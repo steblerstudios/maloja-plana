@@ -1,9 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 
-// ─── Dashboard — Calm Life Overview ────────────────────────
-// Replaces KPI-style boxes with a spacious, editorial layout.
-// Same data, same functionality, calmer atmosphere.
+const AlphaBanner = ({ palette, t, onDismiss }) =>
+  React.createElement('div', {
+    role: 'status',
+    'data-alpha-banner': true,
+    style: {
+      padding: '16px 20px', marginBottom: '24px', borderRadius: '10px',
+      background: palette.gold + '14', border: '1px solid ' + palette.gold + '44',
+    }
+  },
+    React.createElement('div', {
+      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' }
+    },
+      React.createElement('div', { style: { flex: 1 } },
+        React.createElement('div', {
+          style: { fontSize: '13px', fontWeight: '600', color: palette.gold, marginBottom: '8px' }
+        }, t('alpha.title')),
+        React.createElement('div', {
+          style: { fontSize: '12px', color: palette.mid, lineHeight: 1.6 }
+        },
+          React.createElement('p', { style: { margin: '0 0 6px 0' } }, t('alpha.intro')),
+          React.createElement('ul', {
+            style: { margin: '0', paddingLeft: '16px' }
+          },
+            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.skosNote')),
+            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.bvgNote')),
+            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.kkNote'))
+          ),
+          React.createElement('p', { style: { margin: '6px 0 0 0' } }, t('alpha.disclaimer'))
+        )
+      ),
+      React.createElement('button', {
+        onClick: onDismiss,
+        'aria-label': t('common.close'),
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
+          color: palette.mid, fontSize: '16px', lineHeight: 1, flexShrink: 0,
+        }
+      }, '×')
+    )
+  );
 
 export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate }) => {
 
@@ -30,7 +67,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     behoerden: 'behoerden', notfall: 'notfall',
   };
 
+  const [alphaDismissed, setAlphaDismissed] = useState(false);
+
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
+
+    // ─── Alpha banner ──────────────────────────────────────
+    !alphaDismissed && React.createElement(AlphaBanner, {
+      palette, t, onDismiss: () => setAlphaDismissed(true)
+    }),
 
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '32px', paddingTop: '8px' } },
