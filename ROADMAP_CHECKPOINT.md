@@ -1,8 +1,10 @@
 # Maloja Plana — Roadmap Checkpoint
 
-**Date**: 2026-05-15  
-**Build**: ~115 KB gzipped, 53 files, ~10,700 lines  
-**Dependencies**: React 18 + Vite 4 (zero external runtime deps)
+**Date**: 2026-05-15 (updated after Phase 5)  
+**Build**: ~120 KB gzipped, 56 files, ~17,800 lines  
+**Dependencies**: React 18 + Vite 4 (zero external runtime deps)  
+**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+**Repository**: https://github.com/steblerstudios/maloja-plana (private)
 
 ## Current Stable State
 
@@ -21,12 +23,12 @@
 | 2.5 | SVG pictogram system (40 icons) | Done |
 | 3 | Accessibility (focus-visible, skip-link, aria-labels, reduced-motion) | Done |
 | 4 | Responsive polish (all 17 views mobile-safe at 375px) | Done |
+| 5 | Data integrity, encrypted backup, validation, print CSS | Done |
 
-## Frozen Roadmap: Phases 5-19
+## Frozen Roadmap: Phases 6-19
 
 | Phase | Scope | Data Ver. | Risk |
 |-------|-------|:---------:|:----:|
-| 5 | Backup, print, validation | 1 | Low |
 | 6 | Universal design, pictograms, simple language | 1 | Med |
 | 7 | Contact & relationship layer | 2 | Med-High |
 | 8 | Closed alpha (20 testers) | 2 | Low |
@@ -66,9 +68,9 @@
 - Network-based telemetry
 - Open-source publication (needs security audit)
 
-## Next Phase: 5 — Data Integrity & Export Hardening
+## Next Phase: 6 — Universal Design Foundation
 
-**Scope**: Encrypted local backup/restore (Web Crypto API), print-friendly CSS, data validation layer  
-**Risk**: Low  
+**Scope**: Pictogram-first flows, simple-language audit, gender-neutral language, calm progress visualization, visual guidance, discrimination-free UX  
+**Risk**: Medium  
 **Migration**: None (data version stays at 1)  
-**Why first**: Every future phase adds data complexity. Build the safety net before it's needed.
+**Why next**: Design vocabulary must be established before building new modules (Contacts, Mobility, Inventory). Retrofitting later costs 3-5x more.
