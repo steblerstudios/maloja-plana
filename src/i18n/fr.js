@@ -750,6 +750,15 @@ export default {
     largestKey: 'Plus gros : {key} ({size} Ko)',
   },
 
+  alpha: {
+    title: 'Version alpha',
+    intro: 'Ceci est une version préliminaire de Maloja Plana. Certains calculs sont encore en cours de validation. Limitations connues :',
+    skosNote: 'Les calculs d\'aide sociale (CSIAS) pour les ménages avec enfants sont en cours de révision',
+    bvgNote: 'Les déductions LPP peuvent être comptées en double si vous saisissez le salaire net',
+    kkNote: 'Les données du scanner d\'assurance ne sont pas encore liées à vos chapitres enregistrés',
+    disclaimer: 'N\'utilisez pas cette application comme conseil juridique ou financier. Vérifiez toujours auprès de votre autorité cantonale.',
+  },
+
   backup: {
     title: 'Sauvegarde et restauration',
     exportPlain: 'Export (JSON)',

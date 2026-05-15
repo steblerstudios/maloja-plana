@@ -90,6 +90,11 @@
     color: #555 !important;
   }
 
+  /* Hide alpha banner in print */
+  [data-alpha-banner] {
+    display: none !important;
+  }
+
   /* SVG icons: ensure visible in print */
   svg {
     stroke: #000 !important;

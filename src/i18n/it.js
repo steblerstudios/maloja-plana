@@ -751,6 +751,15 @@ export default {
     largestKey: 'Più grande: {key} ({size} KB)',
   },
 
+  alpha: {
+    title: 'Versione alpha',
+    intro: 'Questa è una versione preliminare di Maloja Plana. Alcuni calcoli sono ancora in fase di verifica. Limitazioni note:',
+    skosNote: 'I calcoli dell\'assistenza sociale (COSAS) per nuclei familiari con figli sono in fase di revisione',
+    bvgNote: 'Le deduzioni LPP possono essere conteggiate due volte se si inserisce lo stipendio netto',
+    kkNote: 'I dati dello scanner assicurativo non sono ancora collegati ai capitoli salvati',
+    disclaimer: 'Non utilizzare questa app come consulenza legale o finanziaria. Verifica sempre presso la tua autorità cantonale.',
+  },
+
   backup: {
     title: 'Backup e ripristino',
     exportPlain: 'Esporta (JSON)',

@@ -750,6 +750,15 @@ export default {
     largestKey: 'Grösster Eintrag: {key} ({size} KB)',
   },
 
+  alpha: {
+    title: 'Alpha-Version',
+    intro: 'Dies ist eine frühe Version von Maloja Plana. Einige Berechnungen werden noch überprüft. Bekannte Einschränkungen:',
+    skosNote: 'Sozialhilfe-Berechnungen (SKOS) für Haushalte mit Kindern werden überarbeitet',
+    bvgNote: 'BVG-Abzüge können doppelt gezählt werden, wenn Du das Nettoeinkommen eingibst',
+    kkNote: 'Daten des KK-Scanners sind noch nicht mit Deinen gespeicherten Kapiteln verknüpft',
+    disclaimer: 'Bitte verwende diese App nicht als Rechts- oder Finanzberatung. Überprüfe Angaben immer bei Deiner kantonalen Behörde.',
+  },
+
   backup: {
     title: 'Sicherung & Wiederherstellung',
     exportPlain: 'Export (JSON)',
