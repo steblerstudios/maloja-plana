@@ -1,0 +1,233 @@
+import React, { useState } from 'react';
+import { Icon } from './IconSystem.jsx';
+
+const getDaysUntilExpiry = (expiryDate) => {
+  const today = new Date();
+  const expiry = new Date(expiryDate);
+  const diff = expiry - today;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+};
+
+const getExpiryStatus = (expiryDate, palette, t) => {
+  const days = getDaysUntilExpiry(expiryDate);
+  if (days < 0) return { status: 'expired', color: palette.rose, label: t('tresor.expired') };
+  if (days < 90) return { status: 'warning', color: palette.gold, label: days + 'd' };
+  return { status: 'ok', color: palette.sage, label: '✓ OK' };
+};
+
+export const DocumentTresor = ({
+  palette,
+  t,
+  documents,
+  chapters,
+  onDownload,
+  onDelete,
+  onUpdateExpiry
+}) => {
+  const [filterChapter, setFilterChapter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('expiry');
+  const [showArchive, setShowArchive] = useState(false);
+  const [editingDocId, setEditingDocId] = useState(null);
+  const [editingExpiry, setEditingExpiry] = useState('');
+
+  const active = documents.filter(d => getDaysUntilExpiry(d.expiryDate) >= 0);
+  const archived = documents.filter(d => getDaysUntilExpiry(d.expiryDate) < 0);
+
+  const displayDocs = showArchive ? archived : active;
+
+  const filteredDocs = displayDocs.filter(doc => {
+    const matchChapter = filterChapter === 'all' || doc.chapter === filterChapter;
+    const matchSearch = !searchTerm ||
+      doc.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.type.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchChapter && matchSearch;
+  });
+
+  const sortedDocs = [...filteredDocs].sort((a, b) => {
+    if (sortBy === 'expiry') {
+      return getDaysUntilExpiry(a.expiryDate) - getDaysUntilExpiry(b.expiryDate);
+    } else if (sortBy === 'date') {
+      return new Date(b.uploadDate) - new Date(a.uploadDate);
+    } else if (sortBy === 'name') {
+      return a.fileName.localeCompare(b.fileName);
+    }
+    return 0;
+  });
+
+  const stats = {
+    active: active.length,
+    expiring: active.filter(d => getDaysUntilExpiry(d.expiryDate) < 90).length,
+    archived: archived.length
+  };
+
+  const handleUpdateExpiry = (docId, newDate) => {
+    onUpdateExpiry(docId, newDate);
+    setEditingDocId(null);
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    borderRadius: '6px',
+    border: '1px solid ' + palette.border,
+    background: palette.surface,
+    color: palette.text,
+    boxSizing: 'border-box',
+    fontSize: '12px',
+    marginBottom: '8px'
+  };
+
+  const chapterList = chapters || [];
+
+  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+
+    // Stats
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginBottom: '16px' } },
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border }, onClick: () => setShowArchive(false) },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
+        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.active'))
+      ),
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center' } },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
+        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.expiringSoon'))
+      ),
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: showArchive ? palette.rose : palette.border }, onClick: () => setShowArchive(true) },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.archive'))
+      )
+    ),
+
+    // Filter & Search
+    React.createElement('div', { style: { marginBottom: '16px' } },
+      React.createElement('input', {
+        placeholder: t('common.search'),
+        value: searchTerm,
+        onChange: (e) => setSearchTerm(e.target.value),
+        style: inputStyle
+      }),
+      React.createElement('select', {
+        value: filterChapter,
+        onChange: (e) => setFilterChapter(e.target.value),
+        style: { ...inputStyle, marginBottom: '8px' }
+      },
+        React.createElement('option', { value: 'all' }, '□ ' + t('tresor.allChapters')),
+        chapterList.map(c => React.createElement('option', { key: c.key, value: c.key }, c.icon + ' ' + c.title))
+      ),
+      React.createElement('select', {
+        value: sortBy,
+        onChange: (e) => setSortBy(e.target.value),
+        style: inputStyle
+      },
+        React.createElement('option', { value: 'expiry' }, t('tresor.sortByExpiry')),
+        React.createElement('option', { value: 'date' }, t('tresor.sortByUpload')),
+        React.createElement('option', { value: 'name' }, t('tresor.sortByName'))
+      )
+    ),
+
+    // Documents List
+    sortedDocs.length === 0 ? React.createElement('div', { style: { color: palette.mid, fontSize: '12px', padding: '40px 20px', textAlign: 'center' } },
+      '○ ' + t('tresor.noDocuments')
+    ) : React.createElement('div', { style: { display: 'grid', gap: '8px', maxHeight: '600px', overflowY: 'auto' } },
+      sortedDocs.map(doc => {
+        const status = getExpiryStatus(doc.expiryDate, palette, t);
+        const chapter = chapterList.find(c => c.key === doc.chapter);
+        const isEditing = editingDocId === doc.id;
+
+        return React.createElement('div', {
+          key: doc.id,
+          style: {
+            padding: '12px',
+            background: palette.up,
+            borderRadius: '6px',
+            border: '2px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
+            gap: '12px'
+          }
+        },
+          React.createElement('div', { style: { fontSize: '11px' } },
+            React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' } },
+              React.createElement('span', { style: { fontSize: '14px' } }, doc.uploadStatus === 'uploading' ? '○' : doc.uploadStatus === 'success' ? '✓' : (chapter?.icon || '□')),
+              (chapter?.icon || '□') + ' ' + doc.type
+            ),
+            React.createElement('div', { style: { color: palette.mid, fontSize: '10px', marginBottom: '4px' } }, doc.fileName),
+            React.createElement('div', { style: { color: palette.mid, fontSize: '10px', marginBottom: '6px' } },
+              t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })
+            ),
+
+            // Expiry editor
+            isEditing ? React.createElement('div', { style: { marginTop: '8px' } },
+              React.createElement('input', {
+                type: 'date',
+                value: editingExpiry,
+                onChange: (e) => setEditingExpiry(e.target.value),
+                style: { width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: '11px', marginBottom: '6px' }
+              }),
+              React.createElement('div', { style: { display: 'flex', gap: '4px' } },
+                React.createElement('button', {
+                  onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
+                  style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px', fontWeight: '600' }
+                }, '✓ OK'),
+                React.createElement('button', {
+                  onClick: () => setEditingDocId(null),
+                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px' }
+                }, t('common.cancel'))
+              )
+            ) : React.createElement('div', { style: { marginTop: '6px', color: status.color, fontWeight: '600', fontSize: '11px' } },
+              status.label + ' | ' + t('tresor.expiryDate', { date: doc.expiryDate })
+            )
+          ),
+
+          React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '4px' } },
+            React.createElement('button', {
+              'aria-label': t('common.download'),
+              onClick: () => onDownload(doc),
+              style: {
+                padding: '6px 10px',
+                background: palette.sand,
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '3px',
+                fontSize: '10px',
+                fontWeight: '600'
+              }
+            }, '↙'),
+            React.createElement('button', {
+              'aria-label': t('common.edit'),
+              onClick: () => setEditingDocId(doc.id) || setEditingExpiry(doc.expiryDate),
+              style: {
+                padding: '6px 10px',
+                background: palette.sky,
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '3px',
+                fontSize: '10px',
+                fontWeight: '600'
+              }
+            }, '○'),
+            React.createElement('button', {
+              'aria-label': t('common.delete'),
+              onClick: () => onDelete(doc.id),
+              style: {
+                padding: '6px 10px',
+                background: palette.rose,
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                borderRadius: '3px',
+                fontSize: '10px',
+                fontWeight: '600'
+              }
+            }, '✕')
+          )
+        );
+      })
+    )
+  );
+};
+
+export default DocumentTresor;

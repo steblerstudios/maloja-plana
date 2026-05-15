@@ -1,0 +1,163 @@
+import React, { useState, useEffect } from 'react';
+import {
+  getNotificationPermission,
+  requestNotificationPermission,
+  getNotificationPrefs,
+  saveNotificationPrefs,
+} from './utils/notifications.js';
+import { Icon } from './IconSystem.jsx';
+
+// ─── Notification Settings ─────────────────────────────────
+// Respectful, opt-in notification management.
+// No tracking, no analytics, no external services.
+// User controls everything.
+
+export const NotificationSettings = ({ palette, t }) => {
+  const [permission, setPermission] = useState(getNotificationPermission());
+  const [prefs, setPrefs] = useState(getNotificationPrefs);
+  const [saved, setSaved] = useState(false);
+
+  const isSupported = permission !== 'unsupported';
+  const isGranted = permission === 'granted';
+  const isDenied = permission === 'denied';
+
+  const handleRequestPermission = async () => {
+    const result = await requestNotificationPermission();
+    setPermission(result);
+  };
+
+  const togglePref = (key) => {
+    const updated = { ...prefs, [key]: !prefs[key] };
+    setPrefs(updated);
+    saveNotificationPrefs(updated);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const toggleStyle = (enabled) => ({
+    width: '44px', height: '24px', borderRadius: '12px',
+    background: enabled ? palette.sage : palette.up,
+    border: '2px solid ' + (enabled ? palette.sage : palette.border),
+    cursor: 'pointer', position: 'relative',
+    transition: 'all 0.2s', flexShrink: 0,
+  });
+
+  const toggleDot = (enabled) => ({
+    width: '16px', height: '16px', borderRadius: '50%',
+    background: enabled ? '#fff' : palette.mid,
+    position: 'absolute', top: '2px',
+    left: enabled ? '22px' : '2px',
+    transition: 'all 0.2s',
+  });
+
+  const renderToggle = (key, label, description) => {
+    const enabled = prefs[key] !== false; // default on
+    return React.createElement('div', {
+      key: key,
+      style: {
+        display: 'flex', alignItems: 'start', gap: '12px',
+        padding: '14px 0', borderBottom: '1px solid ' + palette.border,
+      }
+    },
+      React.createElement('div', { style: { flex: 1 } },
+        React.createElement('div', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '2px' } }, label),
+        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, lineHeight: 1.4 } }, description)
+      ),
+      React.createElement('button', {
+        onClick: () => togglePref(key),
+        disabled: !isGranted,
+        'aria-label': label + (enabled ? ' on' : ' off'),
+        style: {
+          ...toggleStyle(enabled && isGranted),
+          opacity: isGranted ? 1 : 0.4,
+          cursor: isGranted ? 'pointer' : 'not-allowed',
+          border: 'none',
+        }
+      },
+        React.createElement('div', { style: toggleDot(enabled && isGranted) })
+      )
+    );
+  };
+
+  return React.createElement('div', {
+    style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border }
+  },
+    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
+      React.createElement(Icon, { name: 'settings', size: 20 }), t('notifications.title')
+    ),
+
+    // Permission status
+    React.createElement('div', {
+      style: {
+        padding: '16px', borderRadius: '8px', marginBottom: '16px',
+        background: isGranted ? palette.sage + '11' : palette.up,
+        border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
+      }
+    },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' } },
+        React.createElement('div', {
+          style: {
+            width: '10px', height: '10px', borderRadius: '50%',
+            background: isGranted ? palette.sage : isDenied ? palette.rose : palette.gold,
+          }
+        }),
+        React.createElement('span', { style: { fontSize: '13px', fontWeight: '600' } },
+          isGranted ? t('notifications.enabled') :
+          isDenied ? t('notifications.blocked') :
+          !isSupported ? t('notifications.notSupported') :
+          t('notifications.notEnabled')
+        )
+      ),
+
+      !isGranted && isSupported && !isDenied && React.createElement('button', {
+        onClick: handleRequestPermission,
+        style: {
+          padding: '10px 16px', background: palette.sand, color: '#000',
+          border: 'none', borderRadius: '6px', cursor: 'pointer',
+          fontWeight: '600', fontSize: '12px', fontFamily: 'DM Sans, sans-serif',
+        }
+      }, t('notifications.enable')),
+
+      isDenied && React.createElement('p', {
+        style: { fontSize: '11px', color: palette.mid, marginTop: '4px' }
+      }, t('notifications.blockedHint'))
+    ),
+
+    // Notification types
+    React.createElement('div', { style: { marginBottom: '16px' } },
+      React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
+        t('notifications.categories')
+      ),
+
+      renderToggle('overdueReminders',
+        t('notifications.overdueReminders'),
+        t('notifications.overdueRemindersDesc')
+      ),
+      renderToggle('documentExpiry',
+        t('notifications.documentExpiry'),
+        t('notifications.documentExpiryDesc')
+      ),
+      renderToggle('healthReminders',
+        t('notifications.healthReminders'),
+        t('notifications.healthRemindersDesc')
+      ),
+      renderToggle('adminDeadlines',
+        t('notifications.adminDeadlines'),
+        t('notifications.adminDeadlinesDesc')
+      )
+    ),
+
+    // Privacy note
+    React.createElement('div', {
+      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '11px', color: palette.mid }
+    },
+      '○ ' + t('notifications.privacyNote')
+    ),
+
+    saved && React.createElement('div', {
+      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: '12px', color: palette.sage, textAlign: 'center' }
+    }, '✓ ' + t('common.saved'))
+  );
+};
+
+export default NotificationSettings;

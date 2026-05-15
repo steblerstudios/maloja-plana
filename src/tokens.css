@@ -1,0 +1,136 @@
+/* ─── Maloja Plana Design Tokens ───────────────────────────────
+   Reusable design system for spacing, typography and transitions.
+   No framework. No preprocessor. Pure CSS custom properties.
+
+   Usage: var(--mp-space-md), var(--mp-text-body), etc.
+   These tokens complement the inline palette system — they
+   define spacing/type/motion that palette objects can't express.
+   ─────────────────────────────────────────────────────────── */
+
+:root {
+  /* ─── Spacing scale (4px base grid) ───────────────────── */
+  --mp-space-2xs: 2px;
+  --mp-space-xs:  4px;
+  --mp-space-sm:  8px;
+  --mp-space-md:  16px;
+  --mp-space-lg:  24px;
+  --mp-space-xl:  32px;
+  --mp-space-2xl: 48px;
+  --mp-space-3xl: 64px;
+
+  /* ─── Typography scale ────────────────────────────────── */
+  --mp-text-xs:   11px;
+  --mp-text-sm:   13px;
+  --mp-text-body: 15px;
+  --mp-text-lg:   18px;
+  --mp-text-xl:   22px;
+  --mp-text-2xl:  28px;
+  --mp-text-3xl:  36px;
+
+  /* ─── Line heights ────────────────────────────────────── */
+  --mp-leading-tight:  1.2;
+  --mp-leading-normal: 1.5;
+  --mp-leading-relaxed: 1.7;
+
+  /* ─── Font weights ────────────────────────────────────── */
+  --mp-weight-normal: 400;
+  --mp-weight-medium: 500;
+  --mp-weight-semi:   600;
+  --mp-weight-bold:   700;
+
+  /* ─── Border radii ────────────────────────────────────── */
+  --mp-radius-sm:  6px;
+  --mp-radius-md:  10px;
+  --mp-radius-lg:  16px;
+  --mp-radius-xl:  24px;
+  --mp-radius-full: 9999px;
+
+  /* ─── Transitions ─────────────────────────────────────── */
+  --mp-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --mp-duration-fast: 150ms;
+  --mp-duration-normal: 250ms;
+  --mp-duration-slow: 400ms;
+
+  /* ─── Shadows (subtle, premium) ───────────────────────── */
+  --mp-shadow-sm:  0 1px 3px rgba(0,0,0,0.06);
+  --mp-shadow-md:  0 2px 8px rgba(0,0,0,0.08);
+  --mp-shadow-lg:  0 4px 16px rgba(0,0,0,0.10);
+  --mp-shadow-xl:  0 8px 32px rgba(0,0,0,0.12);
+}
+
+/* ─── Global animation keyframes ────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Focus styles (accessibility) ──────────────────────── */
+:focus-visible {
+  outline: 2px solid #B8956A;
+  outline-offset: 2px;
+}
+
+/* Ensure buttons and interactive elements always show focus ring.
+   Inline styles cannot override :focus-visible because outline
+   is not set inline. This guarantees keyboard users always see it. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #B8956A;
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+/* ─── Skip-to-content link (keyboard users) ────────────── */
+.mp-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 10000;
+  padding: 8px 16px;
+  background: #B8956A;
+  color: #000;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.mp-skip-link:focus {
+  left: 8px;
+}
+
+/* ─── Reduced motion preference ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ─── Smooth scrolling ──────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Selection color ───────────────────────────────────── */
+::selection {
+  background: rgba(184, 149, 106, 0.3);
+}

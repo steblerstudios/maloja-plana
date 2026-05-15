@@ -1,0 +1,320 @@
+import React, { useState } from 'react';
+import {
+  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay
+} from './validationUtils.js';
+import { Icon } from './IconSystem.jsx';
+
+export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAddDocument }) => {
+  const [expandedSection, setExpandedSection] = useState('fields');
+  const [uploadError, setUploadError] = useState('');
+  const [uploadFile, setUploadFile] = useState(null);
+  const [uploadExpiry, setUploadExpiry] = useState('');
+  const [uploadType, setUploadType] = useState('');
+  const [errors, setErrors] = useState({});
+
+  // t() with fallback if not provided (backward compat)
+  const tr = t || ((k) => k);
+
+  const handleFieldChange = (fieldKey, value) => {
+    onUpdate(fieldKey, value);
+
+    let error = '';
+    if (fieldKey.includes('phone')) {
+      const val = validatePhone(value, tr);
+      error = val.error;
+    } else if (fieldKey === 'ahv') {
+      const val = validateAHV(value, tr);
+      error = val.error;
+    } else if (fieldKey.includes('email')) {
+      const val = validateEmail(value, tr);
+      error = val.error;
+    }
+
+    if (error) setErrors(prev => ({ ...prev, [fieldKey]: error }));
+    else setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+  };
+
+  const renderField = (field) => {
+    const value = data[field.k] || '';
+    const error = errors[field.k];
+
+    const baseStyle = { marginBottom: '16px' };
+
+    const labelStyle = {
+      display: 'block',
+      fontSize: '12px',
+      fontWeight: '500',
+      color: palette.mid,
+      marginBottom: '6px'
+    };
+
+    const inputStyle = {
+      width: '100%',
+      padding: '10px 12px',
+      borderRadius: '6px',
+      border: error ? '2px solid ' + palette.rose : '1px solid ' + palette.border,
+      background: palette.up,
+      color: palette.text,
+      boxSizing: 'border-box',
+      fontSize: '13px',
+      fontFamily: 'DM Sans, sans-serif'
+    };
+
+    const errorStyle = {
+      fontSize: '11px',
+      color: palette.rose,
+      marginTop: '4px'
+    };
+
+    // Text Input
+    if (field.type === 'text') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label + (field.required ? ' *' : '')),
+        React.createElement('input', {
+          type: 'text',
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          placeholder: field.placeholder || '',
+          style: inputStyle
+        }),
+        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
+        error && React.createElement('div', { style: errorStyle }, error)
+      );
+    }
+
+    // Phone
+    if (field.type === 'tel') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('input', {
+          type: 'tel',
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          placeholder: '+41 XX XXX XX XX',
+          style: inputStyle
+        }),
+        error && React.createElement('div', { style: errorStyle }, error)
+      );
+    }
+
+    // Email
+    if (field.type === 'email') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('input', {
+          type: 'email',
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          placeholder: 'name@example.com',
+          style: inputStyle
+        }),
+        error && React.createElement('div', { style: errorStyle }, error)
+      );
+    }
+
+    // Date
+    if (field.type === 'date') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('input', {
+          type: 'date',
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          style: inputStyle
+        })
+      );
+    }
+
+    // Currency
+    if (field.type === 'currency') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('div', { style: { display: 'flex', gap: '6px' } },
+          React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: '6px', borderLeft: '1px solid ' + palette.border } }, 'CHF'),
+          React.createElement('input', {
+            type: 'number',
+            value: value,
+            onChange: (e) => handleFieldChange(field.k, e.target.value),
+            placeholder: '0.00',
+            step: '0.01',
+            style: { ...inputStyle, flex: 1 }
+          })
+        )
+      );
+    }
+
+    // Select — supports both {value, label} objects and plain strings
+    if (field.type === 'select') {
+      const options = (field.options || []).map(opt => {
+        if (typeof opt === 'object' && opt.value !== undefined) return opt;
+        return { value: opt, label: opt };
+      });
+
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('select', {
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          style: { ...inputStyle, cursor: 'pointer' }
+        },
+          React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
+          options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
+        )
+      );
+    }
+
+    // Textarea
+    if (field.type === 'textarea') {
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('textarea', {
+          value: value,
+          onChange: (e) => handleFieldChange(field.k, e.target.value),
+          placeholder: field.placeholder || '',
+          style: { ...inputStyle, minHeight: '100px', fontFamily: 'DM Sans, monospace', resize: 'vertical' }
+        })
+      );
+    }
+
+    return null;
+  };
+
+  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+    // Header
+    React.createElement('div', { style: { marginBottom: '20px' } },
+      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
+      React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, chapter.description)
+    ),
+
+    // Tabs
+    React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid ' + palette.border, paddingBottom: '12px' } },
+      React.createElement('button', {
+        onClick: () => setExpandedSection('fields'),
+        style: {
+          padding: '8px 16px',
+          background: expandedSection === 'fields' ? palette.sand : 'transparent',
+          color: expandedSection === 'fields' ? '#000' : palette.text,
+          border: 'none',
+          borderRadius: '6px 6px 0 0',
+          cursor: 'pointer',
+          fontWeight: '600',
+          fontSize: '12px'
+        }
+      }, '□ ' + tr('chapterView.fields') + ' (' + chapter.fields.length + ')'),
+      React.createElement('button', {
+        onClick: () => setExpandedSection('documents'),
+        style: {
+          padding: '8px 16px',
+          background: expandedSection === 'documents' ? palette.sand : 'transparent',
+          color: expandedSection === 'documents' ? '#000' : palette.text,
+          border: 'none',
+          borderRadius: '6px 6px 0 0',
+          cursor: 'pointer',
+          fontWeight: '600',
+          fontSize: '12px'
+        }
+      }, '□ ' + tr('chapterView.documents') + ' (' + (chapter.docs ? chapter.docs.length : 0) + ')')
+    ),
+
+    // Fields Tab
+    expandedSection === 'fields' && React.createElement('div', null,
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' } },
+        chapter.fields.map(field => renderField(field))
+      )
+    ),
+
+    // Documents Tab
+    expandedSection === 'documents' && chapter.docs && React.createElement('div', null,
+      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '16px' } }, '↗ ' + tr('chapterView.upload')),
+
+      // Upload Form
+      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', marginBottom: '16px', border: '2px dashed ' + palette.border } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
+          React.createElement('div', null,
+            React.createElement('label', { style: { fontSize: '12px', fontWeight: '500', color: palette.mid, display: 'block', marginBottom: '6px' } }, tr('chapterView.docType') + ' *'),
+            React.createElement('select', {
+              value: uploadType,
+              onChange: (e) => setUploadType(e.target.value),
+              style: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+            },
+              React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
+              chapter.docs.map((doc, idx) => React.createElement('option', { key: idx, value: doc.k }, doc.label))
+            )
+          ),
+          React.createElement('div', null,
+            React.createElement('label', { style: { fontSize: '12px', fontWeight: '500', color: palette.mid, display: 'block', marginBottom: '6px' } }, tr('chapterView.expiryDate') + ' *'),
+            React.createElement('input', {
+              type: 'date',
+              value: uploadExpiry,
+              onChange: (e) => setUploadExpiry(e.target.value),
+              style: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+            }),
+            uploadType && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + getFileExpiryHint(uploadType, tr))
+          )
+        ),
+
+        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+          '□ ' + tr('chapterView.selectFile'),
+          React.createElement('input', {
+            type: 'file',
+            onChange: (e) => setUploadFile(e.target.files?.[0]),
+            style: { display: 'none' }
+          })
+        ),
+
+        uploadError && React.createElement('div', { style: { padding: '10px', background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: '6px', color: palette.rose, fontSize: '12px', marginBottom: '12px' } }, uploadError),
+
+        React.createElement('button', {
+          onClick: () => {
+            if (!uploadFile) { setUploadError(tr('chapterView.selectFile')); return; }
+            if (!uploadType) { setUploadError(tr('chapterView.selectDocType')); return; }
+            if (!uploadExpiry) { setUploadError(tr('chapterView.selectExpiry')); return; }
+            setUploadError('');
+            const reader = new FileReader();
+            reader.onload = () => {
+              try {
+                onAddDocument({
+                  type: uploadType,
+                  fileName: uploadFile.name,
+                  fileSize: (uploadFile.size / 1024).toFixed(1) + ' KB',
+                  uploadDate: new Date().toLocaleDateString('de-CH'),
+                  expiryDate: uploadExpiry,
+                  status: 'active',
+                  data: reader.result
+                });
+                setUploadFile(null);
+                setUploadType('');
+                setUploadExpiry('');
+              } catch (err) {
+                setUploadError(tr('chapterView.uploadError') + ': ' + err.message);
+              }
+            };
+            reader.readAsDataURL(uploadFile);
+          },
+          disabled: !uploadFile || !uploadType || !uploadExpiry,
+          style: {
+            width: '100%',
+            padding: '10px',
+            background: uploadFile && uploadType && uploadExpiry ? palette.sage : palette.mid,
+            color: '#000',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',
+            fontWeight: '600',
+            fontSize: '12px'
+          }
+        }, '↗ ' + tr('chapterView.upload'))
+      ),
+
+      // Required documents list
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
+        React.createElement('h4', { style: { fontSize: '12px', fontWeight: '600', marginBottom: '10px' } }, '□ ' + tr('chapterView.requiredDocs')),
+        React.createElement('ul', { style: { fontSize: '12px', paddingLeft: '20px', margin: 0 } },
+          chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc.label))
+        )
+      )
+    )
+  );
+};
+
+export default ChapterViewComplete;
