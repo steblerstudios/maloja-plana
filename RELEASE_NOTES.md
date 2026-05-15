@@ -1,8 +1,10 @@
 # Maloja Plana — Release Notes
 
-**Version**: 0.1.0-alpha (Phase 4 complete)  
+**Version**: 0.5.0-alpha (Phase 5 complete)  
 **Date**: 2026-05-15  
-**License**: AGPL-3.0
+**License**: AGPL-3.0  
+**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+**Repository**: https://github.com/steblerstudios/maloja-plana (private)
 
 ## Completed Phases
 
@@ -12,14 +14,15 @@
 - **Phase 2.5 — Pictogram System**: 40 SVG icons via IconSystem.jsx, consistent viewBox and stroke styling
 - **Phase 3 — Accessibility**: Focus-visible outlines, skip-to-content link, ARIA labels on icon-only buttons, navigation landmark, aria-live status region, prefers-reduced-motion support
 - **Phase 4 — Responsive Polish**: All 17 views verified at 375px mobile width, auto-fit/minmax grids, flex-wrap tab bars, no horizontal scroll on mobile
+- **Phase 5 — Data Integrity & Export Hardening**: Optional AES-256-GCM encrypted backup via Web Crypto API, plaintext JSON export, restore with pre-restore snapshot safety, data validation on load, print-friendly CSS stylesheet. +1 SVG icon (lock), +26 i18n keys per language.
 
 ## Build
 
 | Metric | Value |
 |--------|-------|
-| Source files | 53 |
-| Source lines | ~16,900 |
-| Gzipped bundle | 115 KB |
+| Source files | 56 |
+| Source lines | ~17,800 |
+| Gzipped bundle | 120 KB |
 | Runtime dependencies | React 18, React DOM (no others) |
 | Build tool | Vite 4 |
 
@@ -54,11 +57,13 @@
 - QR code generation (OrganDonation, KKScanner) depends on cdnjs.cloudflare.com CDN — fails offline
 - ~80 button labels use Unicode prefixes (checkmarks, circles) inconsistent with SVG icon system — functional but cosmetically inconsistent
 - SchuldenManager and BudgetImport are scaffolded but do not persist data between sessions
-- No encrypted backup/export capability yet
 - Single-user only — no multi-person or household profile support
 - No PWA manifest or service worker caching
+- SKOS household calculation treats children as additional adults (incorrect)
+- AHV number can be entered in both Basis chapter and KK Scanner (duplication risk)
+- Some Sozialhilfe result strings bypass i18n (hardcoded German)
 
 ## Next Phase
 
-**Phase 5 — Data Integrity & Export Hardening**  
-Encrypted local backup/restore via Web Crypto API, print-friendly CSS, data validation layer. No data model changes, no migration required. Low risk.
+**Phase 6 — Universal Design Foundation**  
+Pictogram-first interaction patterns, simple-language audit, gender-neutral language review, calm progress visualization, visual guidance layer, discrimination-free UX. No data model changes, no migration required. Medium risk.
