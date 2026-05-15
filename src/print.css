@@ -1,0 +1,98 @@
+/* ─── Print Stylesheet ────────────────────────────────────────
+   Scoped entirely inside @media print.
+   No effect on screen layout.
+   ─────────────────────────────────────────────────────────── */
+
+@media print {
+  /* Hide non-essential UI */
+  header[role="banner"],
+  .mp-skip-link,
+  nav[role="navigation"],
+  button,
+  input,
+  select,
+  textarea,
+  [aria-live] {
+    display: none !important;
+  }
+
+  /* Reset background and colors for print */
+  body, html, #root {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Main content fills the page */
+  main {
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Remove fixed/flex layout constraints */
+  div[aria-label] {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Cards and sections: remove dark backgrounds, add borders */
+  div[style*="background"] {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    color: #000 !important;
+    break-inside: avoid;
+    margin-bottom: 8pt;
+    padding: 8pt !important;
+  }
+
+  /* Grids become single column */
+  div[style*="grid"] {
+    display: block !important;
+  }
+
+  /* Links: show URL */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+  }
+  a[href^="#"]:after,
+  a[href^="javascript"]:after {
+    content: "";
+  }
+
+  /* Page margins */
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+
+  /* Avoid page breaks inside important blocks */
+  h1, h2, h3, h4 {
+    break-after: avoid;
+    color: #000 !important;
+  }
+
+  /* Ensure text is readable */
+  span, div, p, strong, em, label {
+    color: #000 !important;
+  }
+
+  /* Muted text slightly lighter for hierarchy */
+  div[style*="color: rgb(128"],
+  div[style*="color: rgb(140"],
+  span[style*="color: rgb(128"],
+  span[style*="color: rgb(140"] {
+    color: #555 !important;
+  }
+
+  /* SVG icons: ensure visible in print */
+  svg {
+    stroke: #000 !important;
+    fill: none !important;
+  }
+}
