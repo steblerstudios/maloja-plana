@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
+import './print.css';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
 import { cantonFromPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
+import { validateData, validateDocs } from './utils/dataValidation.js';
 import { createBackup } from './utils/autoBackup.js';
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
@@ -71,18 +73,30 @@ const AppInner = () => {
       const raw = JSON.parse(localStorage.getItem('or5_data') || '{}');
       const result = migrateData(raw);
       if (result.migrated) {
-        // Persist migrated data immediately
         localStorage.setItem('or5_data', JSON.stringify(result.data));
         console.info('[app] Data migrated v' + result.fromVersion + ' → v' + result.toVersion);
       }
       if (result.error) {
         console.error('[app] Migration error:', result.error);
       }
-      return result.data;
+      const validation = validateData(result.data);
+      if (!validation.valid) {
+        console.warn('[app] Data validation warnings:', validation.errors);
+      }
+      return validation.sanitized;
     } catch { return {}; }
   });
 
-  const [documents, setDocuments] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_docs') || '[]'); } catch { return []; } });
+  const [documents, setDocuments] = useState(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem('or5_docs') || '[]');
+      const validation = validateDocs(raw);
+      if (!validation.valid) {
+        console.warn('[app] Docs validation warnings:', validation.errors);
+      }
+      return validation.sanitized;
+    } catch { return []; }
+  });
 
   // ─── Hash routing: read initial view from URL ─────────────
   const [view, setView] = useState(() => {

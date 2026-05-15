@@ -340,6 +340,12 @@ const _recurring = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
 );
 
 
+const _lock = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '5', y: '11', width: '14', height: '10', rx: '2' }),
+  React.createElement('path', { d: 'M 8 11 L 8 7 Q 8 3 12 3 Q 16 3 16 7 L 16 11' })
+);
+
+
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
 // ═══════════════════════════════════════════════════════════════
@@ -395,6 +401,7 @@ export const Icons = {
   info: _info,
   external: _external,
   recurring: _recurring,
+  lock: _lock,
 };
 
 
