@@ -1,4 +1,11 @@
-import React, { useState } from 'react';
+nano src/i18n/en.js
+nano src/i18n/de.js
+nano src/i18n/fr.js
+nano src/i18n/it.js
+
+npm run build
+git diff
+git statusimport React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
