@@ -312,8 +312,23 @@ const AppInner = () => {
         onUpdateExpiry: handleUpdateDocExpiry
       }),
       view === 'kk' && React.createElement(KKScanner, {
-        palette, t,
-        onSave: (kkData) => updateData('versicherungen', 'kkInsurer', kkData.insurer)
+        palette, t, data,
+        onSave: (kkData) => {
+          const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
+          setData(prev => {
+            const next = { ...prev };
+            next.versicherungen = { ...next.versicherungen,
+              kkInsurer: kkData.insurer || next.versicherungen?.kkInsurer || '',
+              kkCardNumber: kkData.cardNumber || next.versicherungen?.kkCardNumber || '',
+              kkModel: kkData.model || next.versicherungen?.kkModel || '',
+            };
+            if (franchiseKey) next.versicherungen.franchise = franchiseKey;
+            if (kkData.ahv && !next.basis?.ahv) {
+              next.basis = { ...next.basis, ahv: kkData.ahv };
+            }
+            return next;
+          });
+        }
       }),
       view === 'budget' && React.createElement(BudgetImport, {
         palette, t,

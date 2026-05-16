@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 
-export const KKScanner = ({ palette, t, onSave }) => {
+export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
+  const franchiseToNumber = (key) => key ? key.replace('f', '') : '';
   const [kkData, setKKData] = useState({
-    insurer: '', cardNumber: '', holder: '', ahv: '', franchise: '', model: ''
+    insurer: data?.versicherungen?.kkInsurer || '',
+    cardNumber: data?.versicherungen?.kkCardNumber || '',
+    holder: data?.basis?.fullName || '',
+    ahv: data?.basis?.ahv || '',
+    franchise: franchiseToNumber(data?.versicherungen?.franchise) || '',
+    model: data?.versicherungen?.kkModel || ''
   });
   const [scanResult, setScanResult] = useState(null);
   const [scanning, setScanning] = useState(false);
