@@ -1,17 +1,17 @@
-import type { RuntimeEvent } from "../types";
+import type { AuditEvent } from "../types";
 
-export type EventHandler = (event: RuntimeEvent) => void;
+export class RuntimeEventBus {
+  private readonly events: AuditEvent[] = [];
 
-export class EventBus {
-  private handlers: EventHandler[] = [];
-
-  subscribe(handler: EventHandler): void {
-    this.handlers.push(handler);
+  publish(event: AuditEvent): void {
+    this.events.push(event);
   }
 
-  publish(event: RuntimeEvent): void {
-    for (const handler of this.handlers) {
-      handler(event);
-    }
+  getEvents(): AuditEvent[] {
+    return [...this.events];
+  }
+
+  clear(): void {
+    this.events.length = 0;
   }
 }
