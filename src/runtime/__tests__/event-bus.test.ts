@@ -10,10 +10,7 @@ describe("RuntimeEventBus", () => {
       received.push(event);
     });
 
-    const event = {
-      type: "WORKFLOW_STARTED",
-      workflowId: "workflow-1",
-    };
+    const event = { type: "WorkflowStarted", workflowId: "workflow-1" };
 
     bus.publish(event);
 
