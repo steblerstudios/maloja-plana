@@ -1,0 +1,72 @@
+src/Onboarding.jsx:79:            React.createElement('button', {
+src/Onboarding.jsx:138:        React.createElement('button', {
+src/Onboarding.jsx:143:        React.createElement('button', {
+src/Onboarding.jsx:184:      React.createElement('button', { onClick: finish, style: btnPrimary },
+src/BudgetImport.jsx:97:          React.createElement('button', { onClick: handleImportConfirm, style: { ...buttonStyle, flex: 1 } }, '✓ ' + t('common.save')),
+src/BudgetImport.jsx:98:          React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px', color: palette.text } }, t('common.cancel'))
+src/ThemeToggle.jsx:3:  return React.createElement('button', {
+src/KKScanner.jsx:92:        React.createElement('button', {
+src/KKScanner.jsx:96:        React.createElement('button', {
+src/KKScanner.jsx:141:      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save'))
+src/KKScanner.jsx:162:      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '○ ' + t('emergency.qrCode')),
+src/SchuldenManager.jsx:101:      React.createElement('button', {
+src/SchuldenManager.jsx:105:      React.createElement('button', {
+src/SchuldenManager.jsx:109:      React.createElement('button', {
+src/SchuldenManager.jsx:113:      React.createElement('button', {
+src/SchuldenManager.jsx:163:        React.createElement('button', { onClick: handleAddDebt, style: buttonStyle }, '+ ' + t('schulden.addDebt'))
+src/SchuldenManager.jsx:175:          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, '✕ ' + t('common.delete'))
+src/SchuldenManager.jsx:180:        React.createElement('button', { onClick: () => setDebtPlan(createDebtPlan(debtStatus.totalDebt, 500, schulden[0]?.interestRate || 0)), style: buttonStyle }, '◰ ' + t('schulden.paymentPlan'))
+src/SchuldenManager.jsx:195:      React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: '16px' } }, '+ ' + t('schulden.addDebt')),
+src/SchuldenManager.jsx:214:      React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: '16px' } }, '+ ' + t('schulden.lossReceipts')),
+src/SchuldenManager.jsx:231:    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: '16px', background: palette.sage, color: '#000' } }, '□ ' + t('common.save'))
+src/ZipExport.jsx:213:            React.createElement('button', {
+src/ZipExport.jsx:217:            React.createElement('button', {
+src/ZipExport.jsx:221:            React.createElement('button', {
+src/ZipExport.jsx:243:        React.createElement('button', { onClick: handleExportPlainBackup, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
+src/ZipExport.jsx:255:        React.createElement('button', {
+src/ZipExport.jsx:286:            React.createElement('button', {
+src/ZipExport.jsx:290:            React.createElement('button', {
+src/ErrorBoundary.jsx:66:          React.createElement('button', {
+src/ErrorBoundary.jsx:74:          React.createElement('button', {
+src/ChapterView.jsx:230:      React.createElement('button', {
+src/ChapterView.jsx:243:      React.createElement('button', {
+src/ChapterView.jsx:310:        React.createElement('button', {
+src/StorageWarning.jsx:72:    React.createElement('button', {
+src/CVGenerator.jsx:38:      React.createElement('button', {
+src/CVGenerator.jsx:42:      React.createElement('button', {
+src/Dashboard.jsx:34:      React.createElement('button', {
+src/Dashboard.jsx:117:          React.createElement('button', {
+src/Dashboard.jsx:178:          return React.createElement('button', {
+src/Dashboard.jsx:259:          return React.createElement('button', {
+src/NotificationSettings.jsx:66:      React.createElement('button', {
+src/NotificationSettings.jsx:112:      !isGranted && isSupported && !isDenied && React.createElement('button', {
+src/main.jsx:46:      React.createElement('button', {
+src/main.jsx:274:        React.createElement('button', {
+src/DocumentTresor.jsx:171:                React.createElement('button', {
+src/DocumentTresor.jsx:175:                React.createElement('button', {
+src/DocumentTresor.jsx:186:            React.createElement('button', {
+src/DocumentTresor.jsx:200:            React.createElement('button', {
+src/DocumentTresor.jsx:214:            React.createElement('button', {
+src/BudgetSync.jsx:89:      React.createElement('button', {
+src/BudgetSync.jsx:93:      React.createElement('button', {
+src/TaxCalculator.jsx:136:    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
+src/MobileNav.jsx:24:    React.createElement('button', {
+src/PremiumSubsidy.jsx:122:        React.createElement('button', {
+src/PremiumSubsidy.jsx:127:        React.createElement('button', {
+src/PremiumSubsidy.jsx:132:        React.createElement('button', {
+src/CalendarReminders.jsx:196:          React.createElement('button', {
+src/CalendarReminders.jsx:205:          React.createElement('button', {
+src/CalendarReminders.jsx:270:            React.createElement('button', {
+src/CalendarReminders.jsx:291:      React.createElement('button', {
+src/CalendarReminders.jsx:304:        React.createElement('button', {
+src/CalendarReminders.jsx:312:            React.createElement('button', {
+src/OrganDonation.jsx:74:        React.createElement('button', {
+src/OrganDonation.jsx:78:        React.createElement('button', {
+src/OrganDonation.jsx:82:        React.createElement('button', {
+src/OrganDonation.jsx:103:      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
+src/OrganDonation.jsx:104:      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, '○ ' + t('organ.generateQr'))
+src/EmergencyHub.jsx:118:      React.createElement('button', {
+src/EmergencyHub.jsx:122:      React.createElement('button', {
+src/EmergencyHub.jsx:126:      React.createElement('button', {
+src/IconSystem.jsx:457:  return React.createElement('button', {
+src/OverdueBanner.jsx:28:  return React.createElement('button', {
