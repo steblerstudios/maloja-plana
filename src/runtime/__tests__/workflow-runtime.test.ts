@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { WorkflowRuntime } from "../core/workflow-runtime";
 import type { WorkflowDefinition } from "../types";
 
