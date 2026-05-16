@@ -105,6 +105,7 @@ export default {
     basis: {
       title: 'Personal basics',
       description: 'Your identity and contact information',
+      intro: 'Your personal basics are the foundation. Start with your name and canton — everything else can wait.',
       icon: '◎',
       fields: {
         fullName: 'Full name',
@@ -133,6 +134,7 @@ export default {
     wohnen: {
       title: 'Housing',
       description: 'Your home, rent, and living situation',
+      intro: 'Everything about where you live. Useful for tax returns, insurance, and benefits applications.',
       icon: '⌂',
       fields: {
         address: 'Street and house number',
@@ -157,6 +159,7 @@ export default {
     finanzen: {
       title: 'Finances',
       description: 'Your income, savings, and bank details',
+      intro: 'A clear picture of your financial situation. This helps with budgeting, tax, and subsidy applications.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Monthly net income (CHF)',
@@ -184,6 +187,7 @@ export default {
     versicherungen: {
       title: 'Insurance',
       description: 'Health insurance, pension, and coverage',
+      intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',
       icon: '◰',
       fields: {
         kkInsurer: 'Health insurer',
@@ -213,6 +217,7 @@ export default {
     ausbildung: {
       title: 'Education and work',
       description: 'Your qualifications and employment',
+      intro: 'Your education and work history. Useful for CV building, job applications, and work permit renewals.',
       icon: '✦',
       fields: {
         schoolName: 'School / University',
@@ -235,6 +240,7 @@ export default {
     behoerden: {
       title: 'Authorities and legal',
       description: 'Taxes, legal matters, and official documents',
+      intro: 'Your dealings with authorities and legal matters. Keeps important deadlines and contacts together.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Tax canton',
@@ -258,6 +264,7 @@ export default {
     notfall: {
       title: 'Emergency',
       description: 'Emergency contacts, medical information',
+      intro: 'Important information for emergencies. Having this ready can make a real difference for you and your family.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Emergency contact person',
@@ -288,6 +295,8 @@ export default {
   },
 
   chapterView: {
+    emptyState: 'Nothing here yet — and that\'s fine.',
+    emptyStateHint: 'You can start with just a few details. Everything can be updated later.',
     fields: 'Fields',
     documents: 'Documents',
     selectOption: '— Select —',
