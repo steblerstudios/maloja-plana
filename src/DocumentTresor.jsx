@@ -85,7 +85,7 @@ export const DocumentTresor = ({
 
     // Stats
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginBottom: '16px' } },
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border }, onClick: () => setShowArchive(false) },
+      React.createElement('button', { type: 'button', 'aria-pressed': !showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border, font: 'inherit' }, onClick: () => setShowArchive(false) },
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.active'))
       ),
@@ -93,7 +93,7 @@ export const DocumentTresor = ({
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.expiringSoon'))
       ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: showArchive ? palette.rose : palette.border }, onClick: () => setShowArchive(true) },
+      React.createElement('button', { type: 'button', 'aria-pressed': showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: showArchive ? palette.rose : palette.border, font: 'inherit' }, onClick: () => setShowArchive(true) },
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.archive'))
       )
