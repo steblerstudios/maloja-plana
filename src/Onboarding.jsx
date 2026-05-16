@@ -13,6 +13,8 @@ export const isOnboardingDone = () => {
   catch { return false; }
 };
 
+import { CANTON_NAMES } from './config/cantonalData.js';
+
 const CANTONS = [
   'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR',
   'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG',
@@ -25,7 +27,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const [canton, setCanton] = useState('');
 
   const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano' };
-  const langFlags = { en: '🇬🇧', de: '🇨🇭', fr: '🇨🇭', it: '🇨🇭' };
+
 
   const finish = () => {
     if (name.trim()) onUpdateData('basis', 'fullName', name.trim());
@@ -88,7 +90,6 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; },
             },
-              React.createElement('span', { style: { fontSize: '20px' } }, langFlags[lang] || ''),
               langLabels[lang] || lang.toUpperCase()
             )
           )
@@ -126,7 +127,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             style: { ...inputStyle, appearance: 'auto' },
           },
             React.createElement('option', { value: '' }, t('common.select')),
-            CANTONS.map(c => React.createElement('option', { key: c, value: c }, c))
+            CANTONS.map(c => React.createElement('option', { key: c, value: c }, CANTON_NAMES[c] || c))
           )
         ),
 

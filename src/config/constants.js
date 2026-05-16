@@ -16,6 +16,9 @@ export const LIGHT_PALETTE = {
 
 export const CANTONS = ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'];
 
+import { CANTON_NAMES } from './cantonalData.js';
+const cantonOptions = () => CANTONS.map(c => ({ value: c, label: CANTON_NAMES[c] || c }));
+
 // Helper: create select options from translation keys
 // Returns [{value: 'key', label: 'Translated label'}]
 function opts(t, chapterKey, fieldKey) {
@@ -60,7 +63,7 @@ export function getChapters(t) {
         { k: 'dateOfBirth', label: fl(t, 'basis', 'dateOfBirth'), type: 'date', required: true },
         { k: 'gender', label: fl(t, 'basis', 'gender'), type: 'select', options: opts(t, 'basis', 'gender') },
         { k: 'nationality', label: fl(t, 'basis', 'nationality'), type: 'select', options: opts(t, 'basis', 'nationality') },
-        { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: CANTONS.map(c => ({ value: c, label: c })) },
+        { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: cantonOptions() },
         { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone') },
         { k: 'email', label: fl(t, 'basis', 'email'), type: 'email' },
         { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv') },
@@ -175,7 +178,7 @@ export function getChapters(t) {
       description: t('chapters.behoerden.description'),
       icon: t('chapters.behoerden.icon'),
       fields: [
-        { k: 'cantoneOfTaxation', label: fl(t, 'behoerden', 'cantoneOfTaxation'), type: 'select', options: CANTONS.map(c => ({ value: c, label: c })) },
+        { k: 'cantoneOfTaxation', label: fl(t, 'behoerden', 'cantoneOfTaxation'), type: 'select', options: cantonOptions() },
         { k: 'taxId', label: fl(t, 'behoerden', 'taxId'), type: 'text' },
         { k: 'taxFillingDeadline', label: fl(t, 'behoerden', 'taxFillingDeadline'), type: 'date' },
         { k: 'pendingTaxReturns', label: fl(t, 'behoerden', 'pendingTaxReturns'), type: 'text' },
