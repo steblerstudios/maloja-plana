@@ -1,21 +1,17 @@
 import type { RuntimeEvent } from "../types";
 
-export class AuditLog {
+export class RuntimeAuditLog {
   private readonly events: RuntimeEvent[] = [];
 
-  append(event: RuntimeEvent): void {
+  record(event: RuntimeEvent): void {
     this.events.push(event);
   }
 
-  list(): RuntimeEvent[] {
+  all(): RuntimeEvent[] {
     return [...this.events];
   }
 
-  findByWorkflowId(workflowId: string): RuntimeEvent[] {
+  byWorkflow(workflowId: string): RuntimeEvent[] {
     return this.events.filter((event) => event.workflowId === workflowId);
-  }
-
-  clear(): void {
-    this.events.length = 0;
   }
 }
