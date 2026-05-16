@@ -70,10 +70,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);
   const hasMeaningfulProgress = completion >= 15;
-  const gentleStartItems = [
-    t('guidedStart.basicInfo'),
-    t('guidedStart.documents'),
-    t('guidedStart.emergency')
+  const gentleStartActions = [
+    { label: t('guidedStart.basicInfo'), action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'basis')) },
+    { label: t('guidedStart.documents'), action: () => onNavigate('tresor') },
+    { label: t('guidedStart.emergency'), action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'notfall')) },
   ];
 
 
@@ -110,11 +110,24 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('p', {
         style: { fontSize: '13px', color: palette.mid, lineHeight: 1.6, margin: '0 0 12px 0' }
       }, t('guidedStart.text')),
-      React.createElement('ul', {
-        style: { margin: 0, paddingLeft: '18px', color: palette.mid, fontSize: '13px', lineHeight: 1.7 }
+      React.createElement('div', {
+        style: { display: 'flex', flexDirection: 'column', gap: '6px' }
       },
-        gentleStartItems.map((item) =>
-          React.createElement('li', { key: item }, item)
+        gentleStartActions.map((item) =>
+          React.createElement('button', {
+            key: item.label,
+            onClick: item.action,
+            style: {
+              background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0',
+              fontSize: '13px', color: palette.mid, textAlign: 'left', fontFamily: 'inherit',
+              display: 'flex', alignItems: 'center', gap: '8px',
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.color = palette.text; },
+            onMouseLeave: (e) => { e.currentTarget.style.color = palette.mid; },
+          },
+            React.createElement('span', { style: { color: palette.sage, fontSize: '11px' } }, '→'),
+            item.label
+          )
         )
       )
     ),
