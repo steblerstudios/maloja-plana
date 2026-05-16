@@ -1,23 +1,25 @@
-import type { WorkflowDefinition } from "../types";
+export type RuntimeState = {
+  workflowId: string;
+  status?: string;
+  currentStepId?: string;
+};
 
 export class InMemoryRuntimeStore {
-  private readonly workflows = new Map<string, WorkflowDefinition>();
+  private readonly workflows = new Map<string, RuntimeState>();
 
-  async save(workflow: WorkflowDefinition): Promise<void> {
-    this.workflows.set(workflow.id, workflow);
+  async save(state: RuntimeState): Promise<void> {
+    this.workflows.set(state.workflowId, state);
   }
 
-  async get(workflowId: string): Promise<WorkflowDefinition | undefined> {
+  async get(workflowId: string): Promise<RuntimeState | undefined> {
     return this.workflows.get(workflowId);
   }
 
-  async findByWorkflowId(
-    workflowId: string,
-  ): Promise<WorkflowDefinition | undefined> {
+  async findByWorkflowId(workflowId: string): Promise<RuntimeState | undefined> {
     return this.get(workflowId);
   }
 
-  async list(): Promise<WorkflowDefinition[]> {
+  async list(): Promise<RuntimeState[]> {
     return Array.from(this.workflows.values());
   }
 
