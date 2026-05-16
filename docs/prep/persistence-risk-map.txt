@@ -1,0 +1,154 @@
+src/zipExport.js:6:    version: '5.0',
+src/zipExport.js:111:    version: '5.0',
+src/Onboarding.jsx:12:  try { return localStorage.getItem(STORAGE_KEY) === 'true'; }
+src/Onboarding.jsx:35:    try { localStorage.setItem(STORAGE_KEY, 'true'); } catch {}
+src/config/constants.js:3:// Field values stored in localStorage remain language-independent (using option keys)
+src/config/whitelabel.js:3:// Stored in localStorage — no backend dependency.
+src/config/whitelabel.js:50:    const stored = localStorage.getItem(STORAGE_KEY);
+src/config/whitelabel.js:60:    localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+src/config/whitelabel.js:69:    localStorage.removeItem(STORAGE_KEY);
+src/config/whitelabel.js:79:    const stored = localStorage.getItem(STORAGE_KEY);
+src/runtime/types.ts:89:  version: string;
+src/runtime/__tests__/runtime-execution-engine.test.ts:8:  version: "0.1.0",
+src/runtime/__tests__/workflow-runtime.test.ts:8:  version: "1.0.0",
+src/runtime/controllers/workflow-controller.ts:21:        version: workflow.version,
+src/runtime/validation/workflow-validator.ts:47:  if (!workflow.version.trim()) {
+src/runtime/validation/workflow-validator.ts:49:      code: "workflow_version_missing",
+src/runtime/validation/workflow-validator.ts:50:      message: "Workflow version is required.",
+src/utils/backupCrypto.js:39:    version: '5.1',
+src/utils/backupCrypto.js:42:  try { backup.data = JSON.parse(localStorage.getItem('or5_data') || '{}'); } catch { backup.data = {}; }
+src/utils/backupCrypto.js:43:  try { backup.docs = JSON.parse(localStorage.getItem('or5_docs') || '[]'); } catch { backup.docs = []; }
+src/utils/backupCrypto.js:44:  try { backup.reminders = JSON.parse(localStorage.getItem('or5_reminders') || '[]'); } catch { backup.reminders = []; }
+src/utils/backupCrypto.js:45:  try { backup.contacts = JSON.parse(localStorage.getItem('or5_contacts') || '[]'); } catch { backup.contacts = []; }
+src/utils/backupCrypto.js:48:    theme: localStorage.getItem('or5_theme'),
+src/utils/backupCrypto.js:49:    lang: localStorage.getItem('or5_lang'),
+src/utils/backupCrypto.js:50:    onboardingDone: localStorage.getItem('or5_onboarding_done'),
+src/utils/backupCrypto.js:153:  if (!backup.created || !backup.version) {
+src/utils/backupCrypto.js:154:    throw new Error('Invalid backup: missing created or version fields.');
+src/utils/backupCrypto.js:172:    if (parsed && parsed.created && parsed.version) return 'plaintext';
+src/utils/backupCrypto.js:179: * Stored in localStorage as or5_data_prerestore, or5_docs_prerestore, or5_reminders_prerestore.
+src/utils/backupCrypto.js:184:    const val = localStorage.getItem(key);
+src/utils/backupCrypto.js:186:      localStorage.setItem(key + '_prerestore', val);
+src/utils/backupCrypto.js:190:  localStorage.setItem('or5_prerestore_date', new Date().toISOString());
+src/utils/backupCrypto.js:204:      localStorage.setItem('or5_data', JSON.stringify(backup.data));
+src/utils/backupCrypto.js:208:      localStorage.setItem('or5_docs', JSON.stringify(backup.docs));
+src/utils/backupCrypto.js:212:      localStorage.setItem('or5_reminders', JSON.stringify(backup.reminders));
+src/utils/backupCrypto.js:216:      localStorage.setItem('or5_contacts', JSON.stringify(backup.contacts));
+src/utils/backupCrypto.js:220:      if (backup.meta.theme) localStorage.setItem('or5_theme', backup.meta.theme);
+src/utils/backupCrypto.js:221:      if (backup.meta.lang) localStorage.setItem('or5_lang', backup.meta.lang);
+src/utils/dataMigration.js:2:// Safe, incremental schema migrations for or5_data.
+src/utils/dataMigration.js:3:// Each migration function transforms version N → N+1.
+src/utils/dataMigration.js:7://   1. Raw data is snapshot before migration (or5_data_premigration)
+src/utils/dataMigration.js:9://   3. Unknown versions are left untouched (no silent corruption)
+src/utils/dataMigration.js:15:// Each takes a data object at version N and returns version N+1.
+src/utils/dataMigration.js:18:const migrations = {
+src/utils/dataMigration.js:19:  // v0 → v1: Wrap legacy flat data with version marker + metadata
+src/utils/dataMigration.js:21:  // New format:    { _version: 1, _migratedAt: ISO, basis: {}, wohnen: {}, ... }
+src/utils/dataMigration.js:25:      _version: 1,
+src/utils/dataMigration.js:26:      _migratedAt: new Date().toISOString(),
+src/utils/dataMigration.js:31:  // 1: (data) => { ... return { ...data, _version: 2 }; }
+src/utils/dataMigration.js:35: * Detect the version of a data object.
+src/utils/dataMigration.js:36: * - Has _version field → use it
+src/utils/dataMigration.js:37: * - Has chapter keys but no _version → version 0 (legacy)
+src/utils/dataMigration.js:38: * - Empty object → version 0 (fresh install)
+src/utils/dataMigration.js:41:  if (data && typeof data._version === 'number') {
+src/utils/dataMigration.js:42:    return data._version;
+src/utils/dataMigration.js:48: * Run all necessary migrations to bring data to CURRENT_DATA_VERSION.
+src/utils/dataMigration.js:49: * Returns { data, migrated, fromVersion, toVersion, error }.
+src/utils/dataMigration.js:53:export function migrateData(rawData) {
+src/utils/dataMigration.js:57:  let version = fromVersion;
+src/utils/dataMigration.js:59:  // Already current — no migration needed
+src/utils/dataMigration.js:60:  if (version >= CURRENT_DATA_VERSION) {
+src/utils/dataMigration.js:61:    return { data: current, migrated: false, fromVersion, toVersion: version, error: null };
+src/utils/dataMigration.js:64:  // Snapshot pre-migration data for safety
+src/utils/dataMigration.js:67:    localStorage.setItem('or5_data_premigration', snapshot);
+src/utils/dataMigration.js:69:    // If we can't even snapshot, don't risk migration
+src/utils/dataMigration.js:70:    console.error('[migration] Cannot create safety snapshot:', e.message);
+src/utils/dataMigration.js:71:    return { data: input, migrated: false, fromVersion, toVersion: version, error: 'snapshot_failed' };
+src/utils/dataMigration.js:74:  // Run migrations sequentially
+src/utils/dataMigration.js:76:    while (version < CURRENT_DATA_VERSION) {
+src/utils/dataMigration.js:77:      const migrationFn = migrations[version];
+src/utils/dataMigration.js:78:      if (!migrationFn) {
+src/utils/dataMigration.js:79:        console.error('[migration] No migration found for version', version);
+src/utils/dataMigration.js:80:        return { data: input, migrated: false, fromVersion, toVersion: version, error: 'missing_migration_v' + version };
+src/utils/dataMigration.js:83:      current = migrationFn(current);
+src/utils/dataMigration.js:84:      version = current._version;
+src/utils/dataMigration.js:86:      console.info('[migration] Migrated v' + (version - 1) + ' → v' + version);
+src/utils/dataMigration.js:89:    console.error('[migration] Migration failed:', e.message);
+src/utils/dataMigration.js:92:      const restored = JSON.parse(localStorage.getItem('or5_data_premigration'));
+src/utils/dataMigration.js:93:      return { data: restored, migrated: false, fromVersion, toVersion: fromVersion, error: 'migration_failed' };
+src/utils/dataMigration.js:95:      return { data: input, migrated: false, fromVersion, toVersion: fromVersion, error: 'migration_failed' };
+src/utils/dataMigration.js:99:  return { data: current, migrated: true, fromVersion, toVersion: version, error: null };
+src/utils/dataMigration.js:104: * Components should never see _version, _migratedAt, etc.
+src/utils/dataMigration.js:112: * Check if a pre-migration backup exists.
+src/utils/dataMigration.js:113: * Useful for a future "restore previous version" feature.
+src/utils/dataMigration.js:116:  return localStorage.getItem('or5_data_premigration') !== null;
+src/utils/docReminders.js:10:  try { return JSON.parse(localStorage.getItem(REMINDERS_KEY) || '[]'); }
+src/utils/docReminders.js:15:  localStorage.setItem(REMINDERS_KEY, JSON.stringify(reminders));
+src/utils/dataValidation.js:2:// Lightweight shape-checks for localStorage data.
+src/utils/dataValidation.js:24: * Expected: { _version: number, _migratedAt: string, basis: {}, wohnen: {}, ... }
+src/utils/dataValidation.js:25: * Legacy (v0): { basis: {}, wohnen: {}, ... } without _version
+src/utils/dataValidation.js:34:  if (data._version !== undefined && typeof data._version !== 'number') {
+src/utils/dataValidation.js:35:    errors.push('_version is not a number');
+src/utils/dataValidation.js:38:  if (data._migratedAt !== undefined && !isISODate(data._migratedAt)) {
+src/utils/dataValidation.js:39:    errors.push('_migratedAt is not a valid ISO date');
+src/utils/dataValidation.js:49:  const allowedKeys = [...CHAPTER_KEYS, '_version', '_migratedAt', 'schulden', 'betreibung', 'verlustscheine', 'organStatus', 'organDonation', 'finanzen'];
+src/utils/dataValidation.js:56:      // Don't strip unknown keys — they may be from future versions
+src/utils/dataValidation.js:159:  if (!payload.version || !isString(payload.version)) {
+src/utils/dataValidation.js:160:    errors.push('Missing or invalid "version" field');
+src/utils/autoBackup.js:22:    const request = indexedDB.open(BACKUP_DB_NAME, BACKUP_DB_VERSION);
+src/utils/autoBackup.js:43:    const last = localStorage.getItem(BACKUP_TIMESTAMP_KEY);
+src/utils/autoBackup.js:54: * Reads or5_data and or5_docs from localStorage, stores as a single snapshot.
+src/utils/autoBackup.js:63:    const data = localStorage.getItem('or5_data');
+src/utils/autoBackup.js:64:    const docs = localStorage.getItem('or5_docs');
+src/utils/autoBackup.js:65:    const reminders = localStorage.getItem('or5_reminders');
+src/utils/autoBackup.js:92:    localStorage.setItem(BACKUP_TIMESTAMP_KEY, snapshot.createdAt);
+src/utils/autoBackup.js:176: * Writes snapshot data back to localStorage keys.
+src/utils/autoBackup.js:199:    const currentData = localStorage.getItem('or5_data');
+src/utils/autoBackup.js:201:      localStorage.setItem('or5_data_prerestore', currentData);
+src/utils/autoBackup.js:205:    if (snapshot.data) localStorage.setItem('or5_data', snapshot.data);
+src/utils/autoBackup.js:206:    if (snapshot.docs) localStorage.setItem('or5_docs', snapshot.docs);
+src/utils/autoBackup.js:207:    if (snapshot.reminders) localStorage.setItem('or5_reminders', snapshot.reminders);
+src/utils/notifications.js:75:// Checks localStorage for overdue reminders and shows notification
+src/utils/notifications.js:81:    const reminders = JSON.parse(localStorage.getItem('or5_reminders') || '[]');
+src/utils/notifications.js:105:    return JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
+src/utils/notifications.js:113:    localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+src/utils/storageMonitor.js:1:// ─── localStorage Usage Monitor ─────────────────────────────
+src/utils/storageMonitor.js:3:// localStorage has a ~5MB limit in most browsers.
+src/utils/storageMonitor.js:13: * Calculate total bytes used by all or5_ keys in localStorage.
+src/utils/storageMonitor.js:21:    for (let i = 0; i < localStorage.length; i++) {
+src/utils/storageMonitor.js:22:      const key = localStorage.key(i);
+src/utils/storageMonitor.js:24:      const value = localStorage.getItem(key) || '';
+src/utils/storageMonitor.js:81: * Test if localStorage can accept a write of approximately `bytes` size.
+src/utils/storageMonitor.js:89:    localStorage.setItem(testKey, testValue);
+src/utils/storageMonitor.js:90:    localStorage.removeItem(testKey);
+src/utils/storageMonitor.js:93:    localStorage.removeItem(testKey);
+src/utils/storage.js:7:      localStorage.setItem(key, JSON.stringify(value));
+src/utils/storage.js:17:      const raw = localStorage.getItem(key);
+src/utils/storage.js:27:      localStorage.removeItem(key);
+src/utils/storage.js:37:      localStorage.clear();
+src/utils/storage.js:59:    const request = indexedDB.open(DB_NAME, DB_VERSION);
+src/StorageWarning.jsx:5:// Shows a calm, non-intrusive banner when localStorage usage
+src/main.jsx:9:import { migrateData } from './utils/dataMigration.js';
+src/main.jsx:67:  const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
+src/main.jsx:70:  // ─── Data loading with migration ──────────────────────────
+src/main.jsx:73:      const raw = JSON.parse(localStorage.getItem('or5_data') || '{}');
+src/main.jsx:74:      const result = migrateData(raw);
+src/main.jsx:75:      if (result.migrated) {
+src/main.jsx:76:        localStorage.setItem('or5_data', JSON.stringify(result.data));
+src/main.jsx:77:        console.info('[app] Data migrated v' + result.fromVersion + ' → v' + result.toVersion);
+src/main.jsx:92:      const raw = JSON.parse(localStorage.getItem('or5_docs') || '[]');
+src/main.jsx:168:  useEffect(() => { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); }, [isDarkMode]);
+src/main.jsx:172:      localStorage.setItem('or5_data', JSON.stringify(data));
+src/main.jsx:173:      localStorage.setItem('or5_docs', JSON.stringify(documents));
+src/i18n/index.js:19:    const stored = localStorage.getItem(STORAGE_KEY);
+src/i18n/index.js:21:  } catch (e) { /* localStorage unavailable */ }
+src/i18n/index.js:60:      try { localStorage.setItem(STORAGE_KEY, newLang); } catch (e) { /* */ }
+src/i18n/en.js:801:    title: 'Alpha version',
+src/i18n/en.js:802:    intro: 'This is an early version of Maloja Plana. Some calculations are still being validated. Known limitations:',
+src/i18n/fr.js:801:    intro: 'Ceci est une version préliminaire de Maloja Plana. Certains calculs sont encore en cours de validation. Limitations connues :',
+src/i18n/it.js:802:    intro: 'Questa è una versione preliminare di Maloja Plana. Alcuni calcoli sono ancora in fase di verifica. Limitazioni note:',
+src/CalendarReminders.jsx:8:  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+src/CalendarReminders.jsx:13:  localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
+src/OverdueBanner.jsx:6:// Reads directly from localStorage (same key as CalendarReminders).
+src/OverdueBanner.jsx:11:  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
