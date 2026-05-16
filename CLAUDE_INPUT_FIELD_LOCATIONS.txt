@@ -1,0 +1,155 @@
+src/zipExport.js:9:      email: data.basis?.email,
+src/zipExport.js:10:      phone: data.basis?.phone
+src/zipExport.js:49:   - AHV: ${data.chapters.basis?.ahv || '—'}
+src/zipExport.js:50:   - Telefon: ${data.chapters.basis?.phone || '—'}
+src/zipExport.js:51:   - E-Mail: ${data.chapters.basis?.email || '—'}
+src/KKScanner.jsx:12:    ahv: data?.basis?.ahv || '',
+src/KKScanner.jsx:72:    setKKData({ insurer: '', cardNumber: '', holder: '', ahv: '', franchise: '', model: '' });
+src/KKScanner.jsx:122:        React.createElement('label', { style: { display: 'block', fontSize: '12px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.ahvNumber')),
+src/KKScanner.jsx:123:        React.createElement('input', { type: 'text', value: kkData.ahv, onChange: (e) => handleManualInput('ahv', e.target.value), placeholder: '756.1234.5678.90', style: inputStyle }),
+src/KKScanner.jsx:153:          [t('kkScanner.ahvNumber'), kkData.ahv],
+src/cvGenerator.js:7:      phone: data.basis?.phone || '',
+src/cvGenerator.js:8:      email: data.basis?.email || '',
+src/cvGenerator.js:67:${cvData.header.phone} | ${cvData.header.email}
+src/cvGenerator.js:146:      <div class="contact-item">○ ${cvData.header.phone}</div>
+src/cvGenerator.js:147:      <div class="contact-item">○ ${cvData.header.email}</div>
+src/SozialhilfeView.jsx:90:        el.isAHVIV && React.createElement('div', { style: { fontSize: '11px', color: palette.mid } },
+src/config/constants.js:67:        { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone') },
+src/config/constants.js:68:        { k: 'email', label: fl(t, 'basis', 'email'), type: 'email' },
+src/config/constants.js:69:        { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv') },
+src/config/constants.js:75:        { k: 'ahv_card', label: dl(t, 'basis', 'ahv_card') },
+src/config/constants.js:144:        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency' },
+src/config/constants.js:149:        { k: 'ahv_confirmation', label: dl(t, 'versicherungen', 'ahv_confirmation') },
+src/config/constants.js:233:  basis: ['fullName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus', 'dependents'],
+src/config/constants.js:236:  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'bvgInsurer', 'bvgContribution', 'uvg', 'liabilityInsurance', 'liabilityAmount', 'ahvContribution'],
+src/config/constants.js:249:  ahv: 'https://www.ahv-iv.ch',
+src/config/cantonalData.js:123:  LU: { name: 'Luzern', maxIncome: 54000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, model: 'einkommensabhängig', note: 'Antrag bei AHV-Zweigstelle Gemeinde' },
+src/config/cantonalData.js:134:  SH: { name: 'Schaffhausen', maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, model: 'pauschal', note: 'Antrag bei AHV-Zweigstelle' },
+src/config/cantonalData.js:277:  const ahvRente = Number(data.finanzen?.ahvRente || 0);
+src/config/cantonalData.js:281:  const totalIncome = income + ahvRente + ivRente + bvgRente;
+src/config/cantonalData.js:283:  const isAHVIV = ahvRente > 0 || ivRente > 0;
+src/config/cantonalData.js:286:    eligible: isAHVIV && totalIncome < totalExpenses + 2000,
+src/config/cantonalData.js:287:    isAHVIV,
+src/config/cantonalData.js:290:    note: isAHVIV
+src/config/cantonalData.js:291:      ? 'Möglicher Anspruch auf Ergänzungsleistungen — Antrag bei AHV-Zweigstelle prüfen'
+src/config/cantonalData.js:292:      : 'EL nur für AHV/IV-Bezüger'
+src/ChapterView.jsx:3:  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay
+src/ChapterView.jsx:22:    if (fieldKey.includes('phone')) {
+src/ChapterView.jsx:25:    } else if (fieldKey === 'ahv') {
+src/ChapterView.jsx:26:      const val = validateAHV(value, tr);
+src/ChapterView.jsx:28:    } else if (fieldKey.includes('email')) {
+src/ChapterView.jsx:101:    if (field.type === 'email') {
+src/ChapterView.jsx:105:          type: 'email',
+src/CVGenerator.jsx:24:        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '○ ' + t('cv.phone')),
+src/CVGenerator.jsx:25:        React.createElement('div', { style: { fontWeight: '600', fontSize: '12px' } }, cv.header.phone)
+src/CVGenerator.jsx:51:        React.createElement('div', { style: { color: palette.mid, marginBottom: '12px' } }, cv.header.phone + ' | ' + cv.header.email),
+src/validationUtils.js:3:export const validatePhone = (phone, t) => {
+src/validationUtils.js:4:  const cleaned = phone.replace(/[\s\-\+]/g, '');
+src/validationUtils.js:8:    error: !isValid ? (t ? t('validation.invalidPhone') : 'Invalid phone number (Format: +41 XX XXX XX XX)') : ''
+src/validationUtils.js:12:export const validateAHV = (ahv, t) => {
+src/validationUtils.js:13:  // AHV Format: 756.1234.5678.90
+src/validationUtils.js:15:  const isValid = regex.test(ahv);
+src/validationUtils.js:18:    error: !isValid ? (t ? t('validation.invalidAhv') : 'Invalid AHV number (Format: 756.XXXX.XXXX.XX)') : ''
+src/validationUtils.js:22:export const validateEmail = (email, t) => {
+src/validationUtils.js:24:  const isValid = regex.test(email);
+src/validationUtils.js:27:    error: !isValid ? (t ? t('validation.invalidEmail') : 'Invalid email address') : ''
+src/validationUtils.js:125:export const formatPhoneForDisplay = (phone) => {
+src/validationUtils.js:126:  if (!phone) return '';
+src/validationUtils.js:127:  const cleaned = phone.replace(/[\s\-]/g, '');
+src/validationUtils.js:134:export const formatAHVForDisplay = (ahv) => {
+src/validationUtils.js:135:  if (!ahv) return '';
+src/validationUtils.js:136:  return ahv.replace(/(\d{3})(\d{4})(\d{4})(\d{2})/, '$1.$2.$3.$4');
+src/main.jsx:326:            if (kkData.ahv && !next.basis?.ahv) {
+src/main.jsx:327:              next.basis = { ...next.basis, ahv: kkData.ahv };
+src/BudgetSync.jsx:65:          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + (budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)).toFixed(0))
+src/BudgetSync.jsx:67:        (budget.reference.bvg > 0 || budget.reference.ahv > 0) && React.createElement('div', { style: { fontSize: '10px', color: palette.mid, padding: '2px 0 6px 0', borderBottom: '1px solid ' + palette.border } },
+src/premiumCalc.js:90:      ahv: data.basis?.ahv,
+src/kkScanner.js:104:    ahv: '',
+src/kkScanner.js:121:  // AHV (756.xxxx.xxxx.xx Format)
+src/kkScanner.js:122:  const ahvMatch = text.match(/756[\.\s]\d{4}[\.\s]\d{4}[\.\s]\d{2}/);
+src/kkScanner.js:123:  if (ahvMatch) result.ahv = ahvMatch[0].replace(/\s/g, '.');
+src/kkScanner.js:142:    ahv: kkData.ahv,
+src/kkScanner.js:155:  if (data.ahv && !data.ahv.match(/756[\.\s]\d{4}[\.\s]\d{4}[\.\s]\d{2}/)) {
+src/kkScanner.js:156:    errors.push('AHV-Format ungültig');
+src/PremiumSubsidy.jsx:28:      ahv: data.basis?.ahv || '',
+src/i18n/de.js:114:        phone: 'Telefon',
+src/i18n/de.js:115:        email: 'E-Mail',
+src/i18n/de.js:116:        ahv: 'AHV-Nummer',
+src/i18n/de.js:121:        phone: '+41 XX XXX XX XX',
+src/i18n/de.js:122:        ahv: '756.XXXX.XXXX.XX',
+src/i18n/de.js:125:        ahv: 'Format: 756.1234.5678.90',
+src/i18n/de.js:129:        ahv_card: 'AHV-Ausweis',
+src/i18n/de.js:175:        monthlyIncome: 'Gib deinen Nettolohn ein — nach AHV-, BVG- und Steuerabzügen.',
+src/i18n/de.js:198:        ahvContribution: 'AHV-Beitrag CHF/Jahr',
+src/i18n/de.js:209:        ahv_confirmation: 'AHV-Bestätigung',
+src/i18n/de.js:328:    insuranceBvg: 'BVG / AHV (Referenz)',
+src/i18n/de.js:388:    elOnlyAhvIv: 'EL nur für AHV/IV-Bezüger',
+src/i18n/de.js:397:    step4: 'AHV/BVG-Beiträge werden ggf. übernommen',
+src/i18n/de.js:398:    step5: 'EL-Antrag bei AHV-Zweigstelle prüfen',
+src/i18n/de.js:445:    phone: 'Telefon',
+src/i18n/de.js:531:    ahvNumber: 'AHV-Nummer',
+src/i18n/de.js:578:    invalidAhv: 'Ungültige AHV-Nummer (Format: 756.XXXX.XXXX.XX)',
+src/i18n/de.js:784:    bvgNote: 'BVG/AHV-Beträge werden als Referenzwerte angezeigt, wenn der Nettolohn verwendet wird',
+src/i18n/en.js:116:        phone: 'Phone',
+src/i18n/en.js:117:        email: 'Email',
+src/i18n/en.js:118:        ahv: 'AHV number',
+src/i18n/en.js:123:        phone: '+41 XX XXX XX XX',
+src/i18n/en.js:124:        ahv: '756.XXXX.XXXX.XX',
+src/i18n/en.js:127:        ahv: 'Format: 756.1234.5678.90',
+src/i18n/en.js:131:        ahv_card: 'AHV card',
+src/i18n/en.js:147:        landlordPhone: 'Landlord phone',
+src/i18n/en.js:179:        monthlyIncome: 'Enter your net salary — after AHV, BVG, and tax deductions.',
+src/i18n/en.js:203:        ahvContribution: 'AHV contribution (CHF/year)',
+src/i18n/en.js:214:        ahv_confirmation: 'AHV confirmation',
+src/i18n/en.js:271:        emergencyPhone: 'Emergency phone',
+src/i18n/en.js:277:        doctorPhone: 'Doctor phone',
+src/i18n/en.js:338:    insuranceBvg: 'BVG / AHV (reference)',
+src/i18n/en.js:398:    elOnlyAhvIv: 'EL is only for AHV/IV recipients',
+src/i18n/en.js:407:    step4: 'AHV/BVG contributions may be covered',
+src/i18n/en.js:408:    step5: 'Check EL application at AHV branch office',
+src/i18n/en.js:455:    phone: 'Phone',
+src/i18n/en.js:541:    ahvNumber: 'AHV number',
+src/i18n/en.js:587:    invalidPhone: 'Invalid phone number (Format: +41 XX XXX XX XX)',
+src/i18n/en.js:588:    invalidAhv: 'Invalid AHV number (Format: 756.XXXX.XXXX.XX)',
+src/i18n/en.js:589:    invalidEmail: 'Invalid email address',
+src/i18n/en.js:794:    bvgNote: 'BVG/AHV amounts are shown as reference values when net salary is used',
+src/i18n/fr.js:114:        phone: 'Téléphone',
+src/i18n/fr.js:115:        email: 'E-mail',
+src/i18n/fr.js:116:        ahv: 'Numéro AVS',
+src/i18n/fr.js:121:        phone: '+41 XX XXX XX XX',
+src/i18n/fr.js:122:        ahv: '756.XXXX.XXXX.XX',
+src/i18n/fr.js:125:        ahv: 'Format : 756.1234.5678.90',
+src/i18n/fr.js:129:        ahv_card: 'Carte AVS',
+src/i18n/fr.js:144:        landlordPhone: 'Téléphone du propriétaire',
+src/i18n/fr.js:198:        ahvContribution: 'Cotisation AVS (CHF/an)',
+src/i18n/fr.js:209:        ahv_confirmation: 'Attestation AVS',
+src/i18n/fr.js:247:        representativePhone: 'Téléphone du représentant juridique',
+src/i18n/fr.js:263:        emergencyPhone: 'Téléphone d\'urgence',
+src/i18n/fr.js:269:        doctorPhone: 'Téléphone du médecin',
+src/i18n/fr.js:445:    phone: 'Téléphone',
+src/i18n/fr.js:531:    ahvNumber: 'Numéro AVS',
+src/i18n/fr.js:577:    invalidPhone: 'Numéro de téléphone invalide (Format : +41 XX XXX XX XX)',
+src/i18n/it.js:115:        phone: 'Telefono',
+src/i18n/it.js:116:        email: 'E-mail',
+src/i18n/it.js:117:        ahv: 'Numero AVS',
+src/i18n/it.js:122:        phone: '+41 XX XXX XX XX',
+src/i18n/it.js:123:        ahv: '756.XXXX.XXXX.XX',
+src/i18n/it.js:126:        ahv: 'Formato: 756.1234.5678.90',
+src/i18n/it.js:130:        ahv_card: 'Tessera AVS',
+src/i18n/it.js:199:        ahvContribution: 'Contributo AVS (CHF/anno)',
+src/i18n/it.js:210:        ahv_confirmation: 'Conferma AVS',
+src/i18n/it.js:446:    phone: 'Telefono',
+src/i18n/it.js:532:    ahvNumber: 'Numero AVS',
+src/OrganDonation.jsx:29:      phone: data.basis?.phone || '',
+src/OrganDonation.jsx:33:      ahv: data.basis?.ahv || ''
+src/budgetSync.js:19:  budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
+src/budgetSync.js:22:  // BVG and AHV are already deducted from net salary — keep for reference, exclude from totals
+src/budgetSync.js:23:  const referenceOnly = { bvg: budget.expenses.bvg, ahv: budget.expenses.ahv };
+src/budgetSync.js:25:  delete budget.expenses.ahv;
+src/budgetSync.js:28:  // Calculate totals (without BVG/AHV)
+src/budgetSync.js:45:      insurance: budget.income > 0 ? (((budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)) / budget.income) * 100).toFixed(1) : 0,
+src/budgetSync.js:106:        insurance: budget.expenses.healthInsurance + budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
+src/EmergencyHub.jsx:10:    phone: data.basis?.phone || '',
+src/EmergencyHub.jsx:31:   ${emergencyData.phone}
+src/IconSystem.jsx:319:const _phone = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+src/IconSystem.jsx:400:  phone: _phone,
