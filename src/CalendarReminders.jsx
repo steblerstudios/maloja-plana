@@ -221,7 +221,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
     // Stats
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', marginBottom: '16px' } },
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: view === 'upcoming' ? '2px solid ' + palette.sand : '2px solid ' + palette.border }, onClick: () => setView('upcoming') },
+      React.createElement('button', { type: 'button', 'aria-pressed': view === 'upcoming', style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: view === 'upcoming' ? '2px solid ' + palette.sand : '2px solid ' + palette.border, font: 'inherit' }, onClick: () => setView('upcoming') },
         React.createElement('div', { style: { fontSize: '20px', fontWeight: '700', color: overdue.length > 0 ? palette.rose : palette.sky } }, upcoming.length),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('calendar.upcoming'))
       ),
@@ -229,11 +229,11 @@ export const CalendarReminders = ({ palette, t, data }) => {
         React.createElement('div', { style: { fontSize: '20px', fontWeight: '700', color: palette.rose } }, overdue.length),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('calendar.overdue'))
       ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: view === 'completed' ? '2px solid ' + palette.sand : '2px solid ' + palette.border }, onClick: () => setView('completed') },
+      React.createElement('button', { type: 'button', 'aria-pressed': view === 'completed', style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: view === 'completed' ? '2px solid ' + palette.sand : '2px solid ' + palette.border, font: 'inherit' }, onClick: () => setView('completed') },
         React.createElement('div', { style: { fontSize: '20px', fontWeight: '700', color: palette.sage } }, completed.length),
         React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('calendar.completed'))
       ),
-      React.createElement('div', { style: { padding: '12px', background: view === 'add' ? palette.sand : palette.up, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: '2px solid ' + (view === 'add' ? palette.sand : palette.border) }, onClick: () => setView('add') },
+      React.createElement('button', { type: 'button', 'aria-pressed': view === 'add', style: { padding: '12px', background: view === 'add' ? palette.sand : palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', border: '2px solid ' + (view === 'add' ? palette.sand : palette.border), font: 'inherit' }, onClick: () => setView('add') },
         React.createElement('div', { style: { fontSize: '20px', fontWeight: '700', color: view === 'add' ? '#fff' : palette.text } }, '+'),
         React.createElement('div', { style: { fontSize: '10px', color: view === 'add' ? '#fff' : palette.mid } }, t('calendar.addReminder'))
       )
