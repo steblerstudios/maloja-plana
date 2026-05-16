@@ -68,6 +68,21 @@
 - Network-based telemetry
 - Open-source publication (needs security audit)
 
+## Domain Documentation (2026-05-16)
+
+New product docs added based on real-world Swiss domain feedback. These inform Phases 13-14 but require no code changes now.
+
+- `docs/product/social-protection-system.md` — AHV, BVG, UVG, KTG structural overview
+- `docs/product/employment-and-insurance.md` — employed vs. self-employed insurance landscape
+- `docs/product/retirement-timeline.md` — pre/at/post-retirement planning orientation
+
+Key future features identified:
+- BVG continuity and Freizügigkeitskonto tracking (Phase 14)
+- UVG/KTG insurer and coverage recording (Phase 13)
+- Self-employed insurance checklist (Phase 13-14)
+- Retirement year as life-stage input (Phase 9)
+- Employer questions checklist (Phase 13)
+
 ## Next Phase: 6 — Universal Design Foundation
 
 **Scope**: Pictogram-first flows, simple-language audit, gender-neutral language, calm progress visualization, visual guidance, discrimination-free UX  
