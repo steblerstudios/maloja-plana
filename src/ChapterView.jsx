@@ -11,9 +11,22 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const [uploadExpiry, setUploadExpiry] = useState('');
   const [uploadType, setUploadType] = useState('');
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
+
+  const validateField = (fieldKey, value) => {
+    let error = '';
+    if (fieldKey.includes('phone')) {
+      error = validatePhone(value, tr).error;
+    } else if (fieldKey === 'ahv') {
+      error = validateAHV(value, tr).error;
+    } else if (fieldKey.includes('email')) {
+      error = validateEmail(value, tr).error;
+    }
+    return error;
+  };
 
   const handleFieldChange = (fieldKey, value) => {
     let processedValue = value;
@@ -24,20 +37,15 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
     onUpdate(fieldKey, processedValue);
 
-    let error = '';
-    if (fieldKey.includes('phone')) {
-      const val = validatePhone(processedValue, tr);
-      error = val.error;
-    } else if (fieldKey === 'ahv') {
-      const val = validateAHV(processedValue, tr);
-      error = val.error;
-    } else if (fieldKey.includes('email')) {
-      const val = validateEmail(processedValue, tr);
-      error = val.error;
-    }
+    const error = validateField(fieldKey, processedValue);
+    if (!error) setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+    else if (touched[fieldKey]) setErrors(prev => ({ ...prev, [fieldKey]: error }));
+  };
 
-    if (error) setErrors(prev => ({ ...prev, [fieldKey]: error }));
-    else setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+  const handleFieldBlur = (fieldKey, value) => {
+    setTouched(prev => ({ ...prev, [fieldKey]: true }));
+    const error = validateField(fieldKey, value);
+    setErrors(prev => ({ ...prev, [fieldKey]: error }));
   };
 
   const handleEmailBlur = (fieldKey, value) => {
@@ -94,6 +102,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           type: 'text',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
+          onBlur: (e) => handleFieldBlur(field.k, e.target.value),
           placeholder: field.placeholder || '',
           style: inputStyle
         }),
@@ -110,7 +119,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           type: 'tel',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
-          onBlur: (e) => handlePhoneBlur(field.k, e.target.value),
+          onBlur: (e) => { handlePhoneBlur(field.k, e.target.value); handleFieldBlur(field.k, e.target.value); },
           placeholder: '+41 XX XXX XX XX',
           style: inputStyle
         }),
@@ -126,7 +135,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           type: 'email',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
-          onBlur: (e) => handleEmailBlur(field.k, e.target.value),
+          onBlur: (e) => { handleEmailBlur(field.k, e.target.value); handleFieldBlur(field.k, e.target.value); },
           placeholder: 'name@example.com',
           style: inputStyle
         }),
