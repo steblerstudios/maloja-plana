@@ -18,12 +18,12 @@
 
 ## Important
 
-### KI-003: AHV Number Duplication
-- **Location**: `src/config/constants.js` (basis.ahv), `src/KKScanner.jsx` (form state)
-- **Description**: AHV number stored at `basis.ahv` but also requested in KK Scanner. Scanner form data is component state (lost on navigation). Only `kkInsurer` is written back.
-- **Impact**: User enters AHV twice; scanner copy is ephemeral.
-- **Workaround**: None needed currently — scanner AHV is not persisted.
-- **Fix**: Phase 7 or 14 (auto-fill from existing data)
+### KI-003: AHV Number Duplication — PARTIALLY RESOLVED
+- **Location**: `src/KKScanner.jsx`, `src/main.jsx`
+- **Description**: KK Scanner duplicated entry for AHV, franchise, insurer, card number, and model. Only insurer was persisted; all other scanner fields were lost on navigation.
+- **Resolution**: Scanner now autofills from canonical chapter data and persists all fields back on save. AHV writes to `basis.ahv` only if empty (privacy rule). Commit `ae1184f`.
+- **Remaining**: Conflict warnings when scanned values differ from existing data, AHV display masking (future Slice C).
+- **Status**: Partially fixed (2026-05-16)
 
 ### KI-004: Hardcoded German in cantonalData.js
 - **Location**: `src/config/cantonalData.js`
