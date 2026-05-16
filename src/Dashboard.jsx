@@ -46,11 +46,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
-    if (!chapter) return 0;
+    if (!chapter) return { pct: 0, filled: 0, total: 0 };
     const chapterData = data[chapterKey] || {};
     let filled = 0;
     chapter.fields.forEach(f => { if (chapterData[f.k]) filled++; });
-    return chapter.fields.length > 0 ? Math.round((filled / chapter.fields.length) * 100) : 0;
+    const total = chapter.fields.length;
+    return { pct: total > 0 ? Math.round((filled / total) * 100) : 0, filled, total };
   };
 
   const getStatusColor = (pct) => {
@@ -124,7 +125,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '10px' } },
         chapters.map((ch, idx) => {
-          const pct = calculateChapterCompletion(ch.key);
+          const { pct, filled, total } = calculateChapterCompletion(ch.key);
           const statusColor = getStatusColor(pct);
           const iconKey = chapterIcons[ch.key];
           const IconFn = iconKey && Icons[iconKey];
@@ -162,14 +163,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             // Text
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
               React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
-              React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4 } }, ch.description)
+              React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4 } }, ch.description),
+              React.createElement('div', { style: { fontSize: '11px', color: pct === 0 ? palette.soft : palette.mid, marginTop: '4px', fontWeight: '500' } }, t('dashboard.fieldsCount', { filled, total }))
             ),
 
             // Completion indicator — minimal circle
             React.createElement('div', {
               style: { width: '36px', height: '36px', position: 'relative', flexShrink: 0 }
             },
-              // Background circle
               React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 36 36' },
                 React.createElement('circle', { cx: '18', cy: '18', r: '15', fill: 'none', stroke: palette.up, strokeWidth: '2.5' }),
                 React.createElement('circle', {
@@ -182,7 +183,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   style: { transition: 'stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1)' },
                 })
               ),
-              // Percentage text
               React.createElement('div', {
                 style: {
                   position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
