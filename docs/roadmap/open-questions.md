@@ -1,0 +1,7 @@
+- Wie soll household logic funktionieren?
+- Wie tief sollen Sozialhilfe-Regeln gehen?
+- Welche Daten müssen verschlüsselt werden?
+- Soll Romansh vollständig oder teilweise unterstützt werden?
+- Wie visualisieren wir das Spinnennetz ruhig?
+- Welche Dokumente sind offiziell generierbar?
+- Welche Daten dürfen niemals exportiert werden?
