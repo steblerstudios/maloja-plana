@@ -327,7 +327,8 @@ export default {
     sortByExpiry: 'Trier par expiration',
     sortByUpload: 'Trier par date d\'importation',
     sortByName: 'Trier par nom (A-Z)',
-    noDocuments: 'Aucun document',
+    noDocuments: 'Pas encore de documents',
+    noDocumentsHint: 'Importez votre premier document dans un chapitre pour le voir ici.',
     expired: 'Expiré !',
     expiryDate: 'Expire : {date}',
     uploadedInfo: 'Importé : {date} - Taille : {size}',
@@ -587,7 +588,8 @@ export default {
 
   charts: {
     title: 'Graphiques',
-    noData: 'Aucune donnée disponible. Remplissez d\'abord les informations de vos chapitres.',
+    noData: 'Pas encore de graphiques',
+    noDataHint: 'Renseignez vos revenus et dépenses dans les chapitres pour voir les graphiques ici.',
   },
 
   validation: {
