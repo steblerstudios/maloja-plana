@@ -1,31 +1,25 @@
-import type { AuditEvent, WorkflowDefinition } from "../types";
+import type { WorkflowDefinition } from "../types";
 
 export class InMemoryRuntimeStore {
-  private workflows = new Map<string, WorkflowDefinition>();
-  private auditEvents: AuditEvent[] = [];
+  private readonly workflows = new Map<string, WorkflowDefinition>();
 
-  saveWorkflow(workflow: WorkflowDefinition): void {
+  async save(workflow: WorkflowDefinition): Promise<void> {
     this.workflows.set(workflow.id, workflow);
   }
 
-  getWorkflow(id: string): WorkflowDefinition | undefined {
-    return this.workflows.get(id);
+  async get(workflowId: string): Promise<WorkflowDefinition | undefined> {
+    return this.workflows.get(workflowId);
   }
 
-  listWorkflows(): WorkflowDefinition[] {
+  async list(): Promise<WorkflowDefinition[]> {
     return Array.from(this.workflows.values());
   }
 
-  appendAuditEvent(event: AuditEvent): void {
-    this.auditEvents.push(event);
-  }
-
-  listAuditEvents(): AuditEvent[] {
-    return [...this.auditEvents];
+  async delete(workflowId: string): Promise<void> {
+    this.workflows.delete(workflowId);
   }
 
   clear(): void {
     this.workflows.clear();
-    this.auditEvents = [];
   }
 }
