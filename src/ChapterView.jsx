@@ -196,11 +196,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     return null;
   };
 
+  const filledCount = chapter.fields.filter(f => data[f.k]).length;
+  const introText = tr('chapters.' + chapter.key + '.intro');
+  const hasIntro = introText && introText !== 'chapters.' + chapter.key + '.intro';
+
   return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     // Header
     React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
-      React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, chapter.description)
+      React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: '13px', color: palette.mid, marginTop: '8px', fontStyle: 'italic' } }, introText)
     ),
 
     // Tabs
@@ -235,6 +240,10 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
+      filledCount === 0 && React.createElement('div', { style: { padding: '24px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center', marginBottom: '20px' } },
+        React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
+        React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
+      ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' } },
         chapter.fields.map(field => renderField(field))
       )

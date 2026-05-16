@@ -105,6 +105,7 @@ export default {
     basis: {
       title: 'Dati personali',
       description: 'La tua identità e le informazioni di contatto',
+      intro: 'I tuoi dati personali sono la base. Inizia con nome e cantone — tutto il resto può aspettare.',
       icon: '◎',
       fields: {
         fullName: 'Nome completo',
@@ -133,6 +134,7 @@ export default {
     wohnen: {
       title: 'Abitazione',
       description: 'La tua casa, l\'affitto e la situazione abitativa',
+      intro: 'Tutto sulla tua situazione abitativa. Utile per la dichiarazione fiscale, le assicurazioni e le richieste di sostegno.',
       icon: '⌂',
       fields: {
         address: 'Via e numero civico',
@@ -157,6 +159,7 @@ export default {
     finanzen: {
       title: 'Finanze',
       description: 'Il tuo reddito, i risparmi e i dati bancari',
+      intro: 'Un quadro chiaro della tua situazione finanziaria. Utile per il budget, le tasse e le richieste di sostegno.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
@@ -184,6 +187,7 @@ export default {
     versicherungen: {
       title: 'Assicurazioni',
       description: 'Cassa malati, previdenza e coperture',
+      intro: 'I dettagli delle tue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.',
       icon: '◰',
       fields: {
         kkInsurer: 'Cassa malati',
@@ -213,6 +217,7 @@ export default {
     ausbildung: {
       title: 'Formazione e lavoro',
       description: 'Le tue qualifiche e il tuo impiego',
+      intro: 'La tua formazione e la tua esperienza professionale. Utile per il CV, le candidature e i permessi di lavoro.',
       icon: '✦',
       fields: {
         schoolName: 'Scuola / Università',
@@ -235,6 +240,7 @@ export default {
     behoerden: {
       title: 'Autorità e aspetti legali',
       description: 'Imposte, questioni legali e documenti ufficiali',
+      intro: 'I tuoi contatti con le autorità e le questioni legali. Tiene insieme scadenze importanti e referenti.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Cantone fiscale',
@@ -258,6 +264,7 @@ export default {
     notfall: {
       title: 'Emergenza',
       description: 'Contatti di emergenza, informazioni mediche',
+      intro: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per te e la tua famiglia.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Persona di contatto in caso di emergenza',
@@ -300,6 +307,8 @@ export default {
     selectExpiry: 'Inserisci la data di scadenza',
     uploadError: 'Errore durante il caricamento',
     hint: 'Nota',
+    emptyState: 'Niente qui per il momento — ed è perfettamente normale.',
+    emptyStateHint: 'Puoi iniziare con poche informazioni. Tutto può essere completato in seguito.',
   },
 
   tresor: {
