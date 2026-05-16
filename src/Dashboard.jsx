@@ -209,7 +209,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
               React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
               React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4 } }, ch.description),
-              React.createElement('div', { style: { fontSize: '11px', color: pct === 0 ? palette.soft : palette.mid, marginTop: '4px', fontWeight: '500' } }, t('dashboard.fieldsCount', { filled, total }))
+              React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px', fontWeight: '500' } }, t('dashboard.fieldsCount', { filled, total }))
             ),
 
             // Completion indicator — minimal circle
@@ -232,7 +232,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 style: {
                   position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '10px', fontWeight: '600', color: pct === 0 ? palette.soft : palette.text,
+                  fontSize: '10px', fontWeight: '600', color: pct === 0 ? palette.mid : palette.text,
                 }
               }, pct)
             )
