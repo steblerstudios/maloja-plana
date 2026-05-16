@@ -2,12 +2,24 @@
 
 export const validatePhone = (phone, t) => {
   if (!phone) return { isValid: true, error: '' };
-  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
-  const isValid = /^(\+41|0041|0)\d{9,10}$/.test(cleaned);
+  const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
+  const isValid = /^(\+41\d{9}|0041\d{9}|0\d{9})$/.test(cleaned);
   return {
     isValid,
     error: !isValid ? (t ? t('validation.invalidPhone') : 'Invalid phone number (Format: +41 XX XXX XX XX)') : ''
   };
+};
+
+export const formatPhoneOnBlur = (phone) => {
+  if (!phone) return '';
+  const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
+  let digits;
+  if (cleaned.startsWith('+41')) digits = cleaned.slice(3);
+  else if (cleaned.startsWith('0041')) digits = cleaned.slice(4);
+  else if (cleaned.startsWith('0')) digits = cleaned.slice(1);
+  else return phone;
+  if (digits.length !== 9) return phone;
+  return '+41 ' + digits.slice(0, 2) + ' ' + digits.slice(2, 5) + ' ' + digits.slice(5, 7) + ' ' + digits.slice(7, 9);
 };
 
 export const validateAHV = (ahv, t) => {
@@ -140,11 +152,7 @@ export const getConditionalFields = (chapter, fieldKey, value) => {
 // Formatting for display
 export const formatPhoneForDisplay = (phone) => {
   if (!phone) return '';
-  const cleaned = phone.replace(/[\s\-]/g, '');
-  if (cleaned.startsWith('0')) {
-    return cleaned.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
-  }
-  return cleaned.replace(/(\+41)(\d{1})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4 $5');
+  return formatPhoneOnBlur(phone) || phone;
 };
 
 export const formatAHVForDisplay = (ahv) => {
