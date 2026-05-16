@@ -135,3 +135,21 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 - **Severity**: Important
 - **Status**: Documented ([social-protection-system.md](../product/social-protection-system.md))
 - **Phase**: 13 (Swiss Protection Logic)
+
+### F-014: Canton Names Should Be Written Out Fully
+- **Date**: 2026-05-16
+- **Source**: Jana (alpha tester)
+- **Category**: UX / Clarity
+- **Feedback**: Canton dropdowns show abbreviations ("BS", "ZH") instead of full names ("Basel-Stadt", "Zürich"). Reduces clarity and trust for users unfamiliar with Swiss canton codes.
+- **Severity**: Nice-to-have
+- **Status**: Fixed (2026-05-16, commit `1374af9`) — canton dropdowns in Basis, Behörden, and Onboarding now show full names. Stored values remain abbreviations.
+- **Phase**: Resolved
+
+### F-015: Onboarding Language Selector Inconsistent Flags
+- **Date**: 2026-05-16
+- **Source**: Silvan (alpha tester)
+- **Category**: UX / Visual Consistency
+- **Feedback**: In the onboarding language selection, DE/FR/IT had a Swiss cross emoji but EN had a UK flag. Felt inconsistent and unprofessional.
+- **Severity**: Nice-to-have
+- **Status**: Fixed (2026-05-16, commit `1374af9`) — all flag emojis removed, language buttons now show clean text-only labels.
+- **Phase**: Resolved
