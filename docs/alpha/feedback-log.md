@@ -79,8 +79,8 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 - **Category**: Data Architecture
 - **Feedback**: AHV number entered in Basis chapter and KK Scanner separately. Scanner form data lost on navigation.
 - **Severity**: Important
-- **Status**: Planned
-- **Phase**: 7 or 14
+- **Status**: Partially fixed (2026-05-16, commit `ae1184f`) — autofill + persist done; conflict warnings pending
+- **Phase**: Resolved ahead of Phase 7/14 (Slice C remaining)
 
 ### F-008: Hardcoded German in Calculations
 - **Date**: 2026-05
