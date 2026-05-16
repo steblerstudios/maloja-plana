@@ -194,7 +194,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
         ),
         React.createElement('div', { style: { display: 'flex', gap: '4px', flexShrink: 0 } },
           React.createElement('button', {
-            'aria-label': r.done ? t('calendar.undo') || 'Undo' : t('calendar.complete') || 'Complete',
+            'aria-label': r.done ? t('calendar.undo') : t('calendar.markDone'),
             onClick: () => toggleDone(r.id),
             style: {
               padding: '6px 10px', background: r.done ? palette.gold : palette.sage,
