@@ -128,9 +128,9 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('label', { style: { display: 'block', fontSize: '12px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.model')),
         React.createElement('select', { value: kkData.model, onChange: (e) => handleManualInput('model', e.target.value), style: inputStyle },
           React.createElement('option', { value: '' }, t('common.select')),
-          React.createElement('option', { value: 'Basic' }, 'Basic'),
-          React.createElement('option', { value: 'Standard' }, 'Standard'),
-          React.createElement('option', { value: 'Comfort' }, 'Comfort')
+          React.createElement('option', { value: 'Basic' }, t('chapters.versicherungen.fields.kkModel.options.basic')),
+          React.createElement('option', { value: 'Standard' }, t('chapters.versicherungen.fields.kkModel.options.standard')),
+          React.createElement('option', { value: 'Comfort' }, t('chapters.versicherungen.fields.kkModel.options.comfort'))
         )
       ),
 
