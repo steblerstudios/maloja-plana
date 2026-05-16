@@ -29,4 +29,3 @@ export class InMemoryRuntimeStore {
     this.workflows.clear();
   }
 }
-
