@@ -138,6 +138,26 @@ Rx ${t('emergency.medications')}:
         React.createElement('div', null, '✓ ' + t('emergency.tips.blood')),
         React.createElement('div', null, '✓ ' + t('emergency.tips.allergies'))
       )
+    ),
+
+    // Vorsorge documents
+    React.createElement('div', { style: { marginTop: '16px', padding: '16px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border } },
+      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '6px' } }, '○ ' + t('emergency.vorsorge.title')),
+      React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '12px' } }, t('emergency.vorsorge.intro')),
+      React.createElement('div', { style: { display: 'grid', gap: '10px' } },
+        [
+          { key: 'patientenverfuegung', title: t('emergency.vorsorge.patientenverfuegung'), desc: t('emergency.vorsorge.patientenverfuegungDesc') },
+          { key: 'vorsorgeauftrag', title: t('emergency.vorsorge.vorsorgeauftrag'), desc: t('emergency.vorsorge.vorsorgeauftragDesc') },
+          { key: 'bestattungswuensche', title: t('emergency.vorsorge.bestattungswuensche'), desc: t('emergency.vorsorge.bestattungswuenscheDesc') },
+        ].map(item => React.createElement('div', { key: item.key, style: { padding: '10px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' } },
+            React.createElement('div', { style: { fontSize: '12px', fontWeight: '600' } }, item.title),
+            React.createElement('div', { style: { fontSize: '10px', padding: '2px 8px', borderRadius: '4px', background: data.notfall?.[item.key] === 'yes' ? palette.sage + '33' : palette.up, color: data.notfall?.[item.key] === 'yes' ? palette.sage : palette.mid } },
+              data.notfall?.[item.key] === 'yes' ? t('emergency.vorsorge.statusYes') : t('emergency.vorsorge.statusNo'))
+          ),
+          React.createElement('div', { style: { fontSize: '11px', color: palette.mid } }, item.desc)
+        ))
+      )
     )
   );
 };

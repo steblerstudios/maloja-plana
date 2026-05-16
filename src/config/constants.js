@@ -209,6 +209,9 @@ export function getChapters(t) {
         { k: 'doctorPhone', label: fl(t, 'notfall', 'doctorPhone'), type: 'tel' },
         { k: 'hospital', label: fl(t, 'notfall', 'hospital'), type: 'text' },
         { k: 'organDonor', label: fl(t, 'notfall', 'organDonor'), type: 'select', options: opts(t, 'notfall', 'organDonor') },
+        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung') },
+        { k: 'vorsorgeauftrag', label: fl(t, 'notfall', 'vorsorgeauftrag'), type: 'select', options: opts(t, 'notfall', 'vorsorgeauftrag'), hint: hn(t, 'notfall', 'vorsorgeauftrag') },
+        { k: 'bestattungswuensche', label: fl(t, 'notfall', 'bestattungswuensche'), type: 'select', options: opts(t, 'notfall', 'bestattungswuensche'), hint: hn(t, 'notfall', 'bestattungswuensche') },
       ],
       docs: [
         { k: 'advance_directive', label: dl(t, 'notfall', 'advance_directive') },

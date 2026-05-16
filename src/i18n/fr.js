@@ -269,6 +269,14 @@ export default {
         doctorPhone: 'Téléphone du médecin',
         hospital: 'Hôpital préféré',
         organDonor: { label: 'Donneur d\'organes inscrit ?', options: { yes: 'Oui', no: 'Non', declined: 'Refusé' } },
+        patientenverfuegung: { label: 'Directives anticipées ?', options: { yes: 'Oui', no: 'Pas encore' } },
+        vorsorgeauftrag: { label: 'Mandat pour cause d\'inaptitude ?', options: { yes: 'Oui', no: 'Pas encore' } },
+        bestattungswuensche: { label: 'Souhaits funéraires consignés ?', options: { yes: 'Oui', no: 'Pas encore' } },
+      },
+      hints: {
+        patientenverfuegung: 'Instructions pour le traitement médical si vous ne pouvez pas communiquer. Code civil suisse art. 370-373.',
+        vorsorgeauftrag: 'Désigne une personne de confiance pour agir en votre nom en cas d\'incapacité. Doit être enregistré auprès de la commune.',
+        bestattungswuensche: 'Vos souhaits personnels concernant l\'inhumation ou la crémation. Non contraignant juridiquement, mais important pour la famille.',
       },
       docs: {
         advance_directive: 'Directives anticipées',
@@ -475,6 +483,18 @@ export default {
       contact: 'Gardez le contact d\'urgence facilement accessible',
       blood: 'Connaissez et communiquez votre groupe sanguin',
       allergies: 'Documentez vos allergies et médicaments',
+    },
+    vorsorge: {
+      title: 'Documents de prévoyance',
+      intro: 'Ces documents juridiques suisses protègent vous et votre famille. Rien ne presse — vous pouvez les créer à tout moment.',
+      patientenverfuegung: 'Directives anticipées',
+      patientenverfuegungDesc: 'Instructions pour le traitement médical si vous ne pouvez pas exprimer vos souhaits.',
+      vorsorgeauftrag: 'Mandat pour cause d\'inaptitude',
+      vorsorgeauftragDesc: 'Désigne une personne de confiance pour agir en votre nom en cas d\'incapacité.',
+      bestattungswuensche: 'Souhaits funéraires',
+      bestattungswuenscheDesc: 'Vos souhaits personnels concernant l\'inhumation ou la crémation.',
+      statusYes: 'Créé',
+      statusNo: 'Pas encore créé',
     },
   },
 
