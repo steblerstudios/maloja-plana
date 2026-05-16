@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail
+  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 
@@ -44,6 +44,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     const normalized = normalizeEmail(value);
     if (normalized !== value) {
       onUpdate(fieldKey, normalized);
+    }
+  };
+
+  const handlePhoneBlur = (fieldKey, value) => {
+    const formatted = formatPhoneOnBlur(value);
+    if (formatted && formatted !== value) {
+      onUpdate(fieldKey, formatted);
     }
   };
 
@@ -103,6 +110,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           type: 'tel',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
+          onBlur: (e) => handlePhoneBlur(field.k, e.target.value),
           placeholder: '+41 XX XXX XX XX',
           style: inputStyle
         }),
