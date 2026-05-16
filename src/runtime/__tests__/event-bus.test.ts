@@ -17,3 +17,18 @@ describe("RuntimeEventBus", () => {
     expect(received).toEqual([event]);
   });
 });
+type RuntimeEventHandler = (event: unknown) => void;
+
+export class RuntimeEventBus {
+  private readonly handlers: RuntimeEventHandler[] = [];
+
+  subscribe(handler: RuntimeEventHandler): void {
+    this.handlers.push(handler);
+  }
+
+  publish(event: unknown): void {
+    for (const handler of this.handlers) {
+      handler(event);
+    }
+  }
+}
