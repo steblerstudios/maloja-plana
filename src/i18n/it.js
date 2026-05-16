@@ -328,7 +328,8 @@ export default {
     sortByExpiry: 'Ordina per scadenza',
     sortByUpload: 'Ordina per data di caricamento',
     sortByName: 'Ordina per nome (A-Z)',
-    noDocuments: 'Nessun documento',
+    noDocuments: 'Nessun documento ancora',
+    noDocumentsHint: 'Carica il tuo primo documento in un capitolo per vederlo qui.',
     expired: 'Scaduto!',
     expiryDate: 'Scade il: {date}',
     uploadedInfo: 'Caricato il: {date} - Dimensione: {size}',
@@ -588,7 +589,8 @@ export default {
 
   charts: {
     title: 'Grafici',
-    noData: 'Nessun dato disponibile. Compila prima le informazioni nei capitoli.',
+    noData: 'Nessun grafico ancora',
+    noDataHint: 'Inserisci entrate e uscite nei capitoli per vedere i grafici qui.',
   },
 
   validation: {

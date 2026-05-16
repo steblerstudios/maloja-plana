@@ -328,7 +328,8 @@ export default {
     sortByExpiry: 'Sort by expiry',
     sortByUpload: 'Sort by upload date',
     sortByName: 'Sort by name (A-Z)',
-    noDocuments: 'No documents',
+    noDocuments: 'No documents yet',
+    noDocumentsHint: 'Upload your first document in any chapter to see it here.',
     expired: 'Expired!',
     expiryDate: 'Expires: {date}',
     uploadedInfo: 'Uploaded: {date} - Size: {size}',
@@ -588,7 +589,8 @@ export default {
 
   charts: {
     title: 'Charts',
-    noData: 'No data available. Fill in your chapter information first.',
+    noData: 'No charts yet',
+    noDataHint: 'Fill in your income and expenses in the chapters to see charts here.',
   },
 
   validation: {
