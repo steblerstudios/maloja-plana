@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay
+  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 
@@ -16,22 +16,35 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const tr = t || ((k) => k);
 
   const handleFieldChange = (fieldKey, value) => {
-    onUpdate(fieldKey, value);
+    let processedValue = value;
+
+    if (fieldKey === 'ahv') {
+      processedValue = formatAHVOnInput(value);
+    }
+
+    onUpdate(fieldKey, processedValue);
 
     let error = '';
     if (fieldKey.includes('phone')) {
-      const val = validatePhone(value, tr);
+      const val = validatePhone(processedValue, tr);
       error = val.error;
     } else if (fieldKey === 'ahv') {
-      const val = validateAHV(value, tr);
+      const val = validateAHV(processedValue, tr);
       error = val.error;
     } else if (fieldKey.includes('email')) {
-      const val = validateEmail(value, tr);
+      const val = validateEmail(processedValue, tr);
       error = val.error;
     }
 
     if (error) setErrors(prev => ({ ...prev, [fieldKey]: error }));
     else setErrors(prev => ({ ...prev, [fieldKey]: '' }));
+  };
+
+  const handleEmailBlur = (fieldKey, value) => {
+    const normalized = normalizeEmail(value);
+    if (normalized !== value) {
+      onUpdate(fieldKey, normalized);
+    }
   };
 
   const renderField = (field) => {
@@ -105,6 +118,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           type: 'email',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
+          onBlur: (e) => handleEmailBlur(field.k, e.target.value),
           placeholder: 'name@example.com',
           style: inputStyle
         }),
@@ -117,8 +131,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
       return React.createElement('div', { key: field.k, style: baseStyle },
         React.createElement('label', { style: labelStyle }, field.label),
         React.createElement('input', {
+          key: field.k + '_' + (value || 'empty'),
           type: 'date',
-          value: value,
+          value: value || '',
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           style: inputStyle
         })

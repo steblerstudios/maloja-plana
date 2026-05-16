@@ -1,8 +1,9 @@
 // Swiss validation functions — i18n-aware
 
 export const validatePhone = (phone, t) => {
-  const cleaned = phone.replace(/[\s\-\+]/g, '');
-  const isValid = /^(\+41|0)[0-9]{9,10}$/.test(cleaned);
+  if (!phone) return { isValid: true, error: '' };
+  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  const isValid = /^(\+41|0041|0)\d{9,10}$/.test(cleaned);
   return {
     isValid,
     error: !isValid ? (t ? t('validation.invalidPhone') : 'Invalid phone number (Format: +41 XX XXX XX XX)') : ''
@@ -10,7 +11,7 @@ export const validatePhone = (phone, t) => {
 };
 
 export const validateAHV = (ahv, t) => {
-  // AHV Format: 756.1234.5678.90
+  if (!ahv) return { isValid: true, error: '' };
   const regex = /^756\.\d{4}\.\d{4}\.\d{2}$/;
   const isValid = regex.test(ahv);
   return {
@@ -19,13 +20,28 @@ export const validateAHV = (ahv, t) => {
   };
 };
 
+export const formatAHVOnInput = (raw) => {
+  const digits = raw.replace(/\D/g, '').slice(0, 13);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 7) return digits.slice(0, 3) + '.' + digits.slice(3);
+  if (digits.length <= 11) return digits.slice(0, 3) + '.' + digits.slice(3, 7) + '.' + digits.slice(7);
+  return digits.slice(0, 3) + '.' + digits.slice(3, 7) + '.' + digits.slice(7, 11) + '.' + digits.slice(11);
+};
+
 export const validateEmail = (email, t) => {
+  if (!email) return { isValid: true, error: '' };
+  const normalized = email.trim().toLowerCase();
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const isValid = regex.test(email);
+  const isValid = regex.test(normalized);
   return {
     isValid,
     error: !isValid ? (t ? t('validation.invalidEmail') : 'Invalid email address') : ''
   };
+};
+
+export const normalizeEmail = (email) => {
+  if (!email) return '';
+  return email.trim().toLowerCase();
 };
 
 export const validatePostalCode = (code, country = 'CH', t) => {
