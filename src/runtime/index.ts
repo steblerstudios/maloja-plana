@@ -8,3 +8,4 @@ export * from "./persistence/in-memory-runtime-store";
 export * from "./approvals/approval-gate";
 export * from "./state/runtime-state-machine";
 export * from "./events/runtime-events";
+export * from "./execution/runtime-execution-engine";
