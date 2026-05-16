@@ -331,9 +331,9 @@ export const CalendarReminders = ({ palette, t, data }) => {
     // Upcoming view
     view === 'upcoming' && React.createElement('div', null,
       upcoming.length === 0
-        ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid, fontSize: '13px' } },
-            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'calendar', size: 32 })),
-            t('calendar.noReminders')
+        ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
+            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'calendar', size: 28 })),
+            React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, t('calendar.noReminders'))
           )
         : React.createElement('div', null,
             // Overdue section
