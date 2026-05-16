@@ -60,10 +60,16 @@ household[].retirement = {
 }
 ```
 
+## Related Documents
+
+- [Social Protection System](social-protection-system.md) — AHV, BVG, UVG, KTG structural overview
+- [Employment & Insurance](employment-and-insurance.md) — how employment status determines coverage
+- [Retirement Timeline](retirement-timeline.md) — pre/at/post-retirement planning orientation
+
 ## Implementation Timeline
 
 | Phase | Scope |
 |-------|-------|
-| Phase 9 | Retirement flag in household model |
+| Phase 9 | Retirement flag in household model; retirement year as life-stage input |
 | Phase 13 | EL eligibility orientation, pension-aware budget |
-| Phase 14 | Full retirement flow with all three pillars |
+| Phase 14 | Full retirement flow with all three pillars, BVG continuity, Freizügigkeitskonto tracking |
