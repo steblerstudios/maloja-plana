@@ -26,3 +26,15 @@ export class InMemoryRuntimeStore {
 async findByWorkflowId(workflowId: string) {
   return this.states.get(workflowId);
 }
+export class InMemoryRuntimeStore {
+  private states = new Map<string, unknown>();
+
+  async save(state: { workflowId: string }) {
+    this.states.set(state.workflowId, state);
+  }
+
+  async findByWorkflowId(workflowId: string) {
+    return this.states.get(workflowId);
+  }
+}
+
