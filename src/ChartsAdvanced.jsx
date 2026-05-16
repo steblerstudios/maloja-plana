@@ -81,6 +81,19 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   const income = Number(data?.finanzen?.monthlyIncome || 0);
   const remaining = Math.max(0, income - rent - insurance);
 
+  const hasData = income > 0 || rent > 0 || insurance > 0;
+
+  if (!hasData) {
+    return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
+      React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
+        React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'finanzen', size: 28 })),
+        React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, t('charts.noData')),
+        React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, t('charts.noDataHint'))
+      )
+    );
+  }
+
   return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
 
