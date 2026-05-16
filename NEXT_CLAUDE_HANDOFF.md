@@ -126,3 +126,14 @@ After work:
 - run npm run build
 - commit with a precise message
 - push dev
+
+After
+- TRUST_FIRST_IMPLEMENTATION_ORDER.md
+- docs/product/field-inventory.md
+- docs/data-model/field-trust-matrix.md
+- docs/architecture/derived-state-map.md
+- docs/architecture/definition-of-done.md
+- docs/ux/ux-severity-map.md
+- docs/research/top-10-user-confusions.md
+- docs/research/reality-coverage-audit.md
+
