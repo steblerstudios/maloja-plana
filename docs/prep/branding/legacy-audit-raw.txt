@@ -1,0 +1,76 @@
+./DEV_WORKFLOW.md:27:curl -s https://ordnung-ruhe-neu.vercel.app/ | grep -o 'index-[^"]*.js'
+./.vercel/project.json:1:{"projectId":"prj_pfvEdNKDqAqR3ao1YwABbyZwsBVq","orgId":"team_3PYUQYdSKcZBT5C6MbxR0olp","projectName":"ordnung-ruhe-neu"}
+./PROJECT_STATUS.md:8:**Live alpha**: https://ordnung-ruhe-neu.vercel.app
+./ROADMAP_NEXT.md:1:# Ordnung & Ruhe – Next Phase
+./.claude/launch.json:5:      "name": "ordnung-ruhe",
+./docs/context/LEGACY_NAMING_AUDIT.txt:1:./DEV_WORKFLOW.md:27:curl -s https://ordnung-ruhe-neu.vercel.app/ | grep -o 'index-[^"]*.js'
+./docs/context/LEGACY_NAMING_AUDIT.txt:2:./.vercel/project.json:1:{"projectId":"prj_pfvEdNKDqAqR3ao1YwABbyZwsBVq","orgId":"team_3PYUQYdSKcZBT5C6MbxR0olp","projectName":"ordnung-ruhe-neu"}
+./docs/context/LEGACY_NAMING_AUDIT.txt:3:./PROJECT_STATUS.md:8:**Live alpha**: https://ordnung-ruhe-neu.vercel.app
+./docs/context/LEGACY_NAMING_AUDIT.txt:4:./ROADMAP_NEXT.md:1:# Ordnung & Ruhe – Next Phase
+./docs/context/LEGACY_NAMING_AUDIT.txt:5:./.claude/launch.json:5:      "name": "ordnung-ruhe",
+./docs/context/LEGACY_NAMING_AUDIT.txt:6:./docs/security/architecture.md:23:│                       │  ordnung-ruhe-docs    │  │
+./docs/context/LEGACY_NAMING_AUDIT.txt:7:./docs/security/architecture.md:24:│                       │  ordnung-ruhe-backups │  │
+./docs/context/LEGACY_NAMING_AUDIT.txt:8:./docs/security/data-flow.md:19:| IndexedDB | binary/JSON | `ordnung-ruhe-documents` | Uploaded document files |
+./docs/context/LEGACY_NAMING_AUDIT.txt:9:./docs/security/data-flow.md:20:| IndexedDB | JSON | `ordnung-ruhe-backups` | Rolling auto-backup snapshots (max 3) |
+./docs/context/LEGACY_NAMING_AUDIT.txt:10:./docs/runtime/workflow-definition-schema.md:5:This document defines the workflow definition schema for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:11:./docs/runtime/validation-rule-schema.md:5:This document defines the validation rule schema for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:12:./docs/runtime/runtime-persistence-model.md:5:This document defines the runtime persistence model for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:13:./docs/runtime/README.md:5:This directory contains the core runtime specification for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:14:./docs/runtime/state-transition-rules.md:5:This document defines allowed workflow state transitions for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:15:./docs/runtime/audit-event-schema.md:5:This document defines the audit event schema for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:16:./docs/runtime/rollback-strategy-model.md:5:This document defines the rollback strategy model for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:17:./docs/runtime/runtime-event-model.md:5:This document defines the runtime event model for Maloja Plana / Ordnung & Ruhe.
+./docs/context/LEGACY_NAMING_AUDIT.txt:18:./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/sophiestebler/Projects/ordnung-ruhe-neu
+./docs/context/LEGACY_NAMING_AUDIT.txt:19:./README.md:1:# Ordnung & Ruhe
+./docs/context/LEGACY_NAMING_AUDIT.txt:20:./README.md:12:Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
+./docs/context/LEGACY_NAMING_AUDIT.txt:21:./README.md:26:ordnung-ruhe/
+./docs/context/LEGACY_NAMING_AUDIT.txt:22:./README.md:63:git clone https://github.com/YOUR-USERNAME/ordnung-ruhe.git
+./docs/context/LEGACY_NAMING_AUDIT.txt:23:./README.md:64:cd ordnung-ruhe
+./docs/context/LEGACY_NAMING_AUDIT.txt:24:./public/sw.js:1:// ─── Ordnung & Ruhe — Service Worker ───────────────────────
+./docs/context/LEGACY_NAMING_AUDIT.txt:25:./public/sw.js:10:const CACHE_NAME = 'ordnung-ruhe-v1';
+./docs/context/LEGACY_NAMING_AUDIT.txt:26:./public/sw.js:79:      tag: data.tag || 'ordnung-ruhe',
+./docs/context/LEGACY_NAMING_AUDIT.txt:27:./public/sw.js:87:        data.title || 'Ordnung & Ruhe',
+./docs/context/LEGACY_NAMING_AUDIT.txt:28:./package-lock.json:2:  "name": "ordnung-ruhe",
+./docs/context/LEGACY_NAMING_AUDIT.txt:29:./package-lock.json:8:      "name": "ordnung-ruhe",
+./docs/context/LEGACY_NAMING_AUDIT.txt:30:./package.json:2:  "name": "ordnung-ruhe",
+./docs/context/LEGACY_NAMING_AUDIT.txt:31:./RELEASE_NOTES.md:6:**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+./docs/context/LEGACY_NAMING_AUDIT.txt:32:./RELEASE_NOTES.md:13:- **Phase 2 — Visual Rebrand**: Renamed from "Ordnung & Ruhe v5" to "Maloja Plana", new color palette and identity
+./docs/context/LEGACY_NAMING_AUDIT.txt:33:./RELEASE_NOTES.md:34:- **Data**: localStorage (`or5_` prefix) + IndexedDB (`ordnung-ruhe-documents`, `ordnung-ruhe-backups`)
+./docs/context/LEGACY_NAMING_AUDIT.txt:34:./ROADMAP_CHECKPOINT.md:6:**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+./docs/context/LEGACY_NAMING_AUDIT.txt:35:./src/utils/autoBackup.js:6:// Storage: IndexedDB 'ordnung-ruhe-backups' store.
+./docs/context/LEGACY_NAMING_AUDIT.txt:36:./src/utils/autoBackup.js:9:const BACKUP_DB_NAME = 'ordnung-ruhe-backups';
+./docs/context/LEGACY_NAMING_AUDIT.txt:37:./src/utils/notifications.js:59:      tag: tag || 'ordnung-ruhe-reminder',
+./docs/context/LEGACY_NAMING_AUDIT.txt:38:./src/utils/storage.js:49:const DB_NAME = 'ordnung-ruhe-documents';
+./docs/context/LEGACY_NAMING_AUDIT.txt:39:./src/i18n/index.js:1:// Lightweight i18n system for Ordnung & Ruhe
+./docs/security/architecture.md:23:│                       │  ordnung-ruhe-docs    │  │
+./docs/security/architecture.md:24:│                       │  ordnung-ruhe-backups │  │
+./docs/security/data-flow.md:19:| IndexedDB | binary/JSON | `ordnung-ruhe-documents` | Uploaded document files |
+./docs/security/data-flow.md:20:| IndexedDB | JSON | `ordnung-ruhe-backups` | Rolling auto-backup snapshots (max 3) |
+./docs/runtime/workflow-definition-schema.md:5:This document defines the workflow definition schema for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/validation-rule-schema.md:5:This document defines the validation rule schema for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/runtime-persistence-model.md:5:This document defines the runtime persistence model for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/README.md:5:This directory contains the core runtime specification for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/state-transition-rules.md:5:This document defines allowed workflow state transitions for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/audit-event-schema.md:5:This document defines the audit event schema for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/rollback-strategy-model.md:5:This document defines the rollback strategy model for Maloja Plana / Ordnung & Ruhe.
+./docs/runtime/runtime-event-model.md:5:This document defines the runtime event model for Maloja Plana / Ordnung & Ruhe.
+./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/sophiestebler/Projects/ordnung-ruhe-neu
+./README.md:1:# Ordnung & Ruhe
+./README.md:12:Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
+./README.md:26:ordnung-ruhe/
+./README.md:63:git clone https://github.com/YOUR-USERNAME/ordnung-ruhe.git
+./README.md:64:cd ordnung-ruhe
+./public/sw.js:1:// ─── Ordnung & Ruhe — Service Worker ───────────────────────
+./public/sw.js:10:const CACHE_NAME = 'ordnung-ruhe-v1';
+./public/sw.js:79:      tag: data.tag || 'ordnung-ruhe',
+./public/sw.js:87:        data.title || 'Ordnung & Ruhe',
+./package.json:2:  "name": "ordnung-ruhe",
+./RELEASE_NOTES.md:6:**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+./RELEASE_NOTES.md:13:- **Phase 2 — Visual Rebrand**: Renamed from "Ordnung & Ruhe v5" to "Maloja Plana", new color palette and identity
+./RELEASE_NOTES.md:34:- **Data**: localStorage (`or5_` prefix) + IndexedDB (`ordnung-ruhe-documents`, `ordnung-ruhe-backups`)
+./ROADMAP_CHECKPOINT.md:6:**Live alpha**: https://ordnung-ruhe-neu.vercel.app  
+./src/utils/autoBackup.js:6:// Storage: IndexedDB 'ordnung-ruhe-backups' store.
+./src/utils/autoBackup.js:9:const BACKUP_DB_NAME = 'ordnung-ruhe-backups';
+./src/utils/notifications.js:59:      tag: tag || 'ordnung-ruhe-reminder',
+./src/utils/storage.js:49:const DB_NAME = 'ordnung-ruhe-documents';
+./src/i18n/index.js:1:// Lightweight i18n system for Ordnung & Ruhe
