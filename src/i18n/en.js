@@ -80,6 +80,14 @@ export default {
     dark: 'Dark',
   },
 
+  guidedStart: {
+    title: 'A calm place to begin',
+    text: 'You can start with a few simple steps. Nothing needs to be completed all at once.',
+    basicInfo: 'Complete basic information',
+    documents: 'Add important documents',
+    emergency: 'Review emergency information',
+  },
+
   dashboard: {
     welcome: 'Welcome to Maloja Plana',
     tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',

@@ -69,6 +69,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   };
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);
+  const hasMeaningfulProgress = completion >= 15;
+  const gentleStartItems = [
+    t('guidedStart.basicInfo'),
+    t('guidedStart.documents'),
+    t('guidedStart.emergency')
+  ];
+
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
@@ -85,6 +92,31 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('p', {
         style: { fontSize: '15px', color: palette.mid, margin: 0, lineHeight: 1.5 }
       }, t('dashboard.tagline'))
+    ),
+
+    // ─── Guided start — calm first-use card ───────────────
+    !hasMeaningfulProgress && React.createElement('div', {
+      style: {
+        marginBottom: '32px',
+        padding: '20px 24px',
+        background: palette.surface,
+        borderRadius: '12px',
+        border: '1px solid ' + palette.border
+      }
+    },
+      React.createElement('div', {
+        style: { fontSize: '13px', fontWeight: '600', color: palette.text, marginBottom: '8px' }
+      }, t('guidedStart.title')),
+      React.createElement('p', {
+        style: { fontSize: '13px', color: palette.mid, lineHeight: 1.6, margin: '0 0 12px 0' }
+      }, t('guidedStart.text')),
+      React.createElement('ul', {
+        style: { margin: 0, paddingLeft: '18px', color: palette.mid, fontSize: '13px', lineHeight: 1.7 }
+      },
+        gentleStartItems.map((item) =>
+          React.createElement('li', { key: item }, item)
+        )
+      )
     ),
 
     // ─── Progress — subtle, integrated ─────────────────────

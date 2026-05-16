@@ -80,6 +80,14 @@ export default {
     dark: 'Dunkel',
   },
 
+  guidedStart: {
+    title: 'Ein ruhiger Anfang',
+    text: 'Du kannst mit wenigen einfachen Schritten beginnen. Es muss nicht alles auf einmal erledigt werden.',
+    basicInfo: 'Basisinformationen ergänzen',
+    documents: 'Wichtige Dokumente hinzufügen',
+    emergency: 'Notfallinformationen prüfen',
+  },
+
   dashboard: {
     welcome: 'Willkommen bei Maloja Plana',
     tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',
