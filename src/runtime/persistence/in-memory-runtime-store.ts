@@ -23,3 +23,6 @@ export class InMemoryRuntimeStore {
     this.workflows.clear();
   }
 }
+async findByWorkflowId(workflowId: string) {
+  return this.states.get(workflowId);
+}
