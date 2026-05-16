@@ -19,6 +19,7 @@ A privacy-first Swiss life organizer for immigrants, refugees, and expats.
 | `ae1184f` | KK Scanner autofill + persist — all fields now saved, not just insurer |
 | `3a811d0` | Docs updated to reflect KK Scanner fix |
 | `013ce85` | Vorsorge document checklist — Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche yes/not-yet fields + EmergencyHub summary |
+| `1374af9` | UX fix — canton dropdowns show full names (value stays abbreviation), onboarding language buttons text-only (no flag emojis) |
 
 ## Latest Documentation Additions
 
