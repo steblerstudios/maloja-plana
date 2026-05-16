@@ -104,6 +104,7 @@ export default {
     basis: {
       title: 'Données personnelles',
       description: 'Votre identité et vos coordonnées',
+      intro: 'Vos données personnelles sont la base. Commencez par votre nom et canton — le reste peut attendre.',
       icon: '◎',
       fields: {
         fullName: 'Nom complet',
@@ -132,6 +133,7 @@ export default {
     wohnen: {
       title: 'Logement',
       description: 'Votre domicile, loyer et situation de logement',
+      intro: 'Tout sur votre logement. Utile pour la déclaration d\'impôts, les assurances et les demandes de prestations.',
       icon: '⌂',
       fields: {
         address: 'Rue et numéro',
@@ -156,6 +158,7 @@ export default {
     finanzen: {
       title: 'Finances',
       description: 'Vos revenus, épargne et coordonnées bancaires',
+      intro: 'Une vue claire de votre situation financière. Utile pour le budget, les impôts et les demandes de subsides.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Revenu mensuel net (CHF)',
@@ -183,6 +186,7 @@ export default {
     versicherungen: {
       title: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
+      intro: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.',
       icon: '◰',
       fields: {
         kkInsurer: 'Caisse maladie',
@@ -212,6 +216,7 @@ export default {
     ausbildung: {
       title: 'Formation et emploi',
       description: 'Vos qualifications et votre emploi',
+      intro: 'Votre formation et expérience professionnelle. Utile pour le CV, les candidatures et les permis de travail.',
       icon: '✦',
       fields: {
         schoolName: 'École / Université',
@@ -234,6 +239,7 @@ export default {
     behoerden: {
       title: 'Autorités et juridique',
       description: 'Impôts, affaires juridiques et documents officiels',
+      intro: 'Vos contacts avec les autorités et affaires juridiques. Garde les délais importants et contacts ensemble.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Canton d\'imposition',
@@ -257,6 +263,7 @@ export default {
     notfall: {
       title: 'Urgence',
       description: 'Contacts d\'urgence, informations médicales',
+      intro: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Personne de contact d\'urgence',
@@ -287,6 +294,8 @@ export default {
   },
 
   chapterView: {
+    emptyState: 'Rien ici pour le moment — et c\'est tout à fait normal.',
+    emptyStateHint: 'Vous pouvez commencer par quelques informations. Tout peut être complété plus tard.',
     fields: 'Champs',
     documents: 'Documents',
     selectOption: '— Sélectionner —',
