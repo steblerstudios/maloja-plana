@@ -11,6 +11,12 @@ export class InMemoryRuntimeStore {
     return this.workflows.get(workflowId);
   }
 
+  async findByWorkflowId(
+    workflowId: string,
+  ): Promise<WorkflowDefinition | undefined> {
+    return this.get(workflowId);
+  }
+
   async list(): Promise<WorkflowDefinition[]> {
     return Array.from(this.workflows.values());
   }
@@ -21,20 +27,6 @@ export class InMemoryRuntimeStore {
 
   clear(): void {
     this.workflows.clear();
-  }
-}
-async findByWorkflowId(workflowId: string) {
-  return this.states.get(workflowId);
-}
-export class InMemoryRuntimeStore {
-  private states = new Map<string, unknown>();
-
-  async save(state: { workflowId: string }) {
-    this.states.set(state.workflowId, state);
-  }
-
-  async findByWorkflowId(workflowId: string) {
-    return this.states.get(workflowId);
   }
 }
 
