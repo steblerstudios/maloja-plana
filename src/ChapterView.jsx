@@ -208,7 +208,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const introText = tr('chapters.' + chapter.key + '.intro');
   const hasIntro = introText && introText !== 'chapters.' + chapter.key + '.intro';
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     // Header
     React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
@@ -252,7 +252,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
         React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
         chapter.fields.map(field => renderField(field))
       )
     ),
