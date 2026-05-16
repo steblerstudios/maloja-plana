@@ -1,0 +1,10 @@
+ba67703 docs: update Claude handoff with trust-first foundations
+bf3e5f3 docs: add trust-first implementation order
+bd9c5f7 docs: strengthen trust-first product architecture foundation
+49d9275 docs: add product field inventory
+4fe414f docs: capture pre-store critical product issues
+b4df6f8 docs: update Claude handoff with pre-store foundation feedback
+b93cc89 docs: add live product UX feedback notes
+707fbef docs: add next Claude implementation handoff
+ad2a93d docs: add reality walkthrough audit template
+c05cfe5 docs: add documentation index
