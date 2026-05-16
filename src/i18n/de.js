@@ -327,7 +327,8 @@ export default {
     sortByExpiry: 'Nach Ablauf sortieren',
     sortByUpload: 'Nach Upload-Datum',
     sortByName: 'Nach Name (A-Z)',
-    noDocuments: 'Keine Dokumente',
+    noDocuments: 'Noch keine Dokumente',
+    noDocumentsHint: 'Lade Dein erstes Dokument in einem Kapitel hoch, um es hier zu sehen.',
     expired: 'Abgelaufen!',
     expiryDate: 'Ablauf: {date}',
     uploadedInfo: 'Hochgeladen: {date} - Grösse: {size}',
@@ -587,7 +588,8 @@ export default {
 
   charts: {
     title: 'Charts',
-    noData: 'Keine Daten vorhanden. Fülle zuerst Deine Kapitel-Informationen aus.',
+    noData: 'Noch keine Charts',
+    noDataHint: 'Trage Dein Einkommen und Deine Ausgaben in den Kapiteln ein, um hier Charts zu sehen.',
   },
 
   validation: {
