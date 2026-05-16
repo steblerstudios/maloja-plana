@@ -1,0 +1,71 @@
+# Maloja Plana — Project Status
+
+**"Der Schweizer Lebensordner"**
+A privacy-first Swiss life organizer for immigrants, refugees, and expats.
+
+**Date**: 2026-05-16
+**Branch**: `dev`
+**Live alpha**: https://ordnung-ruhe-neu.vercel.app
+**Repository**: https://github.com/steblerstudios/maloja-plana (private)
+**Build**: 447 KB (121 KB gzipped), 75 modules, zero runtime dependencies
+
+## Latest Implemented Fixes
+
+| Commit | Description |
+|--------|-------------|
+| `fdceb91` | Alpha known-issues banner (dismissable, 4-language, calm tone) |
+| `4cb226f` | BVG double-counting fix — BVG/AHV moved to reference, not subtracted from net income |
+| `cdc0e70` | Banner and docs updated to reflect BVG fix |
+| `ae1184f` | KK Scanner autofill + persist — all fields now saved, not just insurer |
+| `3a811d0` | Docs updated to reflect KK Scanner fix |
+
+## Latest Documentation Additions
+
+| File | Content |
+|------|---------|
+| `docs/product/social-protection-system.md` | AHV, BVG, UVG, KTG structural overview |
+| `docs/product/employment-and-insurance.md` | Employed vs. self-employed insurance landscape |
+| `docs/product/retirement-timeline.md` | Pre/at/post-retirement planning orientation |
+| `docs/alpha/feedback-log.md` | F-008 to F-013: domain feedback on pensions, UVG/KTG, self-employment |
+
+## Build Status
+
+Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
+
+## Known Open Issues
+
+| ID | Issue | Severity | Status |
+|----|-------|----------|--------|
+| KI-001 | SKOS household composition bug (children counted as adults) | Critical | Open — requires Phase 9 household model |
+| KI-002 | BVG double deduction | Critical | **Fixed** (2026-05-16) |
+| KI-003 | KK/AHV duplicate entry | Important | **Partially fixed** — autofill + persist done; conflict warnings pending (Slice C) |
+| KI-004 | Hardcoded German in cantonalData.js | Important | Open — Phase 6 |
+| KI-005 | QR code external CDN dependency | Important | Open — Phase 15 |
+| KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
+| KI-007 | No Web Crypto fallback | Minor | Open — low priority |
+| KI-008 | Auto-save 5-second interval (no dirty flag) | Minor | Open — Phase 15 |
+
+## Next Recommended Implementation Candidates
+
+1. **KK Scanner Slice C** — conflict warnings when scanned values differ, AHV display masking (small, UI only)
+2. **Hardcoded German in cantonalData.js** — replace German return values with i18n keys (medium, i18n only)
+3. **Alpha banner BVG note update** — BVG item now says "reference values" but could be removed entirely since it's fixed
+4. **ChapterView hint rendering** — verify hints render on all field types (text, select, date), not just text and currency
+
+## Do Not Touch Yet
+
+- SKOS/Sozialhilfe calculation (requires Phase 9 household model)
+- PremiumSubsidy/IPV calculation
+- Data schema or localStorage keys (no migrations without explicit approval)
+- Cloud sync, accounts, or server-side components
+- Gross/net income toggle (deferred to Phase 14)
+- Multi-person household model
+
+## Architecture Reminders
+
+- React 18 + Vite 4, `React.createElement()` throughout (not JSX despite .jsx extensions)
+- 100% inline styles via `palette` prop + CSS custom properties
+- Custom i18n: `I18nProvider` -> `useT()` -> `t(key)`, fallback: selected -> EN -> key
+- localStorage with `or5_` prefix, IndexedDB for documents
+- Data version 1, sequential migration system
+- 100% offline, zero accounts, zero cloud
