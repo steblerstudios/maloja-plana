@@ -104,6 +104,7 @@ export default {
     basis: {
       title: 'Persönliche Basis',
       description: 'Deine Identität und Kontaktdaten',
+      intro: 'Deine persönlichen Grunddaten sind das Fundament. Beginne mit Name und Kanton — alles andere hat Zeit.',
       icon: '◎',
       fields: {
         fullName: 'Vollständiger Name',
@@ -132,6 +133,7 @@ export default {
     wohnen: {
       title: 'Wohnen & Leben',
       description: 'Dein Zuhause, Miete und Wohnsituation',
+      intro: 'Alles rund um Dein Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.',
       icon: '⌂',
       fields: {
         address: 'Strasse & Hausnummer',
@@ -156,6 +158,7 @@ export default {
     finanzen: {
       title: 'Finanzen & Geld',
       description: 'Dein Einkommen, Erspartes und Bankdaten',
+      intro: 'Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Monatliches Nettoeinkommen CHF',
@@ -183,6 +186,7 @@ export default {
     versicherungen: {
       title: 'Versicherungen & Vorsorge',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
+      intro: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.',
       icon: '◰',
       fields: {
         kkInsurer: 'Krankenkasse',
@@ -212,6 +216,7 @@ export default {
     ausbildung: {
       title: 'Ausbildung & Arbeit',
       description: 'Deine Qualifikationen und Arbeitsstelle',
+      intro: 'Deine Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.',
       icon: '✦',
       fields: {
         schoolName: 'Schule/Universität',
@@ -234,6 +239,7 @@ export default {
     behoerden: {
       title: 'Behörden & Rechtliches',
       description: 'Steuern, rechtliche Angelegenheiten und amtliche Dokumente',
+      intro: 'Deine Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Steuerkanton',
@@ -257,6 +263,7 @@ export default {
     notfall: {
       title: 'Notfall',
       description: 'Notfallkontakte und medizinische Informationen',
+      intro: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Dich und Deine Familie einen echten Unterschied machen.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Notfall-Kontaktperson',
@@ -287,6 +294,8 @@ export default {
   },
 
   chapterView: {
+    emptyState: 'Hier ist noch nichts — und das ist völlig in Ordnung.',
+    emptyStateHint: 'Du kannst mit ein paar wenigen Angaben beginnen. Alles lässt sich später ergänzen.',
     fields: 'Felder',
     documents: 'Dokumente',
     selectOption: '— Auswählen —',
