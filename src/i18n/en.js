@@ -270,6 +270,14 @@ export default {
         doctorPhone: 'Doctor phone',
         hospital: 'Preferred hospital',
         organDonor: { label: 'Organ donor registered?', options: { yes: 'Yes', no: 'No', declined: 'Declined' } },
+        patientenverfuegung: { label: 'Advance healthcare directive?', options: { yes: 'Yes', no: 'Not yet' } },
+        vorsorgeauftrag: { label: 'Lasting power of attorney?', options: { yes: 'Yes', no: 'Not yet' } },
+        bestattungswuensche: { label: 'Burial or cremation wishes recorded?', options: { yes: 'Yes', no: 'Not yet' } },
+      },
+      hints: {
+        patientenverfuegung: 'Instructions for medical treatment if you cannot communicate. Swiss Civil Code Art. 370-373.',
+        vorsorgeauftrag: 'Designates someone to act on your behalf if you lose capacity. Must be registered with your municipality.',
+        bestattungswuensche: 'Your personal wishes regarding burial or cremation. Not legally binding, but important for family.',
       },
       docs: {
         advance_directive: 'Advance directive',
@@ -476,6 +484,18 @@ export default {
       contact: 'Keep emergency contact easily reachable',
       blood: 'Know and communicate your blood type',
       allergies: 'Document allergies and medications',
+    },
+    vorsorge: {
+      title: 'Vorsorge documents',
+      intro: 'These Swiss legal documents help protect you and your family. There is no rush — you can create them at any time.',
+      patientenverfuegung: 'Advance healthcare directive',
+      patientenverfuegungDesc: 'Instructions for medical treatment if you cannot communicate your wishes.',
+      vorsorgeauftrag: 'Lasting power of attorney',
+      vorsorgeauftragDesc: 'Designates a trusted person to act on your behalf if you lose capacity.',
+      bestattungswuensche: 'Burial wishes',
+      bestattungswuenscheDesc: 'Your personal wishes regarding burial or cremation.',
+      statusYes: 'Created',
+      statusNo: 'Not yet created',
     },
   },
 

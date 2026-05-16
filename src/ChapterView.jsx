@@ -160,7 +160,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         },
           React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
           options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
-        )
+        ),
+        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint)
       );
     }
 

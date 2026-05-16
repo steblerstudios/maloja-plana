@@ -269,6 +269,14 @@ export default {
         doctorPhone: 'Telefon Arzt',
         hospital: 'Bevorzugtes Spital',
         organDonor: { label: 'Organspender registriert?', options: { yes: 'Ja', no: 'Nein', declined: 'Widersprochen' } },
+        patientenverfuegung: { label: 'Patientenverfügung vorhanden?', options: { yes: 'Ja', no: 'Noch nicht' } },
+        vorsorgeauftrag: { label: 'Vorsorgeauftrag vorhanden?', options: { yes: 'Ja', no: 'Noch nicht' } },
+        bestattungswuensche: { label: 'Bestattungswünsche festgehalten?', options: { yes: 'Ja', no: 'Noch nicht' } },
+      },
+      hints: {
+        patientenverfuegung: 'Anweisungen für medizinische Behandlung, wenn Du Dich nicht äussern kannst. ZGB Art. 370-373.',
+        vorsorgeauftrag: 'Bestimmt eine Vertrauensperson, die für Dich handelt, wenn Du urteilsunfähig wirst. Muss bei der Gemeinde registriert werden.',
+        bestattungswuensche: 'Deine persönlichen Wünsche für Bestattung oder Kremation. Nicht rechtlich bindend, aber wichtig für die Familie.',
       },
       docs: {
         advance_directive: 'Patientenverfügung',
@@ -475,6 +483,18 @@ export default {
       contact: 'Notfall-Kontakt leicht erreichbar halten',
       blood: 'Blutgruppe kennen und mitteilen',
       allergies: 'Allergien & Medikamente dokumentieren',
+    },
+    vorsorge: {
+      title: 'Vorsorgedokumente',
+      intro: 'Diese Schweizer Dokumente schützen Dich und Deine Familie. Es eilt nicht — Du kannst sie jederzeit erstellen.',
+      patientenverfuegung: 'Patientenverfügung',
+      patientenverfuegungDesc: 'Anweisungen für medizinische Behandlung, wenn Du Deine Wünsche nicht äussern kannst.',
+      vorsorgeauftrag: 'Vorsorgeauftrag',
+      vorsorgeauftragDesc: 'Bestimmt eine Vertrauensperson, die für Dich handelt, wenn Du urteilsunfähig wirst.',
+      bestattungswuensche: 'Bestattungswünsche',
+      bestattungswuenscheDesc: 'Deine persönlichen Wünsche bezüglich Bestattung oder Kremation.',
+      statusYes: 'Erstellt',
+      statusNo: 'Noch nicht erstellt',
     },
   },
 
