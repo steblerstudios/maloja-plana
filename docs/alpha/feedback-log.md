@@ -34,8 +34,8 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 - **Category**: Income Calculation
 - **Feedback**: BVG deducted twice if user enters net salary.
 - **Severity**: Critical
-- **Status**: Planned
-- **Phase**: 14 (Gross/Net salary distinction)
+- **Status**: Fixed (2026-05-16, commit `4cb226f`)
+- **Phase**: Resolved ahead of Phase 14
 
 ### F-003: Missing Vorsorge Documents
 - **Date**: 2026-05

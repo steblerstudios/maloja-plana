@@ -762,7 +762,7 @@ export default {
     title: 'Alpha version',
     intro: 'This is an early version of Maloja Plana. Some calculations are still being validated. Known limitations:',
     skosNote: 'Social assistance (SKOS) calculations for households with children are being revised',
-    bvgNote: 'BVG/pension deductions may be counted twice if you enter net salary',
+    bvgNote: 'BVG/AHV amounts are shown as reference values when net salary is used',
     kkNote: 'Insurance card scanner data is not yet linked to your saved chapters',
     disclaimer: 'Please do not rely on this app as legal or financial advice. Always verify with your cantonal authority.',
   },
