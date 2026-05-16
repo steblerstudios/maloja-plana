@@ -139,7 +139,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
             step: '0.01',
             style: { ...inputStyle, flex: 1 }
           })
-        )
+        ),
+        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint)
       );
     }
 

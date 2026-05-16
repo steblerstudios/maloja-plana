@@ -171,6 +171,9 @@ export default {
         pension3b: { label: '3. Säule B', options: { no: 'Nein', yes: 'Ja' } },
         investmentFunds: { label: 'Anlagefonds vorhanden?', options: { no: 'Nein', yes: 'Ja' } },
       },
+      hints: {
+        monthlyIncome: 'Gib deinen Nettolohn ein — nach AHV-, BVG- und Steuerabzügen.',
+      },
       docs: {
         tax_return: 'Steuererklärung',
         income_proof: 'Lohnzettel',
@@ -196,6 +199,9 @@ export default {
       },
       placeholders: {
         kkInsurer: 'z.B. Swica, Helsana, CSS',
+      },
+      hints: {
+        bvgContribution: 'Nur zur Übersicht — wird im Budget nicht nochmals vom Nettolohn abgezogen.',
       },
       docs: {
         kkcard: 'KK-Karte',
@@ -311,7 +317,8 @@ export default {
     expensesOverview: 'Ausgaben-Übersicht',
     housingCosts: 'Wohnen (Miete + Nebenkosten)',
     healthInsurance: 'Krankenkasse',
-    insuranceBvg: 'Versicherungen & BVG',
+    insuranceBvg: 'BVG / AHV (Referenz)',
+    bvgReferenceNote: 'Diese Beträge sind bereits vom Nettolohn abgezogen und werden hier nur zur Übersicht angezeigt.',
     total: 'Total',
     recommendations: 'Empfehlungen',
     annualForecast: 'Jährliche Prognose',
@@ -387,7 +394,7 @@ export default {
     title: 'Steuern-Kalkulator',
     inputs: 'Eingaben',
     taxCanton: 'Steuerkanton',
-    grossIncome: 'Bruttojahreseinkommen',
+    grossIncome: 'Jahreseinkommen (basierend auf Nettolohn)',
     workCosts: 'Berufskosten',
     pension3a: 'Altersvorsorge 3. Säule',
     debtInterest: 'Schuldzinsen',

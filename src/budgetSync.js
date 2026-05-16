@@ -19,7 +19,13 @@ export const syncBudgetFromChapters = (data) => {
   budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
   budget.expenses.uvg = Number(data.versicherungen?.uvgPremium || 0) || 0;
 
-  // Calculate totals
+  // BVG and AHV are already deducted from net salary — keep for reference, exclude from totals
+  const referenceOnly = { bvg: budget.expenses.bvg, ahv: budget.expenses.ahv };
+  delete budget.expenses.bvg;
+  delete budget.expenses.ahv;
+  budget.reference = referenceOnly;
+
+  // Calculate totals (without BVG/AHV)
   budget.totalExpenses = Object.values(budget.expenses).reduce((a, b) => a + Number(b || 0), 0);
   budget.remaining = budget.income - budget.totalExpenses;
   budget.savingsRate = budget.income > 0 ? ((budget.remaining / budget.income) * 100).toFixed(1) : 0;
@@ -36,7 +42,7 @@ export const calculateMonthlyBudget = (data, t) => {
       rent: budget.income > 0 ? ((budget.expenses.rent / budget.income) * 100).toFixed(1) : 0,
       utilities: budget.income > 0 ? ((budget.expenses.utilities / budget.income) * 100).toFixed(1) : 0,
       health: budget.income > 0 ? ((budget.expenses.healthInsurance / budget.income) * 100).toFixed(1) : 0,
-      insurance: budget.income > 0 ? (((budget.expenses.bvg + budget.expenses.ahv + (budget.expenses.uvg || 0)) / budget.income) * 100).toFixed(1) : 0,
+      insurance: budget.income > 0 ? (((budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)) / budget.income) * 100).toFixed(1) : 0,
       savings: budget.income > 0 ? ((budget.remaining / budget.income) * 100).toFixed(1) : 0
     },
     recommendations: getBudgetRecommendations(budget, t)
@@ -97,7 +103,7 @@ export const createBudgetReport = (data, t) => {
       },
       expenses: {
         housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0),
-        insurance: budget.expenses.healthInsurance + budget.expenses.bvg + budget.expenses.ahv + (budget.expenses.uvg || 0),
+        insurance: budget.expenses.healthInsurance + budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
         total: budget.totalExpenses
       },
       savings: {
