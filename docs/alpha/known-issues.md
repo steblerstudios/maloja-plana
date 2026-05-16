@@ -9,12 +9,12 @@
 - **Workaround**: None — users must manually look up correct SKOS rates.
 - **Fix**: Phase 9 (Household Model) + Phase 14
 
-### KI-002: BVG Double Deduction
-- **Location**: Income calculation logic
-- **Description**: If user enters net salary (after BVG deduction), the app may subtract BVG again as a separate field.
-- **Impact**: Budget calculations understate available income.
-- **Workaround**: Users should be aware that net salary already includes BVG deduction.
-- **Fix**: Phase 14 (Gross/Net salary distinction)
+### KI-002: BVG Double Deduction — RESOLVED
+- **Location**: `src/budgetSync.js`, `src/BudgetSync.jsx`, `src/TaxCalculator.jsx`
+- **Description**: If user enters net salary (after BVG deduction), the app subtracted BVG again as a separate expense.
+- **Impact**: Budget calculations understated available income.
+- **Resolution**: BVG/AHV moved to `budget.reference` (not counted in `totalExpenses`). Field hints added. TaxCalculator label corrected. Commit `4cb226f`.
+- **Status**: Fixed (2026-05-16)
 
 ## Important
 
