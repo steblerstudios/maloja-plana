@@ -43,26 +43,26 @@ For each document type, provide:
 - If yes: upload option, reference storage
 - If no: brief explanation, link to resources, no further prompting
 
-## Current Implementation (Phase 5)
+## Current Implementation
 
+- **Notfall chapter fields**: Three select fields (Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche) with "Yes" / "Not yet" options and legal-reference hints (ZGB Art. 370-373, municipality registration). Persisted to localStorage via standard chapter data flow.
+- **EmergencyHub summary**: Vorsorge section shows each document with title, description, and status badge (green "Vorhanden" / neutral "Nicht vorhanden") reflecting persisted chapter data.
 - **EmergencyHub**: Emergency contact information, QR code generation
 - **OrganDonation**: Organ donation preferences with QR export
-- No Vorsorge document management yet
+- All 4 languages: EN, DE, FR, IT
 
-## Planned Implementation
+## Future Expansion
 
-### Phase 7: Contact Layer
-- Emergency contacts linked to Vorsorge documents
-- "In case of emergency, contact..." with document references
+### Vorsorge Slice B (Phase 7/12)
+- Link each document type to the Dokument-Tresor for actual file uploads
+- Municipality registration reminder for Vorsorgeauftrag
+- Canton-specific links to official forms (e.g., Zürich vs. Bern templates)
 
-### Phase 12: Inventory
-- Document inventory includes Vorsorge documents
-- Upload and storage in IndexedDB (encrypted at rest in future)
-
-### Phase 14: Vorsorge Workflows
-- Guided flow: "Do you have a Patientenverfügung?" → explanation → creation resources → upload → municipality registration reminder
+### Vorsorge Slice C (Phase 14)
+- Guided creation flow with resources and links
 - Annual review reminder (gentle, dismissable)
 - Export Vorsorge summary for family members (encrypted)
+- Expand to include Testament, Ehevertrag, Erbvertrag
 
 ## Privacy Considerations
 
