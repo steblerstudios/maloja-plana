@@ -446,11 +446,16 @@ export const IconWithLabel = ({ icon, label, color = '#8A8478', onClick = null, 
     ...style
   };
 
-  return React.createElement('div', { style: baseStyle, onClick: onClick },
-    React.createElement(Icon, { name: icon, size: 32, color }),
-    React.createElement('div', { style: { fontSize: '12px', color, textAlign: 'center', fontWeight: '500' } }, label)
-  );
+  const content = [
+    React.createElement(Icon, { key: 'icon', name: icon, size: 32, color }),
+    React.createElement('div', { key: 'label', style: { fontSize: '12px', color, textAlign: 'center', fontWeight: '500' } }, label)
+  ];
+
+  return onClick
+    ? React.createElement('button', { type: 'button', style: { ...baseStyle, background: 'none', border: 'none', padding: 0, font: 'inherit' }, onClick }, content)
+    : React.createElement('div', { style: baseStyle }, content);
 };
+
 
 export const IconButton = ({ icon, color = '#EDE8E0', onClick, title = '', size = '20px' }) => {
   const numSize = parseInt(size, 10) || 20;
