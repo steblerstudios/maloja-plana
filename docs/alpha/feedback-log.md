@@ -43,8 +43,8 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 - **Category**: Emergency Planning
 - **Feedback**: App should ask about Patientenverfügung, Vorsorgeauftrag, Bestattungsverordnung.
 - **Severity**: Important
-- **Status**: Planned
-- **Phase**: 7 (Contact Layer) + 12 (Inventory)
+- **Status**: Partially implemented (2026-05-16, commit `013ce85`) — yes/not-yet checklist in Notfall chapter + EmergencyHub summary with status badges. Remaining: document uploads to Tresor, municipality registration reminders, canton-specific form links.
+- **Phase**: Slice A done; Slices B-C in Phase 7/12/14
 
 ### F-004: Mietbeiträge Support Missing
 - **Date**: 2026-05

@@ -18,6 +18,7 @@ A privacy-first Swiss life organizer for immigrants, refugees, and expats.
 | `cdc0e70` | Banner and docs updated to reflect BVG fix |
 | `ae1184f` | KK Scanner autofill + persist — all fields now saved, not just insurer |
 | `3a811d0` | Docs updated to reflect KK Scanner fix |
+| `013ce85` | Vorsorge document checklist — Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche yes/not-yet fields + EmergencyHub summary |
 
 ## Latest Documentation Additions
 
@@ -50,7 +51,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 1. **KK Scanner Slice C** — conflict warnings when scanned values differ, AHV display masking (small, UI only)
 2. **Hardcoded German in cantonalData.js** — replace German return values with i18n keys (medium, i18n only)
 3. **Alpha banner BVG note update** — BVG item now says "reference values" but could be removed entirely since it's fixed
-4. **ChapterView hint rendering** — verify hints render on all field types (text, select, date), not just text and currency
+4. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
 
 ## Do Not Touch Yet
 
