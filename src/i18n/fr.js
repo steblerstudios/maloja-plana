@@ -80,6 +80,14 @@ export default {
     dark: 'Sombre',
   },
 
+  guidedStart: {
+    title: 'Un début calme',
+    text: 'Vous pouvez commencer par quelques étapes simples. Rien ne doit être terminé en une seule fois.',
+    basicInfo: 'Compléter les informations de base',
+    documents: 'Ajouter les documents importants',
+    emergency: 'Vérifier les informations d’urgence',
+  },
+
   dashboard: {
     welcome: 'Bienvenue sur Maloja Plana',
     tagline: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.',
