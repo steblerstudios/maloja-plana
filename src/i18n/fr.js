@@ -171,6 +171,9 @@ export default {
         pension3b: { label: 'Pilier 3b', options: { no: 'Non', yes: 'Oui' } },
         investmentFunds: { label: 'Fonds de placement ?', options: { no: 'Non', yes: 'Oui' } },
       },
+      hints: {
+        monthlyIncome: 'Indiquez votre salaire net — après déductions AVS, LPP et impôts.',
+      },
       docs: {
         tax_return: 'Déclaration d\'impôts',
         income_proof: 'Fiche de salaire',
@@ -196,6 +199,9 @@ export default {
       },
       placeholders: {
         kkInsurer: 'p. ex. Swica, Helsana, CSS',
+      },
+      hints: {
+        bvgContribution: 'À titre indicatif — ce montant n\'est pas déduit une seconde fois du salaire net dans le budget.',
       },
       docs: {
         kkcard: 'Carte d\'assurance',
@@ -311,7 +317,8 @@ export default {
     expensesOverview: 'Aperçu des dépenses',
     housingCosts: 'Logement (loyer + charges)',
     healthInsurance: 'Assurance maladie',
-    insuranceBvg: 'Assurances et LPP',
+    insuranceBvg: 'LPP / AVS (référence)',
+    bvgReferenceNote: 'Ces montants sont déjà déduits de votre salaire net et sont affichés ici à titre indicatif.',
     total: 'Total',
     recommendations: 'Recommandations',
     annualForecast: 'Prévision annuelle',
@@ -387,7 +394,7 @@ export default {
     title: 'Calculateur d\'impôts',
     inputs: 'Données',
     taxCanton: 'Canton d\'imposition',
-    grossIncome: 'Revenu brut annuel',
+    grossIncome: 'Revenu annuel (basé sur le salaire net mensuel)',
     workCosts: 'Frais professionnels',
     pension3a: 'Pilier 3a',
     debtInterest: 'Intérêts de dettes',

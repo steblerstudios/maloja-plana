@@ -172,6 +172,9 @@ export default {
         pension3b: { label: 'Pillar 3b', options: { no: 'No', yes: 'Yes' } },
         investmentFunds: { label: 'Investment funds?', options: { no: 'No', yes: 'Yes' } },
       },
+      hints: {
+        monthlyIncome: 'Enter your net salary — after AHV, BVG, and tax deductions.',
+      },
       docs: {
         tax_return: 'Tax return',
         income_proof: 'Pay slip',
@@ -197,6 +200,9 @@ export default {
       },
       placeholders: {
         kkInsurer: 'e.g. Swica, Helsana, CSS',
+      },
+      hints: {
+        bvgContribution: 'For reference only — not subtracted again from net income in the budget.',
       },
       docs: {
         kkcard: 'Insurance card',
@@ -312,7 +318,8 @@ export default {
     expensesOverview: 'Expenses overview',
     housingCosts: 'Housing (rent + utilities)',
     healthInsurance: 'Health insurance',
-    insuranceBvg: 'Insurance and BVG',
+    insuranceBvg: 'BVG / AHV (reference)',
+    bvgReferenceNote: 'These amounts are already deducted from your net salary and are shown here for reference only.',
     total: 'Total',
     recommendations: 'Recommendations',
     annualForecast: 'Annual forecast',
@@ -388,7 +395,7 @@ export default {
     title: 'Tax calculator',
     inputs: 'Inputs',
     taxCanton: 'Tax canton',
-    grossIncome: 'Gross annual income',
+    grossIncome: 'Annual income (based on net monthly)',
     workCosts: 'Work-related costs',
     pension3a: 'Pillar 3a',
     debtInterest: 'Debt interest',

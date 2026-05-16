@@ -172,6 +172,9 @@ export default {
         pension3b: { label: 'Pilastro 3b', options: { no: 'No', yes: 'Sì' } },
         investmentFunds: { label: 'Fondi d\'investimento?', options: { no: 'No', yes: 'Sì' } },
       },
+      hints: {
+        monthlyIncome: 'Inserisci il tuo salario netto — dopo le deduzioni AVS, LPP e imposte.',
+      },
       docs: {
         tax_return: 'Dichiarazione fiscale',
         income_proof: 'Busta paga',
@@ -197,6 +200,9 @@ export default {
       },
       placeholders: {
         kkInsurer: 'p.es. Swica, Helsana, CSS',
+      },
+      hints: {
+        bvgContribution: 'Solo a titolo informativo — non viene dedotto nuovamente dal salario netto nel budget.',
       },
       docs: {
         kkcard: 'Tessera assicurazione',
@@ -312,7 +318,8 @@ export default {
     expensesOverview: 'Panoramica delle uscite',
     housingCosts: 'Abitazione (affitto + spese accessorie)',
     healthInsurance: 'Assicurazione malattia',
-    insuranceBvg: 'Assicurazioni e LPP',
+    insuranceBvg: 'LPP / AVS (riferimento)',
+    bvgReferenceNote: 'Questi importi sono già dedotti dal salario netto e sono mostrati qui solo a titolo informativo.',
     total: 'Totale',
     recommendations: 'Raccomandazioni',
     annualForecast: 'Previsione annuale',
@@ -388,7 +395,7 @@ export default {
     title: 'Calcolatore imposte',
     inputs: 'Dati',
     taxCanton: 'Cantone fiscale',
-    grossIncome: 'Reddito annuo lordo',
+    grossIncome: 'Reddito annuale (basato sul salario netto mensile)',
     workCosts: 'Spese professionali',
     pension3a: 'Pilastro 3a',
     debtInterest: 'Interessi passivi',

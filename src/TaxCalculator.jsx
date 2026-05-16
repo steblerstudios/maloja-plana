@@ -82,7 +82,8 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: '12px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('tax.grossIncome')),
-        React.createElement('div', { style: { fontSize: '14px', fontWeight: '600', color: palette.sand, padding: '8px', background: palette.up, borderRadius: '6px', marginBottom: '16px' } }, 'CHF ' + income.toFixed(0)),
+        React.createElement('div', { style: { fontSize: '14px', fontWeight: '600', color: palette.sand, padding: '8px', background: palette.up, borderRadius: '6px', marginBottom: '4px' } }, 'CHF ' + income.toFixed(0)),
+        React.createElement('div', { style: { fontSize: '10px', color: palette.mid, marginBottom: '16px' } }, '○ ' + t('budgetSync.bvgReferenceNote')),
 
         deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
           React.createElement('label', { style: { display: 'block', fontSize: '12px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, ded.label),

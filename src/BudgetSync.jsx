@@ -60,9 +60,12 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           React.createElement('span', null, '◰ ' + t('budgetSync.healthInsurance')),
           React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + budget.expenses.healthInsurance.toFixed(0) + ' (' + budget.percentages.health + '%)')
         ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border, opacity: 0.6 } },
           React.createElement('span', null, '◰ ' + t('budgetSync.insuranceBvg')),
-          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + (budget.expenses.bvg + budget.expenses.ahv + (budget.expenses.uvg || 0)).toFixed(0) + ' (' + budget.percentages.insurance + '%)')
+          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + (budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)).toFixed(0))
+        ),
+        (budget.reference.bvg > 0 || budget.reference.ahv > 0) && React.createElement('div', { style: { fontSize: '10px', color: palette.mid, padding: '2px 0 6px 0', borderBottom: '1px solid ' + palette.border } },
+          '○ ' + t('budgetSync.bvgReferenceNote')
         ),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontWeight: '600', borderTop: '2px solid ' + palette.border, paddingTop: '8px' } },
           React.createElement('span', null, t('common.total')),

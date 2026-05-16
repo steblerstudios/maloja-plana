@@ -103,7 +103,7 @@ export function getChapters(t) {
       description: t('chapters.finanzen.description'),
       icon: t('chapters.finanzen.icon'),
       fields: [
-        { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency' },
+        { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyIncome') },
         { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text' },
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
         { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date' },
@@ -134,7 +134,7 @@ export function getChapters(t) {
         { k: 'franchise', label: fl(t, 'versicherungen', 'franchise'), type: 'select', options: opts(t, 'versicherungen', 'franchise') },
         { k: 'kkCardNumber', label: fl(t, 'versicherungen', 'kkCardNumber'), type: 'text' },
         { k: 'bvgInsurer', label: fl(t, 'versicherungen', 'bvgInsurer'), type: 'text' },
-        { k: 'bvgContribution', label: fl(t, 'versicherungen', 'bvgContribution'), type: 'currency' },
+        { k: 'bvgContribution', label: fl(t, 'versicherungen', 'bvgContribution'), type: 'currency', hint: hn(t, 'versicherungen', 'bvgContribution') },
         { k: 'uvg', label: fl(t, 'versicherungen', 'uvg'), type: 'select', options: opts(t, 'versicherungen', 'uvg') },
         { k: 'liabilityInsurance', label: fl(t, 'versicherungen', 'liabilityInsurance'), type: 'select', options: opts(t, 'versicherungen', 'liabilityInsurance') },
         { k: 'liabilityAmount', label: fl(t, 'versicherungen', 'liabilityAmount'), type: 'currency' },
