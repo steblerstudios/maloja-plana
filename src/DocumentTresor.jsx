@@ -127,8 +127,10 @@ export const DocumentTresor = ({
     ),
 
     // Documents List
-    sortedDocs.length === 0 ? React.createElement('div', { style: { color: palette.mid, fontSize: '12px', padding: '40px 20px', textAlign: 'center' } },
-      '○ ' + t('tresor.noDocuments')
+    sortedDocs.length === 0 ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
+      React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'tresor', size: 28 })),
+      React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, t('tresor.noDocuments')),
+      React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, t('tresor.noDocumentsHint'))
     ) : React.createElement('div', { style: { display: 'grid', gap: '8px', maxHeight: '600px', overflowY: 'auto' } },
       sortedDocs.map(doc => {
         const status = getExpiryStatus(doc.expiryDate, palette, t);
