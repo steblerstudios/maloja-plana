@@ -5,6 +5,7 @@ import type {
   WorkflowState,
   WorkflowStep,
 } from "../types";
+import { canTransition } from "../state/runtime-state-machine";
 
 export interface WorkflowValidationIssue {
   code: string;
@@ -16,12 +17,6 @@ export interface WorkflowValidationResult {
   valid: boolean;
   issues: WorkflowValidationIssue[];
 }
-
-const terminalStates: WorkflowState[] = [
-  "COMPLETED",
-  "FAILED",
-  "ROLLED_BACK",
-];
 
 export function validateWorkflowDefinition(
   workflow: WorkflowDefinition,
@@ -109,24 +104,5 @@ export function canTransitionToState(
   currentState: WorkflowState,
   nextState: WorkflowState,
 ): boolean {
-  if (terminalStates.includes(currentState)) {
-    return false;
-  }
-
-  if (currentState === nextState) {
-    return true;
-  }
-
-  const allowedTransitions: Record<WorkflowState, WorkflowState[]> = {
-    DRAFT: ["PENDING_APPROVAL", "FAILED"],
-    PENDING_APPROVAL: ["APPROVED", "FAILED"],
-    APPROVED: ["RUNNING", "FAILED"],
-    RUNNING: ["PAUSED", "FAILED", "COMPLETED"],
-    PAUSED: ["RUNNING", "FAILED", "ROLLED_BACK"],
-    FAILED: [],
-    ROLLED_BACK: [],
-    COMPLETED: [],
-  };
-
-  return allowedTransitions[currentState]?.includes(nextState) ?? false;
+  return canTransition(currentState, nextState);
 }
