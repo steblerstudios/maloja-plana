@@ -37,8 +37,8 @@
 
 | ID | Titel | Typ | Module/Agent | Dependencies | Priorität | Status | Hinweise |
 |----|-------|-----|--------------|--------------|-----------|--------|----------|
-| P1-001 | Event Bus | Core | Runtime Governance | None (root) | Hoch | Offen | Synchronous dispatch, wildcard, leak-free |
-| P1-002 | State Machine | Core | Runtime Governance | P1-001 | Hoch | Offen | 2 Lifecycle-Configs (field + document) |
+| P1-001 | Event Bus | Core | Runtime Governance | None (root) | Hoch | ✅ Done | A-004a: RuntimeEventBus mit publish/subscribe/unsubscribe/getEvents |
+| P1-002 | State Machine | Core | Runtime Governance | P1-001 | Hoch | ✅ Done | A-002: Unified State Machine, A-003: typed WorkflowState |
 | P1-003 | Audit Logger (IndexedDB) | Core | Runtime Governance | P1-001 | Hoch | Offen | Append-only, maloja-plana-audit v1 |
 | P1-004 | Module Registry | Core | Runtime Governance | P1-001 | Hoch | Offen | 4 built-in module IDs, idempotent |
 | P1-005 | Dashboard Health Indicator | UX | UX Calmness | P1-004 | Mittel | Offen | 8px dot, 3 colors, aria-label |
@@ -187,8 +187,8 @@
 | SEC-008 | Password Reset Flow | Sicherer Passwort-Reset via E-Mail | Security | SEC-001 | Hoch | Offen | Time-limited tokens |
 | SEC-009 | Rate Limiting | Schutz vor Brute-Force | Security / Backend | SEC-001 | Hoch | Offen | Progressive delays |
 | SEC-010 | Audit Logging (Security Events) | Login-Versuche, Passwort-Änderungen, Sessions | Security / Compliance | SEC-001, P1-003 | Hoch | Offen | ISO 27001 A.9 |
-| SEC-011 | Content Security Policy (CSP) | XSS-Schutz via strikte CSP-Header | Security / DevOps | — | Hoch | Offen | Vor Beta zwingend, ISO 27001 A.14 |
-| SEC-012 | Subresource Integrity (SRI) | Integrity-Checks für externe Ressourcen | Security / DevOps | — | Mittel | Offen | Nur relevant für Tesseract.js Lazy-Load |
+| SEC-011 | Content Security Policy (CSP) | XSS-Schutz via strikte CSP-Header | Security / DevOps | — | Hoch | ✅ Done | `a99d33f` — CSP aktiv |
+| SEC-012 | Subresource Integrity (SRI) | Integrity-Checks für externe Ressourcen | Security / DevOps | — | Mittel | ✅ Done | `c89d97d` — SRI für alle CDN Scripts |
 | SEC-013 | Penetration Test | Professioneller Pen-Test vor Go-Live | Security | All SEC | Hoch | Offen | Externer Anbieter, Budget einplanen |
 
 ---
@@ -276,7 +276,7 @@
 | INF-002 | API-Schnittstellen (REST/GraphQL) | Backend → Frontend Kommunikation | Backend | INF-001 | Hoch | Offen | Versioniert, dokumentiert |
 | INF-003 | Server Hosting & Skalierung | Lastmanagement, Speicher, Nachhaltigkeit | DevOps | INF-001 | Hoch | Offen | Green hosting bevorzugt |
 | INF-004 | Logging / Monitoring / Alerts | Performance und Fehler überwachen | DevOps | INF-003 | Hoch | Offen | CPU, RAM, Storage, Errors |
-| INF-005 | CI/CD Pipeline | Automatisierte Tests, Builds, Deployments | DevOps | INF-002 | Mittel | Offen | GitHub Actions oder ähnlich |
+| INF-005 | CI/CD Pipeline | Automatisierte Tests, Builds, Deployments | DevOps | INF-002 | Mittel | ✅ Done | `08f8814` — GitHub Actions aktiv |
 | INF-006 | Backup-Strategie (Server) | Regelmässige Backups, Recovery-Tests | DevOps / Security | INF-001 | Hoch | Offen | Verschlüsselt, offsite |
 | INF-007 | API Rate Limiting & Throttling | Schutz vor Überlastung | Backend / Security | INF-002 | Mittel | Offen | Per-User Limits |
 | INF-008 | Local-First Sync Engine | Offline-Daten mit Server synchronisieren | Runtime / Backend | INF-002, P2-002 | Mittel | Offen | Conflict resolution, CRDTs evaluieren |
@@ -459,9 +459,9 @@ Deferred:    Gamification + Community       → Phase 4+ (evaluieren)
 
 | # | Entscheidung | ADR | Status |
 |---|-------------|-----|--------|
-| 1 | Lokaler vs. Server-Speicher | ADR-009 | Proposed |
-| 2 | OCR Engine (Tesseract.js vs. Cloud) | ADR-010 | Proposed |
-| 3 | Auth-Strategie (Progressive Levels) | ADR-011 | Proposed |
+| 1 | Lokaler vs. Server-Speicher | ADR-009 | ✅ Accepted |
+| 2 | OCR Engine (Tesseract.js vs. Cloud) | ADR-010 | ✅ Accepted |
+| 3 | Auth-Strategie (Progressive Levels) | ADR-011 | ✅ Accepted |
 | 4 | REST vs. GraphQL | Offen | Empfehlung: REST für MVP |
 | 5 | Conflict Resolution (CRDTs vs. LWW) | Offen | Empfehlung: LWW + Manual Merge |
 | 6 | Rätoromanisch-Übersetzung (Crowdsourced vs. Professionell) | Offen | Noch zu klären |
@@ -472,7 +472,7 @@ Deferred:    Gamification + Community       → Phase 4+ (evaluieren)
 
 ---
 
-*Document: BACKLOG_MASTER.md v2.1.0*  
+*Document: BACKLOG_MASTER.md v2.2.0*  
 *Updated: 2026-05-17*  
 *Source: Executive Dashboard, Phase 1 Master, Phase 2 Blueprint, Stakeholder Feedback, Open Gaps, Agent Architecture*  
 *Next Review: Nach Iteration 0 (ADRs finalisiert)*
