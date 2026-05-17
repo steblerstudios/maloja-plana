@@ -389,7 +389,8 @@ const AppInner = () => {
 // Wrap in I18nProvider + ErrorBoundary
 const App = () => React.createElement(I18nProvider, null,
   React.createElement(ErrorBoundary, null,
-    React.createElement(AppInner)
+    React.createElement(AppInner),
+    React.createElement(SpeedInsights)
   )
 );
 
