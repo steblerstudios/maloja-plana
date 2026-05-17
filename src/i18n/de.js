@@ -97,6 +97,7 @@ export default {
     progressEarly: 'Du hast die ersten Schritte gemacht',
     progressMid: 'Dein Lebensordner nimmt Form an',
     progressLate: 'Fast alles ist an seinem Platz',
+    lastBackup: 'Letzte Sicherung: {date}',
     chapters: 'Kapitel',
     totalFields: 'Felder insgesamt',
     completed: 'Komplett',
