@@ -1,51 +1,44 @@
-import React from 'react';
-import { Icon } from './IconSystem.jsx';
+import React, { useState, useEffect, useRef } from 'react';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
-  const getTimeSince = (date) => {
-    if (!date) return t('common.never');
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
+  const [visible, setVisible] = useState(false);
+  const timerRef = useRef(null);
 
-    if (seconds < 10) return t('common.justNow');
-    if (seconds < 60) return t('common.agoSeconds', { value: seconds });
-
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return t('common.agoMinutes', { value: minutes });
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return t('common.agoHours', { value: hours });
-
-    const days = Math.floor(hours / 24);
-    return t('common.agoDays', { value: days });
-  };
+  useEffect(() => {
+    if (!lastSave && !isSaving) return;
+    setVisible(true);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setVisible(false), 2400);
+    return () => clearTimeout(timerRef.current);
+  }, [lastSave, isSaving]);
 
   return React.createElement('div', {
     'aria-live': 'polite',
     'aria-atomic': 'true',
     style: {
       position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      padding: '12px 16px',
-      background: isSaving ? palette.gold : lastSave ? palette.sage : palette.mid,
-      color: isSaving ? '#000' : lastSave ? '#000' : '#fff',
-      borderRadius: '6px',
-      fontSize: '12px',
-      fontWeight: '600',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+      bottom: '16px',
+      right: '16px',
+      padding: '6px 12px',
+      borderRadius: '4px',
+      fontSize: '11px',
+      fontWeight: '500',
+      color: palette.mid,
+      background: 'transparent',
       display: 'flex',
       alignItems: 'center',
-      gap: '8px',
+      gap: '5px',
       zIndex: 100,
-      animation: 'slideIn 0.3s'
+      opacity: visible ? 1 : 0,
+      transition: 'opacity 0.4s ease',
+      pointerEvents: 'none',
     }
   },
+    React.createElement('span', {
+      style: { fontSize: '12px', color: palette.sage }
+    }, isSaving ? '...' : '✓'),
     React.createElement('span', null,
-      isSaving ? React.createElement(Icon, { name: 'recurring', size: 14 }) : lastSave ? React.createElement(Icon, { name: 'check', size: 14 }) : React.createElement(Icon, { name: 'info', size: 14 })
-    ),
-    React.createElement('span', null,
-      isSaving ? t('common.saving') : lastSave ? t('common.saved') + ' ' + getTimeSince(lastSave) : t('common.notSaved')
+      isSaving ? t('common.saving') : t('common.saved')
     )
   );
 };
