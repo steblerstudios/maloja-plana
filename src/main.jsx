@@ -225,6 +225,13 @@ const AppInner = () => {
 
   const handleDeleteDocument = (docId) => {
     setDocuments(prev => prev.filter(d => d.id !== docId));
+    runtimeEventBus.publish({
+      id: crypto.randomUUID(),
+      eventType: 'DOCUMENT_DELETED',
+      timestamp: new Date().toISOString(),
+      actor: 'user',
+      workflowId: 'document-tresor',
+    });
   };
 
   const handleDownloadDocument = (doc) => {
