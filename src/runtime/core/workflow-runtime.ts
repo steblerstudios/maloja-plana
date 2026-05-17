@@ -4,12 +4,12 @@ import type {
   RuntimeEvent,
 } from "../types";
 
-import { EventBus } from "../events/event-bus";
+import { RuntimeEventBus } from "../events/event-bus";
 
 export class WorkflowRuntime {
   private workflows = new Map<string, WorkflowDefinition>();
 
-  constructor(private readonly eventBus: EventBus) {}
+  constructor(private readonly eventBus: RuntimeEventBus) {}
 
   registerWorkflow(workflow: WorkflowDefinition): void {
     this.workflows.set(workflow.id, workflow);
