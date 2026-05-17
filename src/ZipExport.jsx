@@ -3,6 +3,7 @@ import { prepareDataForExport, prepareDownloadFiles, initiateBrowserDownload } f
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
+import { runtimeEventBus } from './runtime/singleton.ts';
 
 export const ZipExport = ({ palette, t, data, documents }) => {
   const [exporting, setExporting] = useState(false);
@@ -51,6 +52,13 @@ export const ZipExport = ({ palette, t, data, documents }) => {
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.json', json, 'application/json');
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
+      runtimeEventBus.publish({
+        id: crypto.randomUUID(),
+        eventType: 'BACKUP_EXPORTED',
+        timestamp: new Date().toISOString(),
+        actor: 'user',
+        workflowId: 'backup',
+      });
     } catch (e) {
       setBackupStatus({ type: 'error', msg: e.message });
     }
