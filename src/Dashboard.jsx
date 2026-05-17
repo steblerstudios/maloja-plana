@@ -68,6 +68,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     behoerden: 'behoerden', notfall: 'notfall',
   };
 
+  const lastBackupRaw = localStorage.getItem('or5_lastBackup');
+  const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+
   const [alphaDismissed, setAlphaDismissed] = useState(false);
   const hasMeaningfulProgress = completion >= 15;
   const gentleStartActions = [
@@ -163,7 +166,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         : completion === 0 ? t('dashboard.progressStart')
         : completion <= 30 ? t('dashboard.progressEarly')
         : completion <= 60 ? t('dashboard.progressMid')
-        : t('dashboard.progressLate'))
+        : t('dashboard.progressLate')),
+      lastBackup && React.createElement('div', {
+        style: { fontSize: '11px', color: palette.mid, marginTop: '8px', opacity: 0.7 }
+      }, t('dashboard.lastBackup', { date: lastBackup }))
     ),
 
     // ─── Life chapters — calm cards ────────────────────────
