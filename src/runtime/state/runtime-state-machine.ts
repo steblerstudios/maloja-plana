@@ -1,12 +1,25 @@
 import type { WorkflowState } from "../types";
 
+const TERMINAL_STATES: ReadonlySet<WorkflowState> = new Set([
+  "COMPLETED",
+  "FAILED",
+  "ROLLED_BACK",
+]);
+
 const allowedTransitions: Record<WorkflowState, WorkflowState[]> = {
-  DRAFT: ["ACTIVE"],
-  ACTIVE: ["PAUSED", "COMPLETED", "FAILED"],
-  PAUSED: ["ACTIVE", "FAILED"],
+  DRAFT: ["PENDING_APPROVAL", "FAILED"],
+  PENDING_APPROVAL: ["APPROVED", "FAILED"],
+  APPROVED: ["RUNNING", "FAILED"],
+  RUNNING: ["PAUSED", "FAILED", "COMPLETED"],
+  PAUSED: ["RUNNING", "FAILED", "ROLLED_BACK"],
   COMPLETED: [],
   FAILED: [],
+  ROLLED_BACK: [],
 };
+
+export function isTerminalState(state: WorkflowState): boolean {
+  return TERMINAL_STATES.has(state);
+}
 
 export function canTransition(
   from: WorkflowState,
