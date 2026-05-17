@@ -159,7 +159,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
       React.createElement('div', {
         style: { fontSize: '12px', color: palette.mid, marginTop: '10px' }
-      }, completion === 100 ? t('dashboard.progressComplete') : t('dashboard.progressRemaining', { value: 100 - completion }))
+      }, completion === 100 ? t('dashboard.progressComplete')
+        : completion === 0 ? t('dashboard.progressStart')
+        : completion <= 30 ? t('dashboard.progressEarly')
+        : completion <= 60 ? t('dashboard.progressMid')
+        : t('dashboard.progressLate'))
     ),
 
     // ─── Life chapters — calm cards ────────────────────────
