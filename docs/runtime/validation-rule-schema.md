@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the validation rule schema for Maloja Plana / Ordnung & Ruhe.
+This document defines the validation rule schema for Maloja Plana.
 
 Validation rules define how the runtime checks whether a workflow, step, input, output, or execution condition is safe and complete enough to continue.
 

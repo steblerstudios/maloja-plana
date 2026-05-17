@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the audit event schema for Maloja Plana / Ordnung & Ruhe.
+This document defines the audit event schema for Maloja Plana.
 
 Audit events provide a structured, human-readable, and machine-parseable record of relevant workflow activity.
 

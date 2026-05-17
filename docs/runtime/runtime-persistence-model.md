@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the runtime persistence model for Maloja Plana / Ordnung & Ruhe.
+This document defines the runtime persistence model for Maloja Plana.
 
 Runtime persistence describes what workflow-related information is stored locally, why it is stored, how it supports auditability, and how it avoids hidden or uncontrolled data retention.
 

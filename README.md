@@ -1,4 +1,4 @@
-# Ordnung & Ruhe
+# Maloja Plana
 
 **Privacy-first Swiss Life Organizer — 100% lokal, sicher, strukturiert**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Vision
 
-Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
+Maloja Plana ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
 
 **Kern:**
 - ✅ 100% lokal (Deine Daten gehören dir)
@@ -23,7 +23,7 @@ Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer.
 ## 📂 Struktur
 
 ```
-ordnung-ruhe/
+maloja-plana/
 ├── public/                   ← HTML Entry Point
 │   └── index.html
 ├── src/
@@ -60,8 +60,8 @@ ordnung-ruhe/
 
 ```bash
 # 1. Repo klonen (privat)
-git clone https://github.com/YOUR-USERNAME/ordnung-ruhe.git
-cd ordnung-ruhe
+git clone https://github.com/steblerstudios/maloja-plana.git
+cd maloja-plana
 
 # 2. Dependencies installieren
 npm install
