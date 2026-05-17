@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the workflow definition schema for Maloja Plana / Ordnung & Ruhe.
+This document defines the workflow definition schema for Maloja Plana.
 
 A workflow definition describes the planned structure of a workflow before it becomes a runtime workflow instance.
 

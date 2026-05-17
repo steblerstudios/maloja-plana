@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the rollback strategy model for Maloja Plana / Ordnung & Ruhe.
+This document defines the rollback strategy model for Maloja Plana.
 
 Rollback defines how the runtime responds when a workflow action fails, partially completes, or creates an effect that should be restored, compensated, or clearly explained.
 

@@ -1,4 +1,4 @@
-// ─── Ordnung & Ruhe — Service Worker ───────────────────────
+// ─── Maloja Plana — Service Worker ───────────────────────
 // Phase 1: Offline cache + push notification scaffold.
 // No external services. Local-first. Privacy-first.
 //
@@ -84,7 +84,7 @@ self.addEventListener('push', (event) => {
 
     event.waitUntil(
       self.registration.showNotification(
-        data.title || 'Ordnung & Ruhe',
+        data.title || 'Maloja Plana',
         options
       )
     );

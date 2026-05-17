@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the runtime event model for Maloja Plana / Ordnung & Ruhe.
+This document defines the runtime event model for Maloja Plana.
 
 Runtime events are the canonical record of what happened during workflow execution.
 
