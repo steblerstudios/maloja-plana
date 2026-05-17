@@ -71,6 +71,17 @@ Covers:
 - approval events
 - rollback events
 
+## `runtime-ui-poc.md`
+
+Documents the current Runtime ↔ UI proof of concept (A-004a–A-004e).
+
+Covers:
+
+- current UI → Runtime and Runtime → UI connections
+- validated architecture assumptions
+- deliberately deferred decisions
+- known limits and next steps
+
 Core rule:
 
 ```text
