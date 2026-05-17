@@ -3,6 +3,7 @@ import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
+import { runtimeEventBus } from './runtime/singleton.ts';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAddDocument }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -324,6 +325,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
                   expiryDate: uploadExpiry,
                   status: 'active',
                   data: reader.result
+                });
+                runtimeEventBus.publish({
+                  id: crypto.randomUUID(),
+                  eventType: 'DOCUMENT_UPLOADED',
+                  timestamp: new Date().toISOString(),
+                  actor: 'user',
+                  workflowId: 'document-tresor',
                 });
                 setUploadFile(null);
                 setUploadType('');
