@@ -52,6 +52,7 @@ export const ZipExport = ({ palette, t, data, documents }) => {
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.json', json, 'application/json');
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
+      localStorage.setItem('or5_lastBackup', new Date().toISOString());
       runtimeEventBus.publish({
         id: crypto.randomUUID(),
         eventType: 'BACKUP_EXPORTED',
@@ -79,6 +80,7 @@ export const ZipExport = ({ palette, t, data, documents }) => {
       const encrypted = await exportEncrypted(passphrase);
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.maloja', encrypted, 'application/octet-stream');
+      localStorage.setItem('or5_lastBackup', new Date().toISOString());
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
       setPassphrase('');
       setPassphraseConfirm('');
