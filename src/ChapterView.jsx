@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
@@ -11,11 +11,27 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const [uploadFile, setUploadFile] = useState(null);
   const [uploadExpiry, setUploadExpiry] = useState('');
   const [uploadType, setUploadType] = useState('');
+  const [uploadSuccess, setUploadSuccess] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
+
+  useEffect(() => {
+    let timer;
+    const listener = (event) => {
+      if (event.eventType === 'DOCUMENT_UPLOADED') {
+        setUploadSuccess('Dokument hinzugefügt');
+        timer = setTimeout(() => setUploadSuccess(''), 3000);
+      }
+    };
+    runtimeEventBus.subscribe(listener);
+    return () => {
+      runtimeEventBus.unsubscribe(listener);
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
 
   const validateField = (fieldKey, value) => {
     let error = '';
@@ -307,6 +323,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         ),
 
         uploadError && React.createElement('div', { style: { padding: '10px', background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: '6px', color: palette.rose, fontSize: '12px', marginBottom: '12px' } }, uploadError),
+
+        uploadSuccess && React.createElement('div', { style: { padding: '10px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: '6px', color: palette.sage, fontSize: '12px', marginBottom: '12px' } }, '✓ ' + uploadSuccess),
 
         React.createElement('button', {
           onClick: () => {
