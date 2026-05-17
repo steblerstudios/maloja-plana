@@ -171,14 +171,14 @@ const AppInner = () => {
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsSaving(true);
-      localStorage.setItem('or5_data', JSON.stringify(data));
-      localStorage.setItem('or5_docs', JSON.stringify(documents));
-      setLastSave(new Date());
-      setIsSaving(false);
       if (data !== lastPersistedData.current || documents !== lastPersistedDocs.current) {
+        setIsSaving(true);
+        localStorage.setItem('or5_data', JSON.stringify(data));
+        localStorage.setItem('or5_docs', JSON.stringify(documents));
         lastPersistedData.current = data;
         lastPersistedDocs.current = documents;
+        setLastSave(new Date());
+        setIsSaving(false);
         runtimeEventBus.publish({
           id: crypto.randomUUID(),
           eventType: 'DATA_PERSISTED',
