@@ -7,13 +7,13 @@ describe("InMemoryRuntimeStore", () => {
 
     await store.save({
       workflowId: "workflow-1",
-      status: "running",
+      status: "RUNNING",
       currentStepId: "step-1",
     });
 
     expect(await store.findByWorkflowId("workflow-1")).toEqual({
       workflowId: "workflow-1",
-      status: "running",
+      status: "RUNNING",
       currentStepId: "step-1",
     });
   });

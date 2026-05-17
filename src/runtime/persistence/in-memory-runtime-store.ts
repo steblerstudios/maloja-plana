@@ -1,6 +1,8 @@
+import type { WorkflowState } from "../types";
+
 export type RuntimeState = {
   workflowId: string;
-  status?: string;
+  status?: WorkflowState;
   currentStepId?: string;
 };
 
