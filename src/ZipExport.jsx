@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { prepareDataForExport, prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
@@ -168,6 +168,20 @@ export const ZipExport = ({ palette, t, data, documents }) => {
     setBackupStatus(null);
   };
 
+  const [sessionBackupCount, setSessionBackupCount] = useState(
+    () => runtimeEventBus.getEvents().filter(e => e.eventType === 'BACKUP_EXPORTED').length
+  );
+
+  useEffect(() => {
+    const listener = (event) => {
+      if (event.eventType === 'BACKUP_EXPORTED') {
+        setSessionBackupCount(c => c + 1);
+      }
+    };
+    runtimeEventBus.subscribe(listener);
+    return () => runtimeEventBus.unsubscribe(listener);
+  }, []);
+
   const dataSummary = {
     person: data.basis?.fullName || '—',
     lastUpdate: new Date().toLocaleDateString('de-CH'),
@@ -247,6 +261,10 @@ export const ZipExport = ({ palette, t, data, documents }) => {
       // Encrypted backup export
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
         React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'lock', size: 20 }), t('backup.title')),
+
+        sessionBackupCount > 0 && React.createElement('div', {
+          style: { fontSize: '11px', color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: '6px' }
+        }, 'Sitzung: ' + sessionBackupCount + (sessionBackupCount === 1 ? ' Backup erstellt' : ' Backups erstellt')),
 
         React.createElement('button', { onClick: handleExportPlainBackup, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
 
