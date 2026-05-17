@@ -35,6 +35,7 @@ import { syncDocumentReminders } from './utils/docReminders.js';
 import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
+import { runtimeEventBus } from './runtime/singleton.ts';
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
@@ -166,6 +167,8 @@ const AppInner = () => {
   }, [documents]);
 
   useEffect(() => { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); }, [isDarkMode]);
+  const lastPersistedData = React.useRef(data);
+  const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
     const timer = setInterval(() => {
       setIsSaving(true);
@@ -173,6 +176,17 @@ const AppInner = () => {
       localStorage.setItem('or5_docs', JSON.stringify(documents));
       setLastSave(new Date());
       setIsSaving(false);
+      if (data !== lastPersistedData.current || documents !== lastPersistedDocs.current) {
+        lastPersistedData.current = data;
+        lastPersistedDocs.current = documents;
+        runtimeEventBus.publish({
+          id: crypto.randomUUID(),
+          eventType: 'DATA_PERSISTED',
+          timestamp: new Date().toISOString(),
+          actor: 'system',
+          workflowId: 'auto-save',
+        });
+      }
     }, 5000);
     return () => clearInterval(timer);
   }, [data, documents]);
