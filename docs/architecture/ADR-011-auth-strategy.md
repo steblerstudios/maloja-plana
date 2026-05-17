@@ -2,7 +2,7 @@
 
 | Meta | Value |
 |------|-------|
-| **Status** | Proposed |
+| **Status** | Accepted |
 | **Date** | 2026-05-17 |
 | **Deciders** | Sophie Stebler |
 | **Relates to** | ADR-001 (Offline-First), ADR-002 (No Accounts), GAP-04, GAP-05, SEC-001–SEC-010 |
