@@ -28,13 +28,13 @@
 
 | # | Task | Deliverable | Owner | Status |
 |---|------|-------------|-------|--------|
-| 0.1 | ADR-009 finalisieren (Storage) | Entscheidung dokumentiert | Architektur | Proposed |
-| 0.2 | ADR-010 finalisieren (OCR) | Entscheidung dokumentiert | Architektur | Proposed |
-| 0.3 | ADR-011 finalisieren (Auth) | Entscheidung dokumentiert | Architektur | Proposed |
-| 0.4 | CI/CD Pipeline aufsetzen | GitHub Actions, Lint, Tests | DevOps | Offen |
-| 0.5 | Build Budget Enforcement | Size-limit config, Lighthouse CI | DevOps | Offen |
+| 0.1 | ADR-009 finalisieren (Storage) | Entscheidung dokumentiert | Architektur | ✅ Accepted |
+| 0.2 | ADR-010 finalisieren (OCR) | Entscheidung dokumentiert | Architektur | ✅ Accepted |
+| 0.3 | ADR-011 finalisieren (Auth) | Entscheidung dokumentiert | Architektur | ✅ Accepted |
+| 0.4 | CI/CD Pipeline aufsetzen | GitHub Actions, Lint, Tests | DevOps | ✅ Done (`08f8814`) |
+| 0.5 | Build Budget Enforcement | Size-limit config, Lighthouse CI | DevOps | ✅ Done (`86a1630`) |
 
-**Exit Criteria:** Alle ADRs auf "Accepted", CI grün, Build Budget < 200KB enforced.
+**Exit Criteria:** ✅ Alle erfüllt — ADRs Accepted, CI grün, Build Budget < 200KB enforced.
 
 ---
 
@@ -46,14 +46,19 @@
 
 ### Sprint 1.1 — Core Runtime (Woche 1-2)
 
-| Task ID | Titel | Critical Path | Agent |
-|---------|-------|:---:|-------|
-| P1-001 | Event Bus | Yes | Runtime-Agent |
-| P1-002 | State Machine | Yes | Runtime-Agent |
-| P1-003 | Audit Logger (IndexedDB) | Yes | Audit-Agent |
-| P1-004 | Module Registry | Yes | Runtime-Agent |
+| Task ID | Titel | Critical Path | Agent | Status |
+|---------|-------|:---:|-------|--------|
+| P1-001 | Event Bus | Yes | Runtime-Agent | ✅ Done (A-004a) |
+| P1-002 | State Machine | Yes | Runtime-Agent | ✅ Done (A-002, A-003) |
+| P1-003 | Audit Logger (IndexedDB) | Yes | Audit-Agent | Offen |
+| P1-004 | Module Registry | Yes | Runtime-Agent | Offen |
 
-**Milestone:** Event Bus emittiert, State Machine transitiert, Audit schreibt.
+**Milestone:** Event Bus emittiert ✅, State Machine transitiert ✅, Audit schreibt (offen).
+
+**Runtime ↔ UI POC (A-004a–A-004f):**
+Lokale Runtime ↔ UI Verbindung validiert. EventBus publish/subscribe funktioniert.
+Kein React Context, kein Hook-System — bewusst vertagt.
+Details: [runtime-ui-poc.md](../runtime/runtime-ui-poc.md)
 
 ### Sprint 1.2 — Validation & Ingestion (Woche 3-4)
 
