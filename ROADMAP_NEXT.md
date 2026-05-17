@@ -1,4 +1,4 @@
-# Ordnung & Ruhe – Next Phase
+# Maloja Plana – Next Phase
 
 ## Already strong
 - onboarding

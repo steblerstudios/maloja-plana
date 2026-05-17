@@ -1,4 +1,4 @@
-// Lightweight i18n system for Ordnung & Ruhe
+// Lightweight i18n system for Maloja Plana
 // Zero dependencies — uses React Context + simple key lookup
 
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';

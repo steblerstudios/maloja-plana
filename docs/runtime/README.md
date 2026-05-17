@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This directory contains the core runtime specification for Maloja Plana / Ordnung & Ruhe.
+This directory contains the core runtime specification for Maloja Plana.
 
 The runtime documentation defines how workflows are structured, executed, validated, approved, audited, persisted, and recovered.
 

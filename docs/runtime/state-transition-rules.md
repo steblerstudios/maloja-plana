@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines allowed workflow state transitions for Maloja Plana / Ordnung & Ruhe.
+This document defines allowed workflow state transitions for Maloja Plana.
 
 State transitions describe how a workflow may move from one runtime state to another.
 
