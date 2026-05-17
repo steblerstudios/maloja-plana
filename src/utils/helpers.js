@@ -31,6 +31,8 @@ export async function generatePDF({ title, chapters, data, filename }) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    script.integrity = 'sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk';
+    script.crossOrigin = 'anonymous';
 
     script.onload = () => {
       try {
@@ -123,6 +125,8 @@ export async function generateQRCode(text, containerId) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    script.integrity = 'sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU';
+    script.crossOrigin = 'anonymous';
 
     script.onload = () => {
       try {
