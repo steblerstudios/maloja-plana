@@ -256,7 +256,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           fontWeight: '600',
           fontSize: '12px'
         }
-      }, '□ ' + tr('chapterView.fields') + ' (' + chapter.fields.length + ')'),
+      }, tr('chapterView.fields')),
       React.createElement('button', {
         onClick: () => setExpandedSection('documents'),
         style: {
@@ -269,7 +269,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           fontWeight: '600',
           fontSize: '12px'
         }
-      }, '□ ' + tr('chapterView.documents') + ' (' + (chapter.docs ? chapter.docs.length : 0) + ')')
+      }, tr('chapterView.documents'))
     ),
 
     // Fields Tab

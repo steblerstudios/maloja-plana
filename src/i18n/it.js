@@ -316,7 +316,7 @@ export default {
   },
 
   chapterView: {
-    fields: 'Campi',
+    fields: 'Dati',
     documents: 'Documenti',
     selectOption: '— Seleziona —',
     docType: 'Tipo di documento',
