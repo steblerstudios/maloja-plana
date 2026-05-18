@@ -314,6 +314,17 @@ export default {
     },
   },
 
+  notfallSummary: {
+    contact: 'Vertrauensperson',
+    bloodType: 'Blutgruppe',
+    vorsorge: 'Vorsorge',
+    patientenverfuegung: 'Patientenverfügung',
+    vorsorgeauftrag: 'Vorsorgeauftrag',
+    bestattungswuensche: 'Bestattungswünsche',
+    done: 'Vorhanden',
+    open: 'Noch offen',
+  },
+
   chapterView: {
     emptyState: 'Hier ist noch nichts — und das ist völlig in Ordnung.',
     emptyStateHint: 'Du kannst mit ein paar wenigen Angaben beginnen. Alles lässt sich später ergänzen.',

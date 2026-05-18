@@ -314,6 +314,17 @@ export default {
     },
   },
 
+  notfallSummary: {
+    contact: 'Personne de confiance',
+    bloodType: 'Groupe sanguin',
+    vorsorge: 'Prévoyance',
+    patientenverfuegung: 'Directives anticipées',
+    vorsorgeauftrag: 'Mandat pour cause d\'inaptitude',
+    bestattungswuensche: 'Volontés funéraires',
+    done: 'Fait',
+    open: 'Encore ouvert',
+  },
+
   chapterView: {
     emptyState: 'Rien ici pour le moment — et c\'est tout à fait normal.',
     emptyStateHint: 'Vous pouvez commencer par quelques informations. Tout peut être complété plus tard.',
