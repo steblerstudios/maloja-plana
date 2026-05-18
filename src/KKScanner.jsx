@@ -161,7 +161,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         ))
       ),
 
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '○ ' + t('emergency.qrCode')),
+      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '○ ' + t('kkScanner.qrBarcode')),
 
       qrCode && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', textAlign: 'center' } },
         React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),

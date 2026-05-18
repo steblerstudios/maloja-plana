@@ -517,37 +517,6 @@ export default {
     cvTitle: 'Lebenslauf',
   },
 
-  emergency: {
-    title: 'Notfall-Hub',
-    bloodType: 'BLUTGRUPPE',
-    emergencyContact: 'Notfall-Kontakt',
-    allergies: 'ALLERGIEN',
-    medications: 'Regelmässige Medikamente',
-    doctor: 'Hausarzt',
-    hospital: 'Spital',
-    emergencyCard: 'Notfall-Karte',
-    qrCode: 'QR-Code',
-    edit: 'Bearbeiten',
-    tips: {
-      card: 'Notfall-Karte immer im Geldbeutel tragen',
-      contact: 'Notfall-Kontakt leicht erreichbar halten',
-      blood: 'Blutgruppe kennen und mitteilen',
-      allergies: 'Allergien & Medikamente dokumentieren',
-    },
-    vorsorge: {
-      title: 'Vorsorgedokumente',
-      intro: 'Diese Schweizer Dokumente schützen Dich und Deine Familie. Es eilt nicht — Du kannst sie jederzeit erstellen.',
-      patientenverfuegung: 'Patientenverfügung',
-      patientenverfuegungDesc: 'Anweisungen für medizinische Behandlung, wenn Du Deine Wünsche nicht äussern kannst.',
-      vorsorgeauftrag: 'Vorsorgeauftrag',
-      vorsorgeauftragDesc: 'Bestimmt eine Vertrauensperson, die für Dich handelt, wenn Du urteilsunfähig wirst.',
-      bestattungswuensche: 'Bestattungswünsche',
-      bestattungswuenscheDesc: 'Deine persönlichen Wünsche bezüglich Bestattung oder Kremation.',
-      statusYes: 'Erstellt',
-      statusNo: 'Noch nicht erstellt',
-    },
-  },
-
   organ: {
     title: 'Organspende',
     status: 'Status',
