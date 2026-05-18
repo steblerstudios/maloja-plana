@@ -330,6 +330,12 @@ export default {
     selectExpiry: 'Please enter expiry date',
     uploadError: 'Upload error',
     hint: 'Hint',
+    trustDocuments: 'Your documents stay on this device.',
+  },
+
+  trust: {
+    footer: 'Only on this device · No server',
+    emergency: 'This information is stored locally only.',
   },
 
   tresor: {

@@ -329,6 +329,12 @@ export default {
     selectExpiry: 'Bitte Ablaufdatum eingeben',
     uploadError: 'Fehler beim Upload',
     hint: 'Hinweis',
+    trustDocuments: 'Deine Dokumente bleiben auf diesem Gerät.',
+  },
+
+  trust: {
+    footer: 'Nur auf diesem Gerät · Kein Server',
+    emergency: 'Diese Informationen werden nur lokal gespeichert.',
   },
 
   tresor: {
