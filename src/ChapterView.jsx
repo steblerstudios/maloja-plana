@@ -279,7 +279,32 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
       ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
-        chapter.fields.map(field => renderField(field))
+        chapter.fields.map((field, idx) => {
+          const elements = [];
+          if (field.section) {
+            const isFirst = idx === 0 || !chapter.fields.slice(0, idx).some(f => f.section);
+            elements.push(
+              React.createElement('div', {
+                key: 'section-' + field.k,
+                role: 'presentation',
+                'aria-label': field.section,
+                style: {
+                  gridColumn: '1 / -1',
+                  marginTop: isFirst ? 0 : '28px',
+                  paddingTop: isFirst ? 0 : '16px',
+                  borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  color: palette.mid,
+                  letterSpacing: '0.4px',
+                  marginBottom: '4px',
+                }
+              }, field.section)
+            );
+          }
+          elements.push(renderField(field));
+          return elements;
+        })
       )
     ),
 
