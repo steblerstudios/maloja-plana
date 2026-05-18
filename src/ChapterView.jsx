@@ -234,12 +234,73 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const introText = tr('chapters.' + chapter.key + '.intro');
   const hasIntro = introText && introText !== 'chapters.' + chapter.key + '.intro';
 
+  const isNotfall = chapter.key === 'notfall';
+  const hasContact = isNotfall && data.emergencyContact;
+  const hasBlood = isNotfall && data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '';
+  const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
+  const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
+  const showSummary = hasContact || hasBlood || hasVorsorge;
+
+  const bloodTypeColors = {
+    '0+': palette.rose, '0-': palette.rose,
+    'A+': palette.gold, 'A-': palette.gold,
+    'B+': palette.sky, 'B-': palette.sky,
+    'AB+': palette.sage, 'AB-': palette.sage,
+  };
+
   return React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     // Header
     React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
       React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: '13px', color: palette.mid, marginTop: '8px', fontStyle: 'italic' } }, introText)
+    ),
+
+    // Quiet emergency summary — only when data exists
+    showSummary && React.createElement('div', {
+      style: { marginBottom: '20px', padding: '16px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border }
+    },
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'flex-start' } },
+
+        // Contact card
+        hasContact && React.createElement('div', {
+          style: { flex: '1 1 180px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border }
+        },
+          React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '6px', letterSpacing: '0.3px' } }, tr('notfallSummary.contact')),
+          React.createElement('div', { style: { fontSize: '13px', fontWeight: '500' } }, data.emergencyContact),
+          data.emergencyPhone && React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginTop: '2px' } }, data.emergencyPhone)
+        ),
+
+        // Blood type
+        hasBlood && React.createElement('div', {
+          style: {
+            flex: '0 0 auto', padding: '12px 20px', background: (bloodTypeColors[data.bloodType] || palette.mid) + '15',
+            borderRadius: '6px', border: '1px solid ' + (bloodTypeColors[data.bloodType] || palette.border), textAlign: 'center'
+          }
+        },
+          React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px', letterSpacing: '0.3px' } }, tr('notfallSummary.bloodType')),
+          React.createElement('div', { style: { fontSize: '24px', fontWeight: '600', color: bloodTypeColors[data.bloodType] || palette.text } }, data.bloodType)
+        )
+      ),
+
+      // Vorsorge overview
+      hasVorsorge && React.createElement('div', {
+        style: { marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px' }
+      },
+        vorsorgeKeys.filter(k => data[k]).map(k =>
+          React.createElement('div', {
+            key: k,
+            style: {
+              fontSize: '11px', padding: '4px 10px', borderRadius: '4px', letterSpacing: '0.2px',
+              background: data[k] === 'yes' ? palette.sage + '20' : palette.up,
+              color: data[k] === 'yes' ? palette.sage : palette.mid,
+              border: '1px solid ' + (data[k] === 'yes' ? palette.sage + '40' : palette.border),
+            }
+          },
+            tr('notfallSummary.' + k) + ' — ' + (data[k] === 'yes' ? tr('notfallSummary.done') : tr('notfallSummary.open'))
+          )
+        )
+      )
     ),
 
     // Tabs
