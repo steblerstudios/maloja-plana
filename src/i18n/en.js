@@ -518,37 +518,6 @@ export default {
     cvTitle: 'CV',
   },
 
-  emergency: {
-    title: 'Emergency hub',
-    bloodType: 'BLOOD TYPE',
-    emergencyContact: 'Emergency contact',
-    allergies: 'ALLERGIES',
-    medications: 'Regular medications',
-    doctor: 'Family doctor',
-    hospital: 'Hospital',
-    emergencyCard: 'Emergency card',
-    qrCode: 'QR code',
-    edit: 'Edit',
-    tips: {
-      card: 'Always keep the emergency card in your wallet',
-      contact: 'Keep emergency contact easily reachable',
-      blood: 'Know and communicate your blood type',
-      allergies: 'Document allergies and medications',
-    },
-    vorsorge: {
-      title: 'Vorsorge documents',
-      intro: 'These Swiss legal documents help protect you and your family. There is no rush — you can create them at any time.',
-      patientenverfuegung: 'Advance healthcare directive',
-      patientenverfuegungDesc: 'Instructions for medical treatment if you cannot communicate your wishes.',
-      vorsorgeauftrag: 'Lasting power of attorney',
-      vorsorgeauftragDesc: 'Designates a trusted person to act on your behalf if you lose capacity.',
-      bestattungswuensche: 'Burial wishes',
-      bestattungswuenscheDesc: 'Your personal wishes regarding burial or cremation.',
-      statusYes: 'Created',
-      statusNo: 'Not yet created',
-    },
-  },
-
   organ: {
     title: 'Organ donation',
     status: 'Status',

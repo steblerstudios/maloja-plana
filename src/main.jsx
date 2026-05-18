@@ -23,7 +23,6 @@ import TaxCalculator from './TaxCalculator.jsx';
 import OrganDonation from './OrganDonation.jsx';
 import BudgetSync from './BudgetSync.jsx';
 import PremiumSubsidy from './PremiumSubsidy.jsx';
-import EmergencyHub from './EmergencyHub.jsx';
 import CVGenerator from './CVGenerator.jsx';
 import ChartsAdvanced from './ChartsAdvanced.jsx';
 import ZipExport from './ZipExport.jsx';
@@ -374,7 +373,6 @@ const AppInner = () => {
       }),
       view === 'sync' && React.createElement(BudgetSync, { palette, t, data }),
       view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data }),
-      view === 'notfall' && React.createElement(EmergencyHub, { palette, t, data }),
       view === 'cv' && React.createElement(CVGenerator, { palette, t, data }),
       view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data }),
       view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data }),

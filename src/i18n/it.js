@@ -518,37 +518,6 @@ export default {
     cvTitle: 'CV',
   },
 
-  emergency: {
-    title: 'Centro emergenze',
-    bloodType: 'GRUPPO SANGUIGNO',
-    emergencyContact: 'Contatto di emergenza',
-    allergies: 'ALLERGIE',
-    medications: 'Medicamenti regolari',
-    doctor: 'Medico di famiglia',
-    hospital: 'Ospedale',
-    emergencyCard: 'Tessera di emergenza',
-    qrCode: 'Codice QR',
-    edit: 'Modifica',
-    tips: {
-      card: 'Tieni sempre la tessera di emergenza nel portafoglio',
-      contact: 'Mantieni il contatto di emergenza facilmente raggiungibile',
-      blood: 'Conosci e comunica il tuo gruppo sanguigno',
-      allergies: 'Documenta allergie e medicamenti',
-    },
-    vorsorge: {
-      title: 'Documenti di previdenza',
-      intro: 'Questi documenti legali svizzeri proteggono voi e la vostra famiglia. Non c\'è fretta — potete crearli in qualsiasi momento.',
-      patientenverfuegung: 'Direttive anticipate',
-      patientenverfuegungDesc: 'Istruzioni per il trattamento medico se non potete esprimere i vostri desideri.',
-      vorsorgeauftrag: 'Mandato precauzionale',
-      vorsorgeauftragDesc: 'Designa una persona di fiducia per agire in vostro nome in caso di incapacità.',
-      bestattungswuensche: 'Desideri di sepoltura',
-      bestattungswuenscheDesc: 'I vostri desideri personali riguardo la sepoltura o la cremazione.',
-      statusYes: 'Creato',
-      statusNo: 'Non ancora creato',
-    },
-  },
-
   organ: {
     title: 'Donazione di organi',
     status: 'Stato',

@@ -116,7 +116,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       ),
 
       qrGenerated && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', textAlign: 'center', marginBottom: '16px' } },
-        React.createElement('div', { style: { fontSize: '12px', fontWeight: '600', marginBottom: '12px' } }, t('emergency.qrCode')),
+        React.createElement('div', { style: { fontSize: '12px', fontWeight: '600', marginBottom: '12px' } }, t('organ.generateQr')),
         React.createElement('div', { id: 'organ-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px', minHeight: '220px' } })
       ),
 

@@ -517,37 +517,6 @@ export default {
     cvTitle: 'CV',
   },
 
-  emergency: {
-    title: 'Centre d\'urgence',
-    bloodType: 'GROUPE SANGUIN',
-    emergencyContact: 'Contact d\'urgence',
-    allergies: 'ALLERGIES',
-    medications: 'Médicaments réguliers',
-    doctor: 'Médecin de famille',
-    hospital: 'Hôpital',
-    emergencyCard: 'Carte d\'urgence',
-    qrCode: 'Code QR',
-    edit: 'Modifier',
-    tips: {
-      card: 'Gardez toujours la carte d\'urgence dans votre portefeuille',
-      contact: 'Gardez le contact d\'urgence facilement accessible',
-      blood: 'Connaissez et communiquez votre groupe sanguin',
-      allergies: 'Documentez vos allergies et médicaments',
-    },
-    vorsorge: {
-      title: 'Documents de prévoyance',
-      intro: 'Ces documents juridiques suisses protègent vous et votre famille. Rien ne presse — vous pouvez les créer à tout moment.',
-      patientenverfuegung: 'Directives anticipées',
-      patientenverfuegungDesc: 'Instructions pour le traitement médical si vous ne pouvez pas exprimer vos souhaits.',
-      vorsorgeauftrag: 'Mandat pour cause d\'inaptitude',
-      vorsorgeauftragDesc: 'Désigne une personne de confiance pour agir en votre nom en cas d\'incapacité.',
-      bestattungswuensche: 'Souhaits funéraires',
-      bestattungswuenscheDesc: 'Vos souhaits personnels concernant l\'inhumation ou la crémation.',
-      statusYes: 'Créé',
-      statusNo: 'Pas encore créé',
-    },
-  },
-
   organ: {
     title: 'Don d\'organes',
     status: 'Statut',
