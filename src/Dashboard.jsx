@@ -68,6 +68,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     return palette.sage + '20';
   };
 
+  const getIconOpacity = (pct) => {
+    if (pct === 0) return 0.28;
+    if (pct < 50) return 0.55;
+    if (pct < 100) return 0.78;
+    return 1;
+  };
+
   // Chapter icon mapping to SVG system
   const chapterIcons = {
     basis: 'basis', wohnen: 'wohnen', finanzen: 'finanzen',
@@ -234,7 +241,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           },
             // Icon
             React.createElement('div', {
-              style: { width: '40px', height: '40px', borderRadius: '10px', background: getIconBg(pct), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: statusColor, transition: 'background 0.4s' }
+              style: { width: '40px', height: '40px', borderRadius: '10px', background: getIconBg(pct), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct), transition: 'background 0.4s, opacity 0.6s ease' }
             }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
 
             // Text
