@@ -178,15 +178,27 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }
       }, t('dashboard.yourChapters')),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '10px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '0px' } },
         chapters.map((ch, idx) => {
           const { pct, filled, total } = calculateChapterCompletion(ch.key);
           const statusColor = getStatusColor(pct);
           const iconKey = chapterIcons[ch.key];
           const IconFn = iconKey && Icons[iconKey];
+          const prevPct = idx > 0 ? calculateChapterCompletion(chapters[idx - 1].key).pct : null;
 
-          return React.createElement('button', {
-            key: ch.key,
+          return React.createElement(React.Fragment, { key: ch.key },
+            idx > 0 && React.createElement('div', {
+              'aria-hidden': 'true',
+              style: {
+                width: '2px', height: '20px',
+                marginLeft: '39px',
+                background: (prevPct > 0 && pct > 0) ? palette.sand : palette.border,
+                opacity: (prevPct > 0 && pct > 0) ? 0.6 : 0.3,
+                borderRadius: '1px',
+                transition: 'background 0.4s, opacity 0.4s',
+              }
+            }),
+            React.createElement('button', {
             onClick: () => onSelectChapter(idx),
             style: {
               display: 'flex', alignItems: 'center', gap: '16px',
@@ -246,6 +258,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 }
               }, pct)
             )
+          )
           );
         })
       )
