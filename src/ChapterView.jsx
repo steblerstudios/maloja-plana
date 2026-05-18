@@ -240,6 +240,54 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
   const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
   const showSummary = hasContact || hasBlood || hasVorsorge;
+  const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || data.doctor);
+
+  const handleSaveCard = () => {
+    const lines = [
+      '══════════════════════════════════',
+      '  ' + tr('notfallSummary.cardTitle').toUpperCase(),
+      '══════════════════════════════════',
+      '',
+    ];
+    if (data.emergencyContact) {
+      lines.push('◎ ' + tr('notfallSummary.contact') + ':');
+      lines.push('  ' + data.emergencyContact);
+      if (data.emergencyPhone) lines.push('  ' + data.emergencyPhone);
+      lines.push('');
+    }
+    if (data.bloodType && data.bloodType !== 'unknown') {
+      lines.push('◉ ' + tr('notfallSummary.bloodType') + ': ' + data.bloodType);
+      lines.push('');
+    }
+    if (data.allergies) {
+      lines.push('!! ' + tr('chapters.notfall.fields.allergies') + ':');
+      lines.push('  ' + data.allergies);
+      lines.push('');
+    }
+    if (data.medications) {
+      lines.push('Rx ' + tr('chapters.notfall.fields.medications') + ':');
+      lines.push('  ' + data.medications);
+      lines.push('');
+    }
+    if (data.doctor) {
+      lines.push('○ ' + tr('chapters.notfall.fields.doctor') + ': ' + data.doctor);
+      if (data.doctorPhone) lines.push('  ' + data.doctorPhone);
+      lines.push('');
+    }
+    if (data.hospital) {
+      lines.push('⌂ ' + tr('chapters.notfall.fields.hospital') + ': ' + data.hospital);
+      lines.push('');
+    }
+    lines.push('══════════════════════════════════');
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = tr('notfallSummary.cardTitle').replace(/\s/g, '_') + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const bloodTypeColors = {
     '0+': palette.rose, '0-': palette.rose,
@@ -300,6 +348,23 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
             tr('notfallSummary.' + k) + ' — ' + (data[k] === 'yes' ? tr('notfallSummary.done') : tr('notfallSummary.open'))
           )
         )
+      ),
+
+      // Save card — quiet text link
+      hasMedical && React.createElement('div', {
+        style: { marginTop: '14px', paddingTop: '12px', borderTop: '1px solid ' + palette.border }
+      },
+        React.createElement('span', {
+          onClick: handleSaveCard,
+          role: 'button',
+          tabIndex: 0,
+          onKeyDown: (e) => { if (e.key === 'Enter') handleSaveCard(); },
+          style: {
+            fontSize: '11px', color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
+            borderBottom: '1px solid ' + palette.border,
+            paddingBottom: '1px',
+          }
+        }, '□ ' + tr('notfallSummary.saveCard'))
       )
     ),
 
