@@ -69,7 +69,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   };
 
   const getIconOpacity = (pct) => {
-    if (pct === 0) return 0.28;
+    if (pct === 0) return 0.44;
     if (pct < 50) return 0.55;
     if (pct < 100) return 0.78;
     return 1;
