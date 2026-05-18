@@ -328,8 +328,14 @@ export default {
     selectExpiry: 'Inserisci la data di scadenza',
     uploadError: 'Errore durante il caricamento',
     hint: 'Nota',
+    trustDocuments: 'I tuoi documenti restano su questo dispositivo.',
     emptyState: 'Niente qui per il momento — ed è perfettamente normale.',
     emptyStateHint: 'Puoi iniziare con poche informazioni. Tutto può essere completato in seguito.',
+  },
+
+  trust: {
+    footer: 'Solo su questo dispositivo · Nessun server',
+    emergency: 'Queste informazioni vengono salvate solo localmente.',
   },
 
   tresor: {

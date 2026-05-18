@@ -158,6 +158,9 @@ Rx ${t('emergency.medications')}:
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid } }, item.desc)
         ))
       )
+    ),
+    React.createElement('div', { style: { fontSize: '10px', color: palette.mid, marginTop: '16px', letterSpacing: '0.2px' } },
+      t('trust.emergency')
     )
   );
 };
