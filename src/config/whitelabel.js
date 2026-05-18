@@ -38,7 +38,6 @@ const DEFAULT_CONFIG = {
     showDebtManager: true,
     showCVBuilder: true,
     showOrganDonation: true,
-    showEmergencyHub: true,
     showCalendar: true,
     showCharts: true,
     showExport: true,
