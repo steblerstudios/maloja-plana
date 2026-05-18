@@ -329,6 +329,12 @@ export default {
     selectExpiry: 'Veuillez entrer la date d\'expiration',
     uploadError: 'Erreur d\'importation',
     hint: 'Indication',
+    trustDocuments: 'Tes documents restent sur cet appareil.',
+  },
+
+  trust: {
+    footer: 'Uniquement sur cet appareil · Aucun serveur',
+    emergency: 'Ces informations sont stockées uniquement localement.',
   },
 
   tresor: {
