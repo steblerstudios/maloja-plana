@@ -1,4 +1,13 @@
 export default {
+  sections: {
+    basis: { person: 'Person', contact: 'Kontakt', family: 'Familie' },
+    wohnen: { address: 'Adresse', costs: 'Kosten', landlord: 'Vermieter', property: 'Eigentum' },
+    finanzen: { income: 'Einkommen', savings: 'Sparen', credit: 'Kredit', provision: 'Vorsorge' },
+    versicherungen: { basic: 'Grundversicherung', occupational: 'Berufliche Vorsorge', additional: 'Weitere Versicherungen' },
+    ausbildung: { education: 'Bildung', work: 'Arbeit', languages: 'Sprachen' },
+    behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
+    notfall: { contact: 'Notfallkontakt', medical: 'Medizinisches', care: 'Ärztliche Betreuung', provision: 'Vorsorge' },
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Alles Wichtige an einem Ort.',
