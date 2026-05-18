@@ -315,6 +315,17 @@ export default {
     },
   },
 
+  notfallSummary: {
+    contact: 'Trusted person',
+    bloodType: 'Blood type',
+    vorsorge: 'Provisions',
+    patientenverfuegung: 'Advance directive',
+    vorsorgeauftrag: 'Power of attorney',
+    bestattungswuensche: 'Funeral wishes',
+    done: 'Done',
+    open: 'Still open',
+  },
+
   chapterView: {
     emptyState: 'Nothing here yet — and that\'s fine.',
     emptyStateHint: 'You can start with just a few details. Everything can be updated later.',
