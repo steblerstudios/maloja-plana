@@ -317,7 +317,7 @@ export default {
   chapterView: {
     emptyState: 'Hier ist noch nichts — und das ist völlig in Ordnung.',
     emptyStateHint: 'Du kannst mit ein paar wenigen Angaben beginnen. Alles lässt sich später ergänzen.',
-    fields: 'Felder',
+    fields: 'Angaben',
     documents: 'Dokumente',
     selectOption: '— Auswählen —',
     docType: 'Dokumenttyp',
