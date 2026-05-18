@@ -315,6 +315,17 @@ export default {
     },
   },
 
+  notfallSummary: {
+    contact: 'Persona di fiducia',
+    bloodType: 'Gruppo sanguigno',
+    vorsorge: 'Previdenza',
+    patientenverfuegung: 'Direttive anticipate',
+    vorsorgeauftrag: 'Mandato precauzionale',
+    bestattungswuensche: 'Volontà funerarie',
+    done: 'Presente',
+    open: 'Ancora aperto',
+  },
+
   chapterView: {
     fields: 'Dati',
     documents: 'Documenti',
