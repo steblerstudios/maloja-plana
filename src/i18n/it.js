@@ -319,6 +319,8 @@ export default {
     contact: 'Persona di fiducia',
     bloodType: 'Gruppo sanguigno',
     vorsorge: 'Previdenza',
+    saveCard: 'Salva scheda d\'emergenza',
+    cardTitle: 'Scheda d\'emergenza',
     patientenverfuegung: 'Direttive anticipate',
     vorsorgeauftrag: 'Mandato precauzionale',
     bestattungswuensche: 'Volontà funerarie',

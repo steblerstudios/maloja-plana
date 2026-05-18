@@ -318,6 +318,8 @@ export default {
     contact: 'Vertrauensperson',
     bloodType: 'Blutgruppe',
     vorsorge: 'Vorsorge',
+    saveCard: 'Notfallkarte sichern',
+    cardTitle: 'Notfallkarte',
     patientenverfuegung: 'Patientenverfügung',
     vorsorgeauftrag: 'Vorsorgeauftrag',
     bestattungswuensche: 'Bestattungswünsche',
