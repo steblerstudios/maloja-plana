@@ -406,6 +406,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         React.createElement('ul', { style: { fontSize: '12px', paddingLeft: '20px', margin: 0 } },
           chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc.label))
         )
+      ),
+      React.createElement('div', { style: { fontSize: '10px', color: palette.mid, marginTop: '12px', letterSpacing: '0.2px' } },
+        tr('chapterView.trustDocuments')
       )
     )
   );

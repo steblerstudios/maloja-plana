@@ -382,7 +382,20 @@ const AppInner = () => {
       view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data }),
       view === 'notifications' && React.createElement(NotificationSettings, { palette, t })
     ),
-    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving })
+    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
+    React.createElement('div', {
+      'aria-label': t('trust.footer'),
+      style: {
+        position: 'fixed',
+        bottom: '16px',
+        left: '16px',
+        fontSize: '10px',
+        color: palette.mid,
+        letterSpacing: '0.3px',
+        pointerEvents: 'none',
+        opacity: 0.7,
+      }
+    }, t('trust.footer'))
   );
 };
 
