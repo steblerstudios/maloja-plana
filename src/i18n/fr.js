@@ -318,6 +318,8 @@ export default {
     contact: 'Personne de confiance',
     bloodType: 'Groupe sanguin',
     vorsorge: 'Prévoyance',
+    saveCard: 'Sauvegarder la fiche d\'urgence',
+    cardTitle: 'Fiche d\'urgence',
     patientenverfuegung: 'Directives anticipées',
     vorsorgeauftrag: 'Mandat pour cause d\'inaptitude',
     bestattungswuensche: 'Volontés funéraires',

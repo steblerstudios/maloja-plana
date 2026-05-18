@@ -319,6 +319,8 @@ export default {
     contact: 'Trusted person',
     bloodType: 'Blood type',
     vorsorge: 'Provisions',
+    saveCard: 'Save emergency card',
+    cardTitle: 'Emergency Card',
     patientenverfuegung: 'Advance directive',
     vorsorgeauftrag: 'Power of attorney',
     bestattungswuensche: 'Funeral wishes',
