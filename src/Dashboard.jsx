@@ -113,58 +113,91 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.tagline'))
     ),
 
-    // ─── Maloja Pass silhouette — topographic anchor ───────
+    // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
-      'aria-hidden': 'true',
-      style: { margin: '20px -8px 28px -8px', lineHeight: 0 }
+      style: { margin: '20px -8px 28px -8px', lineHeight: 0, position: 'relative' }
     },
       React.createElement('svg', {
         viewBox: '0 0 720 200',
         preserveAspectRatio: 'xMidYMax slice',
+        'aria-hidden': 'true',
         style: { width: '100%', height: 'auto', display: 'block' }
       },
-        // Far peaks — distant massif, lightest
+        // Far peaks — distant massif
         React.createElement('path', {
           d: 'M 0 200 L 0 120 L 30 105 L 65 70 L 85 55 L 105 68 L 130 42 L 150 30 L 170 45 L 195 58 L 220 38 L 245 22 L 260 30 L 280 50 L 300 65 L 330 80 L 360 95 L 390 88 L 410 80 L 440 70 L 460 55 L 475 42 L 490 28 L 510 18 L 530 30 L 548 45 L 560 55 L 580 68 L 610 80 L 640 72 L 660 58 L 680 48 L 700 60 L 720 75 L 720 200 Z',
           fill: palette.sage, opacity: 0.07,
         }),
-        // Mid peaks — Piz Lunghin side (left) and Bergell peaks (right)
+        // Mid peaks
         React.createElement('path', {
           d: 'M 0 200 L 0 140 L 40 125 L 70 95 L 95 78 L 115 85 L 140 62 L 165 48 L 185 55 L 210 72 L 240 58 L 260 45 L 275 55 L 295 75 L 320 100 L 345 115 L 370 125 L 395 120 L 415 128 L 435 118 L 455 100 L 475 80 L 495 62 L 515 48 L 535 55 L 555 72 L 575 85 L 600 95 L 625 90 L 650 78 L 670 68 L 695 80 L 720 100 L 720 200 Z',
           fill: palette.sage, opacity: 0.12,
         }),
-        // Front range — the pass saddle clearly visible around x:360
+        // Front range with pass saddle
         React.createElement('path', {
           d: 'M 0 200 L 0 155 L 35 142 L 60 120 L 90 105 L 110 110 L 135 92 L 155 80 L 175 88 L 200 100 L 225 112 L 260 130 L 290 142 L 320 150 L 350 155 L 380 158 L 410 155 L 435 148 L 455 135 L 475 118 L 498 100 L 520 85 L 540 78 L 560 88 L 585 102 L 610 115 L 640 108 L 665 95 L 690 105 L 720 120 L 720 200 Z',
           fill: palette.sage, opacity: 0.20,
         }),
-        // Pass trail — the path crossing the Malojapass saddle
+        // Pass trail
         React.createElement('path', {
           d: 'M 15 162 Q 60 148 110 132 Q 160 116 220 128 Q 280 142 330 152 L 360 156 Q 390 156 420 150 Q 465 138 510 118 Q 555 102 590 110 Q 640 120 705 128',
           fill: 'none', stroke: palette.sand, strokeWidth: '1.5', opacity: 0.45,
           strokeLinecap: 'round',
-        }),
-        // 7 station dots along the pass trail
-        ...[
-          { x: 50, y: 152 },
-          { x: 140, y: 124 },
-          { x: 240, y: 136 },
-          { x: 340, y: 153 },
-          { x: 440, y: 145 },
-          { x: 540, y: 110 },
-          { x: 660, y: 122 },
-        ].map((pos, i) => {
+        })
+      ),
+      // Chapter icons positioned along the trail
+      React.createElement('div', {
+        style: { position: 'absolute', inset: 0, pointerEvents: 'none' }
+      },
+        [
+          { x: 6.9, y: 76, key: 'basis' },
+          { x: 19.4, y: 62, key: 'wohnen' },
+          { x: 33.3, y: 68, key: 'finanzen' },
+          { x: 47.2, y: 76.5, key: 'versicherungen' },
+          { x: 61.1, y: 72.5, key: 'ausbildung' },
+          { x: 75, y: 55, key: 'behoerden' },
+          { x: 91.7, y: 61, key: 'notfall' },
+        ].map((station, i) => {
           const pct = chapterCompletions[i] || 0;
-          const dotColor = pct === 100 ? palette.sage : pct > 0 ? palette.sand : palette.border;
-          const dotOpacity = pct === 0 ? 0.4 : pct === 100 ? 0.9 : 0.7;
-          return React.createElement('circle', {
-            key: 'dot-' + i,
-            cx: pos.x, cy: pos.y,
-            r: pct > 0 ? 4 : 3,
-            fill: dotColor,
-            opacity: dotOpacity,
-            style: { transition: 'fill 0.6s, opacity 0.6s, r 0.4s' },
-          });
+          const iconColor = pct === 100 ? palette.sage : pct > 0 ? palette.sand : palette.mid;
+          const iconOpacity = pct === 0 ? 0.55 : pct === 100 ? 0.95 : 0.8;
+          const iconKey = chapterIcons[station.key];
+          const IconFn = iconKey && Icons[iconKey];
+          return React.createElement('button', {
+            key: station.key,
+            onClick: () => onSelectChapter(i),
+            'aria-label': chapters[i] ? chapters[i].title : station.key,
+            style: {
+              position: 'absolute',
+              left: station.x + '%',
+              top: station.y + '%',
+              transform: 'translate(-50%, -50%)',
+              width: '28px', height: '28px',
+              background: palette.surface,
+              border: '1.5px solid ' + (pct > 0 ? iconColor : palette.border),
+              borderRadius: '50%',
+              padding: '4px',
+              cursor: 'pointer',
+              pointerEvents: 'auto',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: iconColor,
+              opacity: iconOpacity,
+              transition: 'opacity 0.4s, border-color 0.3s, background 0.3s, transform 0.2s',
+              boxShadow: pct > 0 ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+            },
+            onMouseEnter: (e) => {
+              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.15)';
+            },
+            onMouseLeave: (e) => {
+              e.currentTarget.style.opacity = String(iconOpacity);
+              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
+            },
+          },
+            React.createElement('div', {
+              style: { width: '18px', height: '18px' }
+            }, IconFn ? IconFn() : null)
+          );
         })
       )
     ),
