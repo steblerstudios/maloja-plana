@@ -29,68 +29,45 @@ import React from 'react';
 // Chapter Icons (24x24 default)
 // ═══════════════════════════════════════════════════════════════
 
-// Swiss passport — booklet with cross
 const _basis = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '4', y: '2', width: '16', height: '20', rx: '2.5' }),
-  React.createElement('rect', { x: '10.5', y: '7', width: '3', height: '9', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '8', y: '10', width: '8', height: '3', rx: '0.5', fill: 'white' }),
-  React.createElement('line', { x1: '7', y1: '19', x2: '17', y2: '19', stroke: 'white', strokeWidth: '1', strokeLinecap: 'round', opacity: '0.5' })
+  React.createElement('circle', { cx: '12', cy: '8', r: '4' }),
+  React.createElement('path', { d: 'M 4 20 Q 4 14 12 14 Q 20 14 20 20' })
 );
 
-// Alpine chalet — pitched roof, balcony, chimney
 const _wohnen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 2 12 L 12 3 L 22 12 Z' }),
-  React.createElement('rect', { x: '4', y: '12', width: '16', height: '10', rx: '0.5' }),
-  React.createElement('rect', { x: '7', y: '14', width: '4', height: '3', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '13', y: '14', width: '4', height: '3', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '10', y: '18', width: '4', height: '4', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '17', y: '5', width: '2.5', height: '5', rx: '0.5' })
+  React.createElement('path', { d: 'M 3 12 L 12 3 L 21 12' }),
+  React.createElement('rect', { x: '5', y: '12', width: '14', height: '9', rx: '1' }),
+  React.createElement('rect', { x: '9', y: '15', width: '2', height: '6' }),
+  React.createElement('rect', { x: '13', y: '15', width: '2', height: '6' })
 );
 
-// Tresor / strongbox — heavy box with lock
 const _finanzen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '2', y: '4', width: '20', height: '16', rx: '2' }),
-  React.createElement('rect', { x: '2', y: '4', width: '20', height: '3', rx: '1' }),
-  React.createElement('circle', { cx: '12', cy: '14', r: '3.5', fill: 'none', stroke: 'white', strokeWidth: '1.5' }),
-  React.createElement('circle', { cx: '12', cy: '14', r: '1', fill: 'white' }),
-  React.createElement('rect', { x: '18', y: '10', width: '2', height: '4', rx: '0.5', fill: 'white', opacity: '0.6' }),
-  React.createElement('rect', { x: '5', y: '20', width: '3', height: '2', rx: '0.5' }),
-  React.createElement('rect', { x: '16', y: '20', width: '3', height: '2', rx: '0.5' })
+  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
+  React.createElement('text', { x: '12', y: '16', textAnchor: 'middle', fontSize: '14', fontWeight: 'bold', fill: 'white' }, 'Fr')
 );
 
-// Shield with Swiss cross — Schutz
 const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }),
-  React.createElement('rect', { x: '10.5', y: '7.5', width: '3', height: '9', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '8', y: '10.5', width: '8', height: '3', rx: '0.5', fill: 'white' })
+  React.createElement('polyline', { points: '9,12 11,14 15,10', stroke: 'white', strokeWidth: '1.8', fill: 'none', strokeLinecap: 'round', strokeLinejoin: 'round' })
 );
 
-// Compass — Orientierung
 const _ausbildung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '8.5', fill: 'none', stroke: 'white', strokeWidth: '0.8' }),
-  React.createElement('polygon', { points: '12,4.5 13.5,11 12,12 10.5,11', fill: 'white' }),
-  React.createElement('polygon', { points: '12,19.5 10.5,13 12,12 13.5,13', fill: 'white', opacity: '0.5' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '1.5', fill: 'white' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '0.7' })
+  React.createElement('path', { d: 'M 2 10 L 12 5 L 22 10 L 12 15 Z' }),
+  React.createElement('path', { d: 'M 6 12.5 L 6 18 L 12 21 L 18 18 L 18 12.5' }),
+  React.createElement('line', { x1: '20', y1: '10', x2: '20', y2: '17', stroke: 'currentColor', strokeWidth: '1.5' })
 );
 
-// Official stamp / seal — Siegel
 const _behoerden = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '13', r: '8' }),
-  React.createElement('circle', { cx: '12', cy: '13', r: '6', fill: 'none', stroke: 'white', strokeWidth: '1' }),
-  React.createElement('circle', { cx: '12', cy: '13', r: '4', fill: 'none', stroke: 'white', strokeWidth: '0.5' }),
-  React.createElement('rect', { x: '10.5', y: '10', width: '3', height: '6', rx: '0.4', fill: 'white' }),
-  React.createElement('rect', { x: '9', y: '11.5', width: '6', height: '3', rx: '0.4', fill: 'white' }),
-  React.createElement('rect', { x: '10', y: '2', width: '4', height: '6', rx: '1' })
+  React.createElement('rect', { x: '4', y: '4', width: '16', height: '17', rx: '2' }),
+  React.createElement('line', { x1: '8', y1: '9', x2: '16', y2: '9', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' }),
+  React.createElement('line', { x1: '8', y1: '13', x2: '16', y2: '13', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' }),
+  React.createElement('line', { x1: '8', y1: '17', x2: '13', y2: '17', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' })
 );
 
-// First-aid rucksack — Notfallrucksack
 const _notfall = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('path', { d: 'M 5 8 L 5 20 Q 5 22 7 22 L 17 22 Q 19 22 19 20 L 19 8 Q 19 6 17 6 L 7 6 Q 5 6 5 8 Z' }),
-  React.createElement('path', { d: 'M 8 6 L 8 4 Q 8 2 10 2 L 14 2 Q 16 2 16 4 L 16 6', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8' }),
-  React.createElement('rect', { x: '10.5', y: '10', width: '3', height: '8', rx: '0.5', fill: 'white' }),
-  React.createElement('rect', { x: '8', y: '12.5', width: '8', height: '3', rx: '0.5', fill: 'white' })
+  React.createElement('rect', { x: '4', y: '2', width: '16', height: '20', rx: '2' }),
+  React.createElement('line', { x1: '12', y1: '8', x2: '12', y2: '16', stroke: 'white', strokeWidth: '2.5', strokeLinecap: 'round' }),
+  React.createElement('line', { x1: '8', y1: '12', x2: '16', y2: '12', stroke: 'white', strokeWidth: '2.5', strokeLinecap: 'round' })
 );
 
 
