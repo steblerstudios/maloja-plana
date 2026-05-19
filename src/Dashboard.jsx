@@ -358,6 +358,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const IconFn = iconKey && Icons[iconKey];
           const isLast = idx === chapters.length - 1;
 
+          const rowOpacity = pct === 0 ? 0.68 : 1;
+
           return React.createElement('button', {
             key: ch.key,
             onClick: () => onSelectChapter(idx),
@@ -372,26 +374,42 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               textAlign: 'left',
               color: palette.text,
               fontFamily: 'inherit',
-              opacity: pct === 0 ? 0.72 : 1,
-              transition: 'opacity 0.4s',
+              opacity: rowOpacity,
+              transition: 'opacity 0.6s ease',
               width: '100%',
             },
-            onMouseEnter: (e) => {
-              if (pct === 0) e.currentTarget.style.opacity = '1';
-            },
-            onMouseLeave: (e) => {
-              if (pct === 0) e.currentTarget.style.opacity = '0.72';
-            }
+            onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
+            onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
           },
-            // Icon
+            // Icon with maturity-aware styling
             React.createElement('div', {
-              style: { width: '40px', height: '40px', borderRadius: '10px', background: getIconBg(pct), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct), transition: 'background 0.4s, opacity 0.6s ease' }
+              style: {
+                width: '40px', height: '40px', borderRadius: '10px',
+                background: getIconBg(pct),
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
+                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
+                border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
+              }
             }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
 
-            // Text
+            // Text + subtle fill indicator
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
               React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
-              React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4 } }, ch.description),
+              React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4, marginBottom: pct > 0 ? '6px' : '0' } }, ch.description),
+              pct > 0 && React.createElement('div', {
+                style: { width: '100%', height: '2px', background: palette.up, borderRadius: '1px', overflow: 'hidden' }
+              },
+                React.createElement('div', {
+                  style: {
+                    width: pct + '%', height: '100%',
+                    background: pct === 100 ? palette.sage : palette.sand,
+                    borderRadius: '1px',
+                    transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }
+                })
+              ),
             ),
 
           );
