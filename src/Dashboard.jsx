@@ -82,6 +82,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     behoerden: 'behoerden', notfall: 'notfall',
   };
 
+  const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
+
   const lastBackupRaw = localStorage.getItem('or5_lastBackup');
   const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
 
@@ -102,13 +104,69 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     }),
 
     // ─── Welcome area ──────────────────────────────────────
-    React.createElement('div', { style: { marginBottom: '32px', paddingTop: '8px' } },
+    React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement('h1', {
         style: { fontSize: '28px', fontWeight: '700', margin: '0 0 6px 0', lineHeight: 1.2, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
         style: { fontSize: '15px', color: palette.mid, margin: 0, lineHeight: 1.5 }
       }, t('dashboard.tagline'))
+    ),
+
+    // ─── Mountain silhouette — topographic anchor ─────────
+    React.createElement('div', {
+      'aria-hidden': 'true',
+      style: { margin: '20px -8px 28px -8px', lineHeight: 0 }
+    },
+      React.createElement('svg', {
+        viewBox: '0 0 720 140',
+        preserveAspectRatio: 'xMidYMax slice',
+        style: { width: '100%', height: 'auto', display: 'block' }
+      },
+        // Back range — farthest, lightest
+        React.createElement('path', {
+          d: 'M 0 140 L 0 95 Q 60 80 120 72 Q 180 64 240 58 Q 300 48 360 42 Q 420 38 480 50 Q 540 62 600 70 Q 660 78 720 85 L 720 140 Z',
+          fill: palette.sage, opacity: 0.08,
+        }),
+        // Mid range
+        React.createElement('path', {
+          d: 'M 0 140 L 0 108 Q 80 92 140 88 Q 200 82 280 72 Q 340 65 400 60 Q 460 58 520 68 Q 580 78 640 90 Q 680 96 720 100 L 720 140 Z',
+          fill: palette.sage, opacity: 0.14,
+        }),
+        // Front range — closest, darkest
+        React.createElement('path', {
+          d: 'M 0 140 L 0 118 Q 100 106 180 102 Q 260 96 340 88 Q 400 84 460 82 Q 520 84 580 92 Q 640 100 700 110 L 720 114 L 720 140 Z',
+          fill: palette.sage, opacity: 0.22,
+        }),
+        // Path line — thin trail across the landscape
+        React.createElement('path', {
+          d: 'M 30 122 Q 90 110 155 104 Q 220 97 310 90 Q 400 84 460 83 Q 530 86 600 95 Q 660 102 695 108',
+          fill: 'none', stroke: palette.sand, strokeWidth: '1.2', opacity: 0.5,
+          strokeLinecap: 'round',
+        }),
+        // 7 station dots along the path — one per chapter
+        ...[
+          { x: 52, y: 118 },
+          { x: 155, y: 104 },
+          { x: 258, y: 95 },
+          { x: 360, y: 87 },
+          { x: 462, y: 83 },
+          { x: 565, y: 90 },
+          { x: 668, y: 105 },
+        ].map((pos, i) => {
+          const pct = chapterCompletions[i] || 0;
+          const dotColor = pct === 100 ? palette.sage : pct > 0 ? palette.sand : palette.border;
+          const dotOpacity = pct === 0 ? 0.4 : pct === 100 ? 0.9 : 0.7;
+          return React.createElement('circle', {
+            key: 'dot-' + i,
+            cx: pos.x, cy: pos.y,
+            r: pct > 0 ? 4 : 3,
+            fill: dotColor,
+            opacity: dotOpacity,
+            style: { transition: 'fill 0.6s, opacity 0.6s, r 0.4s' },
+          });
+        })
+      )
     ),
 
     // ─── Guided start — calm first-use card ───────────────
