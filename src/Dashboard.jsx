@@ -135,21 +135,41 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         'aria-hidden': 'true',
         style: { width: '100%', height: 'auto', display: 'block' }
       },
-        // Far peaks — distant massif
+        // Far peaks — opacity deepens with progress
         React.createElement('path', {
           d: 'M 0 200 L 0 120 L 30 105 L 65 70 L 85 55 L 105 68 L 130 42 L 150 30 L 170 45 L 195 58 L 220 38 L 245 22 L 260 30 L 280 50 L 300 65 L 330 80 L 360 95 L 390 88 L 410 80 L 440 70 L 460 55 L 475 42 L 490 28 L 510 18 L 530 30 L 548 45 L 560 55 L 580 68 L 610 80 L 640 72 L 660 58 L 680 48 L 700 60 L 720 75 L 720 200 Z',
-          fill: palette.sage, opacity: 0.07,
+          fill: palette.sage,
+          style: { opacity: 0.07 + (completion / 100) * 0.06, transition: 'opacity 1.2s ease' },
         }),
         // Mid peaks
         React.createElement('path', {
           d: 'M 0 200 L 0 140 L 40 125 L 70 95 L 95 78 L 115 85 L 140 62 L 165 48 L 185 55 L 210 72 L 240 58 L 260 45 L 275 55 L 295 75 L 320 100 L 345 115 L 370 125 L 395 120 L 415 128 L 435 118 L 455 100 L 475 80 L 495 62 L 515 48 L 535 55 L 555 72 L 575 85 L 600 95 L 625 90 L 650 78 L 670 68 L 695 80 L 720 100 L 720 200 Z',
-          fill: palette.sage, opacity: 0.12,
+          fill: palette.sage,
+          style: { opacity: 0.12 + (completion / 100) * 0.08, transition: 'opacity 1.2s ease' },
         }),
         // Front range with pass saddle
         React.createElement('path', {
           d: 'M 0 200 L 0 155 L 35 142 L 60 120 L 90 105 L 110 110 L 135 92 L 155 80 L 175 88 L 200 100 L 225 112 L 260 130 L 290 142 L 320 150 L 350 155 L 380 158 L 410 155 L 435 148 L 455 135 L 475 118 L 498 100 L 520 85 L 540 78 L 560 88 L 585 102 L 610 115 L 640 108 L 665 95 L 690 105 L 720 120 L 720 200 Z',
-          fill: palette.sage, opacity: 0.20,
+          fill: palette.sage,
+          style: { opacity: 0.20 + (completion / 100) * 0.10, transition: 'opacity 1.2s ease' },
         }),
+        // Landscape details — appear with progress
+        completion >= 30 && React.createElement('g', {
+          key: 'trees',
+          style: { opacity: Math.min(1, (completion - 30) / 40), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('path', { d: 'M 95 178 L 100 160 L 105 178 Z', fill: palette.sage, opacity: 0.25 }),
+          React.createElement('path', { d: 'M 610 168 L 616 148 L 622 168 Z', fill: palette.sage, opacity: 0.25 }),
+          React.createElement('path', { d: 'M 625 172 L 630 155 L 635 172 Z', fill: palette.sage, opacity: 0.2 }),
+        ),
+        completion >= 60 && React.createElement('g', {
+          key: 'detail',
+          style: { opacity: Math.min(1, (completion - 60) / 30), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('path', { d: 'M 200 172 L 205 158 L 210 172 Z', fill: palette.sage, opacity: 0.22 }),
+          React.createElement('path', { d: 'M 450 162 L 454 150 L 458 162 Z', fill: palette.sage, opacity: 0.22 }),
+          React.createElement('circle', { cx: '660', cy: '20', r: '10', fill: palette.sand, opacity: 0.12 }),
+        ),
         // Pass trail — segmented by chapter progress
         ...trailSegments.map((seg, i) => {
           const walked = chapterCompletions[seg.chapter] > 0;
