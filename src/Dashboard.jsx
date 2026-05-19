@@ -113,46 +113,46 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.tagline'))
     ),
 
-    // ─── Mountain silhouette — topographic anchor ─────────
+    // ─── Maloja Pass silhouette — topographic anchor ───────
     React.createElement('div', {
       'aria-hidden': 'true',
       style: { margin: '20px -8px 28px -8px', lineHeight: 0 }
     },
       React.createElement('svg', {
-        viewBox: '0 0 720 140',
+        viewBox: '0 0 720 200',
         preserveAspectRatio: 'xMidYMax slice',
         style: { width: '100%', height: 'auto', display: 'block' }
       },
-        // Back range — farthest, lightest
+        // Far peaks — distant massif, lightest
         React.createElement('path', {
-          d: 'M 0 140 L 0 95 Q 60 80 120 72 Q 180 64 240 58 Q 300 48 360 42 Q 420 38 480 50 Q 540 62 600 70 Q 660 78 720 85 L 720 140 Z',
-          fill: palette.sage, opacity: 0.08,
+          d: 'M 0 200 L 0 120 L 30 105 L 65 70 L 85 55 L 105 68 L 130 42 L 150 30 L 170 45 L 195 58 L 220 38 L 245 22 L 260 30 L 280 50 L 300 65 L 330 80 L 360 95 L 390 88 L 410 80 L 440 70 L 460 55 L 475 42 L 490 28 L 510 18 L 530 30 L 548 45 L 560 55 L 580 68 L 610 80 L 640 72 L 660 58 L 680 48 L 700 60 L 720 75 L 720 200 Z',
+          fill: palette.sage, opacity: 0.07,
         }),
-        // Mid range
+        // Mid peaks — Piz Lunghin side (left) and Bergell peaks (right)
         React.createElement('path', {
-          d: 'M 0 140 L 0 108 Q 80 92 140 88 Q 200 82 280 72 Q 340 65 400 60 Q 460 58 520 68 Q 580 78 640 90 Q 680 96 720 100 L 720 140 Z',
-          fill: palette.sage, opacity: 0.14,
+          d: 'M 0 200 L 0 140 L 40 125 L 70 95 L 95 78 L 115 85 L 140 62 L 165 48 L 185 55 L 210 72 L 240 58 L 260 45 L 275 55 L 295 75 L 320 100 L 345 115 L 370 125 L 395 120 L 415 128 L 435 118 L 455 100 L 475 80 L 495 62 L 515 48 L 535 55 L 555 72 L 575 85 L 600 95 L 625 90 L 650 78 L 670 68 L 695 80 L 720 100 L 720 200 Z',
+          fill: palette.sage, opacity: 0.12,
         }),
-        // Front range — closest, darkest
+        // Front range — the pass saddle clearly visible around x:360
         React.createElement('path', {
-          d: 'M 0 140 L 0 118 Q 100 106 180 102 Q 260 96 340 88 Q 400 84 460 82 Q 520 84 580 92 Q 640 100 700 110 L 720 114 L 720 140 Z',
-          fill: palette.sage, opacity: 0.22,
+          d: 'M 0 200 L 0 155 L 35 142 L 60 120 L 90 105 L 110 110 L 135 92 L 155 80 L 175 88 L 200 100 L 225 112 L 260 130 L 290 142 L 320 150 L 350 155 L 380 158 L 410 155 L 435 148 L 455 135 L 475 118 L 498 100 L 520 85 L 540 78 L 560 88 L 585 102 L 610 115 L 640 108 L 665 95 L 690 105 L 720 120 L 720 200 Z',
+          fill: palette.sage, opacity: 0.20,
         }),
-        // Path line — thin trail across the landscape
+        // Pass trail — the path crossing the Malojapass saddle
         React.createElement('path', {
-          d: 'M 30 122 Q 90 110 155 104 Q 220 97 310 90 Q 400 84 460 83 Q 530 86 600 95 Q 660 102 695 108',
-          fill: 'none', stroke: palette.sand, strokeWidth: '1.2', opacity: 0.5,
+          d: 'M 15 162 Q 60 148 110 132 Q 160 116 220 128 Q 280 142 330 152 L 360 156 Q 390 156 420 150 Q 465 138 510 118 Q 555 102 590 110 Q 640 120 705 128',
+          fill: 'none', stroke: palette.sand, strokeWidth: '1.5', opacity: 0.45,
           strokeLinecap: 'round',
         }),
-        // 7 station dots along the path — one per chapter
+        // 7 station dots along the pass trail
         ...[
-          { x: 52, y: 118 },
-          { x: 155, y: 104 },
-          { x: 258, y: 95 },
-          { x: 360, y: 87 },
-          { x: 462, y: 83 },
-          { x: 565, y: 90 },
-          { x: 668, y: 105 },
+          { x: 50, y: 152 },
+          { x: 140, y: 124 },
+          { x: 240, y: 136 },
+          { x: 340, y: 153 },
+          { x: 440, y: 145 },
+          { x: 540, y: 110 },
+          { x: 660, y: 122 },
         ].map((pos, i) => {
           const pct = chapterCompletions[i] || 0;
           const dotColor = pct === 100 ? palette.sage : pct > 0 ? palette.sand : palette.border;
