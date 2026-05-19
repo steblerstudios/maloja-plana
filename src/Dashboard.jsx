@@ -198,44 +198,30 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const statusColor = getStatusColor(pct);
           const iconKey = chapterIcons[ch.key];
           const IconFn = iconKey && Icons[iconKey];
-          const prevPct = idx > 0 ? calculateChapterCompletion(chapters[idx - 1].key).pct : null;
+          const isLast = idx === chapters.length - 1;
 
-          return React.createElement(React.Fragment, { key: ch.key },
-            idx > 0 && React.createElement('div', {
-              'aria-hidden': 'true',
-              style: {
-                width: '2px', height: '20px',
-                marginLeft: '39px',
-                background: (prevPct > 0 && pct > 0) ? palette.sand : palette.border,
-                opacity: (prevPct > 0 && pct > 0) ? 0.6 : 0.3,
-                borderRadius: '1px',
-                transition: 'background 0.4s, opacity 0.4s',
-              }
-            }),
-            React.createElement('button', {
+          return React.createElement('button', {
+            key: ch.key,
             onClick: () => onSelectChapter(idx),
             style: {
               display: 'flex', alignItems: 'center', gap: '16px',
-              padding: '18px 20px',
-              background: palette.surface,
-              border: '1px solid ' + palette.border,
-              borderRadius: '12px',
+              padding: '20px 4px',
+              background: 'transparent',
+              border: 'none',
+              borderBottom: isLast ? 'none' : '1px solid ' + palette.border,
+              borderRadius: 0,
               cursor: 'pointer',
               textAlign: 'left',
               color: palette.text,
               fontFamily: 'inherit',
               opacity: pct === 0 ? 0.72 : 1,
-              transition: 'border-color 0.2s, box-shadow 0.2s, opacity 0.4s',
+              transition: 'opacity 0.4s',
               width: '100%',
             },
             onMouseEnter: (e) => {
-              e.currentTarget.style.borderColor = palette.sand;
-              e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.06)';
               if (pct === 0) e.currentTarget.style.opacity = '1';
             },
             onMouseLeave: (e) => {
-              e.currentTarget.style.borderColor = palette.border;
-              e.currentTarget.style.boxShadow = 'none';
               if (pct === 0) e.currentTarget.style.opacity = '0.72';
             }
           },
@@ -250,7 +236,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4 } }, ch.description),
             ),
 
-          )
           );
         })
       )
