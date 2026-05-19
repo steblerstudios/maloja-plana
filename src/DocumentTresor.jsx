@@ -83,6 +83,29 @@ export const DocumentTresor = ({
   return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
 
+    // Vault fill indicator
+    React.createElement('div', {
+      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px' }
+    },
+      React.createElement('svg', { viewBox: '0 0 24 24', style: { width: '28px', height: '28px', flexShrink: 0 }, fill: 'none' },
+        React.createElement('rect', { x: '3', y: '6', width: '18', height: '16', rx: '2', stroke: palette.sage, strokeWidth: '1.5', fill: palette.sage + '10' }),
+        React.createElement('rect', { x: '5', y: String(20 - Math.min(12, documents.length * 1.5)), width: '14', height: String(Math.min(12, documents.length * 1.5)), fill: palette.sage, opacity: 0.25, rx: '1' }),
+        React.createElement('circle', { cx: '12', cy: '14', r: '2', stroke: palette.sage, strokeWidth: '1.5' }),
+        React.createElement('path', { d: 'M 7 6 L 7 4 C 7 2.5 9 1 12 1 C 15 1 17 2.5 17 4 L 17 6', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' }),
+      ),
+      React.createElement('div', { style: { flex: 1 } },
+        React.createElement('div', { style: { fontSize: '13px', fontWeight: '600', color: palette.text } },
+          documents.length + ' ' + (documents.length === 1 ? 'Dokument' : 'Dokumente')
+        ),
+        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '2px' } },
+          documents.length === 0 ? 'Dein Tresor ist bereit'
+          : documents.length < 5 ? 'Ein guter Anfang'
+          : documents.length < 15 ? 'Dein Tresor füllt sich'
+          : 'Gut organisiert'
+        ),
+      ),
+    ),
+
     // Stats
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginBottom: '16px' } },
       React.createElement('button', { type: 'button', 'aria-pressed': !showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border, font: 'inherit' }, onClick: () => setShowArchive(false) },
