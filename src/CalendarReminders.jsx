@@ -121,7 +121,14 @@ export const CalendarReminders = ({ palette, t, data }) => {
     setReminders(prev => [...prev, reminder]);
   };
 
+  const [justCompleted, setJustCompleted] = useState(null);
+
   const toggleDone = (id) => {
+    const reminder = reminders.find(r => r.id === id);
+    if (reminder && !reminder.done) {
+      setJustCompleted(id);
+      setTimeout(() => setJustCompleted(null), 800);
+    }
     setReminders(prev => prev.map(r =>
       r.id === id ? { ...r, done: !r.done, completedDate: r.done ? null : todayISO() } : r
     ));
@@ -169,15 +176,20 @@ export const CalendarReminders = ({ palette, t, data }) => {
     const iconKey = CATEGORY_ICON_KEYS[r.category] || 'basis';
     const catLabel = t('calendar.categories.' + r.category) || r.category;
 
+    const isJustDone = justCompleted === r.id;
+
     return React.createElement('div', {
       key: r.id,
       style: {
-        padding: '12px 16px', background: palette.up, borderRadius: '8px',
-        border: '2px solid ' + (r.done ? palette.sage + '44' : dueColor + '66'),
-        marginBottom: '8px', opacity: r.done ? 0.7 : 1,
-        transition: 'all 0.2s'
+        padding: '12px 16px', background: isJustDone ? palette.sage + '12' : palette.up, borderRadius: '8px',
+        border: '2px solid ' + (isJustDone ? palette.sage : r.done ? palette.sage + '44' : dueColor + '66'),
+        marginBottom: '8px', opacity: r.done && !isJustDone ? 0.7 : 1,
+        transition: 'all 0.4s ease',
       }
     },
+      isJustDone && React.createElement('div', {
+        style: { textAlign: 'center', fontSize: '11px', fontWeight: '600', color: palette.sage, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
+      }, '✓ ' + (t('calendar.nicelyDone') || 'Erledigt')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' } },
