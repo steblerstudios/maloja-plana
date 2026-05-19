@@ -153,22 +153,81 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           fill: palette.sage,
           style: { opacity: 0.20 + (completion / 100) * 0.10, transition: 'opacity 1.2s ease' },
         }),
-        // Landscape details — appear with progress
-        completion >= 30 && React.createElement('g', {
-          key: 'trees',
-          style: { opacity: Math.min(1, (completion - 30) / 40), transition: 'opacity 1.5s ease' },
+        // ─── Swiss landscape easter eggs — appear with progress ───
+        // 20%: First trees (Tannen)
+        completion >= 20 && React.createElement('g', {
+          key: 'tannen',
+          style: { opacity: Math.min(1, (completion - 20) / 30), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('path', { d: 'M 95 178 L 100 160 L 105 178 Z', fill: palette.sage, opacity: 0.25 }),
-          React.createElement('path', { d: 'M 610 168 L 616 148 L 622 168 Z', fill: palette.sage, opacity: 0.25 }),
-          React.createElement('path', { d: 'M 625 172 L 630 155 L 635 172 Z', fill: palette.sage, opacity: 0.2 }),
+          React.createElement('path', { d: 'M 95 178 L 100 162 L 105 178 Z', fill: palette.sage, opacity: 0.25 }),
+          React.createElement('path', { d: 'M 610 170 L 616 152 L 622 170 Z', fill: palette.sage, opacity: 0.25 }),
+          React.createElement('path', { d: 'M 625 174 L 630 158 L 635 174 Z', fill: palette.sage, opacity: 0.2 }),
         ),
-        completion >= 60 && React.createElement('g', {
-          key: 'detail',
-          style: { opacity: Math.min(1, (completion - 60) / 30), transition: 'opacity 1.5s ease' },
+        // 35%: Edelweiss flower near a peak
+        completion >= 35 && React.createElement('g', {
+          key: 'edelweiss',
+          style: { opacity: Math.min(1, (completion - 35) / 25), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('path', { d: 'M 200 172 L 205 158 L 210 172 Z', fill: palette.sage, opacity: 0.22 }),
-          React.createElement('path', { d: 'M 450 162 L 454 150 L 458 162 Z', fill: palette.sage, opacity: 0.22 }),
-          React.createElement('circle', { cx: '660', cy: '20', r: '10', fill: palette.sand, opacity: 0.12 }),
+          React.createElement('circle', { cx: '268', cy: '42', r: '2.5', fill: 'white', opacity: 0.5 }),
+          React.createElement('circle', { cx: '268', cy: '42', r: '1', fill: palette.sand, opacity: 0.6 }),
+        ),
+        // 45%: Small Swiss cross on a peak
+        completion >= 45 && React.createElement('g', {
+          key: 'gipfelkreuz',
+          style: { opacity: Math.min(1, (completion - 45) / 20), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('line', { x1: '510', y1: '12', x2: '510', y2: '22', stroke: palette.mid, strokeWidth: '1', opacity: 0.3 }),
+          React.createElement('line', { x1: '506', y1: '15', x2: '514', y2: '15', stroke: palette.mid, strokeWidth: '1', opacity: 0.3 }),
+        ),
+        // 55%: Matterhorn silhouette emerges as a sharper peak
+        completion >= 55 && React.createElement('path', {
+          key: 'matterhorn',
+          d: 'M 480 28 L 490 10 L 494 16 L 500 28',
+          fill: palette.sage, opacity: Math.min(0.15, (completion - 55) / 200),
+          style: { transition: 'opacity 1.5s ease' },
+        }),
+        // 65%: Cow silhouette on the meadow
+        completion >= 65 && React.createElement('g', {
+          key: 'kuh',
+          style: { opacity: Math.min(1, (completion - 65) / 25), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('path', {
+            d: 'M 310 172 L 310 168 L 312 166 L 318 166 L 320 168 L 320 172 M 312 166 L 312 164 L 311 163 M 318 166 L 318 164 L 319 163',
+            fill: 'none', stroke: palette.sage, strokeWidth: '0.8', opacity: 0.2, strokeLinecap: 'round',
+          }),
+        ),
+        // 75%: Watch/clock face (Swiss precision)
+        completion >= 75 && React.createElement('g', {
+          key: 'uhr',
+          style: { opacity: Math.min(1, (completion - 75) / 20), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('circle', { cx: '155', cy: '40', r: '4', fill: 'none', stroke: palette.mid, strokeWidth: '0.5', opacity: 0.2 }),
+          React.createElement('line', { x1: '155', y1: '40', x2: '155', y2: '37.5', stroke: palette.mid, strokeWidth: '0.5', opacity: 0.2 }),
+          React.createElement('line', { x1: '155', y1: '40', x2: '157', y2: '40.5', stroke: palette.mid, strokeWidth: '0.4', opacity: 0.2 }),
+        ),
+        // 85%: Chocolate bar shape
+        completion >= 85 && React.createElement('g', {
+          key: 'schoggi',
+          style: { opacity: Math.min(1, (completion - 85) / 15), transition: 'opacity 1.5s ease' },
+        },
+          React.createElement('rect', { x: '400', y: '170', width: '12', height: '7', rx: '1', fill: palette.sand, opacity: 0.15 }),
+          React.createElement('line', { x1: '404', y1: '170', x2: '404', y2: '177', stroke: palette.sand, strokeWidth: '0.4', opacity: 0.15 }),
+          React.createElement('line', { x1: '408', y1: '170', x2: '408', y2: '177', stroke: palette.sand, strokeWidth: '0.4', opacity: 0.15 }),
+        ),
+        // 95%: Sun fully revealed
+        completion >= 95 && React.createElement('circle', {
+          key: 'sonne',
+          cx: '660', cy: '18', r: '10', fill: palette.sand,
+          style: { opacity: Math.min(0.15, (completion - 95) / 40), transition: 'opacity 1.5s ease' },
+        }),
+        // 100%: Swiss flag on the highest peak — Ordnung hergestellt
+        completion >= 100 && React.createElement('g', {
+          key: 'fahne',
+          style: { opacity: 1, transition: 'opacity 1s ease' },
+        },
+          React.createElement('line', { x1: '510', y1: '6', x2: '510', y2: '18', stroke: palette.mid, strokeWidth: '0.8', opacity: 0.4 }),
+          React.createElement('rect', { x: '511', y: '6', width: '8', height: '6', rx: '0.5', fill: '#e03030', opacity: 0.3 }),
+          React.createElement('path', { d: 'M 514 7.5 L 514 10.5 M 512.5 9 L 515.5 9', fill: 'none', stroke: 'white', strokeWidth: '0.8', opacity: 0.5 }),
         ),
         // Pass trail — segmented by chapter progress
         ...trailSegments.map((seg, i) => {
