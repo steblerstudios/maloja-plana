@@ -43,9 +43,16 @@ const _wohnen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
 
 const _finanzen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('circle', { cx: '12', cy: '12', r: '11' }),
-  React.createElement('circle', { cx: '12', cy: '12', r: '9.5', fill: 'none', stroke: 'white', strokeWidth: '0.6' }),
-  React.createElement('text', { x: '12', y: '16.5', textAnchor: 'middle', fontSize: '13', fontWeight: 'bold', fill: 'white', style: { fontFamily: 'Georgia, serif' } }, '5'),
-  React.createElement('path', { d: 'M 9.5 5.5 L 12 4 L 14.5 5.5', fill: 'none', stroke: 'white', strokeWidth: '0.7', strokeLinecap: 'round' })
+  React.createElement('circle', { cx: '12', cy: '12', r: '9.8', fill: 'none', stroke: 'white', strokeWidth: '0.35' }),
+  React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'white', strokeWidth: '0.35' }),
+  React.createElement('text', { x: '12', y: '15', textAnchor: 'middle', fontSize: '11', fontWeight: 'bold', fill: 'white', style: { fontFamily: 'Georgia, serif' } }, '5'),
+  React.createElement('path', {
+    d: 'M 12 19 C 9.5 18 7 16 6.5 13 M 8 17 L 6.5 16.5 M 7 15 L 5.5 14.5 M 6.5 13 L 5.2 12.8 M 12 19 C 14.5 18 17 16 17.5 13 M 16 17 L 17.5 16.5 M 17 15 L 18.5 14.5 M 17.5 13 L 18.8 12.8',
+    fill: 'none', stroke: 'white', strokeWidth: '0.5', strokeLinecap: 'round',
+  }),
+  React.createElement('circle', { cx: '12', cy: '5.2', r: '0.5', fill: 'white' }),
+  React.createElement('circle', { cx: '9.5', cy: '5.8', r: '0.4', fill: 'white' }),
+  React.createElement('circle', { cx: '14.5', cy: '5.8', r: '0.4', fill: 'white' }),
 );
 
 const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
@@ -60,10 +67,12 @@ const _ausbildung = () => React.createElement('svg', { viewBox: '0 0 24 24', fil
 );
 
 const _behoerden = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '4', y: '4', width: '16', height: '17', rx: '2' }),
-  React.createElement('line', { x1: '8', y1: '9', x2: '16', y2: '9', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '8', y1: '13', x2: '16', y2: '13', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' }),
-  React.createElement('line', { x1: '8', y1: '17', x2: '13', y2: '17', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round' })
+  React.createElement('circle', { cx: '12', cy: '12', r: '11' }),
+  React.createElement('circle', { cx: '12', cy: '12', r: '9.5', fill: 'none', stroke: 'white', strokeWidth: '0.4' }),
+  React.createElement('path', {
+    d: 'M 14 5 C 12 3.5 9 4 8 6 L 7.5 8 L 6 10 L 7.5 10.8 L 7.5 12 C 7.5 13 8 14.5 8.5 16 L 9 18 L 13 18 C 13.5 16 14.5 14 15 12 C 15.5 10 15.5 7 14 5 Z',
+    fill: 'white',
+  }),
 );
 
 const _notfall = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
