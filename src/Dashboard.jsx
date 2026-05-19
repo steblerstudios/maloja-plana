@@ -84,6 +84,18 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
 
+  // Trail segments between stations (SVG coordinates matching icon positions)
+  const trailSegments = [
+    { d: 'M 15 164 C 28 160 38 154 50 152', chapter: 0 },
+    { d: 'M 50 152 C 75 146 108 126 140 124', chapter: 0 },
+    { d: 'M 140 124 C 168 120 208 132 240 136', chapter: 1 },
+    { d: 'M 240 136 C 272 144 308 152 340 153', chapter: 2 },
+    { d: 'M 340 153 C 372 156 408 148 440 145', chapter: 3 },
+    { d: 'M 440 145 C 472 140 508 116 540 110', chapter: 4 },
+    { d: 'M 540 110 C 578 98 628 118 660 122', chapter: 5 },
+    { d: 'M 660 122 C 682 126 698 128 710 128', chapter: 6 },
+  ];
+
   const lastBackupRaw = localStorage.getItem('or5_lastBackup');
   const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
 
@@ -138,11 +150,20 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           d: 'M 0 200 L 0 155 L 35 142 L 60 120 L 90 105 L 110 110 L 135 92 L 155 80 L 175 88 L 200 100 L 225 112 L 260 130 L 290 142 L 320 150 L 350 155 L 380 158 L 410 155 L 435 148 L 455 135 L 475 118 L 498 100 L 520 85 L 540 78 L 560 88 L 585 102 L 610 115 L 640 108 L 665 95 L 690 105 L 720 120 L 720 200 Z',
           fill: palette.sage, opacity: 0.20,
         }),
-        // Pass trail
-        React.createElement('path', {
-          d: 'M 15 162 Q 60 148 110 132 Q 160 116 220 128 Q 280 142 330 152 L 360 156 Q 390 156 420 150 Q 465 138 510 118 Q 555 102 590 110 Q 640 120 705 128',
-          fill: 'none', stroke: palette.sand, strokeWidth: '1.5', opacity: 0.45,
-          strokeLinecap: 'round',
+        // Pass trail — segmented by chapter progress
+        ...trailSegments.map((seg, i) => {
+          const walked = chapterCompletions[seg.chapter] > 0;
+          return React.createElement('path', {
+            key: 'trail-' + i,
+            d: seg.d,
+            fill: 'none',
+            stroke: walked ? palette.sand : palette.mid,
+            strokeWidth: walked ? '2' : '1.5',
+            opacity: walked ? 0.6 : 0.2,
+            strokeLinecap: 'round',
+            strokeDasharray: walked ? 'none' : '4 6',
+            style: { transition: 'opacity 0.8s ease, stroke-width 0.6s ease, stroke 0.6s ease' },
+          });
         })
       ),
       // Chapter icons positioned along the trail
