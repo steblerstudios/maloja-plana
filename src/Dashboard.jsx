@@ -180,10 +180,36 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { x: 91.7, y: 61, key: 'notfall' },
         ].map((station, i) => {
           const pct = chapterCompletions[i] || 0;
-          const iconColor = pct === 100 ? palette.sage : pct > 0 ? palette.sand : palette.mid;
-          const iconOpacity = pct === 0 ? 0.55 : pct === 100 ? 0.95 : 0.8;
           const iconKey = chapterIcons[station.key];
           const IconFn = iconKey && Icons[iconKey];
+
+          // Maturity stages: sketch → emerging → maturing → complete
+          const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
+          const sizes = { sketch: 26, emerging: 30, maturing: 32, complete: 34 };
+          const iconSizes = { sketch: 14, emerging: 17, maturing: 19, complete: 20 };
+          const colors = { sketch: palette.mid, emerging: palette.sand, maturing: palette.sand, complete: palette.sage };
+          const opacities = { sketch: 0.45, emerging: 0.75, maturing: 0.88, complete: 1 };
+          const borders = {
+            sketch: '1px dashed ' + palette.border,
+            emerging: '1.5px solid ' + palette.sand + '88',
+            maturing: '1.5px solid ' + palette.sand,
+            complete: '2px solid ' + palette.sage,
+          };
+          const shadows = {
+            sketch: 'none',
+            emerging: '0 1px 3px rgba(0,0,0,0.06)',
+            maturing: '0 1px 5px rgba(0,0,0,0.08)',
+            complete: '0 2px 8px rgba(0,0,0,0.1), 0 0 0 3px ' + palette.sage + '15',
+          };
+          const bgs = {
+            sketch: 'transparent',
+            emerging: palette.surface,
+            maturing: palette.surface,
+            complete: palette.surface,
+          };
+          const sz = sizes[maturity];
+          const iconOp = opacities[maturity];
+
           return React.createElement('button', {
             key: station.key,
             onClick: () => onSelectChapter(i),
@@ -193,30 +219,30 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               left: station.x + '%',
               top: station.y + '%',
               transform: 'translate(-50%, -50%)',
-              width: '28px', height: '28px',
-              background: palette.surface,
-              border: '1.5px solid ' + (pct > 0 ? iconColor : palette.border),
+              width: sz + 'px', height: sz + 'px',
+              background: bgs[maturity],
+              border: borders[maturity],
               borderRadius: '50%',
-              padding: '4px',
+              padding: '0',
               cursor: 'pointer',
               pointerEvents: 'auto',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: iconColor,
-              opacity: iconOpacity,
-              transition: 'opacity 0.4s, border-color 0.3s, background 0.3s, transform 0.2s',
-              boxShadow: pct > 0 ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+              color: colors[maturity],
+              opacity: iconOp,
+              transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: shadows[maturity],
             },
             onMouseEnter: (e) => {
               e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.15)';
+              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.12)';
             },
             onMouseLeave: (e) => {
-              e.currentTarget.style.opacity = String(iconOpacity);
+              e.currentTarget.style.opacity = String(iconOp);
               e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
             },
           },
             React.createElement('div', {
-              style: { width: '18px', height: '18px' }
+              style: { width: iconSizes[maturity] + 'px', height: iconSizes[maturity] + 'px', transition: 'width 0.6s, height 0.6s' }
             }, IconFn ? IconFn() : null)
           );
         })
