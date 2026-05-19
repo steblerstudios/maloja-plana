@@ -391,6 +391,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                 boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
                 border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
+                animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
               }
             }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
 
