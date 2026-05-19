@@ -42,8 +42,10 @@ const _wohnen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: '
 );
 
 const _finanzen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
-  React.createElement('text', { x: '12', y: '16', textAnchor: 'middle', fontSize: '14', fontWeight: 'bold', fill: 'white' }, 'Fr')
+  React.createElement('circle', { cx: '12', cy: '12', r: '11' }),
+  React.createElement('circle', { cx: '12', cy: '12', r: '9.5', fill: 'none', stroke: 'white', strokeWidth: '0.6' }),
+  React.createElement('text', { x: '12', y: '16.5', textAnchor: 'middle', fontSize: '13', fontWeight: 'bold', fill: 'white', style: { fontFamily: 'Georgia, serif' } }, '5'),
+  React.createElement('path', { d: 'M 9.5 5.5 L 12 4 L 14.5 5.5', fill: 'none', stroke: 'white', strokeWidth: '0.7', strokeLinecap: 'round' })
 );
 
 const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },

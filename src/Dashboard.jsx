@@ -84,16 +84,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
 
-  // Trail segments between stations (SVG coordinates matching icon positions)
+  // Trail segments hugging front range contour (+6px below ridge)
   const trailSegments = [
-    { d: 'M 15 164 C 28 160 38 154 50 152', chapter: 0 },
-    { d: 'M 50 152 C 75 146 108 126 140 124', chapter: 0 },
-    { d: 'M 140 124 C 168 120 208 132 240 136', chapter: 1 },
-    { d: 'M 240 136 C 272 144 308 152 340 153', chapter: 2 },
-    { d: 'M 340 153 C 372 156 408 148 440 145', chapter: 3 },
-    { d: 'M 440 145 C 472 140 508 116 540 110', chapter: 4 },
-    { d: 'M 540 110 C 578 98 628 118 660 122', chapter: 5 },
-    { d: 'M 660 122 C 682 126 698 128 710 128', chapter: 6 },
+    { d: 'M 15 162 C 25 155 35 148 50 134', chapter: 0 },
+    { d: 'M 50 134 C 75 118 110 115 140 97', chapter: 0 },
+    { d: 'M 140 97 C 165 88 200 106 240 126', chapter: 1 },
+    { d: 'M 240 126 C 270 136 305 150 340 158', chapter: 2 },
+    { d: 'M 340 158 C 370 160 410 158 440 153', chapter: 3 },
+    { d: 'M 440 153 C 468 138 505 102 540 86', chapter: 4 },
+    { d: 'M 540 86 C 575 92 625 112 660 103', chapter: 5 },
+    { d: 'M 660 103 C 680 108 698 115 710 119', chapter: 6 },
   ];
 
   const lastBackupRaw = localStorage.getItem('or5_lastBackup');
@@ -191,13 +191,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { position: 'absolute', inset: 0, pointerEvents: 'none' }
       },
         [
-          { x: 6.9, y: 76, key: 'basis' },
-          { x: 19.4, y: 62, key: 'wohnen' },
-          { x: 33.3, y: 68, key: 'finanzen' },
-          { x: 47.2, y: 76.5, key: 'versicherungen' },
-          { x: 61.1, y: 72.5, key: 'ausbildung' },
-          { x: 75, y: 55, key: 'behoerden' },
-          { x: 91.7, y: 61, key: 'notfall' },
+          { x: 6.9, y: 67, key: 'basis' },
+          { x: 19.4, y: 48.5, key: 'wohnen' },
+          { x: 33.3, y: 63, key: 'finanzen' },
+          { x: 47.2, y: 79, key: 'versicherungen' },
+          { x: 61.1, y: 76.5, key: 'ausbildung' },
+          { x: 75, y: 43, key: 'behoerden' },
+          { x: 91.7, y: 51.5, key: 'notfall' },
         ].map((station, i) => {
           const pct = chapterCompletions[i] || 0;
           const iconKey = chapterIcons[station.key];
