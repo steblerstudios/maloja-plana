@@ -84,16 +84,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
 
-  // Trail segments hugging front range contour (+6px below ridge)
+  // Trail follows exact front range ridge points — like a real hiking path
   const trailSegments = [
-    { d: 'M 15 162 C 25 155 35 148 50 134', chapter: 0 },
-    { d: 'M 50 134 C 75 118 110 115 140 97', chapter: 0 },
-    { d: 'M 140 97 C 165 88 200 106 240 126', chapter: 1 },
-    { d: 'M 240 126 C 270 136 305 150 340 158', chapter: 2 },
-    { d: 'M 340 158 C 370 160 410 158 440 153', chapter: 3 },
-    { d: 'M 440 153 C 468 138 505 102 540 86', chapter: 4 },
-    { d: 'M 540 86 C 575 92 625 112 660 103', chapter: 5 },
-    { d: 'M 660 103 C 680 108 698 115 710 119', chapter: 6 },
+    { d: 'M 0 185 L 20 168 L 35 142 L 60 120', chapter: 0 },
+    { d: 'M 60 120 L 90 105 L 110 110 L 135 92', chapter: 0 },
+    { d: 'M 135 92 L 155 80 L 175 88 L 200 100 L 225 112', chapter: 1 },
+    { d: 'M 225 112 L 260 130 L 290 142 L 320 150 L 350 155', chapter: 2 },
+    { d: 'M 350 155 L 380 158 L 410 155 L 435 148', chapter: 3 },
+    { d: 'M 435 148 L 455 135 L 475 118 L 498 100 L 520 85 L 540 78', chapter: 4 },
+    { d: 'M 540 78 L 560 88 L 585 102 L 610 115 L 640 108 L 665 95', chapter: 5 },
+    { d: 'M 665 95 L 690 105 L 720 120', chapter: 6 },
   ];
 
   const lastBackupRaw = localStorage.getItem('or5_lastBackup');
@@ -154,80 +154,73 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { opacity: 0.20 + (completion / 100) * 0.10, transition: 'opacity 1.2s ease' },
         }),
         // ─── Swiss landscape easter eggs — appear with progress ───
-        // 20%: First trees (Tannen)
-        completion >= 20 && React.createElement('g', {
-          key: 'tannen',
-          style: { opacity: Math.min(1, (completion - 20) / 30), transition: 'opacity 1.5s ease' },
+        // 20%: Tannen (fir trees) at mountain base
+        completion >= 20 && React.createElement('g', { key: 'tannen',
+          style: { opacity: Math.min(0.6, (completion - 20) / 30), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('path', { d: 'M 95 178 L 100 162 L 105 178 Z', fill: palette.sage, opacity: 0.25 }),
-          React.createElement('path', { d: 'M 610 170 L 616 152 L 622 170 Z', fill: palette.sage, opacity: 0.25 }),
-          React.createElement('path', { d: 'M 625 174 L 630 158 L 635 174 Z', fill: palette.sage, opacity: 0.2 }),
+          React.createElement('path', { d: 'M 92 180 L 100 158 L 108 180 Z', fill: palette.sage }),
+          React.createElement('path', { d: 'M 108 182 L 114 166 L 120 182 Z', fill: palette.sage }),
+          React.createElement('path', { d: 'M 605 175 L 614 150 L 623 175 Z', fill: palette.sage }),
+          React.createElement('path', { d: 'M 622 178 L 629 158 L 636 178 Z', fill: palette.sage }),
         ),
-        // 35%: Edelweiss flower near a peak
-        completion >= 35 && React.createElement('g', {
-          key: 'edelweiss',
-          style: { opacity: Math.min(1, (completion - 35) / 25), transition: 'opacity 1.5s ease' },
+        // 35%: Edelweiss near a peak
+        completion >= 35 && React.createElement('g', { key: 'edelweiss',
+          style: { opacity: Math.min(0.7, (completion - 35) / 20), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('circle', { cx: '268', cy: '42', r: '2.5', fill: 'white', opacity: 0.5 }),
-          React.createElement('circle', { cx: '268', cy: '42', r: '1', fill: palette.sand, opacity: 0.6 }),
+          React.createElement('circle', { cx: '170', cy: '75', r: '3', fill: 'white' }),
+          React.createElement('circle', { cx: '170', cy: '75', r: '1.2', fill: palette.sand }),
+          React.createElement('circle', { cx: '562', cy: '82', r: '2.5', fill: 'white' }),
+          React.createElement('circle', { cx: '562', cy: '82', r: '1', fill: palette.sand }),
         ),
-        // 45%: Small Swiss cross on a peak
-        completion >= 45 && React.createElement('g', {
-          key: 'gipfelkreuz',
-          style: { opacity: Math.min(1, (completion - 45) / 20), transition: 'opacity 1.5s ease' },
+        // 45%: Gipfelkreuz on a summit
+        completion >= 45 && React.createElement('g', { key: 'gipfelkreuz',
+          style: { opacity: Math.min(0.5, (completion - 45) / 20), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('line', { x1: '510', y1: '12', x2: '510', y2: '22', stroke: palette.mid, strokeWidth: '1', opacity: 0.3 }),
-          React.createElement('line', { x1: '506', y1: '15', x2: '514', y2: '15', stroke: palette.mid, strokeWidth: '1', opacity: 0.3 }),
+          React.createElement('line', { x1: '510', y1: '10', x2: '510', y2: '24', stroke: palette.mid, strokeWidth: '1.2' }),
+          React.createElement('line', { x1: '505', y1: '14', x2: '515', y2: '14', stroke: palette.mid, strokeWidth: '1.2' }),
         ),
-        // 55%: Matterhorn silhouette emerges as a sharper peak
-        completion >= 55 && React.createElement('path', {
-          key: 'matterhorn',
-          d: 'M 480 28 L 490 10 L 494 16 L 500 28',
-          fill: palette.sage, opacity: Math.min(0.15, (completion - 55) / 200),
-          style: { transition: 'opacity 1.5s ease' },
+        // 55%: Matterhorn silhouette — sharp iconic pyramid
+        completion >= 55 && React.createElement('path', { key: 'matterhorn',
+          d: 'M 478 30 L 488 6 L 492 14 L 498 30',
+          fill: palette.sage,
+          style: { opacity: Math.min(0.25, (completion - 55) / 60), transition: 'opacity 1.5s ease' },
         }),
-        // 65%: Cow silhouette on the meadow
-        completion >= 65 && React.createElement('g', {
-          key: 'kuh',
-          style: { opacity: Math.min(1, (completion - 65) / 25), transition: 'opacity 1.5s ease' },
+        // 65%: Kuh on the alpine meadow
+        completion >= 65 && React.createElement('g', { key: 'kuh',
+          style: { opacity: Math.min(0.45, (completion - 65) / 20), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('path', {
-            d: 'M 310 172 L 310 168 L 312 166 L 318 166 L 320 168 L 320 172 M 312 166 L 312 164 L 311 163 M 318 166 L 318 164 L 319 163',
-            fill: 'none', stroke: palette.sage, strokeWidth: '0.8', opacity: 0.2, strokeLinecap: 'round',
-          }),
+          React.createElement('ellipse', { cx: '315', cy: '167', rx: '6', ry: '3.5', fill: palette.sage }),
+          React.createElement('ellipse', { cx: '309', cy: '164', rx: '2.5', ry: '2', fill: palette.sage }),
+          React.createElement('line', { x1: '311', y1: '170', x2: '311', y2: '175', stroke: palette.sage, strokeWidth: '1' }),
+          React.createElement('line', { x1: '319', y1: '170', x2: '319', y2: '175', stroke: palette.sage, strokeWidth: '1' }),
         ),
-        // 75%: Watch/clock face (Swiss precision)
-        completion >= 75 && React.createElement('g', {
-          key: 'uhr',
-          style: { opacity: Math.min(1, (completion - 75) / 20), transition: 'opacity 1.5s ease' },
+        // 75%: Swiss watch face
+        completion >= 75 && React.createElement('g', { key: 'uhr',
+          style: { opacity: Math.min(0.4, (completion - 75) / 15), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('circle', { cx: '155', cy: '40', r: '4', fill: 'none', stroke: palette.mid, strokeWidth: '0.5', opacity: 0.2 }),
-          React.createElement('line', { x1: '155', y1: '40', x2: '155', y2: '37.5', stroke: palette.mid, strokeWidth: '0.5', opacity: 0.2 }),
-          React.createElement('line', { x1: '155', y1: '40', x2: '157', y2: '40.5', stroke: palette.mid, strokeWidth: '0.4', opacity: 0.2 }),
+          React.createElement('circle', { cx: '152', cy: '38', r: '5', fill: 'none', stroke: palette.mid, strokeWidth: '0.8' }),
+          React.createElement('circle', { cx: '152', cy: '38', r: '4', fill: 'none', stroke: palette.mid, strokeWidth: '0.3' }),
+          React.createElement('line', { x1: '152', y1: '38', x2: '152', y2: '35', stroke: palette.mid, strokeWidth: '0.7' }),
+          React.createElement('line', { x1: '152', y1: '38', x2: '154.5', y2: '39', stroke: palette.mid, strokeWidth: '0.5' }),
         ),
-        // 85%: Chocolate bar shape
-        completion >= 85 && React.createElement('g', {
-          key: 'schoggi',
-          style: { opacity: Math.min(1, (completion - 85) / 15), transition: 'opacity 1.5s ease' },
+        // 85%: Schokolade (Toblerone-shape)
+        completion >= 85 && React.createElement('g', { key: 'schoggi',
+          style: { opacity: Math.min(0.4, (completion - 85) / 10), transition: 'opacity 1.5s ease' },
         },
-          React.createElement('rect', { x: '400', y: '170', width: '12', height: '7', rx: '1', fill: palette.sand, opacity: 0.15 }),
-          React.createElement('line', { x1: '404', y1: '170', x2: '404', y2: '177', stroke: palette.sand, strokeWidth: '0.4', opacity: 0.15 }),
-          React.createElement('line', { x1: '408', y1: '170', x2: '408', y2: '177', stroke: palette.sand, strokeWidth: '0.4', opacity: 0.15 }),
+          React.createElement('path', { d: 'M 395 172 L 401 162 L 407 172 L 413 162 L 419 172 Z', fill: palette.sand }),
         ),
-        // 95%: Sun fully revealed
-        completion >= 95 && React.createElement('circle', {
-          key: 'sonne',
-          cx: '660', cy: '18', r: '10', fill: palette.sand,
-          style: { opacity: Math.min(0.15, (completion - 95) / 40), transition: 'opacity 1.5s ease' },
+        // 95%: Sonne (warm sun)
+        completion >= 95 && React.createElement('circle', { key: 'sonne',
+          cx: '660', cy: '16', r: '12', fill: palette.sand,
+          style: { opacity: 0.18, transition: 'opacity 1.5s ease' },
         }),
-        // 100%: Swiss flag on the highest peak — Ordnung hergestellt
-        completion >= 100 && React.createElement('g', {
-          key: 'fahne',
-          style: { opacity: 1, transition: 'opacity 1s ease' },
+        // 100%: Swiss flag on highest peak — Ordnung hergestellt
+        completion >= 100 && React.createElement('g', { key: 'fahne',
+          style: { transition: 'opacity 1s ease' },
         },
-          React.createElement('line', { x1: '510', y1: '6', x2: '510', y2: '18', stroke: palette.mid, strokeWidth: '0.8', opacity: 0.4 }),
-          React.createElement('rect', { x: '511', y: '6', width: '8', height: '6', rx: '0.5', fill: '#e03030', opacity: 0.3 }),
-          React.createElement('path', { d: 'M 514 7.5 L 514 10.5 M 512.5 9 L 515.5 9', fill: 'none', stroke: 'white', strokeWidth: '0.8', opacity: 0.5 }),
+          React.createElement('line', { x1: '510', y1: '4', x2: '510', y2: '20', stroke: palette.mid, strokeWidth: '1' }),
+          React.createElement('rect', { x: '511', y: '4', width: '10', height: '7', rx: '0.5', fill: '#d42b2b', opacity: 0.6 }),
+          React.createElement('path', { d: 'M 514.5 5.5 L 514.5 9.5 M 512.5 7.5 L 516.5 7.5', fill: 'none', stroke: 'white', strokeWidth: '1.2' }),
         ),
         // Pass trail — segmented by chapter progress
         ...trailSegments.map((seg, i) => {
@@ -250,13 +243,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { position: 'absolute', inset: 0, pointerEvents: 'none' }
       },
         [
-          { x: 6.9, y: 67, key: 'basis' },
-          { x: 19.4, y: 48.5, key: 'wohnen' },
-          { x: 33.3, y: 63, key: 'finanzen' },
-          { x: 47.2, y: 79, key: 'versicherungen' },
-          { x: 61.1, y: 76.5, key: 'ausbildung' },
-          { x: 75, y: 43, key: 'behoerden' },
-          { x: 91.7, y: 51.5, key: 'notfall' },
+          { x: 8.33, y: 60, key: 'basis' },
+          { x: 18.75, y: 46, key: 'wohnen' },
+          { x: 31.25, y: 56, key: 'finanzen' },
+          { x: 48.6, y: 77.5, key: 'versicherungen' },
+          { x: 60.4, y: 74, key: 'ausbildung' },
+          { x: 75, y: 39, key: 'behoerden' },
+          { x: 92.4, y: 47.5, key: 'notfall' },
         ].map((station, i) => {
           const pct = chapterCompletions[i] || 0;
           const iconKey = chapterIcons[station.key];
