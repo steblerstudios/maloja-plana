@@ -184,3 +184,20 @@ html {
 ::selection {
   background: rgba(184, 149, 106, 0.3);
 }
+
+/* ─── Micro-feedback animations ────────────────────────── */
+@keyframes mp-stamp {
+  0% { transform: scale(1.25); opacity: 0.6; }
+  60% { transform: scale(0.95); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mp-check-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes mp-lock-close {
+  0% { transform: translateY(-2px); opacity: 0; }
+  60% { transform: translateY(1px); }
+  100% { transform: translateY(0); opacity: 1; }
+}

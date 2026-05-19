@@ -325,8 +325,17 @@ export const ZipExport = ({ palette, t, data, documents }) => {
         // Status messages
         backupStatus && React.createElement('div', {
           role: 'alert',
-          style: { padding: '12px', background: statusColor + '22', borderRadius: '6px', marginBottom: '12px', border: '1px solid ' + statusColor, fontSize: '12px', fontWeight: '500' }
-        }, backupStatus.msg),
+          style: { padding: '12px', background: statusColor + '22', borderRadius: '6px', marginBottom: '12px', border: '1px solid ' + statusColor, fontSize: '12px', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '10px' }
+        },
+          backupStatus.type === 'success' && React.createElement('svg', {
+            viewBox: '0 0 20 20', style: { width: '20px', height: '20px', flexShrink: 0, animation: 'mp-lock-close 0.4s ease-out forwards' }
+          },
+            React.createElement('rect', { x: '4', y: '9', width: '12', height: '10', rx: '2', fill: palette.sage }),
+            React.createElement('path', { d: 'M 7 9 L 7 6 C 7 3.5 10 1.5 13 3.5 L 13 9', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' }),
+            React.createElement('polyline', { points: '8,14 10,16 13,12', fill: 'none', stroke: 'white', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', style: { animation: 'mp-check-pop 0.3s 0.3s ease-out both' } }),
+          ),
+          backupStatus.msg
+        ),
 
         // Validation warnings
         validationWarnings.length > 0 && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: '6px', marginBottom: '12px', border: '1px solid ' + palette.gold, fontSize: '11px' } },
