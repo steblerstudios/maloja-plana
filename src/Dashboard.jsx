@@ -149,9 +149,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Progress — subtle, integrated ─────────────────────
+    // ─── Progress — open editorial section ──────────────────
     React.createElement('div', {
-      style: { marginBottom: '32px', padding: '20px 24px', background: palette.surface, borderRadius: '12px', border: '1px solid ' + palette.border }
+      style: { marginBottom: '28px', padding: '0 2px' }
     },
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }
@@ -164,7 +164,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         )
       ),
       // Progress bar — thinner, calmer
-      React.createElement('div', { style: { width: '100%', height: '4px', background: palette.up, borderRadius: '2px', overflow: 'hidden' } },
+      React.createElement('div', { style: { width: '100%', height: '3px', background: palette.up, borderRadius: '2px', overflow: 'hidden' } },
         React.createElement('div', {
           style: {
             width: completion + '%', height: '100%',
@@ -187,7 +187,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Life chapters — calm cards ────────────────────────
-    React.createElement('div', { style: { marginBottom: '32px' } },
+    React.createElement('div', { style: { marginBottom: '40px', marginTop: '40px' } },
       React.createElement('h2', {
         style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }
       }, t('dashboard.yourChapters')),
@@ -257,7 +257,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Tools — calm grid ─────────────────────────────────
-    React.createElement('div', { style: { marginBottom: '32px' } },
+    React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement('h2', {
         style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }
       }, t('dashboard.toolsAndFeatures')),
@@ -299,12 +299,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Tips — gentle, editorial ──────────────────────────
+    // ─── Tips — open editorial section ─────────────────────
     React.createElement('div', {
-      style: { padding: '20px 24px', background: palette.surface, borderRadius: '12px', border: '1px solid ' + palette.border, marginBottom: '24px' }
+      style: { padding: '0 2px', marginBottom: '24px', borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
       React.createElement('h3', {
-        style: { fontSize: '12px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px' }
+        style: { fontSize: '11px', fontWeight: '500', color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px' }
       }, t('dashboard.tipsTitle')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px' } },
         [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
