@@ -1,9 +1,10 @@
 // CV/Resume Generator for Switzerland — i18n-aware
+import { getFullName } from './config/constants.js';
 
 export const generateCVTemplate = (data, t) => {
   return {
     header: {
-      name: data.basis?.fullName || (t ? t('cv.name') : 'Name'),
+      name: getFullName(data.basis) || (t ? t('cv.name') : 'Name'),
       phone: data.basis?.phone || '',
       email: data.basis?.email || '',
       address: data.wohnen?.address || '',

@@ -9,7 +9,7 @@
 //   3. Unknown versions are left untouched (no silent corruption)
 //   4. Failures leave original data intact
 
-export const CURRENT_DATA_VERSION = 1;
+export const CURRENT_DATA_VERSION = 2;
 
 // ─── Migration functions ────────────────────────────────────
 // Each takes a data object at version N and returns version N+1.
@@ -27,8 +27,16 @@ const migrations = {
     };
   },
 
-  // Future: v1 → v2 would go here
-  // 1: (data) => { ... return { ...data, _version: 2 }; }
+  // v1 → v2: Split fullName into firstName + lastName
+  1: (data) => {
+    const basis = data.basis || {};
+    if (basis.fullName && !basis.firstName && !basis.lastName) {
+      const parts = basis.fullName.trim().split(/\s+/);
+      basis.firstName = parts[0] || '';
+      basis.lastName = parts.slice(1).join(' ') || '';
+    }
+    return { ...data, basis, _version: 2, _migratedAt: new Date().toISOString() };
+  },
 };
 
 /**

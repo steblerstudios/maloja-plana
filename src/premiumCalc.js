@@ -1,5 +1,6 @@
 // KVG §67 Premium subsidy Switzerland
 // Calculates tax savings and subsidy eligibility
+import { getFullName } from './config/constants.js';
 
 export const KVG_BRACKETS_2024 = [
   { income: 27500, single: 3000, couple: 4500, child: 1500 },
@@ -86,7 +87,7 @@ export const generateKVGDocument = (data, subsidyData, t) => {
     title: t ? t('premiumCalc.docTitle') : 'KVG §67 Application data',
     date: new Date().toLocaleDateString('de-CH'),
     applicant: {
-      name: data.basis?.fullName,
+      name: getFullName(data.basis),
       ahv: data.basis?.ahv,
       address: data.wohnen?.address,
       canton: data.basis?.canton
