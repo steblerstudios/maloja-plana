@@ -65,6 +65,7 @@ export default {
   nav: {
     dashboard: 'Dashboard',
     tools: 'WERKZEUGE',
+    moreTools: 'Weitere Werkzeuge',
     advanced: 'ERWEITERT',
     tresor: 'Dokument-Tresor',
     kkScanner: 'KK-Scanner',
@@ -111,6 +112,9 @@ export default {
     totalFields: 'Felder insgesamt',
     completed: 'Komplett',
     yourChapters: 'Deine 7 Lebens-Kapitel',
+    tierCore: 'Dein Alltag',
+    tierSupporting: 'Deine Absicherung',
+    tierProtective: 'Dein Schutz',
     toolsAndFeatures: 'Werkzeuge & Features',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: 'Beginne mit dem Kapitel "Persönliche Basis"',
