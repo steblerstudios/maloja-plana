@@ -355,6 +355,28 @@ export default {
     showMore: 'Weitere Bereiche anzeigen',
     showLess: 'Weniger anzeigen',
     hasHiddenData: 'Einige ausgeblendete Bereiche enthalten bereits Daten.',
+    disclosure: {
+      versicherungen: {
+        more: 'Weitere Versicherungen anzeigen',
+        less: 'Zusatzversicherungen ausblenden',
+        hint: 'Einige Versicherungsangaben sind bereits hinterlegt.',
+      },
+      wohnen: {
+        more: 'Eigentum & Immobiliendetails anzeigen',
+        less: 'Immobiliendetails ausblenden',
+        hint: 'Einige Immobilienangaben sind bereits hinterlegt.',
+      },
+      finanzen: {
+        more: 'Vorsorge & Anlagen anzeigen',
+        less: 'Vorsorgedetails ausblenden',
+        hint: 'Einige Vorsorgeangaben sind bereits hinterlegt.',
+      },
+      notfall: {
+        more: 'Persönliche Vorsorgeverfügungen anzeigen',
+        less: 'Vorsorgeverfügungen ausblenden',
+        hint: 'Einige Vorsorgeinformationen sind bereits hinterlegt.',
+      },
+    },
   },
 
   trust: {
