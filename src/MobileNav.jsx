@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
 export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion }) => {
+  const [showAdvanced, setShowAdvanced] = useState(false);
   if (!isOpen) return null;
 
   // Icon mapping for chapters
@@ -91,18 +92,37 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         activeView === 'dashboard'
       ),
 
-      // Chapters
-      React.createElement('div', {
-        style: { padding: '16px 0 8px 0', borderBottom: '1px solid ' + palette.border }
-      },
-        (chapters || []).map((ch, idx) => {
-          const iconKey = chapterIcons[ch.key];
-          const isActive = activeView === 'chapter' && activeChapter === idx;
-          return navItem(ch.key, ch.title, iconKey,
-            () => { onNavigate('chapter', idx); onClose(); },
-            isActive
-          );
-        })
+      // Chapters — tiered grouping
+      ...[
+        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
+        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
+        { label: t('dashboard.tierProtective'), indices: [5, 6] },
+      ].map((tier, tierIdx) =>
+        React.createElement('div', {
+          key: 'tier-' + tierIdx,
+          style: {
+            padding: tierIdx === 0 ? '8px 0 4px 0' : '4px 0',
+            borderBottom: tierIdx === 2 ? '1px solid ' + palette.border : 'none',
+          }
+        },
+          React.createElement('div', {
+            style: {
+              fontSize: '10px', fontWeight: '500', color: palette.soft,
+              padding: tierIdx === 0 ? '8px 20px 4px 20px' : '12px 20px 4px 20px',
+              letterSpacing: '0.3px',
+            }
+          }, tier.label),
+          ...(tier.indices.map(idx => {
+            const ch = (chapters || [])[idx];
+            if (!ch) return null;
+            const iconKey = chapterIcons[ch.key];
+            const isActive = activeView === 'chapter' && activeChapter === idx;
+            return navItem(ch.key, ch.title, iconKey,
+              () => { onNavigate('chapter', idx); onClose(); },
+              isActive
+            );
+          }))
+        )
       ),
 
       // Tools
@@ -122,12 +142,24 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         activeView === tool.key
       )),
 
-      // Advanced
-      React.createElement('div', {
-        style: { fontSize: '10px', fontWeight: '600', color: palette.mid, padding: '16px 20px 8px 20px', textTransform: 'uppercase', letterSpacing: '0.5px', borderTop: '1px solid ' + palette.border, marginTop: '8px' }
-      }, t('nav.advanced')),
+      // Advanced — collapsed behind disclosure
+      React.createElement('button', {
+        key: 'advanced-toggle',
+        onClick: () => setShowAdvanced(!showAdvanced),
+        style: {
+          width: '100%', background: 'none', border: 'none',
+          borderTop: '1px solid ' + palette.border, marginTop: '8px',
+          padding: '14px 20px', cursor: 'pointer',
+          fontSize: '11px', color: palette.soft, fontFamily: 'inherit',
+          textAlign: 'left', letterSpacing: '0.3px',
+          display: 'flex', alignItems: 'center', gap: '8px',
+        }
+      },
+        React.createElement('span', { style: { fontSize: '9px', transition: 'transform 0.2s', transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
+        t('nav.moreTools')
+      ),
 
-      ...[
+      ...(showAdvanced ? [
         { key: 'calendar', label: t('nav.calendar'), icon: 'calendar' },
         { key: 'sync', label: t('nav.budgetSync'), icon: 'money' },
         { key: 'premium', label: t('nav.kvgIpv'), icon: 'health' },
@@ -139,7 +171,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       ].map(tool => navItem(tool.key, tool.label, tool.icon,
         () => { onNavigate(tool.key); onClose(); },
         activeView === tool.key
-      )),
+      )) : []),
 
       // Spacer
       React.createElement('div', { style: { flex: 1 } }),
