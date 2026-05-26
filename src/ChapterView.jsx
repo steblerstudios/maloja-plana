@@ -15,6 +15,19 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
+  const hasSecondaryFields = chapter.fields.some(f => f.secondary);
+  const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => data[f.k]);
+  const storageKey = 'or5_disclosure_' + chapter.key;
+  const [showSecondary, setShowSecondary] = useState(() => {
+    if (secondaryHasData) return true;
+    try { return localStorage.getItem(storageKey) === 'true'; } catch { return false; }
+  });
+  const toggleSecondary = () => {
+    const next = !showSecondary;
+    setShowSecondary(next);
+    try { localStorage.setItem(storageKey, String(next)); } catch {}
+  };
+
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
 
@@ -452,10 +465,10 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
       ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
-        chapter.fields.map((field, idx) => {
+        chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {
           const elements = [];
           if (field.section) {
-            const isFirst = idx === 0 || !chapter.fields.slice(0, idx).some(f => f.section);
+            const isFirst = idx === 0 || !primaryFields.slice(0, idx).some(f => f.section);
             elements.push(
               React.createElement('div', {
                 key: 'section-' + field.k,
@@ -464,6 +477,66 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
                 style: {
                   gridColumn: '1 / -1',
                   marginTop: isFirst ? 0 : '28px',
+                  paddingTop: isFirst ? 0 : '16px',
+                  borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  color: palette.mid,
+                  letterSpacing: '0.4px',
+                  marginBottom: '4px',
+                }
+              }, field.section)
+            );
+          }
+          elements.push(renderField(field));
+          return elements;
+        })
+      ),
+
+      // Progressive disclosure toggle
+      hasSecondaryFields && React.createElement('div', {
+        style: {
+          marginTop: '24px',
+          paddingTop: '16px',
+          borderTop: '1px solid ' + palette.border,
+          textAlign: 'center',
+        }
+      },
+        React.createElement('button', {
+          onClick: toggleSecondary,
+          'aria-expanded': showSecondary,
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontSize: '12px', color: palette.mid, letterSpacing: '0.3px',
+            padding: '8px 16px',
+            fontFamily: 'DM Sans, sans-serif',
+          }
+        },
+          showSecondary
+            ? '○ ' + tr('chapterView.showLess')
+            : '○ ' + tr('chapterView.showMore')
+        ),
+        !showSecondary && secondaryHasData && React.createElement('div', {
+          style: { fontSize: '10px', color: palette.sage, marginTop: '4px' }
+        }, tr('chapterView.hasHiddenData'))
+      ),
+
+      // Secondary fields
+      hasSecondaryFields && showSecondary && React.createElement('div', {
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px', marginTop: '8px' }
+      },
+        chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => {
+          const elements = [];
+          if (field.section) {
+            const isFirst = idx === 0 || !secFields.slice(0, idx).some(f => f.section);
+            elements.push(
+              React.createElement('div', {
+                key: 'section-' + field.k,
+                role: 'presentation',
+                'aria-label': field.section,
+                style: {
+                  gridColumn: '1 / -1',
+                  marginTop: isFirst ? '8px' : '28px',
                   paddingTop: isFirst ? 0 : '16px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
                   fontSize: '13px',
