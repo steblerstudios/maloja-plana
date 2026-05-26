@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { calculateIPV, CANTONAL_IPV, CANTON_NAMES, getResidenceInfo } from './config/cantonalData.js';
 import { getKVGApplicationLink, estimateTaxSavings } from './premiumCalc.js';
 import { Icon } from './IconSystem.jsx';
+import { getFullName } from './config/constants.js';
 
 export const PremiumSubsidy = ({ palette, t, data }) => {
   const [showCalculation, setShowCalculation] = useState(true);
@@ -24,7 +25,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
       date: new Date().toLocaleDateString('de-CH'),
       canton,
       cantonName: CANTON_NAMES[canton] || canton,
-      applicant: data.basis?.fullName || '',
+      applicant: getFullName(data.basis) || '',
       ahv: data.basis?.ahv || '',
       result: ipvResult
     };
@@ -33,7 +34,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'KVG_IPV_' + (data.basis?.fullName || 'application').replace(/\s/g, '_') + '.json';
+    a.download = 'KVG_IPV_' + (getFullName(data.basis) || 'application').replace(/\s/g, '_') + '.json';
     a.click();
     URL.revokeObjectURL(url);
   };

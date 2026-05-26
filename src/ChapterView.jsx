@@ -35,12 +35,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
   const validateField = (fieldKey, value) => {
     let error = '';
-    if (fieldKey.includes('phone')) {
+    if (fieldKey.includes('phone') || fieldKey.includes('Phone')) {
       error = validatePhone(value, tr).error;
     } else if (fieldKey === 'ahv') {
       error = validateAHV(value, tr).error;
     } else if (fieldKey.includes('email')) {
       error = validateEmail(value, tr).error;
+    } else if (fieldKey === 'postalCode') {
+      error = validatePostalCode(value, 'CH', tr).error;
     }
     return error;
   };
@@ -128,18 +130,50 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
       );
     }
 
-    // Phone
+    // Phone with country code prefix
     if (field.type === 'tel') {
+      const phoneCodes = [
+        { code: '+41', label: '+41' },
+        { code: '+49', label: '+49' },
+        { code: '+43', label: '+43' },
+        { code: '+33', label: '+33' },
+        { code: '+39', label: '+39' },
+      ];
+      const detectedCode = phoneCodes.find(p => value.startsWith(p.code));
+      const activeCode = detectedCode ? detectedCode.code : '+41';
+      const localPart = detectedCode ? value.slice(detectedCode.code.length).replace(/^\s+/, '') : (value.startsWith('0') ? value.slice(1) : value);
+
       return React.createElement('div', { key: field.k, style: baseStyle },
         React.createElement('label', { style: labelStyle }, field.label),
-        React.createElement('input', {
-          type: 'tel',
-          value: value,
-          onChange: (e) => handleFieldChange(field.k, e.target.value),
-          onBlur: (e) => { handlePhoneBlur(field.k, e.target.value); handleFieldBlur(field.k, e.target.value); },
-          placeholder: '+41 XX XXX XX XX',
-          style: inputStyle
-        }),
+        React.createElement('div', { style: { display: 'flex', gap: '6px' } },
+          React.createElement('select', {
+            value: activeCode,
+            onChange: (e) => {
+              const newCode = e.target.value;
+              const joined = localPart ? newCode + ' ' + localPart : newCode;
+              handleFieldChange(field.k, joined);
+            },
+            'aria-label': tr('validation.countryCode'),
+            style: { ...inputStyle, width: '80px', flex: '0 0 80px', cursor: 'pointer' }
+          },
+            phoneCodes.map(p => React.createElement('option', { key: p.code, value: p.code }, p.label))
+          ),
+          React.createElement('input', {
+            type: 'tel',
+            value: localPart,
+            onChange: (e) => {
+              const joined = activeCode + ' ' + e.target.value;
+              handleFieldChange(field.k, joined);
+            },
+            onBlur: (e) => {
+              const full = activeCode + ' ' + e.target.value;
+              handlePhoneBlur(field.k, full);
+              handleFieldBlur(field.k, full);
+            },
+            placeholder: field.placeholder || '79 123 45 67',
+            style: { ...inputStyle, flex: 1 }
+          })
+        ),
         error && React.createElement('div', { style: errorStyle }, error)
       );
     }
@@ -164,13 +198,26 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     if (field.type === 'date') {
       return React.createElement('div', { key: field.k, style: baseStyle },
         React.createElement('label', { style: labelStyle }, field.label),
-        React.createElement('input', {
-          key: field.k + '_' + (value || 'empty'),
-          type: 'date',
-          value: value || '',
-          onChange: (e) => handleFieldChange(field.k, e.target.value),
-          style: inputStyle
-        })
+        React.createElement('div', { style: { position: 'relative' } },
+          React.createElement('input', {
+            key: field.k + '_' + (value || 'empty'),
+            type: 'date',
+            value: value || '',
+            onChange: (e) => handleFieldChange(field.k, e.target.value),
+            onInput: (e) => { if (!e.target.value && value) handleFieldChange(field.k, ''); },
+            style: inputStyle
+          }),
+          value && React.createElement('button', {
+            type: 'button',
+            onClick: () => handleFieldChange(field.k, ''),
+            'aria-label': tr('common.delete'),
+            style: {
+              position: 'absolute', right: '36px', top: '50%', transform: 'translateY(-50%)',
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: palette.mid, fontSize: '14px', padding: '4px', lineHeight: 1,
+            }
+          }, '✕')
+        )
       );
     }
 

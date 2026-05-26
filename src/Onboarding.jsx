@@ -23,14 +23,16 @@ const CANTONS = [
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
   const [step, setStep] = useState(0);
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [canton, setCanton] = useState('');
 
   const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano' };
 
 
   const finish = () => {
-    if (name.trim()) onUpdateData('basis', 'fullName', name.trim());
+    if (firstName.trim()) onUpdateData('basis', 'firstName', firstName.trim());
+    if (lastName.trim()) onUpdateData('basis', 'lastName', lastName.trim());
     if (canton) onUpdateData('basis', 'canton', canton);
     try { localStorage.setItem(STORAGE_KEY, 'true'); } catch {}
     onComplete();
@@ -109,15 +111,26 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('p', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
-        React.createElement('div', { style: { marginBottom: '16px' } },
-          React.createElement('label', { style: { fontSize: '12px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourName')),
-          React.createElement('input', {
-            type: 'text', value: name,
-            onChange: (e) => setName(e.target.value),
-            placeholder: t('onboarding.namePlaceholder'),
-            style: inputStyle,
-            autoFocus: true,
-          })
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' } },
+          React.createElement('div', null,
+            React.createElement('label', { style: { fontSize: '12px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
+            React.createElement('input', {
+              type: 'text', value: firstName,
+              onChange: (e) => setFirstName(e.target.value),
+              placeholder: t('onboarding.firstNamePlaceholder'),
+              style: inputStyle,
+              autoFocus: true,
+            })
+          ),
+          React.createElement('div', null,
+            React.createElement('label', { style: { fontSize: '12px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
+            React.createElement('input', {
+              type: 'text', value: lastName,
+              onChange: (e) => setLastName(e.target.value),
+              placeholder: t('onboarding.lastNamePlaceholder'),
+              style: inputStyle,
+            })
+          )
         ),
 
         React.createElement('div', { style: { marginBottom: '8px' } },
@@ -161,8 +174,8 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       } }, '✓'),
 
       React.createElement('h2', { style: { fontSize: '20px', fontWeight: '700', color: palette.text, marginBottom: '8px' } },
-        name.trim()
-          ? t('onboarding.readyTitle', { name: name.trim().split(' ')[0] })
+        firstName.trim()
+          ? t('onboarding.readyTitle', { name: firstName.trim() })
           : t('onboarding.readyTitleGeneric')
       ),
 
