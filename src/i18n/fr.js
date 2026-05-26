@@ -65,6 +65,7 @@ export default {
   nav: {
     dashboard: 'Tableau de bord',
     tools: 'OUTILS',
+    moreTools: 'Plus d\'outils',
     advanced: 'AVANCÉ',
     tresor: 'Coffre-fort documents',
     kkScanner: 'Scanner assurance',
@@ -111,6 +112,9 @@ export default {
     totalFields: 'Total des champs',
     completed: 'Complétés',
     yourChapters: 'Vos 7 chapitres de vie',
+    tierCore: 'Ton quotidien',
+    tierSupporting: 'Ta couverture',
+    tierProtective: 'Ta protection',
     toolsAndFeatures: 'Outils et fonctionnalités',
     tipsTitle: 'Conseils pour commencer :',
     tip1: 'Commencez par le chapitre « Données personnelles »',

@@ -396,77 +396,90 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.lastBackup', { date: lastBackup }))
     ),
 
-    // ─── Life chapters — calm cards ────────────────────────
+    // ─── Life chapters — tiered spatial layout ──────────────
     React.createElement('div', { style: { marginBottom: '40px', marginTop: '40px' } },
-      React.createElement('h2', {
-        style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }
-      }, t('dashboard.yourChapters')),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '0px' } },
-        chapters.map((ch, idx) => {
-          const { pct, filled, total } = calculateChapterCompletion(ch.key);
-          const statusColor = getStatusColor(pct);
-          const iconKey = chapterIcons[ch.key];
-          const IconFn = iconKey && Icons[iconKey];
-          const isLast = idx === chapters.length - 1;
-
-          const rowOpacity = pct === 0 ? 0.68 : 1;
-
-          return React.createElement('button', {
-            key: ch.key,
-            onClick: () => onSelectChapter(idx),
+      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
+      ...[
+        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
+        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
+        { label: t('dashboard.tierProtective'), indices: [5, 6] },
+      ].map((tier, tierIdx) =>
+        React.createElement('div', {
+          key: 'tier-' + tierIdx,
+          style: { marginTop: tierIdx === 0 ? '0' : '28px' }
+        },
+          React.createElement('div', {
             style: {
-              display: 'flex', alignItems: 'center', gap: '16px',
-              padding: '20px 4px',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: isLast ? 'none' : '1px solid ' + palette.border,
-              borderRadius: 0,
-              cursor: 'pointer',
-              textAlign: 'left',
-              color: palette.text,
-              fontFamily: 'inherit',
-              opacity: rowOpacity,
-              transition: 'opacity 0.6s ease',
-              width: '100%',
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
-            onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
-          },
-            // Icon with maturity-aware styling
-            React.createElement('div', {
+              fontSize: '11px', fontWeight: '500', color: palette.soft,
+              letterSpacing: '0.3px', padding: '0 4px 10px 4px',
+              borderBottom: '1px solid ' + palette.border,
+            }
+          }, tier.label),
+
+          ...tier.indices.map((chIdx) => {
+            const ch = chapters[chIdx];
+            if (!ch) return null;
+            const { pct } = calculateChapterCompletion(ch.key);
+            const statusColor = getStatusColor(pct);
+            const iconKey = chapterIcons[ch.key];
+            const IconFn = iconKey && Icons[iconKey];
+            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
+            const rowOpacity = pct === 0 ? 0.68 : 1;
+
+            return React.createElement('button', {
+              key: ch.key,
+              onClick: () => onSelectChapter(chIdx),
               style: {
-                width: '40px', height: '40px', borderRadius: '10px',
-                background: getIconBg(pct),
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
-                border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
-                animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
-              }
-            }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
-
-            // Text + subtle fill indicator
-            React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
-              React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4, marginBottom: pct > 0 ? '6px' : '0' } }, ch.description),
-              pct > 0 && React.createElement('div', {
-                style: { width: '100%', height: '2px', background: palette.up, borderRadius: '1px', overflow: 'hidden' }
+                display: 'flex', alignItems: 'center', gap: '16px',
+                padding: '20px 4px',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
+                borderRadius: 0,
+                cursor: 'pointer',
+                textAlign: 'left',
+                color: palette.text,
+                fontFamily: 'inherit',
+                opacity: rowOpacity,
+                transition: 'opacity 0.6s ease',
+                width: '100%',
               },
-                React.createElement('div', {
-                  style: {
-                    width: pct + '%', height: '100%',
-                    background: pct === 100 ? palette.sage : palette.sand,
-                    borderRadius: '1px',
-                    transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }
-                })
-              ),
-            ),
+              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
+              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
+            },
+              React.createElement('div', {
+                style: {
+                  width: '40px', height: '40px', borderRadius: '10px',
+                  background: getIconBg(pct),
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
+                  transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
+                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
+                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
+                }
+              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
 
-          );
-        })
+              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+                React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
+                React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4, marginBottom: pct > 0 ? '6px' : '0' } }, ch.description),
+                pct > 0 && React.createElement('div', {
+                  style: { width: '100%', height: '2px', background: palette.up, borderRadius: '1px', overflow: 'hidden' }
+                },
+                  React.createElement('div', {
+                    style: {
+                      width: pct + '%', height: '100%',
+                      background: pct === 100 ? palette.sage : palette.sand,
+                      borderRadius: '1px',
+                      transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    }
+                  })
+                ),
+              ),
+            );
+          })
+        )
       )
     ),
 
@@ -477,12 +490,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px' } },
         [
-          { label: t('nav.calendar'), view: 'calendar', icon: 'calendar' },
-          { label: t('nav.budgetSync'), view: 'sync', icon: 'money' },
-          { label: t('nav.kvgIpv'), view: 'premium', icon: 'health' },
-          { label: t('nav.tresor'), view: 'tresor', icon: 'document' },
-          { label: t('nav.cv'), view: 'cv', icon: 'document' },
-          { label: t('nav.export'), view: 'export', icon: 'download' },
+          { label: t('nav.calendar'), view: 'calendar', icon: 'kalenderUhr' },
+          { label: t('nav.budgetSync'), view: 'sync', icon: 'budgetWallet' },
+          { label: t('nav.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
+          { label: t('nav.tresor'), view: 'tresor', icon: 'dokumentTresor' },
+          { label: t('nav.cv'), view: 'cv', icon: 'lebenslauf' },
+          { label: t('nav.export'), view: 'export', icon: 'exportTool' },
         ].map(tool => {
           const IconFn = Icons[tool.icon];
           return React.createElement('button', {
