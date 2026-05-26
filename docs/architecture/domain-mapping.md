@@ -82,13 +82,27 @@ These fields touch concerns that span more than one chapter:
 
 | Chapter          | Primary fields | Secondary fields | Toggle implemented |
 |------------------|---------------|------------------|--------------------|
+| basis            | 11            | 0                | n/a                |
+| wohnen           | 8             | 4                | A-026              |
+| finanzen         | 9             | 3                | A-026              |
 | versicherungen   | 11            | 6                | A-025              |
-| All others       | all           | 0                | n/a                |
+| ausbildung       | 10            | 0                | n/a                |
+| behoerden        | 10            | 0                | n/a                |
+| notfall          | 9             | 4                | A-026              |
+
+## Field visibility governance
+
+- **Soft cap**: 8–10 primary visible fields per chapter
+- **Hard cap**: 12 — anything above must be reviewed for disclosure
+- **Cognitive weight** matters more than field count (textareas > selects > inputs)
+- Per-chapter contextual disclosure labels (not generic "show more")
+- Notfall uses warm, trustworthy language for advance care fields
 
 ## Design principles
 
 1. **One canonical location** — each field lives in exactly one chapter, even if relevant elsewhere
 2. **Derived connections, not duplication** — cross-domain references use budgetSync / derived state, not field copies
-3. **Progressive disclosure** — chapters with >12 primary fields should consider secondary grouping
+3. **Progressive disclosure** — chapters exceeding the soft cap should consider secondary grouping
 4. **Sections are visual** — they group fields in the UI but carry no data-model weight
 5. **New chapters require governance** — adding a chapter is a structural decision, not a feature request
+6. **Employer fields stay separate** — finanzen.employer (payroll) ≠ ausbildung.employer (CV context)
