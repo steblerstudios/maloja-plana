@@ -513,12 +513,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           }
         },
           showSecondary
-            ? '○ ' + tr('chapterView.showLess')
-            : '○ ' + tr('chapterView.showMore')
+            ? '○ ' + tr('chapterView.disclosure.' + chapter.key + '.less')
+            : '○ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
           style: { fontSize: '10px', color: palette.sage, marginTop: '4px' }
-        }, tr('chapterView.hasHiddenData'))
+        }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
       ),
 
       // Secondary fields

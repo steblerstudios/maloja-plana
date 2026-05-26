@@ -355,6 +355,28 @@ export default {
     showMore: 'Afficher plus de sections',
     showLess: 'Afficher moins',
     hasHiddenData: 'Certaines sections masquées contiennent déjà des données.',
+    disclosure: {
+      versicherungen: {
+        more: 'Afficher les assurances complémentaires',
+        less: 'Masquer les assurances complémentaires',
+        hint: 'Certaines informations d\'assurance sont déjà enregistrées.',
+      },
+      wohnen: {
+        more: 'Afficher les détails immobiliers',
+        less: 'Masquer les détails immobiliers',
+        hint: 'Certains détails immobiliers sont déjà enregistrés.',
+      },
+      finanzen: {
+        more: 'Afficher la prévoyance et les placements',
+        less: 'Masquer les détails de prévoyance',
+        hint: 'Certaines informations de prévoyance sont déjà enregistrées.',
+      },
+      notfall: {
+        more: 'Afficher les directives anticipées',
+        less: 'Masquer les directives anticipées',
+        hint: 'Certaines informations de prévoyance sont déjà enregistrées.',
+      },
+    },
   },
 
   trust: {
