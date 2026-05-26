@@ -352,6 +352,9 @@ export default {
     uploadError: 'Fehler beim Upload',
     hint: 'Hinweis',
     trustDocuments: 'Deine Dokumente bleiben auf diesem Gerät.',
+    showMore: 'Weitere Bereiche anzeigen',
+    showLess: 'Weniger anzeigen',
+    hasHiddenData: 'Einige ausgeblendete Bereiche enthalten bereits Daten.',
   },
 
   trust: {

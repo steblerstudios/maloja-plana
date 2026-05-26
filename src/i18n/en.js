@@ -353,6 +353,9 @@ export default {
     uploadError: 'Upload error',
     hint: 'Hint',
     trustDocuments: 'Your documents stay on this device.',
+    showMore: 'Show more sections',
+    showLess: 'Show less',
+    hasHiddenData: 'Some hidden sections already contain data.',
   },
 
   trust: {
