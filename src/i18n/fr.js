@@ -352,6 +352,9 @@ export default {
     uploadError: 'Erreur d\'importation',
     hint: 'Indication',
     trustDocuments: 'Tes documents restent sur cet appareil.',
+    showMore: 'Afficher plus de sections',
+    showLess: 'Afficher moins',
+    hasHiddenData: 'Certaines sections masquées contiennent déjà des données.',
   },
 
   trust: {

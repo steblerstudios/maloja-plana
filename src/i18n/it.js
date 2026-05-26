@@ -353,6 +353,9 @@ export default {
     trustDocuments: 'I tuoi documenti restano su questo dispositivo.',
     emptyState: 'Niente qui per il momento — ed è perfettamente normale.',
     emptyStateHint: 'Puoi iniziare con poche informazioni. Tutto può essere completato in seguito.',
+    showMore: 'Mostra altre sezioni',
+    showLess: 'Mostra meno',
+    hasHiddenData: 'Alcune sezioni nascoste contengono già dei dati.',
   },
 
   trust: {
