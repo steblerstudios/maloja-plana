@@ -356,6 +356,28 @@ export default {
     showMore: 'Show more sections',
     showLess: 'Show less',
     hasHiddenData: 'Some hidden sections already contain data.',
+    disclosure: {
+      versicherungen: {
+        more: 'Show additional insurance details',
+        less: 'Hide additional insurance',
+        hint: 'Some insurance details are already saved.',
+      },
+      wohnen: {
+        more: 'Show property & ownership details',
+        less: 'Hide property details',
+        hint: 'Some property details are already saved.',
+      },
+      finanzen: {
+        more: 'Show pension & investments',
+        less: 'Hide pension details',
+        hint: 'Some pension details are already saved.',
+      },
+      notfall: {
+        more: 'Show advance care planning',
+        less: 'Hide advance care details',
+        hint: 'Some advance care details are already saved.',
+      },
+    },
   },
 
   trust: {

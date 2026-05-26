@@ -356,6 +356,28 @@ export default {
     showMore: 'Mostra altre sezioni',
     showLess: 'Mostra meno',
     hasHiddenData: 'Alcune sezioni nascoste contengono già dei dati.',
+    disclosure: {
+      versicherungen: {
+        more: 'Mostra assicurazioni aggiuntive',
+        less: 'Nascondi assicurazioni aggiuntive',
+        hint: 'Alcune informazioni assicurative sono già salvate.',
+      },
+      wohnen: {
+        more: 'Mostra dettagli immobiliari',
+        less: 'Nascondi dettagli immobiliari',
+        hint: 'Alcuni dettagli immobiliari sono già salvati.',
+      },
+      finanzen: {
+        more: 'Mostra previdenza e investimenti',
+        less: 'Nascondi dettagli previdenziali',
+        hint: 'Alcune informazioni previdenziali sono già salvate.',
+      },
+      notfall: {
+        more: 'Mostra disposizioni di previdenza personale',
+        less: 'Nascondi disposizioni anticipate',
+        hint: 'Alcune informazioni di previdenza sono già salvate.',
+      },
+    },
   },
 
   trust: {
