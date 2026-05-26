@@ -65,6 +65,7 @@ export default {
   nav: {
     dashboard: 'Dashboard',
     tools: 'TOOLS',
+    moreTools: 'More tools',
     advanced: 'ADVANCED',
     notifications: 'Notifications',
     tresor: 'Document vault',
@@ -111,6 +112,9 @@ export default {
     totalFields: 'Total fields',
     completed: 'Completed',
     yourChapters: 'Your 7 life chapters',
+    tierCore: 'Your everyday',
+    tierSupporting: 'Your coverage',
+    tierProtective: 'Your safety net',
     toolsAndFeatures: 'Tools and features',
     tipsTitle: 'Tips for getting started:',
     tip1: 'Start with the chapter "Personal basics"',
