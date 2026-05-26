@@ -59,7 +59,8 @@ export function getChapters(t) {
       description: t('chapters.basis.description'),
       icon: t('chapters.basis.icon'),
       fields: [
-        { k: 'fullName', label: fl(t, 'basis', 'fullName'), type: 'text', required: true, section: t('sections.basis.person') },
+        { k: 'firstName', label: fl(t, 'basis', 'firstName'), type: 'text', required: true, section: t('sections.basis.person') },
+        { k: 'lastName', label: fl(t, 'basis', 'lastName'), type: 'text', required: true },
         { k: 'dateOfBirth', label: fl(t, 'basis', 'dateOfBirth'), type: 'date', required: true },
         { k: 'gender', label: fl(t, 'basis', 'gender'), type: 'select', options: opts(t, 'basis', 'gender') },
         { k: 'nationality', label: fl(t, 'basis', 'nationality'), type: 'select', options: opts(t, 'basis', 'nationality') },
@@ -141,12 +142,20 @@ export function getChapters(t) {
         { k: 'uvg', label: fl(t, 'versicherungen', 'uvg'), type: 'select', options: opts(t, 'versicherungen', 'uvg'), section: t('sections.versicherungen.additional') },
         { k: 'liabilityInsurance', label: fl(t, 'versicherungen', 'liabilityInsurance'), type: 'select', options: opts(t, 'versicherungen', 'liabilityInsurance') },
         { k: 'liabilityAmount', label: fl(t, 'versicherungen', 'liabilityAmount'), type: 'currency' },
-        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency' },
+        { k: 'householdInsurance', label: fl(t, 'versicherungen', 'householdInsurance'), type: 'select', options: opts(t, 'versicherungen', 'householdInsurance'), section: t('sections.versicherungen.property') },
+        { k: 'householdInsuranceAmount', label: fl(t, 'versicherungen', 'householdInsuranceAmount'), type: 'currency' },
+        { k: 'travelInsurance', label: fl(t, 'versicherungen', 'travelInsurance'), type: 'select', options: opts(t, 'versicherungen', 'travelInsurance') },
+        { k: 'cyberInsurance', label: fl(t, 'versicherungen', 'cyberInsurance'), type: 'select', options: opts(t, 'versicherungen', 'cyberInsurance') },
+        { k: 'autoInsurance', label: fl(t, 'versicherungen', 'autoInsurance'), type: 'select', options: opts(t, 'versicherungen', 'autoInsurance'), section: t('sections.versicherungen.mobility') },
+        { k: 'autoInsuranceAmount', label: fl(t, 'versicherungen', 'autoInsuranceAmount'), type: 'currency' },
+        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social') },
       ],
       docs: [
         { k: 'kkcard', label: dl(t, 'versicherungen', 'kkcard') },
         { k: 'bvg_cert', label: dl(t, 'versicherungen', 'bvg_cert') },
         { k: 'ahv_confirmation', label: dl(t, 'versicherungen', 'ahv_confirmation') },
+        { k: 'household_policy', label: dl(t, 'versicherungen', 'household_policy') },
+        { k: 'auto_policy', label: dl(t, 'versicherungen', 'auto_policy') },
       ]
     },
     {
@@ -225,15 +234,24 @@ export function getChapters(t) {
   ];
 }
 
+// Derive display name from firstName + lastName (backward-compat with legacy fullName)
+export function getFullName(basisData) {
+  if (!basisData) return '';
+  const first = (basisData.firstName || '').trim();
+  const last = (basisData.lastName || '').trim();
+  if (first || last) return (first + ' ' + last).trim();
+  return (basisData.fullName || '').trim();
+}
+
 // Keep CHAPTER_KEYS for data initialization (language-independent)
 export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden', 'notfall'];
 
 // Field keys per chapter (for data initialization — no translations needed)
 const FIELD_KEYS = {
-  basis: ['fullName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus', 'dependents'],
+  basis: ['firstName', 'lastName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus', 'dependents'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
   finanzen: ['monthlyIncome', 'employer', 'employmentType', 'startDate', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3b', 'investmentFunds'],
-  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'bvgInsurer', 'bvgContribution', 'uvg', 'liabilityInsurance', 'liabilityAmount', 'ahvContribution'],
+  versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'bvgInsurer', 'bvgContribution', 'uvg', 'liabilityInsurance', 'liabilityAmount', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFillingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor'],

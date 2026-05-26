@@ -1,5 +1,6 @@
 // Budget-Sync: Links data between chapters
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
+import { getFullName } from './config/constants.js';
 
 export const syncBudgetFromChapters = (data) => {
   const budget = {
@@ -94,7 +95,7 @@ export const createBudgetReport = (data, t) => {
 
   return {
     period: new Date().toLocaleDateString('de-CH'),
-    person: data.basis?.fullName || (t ? t('cv.name') : 'Name'),
+    person: getFullName(data.basis) || (t ? t('cv.name') : 'Name'),
     budget,
     details: {
       income: {
