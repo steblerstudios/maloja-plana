@@ -3,6 +3,7 @@ import { prepareDataForExport, prepareDownloadFiles, initiateBrowserDownload } f
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
+import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 
 export const ZipExport = ({ palette, t, data, documents }) => {
@@ -185,7 +186,7 @@ export const ZipExport = ({ palette, t, data, documents }) => {
   }, []);
 
   const dataSummary = {
-    person: data.basis?.fullName || '—',
+    person: getFullName(data.basis) || '—',
     lastUpdate: new Date().toLocaleDateString('de-CH'),
     documentsCount: documents?.length || 0,
     dataSize: JSON.stringify(data).length

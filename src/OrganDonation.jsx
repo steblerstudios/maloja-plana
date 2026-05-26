@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
+import { getFullName } from './config/constants.js';
 
 export const OrganDonation = ({ palette, t, data, onSave }) => {
   const [status, setStatus] = useState(data.organStatus || 'registered');
@@ -25,7 +26,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   const handleGenerateQR = () => {
     const qrData = JSON.stringify({
       type: 'ORGAN_DONATION',
-      name: data.basis?.fullName || '',
+      name: getFullName(data.basis) || '',
       phone: data.basis?.phone || '',
       bloodType: data.notfall?.bloodType || '',
       organStatus: status,

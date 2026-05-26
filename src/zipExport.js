@@ -1,11 +1,12 @@
 // ZIP-Export für Datensicherung
+import { getFullName } from './config/constants.js';
 
 export const prepareDataForExport = (data, docs = []) => {
   return {
     exportDate: new Date().toISOString(),
     version: '5.0',
     person: {
-      name: data.basis?.fullName,
+      name: getFullName(data.basis),
       email: data.basis?.email,
       phone: data.basis?.phone
     },
@@ -44,7 +45,7 @@ INHALT DER DATENSICHERUNG:
 ──────────────────────────
 
 1. PERSÖNLICHE DATEN (basis)
-   - Name: ${data.chapters.basis?.fullName || '—'}
+   - Name: ${((data.chapters.basis?.firstName || '') + ' ' + (data.chapters.basis?.lastName || '')).trim() || data.chapters.basis?.fullName || '—'}
    - Geburtsdatum: ${data.chapters.basis?.dateOfBirth || '—'}
    - AHV: ${data.chapters.basis?.ahv || '—'}
    - Telefon: ${data.chapters.basis?.phone || '—'}
@@ -146,7 +147,7 @@ export const prepareDownloadFiles = (data, docs = []) => {
       content: generateZipManifest(prepareDataForExport(data, docs))
     },
     json: {
-      filename: `backup_${data.basis?.fullName?.replace(/\s/g, '_')}_${new Date().toISOString().split('T')[0]}.json`,
+      filename: `backup_${(getFullName(data.basis) || 'export').replace(/\s/g, '_')}_${new Date().toISOString().split('T')[0]}.json`,
       content: createJSONBackup(data, docs)
     },
     csv: {

@@ -3,23 +3,32 @@
 export const validatePhone = (phone, t) => {
   if (!phone) return { isValid: true, error: '' };
   const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
-  const isValid = /^(\+41\d{9}|0041\d{9}|0\d{9})$/.test(cleaned);
+  const isValid = /^(\+\d{1,3}\d{7,12}|0\d{9})$/.test(cleaned);
   return {
     isValid,
-    error: !isValid ? (t ? t('validation.invalidPhone') : 'Invalid phone number (Format: +41 XX XXX XX XX)') : ''
+    error: !isValid ? (t ? t('validation.invalidPhone') : 'Invalid phone number') : ''
   };
 };
 
 export const formatPhoneOnBlur = (phone) => {
   if (!phone) return '';
   const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
-  let digits;
-  if (cleaned.startsWith('+41')) digits = cleaned.slice(3);
-  else if (cleaned.startsWith('0041')) digits = cleaned.slice(4);
-  else if (cleaned.startsWith('0')) digits = cleaned.slice(1);
+  let prefix, digits;
+  if (cleaned.startsWith('+41')) { prefix = '+41'; digits = cleaned.slice(3); }
+  else if (cleaned.startsWith('0041')) { prefix = '+41'; digits = cleaned.slice(4); }
+  else if (cleaned.startsWith('+49')) { prefix = '+49'; digits = cleaned.slice(3); }
+  else if (cleaned.startsWith('+43')) { prefix = '+43'; digits = cleaned.slice(3); }
+  else if (cleaned.startsWith('+33')) { prefix = '+33'; digits = cleaned.slice(3); }
+  else if (cleaned.startsWith('+39')) { prefix = '+39'; digits = cleaned.slice(3); }
+  else if (cleaned.startsWith('0')) { prefix = '+41'; digits = cleaned.slice(1); }
   else return phone;
-  if (digits.length !== 9) return phone;
-  return '+41 ' + digits.slice(0, 2) + ' ' + digits.slice(2, 5) + ' ' + digits.slice(5, 7) + ' ' + digits.slice(7, 9);
+  if (prefix === '+41' && digits.length === 9) {
+    return '+41 ' + digits.slice(0, 2) + ' ' + digits.slice(2, 5) + ' ' + digits.slice(5, 7) + ' ' + digits.slice(7, 9);
+  }
+  if (digits.length >= 7 && digits.length <= 12) {
+    return prefix + ' ' + digits;
+  }
+  return phone;
 };
 
 export const validateAHV = (ahv, t) => {
