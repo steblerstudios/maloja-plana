@@ -4,6 +4,7 @@ import {
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
+import { text, weight, leading, space, radius } from './config/tokens.js';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAddDocument }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -102,28 +103,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
     const labelStyle = {
       display: 'block',
-      fontSize: '12px',
-      fontWeight: '500',
+      fontSize: text.sm,
+      fontWeight: weight.medium,
       color: palette.mid,
-      marginBottom: '6px'
+      marginBottom: space.sm - 2
     };
 
     const inputStyle = {
       width: '100%',
-      padding: '10px 12px',
-      borderRadius: '6px',
+      padding: (space.sm + 2) + 'px ' + space.sm + 'px ' + (space.sm + 2) + 'px ' + (space.sm + 4) + 'px',
+      borderRadius: radius.sm,
       border: error ? '2px solid ' + palette.rose : '1px solid ' + palette.border,
       background: palette.up,
       color: palette.text,
       boxSizing: 'border-box',
-      fontSize: '13px',
+      fontSize: text.body,
       fontFamily: 'DM Sans, sans-serif'
     };
 
     const errorStyle = {
-      fontSize: '11px',
+      fontSize: text.xs,
       color: palette.rose,
-      marginTop: '4px'
+      marginTop: space.xs
     };
 
     // Text Input
@@ -359,9 +360,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
   return React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     // Header
     React.createElement('div', { style: { marginBottom: '20px' } },
-      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
-      React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: '13px', color: palette.mid, marginTop: '8px', fontStyle: 'italic' } }, introText)
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.xs, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
+      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: text.body, color: palette.mid, marginTop: space.sm, fontStyle: 'italic', lineHeight: leading.normal } }, introText)
     ),
 
     // Quiet emergency summary — only when data exists
@@ -374,9 +375,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         hasContact && React.createElement('div', {
           style: { flex: '1 1 180px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border }
         },
-          React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '6px', letterSpacing: '0.3px' } }, tr('notfallSummary.contact')),
-          React.createElement('div', { style: { fontSize: '13px', fontWeight: '500' } }, data.emergencyContact),
-          data.emergencyPhone && React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginTop: '2px' } }, data.emergencyPhone)
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm - 2, letterSpacing: '0.3px' } }, tr('notfallSummary.contact')),
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.medium } }, data.emergencyContact),
+          data.emergencyPhone && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } }, data.emergencyPhone)
         ),
 
         // Blood type
@@ -433,27 +434,27 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         style: {
-          padding: '8px 16px',
+          padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'fields' ? palette.sand : 'transparent',
           color: expandedSection === 'fields' ? '#000' : palette.text,
           border: 'none',
-          borderRadius: '6px 6px 0 0',
+          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
-          fontWeight: '600',
-          fontSize: '12px'
+          fontWeight: weight.semi,
+          fontSize: text.sm
         }
       }, tr('chapterView.fields')),
       React.createElement('button', {
         onClick: () => setExpandedSection('documents'),
         style: {
-          padding: '8px 16px',
+          padding: space.sm + 'px ' + space.md + 'px',
           background: expandedSection === 'documents' ? palette.sand : 'transparent',
           color: expandedSection === 'documents' ? '#000' : palette.text,
           border: 'none',
-          borderRadius: '6px 6px 0 0',
+          borderRadius: radius.sm + 'px ' + radius.sm + 'px 0 0',
           cursor: 'pointer',
-          fontWeight: '600',
-          fontSize: '12px'
+          fontWeight: weight.semi,
+          fontSize: text.sm
         }
       }, tr('chapterView.documents'))
     ),
@@ -461,8 +462,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
       filledCount === 0 && React.createElement('div', { style: { padding: '24px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center', marginBottom: '20px' } },
-        React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
-        React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
+        React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
       ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
         chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {
@@ -507,7 +508,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           'aria-expanded': showSecondary,
           style: {
             background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: '12px', color: palette.mid, letterSpacing: '0.3px',
+            fontSize: text.sm, color: palette.mid, letterSpacing: '0.3px',
             padding: '8px 16px',
             fontFamily: 'DM Sans, sans-serif',
           }
@@ -556,13 +557,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
     // Documents Tab
     expandedSection === 'documents' && chapter.docs && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '16px' } }, '↗ ' + tr('chapterView.upload')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
 
       // Upload Form
       React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', marginBottom: '16px', border: '2px dashed ' + palette.border } },
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: '12px', fontWeight: '500', color: palette.mid, display: 'block', marginBottom: '6px' } }, tr('chapterView.docType') + ' *'),
+            React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
             React.createElement('select', {
               value: uploadType,
               onChange: (e) => setUploadType(e.target.value),
@@ -573,7 +574,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
             )
           ),
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: '12px', fontWeight: '500', color: palette.mid, display: 'block', marginBottom: '6px' } }, tr('chapterView.expiryDate') + ' *'),
+            React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.expiryDate') + ' *'),
             React.createElement('input', {
               type: 'date',
               value: uploadExpiry,
@@ -593,9 +594,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           })
         ),
 
-        uploadError && React.createElement('div', { style: { padding: '10px', background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: '6px', color: palette.rose, fontSize: '12px', marginBottom: '12px' } }, uploadError),
+        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.rose, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
-        uploadSuccess && React.createElement('div', { style: { padding: '10px', background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: '6px', color: palette.sage, fontSize: '12px', marginBottom: '12px' } }, '✓ ' + uploadSuccess),
+        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sage, fontSize: text.sm, marginBottom: space.sm + 4 } }, '✓ ' + uploadSuccess),
 
         React.createElement('button', {
           onClick: () => {
@@ -640,16 +641,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
             border: 'none',
             borderRadius: '6px',
             cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',
-            fontWeight: '600',
-            fontSize: '12px'
+            fontWeight: weight.semi,
+            fontSize: text.sm
           }
         }, '↗ ' + tr('chapterView.upload'))
       ),
 
       // Required documents list
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-        React.createElement('h4', { style: { fontSize: '12px', fontWeight: '600', marginBottom: '10px' } }, '□ ' + tr('chapterView.requiredDocs')),
-        React.createElement('ul', { style: { fontSize: '12px', paddingLeft: '20px', margin: 0 } },
+      React.createElement('div', { style: { padding: space.sm + 4, background: palette.up, borderRadius: radius.sm } },
+        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 2 } }, '□ ' + tr('chapterView.requiredDocs')),
+        React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc.label))
         )
       ),
