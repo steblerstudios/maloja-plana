@@ -693,6 +693,46 @@ export default {
     goodSituation: 'Good financial situation. Consider saving the surplus.',
   },
 
+  cantons: {
+    AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
+    BE: 'Bern', BL: 'Basel-Country', BS: 'Basel-City',
+    FR: 'Fribourg', GE: 'Geneva', GL: 'Glarus', GR: 'Grisons',
+    JU: 'Jura', LU: 'Lucerne', NE: 'Neuchâtel', NW: 'Nidwalden',
+    OW: 'Obwalden', SG: 'St. Gallen', SH: 'Schaffhausen', SO: 'Solothurn',
+    SZ: 'Schwyz', TG: 'Thurgau', TI: 'Ticino', UR: 'Uri',
+    VD: 'Vaud', VS: 'Valais', ZG: 'Zug', ZH: 'Zurich',
+  },
+
+  ipv: {
+    modelIncomeBased: 'income-based',
+    modelFlat: 'flat-rate',
+    noteApplySva: 'Apply at SVA {canton}',
+    noteApplyAhvBranch: 'Apply at AHV branch office of your municipality',
+    noteApplyAhvBranchShort: 'Apply at AHV branch office',
+    noteApplyCompensation: 'Apply at compensation office',
+    noteApplySocialOffice: 'Apply at social welfare office',
+    noteApplyHealthOffice: 'Apply at Office of Health',
+    noteApplyHealthService: 'Apply at Health Services Department',
+    noteApplyCantonalCompensation: 'Apply at cantonal compensation office',
+    noteApplyIas: 'Apply at Istituto delle assicurazioni sociali (IAS)',
+    noteApplySocialAction: 'Apply at Service de l\'action sociale',
+    noteAutoTaxData: 'Automatic verification via tax data',
+    noteAutoSam: 'Automatic via SAM (Service de l\'assurance-maladie)',
+    cantonUnknown: 'Canton not recognized',
+    incomeAboveLimit: 'Income above limit (CHF {value})',
+    eligible: 'Entitled to premium subsidy: CHF {value}/month',
+  },
+
+  sozialhilfeCalc: {
+    entitled: 'Entitled to social assistance: CHF {value}/month',
+    notEntitled: 'No entitlement — income covers needs',
+  },
+
+  elCalc: {
+    possible: 'Possible entitlement to supplementary benefits — check at AHV branch office',
+    onlyAhvIv: 'EL only for AHV/IV recipients',
+  },
+
   premiumCalc: {
     coupleChildren: 'Couple + children',
     single: 'Single',

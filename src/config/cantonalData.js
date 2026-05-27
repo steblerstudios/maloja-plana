@@ -98,52 +98,47 @@ export function cantonFromPLZ(plz) {
   return match ? match.canton : null;
 }
 
-export const CANTON_NAMES = {
-  AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
-  BE: 'Bern', BL: 'Basel-Landschaft', BS: 'Basel-Stadt',
-  FR: 'Freiburg', GE: 'Genf', GL: 'Glarus', GR: 'Graubünden',
-  JU: 'Jura', LU: 'Luzern', NE: 'Neuenburg', NW: 'Nidwalden',
-  OW: 'Obwalden', SG: 'St. Gallen', SH: 'Schaffhausen', SO: 'Solothurn',
-  SZ: 'Schwyz', TG: 'Thurgau', TI: 'Tessin', UR: 'Uri',
-  VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich'
-};
-
-// Aufenthaltstypen
-export const RESIDENCE_TYPES = [
-  { key: 'hauptwohnsitz', label: 'Hauptwohnsitz' },
-  { key: 'wochenaufenthalt', label: 'Wochenaufenthalter/in' },
-  { key: 'nebenwohnsitz', label: 'Nebenwohnsitz' },
+export const CANTON_CODES = [
+  'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR',
+  'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG',
+  'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'
 ];
+
+export function getCantonName(code, t) {
+  if (!code) return '';
+  if (t) return t('cantons.' + code) || code;
+  return code;
+}
 
 // Kantonale Prämienverbilligung — Einkommensgrenzen und Beiträge pro Kanton
 // Quelle: BAG, kantonale Gesundheitsdirektionen (vereinfacht, Stand 2024/2025)
 export const CANTONAL_IPV = {
-  ZH: { name: 'Zürich', maxIncome: 54900, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, model: 'einkommensabhängig', note: 'Antrag bei SVA Zürich' },
-  BE: { name: 'Bern', maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Automatische Prüfung via Steuerdaten' },
-  LU: { name: 'Luzern', maxIncome: 54000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, model: 'einkommensabhängig', note: 'Antrag bei AHV-Zweigstelle Gemeinde' },
-  UR: { name: 'Uri', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Antrag beim Amt für Gesundheit' },
-  SZ: { name: 'Schwyz', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei Ausgleichskasse' },
-  OW: { name: 'Obwalden', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Antrag bei Sozialamt' },
-  NW: { name: 'Nidwalden', maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, model: 'pauschal', note: 'Antrag bei Sozialamt' },
-  GL: { name: 'Glarus', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Automatisch via Steuerdaten' },
-  ZG: { name: 'Zug', maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, model: 'einkommensabhängig', note: 'Antrag bei Ausgleichskasse' },
-  FR: { name: 'Freiburg', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei Caisse cantonale de compensation' },
-  SO: { name: 'Solothurn', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei Ausgleichskasse' },
-  BS: { name: 'Basel-Stadt', maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, model: 'einkommensabhängig', note: 'Automatisch via Steuerdaten' },
-  BL: { name: 'Basel-Landschaft', maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, model: 'einkommensabhängig', note: 'Antrag bei SVA BL' },
-  SH: { name: 'Schaffhausen', maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, model: 'pauschal', note: 'Antrag bei AHV-Zweigstelle' },
-  AR: { name: 'Appenzell Ausserrhoden', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Antrag bei SVA' },
-  AI: { name: 'Appenzell Innerrhoden', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Antrag bei Sozialamt' },
-  SG: { name: 'St. Gallen', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei SVA SG' },
-  GR: { name: 'Graubünden', maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, model: 'einkommensabhängig', note: 'Antrag bei SVA GR' },
-  AG: { name: 'Aargau', maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, model: 'einkommensabhängig', note: 'Antrag bei SVA AG' },
-  TG: { name: 'Thurgau', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei SVA TG' },
-  TI: { name: 'Tessin', maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Richiesta presso IAS' },
-  VD: { name: 'Waadt', maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, model: 'einkommensabhängig', note: 'Automatique via données fiscales' },
-  VS: { name: 'Wallis', maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Antrag bei Dienststelle für Gesundheit' },
-  NE: { name: 'Neuenburg', maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, model: 'einkommensabhängig', note: 'Automatique via données fiscales' },
-  GE: { name: 'Genf', maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, model: 'einkommensabhängig', note: 'Automatique via SAM' },
-  JU: { name: 'Jura', maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, model: 'pauschal', note: 'Demande auprès du Service de l\'action sociale' },
+  ZH: { maxIncome: 54900, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'ZH' } },
+  BE: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData' },
+  LU: { maxIncome: 54000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch' },
+  UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice' },
+  SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation' },
+  OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice' },
+  NW: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice' },
+  GL: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteAutoTaxData' },
+  ZG: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation' },
+  FR: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCantonalCompensation' },
+  SO: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation' },
+  BS: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData' },
+  BL: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'BL' } },
+  SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort' },
+  AR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' } },
+  AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice' },
+  SG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' } },
+  GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' } },
+  AG: { maxIncome: 51000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AG' } },
+  TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' } },
+  TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas' },
+  VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData' },
+  VS: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyHealthService' },
+  NE: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData' },
+  GE: { maxIncome: 60000, subsidySingle: 3600, subsidyFamily: 7200, subsidyChild: 1800, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoSam' },
+  JU: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialAction' },
 };
 
 // Kantonale Mietzinsbeiträge / Wohnkosten-Limits (SKOS-Richtlinien + kantonale Anpassungen)
@@ -214,9 +209,8 @@ export function calculateSozialhilfe(data) {
     eligible: deficit > 0,
     householdSize,
     canton,
-    note: deficit > 0
-      ? 'Anspruch auf Sozialhilfe: CHF ' + Math.max(0, deficit).toFixed(0) + '/Monat'
-      : 'Kein Anspruch — Einkommen deckt Bedarf'
+    noteKey: deficit > 0 ? 'sozialhilfeCalc.entitled' : 'sozialhilfeCalc.notEntitled',
+    noteParams: deficit > 0 ? { value: Math.max(0, deficit).toFixed(0) } : {},
   };
 }
 
@@ -224,13 +218,13 @@ export function calculateSozialhilfe(data) {
 export function calculateIPV(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
-  if (!ipvData) return { eligible: false, amount: 0, note: 'Kanton nicht erkannt' };
+  if (!ipvData) return { eligible: false, amount: 0, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const income = Number(data.finanzen?.monthlyIncome || 0) * 12;
   const dependents = Number(data.basis?.dependents || 0);
 
   if (income > ipvData.maxIncome) {
-    return { eligible: false, amount: 0, note: 'Einkommen über Grenze (CHF ' + ipvData.maxIncome + ')', canton, cantonData: ipvData };
+    return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
   }
 
   let monthlySubsidy;
@@ -244,28 +238,27 @@ export function calculateIPV(data) {
     eligible: true,
     amount: monthlySubsidy,
     annual: monthlySubsidy * 12,
-    note: ipvData.note,
-    model: ipvData.model,
+    noteKey: ipvData.noteKey,
+    noteParams: ipvData.noteParams || {},
     canton,
     cantonData: ipvData
   };
 }
 
-// Wochenaufenthalt-Logik
 export function getResidenceInfo(residenceType) {
   if (residenceType === 'wochenaufenthalt') {
     return {
-      taxNote: 'Steuern am Hauptwohnsitz, nicht am Wochenaufenthaltsort',
-      kkNote: 'KK-Prämie richtet sich nach dem Wohnkanton (Hauptwohnsitz)',
-      ipvNote: 'IPV-Antrag im Wohnkanton, nicht am Arbeitsort',
-      votingNote: 'Stimm- und Wahlrecht nur am Hauptwohnsitz'
+      taxNoteKey: 'residence.taxNote',
+      kkNoteKey: 'residence.kkNote',
+      ipvNoteKey: 'residence.ipvNote',
+      votingNoteKey: 'residence.votingNote',
     };
   }
   return {
-    taxNote: 'Steuern am Wohnort',
-    kkNote: 'KK-Prämie nach Wohnkanton',
-    ipvNote: 'IPV-Antrag im Wohnkanton',
-    votingNote: ''
+    taxNoteKey: 'residence.taxNoteMain',
+    kkNoteKey: 'residence.kkNoteMain',
+    ipvNoteKey: 'residence.ipvNoteMain',
+    votingNoteKey: '',
   };
 }
 
@@ -287,8 +280,7 @@ export function checkELEligibility(data) {
     isAHVIV,
     totalIncome,
     totalExpenses,
-    note: isAHVIV
-      ? 'Möglicher Anspruch auf Ergänzungsleistungen — Antrag bei AHV-Zweigstelle prüfen'
-      : 'EL nur für AHV/IV-Bezüger'
+    noteKey: isAHVIV ? 'elCalc.possible' : 'elCalc.onlyAhvIv',
+    noteParams: {},
   };
 }
