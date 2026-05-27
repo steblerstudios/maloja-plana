@@ -85,7 +85,7 @@ export const getKVGApplicationLink = (canton) => {
 export const generateKVGDocument = (data, subsidyData, t) => {
   return {
     title: t ? t('premiumCalc.docTitle') : 'KVG §67 Application data',
-    date: new Date().toLocaleDateString('de-CH'),
+    date: new Date().toLocaleDateString(),
     applicant: {
       name: getFullName(data.basis),
       ahv: data.basis?.ahv,
