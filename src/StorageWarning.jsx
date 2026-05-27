@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getStorageStatus } from './utils/storageMonitor.js';
+import { space, text, radius, leading } from './config/tokens.js';
 
 // ─── Storage Warning Banner ─────────────────────────────────
 // Shows a calm, non-intrusive banner when localStorage usage
@@ -32,22 +33,22 @@ export const StorageWarning = ({ palette, t }) => {
   return React.createElement('div', {
     role: 'alert',
     style: {
-      padding: '12px 16px',
-      margin: '0 0 16px 0',
-      borderRadius: '8px',
+      padding: space.sm + 'px ' + space.md + 'px',
+      margin: '0 0 ' + space.md + 'px 0',
+      borderRadius: radius.sm,
       background: isCritical
         ? palette.rose + '18'
         : palette.gold + '18',
       border: '1px solid ' + (isCritical ? palette.rose + '40' : palette.gold + '40'),
       display: 'flex',
       alignItems: 'start',
-      gap: '10px',
-      fontSize: '12px',
-      lineHeight: 1.5,
+      gap: space.sm + 2,
+      fontSize: text.sm - 1,
+      lineHeight: leading.normal,
     }
   },
     React.createElement('span', {
-      style: { fontSize: '14px', flexShrink: 0, marginTop: '1px' }
+      style: { fontSize: text.sm + 1, flexShrink: 0, marginTop: '1px' }
     }, isCritical ? '◈' : '○'),
 
     React.createElement('div', { style: { flex: 1 } },
@@ -62,7 +63,7 @@ export const StorageWarning = ({ palette, t }) => {
         limitKB: status.limitKB,
       })),
       status.largestKey && React.createElement('div', {
-        style: { color: palette.mid, marginTop: '4px', fontSize: '11px' }
+        style: { color: palette.mid, marginTop: space.xs, fontSize: text.xs }
       }, t('storage.largestKey', {
         key: status.largestKey.replace('or5_', ''),
         size: status.largestKeyKB,
@@ -77,8 +78,8 @@ export const StorageWarning = ({ palette, t }) => {
         border: 'none',
         color: palette.mid,
         cursor: 'pointer',
-        fontSize: '14px',
-        padding: '0 4px',
+        fontSize: text.sm + 1,
+        padding: '0 ' + space.xs + 'px',
         flexShrink: 0,
       }
     }, '✕')
