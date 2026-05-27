@@ -1,6 +1,7 @@
 // KVG §67 Premium subsidy Switzerland
 // Calculates tax savings and subsidy eligibility
 import { getFullName } from './config/constants.js';
+import { getHouseholdInfo } from './config/cantonalData.js';
 
 export const KVG_BRACKETS_2024 = [
   { income: 27500, single: 3000, couple: 4500, child: 1500 },
@@ -38,6 +39,14 @@ export const calculatePremiumSubsidy = (grossIncome, deductions, dependents = 0,
       : (t ? t('premiumCalc.single') : 'Single'),
     estimatedSavings: subsidy * 12
   };
+};
+
+// Household-aware wrapper: extracts values from data object
+export const calculatePremiumSubsidyFromData = (data, t) => {
+  const hh = getHouseholdInfo(data);
+  const grossIncome = Number(data?.finanzen?.monthlyIncome || 0) * 12;
+  const deductions = Number(data?.taxData?.totalDeductions || 0);
+  return calculatePremiumSubsidy(grossIncome, deductions, hh.childrenCount, t);
 };
 
 export const estimateTaxSavings = (subsidyAmount) => {
