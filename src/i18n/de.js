@@ -143,6 +143,16 @@ export default {
         ahv: 'AHV-Nummer',
         maritalStatus: { label: 'Zivilstand', options: { single: 'Ledig', married: 'Verheiratet', divorced: 'Geschieden', widowed: 'Verwitwet' } },
         dependents: 'Anzahl Kinder',
+        household: {
+          adults: 'Erwachsene im Haushalt',
+          children: 'Kinder',
+          childAge: 'Alter',
+          addChild: 'Kind hinzufügen',
+          removeChild: 'Kind entfernen',
+          retired: 'Pensioniert',
+          retiredYes: 'Ja',
+          retiredNo: 'Nein',
+        },
       },
       placeholders: {
         phone: '+41 XX XXX XX XX',

@@ -9,7 +9,7 @@
 //   3. Unknown versions are left untouched (no silent corruption)
 //   4. Failures leave original data intact
 
-export const CURRENT_DATA_VERSION = 2;
+export const CURRENT_DATA_VERSION = 3;
 
 // ─── Migration functions ────────────────────────────────────
 // Each takes a data object at version N and returns version N+1.
@@ -36,6 +36,31 @@ const migrations = {
       basis.lastName = parts.slice(1).join(' ') || '';
     }
     return { ...data, basis, _version: 2, _migratedAt: new Date().toISOString() };
+  },
+
+  // v2 → v3: Add minimal household model (adults, children with age, isRetired)
+  // Derives from existing dependents field. dependents is kept for backward compat.
+  2: (data) => {
+    const basis = { ...(data.basis || {}) };
+    const finanzen = data.finanzen || {};
+    const dependents = Math.min(Number(basis.dependents || 0), 10);
+
+    // Build children array from dependents count (age unknown = 0)
+    const children = [];
+    for (let i = 0; i < dependents; i++) {
+      children.push({ age: 0 });
+    }
+
+    // Derive isRetired from employmentType if available
+    const isRetired = finanzen.employmentType === 'retired';
+
+    basis.household = {
+      adults: 1,
+      children,
+      isRetired,
+    };
+
+    return { ...data, basis, _version: 3, _migratedAt: new Date().toISOString() };
   },
 };
 

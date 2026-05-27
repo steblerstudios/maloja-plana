@@ -144,6 +144,16 @@ export default {
         ahv: 'AHV number',
         maritalStatus: { label: 'Marital status', options: { single: 'Single', married: 'Married', divorced: 'Divorced', widowed: 'Widowed' } },
         dependents: 'Number of children',
+        household: {
+          adults: 'Adults in household',
+          children: 'Children',
+          childAge: 'Age',
+          addChild: 'Add child',
+          removeChild: 'Remove child',
+          retired: 'Retired',
+          retiredYes: 'Yes',
+          retiredNo: 'No',
+        },
       },
       placeholders: {
         phone: '+41 XX XXX XX XX',
