@@ -36,6 +36,7 @@ import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
+import { text, weight, space } from './config/tokens.js';
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
@@ -289,7 +290,7 @@ const AppInner = () => {
         t('common.appName')
       ),
       React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } },
-        React.createElement('span', { style: { fontSize: '11px', color: palette.mid, fontWeight: '500' } }, calculateCompletion() + '%'),
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium } }, calculateCompletion() + '%'),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
