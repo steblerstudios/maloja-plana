@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
+import { text, weight, space } from './config/tokens.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -33,8 +34,8 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         borderLeft: isActive ? '3px solid ' + palette.sand : '3px solid transparent',
         cursor: 'pointer',
         textAlign: 'left',
-        fontSize: '13px',
-        fontWeight: isActive ? '600' : '400',
+        fontSize: text.sm,
+        fontWeight: isActive ? weight.semi : weight.normal,
         color: palette.text,
         fontFamily: 'inherit',
         display: 'flex',
@@ -79,10 +80,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         style: { padding: '20px 20px 16px 20px', borderBottom: '1px solid ' + palette.border }
       },
         React.createElement('div', {
-          style: { fontSize: '16px', fontWeight: '600', marginBottom: '4px', letterSpacing: '0.3px' }
+          style: { fontSize: text.body + 1, fontWeight: weight.semi, marginBottom: space.xs, letterSpacing: '0.3px' }
         }, t('common.appName')),
         React.createElement('div', {
-          style: { fontSize: '11px', color: palette.mid }
+          style: { fontSize: text.xs, color: palette.mid }
         }, t('nav.completion', { value: completion }))
       ),
 
@@ -127,7 +128,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
 
       // Tools
       React.createElement('div', {
-        style: { fontSize: '10px', fontWeight: '600', color: palette.mid, padding: '16px 20px 8px 20px', textTransform: 'uppercase', letterSpacing: '0.5px' }
+        style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.mid, padding: space.md + 'px 20px ' + space.sm + 'px 20px', textTransform: 'uppercase', letterSpacing: '0.5px' }
       }, t('nav.tools')),
 
       ...[
@@ -150,7 +151,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           width: '100%', background: 'none', border: 'none',
           borderTop: '1px solid ' + palette.border, marginTop: '8px',
           padding: '14px 20px', cursor: 'pointer',
-          fontSize: '11px', color: palette.soft, fontFamily: 'inherit',
+          fontSize: text.xs, color: palette.soft, fontFamily: 'inherit',
           textAlign: 'left', letterSpacing: '0.3px',
           display: 'flex', alignItems: 'center', gap: '8px',
         }

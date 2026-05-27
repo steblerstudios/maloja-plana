@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
+import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
@@ -15,10 +16,10 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     },
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { fontSize: '13px', fontWeight: '600', color: palette.gold, marginBottom: '8px' }
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm }
         }, t('alpha.title')),
         React.createElement('div', {
-          style: { fontSize: '12px', color: palette.mid, lineHeight: 1.6 }
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
         },
           React.createElement('p', { style: { margin: '0 0 6px 0' } }, t('alpha.intro')),
           React.createElement('ul', {
@@ -118,10 +119,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement('h1', {
-        style: { fontSize: '28px', fontWeight: '700', margin: '0 0 6px 0', lineHeight: 1.2, letterSpacing: '-0.3px' }
+        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 6px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
-        style: { fontSize: '15px', color: palette.mid, margin: 0, lineHeight: 1.5 }
+        style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal }
       }, t('dashboard.tagline'))
     ),
 
@@ -332,10 +333,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }
     },
       React.createElement('div', {
-        style: { fontSize: '13px', fontWeight: '600', color: palette.text, marginBottom: '8px' }
+        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
       }, t('guidedStart.title')),
       React.createElement('p', {
-        style: { fontSize: '13px', color: palette.mid, lineHeight: 1.6, margin: '0 0 12px 0' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px 0' }
       }, t('guidedStart.text')),
       React.createElement('div', {
         style: { display: 'flex', flexDirection: 'column', gap: '6px' }
@@ -346,13 +347,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onClick: item.action,
             style: {
               background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0',
-              fontSize: '13px', color: palette.mid, textAlign: 'left', fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: '8px',
+              fontSize: text.sm, color: palette.mid, textAlign: 'left', fontFamily: 'inherit',
+              display: 'flex', alignItems: 'center', gap: space.sm,
             },
             onMouseEnter: (e) => { e.currentTarget.style.color = palette.text; },
             onMouseLeave: (e) => { e.currentTarget.style.color = palette.mid; },
           },
-            React.createElement('span', { style: { color: palette.sage, fontSize: '11px' } }, '→'),
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs } }, '→'),
             item.label
           )
         )
@@ -366,10 +367,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }
       },
-        React.createElement('span', { style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px' } },
+        React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px' } },
           t('dashboard.progress')
         ),
-        React.createElement('span', { style: { fontSize: '12px', fontWeight: '500', color: palette.mid } },
+        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid } },
           completion + '%'
         )
       ),
@@ -385,14 +386,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         })
       ),
       React.createElement('div', {
-        style: { fontSize: '12px', color: palette.mid, marginTop: '10px' }
+        style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 2 }
       }, completion === 100 ? t('dashboard.progressComplete')
         : completion === 0 ? t('dashboard.progressStart')
         : completion <= 30 ? t('dashboard.progressEarly')
         : completion <= 60 ? t('dashboard.progressMid')
         : t('dashboard.progressLate')),
       lastBackup && React.createElement('div', {
-        style: { fontSize: '11px', color: palette.mid, marginTop: '8px', opacity: 0.7 }
+        style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, opacity: 0.7 }
       }, t('dashboard.lastBackup', { date: lastBackup }))
     ),
 
@@ -411,7 +412,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
           React.createElement('div', {
             style: {
-              fontSize: '11px', fontWeight: '500', color: palette.soft,
+              fontSize: text.xs, fontWeight: weight.medium, color: palette.soft,
               letterSpacing: '0.3px', padding: '0 4px 10px 4px',
               borderBottom: '1px solid ' + palette.border,
             }
@@ -459,11 +460,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
                   animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
                 }
-              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: '18px' } }, ch.icon)),
+              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
 
               React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-                React.createElement('div', { style: { fontSize: '15px', fontWeight: '600', marginBottom: '2px' } }, ch.title),
-                React.createElement('div', { style: { fontSize: '12px', color: palette.mid, lineHeight: 1.4, marginBottom: pct > 0 ? '6px' : '0' } }, ch.description),
+                React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '2px' } }, ch.title),
+                React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: pct > 0 ? '6px' : '0' } }, ch.description),
                 pct > 0 && React.createElement('div', {
                   style: { width: '100%', height: '2px', background: palette.up, borderRadius: '1px', overflow: 'hidden' }
                 },
@@ -486,7 +487,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement('h2', {
-        style: { fontSize: '13px', fontWeight: '600', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }
+        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.md }
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px' } },
         [
@@ -508,10 +509,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               border: '1px solid ' + palette.border,
               borderRadius: '10px',
               cursor: 'pointer',
-              fontWeight: '500',
-              fontSize: '12px',
+              fontWeight: weight.medium,
+              fontSize: text.sm,
               fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: '8px',
+              display: 'flex', alignItems: 'center', gap: space.sm,
               transition: 'border-color 0.2s',
             },
             onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
@@ -531,12 +532,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       style: { padding: '0 2px', marginBottom: '24px', borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
       React.createElement('h3', {
-        style: { fontSize: '11px', fontWeight: '500', color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px' }
+        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
       }, t('dashboard.tipsTitle')),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
         [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
-          React.createElement('div', { key: i, style: { fontSize: '13px', color: palette.mid, lineHeight: 1.5, display: 'flex', gap: '10px', alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sage, fontSize: '11px', marginTop: '2px', flexShrink: 0 } }, '—'),
+          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
             tip
           )
         )
