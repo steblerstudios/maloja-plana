@@ -745,6 +745,7 @@ export default {
 
   premiumCalc: {
     coupleChildren: 'Couple + children',
+    singleChildren: 'Single + children',
     single: 'Single',
     incomeToHigh: 'Income too high (over CHF {value})',
     eligible: 'Eligible for premium subsidy',

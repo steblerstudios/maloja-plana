@@ -12,10 +12,9 @@ export const KVG_BRACKETS_2024 = [
   { income: 80000, single: 500, couple: 2000, child: 250 }
 ];
 
-export const calculatePremiumSubsidy = (grossIncome, deductions, dependents = 0, t) => {
+export const calculatePremiumSubsidy = (grossIncome, deductions, childrenCount = 0, t, adults = 1) => {
   const taxableIncome = Math.max(0, grossIncome - deductions);
 
-  // Find matching bracket
   let bracket = KVG_BRACKETS_2024[KVG_BRACKETS_2024.length - 1];
   for (const b of KVG_BRACKETS_2024) {
     if (taxableIncome <= b.income) {
@@ -24,19 +23,20 @@ export const calculatePremiumSubsidy = (grossIncome, deductions, dependents = 0,
     }
   }
 
-  let subsidy = bracket.single;
+  const isCouple = adults >= 2;
+  const baseSubsidy = isCouple ? bracket.couple : bracket.single;
+  const subsidy = baseSubsidy + (childrenCount * bracket.child);
 
-  // Married/Partnership
-  if (dependents > 0) {
-    subsidy = bracket.couple + (dependents * bracket.child);
-  }
+  const subsidyType = isCouple
+    ? (t ? t('premiumCalc.coupleChildren') : 'Couple + children')
+    : childrenCount > 0
+      ? (t ? t('premiumCalc.singleChildren') : 'Single + children')
+      : (t ? t('premiumCalc.single') : 'Single');
 
   return {
     taxableIncome,
     eligibleSubsidy: subsidy,
-    subsidyType: dependents > 0
-      ? (t ? t('premiumCalc.coupleChildren') : 'Couple + children')
-      : (t ? t('premiumCalc.single') : 'Single'),
+    subsidyType,
     estimatedSavings: subsidy * 12
   };
 };
@@ -46,7 +46,7 @@ export const calculatePremiumSubsidyFromData = (data, t) => {
   const hh = getHouseholdInfo(data);
   const grossIncome = Number(data?.finanzen?.monthlyIncome || 0) * 12;
   const deductions = Number(data?.taxData?.totalDeductions || 0);
-  return calculatePremiumSubsidy(grossIncome, deductions, hh.childrenCount, t);
+  return calculatePremiumSubsidy(grossIncome, deductions, hh.childrenCount, t, hh.adults);
 };
 
 export const estimateTaxSavings = (subsidyAmount) => {
