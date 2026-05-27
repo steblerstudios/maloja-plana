@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateIPV, CANTONAL_IPV, CANTON_NAMES, getResidenceInfo } from './config/cantonalData.js';
+import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, estimateTaxSavings } from './premiumCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
@@ -11,7 +11,6 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
   const ipvResult = calculateIPV(data);
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : residenceType === 'nebenwohnsitz' ? 'nebenwohnsitz' : 'hauptwohnsitz';
-  const residenceInfo = getResidenceInfo(residenceKey);
   const kvgLink = getKVGApplicationLink(canton);
   const taxSavings = ipvResult.eligible ? estimateTaxSavings(ipvResult.amount) : 0;
 
@@ -22,9 +21,9 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
   const handleDownloadDocument = () => {
     const doc = {
       title: 'KVG IPV — Kantonal',
-      date: new Date().toLocaleDateString('de-CH'),
+      date: new Date().toLocaleDateString(),
       canton,
-      cantonName: CANTON_NAMES[canton] || canton,
+      cantonName: getCantonName(canton, t),
       applicant: getFullName(data.basis) || '',
       ahv: data.basis?.ahv || '',
       result: ipvResult
@@ -44,11 +43,11 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '16px', fontSize: '12px' } },
-      React.createElement('div', { style: { fontWeight: '600', marginBottom: '6px' } }, '○ ' + t('premium.canton', { name: CANTON_NAMES[canton] || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: '600', marginBottom: '6px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
-        React.createElement('div', null, t('premium.model', { value: ipvResult.cantonData.model })),
-        React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString('de-CH') })),
-        React.createElement('div', null, t('premium.note', { value: ipvResult.cantonData.note }))
+        React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
+        React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
+        React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
       !canton && React.createElement('div', { style: { color: palette.rose } }, t('premium.enterCanton'))
     ),
@@ -63,10 +62,10 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
     // Eligibility Status
     ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '2px solid ' + palette.sage, marginBottom: '16px' } },
       React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px' } }, '✓ ' + t('premium.eligible')),
-      React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, ipvResult.note)
+      React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: '6px', border: '2px solid ' + palette.rose, marginBottom: '16px' } },
       React.createElement('div', { style: { fontWeight: '600', color: palette.rose, marginBottom: '4px' } }, '✕ ' + t('premium.notEligible')),
-      React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, ipvResult.note)
+      React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
 
     showCalculation && React.createElement('div', null,
@@ -101,8 +100,8 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
                 fontSize: '11px'
               }
             },
-              React.createElement('div', { style: { fontWeight: '600' } }, key + ' — ' + val.name),
-              React.createElement('div', { style: { color: palette.mid } }, 'Max: CHF ' + val.maxIncome.toLocaleString('de-CH') + ' | Single: CHF ' + val.subsidySingle + t('common.perYear'))
+              React.createElement('div', { style: { fontWeight: '600' } }, key + ' — ' + getCantonName(key, t)),
+              React.createElement('div', { style: { color: palette.mid } }, 'Max: CHF ' + val.maxIncome.toLocaleString() + ' | Single: CHF ' + val.subsidySingle + t('common.perYear'))
             )
           )
         )
