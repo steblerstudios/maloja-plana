@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, space } from './config/tokens.js';
+import { text, weight, space, shadow } from './config/tokens.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -69,6 +69,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       style: {
         position: 'fixed', left: 0, top: 0, bottom: 0, width: '280px',
         background: palette.surface, borderRight: '1px solid ' + palette.border,
+        boxShadow: shadow.lg,
         zIndex: 999, overflowY: 'auto', animation: 'slideIn 0.25s',
         display: 'flex', flexDirection: 'column',
       },

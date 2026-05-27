@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, ease } from './config/tokens.js';
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
@@ -325,11 +325,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Guided start — calm first-use card ───────────────
     !hasMeaningfulProgress && React.createElement('div', {
       style: {
-        marginBottom: '32px',
+        marginBottom: space.xl,
         padding: '20px 24px',
         background: palette.surface,
-        borderRadius: '12px',
-        border: '1px solid ' + palette.border
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.border,
+        boxShadow: shadow.sm
       }
     },
       React.createElement('div', {
@@ -507,16 +508,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               background: palette.surface,
               color: palette.text,
               border: '1px solid ' + palette.border,
-              borderRadius: '10px',
+              borderRadius: radius.md,
               cursor: 'pointer',
               fontWeight: weight.medium,
               fontSize: text.sm,
               fontFamily: 'inherit',
               display: 'flex', alignItems: 'center', gap: space.sm,
-              transition: 'border-color 0.2s',
+              boxShadow: shadow.sm,
+              transition: 'border-color 0.2s, box-shadow 0.2s',
             },
-            onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
-            onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; },
+            onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; e.currentTarget.style.boxShadow = shadow.md; },
+            onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; e.currentTarget.style.boxShadow = shadow.sm; },
           },
             React.createElement('div', { style: { color: palette.mid, width: '16px', height: '16px', flexShrink: 0 } },
               IconFn ? React.createElement('div', { style: { width: '16px', height: '16px' } }, IconFn()) : null
