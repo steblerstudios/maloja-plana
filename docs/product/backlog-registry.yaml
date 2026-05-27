@@ -1,0 +1,1335 @@
+# Maloja Plana — Backlog Registry (YAML)
+# Version: 1.0.0 | Date: 2026-05-26
+# Compact, machine-readable variant of backlog-registry.json
+# Full schema: see backlog-registry.json
+
+meta:
+  version: "1.0.0"
+  date: "2026-05-26"
+  schema_version: 1
+  total_entries: 142
+  human_readable: "product-inventory.md"
+
+# Domain legend:
+#   generators, social-insurance, emergency, insurance, tax, authority-logic,
+#   household, budget, documents, export, api, reminders, ux, security,
+#   ai-agents, governance-runtime, workflow-engine, roles, infrastructure,
+#   data-model, vision, legal, bugs
+
+# --- GENERATORS ---
+
+- id: MP-GEN-001
+  title: Bestattungsgenerator
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-002
+  title: Patientenverfuegung Generator
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-003
+  title: Vorsorgeauftrag Generator
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-004
+  title: Kuendigungsschreiben (Mietvertrag)
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-005
+  title: Mietreduktionsbegehren
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-006
+  title: Steuer-Fristverlaengerung Generator
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-007
+  title: RAV-Anmeldeformular Vorbereitung
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-008
+  title: Kinderzulagen-Antrag Generator
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+  dependencies: [MP-HH-001]
+
+- id: MP-GEN-009
+  title: IPV-Antrag Vorbereitung
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-010
+  title: CV Generator
+  domain: generators
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-011
+  title: Begleitbrief / Cover Letter Templates
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-012
+  title: Einsprache (Steuerveranlagung)
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: future
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-013
+  title: Ratenzahlung-Antrag
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: future
+  complexity: low
+  swiss_specificity: medium
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-014
+  title: EL-Antrag Vorbereitung
+  domain: generators
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+  dependencies: [MP-SOZ-015, MP-HH-001]
+
+- id: MP-GEN-015
+  title: Mietbeitraege-Antrag Vorbereitung
+  domain: generators
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-016
+  title: Template Engine Core
+  domain: generators
+  status: planned
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: medium
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-GEN-017
+  title: Kantonsspezifische Template-Varianten
+  domain: generators
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+  dependencies: [MP-GEN-016, MP-BEH-001]
+
+- id: MP-GEN-018
+  title: Briefgenerator (allgemein)
+  domain: generators
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+# --- SWISS SOCIAL INSURANCE ---
+
+- id: MP-SOZ-001
+  title: AHV-Verwaltung & Ausgleichskasse
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-002
+  title: AHV-Beitragsluecken-Erkennung
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-003
+  title: IV-Orientierung
+  domain: social-insurance
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-004
+  title: EO Orientierung
+  domain: social-insurance
+  status: idea
+  priority: experimental
+  phase: future
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-005
+  title: ALV Orientierung
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-006
+  title: UVG-Transparenz
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-007
+  title: KTG-Transparenz
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-008
+  title: BVG-Kontinuitaet & Freizuegigkeitskonten
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-009
+  title: BVG Pensionskasse-Tracker
+  domain: social-insurance
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-010
+  title: EL Eligibility-Hinweis
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-SOZ-015, MP-HH-001]
+
+- id: MP-SOZ-011
+  title: SKOS Sozialhilfe-Orientierung (korrigiert)
+  domain: social-insurance
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-HH-001]
+
+- id: MP-SOZ-012
+  title: Stipendien / Ausbildungsbeitraege
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-013
+  title: Alimente / Unterhaltszahlungen
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+  dependencies: [MP-HH-001]
+
+- id: MP-SOZ-014
+  title: Selbstaendigkeit-Modul
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-015
+  title: Retirement Timeline & Pensionsplanung
+  domain: social-insurance
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SOZ-016
+  title: 3a/3b Vorsorge Orientierung
+  domain: social-insurance
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- VORSORGE & NOTFALL ---
+
+- id: MP-VOR-001
+  title: Patientenverfuegung Check + Upload
+  domain: emergency
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-VOR-002
+  title: Vorsorgeauftrag Check + Upload + Gemeinde
+  domain: emergency
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-VOR-003
+  title: Bestattungswuensche Check + Upload
+  domain: emergency
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-VOR-004
+  title: Organspende-Karte / QR-Export
+  domain: emergency
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-VOR-005
+  title: Emergency Hub
+  domain: emergency
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-VOR-006
+  title: Vorsorge-Dokument Tresor-Verknuepfung
+  domain: emergency
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-VOR-007
+  title: Gemeinde-Registrierungs-Erinnerung
+  domain: emergency
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-VOR-011
+  title: Death & Legacy Mode
+  domain: emergency
+  status: idea
+  priority: experimental
+  phase: future
+  complexity: high
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+# --- VERSICHERUNGEN & SCANNER ---
+
+- id: MP-VER-001
+  title: Versicherungs-Scanner (allgemein)
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-DOC-003]
+
+- id: MP-VER-002
+  title: Krankenkassen-Scanner (OCR)
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-DOC-003]
+
+- id: MP-VER-003
+  title: Versicherungsluecken-Erkennung
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-VER-004
+  title: IPV Link-System & Eligibility
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-VER-013
+  title: Konfliktwarnungen (Versicherungsdaten)
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-VER-015
+  title: AHV-Nummer Masking
+  domain: insurance
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- STEUERLOGIK ---
+
+- id: MP-TAX-001
+  title: Basis-Steuerberechnung
+  domain: tax
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-TAX-002
+  title: Kantonale Steuersatz-Varianten
+  domain: tax
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-TAX-003
+  title: Quellensteuer vs. ordentliche Veranlagung
+  domain: tax
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+# --- BEHOERDENLOGIK ---
+
+- id: MP-BEH-001
+  title: Canton Rule Engine
+  domain: authority-logic
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-BEH-002
+  title: Gemeindeabhaengige Informationen
+  domain: authority-logic
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-BEH-006
+  title: CH Link-Validierung
+  domain: authority-logic
+  status: idea
+  priority: important
+  phase: alpha
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-BEH-008
+  title: Mietbeitraege / Housing Benefits
+  domain: authority-logic
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+# --- HAUSHALTSLOGIK ---
+
+- id: MP-HH-001
+  title: Household Model
+  domain: household
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-HH-004
+  title: Alimente Tracking & Berechnung
+  domain: household
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+  dependencies: [MP-HH-001]
+
+- id: MP-HH-005
+  title: Familienzulagen Orientierung
+  domain: household
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-HH-006
+  title: Account-Uebergabe (Volljaehrigkeit)
+  domain: household
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- BUDGET & FINANZEN ---
+
+- id: MP-BUD-001
+  title: Budget Tracking Modul
+  domain: budget
+  status: idea
+  priority: core
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-BUD-002
+  title: Schulden-Integration
+  domain: budget
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-BUD-003
+  title: Calm Budget-Orientierung
+  domain: budget
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-BUD-009
+  title: SchuldenManager
+  domain: budget
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-BUD-010
+  title: BudgetSync / BudgetImport
+  domain: budget
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+# --- DOKUMENTE ---
+
+- id: MP-DOC-001
+  title: Dokumenten-Tresor
+  domain: documents
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-DOC-002
+  title: Tresor Hardening (AES-256)
+  domain: documents
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-DOC-003
+  title: OCR Scanner (Tesseract.js)
+  domain: documents
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- EXPORT & IMPORT ---
+
+- id: MP-EXP-001
+  title: PDF-Export
+  domain: export
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-EXP-002
+  title: JSON Export (maschinenlesbar)
+  domain: export
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-EXP-003
+  title: YAML Export
+  domain: export
+  status: idea
+  priority: experimental
+  phase: post-beta
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-EXP-004
+  title: Swiss CSV Export
+  domain: export
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-EXP-006
+  title: ZIP Export (verschluesselt)
+  domain: export
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-EXP-009
+  title: CSV/PDF Import
+  domain: export
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- ERINNERUNGEN & FRISTEN ---
+
+- id: MP-REM-001
+  title: CalendarReminders
+  domain: reminders
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-REM-002
+  title: Wiederkehrende Erinnerungen
+  domain: reminders
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-REM-005
+  title: In-App Benachrichtigungen
+  domain: reminders
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-REM-007
+  title: Life-Event-Checklisten
+  domain: reminders
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: true
+
+- id: MP-REM-008
+  title: Dokumenten-Ablauf-Erinnerungen
+  domain: reminders
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- UX & ACCESSIBILITY ---
+
+- id: MP-UX-001
+  title: i18n Framework (4 Sprachen)
+  domain: ux
+  status: done
+  priority: core
+  phase: alpha
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-002
+  title: Raetoromanisch (5. Sprache)
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-005
+  title: Genderneutrale Sprache
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-007
+  title: Low-Literacy / Universal Design
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: high
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-012
+  title: Onboarding Flow (interaktiv)
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-013
+  title: Calm Dashboard Evolution
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-017
+  title: Dark Mode
+  domain: ux
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-018
+  title: Responsive Design 375px
+  domain: ux
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-UX-023
+  title: User Feedback Interface
+  domain: ux
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- SICHERHEIT ---
+
+- id: MP-SEC-001
+  title: Verschluesselung at-rest
+  domain: security
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SEC-002
+  title: CSP (Content Security Policy)
+  domain: security
+  status: done
+  priority: core
+  phase: alpha
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SEC-003
+  title: SRI (Subresource Integrity)
+  domain: security
+  status: done
+  priority: core
+  phase: alpha
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-SEC-012
+  title: Encrypted Backup
+  domain: security
+  status: done
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+# --- LEGAL ---
+
+- id: MP-LEG-001
+  title: Impressum
+  domain: legal
+  status: idea
+  priority: core
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-LEG-002
+  title: Datenschutzerklaerung
+  domain: legal
+  status: idea
+  priority: core
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-LEG-003
+  title: Nutzungsbedingungen (AGB)
+  domain: legal
+  status: idea
+  priority: core
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-LEG-006
+  title: Datenschutzrechte Interface
+  domain: legal
+  status: idea
+  priority: core
+  phase: beta
+  complexity: medium
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+# --- DATENMODELL ---
+
+- id: MP-DAT-001
+  title: Kontakt- & Beziehungs-Layer
+  domain: data-model
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: true
+
+- id: MP-DAT-002
+  title: Life-Event-Workflows
+  domain: data-model
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-DAT-001]
+
+- id: MP-DAT-004
+  title: Canton Rule Engine
+  domain: data-model
+  status: idea
+  priority: important
+  phase: post-beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+
+- id: MP-DAT-006
+  title: Gross/Net Salary Distinction
+  domain: data-model
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: medium
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- INFRASTRUKTUR ---
+
+- id: MP-INF-001
+  title: PWA Hardening / Service Worker
+  domain: infrastructure
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-INF-002
+  title: CI/CD Pipeline
+  domain: infrastructure
+  status: done
+  priority: important
+  phase: alpha
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-INF-005
+  title: Build Budget (<200KB gzip)
+  domain: infrastructure
+  status: done
+  priority: core
+  phase: alpha
+  complexity: low
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+# --- BUGS ---
+
+- id: MP-BUG-001
+  title: SKOS Haushalt falsch berechnet
+  domain: bugs
+  status: idea
+  priority: core
+  phase: beta
+  complexity: high
+  swiss_specificity: high
+  requires_canton_logic: true
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-HH-001]
+
+- id: MP-BUG-002
+  title: Hardcoded German in cantonalData.js
+  domain: bugs
+  status: idea
+  priority: core
+  phase: alpha
+  complexity: medium
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-BUG-003
+  title: QR-Code CDN-Abhaengigkeit (offline fail)
+  domain: bugs
+  status: idea
+  priority: important
+  phase: beta
+  complexity: medium
+  swiss_specificity: low
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+
+- id: MP-BUG-005
+  title: BVG Doppelabzug
+  domain: bugs
+  status: idea
+  priority: important
+  phase: beta
+  complexity: low
+  swiss_specificity: high
+  requires_canton_logic: false
+  requires_ai: false
+  export_required: false
+  dependencies: [MP-DAT-006]
