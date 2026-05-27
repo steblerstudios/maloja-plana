@@ -95,7 +95,107 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     }
   };
 
+  const renderHouseholdFields = () => {
+    const household = data.household || { adults: 1, children: [], isRetired: false };
+    const adults = household.adults || 1;
+    const children = Array.isArray(household.children) ? household.children : [];
+    const isRetired = Boolean(household.isRetired);
+
+    const hhLabel = {
+      display: 'block', fontSize: text.sm, fontWeight: weight.medium,
+      color: palette.mid, marginBottom: space.sm - 2
+    };
+    const hhSelect = {
+      width: '100%', padding: (space.sm + 2) + 'px ' + space.sm + 'px',
+      borderRadius: radius.sm, border: '1px solid ' + palette.border,
+      background: palette.up, color: palette.text, boxSizing: 'border-box',
+      fontSize: text.body, fontFamily: 'DM Sans, sans-serif', cursor: 'pointer'
+    };
+
+    const updateHousehold = (patch) => {
+      const next = { ...household, ...patch };
+      onUpdate('household', next);
+    };
+
+    return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
+
+      // Adults
+      React.createElement('div', { style: { marginBottom: '16px' } },
+        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.adults')),
+        React.createElement('select', {
+          value: String(adults),
+          onChange: (e) => updateHousehold({ adults: Number(e.target.value) }),
+          style: hhSelect
+        },
+          [1, 2, 3, 4].map(n => React.createElement('option', { key: n, value: String(n) }, String(n)))
+        )
+      ),
+
+      // Retired
+      React.createElement('div', { style: { marginBottom: '16px' } },
+        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.retired')),
+        React.createElement('select', {
+          value: isRetired ? 'yes' : 'no',
+          onChange: (e) => updateHousehold({ isRetired: e.target.value === 'yes' }),
+          style: hhSelect
+        },
+          React.createElement('option', { value: 'no' }, tr('chapters.basis.fields.household.retiredNo')),
+          React.createElement('option', { value: 'yes' }, tr('chapters.basis.fields.household.retiredYes'))
+        )
+      ),
+
+      // Children section — full width
+      React.createElement('div', { style: { gridColumn: '1 / -1', marginBottom: '16px' } },
+        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.children')),
+
+        children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' } },
+          children.map((child, idx) =>
+            React.createElement('div', { key: idx, style: { display: 'flex', alignItems: 'center', gap: '8px' } },
+              React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, minWidth: '36px' } }, tr('chapters.basis.fields.household.childAge')),
+              React.createElement('input', {
+                type: 'number',
+                min: 0,
+                max: 25,
+                value: child.age === 0 ? '0' : (child.age || ''),
+                onChange: (e) => {
+                  const updated = children.map((c, i) => i === idx ? { ...c, age: Math.max(0, Math.min(25, Number(e.target.value) || 0)) } : c);
+                  updateHousehold({ children: updated });
+                },
+                style: { ...hhSelect, width: '72px', cursor: 'text' }
+              }),
+              React.createElement('button', {
+                type: 'button',
+                onClick: () => {
+                  const updated = children.filter((_, i) => i !== idx);
+                  updateHousehold({ children: updated });
+                },
+                'aria-label': tr('chapters.basis.fields.household.removeChild'),
+                style: {
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  color: palette.mid, fontSize: text.sm, padding: '4px 8px',
+                  borderRadius: radius.sm,
+                }
+              }, tr('chapters.basis.fields.household.removeChild'))
+            )
+          )
+        ),
+
+        React.createElement('button', {
+          type: 'button',
+          onClick: () => updateHousehold({ children: [...children, { age: 0 }] }),
+          style: {
+            background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm,
+            cursor: 'pointer', color: palette.mid, fontSize: text.sm,
+            padding: (space.sm) + 'px ' + space.md + 'px',
+            fontFamily: 'DM Sans, sans-serif',
+          }
+        }, '+ ' + tr('chapters.basis.fields.household.addChild'))
+      )
+    );
+  };
+
   const renderField = (field) => {
+    if (field.type === 'household') return renderHouseholdFields();
     const value = data[field.k] || '';
     const error = errors[field.k];
 
