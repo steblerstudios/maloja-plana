@@ -69,7 +69,7 @@ export function getChapters(t) {
         { k: 'email', label: fl(t, 'basis', 'email'), type: 'email' },
         { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv') },
         { k: 'maritalStatus', label: fl(t, 'basis', 'maritalStatus'), type: 'select', options: opts(t, 'basis', 'maritalStatus'), section: t('sections.basis.family') },
-        { k: 'dependents', label: fl(t, 'basis', 'dependents'), type: 'text' },
+        { k: 'household', type: 'household' },
       ],
       docs: [
         { k: 'id', label: dl(t, 'basis', 'id') },
@@ -262,6 +262,9 @@ export const DEFAULT_DATA = CHAPTER_KEYS.reduce((acc, key) => {
   (FIELD_KEYS[key] || []).forEach(f => acc[key][f] = '');
   return acc;
 }, {});
+
+// Default household for new installs (v3+)
+DEFAULT_DATA.basis.household = { adults: 1, children: [], isRetired: false };
 
 export const CH_SUPPORT_LINKS = {
   ahv: 'https://www.ahv-iv.ch',

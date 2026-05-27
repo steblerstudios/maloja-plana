@@ -143,6 +143,16 @@ export default {
         ahv: 'Numéro AVS',
         maritalStatus: { label: 'État civil', options: { single: 'Célibataire', married: 'Marié(e)', divorced: 'Divorcé(e)', widowed: 'Veuf/veuve' } },
         dependents: 'Nombre d\'enfants',
+        household: {
+          adults: 'Adultes dans le ménage',
+          children: 'Enfants',
+          childAge: 'Âge',
+          addChild: 'Ajouter un enfant',
+          removeChild: 'Retirer l\'enfant',
+          retired: 'Retraité(e)',
+          retiredYes: 'Oui',
+          retiredNo: 'Non',
+        },
       },
       placeholders: {
         phone: '+41 XX XXX XX XX',

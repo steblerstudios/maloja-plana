@@ -110,6 +110,36 @@ export function getCantonName(code, t) {
   return code;
 }
 
+// ─── Household helper ─────────────────────────────────────
+// Single source of truth for household composition.
+// Reads from household object if present, falls back to legacy dependents field.
+export function getHouseholdInfo(data) {
+  const basis = data?.basis || {};
+  const household = basis.household;
+
+  if (household && typeof household === 'object') {
+    const adults = Math.max(1, Number(household.adults) || 1);
+    const children = Array.isArray(household.children) ? household.children : [];
+    return {
+      adults,
+      childrenCount: children.length,
+      children,
+      isRetired: Boolean(household.isRetired),
+      householdSize: adults + children.length,
+    };
+  }
+
+  // Fallback: derive from legacy dependents field
+  const dependents = Number(basis.dependents || 0);
+  return {
+    adults: 1,
+    childrenCount: dependents,
+    children: Array.from({ length: dependents }, () => ({ age: 0 })),
+    isRetired: data?.finanzen?.employmentType === 'retired',
+    householdSize: 1 + dependents,
+  };
+}
+
 // Kantonale Prämienverbilligung — Einkommensgrenzen und Beiträge pro Kanton
 // Quelle: BAG, kantonale Gesundheitsdirektionen (vereinfacht, Stand 2024/2025)
 export const CANTONAL_IPV = {
@@ -184,7 +214,8 @@ export function getGrundbedarf(householdSize) {
 // Sozialhilfe-Berechnung (SKOS-basiert, kantonal angepasst)
 export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
-  const householdSize = 1 + Number(data.basis?.dependents || 0);
+  const hh = getHouseholdInfo(data);
+  const householdSize = hh.householdSize;
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
@@ -221,15 +252,16 @@ export function calculateIPV(data) {
   if (!ipvData) return { eligible: false, amount: 0, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const income = Number(data.finanzen?.monthlyIncome || 0) * 12;
-  const dependents = Number(data.basis?.dependents || 0);
+  const hh = getHouseholdInfo(data);
+  const childrenCount = hh.childrenCount;
 
   if (income > ipvData.maxIncome) {
     return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
   }
 
   let monthlySubsidy;
-  if (dependents > 0) {
-    monthlySubsidy = Math.round((ipvData.subsidyFamily + dependents * ipvData.subsidyChild) / 12);
+  if (childrenCount > 0) {
+    monthlySubsidy = Math.round((ipvData.subsidyFamily + childrenCount * ipvData.subsidyChild) / 12);
   } else {
     monthlySubsidy = Math.round(ipvData.subsidySingle / 12);
   }
