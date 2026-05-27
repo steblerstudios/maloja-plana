@@ -4,7 +4,7 @@ import {
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAddDocument }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -357,7 +357,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     'AB+': palette.sage, 'AB-': palette.sage,
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
     // Header
     React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.xs, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
