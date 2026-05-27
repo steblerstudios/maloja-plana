@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
+import { text, weight, space, radius, shadow } from './config/tokens.js';
 
 export const SchuldenManager = ({ palette, t, data, onSave }) => {
   const [view, setView] = useState('overview');
@@ -64,35 +65,35 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income || 1);
 
   const cardStyle = {
-    padding: '12px',
+    padding: space.md,
     background: palette.up,
-    borderRadius: '6px',
-    marginBottom: '8px',
-    fontSize: '12px',
+    borderRadius: radius.sm,
+    marginBottom: space.sm,
+    fontSize: text.sm,
     cursor: 'pointer'
   };
 
   const inputStyle = {
     width: '100%',
-    padding: '8px',
-    marginBottom: '8px',
-    borderRadius: '6px',
+    padding: space.sm + 'px ' + (space.sm + 2) + 'px',
+    marginBottom: space.sm,
+    borderRadius: radius.sm,
     border: '1px solid ' + palette.border,
     background: palette.surface,
     color: palette.text,
     boxSizing: 'border-box',
-    fontSize: '12px'
+    fontSize: text.body
   };
 
   const buttonStyle = {
-    padding: '8px 12px',
+    padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
     background: palette.sand,
     color: '#fff',
     border: 'none',
-    borderRadius: '4px',
+    borderRadius: radius.sm,
     cursor: 'pointer',
-    fontWeight: '600',
-    fontSize: '11px'
+    fontWeight: weight.semi,
+    fontSize: text.xs
   };
 
   return React.createElement('div', null,
@@ -118,22 +119,22 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
     // Overview
     view === 'overview' && React.createElement('div', null,
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '16px' } },
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', border: '2px solid ' + palette.rose } },
-          React.createElement('div', { style: { fontSize: '12px', color: palette.mid } }, t('schulden.totalDebt')),
-          React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.rose, marginTop: '4px' } }, 'CHF ' + debtStatus.totalDebt.toFixed(2))
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.md, marginBottom: space.lg } },
+        React.createElement('div', { style: { padding: space.lg - 4, background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.rose + '44', boxShadow: shadow.sm } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.totalDebt')),
+          React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.rose, marginTop: space.xs } }, 'CHF ' + debtStatus.totalDebt.toFixed(2))
         ),
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', border: '2px solid ' + palette.gold } },
-          React.createElement('div', { style: { fontSize: '12px', color: palette.mid } }, t('schulden.overdue')),
-          React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.gold, marginTop: '4px' } }, 'CHF ' + debtStatus.overdue.toFixed(2))
+        React.createElement('div', { style: { padding: space.lg - 4, background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.gold + '44', boxShadow: shadow.sm } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.overdue')),
+          React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.gold, marginTop: space.xs } }, 'CHF ' + debtStatus.overdue.toFixed(2))
         ),
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', border: '2px solid ' + palette.sky } },
-          React.createElement('div', { style: { fontSize: '12px', color: palette.mid } }, t('schulden.dueSoon')),
-          React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.sky, marginTop: '4px' } }, 'CHF ' + debtStatus.upcoming.toFixed(2))
+        React.createElement('div', { style: { padding: space.lg - 4, background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.sky + '44', boxShadow: shadow.sm } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.dueSoon')),
+          React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.sky, marginTop: space.xs } }, 'CHF ' + debtStatus.upcoming.toFixed(2))
         ),
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', border: '2px solid ' + palette.sage } },
-          React.createElement('div', { style: { fontSize: '12px', color: palette.mid } }, t('schulden.alreadyPaid')),
-          React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.sage, marginTop: '4px' } }, 'CHF ' + debtStatus.paid.toFixed(2))
+        React.createElement('div', { style: { padding: space.lg - 4, background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.sage + '44', boxShadow: shadow.sm } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.alreadyPaid')),
+          React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.semi, color: palette.sage, marginTop: space.xs } }, 'CHF ' + debtStatus.paid.toFixed(2))
         )
       ),
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, CANTON_NAMES, getResidenceInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
+import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 export const SozialhilfeView = ({ palette, t, data }) => {
   const canton = data.basis?.canton || '';
@@ -14,16 +15,16 @@ export const SozialhilfeView = ({ palette, t, data }) => {
   const formatCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   const Row = (label, value, color) =>
-    React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border, fontSize: '12px' } },
+    React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: (space.sm - 1) + 'px 0', borderBottom: '1px solid ' + palette.border, fontSize: text.sm } },
       React.createElement('span', { style: { color: palette.mid } }, label),
-      React.createElement('span', { style: { fontWeight: '600', color: color || palette.text } }, value)
+      React.createElement('span', { style: { fontWeight: weight.semi, color: color || palette.text } }, value)
     );
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
+  return React.createElement('div', { style: { background: palette.surface, padding: space.lg, borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.lg, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
 
     // Canton
-    React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '16px', fontSize: '12px' } },
+    React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
       React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: CANTON_NAMES[canton] || t('premium.cantonUnknown') })),
       React.createElement('div', { style: { color: palette.mid } }, t('sozialhilfe.householdSize', { count: sozialhilfe.householdSize })),
       !canton && React.createElement('div', { style: { color: palette.rose, marginTop: '4px' } }, t('sozialhilfe.enterCanton'))
@@ -37,9 +38,9 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     ),
 
     // SKOS Calculation
-    React.createElement('div', { style: { marginBottom: '20px' } },
-      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '12px' } }, '◰ ' + t('sozialhilfe.skosCalculation')),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
+    React.createElement('div', { style: { marginBottom: space.lg + 4 } },
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.skosCalculation')),
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         Row(t('sozialhilfe.basicNeeds'), formatCHF(sozialhilfe.grundbedarf)),
         Row(t('sozialhilfe.housingCosts'), formatCHF(sozialhilfe.effectiveRent)),
         Row(t('sozialhilfe.rentLimit'), formatCHF(sozialhilfe.rentLimit), palette.mid),
@@ -67,8 +68,8 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // IPV Info
     React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '12px' } }, '◰ ' + t('sozialhilfe.ipvSection')),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.ipvSection')),
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         ipv.eligible
           ? React.createElement('div', null,
               React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px', fontSize: '12px' } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
@@ -82,8 +83,8 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // EL Info
     React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '12px' } }, '◰ ' + t('sozialhilfe.elSection')),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.elSection')),
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: '600', color: el.eligible ? palette.sage : palette.mid, marginBottom: '4px', fontSize: '12px' } },
           el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : '○ ' + el.note
         ),
@@ -117,9 +118,9 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     ),
 
     // Next steps
-    React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-      React.createElement('h4', { style: { fontSize: '12px', fontWeight: '600', marginBottom: '8px' } }, '□ ' + t('sozialhilfe.nextSteps')),
-      React.createElement('ul', { style: { fontSize: '11px', paddingLeft: '20px', margin: 0, color: palette.mid } },
+    React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginTop: space.lg } },
+      React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, '□ ' + t('sozialhilfe.nextSteps')),
+      React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
         React.createElement('li', { style: { marginBottom: '4px' } }, t('sozialhilfe.step1')),
         React.createElement('li', { style: { marginBottom: '4px' } }, t('sozialhilfe.step2')),
         React.createElement('li', { style: { marginBottom: '4px' } }, t('sozialhilfe.step3')),
