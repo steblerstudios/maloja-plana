@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import QRCode from './vendor/qrcodejs.js';
 import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
@@ -50,21 +51,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     const qrData = generateKKQRCode(kkData);
     setQRCode(qrData);
     setTimeout(() => {
-      if (!document.getElementById('qrcode')) {
-        const s = document.createElement('script');
-        s.id = 'qrcode';
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-        s.integrity = 'sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU';
-        s.crossOrigin = 'anonymous';
-        s.onload = () => {
-          const cont = document.getElementById('kk-qr-output');
-          if (cont) { cont.innerHTML = ''; new window.QRCode(cont, { text: qrData, width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }); }
-        };
-        document.head.appendChild(s);
-      } else {
-        const cont = document.getElementById('kk-qr-output');
-        if (cont) { cont.innerHTML = ''; new window.QRCode(cont, { text: qrData, width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }); }
-      }
+      const cont = document.getElementById('kk-qr-output');
+      if (cont) { cont.innerHTML = ''; new QRCode(cont, { text: qrData, width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }); }
     }, 100);
   };
 

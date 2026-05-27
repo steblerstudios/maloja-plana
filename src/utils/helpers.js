@@ -1,3 +1,5 @@
+import QRCode from '../vendor/qrcodejs.js';
+
 // ============================================================================
 // HASH (für Password + Storage-Keys)
 // ============================================================================
@@ -25,9 +27,88 @@ export function getCurrentMonth() {
 }
 
 // ============================================================================
-// PDF GENERATION (via jsPDF CDN)
+// PDF GENERATION (via jsPDF CDN — online only)
 // ============================================================================
 export async function generatePDF({ title, chapters, data, filename }) {
+  const buildPDF = () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const margin = 48;
+    const line = 16;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.text(title, margin, 56);
+    doc.setDrawColor(150);
+    doc.line(margin, 88, pageW - margin, 88);
+
+    let y = 112;
+    const maxY = doc.internal.pageSize.getHeight() - margin;
+
+    for (const ch of chapters) {
+      if (y > maxY - 36) {
+        doc.addPage();
+        y = margin;
+      }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text(ch.title, margin, y);
+      y += 14;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+      const descLines = doc.splitTextToSize(ch.description, pageW - margin * 2);
+      for (const l of descLines) {
+        if (y > maxY) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(l, margin, y);
+        y += line;
+      }
+      doc.setTextColor(0);
+      y += 4;
+
+      for (const f of ch.fields) {
+        const v = data?.[ch.key]?.[f.k] ?? '';
+        const label = `${f.label}: `;
+        const value = v?.trim() ? v.trim() : '—';
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        if (y > maxY) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(label, margin, y);
+
+        doc.setFont('helvetica', 'normal');
+        const labelW = doc.getTextWidth(label);
+        const valueLines = doc.splitTextToSize(value, pageW - margin * 2 - labelW);
+        doc.text(valueLines, margin + labelW, y);
+        y += line * valueLines.length;
+      }
+
+      y += 10;
+      doc.setDrawColor(200);
+      doc.line(margin, y, pageW - margin, y);
+      y += 18;
+    }
+
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.text('Lokal erstellt. Keine Datenübertragung.', margin, doc.internal.pageSize.getHeight() - 24);
+
+    doc.save(filename);
+  };
+
+  if (window.jspdf) {
+    buildPDF();
+    return true;
+  }
+
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
@@ -36,120 +117,32 @@ export async function generatePDF({ title, chapters, data, filename }) {
 
     script.onload = () => {
       try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-        const pageW = doc.internal.pageSize.getWidth();
-        const margin = 48;
-        const line = 16;
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(18);
-        doc.text(title, margin, 56);
-        doc.setDrawColor(150);
-        doc.line(margin, 88, pageW - margin, 88);
-
-        let y = 112;
-        const maxY = doc.internal.pageSize.getHeight() - margin;
-
-        for (const ch of chapters) {
-          if (y > maxY - 36) {
-            doc.addPage();
-            y = margin;
-          }
-
-          doc.setFont('helvetica', 'bold');
-          doc.setFontSize(13);
-          doc.text(ch.title, margin, y);
-          y += 14;
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(10);
-          doc.setTextColor(100);
-          const descLines = doc.splitTextToSize(ch.description, pageW - margin * 2);
-          for (const l of descLines) {
-            if (y > maxY) {
-              doc.addPage();
-              y = margin;
-            }
-            doc.text(l, margin, y);
-            y += line;
-          }
-          doc.setTextColor(0);
-          y += 4;
-
-          for (const f of ch.fields) {
-            const v = data?.[ch.key]?.[f.k] ?? '';
-            const label = `${f.label}: `;
-            const value = v?.trim() ? v.trim() : '—';
-
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(10);
-            if (y > maxY) {
-              doc.addPage();
-              y = margin;
-            }
-            doc.text(label, margin, y);
-
-            doc.setFont('helvetica', 'normal');
-            const labelW = doc.getTextWidth(label);
-            const valueLines = doc.splitTextToSize(value, pageW - margin * 2 - labelW);
-            doc.text(valueLines, margin + labelW, y);
-            y += line * valueLines.length;
-          }
-
-          y += 10;
-          doc.setDrawColor(200);
-          doc.line(margin, y, pageW - margin, y);
-          y += 18;
-        }
-
-        doc.setFontSize(9);
-        doc.setTextColor(120);
-        doc.text('Lokal erstellt. Keine Datenübertragung.', margin, doc.internal.pageSize.getHeight() - 24);
-
-        doc.save(filename);
+        buildPDF();
         resolve(true);
       } catch (e) {
         reject(e);
       }
     };
 
-    script.onerror = () => reject(new Error('jsPDF load failed'));
+    script.onerror = () => reject(new Error('PDF export requires an internet connection'));
     document.head.appendChild(script);
   });
 }
 
 // ============================================================================
-// QR CODE GENERATION (via qrcode.js CDN)
+// QR CODE GENERATION (local, offline-capable)
 // ============================================================================
-export async function generateQRCode(text, containerId) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-    script.integrity = 'sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU';
-    script.crossOrigin = 'anonymous';
+export function generateQRCode(text, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) throw new Error(`Container ${containerId} not found`);
+  container.innerHTML = '';
 
-    script.onload = () => {
-      try {
-        const container = document.getElementById(containerId);
-        if (!container) throw new Error(`Container ${containerId} not found`);
-        container.innerHTML = '';
-
-        new window.QRCode(container, {
-          text,
-          width: 200,
-          height: 200,
-          colorDark: '#2a2a28',
-          colorLight: '#fbfbf7',
-        });
-
-        resolve(true);
-      } catch (e) {
-        reject(e);
-      }
-    };
-
-    script.onerror = () => reject(new Error('QRCode load failed'));
-    document.head.appendChild(script);
+  new QRCode(container, {
+    text,
+    width: 200,
+    height: 200,
+    colorDark: '#2a2a28',
+    colorLight: '#fbfbf7',
   });
 }
 
