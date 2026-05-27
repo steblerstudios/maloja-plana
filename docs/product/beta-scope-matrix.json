@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "document": "beta-scope-matrix.json",
+    "version": "1.0.0",
+    "created": "2026-05-27",
+    "task": "A-034",
+    "description": "Machine-readable beta scope classification for all product areas"
+  },
+  "classification": {
+    "beta-core": "Must ship in beta. Without this, the product is incomplete.",
+    "beta-important": "Should ship if time allows. Strengthens product but not blocking.",
+    "post-beta": "Explicitly deferred. Valuable but scope-dangerous for beta.",
+    "future": "Long-term vision. No timeline.",
+    "scope-killer": "Marked as dangerous for scope. Must not enter beta planning."
+  },
+  "areas": [
+    {
+      "id": "BETA-EXISTING",
+      "title": "Existing Features (behalten)",
+      "scope": "beta-core",
+      "items": 28,
+      "description": "All 28 implemented features remain. No removals.",
+      "includes": [
+        "Dashboard + Malojapass SVG",
+        "14 Lebenskapitel (ChapterView)",
+        "Dokumenten-Tresor (IndexedDB)",
+        "KK-Scanner (QR)",
+        "Budget-Sync (basic)",
+        "SchuldenManager",
+        "TaxCalculator",
+        "OrganDonation",
+        "IPV-Rechner (26 Kantone)",
+        "CV-Generator",
+        "SozialhilfeView (SKOS)",
+        "ZIP-Export",
+        "Budget-Import (CSV)",
+        "Charts",
+        "CalendarReminders",
+        "NotificationSettings",
+        "Onboarding",
+        "i18n (EN/DE/FR/IT/RM)",
+        "Dark Mode",
+        "Hash-Routing (16 Views)",
+        "IconSystem (SVG)",
+        "CSP + SRI + Encrypted Backup",
+        "ARIA Screenreader",
+        "Responsive 375px",
+        "CI/CD Pipeline",
+        "Build Budget <200KB",
+        "Event Bus",
+        "State Machine"
+      ]
+    },
+    {
+      "id": "BETA-BUGFIX",
+      "title": "Bug-Fixes (Vertrauensschutz)",
+      "scope": "beta-core",
+      "items": 4,
+      "refs": ["MP-BUG-001", "MP-BUG-002", "MP-BUG-003", "MP-BUG-005"],
+      "description": "Trust-critical bugs that must be fixed before beta."
+    },
+    {
+      "id": "BETA-BUDGET",
+      "title": "Budget Hardening (Light)",
+      "scope": "beta-core",
+      "items": 6,
+      "refs": ["MP-DAT-006", "MP-BUD-001", "MP-BUD-002", "MP-BUD-003"],
+      "description": "Brutto/Netto toggle, expanded expense categories, Schulden integration, IPV in budget, insurance in budget, calm language.",
+      "details_doc": "budget-recovery-scope.md"
+    },
+    {
+      "id": "BETA-HOUSEHOLD",
+      "title": "Household Model (Minimal)",
+      "scope": "beta-core",
+      "items": 1,
+      "refs": ["MP-HH-001"],
+      "description": "Adults + children (with age) + retired flag. Nothing more.",
+      "unblocks": ["MP-BUG-001", "MP-HH-004", "MP-HH-005", "MP-BUD-003", "MP-SOZ-011"]
+    },
+    {
+      "id": "BETA-EXPORT",
+      "title": "Export: Meine Unterlagen (2 Dossiers)",
+      "scope": "beta-core",
+      "items": 3,
+      "description": "New route #/unterlagen + Lebensmappe PDF + Notfalldossier PDF.",
+      "details_doc": "export-dossier-concept.md"
+    },
+    {
+      "id": "BETA-LEGAL",
+      "title": "Legal (Pflicht)",
+      "scope": "beta-core",
+      "items": 3,
+      "refs": ["MP-LEG-001", "MP-LEG-002", "MP-LEG-003"],
+      "description": "Impressum, Datenschutzerklaerung, Nutzungsbedingungen. Legal requirement."
+    },
+    {
+      "id": "BETA-I18N-FIX",
+      "title": "Hardcoded German Fix",
+      "scope": "beta-core",
+      "items": 1,
+      "refs": ["MP-BUG-002"],
+      "description": "cantonalData.js and premiumCalc.js return German strings instead of i18n keys."
+    },
+    {
+      "id": "BETA-EMOTION",
+      "title": "Emotionale Temperatur schwerer Screens",
+      "scope": "beta-important",
+      "items": 3,
+      "description": "SozialhilfeView, SchuldenManager, TaxCalculator — warmer, supportiver machen.",
+      "details_doc": "docs/design/emotional-temperature-map.md"
+    },
+    {
+      "id": "BETA-SWISS-ORIENT",
+      "title": "AHV/BVG/ALV Basis-Orientierung",
+      "scope": "beta-important",
+      "items": 3,
+      "refs": ["MP-SOZ-001", "MP-SOZ-005", "MP-SOZ-008"],
+      "description": "Info sections, not calculators. What is it? What must I do? Where do I go?"
+    },
+    {
+      "id": "BETA-GENERATORS",
+      "title": "Template Engine + 2 Generatoren",
+      "scope": "beta-important",
+      "items": 3,
+      "refs": ["MP-GEN-016", "MP-GEN-018", "MP-GEN-004"],
+      "description": "Template Engine Core + Briefgenerator + Kuendigungsschreiben."
+    },
+    {
+      "id": "BETA-VORSORGE",
+      "title": "Vorsorge-Dokument-Existenz-Checks",
+      "scope": "beta-important",
+      "items": 3,
+      "refs": ["MP-VOR-001", "MP-VOR-002", "MP-VOR-003"],
+      "description": "Patientenverfuegung, Vorsorgeauftrag, Bestattungswuensche: existence check + upload reference."
+    },
+    {
+      "id": "BETA-PWA",
+      "title": "PWA / Service Worker",
+      "scope": "beta-important",
+      "items": 2,
+      "refs": ["MP-INF-001", "MP-INF-003"],
+      "description": "Real offline reliability and Add-to-Homescreen."
+    },
+    {
+      "id": "BETA-AHV-MASK",
+      "title": "AHV-Nummer Masking",
+      "scope": "beta-important",
+      "items": 1,
+      "refs": ["MP-VER-015"],
+      "description": "Visual masking of sensitive AHV numbers in UI."
+    },
+    {
+      "id": "POST-GOVERNANCE",
+      "title": "Phase 1 Governance Runtime",
+      "scope": "scope-killer",
+      "items": 24,
+      "refs_range": "MP-P1-003 to MP-P1-026 (minus QA items)",
+      "reason": "Over-engineering for single-user local-first app. No user-facing value. Months of work.",
+      "exception": "E2E tests, Mobile QA, Dark Mode QA, Performance Gate — these are quality items, not governance."
+    },
+    {
+      "id": "POST-WORKFLOW",
+      "title": "Phase 2 Workflow Engine",
+      "scope": "scope-killer",
+      "items": 25,
+      "refs_range": "MP-P2-001 to MP-P2-025",
+      "reason": "DAG executor, rollback engine, policy engine — standalone platform within platform. Zero user need."
+    },
+    {
+      "id": "POST-AI",
+      "title": "AI Agents & Assistants",
+      "scope": "scope-killer",
+      "items": 9,
+      "refs_range": "MP-AI-001 to MP-AI-009",
+      "reason": "Requires governance runtime. App is deterministic-first. AI Act compliance is regulatory complex."
+    },
+    {
+      "id": "POST-MULTI-ACCOUNT",
+      "title": "Multi-Account & Rollen",
+      "scope": "scope-killer",
+      "items": 6,
+      "refs_range": "MP-ROL-001 to MP-ROL-006",
+      "reason": "Requires backend, auth, sync — none of which exist."
+    },
+    {
+      "id": "POST-API",
+      "title": "REST API & externe Schnittstellen",
+      "scope": "post-beta",
+      "items": 8,
+      "refs_range": "MP-API-001 to MP-API-009 (minus mailto)",
+      "reason": "Local-first app. No backend. mailto: is the only beta-relevant exception."
+    },
+    {
+      "id": "POST-SCANNER",
+      "title": "Scanner-Systeme (OCR)",
+      "scope": "post-beta",
+      "items": 3,
+      "refs": ["MP-VER-001", "MP-VER-002", "MP-DOC-003"],
+      "reason": "Tesseract.js is 4MB+. Fragile on mobile. KK-Scanner QR already exists."
+    },
+    {
+      "id": "POST-GENERATORS",
+      "title": "Remaining 15 Generators",
+      "scope": "post-beta",
+      "items": 15,
+      "reason": "Each needs cantonal variants. Legally sensitive (PV, Vorsorgeauftrag). Template Engine must exist first."
+    },
+    {
+      "id": "POST-CANTON-FULL",
+      "title": "Full cantonal coverage (new features)",
+      "scope": "post-beta",
+      "items": "variable",
+      "reason": "IPV covers 26 cantons. New features start with 5-6 reference cantons (ZH, BE, BS, GE, LU, TI)."
+    },
+    {
+      "id": "POST-DOC-EXT",
+      "title": "Document Extensions",
+      "scope": "post-beta",
+      "items": 7,
+      "refs_range": "MP-DOC-003 to MP-DOC-009",
+      "reason": "OCR, versioning, full-text search, relations — useful but not essential."
+    },
+    {
+      "id": "POST-REMINDER-EXT",
+      "title": "Reminder Extensions",
+      "scope": "post-beta",
+      "items": 7,
+      "reason": "Smart intervals, push notifications, life-event checklists."
+    },
+    {
+      "id": "POST-UX-EXT",
+      "title": "UX Extensions",
+      "scope": "post-beta",
+      "items": 12,
+      "reason": "Romansh, TTS, pictogram flows, spider web viz, global search, keyboard shortcuts."
+    },
+    {
+      "id": "POST-SECURITY",
+      "title": "Security Extensions",
+      "scope": "post-beta",
+      "items": 6,
+      "reason": "WebAuthn, 2FA, pen test — important for production, not for local-only beta."
+    },
+    {
+      "id": "FUTURE-VISION",
+      "title": "Long-term Vision",
+      "scope": "future",
+      "items": 8,
+      "refs_range": "MP-VIS-001 to MP-VIS-008",
+      "reason": "Mobility module, inventory, community, mini-jobs, monetization, sustainability."
+    }
+  ],
+  "summary": {
+    "total_backlog": 260,
+    "already_built": 28,
+    "beta_core_new": 15,
+    "beta_important": 8,
+    "beta_total": 51,
+    "post_beta": 140,
+    "future": 85,
+    "scope_killers": ["Phase 1 Governance (24)", "Phase 2 Workflow (25)", "AI Agents (9)", "Multi-Account (6)"],
+    "scope_killer_total": 64,
+    "focus_ratio": "51 of 260 items (19.6%) — that is the beta."
+  }
+}
