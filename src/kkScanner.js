@@ -1,32 +1,26 @@
 // KK-Karten Scanner mit Barcode, QR, OCR
 
 export const initBarcodeScanner = async () => {
-  // Lade js-barcode und jsQR
-  if (!document.getElementById('js-barcode')) {
-    const script = document.createElement('script');
-    script.id = 'js-barcode';
-    script.src = 'https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js';
-    script.integrity = 'sha384-tOUygabpHGzWXpKv3qJM5f9tSgU6p5f4ooCayrNDwzm3/3/CDMzgHMLQZiMMGghV';
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
-  }
+  try {
+    if (!document.getElementById('jsqr')) {
+      const script = document.createElement('script');
+      script.id = 'jsqr';
+      script.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
+      script.integrity = 'sha384-b5Ya4Bq3qCyz39m2ISh+4DxjAIljdeFwK/BsXLuj9gugaNwAcj/ia15fxNZL9Nlx';
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+    }
 
-  if (!document.getElementById('jsqr')) {
-    const script = document.createElement('script');
-    script.id = 'jsqr';
-    script.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
-    script.integrity = 'sha384-b5Ya4Bq3qCyz39m2ISh+4DxjAIljdeFwK/BsXLuj9gugaNwAcj/ia15fxNZL9Nlx';
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
-  }
-
-  if (!document.getElementById('tesseract')) {
-    const script = document.createElement('script');
-    script.id = 'tesseract';
-    script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js';
-    script.integrity = 'sha384-llrj4SUC221pVa/E3xKZwmp2zd8q9ReUcs9N37u6A5pQhjiymLsQRg+1AysLVKOZ';
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
+    if (!document.getElementById('tesseract')) {
+      const script = document.createElement('script');
+      script.id = 'tesseract';
+      script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js';
+      script.integrity = 'sha384-llrj4SUC221pVa/E3xKZwmp2zd8q9ReUcs9N37u6A5pQhjiymLsQRg+1AysLVKOZ';
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+    }
+  } catch {
+    // Offline: scanning features unavailable, manual input still works
   }
 };
 
@@ -43,12 +37,6 @@ export const scanBarcodeFromImage = async (imageFile) => {
         ctx.drawImage(img, 0, 0);
 
         try {
-          if (window.JsBarcode && window.JsBarcode.scanBarcode) {
-            // Versuche Barcode zu lesen
-            window.JsBarcode.scanBarcode(canvas);
-          }
-
-          // Fallback: QR Code Scan
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           if (window.jsQR) {
             const code = window.jsQR(imageData.data, imageData.width, imageData.height);
