@@ -693,6 +693,46 @@ export default {
     goodSituation: 'Buona situazione finanziaria. Considera di risparmiare il surplus.',
   },
 
+  cantons: {
+    AG: 'Argovia', AI: 'Appenzello Interno', AR: 'Appenzello Esterno',
+    BE: 'Berna', BL: 'Basilea Campagna', BS: 'Basilea Città',
+    FR: 'Friburgo', GE: 'Ginevra', GL: 'Glarona', GR: 'Grigioni',
+    JU: 'Giura', LU: 'Lucerna', NE: 'Neuchâtel', NW: 'Nidvaldo',
+    OW: 'Obvaldo', SG: 'San Gallo', SH: 'Sciaffusa', SO: 'Soletta',
+    SZ: 'Svitto', TG: 'Turgovia', TI: 'Ticino', UR: 'Uri',
+    VD: 'Vaud', VS: 'Vallese', ZG: 'Zugo', ZH: 'Zurigo',
+  },
+
+  ipv: {
+    modelIncomeBased: 'in base al reddito',
+    modelFlat: 'forfettario',
+    noteApplySva: 'Richiesta presso la SVA {canton}',
+    noteApplyAhvBranch: 'Richiesta presso l\'agenzia AVS del comune',
+    noteApplyAhvBranchShort: 'Richiesta presso l\'agenzia AVS',
+    noteApplyCompensation: 'Richiesta presso la cassa di compensazione',
+    noteApplySocialOffice: 'Richiesta presso l\'ufficio sociale',
+    noteApplyHealthOffice: 'Richiesta presso l\'Ufficio della sanità',
+    noteApplyHealthService: 'Richiesta presso il servizio della sanità',
+    noteApplyCantonalCompensation: 'Richiesta presso la cassa cantonale di compensazione',
+    noteApplyIas: 'Richiesta presso l\'Istituto delle assicurazioni sociali (IAS)',
+    noteApplySocialAction: 'Richiesta presso il Service de l\'action sociale',
+    noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
+    noteAutoSam: 'Automatico tramite il SAM (Service de l\'assurance-maladie)',
+    cantonUnknown: 'Cantone non riconosciuto',
+    incomeAboveLimit: 'Reddito superiore al limite (CHF {value})',
+    eligible: 'Diritto alla riduzione dei premi: CHF {value}/mese',
+  },
+
+  sozialhilfeCalc: {
+    entitled: 'Diritto all\'assistenza sociale: CHF {value}/mese',
+    notEntitled: 'Nessun diritto — il reddito copre il fabbisogno',
+  },
+
+  elCalc: {
+    possible: 'Possibile diritto alle prestazioni complementari — verificare presso l\'agenzia AVS',
+    onlyAhvIv: 'PC solo per beneficiari AVS/AI',
+  },
+
   premiumCalc: {
     coupleChildren: 'Coppia + figli',
     single: 'Singolo',

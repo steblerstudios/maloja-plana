@@ -1,5 +1,5 @@
 import React from 'react';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, CANTON_NAMES, getResidenceInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
@@ -10,9 +10,8 @@ export const SozialhilfeView = ({ palette, t, data }) => {
   const el = checkELEligibility(data);
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : 'hauptwohnsitz';
-  const residenceInfo = getResidenceInfo(residenceKey);
 
-  const formatCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const formatCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   const Row = (label, value, color) =>
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: (space.sm - 1) + 'px 0', borderBottom: '1px solid ' + palette.border, fontSize: text.sm } },
@@ -25,7 +24,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: CANTON_NAMES[canton] || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       React.createElement('div', { style: { color: palette.mid } }, t('sozialhilfe.householdSize', { count: sozialhilfe.householdSize })),
       !canton && React.createElement('div', { style: { color: palette.rose, marginTop: '4px' } }, t('sozialhilfe.enterCanton'))
     ),
@@ -60,10 +59,10 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     // Status
     sozialhilfe.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: '6px', border: '2px solid ' + palette.gold, marginBottom: '16px' } },
       React.createElement('div', { style: { fontWeight: '600', color: palette.gold, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.entitled')),
-      React.createElement('div', { style: { fontSize: '12px' } }, sozialhilfe.note)
+      React.createElement('div', { style: { fontSize: '12px' } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '2px solid ' + palette.sage, marginBottom: '16px' } },
       React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px' } }, '✓ ' + t('sozialhilfe.notEntitled')),
-      React.createElement('div', { style: { fontSize: '12px' } }, sozialhilfe.note)
+      React.createElement('div', { style: { fontSize: '12px' } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
     // IPV Info
@@ -73,10 +72,10 @@ export const SozialhilfeView = ({ palette, t, data }) => {
         ipv.eligible
           ? React.createElement('div', null,
               React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px', fontSize: '12px' } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
-              React.createElement('div', { style: { fontSize: '11px', color: palette.mid } }, ipv.note)
+              React.createElement('div', { style: { fontSize: '11px', color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
             )
           : React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: '600', color: palette.rose, marginBottom: '4px', fontSize: '12px' } }, '✕ ' + ipv.note)
+              React.createElement('div', { style: { fontWeight: '600', color: palette.rose, marginBottom: '4px', fontSize: '12px' } }, '✕ ' + t(ipv.noteKey, ipv.noteParams))
             )
       )
     ),
@@ -86,7 +85,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.elSection')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: '600', color: el.eligible ? palette.sage : palette.mid, marginBottom: '4px', fontSize: '12px' } },
-          el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : '○ ' + el.note
+          el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : '○ ' + t(el.noteKey, el.noteParams)
         ),
         el.isAHVIV && React.createElement('div', { style: { fontSize: '11px', color: palette.mid } },
           t('sozialhilfe.totalIncome', { value: el.totalIncome }) + ' | ' + t('sozialhilfe.totalExpenses', { value: el.totalExpenses })

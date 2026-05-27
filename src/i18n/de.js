@@ -692,6 +692,46 @@ export default {
     goodSituation: 'Gute finanzielle Situation. Nutze überschüssiges Geld zum Sparen.',
   },
 
+  cantons: {
+    AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
+    BE: 'Bern', BL: 'Basel-Landschaft', BS: 'Basel-Stadt',
+    FR: 'Freiburg', GE: 'Genf', GL: 'Glarus', GR: 'Graubünden',
+    JU: 'Jura', LU: 'Luzern', NE: 'Neuenburg', NW: 'Nidwalden',
+    OW: 'Obwalden', SG: 'St. Gallen', SH: 'Schaffhausen', SO: 'Solothurn',
+    SZ: 'Schwyz', TG: 'Thurgau', TI: 'Tessin', UR: 'Uri',
+    VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich',
+  },
+
+  ipv: {
+    modelIncomeBased: 'einkommensabhängig',
+    modelFlat: 'pauschal',
+    noteApplySva: 'Antrag bei SVA {canton}',
+    noteApplyAhvBranch: 'Antrag bei AHV-Zweigstelle Gemeinde',
+    noteApplyAhvBranchShort: 'Antrag bei AHV-Zweigstelle',
+    noteApplyCompensation: 'Antrag bei Ausgleichskasse',
+    noteApplySocialOffice: 'Antrag bei Sozialamt',
+    noteApplyHealthOffice: 'Antrag beim Amt für Gesundheit',
+    noteApplyHealthService: 'Antrag bei Dienststelle für Gesundheit',
+    noteApplyCantonalCompensation: 'Antrag bei kantonaler Ausgleichskasse',
+    noteApplyIas: 'Antrag beim Istituto delle assicurazioni sociali (IAS)',
+    noteApplySocialAction: 'Antrag beim Service de l\'action sociale',
+    noteAutoTaxData: 'Automatische Prüfung via Steuerdaten',
+    noteAutoSam: 'Automatisch via SAM (Service de l\'assurance-maladie)',
+    cantonUnknown: 'Kanton nicht erkannt',
+    incomeAboveLimit: 'Einkommen über Grenze (CHF {value})',
+    eligible: 'Anspruch auf Prämienverbilligung: CHF {value}/Monat',
+  },
+
+  sozialhilfeCalc: {
+    entitled: 'Anspruch auf Sozialhilfe: CHF {value}/Monat',
+    notEntitled: 'Kein Anspruch — Einkommen deckt Bedarf',
+  },
+
+  elCalc: {
+    possible: 'Möglicher Anspruch auf Ergänzungsleistungen — Antrag bei AHV-Zweigstelle prüfen',
+    onlyAhvIv: 'EL nur für AHV/IV-Bezüger',
+  },
+
   premiumCalc: {
     coupleChildren: 'Ehepaar + Kinder',
     single: 'Single',

@@ -13,13 +13,7 @@ export const isOnboardingDone = () => {
   catch { return false; }
 };
 
-import { CANTON_NAMES } from './config/cantonalData.js';
-
-const CANTONS = [
-  'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR',
-  'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG',
-  'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'
-];
+import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
   const [step, setStep] = useState(0);
@@ -140,7 +134,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             style: { ...inputStyle, appearance: 'auto' },
           },
             React.createElement('option', { value: '' }, t('common.select')),
-            CANTONS.map(c => React.createElement('option', { key: c, value: c }, CANTON_NAMES[c] || c))
+            CANTON_CODES.map(c => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
           )
         ),
 

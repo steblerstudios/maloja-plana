@@ -692,6 +692,46 @@ export default {
     goodSituation: 'Bonne situation financière. Pensez à épargner le surplus.',
   },
 
+  cantons: {
+    AG: 'Argovie', AI: 'Appenzell Rhodes-Intérieures', AR: 'Appenzell Rhodes-Extérieures',
+    BE: 'Berne', BL: 'Bâle-Campagne', BS: 'Bâle-Ville',
+    FR: 'Fribourg', GE: 'Genève', GL: 'Glaris', GR: 'Grisons',
+    JU: 'Jura', LU: 'Lucerne', NE: 'Neuchâtel', NW: 'Nidwald',
+    OW: 'Obwald', SG: 'Saint-Gall', SH: 'Schaffhouse', SO: 'Soleure',
+    SZ: 'Schwytz', TG: 'Thurgovie', TI: 'Tessin', UR: 'Uri',
+    VD: 'Vaud', VS: 'Valais', ZG: 'Zoug', ZH: 'Zurich',
+  },
+
+  ipv: {
+    modelIncomeBased: 'en fonction du revenu',
+    modelFlat: 'forfaitaire',
+    noteApplySva: 'Demande auprès de la SVA {canton}',
+    noteApplyAhvBranch: 'Demande auprès de l\'agence AVS de la commune',
+    noteApplyAhvBranchShort: 'Demande auprès de l\'agence AVS',
+    noteApplyCompensation: 'Demande auprès de la caisse de compensation',
+    noteApplySocialOffice: 'Demande auprès de l\'office social',
+    noteApplyHealthOffice: 'Demande auprès de l\'office de la santé',
+    noteApplyHealthService: 'Demande auprès du service de la santé',
+    noteApplyCantonalCompensation: 'Demande auprès de la caisse cantonale de compensation',
+    noteApplyIas: 'Demande auprès de l\'Istituto delle assicurazioni sociali (IAS)',
+    noteApplySocialAction: 'Demande auprès du Service de l\'action sociale',
+    noteAutoTaxData: 'Vérification automatique via les données fiscales',
+    noteAutoSam: 'Automatique via le SAM (Service de l\'assurance-maladie)',
+    cantonUnknown: 'Canton non reconnu',
+    incomeAboveLimit: 'Revenu supérieur à la limite (CHF {value})',
+    eligible: 'Droit à la réduction de primes : CHF {value}/mois',
+  },
+
+  sozialhilfeCalc: {
+    entitled: 'Droit à l\'aide sociale : CHF {value}/mois',
+    notEntitled: 'Pas de droit — le revenu couvre les besoins',
+  },
+
+  elCalc: {
+    possible: 'Droit possible aux prestations complémentaires — vérifier auprès de l\'agence AVS',
+    onlyAhvIv: 'PC uniquement pour les bénéficiaires AVS/AI',
+  },
+
   premiumCalc: {
     coupleChildren: 'Couple + enfants',
     single: 'Personne seule',
