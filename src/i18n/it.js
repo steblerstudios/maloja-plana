@@ -745,6 +745,7 @@ export default {
 
   premiumCalc: {
     coupleChildren: 'Coppia + figli',
+    singleChildren: 'Singolo + figli',
     single: 'Singolo',
     incomeToHigh: 'Reddito troppo alto (oltre CHF {value})',
     eligible: 'Diritto alla riduzione dei premi',
