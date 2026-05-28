@@ -27,6 +27,7 @@ import CVGenerator from './CVGenerator.jsx';
 import ChartsAdvanced from './ChartsAdvanced.jsx';
 import ZipExport from './ZipExport.jsx';
 import MeineUnterlagen from './MeineUnterlagen.jsx';
+import Lebensmappe from './Lebensmappe.jsx';
 import SozialhilfeView from './SozialhilfeView.jsx';
 import CalendarReminders from './CalendarReminders.jsx';
 import OverdueBanner from './OverdueBanner.jsx';
@@ -378,7 +379,8 @@ const AppInner = () => {
       view === 'cv' && React.createElement(CVGenerator, { palette, t, data }),
       view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data }),
       view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data }),
-      view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: setView }),
+      view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
+      view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data, chapters, documents, onNavigate: handleNavigate }),
       view === 'export' && React.createElement(ZipExport, { palette, t, data, documents }),
       view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data }),
       view === 'notifications' && React.createElement(NotificationSettings, { palette, t })
