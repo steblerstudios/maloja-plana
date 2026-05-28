@@ -97,6 +97,8 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   };
 
   return React.createElement('div', null,
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6', marginTop: 0, marginBottom: space.md } }, t('schulden.intro')),
+
     // Tab Navigation
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px', borderBottom: '1px solid ' + palette.border, paddingBottom: '12px' } },
       React.createElement('button', {
@@ -228,8 +230,11 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       )
     ),
 
+    // Privacy note
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md, padding: 0 } }, '○ ' + t('trust.localOnly')),
+
     // Save Button
-    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: '16px', background: palette.sage, color: '#000' } }, '□ ' + t('common.save'))
+    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: space.sm, background: palette.sage, color: '#000' } }, '□ ' + t('common.save'))
   );
 };
 

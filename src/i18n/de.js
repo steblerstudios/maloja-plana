@@ -24,7 +24,7 @@ export default {
     close: 'Schliessen',
     open: 'Öffnen',
     edit: 'Bearbeiten',
-    delete: 'Löschen',
+    delete: 'Entfernen',
     download: 'Herunterladen',
     upload: 'Hochladen',
     search: 'Suchen...',
@@ -63,10 +63,10 @@ export default {
   },
 
   nav: {
-    dashboard: 'Dashboard',
-    tools: 'WERKZEUGE',
+    dashboard: 'Übersicht',
+    tools: 'Werkzeuge',
     moreTools: 'Weitere Werkzeuge',
-    advanced: 'ERWEITERT',
+    advanced: 'Erweitert',
     tresor: 'Dokument-Tresor',
     kkScanner: 'KK-Scanner',
     budget: 'Budget',
@@ -407,6 +407,7 @@ export default {
   trust: {
     footer: 'Nur auf diesem Gerät · Kein Server',
     emergency: 'Diese Informationen werden nur lokal gespeichert.',
+    localOnly: 'Deine Daten bleiben auf diesem Gerät.',
   },
 
   tresor: {
@@ -495,6 +496,7 @@ export default {
 
   sozialhilfe: {
     title: 'Sozialhilfe & Existenzsicherung',
+    intro: 'Diese Übersicht hilft dir, mögliche Unterstützung besser einzuordnen. Soziale Sicherung gehört zur Schweiz — sie steht Menschen in schwierigen Situationen zu.',
     householdSize: 'Haushaltgrösse: {count} Person(en)',
     enterCanton: 'Bitte Kanton eingeben für kantonale Berechnung.',
     weeklyResidence: 'Wochenaufenthalt',
@@ -546,6 +548,7 @@ export default {
 
   schulden: {
     title: 'Schulden-Manager',
+    intro: 'Offene Rechnungen und Schulden sind häufiger, als man denkt. Diese Übersicht hilft dir, den Überblick zu behalten — Schritt für Schritt.',
     overview: 'Übersicht',
     debts: 'Schulden',
     debtCollection: 'Betreibung',
@@ -823,7 +826,7 @@ export default {
     overdueDays: '{days} Tage überfällig',
     markDone: 'Als erledigt markieren',
     undo: 'Rückgängig',
-    delete: 'Löschen',
+    delete: 'Entfernen',
     recurring: 'Wiederkehrend',
     oneTime: 'Einmalig',
     daily: 'Täglich',

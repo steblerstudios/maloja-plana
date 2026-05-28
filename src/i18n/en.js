@@ -24,7 +24,7 @@ export default {
     close: 'Close',
     open: 'Open',
     edit: 'Edit',
-    delete: 'Delete',
+    delete: 'Remove',
     download: 'Download',
     upload: 'Upload',
     search: 'Search...',
@@ -63,10 +63,10 @@ export default {
   },
 
   nav: {
-    dashboard: 'Dashboard',
-    tools: 'TOOLS',
+    dashboard: 'Overview',
+    tools: 'Tools',
     moreTools: 'More tools',
-    advanced: 'ADVANCED',
+    advanced: 'Advanced',
     notifications: 'Notifications',
     tresor: 'Document vault',
     kkScanner: 'Insurance scanner',
@@ -408,6 +408,7 @@ export default {
   trust: {
     footer: 'Only on this device · No server',
     emergency: 'This information is stored locally only.',
+    localOnly: 'Your data stays on this device.',
   },
 
   tresor: {
@@ -496,6 +497,7 @@ export default {
 
   sozialhilfe: {
     title: 'Social assistance and basic needs',
+    intro: 'This overview helps you understand what support may be available to you. Social security is part of Switzerland — it exists for people in difficult situations.',
     householdSize: 'Household size: {count} person(s)',
     enterCanton: 'Please enter canton for cantonal calculation.',
     weeklyResidence: 'Weekly residence',
@@ -547,6 +549,7 @@ export default {
 
   schulden: {
     title: 'Debt manager',
+    intro: 'Outstanding bills and debts are more common than people think. This overview helps you keep track — step by step.',
     overview: 'Overview',
     debts: 'Debts',
     debtCollection: 'Debt collection',
@@ -877,7 +880,7 @@ export default {
     overdueDays: '{days} days overdue',
     markDone: 'Mark as done',
     undo: 'Undo',
-    delete: 'Delete',
+    delete: 'Remove',
     recurring: 'Recurring',
     oneTime: 'One-time',
     daily: 'Daily',

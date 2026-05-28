@@ -45,6 +45,8 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       }, '↙ ' + t('cv.downloadHtml'))
     ),
 
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '12px' } }, '○ ' + t('trust.localOnly')),
+
     preview && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', maxHeight: '500px', overflowY: 'auto', fontSize: '11px', fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
       React.createElement('div', null,
         React.createElement('h3', { style: { marginBottom: '8px' } }, cv.header.name),
