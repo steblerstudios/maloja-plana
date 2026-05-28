@@ -940,7 +940,6 @@ export default {
       notfall: {
         title: 'Notfall-Dossier',
         description: 'Wichtige Informationen für Angehörige. Kontakte, Medizin, Verfügungen.',
-        status: 'Wird in einer nächsten Version verfügbar.',
       },
       behoerden: {
         title: 'Behörden-Dossier',
@@ -980,6 +979,30 @@ export default {
     fileTypes: '.json oder .maloja',
     validationErrors: 'Validierungswarnungen',
     restored: 'Wiederhergestellt',
+  },
+
+  notfallDossier: {
+    title: 'Notfall-Dossier',
+    subtitle: 'Wichtige Informationen, wenn jemand anderes helfen muss.',
+    back: 'Zurück zu Meine Unterlagen',
+    printAction: 'Drucken / Als PDF speichern',
+    previewNote: 'Vorschau — so wird dein Notfall-Dossier aussehen.',
+    empty: 'Noch keine Notfallinformationen erfasst. Du kannst im Kapitel „Notfall" beginnen.',
+    sectionsIncluded: '{count} Bereiche mit Angaben',
+    sectionsMissing: '{count} Bereiche noch offen',
+    openDossier: 'Notfall-Dossier öffnen',
+    notRecorded: 'Nicht erfasst',
+    sectionPerson: 'Person',
+    sectionContact: 'Notfallkontakt',
+    sectionMedical: 'Medizinische Angaben',
+    sectionCare: 'Ärztliche Betreuung',
+    sectionProvision: 'Vorsorge & Verfügungen',
+    sectionInsurance: 'Versicherung',
+    footerPrivacy: 'Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.',
+    footerCredit: 'Erstellt mit Maloja Plana',
+    privacyNote: 'Dieses Dossier enthält persönliche Gesundheitsinformationen.',
+    generated: 'Erstellt am {date}',
+    untitled: 'Ohne Name',
   },
 
   lebensmappe: {
