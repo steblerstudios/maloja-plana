@@ -2,6 +2,16 @@
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
 
+// Budget Light V1 — Grouped expense structure
+// See docs/product/budget-light-v1.md for product definition
+export const BUDGET_GROUPS = [
+  { key: 'housing', fields: ['rent', 'utilities', 'mortgage', 'buildingsInsurance'] },
+  { key: 'insuranceHealth', fields: ['healthInsurance', 'otherInsurance'] },
+  { key: 'living', fields: ['groceries', 'communication'] },
+  { key: 'mobility', fields: ['mobility'] },
+  { key: 'taxProvision', fields: ['tax', 'pension3a'] },
+];
+
 export const syncBudgetFromChapters = (data) => {
   const budget = {
     income: Number(data.finanzen?.monthlyIncome || 0),
@@ -19,6 +29,14 @@ export const syncBudgetFromChapters = (data) => {
   budget.expenses.bvg = Number(data.versicherungen?.bvgContribution || 0);
   budget.expenses.ahv = Number(data.versicherungen?.ahvContribution || 0) / 12;
   budget.expenses.uvg = Number(data.versicherungen?.uvgPremium || 0) || 0;
+
+  // Budget Light V1 — new fields from "finanzen" chapter
+  budget.expenses.otherInsurance = Number(data.finanzen?.otherInsurance || 0);
+  budget.expenses.groceries = Number(data.finanzen?.groceries || 0);
+  budget.expenses.communication = Number(data.finanzen?.communication || 0);
+  budget.expenses.mobility = Number(data.finanzen?.mobility || 0);
+  budget.expenses.tax = Number(data.finanzen?.monthlyTax || 0);
+  budget.expenses.pension3a = Number(data.finanzen?.pension3a || 0) / 12;
 
   // BVG and AHV are already deducted from net salary — keep for reference, exclude from totals
   const referenceOnly = { bvg: budget.expenses.bvg, ahv: budget.expenses.ahv };
@@ -56,36 +74,30 @@ export const getBudgetRecommendations = (budget, t) => {
   const rentPercentage = budget.income > 0 ? (budget.expenses.rent / budget.income) * 100 : 0;
   if (rentPercentage > 40) {
     recommendations.push({
-      level: 'warning',
-      icon: '⚠️',
-      text: t ? t('budget.rentWarning') : 'Rent is over 40% of income. Consider a more affordable option.'
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.rentInfo') : 'Your housing costs make up a large part of your budget. This is not uncommon in many Swiss cities.'
     });
   }
 
   const totalExpensesPercentage = budget.income > 0 ? (budget.totalExpenses / budget.income) * 100 : 0;
   if (totalExpensesPercentage > 90) {
     recommendations.push({
-      level: 'critical',
-      icon: '✦',
-      text: t ? t('budget.expensesCritical') : 'Total expenses over 90%! Very little room.'
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.budgetTight') : 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.'
     });
   }
 
   if (budget.remaining < 0) {
     recommendations.push({
-      level: 'critical',
-      icon: '✦',
-      text: t ? t('budget.deficitCritical') : 'Expenses exceed income! Please review your budget.'
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.deficitInfo') : 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.'
     });
   }
 
-  if (budget.remaining > budget.income * 0.2) {
-    recommendations.push({
-      level: 'good',
-      icon: '✓',
-      text: t ? t('budget.goodSituation') : 'Good financial situation. Consider saving the surplus.'
-    });
-  }
+  // No positive judgment either — Budget Light does not evaluate.
 
   return recommendations;
 };
@@ -103,8 +115,12 @@ export const createBudgetReport = (data, t) => {
         annual: budget.income * 12
       },
       expenses: {
-        housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0),
-        insurance: budget.expenses.healthInsurance + budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
+        housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0) + (budget.expenses.buildingsInsurance || 0),
+        insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.otherInsurance || 0),
+        living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0),
+        mobility: budget.expenses.mobility || 0,
+        taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0),
+        reference: budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
         total: budget.totalExpenses
       },
       savings: {
