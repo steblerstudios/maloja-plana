@@ -2,11 +2,18 @@ import React from 'react';
 import { Icon } from './IconSystem.jsx';
 
 // Dossier card — a calm folder-like entry, not a button grid
-const DossierCard = ({ palette, title, description, status, icon }) => {
+const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
+  const isClickable = !!onClick;
   return React.createElement('div', {
+    onClick: onClick,
+    role: isClickable ? 'button' : undefined,
+    tabIndex: isClickable ? 0 : undefined,
+    onKeyDown: isClickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined,
     style: {
       padding: '20px', background: palette.up, borderRadius: '8px',
       border: '1px solid ' + palette.border, marginBottom: '12px',
+      cursor: isClickable ? 'pointer' : 'default',
+      transition: 'border-color 0.15s',
     }
   },
     React.createElement('div', {
@@ -18,7 +25,7 @@ const DossierCard = ({ palette, title, description, status, icon }) => {
         style: {
           flexShrink: 0, width: '32px', height: '32px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: palette.mid,
+          color: isClickable ? palette.sand : palette.mid,
         }
       }, React.createElement(Icon, { name: icon, size: 22 })),
       React.createElement('div', { style: { flex: 1 } },
@@ -30,10 +37,14 @@ const DossierCard = ({ palette, title, description, status, icon }) => {
         }, description),
         React.createElement('div', {
           style: {
-            fontSize: '11px', color: palette.soft, fontStyle: 'italic',
+            fontSize: '11px', color: palette.soft, fontStyle: isClickable ? 'normal' : 'italic',
           }
         }, status)
-      )
+      ),
+      // Arrow indicator for clickable cards
+      isClickable && React.createElement('div', {
+        style: { color: palette.soft, fontSize: '14px', alignSelf: 'center', flexShrink: 0 }
+      }, '→')
     )
   );
 };
@@ -67,8 +78,9 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       palette,
       title: t('unterlagen.dossier.lebensmappe.title'),
       description: t('unterlagen.dossier.lebensmappe.description'),
-      status: t('unterlagen.dossier.lebensmappe.status'),
+      status: t('lebensmappe.openDossier'),
       icon: 'home',
+      onClick: () => onNavigate('lebensmappe'),
     }),
 
     React.createElement(DossierCard, {
