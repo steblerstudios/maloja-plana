@@ -20,7 +20,9 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     );
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.lg, borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.lg, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
+
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.lg, marginTop: 0 } }, t('sozialhilfe.intro')),
 
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },

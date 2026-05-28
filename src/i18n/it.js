@@ -24,7 +24,7 @@ export default {
     close: 'Chiudi',
     open: 'Apri',
     edit: 'Modifica',
-    delete: 'Elimina',
+    delete: 'Rimuovi',
     download: 'Scarica',
     upload: 'Carica',
     search: 'Cerca...',
@@ -64,9 +64,9 @@ export default {
 
   nav: {
     dashboard: 'Pannello',
-    tools: 'STRUMENTI',
+    tools: 'Strumenti',
     moreTools: 'Altri strumenti',
-    advanced: 'AVANZATO',
+    advanced: 'Avanzato',
     tresor: 'Archivio documenti',
     kkScanner: 'Scanner assicurazione',
     budget: 'Budget',
@@ -408,6 +408,7 @@ export default {
   trust: {
     footer: 'Solo su questo dispositivo · Nessun server',
     emergency: 'Queste informazioni vengono salvate solo localmente.',
+    localOnly: 'I tuoi dati restano su questo dispositivo.',
   },
 
   tresor: {
@@ -496,6 +497,7 @@ export default {
 
   sozialhilfe: {
     title: 'Assistenza sociale e fabbisogno di base',
+    intro: 'Questa panoramica ti aiuta a comprendere meglio quale supporto potrebbe essere disponibile. La sicurezza sociale fa parte della Svizzera — esiste per le persone in situazioni difficili.',
     householdSize: 'Dimensione del nucleo familiare: {count} persona/e',
     enterCanton: 'Inserisci il cantone per il calcolo cantonale.',
     weeklyResidence: 'Residenza settimanale',
@@ -547,6 +549,7 @@ export default {
 
   schulden: {
     title: 'Gestione debiti',
+    intro: 'Fatture in sospeso e debiti sono più comuni di quanto si pensi. Questa panoramica ti aiuta a mantenere il controllo — passo dopo passo.',
     overview: 'Panoramica',
     debts: 'Debiti',
     debtCollection: 'Esecuzione',
@@ -824,7 +827,7 @@ export default {
     overdueDays: '{days} giorni di ritardo',
     markDone: 'Segna come completato',
     undo: 'Annulla',
-    delete: 'Elimina',
+    delete: 'Rimuovi',
     recurring: 'Ricorrente',
     oneTime: 'Una tantum',
     daily: 'Giornaliero',

@@ -129,7 +129,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { fontWeight: '600', marginBottom: '6px', color: palette.sage } }, '✓ ' + t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
-      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save'))
+      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save')),
+      React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
     ),
 
     // Right: Preview & QR

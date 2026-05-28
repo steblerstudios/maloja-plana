@@ -137,7 +137,9 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
     React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '11px', color: palette.mid } },
       '○ ' + t('tax.disclaimer')
-    )
+    ),
+
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 
