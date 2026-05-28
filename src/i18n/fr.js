@@ -24,7 +24,7 @@ export default {
     close: 'Fermer',
     open: 'Ouvrir',
     edit: 'Modifier',
-    delete: 'Supprimer',
+    delete: 'Retirer',
     download: 'Télécharger',
     upload: 'Importer',
     search: 'Rechercher...',
@@ -64,9 +64,9 @@ export default {
 
   nav: {
     dashboard: 'Tableau de bord',
-    tools: 'OUTILS',
+    tools: 'Outils',
     moreTools: 'Plus d\'outils',
-    advanced: 'AVANCÉ',
+    advanced: 'Avancé',
     tresor: 'Coffre-fort documents',
     kkScanner: 'Scanner assurance',
     budget: 'Budget',
@@ -407,6 +407,7 @@ export default {
   trust: {
     footer: 'Uniquement sur cet appareil · Aucun serveur',
     emergency: 'Ces informations sont stockées uniquement localement.',
+    localOnly: 'Vos données restent sur cet appareil.',
   },
 
   tresor: {
@@ -495,6 +496,7 @@ export default {
 
   sozialhilfe: {
     title: 'Aide sociale et minimum vital',
+    intro: 'Cet aperçu vous aide à mieux comprendre les aides disponibles. La sécurité sociale fait partie de la Suisse — elle est là pour les personnes en situation difficile.',
     householdSize: 'Taille du ménage : {count} personne(s)',
     enterCanton: 'Veuillez entrer le canton pour le calcul cantonal.',
     weeklyResidence: 'Résidence hebdomadaire',
@@ -546,6 +548,7 @@ export default {
 
   schulden: {
     title: 'Gestionnaire de dettes',
+    intro: 'Les factures en suspens et les dettes sont plus fréquentes qu\'on ne le pense. Cet aperçu vous aide à garder le contrôle — étape par étape.',
     overview: 'Aperçu',
     debts: 'Dettes',
     debtCollection: 'Poursuites',
@@ -823,7 +826,7 @@ export default {
     overdueDays: '{days} jours de retard',
     markDone: 'Marquer comme terminé',
     undo: 'Annuler',
-    delete: 'Supprimer',
+    delete: 'Retirer',
     recurring: 'Récurrent',
     oneTime: 'Unique',
     daily: 'Quotidien',
