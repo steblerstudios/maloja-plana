@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Personne', contact: 'Contact', family: 'Famille' },
     wohnen: { address: 'Adresse', costs: 'Coûts', landlord: 'Bailleur', property: 'Propriété' },
-    finanzen: { income: 'Revenus', savings: 'Épargne', credit: 'Crédit', provision: 'Prévoyance' },
+    finanzen: { income: 'Revenus', budgetLight: 'Dépenses mensuelles', savings: 'Épargne', credit: 'Crédit', provision: 'Prévoyance' },
     versicherungen: { basic: 'Assurance de base', occupational: 'Prévoyance professionnelle', additional: 'Assurances complémentaires', property: 'Assurances biens & voyage', mobility: 'Mobilité', social: 'Assurance sociale' },
     ausbildung: { education: 'Formation', work: 'Emploi', languages: 'Langues' },
     behoerden: { taxes: 'Impôts', legal: 'Droit', representation: 'Représentation' },
@@ -206,12 +206,22 @@ export default {
         bankName: 'Banque',
         creditCard: { label: 'Cartes de crédit ?', options: { no: 'Non', one: 'Oui (1)', multiple: 'Oui (2+)' } },
         loans: 'Prêts personnels (CHF)',
+        monthlyTax: 'Impôts mensuels (CHF)',
+        groceries: 'Alimentation & ménage (CHF)',
+        communication: 'Internet & téléphone (CHF)',
+        mobility: 'Mobilité (CHF)',
+        otherInsurance: 'Autres assurances (CHF)',
         pension3a: 'Pilier 3a versé (CHF/an)',
         pension3b: { label: 'Pilier 3b', options: { no: 'Non', yes: 'Oui' } },
         investmentFunds: { label: 'Fonds de placement ?', options: { no: 'Non', yes: 'Oui' } },
       },
       hints: {
-        monthlyIncome: 'Indiquez votre salaire net — après déductions AVS, LPP et impôts.',
+        monthlyIncome: 'Votre salaire net — ce qui arrive sur votre compte.',
+        monthlyTax: 'Estimation ou selon votre avis d\'imposition.',
+        groceries: 'Alimentation, droguerie, articles ménagers par mois.',
+        communication: 'Internet, téléphone mobile, ligne fixe par mois.',
+        mobility: 'AG, demi-tarif, abonnement de zone ou frais de voiture par mois.',
+        otherInsurance: 'RC, ménage, protection juridique, assurance complémentaire réunis par mois.',
       },
       docs: {
         tax_return: 'Déclaration d\'impôts',
@@ -432,10 +442,6 @@ export default {
     annualExpenses: 'Dépenses annuelles',
     annualSavings: 'Potentiel d\'épargne annuel',
     autoUpdateTip: 'Conseil : Le budget se met à jour automatiquement lorsque vous modifiez des données dans d\'autres chapitres.',
-    rentWarning: 'Le loyer dépasse 40% du revenu. Envisagez une option plus abordable.',
-    expensesWarning: 'Dépenses totales supérieures à 90% ! Très peu de marge.',
-    deficitWarning: 'Les dépenses dépassent les revenus ! Veuillez revoir votre budget.',
-    goodSituation: 'Bonne situation financière. Pensez à épargner le surplus.',
   },
 
   premium: {
@@ -696,10 +702,9 @@ export default {
   },
 
   budget: {
-    rentWarning: 'Le loyer dépasse 40% du revenu. Envisagez une option plus abordable.',
-    expensesCritical: 'Dépenses totales supérieures à 90% ! Très peu de marge.',
-    deficitCritical: 'Les dépenses dépassent les revenus ! Veuillez revoir votre budget.',
-    goodSituation: 'Bonne situation financière. Pensez à épargner le surplus.',
+    rentInfo: 'Vos frais de logement représentent une part importante de votre budget. Ce n\'est pas inhabituel dans de nombreuses villes suisses.',
+    budgetTight: 'Votre budget est serré. Il existe des services gratuits de conseil budgétaire — par exemple auprès de Caritas ou de votre commune.',
+    deficitInfo: 'Les dépenses dépassent actuellement les revenus. Cela peut être temporaire — le service de conseil en désendettement de votre canton peut vous aider.',
   },
 
   cantons: {
