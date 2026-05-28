@@ -117,7 +117,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
       onUpdate('household', next);
     };
 
-    return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
+    return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
 
       // Adults
       React.createElement('div', { style: { marginBottom: '16px' } },
@@ -199,7 +199,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
     const value = data[field.k] || '';
     const error = errors[field.k];
 
-    const baseStyle = { marginBottom: '16px' };
+    const baseStyle = { marginBottom: '20px' };
 
     const labelStyle = {
       display: 'block',
@@ -565,7 +565,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px' } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
         chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {
           const elements = [];
           if (field.section) {
@@ -577,14 +577,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  marginTop: isFirst ? 0 : '28px',
-                  paddingTop: isFirst ? 0 : '16px',
+                  marginTop: isFirst ? 0 : '36px',
+                  paddingTop: isFirst ? 0 : '20px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
                   fontSize: '13px',
                   fontWeight: '500',
                   color: palette.mid,
                   letterSpacing: '0.4px',
-                  marginBottom: '4px',
+                  marginBottom: '8px',
                 }
               }, field.section)
             );
@@ -624,7 +624,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
 
       // Secondary fields
       hasSecondaryFields && showSecondary && React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0 16px', marginTop: '8px' }
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px', marginTop: '8px' }
       },
         chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => {
           const elements = [];
@@ -637,14 +637,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  marginTop: isFirst ? '8px' : '28px',
-                  paddingTop: isFirst ? 0 : '16px',
+                  marginTop: isFirst ? '8px' : '36px',
+                  paddingTop: isFirst ? 0 : '20px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
                   fontSize: '13px',
                   fontWeight: '500',
                   color: palette.mid,
                   letterSpacing: '0.4px',
-                  marginBottom: '4px',
+                  marginBottom: '8px',
                 }
               }, field.section)
             );
