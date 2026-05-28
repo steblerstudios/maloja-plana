@@ -78,6 +78,7 @@ export default {
     sozialhilfe: 'Sozialhilfe',
     cv: 'Lebenslauf',
     charts: 'Charts',
+    unterlagen: 'Meine Unterlagen',
     export: 'Export',
     calendar: 'Kalender',
     notifications: 'Benachrichtigungen',
@@ -925,6 +926,34 @@ export default {
     bvgNote: 'BVG/AHV-Beträge werden als Referenzwerte angezeigt, wenn der Nettolohn verwendet wird',
     kkNote: 'Daten des KK-Scanners sind noch nicht mit Deinen gespeicherten Kapiteln verknüpft',
     disclaimer: 'Bitte verwende diese App nicht als Rechts- oder Finanzberatung. Überprüfe Angaben immer bei Deiner kantonalen Behörde.',
+  },
+
+  unterlagen: {
+    title: 'Meine Unterlagen',
+    subtitle: 'Deine Lebensdossiers, ruhig geordnet.',
+    dossier: {
+      lebensmappe: {
+        title: 'Lebensmappe',
+        description: 'Deine persönliche Gesamtübersicht. Alle Kapitel auf einen Blick.',
+        status: 'Wird in einer nächsten Version verfügbar.',
+      },
+      notfall: {
+        title: 'Notfall-Dossier',
+        description: 'Wichtige Informationen für Angehörige. Kontakte, Medizin, Verfügungen.',
+        status: 'Wird in einer nächsten Version verfügbar.',
+      },
+      behoerden: {
+        title: 'Behörden-Dossier',
+        description: 'Unterlagen für Gemeinde, Amt und Verwaltung. Personalien, Wohnung, Einkommen.',
+        status: 'Wird in einer nächsten Version verfügbar.',
+      },
+    },
+    backup: {
+      title: 'Datensicherung',
+      description: 'Deine Daten lokal sichern oder wiederherstellen.',
+      action: 'Sicherung & Wiederherstellung',
+    },
+    note: 'Alle Unterlagen bleiben auf deinem Gerät. Nichts wird hochgeladen.',
   },
 
   backup: {
