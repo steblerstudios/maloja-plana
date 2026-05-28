@@ -79,6 +79,7 @@ export default {
     sozialhilfe: 'Social assistance',
     cv: 'CV builder',
     charts: 'Charts',
+    unterlagen: 'My Documents',
     export: 'Export',
     calendar: 'Calendar',
     menu: 'Menu',
@@ -926,6 +927,34 @@ export default {
     bvgNote: 'BVG/AHV amounts are shown as reference values when net salary is used',
     kkNote: 'Insurance card scanner data is not yet linked to your saved chapters',
     disclaimer: 'Please do not rely on this app as legal or financial advice. Always verify with your cantonal authority.',
+  },
+
+  unterlagen: {
+    title: 'My Documents',
+    subtitle: 'Your life dossiers, calmly organised.',
+    dossier: {
+      lebensmappe: {
+        title: 'Life folder',
+        description: 'Your personal overview. All chapters at a glance.',
+        status: 'Available in a future version.',
+      },
+      notfall: {
+        title: 'Emergency dossier',
+        description: 'Important information for your next of kin. Contacts, medical details, directives.',
+        status: 'Available in a future version.',
+      },
+      behoerden: {
+        title: 'Authorities dossier',
+        description: 'Documents for your municipality and administration. Personal details, housing, income.',
+        status: 'Available in a future version.',
+      },
+    },
+    backup: {
+      title: 'Data backup',
+      description: 'Back up or restore your data locally.',
+      action: 'Backup & restore',
+    },
+    note: 'All documents stay on your device. Nothing is uploaded.',
   },
 
   backup: {

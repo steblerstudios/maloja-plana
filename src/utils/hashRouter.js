@@ -19,7 +19,7 @@
 const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
   'tax', 'organ', 'sync', 'premium', 'cv', 'charts',
-  'sozialhilfe', 'export', 'calendar', 'notifications',
+  'sozialhilfe', 'unterlagen', 'export', 'calendar', 'notifications',
 ]);
 
 /**

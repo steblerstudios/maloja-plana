@@ -133,6 +133,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       }, t('nav.tools')),
 
       ...[
+        { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
         { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
         { key: 'kk', label: t('nav.kkScanner'), icon: 'barcode' },
         { key: 'budget', label: t('nav.budget'), icon: 'csv' },
