@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Person', contact: 'Kontakt', family: 'Familie' },
     wohnen: { address: 'Adresse', costs: 'Kosten', landlord: 'Vermieter', property: 'Eigentum' },
-    finanzen: { income: 'Einkommen', savings: 'Sparen', credit: 'Kredit', provision: 'Vorsorge' },
+    finanzen: { income: 'Einkommen', budgetLight: 'Monatliche Ausgaben', savings: 'Sparen', credit: 'Kredit', provision: 'Vorsorge' },
     versicherungen: { basic: 'Grundversicherung', occupational: 'Berufliche Vorsorge', additional: 'Weitere Versicherungen', property: 'Sach- & Reiseversicherungen', mobility: 'Mobilität', social: 'Sozialversicherung' },
     ausbildung: { education: 'Bildung', work: 'Arbeit', languages: 'Sprachen' },
     behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
@@ -206,12 +206,22 @@ export default {
         bankName: 'Hausbank',
         creditCard: { label: 'Kreditkarten vorhanden?', options: { no: 'Nein', one: 'Ja (1)', multiple: 'Ja (2+)' } },
         loans: 'Persönliche Darlehen CHF',
+        monthlyTax: 'Steuern monatlich CHF',
+        groceries: 'Lebensmittel & Haushalt CHF',
+        communication: 'Internet & Telefon CHF',
+        mobility: 'Mobilität CHF',
+        otherInsurance: 'Weitere Versicherungen CHF',
         pension3a: '3. Säule A eingezahlt CHF/Jahr',
         pension3b: { label: '3. Säule B', options: { no: 'Nein', yes: 'Ja' } },
         investmentFunds: { label: 'Anlagefonds vorhanden?', options: { no: 'Nein', yes: 'Ja' } },
       },
       hints: {
-        monthlyIncome: 'Gib deinen Nettolohn ein — nach AHV-, BVG- und Steuerabzügen.',
+        monthlyIncome: 'Dein Nettolohn — was auf deinem Konto ankommt.',
+        monthlyTax: 'Geschätzt oder laut Steuerrechnung.',
+        groceries: 'Lebensmittel, Drogerie, Haushaltsbedarf pro Monat.',
+        communication: 'Internet, Mobiltelefon, Festnetz pro Monat.',
+        mobility: 'GA, Halbtax, Verbundabo oder Autokosten pro Monat.',
+        otherInsurance: 'Haftpflicht, Hausrat, Rechtsschutz, KK-Zusatz zusammen pro Monat.',
       },
       docs: {
         tax_return: 'Steuererklärung',
@@ -432,10 +442,6 @@ export default {
     annualExpenses: 'Jahresausgaben',
     annualSavings: 'Jährliches Sparpotential',
     autoUpdateTip: 'Tipp: Das Budget wird automatisch aktualisiert wenn Du in anderen Kapiteln Daten änderst.',
-    rentWarning: 'Miete ist über 40% des Einkommens. Erwäge eine günstigere Wohnung.',
-    expensesWarning: 'Gesamtausgaben über 90%! Sehr wenig Spielraum.',
-    deficitWarning: 'Ausgaben übersteigen Einkommen! Budget überprüfen.',
-    goodSituation: 'Gute finanzielle Situation. Nutze überschüssiges Geld zum Sparen.',
   },
 
   premium: {
@@ -696,10 +702,9 @@ export default {
   },
 
   budget: {
-    rentWarning: 'Miete ist über 40% des Einkommens. Erwäge eine günstigere Wohnung.',
-    expensesCritical: 'Gesamtausgaben über 90%! Sehr wenig Spielraum.',
-    deficitCritical: 'Ausgaben übersteigen Einkommen! Budget überprüfen.',
-    goodSituation: 'Gute finanzielle Situation. Nutze überschüssiges Geld zum Sparen.',
+    rentInfo: 'Deine Wohnkosten machen einen grossen Teil deines Budgets aus. In vielen Schweizer Städten ist das nicht ungewöhnlich.',
+    budgetTight: 'Dein Budget ist eng. Es gibt kostenlose Budgetberatungsstellen — zum Beispiel bei der Caritas oder deiner Gemeinde.',
+    deficitInfo: 'Die Ausgaben sind aktuell höher als die Einnahmen. Das kann vorübergehend sein — bei der Schuldenberatung deines Kantons findest du Unterstützung.',
   },
 
   cantons: {

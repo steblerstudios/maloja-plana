@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Persona', contact: 'Contatto', family: 'Famiglia' },
     wohnen: { address: 'Indirizzo', costs: 'Costi', landlord: 'Locatore', property: 'Proprietà' },
-    finanzen: { income: 'Reddito', savings: 'Risparmio', credit: 'Credito', provision: 'Previdenza' },
+    finanzen: { income: 'Reddito', budgetLight: 'Spese mensili', savings: 'Risparmio', credit: 'Credito', provision: 'Previdenza' },
     versicherungen: { basic: 'Assicurazione di base', occupational: 'Previdenza professionale', additional: 'Assicurazioni complementari', property: 'Assicurazioni beni & viaggio', mobility: 'Mobilità', social: 'Assicurazione sociale' },
     ausbildung: { education: 'Formazione', work: 'Impiego', languages: 'Lingue' },
     behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
@@ -207,12 +207,22 @@ export default {
         bankName: 'Banca',
         creditCard: { label: 'Carte di credito?', options: { no: 'No', one: 'Sì (1)', multiple: 'Sì (2+)' } },
         loans: 'Prestiti personali (CHF)',
+        monthlyTax: 'Imposte mensili (CHF)',
+        groceries: 'Alimentari & casa (CHF)',
+        communication: 'Internet & telefono (CHF)',
+        mobility: 'Mobilità (CHF)',
+        otherInsurance: 'Altre assicurazioni (CHF)',
         pension3a: 'Pilastro 3a versato (CHF/anno)',
         pension3b: { label: 'Pilastro 3b', options: { no: 'No', yes: 'Sì' } },
         investmentFunds: { label: 'Fondi d\'investimento?', options: { no: 'No', yes: 'Sì' } },
       },
       hints: {
-        monthlyIncome: 'Inserisci il tuo salario netto — dopo le deduzioni AVS, LPP e imposte.',
+        monthlyIncome: 'Il tuo salario netto — quello che arriva sul tuo conto.',
+        monthlyTax: 'Stima o secondo la dichiarazione fiscale.',
+        groceries: 'Alimentari, drogheria, articoli per la casa al mese.',
+        communication: 'Internet, cellulare, telefono fisso al mese.',
+        mobility: 'AG, metà-prezzo, abbonamento trasporti o costi auto al mese.',
+        otherInsurance: 'RC, mobilia domestica, protezione giuridica, cassa malati complementare insieme al mese.',
       },
       docs: {
         tax_return: 'Dichiarazione fiscale',
@@ -433,10 +443,6 @@ export default {
     annualExpenses: 'Uscite annuali',
     annualSavings: 'Potenziale di risparmio annuale',
     autoUpdateTip: 'Suggerimento: il budget si aggiorna automaticamente quando modifichi i dati negli altri capitoli.',
-    rentWarning: 'L\'affitto supera il 40% del reddito. Considera un\'opzione più conveniente.',
-    expensesWarning: 'Uscite totali oltre il 90%! Margine molto ridotto.',
-    deficitWarning: 'Le uscite superano le entrate! Verifica il tuo budget.',
-    goodSituation: 'Buona situazione finanziaria. Considera di risparmiare il surplus.',
   },
 
   premium: {
@@ -697,10 +703,9 @@ export default {
   },
 
   budget: {
-    rentWarning: 'L\'affitto supera il 40% del reddito. Considera un\'opzione più conveniente.',
-    expensesCritical: 'Uscite totali oltre il 90%! Margine molto ridotto.',
-    deficitCritical: 'Le uscite superano le entrate! Verifica il tuo budget.',
-    goodSituation: 'Buona situazione finanziaria. Considera di risparmiare il surplus.',
+    rentInfo: 'I costi abitativi rappresentano una parte importante del tuo budget. In molte città svizzere questo non è insolito.',
+    budgetTight: 'Il tuo budget è stretto. Esistono servizi gratuiti di consulenza sul budget — ad esempio presso la Caritas o il tuo comune.',
+    deficitInfo: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del tuo cantone può aiutarti.',
   },
 
   cantons: {

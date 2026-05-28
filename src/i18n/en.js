@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Person', contact: 'Contact', family: 'Family' },
     wohnen: { address: 'Address', costs: 'Costs', landlord: 'Landlord', property: 'Property' },
-    finanzen: { income: 'Income', savings: 'Savings', credit: 'Credit', provision: 'Provision' },
+    finanzen: { income: 'Income', budgetLight: 'Monthly expenses', savings: 'Savings', credit: 'Credit', provision: 'Provision' },
     versicherungen: { basic: 'Basic insurance', occupational: 'Occupational pension', additional: 'Additional insurance', property: 'Property & travel insurance', mobility: 'Mobility', social: 'Social insurance' },
     ausbildung: { education: 'Education', work: 'Employment', languages: 'Languages' },
     behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation' },
@@ -207,12 +207,22 @@ export default {
         bankName: 'Bank',
         creditCard: { label: 'Credit cards?', options: { no: 'No', one: 'Yes (1)', multiple: 'Yes (2+)' } },
         loans: 'Personal loans (CHF)',
+        monthlyTax: 'Monthly taxes (CHF)',
+        groceries: 'Groceries & household (CHF)',
+        communication: 'Internet & phone (CHF)',
+        mobility: 'Mobility (CHF)',
+        otherInsurance: 'Other insurance (CHF)',
         pension3a: 'Pillar 3a paid (CHF/year)',
         pension3b: { label: 'Pillar 3b', options: { no: 'No', yes: 'Yes' } },
         investmentFunds: { label: 'Investment funds?', options: { no: 'No', yes: 'Yes' } },
       },
       hints: {
-        monthlyIncome: 'Enter your net salary — after AHV, BVG, and tax deductions.',
+        monthlyIncome: 'Your net salary — what arrives in your account.',
+        monthlyTax: 'Estimated or from your tax bill.',
+        groceries: 'Groceries, toiletries, household supplies per month.',
+        communication: 'Internet, mobile, landline per month.',
+        mobility: 'GA, Halbtax, transit pass, or car costs per month.',
+        otherInsurance: 'Liability, household, legal protection, supplementary health insurance combined per month.',
       },
       docs: {
         tax_return: 'Tax return',
@@ -433,10 +443,6 @@ export default {
     annualExpenses: 'Annual expenses',
     annualSavings: 'Annual savings potential',
     autoUpdateTip: 'Tip: The budget is updated automatically when you change data in other chapters.',
-    rentWarning: 'Rent is over 40% of income. Consider a more affordable option.',
-    expensesWarning: 'Total expenses over 90%! Very little room.',
-    deficitWarning: 'Expenses exceed income! Please review your budget.',
-    goodSituation: 'Good financial situation. Consider saving the surplus.',
   },
 
   premium: {
@@ -697,10 +703,9 @@ export default {
   },
 
   budget: {
-    rentWarning: 'Rent is over 40% of income. Consider a more affordable option.',
-    expensesCritical: 'Total expenses over 90%! Very little room.',
-    deficitCritical: 'Expenses exceed income! Please review your budget.',
-    goodSituation: 'Good financial situation. Consider saving the surplus.',
+    rentInfo: 'Your housing costs make up a large part of your budget. This is not uncommon in many Swiss cities.',
+    budgetTight: 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.',
+    deficitInfo: 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.',
   },
 
   cantons: {
