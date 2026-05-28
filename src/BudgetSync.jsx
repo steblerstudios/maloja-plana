@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { syncBudgetFromChapters, calculateMonthlyBudget, getBudgetRecommendations, createBudgetReport } from './budgetSync.js';
+import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
+
+// Format CHF amount — Swiss style with apostrophe thousands separator
+const formatCHF = (amount) => {
+  if (amount === 0) return 'CHF 0';
+  const rounded = Math.round(amount);
+  const abs = Math.abs(rounded);
+  const formatted = abs >= 1000
+    ? abs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’')
+    : abs.toString();
+  return (rounded < 0 ? '− ' : '') + 'CHF ' + formatted;
+};
 
 export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const [budget, setBudget] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
+  const [showAnnual, setShowAnnual] = useState(false);
 
   useEffect(() => {
     const synced = calculateMonthlyBudget(data, t);
@@ -20,93 +31,205 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `budget_report_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = 'budget_report_' + new Date().toISOString().split('T')[0] + '.json';
     a.click();
     URL.revokeObjectURL(url);
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'budget', size: 20 }), t('budgetSync.title')),
+  // Shared styles
+  const lineStyle = {
+    display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+    padding: '5px 0', fontSize: '13px', lineHeight: '1.5'
+  };
+  const itemLineStyle = {
+    ...lineStyle, paddingLeft: '16px', color: palette.mid, fontSize: '12px'
+  };
+  const emptyValueStyle = { color: palette.soft, fontStyle: 'italic', fontSize: '12px' };
+  const separatorStyle = {
+    borderTop: '1px solid ' + palette.border, margin: '12px 0'
+  };
+  const groupHeaderStyle = {
+    ...lineStyle, fontWeight: '600', paddingTop: '10px'
+  };
 
-    // Main overview
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '16px' } },
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.sage } },
-        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '▸ ' + t('budgetSync.income')),
-        React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.sage } }, 'CHF ' + budget.income.toFixed(0))
-      ),
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.rose } },
-        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('budgetSync.expenses')),
-        React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.rose } }, 'CHF ' + budget.totalExpenses.toFixed(0))
-      ),
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', border: '2px solid ' + (budget.remaining >= 0 ? palette.sage : palette.rose) } },
-        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '□ ' + t('budgetSync.remaining')),
-        React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: budget.remaining >= 0 ? palette.sage : palette.rose } }, 'CHF ' + budget.remaining.toFixed(0))
-      ),
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.sky } },
-        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '◰ ' + t('budgetSync.savingsRate')),
-        React.createElement('div', { style: { fontSize: '20px', fontWeight: '600', color: palette.sky } }, budget.savingsRate + '%')
-      )
-    ),
+  // Compute group totals
+  const groupData = BUDGET_GROUPS.map(group => {
+    const items = group.fields.map(field => ({
+      key: field,
+      label: t('budgetSync.field.' + field),
+      value: Number(budget.expenses[field] || 0)
+    }));
+    const total = items.reduce((sum, item) => sum + item.value, 0);
+    return { ...group, items, total };
+  });
 
-    // Expenses breakdown
-    React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.up, borderRadius: '6px' } },
-      React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '10px' } }, '□ ' + t('budgetSync.expensesOverview')),
-      React.createElement('div', { style: { fontSize: '12px' } },
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border } },
-          React.createElement('span', null, '⌂ ' + t('budgetSync.housingCosts')),
-          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + (budget.expenses.rent + budget.expenses.utilities).toFixed(0) + ' (' + budget.percentages.rent + '%)')
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border } },
-          React.createElement('span', null, '◰ ' + t('budgetSync.healthInsurance')),
-          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + budget.expenses.healthInsurance.toFixed(0) + ' (' + budget.percentages.health + '%)')
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border, opacity: 0.6 } },
-          React.createElement('span', null, '◰ ' + t('budgetSync.insuranceBvg')),
-          React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + (budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0)).toFixed(0))
-        ),
-        (budget.reference.bvg > 0 || budget.reference.ahv > 0) && React.createElement('div', { style: { fontSize: '10px', color: palette.mid, padding: '2px 0 6px 0', borderBottom: '1px solid ' + palette.border } },
-          '○ ' + t('budgetSync.bvgReferenceNote')
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontWeight: '600', borderTop: '2px solid ' + palette.border, paddingTop: '8px' } },
-          React.createElement('span', null, t('common.total')),
-          React.createElement('span', null, 'CHF ' + budget.totalExpenses.toFixed(0))
+  // Count unfilled categories
+  const emptyCount = groupData.reduce((count, group) =>
+    count + group.items.filter(item => item.value === 0).length, 0
+  );
+
+  // Multiplier for annual view
+  const mult = showAnnual ? 12 : 1;
+
+  // Render a single field line
+  const renderItem = (item) => {
+    const isEmpty = item.value === 0;
+    return React.createElement('div', { key: item.key, style: itemLineStyle },
+      React.createElement('span', null, item.label),
+      isEmpty
+        ? React.createElement('span', { style: emptyValueStyle }, '—')
+        : React.createElement('span', null, formatCHF(item.value * mult))
+    );
+  };
+
+  // Group percentage (only shown when income > 0 and group has values)
+  const groupPercent = (total) => {
+    if (budget.income <= 0 || total <= 0) return null;
+    return Math.round((total / budget.income) * 100) + '%';
+  };
+
+  // Render a group section
+  const renderGroup = (group) => {
+    const pct = groupPercent(group.total);
+    return React.createElement('div', { key: group.key, style: { marginBottom: '4px' } },
+      // Group header with label, total, and quiet percentage
+      React.createElement('div', { style: groupHeaderStyle },
+        React.createElement('span', null, t('budgetSync.group.' + group.key)),
+        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: '8px' } },
+          group.total > 0
+            ? React.createElement('span', null, formatCHF(group.total * mult))
+            : React.createElement('span', { style: emptyValueStyle }, '—'),
+          pct && React.createElement('span', {
+            style: { fontSize: '11px', color: palette.soft, fontWeight: '400', minWidth: '28px', textAlign: 'right' }
+          }, pct)
         )
-      )
+      ),
+      // Individual items (no percentages)
+      group.items.map(renderItem)
+    );
+  };
+
+  // BVG/AHV reference total
+  const bvgAhvTotal = (budget.reference.bvg || 0) + (budget.reference.ahv || 0) + (budget.expenses.uvg || 0);
+
+  return React.createElement('div', {
+    style: {
+      background: palette.surface, padding: '20px', borderRadius: '8px',
+      border: '1px solid ' + palette.border, maxWidth: '520px'
+    }
+  },
+
+    // Title
+    React.createElement('h2', {
+      style: {
+        fontSize: '17px', fontWeight: '600', marginBottom: '20px',
+        display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px'
+      }
+    }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
+
+    // === Income line ===
+    React.createElement('div', { style: { ...lineStyle, fontWeight: '600', fontSize: '14px' } },
+      React.createElement('span', null, t('budgetSync.income')),
+      budget.income > 0
+        ? React.createElement('span', null, formatCHF(budget.income * mult))
+        : React.createElement('span', { style: emptyValueStyle }, t('budgetSync.notRecorded'))
     ),
 
-    // Recommendations
-    budget.recommendations && budget.recommendations.length > 0 && React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '10px' } }, '○ ' + t('common.recommendations')),
-      React.createElement('div', { style: { display: 'grid', gap: '8px' } },
-        budget.recommendations.map((rec, idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: rec.level === 'critical' ? palette.rose + '22' : rec.level === 'warning' ? palette.gold + '22' : palette.sage + '22', borderRadius: '6px', border: '1px solid ' + (rec.level === 'critical' ? palette.rose : rec.level === 'warning' ? palette.gold : palette.sage), fontSize: '12px' } },
-          React.createElement('span', { style: { fontWeight: '600', marginRight: '6px' } }, rec.icon),
-          rec.text
-        ))
-      )
+    // Separator
+    React.createElement('div', { style: separatorStyle }),
+
+    // === Grouped expenses ===
+    groupData.map(renderGroup),
+
+    // BVG/AHV reference note (if any exist)
+    bvgAhvTotal > 0 && React.createElement('div', {
+      style: {
+        marginTop: '8px', padding: '8px 12px', background: palette.up,
+        borderRadius: '4px', fontSize: '11px', color: palette.mid, lineHeight: '1.5'
+      }
+    }, '○ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+
+    // Separator before total
+    React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),
+
+    // === Total expenses ===
+    React.createElement('div', { style: { ...lineStyle, fontSize: '13px', color: palette.mid } },
+      React.createElement('span', null, t('budgetSync.total')),
+      React.createElement('span', null, formatCHF(budget.totalExpenses * mult))
     ),
 
-    React.createElement('div', { style: { display: 'flex', gap: '8px' } },
+    // === Available line ===
+    React.createElement('div', {
+      style: {
+        ...lineStyle, fontWeight: '600', fontSize: '15px', paddingTop: '8px'
+      }
+    },
+      React.createElement('span', null,
+        showAnnual ? t('budgetSync.annualAvailable') : t('budgetSync.available')
+      ),
+      React.createElement('span', {
+        style: { color: budget.remaining < 0 ? palette.rose : palette.text }
+      }, formatCHF(budget.remaining * mult))
+    ),
+
+    // === Recommendations (calm, info-level only) ===
+    budget.recommendations && budget.recommendations.length > 0 && React.createElement('div', {
+      style: { marginTop: '16px' }
+    },
+      budget.recommendations.map((rec, idx) => React.createElement('div', {
+        key: idx,
+        style: {
+          padding: '10px 12px', background: palette.up, borderRadius: '6px',
+          fontSize: '12px', lineHeight: '1.6', color: palette.mid,
+          marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
+        }
+      },
+        React.createElement('span', { style: { marginRight: '6px' } }, rec.icon),
+        rec.text
+      ))
+    ),
+
+    // === Empty fields note ===
+    emptyCount > 0 && React.createElement('div', {
+      style: {
+        marginTop: '14px', fontSize: '11px', color: palette.soft, lineHeight: '1.5'
+      }
+    }, emptyCount === 1
+      ? t('budgetSync.emptyNoteSingle')
+      : t('budgetSync.emptyNote', { count: emptyCount })
+    ),
+
+    // === Footer: annual toggle + export ===
+    React.createElement('div', {
+      style: {
+        marginTop: '16px', display: 'flex', gap: '8px'
+      }
+    },
       React.createElement('button', {
-        onClick: () => setShowDetails(!showDetails),
-        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px' }
-      }, showDetails ? '▼ ' + t('common.details') : '▶ ' + t('common.details')),
+        onClick: () => setShowAnnual(!showAnnual),
+        style: {
+          flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
+          color: showAnnual ? '#fff' : palette.mid, border: '1px solid ' + palette.border,
+          borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
+          fontWeight: showAnnual ? '600' : '400'
+        }
+      }, showAnnual ? '○ ' + t('budgetSync.title') : '○ ' + t('budgetSync.annualView')),
       React.createElement('button', {
         onClick: handleExportReport,
-        style: { flex: 1, padding: '10px', background: palette.sky, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px' }
-      }, '◰ ' + t('nav.export'))
+        style: {
+          padding: '9px 14px', background: palette.up, color: palette.mid,
+          border: '1px solid ' + palette.border, borderRadius: '6px',
+          cursor: 'pointer', fontSize: '12px'
+        }
+      }, t('nav.export'))
     ),
 
-    showDetails && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '11px' } },
-      React.createElement('div', { style: { marginBottom: '8px' } },
-        React.createElement('strong', null, t('budgetSync.annualForecast') + ':'),
-        React.createElement('div', null, '◇ ' + t('budgetSync.annualIncome') + ': CHF ' + (budget.income * 12).toFixed(0)),
-        React.createElement('div', null, '◇ ' + t('budgetSync.annualExpenses') + ': CHF ' + (budget.totalExpenses * 12).toFixed(0)),
-        React.createElement('div', { style: { fontWeight: '600', marginTop: '6px', color: budget.remaining >= 0 ? palette.sage : palette.rose } }, '□ ' + t('budgetSync.annualSavings') + ': CHF ' + (budget.remaining * 12).toFixed(0))
-      ),
-      React.createElement('div', { style: { padding: '8px', background: palette.surface, borderRadius: '4px', fontSize: '10px', color: palette.mid } },
-        '○ ' + t('budgetSync.autoUpdateTip')
-      )
-    )
+    // === Auto-update note ===
+    React.createElement('div', {
+      style: {
+        marginTop: '10px', fontSize: '10px', color: palette.soft, lineHeight: '1.4'
+      }
+    }, '○ ' + t('budgetSync.autoUpdateNote'))
   );
 };
 
