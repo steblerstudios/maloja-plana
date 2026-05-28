@@ -497,7 +497,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('nav.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
           { label: t('nav.tresor'), view: 'tresor', icon: 'dokumentTresor' },
           { label: t('nav.cv'), view: 'cv', icon: 'lebenslauf' },
-          { label: t('nav.export'), view: 'export', icon: 'exportTool' },
+          { label: t('nav.unterlagen'), view: 'unterlagen', icon: 'documents' },
         ].map(tool => {
           const IconFn = Icons[tool.icon];
           return React.createElement('button', {

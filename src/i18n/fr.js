@@ -78,6 +78,7 @@ export default {
     sozialhilfe: 'Aide sociale',
     cv: 'Créateur de CV',
     charts: 'Graphiques',
+    unterlagen: 'Mes documents',
     export: 'Export',
     calendar: 'Calendrier',
     notifications: 'Notifications',
@@ -925,6 +926,34 @@ export default {
     bvgNote: 'Les montants LPP/AVS sont affichés comme valeurs de référence lorsque le salaire net est utilisé',
     kkNote: 'Les données du scanner d\'assurance ne sont pas encore liées à vos chapitres enregistrés',
     disclaimer: 'N\'utilisez pas cette application comme conseil juridique ou financier. Vérifiez toujours auprès de votre autorité cantonale.',
+  },
+
+  unterlagen: {
+    title: 'Mes documents',
+    subtitle: 'Vos dossiers de vie, calmement organisés.',
+    dossier: {
+      lebensmappe: {
+        title: 'Dossier de vie',
+        description: 'Votre aperçu personnel complet. Tous les chapitres en un coup d\'oeil.',
+        status: 'Disponible dans une prochaine version.',
+      },
+      notfall: {
+        title: 'Dossier d\'urgence',
+        description: 'Informations importantes pour vos proches. Contacts, médecine, directives.',
+        status: 'Disponible dans une prochaine version.',
+      },
+      behoerden: {
+        title: 'Dossier administratif',
+        description: 'Documents pour la commune et l\'administration. Données personnelles, logement, revenus.',
+        status: 'Disponible dans une prochaine version.',
+      },
+    },
+    backup: {
+      title: 'Sauvegarde des données',
+      description: 'Sauvegarder ou restaurer vos données localement.',
+      action: 'Sauvegarde et restauration',
+    },
+    note: 'Tous les documents restent sur votre appareil. Rien n\'est téléchargé.',
   },
 
   backup: {
