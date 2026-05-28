@@ -940,7 +940,6 @@ export default {
       notfall: {
         title: 'Dossier d\'urgence',
         description: 'Informations importantes pour vos proches. Contacts, médecine, directives.',
-        status: 'Disponible dans une prochaine version.',
       },
       behoerden: {
         title: 'Dossier administratif',
@@ -980,6 +979,30 @@ export default {
     fileTypes: '.json ou .maloja',
     validationErrors: 'Avertissements de validation',
     restored: 'Restauré',
+  },
+
+  notfallDossier: {
+    title: 'Dossier d\'urgence',
+    subtitle: 'Informations importantes pour quand quelqu\'un d\'autre doit aider.',
+    back: 'Retour à Mes documents',
+    printAction: 'Imprimer / Enregistrer en PDF',
+    previewNote: 'Aperçu — voici à quoi ressemblera votre dossier d\'urgence.',
+    empty: 'Aucune information d\'urgence enregistrée. Vous pouvez commencer dans le chapitre « Urgence ».',
+    sectionsIncluded: '{count} sections avec des données',
+    sectionsMissing: '{count} sections encore ouvertes',
+    openDossier: 'Ouvrir le dossier d\'urgence',
+    notRecorded: 'Non renseigné',
+    sectionPerson: 'Personne',
+    sectionContact: 'Contact d\'urgence',
+    sectionMedical: 'Données médicales',
+    sectionCare: 'Soins médicaux',
+    sectionProvision: 'Directives anticipées',
+    sectionInsurance: 'Assurance',
+    footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',
+    footerCredit: 'Créé avec Maloja Plana',
+    privacyNote: 'Ce dossier contient des informations de santé personnelles.',
+    generated: 'Créé le {date}',
+    untitled: 'Sans nom',
   },
 
   lebensmappe: {

@@ -941,7 +941,6 @@ export default {
       notfall: {
         title: 'Dossier di emergenza',
         description: 'Informazioni importanti per i tuoi familiari. Contatti, medicina, direttive.',
-        status: 'Disponibile in una versione futura.',
       },
       behoerden: {
         title: 'Dossier per le autorità',
@@ -981,6 +980,30 @@ export default {
     fileTypes: '.json o .maloja',
     validationErrors: 'Avvisi di validazione',
     restored: 'Ripristinato',
+  },
+
+  notfallDossier: {
+    title: 'Dossier di emergenza',
+    subtitle: 'Informazioni importanti per quando qualcun altro deve aiutare.',
+    back: 'Torna a I miei documenti',
+    printAction: 'Stampa / Salva come PDF',
+    previewNote: 'Anteprima — ecco come apparirà il tuo dossier di emergenza.',
+    empty: 'Nessuna informazione di emergenza registrata. Puoi iniziare nel capitolo « Emergenza ».',
+    sectionsIncluded: '{count} sezioni con dati',
+    sectionsMissing: '{count} sezioni ancora aperte',
+    openDossier: 'Apri dossier di emergenza',
+    notRecorded: 'Non registrato',
+    sectionPerson: 'Persona',
+    sectionContact: 'Contatto di emergenza',
+    sectionMedical: 'Dati medici',
+    sectionCare: 'Cure mediche',
+    sectionProvision: 'Direttive anticipate',
+    sectionInsurance: 'Assicurazione',
+    footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
+    footerCredit: 'Creato con Maloja Plana',
+    privacyNote: 'Questo dossier contiene informazioni sanitarie personali.',
+    generated: 'Creato il {date}',
+    untitled: 'Senza nome',
   },
 
   lebensmappe: {
