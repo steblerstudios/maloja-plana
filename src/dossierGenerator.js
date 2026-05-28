@@ -5,6 +5,8 @@
 // Usage:
 //   generateLebensmappe(data, chapters, t, documents) → HTML string
 //   getLebensMappePreview(data, chapters, t, documents) → structured data for React preview
+//   generateNotfallDossier(data, chapters, t) → HTML string
+//   getNotfallDossierPreview(data, chapters, t) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
 
@@ -360,6 +362,265 @@ export function generateLebensmappe(data, chapters, t, documents) {
 
     <button class="lm-print-btn" onclick="window.print()">
       ${esc(t('lebensmappe.printAction'))}
+    </button>
+  </div>
+</body>
+</html>`;
+}
+
+// ─── Notfall-Dossier Section Definitions ─────────────────
+// Curated, reduced set — not a data dump. Focused on what
+// someone else needs when they have to help.
+
+function getNotfallSections(data, chapters, t) {
+  const d = (chapterKey, fieldKey) => (data[chapterKey] || {})[fieldKey] || '';
+  const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
+  const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
+  const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
+
+  return [
+    {
+      key: 'person',
+      title: t('notfallDossier.sectionPerson'),
+      rows: [
+        { label: t('lebensmappe.name'), value: getFullName(data.basis) },
+        { label: lbl('basis', 'dateOfBirth'), value: dt('basis', 'dateOfBirth') },
+        { label: lbl('basis', 'phone'), value: d('basis', 'phone') },
+        { label: lbl('wohnen', 'address'), value: [d('wohnen', 'address'), [d('wohnen', 'postalCode'), d('wohnen', 'city')].filter(Boolean).join(' ')].filter(Boolean).join(', ') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'contact',
+      title: t('notfallDossier.sectionContact'),
+      rows: [
+        { label: lbl('notfall', 'emergencyContact'), value: d('notfall', 'emergencyContact') },
+        { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'medical',
+      title: t('notfallDossier.sectionMedical'),
+      rows: [
+        { label: lbl('notfall', 'bloodType'), value: sel('notfall', 'bloodType') },
+        { label: lbl('notfall', 'allergies'), value: d('notfall', 'allergies') },
+        { label: lbl('notfall', 'medications'), value: d('notfall', 'medications') },
+        { label: lbl('notfall', 'chronicDiseases'), value: d('notfall', 'chronicDiseases') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'care',
+      title: t('notfallDossier.sectionCare'),
+      rows: [
+        { label: lbl('notfall', 'doctor'), value: d('notfall', 'doctor') },
+        { label: lbl('notfall', 'doctorPhone'), value: d('notfall', 'doctorPhone') },
+        { label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'provision',
+      title: t('notfallDossier.sectionProvision'),
+      rows: [
+        { label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
+        { label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
+        { label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
+        { label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'insurance',
+      title: t('notfallDossier.sectionInsurance'),
+      rows: [
+        { label: lbl('versicherungen', 'kkInsurer'), value: d('versicherungen', 'kkInsurer') },
+        { label: lbl('versicherungen', 'kkCardNumber'), value: d('versicherungen', 'kkCardNumber') },
+        { label: lbl('basis', 'ahv'), value: d('basis', 'ahv') },
+      ].filter(r => r.value),
+    },
+  ];
+}
+
+// ─── Notfall Preview Data (for React rendering) ─────────
+
+export function getNotfallDossierPreview(data, chapters, t) {
+  const sections = getNotfallSections(data, chapters, t);
+  const filledSections = sections.filter(s => s.rows.length > 0);
+  const emptySections = sections.filter(s => s.rows.length === 0);
+
+  return {
+    name: getFullName(data.basis),
+    sections: filledSections,
+    emptySections,
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+// ─── Notfall Standalone HTML Generator (for print) ──────
+
+export function generateNotfallDossier(data, chapters, t) {
+  const sections = getNotfallSections(data, chapters, t);
+  const name = getFullName(data.basis) || t('notfallDossier.untitled');
+  const now = new Date();
+  const dateStr = [
+    String(now.getDate()).padStart(2, '0'),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    now.getFullYear(),
+  ].join('.');
+
+  const sectionHtml = sections
+    .filter(s => s.rows.length > 0)
+    .map(s => `
+      <div class="nd-section">
+        <h2>${esc(s.title)}</h2>
+        <table>
+          ${s.rows.map(r => `
+            <tr>
+              <td class="nd-label">${esc(r.label)}</td>
+              <td class="nd-value">${esc(r.value)}</td>
+            </tr>
+          `).join('')}
+        </table>
+      </div>
+    `).join('');
+
+  return `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(t('notfallDossier.title'))} — ${esc(name)}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1C1A17;
+      background: #F5F2EE;
+      padding: 40px 20px;
+    }
+    .nd-container {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #DDD8D0;
+      border-radius: 8px;
+      padding: 40px 36px;
+    }
+    .nd-header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #DDD8D0;
+    }
+    .nd-header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+    .nd-header .nd-name {
+      font-size: 15px;
+      color: #6B6560;
+      margin-bottom: 2px;
+    }
+    .nd-header .nd-date {
+      font-size: 11px;
+      color: #A89F94;
+    }
+    .nd-privacy {
+      background: #F5F2EE;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 24px;
+      font-size: 11px;
+      color: #6B6560;
+      line-height: 1.5;
+    }
+    .nd-section {
+      margin-bottom: 24px;
+    }
+    .nd-section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #6B6560;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #EAE5DD;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    tr { border-bottom: 1px solid #F0EDE8; }
+    tr:last-child { border-bottom: none; }
+    td { padding: 5px 0; vertical-align: top; }
+    .nd-label {
+      width: 45%;
+      font-size: 12px;
+      color: #6B6560;
+    }
+    .nd-value {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .nd-footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #DDD8D0;
+      text-align: center;
+      font-size: 10px;
+      color: #A89F94;
+      line-height: 1.6;
+    }
+    .nd-print-btn {
+      display: block;
+      margin: 24px auto 0;
+      padding: 10px 24px;
+      background: #B8956A;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .nd-print-btn:hover { opacity: 0.9; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .nd-container {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .nd-print-btn { display: none; }
+      .nd-section { break-inside: avoid; }
+      @page { margin: 2cm; size: A4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nd-container">
+    <div class="nd-header">
+      <h1>${esc(t('notfallDossier.title'))}</h1>
+      <div class="nd-name">${esc(name)}</div>
+      <div class="nd-date">${esc(t('notfallDossier.generated', { date: dateStr }))}</div>
+    </div>
+
+    <div class="nd-privacy">
+      ${esc(t('notfallDossier.privacyNote'))}
+    </div>
+
+    ${sectionHtml}
+
+    <div class="nd-footer">
+      ${esc(t('notfallDossier.footerPrivacy'))}<br>
+      ${esc(t('notfallDossier.footerCredit'))}
+    </div>
+
+    <button class="nd-print-btn" onclick="window.print()">
+      ${esc(t('notfallDossier.printAction'))}
     </button>
   </div>
 </body>

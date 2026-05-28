@@ -87,8 +87,9 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       palette,
       title: t('unterlagen.dossier.notfall.title'),
       description: t('unterlagen.dossier.notfall.description'),
-      status: t('unterlagen.dossier.notfall.status'),
+      status: t('notfallDossier.openDossier'),
       icon: 'emergency',
+      onClick: () => onNavigate('notfalldossier'),
     }),
 
     React.createElement(DossierCard, {
