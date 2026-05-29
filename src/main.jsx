@@ -35,6 +35,7 @@ import OverdueBanner from './OverdueBanner.jsx';
 import NotificationSettings from './NotificationSettings.jsx';
 import { Onboarding, isOnboardingDone } from './Onboarding.jsx';
 import { syncDocumentReminders } from './utils/docReminders.js';
+import LegalView from './LegalView.jsx';
 import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
@@ -117,6 +118,7 @@ const AppInner = () => {
   });
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [legalSection, setLegalSection] = useState('privacy');
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
@@ -251,9 +253,12 @@ const AppInner = () => {
     setDocuments(prev => prev.map(d => d.id === docId ? { ...d, expiryDate: newDate } : d));
   };
 
-  const handleNavigate = (viewName, chapterIdx) => {
+  const handleNavigate = (viewName, chapterIdx, extra) => {
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
+    }
+    if (viewName === 'legal' && extra) {
+      setLegalSection(extra);
     }
     setView(viewName);
   };
@@ -385,11 +390,11 @@ const AppInner = () => {
       view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data, chapters, onNavigate: handleNavigate }),
       view === 'export' && React.createElement(ZipExport, { palette, t, data, documents }),
       view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data }),
-      view === 'notifications' && React.createElement(NotificationSettings, { palette, t })
+      view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
     React.createElement('div', {
-      'aria-label': t('trust.footer'),
       style: {
         position: 'fixed',
         bottom: '16px',
@@ -397,10 +402,24 @@ const AppInner = () => {
         fontSize: '10px',
         color: palette.mid,
         letterSpacing: '0.3px',
-        pointerEvents: 'none',
         opacity: 0.7,
+        display: 'flex',
+        gap: '8px',
+        alignItems: 'center',
       }
-    }, t('trust.footer'))
+    },
+      React.createElement('span', { style: { pointerEvents: 'none' } }, t('trust.footer')),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('button', {
+        onClick: () => handleNavigate('legal'),
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer',
+          color: palette.mid, fontSize: '10px', padding: 0,
+          fontFamily: 'inherit', letterSpacing: '0.3px',
+          textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, t('legal.footerLink'))
+    )
   );
 };
 

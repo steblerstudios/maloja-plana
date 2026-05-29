@@ -7,37 +7,32 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     role: 'status',
     'data-alpha-banner': true,
     style: {
-      padding: '16px 20px', marginBottom: '24px', borderRadius: '10px',
-      background: palette.gold + '14', border: '1px solid ' + palette.gold + '44',
+      padding: '12px 16px', marginBottom: '20px', borderRadius: '8px',
+      background: palette.up, border: '1px solid ' + palette.border,
     }
   },
     React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' }
+      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '10px' }
     },
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm }
-        }, t('alpha.title')),
-        React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+          style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed }
         },
-          React.createElement('p', { style: { margin: '0 0 6px 0' } }, t('alpha.intro')),
-          React.createElement('ul', {
-            style: { margin: '0', paddingLeft: '16px' }
-          },
-            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.skosNote')),
-            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.bvgNote')),
-            React.createElement('li', { style: { marginBottom: '3px' } }, t('alpha.kkNote'))
-          ),
-          React.createElement('p', { style: { margin: '6px 0 0 0' } }, t('alpha.disclaimer'))
-        )
+          React.createElement('span', {
+            style: { fontWeight: weight.semi }
+          }, t('alpha.title') + ' · '),
+          t('alpha.summary')
+        ),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.relaxed }
+        }, t('alpha.disclaimer'))
       ),
       React.createElement('button', {
         onClick: onDismiss,
         'aria-label': t('common.close'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
-          color: palette.mid, fontSize: '16px', lineHeight: 1, flexShrink: 0,
+          color: palette.mid, fontSize: '14px', lineHeight: 1, flexShrink: 0,
         }
       }, '×')
     )
