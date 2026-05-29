@@ -457,27 +457,32 @@ export default {
   },
 
   orientation: {
+    // ─── P0: Visibile sui campi ────────────────────────────
     ahv: 'Il tuo numero AVS ti accompagna per tutta la vita lavorativa. Ne hai bisogno presso datori di lavoro, assicurazioni e autorità.',
-    bvg: 'La previdenza professionale (2o pilastro) è finanziata congiuntamente da te e dal tuo datore di lavoro. Integra la rendita AVS.',
-    kvg: 'In Svizzera l\'assicurazione malattia di base (LAMal) è obbligatoria. Scegli tu stesso il tuo assicuratore e il tuo modello.',
+    ahvBeitrag: 'L\'AVS assicura la tua rendita di vecchiaia. Il tuo contributo viene detratto direttamente dallo stipendio — il tuo datore di lavoro paga l\'altra metà.',
+    bvg: 'La tua cassa pensione è finanziata congiuntamente da te e dal tuo datore di lavoro. Ti garantisce di ricevere in pensione più della sola rendita AVS.',
+    kvg: 'In Svizzera un\'assicurazione malattia di base è obbligatoria. Scegli tu stesso il tuo assicuratore e il tuo modello.',
     franchise: 'La franchigia è l\'importo che paghi di tasca tua ogni anno prima che l\'assicurazione malattia copra i costi. Franchigia più alta = premio più basso.',
-    uvg: 'L\'assicurazione infortuni (LAINF) è coperta dal datore di lavoro per i dipendenti. Gli indipendenti devono assicurarsi privatamente.',
-    saeule3a: 'La previdenza privata (pilastro 3a) è volontaria e fiscalmente deducibile. Importo massimo 2026: CHF 7\'258 (dipendenti).',
-    ipv: 'A seconda del tuo reddito e del tuo cantone, potresti avere diritto a una riduzione dei premi dell\'assicurazione malattia.',
-    familienzulagen: 'In Svizzera esistono assegni familiari per i figli. L\'importo varia per cantone — almeno CHF 200 per figlio al mese.',
+    uvg: 'Se sei dipendente, la tua assicurazione infortuni è coperta dal datore di lavoro.',
+    saeule3a: 'Con il pilastro 3a risparmi volontariamente per il futuro — e risparmi anche sulle tasse.',
     betreibung: 'Il registro delle esecuzioni è una sorta di biglietto da visita finanziario in Svizzera. Proprietari, datori di lavoro e banche lo consultano spesso.',
-    bewilligung_b: 'Permesso B (permesso di dimora): temporaneo, deve essere rinnovato regolarmente. Dà diritto al lavoro e al soggiorno.',
-    bewilligung_c: 'Permesso C (permesso di domicilio): illimitato, nessun rinnovo necessario. Diritti ampiamente uguali a quelli dei cittadini svizzeri.',
-    el: 'Le prestazioni complementari (PC) integrano le rendite AVS o AI quando il reddito non copre i costi di vita.',
-    alv: 'L\'assicurazione contro la disoccupazione (AD) ti protegge in caso di perdita del lavoro. I contributi vengono detratti direttamente dallo stipendio.',
-    rav: 'L\'Ufficio regionale di collocamento (URC) è il tuo punto di contatto in caso di disoccupazione. Iscriviti dal primo giorno.',
+    bewilligung_b: 'Il permesso B è temporaneo. Ricordati di rinnovarlo per tempo — il tuo comune ti informerà sulla procedura.',
+    // ─── P0: Indicazioni contestuali (in base ai dati) ────
+    contextIpv: 'In base al tuo reddito, potresti avere diritto a una riduzione del premio dell\'assicurazione malattia. Informati presso il tuo comune o il tuo cantone.',
+    contextFamilienzulagen: 'Hai diritto agli assegni familiari per i tuoi figli. L\'importo dipende dal cantone. Il tuo datore di lavoro può aiutarti.',
+    // ─── P1: Preparato, non ancora visibile ────────────────
+    ipv: 'In base al tuo reddito e al tuo cantone, potresti beneficiare di una riduzione sui costi dell\'assicurazione malattia.',
+    familienzulagen: 'In Svizzera esistono assegni familiari per i figli. L\'importo varia per cantone — almeno CHF 200 per figlio al mese.',
+    bewilligung_c: 'Il permesso C è illimitato. Non devi rinnovarlo e hai ampiamente gli stessi diritti dei cittadini svizzeri.',
+    el: 'Le prestazioni complementari aiutano quando la rendita AVS o AI non basta per vivere. Il tuo comune può dirti se ne hai diritto.',
+    alv: 'L\'assicurazione contro la disoccupazione ti protegge in caso di perdita del lavoro. I contributi vengono detratti direttamente dallo stipendio.',
+    rav: 'L\'URC (ufficio regionale di collocamento) è il tuo punto di contatto in caso di disoccupazione. Iscriviti dal primo giorno.',
     skos: 'Le direttive COSAS determinano il livello dell\'aiuto sociale. Ogni cantone le applica in modo leggermente diverso.',
-    verlustschein: 'Un attestato di carenza di beni significa: un\'esecuzione è stata conclusa, ma il credito sussiste — per 20 anni.',
-    selbstbehalt: 'Dopo aver raggiunto la franchigia, paghi il 10% dei costi di tasca tua (partecipazione ai costi), fino a un massimo di CHF 700 all\'anno.',
     iv: 'L\'assicurazione invalidità (AI) sostiene le persone durevolmente colpite da malattia o infortunio.',
-    eo: 'L\'indennità per perdita di guadagno (IPG) compensa la perdita di reddito durante il servizio militare, civile o la maternità.',
-    contextIpv: 'Hai indicato il tuo reddito e il tuo cantone. A seconda dell\'importo, una riduzione dei premi potrebbe essere rilevante per te. Informati presso la tua cassa cantonale di compensazione.',
-    contextFamilienzulagen: 'Hai registrato dei figli. In Svizzera si applicano gli assegni familiari — l\'importo dipende dal cantone. Informati presso il tuo datore di lavoro o la cassa per assegni familiari.',
+    // ─── P2: Riferimento, per dopo ────────────────────────
+    selbstbehalt: 'Oltre alla franchigia, paghi il 10% delle spese mediche di tasca tua — si chiama partecipazione ai costi. Massimo CHF 700 all\'anno.',
+    verlustschein: 'Un attestato di carenza di beni significa: un\'esecuzione è terminata, ma il debito sussiste — per 20 anni.',
+    eo: 'In caso di servizio militare, servizio civile o maternità, ricevi un compenso per il reddito perso.',
   },
 
   tresor: {

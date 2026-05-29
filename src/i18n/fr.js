@@ -456,27 +456,32 @@ export default {
   },
 
   orientation: {
+    // ─── P0 : Visible sur les champs ───────────────────────
     ahv: 'Ton numéro AVS t\'accompagne toute ta vie active. Tu en as besoin auprès des employeurs, assurances et autorités.',
-    bvg: 'La prévoyance professionnelle (2e pilier) est financée conjointement par toi et ton employeur. Elle complète la rente AVS.',
-    kvg: 'En Suisse, l\'assurance maladie de base (LAMal) est obligatoire. Tu choisis toi-même ton assureur et ton modèle.',
+    ahvBeitrag: 'L\'AVS assure ta rente de retraite. Ta cotisation est directement déduite de ton salaire — ton employeur en paie l\'autre moitié.',
+    bvg: 'Ta caisse de pension est financée conjointement par toi et ton employeur. Elle te permet de recevoir plus que la seule rente AVS à la retraite.',
+    kvg: 'En Suisse, une assurance maladie de base est obligatoire. Tu choisis toi-même ton assureur et ton modèle.',
     franchise: 'La franchise est le montant que tu paies toi-même chaque année avant que ton assurance maladie ne prenne en charge les coûts. Franchise plus élevée = prime plus basse.',
-    uvg: 'L\'assurance accidents (LAA) est couverte par l\'employeur pour les salariés. Les indépendants doivent s\'assurer eux-mêmes.',
-    saeule3a: 'La prévoyance privée (pilier 3a) est volontaire et déductible fiscalement. Montant maximal 2026 : CHF 7\'258 (salariés).',
-    ipv: 'Selon ton revenu et ton canton, une réduction de primes d\'assurance maladie (subsides) pourrait te concerner.',
-    familienzulagen: 'En Suisse, des allocations familiales existent pour les enfants. Le montant varie selon le canton — au minimum CHF 200 par enfant et par mois.',
+    uvg: 'Si tu es salarié, ton assurance accidents est couverte par ton employeur.',
+    saeule3a: 'Avec le pilier 3a, tu épargnes librement pour plus tard — et tu économises des impôts en même temps.',
     betreibung: 'Le registre des poursuites est une sorte de carte de visite financière en Suisse. Les propriétaires, employeurs et banques le consultent souvent.',
-    bewilligung_b: 'Permis B (autorisation de séjour) : temporaire, doit être renouvelé régulièrement. Donne droit au travail et au séjour.',
-    bewilligung_c: 'Permis C (autorisation d\'établissement) : illimité, pas de renouvellement nécessaire. Droits largement identiques aux citoyens suisses.',
-    el: 'Les prestations complémentaires (PC) complètent les rentes AVS ou AI lorsque le revenu ne couvre pas les frais de vie.',
-    alv: 'L\'assurance chômage (AC) te protège en cas de perte d\'emploi. Les cotisations sont directement déduites du salaire.',
-    rav: 'L\'Office régional de placement (ORP) est ton interlocuteur en cas de chômage. Inscris-toi dès le premier jour.',
+    bewilligung_b: 'Le permis B est temporaire. Pense à le renouveler à temps — ta commune t\'informera de la marche à suivre.',
+    // ─── P0 : Indices contextuels (selon les données) ──────
+    contextIpv: 'Selon ton revenu, tu pourrais avoir droit à une réduction de ta prime d\'assurance maladie. Renseigne-toi auprès de ta commune ou de ton canton.',
+    contextFamilienzulagen: 'Tu as droit à des allocations familiales pour tes enfants. Le montant dépend du canton. Ton employeur peut t\'aider.',
+    // ─── P1 : Préparé, pas encore visible ──────────────────
+    ipv: 'Selon ton revenu et ton canton, tu pourrais bénéficier d\'une réduction sur tes coûts d\'assurance maladie.',
+    familienzulagen: 'En Suisse, des allocations familiales existent pour les enfants. Le montant varie selon le canton — au minimum CHF 200 par enfant et par mois.',
+    bewilligung_c: 'Le permis C est illimité. Tu n\'as pas besoin de le renouveler et tu as largement les mêmes droits que les citoyens suisses.',
+    el: 'Les prestations complémentaires aident quand la rente AVS ou AI ne suffit pas pour vivre. Ta commune peut te dire si tu y as droit.',
+    alv: 'L\'assurance chômage te protège en cas de perte d\'emploi. Les cotisations sont directement déduites de ton salaire.',
+    rav: 'L\'ORP (office régional de placement) est ton interlocuteur en cas de chômage. Inscris-toi dès le premier jour.',
     skos: 'Les directives CSIAS déterminent le niveau de l\'aide sociale. Chaque canton les applique un peu différemment.',
-    verlustschein: 'Un acte de défaut de biens signifie : une poursuite a été conclue, mais la créance subsiste — pendant 20 ans.',
-    selbstbehalt: 'Après avoir atteint la franchise, tu paies 10% des coûts toi-même (quote-part), jusqu\'à CHF 700 par an maximum.',
     iv: 'L\'assurance invalidité (AI) soutient les personnes durablement atteintes par la maladie ou un accident.',
-    eo: 'Les allocations pour perte de gain (APG) compensent la perte de revenu pendant le service militaire, civil ou la maternité.',
-    contextIpv: 'Tu as indiqué ton revenu et ton canton. Selon le montant, une réduction de primes pourrait te concerner. Renseigne-toi auprès de ta caisse cantonale de compensation.',
-    contextFamilienzulagen: 'Tu as enregistré des enfants. En Suisse, des allocations familiales s\'appliquent — le montant dépend du canton. Renseigne-toi auprès de ton employeur ou de la caisse d\'allocations familiales.',
+    // ─── P2 : Référence, pour plus tard ────────────────────
+    selbstbehalt: 'En plus de la franchise, tu paies 10% des frais médicaux toi-même — c\'est la quote-part. Maximum CHF 700 par an.',
+    verlustschein: 'Un acte de défaut de biens signifie : une poursuite est terminée, mais la dette subsiste — pendant 20 ans.',
+    eo: 'En cas de service militaire, service civil ou maternité, tu reçois une compensation pour le revenu perdu.',
   },
 
   tresor: {
