@@ -38,7 +38,18 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
     URL.revokeObjectURL(url);
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  const hasProfile = canton && data.finanzen;
+
+  if (!hasProfile) {
+    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '12px', color: palette.mid } },
+        '○ ' + t('premium.enterCanton')
+      )
+    );
+  }
+
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
 
     // Canton info
@@ -60,28 +71,28 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
     ),
 
     // Eligibility Status
-    ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '2px solid ' + palette.sage, marginBottom: '16px' } },
+    ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '1px solid ' + palette.sage, marginBottom: '16px' } },
       React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px' } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
-    ) : React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: '6px', border: '2px solid ' + palette.rose, marginBottom: '16px' } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.rose, marginBottom: '4px' } }, '✕ ' + t('premium.notEligible')),
-      React.createElement('div', { style: { fontSize: '12px', color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
+    ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border, marginBottom: '16px' } },
+      React.createElement('div', { style: { fontWeight: '600', color: palette.mid, marginBottom: '4px' } }, '○ ' + t('premium.notEligible')),
+      React.createElement('div', { style: { fontSize: '12px', color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
 
     showCalculation && React.createElement('div', null,
       // Results
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '16px' } },
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.gold } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.monthlySubsidy')),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.gold } }, 'CHF ' + ipvResult.amount)
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, 'CHF ' + ipvResult.amount)
         ),
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.sage } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.annualSubsidy')),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.sage } }, 'CHF ' + (ipvResult.annual || 0))
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, 'CHF ' + (ipvResult.annual || 0))
         ),
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '2px solid ' + palette.sky } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.taxSavings')),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.sky } }, '~ CHF ' + taxSavings + t('common.perYear'))
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, '~ CHF ' + taxSavings + t('common.perYear'))
         )
       ),
 
@@ -96,7 +107,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
                 padding: '8px',
                 background: key === canton ? palette.sage + '22' : palette.up,
                 borderRadius: '4px',
-                border: key === canton ? '2px solid ' + palette.sage : '1px solid ' + palette.border,
+                border: '1px solid ' + (key === canton ? palette.sage : palette.border),
                 fontSize: '11px'
               }
             },
@@ -134,7 +145,9 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
           style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px' }
         }, '✕ ' + t('common.close'))
       )
-    )
+    ),
+
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 
