@@ -456,27 +456,32 @@ export default {
   },
 
   orientation: {
+    // ─── P0: Sichtbar auf Feldern ──────────────────────────
     ahv: 'Deine AHV-Nummer begleitet Dich Dein ganzes Arbeitsleben. Du brauchst sie bei Arbeitgebern, Versicherungen und Behörden.',
-    bvg: 'Die berufliche Vorsorge (2. Säule) wird gemeinsam von Dir und Deinem Arbeitgeber finanziert. Sie ergänzt die AHV-Rente.',
-    kvg: 'In der Schweiz ist die Grundversicherung (KVG) obligatorisch. Du wählst Deine Krankenkasse und Dein Modell selbst.',
+    ahvBeitrag: 'Die AHV sichert Deine Rente. Dein Beitrag wird direkt vom Lohn abgezogen — Dein Arbeitgeber zahlt die andere Hälfte.',
+    bvg: 'Deine Pensionskasse wird gemeinsam von Dir und Deinem Arbeitgeber finanziert. Sie sorgt dafür, dass Du im Alter mehr als nur die AHV-Rente bekommst.',
+    kvg: 'In der Schweiz ist eine Grundversicherung bei einer Krankenkasse Pflicht. Du wählst Deine Krankenkasse und Dein Modell selbst.',
     franchise: 'Die Franchise ist der Betrag, den Du pro Jahr selbst trägst, bevor Deine Krankenkasse Leistungen übernimmt. Höhere Franchise = tiefere Prämie.',
-    uvg: 'Die Unfallversicherung (UVG) ist bei Anstellung über den Arbeitgeber gedeckt. Selbstständige müssen sich privat versichern.',
-    saeule3a: 'Private Vorsorge (Säule 3a) ist freiwillig und steuerlich abzugsfähig. Maximalbetrag 2026: CHF 7\'258 (Angestellte).',
-    ipv: 'Je nach Einkommen und Kanton könnte eine Prämienverbilligung (IPV) für Deine Krankenkassenkosten relevant sein.',
-    familienzulagen: 'Für Kinder bestehen in der Schweiz Familienzulagen. Die Höhe unterscheidet sich je nach Kanton — mindestens CHF 200 pro Kind und Monat.',
+    uvg: 'Wenn Du angestellt bist, ist Deine Unfallversicherung über den Arbeitgeber gedeckt.',
+    saeule3a: 'Mit der Säule 3a sparst Du freiwillig für später — und sparst gleichzeitig Steuern.',
     betreibung: 'Das Betreibungsregister ist in der Schweiz eine Art finanzielle Visitenkarte. Vermieter, Arbeitgeber und Banken fragen häufig danach.',
-    bewilligung_b: 'Bewilligung B (Aufenthaltsbewilligung): Befristet, muss regelmässig verlängert werden. Berechtigt zu Arbeit und Aufenthalt.',
-    bewilligung_c: 'Bewilligung C (Niederlassungsbewilligung): Unbefristet, keine Verlängerung nötig. Weitgehend gleiche Rechte wie Schweizer Bürger.',
-    el: 'Ergänzungsleistungen (EL) ergänzen AHV- oder IV-Renten, wenn das Einkommen die Lebenskosten nicht deckt.',
-    alv: 'Die Arbeitslosenversicherung (ALV) sichert Dich bei Arbeitslosigkeit ab. Beiträge werden direkt vom Lohn abgezogen.',
-    rav: 'Das Regionale Arbeitsvermittlungszentrum (RAV) ist Deine Anlaufstelle bei Arbeitslosigkeit. Melde Dich dort am ersten Tag.',
+    bewilligung_b: 'Die Bewilligung B ist befristet. Denk daran, sie rechtzeitig zu verlängern — Deine Gemeinde informiert Dich über den Ablauf.',
+    // ─── P0: Kontexthinweise (datenabhängig) ───────────────
+    contextIpv: 'Je nach Einkommen hast Du möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundige Dich bei Deiner Gemeinde oder Deinem Kanton.',
+    contextFamilienzulagen: 'Für Deine Kinder stehen Dir Familienzulagen zu. Die Höhe hängt vom Kanton ab. Dein Arbeitgeber kann Dir weiterhelfen.',
+    // ─── P1: Vorbereitet, noch nicht sichtbar ──────────────
+    ipv: 'Je nach Einkommen und Kanton könnte eine Vergünstigung bei den Krankenkassenkosten für Dich möglich sein.',
+    familienzulagen: 'Für Kinder gibt es in der Schweiz Familienzulagen. Die Höhe unterscheidet sich je nach Kanton — mindestens CHF 200 pro Kind und Monat.',
+    bewilligung_c: 'Die Bewilligung C ist unbefristet. Du musst sie nicht verlängern und hast weitgehend die gleichen Rechte wie Schweizer Bürger.',
+    el: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Deine Gemeinde kann Dir sagen, ob Du Anspruch hast.',
+    alv: 'Die Arbeitslosenversicherung sichert Dich bei Jobverlust ab. Die Beiträge werden direkt vom Lohn abgezogen.',
+    rav: 'Das RAV (Regionale Arbeitsvermittlung) ist Deine Anlaufstelle bei Arbeitslosigkeit. Melde Dich dort am ersten Tag.',
     skos: 'Die SKOS-Richtlinien bestimmen die Höhe der Sozialhilfe. Jeder Kanton wendet sie etwas anders an.',
-    verlustschein: 'Ein Verlustschein bedeutet: Eine Betreibung wurde abgeschlossen, die Forderung besteht aber weiterhin — 20 Jahre lang.',
-    selbstbehalt: 'Nach Erreichen der Franchise zahlst Du 10% der Kosten selbst (Selbstbehalt), bis maximal CHF 700 pro Jahr.',
     iv: 'Die Invalidenversicherung (IV) unterstützt Menschen, die wegen Krankheit oder Unfall dauerhaft eingeschränkt sind.',
-    eo: 'Die Erwerbsersatzordnung (EO) entschädigt Einkommensverluste bei Militärdienst, Zivildienst oder Mutterschaft.',
-    contextIpv: 'Du hast Einkommen und Kanton angegeben. Je nach Höhe könnte eine Prämienverbilligung für Dich relevant sein. Prüfe dies bei Deiner kantonalen Ausgleichskasse.',
-    contextFamilienzulagen: 'Du hast Kinder erfasst. In der Schweiz bestehen Familienzulagen — die Höhe hängt vom Kanton ab. Informiere Dich bei Deinem Arbeitgeber oder der Familienausgleichskasse.',
+    // ─── P2: Referenz, erst später ─────────────────────────
+    selbstbehalt: 'Zusätzlich zur Franchise zahlst Du 10% der Arztkosten selbst — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.',
+    verlustschein: 'Ein Verlustschein bedeutet: Eine Betreibung ist abgeschlossen, aber die Schuld bleibt bestehen — 20 Jahre lang.',
+    eo: 'Bei Militärdienst, Zivildienst oder Mutterschaft erhältst Du einen Ersatz für den entgangenen Lohn.',
   },
 
   tresor: {
