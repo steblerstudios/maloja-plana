@@ -46,6 +46,13 @@ function hn(t, chapterKey, fieldKey) {
   return t('chapters.' + chapterKey + '.hints.' + fieldKey);
 }
 
+// Get orientation sentence for a field (Helvetia layer)
+function or(t, orientationKey) {
+  const val = t('orientation.' + orientationKey);
+  // Only return if it resolved (not the raw key)
+  return val && val !== 'orientation.' + orientationKey ? val : '';
+}
+
 // Get translated doc label
 function dl(t, chapterKey, docKey) {
   return t('chapters.' + chapterKey + '.docs.' + docKey);
@@ -67,7 +74,7 @@ export function getChapters(t) {
         { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: cantonOptions(t) },
         { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone'), section: t('sections.basis.contact') },
         { k: 'email', label: fl(t, 'basis', 'email'), type: 'email' },
-        { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv') },
+        { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv'), orientation: or(t, 'ahv') },
         { k: 'maritalStatus', label: fl(t, 'basis', 'maritalStatus'), type: 'select', options: opts(t, 'basis', 'maritalStatus'), section: t('sections.basis.family') },
         { k: 'household', type: 'household' },
       ],
@@ -121,7 +128,7 @@ export function getChapters(t) {
         { k: 'bankName', label: fl(t, 'finanzen', 'bankName'), type: 'text' },
         { k: 'creditCard', label: fl(t, 'finanzen', 'creditCard'), type: 'select', options: opts(t, 'finanzen', 'creditCard'), section: t('sections.finanzen.credit') },
         { k: 'loans', label: fl(t, 'finanzen', 'loans'), type: 'currency' },
-        { k: 'pension3a', label: fl(t, 'finanzen', 'pension3a'), type: 'currency', section: t('sections.finanzen.provision'), secondary: true },
+        { k: 'pension3a', label: fl(t, 'finanzen', 'pension3a'), type: 'currency', section: t('sections.finanzen.provision'), secondary: true, orientation: or(t, 'saeule3a') },
         { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true },
         { k: 'investmentFunds', label: fl(t, 'finanzen', 'investmentFunds'), type: 'select', options: opts(t, 'finanzen', 'investmentFunds'), secondary: true },
       ],
@@ -137,14 +144,14 @@ export function getChapters(t) {
       description: t('chapters.versicherungen.description'),
       icon: t('chapters.versicherungen.icon'),
       fields: [
-        { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), section: t('sections.versicherungen.basic') },
+        { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), section: t('sections.versicherungen.basic'), orientation: or(t, 'kvg') },
         { k: 'kkModel', label: fl(t, 'versicherungen', 'kkModel'), type: 'select', options: opts(t, 'versicherungen', 'kkModel') },
         { k: 'kkPremium', label: fl(t, 'versicherungen', 'kkPremium'), type: 'currency' },
-        { k: 'franchise', label: fl(t, 'versicherungen', 'franchise'), type: 'select', options: opts(t, 'versicherungen', 'franchise') },
+        { k: 'franchise', label: fl(t, 'versicherungen', 'franchise'), type: 'select', options: opts(t, 'versicherungen', 'franchise'), orientation: or(t, 'franchise') },
         { k: 'kkCardNumber', label: fl(t, 'versicherungen', 'kkCardNumber'), type: 'text' },
-        { k: 'bvgInsurer', label: fl(t, 'versicherungen', 'bvgInsurer'), type: 'text', section: t('sections.versicherungen.occupational') },
+        { k: 'bvgInsurer', label: fl(t, 'versicherungen', 'bvgInsurer'), type: 'text', section: t('sections.versicherungen.occupational'), orientation: or(t, 'bvg') },
         { k: 'bvgContribution', label: fl(t, 'versicherungen', 'bvgContribution'), type: 'currency', hint: hn(t, 'versicherungen', 'bvgContribution') },
-        { k: 'uvg', label: fl(t, 'versicherungen', 'uvg'), type: 'select', options: opts(t, 'versicherungen', 'uvg'), section: t('sections.versicherungen.additional') },
+        { k: 'uvg', label: fl(t, 'versicherungen', 'uvg'), type: 'select', options: opts(t, 'versicherungen', 'uvg'), section: t('sections.versicherungen.additional'), orientation: or(t, 'uvg') },
         { k: 'liabilityInsurance', label: fl(t, 'versicherungen', 'liabilityInsurance'), type: 'select', options: opts(t, 'versicherungen', 'liabilityInsurance') },
         { k: 'liabilityAmount', label: fl(t, 'versicherungen', 'liabilityAmount'), type: 'currency' },
         { k: 'householdInsurance', label: fl(t, 'versicherungen', 'householdInsurance'), type: 'select', options: opts(t, 'versicherungen', 'householdInsurance'), section: t('sections.versicherungen.property'), secondary: true },
@@ -153,7 +160,7 @@ export function getChapters(t) {
         { k: 'cyberInsurance', label: fl(t, 'versicherungen', 'cyberInsurance'), type: 'select', options: opts(t, 'versicherungen', 'cyberInsurance'), secondary: true },
         { k: 'autoInsurance', label: fl(t, 'versicherungen', 'autoInsurance'), type: 'select', options: opts(t, 'versicherungen', 'autoInsurance'), section: t('sections.versicherungen.mobility'), secondary: true },
         { k: 'autoInsuranceAmount', label: fl(t, 'versicherungen', 'autoInsuranceAmount'), type: 'currency', secondary: true },
-        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social') },
+        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social'), orientation: or(t, 'ahv') },
       ],
       docs: [
         { k: 'kkcard', label: dl(t, 'versicherungen', 'kkcard') },
@@ -176,7 +183,7 @@ export function getChapters(t) {
         { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', section: t('sections.ausbildung.work') },
         { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text' },
         { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date' },
-        { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit') },
+        { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit'), orientation: or(t, 'bewilligung_b') },
         { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text' },
         { k: 'languages', label: fl(t, 'ausbildung', 'languages'), type: 'textarea', section: t('sections.ausbildung.languages') },
       ],
@@ -197,7 +204,7 @@ export function getChapters(t) {
         { k: 'taxFillingDeadline', label: fl(t, 'behoerden', 'taxFillingDeadline'), type: 'date' },
         { k: 'pendingTaxReturns', label: fl(t, 'behoerden', 'pendingTaxReturns'), type: 'text' },
         { k: 'registryOffice', label: fl(t, 'behoerden', 'registryOffice'), type: 'text', section: t('sections.behoerden.legal') },
-        { k: 'betreibungsStatus', label: fl(t, 'behoerden', 'betreibungsStatus'), type: 'select', options: opts(t, 'behoerden', 'betreibungsStatus') },
+        { k: 'betreibungsStatus', label: fl(t, 'behoerden', 'betreibungsStatus'), type: 'select', options: opts(t, 'behoerden', 'betreibungsStatus'), orientation: or(t, 'betreibung') },
         { k: 'courtCases', label: fl(t, 'behoerden', 'courtCases'), type: 'select', options: opts(t, 'behoerden', 'courtCases') },
         { k: 'legalRepresentative', label: fl(t, 'behoerden', 'legalRepresentative'), type: 'text', section: t('sections.behoerden.representation') },
         { k: 'representativePhone', label: fl(t, 'behoerden', 'representativePhone'), type: 'tel' },
