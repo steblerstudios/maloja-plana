@@ -80,7 +80,7 @@ export const DocumentTresor = ({
 
   const chapterList = chapters || [];
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
 
     // Vault fill indicator
@@ -166,7 +166,7 @@ export const DocumentTresor = ({
             padding: '12px',
             background: palette.up,
             borderRadius: '6px',
-            border: '2px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
+            border: '1px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
             display: 'grid',
             gridTemplateColumns: '1fr auto',
             gap: '12px'
@@ -251,7 +251,9 @@ export const DocumentTresor = ({
           )
         );
       })
-    )
+    ),
+
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 

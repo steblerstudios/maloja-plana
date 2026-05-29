@@ -208,7 +208,7 @@ export const ZipExport = ({ palette, t, data, documents }) => {
     : backupStatus?.type === 'error' ? palette.rose
     : palette.gold;
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+  return React.createElement('div', { style: { maxWidth: '720px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
 
     // Left column: existing export + new backup export
     React.createElement('div', null,
@@ -232,7 +232,7 @@ export const ZipExport = ({ palette, t, data, documents }) => {
         ),
 
         // Export formats
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', marginBottom: '16px', border: '2px solid ' + palette.gold } },
+        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', marginBottom: '16px', border: '1px solid ' + palette.border } },
           React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '12px' } }, '↙ ' + t('zipExport.exportFormats')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px' } },
             React.createElement('button', {
