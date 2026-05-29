@@ -330,6 +330,7 @@ const AppInner = () => {
         palette, t,
         chapter: chapters[activeChapter],
         data: data[chapters[activeChapter].key] || {},
+        allData: data,
         onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
         onAddDocument: handleAddDocument
       }),
