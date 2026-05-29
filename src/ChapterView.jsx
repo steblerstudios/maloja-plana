@@ -6,7 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAddDocument }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
@@ -240,6 +240,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           style: inputStyle
         }),
         field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation),
         error && React.createElement('div', { style: errorStyle }, error)
       );
     }
@@ -350,7 +351,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
             style: { ...inputStyle, flex: 1 }
           })
         ),
-        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint)
+        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation)
       );
     }
 
@@ -371,7 +373,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
           React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
           options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
         ),
-        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint)
+        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation)
       );
     }
 
@@ -528,6 +531,29 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, onUpdate, onAdd
         }, '□ ' + tr('notfallSummary.saveCard'))
       )
     ),
+
+    // ─── Contextual orientation hints (Helvetia layer) ──────
+    // IPV: shown in finanzen when income + canton exist
+    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
+      React.createElement('div', {
+        style: {
+          marginBottom: '16px', padding: '12px 14px',
+          background: palette.sage + '10', borderRadius: '8px',
+          border: '1px solid ' + palette.sage + '30',
+          fontSize: text.sm, color: palette.sage, lineHeight: leading.relaxed,
+        }
+      }, '○ ' + tr('orientation.contextIpv')),
+
+    // Familienzulagen: shown in basis when children exist
+    chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
+      React.createElement('div', {
+        style: {
+          marginBottom: '16px', padding: '12px 14px',
+          background: palette.sage + '10', borderRadius: '8px',
+          border: '1px solid ' + palette.sage + '30',
+          fontSize: text.sm, color: palette.sage, lineHeight: leading.relaxed,
+        }
+      }, '○ ' + tr('orientation.contextFamilienzulagen')),
 
     // Tabs
     React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid ' + palette.border, paddingBottom: '12px' } },
