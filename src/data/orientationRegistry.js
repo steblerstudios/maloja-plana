@@ -13,6 +13,7 @@
 export const ORIENTATION_ENTRIES = [
   // ─── Sozialversicherungen (1. Säule) ─────────────────
   { key: 'ahv',        chapter: 'basis',          fieldKey: 'ahv',              priority: 'p0' },
+  { key: 'ahvBeitrag', chapter: 'versicherungen', fieldKey: 'ahvContribution', priority: 'p0' },
   { key: 'alv',        chapter: 'finanzen',       fieldKey: null,               priority: 'p1' },
   { key: 'iv',         chapter: null,             fieldKey: null,               priority: 'p2' },
   { key: 'eo',         chapter: null,             fieldKey: null,               priority: 'p2' },
