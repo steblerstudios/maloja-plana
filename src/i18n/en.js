@@ -411,6 +411,51 @@ export default {
     localOnly: 'Your data stays on this device.',
   },
 
+  legal: {
+    title: 'Legal',
+    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint' },
+    footerLink: 'Privacy & Legal',
+    lastUpdated: 'As of: May 2026. This page is updated when significant changes occur.',
+    privacy: {
+      localTitle: 'Local data storage',
+      local1: 'Maloja Plana stores all your data exclusively on your device — in your browser\'s localStorage and IndexedDB.',
+      local2: 'No data is transmitted to any server, cloud service, or third party.',
+      local3: 'There is no user account. You do not need to register.',
+      noServerTitle: 'No server, no backend',
+      noServer1: 'Maloja Plana runs entirely in your browser. There is no server that receives or processes your data.',
+      noServer2: 'The application works without an internet connection.',
+      backupTitle: 'Backups',
+      backup1: 'Backups are stored locally in your browser. You can export your data as a file at any time. This file only leaves your device if you actively share it.',
+      deletionTitle: 'Data deletion',
+      deletion1: 'You can delete your data at any time by clearing your browser data. There are no server-side copies.',
+      analyticsTitle: 'Analytics and tracking',
+      analytics1: 'Maloja Plana uses Vercel Speed Insights for anonymous performance measurement. No personal data is collected.',
+    },
+    terms: {
+      scopeTitle: 'Scope',
+      scope1: 'Maloja Plana is a personal organisation tool. It helps you organise information about your life in Switzerland.',
+      scope2: 'The application is under active development. Features may change.',
+      noAdviceTitle: 'No legal or financial advice',
+      noAdvice1: 'Maloja Plana does not provide legal advice, financial advice, or medical advice.',
+      noAdvice2: 'Calculations (budget, social assistance, premium reduction, taxes) are for orientation only. They may differ from actual entitlements.',
+      noAdvice3: 'Please verify all information with your responsible authority or a specialist.',
+      accuracyTitle: 'Accuracy',
+      accuracy1: 'Swiss regulations (SKOS, KVG, AHV, BVG, EL) are represented to the best of our knowledge but may be outdated or incomplete.',
+      accuracy2: 'Cantonal differences are only partially covered.',
+      responsibilityTitle: 'Personal responsibility',
+      responsibility1: 'You are responsible for verifying the accuracy of your information and the currency of your documents. Maloja Plana assumes no liability for decisions made based on the displayed information.',
+    },
+    imprint: {
+      operatorTitle: 'Operator',
+      operator1: '[Name / Organisation — Placeholder]',
+      operator2: '[Address — Placeholder]',
+      contactTitle: 'Contact',
+      contact1: '[Email — Placeholder]',
+      projectTitle: 'Project',
+      project1: 'Maloja Plana is an open-source project under development. The source code is publicly available.',
+    },
+  },
+
   tresor: {
     title: 'Document vault',
     active: 'Active',
@@ -924,12 +969,9 @@ export default {
   },
 
   alpha: {
-    title: 'Alpha version',
-    intro: 'This is an early version of Maloja Plana. Some calculations are still being validated. Known limitations:',
-    skosNote: 'Social assistance (SKOS) calculations for households with children are being revised',
-    bvgNote: 'BVG/AHV amounts are shown as reference values when net salary is used',
-    kkNote: 'Insurance card scanner data is not yet linked to your saved chapters',
-    disclaimer: 'Please do not rely on this app as legal or financial advice. Always verify with your cantonal authority.',
+    title: 'Early version',
+    summary: 'Maloja Plana is under active development. Calculations are for orientation only — not legal or financial advice.',
+    disclaimer: 'Please verify information with your cantonal authority or specialist. Your data stays entirely on this device.',
   },
 
   unterlagen: {

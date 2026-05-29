@@ -411,6 +411,51 @@ export default {
     localOnly: 'I tuoi dati restano su questo dispositivo.',
   },
 
+  legal: {
+    title: 'Note legali',
+    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum' },
+    footerLink: 'Privacy & Note legali',
+    lastUpdated: 'Aggiornato: maggio 2026. Questa pagina viene aggiornata in caso di modifiche significative.',
+    privacy: {
+      localTitle: 'Archiviazione locale dei dati',
+      local1: 'Maloja Plana archivia tutti i tuoi dati esclusivamente sul tuo dispositivo — nel localStorage e nell\'IndexedDB del tuo browser.',
+      local2: 'Nessun dato viene trasmesso a server, servizi cloud o terzi.',
+      local3: 'Non esiste un account utente. Non devi registrarti.',
+      noServerTitle: 'Nessun server, nessun backend',
+      noServer1: 'Maloja Plana funziona interamente nel tuo browser. Nessun server riceve o elabora i tuoi dati.',
+      noServer2: 'L\'applicazione funziona senza connessione internet.',
+      backupTitle: 'Backup',
+      backup1: 'I backup vengono salvati localmente nel browser. Puoi esportare i tuoi dati come file in qualsiasi momento. Questo file lascia il tuo dispositivo solo se lo condividi attivamente.',
+      deletionTitle: 'Cancellazione dei dati',
+      deletion1: 'Puoi cancellare i tuoi dati in qualsiasi momento eliminando i dati del browser. Non esistono copie lato server.',
+      analyticsTitle: 'Analisi e tracciamento',
+      analytics1: 'Maloja Plana utilizza Vercel Speed Insights per la misurazione anonima delle prestazioni. Non vengono raccolti dati personali.',
+    },
+    terms: {
+      scopeTitle: 'Ambito di applicazione',
+      scope1: 'Maloja Plana è uno strumento di organizzazione personale. Ti aiuta a organizzare le informazioni relative alla tua vita in Svizzera.',
+      scope2: 'L\'applicazione è in fase di sviluppo attivo. Le funzionalità possono cambiare.',
+      noAdviceTitle: 'Nessuna consulenza legale o finanziaria',
+      noAdvice1: 'Maloja Plana non fornisce consulenza legale, finanziaria o medica.',
+      noAdvice2: 'I calcoli (budget, assistenza sociale, riduzione dei premi, imposte) servono esclusivamente come orientamento. Possono differire dai diritti effettivi.',
+      noAdvice3: 'Verifica tutte le informazioni presso la tua autorità competente o uno specialista.',
+      accuracyTitle: 'Accuratezza',
+      accuracy1: 'Le normative svizzere (COSAS, LAMal, AVS, LPP, PC) sono rappresentate al meglio delle nostre conoscenze, ma possono essere obsolete o incomplete.',
+      accuracy2: 'Le differenze cantonali sono considerate solo parzialmente.',
+      responsibilityTitle: 'Responsabilità personale',
+      responsibility1: 'Sei responsabile della verifica dell\'accuratezza delle tue informazioni e dell\'attualità dei tuoi documenti. Maloja Plana non si assume alcuna responsabilità per decisioni prese sulla base delle informazioni visualizzate.',
+    },
+    imprint: {
+      operatorTitle: 'Gestore',
+      operator1: '[Nome / Organizzazione — Segnaposto]',
+      operator2: '[Indirizzo — Segnaposto]',
+      contactTitle: 'Contatto',
+      contact1: '[E-mail — Segnaposto]',
+      projectTitle: 'Progetto',
+      project1: 'Maloja Plana è un progetto open source in fase di sviluppo. Il codice sorgente è accessibile pubblicamente.',
+    },
+  },
+
   tresor: {
     title: 'Archivio documenti',
     active: 'Attivi',
@@ -924,12 +969,9 @@ export default {
   },
 
   alpha: {
-    title: 'Versione alpha',
-    intro: 'Questa è una versione preliminare di Maloja Plana. Alcuni calcoli sono ancora in fase di verifica. Limitazioni note:',
-    skosNote: 'I calcoli dell\'assistenza sociale (COSAS) per nuclei familiari con figli sono in fase di revisione',
-    bvgNote: 'Gli importi LPP/AVS sono mostrati come valori di riferimento quando si utilizza il salario netto',
-    kkNote: 'I dati dello scanner assicurativo non sono ancora collegati ai capitoli salvati',
-    disclaimer: 'Non utilizzare questa app come consulenza legale o finanziaria. Verifica sempre presso la tua autorità cantonale.',
+    title: 'Versione preliminare',
+    summary: 'Maloja Plana è in fase di sviluppo. I calcoli servono come orientamento — non sostituiscono una consulenza legale o finanziaria.',
+    disclaimer: 'Verifica le informazioni presso la tua autorità cantonale o uno specialista. I tuoi dati restano interamente su questo dispositivo.',
   },
 
   unterlagen: {
