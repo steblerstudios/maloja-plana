@@ -52,10 +52,11 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   };
 
   const statusButtonStyle = {
-    padding: '10px 16px', border: '2px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px'
+    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '12px'
   };
 
-  return React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
+  return React.createElement('div', { style: { maxWidth: '720px' } },
+   React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
@@ -78,7 +79,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
       React.createElement('h3', { style: { fontSize: '14px', fontWeight: '600', marginBottom: '12px' } }, t('organ.organsAndTissue')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '16px' } },
-        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: '8px', padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: '6px', cursor: 'pointer', border: '2px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: '12px' } },
+        organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: '8px', padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: '6px', cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: '12px' } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
           org.label
         ))
@@ -117,8 +118,10 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
           )
         )
       )
-    )
-  );
+    ),
+
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+  ));
 };
 
 export default OrganDonation;

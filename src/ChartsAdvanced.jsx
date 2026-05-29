@@ -84,7 +84,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   const hasData = income > 0 || rent > 0 || insurance > 0;
 
   if (!hasData) {
-    return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
       React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
         React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'finanzen', size: 28 })),
@@ -94,7 +94,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
     );
   }
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
 
     React.createElement(PieChart, {
@@ -121,7 +121,9 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
       ],
       colors: [palette.rose, palette.gold, palette.sky, palette.sage],
       title: t('budgetSync.expenses') + ' (CHF' + t('common.perMonth') + ')'
-    })
+    }),
+
+    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 

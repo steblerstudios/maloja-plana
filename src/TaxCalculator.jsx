@@ -67,7 +67,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
     fontSize: '12px'
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'money', size: 20 }), t('tax.title')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' } },
@@ -104,31 +104,31 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, t('tax.grossIncome')),
-          React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, 'CHF ' + income.toFixed(0))
+          React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.text } }, 'CHF ' + income.toFixed(0))
         ),
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, t('common.total') + ' (-)'),
-          React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sky } }, '- CHF ' + (income - taxableIncome).toFixed(0))
+          React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.text } }, '- CHF ' + (income - taxableIncome).toFixed(0))
         ),
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '2px solid ' + palette.sand } },
+        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, t('tax.taxableIncome')),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.sand } }, 'CHF ' + taxableIncome.toFixed(0))
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0))
         ),
 
-        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.rose + '22', borderRadius: '6px', border: '2px solid ' + palette.rose } },
+        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, t('tax.estimatedTax') + ' (~' + (income > 0 ? ((estimatedTax / income) * 100).toFixed(1) : '0') + '%)'),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.rose } }, '~ CHF ' + estimatedTax.toFixed(0))
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, '~ CHF ' + estimatedTax.toFixed(0))
         ),
 
-        React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '2px solid ' + palette.sage } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px' } }, t('tax.netIncome')),
-          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.sage } }, 'CHF ' + (income - estimatedTax).toFixed(0))
+          React.createElement('div', { style: { fontSize: '18px', fontWeight: '600', color: palette.text } }, 'CHF ' + (income - estimatedTax).toFixed(0))
         )
       )
     ),

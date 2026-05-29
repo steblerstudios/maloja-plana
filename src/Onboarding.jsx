@@ -77,7 +77,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               onClick: () => { setLanguage(lang); setStep(1); },
               style: {
                 padding: '16px 12px', borderRadius: '10px', cursor: 'pointer',
-                border: '2px solid ' + palette.border, background: palette.up,
+                border: '1px solid ' + palette.border, background: palette.up,
                 color: palette.text, fontSize: '15px', fontWeight: '600',
                 fontFamily: 'DM Sans, sans-serif',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
