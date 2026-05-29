@@ -457,27 +457,32 @@ export default {
   },
 
   orientation: {
+    // ─── P0: Visible on fields ─────────────────────────────
     ahv: 'Your AHV number stays with you throughout your working life. You need it for employers, insurers, and authorities.',
-    bvg: 'Occupational pension (2nd pillar) is funded jointly by you and your employer. It supplements your AHV retirement pension.',
-    kvg: 'In Switzerland, basic health insurance (KVG) is mandatory. You choose your insurer and model yourself.',
+    ahvBeitrag: 'The AHV secures your retirement pension. Your contribution is deducted directly from your salary — your employer pays the other half.',
+    bvg: 'Your pension fund is financed jointly by you and your employer. It ensures you receive more than just the basic AHV pension in retirement.',
+    kvg: 'In Switzerland, basic health insurance is mandatory. You choose your insurer and your model yourself.',
     franchise: 'The franchise is the amount you pay yourself each year before your health insurer covers costs. Higher franchise = lower premium.',
-    uvg: 'Accident insurance (UVG) is covered through your employer if you are employed. Self-employed people must insure privately.',
-    saeule3a: 'Private pension (Pillar 3a) is voluntary and tax-deductible. Maximum contribution 2026: CHF 7,258 (employees).',
-    ipv: 'Depending on your income and canton, you may be eligible for a health insurance premium reduction (IPV).',
-    familienzulagen: 'In Switzerland, family allowances exist for children. The amount varies by canton — at least CHF 200 per child per month.',
+    uvg: 'If you are employed, your accident insurance is covered through your employer.',
+    saeule3a: 'With Pillar 3a you save voluntarily for later — and save on taxes at the same time.',
     betreibung: 'The debt collection register is like a financial reputation in Switzerland. Landlords, employers, and banks often check it.',
-    bewilligung_b: 'Permit B (residence permit): Temporary, must be renewed regularly. Entitles you to work and reside in Switzerland.',
-    bewilligung_c: 'Permit C (settlement permit): Permanent, no renewal needed. Largely the same rights as Swiss citizens.',
-    el: 'Supplementary benefits (EL) top up AHV or IV pensions when income does not cover living costs.',
-    alv: 'Unemployment insurance (ALV) protects you in case of job loss. Contributions are deducted directly from your salary.',
-    rav: 'The Regional Employment Centre (RAV) is your contact point when unemployed. Register there on your first day.',
+    bewilligung_b: 'Permit B is temporary. Remember to renew it in time — your municipality will inform you about the process.',
+    // ─── P0: Context hints (data-driven) ───────────────────
+    contextIpv: 'Depending on your income, you may be eligible for a reduction on your health insurance premium. Check with your municipality or canton.',
+    contextFamilienzulagen: 'You are entitled to family allowances for your children. The amount depends on the canton. Your employer can help you with this.',
+    // ─── P1: Prepared, not yet visible ─────────────────────
+    ipv: 'Depending on your income and canton, you may be eligible for a reduction on your health insurance costs.',
+    familienzulagen: 'In Switzerland, family allowances exist for children. The amount varies by canton — at least CHF 200 per child per month.',
+    bewilligung_c: 'Permit C is permanent. You do not need to renew it and you have largely the same rights as Swiss citizens.',
+    el: 'Supplementary benefits help when your AHV or IV pension is not enough to live on. Your municipality can tell you if you are eligible.',
+    alv: 'Unemployment insurance protects you in case of job loss. Contributions are deducted directly from your salary.',
+    rav: 'The RAV (regional employment office) is your contact point when unemployed. Register there on your first day.',
     skos: 'SKOS guidelines determine social assistance levels. Each canton applies them slightly differently.',
-    verlustschein: 'A certificate of loss means: a debt collection was completed but the claim remains — for 20 years.',
-    selbstbehalt: 'After reaching the franchise, you pay 10% of costs yourself (co-payment), up to CHF 700 per year.',
     iv: 'Disability insurance (IV) supports people permanently affected by illness or accident.',
-    eo: 'Income compensation (EO) covers lost earnings during military service, civil service, or maternity.',
-    contextIpv: 'You have entered your income and canton. Depending on the amount, a premium reduction may be relevant for you. Check with your cantonal compensation office.',
-    contextFamilienzulagen: 'You have registered children. In Switzerland, family allowances apply — the amount depends on the canton. Ask your employer or the family compensation office.',
+    // ─── P2: Reference, later ──────────────────────────────
+    selbstbehalt: 'On top of the franchise, you pay 10% of medical costs yourself — this is called the co-payment. Maximum CHF 700 per year.',
+    verlustschein: 'A certificate of loss means: a debt collection is complete, but the debt remains — for 20 years.',
+    eo: 'During military service, civil service, or maternity, you receive compensation for lost earnings.',
   },
 
   tresor: {
