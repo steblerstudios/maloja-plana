@@ -107,6 +107,11 @@ export const SozialhilfeView = ({ palette, t, data }) => {
       )
     ),
 
+    // Orientation note
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md, fontStyle: 'italic' } },
+      '○ ' + t('sozialhilfe.orientationNote')
+    ),
+
     // SKOS table
     React.createElement('details', { style: { marginBottom: '16px' } },
       React.createElement('summary', { style: { cursor: 'pointer', fontSize: '12px', fontWeight: '600', color: palette.mid, padding: '8px 0' } }, '◰ ' + t('sozialhilfe.skosTable')),

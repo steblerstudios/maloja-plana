@@ -46,7 +46,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   };
 
   const handleGenerateQR = () => {
-    const validation = validateKKData(kkData);
+    const validation = validateKKData(kkData, t);
     if (!validation.valid) return;
     const qrData = generateKKQRCode(kkData);
     setQRCode(qrData);
@@ -57,7 +57,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   };
 
   const handleSave = () => {
-    const validation = validateKKData(kkData);
+    const validation = validateKKData(kkData, t);
     if (!validation.valid) return;
     onSave(kkData);
     setKKData({ insurer: '', cardNumber: '', holder: '', ahv: '', franchise: '', model: '' });
@@ -92,6 +92,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       ),
 
       scanMode === 'upload' && React.createElement('div', null,
+        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '8px', fontStyle: 'italic' } }, '○ ' + t('kkScanner.scanRequiresInternet')),
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: '8px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
           React.createElement('div', { style: { fontSize: '18px', marginBottom: '4px' } }, '○'),

@@ -661,6 +661,7 @@ export default {
     step3: 'Mietvertrag und KK-Police bereithalten',
     step4: 'AHV/BVG-Beiträge werden ggf. übernommen',
     step5: 'EL-Antrag bei AHV-Zweigstelle prüfen',
+    orientationNote: 'Diese Berechnung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.',
   },
 
   tax: {
@@ -769,6 +770,10 @@ export default {
     dataPreview: 'Daten-Vorschau',
     scanSuccess: 'Scan erfolgreich',
     scanForEmergency: 'Zum Notfall-Pass scannen',
+    errorNoInsurer: 'Versicherer nicht erkannt',
+    errorCardNumber: 'Kartennummer ungültig',
+    errorAhvFormat: 'AHV-Format ungültig',
+    scanRequiresInternet: 'Scannen benötigt eine Internetverbindung. Du kannst die Daten auch manuell eingeben.',
   },
 
   budgetImport: {
