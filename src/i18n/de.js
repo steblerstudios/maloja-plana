@@ -455,6 +455,26 @@ export default {
     },
   },
 
+  mirror: {
+    basis: {
+      person: 'Person',
+      contact: 'Kontakt',
+      name: 'Name',
+      dateOfBirth: 'Geburtsdatum',
+      canton: 'Kanton',
+      maritalStatus: 'Zivilstand',
+      household: 'Haushalt',
+      phone: 'Telefon',
+      email: 'E-Mail',
+      born: 'geboren {year}',
+      livingIn: 'wohnhaft im Kanton {canton}',
+      householdAlone: 'lebt alleine',
+      householdAdults: '{count} Erwachsene',
+      householdWithChild: '{count} Erwachsene, 1 Kind ({age})',
+      householdWithChildren: '{count} Erwachsene, {childCount} Kinder ({ages})',
+    },
+  },
+
   orientation: {
     // ─── P0: Sichtbar auf Feldern ──────────────────────────
     ahv: 'Deine AHV-Nummer begleitet Dich Dein ganzes Arbeitsleben. Du brauchst sie bei Arbeitgebern, Versicherungen und Behörden.',

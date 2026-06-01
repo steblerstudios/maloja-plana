@@ -5,6 +5,7 @@ import {
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
+import MirrorCards from './MirrorCards.jsx';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -467,6 +468,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.body, color: palette.mid, marginTop: space.sm, fontStyle: 'italic', lineHeight: leading.normal } }, introText)
     ),
+
+    // Living mirror layer — life sentence + mirror cards
+    React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
     // Quiet emergency summary — only when data exists
     showSummary && React.createElement('div', {
