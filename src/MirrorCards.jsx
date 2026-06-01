@@ -19,12 +19,19 @@ function hasMinData(chapterKey, data) {
   return false;
 }
 
-function formatDate(dateStr, t) {
+const LOCALE_MAP = { de: 'de-CH', en: 'en-CH', fr: 'fr-CH', it: 'it-CH' };
+
+function getLocale() {
+  try { const lang = localStorage.getItem('or5_lang') || 'de'; return LOCALE_MAP[lang] || 'de-CH'; }
+  catch { return 'de-CH'; }
+}
+
+function formatDate(dateStr) {
   if (!dateStr) return null;
   try {
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return null;
-    return d.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' });
+    return d.toLocaleDateString(getLocale(), { day: 'numeric', month: 'long', year: 'numeric' });
   } catch {
     return null;
   }
@@ -227,7 +234,7 @@ function buildBasisSections(data, t) {
   const personRows = [];
   const fullName = [(data.firstName || ''), (data.lastName || '')].filter(Boolean).join(' ');
   if (fullName) personRows.push({ label: t('mirror.basis.name'), value: fullName });
-  if (data.dateOfBirth) personRows.push({ label: t('mirror.basis.dateOfBirth'), value: formatDate(data.dateOfBirth, t) });
+  if (data.dateOfBirth) personRows.push({ label: t('mirror.basis.dateOfBirth'), value: formatDate(data.dateOfBirth) });
   if (data.canton) personRows.push({ label: t('mirror.basis.canton'), value: getCantonName(data.canton, t) });
   if (data.maritalStatus) personRows.push({ label: t('mirror.basis.maritalStatus'), value: maritalLabel(data.maritalStatus, t) });
 
@@ -238,10 +245,9 @@ function buildBasisSections(data, t) {
     sections.push({ title: t('mirror.basis.person'), rows: personRows });
   }
 
-  // Section: Contact & Family
+  // Section: Contact (E-Mail excluded — no identity/mirror value)
   const contactRows = [];
   if (data.phone) contactRows.push({ label: t('mirror.basis.phone'), value: data.phone });
-  if (data.email) contactRows.push({ label: t('mirror.basis.email'), value: data.email });
 
   if (contactRows.length > 0) {
     sections.push({ title: t('mirror.basis.contact'), rows: contactRows });
@@ -257,7 +263,7 @@ function buildWohnenSections(data, t) {
   const homeRows = [];
   const addr = addressLine(data);
   if (addr) homeRows.push({ label: t('mirror.wohnen.address'), value: addr });
-  if (data.moveInDate) homeRows.push({ label: t('mirror.wohnen.moveInDate'), value: formatDate(data.moveInDate, t) });
+  if (data.moveInDate) homeRows.push({ label: t('mirror.wohnen.moveInDate'), value: formatDate(data.moveInDate) });
   const duration = calcDuration(data.moveInDate, t);
   if (duration) homeRows.push({ label: t('mirror.wohnen.duration'), value: duration });
   if (data.residenceType) {
