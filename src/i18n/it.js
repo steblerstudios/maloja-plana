@@ -456,6 +456,26 @@ export default {
     },
   },
 
+  mirror: {
+    basis: {
+      person: 'Persona',
+      contact: 'Contatto',
+      name: 'Nome',
+      dateOfBirth: 'Data di nascita',
+      canton: 'Cantone',
+      maritalStatus: 'Stato civile',
+      household: 'Nucleo familiare',
+      phone: 'Telefono',
+      email: 'E-mail',
+      born: 'nato/a nel {year}',
+      livingIn: 'residente nel Canton {canton}',
+      householdAlone: 'vive da solo/a',
+      householdAdults: '{count} adulti',
+      householdWithChild: '{count} adulti, 1 bambino/a ({age})',
+      householdWithChildren: '{count} adulti, {childCount} bambini ({ages})',
+    },
+  },
+
   orientation: {
     // ─── P0: Visibile sui campi ────────────────────────────
     ahv: 'Il tuo numero AVS ti accompagna per tutta la vita lavorativa. Ne hai bisogno presso datori di lavoro, assicurazioni e autorità.',
