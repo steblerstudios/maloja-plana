@@ -663,6 +663,10 @@ export default {
     step4: 'I contributi AVS/LPP possono essere coperti',
     step5: 'Verifica la richiesta di PC presso la cassa di compensazione AVS',
     orientationNote: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.',
+    householdAdults: 'Nucleo familiare: {count} adulto/i',
+    householdAdultsChildren: 'Nucleo familiare: {adults} adulto/i + {children} bambino/i',
+    childrenNote: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.',
+    childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
   },
 
   tax: {
@@ -682,6 +686,7 @@ export default {
     netIncome: 'Reddito netto (stima annuale)',
     saveData: 'Salva dati',
     disclaimer: 'Questo calcolo è una stima. Verifica con l\'autorità fiscale del tuo cantone per gli importi esatti.',
+    netIncomeNote: 'Proiezione basata sul tuo salario netto × 12. L\'onere fiscale effettivo può variare.',
   },
 
   schulden: {

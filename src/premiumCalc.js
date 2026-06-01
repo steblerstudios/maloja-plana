@@ -12,8 +12,8 @@ export const KVG_BRACKETS_2024 = [
   { income: 80000, single: 500, couple: 2000, child: 250 }
 ];
 
-export const calculatePremiumSubsidy = (grossIncome, deductions, childrenCount = 0, t, adults = 1) => {
-  const taxableIncome = Math.max(0, grossIncome - deductions);
+export const calculatePremiumSubsidy = (annualIncome, deductions, childrenCount = 0, t, adults = 1) => {
+  const taxableIncome = Math.max(0, annualIncome - deductions);
 
   let bracket = KVG_BRACKETS_2024[KVG_BRACKETS_2024.length - 1];
   for (const b of KVG_BRACKETS_2024) {
@@ -44,9 +44,9 @@ export const calculatePremiumSubsidy = (grossIncome, deductions, childrenCount =
 // Household-aware wrapper: extracts values from data object
 export const calculatePremiumSubsidyFromData = (data, t) => {
   const hh = getHouseholdInfo(data);
-  const grossIncome = Number(data?.finanzen?.monthlyIncome || 0) * 12;
+  const annualIncome = Number(data?.finanzen?.monthlyIncome || 0) * 12;
   const deductions = Number(data?.taxData?.totalDeductions || 0);
-  return calculatePremiumSubsidy(grossIncome, deductions, hh.childrenCount, t, hh.adults);
+  return calculatePremiumSubsidy(annualIncome, deductions, hh.childrenCount, t, hh.adults);
 };
 
 export const estimateTaxSavings = (subsidyAmount) => {
