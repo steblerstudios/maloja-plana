@@ -15,6 +15,7 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 function hasMinData(chapterKey, data) {
   if (chapterKey === 'basis') return Boolean(data.firstName);
   if (chapterKey === 'wohnen') return Boolean(data.address || data.city);
+  if (chapterKey === 'finanzen') return Boolean(data.monthlyIncome);
   return false;
 }
 
@@ -163,9 +164,57 @@ function buildWohnenSentence(data, t) {
   return parts.join(' ');
 }
 
+// ─── Finanzen ──────────────────────────────────────────────
+
+function sumExpenses(data, allData) {
+  const fields = ['monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance'];
+  let sum = 0;
+  fields.forEach(k => { sum += Number(data[k]) || 0; });
+  // Cross-chapter: rent + utilities from wohnen
+  sum += Number(allData?.wohnen?.rentAmount) || 0;
+  sum += Number(allData?.wohnen?.utilities) || 0;
+  // Cross-chapter: KK premium from versicherungen
+  sum += Number(allData?.versicherungen?.kkPremium) || 0;
+  return sum;
+}
+
+function employmentLabel(value, t) {
+  if (!value) return null;
+  return t('chapters.finanzen.fields.employmentType.options.' + value) || value;
+}
+
+function buildFinanzenSentence(data, allData, t) {
+  const income = formatCHF(data.monthlyIncome);
+  if (!income) return null;
+
+  const parts = [];
+
+  // First part: income + employer
+  if (data.employer) {
+    parts.push(t('mirror.finanzen.incomeAt', { income: income, employer: data.employer }) + '.');
+  } else {
+    parts.push(t('mirror.finanzen.incomeOnly', { income: income }) + '.');
+  }
+
+  // Second part: recorded expenses
+  const expSum = sumExpenses(data, allData);
+  if (expSum > 0) {
+    parts.push(t('mirror.finanzen.expensesRecorded', { amount: formatCHF(expSum) }) + '.');
+  }
+
+  // Third part: loans (only if > 0)
+  const loans = Number(data.loans) || 0;
+  if (loans > 0) {
+    parts.push(t('mirror.finanzen.loansOpen', { amount: formatCHF(loans) }) + '.');
+  }
+
+  return parts.join(' ');
+}
+
 function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'basis') return buildBasisSentence(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSentence(data, t);
+  if (chapterKey === 'finanzen') return buildFinanzenSentence(data, allData, t);
   return null;
 }
 
@@ -238,9 +287,61 @@ function buildWohnenSections(data, t) {
   return sections;
 }
 
-function buildMirrorSections(chapterKey, data, t) {
+function buildFinanzenSections(data, allData, t) {
+  const sections = [];
+
+  // Section: Einkommen
+  const incomeRows = [];
+  if (data.monthlyIncome) incomeRows.push({ label: t('mirror.finanzen.income'), value: formatCHF(data.monthlyIncome) + '/Mt.' });
+  if (data.employer) incomeRows.push({ label: t('mirror.finanzen.employer'), value: data.employer });
+  if (data.employmentType) incomeRows.push({ label: t('mirror.finanzen.employment'), value: employmentLabel(data.employmentType, t) });
+
+  if (incomeRows.length > 0) {
+    sections.push({ title: t('mirror.finanzen.incomeTitle'), rows: incomeRows });
+  }
+
+  // Section: Monatliche Ausgaben (own + cross-chapter)
+  const expRows = [];
+  // Cross-chapter: wohnen
+  const rentTotal = (Number(allData?.wohnen?.rentAmount) || 0) + (Number(allData?.wohnen?.utilities) || 0);
+  if (rentTotal > 0) expRows.push({ label: t('mirror.finanzen.housing'), value: formatCHF(rentTotal) + '/Mt.' });
+  // Cross-chapter: KK
+  if (allData?.versicherungen?.kkPremium) expRows.push({ label: t('mirror.finanzen.healthInsurance'), value: formatCHF(allData.versicherungen.kkPremium) + '/Mt.' });
+  // Own fields
+  if (data.monthlyTax) expRows.push({ label: t('mirror.finanzen.tax'), value: formatCHF(data.monthlyTax) + '/Mt.' });
+  if (data.groceries) expRows.push({ label: t('mirror.finanzen.groceries'), value: formatCHF(data.groceries) + '/Mt.' });
+  if (data.communication) expRows.push({ label: t('mirror.finanzen.communication'), value: formatCHF(data.communication) + '/Mt.' });
+  if (data.mobility) expRows.push({ label: t('mirror.finanzen.mobility'), value: formatCHF(data.mobility) + '/Mt.' });
+  if (data.otherInsurance) expRows.push({ label: t('mirror.finanzen.otherInsurance'), value: formatCHF(data.otherInsurance) + '/Mt.' });
+
+  if (expRows.length > 0) {
+    sections.push({ title: t('mirror.finanzen.expensesTitle'), rows: expRows });
+  }
+
+  // Section: Sparen & Vorsorge (only if data exists)
+  const savingsRows = [];
+  if (data.savingsGoal) savingsRows.push({ label: t('mirror.finanzen.savingsGoal'), value: formatCHF(data.savingsGoal) + '/Mt.' });
+  if (data.pension3a) savingsRows.push({ label: t('mirror.finanzen.pension3a'), value: formatCHF(data.pension3a) + '/J.' });
+
+  if (savingsRows.length > 0) {
+    sections.push({ title: t('mirror.finanzen.savingsTitle'), rows: savingsRows });
+  }
+
+  // Loans: only if > 0, no section — just a single row appended to expenses or standalone
+  const loans = Number(data.loans) || 0;
+  if (loans > 0) {
+    sections.push({ title: t('mirror.finanzen.loansTitle'), rows: [
+      { label: t('mirror.finanzen.loansOpen2'), value: formatCHF(loans) },
+    ]});
+  }
+
+  return sections;
+}
+
+function buildMirrorSections(chapterKey, data, t, allData) {
   if (chapterKey === 'basis') return buildBasisSections(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSections(data, t);
+  if (chapterKey === 'finanzen') return buildFinanzenSections(data, allData, t);
   return [];
 }
 
@@ -301,7 +402,7 @@ export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
   if (!hasMinData(chapterKey, data)) return null;
 
   const sentence = buildLifeSentence(chapterKey, data, allData, t);
-  const sections = buildMirrorSections(chapterKey, data, t);
+  const sections = buildMirrorSections(chapterKey, data, t, allData);
 
   if (!sentence && sections.length === 0) return null;
 
