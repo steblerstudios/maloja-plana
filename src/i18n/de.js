@@ -1193,4 +1193,14 @@ export default {
     docsIncluded: '{count} Dokumente hinterlegt',
     previewNote: 'Vorschau — so wird deine Lebensmappe aussehen.',
   },
+
+  beta: {
+    gateMessage: 'Diese App befindet sich in der geschlossenen Beta. Bitte gib den Zugangscode ein.',
+    codePlaceholder: 'Zugangscode',
+    codeWrong: 'Dieser Code ist leider nicht gültig.',
+    enter: 'Öffnen',
+    bannerLabel: 'Geschlossene Beta',
+    feedbackMail: 'Feedback per E-Mail',
+    feedbackForm: 'Feedback-Formular',
+  },
 };
