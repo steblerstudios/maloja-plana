@@ -91,6 +91,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Render a group section
   const renderGroup = (group) => {
     const pct = groupPercent(group.total);
+    const singleField = group.items.length === 1;
     return React.createElement('div', { key: group.key, style: { marginBottom: '4px' } },
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
@@ -104,8 +105,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           }, pct)
         )
       ),
-      // Individual items (no percentages)
-      group.items.map(renderItem)
+      // Individual items — skip when group has only one field (avoids redundant line)
+      !singleField && group.items.map(renderItem)
     );
   };
 
@@ -149,6 +150,14 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // Separator
     React.createElement('div', { style: separatorStyle }),
+
+    // === Empty state guidance (only when no income) ===
+    budget.income <= 0 && React.createElement('div', {
+      style: {
+        padding: '12px 14px', background: palette.up, borderRadius: '6px',
+        fontSize: '13px', lineHeight: '1.6', color: palette.mid, marginBottom: '12px'
+      }
+    }, t('budgetSync.emptyStateGuide')),
 
     // === Grouped expenses ===
     groupData.map(renderGroup),

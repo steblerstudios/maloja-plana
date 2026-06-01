@@ -584,6 +584,7 @@ export default {
     notRecorded: 'Noch nicht erfasst',
     emptyNote: '{count} Kategorien sind noch nicht erfasst.',
     emptyNoteSingle: '1 Kategorie ist noch nicht erfasst.',
+    emptyStateGuide: 'Starte mit deinem monatlichen Einkommen im Kapitel Finanzen. Viele Angaben werden automatisch aus anderen Kapiteln übernommen.',
     expensesOverview: 'Ausgaben-Übersicht',
     total: 'Total Ausgaben',
     annualView: 'Jahresansicht',
