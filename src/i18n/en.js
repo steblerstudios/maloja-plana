@@ -585,6 +585,7 @@ export default {
     notRecorded: 'Not yet recorded',
     emptyNote: '{count} categories not yet recorded.',
     emptyNoteSingle: '1 category not yet recorded.',
+    emptyStateGuide: 'Start with your monthly income in the Finance chapter. Many entries are filled in automatically from other chapters.',
     expensesOverview: 'Expenses overview',
     total: 'Total expenses',
     annualView: 'Annual view',

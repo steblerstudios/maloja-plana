@@ -584,6 +584,7 @@ export default {
     notRecorded: 'Pas encore saisi',
     emptyNote: '{count} catégories pas encore saisies.',
     emptyNoteSingle: '1 catégorie pas encore saisie.',
+    emptyStateGuide: 'Commencez par votre revenu mensuel dans le chapitre Finances. De nombreuses données sont reprises automatiquement des autres chapitres.',
     expensesOverview: 'Aperçu des dépenses',
     total: 'Total des dépenses',
     annualView: 'Vue annuelle',
