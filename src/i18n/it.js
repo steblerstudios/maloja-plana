@@ -585,6 +585,7 @@ export default {
     notRecorded: 'Non ancora registrato',
     emptyNote: '{count} categorie non ancora registrate.',
     emptyNoteSingle: '1 categoria non ancora registrata.',
+    emptyStateGuide: 'Inizia con il tuo reddito mensile nel capitolo Finanze. Molti dati vengono ripresi automaticamente dagli altri capitoli.',
     expensesOverview: 'Panoramica delle uscite',
     total: 'Totale uscite',
     annualView: 'Vista annuale',
