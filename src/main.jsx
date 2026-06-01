@@ -36,6 +36,7 @@ import NotificationSettings from './NotificationSettings.jsx';
 import { Onboarding, isOnboardingDone } from './Onboarding.jsx';
 import { syncDocumentReminders } from './utils/docReminders.js';
 import LegalView from './LegalView.jsx';
+import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
@@ -409,7 +410,24 @@ const AppInner = () => {
         alignItems: 'center',
       }
     },
-      React.createElement('span', { style: { pointerEvents: 'none' } }, t('trust.footer')),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel')),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('a', {
+        href: 'mailto:feedback@example.com?subject=Maloja%20Plana%20Beta%20Feedback',
+        style: {
+          color: palette.mid, fontSize: '10px', fontFamily: 'inherit',
+          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, t('beta.feedbackMail')),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('a', {
+        href: 'https://example.com/feedback',
+        target: '_blank', rel: 'noopener noreferrer',
+        style: {
+          color: palette.mid, fontSize: '10px', fontFamily: 'inherit',
+          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, t('beta.feedbackForm')),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: () => handleNavigate('legal'),
@@ -424,10 +442,12 @@ const AppInner = () => {
   );
 };
 
-// Wrap in I18nProvider + ErrorBoundary
+// Wrap in I18nProvider + ErrorBoundary + BetaGate
 const App = () => React.createElement(I18nProvider, null,
   React.createElement(ErrorBoundary, null,
-    React.createElement(AppInner)
+    React.createElement(BetaGate, null,
+      React.createElement(AppInner)
+    )
   )
 );
 
