@@ -127,9 +127,21 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       }
     }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
 
-    // === Income line ===
+    // === Income section ===
+    budget.incomeDetail.net > 0 && React.createElement('div', { style: itemLineStyle },
+      React.createElement('span', null, t('budgetSync.incomeNet')),
+      React.createElement('span', null, formatCHF(budget.incomeDetail.net * mult))
+    ),
+    budget.incomeDetail.familienzulagen > 0 && React.createElement('div', { style: itemLineStyle },
+      React.createElement('span', null, t('budgetSync.incomeFamilienzulagen')),
+      React.createElement('span', null, formatCHF(budget.incomeDetail.familienzulagen * mult))
+    ),
+    budget.incomeDetail.alimenteReceived > 0 && React.createElement('div', { style: itemLineStyle },
+      React.createElement('span', null, t('budgetSync.incomeAlimente')),
+      React.createElement('span', null, formatCHF(budget.incomeDetail.alimenteReceived * mult))
+    ),
     React.createElement('div', { style: { ...lineStyle, fontWeight: '600', fontSize: '14px' } },
-      React.createElement('span', null, t('budgetSync.income')),
+      React.createElement('span', null, t('budgetSync.totalIncome')),
       budget.income > 0
         ? React.createElement('span', null, formatCHF(budget.income * mult))
         : React.createElement('span', { style: emptyValueStyle }, t('budgetSync.notRecorded'))
@@ -140,6 +152,20 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // === Grouped expenses ===
     groupData.map(renderGroup),
+
+    // IPV relief (shown only when eligible)
+    budget.ipvRelief > 0 && budget.expenses.healthInsurance > 0 && React.createElement('div', {
+      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: '12px', lineHeight: '1.5' }
+    },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', color: palette.mid } },
+        React.createElement('span', null, t('budgetSync.ipvRelief')),
+        React.createElement('span', null, '− ' + formatCHF(budget.ipvRelief * mult))
+      ),
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: '600', marginTop: '4px', fontSize: '12px' } },
+        React.createElement('span', null, t('budgetSync.ipvEffective')),
+        React.createElement('span', null, formatCHF(Math.max(0, budget.expenses.healthInsurance - budget.ipvRelief) * mult))
+      )
+    ),
 
     // BVG/AHV reference note (if any exist)
     bvgAhvTotal > 0 && React.createElement('div', {

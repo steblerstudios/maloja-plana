@@ -1,6 +1,7 @@
 // Budget-Sync: Links data between chapters
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
+import { calculateIPV } from './config/cantonalData.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -10,11 +11,27 @@ export const BUDGET_GROUPS = [
   { key: 'living', fields: ['groceries', 'communication'] },
   { key: 'mobility', fields: ['mobility'] },
   { key: 'taxProvision', fields: ['tax', 'pension3a'] },
+  { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
 ];
 
 export const syncBudgetFromChapters = (data) => {
+  const netIncome = Number(data.finanzen?.monthlyIncome || 0);
+  const familienzulagen = Number(data.finanzen?.familienzulagen || 0);
+  const alimenteReceived = Number(data.finanzen?.alimenteReceived || 0);
+  const totalIncome = netIncome + familienzulagen + alimenteReceived;
+
+  // IPV relief (reduces health insurance cost, not an income)
+  const ipv = calculateIPV(data);
+  const ipvRelief = ipv.eligible ? ipv.amount : 0;
+
   const budget = {
-    income: Number(data.finanzen?.monthlyIncome || 0),
+    income: totalIncome,
+    incomeDetail: {
+      net: netIncome,
+      familienzulagen,
+      alimenteReceived,
+    },
+    ipvRelief,
     expenses: {}
   };
 
@@ -37,6 +54,8 @@ export const syncBudgetFromChapters = (data) => {
   budget.expenses.mobility = Number(data.finanzen?.mobility || 0);
   budget.expenses.tax = Number(data.finanzen?.monthlyTax || 0);
   budget.expenses.pension3a = Number(data.finanzen?.pension3a || 0) / 12;
+  budget.expenses.debtPayments = Number(data.finanzen?.debtPayments || 0);
+  budget.expenses.alimentePaid = Number(data.finanzen?.alimentePaid || 0);
 
   // BVG and AHV are already deducted from net salary — keep for reference, exclude from totals
   const referenceOnly = { bvg: budget.expenses.bvg, ahv: budget.expenses.ahv };
@@ -112,7 +131,9 @@ export const createBudgetReport = (data, t) => {
     details: {
       income: {
         monthly: budget.income,
-        annual: budget.income * 12
+        annual: budget.income * 12,
+        detail: budget.incomeDetail,
+        ipvRelief: budget.ipvRelief,
       },
       expenses: {
         housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0) + (budget.expenses.buildingsInsurance || 0),

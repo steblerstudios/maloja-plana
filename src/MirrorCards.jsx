@@ -302,6 +302,9 @@ function buildFinanzenSections(data, allData, t) {
   if (data.employer) incomeRows.push({ label: t('mirror.finanzen.employer'), value: data.employer });
   if (data.employmentType) incomeRows.push({ label: t('mirror.finanzen.employment'), value: employmentLabel(data.employmentType, t) });
 
+  if (data.familienzulagen) incomeRows.push({ label: t('mirror.finanzen.familienzulagen'), value: formatCHF(data.familienzulagen) + '/Mt.' });
+  if (data.alimenteReceived) incomeRows.push({ label: t('mirror.finanzen.alimenteReceived'), value: formatCHF(data.alimenteReceived) + '/Mt.' });
+
   if (incomeRows.length > 0) {
     sections.push({ title: t('mirror.finanzen.incomeTitle'), rows: incomeRows });
   }
@@ -331,6 +334,15 @@ function buildFinanzenSections(data, allData, t) {
 
   if (savingsRows.length > 0) {
     sections.push({ title: t('mirror.finanzen.savingsTitle'), rows: savingsRows });
+  }
+
+  // Section: Verpflichtungen
+  const obligationRows = [];
+  if (data.debtPayments) obligationRows.push({ label: t('mirror.finanzen.debtPayments'), value: formatCHF(data.debtPayments) + '/Mt.' });
+  if (data.alimentePaid) obligationRows.push({ label: t('mirror.finanzen.alimentePaid'), value: formatCHF(data.alimentePaid) + '/Mt.' });
+
+  if (obligationRows.length > 0) {
+    sections.push({ title: t('mirror.finanzen.obligationsTitle'), rows: obligationRows });
   }
 
   // Loans: only if > 0, no section — just a single row appended to expenses or standalone
