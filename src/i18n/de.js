@@ -662,6 +662,10 @@ export default {
     step4: 'AHV/BVG-Beiträge werden ggf. übernommen',
     step5: 'EL-Antrag bei AHV-Zweigstelle prüfen',
     orientationNote: 'Diese Berechnung dient der Orientierung. Für eine verbindliche Einschätzung wende dich bitte an deine Gemeinde oder eine Fachstelle.',
+    householdAdults: 'Haushalt: {count} Erwachsene',
+    householdAdultsChildren: 'Haushalt: {adults} Erwachsene + {children} Kinder',
+    childrenNote: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.',
+    childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
   },
 
   tax: {
@@ -681,6 +685,7 @@ export default {
     netIncome: 'Nettoeinkommen (Jahres-Schätzung)',
     saveData: 'Daten speichern',
     disclaimer: 'Diese Berechnung ist eine Schätzung. Bitte prüfe die genauen Beträge bei Deiner kantonalen Steuerverwaltung.',
+    netIncomeNote: 'Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.',
   },
 
   schulden: {

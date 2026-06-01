@@ -663,6 +663,10 @@ export default {
     step4: 'AHV/BVG contributions may be covered',
     step5: 'Check EL application at AHV branch office',
     orientationNote: 'This calculation is for orientation only. For a binding assessment, please contact your municipality or a specialist office.',
+    householdAdults: 'Household: {count} adult(s)',
+    householdAdultsChildren: 'Household: {adults} adult(s) + {children} child(ren)',
+    childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
+    childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',
   },
 
   tax: {
@@ -682,6 +686,7 @@ export default {
     netIncome: 'Net income (annual estimate)',
     saveData: 'Save data',
     disclaimer: 'This calculation is an estimate. Please check with your cantonal tax authority for exact amounts.',
+    netIncomeNote: 'Projection based on your net salary × 12. Actual tax liability may differ.',
   },
 
   schulden: {
