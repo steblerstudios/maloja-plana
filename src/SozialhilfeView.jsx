@@ -39,7 +39,11 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
       React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
-      React.createElement('div', { style: { color: palette.mid } }, t('sozialhilfe.householdSize', { count: sozialhilfe.householdSize })),
+      React.createElement('div', { style: { color: palette.mid } },
+        sozialhilfe.childrenCount > 0
+          ? t('sozialhilfe.householdAdultsChildren', { adults: sozialhilfe.adults, children: sozialhilfe.childrenCount })
+          : t('sozialhilfe.householdAdults', { count: sozialhilfe.adults })
+      ),
       !canton && React.createElement('div', { style: { color: palette.rose, marginTop: '4px' } }, t('sozialhilfe.enterCanton'))
     ),
 
@@ -110,6 +114,13 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     // Orientation note
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md, fontStyle: 'italic' } },
       '○ ' + t('sozialhilfe.orientationNote')
+    ),
+
+    // Children context (only when children present)
+    sozialhilfe.childrenCount > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed } },
+      React.createElement('div', { style: { marginBottom: '4px' } }, '□ ' + t('sozialhilfe.childrenNote')),
+      sozialhilfe.children.some(c => c.age >= 16) &&
+        React.createElement('div', { style: { marginTop: '4px' } }, '□ ' + t('sozialhilfe.childrenEducationNote'))
     ),
 
     // SKOS table

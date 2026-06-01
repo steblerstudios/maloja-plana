@@ -662,6 +662,10 @@ export default {
     step4: 'Les cotisations AVS/LPP peuvent être prises en charge',
     step5: 'Vérifiez la demande de PC auprès de la caisse AVS',
     orientationNote: 'Ce calcul est donné à titre indicatif. Pour une évaluation contraignante, adressez-vous à votre commune ou à un service spécialisé.',
+    householdAdults: 'Ménage : {count} adulte(s)',
+    householdAdultsChildren: 'Ménage : {adults} adulte(s) + {children} enfant(s)',
+    childrenNote: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.',
+    childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
   },
 
   tax: {
@@ -681,6 +685,7 @@ export default {
     netIncome: 'Revenu net (estimation annuelle)',
     saveData: 'Enregistrer les données',
     disclaimer: 'Ce calcul est une estimation. Veuillez vérifier auprès de votre administration fiscale cantonale pour les montants exacts.',
+    netIncomeNote: 'Projection basée sur votre salaire net × 12. La charge fiscale réelle peut varier.',
   },
 
   schulden: {
