@@ -662,6 +662,7 @@ export default {
     step3: 'Have rental contract and insurance policy ready',
     step4: 'AHV/BVG contributions may be covered',
     step5: 'Check EL application at AHV branch office',
+    orientationNote: 'This calculation is for orientation only. For a binding assessment, please contact your municipality or a specialist office.',
   },
 
   tax: {
@@ -770,6 +771,10 @@ export default {
     dataPreview: 'Data preview',
     scanSuccess: 'Scan successful',
     scanForEmergency: 'Scan for emergency pass',
+    errorNoInsurer: 'Insurer not recognized',
+    errorCardNumber: 'Card number invalid',
+    errorAhvFormat: 'AHV number format invalid',
+    scanRequiresInternet: 'Scanning requires an internet connection. You can also enter the data manually.',
   },
 
   budgetImport: {

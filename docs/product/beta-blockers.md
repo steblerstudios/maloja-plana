@@ -1,6 +1,6 @@
 # Beta-Blocker — Maloja Plana
 
-> Stand: 2026-05-29
+> Stand: 2026-06-01
 > Zweck: Klare Priorisierung, was vor welcher Beta-Phase erledigt sein muss.
 > Regel: Nichts ist "erledigt", bis es tatsächlich verifiziert ist.
 
@@ -13,11 +13,17 @@
 | 1 | Legal sichtbar (Datenschutz, Nutzung, Impressum) | done | Ja — `LegalView.jsx`, Footer-Link, 4 Sprachen |
 | 2 | Alpha-Hinweis sauber (nicht alarmistisch, nicht dominant) | done | Ja — kompakter Banner, 2 Zeilen |
 | 3 | Datenschutzseite sichtbar und erreichbar | done | Ja — über Footer-Link "Datenschutz & Rechtliches" |
-| 4 | Berechnungen als Orientierung kennzeichnen | done | Ja — Alpha-Banner + Legal/Nutzungsbedingungen |
-| 5 | SKOS-Kinderlogik prüfen / klar einschränken | **offen** | Sophie muss mit Fachstelle abgleichen |
+| 4 | Berechnungen als Orientierung kennzeichnen | done | Ja — Alpha-Banner + Legal + Sozialhilfe-Orientierungshinweis direkt bei Resultaten |
+| 5 | SKOS-Kinderlogik prüfen / klar einschränken | **offen** | Blockiert von Household Model. Sophie muss mit Fachstelle abgleichen |
 | 6 | Impressum-Platzhalter füllen (Name, Adresse, Kontakt) | **offen** | Sophie muss Betreiberangaben eintragen |
-| 7 | Sozialhilfe-Disclaimer visuell prüfen | **offen** | Ist vorhanden, aber visuell möglicherweise zu leise |
-| 8 | Build grün + Smoke Test | done | Ja |
+| 7 | Sozialhilfe-Disclaimer visuell prüfen | done | Ja — Orientierungshinweis direkt nach Berechnungsergebnissen, ruhiger Ton, 4 Sprachen |
+| 8 | Build grün + Smoke Test | done | Ja — 634 KB dist, 178 KB gzipped |
+| 9 | Hardcoded German in cantonalData/premiumCalc | done | Ja — Commit `0ddb57b`, alle Kantonsnamen + IPV/SKOS/EL über i18n |
+| 10 | Hardcoded German in KKScanner-Validation | done | Ja — 3 Fehlermeldungen über i18n, 4 Sprachen |
+| 11 | QR-Code offline (Generation) | done | Ja — qrcodejs lokal gebundelt, Commit `77ad82a` |
+| 12 | QR-Scanner + OCR offline | **teilweise** | Graceful Fallback vorhanden, aber jsQR/Tesseract laden per CDN. Scanner als "benötigt Internet" gekennzeichnet, manueller Input funktioniert offline. |
+| 13 | jsPDF offline | **nicht relevant** | jsPDF in `helpers.js` wird von keinem aktiven Feature genutzt. Dossier-Export verwendet browser-native Print (HTML). CDN-Abhängigkeit ist toter Code. |
+| 14 | Helvetia Orientierungssätze (P0-Set) | done | AHV, BVG, KVG, Franchise, IPV, Säule 3a, Betreibung, Bewilligung B — Commit `ea2a9ac` |
 
 ---
 
@@ -25,14 +31,14 @@
 
 | # | Punkt | Status |
 |---|-------|--------|
-| 1 | Schweizer Orientierungssätze (Franchise, KVG, AHV, BVG) | offen — Phase 3 geplant |
-| 2 | Spiegelungsebenen pro Kapitel | offen — Phase 3 Architektur entworfen |
-| 3 | Mutter-Feedback vollständig rekonstruieren | offen — Template existiert, nicht ausgefüllt |
+| 1 | Schweizer Orientierungssätze (Franchise, KVG, AHV, BVG) | done — Helvetia Orientation Layer, Commit `ea2a9ac` |
+| 2 | Spiegelungsebenen pro Kapitel | done — Basis, Wohnen, Finanzen. Commits `e9fc6f8`, `ea75fd0`, `2f7d884` |
+| 3 | Mutter-Feedback vollständig rekonstruieren | offen — Template existiert, nicht ausgefüllt. Sophie-Aktion. |
 | 4 | Testpersonen wirklich durchführen | offen — Plan existiert, nicht durchgeführt |
-| 5 | Finanzen-Gesamtbild (kapitelübergreifend) | offen |
-| 6 | Budget-UX verbessern (Geduld/Finesse) | offen |
-| 7 | Empty States wärmer gestalten (FB-019) | offen |
-| 8 | Hardcoded German in Berechnungen fixen (FB-018) | offen |
+| 5 | Finanzen-Gesamtbild (kapitelübergreifend) | teilweise — Finanzen-Spiegelkarten zeigen Einkommen, Ausgaben, Sparen, Kredite. Budget Hardening steht aus. |
+| 6 | Budget-UX verbessern (Geduld/Finesse) | offen — blockiert von Brutto/Netto-Entscheidung + Household |
+| 7 | Empty States wärmer gestalten (FB-019) | offen — generische Texte existieren, aber nicht durchgehend eingesetzt |
+| 8 | Hardcoded German in Berechnungen fixen (FB-018) | done — Commits `0ddb57b`, `84006d0`. Restliche 3 Strings in kkScanner.js jetzt auch behoben. |
 
 ---
 

@@ -141,13 +141,13 @@ export const generateKKQRCode = (kkData) => {
   return qrData;
 };
 
-export const validateKKData = (data) => {
+export const validateKKData = (data, t) => {
   const errors = [];
 
-  if (!data.insurer) errors.push('Versicherer nicht erkannt');
-  if (!data.cardNumber || data.cardNumber.length < 10) errors.push('Kartennummer ungültig');
+  if (!data.insurer) errors.push(t ? t('kkScanner.errorNoInsurer') : 'Insurer not recognized');
+  if (!data.cardNumber || data.cardNumber.length < 10) errors.push(t ? t('kkScanner.errorCardNumber') : 'Card number invalid');
   if (data.ahv && !data.ahv.match(/756[\.\s]\d{4}[\.\s]\d{4}[\.\s]\d{2}/)) {
-    errors.push('AHV-Format ungültig');
+    errors.push(t ? t('kkScanner.errorAhvFormat') : 'AHV format invalid');
   }
 
   return {
