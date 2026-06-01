@@ -662,6 +662,7 @@ export default {
     step3: 'Tieni pronti il contratto di locazione e la polizza assicurativa',
     step4: 'I contributi AVS/LPP possono essere coperti',
     step5: 'Verifica la richiesta di PC presso la cassa di compensazione AVS',
+    orientationNote: 'Questo calcolo è puramente indicativo. Per una valutazione vincolante, rivolgiti al tuo comune o a un servizio specializzato.',
   },
 
   tax: {
@@ -770,6 +771,10 @@ export default {
     dataPreview: 'Anteprima dati',
     scanSuccess: 'Scansione riuscita',
     scanForEmergency: 'Scansione per tessera di emergenza',
+    errorNoInsurer: 'Assicuratore non riconosciuto',
+    errorCardNumber: 'Numero tessera non valido',
+    errorAhvFormat: 'Formato numero AVS non valido',
+    scanRequiresInternet: 'La scansione richiede una connessione internet. Puoi anche inserire i dati manualmente.',
   },
 
   budgetImport: {
