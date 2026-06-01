@@ -420,15 +420,6 @@ const AppInner = () => {
         }
       }, t('beta.feedbackMail')),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('a', {
-        href: 'https://example.com/feedback',
-        target: '_blank', rel: 'noopener noreferrer',
-        style: {
-          color: palette.mid, fontSize: '10px', fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, t('beta.feedbackForm')),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
         onClick: () => handleNavigate('legal'),
         style: {
