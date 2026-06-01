@@ -1194,4 +1194,14 @@ export default {
     docsIncluded: '{count} documents stored',
     previewNote: 'Preview — this is how your life folder will look.',
   },
+
+  beta: {
+    gateMessage: 'This app is in closed beta. Please enter the access code.',
+    codePlaceholder: 'Access code',
+    codeWrong: 'This code is not valid.',
+    enter: 'Open',
+    bannerLabel: 'Closed Beta',
+    feedbackMail: 'Feedback by email',
+    feedbackForm: 'Feedback form',
+  },
 };

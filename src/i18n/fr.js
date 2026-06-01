@@ -1193,4 +1193,14 @@ export default {
     docsIncluded: '{count} documents enregistrés',
     previewNote: 'Aperçu — voici à quoi ressemblera votre dossier de vie.',
   },
+
+  beta: {
+    gateMessage: 'Cette application est en bêta fermée. Veuillez entrer le code d\'accès.',
+    codePlaceholder: 'Code d\'accès',
+    codeWrong: 'Ce code n\'est pas valide.',
+    enter: 'Ouvrir',
+    bannerLabel: 'Bêta fermée',
+    feedbackMail: 'Feedback par e-mail',
+    feedbackForm: 'Formulaire de feedback',
+  },
 };

@@ -1194,4 +1194,14 @@ export default {
     docsIncluded: '{count} documenti salvati',
     previewNote: 'Anteprima — ecco come apparirà la tua cartella della vita.',
   },
+
+  beta: {
+    gateMessage: 'Questa app è in beta chiusa. Inserisci il codice di accesso.',
+    codePlaceholder: 'Codice di accesso',
+    codeWrong: 'Questo codice non è valido.',
+    enter: 'Apri',
+    bannerLabel: 'Beta chiusa',
+    feedbackMail: 'Feedback via e-mail',
+    feedbackForm: 'Modulo di feedback',
+  },
 };
