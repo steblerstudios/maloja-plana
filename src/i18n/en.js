@@ -456,6 +456,26 @@ export default {
     },
   },
 
+  mirror: {
+    basis: {
+      person: 'Person',
+      contact: 'Contact',
+      name: 'Name',
+      dateOfBirth: 'Date of birth',
+      canton: 'Canton',
+      maritalStatus: 'Marital status',
+      household: 'Household',
+      phone: 'Phone',
+      email: 'Email',
+      born: 'born {year}',
+      livingIn: 'living in the canton of {canton}',
+      householdAlone: 'lives alone',
+      householdAdults: '{count} adults',
+      householdWithChild: '{count} adults, 1 child ({age})',
+      householdWithChildren: '{count} adults, {childCount} children ({ages})',
+    },
+  },
+
   orientation: {
     // ─── P0: Visible on fields ─────────────────────────────
     ahv: 'Your AHV number stays with you throughout your working life. You need it for employers, insurers, and authorities.',
