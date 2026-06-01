@@ -13,9 +13,8 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 // ─── Data helpers ──────────────────────────────────────────
 
 function hasMinData(chapterKey, data) {
-  if (chapterKey === 'basis') {
-    return Boolean(data.firstName);
-  }
+  if (chapterKey === 'basis') return Boolean(data.firstName);
+  if (chapterKey === 'wohnen') return Boolean(data.address || data.city);
   return false;
 }
 
@@ -98,8 +97,75 @@ function buildBasisSentence(data, t) {
   return parts.join(' ');
 }
 
+// ─── Wohnen ────────────────────────────────────────────────
+
+function formatCHF(value) {
+  const num = Number(value);
+  if (!num || isNaN(num)) return null;
+  return "CHF " + num.toLocaleString('de-CH');
+}
+
+function calcDuration(moveInDate, t) {
+  if (!moveInDate) return null;
+  try {
+    const start = new Date(moveInDate);
+    if (isNaN(start.getTime())) return null;
+    const now = new Date();
+    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    if (totalMonths < 0) return null;
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    if (years === 0 && months === 0) return t('mirror.wohnen.durationUnder1');
+    if (years === 0) return t('mirror.wohnen.durationMonths', { months: String(months) });
+    if (months === 0) return t('mirror.wohnen.durationYears', { years: String(years) });
+    return t('mirror.wohnen.durationFull', { years: String(years), months: String(months) });
+  } catch {
+    return null;
+  }
+}
+
+function addressLine(data) {
+  const parts = [];
+  if (data.address) parts.push(data.address);
+  const plzCity = [(data.postalCode || ''), (data.city || '')].filter(Boolean).join(' ');
+  if (plzCity) parts.push(plzCity);
+  return parts.length > 0 ? parts.join(', ') : null;
+}
+
+function buildWohnenSentence(data, t) {
+  const addr = addressLine(data);
+  if (!addr) return null;
+
+  const parts = [];
+
+  // First part: address + optional duration
+  const duration = calcDuration(data.moveInDate, t);
+  if (duration) {
+    parts.push(addr + '. ' + t('mirror.wohnen.since', { duration: duration }) + '.');
+  } else {
+    parts.push(addr + '.');
+  }
+
+  // Second part: costs
+  const rent = formatCHF(data.rentAmount);
+  const utils = formatCHF(data.utilities);
+  if (rent && utils) {
+    parts.push(t('mirror.wohnen.rentAndUtils', { rent: rent, utilities: utils }) + '.');
+  } else if (rent) {
+    parts.push(t('mirror.wohnen.rentOnly', { rent: rent }) + '.');
+  }
+
+  // Third part: landlord
+  if (data.landlord) {
+    parts.push(t('mirror.wohnen.landlordLabel') + ': ' + data.landlord + '.');
+  }
+
+  return parts.join(' ');
+}
+
 function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'basis') return buildBasisSentence(data, t);
+  if (chapterKey === 'wohnen') return buildWohnenSentence(data, t);
   return null;
 }
 
@@ -135,14 +201,52 @@ function buildBasisSections(data, t) {
   return sections;
 }
 
+function buildWohnenSections(data, t) {
+  const sections = [];
+
+  // Section: Zuhause
+  const homeRows = [];
+  const addr = addressLine(data);
+  if (addr) homeRows.push({ label: t('mirror.wohnen.address'), value: addr });
+  if (data.moveInDate) homeRows.push({ label: t('mirror.wohnen.moveInDate'), value: formatDate(data.moveInDate, t) });
+  const duration = calcDuration(data.moveInDate, t);
+  if (duration) homeRows.push({ label: t('mirror.wohnen.duration'), value: duration });
+  if (data.residenceType) {
+    const label = t('chapters.wohnen.fields.residenceType.options.' + data.residenceType) || data.residenceType;
+    homeRows.push({ label: t('mirror.wohnen.residenceType'), value: label });
+  }
+
+  if (homeRows.length >= 1) {
+    sections.push({ title: t('mirror.wohnen.home'), rows: homeRows });
+  }
+
+  // Section: Kosten
+  const costRows = [];
+  if (data.rentAmount) costRows.push({ label: t('mirror.wohnen.rent'), value: formatCHF(data.rentAmount) + '/Mt.' });
+  if (data.utilities) costRows.push({ label: t('mirror.wohnen.utilities'), value: formatCHF(data.utilities) + '/Mt.' });
+
+  const rentNum = Number(data.rentAmount) || 0;
+  const utilsNum = Number(data.utilities) || 0;
+  if (rentNum > 0 && utilsNum > 0) {
+    costRows.push({ label: t('mirror.wohnen.totalCost'), value: formatCHF(rentNum + utilsNum) + '/Mt.', bold: true });
+  }
+
+  if (costRows.length > 0) {
+    sections.push({ title: t('mirror.wohnen.costs'), rows: costRows });
+  }
+
+  return sections;
+}
+
 function buildMirrorSections(chapterKey, data, t) {
   if (chapterKey === 'basis') return buildBasisSections(data, t);
+  if (chapterKey === 'wohnen') return buildWohnenSections(data, t);
   return [];
 }
 
 // ─── Render ────────────────────────────────────────────────
 
-function MirrorRow({ label, value, palette, isLast }) {
+function MirrorRow({ label, value, palette, isLast, bold }) {
   return React.createElement('div', {
     style: {
       display: 'flex',
@@ -154,10 +258,10 @@ function MirrorRow({ label, value, palette, isLast }) {
     }
   },
     React.createElement('span', {
-      style: { fontSize: text.sm, color: palette.mid, flexShrink: 0 }
+      style: { fontSize: text.sm, color: bold ? palette.text : palette.mid, flexShrink: 0, fontWeight: bold ? weight.semi : weight.normal }
     }, label),
     React.createElement('span', {
-      style: { fontSize: text.body, color: palette.text, textAlign: 'right' }
+      style: { fontSize: text.body, color: palette.text, textAlign: 'right', fontWeight: bold ? weight.semi : weight.normal }
     }, value || '—')
   );
 }
@@ -187,6 +291,7 @@ function MirrorSection({ title, rows, palette }) {
         value: row.value,
         palette: palette,
         isLast: idx === rows.length - 1,
+        bold: row.bold || false,
       })
     )
   );
