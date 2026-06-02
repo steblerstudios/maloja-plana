@@ -97,7 +97,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6', marginTop: 0, marginBottom: space.md } }, t('schulden.intro')),
+    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro')),
 
     // Tab Navigation
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.md, borderBottom: '1px solid ' + palette.border, paddingBottom: space.sm + 4 } },
