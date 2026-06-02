@@ -131,6 +131,8 @@ export default {
       title: 'Données personnelles',
       description: 'Votre identité et vos coordonnées',
       intro: 'Vos données personnelles sont la base. Commencez par votre nom et canton — le reste peut attendre.',
+      emptyState: 'Tes données personnelles — la base de tout le reste.',
+      emptyStateHint: 'Commence par ton prénom et ton canton de résidence.',
       icon: '◎',
       fields: {
         firstName: 'Prénom',
@@ -171,6 +173,8 @@ export default {
       title: 'Logement',
       description: 'Votre domicile, loyer et situation de logement',
       intro: 'Tout sur votre logement. Utile pour la déclaration d\'impôts, les assurances et les demandes de prestations.',
+      emptyState: 'Ton chez-toi — ta façon de vivre évolue avec le temps.',
+      emptyStateHint: 'Indique ton adresse ou ton loyer si tu les connais.',
       icon: '⌂',
       fields: {
         address: 'Rue et numéro',
@@ -196,6 +200,8 @@ export default {
       title: 'Finances',
       description: 'Vos revenus, épargne et coordonnées bancaires',
       intro: 'Une vue claire de votre situation financière. Utile pour le budget, les impôts et les demandes de subsides.',
+      emptyState: 'Un premier aperçu de ta situation financière.',
+      emptyStateHint: 'Ton revenu mensuel suffit pour commencer.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Revenu mensuel net (CHF)',
@@ -242,6 +248,8 @@ export default {
       title: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
       intro: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.',
+      emptyState: 'Tes assurances en un seul endroit — pour y voir clair et préparer le prochain changement.',
+      emptyStateHint: 'Commence par ton assurance maladie.',
       icon: '◰',
       fields: {
         kkInsurer: 'Caisse maladie',
@@ -280,6 +288,8 @@ export default {
       title: 'Formation et emploi',
       description: 'Vos qualifications et votre emploi',
       intro: 'Votre formation et expérience professionnelle. Utile pour le CV, les candidatures et les permis de travail.',
+      emptyState: 'Ton parcours professionnel — utile pour les candidatures et les autorisations.',
+      emptyStateHint: 'Indique ton métier actuel ou ta formation.',
       icon: '✦',
       fields: {
         schoolName: 'École / Université',
@@ -303,6 +313,8 @@ export default {
       title: 'Autorités et juridique',
       description: 'Impôts, affaires juridiques et documents officiels',
       intro: 'Vos contacts avec les autorités et affaires juridiques. Garde les délais importants et contacts ensemble.',
+      emptyState: 'Tes contacts avec les autorités — tout en un seul endroit.',
+      emptyStateHint: 'As-tu un service social ou une administration fiscale ? Indique ce que tu sais.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Canton d\'imposition',
@@ -327,6 +339,8 @@ export default {
       title: 'Urgence',
       description: 'Contacts d\'urgence, informations médicales',
       intro: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.',
+      emptyState: 'En cas d\'urgence — qui prévenir et quelles informations sont importantes ?',
+      emptyStateHint: 'Un contact d\'urgence avec un numéro de téléphone est un bon premier pas.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Personne de contact d\'urgence',
@@ -541,6 +555,16 @@ export default {
     saeule3a: 'Avec le pilier 3a, tu épargnes librement pour plus tard — et tu économises des impôts en même temps.',
     betreibung: 'Le registre des poursuites est une sorte de carte de visite financière en Suisse. Les propriétaires, employeurs et banques le consultent souvent.',
     bewilligung_b: 'Le permis B est temporaire. Pense à le renouveler à temps — ta commune t\'informera de la marche à suivre.',
+    miete: 'Le loyer est la plus grande dépense pour la plupart des ménages. Certains cantons offrent des aides au logement.',
+    wohnform: 'Que tu sois locataire ou propriétaire influence tes impôts, tes assurances et tes droits aux prestations.',
+    steuern: 'En Suisse, tu paies des impôts à la commune, au canton et à la Confédération. Le montant dépend de ton lieu de résidence et de ton revenu.',
+    schuldenraten: 'Les mensualités de dettes font partie des charges fixes. Des conseils gratuits en matière de dettes existent dans chaque canton.',
+    einkommen: 'Ton revenu est la base pour le budget, les impôts et d\'éventuelles aides comme la réduction de primes.',
+    sozialdienst: 'Le service social de ta commune est le premier interlocuteur pour obtenir du soutien. Un entretien est sans engagement et confidentiel.',
+    steuerverwaltung: 'La déclaration d\'impôts est obligatoire en Suisse — même avec un petit revenu. L\'administration fiscale cantonale peut t\'aider.',
+    beruf: 'Ta profession et tes qualifications sont pertinentes pour les permis de travail, les assurances et les droits aux prestations.',
+    patientenverfuegung: 'Les directives anticipées précisent quels traitements médicaux tu souhaites recevoir si tu ne peux plus t\'exprimer.',
+    vorsorgeauftrag: 'Un mandat pour cause d\'inaptitude désigne la personne qui prendra des décisions pour toi si tu ne le peux plus. Il doit être entièrement rédigé à la main.',
     // ─── P0 : Indices contextuels (selon les données) ──────
     contextIpv: 'Selon ton revenu, tu pourrais avoir droit à une réduction de ta prime d\'assurance maladie. Renseigne-toi auprès de ta commune ou de ton canton.',
     contextFamilienzulagen: 'Tu as droit à des allocations familiales pour tes enfants. Le montant dépend du canton. Ton employeur peut t\'aider.',
