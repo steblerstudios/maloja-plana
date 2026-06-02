@@ -592,8 +592,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
       filledCount === 0 && React.createElement('div', { style: { padding: '24px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center', marginBottom: '20px' } },
-        React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, tr('chapterView.emptyState')),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, tr('chapterView.emptyStateHint'))
+        React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
+          (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
+        ),
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } },
+          (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
+        )
       ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
         chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {

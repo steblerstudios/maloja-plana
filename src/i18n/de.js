@@ -131,6 +131,8 @@ export default {
       title: 'Persönliche Basis',
       description: 'Deine Identität und Kontaktdaten',
       intro: 'Deine persönlichen Grunddaten sind das Fundament. Beginne mit Name und Kanton — alles andere hat Zeit.',
+      emptyState: 'Deine persönlichen Grunddaten — das Fundament für alles Weitere.',
+      emptyStateHint: 'Beginne mit deinem Vornamen und Wohnkanton.',
       icon: '◎',
       fields: {
         firstName: 'Vorname',
@@ -171,6 +173,8 @@ export default {
       title: 'Wohnen & Leben',
       description: 'Dein Zuhause, Miete und Wohnsituation',
       intro: 'Alles rund um Dein Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.',
+      emptyState: 'Dein Zuhause — wie du wohnst, verändert sich mit der Zeit.',
+      emptyStateHint: 'Trage deine Adresse oder Miete ein, wenn du sie kennst.',
       icon: '⌂',
       fields: {
         address: 'Strasse & Hausnummer',
@@ -196,6 +200,8 @@ export default {
       title: 'Finanzen & Geld',
       description: 'Dein Einkommen, Erspartes und Bankdaten',
       intro: 'Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.',
+      emptyState: 'Ein erster Überblick über deine finanzielle Situation.',
+      emptyStateHint: 'Dein monatliches Einkommen genügt als Anfang.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Monatliches Nettoeinkommen CHF',
@@ -242,6 +248,8 @@ export default {
       title: 'Versicherungen & Vorsorge',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
       intro: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.',
+      emptyState: 'Deine Versicherungen an einem Ort — für den Überblick und den nächsten Wechsel.',
+      emptyStateHint: 'Beginne mit deiner Krankenkasse.',
       icon: '◰',
       fields: {
         kkInsurer: 'Krankenkasse',
@@ -280,6 +288,8 @@ export default {
       title: 'Ausbildung & Arbeit',
       description: 'Deine Qualifikationen und Arbeitsstelle',
       intro: 'Deine Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.',
+      emptyState: 'Dein beruflicher Hintergrund — nützlich für Bewerbungen und Bewilligungen.',
+      emptyStateHint: 'Trage deinen aktuellen Beruf oder deine Ausbildung ein.',
       icon: '✦',
       fields: {
         schoolName: 'Schule/Universität',
@@ -303,6 +313,8 @@ export default {
       title: 'Behörden & Rechtliches',
       description: 'Steuern, rechtliche Angelegenheiten und amtliche Dokumente',
       intro: 'Deine Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.',
+      emptyState: 'Deine Behördenkontakte und rechtliche Situation — alles an einem Ort.',
+      emptyStateHint: 'Hast du einen Sozialdienst oder eine Steuerverwaltung? Trage ein, was du weisst.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Steuerkanton',
@@ -327,6 +339,8 @@ export default {
       title: 'Notfall',
       description: 'Notfallkontakte und medizinische Informationen',
       intro: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Dich und Deine Familie einen echten Unterschied machen.',
+      emptyState: 'Für den Fall der Fälle — wer soll informiert werden und was ist wichtig?',
+      emptyStateHint: 'Ein Notfallkontakt mit Telefonnummer ist ein guter erster Schritt.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Notfall-Kontaktperson',
@@ -541,6 +555,16 @@ export default {
     saeule3a: 'Mit der Säule 3a sparst Du freiwillig für später — und sparst gleichzeitig Steuern.',
     betreibung: 'Das Betreibungsregister ist in der Schweiz eine Art finanzielle Visitenkarte. Vermieter, Arbeitgeber und Banken fragen häufig danach.',
     bewilligung_b: 'Die Bewilligung B ist befristet. Denk daran, sie rechtzeitig zu verlängern — Deine Gemeinde informiert Dich über den Ablauf.',
+    miete: 'Die Miete ist für die meisten Haushalte der grösste Ausgabeposten. In einigen Kantonen gibt es Mietbeiträge.',
+    wohnform: 'Ob du zur Miete wohnst oder Eigentum besitzt, beeinflusst Steuern, Versicherungen und Unterstützungsansprüche.',
+    steuern: 'In der Schweiz zahlst du Steuern an Gemeinde, Kanton und Bund. Die Höhe hängt von Wohnort und Einkommen ab.',
+    schuldenraten: 'Monatliche Schuldenraten gehören zu den Fixkosten. Kostenlose Schuldenberatung gibt es in jedem Kanton.',
+    einkommen: 'Dein Einkommen ist die Grundlage für Budget, Steuern und mögliche Unterstützungsansprüche wie Prämienverbilligung.',
+    sozialdienst: 'Der Sozialdienst deiner Gemeinde ist die erste Anlaufstelle für Unterstützung. Ein Gespräch ist unverbindlich und vertraulich.',
+    steuerverwaltung: 'Die Steuererklärung ist in der Schweiz obligatorisch — auch mit kleinem Einkommen. Die kantonale Steuerverwaltung hilft bei Fragen.',
+    beruf: 'Dein Beruf und deine Qualifikationen sind relevant für Arbeitsbewilligungen, Versicherungen und Unterstützungsansprüche.',
+    patientenverfuegung: 'Eine Patientenverfügung hält fest, welche medizinischen Behandlungen du wünschst, falls du dich nicht mehr äussern kannst.',
+    vorsorgeauftrag: 'Ein Vorsorgeauftrag bestimmt, wer für dich entscheidet, wenn du es nicht mehr selbst kannst. Er muss vollständig handschriftlich verfasst sein.',
     // ─── P0: Kontexthinweise (datenabhängig) ───────────────
     contextIpv: 'Je nach Einkommen hast Du möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundige Dich bei Deiner Gemeinde oder Deinem Kanton.',
     contextFamilienzulagen: 'Für Deine Kinder stehen Dir Familienzulagen zu. Die Höhe hängt vom Kanton ab. Dein Arbeitgeber kann Dir weiterhelfen.',
