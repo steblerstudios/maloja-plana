@@ -16,6 +16,8 @@ function hasMinData(chapterKey, data) {
   if (chapterKey === 'basis') return Boolean(data.firstName);
   if (chapterKey === 'wohnen') return Boolean(data.address || data.city);
   if (chapterKey === 'finanzen') return Boolean(data.monthlyIncome);
+  if (chapterKey === 'behoerden') return Boolean(data.cantoneOfTaxation);
+  if (chapterKey === 'notfall') return Boolean(data.emergencyContact);
   return false;
 }
 
@@ -218,10 +220,150 @@ function buildFinanzenSentence(data, allData, t) {
   return parts.join(' ');
 }
 
+// ─── Generic select label helper ──────────────────────────
+
+function selectLabel(t, chapterKey, fieldKey, value) {
+  if (!value) return null;
+  return t('chapters.' + chapterKey + '.fields.' + fieldKey + '.options.' + value) || value;
+}
+
+// ─── Behörden ─────────────────────────────────────────────
+
+function buildBehoerdenSentence(data, t) {
+  if (!data.cantoneOfTaxation) return null;
+
+  const canton = getCantonName(data.cantoneOfTaxation, t);
+
+  if (data.legalRepresentative) {
+    return t('mirror.behoerden.taxCantonWithRep', { canton: canton });
+  }
+
+  return t('mirror.behoerden.taxCantonSentence', { canton: canton });
+}
+
+function buildBehoerdenSections(data, t) {
+  const sections = [];
+
+  // Section: Steuersituation
+  const taxRows = [];
+  if (data.cantoneOfTaxation) taxRows.push({ label: t('mirror.behoerden.taxCanton'), value: getCantonName(data.cantoneOfTaxation, t) });
+  if (data.taxFillingDeadline) taxRows.push({ label: t('mirror.behoerden.taxDeadline'), value: formatDate(data.taxFillingDeadline) });
+  if (data.pendingTaxReturns) taxRows.push({ label: t('mirror.behoerden.pendingReturns'), value: data.pendingTaxReturns });
+
+  if (taxRows.length > 0) {
+    sections.push({ title: t('mirror.behoerden.taxSituation'), rows: taxRows });
+  }
+
+  // Section: Rechtliche Situation
+  const legalRows = [];
+  if (data.betreibungsStatus) legalRows.push({ label: t('mirror.behoerden.betreibung'), value: selectLabel(t, 'behoerden', 'betreibungsStatus', data.betreibungsStatus) });
+  if (data.registryOffice) legalRows.push({ label: t('mirror.behoerden.betreibungsamt'), value: data.registryOffice });
+  if (data.courtCases) legalRows.push({ label: t('mirror.behoerden.courtCases'), value: selectLabel(t, 'behoerden', 'courtCases', data.courtCases) });
+
+  if (legalRows.length > 0) {
+    sections.push({ title: t('mirror.behoerden.legalSituation'), rows: legalRows });
+  }
+
+  // Section: Vertretung
+  const repRows = [];
+  if (data.legalRepresentative) repRows.push({ label: t('mirror.behoerden.legalRep'), value: data.legalRepresentative });
+  if (data.representativePhone) repRows.push({ label: t('mirror.behoerden.legalRepPhone'), value: data.representativePhone });
+
+  if (repRows.length > 0) {
+    sections.push({ title: t('mirror.behoerden.representation'), rows: repRows });
+  }
+
+  // Section: Vorsorge
+  const provRows = [];
+  if (data.willMade) provRows.push({ label: t('mirror.behoerden.will'), value: selectLabel(t, 'behoerden', 'willMade', data.willMade) });
+
+  if (provRows.length > 0) {
+    sections.push({ title: t('mirror.behoerden.provision'), rows: provRows });
+  }
+
+  return sections;
+}
+
+// ─── Notfall ──────────────────────────────────────────────
+
+function buildNotfallSentence(data, t) {
+  if (!data.emergencyContact) return null;
+
+  const hasDoctor = Boolean(data.doctor);
+  const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag'];
+  const hasProvision = vorsorgeKeys.some(k => data[k] && data[k] !== 'no');
+  const hasHealth = Boolean(data.allergies || data.medications || data.chronicDiseases);
+
+  if (hasDoctor && hasProvision) return t('mirror.notfall.contactDoctorProvision');
+  if (hasDoctor) return t('mirror.notfall.contactAndDoctor');
+  if (hasProvision) return t('mirror.notfall.contactAndProvision');
+  if (hasHealth) return t('mirror.notfall.contactAndHealth');
+  return t('mirror.notfall.contactSentence');
+}
+
+function vorsorgeStatus(value, t) {
+  if (!value) return null;
+  if (value === 'yes') return t('mirror.notfall.statusYes');
+  if (value === 'declined') return t('mirror.notfall.statusDeclined');
+  return t('mirror.notfall.statusNo');
+}
+
+function buildNotfallSections(data, t) {
+  const sections = [];
+
+  // Section: Notfallkontakt
+  const contactRows = [];
+  if (data.emergencyContact) contactRows.push({ label: t('mirror.notfall.contactName'), value: data.emergencyContact });
+  if (data.emergencyPhone) contactRows.push({ label: t('mirror.notfall.contactPhone'), value: data.emergencyPhone });
+
+  if (contactRows.length > 0) {
+    sections.push({ title: t('mirror.notfall.emergencyContact'), rows: contactRows });
+  }
+
+  // Section: Ärztliche Betreuung
+  const careRows = [];
+  if (data.doctor) careRows.push({ label: t('mirror.notfall.doctor'), value: data.doctor });
+  if (data.doctorPhone) careRows.push({ label: t('mirror.notfall.doctorPhone'), value: data.doctorPhone });
+  if (data.hospital) careRows.push({ label: t('mirror.notfall.hospital'), value: data.hospital });
+
+  if (careRows.length > 0) {
+    sections.push({ title: t('mirror.notfall.medicalCare'), rows: careRows });
+  }
+
+  // Section: Vorsorge
+  const provRows = [];
+  if (data.patientenverfuegung) provRows.push({ label: t('mirror.notfall.patientenverfuegung'), value: vorsorgeStatus(data.patientenverfuegung, t) });
+  if (data.vorsorgeauftrag) provRows.push({ label: t('mirror.notfall.vorsorgeauftrag'), value: vorsorgeStatus(data.vorsorgeauftrag, t) });
+  if (data.organDonor) provRows.push({ label: t('mirror.notfall.organDonor'), value: selectLabel(t, 'notfall', 'organDonor', data.organDonor) });
+
+  if (provRows.length > 0) {
+    sections.push({ title: t('mirror.notfall.provision'), rows: provRows });
+  }
+
+  // Section: Gesundheitsdaten (status only — no content)
+  const healthRows = [];
+  if (data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '') {
+    healthRows.push({ label: t('mirror.notfall.bloodType'), value: data.bloodType });
+  }
+  if (data.allergies) healthRows.push({ label: t('mirror.notfall.allergiesRecorded'), value: '✓' });
+  if (data.medications) healthRows.push({ label: t('mirror.notfall.medicationsRecorded'), value: '✓' });
+  if (data.chronicDiseases) healthRows.push({ label: t('mirror.notfall.healthInfoRecorded'), value: '✓' });
+
+  if (healthRows.length > 0) {
+    sections.push({ title: t('mirror.notfall.healthData'), rows: healthRows });
+  }
+
+  return sections;
+}
+
+// ─── Life sentence dispatcher ─────────────────────────────
+
 function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'basis') return buildBasisSentence(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSentence(data, t);
   if (chapterKey === 'finanzen') return buildFinanzenSentence(data, allData, t);
+  if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, t);
+  if (chapterKey === 'notfall') return buildNotfallSentence(data, t);
   return null;
 }
 
@@ -360,6 +502,8 @@ function buildMirrorSections(chapterKey, data, t, allData) {
   if (chapterKey === 'basis') return buildBasisSections(data, t);
   if (chapterKey === 'wohnen') return buildWohnenSections(data, t);
   if (chapterKey === 'finanzen') return buildFinanzenSections(data, allData, t);
+  if (chapterKey === 'behoerden') return buildBehoerdenSections(data, t);
+  if (chapterKey === 'notfall') return buildNotfallSections(data, t);
   return [];
 }
 
