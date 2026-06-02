@@ -18,6 +18,8 @@ function hasMinData(chapterKey, data) {
   if (chapterKey === 'finanzen') return Boolean(data.monthlyIncome);
   if (chapterKey === 'behoerden') return Boolean(data.cantoneOfTaxation);
   if (chapterKey === 'notfall') return Boolean(data.emergencyContact);
+  if (chapterKey === 'versicherungen') return Boolean(data.kkInsurer);
+  if (chapterKey === 'ausbildung') return Boolean(data.jobTitle || data.employer || data.educationLevel);
   return false;
 }
 
@@ -356,6 +358,132 @@ function buildNotfallSections(data, t) {
   return sections;
 }
 
+// ─── Versicherungen ───────────────────────────────────────
+
+function franchiseValue(data, t) {
+  if (!data.franchise) return null;
+  const label = selectLabel(t, 'versicherungen', 'franchise', data.franchise);
+  return label;
+}
+
+function buildVersicherungenSentence(data, t) {
+  if (!data.kkInsurer) return null;
+
+  const franchise = franchiseValue(data, t);
+  const hasBvg = Boolean(data.bvgInsurer);
+
+  if (franchise && hasBvg) {
+    return t('mirror.versicherungen.insurerFranchiseBvg', { insurer: data.kkInsurer, franchise: franchise });
+  }
+  if (franchise) {
+    return t('mirror.versicherungen.insurerAndFranchise', { insurer: data.kkInsurer, franchise: franchise });
+  }
+  return t('mirror.versicherungen.insurerSentence', { insurer: data.kkInsurer });
+}
+
+function buildVersicherungenSections(data, t) {
+  const sections = [];
+  const mt = t('mirror.versicherungen.perMonth');
+  const yr = t('mirror.versicherungen.perYear');
+
+  // Section: Grundversicherung
+  const basicRows = [];
+  if (data.kkInsurer) basicRows.push({ label: t('mirror.versicherungen.insurer'), value: data.kkInsurer });
+  if (data.kkModel) basicRows.push({ label: t('mirror.versicherungen.model'), value: selectLabel(t, 'versicherungen', 'kkModel', data.kkModel) });
+  if (data.franchise) basicRows.push({ label: t('mirror.versicherungen.franchise'), value: 'CHF ' + franchiseValue(data, t) });
+  if (data.kkPremium) basicRows.push({ label: t('mirror.versicherungen.premium'), value: formatCHF(data.kkPremium) + mt });
+  if (data.uvg) basicRows.push({ label: t('mirror.versicherungen.accident'), value: selectLabel(t, 'versicherungen', 'uvg', data.uvg) });
+
+  if (basicRows.length > 0) {
+    sections.push({ title: t('mirror.versicherungen.basicInsurance'), rows: basicRows });
+  }
+
+  // Section: Berufliche Vorsorge
+  const bvgRows = [];
+  if (data.bvgInsurer) bvgRows.push({ label: t('mirror.versicherungen.bvg'), value: data.bvgInsurer });
+  if (data.bvgContribution) bvgRows.push({ label: t('mirror.versicherungen.bvgContribution'), value: formatCHF(data.bvgContribution) + mt });
+  if (data.ahvContribution) bvgRows.push({ label: t('mirror.versicherungen.ahv'), value: formatCHF(data.ahvContribution) + yr });
+
+  if (bvgRows.length > 0) {
+    sections.push({ title: t('mirror.versicherungen.social'), rows: bvgRows });
+  }
+
+  // Section: Weitere Versicherungen (only if any are "yes" or have amounts)
+  const addRows = [];
+  if (data.liabilityInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.liability'), value: data.liabilityAmount ? formatCHF(data.liabilityAmount) : '✓' });
+  if (data.householdInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.household'), value: data.householdInsuranceAmount ? formatCHF(data.householdInsuranceAmount) + yr : '✓' });
+  if (data.travelInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.travel'), value: '✓' });
+  if (data.cyberInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.cyber'), value: '✓' });
+  if (data.autoInsurance && data.autoInsurance !== 'no') addRows.push({ label: t('mirror.versicherungen.auto'), value: selectLabel(t, 'versicherungen', 'autoInsurance', data.autoInsurance) });
+
+  if (addRows.length > 0) {
+    sections.push({ title: t('mirror.versicherungen.additional'), rows: addRows });
+  }
+
+  return sections;
+}
+
+// ─── Ausbildung ───────────────────────────────────────────
+
+function buildAusbildungSentence(data, t) {
+  const job = data.jobTitle;
+  const employer = data.employer;
+  const level = data.educationLevel ? selectLabel(t, 'ausbildung', 'educationLevel', data.educationLevel) : null;
+
+  // Priority: education + job combined, then job alone, then education alone
+  if (level && job) {
+    return t('mirror.ausbildung.educationAndJob', { level: level, job: job });
+  }
+  if (job && employer) {
+    return t('mirror.ausbildung.jobSentence', { job: job, employer: employer });
+  }
+  if (job) {
+    return t('mirror.ausbildung.jobOnly', { job: job });
+  }
+  if (employer) {
+    return t('mirror.ausbildung.employerOnly', { employer: employer });
+  }
+  if (level) {
+    return t('mirror.ausbildung.educationSentence', { level: level });
+  }
+  return null;
+}
+
+function buildAusbildungSections(data, t) {
+  const sections = [];
+
+  // Section: Bildung
+  const eduRows = [];
+  if (data.educationLevel) eduRows.push({ label: t('mirror.ausbildung.level'), value: selectLabel(t, 'ausbildung', 'educationLevel', data.educationLevel) });
+  if (data.schoolName) eduRows.push({ label: t('mirror.ausbildung.school'), value: data.schoolName });
+  if (data.certifications) eduRows.push({ label: t('mirror.ausbildung.certifications'), value: data.certifications });
+
+  if (eduRows.length > 0) {
+    sections.push({ title: t('mirror.ausbildung.education'), rows: eduRows });
+  }
+
+  // Section: Beruf
+  const workRows = [];
+  if (data.jobTitle) workRows.push({ label: t('mirror.ausbildung.jobTitle'), value: data.jobTitle });
+  if (data.employer) workRows.push({ label: t('mirror.ausbildung.employer'), value: data.employer });
+  if (data.employmentStart) workRows.push({ label: t('mirror.ausbildung.since'), value: formatDate(data.employmentStart) });
+  if (data.workHoursPerWeek) workRows.push({ label: t('mirror.ausbildung.hoursPerWeek'), value: data.workHoursPerWeek + 'h' });
+  if (data.workPermit) workRows.push({ label: t('mirror.ausbildung.workPermit'), value: selectLabel(t, 'ausbildung', 'workPermit', data.workPermit) });
+
+  if (workRows.length > 0) {
+    sections.push({ title: t('mirror.ausbildung.work'), rows: workRows });
+  }
+
+  // Section: Sprachen
+  if (data.languages) {
+    sections.push({ title: t('mirror.ausbildung.languagesTitle'), rows: [
+      { label: t('mirror.ausbildung.languages'), value: data.languages },
+    ]});
+  }
+
+  return sections;
+}
+
 // ─── Life sentence dispatcher ─────────────────────────────
 
 function buildLifeSentence(chapterKey, data, allData, t) {
@@ -364,6 +492,8 @@ function buildLifeSentence(chapterKey, data, allData, t) {
   if (chapterKey === 'finanzen') return buildFinanzenSentence(data, allData, t);
   if (chapterKey === 'behoerden') return buildBehoerdenSentence(data, t);
   if (chapterKey === 'notfall') return buildNotfallSentence(data, t);
+  if (chapterKey === 'versicherungen') return buildVersicherungenSentence(data, t);
+  if (chapterKey === 'ausbildung') return buildAusbildungSentence(data, t);
   return null;
 }
 
@@ -504,6 +634,8 @@ function buildMirrorSections(chapterKey, data, t, allData) {
   if (chapterKey === 'finanzen') return buildFinanzenSections(data, allData, t);
   if (chapterKey === 'behoerden') return buildBehoerdenSections(data, t);
   if (chapterKey === 'notfall') return buildNotfallSections(data, t);
+  if (chapterKey === 'versicherungen') return buildVersicherungenSections(data, t);
+  if (chapterKey === 'ausbildung') return buildAusbildungSections(data, t);
   return [];
 }
 
