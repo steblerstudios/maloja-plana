@@ -237,8 +237,8 @@ export function getChapters(t) {
         { k: 'doctorPhone', label: fl(t, 'notfall', 'doctorPhone'), type: 'tel' },
         { k: 'hospital', label: fl(t, 'notfall', 'hospital'), type: 'text' },
         { k: 'organDonor', label: fl(t, 'notfall', 'organDonor'), type: 'select', options: opts(t, 'notfall', 'organDonor'), section: t('sections.notfall.provision'), secondary: true },
-        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung'), secondary: true },
-        { k: 'vorsorgeauftrag', label: fl(t, 'notfall', 'vorsorgeauftrag'), type: 'select', options: opts(t, 'notfall', 'vorsorgeauftrag'), hint: hn(t, 'notfall', 'vorsorgeauftrag'), secondary: true },
+        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung'), orientation: or(t, 'patientenverfuegung'), secondary: true },
+        { k: 'vorsorgeauftrag', label: fl(t, 'notfall', 'vorsorgeauftrag'), type: 'select', options: opts(t, 'notfall', 'vorsorgeauftrag'), hint: hn(t, 'notfall', 'vorsorgeauftrag'), orientation: or(t, 'vorsorgeauftrag'), secondary: true },
         { k: 'bestattungswuensche', label: fl(t, 'notfall', 'bestattungswuensche'), type: 'select', options: opts(t, 'notfall', 'bestattungswuensche'), hint: hn(t, 'notfall', 'bestattungswuensche'), secondary: true },
       ],
       docs: [
