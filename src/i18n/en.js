@@ -132,6 +132,8 @@ export default {
       title: 'Personal basics',
       description: 'Your identity and contact information',
       intro: 'Your personal basics are the foundation. Start with your name and canton — everything else can wait.',
+      emptyState: 'Your personal details — the foundation for everything else.',
+      emptyStateHint: 'Start with your first name and canton of residence.',
       icon: '◎',
       fields: {
         firstName: 'First name',
@@ -172,6 +174,8 @@ export default {
       title: 'Housing',
       description: 'Your home, rent, and living situation',
       intro: 'Everything about where you live. Useful for tax returns, insurance, and benefits applications.',
+      emptyState: 'Your home — how you live changes over time.',
+      emptyStateHint: 'Enter your address or rent if you know them.',
       icon: '⌂',
       fields: {
         address: 'Street and house number',
@@ -197,6 +201,8 @@ export default {
       title: 'Finances',
       description: 'Your income, savings, and bank details',
       intro: 'A clear picture of your financial situation. This helps with budgeting, tax, and subsidy applications.',
+      emptyState: 'A first overview of your financial situation.',
+      emptyStateHint: 'Your monthly income is enough to start.',
       icon: '◇',
       fields: {
         monthlyIncome: 'Monthly net income (CHF)',
@@ -243,6 +249,8 @@ export default {
       title: 'Insurance',
       description: 'Health insurance, pension, and coverage',
       intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',
+      emptyState: 'Your insurance details in one place — for clarity and your next change.',
+      emptyStateHint: 'Start with your health insurance.',
       icon: '◰',
       fields: {
         kkInsurer: 'Health insurer',
@@ -281,6 +289,8 @@ export default {
       title: 'Education and work',
       description: 'Your qualifications and employment',
       intro: 'Your education and work history. Useful for CV building, job applications, and work permit renewals.',
+      emptyState: 'Your professional background — useful for applications and permits.',
+      emptyStateHint: 'Enter your current occupation or education.',
       icon: '✦',
       fields: {
         schoolName: 'School / University',
@@ -304,6 +314,8 @@ export default {
       title: 'Authorities and legal',
       description: 'Taxes, legal matters, and official documents',
       intro: 'Your dealings with authorities and legal matters. Keeps important deadlines and contacts together.',
+      emptyState: 'Your dealings with authorities — everything in one place.',
+      emptyStateHint: 'Do you have a social services contact or tax office? Enter what you know.',
       icon: '◉',
       fields: {
         cantoneOfTaxation: 'Tax canton',
@@ -328,6 +340,8 @@ export default {
       title: 'Emergency',
       description: 'Emergency contacts, medical information',
       intro: 'Important information for emergencies. Having this ready can make a real difference for you and your family.',
+      emptyState: 'Just in case — who should be contacted and what matters most?',
+      emptyStateHint: 'An emergency contact with a phone number is a good first step.',
       icon: '⚠',
       fields: {
         emergencyContact: 'Emergency contact person',
@@ -542,6 +556,16 @@ export default {
     saeule3a: 'With Pillar 3a you save voluntarily for later — and save on taxes at the same time.',
     betreibung: 'The debt collection register is like a financial reputation in Switzerland. Landlords, employers, and banks often check it.',
     bewilligung_b: 'Permit B is temporary. Remember to renew it in time — your municipality will inform you about the process.',
+    miete: 'Rent is the largest expense for most households. Some cantons offer rental subsidies.',
+    wohnform: 'Whether you rent or own affects taxes, insurance, and benefit eligibility.',
+    steuern: 'In Switzerland you pay taxes to your municipality, canton, and the federal government. The amount depends on where you live and your income.',
+    schuldenraten: 'Monthly debt payments count as fixed expenses. Free debt counselling is available in every canton.',
+    einkommen: 'Your income is the basis for budgeting, taxes, and possible support like premium reductions.',
+    sozialdienst: 'Your municipality\'s social services office is the first point of contact for support. A conversation is non-binding and confidential.',
+    steuerverwaltung: 'Filing a tax return is mandatory in Switzerland — even with a low income. The cantonal tax office can help with questions.',
+    beruf: 'Your occupation and qualifications are relevant for work permits, insurance, and benefit eligibility.',
+    patientenverfuegung: 'An advance directive records which medical treatments you wish to receive if you can no longer express yourself.',
+    vorsorgeauftrag: 'A power of attorney for personal care determines who makes decisions for you when you no longer can. It must be entirely handwritten.',
     // ─── P0: Context hints (data-driven) ───────────────────
     contextIpv: 'Depending on your income, you may be eligible for a reduction on your health insurance premium. Check with your municipality or canton.',
     contextFamilienzulagen: 'You are entitled to family allowances for your children. The amount depends on the canton. Your employer can help you with this.',
