@@ -472,68 +472,21 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Living mirror layer — life sentence + mirror cards
     React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
-    // Quiet emergency summary — only when data exists
-    showSummary && React.createElement('div', {
-      style: { marginBottom: '20px', padding: '16px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border }
+    // Notfallkarte export — quiet text link (below mirror cards)
+    isNotfall && hasMedical && React.createElement('div', {
+      style: { marginBottom: '16px' }
     },
-      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'flex-start' } },
-
-        // Contact card
-        hasContact && React.createElement('div', {
-          style: { flex: '1 1 180px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border }
-        },
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm - 2, letterSpacing: '0.3px' } }, tr('notfallSummary.contact')),
-          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.medium } }, data.emergencyContact),
-          data.emergencyPhone && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } }, data.emergencyPhone)
-        ),
-
-        // Blood type
-        hasBlood && React.createElement('div', {
-          style: {
-            flex: '0 0 auto', padding: '12px 20px', background: (bloodTypeColors[data.bloodType] || palette.mid) + '15',
-            borderRadius: '6px', border: '1px solid ' + (bloodTypeColors[data.bloodType] || palette.border), textAlign: 'center'
-          }
-        },
-          React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginBottom: '4px', letterSpacing: '0.3px' } }, tr('notfallSummary.bloodType')),
-          React.createElement('div', { style: { fontSize: '24px', fontWeight: '600', color: bloodTypeColors[data.bloodType] || palette.text } }, data.bloodType)
-        )
-      ),
-
-      // Vorsorge overview
-      hasVorsorge && React.createElement('div', {
-        style: { marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px' }
-      },
-        vorsorgeKeys.filter(k => data[k]).map(k =>
-          React.createElement('div', {
-            key: k,
-            style: {
-              fontSize: '11px', padding: '4px 10px', borderRadius: '4px', letterSpacing: '0.2px',
-              background: data[k] === 'yes' ? palette.sage + '20' : palette.up,
-              color: data[k] === 'yes' ? palette.sage : palette.mid,
-              border: '1px solid ' + (data[k] === 'yes' ? palette.sage + '40' : palette.border),
-            }
-          },
-            tr('notfallSummary.' + k) + ' — ' + (data[k] === 'yes' ? tr('notfallSummary.done') : tr('notfallSummary.open'))
-          )
-        )
-      ),
-
-      // Save card — quiet text link
-      hasMedical && React.createElement('div', {
-        style: { marginTop: '14px', paddingTop: '12px', borderTop: '1px solid ' + palette.border }
-      },
-        React.createElement('span', {
-          onClick: handleSaveCard,
-          role: 'button',
-          tabIndex: 0,
-          onKeyDown: (e) => { if (e.key === 'Enter') handleSaveCard(); },
-          style: {
-            fontSize: '11px', color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
-            borderBottom: '1px solid ' + palette.border,
-            paddingBottom: '1px',
-          }
-        }, '□ ' + tr('notfallSummary.saveCard'))
-      )
+      React.createElement('span', {
+        onClick: handleSaveCard,
+        role: 'button',
+        tabIndex: 0,
+        onKeyDown: (e) => { if (e.key === 'Enter') handleSaveCard(); },
+        style: {
+          fontSize: '11px', color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
+          borderBottom: '1px solid ' + palette.border,
+          paddingBottom: '1px',
+        }
+      }, '□ ' + tr('notfallSummary.saveCard'))
     ),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
