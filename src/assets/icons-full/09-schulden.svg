@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Document/bill -->
+  <rect x="72" y="56" width="112" height="144" rx="8" fill="#5F5A54" opacity="0.85"/>
+  <!-- Document lines -->
+  <line x1="90" y1="82" x2="166" y2="82" stroke="#F4F0EA" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="90" y1="98" x2="150" y2="98" stroke="#F4F0EA" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="90" y1="114" x2="158" y2="114" stroke="#F4F0EA" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="90" y1="130" x2="140" y2="130" stroke="#F4F0EA" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <!-- Minus circle -->
+  <circle cx="168" cy="168" r="24" fill="#C29A63"/>
+  <line x1="156" y1="168" x2="180" y2="168" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <!-- Small CHF hint -->
+  <text x="108" y="168" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#F4F0EA" opacity="0.5">CHF</text>
+</svg>
