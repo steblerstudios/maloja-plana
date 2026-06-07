@@ -188,7 +188,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
       }
     },
       isJustDone && React.createElement('div', {
-        style: { textAlign: 'center', fontSize: '11px', fontWeight: '600', color: palette.sage, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
+        style: { textAlign: 'center', fontSize: '13px', fontWeight: '600', color: palette.sage, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
       }, '✓ ' + (t('calendar.nicelyDone') || 'Erledigt')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
         React.createElement('div', { style: { flex: 1 } },
@@ -196,13 +196,13 @@ export const CalendarReminders = ({ palette, t, data }) => {
             React.createElement(Icon, { name: iconKey, size: 16 }),
             React.createElement('span', { style: { fontWeight: '600', fontSize: '13px', textDecoration: r.done ? 'line-through' : 'none' } }, r.title)
           ),
-          React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center', fontSize: '11px', color: palette.mid, marginTop: '4px' } },
+          React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center', fontSize: '13px', color: palette.mid, marginTop: '4px' } },
             React.createElement('span', { style: { color: dueColor, fontWeight: '600' } }, r.done ? '✓ ' + t('calendar.completed') : getDueLabel(r.dueDate)),
             React.createElement('span', null, '|'),
             React.createElement('span', null, catLabel),
             r.recurrence !== 'once' && React.createElement('span', null, '| ↻ ' + t('calendar.' + r.recurrence))
           ),
-          r.notes && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '6px', fontStyle: 'italic' } }, r.notes)
+          r.notes && React.createElement('div', { style: { fontSize: '13px', color: palette.mid, marginTop: '6px', fontStyle: 'italic' } }, r.notes)
         ),
         React.createElement('div', { style: { display: 'flex', gap: '4px', flexShrink: 0 } },
           React.createElement('button', {
@@ -264,11 +264,11 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '8px', marginBottom: '12px' } },
         React.createElement('div', null,
-          React.createElement('label', { style: { fontSize: '11px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('chapterView.expiryDate')),
+          React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('chapterView.expiryDate')),
           React.createElement('input', { type: 'date', value: newDate, onChange: (e) => setNewDate(e.target.value), style: { ...inputStyle, marginBottom: 0 } })
         ),
         React.createElement('div', null,
-          React.createElement('label', { style: { fontSize: '11px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('calendar.category')),
+          React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('calendar.category')),
           React.createElement('select', { value: newCategory, onChange: (e) => setNewCategory(e.target.value), style: { ...inputStyle, marginBottom: 0 } },
             categories.map(cat => React.createElement('option', { key: cat, value: cat }, t('calendar.categories.' + cat)))
           )
@@ -276,7 +276,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
       ),
 
       React.createElement('div', { style: { marginBottom: '12px' } },
-        React.createElement('label', { style: { fontSize: '11px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('calendar.recurring')),
+        React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '4px' } }, t('calendar.recurring')),
         React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           ['once', 'daily', 'weekly', 'monthly', 'quarterly', 'halfYearly', 'yearly'].map(freq =>
             React.createElement('button', {
@@ -284,7 +284,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
               onClick: () => setNewRecurrence(freq),
               style: {
                 padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
-                fontSize: '11px', fontWeight: newRecurrence === freq ? '600' : '400',
+                fontSize: '13px', fontWeight: newRecurrence === freq ? '600' : '400',
                 background: newRecurrence === freq ? palette.sand : palette.surface,
                 color: newRecurrence === freq ? '#fff' : palette.text,
                 border: '1px solid ' + (newRecurrence === freq ? palette.sand : palette.border)
@@ -316,7 +316,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
         React.createElement('button', {
           'aria-expanded': showTemplates,
           onClick: () => setShowTemplates(!showTemplates),
-          style: { width: '100%', padding: '8px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '600' }
+          style: { width: '100%', padding: '8px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontSize: '13px', fontWeight: '600' }
         }, (showTemplates ? '▼' : '▶') + ' ' + t('calendar.templates.title')),
 
         showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '6px', marginTop: '8px' } },
@@ -326,7 +326,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
               onClick: () => addFromTemplate(tmpl),
               style: {
                 padding: '8px 12px', background: palette.surface, border: '1px solid ' + palette.border,
-                borderRadius: '6px', cursor: 'pointer', fontSize: '11px', textAlign: 'left',
+                borderRadius: '6px', cursor: 'pointer', fontSize: '13px', textAlign: 'left',
                 color: palette.text, transition: 'all 0.2s'
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
@@ -350,25 +350,25 @@ export const CalendarReminders = ({ palette, t, data }) => {
         : React.createElement('div', null,
             // Overdue section
             overdue.length > 0 && React.createElement('div', { style: { marginBottom: '16px' } },
-              React.createElement('h3', { style: { fontSize: '12px', fontWeight: '600', color: palette.rose, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
+              React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.rose, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
               overdue.map(r => renderReminderCard(r))
             ),
 
             // Due today
             dueToday.length > 0 && React.createElement('div', { style: { marginBottom: '16px' } },
-              React.createElement('h3', { style: { fontSize: '12px', fontWeight: '600', color: palette.gold, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.today') + ' (' + dueToday.length + ')'),
+              React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.gold, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.today') + ' (' + dueToday.length + ')'),
               dueToday.map(r => renderReminderCard(r))
             ),
 
             // This week
             dueSoon.length > 0 && React.createElement('div', { style: { marginBottom: '16px' } },
-              React.createElement('h3', { style: { fontSize: '12px', fontWeight: '600', color: palette.sky, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
+              React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.sky, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
               dueSoon.map(r => renderReminderCard(r))
             ),
 
             // Later
             upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).length > 0 && React.createElement('div', { style: { marginBottom: '16px' } },
-              React.createElement('h3', { style: { fontSize: '12px', fontWeight: '600', color: palette.mid, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.later')),
+              React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.mid, marginBottom: '8px', textTransform: 'uppercase' } }, t('calendar.later')),
               upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).map(r => renderReminderCard(r))
             )
           )

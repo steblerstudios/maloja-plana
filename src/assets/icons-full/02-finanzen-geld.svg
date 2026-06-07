@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- 5-Franken coin inspired -->
+  <circle cx="128" cy="128" r="64" fill="#D9C49A"/>
+  <circle cx="128" cy="128" r="58" fill="none" stroke="#C29A63" stroke-width="3"/>
+  <circle cx="128" cy="128" r="52" fill="none" stroke="#C29A63" stroke-width="1.5"/>
+  <!-- "5" numeral -->
+  <text x="128" y="140" text-anchor="middle" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#FFFFFF">5</text>
+  <!-- Small shield with cross below the 5 -->
+  <path d="M120,152 L120,148 Q128,142 136,148 L136,152 Q128,160 120,152Z" fill="#FFFFFF" opacity="0.8"/>
+  <line x1="128" y1="147" x2="128" y2="155" stroke="#D9C49A" stroke-width="1.5"/>
+  <line x1="124" y1="151" x2="132" y2="151" stroke="#D9C49A" stroke-width="1.5"/>
+  <!-- Laurel wreath (simplified) -->
+  <path d="M94,148 Q88,128 94,108" fill="none" stroke="#C29A63" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M90,144 Q84,128 90,112" fill="none" stroke="#C29A63" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M162,148 Q168,128 162,108" fill="none" stroke="#C29A63" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M166,144 Q172,128 166,112" fill="none" stroke="#C29A63" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+</svg>

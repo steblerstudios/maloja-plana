@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Document -->
+  <rect x="72" y="48" width="112" height="160" rx="8" fill="#FFFFFF" stroke="#5F5A54" stroke-width="2.5"/>
+  <!-- Person icon (head circle) -->
+  <circle cx="104" cy="82" r="14" fill="#5F5A54" opacity="0.6"/>
+  <!-- Shoulders hint -->
+  <path d="M82,108 Q104,98 126,108" fill="#5F5A54" opacity="0.4"/>
+  <!-- Name line -->
+  <line x1="140" y1="76" x2="170" y2="76" stroke="#5F5A54" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <line x1="140" y1="90" x2="164" y2="90" stroke="#5F5A54" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <!-- Divider -->
+  <line x1="86" y1="118" x2="170" y2="118" stroke="#5F5A54" stroke-width="1.5" opacity="0.3"/>
+  <!-- Content lines -->
+  <line x1="86" y1="134" x2="170" y2="134" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="86" y1="150" x2="156" y2="150" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="86" y1="166" x2="164" y2="166" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="86" y1="182" x2="140" y2="182" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+</svg>

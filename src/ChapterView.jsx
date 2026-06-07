@@ -200,7 +200,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const value = data[field.k] || '';
     const error = errors[field.k];
 
-    const baseStyle = { marginBottom: '20px' };
+    const baseStyle = { marginBottom: space.lg + 'px' };
 
     const labelStyle = {
       display: 'block',
@@ -240,8 +240,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           placeholder: field.placeholder || '',
           style: inputStyle
         }),
-        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation),
         error && React.createElement('div', { style: errorStyle }, error)
       );
     }
@@ -352,8 +352,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             style: { ...inputStyle, flex: 1 }
           })
         ),
-        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation)
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation)
       );
     }
 
@@ -374,8 +374,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
           options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
         ),
-        field.hint && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: '11px', color: palette.sage, marginTop: '4px', lineHeight: '1.5' } }, '○ ' + field.orientation)
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation)
       );
     }
 
@@ -463,7 +463,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
     // Header
-    React.createElement('div', { style: { marginBottom: '20px' } },
+    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.xs, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.body, color: palette.mid, marginTop: space.sm, fontStyle: 'italic', lineHeight: leading.normal } }, introText)
@@ -482,7 +482,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         tabIndex: 0,
         onKeyDown: (e) => { if (e.key === 'Enter') handleSaveCard(); },
         style: {
-          fontSize: '11px', color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
+          fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
           borderBottom: '1px solid ' + palette.border,
           paddingBottom: '1px',
         }
@@ -513,7 +513,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       }, '○ ' + tr('orientation.contextFamilienzulagen')),
 
     // Tabs
-    React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid ' + palette.border, paddingBottom: '12px' } },
+    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         style: {
@@ -668,7 +668,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               onChange: (e) => setUploadExpiry(e.target.value),
               style: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
-            uploadType && React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '4px' } }, '○ ' + getFileExpiryHint(uploadType, tr))
+            uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + getFileExpiryHint(uploadType, tr))
           )
         ),
 

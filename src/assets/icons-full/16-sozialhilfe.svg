@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Two hands cradling / supporting -->
+  <!-- Left hand -->
+  <path d="M56,152 Q56,132 76,120 Q92,112 108,120 L108,148 Q92,162 76,162 Q56,162 56,152Z" fill="#8EAD9F"/>
+  <!-- Right hand -->
+  <path d="M200,152 Q200,132 180,120 Q164,112 148,120 L148,148 Q164,162 180,162 Q200,162 200,152Z" fill="#8EAD9F"/>
+  <!-- Person above hands -->
+  <circle cx="128" cy="84" r="16" fill="#8EAD9F"/>
+  <!-- Body/torso simplified -->
+  <path d="M112,100 L144,100 L148,136 L108,136Z" fill="#8EAD9F" opacity="0.8"/>
+  <!-- Protective arc/roof above -->
+  <path d="M76,68 Q128,40 180,68" fill="none" stroke="#C29A63" stroke-width="4" stroke-linecap="round"/>
+  <!-- Small heart between hands -->
+  <path d="M128,168 Q118,158 118,150 Q118,144 122,142 Q128,140 128,146 Q128,140 134,142 Q138,144 138,150 Q138,158 128,168Z" fill="#C29A63" opacity="0.7"/>
+</svg>

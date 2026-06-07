@@ -21,7 +21,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
       right: '16px',
       padding: '6px 12px',
       borderRadius: '4px',
-      fontSize: '11px',
+      fontSize: '12px',
       fontWeight: '500',
       color: palette.mid,
       background: 'transparent',

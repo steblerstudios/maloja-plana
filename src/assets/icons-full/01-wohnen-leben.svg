@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Chalet: big gable roof, balcony, shutters, chimney -->
+  <g fill="none">
+    <!-- Chimney -->
+    <rect x="158" y="68" width="16" height="28" rx="2" fill="#5F5A54"/>
+    <!-- Main roof -->
+    <polygon points="128,60 60,116 196,116" fill="#8EAD9F"/>
+    <!-- Roof overhang line -->
+    <line x1="54" y1="116" x2="202" y2="116" stroke="#5F5A54" stroke-width="3" stroke-linecap="round"/>
+    <!-- House body -->
+    <rect x="76" y="116" width="104" height="72" fill="#8EAD9F" opacity="0.7"/>
+    <!-- Balcony rail -->
+    <rect x="76" y="116" width="104" height="6" fill="#5F5A54" opacity="0.5"/>
+    <line x1="92" y1="116" x2="92" y2="122" stroke="#F4F0EA" stroke-width="2"/>
+    <line x1="108" y1="116" x2="108" y2="122" stroke="#F4F0EA" stroke-width="2"/>
+    <line x1="128" y1="116" x2="128" y2="122" stroke="#F4F0EA" stroke-width="2"/>
+    <line x1="148" y1="116" x2="148" y2="122" stroke="#F4F0EA" stroke-width="2"/>
+    <line x1="164" y1="116" x2="164" y2="122" stroke="#F4F0EA" stroke-width="2"/>
+    <!-- Left window with shutters -->
+    <rect x="88" y="134" width="28" height="24" rx="2" fill="#F4F0EA"/>
+    <rect x="86" y="134" width="8" height="24" rx="1" fill="#5F5A54" opacity="0.4"/>
+    <rect x="110" y="134" width="8" height="24" rx="1" fill="#5F5A54" opacity="0.4"/>
+    <!-- Right window with shutters -->
+    <rect x="140" y="134" width="28" height="24" rx="2" fill="#F4F0EA"/>
+    <rect x="138" y="134" width="8" height="24" rx="1" fill="#5F5A54" opacity="0.4"/>
+    <rect x="162" y="134" width="8" height="24" rx="1" fill="#5F5A54" opacity="0.4"/>
+    <!-- Door -->
+    <rect x="114" y="162" width="28" height="26" rx="3" fill="#5F5A54" opacity="0.6"/>
+    <circle cx="136" cy="176" r="2.5" fill="#F4F0EA"/>
+    <!-- Foundation line -->
+    <line x1="68" y1="188" x2="188" y2="188" stroke="#5F5A54" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -61,7 +61,7 @@ export const NotificationSettings = ({ palette, t }) => {
     },
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '2px' } }, label),
-        React.createElement('div', { style: { fontSize: '11px', color: palette.mid, lineHeight: 1.4 } }, description)
+        React.createElement('div', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.4 } }, description)
       ),
       React.createElement('button', {
         onClick: () => togglePref(key),
@@ -114,12 +114,12 @@ export const NotificationSettings = ({ palette, t }) => {
         style: {
           padding: '10px 16px', background: palette.sand, color: '#000',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
-          fontWeight: '600', fontSize: '12px', fontFamily: 'DM Sans, sans-serif',
+          fontWeight: '600', fontSize: '13px', fontFamily: 'DM Sans, sans-serif',
         }
       }, t('notifications.enable')),
 
       isDenied && React.createElement('p', {
-        style: { fontSize: '11px', color: palette.mid, marginTop: '4px' }
+        style: { fontSize: '13px', color: palette.mid, marginTop: '4px' }
       }, t('notifications.blockedHint'))
     ),
 
@@ -149,13 +149,13 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Privacy note
     React.createElement('div', {
-      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '11px', color: palette.mid }
+      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '13px', color: palette.mid }
     },
       '○ ' + t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: '12px', color: palette.sage, textAlign: 'center' }
+      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: '13px', color: palette.sage, textAlign: 'center' }
     }, '✓ ' + t('common.saved'))
   );
 };
