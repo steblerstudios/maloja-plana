@@ -462,11 +462,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   };
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-    // Header
-    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.xs, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: chapter.key, size: 20 }), chapter.title),
-      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.body, color: palette.mid, marginTop: space.sm, fontStyle: 'italic', lineHeight: leading.normal } }, introText)
+    // Header — expressive chapter entrance
+    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.sm + 'px', paddingBottom: space.md + 'px' } },
+      React.createElement('div', { style: { marginBottom: space.md + 'px', color: palette.sand } },
+        React.createElement(Icon, { name: chapter.key, size: 48 })
+      ),
+      React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
+      React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
 
     // Living mirror layer — life sentence + mirror cards
