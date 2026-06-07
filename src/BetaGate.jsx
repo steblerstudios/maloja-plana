@@ -62,7 +62,7 @@ export const BetaGate = ({ children }) => {
         }
       }),
       error && React.createElement('p', {
-        style: { fontSize: '12px', color: palette.rose, marginTop: '8px' }
+        style: { fontSize: '13px', color: palette.rose, marginTop: '8px' }
       }, t('beta.codeWrong')),
       React.createElement('button', {
         type: 'submit',

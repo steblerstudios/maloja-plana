@@ -5,7 +5,7 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
   const total = data.reduce((a, b) => a + b, 0);
   if (total === 0) return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', marginBottom: '16px' } },
     React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '12px' } }, title),
-    React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: '12px', padding: '20px' } }, '—')
+    React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: '13px', padding: '20px' } }, '—')
   );
 
   let currentAngle = 0;
@@ -52,7 +52,7 @@ const BarChart = ({ data, labels, colors, title, palette }) => {
   const maxValue = Math.max(...data);
   if (maxValue === 0) return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '8px', marginBottom: '16px' } },
     React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '12px' } }, title),
-    React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: '12px', padding: '20px' } }, '—')
+    React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: '13px', padding: '20px' } }, '—')
   );
 
   const barWidth = Math.min(50, 300 / data.length);
@@ -84,17 +84,17 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   const hasData = income > 0 || rent > 0 || insurance > 0;
 
   if (!hasData) {
-    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+    return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
       React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
         React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'finanzen', size: 28 })),
         React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, t('charts.noData')),
-        React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, t('charts.noDataHint'))
+        React.createElement('p', { style: { fontSize: '13px', color: palette.mid, margin: 0 } }, t('charts.noDataHint'))
       )
     );
   }
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' } },
     React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
 
     React.createElement(PieChart, {
@@ -123,7 +123,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
       title: t('budgetSync.expenses') + ' (CHF' + t('common.perMonth') + ')'
     }),
 
-    React.createElement('div', { style: { fontSize: '11px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 

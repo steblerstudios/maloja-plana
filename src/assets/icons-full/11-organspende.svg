@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Heart shape -->
+  <path d="M128,188 Q68,148 68,108 Q68,78 92,72 Q112,68 128,88 Q144,68 164,72 Q188,78 188,108 Q188,148 128,188Z" fill="#8EAD9F"/>
+  <!-- Medical cross inside heart -->
+  <rect x="118" y="104" width="20" height="52" rx="4" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="102" y="120" width="52" height="20" rx="4" fill="#FFFFFF" opacity="0.9"/>
+</svg>

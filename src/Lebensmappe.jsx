@@ -33,7 +33,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     },
       React.createElement('div', {
         style: {
-          fontSize: '12px', fontWeight: '600', color: palette.text,
+          fontSize: '13px', fontWeight: '600', color: palette.text,
           marginBottom: '8px', letterSpacing: '0.2px',
         }
       }, section.title),
@@ -42,7 +42,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: '12px',
+            padding: '3px 0', fontSize: '13px',
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -75,7 +75,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       onClick: () => onNavigate('unterlagen'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: '12px', padding: '0 0 16px 0',
+        color: palette.mid, fontSize: '13px', padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '4px',
       }
     }, '← ' + t('lebensmappe.back')),
@@ -99,7 +99,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
 
       // Status summary
       hasSections && React.createElement('div', {
-        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '11px', color: palette.soft }
+        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '13px', color: palette.soft }
       },
         React.createElement('span', null, t('lebensmappe.sectionsIncluded', { count: preview.sections.length })),
         preview.emptySections.length > 0 &&
@@ -123,7 +123,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
 
     // ─── Preview note ───────────────────────────────────
     hasSections && React.createElement('div', {
-      style: { fontSize: '11px', color: palette.soft, marginBottom: '12px' }
+      style: { fontSize: '13px', color: palette.soft, marginBottom: '12px' }
     }, t('lebensmappe.previewNote')),
 
     // ─── Content preview ────────────────────────────────
@@ -139,12 +139,12 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       }
     },
       React.createElement('div', {
-        style: { fontSize: '12px', fontWeight: '600', color: palette.text, marginBottom: '8px', letterSpacing: '0.2px' }
+        style: { fontSize: '13px', fontWeight: '600', color: palette.text, marginBottom: '8px', letterSpacing: '0.2px' }
       }, t('lebensmappe.documents')),
       ...preview.docRefs.map((doc, i) =>
         React.createElement('div', {
           key: i,
-          style: { fontSize: '12px', color: palette.mid, padding: '2px 0' }
+          style: { fontSize: '13px', color: palette.mid, padding: '2px 0' }
         }, '○ ' + doc.name)
       )
     ),
