@@ -33,11 +33,11 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
           style: { fontSize: '14px', fontWeight: '600', marginBottom: '4px' }
         }, title),
         React.createElement('div', {
-          style: { fontSize: '12px', color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
+          style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
         }, description),
         React.createElement('div', {
           style: {
-            fontSize: '11px', color: palette.soft, fontStyle: isClickable ? 'normal' : 'italic',
+            fontSize: '13px', color: palette.soft, fontStyle: isClickable ? 'normal' : 'italic',
           }
         }, status)
       ),
@@ -127,14 +127,14 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
             style: { fontSize: '14px', fontWeight: '600', marginBottom: '4px' }
           }, t('unterlagen.backup.title')),
           React.createElement('div', {
-            style: { fontSize: '12px', color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }
+            style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }
           }, t('unterlagen.backup.description')),
           React.createElement('button', {
             onClick: () => onNavigate('export'),
             style: {
               padding: '8px 14px', background: palette.up,
               color: palette.mid, border: '1px solid ' + palette.border,
-              borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
+              borderRadius: '6px', cursor: 'pointer', fontSize: '13px',
             }
           }, t('unterlagen.backup.action'))
         )

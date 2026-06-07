@@ -63,12 +63,12 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       }, t ? t('overdue.overdueCount', { count: overdue.length }) : overdue.length + ' overdue'),
 
       dueToday.length > 0 && React.createElement('div', {
-        style: { fontSize: '12px', color: palette.mid }
+        style: { fontSize: '13px', color: palette.mid }
       }, t ? t('overdue.dueTodayCount', { count: dueToday.length }) : dueToday.length + ' due today')
     ),
 
     React.createElement('span', {
-      style: { fontSize: '12px', color: palette.mid, flexShrink: 0 }
+      style: { fontSize: '13px', color: palette.mid, flexShrink: 0 }
     }, '→')
   );
 };

@@ -714,6 +714,7 @@ export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
         fontSize: text.body,
         color: palette.text,
         lineHeight: leading.normal,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
       }
     }, sentence),
 

@@ -42,9 +42,9 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     padding: '5px 0', fontSize: '13px', lineHeight: '1.5'
   };
   const itemLineStyle = {
-    ...lineStyle, paddingLeft: '16px', color: palette.mid, fontSize: '12px'
+    ...lineStyle, paddingLeft: '16px', color: palette.mid, fontSize: '13px'
   };
-  const emptyValueStyle = { color: palette.soft, fontStyle: 'italic', fontSize: '12px' };
+  const emptyValueStyle = { color: palette.soft, fontStyle: 'italic', fontSize: '13px' };
   const separatorStyle = {
     borderTop: '1px solid ' + palette.border, margin: '12px 0'
   };
@@ -101,7 +101,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
             ? React.createElement('span', null, formatCHF(group.total * mult))
             : React.createElement('span', { style: emptyValueStyle }, '—'),
           pct && React.createElement('span', {
-            style: { fontSize: '11px', color: palette.soft, fontWeight: '400', minWidth: '28px', textAlign: 'right' }
+            style: { fontSize: '13px', color: palette.soft, fontWeight: '400', minWidth: '28px', textAlign: 'right' }
           }, pct)
         )
       ),
@@ -116,7 +116,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   return React.createElement('div', {
     style: {
       background: palette.surface, padding: '20px', borderRadius: '8px',
-      border: '1px solid ' + palette.border, maxWidth: '520px'
+      border: '1px solid ' + palette.border, maxWidth: '520px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.06)'
     }
   },
 
@@ -164,13 +165,13 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // IPV relief (shown only when eligible)
     budget.ipvRelief > 0 && budget.expenses.healthInsurance > 0 && React.createElement('div', {
-      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: '12px', lineHeight: '1.5' }
+      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: '13px', lineHeight: '1.5' }
     },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', color: palette.mid } },
         React.createElement('span', null, t('budgetSync.ipvRelief')),
         React.createElement('span', null, '− ' + formatCHF(budget.ipvRelief * mult))
       ),
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: '600', marginTop: '4px', fontSize: '12px' } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: '600', marginTop: '4px', fontSize: '13px' } },
         React.createElement('span', null, t('budgetSync.ipvEffective')),
         React.createElement('span', null, formatCHF(Math.max(0, budget.expenses.healthInsurance - budget.ipvRelief) * mult))
       )
@@ -180,7 +181,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     bvgAhvTotal > 0 && React.createElement('div', {
       style: {
         marginTop: '8px', padding: '8px 12px', background: palette.up,
-        borderRadius: '4px', fontSize: '11px', color: palette.mid, lineHeight: '1.5'
+        borderRadius: '4px', fontSize: '13px', color: palette.mid, lineHeight: '1.5'
       }
     }, '○ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
@@ -215,7 +216,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         key: idx,
         style: {
           padding: '10px 12px', background: palette.up, borderRadius: '6px',
-          fontSize: '12px', lineHeight: '1.6', color: palette.mid,
+          fontSize: '13px', lineHeight: '1.6', color: palette.mid,
           marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
         }
       },
@@ -227,7 +228,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Empty fields note ===
     emptyCount > 0 && React.createElement('div', {
       style: {
-        marginTop: '14px', fontSize: '11px', color: palette.soft, lineHeight: '1.5'
+        marginTop: '14px', fontSize: '13px', color: palette.soft, lineHeight: '1.5'
       }
     }, emptyCount === 1
       ? t('budgetSync.emptyNoteSingle')
@@ -245,7 +246,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         style: {
           flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
           color: showAnnual ? '#fff' : palette.mid, border: '1px solid ' + palette.border,
-          borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
+          borderRadius: '6px', cursor: 'pointer', fontSize: '13px',
           fontWeight: showAnnual ? '600' : '400'
         }
       }, showAnnual ? '○ ' + t('budgetSync.title') : '○ ' + t('budgetSync.annualView')),
@@ -254,7 +255,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         style: {
           padding: '9px 14px', background: palette.up, color: palette.mid,
           border: '1px solid ' + palette.border, borderRadius: '6px',
-          cursor: 'pointer', fontSize: '12px'
+          cursor: 'pointer', fontSize: '13px'
         }
       }, t('nav.export'))
     ),

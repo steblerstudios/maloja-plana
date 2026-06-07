@@ -28,7 +28,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     },
       React.createElement('div', {
         style: {
-          fontSize: '12px', fontWeight: '600', color: palette.text,
+          fontSize: '13px', fontWeight: '600', color: palette.text,
           marginBottom: '8px', letterSpacing: '0.2px',
         }
       }, section.title),
@@ -37,7 +37,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: '12px',
+            padding: '3px 0', fontSize: '13px',
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -68,7 +68,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       onClick: () => onNavigate('unterlagen'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: '12px', padding: '0 0 16px 0',
+        color: palette.mid, fontSize: '13px', padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '4px',
       }
     }, '← ' + t('notfallDossier.back')),
@@ -90,7 +90,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallDossier.subtitle')),
 
       hasSections && React.createElement('div', {
-        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '11px', color: palette.soft }
+        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '13px', color: palette.soft }
       },
         React.createElement('span', null, t('notfallDossier.sectionsIncluded', { count: preview.sections.length })),
         preview.emptySections.length > 0 &&
@@ -102,7 +102,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         padding: '10px 14px', marginBottom: '16px',
         background: palette.up, borderRadius: '6px',
-        fontSize: '11px', color: palette.mid, lineHeight: '1.5',
+        fontSize: '13px', color: palette.mid, lineHeight: '1.5',
       }
     }, '○ ' + t('notfallDossier.privacyNote')),
 
@@ -118,7 +118,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     }, t('notfallDossier.printAction')),
 
     hasSections && React.createElement('div', {
-      style: { fontSize: '11px', color: palette.soft, marginBottom: '12px' }
+      style: { fontSize: '13px', color: palette.soft, marginBottom: '12px' }
     }, t('notfallDossier.previewNote')),
 
     hasSections

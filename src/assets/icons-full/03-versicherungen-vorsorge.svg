@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Shield -->
+  <path d="M128,56 L176,80 L176,136 Q176,176 128,200 Q80,176 80,136 L80,80Z" fill="#C29A63"/>
+  <path d="M128,66 L168,86 L168,134 Q168,168 128,190 Q88,168 88,134 L88,86Z" fill="#F4F0EA"/>
+  <!-- Abstract Edelweiss in center -->
+  <g transform="translate(128,128)">
+    <circle r="8" fill="#C29A63"/>
+    <!-- Petals -->
+    <ellipse cx="0" cy="-20" rx="6" ry="12" fill="#C29A63" opacity="0.8"/>
+    <ellipse cx="0" cy="20" rx="6" ry="12" fill="#C29A63" opacity="0.8"/>
+    <ellipse cx="-20" cy="0" rx="12" ry="6" fill="#C29A63" opacity="0.8"/>
+    <ellipse cx="20" cy="0" rx="12" ry="6" fill="#C29A63" opacity="0.8"/>
+    <ellipse cx="-14" cy="-14" rx="6" ry="12" fill="#C29A63" opacity="0.6" transform="rotate(-45)"/>
+    <ellipse cx="14" cy="-14" rx="6" ry="12" fill="#C29A63" opacity="0.6" transform="rotate(45)"/>
+    <ellipse cx="-14" cy="14" rx="6" ry="12" fill="#C29A63" opacity="0.6" transform="rotate(45)"/>
+    <ellipse cx="14" cy="14" rx="6" ry="12" fill="#C29A63" opacity="0.6" transform="rotate(-45)"/>
+  </g>
+</svg>

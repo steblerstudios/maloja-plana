@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Helvetia-inspired figure: abstracted standing figure with spear and shield -->
+  <g fill="#D9C49A">
+    <!-- Head -->
+    <circle cx="128" cy="72" r="14"/>
+    <!-- Crown/laurel hint -->
+    <path d="M114,66 Q118,56 128,54 Q138,56 142,66" fill="none" stroke="#C29A63" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Neck - deliberately elegant/long -->
+    <rect x="123" y="86" width="10" height="12" rx="3"/>
+    <!-- Body/robe -->
+    <path d="M108,98 L148,98 L154,184 L102,184Z" fill="#D9C49A"/>
+    <!-- Robe detail line -->
+    <line x1="128" y1="98" x2="128" y2="184" stroke="#C29A63" stroke-width="1.5" opacity="0.5"/>
+    <!-- Left arm holding small shield -->
+    <path d="M108,110 L82,130 L82,148 Q82,158 94,158 L108,148" fill="none" stroke="#D9C49A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Small shield -->
+    <path d="M76,126 L96,126 L96,150 Q86,160 76,150Z" fill="#C29A63"/>
+    <line x1="86" y1="132" x2="86" y2="146" stroke="#FFFFFF" stroke-width="2"/>
+    <line x1="80" y1="139" x2="92" y2="139" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Right arm holding spear -->
+    <path d="M148,108 L168,92" fill="none" stroke="#D9C49A" stroke-width="8" stroke-linecap="round"/>
+    <!-- Spear -->
+    <line x1="172" y1="56" x2="172" y2="186" stroke="#C29A63" stroke-width="4" stroke-linecap="round"/>
+    <!-- Spear tip -->
+    <polygon points="172,52 166,66 178,66" fill="#C29A63"/>
+  </g>
+</svg>

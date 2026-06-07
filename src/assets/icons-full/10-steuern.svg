@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="#F4F0EA"/>
+  <!-- Tax document / QR-Rechnung -->
+  <rect x="68" y="52" width="120" height="152" rx="8" fill="#FFFFFF" stroke="#5F5A54" stroke-width="2.5"/>
+  <!-- Header lines -->
+  <line x1="84" y1="74" x2="172" y2="74" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="84" y1="88" x2="148" y2="88" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="84" y1="102" x2="160" y2="102" stroke="#5F5A54" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Divider -->
+  <line x1="68" y1="118" x2="188" y2="118" stroke="#5F5A54" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- QR code area -->
+  <rect x="84" y="128" width="48" height="48" rx="4" fill="#5F5A54" opacity="0.15"/>
+  <!-- QR pattern (simplified) -->
+  <rect x="88" y="132" width="12" height="12" rx="1" fill="#5F5A54" opacity="0.7"/>
+  <rect x="104" y="132" width="6" height="6" fill="#5F5A54" opacity="0.5"/>
+  <rect x="116" y="132" width="12" height="12" rx="1" fill="#5F5A54" opacity="0.7"/>
+  <rect x="88" y="148" width="6" height="6" fill="#5F5A54" opacity="0.5"/>
+  <rect x="100" y="148" width="6" height="6" fill="#5F5A54" opacity="0.5"/>
+  <rect x="112" y="148" width="6" height="6" fill="#5F5A54" opacity="0.5"/>
+  <rect x="88" y="160" width="12" height="12" rx="1" fill="#5F5A54" opacity="0.7"/>
+  <rect x="104" y="164" width="6" height="6" fill="#5F5A54" opacity="0.5"/>
+  <rect x="116" y="160" width="12" height="12" rx="1" fill="#5F5A54" opacity="0.7"/>
+  <!-- Percent badge -->
+  <circle cx="162" cy="156" r="20" fill="#C29A63"/>
+  <text x="162" y="163" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#FFFFFF">%</text>
+</svg>
