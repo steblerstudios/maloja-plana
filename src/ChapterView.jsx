@@ -461,7 +461,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     'AB+': palette.sage, 'AB-': palette.sage,
   };
 
-  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
+  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.md } },
     // Header — expressive chapter entrance
     React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.sm + 'px', paddingBottom: space.md + 'px' } },
       React.createElement('div', { style: { marginBottom: space.md + 'px', color: palette.sand } },

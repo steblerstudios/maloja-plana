@@ -8,7 +8,8 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     'data-alpha-banner': true,
     style: {
       padding: '12px 16px', marginBottom: '20px', borderRadius: '8px',
-      background: palette.up, border: '1px solid ' + palette.border,
+      background: palette.up, border: '1px solid ' + palette.border + '88',
+      boxShadow: shadow.sm,
     }
   },
     React.createElement('div', {
@@ -324,8 +325,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         padding: '20px 24px',
         background: palette.surface,
         borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border,
-        boxShadow: shadow.sm
+        border: '1px solid ' + palette.border + '88',
+        boxShadow: shadow.md
       }
     },
       React.createElement('div', {
