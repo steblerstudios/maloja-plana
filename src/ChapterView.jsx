@@ -578,6 +578,22 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }
               }, field.section)
             );
+            if (field.sectionIntro) {
+              elements.push(
+                React.createElement('p', {
+                  key: 'sectionIntro-' + field.k,
+                  style: {
+                    gridColumn: '1 / -1',
+                    fontSize: text.sm + 'px',
+                    color: palette.sage,
+                    fontStyle: 'italic',
+                    lineHeight: leading.relaxed,
+                    margin: '0 0 8px 0',
+                    maxWidth: '420px',
+                  }
+                }, field.sectionIntro)
+              );
+            }
           }
           elements.push(renderField(field));
           return elements;
@@ -638,6 +654,22 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }
               }, field.section)
             );
+            if (field.sectionIntro) {
+              elements.push(
+                React.createElement('p', {
+                  key: 'sectionIntro-' + field.k,
+                  style: {
+                    gridColumn: '1 / -1',
+                    fontSize: text.sm + 'px',
+                    color: palette.sage,
+                    fontStyle: 'italic',
+                    lineHeight: leading.relaxed,
+                    margin: '0 0 8px 0',
+                    maxWidth: '420px',
+                  }
+                }, field.sectionIntro)
+              );
+            }
           }
           elements.push(renderField(field));
           return elements;
