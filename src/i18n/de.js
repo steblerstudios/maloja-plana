@@ -129,6 +129,7 @@ export default {
     notifications: 'Benachrichtigungen',
     menu: 'Menü',
     completion: '{value}% vollständig',
+    privacyNote: '100% lokal. Keine Daten verlassen Dein Gerät.',
   },
 
   theme: {
@@ -442,6 +443,7 @@ export default {
     selectDocType: 'Bitte Dokumenttyp auswählen',
     selectExpiry: 'Bitte Ablaufdatum eingeben',
     uploadError: 'Fehler beim Upload',
+    uploadSuccess: 'Dokument hinzugefügt',
     hint: 'Hinweis',
     trustDocuments: 'Deine Dokumente bleiben auf diesem Gerät.',
     showMore: 'Weitere Bereiche anzeigen',
