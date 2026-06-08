@@ -8,6 +8,51 @@ export default {
     behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
     notfall: { contact: 'Notfallkontakt', medical: 'Medizinisches', care: 'Ärztliche Betreuung', provision: 'Vorsorge' },
   },
+  sectionIntros: {
+    basis: {
+      person: 'Dein Name und Geburtsdatum, so wie sie in offiziellen Dokumenten stehen.',
+      contact: 'Wie Du erreichbar bist — für Behörden, Vermieter oder den Arbeitgeber.',
+      family: 'Wer zu Deinem Haushalt gehört, beeinflusst Steuern, Versicherungen und Unterstützungsansprüche.',
+    },
+    wohnen: {
+      address: 'Deine aktuelle Wohnadresse — sie wird für fast jedes offizielle Dokument gebraucht.',
+      costs: 'Was Dein Zuhause monatlich kostet. Nützlich für Budget, Steuern und allfällige Unterstützungsanträge.',
+      landlord: 'Die Kontaktdaten Deines Vermieters — hilfreich bei Fragen, Reparaturen oder einer Kündigung.',
+      property: 'Falls Du Wohneigentum besitzt. Diese Angaben sind für die Steuererklärung relevant.',
+    },
+    finanzen: {
+      income: 'Was jeden Monat auf Deinem Konto ankommt. Der Ausgangspunkt für alles Weitere.',
+      budgetLight: 'Ein grober Überblick genügt. Exakte Beträge sind weniger wichtig als die Grössenordnung.',
+      obligations: 'Regelmässige Zahlungen, die nicht aufschiebbar sind — Schulden, Alimente, feste Abzüge.',
+      savings: 'Auch kleine Rücklagen zählen. Hier geht es um den Überblick, nicht um einen Zielwert.',
+      credit: 'Kreditkarten und laufende Darlehen — für den Gesamtüberblick über Deine finanzielle Situation.',
+      provision: 'Säule 3a, 3b und Anlagen. Freiwillige Vorsorge, die Du im Blick behalten willst.',
+    },
+    versicherungen: {
+      basic: 'Jede Person in der Schweiz hat eine Krankenkasse. Hier sammelst Du die wichtigsten Angaben dazu.',
+      occupational: 'Deine Pensionskasse — sie wird gemeinsam mit Deinem Arbeitgeber finanziert und sichert Dein Alter ab.',
+      additional: 'Unfallversicherung und Haftpflicht. Oft obligatorisch oder dringend empfohlen.',
+      property: 'Hausrat, Reise, Cyber — Versicherungen, die Du haben kannst, aber nicht musst.',
+      mobility: 'Falls Du ein Auto hast: die Motorfahrzeugversicherung gehört hierher.',
+      social: 'AHV-Beiträge und Sozialversicherungen — die Basis des Schweizer Vorsorgesystems.',
+    },
+    ausbildung: {
+      education: 'Deine schulische und berufliche Ausbildung. Nützlich für Bewerbungen und Anerkennungsverfahren.',
+      work: 'Deine aktuelle Arbeitssituation — Arbeitgeber, Pensum und Bewilligung.',
+      languages: 'Welche Sprachen Du sprichst. In der viersprachigen Schweiz eine wichtige Angabe.',
+    },
+    behoerden: {
+      taxes: 'Die Steuererklärung gehört zum Schweizer Alltag. Hier behältst Du Fristen und Zuständigkeiten im Blick.',
+      legal: 'Diese Angaben helfen Dir, den Überblick über Deine rechtliche Situation zu behalten — nicht mehr, nicht weniger.',
+      representation: 'Falls jemand Dich in rechtlichen oder behördlichen Angelegenheiten unterstützt.',
+    },
+    notfall: {
+      contact: 'Wer soll zuerst informiert werden? Ein Name und eine Telefonnummer genügen als Anfang.',
+      medical: 'Was Ärzte und Rettungskräfte im Notfall über Dich wissen sollten.',
+      care: 'Dein Hausarzt und Dein bevorzugtes Spital — damit diese Information auffindbar ist, wenn sie gebraucht wird.',
+      provision: 'Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche. Themen, die man einmal klären und dann ablegen kann.',
+    },
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Alles Wichtige an einem Ort.',
