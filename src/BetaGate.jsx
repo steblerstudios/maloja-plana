@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
+import { text, weight } from './config/tokens.js';
 
 const BETA_CODE = 'maloja2026';
 const STORAGE_KEY = 'or5_beta_access';
@@ -55,7 +56,7 @@ export const BetaGate = ({ children }) => {
         placeholder: t('beta.codePlaceholder'),
         autoFocus: true,
         style: {
-          width: '100%', padding: '10px 14px', fontSize: '14px',
+          width: '100%', padding: '10px 14px', fontSize: text.body,
           border: '1px solid ' + (error ? palette.rose : palette.border),
           borderRadius: '6px', background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
@@ -67,7 +68,7 @@ export const BetaGate = ({ children }) => {
       React.createElement('button', {
         type: 'submit',
         style: {
-          marginTop: '16px', width: '100%', padding: '10px', fontSize: '14px',
+          marginTop: '16px', width: '100%', padding: '10px', fontSize: text.body,
           background: palette.sand, color: '#fff', border: 'none',
           borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontFamily: 'inherit',
         }

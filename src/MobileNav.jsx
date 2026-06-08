@@ -109,7 +109,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         },
           React.createElement('div', {
             style: {
-              fontSize: '10px', fontWeight: '500', color: palette.soft,
+              fontSize: text.xs, fontWeight: '500', color: palette.soft,
               padding: tierIdx === 0 ? '8px 20px 4px 20px' : '12px 20px 4px 20px',
               letterSpacing: '0.3px',
             }
@@ -181,7 +181,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
 
       // Footer
       React.createElement('div', {
-        style: { padding: '16px 20px', borderTop: '1px solid ' + palette.border, fontSize: '10px', color: palette.soft }
+        style: { padding: '16px 20px', borderTop: '1px solid ' + palette.border, fontSize: text.xs, color: palette.soft }
       }, t('nav.privacyNote'))
     )
   );

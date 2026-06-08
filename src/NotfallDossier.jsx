@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
+import { text, weight } from './config/tokens.js';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -28,7 +29,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     },
       React.createElement('div', {
         style: {
-          fontSize: '13px', fontWeight: '600', color: palette.text,
+          fontSize: text.sm, fontWeight: '600', color: palette.text,
           marginBottom: '8px', letterSpacing: '0.2px',
         }
       }, section.title),
@@ -37,7 +38,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           key: i,
           style: {
             display: 'flex', justifyContent: 'space-between',
-            padding: '3px 0', fontSize: '13px',
+            padding: '3px 0', fontSize: text.sm,
             borderBottom: i < section.rows.length - 1 ? '1px solid ' + palette.border : 'none',
           }
         },
@@ -56,7 +57,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }
     },
       React.createElement('div', {
-        style: { fontSize: '13px', color: palette.mid, lineHeight: '1.6' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' }
       }, t('notfallDossier.empty'))
     );
 
@@ -68,7 +69,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       onClick: () => onNavigate('unterlagen'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
-        color: palette.mid, fontSize: '13px', padding: '0 0 16px 0',
+        color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '4px',
       }
     }, '← ' + t('notfallDossier.back')),
@@ -86,11 +87,11 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         }
       }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
       React.createElement('div', {
-        style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5', marginBottom: '14px' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),
 
       hasSections && React.createElement('div', {
-        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '13px', color: palette.soft }
+        style: { display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: text.sm, color: palette.soft }
       },
         React.createElement('span', null, t('notfallDossier.sectionsIncluded', { count: preview.sections.length })),
         preview.emptySections.length > 0 &&
@@ -102,7 +103,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         padding: '10px 14px', marginBottom: '16px',
         background: palette.up, borderRadius: '6px',
-        fontSize: '13px', color: palette.mid, lineHeight: '1.5',
+        fontSize: text.sm, color: palette.mid, lineHeight: '1.5',
       }
     }, '○ ' + t('notfallDossier.privacyNote')),
 
@@ -112,13 +113,13 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         width: '100%', padding: '12px', marginBottom: '20px',
         background: palette.sand, color: '#fff', border: 'none',
         borderRadius: '6px', cursor: 'pointer',
-        fontSize: '13px', fontWeight: '500', fontFamily: 'inherit',
+        fontSize: text.sm, fontWeight: '500', fontFamily: 'inherit',
         letterSpacing: '0.2px',
       }
     }, t('notfallDossier.printAction')),
 
     hasSections && React.createElement('div', {
-      style: { fontSize: '13px', color: palette.soft, marginBottom: '12px' }
+      style: { fontSize: text.sm, color: palette.soft, marginBottom: '12px' }
     }, t('notfallDossier.previewNote')),
 
     hasSections
@@ -127,7 +128,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        marginTop: '16px', fontSize: '10px', color: palette.soft, lineHeight: '1.4',
+        marginTop: '16px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
     }, '○ ' + t('notfallDossier.footerPrivacy'))
   );
