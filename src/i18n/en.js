@@ -129,6 +129,7 @@ export default {
     calendar: 'Calendar',
     menu: 'Menu',
     completion: '{value}% complete',
+    privacyNote: '100% local. No data leaves your device.',
   },
 
   theme: {
@@ -443,6 +444,7 @@ export default {
     selectDocType: 'Please select document type',
     selectExpiry: 'Please enter expiry date',
     uploadError: 'Upload error',
+    uploadSuccess: 'Document added',
     hint: 'Hint',
     trustDocuments: 'Your documents stay on this device.',
     showMore: 'Show more sections',

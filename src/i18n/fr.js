@@ -129,6 +129,7 @@ export default {
     notifications: 'Notifications',
     menu: 'Menu',
     completion: '{value}% complété',
+    privacyNote: '100% local. Aucune donnée ne quitte ton appareil.',
   },
 
   theme: {
@@ -442,6 +443,7 @@ export default {
     selectDocType: 'Veuillez sélectionner le type de document',
     selectExpiry: 'Veuillez entrer la date d\'expiration',
     uploadError: 'Erreur d\'importation',
+    uploadSuccess: 'Document ajouté',
     hint: 'Indication',
     trustDocuments: 'Tes documents restent sur cet appareil.',
     showMore: 'Afficher plus de sections',
