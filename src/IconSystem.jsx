@@ -30,8 +30,15 @@ import React from 'react';
 // ═══════════════════════════════════════════════════════════════
 
 const _basis = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('circle', { cx: '12', cy: '8', r: '4' }),
-  React.createElement('path', { d: 'M 4 20 Q 4 14 12 14 Q 20 14 20 20' })
+  // ID card outline — rounded rectangle framing the person
+  React.createElement('rect', { x: '2', y: '3', width: '20', height: '18', rx: '2.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
+  // Person silhouette — centered in card
+  React.createElement('circle', { cx: '9', cy: '10', r: '3' }),
+  React.createElement('path', { d: 'M 4.5 18 Q 4.5 14 9 14 Q 13.5 14 13.5 18' }),
+  // Data lines on right side
+  React.createElement('line', { x1: '15.5', y1: '9', x2: '19.5', y2: '9', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.5' }),
+  React.createElement('line', { x1: '15.5', y1: '12', x2: '18.5', y2: '12', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.4' }),
+  React.createElement('line', { x1: '15.5', y1: '15', x2: '19', y2: '15', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.35' }),
 );
 
 const _wohnen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
@@ -236,18 +243,15 @@ const _finanzen = () => React.createElement('svg', { viewBox: '0 0 48 48', fill:
 );
 
 const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Shield
+  // Shield — Swiss protection shape
   React.createElement('path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }),
-  // Inner shield outline
+  // Inner shield border
   React.createElement('path', { d: 'M 12 4 L 6 7.2 L 6 12 Q 6 17.5 12 20 Q 18 17.5 18 12 L 18 7.2 Z', fill: 'none', stroke: 'white', strokeWidth: '0.5', opacity: '0.3' }),
-  // Abstract Edelweiss — centre dot + 6 petals
-  React.createElement('circle', { cx: '12', cy: '12', r: '1.2', fill: 'white' }),
-  React.createElement('ellipse', { cx: '12', cy: '8.5', rx: '1', ry: '2.2', fill: 'white', opacity: '0.85' }),
-  React.createElement('ellipse', { cx: '12', cy: '15.5', rx: '1', ry: '2.2', fill: 'white', opacity: '0.85' }),
-  React.createElement('ellipse', { cx: '9', cy: '10', rx: '2.2', ry: '1', fill: 'white', opacity: '0.75', transform: 'rotate(-30 9 10)' }),
-  React.createElement('ellipse', { cx: '15', cy: '10', rx: '2.2', ry: '1', fill: 'white', opacity: '0.75', transform: 'rotate(30 15 10)' }),
-  React.createElement('ellipse', { cx: '9', cy: '14', rx: '2.2', ry: '1', fill: 'white', opacity: '0.75', transform: 'rotate(30 9 14)' }),
-  React.createElement('ellipse', { cx: '15', cy: '14', rx: '2.2', ry: '1', fill: 'white', opacity: '0.75', transform: 'rotate(-30 15 14)' }),
+  // Small Swiss cross — top center of shield
+  React.createElement('rect', { x: '11', y: '6', width: '2', height: '5', rx: '0.4', fill: 'white' }),
+  React.createElement('rect', { x: '9.5', y: '7.5', width: '5', height: '2', rx: '0.4', fill: 'white' }),
+  // Protective hand cupping from below — open palm gesture
+  React.createElement('path', { d: 'M 7.5 16 Q 8 13.5 10 13 Q 11 12.8 12 13.5 Q 13 12.8 14 13 Q 16 13.5 16.5 16 Q 16.5 17.5 12 19 Q 7.5 17.5 7.5 16 Z', fill: 'white', opacity: '0.85' }),
 );
 
 const _ausbildung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
@@ -363,10 +367,13 @@ const _behoerden = () => React.createElement('svg', { viewBox: '0 0 48 48', fill
 );
 
 const _notfall = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  // Maloja emergency cross — rounded square with prominent plus, eigenständige Proportionen
-  React.createElement('rect', { x: '2', y: '2', width: '20', height: '20', rx: '5' }),
-  React.createElement('rect', { x: '10', y: '5.5', width: '4', height: '13', rx: '1.2', fill: 'white' }),
-  React.createElement('rect', { x: '5.5', y: '10', width: '13', height: '4', rx: '1.2', fill: 'white' }),
+  // Heart-shaped container — warm, precautionary, not alarming
+  React.createElement('path', { d: 'M 12 21 Q 3 14 3 8.5 Q 3 4 7 4 Q 9.5 4 12 7 Q 14.5 4 17 4 Q 21 4 21 8.5 Q 21 14 12 21 Z' }),
+  // Soft inner glow line
+  React.createElement('path', { d: 'M 12 19 Q 5 13.5 5 9 Q 5 5.8 7.5 5.5 Q 9.5 5.5 12 8 Q 14.5 5.5 16.5 5.5 Q 19 5.8 19 9 Q 19 13.5 12 19 Z', fill: 'none', stroke: 'white', strokeWidth: '0.4', opacity: '0.25' }),
+  // Medical cross — centered, proportional
+  React.createElement('rect', { x: '10.5', y: '7.5', width: '3', height: '8', rx: '0.8', fill: 'white' }),
+  React.createElement('rect', { x: '8', y: '10', width: '8', height: '3', rx: '0.8', fill: 'white' }),
 );
 
 
