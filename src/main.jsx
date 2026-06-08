@@ -286,7 +286,7 @@ const AppInner = () => {
       chapters,
       completion: calculateCompletion()
     }),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface, borderBottom: '1px solid ' + palette.border, boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', position: 'relative', zIndex: 2 } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
         style: { fontSize: '17px', fontWeight: '600', margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '10px' }
