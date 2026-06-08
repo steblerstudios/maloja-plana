@@ -462,14 +462,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   };
 
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.md } },
-    // Header — expressive chapter entrance
-    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.sm + 'px', paddingBottom: space.md + 'px' } },
-      React.createElement('div', { style: { marginBottom: space.md + 'px', color: palette.sand } },
+    // Header — expressive chapter entrance with landscape continuity
+    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: palette.sageMist, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + palette.sage + '20' } },
+      React.createElement('div', { style: { marginBottom: space.md + 'px', color: palette.sageDeep } },
         React.createElement(Icon, { name: chapter.key, size: 48 })
       ),
       React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
 
     // Living mirror layer — life sentence + mirror cards
@@ -497,10 +497,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
       React.createElement('div', {
         style: {
-          marginBottom: '16px', padding: '12px 14px',
-          background: palette.sage + '10', borderRadius: '8px',
-          border: '1px solid ' + palette.sage + '30',
-          fontSize: text.sm, color: palette.sage, lineHeight: leading.relaxed,
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
+          border: '1px solid ' + palette.sage + '25',
+          borderLeft: '3px solid ' + palette.sage + '50',
+          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
       }, '○ ' + tr('orientation.contextIpv')),
 
@@ -508,10 +509,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
       React.createElement('div', {
         style: {
-          marginBottom: '16px', padding: '12px 14px',
-          background: palette.sage + '10', borderRadius: '8px',
-          border: '1px solid ' + palette.sage + '30',
-          fontSize: text.sm, color: palette.sage, lineHeight: leading.relaxed,
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || (palette.sage + '10'), borderRadius: radius.sm,
+          border: '1px solid ' + palette.sage + '25',
+          borderLeft: '3px solid ' + palette.sage + '50',
+          fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
       }, '○ ' + tr('orientation.contextFamilienzulagen')),
 
@@ -547,7 +549,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
-      filledCount === 0 && React.createElement('div', { style: { padding: '24px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center', marginBottom: '20px' } },
+      filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
         ),
@@ -567,14 +569,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  marginTop: isFirst ? 0 : '36px',
-                  paddingTop: isFirst ? 0 : '20px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: palette.mid,
+                  marginTop: isFirst ? 0 : space['2xl'] + 'px',
+                  paddingTop: isFirst ? 0 : space.lg + 'px',
+                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
+                  fontSize: text.sm,
+                  fontWeight: weight.medium,
+                  color: palette.sageDeep || palette.mid,
                   letterSpacing: '0.4px',
-                  marginBottom: '8px',
+                  marginBottom: space.sm + 'px',
                 }
               }, field.section)
             );
@@ -584,12 +586,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   key: 'sectionIntro-' + field.k,
                   style: {
                     gridColumn: '1 / -1',
-                    fontSize: text.sm + 'px',
-                    color: palette.sage,
+                    fontSize: text.sm,
+                    color: palette.sageDeep || palette.sage,
                     fontStyle: 'italic',
                     lineHeight: leading.relaxed,
-                    margin: '0 0 8px 0',
+                    margin: '0 0 12px 0',
                     maxWidth: '420px',
+                    background: palette.sageMist || 'transparent',
+                    padding: space.sm + 'px ' + space.md + 'px',
+                    borderRadius: radius.sm,
+                    borderLeft: '3px solid ' + palette.sage + '40',
                   }
                 }, field.sectionIntro)
               );
@@ -643,14 +649,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  marginTop: isFirst ? '8px' : '36px',
-                  paddingTop: isFirst ? 0 : '20px',
-                  borderTop: isFirst ? 'none' : '1px solid ' + palette.border,
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: palette.mid,
+                  marginTop: isFirst ? '8px' : space['2xl'] + 'px',
+                  paddingTop: isFirst ? 0 : space.lg + 'px',
+                  borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
+                  fontSize: text.sm,
+                  fontWeight: weight.medium,
+                  color: palette.sageDeep || palette.mid,
                   letterSpacing: '0.4px',
-                  marginBottom: '8px',
+                  marginBottom: space.sm + 'px',
                 }
               }, field.section)
             );
@@ -660,12 +666,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   key: 'sectionIntro-' + field.k,
                   style: {
                     gridColumn: '1 / -1',
-                    fontSize: text.sm + 'px',
-                    color: palette.sage,
+                    fontSize: text.sm,
+                    color: palette.sageDeep || palette.sage,
                     fontStyle: 'italic',
                     lineHeight: leading.relaxed,
-                    margin: '0 0 8px 0',
+                    margin: '0 0 12px 0',
                     maxWidth: '420px',
+                    background: palette.sageMist || 'transparent',
+                    padding: space.sm + 'px ' + space.md + 'px',
+                    borderRadius: radius.sm,
+                    borderLeft: '3px solid ' + palette.sage + '40',
                   }
                 }, field.sectionIntro)
               );
