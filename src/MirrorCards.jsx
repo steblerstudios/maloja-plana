@@ -664,12 +664,12 @@ function MirrorRow({ label, value, palette, isLast, bold }) {
 function MirrorSection({ title, rows, palette }) {
   return React.createElement('div', {
     style: {
-      background: palette.up,
+      background: palette.sageMist || palette.up,
       borderRadius: radius.md,
       padding: space.md + 'px',
       marginBottom: space.md + 'px',
       boxShadow: shadow.sm,
-      border: '1px solid ' + palette.border + '44',
+      border: '1px solid ' + palette.sage + '22',
     }
   },
     React.createElement('div', {
@@ -705,11 +705,11 @@ export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
   return React.createElement('div', {
     style: { marginBottom: space.lg + 'px' }
   },
-    // Life sentence card
+    // Life sentence card — sage-tinted mirror of your life
     sentence && React.createElement('div', {
       style: {
-        background: palette.surface,
-        border: '1px solid ' + palette.border + '88',
+        background: palette.sageDew || palette.surface,
+        border: '1px solid ' + palette.sage + '30',
         borderRadius: radius.md,
         padding: space.lg + 'px ' + space.md + 'px',
         marginBottom: sections.length > 0 ? space.md + 'px' : 0,
