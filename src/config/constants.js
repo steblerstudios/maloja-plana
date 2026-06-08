@@ -5,13 +5,15 @@
 export const DARK_PALETTE = {
   bg: '#0F0E0C', surface: '#161513', up: '#1E1C19', top: '#252320',
   border: '#2A2824', text: '#EDE8E0', mid: '#8A8478', soft: '#504C46',
-  gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#B8956A'
+  gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#B8956A',
+  sageMist: '#1A2420', sageDew: '#1F2E28', sageDeep: '#8FB5A0'
 };
 
 export const LIGHT_PALETTE = {
   bg: '#F5F2EE', surface: '#FFFFFF', up: '#F0EDE8', top: '#EAE5DD',
   border: '#DDD8D0', text: '#1C1A17', mid: '#6B6560', soft: '#A89F94',
-  gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#B8956A'
+  gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#B8956A',
+  sageMist: '#E8F0EC', sageDew: '#D4E5DB', sageDeep: '#5C7D6C'
 };
 
 export const CANTONS = ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'];
