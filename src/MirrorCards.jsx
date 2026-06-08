@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { getCantonName } from './config/cantonalData.js';
-import { text, weight, space, radius, leading } from './config/tokens.js';
+import { text, weight, space, radius, leading, shadow } from './config/tokens.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -665,9 +665,11 @@ function MirrorSection({ title, rows, palette }) {
   return React.createElement('div', {
     style: {
       background: palette.up,
-      borderRadius: radius.sm,
+      borderRadius: radius.md,
       padding: space.md + 'px',
       marginBottom: space.md + 'px',
+      boxShadow: shadow.sm,
+      border: '1px solid ' + palette.border + '44',
     }
   },
     React.createElement('div', {
@@ -707,14 +709,14 @@ export const MirrorCards = ({ chapterKey, data, allData, palette, t }) => {
     sentence && React.createElement('div', {
       style: {
         background: palette.surface,
-        border: '1px solid ' + palette.border,
+        border: '1px solid ' + palette.border + '88',
         borderRadius: radius.md,
-        padding: space.md + 'px',
+        padding: space.lg + 'px ' + space.md + 'px',
         marginBottom: sections.length > 0 ? space.md + 'px' : 0,
         fontSize: text.body,
         color: palette.text,
-        lineHeight: leading.normal,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+        lineHeight: leading.relaxed,
+        boxShadow: shadow.md,
       }
     }, sentence),
 
