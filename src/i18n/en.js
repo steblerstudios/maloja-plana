@@ -8,6 +8,51 @@ export default {
     behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation' },
     notfall: { contact: 'Emergency contact', medical: 'Medical', care: 'Medical care', provision: 'Advance directives' },
   },
+  sectionIntros: {
+    basis: {
+      person: 'Your name and date of birth, as they appear in official documents.',
+      contact: 'How you can be reached — by authorities, landlords, or your employer.',
+      family: 'Who belongs to your household affects taxes, insurance, and support entitlements.',
+    },
+    wohnen: {
+      address: 'Your current home address — needed for almost every official document.',
+      costs: 'What your home costs each month. Useful for budgeting, taxes, and any support applications.',
+      landlord: 'Your landlord\'s contact details — helpful for questions, repairs, or termination.',
+      property: 'If you own property. These details are relevant for your tax return.',
+    },
+    finanzen: {
+      income: 'What arrives in your account each month. The starting point for everything else.',
+      budgetLight: 'A rough overview is enough. The order of magnitude matters more than exact amounts.',
+      obligations: 'Regular payments that cannot be deferred — debts, alimony, fixed deductions.',
+      savings: 'Even small reserves count. This is about the overview, not a target amount.',
+      credit: 'Credit cards and current loans — for a complete picture of your financial situation.',
+      provision: 'Pillar 3a, 3b, and investments. Voluntary provision you want to keep track of.',
+    },
+    versicherungen: {
+      basic: 'Everyone in Switzerland has health insurance. Collect the key details here.',
+      occupational: 'Your pension fund — jointly financed with your employer to secure your retirement.',
+      additional: 'Accident insurance and liability. Often mandatory or strongly recommended.',
+      property: 'Household, travel, cyber — insurance you can have, but don\'t have to.',
+      mobility: 'If you have a car: motor vehicle insurance belongs here.',
+      social: 'AHV contributions and social insurance — the foundation of the Swiss pension system.',
+    },
+    ausbildung: {
+      education: 'Your academic and vocational training. Useful for applications and recognition procedures.',
+      work: 'Your current employment situation — employer, workload, and permit.',
+      languages: 'Which languages you speak. An important detail in multilingual Switzerland.',
+    },
+    behoerden: {
+      taxes: 'Filing taxes is part of everyday life in Switzerland. Keep track of deadlines and responsibilities here.',
+      legal: 'These details help you keep an overview of your legal situation — nothing more, nothing less.',
+      representation: 'If someone supports you in legal or administrative matters.',
+    },
+    notfall: {
+      contact: 'Who should be contacted first? A name and phone number are enough to start.',
+      medical: 'What doctors and paramedics should know about you in an emergency.',
+      care: 'Your family doctor and preferred hospital — so this information is findable when needed.',
+      provision: 'Advance directive, power of attorney, funeral wishes. Topics to settle once and file away.',
+    },
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Everything important in one place.',

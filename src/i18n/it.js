@@ -8,6 +8,51 @@ export default {
     behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
     notfall: { contact: 'Contatto d\'emergenza', medical: 'Medico', care: 'Assistenza medica', provision: 'Direttive anticipate' },
   },
+  sectionIntros: {
+    basis: {
+      person: 'Il tuo nome e la tua data di nascita, come figurano nei documenti ufficiali.',
+      contact: 'Come raggiungerti — per autorità, locatore o datore di lavoro.',
+      family: 'Chi fa parte del tuo nucleo familiare influisce su imposte, assicurazioni e diritti alle prestazioni.',
+    },
+    wohnen: {
+      address: 'Il tuo indirizzo attuale — necessario per quasi ogni documento ufficiale.',
+      costs: 'Quanto costa il tuo alloggio ogni mese. Utile per il budget, le imposte e le eventuali richieste di sostegno.',
+      landlord: 'I dati di contatto del tuo locatore — utili per domande, riparazioni o disdetta.',
+      property: 'Se possiedi un immobile. Queste informazioni sono rilevanti per la dichiarazione d\'imposta.',
+    },
+    finanzen: {
+      income: 'Quello che arriva sul tuo conto ogni mese. Il punto di partenza per tutto il resto.',
+      budgetLight: 'Una panoramica approssimativa è sufficiente. L\'ordine di grandezza conta più degli importi esatti.',
+      obligations: 'Pagamenti regolari non rinviabili — debiti, alimenti, deduzioni fisse.',
+      savings: 'Anche piccole riserve contano. Qui si tratta di avere una visione d\'insieme, non di un obiettivo.',
+      credit: 'Carte di credito e prestiti in corso — per un quadro completo della tua situazione finanziaria.',
+      provision: 'Pilastro 3a, 3b e investimenti. Previdenza volontaria che vuoi tenere d\'occhio.',
+    },
+    versicherungen: {
+      basic: 'Ogni persona in Svizzera ha una cassa malati. Raccogli qui le informazioni principali.',
+      occupational: 'La tua cassa pensione — finanziata insieme al tuo datore di lavoro per garantire la tua vecchiaia.',
+      additional: 'Assicurazione infortuni e responsabilità civile. Spesso obbligatorie o fortemente raccomandate.',
+      property: 'Economia domestica, viaggio, cyber — assicurazioni che puoi avere, ma non devi.',
+      mobility: 'Se hai un\'auto: l\'assicurazione veicoli a motore va qui.',
+      social: 'Contributi AVS e assicurazioni sociali — la base del sistema previdenziale svizzero.',
+    },
+    ausbildung: {
+      education: 'La tua formazione scolastica e professionale. Utile per candidature e procedure di riconoscimento.',
+      work: 'La tua situazione lavorativa attuale — datore di lavoro, grado di occupazione e permesso.',
+      languages: 'Quali lingue parli. Un\'informazione importante nella Svizzera quadrilingue.',
+    },
+    behoerden: {
+      taxes: 'La dichiarazione d\'imposta fa parte della vita quotidiana in Svizzera. Tieni d\'occhio scadenze e competenze.',
+      legal: 'Queste informazioni ti aiutano a mantenere una visione d\'insieme della tua situazione giuridica — né più, né meno.',
+      representation: 'Se qualcuno ti accompagna nelle questioni giuridiche o amministrative.',
+    },
+    notfall: {
+      contact: 'Chi deve essere informato per primo? Un nome e un numero di telefono bastano per iniziare.',
+      medical: 'Quello che medici e soccorritori dovrebbero sapere su di te in caso di emergenza.',
+      care: 'Il tuo medico di famiglia e l\'ospedale preferito — affinché queste informazioni siano reperibili quando servono.',
+      provision: 'Direttive anticipate, mandato precauzionale, volontà funerarie. Temi da chiarire una volta e archiviare.',
+    },
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Tutto l\'importante in un unico posto.',
