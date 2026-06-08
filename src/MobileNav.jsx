@@ -182,7 +182,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       // Footer
       React.createElement('div', {
         style: { padding: '16px 20px', borderTop: '1px solid ' + palette.border, fontSize: '10px', color: palette.soft }
-      }, '100% local. No data leaves your device.')
+      }, t('nav.privacyNote'))
     )
   );
 

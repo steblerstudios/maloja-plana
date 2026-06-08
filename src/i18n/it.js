@@ -129,6 +129,7 @@ export default {
     notifications: 'Notifiche',
     menu: 'Menu',
     completion: '{value}% completato',
+    privacyNote: '100% locale. Nessun dato lascia il tuo dispositivo.',
   },
 
   theme: {
@@ -441,6 +442,7 @@ export default {
     selectDocType: 'Seleziona il tipo di documento',
     selectExpiry: 'Inserisci la data di scadenza',
     uploadError: 'Errore durante il caricamento',
+    uploadSuccess: 'Documento aggiunto',
     hint: 'Nota',
     trustDocuments: 'I tuoi documenti restano su questo dispositivo.',
     emptyState: 'Niente qui per il momento — ed è perfettamente normale.',
