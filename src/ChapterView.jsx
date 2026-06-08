@@ -37,7 +37,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     let timer;
     const listener = (event) => {
       if (event.eventType === 'DOCUMENT_UPLOADED') {
-        setUploadSuccess('Dokument hinzugefügt');
+        setUploadSuccess(tr('chapterView.uploadSuccess'));
         timer = setTimeout(() => setUploadSuccess(''), 3000);
       }
     };
