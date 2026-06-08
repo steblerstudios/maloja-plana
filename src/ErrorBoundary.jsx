@@ -1,4 +1,5 @@
 import React from 'react';
+import { text } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -81,7 +82,7 @@ export class ErrorBoundary extends React.Component {
           }, t ? t('error.reload') : 'Reload page')
         ),
 
-        React.createElement('p', { style: { fontSize: '10px', color: palette?.mid || '#888', marginTop: '20px' } },
+        React.createElement('p', { style: { fontSize: text.xs, color: palette?.mid || '#888', marginTop: '20px' } },
           t ? t('error.privacy') : 'No data was sent anywhere. Everything stays on your device.'
         )
       )

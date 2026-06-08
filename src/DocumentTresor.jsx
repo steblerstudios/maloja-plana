@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
+import { text, weight, space, radius } from './config/tokens.js';
 
 const getDaysUntilExpiry = (expiryDate) => {
   const today = new Date();
@@ -74,14 +75,14 @@ export const DocumentTresor = ({
     background: palette.surface,
     color: palette.text,
     boxSizing: 'border-box',
-    fontSize: '13px',
+    fontSize: text.sm,
     marginBottom: '8px'
   };
 
   const chapterList = chapters || [];
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' } },
-    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
 
     // Vault fill indicator
     React.createElement('div', {
@@ -94,10 +95,10 @@ export const DocumentTresor = ({
         React.createElement('path', { d: 'M 7 6 L 7 4 C 7 2.5 9 1 12 1 C 15 1 17 2.5 17 4 L 17 6', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' }),
       ),
       React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: '13px', fontWeight: '600', color: palette.text } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
           documents.length + ' ' + (documents.length === 1 ? 'Dokument' : 'Dokumente')
         ),
-        React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginTop: '2px' } },
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
           documents.length === 0 ? 'Dein Tresor ist bereit'
           : documents.length < 5 ? 'Ein guter Anfang'
           : documents.length < 15 ? 'Dein Tresor füllt sich'
@@ -110,15 +111,15 @@ export const DocumentTresor = ({
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginBottom: '16px' } },
       React.createElement('button', { type: 'button', 'aria-pressed': !showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border, font: 'inherit' }, onClick: () => setShowArchive(false) },
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
-        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.active'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active'))
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center' } },
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
-        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.expiringSoon'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon'))
       ),
       React.createElement('button', { type: 'button', 'aria-pressed': showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: showArchive ? palette.rose : palette.border, font: 'inherit' }, onClick: () => setShowArchive(true) },
         React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
-        React.createElement('div', { style: { fontSize: '10px', color: palette.mid } }, t('tresor.archive'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive'))
       )
     ),
 
@@ -152,8 +153,8 @@ export const DocumentTresor = ({
     // Documents List
     sortedDocs.length === 0 ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
       React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'tresor', size: 28 })),
-      React.createElement('p', { style: { fontSize: '14px', color: palette.text, margin: '0 0 6px 0' } }, t('tresor.noDocuments')),
-      React.createElement('p', { style: { fontSize: '12px', color: palette.mid, margin: 0 } }, t('tresor.noDocumentsHint'))
+      React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('tresor.noDocuments')),
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, t('tresor.noDocumentsHint'))
     ) : React.createElement('div', { style: { display: 'grid', gap: '8px', maxHeight: '600px', overflowY: 'auto' } },
       sortedDocs.map(doc => {
         const status = getExpiryStatus(doc.expiryDate, palette, t);
@@ -172,13 +173,13 @@ export const DocumentTresor = ({
             gap: '12px'
           }
         },
-          React.createElement('div', { style: { fontSize: '12px' } },
+          React.createElement('div', { style: { fontSize: text.sm } },
             React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' } },
-              React.createElement('span', { style: { fontSize: '14px' } }, doc.uploadStatus === 'uploading' ? '○' : doc.uploadStatus === 'success' ? '✓' : (chapter?.icon || '□')),
+              React.createElement('span', { style: { fontSize: text.body } }, doc.uploadStatus === 'uploading' ? '○' : doc.uploadStatus === 'success' ? '✓' : (chapter?.icon || '□')),
               (chapter?.icon || '□') + ' ' + doc.type
             ),
-            React.createElement('div', { style: { color: palette.mid, fontSize: '10px', marginBottom: '4px' } }, doc.fileName),
-            React.createElement('div', { style: { color: palette.mid, fontSize: '10px', marginBottom: '6px' } },
+            React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: '4px' } }, doc.fileName),
+            React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: '6px' } },
               t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })
             ),
 
@@ -188,19 +189,19 @@ export const DocumentTresor = ({
                 type: 'date',
                 value: editingExpiry,
                 onChange: (e) => setEditingExpiry(e.target.value),
-                style: { width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: '12px', marginBottom: '6px' }
+                style: { width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm, marginBottom: '6px' }
               }),
               React.createElement('div', { style: { display: 'flex', gap: '4px' } },
                 React.createElement('button', {
                   onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                  style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px', fontWeight: '600' }
+                  style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi }
                 }, '✓ OK'),
                 React.createElement('button', {
                   onClick: () => setEditingDocId(null),
-                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px' }
+                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs }
                 }, t('common.cancel'))
               )
-            ) : React.createElement('div', { style: { marginTop: '6px', color: status.color, fontWeight: '600', fontSize: '12px' } },
+            ) : React.createElement('div', { style: { marginTop: '6px', color: status.color, fontWeight: weight.semi, fontSize: text.sm } },
               status.label + ' | ' + t('tresor.expiryDate', { date: doc.expiryDate })
             )
           ),
@@ -216,7 +217,7 @@ export const DocumentTresor = ({
                 border: 'none',
                 cursor: 'pointer',
                 borderRadius: '3px',
-                fontSize: '10px',
+                fontSize: text.xs,
                 fontWeight: '600'
               }
             }, '↙'),
@@ -230,7 +231,7 @@ export const DocumentTresor = ({
                 border: 'none',
                 cursor: 'pointer',
                 borderRadius: '3px',
-                fontSize: '10px',
+                fontSize: text.xs,
                 fontWeight: '600'
               }
             }, '○'),
@@ -244,7 +245,7 @@ export const DocumentTresor = ({
                 border: 'none',
                 cursor: 'pointer',
                 borderRadius: '3px',
-                fontSize: '10px',
+                fontSize: text.xs,
                 fontWeight: '600'
               }
             }, '✕')
@@ -253,7 +254,7 @@ export const DocumentTresor = ({
       })
     ),
 
-    React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
   );
 };
 

@@ -330,7 +330,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             style: {
               position: 'absolute', right: '36px', top: '50%', transform: 'translateY(-50%)',
               background: 'none', border: 'none', cursor: 'pointer',
-              color: palette.mid, fontSize: '14px', padding: '4px', lineHeight: 1,
+              color: palette.mid, fontSize: text.body, padding: '4px', lineHeight: 1,
             }
           }, '✕')
         )
@@ -624,7 +624,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             : '○ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
-          style: { fontSize: '10px', color: palette.sage, marginTop: '4px' }
+          style: { fontSize: text.xs, color: palette.sage, marginTop: '4px' }
         }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
       ),
 
@@ -776,7 +776,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc.label))
         )
       ),
-      React.createElement('div', { style: { fontSize: '10px', color: palette.mid, marginTop: '12px', letterSpacing: '0.2px' } },
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', letterSpacing: '0.2px' } },
         tr('chapterView.trustDocuments')
       )
     )

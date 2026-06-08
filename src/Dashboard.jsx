@@ -33,7 +33,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
         'aria-label': t('common.close'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
-          color: palette.mid, fontSize: '14px', lineHeight: 1, flexShrink: 0,
+          color: palette.mid, fontSize: text.body, lineHeight: 1, flexShrink: 0,
         }
       }, '×')
     )

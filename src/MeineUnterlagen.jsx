@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
+import { text, weight } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
 const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
@@ -30,20 +31,20 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
       }, React.createElement(Icon, { name: icon, size: 22 })),
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { fontSize: '14px', fontWeight: '600', marginBottom: '4px' }
+          style: { fontSize: text.body, fontWeight: '600', marginBottom: '4px' }
         }, title),
         React.createElement('div', {
-          style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
         }, description),
         React.createElement('div', {
           style: {
-            fontSize: '13px', color: palette.soft, fontStyle: isClickable ? 'normal' : 'italic',
+            fontSize: text.sm, color: palette.soft, fontStyle: isClickable ? 'normal' : 'italic',
           }
         }, status)
       ),
       // Arrow indicator for clickable cards
       isClickable && React.createElement('div', {
-        style: { color: palette.soft, fontSize: '14px', alignSelf: 'center', flexShrink: 0 }
+        style: { color: palette.soft, fontSize: text.body, alignSelf: 'center', flexShrink: 0 }
       }, '→')
     )
   );
@@ -69,7 +70,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('unterlagen.title')),
       React.createElement('div', {
-        style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5' }
       }, t('unterlagen.subtitle'))
     ),
 
@@ -124,17 +125,17 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
         }, React.createElement(Icon, { name: 'lock', size: 22 })),
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', {
-            style: { fontSize: '14px', fontWeight: '600', marginBottom: '4px' }
+            style: { fontSize: text.body, fontWeight: '600', marginBottom: '4px' }
           }, t('unterlagen.backup.title')),
           React.createElement('div', {
-            style: { fontSize: '13px', color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }
+            style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }
           }, t('unterlagen.backup.description')),
           React.createElement('button', {
             onClick: () => onNavigate('export'),
             style: {
               padding: '8px 14px', background: palette.up,
               color: palette.mid, border: '1px solid ' + palette.border,
-              borderRadius: '6px', cursor: 'pointer', fontSize: '13px',
+              borderRadius: '6px', cursor: 'pointer', fontSize: text.sm,
             }
           }, t('unterlagen.backup.action'))
         )
@@ -144,7 +145,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     // Privacy note
     React.createElement('div', {
       style: {
-        marginTop: '8px', fontSize: '10px', color: palette.soft, lineHeight: '1.4',
+        marginTop: '8px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
     }, '○ ' + t('unterlagen.note'))
   );
