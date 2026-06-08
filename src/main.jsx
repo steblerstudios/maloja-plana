@@ -60,7 +60,7 @@ const LanguageSwitcher = ({ palette }) => {
           border: 'none',
           borderRadius: '3px',
           cursor: 'pointer',
-          fontSize: '10px',
+          fontSize: text.xs,
           fontWeight: l === lang ? '700' : '500',
           lineHeight: 1,
         }
@@ -305,7 +305,7 @@ const AppInner = () => {
         React.createElement('button', {
           'aria-label': t('nav.menu'),
           onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: '8px', cursor: 'pointer', fontSize: '14px', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: '8px', cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
         },
           // Hamburger icon as SVG
           React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
@@ -401,7 +401,7 @@ const AppInner = () => {
         position: 'fixed',
         bottom: '16px',
         left: '16px',
-        fontSize: '10px',
+        fontSize: text.xs,
         color: palette.mid,
         letterSpacing: '0.3px',
         opacity: 0.7,
@@ -415,7 +415,7 @@ const AppInner = () => {
       React.createElement('a', {
         href: 'mailto:feedback@example.com?subject=Maloja%20Plana%20Beta%20Feedback',
         style: {
-          color: palette.mid, fontSize: '10px', fontFamily: 'inherit',
+          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
           letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
         }
       }, t('beta.feedbackMail')),
@@ -424,7 +424,7 @@ const AppInner = () => {
         onClick: () => handleNavigate('legal'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: '10px', padding: 0,
+          color: palette.mid, fontSize: text.xs, padding: 0,
           fontFamily: 'inherit', letterSpacing: '0.3px',
           textDecoration: 'underline', textUnderlineOffset: '2px',
         }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { text, weight } from './config/tokens.js';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -41,7 +42,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
     color: '#000', border: 'none', borderRadius: '8px',
-    cursor: 'pointer', fontWeight: '600', fontSize: '14px',
+    cursor: 'pointer', fontWeight: '600', fontSize: text.body,
     fontFamily: 'DM Sans, sans-serif', marginTop: '16px',
   };
 
@@ -54,7 +55,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const inputStyle = {
     width: '100%', padding: '12px 16px', borderRadius: '8px',
     border: '1px solid ' + palette.border, background: palette.up,
-    color: palette.text, fontSize: '14px', boxSizing: 'border-box',
+    color: palette.text, fontSize: text.body, boxSizing: 'border-box',
     fontFamily: 'DM Sans, sans-serif',
   };
 
@@ -65,7 +66,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
-          React.createElement('div', { style: { fontSize: '36px', marginBottom: '12px' } }, '◎'),
+          React.createElement('div', { style: { fontSize: text['3xl'], marginBottom: '12px' } }, '◎'),
           React.createElement('h1', { style: { fontSize: '22px', fontWeight: '700', color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: '13px', color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
@@ -138,7 +139,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           )
         ),
 
-        React.createElement('p', { style: { fontSize: '10px', color: palette.mid, marginTop: '4px', marginBottom: '8px' } },
+        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', marginBottom: '8px' } },
           t('onboarding.privacyNote')
         ),
 

@@ -3,6 +3,7 @@ import QRCode from './vendor/qrcodejs.js';
 import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
+import { text } from './config/tokens.js';
 
 export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
@@ -67,11 +68,11 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
   const inputStyle = {
     width: '100%', padding: '8px', marginBottom: '12px', borderRadius: '6px',
-    border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: '13px'
+    border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
   const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px'
+    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
@@ -83,42 +84,42 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '16px' } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }
+          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }
+          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 
       scanMode === 'upload' && React.createElement('div', null,
-        React.createElement('div', { style: { fontSize: '13px', color: palette.mid, marginBottom: '8px', fontStyle: 'italic' } }, '○ ' + t('kkScanner.scanRequiresInternet')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '8px', fontStyle: 'italic' } }, '○ ' + t('kkScanner.scanRequiresInternet')),
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: '8px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
           React.createElement('div', { style: { fontSize: '18px', marginBottom: '4px' } }, '○'),
           React.createElement('div', { style: { fontWeight: '600' } }, t('kkScanner.selectImage')),
-          React.createElement('div', { style: { fontSize: '13px', color: palette.mid, marginTop: '4px' } }, t('kkScanner.qrBarcode'))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } }, t('kkScanner.qrBarcode'))
         ),
         scanning && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: '6px', textAlign: 'center', color: palette.gold, fontWeight: '600' } }, '○ ' + t('kkScanner.scanning'))
       ),
 
       scanMode === 'manual' && React.createElement('div', null,
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.insurer')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.insurer')),
         React.createElement('input', { type: 'text', value: kkData.insurer, onChange: (e) => handleManualInput('insurer', e.target.value), placeholder: 'Swica, Helsana, CSS...', style: inputStyle }),
 
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.cardNumber')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.cardNumber')),
         React.createElement('input', { type: 'text', value: kkData.cardNumber, onChange: (e) => handleManualInput('cardNumber', e.target.value), style: inputStyle }),
 
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.insuredPerson')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.insuredPerson')),
         React.createElement('input', { type: 'text', value: kkData.holder, onChange: (e) => handleManualInput('holder', e.target.value), style: inputStyle }),
 
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.ahvNumber')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.ahvNumber')),
         React.createElement('input', { type: 'text', value: kkData.ahv, onChange: (e) => handleManualInput('ahv', e.target.value), placeholder: '756.1234.5678.90', style: inputStyle }),
 
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.franchise')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.franchise')),
         React.createElement('input', { type: 'number', value: kkData.franchise, onChange: (e) => handleManualInput('franchise', e.target.value), placeholder: '300', style: inputStyle }),
 
-        React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.model')),
+        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.model')),
         React.createElement('select', { value: kkData.model, onChange: (e) => handleManualInput('model', e.target.value), style: inputStyle },
           React.createElement('option', { value: '' }, t('common.select')),
           React.createElement('option', { value: 'Basic' }, t('chapters.versicherungen.fields.kkModel.options.basic')),
@@ -127,12 +128,12 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         )
       ),
 
-      scanResult && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '12px', fontSize: '13px' } },
+      scanResult && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '12px', fontSize: text.sm } },
         React.createElement('div', { style: { fontWeight: '600', marginBottom: '6px', color: palette.sage } }, '✓ ' + t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
       React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save')),
-      React.createElement('div', { style: { fontSize: '13px', color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
     ),
 
     // Right: Preview & QR
@@ -148,7 +149,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           [t('kkScanner.franchise'), kkData.franchise ? 'CHF ' + kkData.franchise : ''],
           [t('kkScanner.model'), kkData.model]
         ].map(([label, val], idx) => React.createElement('div', { key: idx, style: { padding: '10px', background: palette.up, borderRadius: '6px' } },
-          React.createElement('div', { style: { fontSize: '13px', color: palette.mid } }, label),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, label),
           React.createElement('div', { style: { fontWeight: '600' } }, val || '—')
         ))
       ),
@@ -157,7 +158,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
       qrCode && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', textAlign: 'center' } },
         React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px' } }),
-        React.createElement('div', { style: { fontSize: '13px', color: palette.mid } }, t('kkScanner.scanForEmergency'))
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('kkScanner.scanForEmergency'))
       )
     )
   ));

@@ -1,4 +1,5 @@
 import React from 'react';
+import { text, weight } from './config/tokens.js';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
 // Shows on Dashboard when there are overdue or due-today reminders.
@@ -52,7 +53,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
         width: '36px', height: '36px', borderRadius: '50%',
         background: overdue.length > 0 ? palette.rose : palette.gold,
         color: '#000', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontWeight: '700', fontSize: '14px',
+        justifyContent: 'center', fontWeight: '700', fontSize: text.body,
         flexShrink: 0,
       }
     }, total),

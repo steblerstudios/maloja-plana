@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { generateCVTemplate, generateCVHTML, downloadCVAsHTML } from './cvGenerator.js';
 import { Icon } from './IconSystem.jsx';
+import { text, weight } from './config/tokens.js';
 
 export const CVGenerator = ({ palette, t, data, onUpdate }) => {
   const [preview, setPreview] = useState(false);
@@ -17,19 +18,19 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '16px' } },
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-        React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginBottom: '4px' } }, '◎ ' + t('cv.name')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◎ ' + t('cv.name')),
         React.createElement('div', { style: { fontWeight: '600' } }, cv.header.name)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-        React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginBottom: '4px' } }, '○ ' + t('cv.phone')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('cv.phone')),
         React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.header.phone)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-        React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('cv.profession')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('cv.profession')),
         React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.experience.current.title || '—')
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
-        React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginBottom: '4px' } }, '✦ ' + t('cv.qualification')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '✦ ' + t('cv.qualification')),
         React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.education.highest || '—')
       )
     ),
@@ -45,9 +46,9 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       }, '↙ ' + t('cv.downloadHtml'))
     ),
 
-    React.createElement('div', { style: { fontSize: '12px', color: palette.mid, marginBottom: '12px' } }, '○ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, '○ ' + t('trust.localOnly')),
 
-    preview && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', maxHeight: '500px', overflowY: 'auto', fontSize: '12px', fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
+    preview && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', maxHeight: '500px', overflowY: 'auto', fontSize: text.sm, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
       React.createElement('div', null,
         React.createElement('h3', { style: { marginBottom: '8px' } }, cv.header.name),
         React.createElement('div', { style: { color: palette.mid, marginBottom: '12px' } }, cv.header.phone + ' | ' + cv.header.email),

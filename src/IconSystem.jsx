@@ -972,7 +972,7 @@ export const IconWithLabel = ({ icon, label, color = '#8A8478', onClick = null, 
 
   const content = [
     React.createElement(Icon, { key: 'icon', name: icon, size: 32, color }),
-    React.createElement('div', { key: 'label', style: { fontSize: '12px', color, textAlign: 'center', fontWeight: '500' } }, label)
+    React.createElement('div', { key: 'label', style: { fontSize: text.sm, color, textAlign: 'center', fontWeight: '500' } }, label)
   ];
 
   return onClick

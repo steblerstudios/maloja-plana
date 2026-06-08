@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { text } from './config/tokens.js';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
   const [visible, setVisible] = useState(false);
@@ -21,7 +22,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
       right: '16px',
       padding: '6px 12px',
       borderRadius: '4px',
-      fontSize: '12px',
+      fontSize: text.sm,
       fontWeight: '500',
       color: palette.mid,
       background: 'transparent',
@@ -35,7 +36,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
     }
   },
     React.createElement('span', {
-      style: { fontSize: '12px', color: palette.sage }
+      style: { fontSize: text.sm, color: palette.sage }
     }, isSaving ? '...' : '✓'),
     React.createElement('span', null,
       isSaving ? t('common.saving') : t('common.saved')
