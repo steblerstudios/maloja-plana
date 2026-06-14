@@ -1,6 +1,61 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease } from './config/tokens.js';
+import { getCantonName } from './config/cantonalData.js';
+
+function fmtCHF(v) {
+  const n = Number(v);
+  return n && !isNaN(n) ? "CHF " + n.toLocaleString('de-CH') : null;
+}
+
+function buildSnippet(chapterKey, chData, allData, t) {
+  if (chapterKey === 'basis') {
+    const name = [(chData.firstName || ''), (chData.lastName || '')].filter(Boolean).join(' ');
+    if (!name) return null;
+    const canton = chData.canton ? getCantonName(chData.canton, t) : null;
+    return canton ? name + ', ' + canton + '.' : name + '.';
+  }
+  if (chapterKey === 'wohnen') {
+    const city = chData.city;
+    const rent = fmtCHF(chData.rentAmount);
+    if (city && rent) return city + ', ' + rent + '.';
+    if (city) return city + '.';
+    if (chData.address) return chData.address + '.';
+    return null;
+  }
+  if (chapterKey === 'finanzen') {
+    const income = fmtCHF(chData.monthlyIncome);
+    if (!income) return null;
+    const expFields = ['monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance'];
+    let exp = 0;
+    expFields.forEach(k => { exp += Number(chData[k]) || 0; });
+    exp += Number(allData?.wohnen?.rentAmount) || 0;
+    exp += Number(allData?.wohnen?.utilities) || 0;
+    exp += Number(allData?.versicherungen?.kkPremium) || 0;
+    if (exp > 0) return income + ', ' + fmtCHF(exp) + ' ' + t('synthesis.expenses') + '.';
+    return income + '.';
+  }
+  if (chapterKey === 'versicherungen') {
+    if (!chData.kkInsurer) return null;
+    const prem = fmtCHF(chData.kkPremium);
+    if (prem) return chData.kkInsurer + ', ' + prem + '.';
+    return chData.kkInsurer + '.';
+  }
+  if (chapterKey === 'ausbildung') {
+    const parts = [chData.jobTitle, chData.employer].filter(Boolean);
+    return parts.length > 0 ? parts.join(', ') + '.' : null;
+  }
+  if (chapterKey === 'behoerden') {
+    if (!chData.cantoneOfTaxation) return null;
+    const canton = getCantonName(chData.cantoneOfTaxation, t);
+    return t('synthesis.taxCanton', { canton }) + '.';
+  }
+  if (chapterKey === 'notfall') {
+    if (!chData.emergencyContact) return null;
+    return t('synthesis.emergencyContact', { name: chData.emergencyContact }) + '.';
+  }
+  return null;
+}
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
@@ -541,6 +596,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   }, t('chapterStatus.' + status))
                 ),
                 React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
+                status !== 'leer' && (() => {
+                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
+                  return snippet ? React.createElement('div', {
+                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: '4px', fontStyle: 'italic' }
+                  }, snippet) : null;
+                })(),
               ),
             );
           })

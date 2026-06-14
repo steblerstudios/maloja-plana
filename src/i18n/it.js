@@ -169,6 +169,11 @@ export default {
     progress: 'Sei sulla buona strada. Ogni campo compilato porta ordine.',
     complete: 'Il tuo ordine essenziale è completo. Le basi sono coperte.',
   },
+  synthesis: {
+    expenses: 'spese registrate',
+    taxCanton: 'Cantone fiscale {canton}',
+    emergencyContact: 'In caso di emergenza: {name}',
+  },
   chapterStatus: {
     leer: 'Non ancora iniziato',
     begonnen: 'Iniziato',
