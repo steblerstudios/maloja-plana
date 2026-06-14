@@ -247,11 +247,18 @@ const _versicherungen = () => React.createElement('svg', { viewBox: '0 0 24 24',
   React.createElement('path', { d: 'M 12 2 L 4 6 L 4 12 Q 4 19 12 22 Q 20 19 20 12 L 20 6 Z' }),
   // Inner shield border
   React.createElement('path', { d: 'M 12 4 L 6 7.2 L 6 12 Q 6 17.5 12 20 Q 18 17.5 18 12 L 18 7.2 Z', fill: 'none', stroke: 'white', strokeWidth: '0.5', opacity: '0.3' }),
-  // Small Swiss cross — top center of shield
-  React.createElement('rect', { x: '11', y: '6', width: '2', height: '5', rx: '0.4', fill: 'white' }),
-  React.createElement('rect', { x: '9.5', y: '7.5', width: '5', height: '2', rx: '0.4', fill: 'white' }),
-  // Protective hand cupping from below — open palm gesture
-  React.createElement('path', { d: 'M 7.5 16 Q 8 13.5 10 13 Q 11 12.8 12 13.5 Q 13 12.8 14 13 Q 16 13.5 16.5 16 Q 16.5 17.5 12 19 Q 7.5 17.5 7.5 16 Z', fill: 'white', opacity: '0.85' }),
+  // Edelweiss — Alpine protection flower (8 petals + center)
+  React.createElement('g', { transform: 'translate(12, 12.5)' },
+    React.createElement('circle', { r: '1.5', fill: 'white' }),
+    React.createElement('ellipse', { cx: '0', cy: '-4', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.9' }),
+    React.createElement('ellipse', { cx: '0', cy: '4', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.9' }),
+    React.createElement('ellipse', { cx: '-4', cy: '0', rx: '2.5', ry: '1.2', fill: 'white', opacity: '0.9' }),
+    React.createElement('ellipse', { cx: '4', cy: '0', rx: '2.5', ry: '1.2', fill: 'white', opacity: '0.9' }),
+    React.createElement('ellipse', { cx: '-2.8', cy: '-2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(-45)' }),
+    React.createElement('ellipse', { cx: '2.8', cy: '-2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(45)' }),
+    React.createElement('ellipse', { cx: '-2.8', cy: '2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(45)' }),
+    React.createElement('ellipse', { cx: '2.8', cy: '2.8', rx: '1.2', ry: '2.5', fill: 'white', opacity: '0.7', transform: 'rotate(-45)' }),
+  ),
 );
 
 const _ausbildung = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
