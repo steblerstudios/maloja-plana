@@ -189,6 +189,15 @@ export default {
     behoerden: 'Deine Behördenangaben stehen bereit.',
     notfall: 'Dein Notfall-Plan nimmt Gestalt an.',
   },
+  ruhe: {
+    basis: 'Das Bild steht.',
+    wohnen: 'Dein Zuhause hat einen Platz.',
+    finanzen: 'Die Zahlen liegen vor dir.',
+    versicherungen: 'Der Schutz ist erfasst.',
+    ausbildung: 'Der Weg ist festgehalten.',
+    behoerden: 'Der Stand ist dokumentiert.',
+    notfall: 'Die Informationen sind hinterlegt.',
+  },
   dashboard: {
     welcome: 'Willkommen bei Maloja Plana',
     tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',

@@ -823,7 +823,36 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', letterSpacing: '0.2px' } },
         tr('chapterView.trustDocuments')
       )
-    )
+    ),
+
+    // Chapter arrival — quiet rest moment when enough data is present
+    (() => {
+      const primaryFields = chapter.fields.filter(f => !f.secondary);
+      const primaryFilled = primaryFields.filter(f => data[f.k]).length;
+      const threshold = Math.ceil(primaryFields.length * 0.6);
+      if (primaryFilled < threshold) return null;
+      const ruheText = tr('ruhe.' + chapter.key);
+      if (!ruheText || ruheText === 'ruhe.' + chapter.key) return null;
+      return React.createElement('div', {
+        style: {
+          textAlign: 'center',
+          paddingTop: space['2xl'] + 'px',
+          paddingBottom: space.lg + 'px',
+          marginTop: space.xl + 'px',
+          borderTop: '1px solid ' + palette.border + '44',
+        }
+      },
+        React.createElement('p', {
+          style: {
+            fontSize: text.sm,
+            color: palette.mid,
+            fontStyle: 'italic',
+            letterSpacing: '0.3px',
+            margin: 0,
+          }
+        }, ruheText)
+      );
+    })()
   );
 };
 
