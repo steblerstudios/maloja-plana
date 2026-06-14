@@ -189,6 +189,15 @@ export default {
     behoerden: 'Your official records are ready.',
     notfall: 'Your emergency plan is taking shape.',
   },
+  ruhe: {
+    basis: 'The picture is in place.',
+    wohnen: 'Your home has a place.',
+    finanzen: 'The numbers are in front of you.',
+    versicherungen: 'Your coverage is on record.',
+    ausbildung: 'The path is documented.',
+    behoerden: 'The status is on file.',
+    notfall: 'The information is on record.',
+  },
   dashboard: {
     welcome: 'Welcome to Maloja Plana',
     tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',
