@@ -189,6 +189,20 @@ function sumExpenses(data, allData) {
   return sum;
 }
 
+function sumAllExpenses(data, allData) {
+  let sum = sumExpenses(data, allData);
+  sum += Number(data.debtPayments) || 0;
+  sum += Number(data.alimentePaid) || 0;
+  return sum;
+}
+
+function sumTotalIncome(data) {
+  let sum = Number(data.monthlyIncome) || 0;
+  sum += Number(data.familienzulagen) || 0;
+  sum += Number(data.alimenteReceived) || 0;
+  return sum;
+}
+
 function employmentLabel(value, t) {
   if (!value) return null;
   return t('chapters.finanzen.fields.employmentType.options.' + value) || value;
@@ -213,7 +227,21 @@ function buildFinanzenSentence(data, allData, t) {
     parts.push(t('mirror.finanzen.expensesRecorded', { amount: formatCHF(expSum) }) + '.');
   }
 
-  // Third part: loans (only if > 0)
+  // Third part: financial difference
+  const totalIncome = sumTotalIncome(data);
+  const totalExp = sumAllExpenses(data, allData);
+  if (totalIncome > 0 && totalExp > 0) {
+    const diff = totalIncome - totalExp;
+    if (diff > 0) {
+      parts.push(t('mirror.finanzen.remainsPositive', { amount: formatCHF(diff) }) + '.');
+    } else if (diff < 0) {
+      parts.push(t('mirror.finanzen.remainsNegative', { amount: formatCHF(Math.abs(diff)) }) + '.');
+    } else {
+      parts.push(t('mirror.finanzen.remainsZero') + '.');
+    }
+  }
+
+  // Fourth part: loans (only if > 0)
   const loans = Number(data.loans) || 0;
   if (loans > 0) {
     parts.push(t('mirror.finanzen.loansOpen', { amount: formatCHF(loans) }) + '.');
@@ -622,6 +650,24 @@ function buildFinanzenSections(data, allData, t) {
   if (loans > 0) {
     sections.push({ title: t('mirror.finanzen.loansTitle'), rows: [
       { label: t('mirror.finanzen.loansOpen2'), value: formatCHF(loans) },
+    ]});
+  }
+
+  // Section: Monatlicher Spielraum (only when income + expenses exist)
+  const totalIncome = sumTotalIncome(data);
+  const totalExp = sumAllExpenses(data, allData);
+  if (totalIncome > 0 && totalExp > 0) {
+    const diff = totalIncome - totalExp;
+    let diffValue;
+    if (diff > 0) {
+      diffValue = formatCHF(diff) + ' ' + t('mirror.finanzen.diffPositiveShort');
+    } else if (diff < 0) {
+      diffValue = formatCHF(Math.abs(diff)) + ' ' + t('mirror.finanzen.diffNegativeShort');
+    } else {
+      diffValue = t('mirror.finanzen.diffZeroShort');
+    }
+    sections.push({ title: t('mirror.finanzen.diffTitle'), rows: [
+      { label: t('mirror.finanzen.diffLabel'), value: diffValue, bold: true },
     ]});
   }
 
