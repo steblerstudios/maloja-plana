@@ -560,10 +560,10 @@ export default {
     },
     imprint: {
       operatorTitle: 'Gestore',
-      operator1: '[Nome / Organizzazione — Segnaposto]',
-      operator2: '[Indirizzo — Segnaposto]',
+      operator1: 'Maloja Plana — Un progetto di Sophie Stebler',
+      operator2: 'Basilea, Svizzera',
       contactTitle: 'Contatto',
-      contact1: '[E-mail — Segnaposto]',
+      contact1: 'info@malojaplana.ch',
       projectTitle: 'Progetto',
       project1: 'Maloja Plana è un progetto open source in fase di sviluppo. Il codice sorgente è accessibile pubblicamente.',
     },
