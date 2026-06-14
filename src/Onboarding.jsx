@@ -66,7 +66,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
-          React.createElement('div', { style: { fontSize: text['3xl'], marginBottom: '12px' } }, '◎'),
+          React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: palette.sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: '12px' } },
+            React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
+            React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
+          ),
           React.createElement('h1', { style: { fontSize: '22px', fontWeight: '700', color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: '13px', color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
