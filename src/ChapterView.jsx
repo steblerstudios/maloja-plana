@@ -509,6 +509,54 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Living mirror layer — life sentence + mirror cards
     React.createElement(MirrorCards, { chapterKey: chapter.key, data: data, allData: allData, palette: palette, t: tr }),
 
+    // Notfallübergabe — calm structured summary when enough data is present
+    isNotfall && showSummary && (() => {
+      const sections = [];
+      if (data.emergencyContact) {
+        const rows = [data.emergencyContact];
+        if (data.emergencyPhone) rows.push(data.emergencyPhone);
+        sections.push({ title: tr('notfallSummary.handoverContact'), rows: rows });
+      }
+      const medRows = [];
+      if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
+      if (data.allergies) medRows.push(tr('notfallSummary.handoverAllergies'));
+      if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
+      if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
+      if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), rows: medRows });
+      const careRows = [];
+      if (data.doctor) careRows.push(data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : ''));
+      if (data.hospital) careRows.push(data.hospital);
+      if (careRows.length) sections.push({ title: tr('notfallSummary.handoverCare'), rows: careRows });
+      const provRows = [];
+      if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push(tr('notfallSummary.patientenverfuegung'));
+      if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push(tr('notfallSummary.vorsorgeauftrag'));
+      if (data.bestattungswuensche && data.bestattungswuensche !== 'no') provRows.push(tr('notfallSummary.bestattungswuensche'));
+      if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), rows: provRows });
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('notfallSummary.handoverIntro')),
+        ...sections.map((sec, i) =>
+          React.createElement('div', { key: i, style: { marginBottom: i < sections.length - 1 ? space.sm + 'px' : 0 } },
+            React.createElement('div', {
+              style: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }
+            }, sec.title),
+            ...sec.rows.map((row, j) =>
+              React.createElement('div', { key: j, style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } }, row)
+            )
+          )
+        )
+      );
+    })(),
+
     // Notfallkarte export — quiet text link (below mirror cards)
     isNotfall && hasMedical && React.createElement('div', {
       style: { marginBottom: '16px' }
