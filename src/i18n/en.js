@@ -145,6 +145,45 @@ export default {
     emergency: 'Review emergency information',
   },
 
+  notfallEinstieg: {
+    title: 'What do you need in an emergency?',
+    subtitle: 'Three scenarios — and which information you should have ready.',
+    back: 'Back to overview',
+    allDone: 'All information available.',
+    unfall: {
+      title: 'Accident',
+      description: 'You had an accident. What do paramedics and the hospital need?',
+    },
+    spital: {
+      title: 'Hospital stay',
+      description: 'You need to go to the hospital. What does admission require?',
+    },
+    behoerde: {
+      title: 'Government office',
+      description: 'You need to visit a government office. What should you have with you?',
+    },
+  },
+  mvo: {
+    title: 'Your Essential Order',
+    empty: 'The 18 most important fields — everything you need for authorities, emergencies, and daily life.',
+    progress: 'You\'re on your way. Every field brings order.',
+    complete: 'Your essential order is in place. The basics are covered.',
+  },
+  chapterStatus: {
+    leer: 'Not yet started',
+    begonnen: 'Started',
+    grundordnung: 'Essentials covered',
+    vertieft: 'Well documented',
+  },
+  ankunft: {
+    basis: 'Your basics are now visible.',
+    wohnen: 'Your home now has a place.',
+    finanzen: 'Your finances are taking shape.',
+    versicherungen: 'Your protection is becoming visible.',
+    ausbildung: 'Your professional path is on record.',
+    behoerden: 'Your official records are ready.',
+    notfall: 'Your emergency plan is taking shape.',
+  },
   dashboard: {
     welcome: 'Welcome to Maloja Plana',
     tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',

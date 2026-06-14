@@ -145,6 +145,45 @@ export default {
     emergency: 'Notfallinformationen prüfen',
   },
 
+  notfallEinstieg: {
+    title: 'Was brauchst Du im Notfall?',
+    subtitle: 'Drei Szenarien — und welche Angaben Du dafür parat haben solltest.',
+    back: 'Zurück zur Übersicht',
+    allDone: 'Alle Angaben vorhanden.',
+    unfall: {
+      title: 'Unfall',
+      description: 'Du hattest einen Unfall. Was brauchen Rettungskräfte und Spital?',
+    },
+    spital: {
+      title: 'Spitalaufenthalt',
+      description: 'Du musst ins Spital. Was braucht die Aufnahme?',
+    },
+    behoerde: {
+      title: 'Behördengang',
+      description: 'Du gehst auf ein Amt. Was musst Du dabei haben?',
+    },
+  },
+  mvo: {
+    title: 'Deine Grundordnung',
+    empty: 'Die 18 wichtigsten Angaben — alles, was Du für Behörden, Notfall und Alltag brauchst.',
+    progress: 'Du bist auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.',
+    complete: 'Deine Grundordnung steht. Das Wichtigste ist an seinem Platz.',
+  },
+  chapterStatus: {
+    leer: 'Noch offen',
+    begonnen: 'Begonnen',
+    grundordnung: 'Grundordnung',
+    vertieft: 'Vertieft',
+  },
+  ankunft: {
+    basis: 'Deine Grundlagen sind jetzt sichtbar.',
+    wohnen: 'Dein Zuhause hat jetzt einen Platz.',
+    finanzen: 'Deine Finanzen nehmen Form an.',
+    versicherungen: 'Dein Schutz wird sichtbar.',
+    ausbildung: 'Dein beruflicher Weg ist erfasst.',
+    behoerden: 'Deine Behördenangaben stehen bereit.',
+    notfall: 'Dein Notfall-Plan nimmt Gestalt an.',
+  },
   dashboard: {
     welcome: 'Willkommen bei Maloja Plana',
     tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',

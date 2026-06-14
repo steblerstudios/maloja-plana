@@ -145,6 +145,45 @@ export default {
     emergency: 'Vérifier les informations d’urgence',
   },
 
+  notfallEinstieg: {
+    title: 'De quoi as-tu besoin en cas d\'urgence?',
+    subtitle: 'Trois scénarios — et les informations que tu devrais avoir sous la main.',
+    back: 'Retour à l\'aperçu',
+    allDone: 'Toutes les informations sont disponibles.',
+    unfall: {
+      title: 'Accident',
+      description: 'Tu as eu un accident. De quoi les secours et l\'hôpital ont-ils besoin?',
+    },
+    spital: {
+      title: 'Séjour à l\'hôpital',
+      description: 'Tu dois aller à l\'hôpital. Que faut-il pour l\'admission?',
+    },
+    behoerde: {
+      title: 'Visite administrative',
+      description: 'Tu dois te rendre dans un bureau officiel. Que dois-tu avoir avec toi?',
+    },
+  },
+  mvo: {
+    title: 'Ton ordre essentiel',
+    empty: 'Les 18 champs les plus importants — tout ce qu\'il faut pour les autorités, les urgences et le quotidien.',
+    progress: 'Tu es en chemin. Chaque champ rempli apporte de l\'ordre.',
+    complete: 'Ton ordre essentiel est en place. L\'essentiel est couvert.',
+  },
+  chapterStatus: {
+    leer: 'Pas encore commencé',
+    begonnen: 'Commencé',
+    grundordnung: 'Essentiel couvert',
+    vertieft: 'Bien documenté',
+  },
+  ankunft: {
+    basis: 'Tes données de base sont maintenant visibles.',
+    wohnen: 'Ton chez-toi a maintenant sa place.',
+    finanzen: 'Tes finances prennent forme.',
+    versicherungen: 'Ta protection devient visible.',
+    ausbildung: 'Ton parcours professionnel est enregistré.',
+    behoerden: 'Tes documents officiels sont prêts.',
+    notfall: 'Ton plan d\'urgence prend forme.',
+  },
   dashboard: {
     welcome: 'Bienvenue sur Maloja Plana',
     tagline: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.',
