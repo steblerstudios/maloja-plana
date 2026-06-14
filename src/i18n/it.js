@@ -359,7 +359,7 @@ export default {
         kkCardNumber: 'Numero tessera assicurazione',
         bvgInsurer: 'Cassa pensione (LPP)',
         bvgContribution: 'Contributo LPP mensile (CHF)',
-        uvg: { label: 'Assicurazione infortuni (LAINF)', options: { employer: 'Tramite datore di lavoro', private: 'Privata', none: 'Nessuna' } },
+        uvg: { label: 'Assicurazione infortuni (LAINF)', options: { yes: 'Sì', employer: 'Tramite datore di lavoro', private: 'Privata', none: 'Nessuna' } },
         liabilityInsurance: { label: 'Assicurazione responsabilità civile', options: { no: 'No', yes: 'Sì' } },
         liabilityAmount: 'Importo di copertura (CHF)',
         householdInsurance: { label: 'Assicurazione economia domestica', options: { no: 'No', yes: 'Sì' } },
@@ -506,6 +506,22 @@ export default {
     cyber: 'Assicurazione cyber',
     fahrzeug: 'Assicurazione veicolo',
     ahv: 'AVS/AI/IPG',
+  },
+
+  behördenStatus: {
+    intro: 'I seguenti stati e scadenze sono documentati.',
+    taxDeadline: 'Scadenza fiscale',
+    pendingReturns: 'Dichiarazioni in sospeso',
+    betreibung: 'Registro esecuzioni',
+    courtCases: 'Procedimenti giudiziari',
+    will: 'Testamento',
+    legalRep: 'Rappresentante legale',
+    inMonths: 'tra {n} mesi',
+    inDays: 'tra {n} giorni',
+    today: 'oggi',
+    ago: '{n} mesi fa',
+    agoDays: '{n} giorni fa',
+    recorded: 'documentato',
   },
 
   chapterView: {

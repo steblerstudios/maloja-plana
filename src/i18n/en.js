@@ -359,7 +359,7 @@ export default {
         kkCardNumber: 'Insurance card number',
         bvgInsurer: 'Pension fund (BVG)',
         bvgContribution: 'BVG contribution monthly (CHF)',
-        uvg: { label: 'Accident insurance (UVG)', options: { employer: 'Through employer', private: 'Private', none: 'None' } },
+        uvg: { label: 'Accident insurance (UVG)', options: { yes: 'Yes', employer: 'Through employer', private: 'Private', none: 'None' } },
         liabilityInsurance: { label: 'Liability insurance', options: { no: 'No', yes: 'Yes' } },
         liabilityAmount: 'Coverage amount (CHF)',
         householdInsurance: { label: 'Household contents insurance', options: { no: 'No', yes: 'Yes' } },
@@ -506,6 +506,22 @@ export default {
     cyber: 'Cyber insurance',
     fahrzeug: 'Vehicle insurance',
     ahv: 'AHV/IV/EO',
+  },
+
+  behördenStatus: {
+    intro: 'The following statuses and deadlines are on record.',
+    taxDeadline: 'Tax deadline',
+    pendingReturns: 'Pending tax returns',
+    betreibung: 'Debt collection register',
+    courtCases: 'Court proceedings',
+    will: 'Will',
+    legalRep: 'Legal representative',
+    inMonths: 'in {n} months',
+    inDays: 'in {n} days',
+    today: 'today',
+    ago: '{n} months ago',
+    agoDays: '{n} days ago',
+    recorded: 'recorded',
   },
 
   chapterView: {

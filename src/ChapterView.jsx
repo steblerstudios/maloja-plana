@@ -622,6 +622,66 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       );
     })(),
 
+    // Behörden-Zeitstatus — temporal overview of official matters
+    chapter.key === 'behoerden' && (() => {
+      const rows = [];
+      if (data.taxFillingDeadline) {
+        const deadline = new Date(data.taxFillingDeadline);
+        const now = new Date();
+        const diffMs = deadline.getTime() - now.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        let relative;
+        if (diffDays === 0) relative = tr('behördenStatus.today');
+        else if (diffDays > 0 && diffDays < 60) relative = tr('behördenStatus.inDays').replace('{n}', diffDays);
+        else if (diffDays >= 60) relative = tr('behördenStatus.inMonths').replace('{n}', Math.round(diffDays / 30));
+        else if (diffDays > -60) relative = tr('behördenStatus.agoDays').replace('{n}', Math.abs(diffDays));
+        else relative = tr('behördenStatus.ago').replace('{n}', Math.round(Math.abs(diffDays) / 30));
+        const formatted = deadline.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+        rows.push({ label: tr('behördenStatus.taxDeadline'), value: formatted + ' (' + relative + ')' });
+      }
+      if (data.pendingTaxReturns) rows.push({ label: tr('behördenStatus.pendingReturns'), value: data.pendingTaxReturns });
+      if (data.betreibungsStatus) {
+        const opts = { none: tr('chapters.behoerden.fields.betreibungsStatus.options.none') || data.betreibungsStatus, entries: tr('chapters.behoerden.fields.betreibungsStatus.options.entries') || data.betreibungsStatus, unknown: tr('chapters.behoerden.fields.betreibungsStatus.options.unknown') || data.betreibungsStatus };
+        rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
+      }
+      if (data.courtCases) {
+        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || 'Ja') : (tr('chapters.behoerden.fields.courtCases.options.no') || 'Nein');
+        rows.push({ label: tr('behördenStatus.courtCases'), value: val });
+      }
+      if (data.willMade) {
+        const wOpts = { no: tr('chapters.behoerden.fields.willMade.options.no'), handwritten: tr('chapters.behoerden.fields.willMade.options.handwritten'), public: tr('chapters.behoerden.fields.willMade.options.public'), inProgress: tr('chapters.behoerden.fields.willMade.options.inProgress') };
+        rows.push({ label: tr('behördenStatus.will'), value: wOpts[data.willMade] || data.willMade });
+      }
+      if (data.legalRepresentative) rows.push({ label: tr('behördenStatus.legalRep'), value: data.legalRepresentative });
+      if (rows.length === 0) return null;
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('behördenStatus.intro')),
+        ...rows.map((row, i) =>
+          React.createElement('div', {
+            key: i,
+            style: {
+              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+              padding: '6px 0',
+              borderBottom: i < rows.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
+            }
+          },
+            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, row.label),
+            React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, textAlign: 'right', maxWidth: '55%' } }, row.value)
+          )
+        )
+      );
+    })(),
+
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // IPV: shown in finanzen when income + canton exist
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
