@@ -177,7 +177,7 @@ export default {
   chapterStatus: {
     leer: 'Noch offen',
     begonnen: 'Begonnen',
-    grundordnung: 'Grundordnung',
+    grundordnung: 'Überblick steht',
     vertieft: 'Vertieft',
   },
   ankunft: {
