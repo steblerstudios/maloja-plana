@@ -169,6 +169,11 @@ export default {
     progress: 'Du bist auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.',
     complete: 'Deine Grundordnung steht. Das Wichtigste ist an seinem Platz.',
   },
+  synthesis: {
+    expenses: 'erfasste Ausgaben',
+    taxCanton: 'Steuerkanton {canton}',
+    emergencyContact: 'Im Notfall: {name}',
+  },
   chapterStatus: {
     leer: 'Noch offen',
     begonnen: 'Begonnen',
