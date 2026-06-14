@@ -169,6 +169,11 @@ export default {
     progress: 'You\'re on your way. Every field brings order.',
     complete: 'Your essential order is in place. The basics are covered.',
   },
+  synthesis: {
+    expenses: 'recorded expenses',
+    taxCanton: 'Tax canton {canton}',
+    emergencyContact: 'In an emergency: {name}',
+  },
   chapterStatus: {
     leer: 'Not yet started',
     begonnen: 'Started',
