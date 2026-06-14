@@ -39,6 +39,7 @@ import LegalView from './LegalView.jsx';
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
+import NotfallEinstieg from './NotfallEinstieg.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, shadow } from './config/tokens.js';
@@ -390,6 +391,7 @@ const AppInner = () => {
       view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
       view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data, chapters, documents, onNavigate: handleNavigate }),
       view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data, chapters, onNavigate: handleNavigate }),
+      view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data, chapters, onNavigate: handleNavigate }),
       view === 'export' && React.createElement(ZipExport, { palette, t, data, documents }),
       view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data }),
       view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
