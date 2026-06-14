@@ -480,6 +480,15 @@ export default {
     bestattungswuensche: 'Volontés funéraires',
     done: 'Fait',
     open: 'Encore ouvert',
+    handoverTitle: 'Transmission',
+    handoverIntro: 'En cas d\'urgence, ces informations doivent être faciles à trouver.',
+    handoverContact: 'Personne à contacter',
+    handoverMedical: 'Médical',
+    handoverCare: 'Suivi médical',
+    handoverProvision: 'Prévoyance',
+    handoverAllergies: 'Allergies documentées',
+    handoverMedications: 'Médicaments documentés',
+    handoverChronic: 'Antécédents documentés',
   },
 
   chapterView: {

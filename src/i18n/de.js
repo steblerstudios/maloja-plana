@@ -480,6 +480,15 @@ export default {
     bestattungswuensche: 'Bestattungswünsche',
     done: 'Vorhanden',
     open: 'Noch offen',
+    handoverTitle: 'Übergabe',
+    handoverIntro: 'Wenn etwas passiert, sollen diese Informationen auffindbar sein.',
+    handoverContact: 'Kontaktperson',
+    handoverMedical: 'Medizinisches',
+    handoverCare: 'Ärztliche Betreuung',
+    handoverProvision: 'Vorsorge',
+    handoverAllergies: 'Allergien erfasst',
+    handoverMedications: 'Medikamente erfasst',
+    handoverChronic: 'Vorerkrankungen erfasst',
   },
 
   chapterView: {
