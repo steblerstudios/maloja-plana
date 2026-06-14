@@ -559,10 +559,10 @@ export default {
     },
     imprint: {
       operatorTitle: 'Exploitant',
-      operator1: '[Nom / Organisation — À compléter]',
-      operator2: '[Adresse — À compléter]',
+      operator1: 'Maloja Plana — Un projet de Sophie Stebler',
+      operator2: 'Bâle, Suisse',
       contactTitle: 'Contact',
-      contact1: '[E-mail — À compléter]',
+      contact1: 'info@malojaplana.ch',
       projectTitle: 'Projet',
       project1: 'Maloja Plana est un projet open source en cours de développement. Le code source est accessible publiquement.',
     },

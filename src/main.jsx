@@ -414,7 +414,7 @@ const AppInner = () => {
       React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel')),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('a', {
-        href: 'mailto:feedback@example.com?subject=Maloja%20Plana%20Beta%20Feedback',
+        href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
         style: {
           color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
           letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
