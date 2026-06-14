@@ -358,7 +358,7 @@ export default {
         kkCardNumber: 'Numéro de carte d\'assurance',
         bvgInsurer: 'Caisse de pension (LPP)',
         bvgContribution: 'Cotisation LPP mensuelle (CHF)',
-        uvg: { label: 'Assurance-accidents (LAA)', options: { employer: 'Par l\'employeur', private: 'Privée', none: 'Aucune' } },
+        uvg: { label: 'Assurance-accidents (LAA)', options: { yes: 'Oui', employer: 'Par l\'employeur', private: 'Privée', none: 'Aucune' } },
         liabilityInsurance: { label: 'Responsabilité civile', options: { no: 'Non', yes: 'Oui' } },
         liabilityAmount: 'Montant de couverture (CHF)',
         householdInsurance: { label: 'Assurance ménage', options: { no: 'Non', yes: 'Oui' } },
@@ -505,6 +505,22 @@ export default {
     cyber: 'Assurance cyber',
     fahrzeug: 'Assurance véhicule',
     ahv: 'AVS/AI/APG',
+  },
+
+  behördenStatus: {
+    intro: 'Les états et délais suivants sont documentés.',
+    taxDeadline: 'Délai fiscal',
+    pendingReturns: 'Déclarations en suspens',
+    betreibung: 'Registre des poursuites',
+    courtCases: 'Procédures judiciaires',
+    will: 'Testament',
+    legalRep: 'Représentant juridique',
+    inMonths: 'dans {n} mois',
+    inDays: 'dans {n} jours',
+    today: 'aujourd\'hui',
+    ago: 'il y a {n} mois',
+    agoDays: 'il y a {n} jours',
+    recorded: 'documenté',
   },
 
   chapterView: {

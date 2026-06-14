@@ -358,7 +358,7 @@ export default {
         kkCardNumber: 'KK-Kartennummer',
         bvgInsurer: 'BVG/Pensionskasse',
         bvgContribution: 'BVG-Beitrag monatlich CHF',
-        uvg: { label: 'UVG-Versicherung', options: { employer: 'Über Arbeitgeber', private: 'Privat', none: 'Keine' } },
+        uvg: { label: 'UVG-Versicherung', options: { yes: 'Ja', employer: 'Über Arbeitgeber', private: 'Privat', none: 'Keine' } },
         liabilityInsurance: { label: 'Haftpflichtversicherung', options: { no: 'Nein', yes: 'Ja' } },
         liabilityAmount: 'Versicherungssumme CHF',
         householdInsurance: { label: 'Hausratversicherung', options: { no: 'Nein', yes: 'Ja' } },
@@ -505,6 +505,22 @@ export default {
     cyber: 'Cyberversicherung',
     fahrzeug: 'Fahrzeugversicherung',
     ahv: 'AHV/IV/EO',
+  },
+
+  behördenStatus: {
+    intro: 'Folgende Stände und Fristen sind erfasst.',
+    taxDeadline: 'Steuerfrist',
+    pendingReturns: 'Ausstehende Steuererklärungen',
+    betreibung: 'Betreibungsregister',
+    courtCases: 'Gerichtsverfahren',
+    will: 'Testament',
+    legalRep: 'Rechtsbeistand',
+    inMonths: 'in {n} Monaten',
+    inDays: 'in {n} Tagen',
+    today: 'heute',
+    ago: 'vor {n} Monaten',
+    agoDays: 'vor {n} Tagen',
+    recorded: 'erfasst',
   },
 
   chapterView: {
