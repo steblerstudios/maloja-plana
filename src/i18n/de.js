@@ -491,6 +491,22 @@ export default {
     handoverChronic: 'Vorerkrankungen erfasst',
   },
 
+  versicherungsübersicht: {
+    title: 'Versicherungsübersicht',
+    intro: 'Diese Bereiche sind in Deiner Ablage sichtbar. «Nicht erfasst» bedeutet nicht «nicht vorhanden».',
+    erfasst: 'Erfasst',
+    nichtErfasst: 'Nicht erfasst',
+    kvg: 'Grundversicherung (KVG)',
+    bvg: 'Pensionskasse (BVG)',
+    uvg: 'Unfallversicherung (UVG)',
+    haftpflicht: 'Haftpflichtversicherung',
+    hausrat: 'Hausratversicherung',
+    reise: 'Reiseversicherung',
+    cyber: 'Cyberversicherung',
+    fahrzeug: 'Fahrzeugversicherung',
+    ahv: 'AHV/IV/EO',
+  },
+
   chapterView: {
     emptyState: 'Hier ist noch nichts — und das ist völlig in Ordnung.',
     emptyStateHint: 'Du kannst mit ein paar wenigen Angaben beginnen. Alles lässt sich später ergänzen.',
