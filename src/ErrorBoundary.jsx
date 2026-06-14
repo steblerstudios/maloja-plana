@@ -55,7 +55,10 @@ export class ErrorBoundary extends React.Component {
           border: '1px solid ' + border, textAlign: 'center'
         }
       },
-        React.createElement('div', { style: { fontSize: '32px', marginBottom: '16px' } }, '◎'),
+        React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: '16px' } },
+          React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
+          React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
+        ),
         React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '8px' } },
           t ? t('error.title') : 'Something went wrong'
         ),
