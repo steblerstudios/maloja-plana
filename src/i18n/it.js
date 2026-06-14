@@ -481,6 +481,15 @@ export default {
     bestattungswuensche: 'Volontà funerarie',
     done: 'Presente',
     open: 'Ancora aperto',
+    handoverTitle: 'Consegna',
+    handoverIntro: 'In caso di emergenza, queste informazioni devono essere facili da trovare.',
+    handoverContact: 'Persona da contattare',
+    handoverMedical: 'Medico',
+    handoverCare: 'Assistenza medica',
+    handoverProvision: 'Previdenza',
+    handoverAllergies: 'Allergie documentate',
+    handoverMedications: 'Medicamenti documentati',
+    handoverChronic: 'Patologie pregresse documentate',
   },
 
   chapterView: {
