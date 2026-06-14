@@ -177,7 +177,7 @@ export default {
   chapterStatus: {
     leer: 'Non ancora iniziato',
     begonnen: 'Iniziato',
-    grundordnung: 'Essenziale coperto',
+    grundordnung: 'Panoramica pronta',
     vertieft: 'Ben documentato',
   },
   ankunft: {
