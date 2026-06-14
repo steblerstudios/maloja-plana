@@ -230,7 +230,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'calendar', size: 20 }), t('calendar.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'cowbell', size: 20 }), t('calendar.title')),
 
     // Stats
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', marginBottom: '16px' } },
@@ -345,7 +345,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
     view === 'upcoming' && React.createElement('div', null,
       upcoming.length === 0
         ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
-            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'calendar', size: 28 })),
+            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'cowbell', size: 28 })),
             React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('calendar.noReminders'))
           )
         : React.createElement('div', null,
