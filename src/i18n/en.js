@@ -560,10 +560,10 @@ export default {
     },
     imprint: {
       operatorTitle: 'Operator',
-      operator1: '[Name / Organisation — Placeholder]',
-      operator2: '[Address — Placeholder]',
+      operator1: 'Maloja Plana — A project by Sophie Stebler',
+      operator2: 'Basel, Switzerland',
       contactTitle: 'Contact',
-      contact1: '[Email — Placeholder]',
+      contact1: 'info@malojaplana.ch',
       projectTitle: 'Project',
       project1: 'Maloja Plana is an open-source project under development. The source code is publicly available.',
     },
