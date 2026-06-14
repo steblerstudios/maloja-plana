@@ -481,6 +481,15 @@ export default {
     bestattungswuensche: 'Funeral wishes',
     done: 'Done',
     open: 'Still open',
+    handoverTitle: 'Handover',
+    handoverIntro: 'If something happens, this information should be easy to find.',
+    handoverContact: 'Contact person',
+    handoverMedical: 'Medical',
+    handoverCare: 'Medical care',
+    handoverProvision: 'Provisions',
+    handoverAllergies: 'Allergies on record',
+    handoverMedications: 'Medications on record',
+    handoverChronic: 'Pre-existing conditions on record',
   },
 
   chapterView: {
