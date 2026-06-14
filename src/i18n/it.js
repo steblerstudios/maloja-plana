@@ -492,6 +492,22 @@ export default {
     handoverChronic: 'Patologie pregresse documentate',
   },
 
+  versicherungsübersicht: {
+    title: 'Panoramica assicurazioni',
+    intro: 'Questi ambiti sono visibili nel tuo archivio. «Non documentato» non significa «inesistente».',
+    erfasst: 'Documentato',
+    nichtErfasst: 'Non documentato',
+    kvg: 'Assicurazione di base (LAMal)',
+    bvg: 'Cassa pensioni (LPP)',
+    uvg: 'Assicurazione infortuni (LAINF)',
+    haftpflicht: 'Assicurazione responsabilità civile',
+    hausrat: 'Assicurazione economia domestica',
+    reise: 'Assicurazione viaggio',
+    cyber: 'Assicurazione cyber',
+    fahrzeug: 'Assicurazione veicolo',
+    ahv: 'AVS/AI/IPG',
+  },
+
   chapterView: {
     fields: 'Dati',
     documents: 'Documenti',

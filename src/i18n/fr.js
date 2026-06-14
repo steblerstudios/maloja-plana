@@ -491,6 +491,22 @@ export default {
     handoverChronic: 'Antécédents documentés',
   },
 
+  versicherungsübersicht: {
+    title: 'Aperçu des assurances',
+    intro: 'Ces domaines sont visibles dans ton classeur. «Non documenté» ne signifie pas «inexistant».',
+    erfasst: 'Documenté',
+    nichtErfasst: 'Non documenté',
+    kvg: 'Assurance de base (LAMal)',
+    bvg: 'Caisse de pension (LPP)',
+    uvg: 'Assurance accidents (LAA)',
+    haftpflicht: 'Assurance responsabilité civile',
+    hausrat: 'Assurance ménage',
+    reise: 'Assurance voyage',
+    cyber: 'Assurance cyber',
+    fahrzeug: 'Assurance véhicule',
+    ahv: 'AVS/AI/APG',
+  },
+
   chapterView: {
     emptyState: 'Rien ici pour le moment — et c\'est tout à fait normal.',
     emptyStateHint: 'Vous pouvez commencer par quelques informations. Tout peut être complété plus tard.',
