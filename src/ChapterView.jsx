@@ -574,6 +574,54 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       }, '□ ' + tr('notfallSummary.saveCard'))
     ),
 
+    // Versicherungsübersicht — coverage overview when at least one field is filled
+    chapter.key === 'versicherungen' && (() => {
+      const areas = [
+        { key: 'kvg', fields: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber'] },
+        { key: 'bvg', fields: ['bvgInsurer', 'bvgContribution'] },
+        { key: 'uvg', fields: ['uvg'] },
+        { key: 'haftpflicht', fields: ['liabilityInsurance', 'liabilityAmount'] },
+        { key: 'hausrat', fields: ['householdInsurance', 'householdInsuranceAmount'] },
+        { key: 'reise', fields: ['travelInsurance'] },
+        { key: 'cyber', fields: ['cyberInsurance'] },
+        { key: 'fahrzeug', fields: ['autoInsurance', 'autoInsuranceAmount'] },
+        { key: 'ahv', fields: ['ahvContribution'] },
+      ];
+      const hasAny = areas.some(a => a.fields.some(f => data[f]));
+      if (!hasAny) return null;
+      const erfasst = tr('versicherungsübersicht.erfasst');
+      const nicht = tr('versicherungsübersicht.nichtErfasst');
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('versicherungsübersicht.intro')),
+        ...areas.map((area, i) => {
+          const filled = area.fields.some(f => data[f]);
+          return React.createElement('div', {
+            key: i,
+            style: {
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '6px 0',
+              borderBottom: i < areas.length - 1 ? '1px solid ' + palette.border + '33' : 'none',
+            }
+          },
+            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('versicherungsübersicht.' + area.key)),
+            React.createElement('span', {
+              style: { fontSize: text.sm, color: filled ? palette.sageDeep || palette.sage : palette.mid, fontStyle: filled ? 'normal' : 'italic' }
+            }, filled ? erfasst : nicht)
+          );
+        })
+      );
+    })(),
+
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // IPV: shown in finanzen when income + canton exist
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&

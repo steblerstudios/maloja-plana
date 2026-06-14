@@ -492,6 +492,22 @@ export default {
     handoverChronic: 'Pre-existing conditions on record',
   },
 
+  versicherungsübersicht: {
+    title: 'Insurance overview',
+    intro: 'These areas are visible in your filing. "Not recorded" does not mean "not existing".',
+    erfasst: 'Recorded',
+    nichtErfasst: 'Not recorded',
+    kvg: 'Basic health insurance (KVG)',
+    bvg: 'Pension fund (BVG)',
+    uvg: 'Accident insurance (UVG)',
+    haftpflicht: 'Liability insurance',
+    hausrat: 'Household insurance',
+    reise: 'Travel insurance',
+    cyber: 'Cyber insurance',
+    fahrzeug: 'Vehicle insurance',
+    ahv: 'AHV/IV/EO',
+  },
+
   chapterView: {
     emptyState: 'Nothing here yet — and that\'s fine.',
     emptyStateHint: 'You can start with just a few details. Everything can be updated later.',
