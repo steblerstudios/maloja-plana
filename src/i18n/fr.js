@@ -177,7 +177,7 @@ export default {
   chapterStatus: {
     leer: 'Pas encore commencé',
     begonnen: 'Commencé',
-    grundordnung: 'Essentiel couvert',
+    grundordnung: 'Vue d\'ensemble en place',
     vertieft: 'Bien documenté',
   },
   ankunft: {
