@@ -177,7 +177,7 @@ export default {
   chapterStatus: {
     leer: 'Not yet started',
     begonnen: 'Started',
-    grundordnung: 'Essentials covered',
+    grundordnung: 'Overview in place',
     vertieft: 'Well documented',
   },
   ankunft: {

@@ -24,15 +24,11 @@ MirrorCards.jsx rendert Lebenssätze für alle 7 Kapitel direkt in der ChapterVi
 ### ~~E-04: Ankunftsmomente~~ ✅ ERLEDIGT 2026-06-14
 Beim ersten Ausfüllen eines Kapitels erscheint ein ruhiger Satz (z.B. "Dein Zuhause hat jetzt einen Platz."). Erkennung via `filledCount` 0→1 Übergang, localStorage-Persistenz (`or5_ankunft_<key>`), 6s Einblendung mit `fadeIn`. i18n in DE/EN/FR/IT für alle 7 Kapitel.
 
-### E-05: Kapitelabschlüsse
-**Was:** Visueller Zustand "abgeschlossen" pro Kapitel. Nicht binär, sondern: leer → begonnen → Grundordnung → vollständig. Sichtbar im Dashboard.
-**Wo:** `Dashboard.jsx` (Tier-Berechnung), `constants.js` (Schwellenwerte)
-**Aufwand:** Klein (1 Session)
+### ~~E-05: Kapitelabschlüsse~~ ✅ ERLEDIGT 2026-06-14
+Ruhige Status-Labels im Dashboard pro Kapitel: leer ("Noch offen"), begonnen ("Begonnen"), Grundordnung ("Grundordnung"), vertieft ("Vertieft"). Logik basiert auf MVO-Feldern und ≥75% Gesamtfelder. Keine Prozente, keine Scores, keine Gamification. i18n in DE/EN/FR/IT.
 
-### E-06: Sichtbare Synthesen
-**Was:** Dashboard zeigt nicht nur Fortschritt, sondern Zusammenfassung: "Du wohnst in Zürich, versichert bei CSS, Einkommen CHF 5'200." Lebenssatz aus echten Daten.
-**Wo:** `Dashboard.jsx` (neuer Synthese-Block), Hilfsfunktion in `utils/helpers.js`
-**Aufwand:** Mittel (1-2 Sessions)
+### ~~E-06: Sichtbare Synthesen~~ ✅ ERLEDIGT 2026-06-14
+Ruhige Einzeiler-Synthesen pro Kapitel im Dashboard. `buildSnippet()` Funktion für alle 7 Kapitel, Cross-Chapter-Berechnung bei Finanzen (Miete, NK, KK-Prämie). Nur sichtbar wenn Daten vorhanden. Kursiv in sageDeep. i18n DE/EN/FR/IT.
 
 ---
 

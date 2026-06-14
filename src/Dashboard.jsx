@@ -179,7 +179,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);
-  const hasMeaningfulProgress = completion >= 15;
+  const chapterStatuses = chapters.map(ch => getChapterStatus(ch));
+  const settledCount = chapterStatuses.filter(s => s === 'grundordnung' || s === 'vertieft').length;
+  const hasMeaningfulProgress = settledCount >= 2;
   const gentleStartActions = [
     { label: t('guidedStart.basicInfo'), action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'basis')) },
     { label: t('guidedStart.documents'), action: () => onNavigate('tresor') },
@@ -477,33 +479,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress'))
     ),
 
-    // ─── Progress — open editorial section ──────────────────
+    // ─── Overview — calm editorial section ──────────────────
     React.createElement('div', {
       style: { marginBottom: '28px', padding: '0 2px' }
     },
       React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '14px' }
-      },
-        React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px' } },
-          t('dashboard.progress')
-        ),
-        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid } },
-          completion + '%'
-        )
-      ),
-      // Progress bar — thinner, calmer
-      React.createElement('div', { style: { width: '100%', height: '3px', background: palette.up, borderRadius: '2px', overflow: 'hidden' } },
-        React.createElement('div', {
-          style: {
-            width: completion + '%', height: '100%',
-            background: completion === 100 ? palette.sage : palette.sand,
-            borderRadius: '2px',
-            transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          }
-        })
-      ),
-      React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 2 }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
       }, completion === 100 ? t('dashboard.progressComplete')
         : completion === 0 ? t('dashboard.progressStart')
         : completion <= 30 ? t('dashboard.progressEarly')
