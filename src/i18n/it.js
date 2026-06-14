@@ -193,7 +193,7 @@ export default {
     welcome: 'Benvenuto su Maloja Plana',
     tagline: 'Il tuo organizzatore di vita svizzero — 100% privato, offline, gratuito.',
     progress: 'Il tuo progresso',
-    progressComplete: 'Il tuo fascicolo di vita è completo. Serenità.',
+    progressComplete: 'Il tuo fascicolo di vita è al suo posto. Serenità.',
     progressStart: 'Il tuo cammino inizia qui',
     progressEarly: 'Hai mosso i primi passi',
     progressMid: 'Il tuo fascicolo di vita prende forma',

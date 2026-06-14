@@ -99,10 +99,10 @@ export const DocumentTresor = ({
           documents.length + ' ' + (documents.length === 1 ? 'Dokument' : 'Dokumente')
         ),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
-          documents.length === 0 ? 'Dein Tresor ist bereit'
+          documents.length === 0 ? 'Deine Ablage ist bereit'
           : documents.length < 5 ? 'Ein guter Anfang'
-          : documents.length < 15 ? 'Dein Tresor füllt sich'
-          : 'Gut organisiert'
+          : documents.length < 15 ? 'Deine Ablage füllt sich'
+          : 'Alles an seinem Platz'
         ),
       ),
     ),
