@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
@@ -396,6 +396,24 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   };
 
   const filledCount = chapter.fields.filter(f => data[f.k]).length;
+
+  const ankunftKey = 'or5_ankunft_' + chapter.key;
+  const [showAnkunft, setShowAnkunft] = useState(false);
+  const prevFilledRef = useRef(filledCount);
+  useEffect(() => {
+    if (prevFilledRef.current === 0 && filledCount > 0) {
+      try {
+        if (!localStorage.getItem(ankunftKey)) {
+          localStorage.setItem(ankunftKey, Date.now().toString());
+          setShowAnkunft(true);
+          const timer = setTimeout(() => setShowAnkunft(false), 6000);
+          return () => clearTimeout(timer);
+        }
+      } catch {}
+    }
+    prevFilledRef.current = filledCount;
+  }, [filledCount, ankunftKey]);
+
   const introText = tr('chapters.' + chapter.key + '.intro');
   const hasIntro = introText && introText !== 'chapters.' + chapter.key + '.intro';
 
@@ -470,6 +488,22 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
+    ),
+
+    // Ankunftsmoment — calm acknowledgment on first data entry
+    showAnkunft && React.createElement('div', {
+      style: {
+        textAlign: 'center', padding: space.md + 'px ' + space.lg + 'px',
+        marginBottom: space.md + 'px',
+        background: palette.sageDew || palette.sage + '08',
+        borderRadius: radius.md,
+        border: '1px solid ' + palette.sage + '25',
+        animation: 'fadeIn 0.8s ease',
+      }
+    },
+      React.createElement('div', {
+        style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, fontStyle: 'italic' }
+      }, tr('ankunft.' + chapter.key))
     ),
 
     // Living mirror layer — life sentence + mirror cards
