@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
 // Shows on Dashboard when there are overdue or due-today reminders.
@@ -50,13 +51,14 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
   },
     React.createElement('div', {
       style: {
-        width: '36px', height: '36px', borderRadius: '50%',
-        background: overdue.length > 0 ? palette.rose : palette.gold,
-        color: '#000', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontWeight: '700', fontSize: text.body,
-        flexShrink: 0,
+        display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0,
       }
-    }, total),
+    },
+      React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.gold }),
+      React.createElement('span', {
+        style: { fontWeight: '700', fontSize: text.body, color: overdue.length > 0 ? palette.rose : palette.gold }
+      }, total)
+    ),
 
     React.createElement('div', { style: { flex: 1 } },
       overdue.length > 0 && React.createElement('div', {
