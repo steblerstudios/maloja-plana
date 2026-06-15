@@ -124,6 +124,7 @@ export default {
     vorsorge: 'Vorsorge-Rechner',
     eo: 'Erwerbsersatz (EO)',
     sozialhilfe: 'Sozialhilfe',
+    direktlinks: 'Offizielle Links',
     cv: 'Lebenslauf',
     charts: 'Charts',
     unterlagen: 'Meine Unterlagen',
@@ -1637,5 +1638,12 @@ export default {
     freibetrag: 'Freibetrag',
     eingeben: 'Gib Miete und KVG-Prämie ein, um den Anspruch zu berechnen.',
     source: 'Berechnung nach SKOS-Richtlinien (Stand 1.1.2025). Keine rechtsverbindliche Auskunft.',
+  },
+  dl: {
+    lang: 'de',
+    title: 'Offizielle Links & Anträge',
+    alle: 'Alle',
+    antragsstelle: 'Antragsstelle',
+    source: 'Offizielle Links von ch.ch, BAG, BSV und weiteren Bundesbehörden.',
   },
 };

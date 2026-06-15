@@ -124,6 +124,7 @@ export default {
     vorsorge: 'Calculateur de prévoyance',
     eo: 'Allocations perte de gain (APG)',
     sozialhilfe: 'Aide sociale',
+    direktlinks: 'Liens officiels',
     cv: 'Créateur de CV',
     charts: 'Graphiques',
     unterlagen: 'Mes documents',
@@ -1637,5 +1638,12 @@ export default {
     freibetrag: 'franchise',
     eingeben: 'Saisissez le loyer et la prime LAMal pour calculer le droit.',
     source: 'Calcul selon les normes CSIAS (1.1.2025). Sans valeur juridique.',
+  },
+  dl: {
+    lang: 'fr',
+    title: 'Liens officiels & Demandes',
+    alle: 'Tous',
+    antragsstelle: 'Point de contact',
+    source: 'Liens officiels de ch.ch, OFSP, OFAS et autres autorités fédérales.',
   },
 };
