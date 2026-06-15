@@ -1,4 +1,9 @@
-// PLZ-Bereiche → Kanton Zuordnung (vereinfacht, deckt Hauptbereiche ab)
+import { cantonFromPLZPrecise, lookupPLZ, primaryGemeinde } from '../data/plzGemeinde.js';
+import { getRegionInfo, getAveragePremium } from '../data/praemienRegionen.js';
+import { getAllInsurers, searchInsurers } from '../data/versichererListe.js';
+export { lookupPLZ, primaryGemeinde, getRegionInfo, getAveragePremium, getAllInsurers, searchInsurers };
+
+// PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
   { from: 1000, to: 1099, canton: 'VD' },
   { from: 1100, to: 1199, canton: 'VD' },
@@ -92,6 +97,8 @@ const PLZ_RANGES = [
 ];
 
 export function cantonFromPLZ(plz) {
+  const precise = cantonFromPLZPrecise(plz);
+  if (precise) return precise;
   const num = parseInt(plz, 10);
   if (isNaN(num) || num < 1000 || num > 9999) return null;
   const match = PLZ_RANGES.find(r => num >= r.from && num <= r.to);
