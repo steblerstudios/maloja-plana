@@ -355,7 +355,7 @@ export default {
         kkInsurer: 'Cassa malati',
         kkModel: { label: 'Modello assicurativo', options: { basic: 'Base', standard: 'Standard', comfort: 'Comfort' } },
         kkPremium: 'Premio mensile (CHF)',
-        franchise: { label: 'Franchigia (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500' } },
+        franchise: { label: 'Franchigia (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numero tessera assicurazione',
         bvgInsurer: 'Cassa pensione (LPP)',
         bvgContribution: 'Contributo LPP mensile (CHF)',
@@ -522,6 +522,14 @@ export default {
     ago: '{n} mesi fa',
     agoDays: '{n} giorni fa',
     recorded: 'documentato',
+  },
+
+  wohnkostenanteil: {
+    intro: 'I costi abitativi registrati in rapporto al reddito registrato.',
+    housing: 'Costi abitativi',
+    income: 'Reddito',
+    share: 'Quota',
+    perMonth: 'al mese',
   },
 
   chapterView: {

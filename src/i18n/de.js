@@ -354,7 +354,7 @@ export default {
         kkInsurer: 'Krankenkasse',
         kkModel: { label: 'KK-Modell', options: { basic: 'Basic', standard: 'Standard', comfort: 'Comfort' } },
         kkPremium: 'KK-Prämie monatlich CHF',
-        franchise: { label: 'Franchise CHF', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500' } },
+        franchise: { label: 'Franchise CHF', options: { f300: '300', f500: '500', f1000: '1\'000', f1500: '1\'500', f2500: '2\'500', 300: '300', 500: '500', 1000: '1\'000', 1500: '1\'500', 2500: '2\'500' } },
         kkCardNumber: 'KK-Kartennummer',
         bvgInsurer: 'BVG/Pensionskasse',
         bvgContribution: 'BVG-Beitrag monatlich CHF',
@@ -521,6 +521,14 @@ export default {
     ago: 'vor {n} Monaten',
     agoDays: 'vor {n} Tagen',
     recorded: 'erfasst',
+  },
+
+  wohnkostenanteil: {
+    intro: 'Die erfassten Wohnkosten im Verhältnis zum erfassten Einkommen.',
+    housing: 'Wohnkosten',
+    income: 'Einkommen',
+    share: 'Anteil',
+    perMonth: 'pro Monat',
   },
 
   chapterView: {
