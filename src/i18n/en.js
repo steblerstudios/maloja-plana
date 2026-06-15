@@ -145,6 +145,12 @@ export default {
     emergency: 'Review emergency information',
   },
 
+  emergencyCardEntry: {
+    title: 'Prepare your emergency card',
+    text: 'A contact person and your blood type are enough to start.',
+    action: 'Open emergency card',
+  },
+
   notfallEinstieg: {
     title: 'What do you need in an emergency?',
     subtitle: 'Three scenarios — and which information you should have ready.',
@@ -1250,7 +1256,7 @@ export default {
     firstNamePlaceholder: 'First name',
     lastNamePlaceholder: 'Last name',
     yourCanton: 'Your canton',
-    privacyNote: 'Everything is stored only on your device. No account needed.',
+    privacyNote: 'Your data stays on this device. No account. No cloud.',
     skipForNow: 'Skip for now',
     readyTitle: 'Ready, {name}!',
     readyTitleGeneric: 'Everything is ready!',
