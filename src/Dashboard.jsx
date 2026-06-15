@@ -181,7 +181,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const [alphaDismissed, setAlphaDismissed] = useState(false);
   const chapterStatuses = chapters.map(ch => getChapterStatus(ch));
   const settledCount = chapterStatuses.filter(s => s === 'grundordnung' || s === 'vertieft').length;
-  const hasMeaningfulProgress = settledCount >= 2;
+  const begunCount = chapterStatuses.filter(s => s !== 'leer').length;
+  const hasMeaningfulProgress = settledCount >= 1 || begunCount >= 3;
   const gentleStartActions = [
     { label: t('guidedStart.basicInfo'), action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'basis')) },
     { label: t('guidedStart.documents'), action: () => onNavigate('tresor') },
@@ -533,6 +534,40 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, opacity: 0.7 }
       }, t('dashboard.lastBackup', { date: lastBackup }))
     ),
+
+    // ─── Export reminder — calm data safety nudge ────────────
+    (() => {
+      const hasData = chapters.some(ch => {
+        const d = data[ch.key] || {};
+        return ch.fields.some(f => d[f.k]);
+      });
+      if (!hasData) return null;
+      const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
+      const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
+      if (daysSince <= 7) return null;
+      const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.xl,
+          padding: '16px 20px',
+          background: palette.sageMist || palette.sage + '08',
+          borderRadius: radius.md,
+          border: '1px solid ' + palette.sage + '25',
+        }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: '6px' }
+        }, reason + ' ' + t('dashboard.exportReminder')),
+        React.createElement('button', {
+          onClick: () => onNavigate('export'),
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            fontSize: text.sm, color: palette.sageDeep || palette.sage,
+            fontFamily: 'inherit', fontWeight: weight.medium,
+          }
+        }, t('dashboard.exportReminderAction'))
+      );
+    })(),
 
     // ─── Life chapters — tiered spatial layout ──────────────
     React.createElement('div', { style: { marginBottom: '40px', marginTop: '40px' } },

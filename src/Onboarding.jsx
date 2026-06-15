@@ -71,7 +71,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
           ),
           React.createElement('h1', { style: { fontSize: '22px', fontWeight: '700', color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
-          React.createElement('p', { style: { fontSize: '13px', color: palette.mid } }, t('onboarding.chooseLanguage'))
+          React.createElement('p', { style: { fontSize: '14px', color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
 
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' } },
@@ -106,7 +106,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
           React.createElement('h2', { style: { fontSize: '20px', fontWeight: '700', color: palette.text, marginBottom: '4px' } }, t('onboarding.welcomeTitle')),
-          React.createElement('p', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
+          React.createElement('p', { style: { fontSize: '14px', color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
         React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '16px', lineHeight: 1.5, textAlign: 'center' } },
@@ -115,7 +115,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' } },
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
+            React.createElement('label', { style: { fontSize: '14px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
             React.createElement('input', {
               type: 'text', value: firstName,
               onChange: (e) => setFirstName(e.target.value),
@@ -125,7 +125,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             })
           ),
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
+            React.createElement('label', { style: { fontSize: '14px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
             React.createElement('input', {
               type: 'text', value: lastName,
               onChange: (e) => setLastName(e.target.value),
@@ -136,7 +136,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         ),
 
         React.createElement('div', { style: { marginBottom: '8px' } },
-          React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
+          React.createElement('label', { style: { fontSize: '14px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
           React.createElement('select', {
             value: canton, onChange: (e) => setCanton(e.target.value),
             style: { ...inputStyle, appearance: 'auto' },
@@ -177,7 +177,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           : t('onboarding.readyTitleGeneric')
       ),
 
-      React.createElement('p', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.5, marginBottom: '8px' } },
+      React.createElement('p', { style: { fontSize: '14px', color: palette.mid, lineHeight: 1.5, marginBottom: '8px' } },
         t('onboarding.readyMessage')
       ),
 
@@ -186,7 +186,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           t('onboarding.tip1'),
           t('onboarding.tip2'),
           t('onboarding.tip3'),
-        ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: '13px', color: palette.mid, display: 'flex', gap: '8px' } },
+        ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: '14px', color: palette.mid, display: 'flex', gap: '8px' } },
           React.createElement('span', { style: { color: palette.sage } }, '✓'),
           tip
         ))
