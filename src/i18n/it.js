@@ -145,6 +145,12 @@ export default {
     emergency: 'Controllare le informazioni di emergenza',
   },
 
+  emergencyCardEntry: {
+    title: 'Prepara la tua scheda di emergenza',
+    text: 'Una persona di contatto e il tuo gruppo sanguigno bastano per iniziare.',
+    action: 'Apri la scheda di emergenza',
+  },
+
   notfallEinstieg: {
     title: 'Di cosa hai bisogno in caso di emergenza?',
     subtitle: 'Tre scenari — e quali informazioni dovresti avere pronte.',
@@ -1327,7 +1333,7 @@ export default {
     firstNamePlaceholder: 'Nome',
     lastNamePlaceholder: 'Cognome',
     yourCanton: 'Il tuo cantone',
-    privacyNote: 'Tutto viene salvato solo sul tuo dispositivo. Nessun account necessario.',
+    privacyNote: 'I tuoi dati restano su questo dispositivo. Nessun account. Nessun cloud.',
     skipForNow: 'Salta per ora',
     readyTitle: 'Pronto, {name}!',
     readyTitleGeneric: 'Tutto è pronto!',
