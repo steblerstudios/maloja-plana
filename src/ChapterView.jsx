@@ -1025,8 +1025,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const primaryFilled = primaryFields.filter(f => data[f.k]).length;
       const threshold = Math.ceil(primaryFields.length * 0.6);
       if (primaryFilled < threshold) return null;
+      const allPrimaryFilled = primaryFilled === primaryFields.length;
       const ruheText = tr('ruhe.' + chapter.key);
-      if (!ruheText || ruheText === 'ruhe.' + chapter.key) return null;
+      const stilleText = tr('stille.' + chapter.key);
+      const hasRuhe = ruheText && ruheText !== 'ruhe.' + chapter.key;
+      const hasStille = stilleText && stilleText !== 'stille.' + chapter.key;
+      if (!hasRuhe && !hasStille) return null;
       return React.createElement('div', {
         style: {
           textAlign: 'center',
@@ -1036,7 +1040,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           borderTop: '1px solid ' + palette.border + '44',
         }
       },
-        React.createElement('p', {
+        hasRuhe && !allPrimaryFilled && React.createElement('p', {
           style: {
             fontSize: text.sm,
             color: palette.mid,
@@ -1044,7 +1048,24 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             letterSpacing: '0.3px',
             margin: 0,
           }
-        }, ruheText)
+        }, ruheText),
+        allPrimaryFilled && hasStille && React.createElement('div', {
+          style: { animation: 'fadeIn 1s ease' }
+        },
+          React.createElement('p', {
+            style: {
+              fontSize: text.body,
+              color: palette.text,
+              fontStyle: 'italic',
+              letterSpacing: '0.2px',
+              margin: '0 0 ' + space.md + 'px 0',
+              lineHeight: leading.relaxed,
+            }
+          }, stilleText),
+          React.createElement('div', {
+            style: { width: '32px', height: '1px', background: palette.border, margin: '0 auto' }
+          })
+        )
       );
     })()
   );
