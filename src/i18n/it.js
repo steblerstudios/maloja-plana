@@ -490,6 +490,14 @@ export default {
     handoverAllergies: 'Allergie documentate',
     handoverMedications: 'Medicamenti documentati',
     handoverChronic: 'Patologie pregresse documentate',
+    printCard: 'Stampa scheda d\'emergenza',
+    cardPerson: 'Persona',
+    cardDateOfBirth: 'Data di nascita',
+    cardDoctor: 'Medico',
+    cardRecorded: 'documentato',
+    cardAdvanceDirective: 'Direttive anticipate',
+    cardPowerOfAttorney: 'Mandato precauzionale',
+    cardFooter: 'Creato con Maloja Plana · Stato delle informazioni all\'ultimo salvataggio',
   },
 
   versicherungsübersicht: {

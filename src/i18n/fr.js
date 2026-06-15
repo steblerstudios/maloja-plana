@@ -489,6 +489,14 @@ export default {
     handoverAllergies: 'Allergies documentées',
     handoverMedications: 'Médicaments documentés',
     handoverChronic: 'Antécédents documentés',
+    printCard: 'Imprimer la fiche d\'urgence',
+    cardPerson: 'Personne',
+    cardDateOfBirth: 'Date de naissance',
+    cardDoctor: 'Médecin',
+    cardRecorded: 'documenté',
+    cardAdvanceDirective: 'Directives anticipées',
+    cardPowerOfAttorney: 'Mandat pour cause d\'inaptitude',
+    cardFooter: 'Créé avec Maloja Plana · État des informations lors de la dernière sauvegarde',
   },
 
   versicherungsübersicht: {
