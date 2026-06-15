@@ -1,0 +1,12 @@
+# Maloja Plana — Apache Security Headers
+# CSP is already defined via <meta> in index.html — not duplicated here.
+
+<IfModule mod_headers.c>
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Custom 404 page
+ErrorDocument 404 /404.html
