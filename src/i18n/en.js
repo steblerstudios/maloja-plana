@@ -1504,4 +1504,15 @@ export default {
     feedbackMail: 'Feedback by email',
     feedbackForm: 'Feedback form',
   },
+
+  demo: {
+    bannerTitle: 'Example: Maria Muster, 34, Zurich',
+    bannerText: 'This is what a completed life folder could look like.',
+    leave: 'Leave example',
+    enterLink: 'View example',
+    enterSubtitle: 'See what a completed life folder looks like.',
+    footerLink: 'Example',
+    readOnlyHint: 'Data cannot be edited in example mode.',
+    exportBlocked: 'Export is not available in example mode.',
+  },
 };

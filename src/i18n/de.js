@@ -1503,4 +1503,15 @@ export default {
     feedbackMail: 'Feedback per E-Mail',
     feedbackForm: 'Feedback-Formular',
   },
+
+  demo: {
+    bannerTitle: 'Beispiel: Maria Muster, 34, Zürich',
+    bannerText: 'So könnte ein ausgefüllter Lebensordner aussehen.',
+    leave: 'Beispiel verlassen',
+    enterLink: 'Beispiel ansehen',
+    enterSubtitle: 'So sieht ein ausgefüllter Lebensordner aus.',
+    footerLink: 'Beispiel',
+    readOnlyHint: 'Im Beispiel-Modus können keine Daten bearbeitet werden.',
+    exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
+  },
 };

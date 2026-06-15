@@ -7,7 +7,7 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, demoMode }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
@@ -219,7 +219,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       color: palette.text,
       boxSizing: 'border-box',
       fontSize: text.body,
-      fontFamily: 'DM Sans, sans-serif'
+      fontFamily: 'DM Sans, sans-serif',
+      ...(demoMode ? { pointerEvents: 'none', opacity: 0.7 } : {}),
     };
 
     const errorStyle = {
@@ -490,8 +491,19 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
 
+    demoMode && React.createElement('div', {
+      style: {
+        padding: space.sm + 'px ' + space.md + 'px',
+        marginBottom: space.md + 'px',
+        background: palette.sand + '15',
+        borderRadius: radius.sm,
+        border: '1px solid ' + palette.sand + '25',
+        fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
+      }
+    }, tr('demo.readOnlyHint')),
+
     // Ankunftsmoment — calm acknowledgment on first data entry
-    showAnkunft && React.createElement('div', {
+    !demoMode && showAnkunft && React.createElement('div', {
       style: {
         textAlign: 'center', padding: space.md + 'px ' + space.lg + 'px',
         marginBottom: space.md + 'px',

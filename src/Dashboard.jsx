@@ -94,7 +94,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     )
   );
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -439,6 +439,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             item.label
           )
         )
+      ),
+      React.createElement('div', {
+        style: { marginTop: space.md, paddingTop: space.sm, borderTop: '1px solid ' + palette.border + '44' }
+      },
+        React.createElement('button', {
+          onClick: onEnterDemo,
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium,
+            textAlign: 'left',
+          }
+        }, t('demo.enterLink')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
+        }, t('demo.enterSubtitle'))
       )
     ),
 
