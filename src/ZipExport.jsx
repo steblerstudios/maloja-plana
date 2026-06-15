@@ -7,8 +7,17 @@ import { text, weight } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 
-export const ZipExport = ({ palette, t, data, documents }) => {
+export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [exporting, setExporting] = useState(false);
+
+  if (demoMode) {
+    return React.createElement('div', {
+      style: { maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '40px 20px' }
+    },
+      React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, marginBottom: '12px' } }, t('demo.exportBlocked')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('demo.bannerText'))
+    );
+  }
 
   // Backup & Restore state
   const [passphrase, setPassphrase] = useState('');

@@ -1504,4 +1504,15 @@ export default {
     feedbackMail: 'Feedback via e-mail',
     feedbackForm: 'Modulo di feedback',
   },
+
+  demo: {
+    bannerTitle: 'Esempio: Maria Muster, 34 anni, Zurigo',
+    bannerText: 'Ecco come potrebbe apparire una cartella della vita compilata.',
+    leave: 'Esci dall\'esempio',
+    enterLink: 'Vedi esempio',
+    enterSubtitle: 'Scopri come appare una cartella della vita compilata.',
+    footerLink: 'Esempio',
+    readOnlyHint: 'I dati non possono essere modificati in modalità esempio.',
+    exportBlocked: 'L\'esportazione non è disponibile in modalità esempio.',
+  },
 };

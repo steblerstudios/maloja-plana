@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import './print.css';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
+import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
@@ -42,7 +43,7 @@ import AutoSaveStatus from './AutoSaveStatus.jsx';
 import NotfallEinstieg from './NotfallEinstieg.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, space, shadow } from './config/tokens.js';
+import { text, weight, space, radius, shadow } from './config/tokens.js';
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
@@ -124,6 +125,8 @@ const AppInner = () => {
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
+  const [demoMode, setDemoMode] = useState(false);
+  const activeData = demoMode ? DEMO_DATA : data;
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -200,6 +203,7 @@ const AppInner = () => {
   }, [data, documents]);
 
   const updateData = (chapter, field, value) => {
+    if (demoMode) return;
     setData(prev => {
       const next = { ...prev, [chapter]: { ...prev[chapter], [field]: value } };
 
@@ -229,7 +233,7 @@ const AppInner = () => {
 
   const calculateCompletion = () => {
     let filled = 0, total = 0;
-    chapters.forEach(ch => { ch.fields.forEach(f => { total++; if (data[ch.key]?.[f.k]) filled++; }); });
+    chapters.forEach(ch => { ch.fields.forEach(f => { total++; if (activeData[ch.key]?.[f.k]) filled++; }); });
     return total > 0 ? Math.round((filled / total) * 100) : 0;
   };
 
@@ -323,24 +327,51 @@ const AppInner = () => {
         )
       )
     ),
+    demoMode && React.createElement('div', {
+      role: 'status',
+      style: {
+        padding: '10px 16px',
+        background: palette.sand + '18',
+        borderBottom: '1px solid ' + palette.sand + '30',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('demo.bannerTitle')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('demo.bannerText'))
+      ),
+      React.createElement('button', {
+        onClick: () => setDemoMode(false),
+        style: {
+          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          color: palette.text, fontFamily: 'inherit', flexShrink: 0,
+        }
+      }, t('demo.leave'))
+    ),
     React.createElement('main', { id: 'mp-main', role: 'main', style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px' } },
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
         React.createElement(Dashboard, {
-          palette, t, chapters, data,
+          palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => { setActiveChapter(idx); setView('chapter'); },
           completion: calculateCompletion(),
-          onNavigate: setView
+          onNavigate: setView,
+          demoMode,
+          onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
+          onLeaveDemo: () => setDemoMode(false),
         })
       ),
       view === 'chapter' && React.createElement(ChapterView, {
         palette, t,
         chapter: chapters[activeChapter],
-        data: data[chapters[activeChapter].key] || {},
-        allData: data,
+        data: activeData[chapters[activeChapter].key] || {},
+        allData: activeData,
         onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
-        onAddDocument: handleAddDocument
+        onAddDocument: handleAddDocument,
+        demoMode,
       }),
       view === 'tresor' && React.createElement(DocumentTresor, {
         palette, t,
@@ -351,7 +382,7 @@ const AppInner = () => {
         onUpdateExpiry: handleUpdateDocExpiry
       }),
       view === 'kk' && React.createElement(KKScanner, {
-        palette, t, data,
+        palette, t, data: activeData,
         onSave: (kkData) => {
           const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
           setData(prev => {
@@ -371,35 +402,35 @@ const AppInner = () => {
       }),
       view === 'budget' && React.createElement(BudgetImport, {
         palette, t,
-        currentBudget: data.finanzen || {},
+        currentBudget: activeData.finanzen || {},
         onImport: (updated) => setData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
       }),
       view === 'schulden' && React.createElement(SchuldenManager, {
         palette, t,
-        data: data,
+        data: activeData,
         onSave: (schuldenData) => setData(prev => ({ ...prev, ...schuldenData }))
       }),
       view === 'tax' && React.createElement(TaxCalculator, {
         palette, t,
-        data: data,
+        data: activeData,
         onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData }))
       }),
       view === 'organ' && React.createElement(OrganDonation, {
         palette, t,
-        data: data,
+        data: activeData,
         onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
       }),
-      view === 'sync' && React.createElement(BudgetSync, { palette, t, data }),
-      view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data }),
-      view === 'cv' && React.createElement(CVGenerator, { palette, t, data }),
-      view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data }),
-      view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data }),
+      view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
+      view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
+      view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
+      view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
+      view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
       view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
-      view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data, chapters, documents, onNavigate: handleNavigate }),
-      view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data, chapters, onNavigate: handleNavigate }),
-      view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data, chapters, onNavigate: handleNavigate }),
-      view === 'export' && React.createElement(ZipExport, { palette, t, data, documents }),
-      view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data }),
+      view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
+      view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+      view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+      view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
+      view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
       view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
     ),
@@ -436,7 +467,17 @@ const AppInner = () => {
           fontFamily: 'inherit', letterSpacing: '0.3px',
           textDecoration: 'underline', textUnderlineOffset: '2px',
         }
-      }, t('legal.footerLink'))
+      }, t('legal.footerLink')),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('button', {
+        onClick: () => { setDemoMode(!demoMode); setView('dashboard'); },
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer',
+          color: palette.mid, fontSize: text.xs, padding: 0,
+          fontFamily: 'inherit', letterSpacing: '0.3px',
+          textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, demoMode ? t('demo.leave') : t('demo.footerLink'))
     )
   );
 };
