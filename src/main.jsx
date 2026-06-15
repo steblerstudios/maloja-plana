@@ -44,6 +44,7 @@ import NotfallEinstieg from './NotfallEinstieg.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import PraemienOrientierung from './PraemienOrientierung.jsx';
 import VorsorgeRechner from './VorsorgeRechner.jsx';
+import EOrechner from './EOrechner.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 
@@ -426,6 +427,7 @@ const AppInner = () => {
       view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
       view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
       view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData }),
+      view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
       view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
       view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
       view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),

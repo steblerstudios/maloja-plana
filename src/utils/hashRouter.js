@@ -18,7 +18,7 @@
 // All known view names (must match the view === 'x' checks in main.jsx)
 const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
-  'tax', 'organ', 'sync', 'premium', 'praemien', 'vorsorge', 'cv', 'charts',
+  'tax', 'organ', 'sync', 'premium', 'praemien', 'vorsorge', 'eo', 'cv', 'charts',
   'sozialhilfe', 'unterlagen', 'lebensmappe', 'notfalldossier', 'export', 'calendar', 'notifications',
   'notfalleinstieg',
 ]);
