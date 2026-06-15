@@ -25,3 +25,10 @@ npm-debug.log*
 # OS
 Thumbs.db
 .vercel
+
+# AI research artefacts (kept in docs/research/)
+docs/research/
+
+# Deploy artefacts
+maloja-plana-deploy/
+maloja-plana-deploy.zip
