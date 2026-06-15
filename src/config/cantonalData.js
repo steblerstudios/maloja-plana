@@ -1,7 +1,9 @@
 import { cantonFromPLZPrecise, lookupPLZ, primaryGemeinde } from '../data/plzGemeinde.js';
 import { getRegionInfo, getAveragePremium } from '../data/praemienRegionen.js';
 import { getAllInsurers, searchInsurers } from '../data/versichererListe.js';
+import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, ERW_FRA, KIN_FRA } from '../data/praemienDetail.js';
 export { lookupPLZ, primaryGemeinde, getRegionInfo, getAveragePremium, getAllInsurers, searchInsurers };
+export { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, ERW_FRA, KIN_FRA };
 
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
