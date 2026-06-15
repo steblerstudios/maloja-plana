@@ -426,50 +426,50 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || data.doctor);
 
   const handleSaveCard = () => {
-    const lines = [
-      '══════════════════════════════════',
-      '  ' + tr('notfallSummary.cardTitle').toUpperCase(),
-      '══════════════════════════════════',
-      '',
-    ];
+    const basis = allData && allData.basis || {};
+    const name = [basis.firstName, basis.lastName].filter(Boolean).join(' ');
+    const dob = basis.dateOfBirth ? new Date(basis.dateOfBirth).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    const sections = [];
+    if (name || dob) {
+      const rows = [];
+      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + name + '</div>');
+      if (dob) rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>');
+      sections.push({ title: tr('notfallSummary.cardPerson'), html: rows.join('') });
+    }
     if (data.emergencyContact) {
-      lines.push('◎ ' + tr('notfallSummary.contact') + ':');
-      lines.push('  ' + data.emergencyContact);
-      if (data.emergencyPhone) lines.push('  ' + data.emergencyPhone);
-      lines.push('');
+      const rows = ['<div>' + data.emergencyContact + '</div>'];
+      if (data.emergencyPhone) rows.push('<div>' + data.emergencyPhone + '</div>');
+      sections.push({ title: tr('notfallSummary.handoverContact'), html: rows.join('') });
     }
-    if (data.bloodType && data.bloodType !== 'unknown') {
-      lines.push('◉ ' + tr('notfallSummary.bloodType') + ': ' + data.bloodType);
-      lines.push('');
-    }
-    if (data.allergies) {
-      lines.push('!! ' + tr('chapters.notfall.fields.allergies') + ':');
-      lines.push('  ' + data.allergies);
-      lines.push('');
-    }
-    if (data.medications) {
-      lines.push('Rx ' + tr('chapters.notfall.fields.medications') + ':');
-      lines.push('  ' + data.medications);
-      lines.push('');
-    }
+    const medRows = [];
+    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + data.bloodType + '</strong></div>');
+    if (data.allergies) medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
     if (data.doctor) {
-      lines.push('○ ' + tr('chapters.notfall.fields.doctor') + ': ' + data.doctor);
-      if (data.doctorPhone) lines.push('  ' + data.doctorPhone);
-      lines.push('');
+      const rows = ['<div>' + data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : '') + '</div>'];
+      sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     }
-    if (data.hospital) {
-      lines.push('⌂ ' + tr('chapters.notfall.fields.hospital') + ': ' + data.hospital);
-      lines.push('');
-    }
-    lines.push('══════════════════════════════════');
-
-    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = tr('notfallSummary.cardTitle').replace(/\s/g, '_') + '.txt';
-    a.click();
-    URL.revokeObjectURL(url);
+    const provRows = [];
+    if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push('<div>' + tr('notfallSummary.cardAdvanceDirective') + '</div>');
+    if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push('<div>' + tr('notfallSummary.cardPowerOfAttorney') + '</div>');
+    if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), html: provRows.join('') });
+    const sectionHtml = sections.map(s =>
+      '<div style="margin-bottom:16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
+    ).join('');
+    const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + tr('notfallSummary.cardTitle') + '</title>' +
+      '<style>@media print{body{margin:0;padding:20mm}@page{size:A4;margin:20mm}}body{font-family:-apple-system,system-ui,sans-serif;max-width:600px;margin:40px auto;padding:0 24px;color:#222;line-height:1.5}' +
+      '.card{border:1px solid #ddd;border-radius:8px;padding:24px;background:#fff}h1{font-size:20px;font-weight:500;margin:0 0 4px;letter-spacing:0.3px}' +
+      '.subtitle{font-size:13px;color:#888;margin:0 0 20px;font-style:italic}.footer{margin-top:20px;padding-top:12px;border-top:1px solid #eee;font-size:11px;color:#aaa}' +
+      '.no-print{text-align:center;margin-bottom:24px}@media print{.no-print{display:none}}</style></head><body>' +
+      '<div class="no-print"><button onclick="window.print()" style="padding:8px 20px;font-size:14px;border:1px solid #ccc;border-radius:6px;background:#f8f7f5;cursor:pointer">' + tr('notfallSummary.printCard') + '</button></div>' +
+      '<div class="card"><h1>' + tr('notfallSummary.cardTitle') + '</h1>' +
+      '<p class="subtitle">' + tr('notfallSummary.handoverIntro') + '</p>' +
+      sectionHtml +
+      '<div class="footer">' + tr('notfallSummary.cardFooter') + '</div></div></body></html>';
+    const w = window.open('', '_blank');
+    if (w) { w.document.write(html); w.document.close(); }
   };
 
   const bloodTypeColors = {
@@ -571,7 +571,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           borderBottom: '1px solid ' + palette.border,
           paddingBottom: '1px',
         }
-      }, '□ ' + tr('notfallSummary.saveCard'))
+      }, '□ ' + tr('notfallSummary.printCard'))
     ),
 
     // Versicherungsübersicht — coverage overview when at least one field is filled
