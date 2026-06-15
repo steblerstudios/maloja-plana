@@ -14,7 +14,7 @@ const Section = ({ title, children, palette }) =>
     }, title),
     React.createElement('div', {
       style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-    }, children)
+    }, Array.isArray(children) ? children.map((c, i) => React.cloneElement(c, { key: i })) : children)
   );
 
 const P = ({ children }) =>
