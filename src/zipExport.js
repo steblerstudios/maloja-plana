@@ -45,7 +45,7 @@ INHALT DER DATENSICHERUNG:
 ──────────────────────────
 
 1. PERSÖNLICHE DATEN (basis)
-   - Name: ${((data.chapters.basis?.firstName || '') + ' ' + (data.chapters.basis?.lastName || '')).trim() || data.chapters.basis?.fullName || '—'}
+   - Name: ${[data.chapters.basis?.firstName, data.chapters.basis?.middleName, data.chapters.basis?.lastName].filter(Boolean).join(' ') || data.chapters.basis?.fullName || '—'}
    - Geburtsdatum: ${data.chapters.basis?.dateOfBirth || '—'}
    - AHV: ${data.chapters.basis?.ahv || '—'}
    - Telefon: ${data.chapters.basis?.phone || '—'}

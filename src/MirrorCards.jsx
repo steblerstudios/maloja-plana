@@ -82,7 +82,7 @@ function maritalLabel(value, t) {
 
 function buildBasisSentence(data, t) {
   const parts = [];
-  const name = [(data.firstName || ''), (data.lastName || '')].filter(Boolean).join(' ');
+  const name = [(data.firstName || ''), (data.middleName || ''), (data.lastName || '')].filter(Boolean).join(' ');
   if (!name) return null;
 
   const year = birthYear(data.dateOfBirth);
@@ -532,7 +532,7 @@ function buildBasisSections(data, t) {
 
   // Section: Person
   const personRows = [];
-  const fullName = [(data.firstName || ''), (data.lastName || '')].filter(Boolean).join(' ');
+  const fullName = [(data.firstName || ''), (data.middleName || ''), (data.lastName || '')].filter(Boolean).join(' ');
   if (fullName) personRows.push({ label: t('mirror.basis.name'), value: fullName });
   if (data.dateOfBirth) personRows.push({ label: t('mirror.basis.dateOfBirth'), value: formatDate(data.dateOfBirth) });
   if (data.canton) personRows.push({ label: t('mirror.basis.canton'), value: getCantonName(data.canton, t) });

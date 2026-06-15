@@ -236,6 +236,7 @@ export default {
       icon: '◎',
       fields: {
         firstName: 'First name',
+        middleName: 'Middle name',
         lastName: 'Last name',
         dateOfBirth: 'Date of birth',
         gender: { label: 'Gender', options: { male: 'Male', female: 'Female', diverse: 'Diverse' } },
