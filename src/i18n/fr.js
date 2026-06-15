@@ -1503,4 +1503,15 @@ export default {
     feedbackMail: 'Feedback par e-mail',
     feedbackForm: 'Formulaire de feedback',
   },
+
+  demo: {
+    bannerTitle: 'Exemple : Maria Muster, 34 ans, Zurich',
+    bannerText: 'Voici à quoi pourrait ressembler un dossier de vie rempli.',
+    leave: 'Quitter l\'exemple',
+    enterLink: 'Voir l\'exemple',
+    enterSubtitle: 'Découvrez à quoi ressemble un dossier de vie rempli.',
+    footerLink: 'Exemple',
+    readOnlyHint: 'Les données ne peuvent pas être modifiées en mode exemple.',
+    exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',
+  },
 };
