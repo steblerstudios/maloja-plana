@@ -490,6 +490,14 @@ export default {
     handoverAllergies: 'Allergies on record',
     handoverMedications: 'Medications on record',
     handoverChronic: 'Pre-existing conditions on record',
+    printCard: 'Print emergency card',
+    cardPerson: 'Person',
+    cardDateOfBirth: 'Date of birth',
+    cardDoctor: 'Doctor',
+    cardRecorded: 'on record',
+    cardAdvanceDirective: 'Advance directive',
+    cardPowerOfAttorney: 'Power of attorney',
+    cardFooter: 'Created with Maloja Plana · Information as of last save',
   },
 
   versicherungsübersicht: {
