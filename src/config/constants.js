@@ -75,6 +75,7 @@ export function getChapters(t) {
       icon: t('chapters.basis.icon'),
       fields: [
         { k: 'firstName', label: fl(t, 'basis', 'firstName'), type: 'text', required: true, mvo: true, section: t('sections.basis.person'), sectionIntro: si(t, 'basis', 'person') },
+        { k: 'middleName', label: fl(t, 'basis', 'middleName'), type: 'text' },
         { k: 'lastName', label: fl(t, 'basis', 'lastName'), type: 'text', required: true, mvo: true },
         { k: 'dateOfBirth', label: fl(t, 'basis', 'dateOfBirth'), type: 'date', required: true, mvo: true },
         { k: 'gender', label: fl(t, 'basis', 'gender'), type: 'select', options: opts(t, 'basis', 'gender') },
@@ -262,8 +263,9 @@ export function getChapters(t) {
 export function getFullName(basisData) {
   if (!basisData) return '';
   const first = (basisData.firstName || '').trim();
+  const middle = (basisData.middleName || '').trim();
   const last = (basisData.lastName || '').trim();
-  if (first || last) return (first + ' ' + last).trim();
+  if (first || middle || last) return [first, middle, last].filter(Boolean).join(' ');
   return (basisData.fullName || '').trim();
 }
 
