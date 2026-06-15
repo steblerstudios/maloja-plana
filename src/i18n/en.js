@@ -355,7 +355,7 @@ export default {
         kkInsurer: 'Health insurer',
         kkModel: { label: 'Insurance model', options: { basic: 'Basic', standard: 'Standard', comfort: 'Comfort' } },
         kkPremium: 'Monthly premium (CHF)',
-        franchise: { label: 'Deductible (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500' } },
+        franchise: { label: 'Deductible (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Insurance card number',
         bvgInsurer: 'Pension fund (BVG)',
         bvgContribution: 'BVG contribution monthly (CHF)',
@@ -522,6 +522,14 @@ export default {
     ago: '{n} months ago',
     agoDays: '{n} days ago',
     recorded: 'recorded',
+  },
+
+  wohnkostenanteil: {
+    intro: 'Recorded housing costs in relation to recorded income.',
+    housing: 'Housing costs',
+    income: 'Income',
+    share: 'Share',
+    perMonth: 'per month',
   },
 
   chapterView: {
