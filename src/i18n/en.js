@@ -125,6 +125,7 @@ export default {
     vorsorge: 'Pension Calculator',
     eo: 'Income Compensation (EO)',
     sozialhilfe: 'Social assistance',
+    direktlinks: 'Official links',
     cv: 'CV builder',
     charts: 'Charts',
     unterlagen: 'My Documents',
@@ -1638,5 +1639,12 @@ export default {
     freibetrag: 'exemption',
     eingeben: 'Enter rent and health insurance premium to calculate entitlement.',
     source: 'Calculation based on SKOS guidelines (1.1.2025). Not legally binding.',
+  },
+  dl: {
+    lang: 'en',
+    title: 'Official Links & Applications',
+    alle: 'All',
+    antragsstelle: 'Filing office',
+    source: 'Official links from ch.ch, FOPH, FSIO, and other federal authorities.',
   },
 };

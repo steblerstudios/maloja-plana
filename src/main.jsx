@@ -45,6 +45,7 @@ import StorageWarning from './StorageWarning.jsx';
 import PraemienOrientierung from './PraemienOrientierung.jsx';
 import VorsorgeRechner from './VorsorgeRechner.jsx';
 import EOrechner from './EOrechner.jsx';
+import DirektLinks from './DirektLinks.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 
@@ -431,6 +432,7 @@ const AppInner = () => {
       view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
       view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
       view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
+      view === 'direktlinks' && React.createElement(DirektLinks, { palette, t }),
       view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
       view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
       view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
