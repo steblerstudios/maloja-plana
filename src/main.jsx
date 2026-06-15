@@ -216,6 +216,13 @@ const AppInner = () => {
         next.behoerden = { ...next.behoerden, cantoneOfTaxation: next.behoerden?.cantoneOfTaxation || value };
       }
 
+      if (chapter === 'finanzen' && field === 'employer' && value) {
+        next.ausbildung = { ...next.ausbildung, employer: next.ausbildung?.employer || value };
+      }
+      if (chapter === 'ausbildung' && field === 'employer' && value) {
+        next.finanzen = { ...next.finanzen, employer: next.finanzen?.employer || value };
+      }
+
       return next;
     });
   };
