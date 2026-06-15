@@ -354,7 +354,7 @@ export default {
         kkInsurer: 'Caisse maladie',
         kkModel: { label: 'Modèle d\'assurance', options: { basic: 'Base', standard: 'Standard', comfort: 'Confort' } },
         kkPremium: 'Prime mensuelle (CHF)',
-        franchise: { label: 'Franchise (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500' } },
+        franchise: { label: 'Franchise (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numéro de carte d\'assurance',
         bvgInsurer: 'Caisse de pension (LPP)',
         bvgContribution: 'Cotisation LPP mensuelle (CHF)',
@@ -521,6 +521,14 @@ export default {
     ago: 'il y a {n} mois',
     agoDays: 'il y a {n} jours',
     recorded: 'documenté',
+  },
+
+  wohnkostenanteil: {
+    intro: 'Les frais de logement enregistrés par rapport au revenu enregistré.',
+    housing: 'Frais de logement',
+    income: 'Revenu',
+    share: 'Part',
+    perMonth: 'par mois',
   },
 
   chapterView: {
