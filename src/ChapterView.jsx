@@ -427,7 +427,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
   const handleSaveCard = () => {
     const basis = allData && allData.basis || {};
-    const name = [basis.firstName, basis.lastName].filter(Boolean).join(' ');
+    const name = [basis.firstName, basis.middleName, basis.lastName].filter(Boolean).join(' ');
     const dob = basis.dateOfBirth ? new Date(basis.dateOfBirth).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
     const sections = [];
     if (name || dob) {
