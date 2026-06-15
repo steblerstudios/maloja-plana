@@ -23,8 +23,8 @@ export const space = {
 
 // ─── Typography scale ───────────────────────────────────────
 export const text = {
-  xs:   11,
-  sm:   13,
+  xs:   12,
+  sm:   14,
   body: 15,
   lg:   18,
   xl:   22,
