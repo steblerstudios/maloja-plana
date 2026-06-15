@@ -441,6 +441,45 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
+    // ─── Notfallkarte — calm value entry ─────────────────────
+    React.createElement('button', {
+      onClick: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'notfall')),
+      style: {
+        display: 'flex', alignItems: 'center', gap: '16px',
+        width: '100%', textAlign: 'left',
+        marginBottom: space.xl,
+        padding: '16px 20px',
+        background: palette.surface,
+        borderRadius: radius.md,
+        border: '1px solid ' + palette.border + '66',
+        cursor: 'pointer',
+        fontFamily: 'inherit',
+        transition: 'border-color 0.2s',
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
+      onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '66'; },
+    },
+      React.createElement('div', {
+        style: {
+          width: '36px', height: '36px', borderRadius: '10px',
+          background: palette.sand + '15',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0, color: palette.sand, fontSize: '16px',
+        }
+      }, Icons.notfall ? React.createElement('div', { style: { width: '18px', height: '18px' } }, Icons.notfall()) : '♡'),
+      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' }
+        }, t('emergencyCardEntry.title')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
+        }, t('emergencyCardEntry.text'))
+      ),
+      React.createElement('span', {
+        style: { color: palette.mid, fontSize: text.sm, flexShrink: 0 }
+      }, '→')
+    ),
+
     // ─── MVO — Deine Grundordnung ───────────────────────────
     mvo.total > 0 && React.createElement('div', {
       style: {

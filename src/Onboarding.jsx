@@ -109,6 +109,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('p', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
+        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '16px', lineHeight: 1.5, textAlign: 'center' } },
+          t('onboarding.privacyNote')
+        ),
+
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' } },
           React.createElement('div', null,
             React.createElement('label', { style: { fontSize: '13px', color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
@@ -140,10 +144,6 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             React.createElement('option', { value: '' }, t('common.select')),
             CANTON_CODES.map(c => React.createElement('option', { key: c, value: c }, getCantonName(c, t)))
           )
-        ),
-
-        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', marginBottom: '8px' } },
-          t('onboarding.privacyNote')
         ),
 
         React.createElement('button', {

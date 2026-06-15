@@ -142,7 +142,13 @@ export default {
     text: 'Vous pouvez commencer par quelques étapes simples. Rien ne doit être terminé en une seule fois.',
     basicInfo: 'Compléter les informations de base',
     documents: 'Ajouter les documents importants',
-    emergency: 'Vérifier les informations d’urgence',
+    emergency: "Vérifier les informations d'urgence",
+  },
+
+  emergencyCardEntry: {
+    title: 'Préparer ta carte d\'urgence',
+    text: 'Une personne de contact et ton groupe sanguin suffisent pour commencer.',
+    action: 'Ouvrir la carte d\'urgence',
   },
 
   notfallEinstieg: {
@@ -1326,7 +1332,7 @@ export default {
     firstNamePlaceholder: 'Prénom',
     lastNamePlaceholder: 'Nom de famille',
     yourCanton: 'Votre canton',
-    privacyNote: 'Tout est stocké uniquement sur votre appareil. Aucun compte requis.',
+    privacyNote: 'Tes données restent sur cet appareil. Pas de compte. Pas de cloud.',
     skipForNow: 'Passer pour l\'instant',
     readyTitle: 'Prêt, {name} !',
     readyTitleGeneric: 'Tout est prêt !',

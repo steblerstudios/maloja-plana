@@ -145,6 +145,12 @@ export default {
     emergency: 'Notfallinformationen prüfen',
   },
 
+  emergencyCardEntry: {
+    title: 'Notfallkarte vorbereiten',
+    text: 'Eine Kontaktperson und deine Blutgruppe reichen als Anfang.',
+    action: 'Notfallkarte öffnen',
+  },
+
   notfallEinstieg: {
     title: 'Was brauchst Du im Notfall?',
     subtitle: 'Drei Szenarien — und welche Angaben Du dafür parat haben solltest.',
@@ -1326,7 +1332,7 @@ export default {
     firstNamePlaceholder: 'Vorname',
     lastNamePlaceholder: 'Nachname',
     yourCanton: 'Dein Kanton',
-    privacyNote: 'Alles wird nur auf deinem Gerät gespeichert. Kein Konto nötig.',
+    privacyNote: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.',
     skipForNow: 'Vorerst überspringen',
     readyTitle: 'Bereit, {name}!',
     readyTitleGeneric: 'Alles ist bereit!',
