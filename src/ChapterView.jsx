@@ -682,6 +682,44 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       );
     })(),
 
+    // Wohnkostenanteil — housing cost share when both costs and income are recorded
+    chapter.key === 'wohnen' && allData && (() => {
+      const rent = parseFloat(data.rentAmount) || 0;
+      const util = parseFloat(data.utilities) || 0;
+      const wohnkosten = rent + util;
+      if (wohnkosten <= 0) return null;
+      const fin = allData.finanzen || {};
+      const income = (parseFloat(fin.monthlyIncome) || 0) + (parseFloat(fin.familienzulagen) || 0) + (parseFloat(fin.alimenteReceived) || 0);
+      if (income <= 0) return null;
+      const pct = ((wohnkosten / income) * 100).toFixed(1).replace(/\.0$/, '');
+      const fmt = (v) => Math.round(v).toLocaleString(undefined, { minimumFractionDigits: 0 });
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.lg + 'px',
+          padding: space.md + 'px',
+          background: palette.surface,
+          border: '1px solid ' + palette.border + '66',
+          borderRadius: radius.md,
+        }
+      },
+        React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', fontStyle: 'italic', lineHeight: leading.relaxed }
+        }, tr('wohnkostenanteil.intro')),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.housing')),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(wohnkosten) + ' ' + tr('wohnkostenanteil.perMonth'))
+        ),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid ' + palette.border + '33' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, tr('wohnkostenanteil.income')),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + fmt(income) + ' ' + tr('wohnkostenanteil.perMonth'))
+        ),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '6px 0' } },
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, tr('wohnkostenanteil.share')),
+          React.createElement('span', { style: { fontSize: text.body, color: palette.text, fontWeight: weight.medium } }, pct + ' %')
+        )
+      );
+    })(),
+
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // IPV: shown in finanzen when income + canton exist
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && allData.basis?.canton &&
