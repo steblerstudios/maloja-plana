@@ -209,6 +209,24 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       }, formatCHF(budget.remaining * mult))
     ),
 
+    // === SKOS household orientation ===
+    budget.householdContext && budget.income > 0 && React.createElement('div', {
+      style: {
+        marginTop: '12px', padding: '10px 14px', background: palette.up,
+        borderRadius: '6px', fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
+      }
+    },
+      React.createElement('div', { style: { marginBottom: '4px' } },
+        '○ ' + t('budgetSync.skosOrientation', {
+          size: budget.householdContext.size,
+          amount: formatCHF(budget.householdContext.skosGrundbedarf),
+        })
+      ),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft }
+      }, t('budgetSync.skosNote'))
+    ),
+
     // === Recommendations (calm, info-level only) ===
     budget.recommendations && budget.recommendations.length > 0 && React.createElement('div', {
       style: { marginTop: '16px' }

@@ -921,6 +921,8 @@ export default {
     annualIncome: 'Annual income',
     annualExpenses: 'Annual expenses',
     annualAvailable: 'Available per year',
+    skosOrientation: 'SKOS basic needs for a {size}-person household: {amount}/month',
+    skosNote: 'Guideline from the Swiss Conference on Social Welfare. For orientation, not evaluation.',
     autoUpdateNote: 'Updated automatically when you change data in other chapters.',
     bvgReferenceNote: 'BVG and AHV are already deducted from net salary — shown here for reference only.',
     // Legacy keys used by ChartsAdvanced

@@ -2,6 +2,7 @@
 // When rent changes in "wohnen" → automatically reflected in budget, etc.
 import { getFullName } from './config/constants.js';
 import { calculateIPV } from './config/cantonalData.js';
+import { grundbedarfFuerHaushalt } from './data/sozialhilfeRechner.js';
 
 // Budget Light V1 — Grouped expense structure
 // See docs/product/budget-light-v1.md for product definition
@@ -68,6 +69,18 @@ export const syncBudgetFromChapters = (data) => {
   budget.totalExpenses = Object.values(budget.expenses).reduce((a, b) => a + Number(b || 0), 0);
   budget.remaining = budget.income - budget.totalExpenses;
   budget.savingsRate = budget.income > 0 ? ((budget.remaining / budget.income) * 100).toFixed(1) : 0;
+
+  // Household context for SKOS orientation
+  const household = data.basis?.household;
+  const adults = household?.adults || 1;
+  const children = Array.isArray(household?.children) ? household.children.length : 0;
+  const householdSize = adults + children;
+  budget.householdContext = {
+    size: householdSize,
+    adults,
+    children,
+    skosGrundbedarf: grundbedarfFuerHaushalt(householdSize),
+  };
 
   return budget;
 };
