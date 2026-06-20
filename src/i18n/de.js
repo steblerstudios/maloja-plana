@@ -920,6 +920,8 @@ export default {
     annualIncome: 'Jahreseinkommen',
     annualExpenses: 'Jahresausgaben',
     annualAvailable: 'Verfügbar im Jahr',
+    skosOrientation: 'SKOS-Grundbedarf für {size}-Personen-Haushalt: {amount}/Monat',
+    skosNote: 'Richtwert der Schweizerischen Konferenz für Sozialhilfe. Dient als Orientierung, nicht als Bewertung.',
     autoUpdateNote: 'Wird automatisch aktualisiert, wenn Du in anderen Kapiteln Daten änderst.',
     bvgReferenceNote: 'BVG und AHV sind bereits vom Nettolohn abgezogen — hier nur zur Übersicht.',
     // Legacy keys used by ChartsAdvanced
