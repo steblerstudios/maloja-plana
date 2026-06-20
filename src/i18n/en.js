@@ -960,6 +960,7 @@ export default {
     note: 'Note: {value}',
     enterCanton: 'Please enter your canton under "Personal basics" or your postal code under "Housing".',
     eligible: 'Eligible',
+    disclaimer: 'For orientation only. Actual entitlement is determined by the responsible authority.',
     notEligible: 'Not eligible',
     monthlySubsidy: 'Monthly subsidy',
     annualSubsidy: 'Annual subsidy',
@@ -1433,6 +1434,7 @@ export default {
     title: 'Early version',
     summary: 'Maloja Plana is under active development. Calculations are for orientation only — not legal or financial advice.',
     disclaimer: 'Please verify information with your cantonal authority or specialist. Your data stays entirely on this device.',
+    noAdviceHint: 'Maloja Plana is for orientation and does not replace legal, tax, or insurance advice.',
   },
 
   unterlagen: {
@@ -1573,6 +1575,7 @@ export default {
     thFranchise: 'Deductible',
     thPremium: 'Premium/mo.',
     source: 'Source: FOPH priminfo.admin.ch · Standard model with accident · As of 2026',
+    disclaimer: 'Reference premiums only. Actual premiums may differ — your insurer\'s policy is authoritative.',
   },
 
   vr: {
@@ -1617,7 +1620,7 @@ export default {
     totalRente: 'Total 1st + 2nd pillar',
     saeulen: 'Composition',
     einkommenEingeben: 'Enter your annual income to estimate the pension.',
-    source: 'Estimate based on OASIA Art. 34–40, OPA Art. 16. Not legally binding.',
+    source: 'Estimate based on OASIA Art. 34–40, OPA Art. 16. Not legally binding. As of 2026.',
   },
 
   eo: {
@@ -1643,7 +1646,7 @@ export default {
     hinweisMutterschaft: 'Maternity: 14 weeks from birth. Requires at least 5 months of employment.',
     hinweisVaterschaft: 'Paternity: 2 weeks, to be taken within 6 months of birth.',
     hinweisAdoption: 'Adoption: 2 weeks, child under 4 years old.',
-    source: 'Calculation based on LIECA Art. 16a–16n. Not legally binding.',
+    source: 'Calculation based on LIECA Art. 16a–16n. Not legally binding. As of 2026.',
   },
   sh: {
     title: 'Social Assistance Calculator',

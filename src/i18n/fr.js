@@ -959,6 +959,7 @@ export default {
     note: 'Remarque : {value}',
     enterCanton: 'Veuillez entrer votre canton sous « Données personnelles » ou votre code postal sous « Logement ».',
     eligible: 'Éligible',
+    disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',
     monthlySubsidy: 'Subside mensuel',
     annualSubsidy: 'Subside annuel',
@@ -1432,6 +1433,7 @@ export default {
     title: 'Version préliminaire',
     summary: 'Maloja Plana est en cours de développement. Les calculs servent d\'orientation — ils ne remplacent pas un conseil juridique ou financier.',
     disclaimer: 'Veuillez vérifier les informations auprès de votre autorité cantonale ou d\'un spécialiste. Vos données restent entièrement sur cet appareil.',
+    noAdviceHint: 'Maloja Plana sert d\'orientation et ne remplace pas un conseil juridique, fiscal ou en assurance.',
   },
 
   unterlagen: {
@@ -1572,6 +1574,7 @@ export default {
     thFranchise: 'Franchise',
     thPremium: 'Prime/mois',
     source: 'Source : OFSP priminfo.admin.ch · Modèle standard avec accident · État 2026',
+    disclaimer: 'Primes de référence uniquement. Les primes effectives peuvent différer — la police de votre assureur fait foi.',
   },
 
   vr: {
@@ -1616,7 +1619,7 @@ export default {
     totalRente: 'Total 1er + 2e pilier',
     saeulen: 'Composition',
     einkommenEingeben: 'Saisissez votre revenu annuel pour estimer la rente.',
-    source: 'Estimation selon LAVS art. 34–40, LPP art. 16. Sans valeur juridique.',
+    source: 'Estimation selon LAVS art. 34–40, LPP art. 16. Sans valeur juridique. État 2026.',
   },
 
   eo: {
@@ -1642,7 +1645,7 @@ export default {
     hinweisMutterschaft: 'Maternité : 14 semaines dès la naissance. Condition : au moins 5 mois d\'activité.',
     hinweisVaterschaft: 'Paternité : 2 semaines, à prendre dans les 6 mois suivant la naissance.',
     hinweisAdoption: 'Adoption : 2 semaines, enfant de moins de 4 ans.',
-    source: 'Calcul selon LAPG art. 16a–16n. Sans valeur juridique.',
+    source: 'Calcul selon LAPG art. 16a–16n. Sans valeur juridique. État 2026.',
   },
   sh: {
     title: 'Calculateur d\'aide sociale',
