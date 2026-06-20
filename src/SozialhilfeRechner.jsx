@@ -4,7 +4,12 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
-  const [haushalt, setHaushalt] = useState(1);
+  const household = data?.basis?.household;
+  const initAdults = household?.adults || 1;
+  const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
+
+  const [adults, setAdults] = useState(initAdults);
+  const [kinderCount, setKinderCount] = useState(initChildren);
   const [miete, setMiete] = useState('');
   const [kvg, setKvg] = useState('');
   const [einkommen, setEinkommen] = useState('');
@@ -18,7 +23,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     const k = Number(kvg) || 0;
     if (m <= 0 && k <= 0) return null;
     return berechneSozialhilfe({
-      haushaltGroesse: haushalt,
+      adults,
+      kinderImHaushalt: kinderCount,
       miete: m,
       krankenkassePraemie: k,
       erwerbseinkommen: Number(einkommen) || 0,
@@ -27,7 +33,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       erwerbstaetig,
       integrationsMassnahme: integration,
     });
-  }, [haushalt, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration]);
+  }, [adults, kinderCount, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -78,12 +84,23 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.inputRow },
         React.createElement('div', { style: s.inputGroup },
-          React.createElement('div', { style: s.label }, t('sh.haushalt')),
+          React.createElement('div', { style: s.label }, t('sh.erwachsene')),
           React.createElement('select', {
-            style: s.select, value: haushalt,
-            onChange: e => setHaushalt(Number(e.target.value)),
+            style: s.select, value: adults,
+            onChange: e => setAdults(Number(e.target.value)),
           },
-            [1,2,3,4,5,6,7].map(n =>
+            [1,2,3,4].map(n =>
+              React.createElement('option', { key: n, value: n }, n)
+            )
+          )
+        ),
+        React.createElement('div', { style: s.inputGroup },
+          React.createElement('div', { style: s.label }, t('sh.kinder')),
+          React.createElement('select', {
+            style: s.select, value: kinderCount,
+            onChange: e => setKinderCount(Number(e.target.value)),
+          },
+            [0,1,2,3,4,5].map(n =>
               React.createElement('option', { key: n, value: n }, n)
             )
           )
