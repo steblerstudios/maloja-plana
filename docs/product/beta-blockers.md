@@ -37,7 +37,7 @@
 | 4 | Testpersonen wirklich durchführen | offen — Plan existiert, nicht durchgeführt |
 | 5 | Finanzen-Gesamtbild (kapitelübergreifend) | teilweise — Finanzen-Spiegelkarten zeigen Einkommen, Ausgaben, Sparen, Kredite. Budget Hardening steht aus. |
 | 6 | Budget-UX verbessern (Geduld/Finesse) | offen — blockiert von Brutto/Netto-Entscheidung + Household |
-| 7 | Empty States wärmer gestalten (FB-019) | offen — generische Texte existieren, aber nicht durchgehend eingesetzt |
+| 7 | Empty States wärmer gestalten (FB-019) | done — Kapitelstatus, Tresor, Notfall-Dossier wärmer, 4 Sprachen |
 | 8 | Hardcoded German in Berechnungen fixen (FB-018) | done — Commits `0ddb57b`, `84006d0`. Restliche 3 Strings in kkScanner.js jetzt auch behoben. |
 
 ---
