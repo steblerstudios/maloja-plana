@@ -8,7 +8,7 @@ import { calculateIPV } from './config/cantonalData.js';
 export const BUDGET_GROUPS = [
   { key: 'housing', fields: ['rent', 'utilities', 'mortgage', 'buildingsInsurance'] },
   { key: 'insuranceHealth', fields: ['healthInsurance', 'otherInsurance'] },
-  { key: 'living', fields: ['groceries', 'communication'] },
+  { key: 'living', fields: ['groceries', 'communication', 'childcare'] },
   { key: 'mobility', fields: ['mobility'] },
   { key: 'taxProvision', fields: ['tax', 'pension3a'] },
   { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
@@ -51,6 +51,7 @@ export const syncBudgetFromChapters = (data) => {
   budget.expenses.otherInsurance = Number(data.finanzen?.otherInsurance || 0);
   budget.expenses.groceries = Number(data.finanzen?.groceries || 0);
   budget.expenses.communication = Number(data.finanzen?.communication || 0);
+  budget.expenses.childcare = Number(data.finanzen?.childcare || 0);
   budget.expenses.mobility = Number(data.finanzen?.mobility || 0);
   budget.expenses.tax = Number(data.finanzen?.monthlyTax || 0);
   budget.expenses.pension3a = Number(data.finanzen?.pension3a || 0) / 12;
@@ -138,7 +139,7 @@ export const createBudgetReport = (data, t) => {
       expenses: {
         housing: budget.expenses.rent + budget.expenses.utilities + (budget.expenses.mortgage || 0) + (budget.expenses.buildingsInsurance || 0),
         insuranceHealth: budget.expenses.healthInsurance + (budget.expenses.otherInsurance || 0),
-        living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0),
+        living: (budget.expenses.groceries || 0) + (budget.expenses.communication || 0) + (budget.expenses.childcare || 0),
         mobility: budget.expenses.mobility || 0,
         taxProvision: (budget.expenses.tax || 0) + (budget.expenses.pension3a || 0),
         reference: budget.reference.bvg + budget.reference.ahv + (budget.expenses.uvg || 0),
