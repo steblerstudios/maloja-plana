@@ -66,6 +66,7 @@ Brutto/Netto ───────────┤                     ├── 
 | **Blocker fuer** | Korrekte Mehrsprachigkeit, KK-Scanner in Fremdsprachen, IPV-Anzeige |
 | **Prioritaet** | **1** — kleinster Aufwand, groesster Impact |
 | **Abhaengigkeit** | Keine |
+| **Status** | **Done** — cantonalData, premiumCalc, kkScanner alle über i18n. Commits `0ddb57b`, `84006d0`. |
 
 ### Betroffene Dateien
 - `src/i18n/de.js` — Referenz (bereits deutsche Strings)
@@ -88,6 +89,7 @@ Brutto/Netto ───────────┤                     ├── 
 | **Aufwand** | Mittel — Datenstruktur, localStorage-Schema, UI-Felder (minimal) |
 | **Prioritaet** | **1** — blockiert die meisten anderen Beta-Features |
 | **Abhaengigkeit** | Brutto/Netto-Entscheidung (teilweise) |
+| **Status** | **Done** — Datenstruktur, Migration v2→v3, UI in ChapterView, verbunden mit SKOS-Rechner. (2026-06-20) |
 
 ### Was es entblockt
 
@@ -164,6 +166,7 @@ Monatliches Einkommen: [________] CHF
 | **Aufwand** | Mittel-Hoch |
 | **Prioritaet** | **2** — nach Household |
 | **Abhaengigkeit** | Household Model, Brutto/Netto-Entscheidung |
+| **Status** | **Phase 1 done** — 6 Gruppen, 14 Felder, IPV-Relief, Calm Sprache. Phase 2 (Household-Templates) offen. (2026-06-20) |
 
 ### Abhaengige Bereiche
 
@@ -207,6 +210,7 @@ Monatliches Einkommen: [________] CHF
 | **Aufwand** | Mittel |
 | **Prioritaet** | **3** — nach Budget, parallel zu Legal |
 | **Abhaengigkeit** | Budget Hardening (fuer Lebensmappe-Inhalt) |
+| **Status** | **Done** — Hub (#/unterlagen), Lebensmappe (6 Kapitel + Dokumente), Notfalldossier (6 Sektionen), browser-native Print/PDF, A4 Styling. `dossierGenerator.js` + `Lebensmappe.jsx` + `NotfallDossier.jsx`. (2026-06-20) |
 
 ### Abhaengige Bereiche
 
