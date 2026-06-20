@@ -6,6 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
+import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -883,6 +884,37 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }
               }, t('nav.crosslink.taxHint'))
             );
+            const kanton = allData && allData.basis && allData.basis.canton;
+            if (kanton && kantonHatMindestlohn(kanton)) {
+              const lohn = parseFloat(data[field.k]) || 0;
+              if (lohn > 0) {
+                const result = pruefeLohn(lohn, kanton);
+                if (result.status === 'unterMindestlohn') {
+                  elements.push(
+                    React.createElement('div', {
+                      key: 'mindestlohn-warnung',
+                      style: {
+                        gridColumn: '1 / -1',
+                        background: '#fef2f2',
+                        border: '1px solid #fca5a5',
+                        borderLeft: '3px solid #ef4444',
+                        borderRadius: radius.sm,
+                        padding: space.sm + 'px ' + space.md + 'px',
+                        fontSize: text.sm,
+                        color: '#991b1b',
+                        lineHeight: leading.relaxed,
+                        marginBottom: space.sm + 'px',
+                      }
+                    },
+                      t('lohnCheck.unterMindestlohn')
+                        .replace('{kanton}', kanton)
+                        .replace('{mindestStunde}', result.mindestStunde.toFixed(2))
+                        .replace('{lohnStunde}', result.lohnStunde.toFixed(2))
+                    )
+                  );
+                }
+              }
+            }
           }
           return elements;
         })
