@@ -240,6 +240,7 @@ export default {
   dashboard: {
     welcome: 'Willkommen bei Maloja Plana',
     tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',
+    taglineBenefit: 'Prüfe Deine Ansprüche. Ordne Deine Unterlagen. Behalte Fristen im Blick.',
     progress: 'Dein Fortschritt',
     progressComplete: 'Dein Lebensordner steht. Ruhe.',
     progressStart: 'Dein Weg beginnt hier',
@@ -255,6 +256,7 @@ export default {
     tierSupporting: 'Deine Absicherung',
     tierProtective: 'Dein Schutz',
     toolsAndFeatures: 'Werkzeuge & Features',
+    toolsSubtitle: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: 'Beginne mit dem Kapitel "Persönliche Basis"',
     tip2: 'Lade Deine wichtigen Dokumente hoch',
