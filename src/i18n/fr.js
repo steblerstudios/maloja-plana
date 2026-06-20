@@ -920,6 +920,8 @@ export default {
     annualIncome: 'Revenu annuel',
     annualExpenses: 'Dépenses annuelles',
     annualAvailable: 'Disponible par an',
+    skosOrientation: 'Besoins de base CSIAS pour un ménage de {size} personne(s) : {amount}/mois',
+    skosNote: 'Valeur indicative de la Conférence suisse des institutions d\'action sociale. Pour orientation, pas pour évaluation.',
     autoUpdateNote: 'Se met à jour automatiquement lorsque vous modifiez des données dans d\'autres chapitres.',
     bvgReferenceNote: 'LPP et AVS sont déjà déduits du salaire net — affichés ici à titre indicatif.',
     // Legacy keys used by ChartsAdvanced
