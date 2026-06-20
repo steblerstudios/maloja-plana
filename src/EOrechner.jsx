@@ -4,7 +4,8 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
 export const EOrechner = ({ palette, t, data }) => {
-  const [einkommen, setEinkommen] = useState(data.finanzen?.income || '');
+  const prefill = data.finanzen?.monthlyIncome ? Math.round(parseFloat(data.finanzen.monthlyIncome) * 12) : '';
+  const [einkommen, setEinkommen] = useState(prefill || '');
   const parsedEinkommen = Number(einkommen) || 0;
 
   const result = useMemo(() => {
@@ -94,7 +95,10 @@ export const EOrechner = ({ palette, t, data }) => {
       )
     ),
 
-    !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('eo.einkommenEingeben')),
+    !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } },
+      React.createElement('div', null, t('eo.einkommenEingeben')),
+      React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.xs } }, t('eo.erklaerung'))
+    ),
 
     React.createElement('div', { style: s.source }, t('eo.source'))
   );
