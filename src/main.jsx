@@ -375,6 +375,7 @@ const AppInner = () => {
         allData: activeData,
         onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
         onAddDocument: handleAddDocument,
+        onNavigate: handleNavigate,
         demoMode,
       }),
       view === 'tresor' && React.createElement(DocumentTresor, {

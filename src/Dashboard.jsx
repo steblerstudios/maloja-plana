@@ -686,16 +686,18 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' } },
         [
-          { label: t('nav.calendar'), view: 'calendar', icon: 'kalenderUhr' },
-          { label: t('nav.budgetSync'), view: 'sync', icon: 'budgetWallet' },
-          { label: t('nav.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
-          { label: t('nav.praemien'), view: 'praemien', icon: 'insurance' },
-          { label: t('nav.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
-          { label: t('nav.eo'), view: 'eo', icon: 'family' },
-          { label: t('nav.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
-          { label: t('nav.tresor'), view: 'tresor', icon: 'dokumentTresor' },
-          { label: t('nav.cv'), view: 'cv', icon: 'lebenslauf' },
-          { label: t('nav.unterlagen'), view: 'unterlagen', icon: 'documents' },
+          { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'kalenderUhr' },
+          { label: t('nav.budgetSync'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
+          { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
+          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
+          { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
+          { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
+          { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
+          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
+          { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
+          { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
+          { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
+          { label: t('nav.unterlagen'), sub: t('nav.sub.unterlagen'), view: 'unterlagen', icon: 'documents' },
         ].map(tool => {
           const IconFn = Icons[tool.icon];
           return React.createElement('button', {
@@ -708,11 +710,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               border: 'none',
               borderRadius: radius.md,
               cursor: 'pointer',
-              fontWeight: weight.medium,
-              fontSize: text.sm,
               fontFamily: 'inherit',
               display: 'flex', alignItems: 'center', gap: space.sm,
               transition: 'background 0.2s',
+              textAlign: 'left',
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
@@ -720,7 +721,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('div', { style: { color: palette.mid, width: '16px', height: '16px', flexShrink: 0 } },
               IconFn ? React.createElement('div', { style: { width: '16px', height: '16px' } }, IconFn()) : null
             ),
-            tool.label
+            React.createElement('div', null,
+              React.createElement('div', { style: { fontWeight: weight.medium, fontSize: text.sm } }, tool.label),
+              tool.sub ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
+            )
           );
         })
       )

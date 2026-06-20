@@ -134,6 +134,24 @@ export default {
     menu: 'Menü',
     completion: '{value}% vollständig',
     privacyNote: '100% lokal. Keine Daten verlassen Dein Gerät.',
+    sub: {
+      calendar: 'Fristen & Termine',
+      budgetSync: 'CSV-Import',
+      kvgIpv: 'Anspruch prüfen',
+      praemien: 'Modelle vergleichen',
+      vorsorge: 'AHV & Pensionskasse',
+      eo: 'Mutterschaft, Vaterschaft, Dienst',
+      taxes: 'Bundessteuer berechnen',
+      sozialhilfe: 'SKOS-Orientierung',
+      direktlinks: 'Behörden & Ämter',
+      tresor: 'Sichere Ablage',
+      cv: 'Lebenslauf erstellen',
+      unterlagen: 'Dokumente verwalten',
+    },
+    crosslink: {
+      ipvHint: 'Hohe Prämien? Prüfe Deinen IPV-Anspruch →',
+      taxHint: 'Bundessteuer abschätzen →',
+    },
   },
 
   theme: {
