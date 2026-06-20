@@ -134,6 +134,7 @@ export function getChapters(t) {
         { k: 'groceries', label: fl(t, 'finanzen', 'groceries'), type: 'currency', hint: hn(t, 'finanzen', 'groceries') },
         { k: 'communication', label: fl(t, 'finanzen', 'communication'), type: 'currency', hint: hn(t, 'finanzen', 'communication') },
         { k: 'mobility', label: fl(t, 'finanzen', 'mobility'), type: 'currency', hint: hn(t, 'finanzen', 'mobility') },
+        { k: 'childcare', label: fl(t, 'finanzen', 'childcare'), type: 'currency', hint: hn(t, 'finanzen', 'childcare') },
         { k: 'otherInsurance', label: fl(t, 'finanzen', 'otherInsurance'), type: 'currency', hint: hn(t, 'finanzen', 'otherInsurance') },
         { k: 'debtPayments', label: fl(t, 'finanzen', 'debtPayments'), type: 'currency', hint: hn(t, 'finanzen', 'debtPayments'), section: t('sections.finanzen.obligations'), sectionIntro: si(t, 'finanzen', 'obligations'), orientation: or(t, 'schuldenraten') },
         { k: 'alimentePaid', label: fl(t, 'finanzen', 'alimentePaid'), type: 'currency', hint: hn(t, 'finanzen', 'alimentePaid') },
