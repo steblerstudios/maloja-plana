@@ -912,9 +912,9 @@ export default {
     remaining: 'Remaining / Savings',
     available: 'Available',
     notRecorded: 'Not yet recorded',
-    emptyNote: '{count} categories not yet recorded.',
-    emptyNoteSingle: '1 category not yet recorded.',
-    emptyStateGuide: 'Start with your monthly income in the Finance chapter. Many entries are filled in automatically from other chapters.',
+    emptyNote: '{count} categories you can still add — no rush, every step counts.',
+    emptyNoteSingle: 'One category is still open — you can add it any time.',
+    emptyStateGuide: 'Start with your monthly income in the Finance chapter. Many entries are filled in automatically — you don\'t have to do everything at once.',
     expensesOverview: 'Expenses overview',
     total: 'Total expenses',
     annualView: 'Annual view',
@@ -943,6 +943,7 @@ export default {
       otherInsurance: 'Other insurance',
       groceries: 'Groceries & household',
       communication: 'Internet & phone',
+      childcare: 'Childcare',
       mobility: 'Mobility',
       tax: 'Taxes',
       pension3a: 'Pillar 3a',
@@ -1245,6 +1246,7 @@ export default {
     rentInfo: 'Your housing costs make up a large part of your budget. This is not uncommon in many Swiss cities.',
     budgetTight: 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.',
     deficitInfo: 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.',
+    budgetCalm: 'You have an overview of your finances. Every recorded area helps.',
   },
 
   cantons: {
