@@ -117,7 +117,13 @@ export const getBudgetRecommendations = (budget, t) => {
     });
   }
 
-  // No positive judgment either — Budget Light does not evaluate.
+  if (budget.income > 0 && budget.remaining >= 0 && totalExpensesPercentage <= 90) {
+    recommendations.push({
+      level: 'calm',
+      icon: '○',
+      text: t ? t('budget.budgetCalm') : 'You have an overview of your finances. Every step counts.'
+    });
+  }
 
   return recommendations;
 };
