@@ -152,6 +152,7 @@ export default {
       ipvHint: 'Hohe Prämien? Prüfe Deinen IPV-Anspruch →',
       taxHint: 'Bundessteuer abschätzen →',
     },
+    backToDashboard: 'Übersicht',
   },
 
   theme: {
@@ -1623,6 +1624,7 @@ export default {
     einkommen: 'Jahreseinkommen brutto (CHF)',
     einkommenHint: 'Letztes Jahreseinkommen vor Ereignis',
     einkommenEingeben: 'Gib Dein Jahreseinkommen ein, um die Entschädigung zu berechnen.',
+    erklaerung: 'Der Rechner zeigt Dein Taggeld und die Gesamtentschädigung für Mutterschaft (14 Wochen), Vaterschaft (2 Wochen), Adoption (2 Wochen) und Betreuungsurlaub (14 Wochen).',
     taggeld: 'Taggeld',
     tag: 'Tag',
     tage: 'Tage',
