@@ -35,7 +35,7 @@
 | 2 | Spiegelungsebenen pro Kapitel | done — Basis, Wohnen, Finanzen. Commits `e9fc6f8`, `ea75fd0`, `2f7d884` |
 | 3 | Mutter-Feedback vollständig rekonstruieren | offen — Template existiert, nicht ausgefüllt. Sophie-Aktion. |
 | 4 | Testpersonen wirklich durchführen | offen — Plan existiert, nicht durchgeführt |
-| 5 | Finanzen-Gesamtbild (kapitelübergreifend) | teilweise — Finanzen-Spiegelkarten + BudgetSync (6 Gruppen, 14 Felder, IPV). Budget Phase 2 (Household-Templates) offen. |
+| 5 | Finanzen-Gesamtbild (kapitelübergreifend) | done — BudgetSync (6 Gruppen, 14 Felder, IPV), Kinderbetreuung, SKOS-Orientierung nach Haushaltsgrösse. |
 | 6 | Budget-UX verbessern (Geduld/Finesse) | done — Wärmere Leerstellen, ermutigende Sprache, positives Feedback, Kinderbetreuung. 3 Sprachen. |
 | 7 | Empty States wärmer gestalten (FB-019) | done — Kapitelstatus, Tresor, Notfall-Dossier wärmer, 4 Sprachen |
 | 8 | Hardcoded German in Berechnungen fixen (FB-018) | done — Commits `0ddb57b`, `84006d0`. Restliche 3 Strings in kkScanner.js jetzt auch behoben. |

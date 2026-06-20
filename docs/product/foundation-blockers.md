@@ -166,7 +166,7 @@ Monatliches Einkommen: [________] CHF
 | **Aufwand** | Mittel-Hoch |
 | **Prioritaet** | **2** — nach Household |
 | **Abhaengigkeit** | Household Model, Brutto/Netto-Entscheidung |
-| **Status** | **Phase 1 done** — 6 Gruppen, 14 Felder, IPV-Relief, Calm Sprache. Phase 2 (Household-Templates) offen. (2026-06-20) |
+| **Status** | **Done** — Phase 1: 6 Gruppen, 14 Felder, IPV-Relief, Calm Sprache. Phase 2: SKOS-Grundbedarf nach Haushaltsgrösse, Kinderbetreuung, emotionale Temperatur. (2026-06-20) |
 
 ### Abhaengige Bereiche
 
