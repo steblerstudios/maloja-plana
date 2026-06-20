@@ -911,9 +911,9 @@ export default {
     remaining: 'Rest/Sparen',
     available: 'Verfügbar',
     notRecorded: 'Noch nicht erfasst',
-    emptyNote: '{count} Kategorien sind noch nicht erfasst.',
-    emptyNoteSingle: '1 Kategorie ist noch nicht erfasst.',
-    emptyStateGuide: 'Starte mit deinem monatlichen Einkommen im Kapitel Finanzen. Viele Angaben werden automatisch aus anderen Kapiteln übernommen.',
+    emptyNote: '{count} Kategorien kannst Du noch ergänzen — kein Stress, jeder Schritt zählt.',
+    emptyNoteSingle: 'Eine Kategorie ist noch offen — Du kannst sie jederzeit ergänzen.',
+    emptyStateGuide: 'Starte mit deinem monatlichen Einkommen im Kapitel Finanzen. Vieles wird automatisch übernommen — Du musst nicht alles auf einmal ausfüllen.',
     expensesOverview: 'Ausgaben-Übersicht',
     total: 'Total Ausgaben',
     annualView: 'Jahresansicht',
@@ -942,6 +942,7 @@ export default {
       otherInsurance: 'Weitere Versicherungen',
       groceries: 'Lebensmittel & Haushalt',
       communication: 'Internet & Telefon',
+      childcare: 'Kinderbetreuung',
       mobility: 'Mobilität',
       tax: 'Steuern',
       pension3a: 'Säule 3a',
@@ -1244,6 +1245,7 @@ export default {
     rentInfo: 'Deine Wohnkosten machen einen grossen Teil deines Budgets aus. In vielen Schweizer Städten ist das nicht ungewöhnlich.',
     budgetTight: 'Dein Budget ist eng. Es gibt kostenlose Budgetberatungsstellen — zum Beispiel bei der Caritas oder deiner Gemeinde.',
     deficitInfo: 'Die Ausgaben sind aktuell höher als die Einnahmen. Das kann vorübergehend sein — bei der Schuldenberatung deines Kantons findest du Unterstützung.',
+    budgetCalm: 'Du hast einen Überblick über deine Finanzen. Jeder erfasste Bereich hilft.',
   },
 
   cantons: {
