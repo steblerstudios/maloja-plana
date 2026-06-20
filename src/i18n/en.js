@@ -1014,6 +1014,11 @@ export default {
     childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',
   },
 
+  lohnCheck: {
+    unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) is below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr). Check your rights with the cantonal labour inspectorate.',
+    keinMindestlohn: 'Your canton does not have a legal minimum wage.',
+  },
+
   tax: {
     title: 'Tax calculator',
     inputs: 'Inputs',

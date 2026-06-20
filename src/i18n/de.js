@@ -1013,6 +1013,11 @@ export default {
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
   },
 
+  lohnCheck: {
+    unterMindestlohn: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei der kantonalen Arbeitsinspektorat.',
+    keinMindestlohn: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.',
+  },
+
   tax: {
     title: 'Steuern-Kalkulator',
     inputs: 'Eingaben',
