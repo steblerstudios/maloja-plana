@@ -46,12 +46,12 @@
 
 | # | Punkt |
 |---|-------|
-| 1 | Kuhglocke-Erinnerungen (Fristen) |
-| 2 | Erweiterte Verbindungen (EL, RAV, IPV-Hinweise) |
-| 3 | Kapitel-Einleitungen als Orientierungsseiten |
-| 4 | Export-Architektur (PDF, JSON, ZIP) erweitern |
-| 5 | Bundesordner-Metapher im Dokumenten-Tresor |
-| 6 | Multi-Sprach-Audit (FR, IT Qualität) |
+| 1 | Kuhglocke-Erinnerungen (Fristen) | done — CalendarReminders + OverdueBanner + NotificationSettings |
+| 2 | Erweiterte Verbindungen (EL, RAV, IPV-Hinweise) | done — Kontextuelle Budget-Hinweise: IPV, Sozialhilfe, EL. 4 Sprachen. |
+| 3 | Kapitel-Einleitungen als Orientierungsseiten | done — Intro-Texte in allen 7 Kapiteln |
+| 4 | Export-Architektur (PDF, JSON, ZIP) erweitern | teilweise — Lebensmappe, Notfalldossier, Briefvorlagen, ZIP-Export |
+| 5 | Bundesordner-Metapher im Dokumenten-Tresor | offen |
+| 6 | Multi-Sprach-Audit (FR, IT Qualität) | done — IT auf Parität gebracht (6 fehlende Sektionen + alle neuen Keys) |
 
 ---
 
