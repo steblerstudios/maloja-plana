@@ -7,7 +7,7 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, demoMode }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
@@ -842,6 +842,48 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             }
           }
           elements.push(renderField(field));
+          if (onNavigate && field.k === 'kkPremium' && chapter.key === 'versicherungen') {
+            elements.push(
+              React.createElement('button', {
+                key: 'crosslink-ipv',
+                onClick: () => onNavigate('premium'),
+                style: {
+                  gridColumn: '1 / -1',
+                  background: palette.sageMist || palette.up,
+                  border: 'none',
+                  borderRadius: radius.sm,
+                  padding: space.sm + 'px ' + space.md + 'px',
+                  fontSize: text.sm,
+                  color: palette.sageDeep || palette.mid,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  marginBottom: space.sm + 'px',
+                }
+              }, t('nav.crosslink.ipvHint'))
+            );
+          }
+          if (onNavigate && field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
+            elements.push(
+              React.createElement('button', {
+                key: 'crosslink-tax',
+                onClick: () => onNavigate('tax'),
+                style: {
+                  gridColumn: '1 / -1',
+                  background: palette.sageMist || palette.up,
+                  border: 'none',
+                  borderRadius: radius.sm,
+                  padding: space.sm + 'px ' + space.md + 'px',
+                  fontSize: text.sm,
+                  color: palette.sageDeep || palette.mid,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  marginBottom: space.sm + 'px',
+                }
+              }, t('nav.crosslink.taxHint'))
+            );
+          }
           return elements;
         })
       ),
