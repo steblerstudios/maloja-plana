@@ -134,6 +134,24 @@ export default {
     menu: 'Menu',
     completion: '{value}% complété',
     privacyNote: '100% local. Aucune donnée ne quitte ton appareil.',
+    sub: {
+      calendar: 'Délais & rendez-vous',
+      budgetSync: 'Import CSV',
+      kvgIpv: 'Vérifier le droit',
+      praemien: 'Comparer les modèles',
+      vorsorge: 'AVS & caisse de pension',
+      eo: 'Maternité, paternité, service',
+      taxes: 'Calculer l\'impôt fédéral',
+      sozialhilfe: 'Orientation CSIAS',
+      direktlinks: 'Autorités & offices',
+      tresor: 'Classement sécurisé',
+      cv: 'Créer ton CV',
+      unterlagen: 'Gérer les documents',
+    },
+    crosslink: {
+      ipvHint: 'Primes élevées ? Vérifie ton droit à la réduction →',
+      taxHint: 'Estimer l\'impôt fédéral →',
+    },
   },
 
   theme: {

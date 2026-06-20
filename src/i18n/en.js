@@ -134,6 +134,24 @@ export default {
     menu: 'Menu',
     completion: '{value}% complete',
     privacyNote: '100% local. No data leaves your device.',
+    sub: {
+      calendar: 'Deadlines & dates',
+      budgetSync: 'CSV import',
+      kvgIpv: 'Check eligibility',
+      praemien: 'Compare models',
+      vorsorge: 'AHV & pension fund',
+      eo: 'Maternity, paternity, service',
+      taxes: 'Calculate federal tax',
+      sozialhilfe: 'SKOS orientation',
+      direktlinks: 'Authorities & offices',
+      tresor: 'Secure storage',
+      cv: 'Build your CV',
+      unterlagen: 'Manage documents',
+    },
+    crosslink: {
+      ipvHint: 'High premiums? Check your IPV eligibility →',
+      taxHint: 'Estimate federal tax →',
+    },
   },
 
   theme: {
