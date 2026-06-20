@@ -204,7 +204,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.welcome')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal }
-      }, t('dashboard.tagline'))
+      }, t('dashboard.tagline')),
+      React.createElement('p', {
+        style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0', opacity: 0.7, lineHeight: leading.normal }
+      }, t('alpha.noAdviceHint'))
     ),
 
     // ─── Maloja Pass — interactive topographic map ─────────
