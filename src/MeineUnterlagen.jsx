@@ -97,8 +97,9 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       palette,
       title: t('unterlagen.dossier.behoerden.title'),
       description: t('unterlagen.dossier.behoerden.description'),
-      status: t('unterlagen.dossier.behoerden.status'),
+      status: t('briefe.title'),
       icon: 'legal',
+      onClick: () => onNavigate('briefe'),
     }),
 
     // Separator
