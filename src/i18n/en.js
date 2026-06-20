@@ -1017,7 +1017,7 @@ export default {
   },
 
   lohnCheck: {
-    unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) is below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr). Check your rights with the cantonal labour inspectorate.',
+    unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) is below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr). Check your rights with the cantonal labour inspectorate. As of 2025.',
     keinMindestlohn: 'Your canton does not have a legal minimum wage.',
   },
 
