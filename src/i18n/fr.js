@@ -349,7 +349,8 @@ export default {
       emptyStateHint: 'Ton revenu mensuel suffit pour commencer.',
       icon: '◇',
       fields: {
-        monthlyIncome: 'Revenu mensuel net (CHF)',
+        monthlyIncome: 'Revenu mensuel (CHF)',
+        incomeType: { label: 'Type de revenu', options: { netto: 'Net (ce que je reçois)', brutto: 'Brut (avant déductions)' } },
         employer: 'Employeur',
         employmentType: { label: 'Type d\'emploi', options: { employed: 'Salarié(e)', selfEmployed: 'Indépendant(e)', freelance: 'Freelance', retired: 'Retraité(e)' } },
         startDate: 'Début de l\'emploi',
@@ -372,7 +373,7 @@ export default {
         investmentFunds: { label: 'Fonds de placement ?', options: { no: 'Non', yes: 'Oui' } },
       },
       hints: {
-        monthlyIncome: 'Votre salaire net — ce qui arrive sur votre compte.',
+        monthlyIncome: 'Votre revenu — le net est ce qui arrive sur votre compte.',
         monthlyTax: 'Estimation ou selon votre avis d\'imposition.',
         groceries: 'Alimentation, droguerie, articles ménagers par mois.',
         communication: 'Internet, téléphone mobile, ligne fixe par mois.',
@@ -1652,6 +1653,8 @@ export default {
   sh: {
     title: 'Calculateur d\'aide sociale',
     haushalt: 'Taille du ménage',
+    erwachsene: 'Adultes',
+    kinder: 'Enfants',
     miete: 'Loyer (CHF)',
     kvg: 'Prime LAMal (CHF)',
     einkommen: 'Revenu professionnel (CHF)',

@@ -350,7 +350,8 @@ export default {
       emptyStateHint: 'Your monthly income is enough to start.',
       icon: '◇',
       fields: {
-        monthlyIncome: 'Monthly net income (CHF)',
+        monthlyIncome: 'Monthly income (CHF)',
+        incomeType: { label: 'Income type', options: { netto: 'Net (what I receive)', brutto: 'Gross (before deductions)' } },
         employer: 'Employer',
         employmentType: { label: 'Employment type', options: { employed: 'Employed', selfEmployed: 'Self-employed', freelance: 'Freelancer', retired: 'Retired' } },
         startDate: 'Employment start date',
@@ -373,7 +374,7 @@ export default {
         investmentFunds: { label: 'Investment funds?', options: { no: 'No', yes: 'Yes' } },
       },
       hints: {
-        monthlyIncome: 'Your net salary — what arrives in your account.',
+        monthlyIncome: 'Your income — net is what arrives in your account.',
         monthlyTax: 'Estimated or from your tax bill.',
         groceries: 'Groceries, toiletries, household supplies per month.',
         communication: 'Internet, mobile, landline per month.',
@@ -1653,6 +1654,8 @@ export default {
   sh: {
     title: 'Social Assistance Calculator',
     haushalt: 'Household size',
+    erwachsene: 'Adults',
+    kinder: 'Children',
     miete: 'Rent (CHF)',
     kvg: 'Health insurance (CHF)',
     einkommen: 'Earned income (CHF)',
