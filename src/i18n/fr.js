@@ -1013,6 +1013,11 @@ export default {
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
   },
 
+  lohnCheck: {
+    unterMindestlohn: 'Remarque : Ton salaire (CHF {lohnStunde}/h) est inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h). Vérifie tes droits auprès de l\'inspection cantonale du travail.',
+    keinMindestlohn: 'Ton canton n\'a pas de salaire minimum légal.',
+  },
+
   tax: {
     title: 'Calculateur d\'impôts',
     inputs: 'Données',
