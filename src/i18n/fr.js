@@ -1291,6 +1291,9 @@ export default {
     budgetTight: 'Votre budget est serré. Il existe des services gratuits de conseil budgétaire — par exemple auprès de Caritas ou de votre commune.',
     deficitInfo: 'Les dépenses dépassent actuellement les revenus. Cela peut être temporaire — le service de conseil en désendettement de votre canton peut vous aider.',
     budgetCalm: 'Vous avez une vue d\'ensemble de vos finances. Chaque domaine enregistré aide.',
+    ipvHint: 'Vous pourriez avoir droit à une réduction de prime (RDP) — env. CHF {amount}/mois. La demande peut être faite auprès de votre commune ou caisse de compensation cantonale.',
+    sozialhilfeHint: 'Votre revenu est inférieur au minimum vital CSIAS. L\'aide sociale peut être une option — le conseil est confidentiel et gratuit.',
+    elHint: 'Avec un revenu modeste à la retraite, des prestations complémentaires (PC) peuvent entrer en ligne de compte. Votre agence AVS vous conseille gratuitement.',
   },
 
   cantons: {

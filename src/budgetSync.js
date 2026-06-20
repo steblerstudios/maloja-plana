@@ -79,6 +79,7 @@ export const syncBudgetFromChapters = (data) => {
     size: householdSize,
     adults,
     children,
+    isRetired: !!household?.isRetired,
     skosGrundbedarf: grundbedarfFuerHaushalt(householdSize),
   };
 
@@ -136,6 +137,37 @@ export const getBudgetRecommendations = (budget, t) => {
       icon: '○',
       text: t ? t('budget.budgetCalm') : 'You have an overview of your finances. Every step counts.'
     });
+  }
+
+  // IPV hint — if eligible but not yet applied
+  if (budget.ipvRelief > 0) {
+    recommendations.push({
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'
+    });
+  }
+
+  // SKOS/Sozialhilfe hint — if income is below Grundbedarf
+  const hc = budget.householdContext;
+  if (hc && budget.income > 0 && budget.income < hc.skosGrundbedarf) {
+    recommendations.push({
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.sozialhilfeHint') : 'Your income is below the SKOS basic needs threshold. Social assistance may be an option.'
+    });
+  }
+
+  // EL hint — for retired persons with modest income
+  if (budget.income > 0 && budget.income < 3000 && hc && hc.size >= 1) {
+    const isRetired = budget.householdContext.isRetired;
+    if (isRetired) {
+      recommendations.push({
+        level: 'info',
+        icon: '○',
+        text: t ? t('budget.elHint') : 'With a modest income in retirement, supplementary benefits (EL) may be available.'
+      });
+    }
   }
 
   return recommendations;
