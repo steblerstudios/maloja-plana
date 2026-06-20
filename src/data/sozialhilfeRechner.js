@@ -60,7 +60,9 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 }
 
 export function berechneSozialhilfe({
-  haushaltGroesse = 1,
+  haushaltGroesse,
+  adults = 1,
+  kinderImHaushalt = 0,
   miete = 0,
   krankenkassePraemie = 0,
   erwerbseinkommen = 0,
@@ -68,8 +70,8 @@ export function berechneSozialhilfe({
   vermoegen = 0,
   erwerbstaetig = false,
   integrationsMassnahme = false,
-  kinderImHaushalt = 0,
 }) {
+  if (haushaltGroesse == null) haushaltGroesse = adults + kinderImHaushalt;
   const gbl = grundbedarfFuerHaushalt(haushaltGroesse);
   const wohnkosten = Math.max(0, miete);
   const kvgPraemie = Math.max(0, krankenkassePraemie);

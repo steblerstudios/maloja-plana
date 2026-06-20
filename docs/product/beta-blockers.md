@@ -14,8 +14,8 @@
 | 2 | Alpha-Hinweis sauber (nicht alarmistisch, nicht dominant) | done | Ja — kompakter Banner, 2 Zeilen |
 | 3 | Datenschutzseite sichtbar und erreichbar | done | Ja — über Footer-Link "Datenschutz & Rechtliches" |
 | 4 | Berechnungen als Orientierung kennzeichnen | done | Ja — Alpha-Banner + Legal + Sozialhilfe-Orientierungshinweis direkt bei Resultaten |
-| 5 | SKOS-Kinderlogik prüfen / klar einschränken | **offen** | Blockiert von Household Model. Sophie muss mit Fachstelle abgleichen |
-| 6 | Impressum-Platzhalter füllen (Name, Adresse, Kontakt) | **offen** | Sophie muss Betreiberangaben eintragen |
+| 5 | SKOS-Kinderlogik prüfen / klar einschränken | done | Ja — Rechner unterscheidet Erwachsene/Kinder, Household Model verbunden |
+| 6 | Impressum-Platzhalter füllen (Name, Adresse, Kontakt) | done | Ja — Name, Ort, E-Mail, Web in `de.js` `legal.imprint`, alle Sprachen |
 | 7 | Sozialhilfe-Disclaimer visuell prüfen | done | Ja — Orientierungshinweis direkt nach Berechnungsergebnissen, ruhiger Ton, 4 Sprachen |
 | 8 | Build grün + Smoke Test | done | Ja — 634 KB dist, 178 KB gzipped |
 | 9 | Hardcoded German in cantonalData/premiumCalc | done | Ja — Commit `0ddb57b`, alle Kantonsnamen + IPV/SKOS/EL über i18n |

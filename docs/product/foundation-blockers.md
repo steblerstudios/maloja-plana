@@ -46,7 +46,11 @@ Brutto/Netto ───────────┤                     ├── 
 | BVG-Bug-Status klaeren | feedback-log sagt "behoben", backlog-registry sagt "offen". Widerspruch. | Bug-Tracking |
 | Brutto/Netto-Entscheidung | Alle Budget-Berechnungen haengen davon ab. | Budget Hardening |
 
-**Status:** Template in feedback-log.md erstellt (A-033). Ausstehend.
+**Status:**
+- Brutto/Netto: **Entschieden** — Netto als Default, Brutto als Option (2026-06-20)
+- Mutter-Feedback: Ausstehend (Sophie-Aktion)
+- Family Expert: Ausstehend (Sophie-Aktion)
+- BVG-Bug-Status: Ausstehend (Sophie-Aktion)
 
 ---
 
@@ -131,6 +135,7 @@ household: {
 | **Aufwand** | Entscheidung: Minimal. Implementation: Klein (Toggle + Label) |
 | **Prioritaet** | **1** (Entscheidung), **2** (Implementation) |
 | **Abhaengigkeit** | Keine fuer Entscheidung |
+| **Status** | **Done** — Netto als Default, Brutto als Option. `incomeType` Feld in Finanzen-Kapitel, 3 Sprachen. (2026-06-20) |
 
 ### Empfehlung
 

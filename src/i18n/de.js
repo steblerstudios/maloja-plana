@@ -349,7 +349,8 @@ export default {
       emptyStateHint: 'Dein monatliches Einkommen genügt als Anfang.',
       icon: '◇',
       fields: {
-        monthlyIncome: 'Monatliches Nettoeinkommen CHF',
+        monthlyIncome: 'Monatliches Einkommen CHF',
+        incomeType: { label: 'Einkommensart', options: { netto: 'Netto (was ich erhalte)', brutto: 'Brutto (vor Abzügen)' } },
         employer: 'Arbeitgeber',
         employmentType: { label: 'Anstellungstyp', options: { employed: 'Angestellt', selfEmployed: 'Selbstständig', freelance: 'Freiberufler', retired: 'Rentner' } },
         startDate: 'Arbeitsbeginn',
@@ -372,7 +373,7 @@ export default {
         investmentFunds: { label: 'Anlagefonds vorhanden?', options: { no: 'Nein', yes: 'Ja' } },
       },
       hints: {
-        monthlyIncome: 'Dein Nettolohn — was auf deinem Konto ankommt.',
+        monthlyIncome: 'Dein Einkommen — Netto ist was auf deinem Konto ankommt.',
         monthlyTax: 'Geschätzt oder laut Steuerrechnung.',
         groceries: 'Lebensmittel, Drogerie, Haushaltsbedarf pro Monat.',
         communication: 'Internet, Mobiltelefon, Festnetz pro Monat.',
@@ -1652,6 +1653,8 @@ export default {
   sh: {
     title: 'Sozialhilfe-Rechner',
     haushalt: 'Haushaltsgrösse',
+    erwachsene: 'Erwachsene',
+    kinder: 'Kinder',
     miete: 'Miete (CHF)',
     kvg: 'KVG-Prämie (CHF)',
     einkommen: 'Erwerbseinkommen (CHF)',
