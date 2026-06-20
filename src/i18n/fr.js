@@ -240,6 +240,7 @@ export default {
   dashboard: {
     welcome: 'Bienvenue sur Maloja Plana',
     tagline: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.',
+    taglineBenefit: 'Vérifiez vos droits. Classez vos documents. Gardez vos échéances en vue.',
     progress: 'Votre progression',
     progressComplete: 'Votre dossier de vie est en place. Sérénité.',
     progressStart: 'Votre chemin commence ici',
@@ -255,6 +256,7 @@ export default {
     tierSupporting: 'Ta couverture',
     tierProtective: 'Ta protection',
     toolsAndFeatures: 'Outils et fonctionnalités',
+    toolsSubtitle: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.',
     tipsTitle: 'Conseils pour commencer :',
     tip1: 'Commencez par le chapitre « Données personnelles »',
     tip2: 'Importez vos documents importants',
