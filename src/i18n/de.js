@@ -1016,7 +1016,7 @@ export default {
   },
 
   lohnCheck: {
-    unterMindestlohn: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei der kantonalen Arbeitsinspektorat.',
+    unterMindestlohn: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei der kantonalen Arbeitsinspektorat. Stand 2025.',
     keinMindestlohn: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.',
   },
 
