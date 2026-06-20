@@ -895,13 +895,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                       key: 'mindestlohn-warnung',
                       style: {
                         gridColumn: '1 / -1',
-                        background: '#fef2f2',
-                        border: '1px solid #fca5a5',
-                        borderLeft: '3px solid #ef4444',
+                        background: palette.rose + '15',
+                        border: '1px solid ' + palette.rose + '40',
+                        borderLeft: '3px solid ' + palette.rose,
                         borderRadius: radius.sm,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
-                        color: '#991b1b',
+                        color: palette.rose,
                         lineHeight: leading.relaxed,
                         marginBottom: space.sm + 'px',
                       }
