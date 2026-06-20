@@ -206,6 +206,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal }
       }, t('dashboard.tagline')),
       React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.text, margin: '6px 0 0 0', lineHeight: leading.normal, opacity: 0.75 }
+      }, t('dashboard.taglineBenefit')),
+      React.createElement('p', {
         style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0', opacity: 0.7, lineHeight: leading.normal }
       }, t('alpha.noAdviceHint'))
     ),
@@ -682,11 +685,31 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
+    // ─── Tips — open editorial section ─────────────────────
+    React.createElement('div', {
+      style: { padding: '0 2px', marginBottom: '24px', borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
+    },
+      React.createElement('h3', {
+        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
+      }, t('dashboard.tipsTitle')),
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
+        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
+          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
+            tip
+          )
+        )
+      )
+    ),
+
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.md }
+        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }
       }, t('dashboard.toolsAndFeatures')),
+      React.createElement('p', {
+        style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
+      }, t('dashboard.toolsSubtitle')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' } },
         [
           { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'kalenderUhr' },
@@ -730,23 +753,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             )
           );
         })
-      )
-    ),
-
-    // ─── Tips — open editorial section ─────────────────────
-    React.createElement('div', {
-      style: { padding: '0 2px', marginBottom: '24px', borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
-    },
-      React.createElement('h3', {
-        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
-      }, t('dashboard.tipsTitle')),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
-        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
-          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
-            tip
-          )
-        )
       )
     )
   );
