@@ -152,6 +152,7 @@ export default {
       ipvHint: 'Primes élevées ? Vérifie ton droit à la réduction →',
       taxHint: 'Estimer l\'impôt fédéral →',
     },
+    backToDashboard: 'Aperçu',
   },
 
   theme: {
@@ -1623,6 +1624,7 @@ export default {
     einkommen: 'Revenu annuel brut (CHF)',
     einkommenHint: 'Dernier revenu annuel avant l\'événement',
     einkommenEingeben: 'Saisissez votre revenu annuel pour calculer l\'indemnité.',
+    erklaerung: 'Le calculateur affiche votre indemnité journalière et l\'indemnité totale pour la maternité (14 semaines), la paternité (2 semaines), l\'adoption (2 semaines) et le congé de prise en charge (14 semaines).',
     taggeld: 'Indemnité journalière',
     tag: 'jour',
     tage: 'jours',

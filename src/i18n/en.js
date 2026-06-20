@@ -152,6 +152,7 @@ export default {
       ipvHint: 'High premiums? Check your IPV eligibility →',
       taxHint: 'Estimate federal tax →',
     },
+    backToDashboard: 'Overview',
   },
 
   theme: {
@@ -1624,6 +1625,7 @@ export default {
     einkommen: 'Gross annual income (CHF)',
     einkommenHint: 'Last annual income before the event',
     einkommenEingeben: 'Enter your annual income to calculate compensation.',
+    erklaerung: 'The calculator shows your daily allowance and total compensation for maternity (14 weeks), paternity (2 weeks), adoption (2 weeks), and care leave (14 weeks).',
     taggeld: 'Daily allowance',
     tag: 'day',
     tage: 'days',

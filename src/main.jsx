@@ -355,6 +355,15 @@ const AppInner = () => {
       }, t('demo.leave'))
     ),
     React.createElement('main', { id: 'mp-main', role: 'main', style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px' } },
+      view !== 'dashboard' && React.createElement('button', {
+        onClick: () => setView('dashboard'),
+        style: {
+          background: 'none', border: 'none', cursor: 'pointer',
+          padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
+          color: palette.mid, fontFamily: 'inherit',
+          display: 'flex', alignItems: 'center', gap: '6px',
+        },
+      }, '← ', t('nav.backToDashboard')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
@@ -446,16 +455,15 @@ const AppInner = () => {
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
     React.createElement('div', {
       style: {
-        position: 'fixed',
-        bottom: '16px',
-        left: '16px',
         fontSize: text.xs,
         color: palette.mid,
         letterSpacing: '0.3px',
         opacity: 0.7,
         display: 'flex',
+        flexWrap: 'wrap',
         gap: '8px',
         alignItems: 'center',
+        padding: '16px 20px',
       }
     },
       React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel')),
