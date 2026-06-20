@@ -1291,6 +1291,9 @@ export default {
     budgetTight: 'Dein Budget ist eng. Es gibt kostenlose Budgetberatungsstellen — zum Beispiel bei der Caritas oder deiner Gemeinde.',
     deficitInfo: 'Die Ausgaben sind aktuell höher als die Einnahmen. Das kann vorübergehend sein — bei der Schuldenberatung deines Kantons findest du Unterstützung.',
     budgetCalm: 'Du hast einen Überblick über deine Finanzen. Jeder erfasste Bereich hilft.',
+    ipvHint: 'Du hast möglicherweise Anspruch auf Prämienverbilligung (IPV) — ca. CHF {amount}/Monat. Die IPV kann bei deiner Gemeinde oder kantonalen Ausgleichskasse beantragt werden.',
+    sozialhilfeHint: 'Dein Einkommen liegt unter dem SKOS-Grundbedarf. Sozialhilfe kann eine Möglichkeit sein — die Beratung ist vertraulich und kostenlos.',
+    elHint: 'Bei bescheidenem Einkommen im Ruhestand können Ergänzungsleistungen (EL) in Frage kommen. Deine AHV-Zweigstelle berät dich kostenlos.',
   },
 
   cantons: {

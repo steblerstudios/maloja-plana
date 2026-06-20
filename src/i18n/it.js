@@ -1256,6 +1256,9 @@ export default {
     budgetTight: 'Il tuo budget è stretto. Esistono servizi gratuiti di consulenza sul budget — ad esempio presso la Caritas o il tuo comune.',
     deficitInfo: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del tuo cantone può aiutarti.',
     budgetCalm: 'Hai una panoramica delle tue finanze. Ogni ambito registrato aiuta.',
+    ipvHint: 'Potresti avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il tuo comune o la cassa di compensazione cantonale.',
+    sozialhilfeHint: 'Il tuo reddito è inferiore al fabbisogno di base COSAS. L\'aiuto sociale può essere un\'opzione — la consulenza è confidenziale e gratuita.',
+    elHint: 'Con un reddito modesto in pensione, le prestazioni complementari (PC) possono entrare in considerazione. La tua agenzia AVS ti consiglia gratuitamente.',
   },
 
   cantons: {
