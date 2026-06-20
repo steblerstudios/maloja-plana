@@ -911,9 +911,9 @@ export default {
     remaining: 'Restant / Épargne',
     available: 'Disponible',
     notRecorded: 'Pas encore saisi',
-    emptyNote: '{count} catégories pas encore saisies.',
-    emptyNoteSingle: '1 catégorie pas encore saisie.',
-    emptyStateGuide: 'Commencez par votre revenu mensuel dans le chapitre Finances. De nombreuses données sont reprises automatiquement des autres chapitres.',
+    emptyNote: '{count} catégories encore ouvertes — pas de pression, chaque étape compte.',
+    emptyNoteSingle: 'Une catégorie encore ouverte — vous pouvez la compléter à tout moment.',
+    emptyStateGuide: 'Commencez par votre revenu mensuel dans le chapitre Finances. Beaucoup est repris automatiquement — pas besoin de tout remplir d\'un coup.',
     expensesOverview: 'Aperçu des dépenses',
     total: 'Total des dépenses',
     annualView: 'Vue annuelle',
@@ -942,6 +942,7 @@ export default {
       otherInsurance: 'Autres assurances',
       groceries: 'Alimentation & ménage',
       communication: 'Internet & téléphone',
+      childcare: 'Garde d\'enfants',
       mobility: 'Mobilité',
       tax: 'Impôts',
       pension3a: 'Pilier 3a',
@@ -1244,6 +1245,7 @@ export default {
     rentInfo: 'Vos frais de logement représentent une part importante de votre budget. Ce n\'est pas inhabituel dans de nombreuses villes suisses.',
     budgetTight: 'Votre budget est serré. Il existe des services gratuits de conseil budgétaire — par exemple auprès de Caritas ou de votre commune.',
     deficitInfo: 'Les dépenses dépassent actuellement les revenus. Cela peut être temporaire — le service de conseil en désendettement de votre canton peut vous aider.',
+    budgetCalm: 'Vous avez une vue d\'ensemble de vos finances. Chaque domaine enregistré aide.',
   },
 
   cantons: {
