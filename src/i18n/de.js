@@ -959,6 +959,7 @@ export default {
     note: 'Hinweis: {value}',
     enterCanton: 'Bitte gib Deinen Kanton unter "Persönliche Basis" oder Deine PLZ unter "Wohnen" ein.',
     eligible: 'Berechtigt',
+    disclaimer: 'Orientierungshilfe. Der tatsächliche Anspruch wird von der zuständigen Stelle geprüft.',
     notEligible: 'Nicht berechtigt',
     monthlySubsidy: 'Monatliche Förderung',
     annualSubsidy: 'Jährliche Förderung',
@@ -1432,6 +1433,7 @@ export default {
     title: 'Frühe Version',
     summary: 'Maloja Plana befindet sich in Entwicklung. Berechnungen dienen der Orientierung — sie ersetzen keine Rechts- oder Finanzberatung.',
     disclaimer: 'Angaben bitte bei Deiner Behörde oder Fachstelle prüfen. Deine Daten bleiben vollständig auf diesem Gerät.',
+    noAdviceHint: 'Maloja Plana dient der Orientierung und ersetzt keine Rechts-, Steuer- oder Versicherungsberatung.',
   },
 
   unterlagen: {
@@ -1572,6 +1574,7 @@ export default {
     thFranchise: 'Franchise',
     thPremium: 'Prämie/Mt.',
     source: 'Quelle: BAG priminfo.admin.ch · Standardmodell mit Unfall · Stand 2026',
+    disclaimer: 'Nur Referenzprämien. Effektive Prämien können abweichen — massgebend ist die Police Deines Versicherers.',
   },
 
   vr: {
@@ -1616,7 +1619,7 @@ export default {
     totalRente: 'Total 1. + 2. Säule',
     saeulen: 'Zusammensetzung',
     einkommenEingeben: 'Gib Dein Jahreseinkommen ein, um die Rente zu schätzen.',
-    source: 'Schätzung nach AHVG Art. 34–40, BVG Art. 16. Keine rechtsverbindliche Auskunft.',
+    source: 'Schätzung nach AHVG Art. 34–40, BVG Art. 16. Keine rechtsverbindliche Auskunft. Stand 2026.',
   },
 
   eo: {
@@ -1642,7 +1645,7 @@ export default {
     hinweisMutterschaft: 'Mutterschaft: 14 Wochen ab Geburt. Voraussetzung: mind. 5 Monate erwerbstätig.',
     hinweisVaterschaft: 'Vaterschaft: 2 Wochen, Bezug innerhalb 6 Monaten nach Geburt.',
     hinweisAdoption: 'Adoption: 2 Wochen, Kind unter 4 Jahren.',
-    source: 'Berechnung nach EOG Art. 16a–16n. Keine rechtsverbindliche Auskunft.',
+    source: 'Berechnung nach EOG Art. 16a–16n. Keine rechtsverbindliche Auskunft. Stand 2026.',
   },
   sh: {
     title: 'Sozialhilfe-Rechner',
