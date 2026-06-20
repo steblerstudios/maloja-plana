@@ -1292,6 +1292,9 @@ export default {
     budgetTight: 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.',
     deficitInfo: 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.',
     budgetCalm: 'You have an overview of your finances. Every recorded area helps.',
+    ipvHint: 'You may be eligible for premium reduction (IPV) — approx. CHF {amount}/month. You can apply at your municipality or cantonal compensation office.',
+    sozialhilfeHint: 'Your income is below the SKOS basic needs threshold. Social assistance may be an option — counselling is confidential and free.',
+    elHint: 'With a modest income in retirement, supplementary benefits (EL) may be available. Your AHV branch office can advise you for free.',
   },
 
   cantons: {
