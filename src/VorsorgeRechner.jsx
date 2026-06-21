@@ -88,6 +88,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
       React.createElement('input', {
         style: { ...s.input, width: opts.width || '140px' },
         type: 'number',
+        inputMode: 'decimal',
         value,
         onChange: e => setter(e.target.value),
         placeholder: opts.placeholder || '',
