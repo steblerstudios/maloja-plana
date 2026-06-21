@@ -3,12 +3,13 @@
 Version: v0.1.0-alpha
 Datum: ____
 
+> Signal-Kriterien: siehe [feedback-rekonstruktion.md](feedback-rekonstruktion.md#signal-kriterien)
+
 ---
 
-## Tester 1
+## Jana
 
 ```
-Name / Rolle:
 Gerät:
 Sprache:
 Verstanden in 30 Sek.? Ja/Nein
@@ -22,10 +23,9 @@ Konkreter nächster Fix:
 
 ---
 
-## Tester 2
+## Annora
 
 ```
-Name / Rolle:
 Gerät:
 Sprache:
 Verstanden in 30 Sek.? Ja/Nein
@@ -39,10 +39,9 @@ Konkreter nächster Fix:
 
 ---
 
-## Tester 3
+## Silvan
 
 ```
-Name / Rolle:
 Gerät:
 Sprache:
 Verstanden in 30 Sek.? Ja/Nein
@@ -56,27 +55,9 @@ Konkreter nächster Fix:
 
 ---
 
-## Tester 4
+## Greg
 
 ```
-Name / Rolle:
-Gerät:
-Sprache:
-Verstanden in 30 Sek.? Ja/Nein
-Erster Klick:
-Vertrauen 1–5:
-Klarheit 1–5:
-Grösstes Problem:
-Beste Sache:
-Konkreter nächster Fix:
-```
-
----
-
-## Tester 5
-
-```
-Name / Rolle:
 Gerät:
 Sprache:
 Verstanden in 30 Sek.? Ja/Nein
@@ -94,7 +75,7 @@ Konkreter nächster Fix:
 
 ### Muster
 
-- Verstanden in 30s: __/5
+- Verstanden in 30s: __/4
 - Durchschnitt Vertrauen: __/5
 - Durchschnitt Klarheit: __/5
 - Häufigster erster Klick:
@@ -102,6 +83,17 @@ Konkreter nächster Fix:
   1.
   2.
   3.
+
+### Fortschrittskarte-Signal (A1)
+
+Haben mindestens 2 Personen unabhängig gefragt: "Welche Felder fehlen?" / "Wie komme ich dorthin?"
+
+- [ ] Jana
+- [ ] Annora
+- [ ] Silvan
+- [ ] Greg
+
+→ Falls ≥2: Fortschrittskarte wird erster Produkt-Commit nach Beta.
 
 ### Nächste Commits (abgeleitet aus Feedback)
 

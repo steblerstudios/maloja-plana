@@ -66,6 +66,6 @@
 | Push-Notifications (Web Push) | Braucht Service Worker Permissions, zu intrusiv |
 | Multi-Personen-Haushalte als Profile | Architektur-Umbau — nach Beta |
 | FINMA/ISO-Zertifizierung | Unrealistisch und unnötig für Beta |
-| Rätoromanisch (RM) | ~60'000 Sprecher, alle bilingual. rm.js existiert leer. Bewusst nicht Beta. |
+| Rätoromanisch (RM) | ~60'000 Sprecher, alle bilingual. Dokumentierter Kandidat (2+ Signale: Annora, Jana), aber kein Beta-Blocker. Siehe [language-strategy.md](language-strategy.md) |
 | BFS Branchenvergleich | Geplant, aber kein Beta-Blocker — nach Beta |
 | PWA / Service Worker | Nice-to-have, nicht kritisch — nach Beta |
