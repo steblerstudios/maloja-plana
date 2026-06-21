@@ -1,102 +1,101 @@
 # Beta-Test Auswertung
 
 Version: v0.1.0-alpha
-Datum: ____
+Datum: 2026-06-21
 
-> Signal-Kriterien: siehe [feedback-rekonstruktion.md](feedback-rekonstruktion.md#signal-kriterien)
-
----
-
-## Jana
-
-```
-Gerät:
-Sprache:
-Verstanden in 30 Sek.? Ja/Nein
-Erster Klick:
-Vertrauen 1–5:
-Klarheit 1–5:
-Grösstes Problem:
-Beste Sache:
-Konkreter nächster Fix:
-```
+> Vollständige Feedback-Analyse: siehe [feedback-rekonstruktion.md](feedback-rekonstruktion.md)
 
 ---
 
-## Annora
+## Tester-Ergebnisse
+
+### Jana
 
 ```
-Gerät:
-Sprache:
-Verstanden in 30 Sek.? Ja/Nein
-Erster Klick:
-Vertrauen 1–5:
-Klarheit 1–5:
-Grösstes Problem:
-Beste Sache:
-Konkreter nächster Fix:
+Verstanden in 30 Sek.? Teilweise
+Vertrauen: —
+Klarheit: —
+Grösstes Problem: Wirkt wie ein grosses Formular. Nutzen nicht sofort sichtbar.
+Beste Sache: —
+Konkreter nächster Fix: Beispiel-Modus / früher sichtbare Ergebnisse
+Muster: 1 (Nutzen kommt zu spät)
 ```
 
----
-
-## Silvan
+### Annora
 
 ```
-Gerät:
-Sprache:
-Verstanden in 30 Sek.? Ja/Nein
-Erster Klick:
-Vertrauen 1–5:
-Klarheit 1–5:
-Grösstes Problem:
-Beste Sache:
-Konkreter nächster Fix:
+Verstanden in 30 Sek.? —
+Vertrauen: Bedenken
+Klarheit: —
+Grösstes Problem: Was passiert mit meinen Daten? Warum sensible Daten eingeben?
+Beste Sache: —
+Konkreter nächster Fix: Local First stärker erklären, Datenhoheit sichtbarer
+Muster: 2 (Vertrauen & Datenhoheit)
+Zusätzlich: Fragte nach Rätoromanisch
 ```
 
----
-
-## Greg
+### Silvan
 
 ```
-Gerät:
-Sprache:
-Verstanden in 30 Sek.? Ja/Nein
-Erster Klick:
-Vertrauen 1–5:
-Klarheit 1–5:
-Grösstes Problem:
-Beste Sache:
-Konkreter nächster Fix:
+Verstanden in 30 Sek.? —
+Vertrauen: —
+Klarheit: —
+Grösstes Problem: Daten nicht doppelt eingeben. Querverbindungen fehlen.
+Beste Sache: —
+Konkreter nächster Fix: Auto-Prefill, Querverbindungen
+Muster: 3 (Verbindungen statt Formulare)
+```
+
+### André
+
+```
+Verstanden in 30 Sek.? —
+Vertrauen: —
+Klarheit: —
+Grösstes Problem: Was bringt mir Maloja konkret? Nutzen zu spät sichtbar.
+Beste Sache: —
+Konkreter nächster Fix: Beispiel-Modus, Notfallkarte, sofort sichtbare Resultate
+Muster: 1 (Nutzen kommt zu spät)
+```
+
+### Gianni
+
+```
+Verstanden in 30 Sek.? —
+Vertrauen: —
+Klarheit: —
+Grösstes Problem: Warum soll ich das ausfüllen? Nutzen kommt zu spät.
+Beste Sache: —
+Konkreter nächster Fix: Demo-Person, Nutzen vor Dateneingabe
+Muster: 1 (Nutzen kommt zu spät)
+```
+
+### Greg
+
+```
+Verstanden in 30 Sek.? —
+Vertrauen: —
+Klarheit: —
+Grösstes Problem: Design/UX-Details (Dark Mode, Beige, Dropdowns, Icons)
+Beste Sache: —
+Konkreter nächster Fix: Info-Icons, Dropdown-UX
+Muster: UX-Details (Einzelmeinungen, beobachten)
 ```
 
 ---
 
 ## Zusammenfassung
 
-### Muster
+### Muster-Häufigkeit
 
-- Verstanden in 30s: __/4
-- Durchschnitt Vertrauen: __/5
-- Durchschnitt Klarheit: __/5
-- Häufigster erster Klick:
-- Top 3 Probleme:
-  1.
-  2.
-  3.
+| Muster | Quellen | Stärke |
+|--------|---------|--------|
+| 1: Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐ Stärkstes Signal |
+| 2: Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐ |
+| 3: Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, Sophie | ⭐⭐⭐ |
 
-### Fortschrittskarte-Signal (A1)
+### Top 3 Nächste Schritte (abgeleitet aus Mustern)
 
-Haben mindestens 2 Personen unabhängig gefragt: "Welche Felder fehlen?" / "Wie komme ich dorthin?"
-
-- [ ] Jana
-- [ ] Annora
-- [ ] Silvan
-- [ ] Greg
-
-→ Falls ≥2: Fortschrittskarte wird erster Produkt-Commit nach Beta.
-
-### Nächste Commits (abgeleitet aus Feedback)
-
-1.
-2.
-3.
+1. Nutzen vor Dateneingabe zeigen (Beispiel-Modus, Demo-Person)
+2. Vertrauen/Datenhoheit früher kommunizieren
+3. Querverbindungen sichtbar machen
