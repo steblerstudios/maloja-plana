@@ -34,7 +34,7 @@
 | 1 | Schweizer Orientierungssätze (Franchise, KVG, AHV, BVG) | done — Helvetia Orientation Layer, Commit `ea2a9ac` |
 | 2 | Spiegelungsebenen pro Kapitel | done — Basis, Wohnen, Finanzen. Commits `e9fc6f8`, `ea75fd0`, `2f7d884` |
 | 3 | Mutter-Feedback vollständig rekonstruieren | done — Rekonstruiert 2026-06-21. Siehe docs/ux/feedback-rekonstruktion.md |
-| 4 | Testpersonen wirklich durchführen | offen — Plan existiert, nicht durchgeführt |
+| 4 | Testpersonen wirklich durchführen | done — 6 Tester (Jana, Annora, Silvan, André, Gianni, Greg) + Lynette + Kolleg:innen. 3 Muster identifiziert. Siehe docs/ux/feedback-rekonstruktion.md |
 | 5 | Finanzen-Gesamtbild (kapitelübergreifend) | done — BudgetSync (6 Gruppen, 14 Felder, IPV), Kinderbetreuung, SKOS-Orientierung nach Haushaltsgrösse. |
 | 6 | Budget-UX verbessern (Geduld/Finesse) | done — Wärmere Leerstellen, ermutigende Sprache, positives Feedback, Kinderbetreuung. 3 Sprachen. |
 | 7 | Empty States wärmer gestalten (FB-019) | done — Kapitelstatus, Tresor, Notfall-Dossier wärmer, 4 Sprachen |
