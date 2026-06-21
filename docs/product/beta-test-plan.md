@@ -19,19 +19,21 @@
 
 Kein formaler Test wurde bisher durchgeführt. Informelles Feedback existiert von Lynette (Mutter) und Greg, dokumentiert in der Feedback-Rekonstruktion.
 
-Nächster Schritt: Jana, Annora, Silvan, Greg mit Kurzskript testen lassen.
+Informelles Feedback wurde gesammelt von 6 Testern (Jana, Annora, Silvan, André, Gianni, Greg), Lynette (Mutter) und Kolleg:innen. Drei Kernmuster identifiziert. Vollständige Auswertung in der Feedback-Rekonstruktion.
 
 ---
 
-## Testpersonen-Profile
+## Tester und Ergebnisse
 
-| # | Profil | Sprache | Warum wichtig |
-|---|--------|---------|---------------|
-| T1 | Immigrant/in, kürzlich angekommen, wenig Deutsch | EN oder FR | Kernzielgruppe — versteht Schweizer System nicht |
-| T2 | Langzeit-Expat, kennt sich einigermassen aus | DE | Weiss mehr, erwartet Genauigkeit |
-| T3 | Sozialarbeiter/in oder Beratungsstelle | DE | Domainexperte — erkennt fachliche Fehler |
-| T4 | Ältere Person, wenig Tech-Erfahrung | DE | Barrierefreiheit, Verständlichkeit |
-| T5 | Junge Person, Smartphone-first | DE oder EN | Mobile UX, Geduld, Erwartungen |
+| Person | Perspektive | Haupterkenntnis | Muster |
+|--------|-------------|-----------------|--------|
+| Jana | Verständlichkeit, Nutzen | "Wirkt wie ein Formular, Nutzen zu spät" | 1 |
+| Annora | Vertrauen, Erstnutzerin | "Was passiert mit meinen Daten?" | 2 |
+| Silvan | Logik, Datenwiederverwendung | "Daten nicht doppelt eingeben" | 3 |
+| André | Nutzen-Kommunikation | "Was bringt mir Maloja konkret?" | 1 |
+| Gianni | Nutzen-Kommunikation | "Nutzen kommt zu spät" | 1 |
+| Greg | UX, Design | Dark Mode, Beige, Dropdowns, Mindestlohn | UX |
+| Lynette | Ordnung, Sozialleistungen | Vorsorge, RM, Orientierung | 3 |
 
 ---
 
@@ -80,21 +82,22 @@ Nächster Schritt: Jana, Annora, Silvan, Greg mit Kurzskript testen lassen.
 
 ---
 
-## Auswertungsraster
+## Auswertung
 
-| Testperson | Profil | Datum | Durchgeführt | Kernerkenntnisse | Blockers gefunden | Dokumentiert in |
-|------------|--------|-------|-------------|-------------------|--------------------|-----------------|
-| T1 | — | — | **Nein** | — | — | — |
-| T2 | — | — | **Nein** | — | — | — |
-| T3 | — | — | **Nein** | — | — | — |
-| T4 | — | — | **Nein** | — | — | — |
-| T5 | — | — | **Nein** | — | — | — |
+Tests wurden informell durchgeführt. Ergebnisse pro Person: siehe [beta-test-auswertung.md](../ux/beta-test-auswertung.md)
+
+Drei Kernmuster über alle Tester hinweg:
+
+| # | Muster | Quellen | Stärke |
+|---|--------|---------|--------|
+| 1 | Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐⭐⭐ |
+| 2 | Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐⭐ |
+| 3 | Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, Sophie | ⭐⭐⭐⭐ |
 
 ---
 
 ## Nächste Schritte
 
-1. **Sophie entscheidet**, ob sie selbst testet oder jemanden bittet
-2. **Mindestens 1 Test** vor geschlossener Beta (P1)
-3. **Mindestens 3 Tests** vor öffentlicher Beta (P0-Empfehlung, aber kein harter Blocker)
-4. Ergebnisse werden als FB-Einträge im `feedback-log.md` aufgenommen
+1. Produktentscheidung: "Wie zeigt Maloja Plana Nutzen in den ersten 30 Sekunden?"
+2. Danach erst: Feature-Arbeit basierend auf den drei Mustern
+3. Keine neuen Features die nicht auf Muster 1, 2 oder 3 einzahlen
