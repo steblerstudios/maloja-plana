@@ -163,11 +163,11 @@ export default {
   },
 
   guidedStart: {
-    title: 'A calm place to begin',
-    text: 'You can start with a few simple steps. Nothing needs to be completed all at once.',
-    basicInfo: 'Complete basic information',
-    documents: 'Add important documents',
-    emergency: 'Review emergency information',
+    title: 'Ready in a few minutes',
+    text: 'Three small steps — then Maloja Plana works for you.',
+    basicInfo: 'Set your canton — for tax and premium subsidies',
+    documents: 'Store a document securely — takes 30 seconds',
+    emergency: 'Prepare your emergency card — 2 minutes',
   },
 
   emergencyCardEntry: {
@@ -240,9 +240,9 @@ export default {
     next: 'Back to overview',
   },
   dashboard: {
-    welcome: 'Welcome to Maloja Plana',
+    welcome: 'Check your entitlements. Organize your life.',
     tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',
-    taglineBenefit: 'Check your entitlements. Organize your documents. Keep track of deadlines.',
+    taglineBenefit: 'Tax calculator, premium subsidies, social assistance, emergency card — no sign-up needed.',
     progress: 'Your progress',
     progressComplete: 'Your life folder is in place. Peace of mind.',
     progressStart: 'Your path begins here',

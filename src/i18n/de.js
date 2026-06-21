@@ -163,11 +163,11 @@ export default {
   },
 
   guidedStart: {
-    title: 'Ein ruhiger Anfang',
-    text: 'Du kannst mit wenigen einfachen Schritten beginnen. Es muss nicht alles auf einmal erledigt werden.',
-    basicInfo: 'Basisinformationen ergänzen',
-    documents: 'Wichtige Dokumente hinzufügen',
-    emergency: 'Notfallinformationen prüfen',
+    title: 'In wenigen Minuten startklar',
+    text: 'Drei kleine Schritte — danach arbeitet Maloja Plana für Dich.',
+    basicInfo: 'Deinen Kanton hinterlegen — für Steuer und IPV',
+    documents: 'Ein Dokument sicher ablegen — dauert 30 Sekunden',
+    emergency: 'Notfallkarte vorbereiten — 2 Minuten',
   },
 
   emergencyCardEntry: {
@@ -240,9 +240,9 @@ export default {
     next: 'Zurück zur Übersicht',
   },
   dashboard: {
-    welcome: 'Willkommen bei Maloja Plana',
+    welcome: 'Prüfe Deine Ansprüche. Ordne Dein Leben.',
     tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',
-    taglineBenefit: 'Prüfe Deine Ansprüche. Ordne Deine Unterlagen. Behalte Fristen im Blick.',
+    taglineBenefit: 'Steuerrechner, IPV, Sozialhilfe, Notfallkarte — ohne Anmeldung nutzbar.',
     progress: 'Dein Fortschritt',
     progressComplete: 'Dein Lebensordner steht. Ruhe.',
     progressStart: 'Dein Weg beginnt hier',
