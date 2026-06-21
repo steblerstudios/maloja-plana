@@ -268,6 +268,15 @@ export default {
     exportReminderOld: 'Your last backup is over a week old.',
     openChapter: 'Open',
     fieldsCount: '{filled}/{total} fields',
+    highlightTitle: 'What can you do right away?',
+    highlightTax: 'Calculate federal tax',
+    highlightTaxSub: 'Estimate your tax burden — no sign-up needed.',
+    highlightIpv: 'Check premium reduction',
+    highlightIpvSub: 'See if you qualify for health insurance subsidies.',
+    highlightSozialhilfe: 'Social assistance overview',
+    highlightSozialhilfeSub: 'Understand SKOS basic needs.',
+    highlightNotfall: 'Prepare emergency card',
+    highlightNotfallSub: 'Ready in 2 minutes — stored on your device.',
   },
 
   // Chapter titles, descriptions, field labels, select options, doc labels
