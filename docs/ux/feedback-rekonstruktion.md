@@ -228,9 +228,11 @@ Aber: Die AHV-Links sollten auch bei der AHV-Berechnung erscheinen, die KK-Links
 Annora fragte ob eine Vergleichsfunktion wie Comparis möglich wäre.
 **Bewusste Entscheidung: Nein.** Keine Comparis-Logik, keine Produktempfehlungen, keine Beratung. Nur Orientierung und Kontext. Dokumentiert in Excluded Features.
 
-### Herzensempfehlungen (Annora)
+### Herzensempfehlungen (Annora / Sophie)
 
-Abschnitt "Herzensempfehlungen" fehlt. Noch unklar was genau gemeint ist — klären mit Annora.
+Persönliche Linksammlung für Orte, Menschen und Projekte die einem am Herzen liegen. Nicht offiziell, sondern privat. Beispiele: Tierheim Basel, Schmuck von Freundin Jana (Artful Jana), lokale Vereine etc.
+
+Passt nicht zu den drei Kernmustern, eher Nice-to-have. Könnte aber zur Lebensordner-Vision passen ("mein ganzes Leben an einem Ort").
 
 ### Spenden verbessern (Sophie-Beobachtung)
 
