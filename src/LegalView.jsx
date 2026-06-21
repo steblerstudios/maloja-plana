@@ -77,25 +77,52 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       )
     ),
 
-    // ─── Privacy / Datenschutz ──────────────────────────────
+    // ─── Privacy / Datenschutz (nDSG) ─────────────────────────
     activeSection === 'privacy' && React.createElement('div', null,
+      Section({ title: t('legal.privacy.responsibleTitle'), palette, children: [
+        P({ children: t('legal.privacy.responsible1') }),
+        P({ children: t('legal.privacy.responsible2') }),
+        P({ children: t('legal.privacy.responsible3') }),
+      ]}),
       Section({ title: t('legal.privacy.localTitle'), palette, children: [
         P({ children: t('legal.privacy.local1') }),
         P({ children: t('legal.privacy.local2') }),
         P({ children: t('legal.privacy.local3') }),
       ]}),
-      Section({ title: t('legal.privacy.noServerTitle'), palette, children: [
-        P({ children: t('legal.privacy.noServer1') }),
-        P({ children: t('legal.privacy.noServer2') }),
+      Section({ title: t('legal.privacy.dataTitle'), palette, children: [
+        P({ children: t('legal.privacy.data1') }),
+        P({ children: t('legal.privacy.data2') }),
+        P({ children: t('legal.privacy.data3') }),
+        P({ children: t('legal.privacy.data4') }),
+      ]}),
+      Section({ title: t('legal.privacy.sensitiveTitle'), palette, children: [
+        P({ children: t('legal.privacy.sensitive1') }),
+        P({ children: t('legal.privacy.sensitive2') }),
+      ]}),
+      Section({ title: t('legal.privacy.hostingTitle'), palette, children: [
+        P({ children: t('legal.privacy.hosting1') }),
+        P({ children: t('legal.privacy.hosting2') }),
       ]}),
       Section({ title: t('legal.privacy.backupTitle'), palette, children: [
         P({ children: t('legal.privacy.backup1') }),
       ]}),
-      Section({ title: t('legal.privacy.deletionTitle'), palette, children: [
-        P({ children: t('legal.privacy.deletion1') }),
+      Section({ title: t('legal.privacy.rightsTitle'), palette, children: [
+        P({ children: t('legal.privacy.rights1') }),
+        P({ children: t('legal.privacy.rights2') }),
+        P({ children: t('legal.privacy.rights3') }),
       ]}),
-      Section({ title: t('legal.privacy.analyticsTitle'), palette, children: [
-        P({ children: t('legal.privacy.analytics1') }),
+      Section({ title: t('legal.privacy.securityTitle'), palette, children: [
+        P({ children: t('legal.privacy.security1') }),
+        P({ children: t('legal.privacy.security2') }),
+      ]}),
+      Section({ title: t('legal.privacy.cookiesTitle'), palette, children: [
+        P({ children: t('legal.privacy.cookies1') }),
+      ]}),
+      Section({ title: t('legal.privacy.notificationsTitle'), palette, children: [
+        P({ children: t('legal.privacy.notifications1') }),
+      ]}),
+      Section({ title: t('legal.privacy.supervisoryTitle'), palette, children: [
+        P({ children: t('legal.privacy.supervisory1') }),
       ]})
     ),
 
