@@ -42,7 +42,7 @@ Diese Sprachen würden Menschen erreichen, die Maloja Plana am meisten brauchen.
 | Fakt | Detail |
 |------|--------|
 | Sprecher | ~60'000, praktisch alle bilingual (DE) |
-| Signale | Annora fragte aktiv danach. Jana fragte danach. Lynette denkt aus Integrations-/Sprachperspektive. |
+| Signale | 4 unabhängige: Annora, Jana, Silvan, Lynette |
 | Technischer Stand | `rm.js` existiert leer, nicht in SUPPORTED array, kein Header-Button |
 | Status vorher | "Bewusst ausgeschlossen" |
 | **Status jetzt** | **Dokumentierter Kandidat** — nicht ausgeschlossen, aber kein Beta-Blocker |
@@ -74,7 +74,7 @@ Eine neue Sprache wird Kandidat, wenn:
 
 | Sprache | Nachfrage | Reichweite | Bedarf | Machbarkeit | Empfehlung |
 |---------|-----------|------------|--------|-------------|------------|
-| RM | 2 Signale (Annora, Jana) | Klein (~60k, alle bilingual) | Gering (alle sprechen DE) | Hoch (Romanisch-Übersetzungsdienste existieren) | Kandidat, nicht dringend |
+| RM | 4 Signale (Annora, Jana, Silvan, Lynette) | Klein (~60k, alle bilingual) | Gering (alle sprechen DE) | Hoch (Romanisch-Übersetzungsdienste existieren) | Stärkster Sprach-Kandidat, aber löst keine Kernmuster |
 | Ukrainisch | Nicht getestet | Hoch (~80k, wachsend) | Hoch (viele sprechen weder DE noch EN) | Mittel (Fachterminologie) | Prüfen wenn Integrations-Fokus wächst |
 | Albanisch | Nicht getestet | Sehr hoch (~250k) | Mittel (viele sprechen DE, aber nicht alle) | Mittel | Prüfen bei Community-Feedback |
 | Portugiesisch | Nicht getestet | Sehr hoch (~270k) | Mittel | Hoch | Prüfen bei Community-Feedback |
