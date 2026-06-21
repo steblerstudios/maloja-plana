@@ -130,6 +130,11 @@ export default {
     menu: 'Menu',
     completion: '{value}% completato',
     privacyNote: '100% locale. Nessun dato lascia il tuo dispositivo.',
+    crosslink: {
+      ipvHint: 'Premi alti? Verifica il tuo diritto alla riduzione →',
+      taxHint: 'Stima dell\'imposta federale →',
+    },
+    backToDashboard: 'Panoramica',
   },
 
   theme: {
@@ -217,6 +222,7 @@ export default {
   dashboard: {
     welcome: 'Benvenuto su Maloja Plana',
     tagline: 'Il tuo organizzatore di vita svizzero — 100% privato, offline, gratuito.',
+    taglineBenefit: 'Verifica i tuoi diritti. Organizza i tuoi documenti. Tieni sotto controllo le scadenze.',
     progress: 'Il tuo progresso',
     progressComplete: 'Il tuo fascicolo di vita è al suo posto. Serenità.',
     progressStart: 'Il tuo cammino inizia qui',
@@ -232,6 +238,7 @@ export default {
     tierSupporting: 'La tua copertura',
     tierProtective: 'La tua protezione',
     toolsAndFeatures: 'Strumenti e funzioni',
+    toolsSubtitle: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.',
     tipsTitle: 'Consigli per iniziare:',
     tip1: 'Inizia con il capitolo "Dati personali"',
     tip2: 'Carica i tuoi documenti importanti',
@@ -326,6 +333,7 @@ export default {
       icon: '◇',
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
+        incomeType: { label: 'Tipo di reddito', options: { netto: 'Netto (quello che ricevo)', brutto: 'Lordo (prima delle deduzioni)' } },
         employer: 'Datore di lavoro',
         employmentType: { label: 'Tipo di impiego', options: { employed: 'Dipendente', selfEmployed: 'Indipendente', freelance: 'Freelance', retired: 'In pensione' } },
         startDate: 'Data di inizio impiego',
@@ -1019,6 +1027,15 @@ export default {
     estimatedTax: 'Imposte stimate',
     netIncome: 'Reddito netto (stima annuale)',
     saveData: 'Salva dati',
+    married: 'Coniugato/a',
+    children: 'Figli',
+    childDeduction: 'Deduzione per figli (imposta federale)',
+    federalOnly: 'solo imposta federale',
+    tariff: 'Tariffa',
+    singleTariff: 'Tariffa base',
+    marriedTariff: 'Tariffa coniugati',
+    marginalRate: 'Aliquota marginale',
+    dataVersion: 'Dati aggiornati al',
     disclaimer: 'Questo orientamento mostra l\'imposta federale diretta (LIFD art. 36). Le imposte cantonali e comunali si aggiungono. Gli importi esatti si trovano presso l\'amministrazione fiscale del tuo cantone.',
     netIncomeNote: 'Proiezione basata sul tuo salario netto × 12. L\'onere fiscale effettivo può variare.',
   },
