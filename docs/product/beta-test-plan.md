@@ -1,22 +1,25 @@
 # Beta-Testplan — Maloja Plana
 
-> Stand: 2026-05-29
-> Status: **GEPLANT — NICHT DURCHGEFÜHRT**
+> Stand: 2026-06-21
+> Status: **BEREIT — NOCH NICHT DURCHGEFÜHRT**
 > Zweck: Strukturierter Plan für echte Testpersonen-Tests
 
 ---
 
-## Wichtig
+## Verwandte Dokumente
 
-Dieser Plan wurde erstellt, aber **kein einziger Test wurde bisher durchgeführt**.
+- [Kurzskript (10-15 Min.)](../ux/beta-test-skript.md) — Was Tester tun sollen
+- [Auswertungsvorlage](../ux/beta-test-auswertung.md) — Ergebnisse pro Tester eintragen
+- [Feedback-Rekonstruktion](../ux/feedback-rekonstruktion.md) — Bisheriges Feedback, Signal-Kriterien, Prioritäten
+- [Sprachstrategie](language-strategy.md) — DE/EN/FR/IT, RM-Status, Integrations-Sprachen
 
-Es gibt:
-- Keine Testergebnisse
-- Keine ausgefüllten Fragebögen
-- Keine dokumentierten Beobachtungen
-- Keine Testpersonen, die tatsächlich getestet haben
+---
 
-Der Plan dient als Vorlage für die Durchführung.
+## Status
+
+Kein formaler Test wurde bisher durchgeführt. Informelles Feedback existiert von Lynette (Mutter) und Greg, dokumentiert in der Feedback-Rekonstruktion.
+
+Nächster Schritt: Jana, Annora, Silvan, Greg mit Kurzskript testen lassen.
 
 ---
 
