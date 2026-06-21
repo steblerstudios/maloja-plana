@@ -121,6 +121,8 @@ export default {
     budgetSync: 'Sincr. budget',
     kvgIpv: 'Riduzione dei premi (IPV)',
     sozialhilfe: 'Assistenza sociale',
+    praemien: 'Orientamento premi',
+    direktlinks: 'Link ufficiali',
     cv: 'Creazione CV',
     charts: 'Grafici',
     unterlagen: 'I miei documenti',
@@ -130,6 +132,20 @@ export default {
     menu: 'Menu',
     completion: '{value}% completato',
     privacyNote: '100% locale. Nessun dato lascia il tuo dispositivo.',
+    sub: {
+      calendar: 'Scadenze e appuntamenti',
+      budgetSync: 'Importazione CSV',
+      kvgIpv: 'Verifica il diritto',
+      praemien: 'Confronta i modelli',
+      vorsorge: 'AVS & Cassa pensioni',
+      eo: 'Maternità, paternità, servizio',
+      taxes: 'Calcola l\'imposta federale',
+      sozialhilfe: 'Orientamento SKOS',
+      direktlinks: 'Autorità e uffici',
+      tresor: 'Archivio sicuro',
+      cv: 'Crea il tuo CV',
+      unterlagen: 'Gestisci i documenti',
+    },
     crosslink: {
       ipvHint: 'Premi alti? Verifica il tuo diritto alla riduzione →',
       taxHint: 'Stima dell\'imposta federale →',
@@ -1476,6 +1492,7 @@ export default {
     title: 'Versione preliminare',
     summary: 'Maloja Plana è in fase di sviluppo. I calcoli servono come orientamento — non sostituiscono una consulenza legale o finanziaria.',
     disclaimer: 'Verifica le informazioni presso la tua autorità cantonale o uno specialista. I tuoi dati restano interamente su questo dispositivo.',
+    noAdviceHint: 'Maloja Plana serve come orientamento e non sostituisce una consulenza legale, fiscale o assicurativa.',
   },
 
   unterlagen: {

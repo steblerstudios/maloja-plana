@@ -172,19 +172,19 @@ export const DocumentTresor = ({
             }, status.label + ' · ' + t('tresor.expiryDate', { date: doc.expiryDate })),
       ),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '3px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '4px' } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
-          style: { padding: '5px 8px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+          style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
         }, '↙'),
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
-          style: { padding: '5px 8px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+          style: { padding: '10px 12px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
         }, '○'),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
-          style: { padding: '5px 8px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+          style: { padding: '10px 12px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
         }, '✕'),
       ),
     );

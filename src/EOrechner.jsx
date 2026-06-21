@@ -55,6 +55,7 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('input', {
         style: s.input,
         type: 'number',
+        inputMode: 'decimal',
         value: einkommen,
         onChange: e => setEinkommen(e.target.value),
         placeholder: '80000',
