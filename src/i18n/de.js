@@ -268,6 +268,15 @@ export default {
     exportReminderOld: 'Deine letzte Sicherung ist über eine Woche alt.',
     openChapter: 'Öffnen',
     fieldsCount: '{filled}/{total} Felder',
+    highlightTitle: 'Was kannst Du hier sofort tun?',
+    highlightTax: 'Bundessteuer berechnen',
+    highlightTaxSub: 'Schätze Deine Steuerlast ab — ohne Anmeldung.',
+    highlightIpv: 'IPV-Anspruch prüfen',
+    highlightIpvSub: 'Prüfe ob Du Prämienverbilligung erhältst.',
+    highlightSozialhilfe: 'Sozialhilfe-Orientierung',
+    highlightSozialhilfeSub: 'SKOS-Grundbedarf einordnen.',
+    highlightNotfall: 'Notfallkarte vorbereiten',
+    highlightNotfallSub: 'In 2 Minuten bereit — auf Deinem Gerät.',
   },
 
   chapters: {
