@@ -3,6 +3,21 @@
 Dauer: 10–15 Minuten
 URL: https://ordnung-ruhe-neu.vercel.app
 Version: v0.1.0-alpha
+Beta-Code: maloja2026
+
+> Tester-Erwartungen und Signal-Kriterien: siehe [feedback-rekonstruktion.md](../ux/feedback-rekonstruktion.md)
+> Priorisierte Kandidatenliste: siehe [feedback-rekonstruktion.md](../ux/feedback-rekonstruktion.md#priorisierte-kandidatenliste)
+
+---
+
+## Geplante Tester
+
+| Person | Perspektive | Sprache | Worauf achten |
+|--------|-------------|---------|---------------|
+| Jana | Verständlichkeit, Vertrauen, visuelle Wirkung | DE | Fühlt sich die App vertrauenswürdig an? |
+| Annora | Erstnutzer, Sprachsensibilität | DE/EN | "Wo klicke ich?", "Was soll ich hier machen?" |
+| Silvan | Logik, technische Konsistenz | DE | Rechner plausibel? Fehlende Verknüpfungen? |
+| Greg | UX, Design, Navigation | DE | Visuelles Urteil, Interaktionsprobleme |
 
 ---
 

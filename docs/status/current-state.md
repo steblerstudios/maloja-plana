@@ -103,7 +103,7 @@ Branch: dev
 - BFS median wage comparison per industry sector
 - SECO Lohnrechner reference link integration
 - PWA / Service Worker for offline install
-- Rätoromanisch (RM) — rm.js exists empty, not in SUPPORTED array
+- Rätoromanisch (RM) — rm.js exists empty, documented candidate (2+ signals), not Beta. See language-strategy.md
 - Multi-person household profiles (architecture rebuild)
 
 ## Features — Explicitly Excluded
@@ -118,7 +118,7 @@ Branch: dev
 - No TypeScript in UI layer (only in src/runtime/)
 - No Tailwind
 - No dependency bloat
-- No Rätoromanisch in Beta (bewusst)
+- No Rätoromanisch in Beta (documented candidate, not excluded — see language-strategy.md)
 
 ## Mobile
 
