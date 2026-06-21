@@ -163,11 +163,11 @@ export default {
   },
 
   guidedStart: {
-    title: 'Un début calme',
-    text: 'Vous pouvez commencer par quelques étapes simples. Rien ne doit être terminé en une seule fois.',
-    basicInfo: 'Compléter les informations de base',
-    documents: 'Ajouter les documents importants',
-    emergency: "Vérifier les informations d'urgence",
+    title: 'Prêt en quelques minutes',
+    text: 'Trois petites étapes — ensuite Maloja Plana travaille pour vous.',
+    basicInfo: 'Indiquer votre canton — pour impôts et réduction de primes',
+    documents: 'Déposer un document en sécurité — 30 secondes',
+    emergency: "Préparer votre carte d'urgence — 2 minutes",
   },
 
   emergencyCardEntry: {
@@ -240,9 +240,9 @@ export default {
     next: 'Retour à l\'aperçu',
   },
   dashboard: {
-    welcome: 'Bienvenue sur Maloja Plana',
+    welcome: 'Vérifiez vos droits. Organisez votre vie.',
     tagline: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.',
-    taglineBenefit: 'Vérifiez vos droits. Classez vos documents. Gardez vos échéances en vue.',
+    taglineBenefit: 'Calculateur d\'impôts, réduction de primes, aide sociale, carte d\'urgence — sans inscription.',
     progress: 'Votre progression',
     progressComplete: 'Votre dossier de vie est en place. Sérénité.',
     progressStart: 'Votre chemin commence ici',
