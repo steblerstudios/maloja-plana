@@ -156,6 +156,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, minWidth: '36px' } }, tr('chapters.basis.fields.household.childAge')),
               React.createElement('input', {
                 type: 'number',
+                inputMode: 'numeric',
                 min: 0,
                 max: 25,
                 value: child.age === 0 ? '0' : (child.age || ''),
@@ -347,6 +348,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: '6px', borderLeft: '1px solid ' + palette.border } }, 'CHF'),
           React.createElement('input', {
             type: 'number',
+            inputMode: 'decimal',
             value: value,
             onChange: (e) => handleFieldChange(field.k, e.target.value),
             placeholder: '0.00',

@@ -155,9 +155,9 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
       React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', marginBottom: '16px', border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), style: inputStyle }),
-        React.createElement('input', { type: 'number', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), style: inputStyle }),
+        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), style: inputStyle }),
         React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), style: inputStyle }),
-        React.createElement('input', { type: 'number', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), style: inputStyle }),
+        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), style: inputStyle }),
         React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), style: inputStyle },
           React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
           React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),

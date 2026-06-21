@@ -115,6 +115,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
           React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, ded.label),
           React.createElement('input', {
             type: 'number',
+            inputMode: 'decimal',
             value: taxData[ded.key] || '',
             onChange: (e) => handleInputChange(ded.key, e.target.value),
             placeholder: '0',
