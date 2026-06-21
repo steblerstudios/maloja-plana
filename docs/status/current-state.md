@@ -1,6 +1,6 @@
 # Current State — Maloja Plana
 
-Last updated: 2026-06-20
+Last updated: 2026-06-21
 Branch: dev
 
 ## Architecture
@@ -8,7 +8,7 @@ Branch: dev
 - Local-first, offline-first, account-free, browser storage only
 - React.createElement (no JSX transpilation despite .jsx extensions)
 - palette/tokens styling (no Tailwind, no CSS modules)
-- Custom i18n with t() function: DE, EN, FR (+ IT/RM header only)
+- Custom i18n with t() function: DE, EN, FR, IT (full parity). RM: excluded from Beta (rm.js empty).
 - Hash-based routing (src/utils/hashRouter.js)
 - Components receive { palette, t, data } props
 - Runtime layer: TypeScript (src/runtime/) for workflow/approval/audit
@@ -96,13 +96,15 @@ Branch: dev
 
 ## Features — Partially Built
 
-- Italian (IT) and Romansch (RM): header language switcher exists, i18n files exist but not as complete as DE/EN/FR
-- BFS Branchenvergleich: data module not built, only cantonal minimum wage check exists
+- BFS Branchenvergleich: data module not built, only cantonal minimum wage check exists (post-beta)
 
-## Features — Planned
+## Features — Planned (post-beta)
 
 - BFS median wage comparison per industry sector
 - SECO Lohnrechner reference link integration
+- PWA / Service Worker for offline install
+- Rätoromanisch (RM) — rm.js exists empty, not in SUPPORTED array
+- Multi-person household profiles (architecture rebuild)
 
 ## Features — Explicitly Excluded
 
@@ -116,6 +118,7 @@ Branch: dev
 - No TypeScript in UI layer (only in src/runtime/)
 - No Tailwind
 - No dependency bloat
+- No Rätoromanisch in Beta (bewusst)
 
 ## Mobile
 
@@ -123,6 +126,8 @@ Branch: dev
 - Primary: Unterlagen, Tresor, KK-Scanner, Budget, Schulden, Steuern, Sozialhilfe, Organspende
 - Weitere: Kalender, Budget-Sync, IPV, CV, Charts, Export, Benachrichtigungen
 - 375px QA verified
+- inputMode="decimal" on all CHF/number inputs (7 components)
+- Touch targets ≥36px on DocumentTresor action buttons
 
 ## Code Quality
 

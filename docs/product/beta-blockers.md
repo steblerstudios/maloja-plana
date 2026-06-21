@@ -1,6 +1,6 @@
 # Beta-Blocker — Maloja Plana
 
-> Stand: 2026-06-01
+> Stand: 2026-06-21
 > Zweck: Klare Priorisierung, was vor welcher Beta-Phase erledigt sein muss.
 > Regel: Nichts ist "erledigt", bis es tatsächlich verifiziert ist.
 
@@ -51,7 +51,7 @@
 | 3 | Kapitel-Einleitungen als Orientierungsseiten | done — Intro-Texte in allen 7 Kapiteln |
 | 4 | Export-Architektur (PDF, JSON, ZIP) erweitern | teilweise — Lebensmappe, Notfalldossier, Briefvorlagen, ZIP-Export |
 | 5 | Bundesordner-Metapher im Dokumenten-Tresor | done — Ordner-Icon, Register-Tabs, gruppierte Ansicht, warme Sprache. 4 Sprachen. |
-| 6 | Multi-Sprach-Audit (FR, IT Qualität) | done — IT auf Parität gebracht (6 fehlende Sektionen + alle neuen Keys) |
+| 6 | Multi-Sprach-Audit (FR, IT Qualität) | done — IT vollständig auf Parität mit DE/EN/FR (0 fehlende Keys). Mobile inputMode="decimal" bei allen CHF-Feldern. Touch-Zielgrössen Tresor verbessert. |
 
 ---
 
@@ -64,5 +64,8 @@
 | Gamification | Widerspricht Produkt-Philosophie |
 | Kalender-Synchronisation | Braucht Server/API, widerspricht local-first |
 | Push-Notifications (Web Push) | Braucht Service Worker Permissions, zu intrusiv |
-| Multi-Personen-Haushalte als Profile | Architektur-Umbau, nicht jetzt |
+| Multi-Personen-Haushalte als Profile | Architektur-Umbau — nach Beta |
 | FINMA/ISO-Zertifizierung | Unrealistisch und unnötig für Beta |
+| Rätoromanisch (RM) | ~60'000 Sprecher, alle bilingual. rm.js existiert leer. Bewusst nicht Beta. |
+| BFS Branchenvergleich | Geplant, aber kein Beta-Blocker — nach Beta |
+| PWA / Service Worker | Nice-to-have, nicht kritisch — nach Beta |
