@@ -60,6 +60,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Aspekt | Detail |
 |--------|--------|
 | Wahrnehmung | Wirkt teilweise wie ein grosses Formular. Nutzen nicht sofort sichtbar. "Warum soll ich das alles ausfüllen?" |
+| Zusätzlich | Fragte warum der Mindestlohnrechner bei den Werkzeugen ist (Auffindbarkeit) |
 | Potenzial | Beispiel-Modus. Früher sichtbare Ergebnisse. |
 | Muster | 1 (Nutzen), 3 (Verbindungen) |
 
@@ -77,6 +78,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Aspekt | Detail |
 |--------|--------|
 | Wahrnehmung | Daten sollten wiederverwendet werden. Nicht mehrfach eingeben müssen. Automatisch vorausfüllen. |
+| Zusätzlich | Fragte nach Mindestlohnrechner in Werkzeugen. Fragte nach RM. |
 | Potenzial | Auto-Prefill, Querverbindungen, weniger Doppelungen |
 | Muster | 3 (Verbindungen) |
 
@@ -85,6 +87,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Aspekt | Detail |
 |--------|--------|
 | Wahrnehmung | Was passiert mit meinen Daten? Warum sensible Daten eingeben? Vertrauen ist wichtig. Fragte nach RM. |
+| Zusätzlich | Fragte ob bei Versicherungen eine Comparis-ähnliche Vergleichsfunktion möglich wäre (günstiger?). Abschnitt "Herzensempfehlungen" fehlt. |
 | Potenzial | Local First stärker erklären, Export hervorheben, Datenhoheit sichtbarer |
 | Muster | 2 (Vertrauen) |
 
@@ -196,6 +199,56 @@ Später, optional. Nur für: Testament, Vorsorgeauftrag, Patientenverfügung, Pa
 | "Auswahl-Menü komisch" | UX-Thema wenn mehrere es nennen | Beobachten |
 | Kreisicon → "i"-Icon | Wenn mehrere denken Kreis sei klickbar | Kandidat |
 | Sandbox-Modus | Echtes neues Feature | Nicht jetzt |
+| Mindestlohnrechner bei Werkzeugen? | Auch von Jana und Silvan gefragt — 3 Quellen → **Muster** | Auffindbarkeit verbessern |
+
+---
+
+## Zusätzliches Detailfeedback
+
+### Betreibungen / Verlustscheine (Sophie-Beobachtung)
+
+Aktuell nur einfache Schulden-Erfassung. Potenzial:
+- Betreibungsnummern erfassen
+- Ist-Zustand dokumentieren
+- Bei Verlustschein: Übertrag und Status-Änderung
+- Integration in Schuldenberechnung
+- Prozentbasierte Abzahlungsempfehlung generieren ("Was könnte der Mensch realistisch pro Monat abzahlen?")
+
+→ Passt zu Muster 3 (Verbindungen) und zur Lebensordner-Vision.
+
+### Offizielle Links kontextuell platzieren (Sophie-Beobachtung)
+
+Aktuell: Alle offiziellen Links in einem separaten Werkzeug (DirektLinks). Das ist gut.
+Aber: Die AHV-Links sollten auch bei der AHV-Berechnung erscheinen, die KK-Links bei der KK usw.
+
+→ Passt zu Muster 3 (Verbindungen). Teilweise bereits umgesetzt (Querlinks KK→IPV, Finanzen→Steuer).
+
+### Comparis-Vergleich bei Versicherungen (Annora)
+
+Annora fragte ob eine Vergleichsfunktion wie Comparis möglich wäre.
+**Bewusste Entscheidung: Nein.** Keine Comparis-Logik, keine Produktempfehlungen, keine Beratung. Nur Orientierung und Kontext. Dokumentiert in Excluded Features.
+
+### Herzensempfehlungen (Annora)
+
+Abschnitt "Herzensempfehlungen" fehlt. Noch unklar was genau gemeint ist — klären mit Annora.
+
+### Spenden verbessern (Sophie-Beobachtung)
+
+Aktuell nur einfache Erfassung. Könnte detaillierter werden (Beträge, Empfänger, steuerliche Relevanz).
+
+---
+
+## Neue Muster nach Ergänzungen
+
+### Mindestlohn-Auffindbarkeit — 3 Quellen → MUSTER
+
+Jana, Greg, Silvan fragten unabhängig: "Warum ist der Mindestlohnrechner bei den Werkzeugen?"
+
+Das ist kein Feature-Wunsch sondern ein **Auffindbarkeits-Problem**. Der Mindestlohn-Check existiert als Hintergrund-Warnung im Finanzen-Kapitel, aber Nutzer suchen ihn als sichtbares Werkzeug.
+
+### RM — jetzt 4 Quellen
+
+Lynette, Annora, Jana, Silvan. Immer noch kein Beta-Blocker, aber das stärkste Sprach-Signal.
 
 ---
 
@@ -232,20 +285,35 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 ### C — UX-Verbesserungen
 
-7. Fortschrittskarte → fehlende Felder navigierbar
-8. Dropdown-UX prüfen
-9. Info-Icons verständlicher
+7. **Mindestlohn-Auffindbarkeit** — 3 Quellen (Jana, Greg, Silvan) → echtes Muster. Sichtbarer machen oder kontextuell besser platzieren.
+8. Fortschrittskarte → fehlende Felder navigierbar
+9. Offizielle Links kontextuell platzieren (AHV bei AHV, KK bei KK)
+10. Dropdown-UX prüfen
+11. Info-Icons verständlicher
 
 ### D — Sprache
 
-10. Rätoromanisch (RM) — 3 Signale (Lynette, Annora, Jana), dokumentierter Kandidat. Siehe [language-strategy.md](../product/language-strategy.md)
-11. Weitere Integrationssprachen
+12. Rätoromanisch (RM) — 4 Signale (Lynette, Annora, Jana, Silvan), dokumentierter Kandidat. Siehe [language-strategy.md](../product/language-strategy.md)
+13. Weitere Integrationssprachen
+
+### E — Fachliche Vertiefung (später)
+
+14. Betreibungen/Verlustscheine detaillierter (Nummern, Statuswechsel, Abzahlungsplan)
+15. Spenden detaillierter
+16. 3a bestehendes Guthaben
 
 ### Beobachten
 
-- Mindestlohn-Sichtbarkeit
-- Design-Farben (erst ab 3+ Testern)
-- 3a bestehendes Guthaben
+- Design-Farben (Greg einzige Quelle)
+- Herzensempfehlungen (Annora — klären was gemeint ist)
+
+### Bewusst nicht
+
+- Comparis-Vergleich bei Versicherungen (widerspricht Produktphilosophie)
+- Mehrpersonen-Haushalte
+- Komplette Design-Neugestaltung
+- PWA
+- BFS Branchenvergleich
 
 ### Noch nicht
 
@@ -260,10 +328,10 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 | Person | Perspektive | Hauptmuster |
 |--------|-------------|-------------|
-| Jana | Verständlichkeit, Nutzen | 1 (Nutzen) |
-| Lynette (Mutter) | Ordnung, Sozialleistungen, Vorsorge | 3 (Verbindungen) |
-| Silvan | Logik, Datenwiederverwendung | 3 (Verbindungen) |
-| Annora | Vertrauen, Erstnutzerin, RM | 2 (Vertrauen) |
+| Jana | Verständlichkeit, Nutzen, Mindestlohn-Auffindbarkeit | 1 (Nutzen) |
+| Lynette (Mutter) | Ordnung, Sozialleistungen, Vorsorge, RM | 3 (Verbindungen) |
+| Silvan | Logik, Datenwiederverwendung, Mindestlohn, RM | 3 (Verbindungen) |
+| Annora | Vertrauen, Erstnutzerin, RM, Comparis-Frage, Herzensempfehlungen | 2 (Vertrauen) |
 | André | Nutzen-Kommunikation | 1 (Nutzen) |
 | Gianni | Nutzen-Kommunikation | 1 (Nutzen) |
 | Greg | UX, Design, Navigation | UX-Details |
