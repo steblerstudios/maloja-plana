@@ -45,6 +45,21 @@
 
 ---
 
+## Sophie-Beobachtungen
+
+| Feedback | Bewertung | Priorität |
+|----------|-----------|-----------|
+| 3a-Rechner startet bei 0 — viele haben bereits Guthaben | Fachlich sinnvoll, kein Bug. Feld "Aktuelles 3a-Guthaben" ergänzen. | B |
+| Mindestlohn-Check existiert nur als Hintergrund-Warnung, kein sichtbares Werkzeug | Beobachten ob Nutzer danach suchen. Auffindbarkeits-Frage, nicht Feature-Frage. | Beobachten |
+
+## Annora-Feedback
+
+| Feedback | Bewertung | Aktion |
+|----------|-----------|--------|
+| Fragte aktiv nach Rätoromanisch | 1 Signal. RM hat ~60k Sprecher, alle bilingual. Noch kein Muster. | Beobachten — dokumentiert, nicht bauen |
+
+---
+
 ## Sophie-Screenshot: "Deine Grundordnung 4/18"
 
 > Fortschrittskarte zeigt 4/18 erledigt — könnte auch zeigen welche 14 fehlen und direkt dorthin navigieren.
@@ -63,9 +78,10 @@ Bewertung: **Stärkster UX-Gewinn bei kleinem Aufwand.** Verbesserung eines best
 
 ### B — Nach Beta
 
-4. BVG/Freizügigkeits-Übersicht
-5. UVG/KTG-Dokumentation
-6. EL/Rentenpfad
+4. Bestehendes 3a-Guthaben im Vorsorge-Rechner (aktuell rechnet ab 0, viele haben bereits 5k–80k)
+5. BVG/Freizügigkeits-Übersicht
+6. UVG/KTG-Dokumentation
+7. EL/Rentenpfad
 
 ### C — Später
 
@@ -73,8 +89,27 @@ Bewertung: **Stärkster UX-Gewinn bei kleinem Aufwand.** Verbesserung eines best
 8. BFS Branchenvergleich
 9. PWA
 
-### Kein Kandidat
+### Beobachten
 
-- RM (Rätoromanisch)
+- Mindestlohn besser sichtbar? (Hintergrund-Check existiert, aber Nutzer erwarten evtl. sichtbares Werkzeug)
+- Rätoromanisch-Nachfrage? (Annora fragte aktiv danach — 1 Signal, noch kein Muster)
+- Design-Farben? (Greg: "zu dunkel", "Beige" — erst ab 3/5 Testern ein Thema)
+
+### Noch nicht
+
+- RM komplett übersetzen (1 Signal, beobachten)
+- BFS Branchenvergleich
+- PWA
 - Mehrpersonen-Haushalte
-- Komplette Design-Neugestaltung wegen "Beige"
+- Komplette Design-Neugestaltung
+
+---
+
+## Feedback-Quellen
+
+| Person | Perspektive | Stärke |
+|--------|-------------|--------|
+| Lynette (Mutter) | Ordnung, Sozialleistungen, BVG, Renten, Praxis | Reale Lebenssituation, nicht technikgetrieben |
+| Greg | UX, Design, Navigation | Visuelles Urteil, Interaktionsprobleme |
+| Annora | Sprache, Erstnutzer-Perspektive, RM-Frage | Sprachliche Sensibilität, Zugänglichkeit |
+| Sophie | Tägliche Nutzung, Fachlogik | Tiefes Produktwissen, erkennt Lücken im Alltag |
