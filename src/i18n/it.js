@@ -266,6 +266,15 @@ export default {
     exportReminderOld: 'Il tuo ultimo backup risale a più di una settimana fa.',
     openChapter: 'Apri',
     fieldsCount: '{filled}/{total} campi',
+    highlightTitle: 'Cosa puoi fare subito?',
+    highlightTax: 'Calcola l\'imposta federale',
+    highlightTaxSub: 'Stima il tuo carico fiscale — senza registrazione.',
+    highlightIpv: 'Verifica riduzione premi',
+    highlightIpvSub: 'Controlla se hai diritto a una riduzione dei premi.',
+    highlightSozialhilfe: 'Orientamento assistenza sociale',
+    highlightSozialhilfeSub: 'Comprendere il fabbisogno di base COSAS.',
+    highlightNotfall: 'Prepara la scheda d\'emergenza',
+    highlightNotfallSub: 'Pronta in 2 minuti — sul tuo dispositivo.',
   },
 
   // Titoli capitoli, descrizioni, etichette campi, opzioni di selezione, etichette documenti

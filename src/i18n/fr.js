@@ -268,6 +268,15 @@ export default {
     exportReminderOld: 'Votre dernière sauvegarde date de plus d\'une semaine.',
     openChapter: 'Ouvrir',
     fieldsCount: '{filled}/{total} champs',
+    highlightTitle: 'Que pouvez-vous faire tout de suite ?',
+    highlightTax: 'Calculer l\'impôt fédéral',
+    highlightTaxSub: 'Estimez votre charge fiscale — sans inscription.',
+    highlightIpv: 'Vérifier la réduction de primes',
+    highlightIpvSub: 'Vérifiez si vous avez droit à une réduction.',
+    highlightSozialhilfe: 'Orientation aide sociale',
+    highlightSozialhilfeSub: 'Comprendre les besoins de base CSIAS.',
+    highlightNotfall: 'Préparer la carte d\'urgence',
+    highlightNotfallSub: 'Prête en 2 minutes — sur votre appareil.',
   },
 
   chapters: {
