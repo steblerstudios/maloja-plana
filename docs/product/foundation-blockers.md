@@ -48,9 +48,9 @@ Brutto/Netto ───────────┤                     ├── 
 
 **Status:**
 - Brutto/Netto: **Entschieden** — Netto als Default, Brutto als Option (2026-06-20)
-- Mutter-Feedback: Ausstehend (Sophie-Aktion)
-- Family Expert: Ausstehend (Sophie-Aktion)
-- BVG-Bug-Status: Ausstehend (Sophie-Aktion)
+- Mutter-Feedback: **Erledigt** — Vollständige Rekonstruktion 2026-06-21, siehe docs/ux/feedback-rekonstruktion.md
+- Family Expert: **Geklärt** — Lynette (Mutter) ist die Hauptquelle
+- BVG-Bug-Status: **Geklärt** — kein offener Bug, Vorsorge-Rechner funktioniert korrekt
 
 ---
 
