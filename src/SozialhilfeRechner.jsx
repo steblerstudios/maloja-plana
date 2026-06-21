@@ -61,7 +61,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     React.createElement('div', { style: s.inputGroup },
       React.createElement('div', { style: s.label }, t(labelKey)),
       React.createElement('input', {
-        style: s.input, type: 'number', value, placeholder,
+        style: s.input, type: 'number', inputMode: 'decimal', value, placeholder,
         onChange: e => setter(e.target.value),
       })
     );

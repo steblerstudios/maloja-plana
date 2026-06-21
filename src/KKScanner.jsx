@@ -117,7 +117,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('input', { type: 'text', value: kkData.ahv, onChange: (e) => handleManualInput('ahv', e.target.value), placeholder: '756.1234.5678.90', style: inputStyle }),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.franchise')),
-        React.createElement('input', { type: 'number', value: kkData.franchise, onChange: (e) => handleManualInput('franchise', e.target.value), placeholder: '300', style: inputStyle }),
+        React.createElement('input', { type: 'number', inputMode: 'decimal', value: kkData.franchise, onChange: (e) => handleManualInput('franchise', e.target.value), placeholder: '300', style: inputStyle }),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('kkScanner.model')),
         React.createElement('select', { value: kkData.model, onChange: (e) => handleManualInput('model', e.target.value), style: inputStyle },
