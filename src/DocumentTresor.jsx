@@ -13,7 +13,33 @@ const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
   if (days < 0) return { status: 'expired', color: palette.rose, label: t('tresor.expired') };
   if (days < 90) return { status: 'warning', color: palette.gold, label: days + 'd' };
-  return { status: 'ok', color: palette.sage, label: '✓ OK' };
+  return { status: 'ok', color: palette.sage, label: '✓' };
+};
+
+const OrdnerIcon = ({ palette, fillLevel }) => {
+  const h = Math.min(10, Math.max(0, fillLevel * 2));
+  return React.createElement('svg', {
+    viewBox: '0 0 28 24', style: { width: '32px', height: '28px', flexShrink: 0 }, fill: 'none',
+  },
+    // Folder back
+    React.createElement('path', {
+      d: 'M 2 6 L 2 21 C 2 22.1 2.9 23 4 23 L 24 23 C 25.1 23 26 22.1 26 21 L 26 8 C 26 6.9 25.1 6 24 6 L 14 6 L 12 3 L 4 3 C 2.9 3 2 3.9 2 5 Z',
+      stroke: palette.sage, strokeWidth: '1.2', fill: palette.sage + '08',
+    }),
+    // Tab dividers
+    React.createElement('line', { x1: '8', y1: '6', x2: '8', y2: '4', stroke: palette.sage, strokeWidth: '0.8', opacity: 0.4 }),
+    React.createElement('line', { x1: '11', y1: '6', x2: '11', y2: '4.5', stroke: palette.sage, strokeWidth: '0.8', opacity: 0.4 }),
+    // Fill level
+    h > 0 && React.createElement('rect', {
+      x: '5', y: String(21 - h), width: '18', height: String(h),
+      fill: palette.sage, opacity: 0.15, rx: '1',
+    }),
+    // Front flap
+    React.createElement('path', {
+      d: 'M 2 8 L 4 6 L 24 6 L 26 8',
+      stroke: palette.sage, strokeWidth: '0.8', opacity: 0.3,
+    }),
+  );
 };
 
 export const DocumentTresor = ({
@@ -25,7 +51,7 @@ export const DocumentTresor = ({
   onDelete,
   onUpdateExpiry
 }) => {
-  const [filterChapter, setFilterChapter] = useState('all');
+  const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('expiry');
   const [showArchive, setShowArchive] = useState(false);
@@ -34,32 +60,36 @@ export const DocumentTresor = ({
 
   const active = documents.filter(d => getDaysUntilExpiry(d.expiryDate) >= 0);
   const archived = documents.filter(d => getDaysUntilExpiry(d.expiryDate) < 0);
-
   const displayDocs = showArchive ? archived : active;
 
   const filteredDocs = displayDocs.filter(doc => {
-    const matchChapter = filterChapter === 'all' || doc.chapter === filterChapter;
+    const matchTab = activeTab === 'all' || doc.chapter === activeTab;
     const matchSearch = !searchTerm ||
       doc.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       doc.type.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchChapter && matchSearch;
+    return matchTab && matchSearch;
   });
 
   const sortedDocs = [...filteredDocs].sort((a, b) => {
-    if (sortBy === 'expiry') {
-      return getDaysUntilExpiry(a.expiryDate) - getDaysUntilExpiry(b.expiryDate);
-    } else if (sortBy === 'date') {
-      return new Date(b.uploadDate) - new Date(a.uploadDate);
-    } else if (sortBy === 'name') {
-      return a.fileName.localeCompare(b.fileName);
-    }
+    if (sortBy === 'expiry') return getDaysUntilExpiry(a.expiryDate) - getDaysUntilExpiry(b.expiryDate);
+    if (sortBy === 'date') return new Date(b.uploadDate) - new Date(a.uploadDate);
+    if (sortBy === 'name') return a.fileName.localeCompare(b.fileName);
     return 0;
   });
+
+  const chapterList = chapters || [];
+
+  // Count docs per chapter for register tabs
+  const chapterCounts = {};
+  displayDocs.forEach(d => {
+    chapterCounts[d.chapter] = (chapterCounts[d.chapter] || 0) + 1;
+  });
+  const chaptersWithDocs = chapterList.filter(c => chapterCounts[c.key] > 0);
 
   const stats = {
     active: active.length,
     expiring: active.filter(d => getDaysUntilExpiry(d.expiryDate) < 90).length,
-    archived: archived.length
+    archived: archived.length,
   };
 
   const handleUpdateExpiry = (docId, newDate) => {
@@ -68,193 +98,251 @@ export const DocumentTresor = ({
   };
 
   const inputStyle = {
-    width: '100%',
-    padding: '8px',
-    borderRadius: '6px',
-    border: '1px solid ' + palette.border,
-    background: palette.surface,
-    color: palette.text,
-    boxSizing: 'border-box',
-    fontSize: text.sm,
-    marginBottom: '8px'
+    width: '100%', padding: '8px', borderRadius: '6px',
+    border: '1px solid ' + palette.border, background: palette.surface,
+    color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
   };
 
-  const chapterList = chapters || [];
+  const tabStyle = (isActive) => ({
+    padding: '6px 12px', background: isActive ? palette.surface : 'transparent',
+    border: isActive ? '1px solid ' + palette.border : '1px solid transparent',
+    borderBottom: isActive ? '1px solid ' + palette.surface : '1px solid ' + palette.border,
+    borderRadius: '6px 6px 0 0', cursor: 'pointer', fontSize: text.xs,
+    fontWeight: isActive ? weight.semi : weight.normal, color: isActive ? palette.text : palette.mid,
+    marginBottom: '-1px', whiteSpace: 'nowrap',
+  });
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+  // Group docs by chapter when showing "all"
+  const groupedByChapter = {};
+  if (activeTab === 'all') {
+    sortedDocs.forEach(doc => {
+      const key = doc.chapter || '_other';
+      if (!groupedByChapter[key]) groupedByChapter[key] = [];
+      groupedByChapter[key].push(doc);
+    });
+  }
 
-    // Vault fill indicator
-    React.createElement('div', {
-      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px' }
+  const renderDocCard = (doc) => {
+    const status = getExpiryStatus(doc.expiryDate, palette, t);
+    const chapter = chapterList.find(c => c.key === doc.chapter);
+    const isEditing = editingDocId === doc.id;
+
+    return React.createElement('div', {
+      key: doc.id,
+      style: {
+        padding: '10px 12px', background: palette.up, borderRadius: '6px',
+        border: '1px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
+        display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px',
+      }
     },
-      React.createElement('svg', { viewBox: '0 0 24 24', style: { width: '28px', height: '28px', flexShrink: 0 }, fill: 'none' },
-        React.createElement('rect', { x: '3', y: '6', width: '18', height: '16', rx: '2', stroke: palette.sage, strokeWidth: '1.5', fill: palette.sage + '10' }),
-        React.createElement('rect', { x: '5', y: String(20 - Math.min(12, documents.length * 1.5)), width: '14', height: String(Math.min(12, documents.length * 1.5)), fill: palette.sage, opacity: 0.25, rx: '1' }),
-        React.createElement('circle', { cx: '12', cy: '14', r: '2', stroke: palette.sage, strokeWidth: '1.5' }),
-        React.createElement('path', { d: 'M 7 6 L 7 4 C 7 2.5 9 1 12 1 C 15 1 17 2.5 17 4 L 17 6', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' }),
-      ),
-      React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
-          documents.length + ' ' + (documents.length === 1 ? 'Dokument' : 'Dokumente')
-        ),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
-          documents.length === 0 ? 'Deine Ablage ist bereit'
-          : documents.length < 5 ? 'Ein guter Anfang'
-          : documents.length < 15 ? 'Deine Ablage füllt sich'
-          : 'Alles an seinem Platz'
-        ),
-      ),
-    ),
-
-    // Stats
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginBottom: '16px' } },
-      React.createElement('button', { type: 'button', 'aria-pressed': !showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: !showArchive ? palette.sand : palette.border, font: 'inherit' }, onClick: () => setShowArchive(false) },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active'))
-      ),
-      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', textAlign: 'center' } },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon'))
-      ),
-      React.createElement('button', { type: 'button', 'aria-pressed': showArchive, style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', borderWidth: '2px', borderStyle: 'solid', borderColor: showArchive ? palette.rose : palette.border, font: 'inherit' }, onClick: () => setShowArchive(true) },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive'))
-      )
-    ),
-
-    // Filter & Search
-    React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('input', {
-        placeholder: t('common.search'),
-        value: searchTerm,
-        onChange: (e) => setSearchTerm(e.target.value),
-        style: inputStyle
-      }),
-      React.createElement('select', {
-        value: filterChapter,
-        onChange: (e) => setFilterChapter(e.target.value),
-        style: { ...inputStyle, marginBottom: '8px' }
-      },
-        React.createElement('option', { value: 'all' }, '□ ' + t('tresor.allChapters')),
-        chapterList.map(c => React.createElement('option', { key: c.key, value: c.key }, c.icon + ' ' + c.title))
-      ),
-      React.createElement('select', {
-        value: sortBy,
-        onChange: (e) => setSortBy(e.target.value),
-        style: inputStyle
-      },
-        React.createElement('option', { value: 'expiry' }, t('tresor.sortByExpiry')),
-        React.createElement('option', { value: 'date' }, t('tresor.sortByUpload')),
-        React.createElement('option', { value: 'name' }, t('tresor.sortByName'))
-      )
-    ),
-
-    // Documents List
-    sortedDocs.length === 0 ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' } },
-      React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'tresor', size: 28 })),
-      React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('tresor.noDocuments')),
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, t('tresor.noDocumentsHint'))
-    ) : React.createElement('div', { style: { display: 'grid', gap: '8px', maxHeight: '600px', overflowY: 'auto' } },
-      sortedDocs.map(doc => {
-        const status = getExpiryStatus(doc.expiryDate, palette, t);
-        const chapter = chapterList.find(c => c.key === doc.chapter);
-        const isEditing = editingDocId === doc.id;
-
-        return React.createElement('div', {
-          key: doc.id,
-          style: {
-            padding: '12px',
-            background: palette.up,
-            borderRadius: '6px',
-            border: '1px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
-            display: 'grid',
-            gridTemplateColumns: '1fr auto',
-            gap: '12px'
-          }
+      React.createElement('div', { style: { fontSize: text.sm, minWidth: 0 } },
+        React.createElement('div', {
+          style: { fontWeight: '600', marginBottom: '3px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.sm }
         },
-          React.createElement('div', { style: { fontSize: text.sm } },
-            React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' } },
-              React.createElement('span', { style: { fontSize: text.body } }, doc.uploadStatus === 'uploading' ? '○' : doc.uploadStatus === 'success' ? '✓' : (chapter?.icon || '□')),
-              (chapter?.icon || '□') + ' ' + doc.type
-            ),
-            React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: '4px' } }, doc.fileName),
-            React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginBottom: '6px' } },
-              t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })
-            ),
+          React.createElement('span', null, chapter?.icon || '□'),
+          doc.type
+        ),
+        React.createElement('div', {
+          style: { color: palette.mid, fontSize: text.xs, marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
+        }, doc.fileName),
+        React.createElement('div', {
+          style: { color: palette.mid, fontSize: text.xs, marginBottom: '4px' }
+        }, t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })),
 
-            // Expiry editor
-            isEditing ? React.createElement('div', { style: { marginTop: '8px' } },
+        isEditing
+          ? React.createElement('div', { style: { marginTop: '6px' } },
               React.createElement('input', {
-                type: 'date',
-                value: editingExpiry,
+                type: 'date', value: editingExpiry,
                 onChange: (e) => setEditingExpiry(e.target.value),
-                style: { width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm, marginBottom: '6px' }
+                style: { ...inputStyle, marginBottom: '6px', padding: '6px' },
               }),
               React.createElement('div', { style: { display: 'flex', gap: '4px' } },
                 React.createElement('button', {
                   onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
-                  style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi }
+                  style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
                 }, '✓ OK'),
                 React.createElement('button', {
                   onClick: () => setEditingDocId(null),
-                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs }
-                }, t('common.cancel'))
-              )
-            ) : React.createElement('div', { style: { marginTop: '6px', color: status.color, fontWeight: weight.semi, fontSize: text.sm } },
-              status.label + ' | ' + t('tresor.expiryDate', { date: doc.expiryDate })
+                  style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs },
+                }, t('common.cancel')),
+              ),
             )
-          ),
+          : React.createElement('div', {
+              style: { color: status.color, fontWeight: weight.semi, fontSize: text.xs }
+            }, status.label + ' · ' + t('tresor.expiryDate', { date: doc.expiryDate })),
+      ),
 
-          React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '4px' } },
-            React.createElement('button', {
-              'aria-label': t('common.download'),
-              onClick: () => onDownload(doc),
-              style: {
-                padding: '6px 10px',
-                background: palette.sand,
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: '3px',
-                fontSize: text.xs,
-                fontWeight: '600'
-              }
-            }, '↙'),
-            React.createElement('button', {
-              'aria-label': t('common.edit'),
-              onClick: () => setEditingDocId(doc.id) || setEditingExpiry(doc.expiryDate),
-              style: {
-                padding: '6px 10px',
-                background: palette.sky,
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: '3px',
-                fontSize: text.xs,
-                fontWeight: '600'
-              }
-            }, '○'),
-            React.createElement('button', {
-              'aria-label': t('common.delete'),
-              onClick: () => onDelete(doc.id),
-              style: {
-                padding: '6px 10px',
-                background: palette.rose,
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: '3px',
-                fontSize: text.xs,
-                fontWeight: '600'
-              }
-            }, '✕')
-          )
-        );
-      })
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '3px' } },
+        React.createElement('button', {
+          'aria-label': t('common.download'), onClick: () => onDownload(doc),
+          style: { padding: '5px 8px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+        }, '↙'),
+        React.createElement('button', {
+          'aria-label': t('common.edit'),
+          onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
+          style: { padding: '5px 8px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+        }, '○'),
+        React.createElement('button', {
+          'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
+          style: { padding: '5px 8px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '3px', fontSize: text.xs, fontWeight: '600' },
+        }, '✕'),
+      ),
+    );
+  };
+
+  return React.createElement('div', {
+    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }
+  },
+    // Title with folder icon
+    React.createElement('h2', {
+      style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: '8px' }
+    }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+
+    // Ordner status — warm language
+    React.createElement('div', {
+      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px' }
+    },
+      React.createElement(OrdnerIcon, { palette, fillLevel: documents.length }),
+      React.createElement('div', { style: { flex: 1 } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+          t('tresor.docCount', { count: documents.length })
+        ),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '2px' } },
+          documents.length === 0 ? t('tresor.ordnerEmpty')
+          : documents.length < 5 ? t('tresor.ordnerStarting')
+          : documents.length < 15 ? t('tresor.ordnerGrowing')
+          : t('tresor.ordnerFull')
+        ),
+      ),
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    // Stats row
+    React.createElement('div', {
+      style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '16px' }
+    },
+      React.createElement('button', {
+        type: 'button', 'aria-pressed': !showArchive,
+        onClick: () => setShowArchive(false),
+        style: {
+          padding: '10px', background: palette.up, color: palette.text, borderRadius: '6px',
+          textAlign: 'center', cursor: 'pointer', font: 'inherit',
+          borderWidth: '2px', borderStyle: 'solid',
+          borderColor: !showArchive ? palette.sand : palette.border,
+        },
+      },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active')),
+      ),
+      React.createElement('div', {
+        style: { padding: '10px', background: palette.up, borderRadius: '6px', textAlign: 'center', border: '2px solid ' + palette.border },
+      },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon')),
+      ),
+      React.createElement('button', {
+        type: 'button', 'aria-pressed': showArchive,
+        onClick: () => setShowArchive(true),
+        style: {
+          padding: '10px', background: palette.up, color: palette.text, borderRadius: '6px',
+          textAlign: 'center', cursor: 'pointer', font: 'inherit',
+          borderWidth: '2px', borderStyle: 'solid',
+          borderColor: showArchive ? palette.rose : palette.border,
+        },
+      },
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive')),
+      ),
+    ),
+
+    // Register tabs — Bundesordner Trennblätter
+    (chaptersWithDocs.length > 0 || documents.length > 0) && React.createElement('div', {
+      style: {
+        display: 'flex', gap: '2px', borderBottom: '1px solid ' + palette.border,
+        marginBottom: '12px', overflowX: 'auto', paddingBottom: 0,
+      },
+    },
+      React.createElement('button', {
+        onClick: () => setActiveTab('all'), style: tabStyle(activeTab === 'all'),
+      }, t('tresor.allChapters') + ' (' + displayDocs.length + ')'),
+      chaptersWithDocs.map(c => React.createElement('button', {
+        key: c.key, onClick: () => setActiveTab(c.key),
+        style: tabStyle(activeTab === c.key),
+      }, c.icon + ' ' + (chapterCounts[c.key] || 0))),
+    ),
+
+    // Search + Sort
+    React.createElement('div', {
+      style: { display: 'flex', gap: '8px', marginBottom: '12px' }
+    },
+      React.createElement('input', {
+        placeholder: t('common.search'), value: searchTerm,
+        onChange: (e) => setSearchTerm(e.target.value),
+        style: { ...inputStyle, flex: 1 },
+      }),
+      React.createElement('select', {
+        value: sortBy, onChange: (e) => setSortBy(e.target.value),
+        style: { ...inputStyle, width: 'auto', minWidth: '120px' },
+      },
+        React.createElement('option', { value: 'expiry' }, t('tresor.sortByExpiry')),
+        React.createElement('option', { value: 'date' }, t('tresor.sortByUpload')),
+        React.createElement('option', { value: 'name' }, t('tresor.sortByName')),
+      ),
+    ),
+
+    // Document list
+    sortedDocs.length === 0
+      ? React.createElement('div', {
+          style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' }
+        },
+          React.createElement('div', { style: { marginBottom: '12px' } },
+            React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
+          ),
+          React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
+            t('tresor.noDocuments'),
+          ),
+          React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: '1.6' } },
+            t('tresor.noDocumentsHint'),
+          ),
+        )
+      : activeTab === 'all'
+        // Grouped view — documents under chapter dividers
+        ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '16px', maxHeight: '600px', overflowY: 'auto' } },
+            Object.keys(groupedByChapter).map(chKey => {
+              const chapter = chapterList.find(c => c.key === chKey);
+              const docs = groupedByChapter[chKey];
+              return React.createElement('div', { key: chKey },
+                // Register divider
+                React.createElement('div', {
+                  style: {
+                    fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
+                    textTransform: 'uppercase', letterSpacing: '0.5px',
+                    paddingBottom: '6px', marginBottom: '8px',
+                    borderBottom: '1px solid ' + palette.border,
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                  },
+                },
+                  React.createElement('span', null, chapter?.icon || '□'),
+                  chapter?.title || chKey,
+                  React.createElement('span', {
+                    style: { fontWeight: weight.normal, color: palette.soft }
+                  }, ' · ' + docs.length),
+                ),
+                // Docs in this chapter
+                React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px' } },
+                  docs.map(renderDocCard),
+                ),
+              );
+            }),
+          )
+        // Single chapter — flat list
+        : React.createElement('div', {
+            style: { display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '600px', overflowY: 'auto' }
+          }, sortedDocs.map(renderDocCard)),
+
+    // Local-only note
+    React.createElement('div', {
+      style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' }
+    }, '○ ' + t('trust.localOnly')),
   );
 };
 
