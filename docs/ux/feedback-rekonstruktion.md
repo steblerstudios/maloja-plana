@@ -1,81 +1,201 @@
-# Feedback-Rekonstruktion — Mutter + Greg
+# Master Feedback Sammlung — Maloja Plana
 
 > Stand: 2026-06-21
-> Rekonstruiert von Sophie aus Erinnerung und Notizen.
-> Zweck: Alle bisher gesammelten Nutzerfeedbacks an einem Ort, mit Bewertung.
+> Zweck: Alle gesammelten Nutzerfeedbacks, Muster und Prioritäten an einem Ort.
+> Quellen: 6 echte Tester, Kolleg:innen, eigene Beobachtungen, Perplexity-Recherche.
 
 ---
 
-## Mutter-Feedback
+## Kernerkenntnis
 
-### Bereits umgesetzt
+> Menschen wünschen sich nicht primär mehr Funktionen.
+> Menschen möchten schneller verstehen, warum Maloja Plana ihnen hilft.
 
-| Feedback | Zitat / Kontext | Status |
-|----------|-----------------|--------|
-| Prämienverbilligung-Link | "Eine Link zu der Prämienverbilligungsseite wäre gut" | Done — IPV-Rechner + Querlink Versicherungen → IPV |
-| Budget hochladen | "Ich kann ein Budget hochladen" | Done — Budget-Import vorhanden |
-| SKOS / Sozialhilfe | "SKOS Tabelle sollte angepasst werden" | Done — Sozialhilfe-Rechner, SKOS-Hinweise, Mietbeiträge Basel |
-
-### Teilweise vorbereitet
-
-| Feedback | Zitat / Kontext | Status |
-|----------|-----------------|--------|
-| Patientenverfügung / Vorsorgeauftrag / Bestattung | "Frage noch ob Patientenverfügung erstellt..." | Generatoren/Planung vorgesehen, nicht vollständig umgesetzt |
-
-### Noch interessant (nach Beta)
-
-| Feedback | Zitat / Kontext | Bewertung | Priorität |
-|----------|-----------------|-----------|-----------|
-| BVG / Freizügigkeitsguthaben suchen | "Das Zusammentragen und Verwalten der BVG obliegt dem Arbeitnehmer selber" | Echtes Schweizer Problem. Pensionskassen-Check, alte Freizügigkeitskonten, Links zur Suche. Passt sehr gut zu Maloja. | B |
-| UVG / KTG Übersicht | "Wo sind die Angestellten wirklich versichert?" | Arbeitgeber, UVG, KTG, BVG, KK — alles an einem Ort dokumentieren. Passt extrem gut zur Philosophie. | B |
-| EL für Rentner | "Wenn Rentner - EL beantragen" | Fachlich sinnvoll. Braucht aber echte Rentner-Tester zuerst. | B |
-| Rentenalter / Rentenjahr | — | Sinnvoll, eher Nice-to-have. | C |
+Das zieht sich durch fast jede Kategorie.
 
 ---
 
-## Greg-Feedback
+## Drei Hauptmuster
+
+### Muster 1: Nutzen kommt zu spät (5 Quellen)
+
+Genannt von: Jana, André, Gianni, Kolleg:innen, Perplexity
+
+Immer dieselbe Aussage:
+- "Warum soll ich das ausfüllen?"
+- "Was bringt mir Maloja?"
+- "Wirkt wie ein grosses Formular"
+- "Nutzen kommt erst später"
+
+**Das ist das stärkste Signal in der ganzen Sammlung.**
+
+### Muster 2: Vertrauen & Datenhoheit (4 Quellen)
+
+Genannt von: Annora, Kolleg:innen, Perplexity, eigene Beobachtungen
+
+Immer dieselbe Frage:
+- "Was passiert mit meinen Daten?"
+- "Warum sollte ich sensible Daten eingeben?"
+
+Bereits umgesetzt: Local First, Export, Legal, Datenschutz.
+Aber die Botschaft kommt noch nicht früh genug an. Kein Feature-Problem — **Kommunikations-/UX-Thema**.
+
+### Muster 3: Verbindungen statt Formulare (4 Quellen)
+
+Genannt von: Silvan, Kolleg:innen, Mutter (indirekt), eigene Beobachtungen
+
+Immer dieselbe Richtung:
+- "Daten nicht doppelt erfassen"
+- "Dinge verbinden"
+- "Kontext herstellen"
+
+Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Budget, Arbeit → Finanzen
+
+---
+
+## Kategorie A — Echtes Nutzerfeedback
+
+### Jana
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Wirkt teilweise wie ein grosses Formular. Nutzen nicht sofort sichtbar. "Warum soll ich das alles ausfüllen?" |
+| Potenzial | Beispiel-Modus. Früher sichtbare Ergebnisse. |
+| Muster | 1 (Nutzen), 3 (Verbindungen) |
+
+### Lynette (Mutter)
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Zweiter Vorname fehlt. Rätoromanisch angesprochen. Vorsorge-/Nachlassthemen wirken wichtig. Orientierung bei Dokumenten und Behörden hilfreich. |
+| Potenzial | Testament, Vorsorgeauftrag, Bestattungsplanung, Familien-/Nachlasssicht |
+| Bereits umgesetzt | IPV-Rechner, Budget-Import, Sozialhilfe/SKOS, Mietbeiträge Basel |
+| Muster | 3 (Verbindungen/Orientierung) |
+
+### Silvan
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Daten sollten wiederverwendet werden. Nicht mehrfach eingeben müssen. Automatisch vorausfüllen. |
+| Potenzial | Auto-Prefill, Querverbindungen, weniger Doppelungen |
+| Muster | 3 (Verbindungen) |
+
+### Annora
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Was passiert mit meinen Daten? Warum sensible Daten eingeben? Vertrauen ist wichtig. Fragte nach RM. |
+| Potenzial | Local First stärker erklären, Export hervorheben, Datenhoheit sichtbarer |
+| Muster | 2 (Vertrauen) |
+
+### André
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Was bringt mir Maloja konkret? Nutzen sollte früher sichtbar sein. |
+| Potenzial | Beispiel-Modus, Notfallkarte, sofort sichtbare Ergebnisse |
+| Muster | 1 (Nutzen) |
+
+### Gianni
+
+| Aspekt | Detail |
+|--------|--------|
+| Wahrnehmung | Warum soll ich das ausfüllen? Nutzen kommt zu spät. |
+| Potenzial | Demo-Person, Nutzen vor Dateneingabe |
+| Muster | 1 (Nutzen) |
+
+---
+
+## Kategorie B — Kolleg:innen-Feedback
+
+### Versicherungen
+
+- Gute Erfassung, aber es fehlt Orientierung
+- "Ist meine Prämie hoch?", "Gibt es günstigere Modelle?", "Habe ich IPV-Potenzial?"
+- Keine Comparis-Logik, keine Beratung — nur Orientierung und Kontext
+
+### Budget
+
+- Budget sollte mehr Nutzen zeigen, Ziele setzen können, Einordnung ermöglichen
+- "Liege ich ungefähr im Rahmen?", "Wohin fliesst mein Geld?"
+- Keine Bewertung, keine Gamification
+
+### Formularcharakter
+
+- Wirkt teilweise wie ein grosses Formular, Nutzen nicht sofort sichtbar
+- Potenzial: Beispiel-Modus, Demo-Person, Nutzen-Kommunikation
+
+### Datenvertrauen
+
+- Menschen haben Hemmungen, Daten einzutragen — Sorge vor Datensammlung
+- Potenzial: Local First erklären, Export zeigen, Dokumentenablage sichtbar
+
+### Dokumentenablage
+
+- Idee: Lokaler Lebensordner, Dokumente geordnet, kategorisiert, exportierbar
+- Mögliche Speicherorte: Gerät lokal, KDrive, WebDAV, externe Festplatte
+- Cloud niemals Pflicht
+
+### Performance
+
+- App soll schnell laden, wenig Akku verbrauchen, einfach bleiben
+- Bundle-Grösse beobachten, keine unnötigen Bibliotheken
+
+---
+
+## Kategorie C — Eigene Beobachtungen (Sophie)
+
+### Zu wenig sichtbar
+
+- Steuerrechner, Sozialhilfe, Schulden, Notfalldossier, Lebensmappe
+
+### Querverbindungen fehlen
+
+- KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Budget, Arbeit → Finanzen
+
+### Versicherungen
+
+- Gute Felder und Struktur, aber es fehlt Kontext, Orientierung und Nutzen-Kommunikation
+
+### Dashboard
+
+- Sichtbarkeit fertiger Werkzeuge fehlt, Untertitel fehlen, Nutzen-Kommunikation fehlt
+
+---
+
+## Kategorie D — Perplexity-Erkenntnisse
+
+### Wichtigste Erkenntnis
+
+Nutzen vor Dateneingabe. Nicht "Fülle zuerst alles aus" — sondern "Hier ist der Nutzen."
+
+### Top Hebel
+
+1. Beispiel-Modus
+2. Demo-Person
+3. Notfallkarte
+4. Qualitative Fortschritte
+5. Dokumentenablage sichtbar machen
+
+### Local First — bestätigt
+
+Dateien zuerst, Export immer, Backup sichtbar, keine Cloud-Pflicht.
+
+### Secure Safe — bestätigt: nicht jetzt
+
+Später, optional. Nur für: Testament, Vorsorgeauftrag, Patientenverfügung, Passkopien.
+
+---
+
+## Greg-Feedback (UX/Design)
 
 | Feedback | Bewertung | Aktion |
 |----------|-----------|--------|
-| "Dunkel ist zu dunkel" | Wenn 3/5 Tester: Thema. Wenn nur Greg: Geschmack. | Beobachten |
-| "Beige gefällt nicht" | Gleiches Prinzip. | Beobachten |
-| "Auswahl-Menü komisch" | Ernst nehmen wenn mehrere Leute Mühe mit Dropdowns haben. | Beobachten — UX-Thema |
-| Kreisicon statt Info-Icon — "könnte zu einem i werden" | Klassischer UX-Punkt. Wenn mehrere denken der Kreis sei klickbar: guter kleiner Fix. | Kandidat nach Feedbackrunde |
-| Wissensbank / Sandbox — "Etwas berechnen ohne eigenen Stand zu verändern" | Interessant (persönlicher Modus vs. Beispielmodus), aber echtes neues Feature. | Nicht jetzt |
-
----
-
-## Sophie-Beobachtungen
-
-| Feedback | Bewertung | Priorität |
-|----------|-----------|-----------|
-| 3a-Rechner startet bei 0 — viele haben bereits Guthaben | Fachlich sinnvoll, kein Bug. Feld "Aktuelles 3a-Guthaben" ergänzen. | B |
-| Mindestlohn-Check existiert nur als Hintergrund-Warnung, kein sichtbares Werkzeug | Beobachten ob Nutzer danach suchen. Auffindbarkeits-Frage, nicht Feature-Frage. | Beobachten |
-
-## Annora-Feedback
-
-| Feedback | Bewertung | Aktion |
-|----------|-----------|--------|
-| Fragte aktiv nach Rätoromanisch | 1 Signal. RM hat ~60k Sprecher, alle bilingual. Noch kein Muster. | Beobachten — dokumentiert, nicht bauen |
-
----
-
-## Sophie-Screenshot: "Deine Grundordnung 4/18"
-
-> Fortschrittskarte zeigt 4/18 erledigt — könnte auch zeigen welche 14 fehlen und direkt dorthin navigieren.
-
-Bewertung: **Stärkster UX-Gewinn bei kleinem Aufwand.** Verbesserung eines bestehenden Features, kein neues Feature. Fast jeder Nutzer versteht das sofort.
-
----
-
-## Nächste Tester — Erwartete Perspektiven
-
-| Person | Erwartete Stärke | Worauf achten |
-|--------|-----------------|---------------|
-| Jana | Verständlichkeit, Navigation, Vertrauen, visuelle Wirkung | Fühlt sich die App vertrauenswürdig an? Ist die Navigation klar? |
-| Annora | Erstnutzer-Perspektive | "Wo klicke ich?", "Was soll ich hier machen?" |
-| Silvan | Logik, technische Konsistenz, unnötige Komplexität, fehlende Verknüpfungen | Sind die Rechner plausibel? Fehlen Verbindungen? |
-| Greg | UX, Design, Navigation | Visuelles Urteil, Interaktionsprobleme |
+| "Dunkel ist zu dunkel" | Einzelne Meinung, kein Muster | Beobachten |
+| "Beige gefällt nicht" | Einzelne Meinung | Beobachten |
+| "Auswahl-Menü komisch" | UX-Thema wenn mehrere es nennen | Beobachten |
+| Kreisicon → "i"-Icon | Wenn mehrere denken Kreis sei klickbar | Kandidat |
+| Sandbox-Modus | Echtes neues Feature | Nicht jetzt |
 
 ---
 
@@ -83,83 +203,69 @@ Bewertung: **Stärkster UX-Gewinn bei kleinem Aufwand.** Verbesserung eines best
 
 ### Starkes Signal (→ bauen)
 
-Mindestens 2 Personen sagen **unabhängig** dasselbe:
-
-- "Ich sehe 4/18, aber ich weiss nicht, was die 14 fehlenden Punkte sind."
-- "Wie komme ich direkt dahin?"
-- Verwirrung, Sackgassen, unnötige Klicks, fehlende Orientierung
-
-→ Dann wird aus einer Idee ein **echtes Muster** und der nächste Produkt-Commit.
-
-### Kein starkes Signal (→ dokumentieren, beobachten)
-
-Eine einzelne Person sagt:
-
-- "Mach alles blau statt beige"
-- "Dark Mode ist zu dunkel"
-- "Ich hätte gerne Rätoromanisch"
-- "Mach eine App für Familien"
-
-Das sind **Präferenzen**, keine Muster. Dokumentieren, nicht bauen.
-
-### Was wirklich zählt
-
-Die wertvollen Signale sind nicht Feature-Wünsche, sondern:
+Mindestens 2 Personen sagen **unabhängig** dasselbe. Die wertvollen Signale sind:
 
 - **Verwirrung** — "Was bedeutet das?"
 - **Sackgassen** — "Und jetzt?"
 - **Unnötige Klicks** — "Warum muss ich dreimal klicken?"
 - **Fehlende Orientierung** — "Wo bin ich? Was fehlt noch?"
 
-### Erkenntnis aus Mutters Feedback
+### Kein starkes Signal (→ dokumentieren, beobachten)
 
-Lynettes Feedback war überraschend hochwertig — nicht wegen einzelner Features, sondern weil sie mehrfach auf dieselbe Grundidee hinwies:
-
-> "Zeig mir, was fehlt. Zeig mir, worauf ich achten muss. Hilf mir beim Ordnen."
-
-Das passt extrem gut zur Vision von Maloja Plana als *Lebensordner*.
+Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 ---
 
 ## Priorisierte Kandidatenliste
 
-### A — Erster Beta-Nachbesserung
+### A — Stärkste Signale (5 Quellen)
 
-1. **Fortschrittskarte → zu fehlenden Feldern springen**
-2. Info-Icons verständlicher machen (falls mehrfach genannt)
-3. Dropdown-Auswahl prüfen (falls mehrfach genannt)
+1. **Nutzen vor Dateneingabe** — Beispiel-Modus, Demo-Person, sofort sichtbare Resultate
+2. **Vertrauen/Datenhoheit früher kommunizieren** — Local First erklären, Export hervorheben
+3. **Verbindungen sichtbar machen** — Querverbindungen, Auto-Prefill, Kontext
 
-### B — Nach Beta
+### B — Fachliche Erweiterungen
 
-4. Bestehendes 3a-Guthaben im Vorsorge-Rechner (aktuell rechnet ab 0, viele haben bereits 5k–80k)
-5. BVG/Freizügigkeits-Übersicht
-6. UVG/KTG-Dokumentation
-7. EL/Rentenpfad
+4. BVG/Freizügigkeits-Übersicht (passt zu Muster 3)
+5. UVG/KTG-Dokumentation
+6. Vorsorge/Nachlass (Testament, Vorsorgeauftrag, Bestattung)
 
-### C — Später
+### C — UX-Verbesserungen
 
-7. Rätoromanisch (RM) — 3 unabhängige Signale (Lynette, Annora, Jana), höher als BFS/PWA weil echte Menschen danach fragten. Siehe [language-strategy.md](../product/language-strategy.md)
-8. Wissensbank/Sandbox-Modus
-9. BFS Branchenvergleich
-10. PWA
+7. Fortschrittskarte → fehlende Felder navigierbar
+8. Dropdown-UX prüfen
+9. Info-Icons verständlicher
+
+### D — Sprache
+
+10. Rätoromanisch (RM) — 3 Signale (Lynette, Annora, Jana), dokumentierter Kandidat. Siehe [language-strategy.md](../product/language-strategy.md)
+11. Weitere Integrationssprachen
 
 ### Beobachten
 
-- Mindestlohn besser sichtbar? (Hintergrund-Check existiert, aber Nutzer erwarten evtl. sichtbares Werkzeug)
-- Design-Farben? (Greg: "zu dunkel", "Beige" — erst ab 3/5 Testern ein Thema)
+- Mindestlohn-Sichtbarkeit
+- Design-Farben (erst ab 3+ Testern)
+- 3a bestehendes Guthaben
 
 ### Noch nicht
 
 - Mehrpersonen-Haushalte
 - Komplette Design-Neugestaltung
+- PWA
+- BFS Branchenvergleich
 
 ---
 
 ## Feedback-Quellen
 
-| Person | Perspektive | Stärke |
-|--------|-------------|--------|
-| Lynette (Mutter) | Ordnung, Sozialleistungen, BVG, Renten, Praxis | Reale Lebenssituation, nicht technikgetrieben |
-| Greg | UX, Design, Navigation | Visuelles Urteil, Interaktionsprobleme |
-| Annora | Sprache, Erstnutzer-Perspektive, RM-Frage | Sprachliche Sensibilität, Zugänglichkeit |
-| Sophie | Tägliche Nutzung, Fachlogik | Tiefes Produktwissen, erkennt Lücken im Alltag |
+| Person | Perspektive | Hauptmuster |
+|--------|-------------|-------------|
+| Jana | Verständlichkeit, Nutzen | 1 (Nutzen) |
+| Lynette (Mutter) | Ordnung, Sozialleistungen, Vorsorge | 3 (Verbindungen) |
+| Silvan | Logik, Datenwiederverwendung | 3 (Verbindungen) |
+| Annora | Vertrauen, Erstnutzerin, RM | 2 (Vertrauen) |
+| André | Nutzen-Kommunikation | 1 (Nutzen) |
+| Gianni | Nutzen-Kommunikation | 1 (Nutzen) |
+| Greg | UX, Design, Navigation | UX-Details |
+| Kolleg:innen | Versicherungen, Budget, Formular, Vertrauen | 1 + 2 + 3 |
+| Sophie | Tägliche Nutzung, Fachlogik | 3 (Verbindungen) |
