@@ -138,21 +138,18 @@ Das passt extrem gut zur Vision von Maloja Plana als *Lebensordner*.
 
 ### C — Später
 
-7. Wissensbank/Sandbox-Modus
-8. BFS Branchenvergleich
-9. PWA
+7. Rätoromanisch (RM) — 3 unabhängige Signale (Lynette, Annora, Jana), höher als BFS/PWA weil echte Menschen danach fragten. Siehe [language-strategy.md](../product/language-strategy.md)
+8. Wissensbank/Sandbox-Modus
+9. BFS Branchenvergleich
+10. PWA
 
 ### Beobachten
 
 - Mindestlohn besser sichtbar? (Hintergrund-Check existiert, aber Nutzer erwarten evtl. sichtbares Werkzeug)
-- Rätoromanisch-Nachfrage? (Annora fragte aktiv danach — 1 Signal, noch kein Muster)
 - Design-Farben? (Greg: "zu dunkel", "Beige" — erst ab 3/5 Testern ein Thema)
 
 ### Noch nicht
 
-- RM komplett übersetzen (1 Signal, beobachten)
-- BFS Branchenvergleich
-- PWA
 - Mehrpersonen-Haushalte
 - Komplette Design-Neugestaltung
 
