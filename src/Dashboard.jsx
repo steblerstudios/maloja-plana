@@ -225,8 +225,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }
     },
       React.createElement('div', {
-        style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.md }
-      }, t('dashboard.highlightTitle')),
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+        }, t('dashboard.highlightTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs - 1, color: palette.sage, opacity: 0.8 }
+        }, t('dashboard.highlightPrivacy'))
+      ),
       React.createElement('div', {
         style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '8px' }
       },
@@ -522,45 +529,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Notfallkarte — calm value entry ─────────────────────
-    React.createElement('button', {
-      onClick: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'notfall')),
-      style: {
-        display: 'flex', alignItems: 'center', gap: '16px',
-        width: '100%', textAlign: 'left',
-        marginBottom: space.xl,
-        padding: '16px 20px',
-        background: palette.surface,
-        borderRadius: radius.md,
-        border: '1px solid ' + palette.border + '66',
-        cursor: 'pointer',
-        fontFamily: 'inherit',
-        transition: 'border-color 0.2s',
-      },
-      onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
-      onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '66'; },
-    },
-      React.createElement('div', {
-        style: {
-          width: '36px', height: '36px', borderRadius: '10px',
-          background: palette.sand + '15',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0, color: palette.sand, fontSize: '16px',
-        }
-      }, Icons.notfall ? React.createElement('div', { style: { width: '18px', height: '18px' } }, Icons.notfall()) : '♡'),
-      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' }
-        }, t('emergencyCardEntry.title')),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
-        }, t('emergencyCardEntry.text'))
-      ),
-      React.createElement('span', {
-        style: { color: palette.mid, fontSize: text.sm, flexShrink: 0 }
-      }, '→')
-    ),
-
     // ─── MVO — Deine Grundordnung ───────────────────────────
     mvo.total > 0 && React.createElement('div', {
       style: {
@@ -778,6 +746,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
           { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
           { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
+          { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
           { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
           { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
           { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
@@ -786,8 +755,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         ].map(tool => {
           const IconFn = Icons[tool.icon];
           return React.createElement('button', {
-            key: tool.view,
-            onClick: () => onNavigate(tool.view),
+            key: tool.key || tool.view,
+            onClick: tool.action || (() => onNavigate(tool.view)),
             style: {
               padding: '14px 16px',
               background: 'transparent',
