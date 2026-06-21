@@ -68,6 +68,59 @@ Bewertung: **Stärkster UX-Gewinn bei kleinem Aufwand.** Verbesserung eines best
 
 ---
 
+## Nächste Tester — Erwartete Perspektiven
+
+| Person | Erwartete Stärke | Worauf achten |
+|--------|-----------------|---------------|
+| Jana | Verständlichkeit, Navigation, Vertrauen, visuelle Wirkung | Fühlt sich die App vertrauenswürdig an? Ist die Navigation klar? |
+| Annora | Erstnutzer-Perspektive | "Wo klicke ich?", "Was soll ich hier machen?" |
+| Silvan | Logik, technische Konsistenz, unnötige Komplexität, fehlende Verknüpfungen | Sind die Rechner plausibel? Fehlen Verbindungen? |
+| Greg | UX, Design, Navigation | Visuelles Urteil, Interaktionsprobleme |
+
+---
+
+## Signal-Kriterien
+
+### Starkes Signal (→ bauen)
+
+Mindestens 2 Personen sagen **unabhängig** dasselbe:
+
+- "Ich sehe 4/18, aber ich weiss nicht, was die 14 fehlenden Punkte sind."
+- "Wie komme ich direkt dahin?"
+- Verwirrung, Sackgassen, unnötige Klicks, fehlende Orientierung
+
+→ Dann wird aus einer Idee ein **echtes Muster** und der nächste Produkt-Commit.
+
+### Kein starkes Signal (→ dokumentieren, beobachten)
+
+Eine einzelne Person sagt:
+
+- "Mach alles blau statt beige"
+- "Dark Mode ist zu dunkel"
+- "Ich hätte gerne Rätoromanisch"
+- "Mach eine App für Familien"
+
+Das sind **Präferenzen**, keine Muster. Dokumentieren, nicht bauen.
+
+### Was wirklich zählt
+
+Die wertvollen Signale sind nicht Feature-Wünsche, sondern:
+
+- **Verwirrung** — "Was bedeutet das?"
+- **Sackgassen** — "Und jetzt?"
+- **Unnötige Klicks** — "Warum muss ich dreimal klicken?"
+- **Fehlende Orientierung** — "Wo bin ich? Was fehlt noch?"
+
+### Erkenntnis aus Mutters Feedback
+
+Lynettes Feedback war überraschend hochwertig — nicht wegen einzelner Features, sondern weil sie mehrfach auf dieselbe Grundidee hinwies:
+
+> "Zeig mir, was fehlt. Zeig mir, worauf ich achten muss. Hilf mir beim Ordnen."
+
+Das passt extrem gut zur Vision von Maloja Plana als *Lebensordner*.
+
+---
+
 ## Priorisierte Kandidatenliste
 
 ### A — Erster Beta-Nachbesserung
