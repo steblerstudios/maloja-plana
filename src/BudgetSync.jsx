@@ -50,7 +50,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     borderTop: '1px solid ' + palette.border, margin: '12px 0'
   };
   const groupHeaderStyle = {
-    ...lineStyle, fontWeight: '600', paddingTop: '10px'
+    ...lineStyle, fontWeight: weight.semi, paddingTop: '10px'
   };
 
   // Compute group totals
@@ -125,7 +125,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: text.lg, fontWeight: '600', marginBottom: '16px',
+        fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px',
         display: 'flex', alignItems: 'center', gap: '8px'
       }
     }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
@@ -143,7 +143,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       React.createElement('span', null, t('budgetSync.incomeAlimente')),
       React.createElement('span', null, formatCHF(budget.incomeDetail.alimenteReceived * mult))
     ),
-    React.createElement('div', { style: { ...lineStyle, fontWeight: '600', fontSize: text.body } },
+    React.createElement('div', { style: { ...lineStyle, fontWeight: weight.semi, fontSize: text.body } },
       React.createElement('span', null, t('budgetSync.totalIncome')),
       budget.income > 0
         ? React.createElement('span', null, formatCHF(budget.income * mult))
@@ -172,7 +172,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         React.createElement('span', null, t('budgetSync.ipvRelief')),
         React.createElement('span', null, '− ' + formatCHF(budget.ipvRelief * mult))
       ),
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: '600', marginTop: '4px', fontSize: text.sm } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: weight.semi, marginTop: '4px', fontSize: text.sm } },
         React.createElement('span', null, t('budgetSync.ipvEffective')),
         React.createElement('span', null, formatCHF(Math.max(0, budget.expenses.healthInsurance - budget.ipvRelief) * mult))
       )
@@ -198,7 +198,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Available line ===
     React.createElement('div', {
       style: {
-        ...lineStyle, fontWeight: '600', fontSize: '15px', paddingTop: '8px'
+        ...lineStyle, fontWeight: weight.semi, fontSize: '15px', paddingTop: '8px'
       }
     },
       React.createElement('span', null,

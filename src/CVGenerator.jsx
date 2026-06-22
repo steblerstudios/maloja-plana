@@ -14,35 +14,35 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'document', size: 20 }), t('cv.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'document', size: 20 }), t('cv.title')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '16px' } },
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◎ ' + t('cv.name')),
-        React.createElement('div', { style: { fontWeight: '600' } }, cv.header.name)
+        React.createElement('div', { style: { fontWeight: weight.semi } }, cv.header.name)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('cv.phone')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.header.phone)
+        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.header.phone)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('cv.profession')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.experience.current.title || '—')
+        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.experience.current.title || '—')
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '✦ ' + t('cv.qualification')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.education.highest || '—')
+        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.education.highest || '—')
       )
     ),
 
     React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '16px' } },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
-        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
+        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, preview ? '✕ ' + t('common.close') : '◉ ' + t('cv.preview')),
       React.createElement('button', {
         onClick: handleDownload,
-        style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
+        style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, '↙ ' + t('cv.downloadHtml'))
     ),
 

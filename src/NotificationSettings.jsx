@@ -61,7 +61,7 @@ export const NotificationSettings = ({ palette, t }) => {
       }
     },
       React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: '600', marginBottom: '2px' } }, label),
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '2px' } }, label),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.4 } }, description)
       ),
       React.createElement('button', {
@@ -83,7 +83,7 @@ export const NotificationSettings = ({ palette, t }) => {
   return React.createElement('div', {
     style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border }
   },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
       React.createElement(Icon, { name: 'cowbell', size: 20 }), t('notifications.title')
     ),
 
@@ -102,7 +102,7 @@ export const NotificationSettings = ({ palette, t }) => {
             background: isGranted ? palette.sage : isDenied ? palette.rose : palette.gold,
           }
         }),
-        React.createElement('span', { style: { fontSize: text.sm, fontWeight: '600' } },
+        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },
           isGranted ? t('notifications.enabled') :
           isDenied ? t('notifications.blocked') :
           !isSupported ? t('notifications.notSupported') :
@@ -115,7 +115,7 @@ export const NotificationSettings = ({ palette, t }) => {
         style: {
           padding: '10px 16px', background: palette.sand, color: '#000',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
-          fontWeight: '600', fontSize: text.sm, fontFamily: 'DM Sans, sans-serif',
+          fontWeight: weight.semi, fontSize: text.sm, fontFamily: 'DM Sans, sans-serif',
         }
       }, t('notifications.enable')),
 
@@ -126,7 +126,7 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Notification types
     React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: '600', color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
+      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
         t('notifications.categories')
       ),
 

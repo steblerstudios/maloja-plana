@@ -44,7 +44,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: '600', marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       React.createElement('div', { style: { color: palette.mid } },
         sozialhilfe.childrenCount > 0
           ? t('sozialhilfe.householdAdultsChildren', { adults: sozialhilfe.adults, children: sozialhilfe.childrenCount })
@@ -55,7 +55,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // Residence type
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: '6px', border: '1px solid ' + palette.gold, marginBottom: '16px', fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.gold, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.weeklyResidence')),
       React.createElement('div', null, t('residence.taxNote')),
       React.createElement('div', null, t('sozialhilfe.weeklyNote'))
     ),
@@ -82,10 +82,10 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // Status
     sozialhilfe.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: '6px', border: '1px solid ' + palette.gold, marginBottom: '16px' } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.gold, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.entitled')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.entitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border, marginBottom: '16px' } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.mid, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.notEntitled')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('sozialhilfe.notEntitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
@@ -95,11 +95,11 @@ export const SozialhilfeView = ({ palette, t, data }) => {
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         ipv.eligible
           ? React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px', fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
+              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: '4px', fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
             )
           : React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: '600', color: palette.mid, marginBottom: '4px', fontSize: text.sm } }, '○ ' + t(ipv.noteKey, ipv.noteParams))
+              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: '4px', fontSize: text.sm } }, '○ ' + t(ipv.noteKey, ipv.noteParams))
             )
       )
     ),
@@ -108,7 +108,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     React.createElement('div', { style: { marginBottom: '16px' } },
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.elSection')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontWeight: '600', color: el.eligible ? palette.sage : palette.mid, marginBottom: '4px', fontSize: text.sm } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: el.eligible ? palette.sage : palette.mid, marginBottom: '4px', fontSize: text.sm } },
           el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : '○ ' + t(el.noteKey, el.noteParams)
         ),
         el.isAHVIV && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } },
@@ -131,7 +131,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     // SKOS table
     React.createElement('details', { style: { marginBottom: '16px' } },
-      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: '600', color: palette.mid, padding: '8px 0' } }, '◰ ' + t('sozialhilfe.skosTable')),
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, '◰ ' + t('sozialhilfe.skosTable')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px', marginTop: '8px' } },
         Object.entries(SKOS_GRUNDBEDARF).map(([size, amount]) =>
           React.createElement('div', {
@@ -145,7 +145,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
               textAlign: 'center'
             }
           },
-            React.createElement('div', { style: { fontWeight: '600' } }, Number(size) === 1 ? t('common.person', { count: size }) : t('common.persons', { count: size })),
+            React.createElement('div', { style: { fontWeight: weight.semi } }, Number(size) === 1 ? t('common.person', { count: size }) : t('common.persons', { count: size })),
             React.createElement('div', { style: { color: palette.mid } }, formatCHF(amount))
           )
         )
