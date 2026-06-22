@@ -121,6 +121,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     result && React.createElement(React.Fragment, null,
       React.createElement('div', {
+        'aria-live': 'polite',
         style: {
           ...s.highlight,
           borderColor: result.hatAnspruch ? palette.sage : palette.border,
