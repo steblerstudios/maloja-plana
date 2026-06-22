@@ -170,6 +170,12 @@ export default {
     dark: 'Dark',
   },
 
+  progress: {
+    notStarted: 'Your journey starts here',
+    status: '{started} of {total} started · {done} completed',
+    allDone: 'All sections completed',
+  },
+
   guidedStart: {
     title: 'Ready in a few minutes',
     text: 'Three small steps — then Maloja Plana works for you.',
