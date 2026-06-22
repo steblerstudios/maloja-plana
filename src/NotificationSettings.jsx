@@ -6,6 +6,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
+import { text, weight } from './config/tokens.js';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -60,8 +61,8 @@ export const NotificationSettings = ({ palette, t }) => {
       }
     },
       React.createElement('div', { style: { flex: 1 } },
-        React.createElement('div', { style: { fontSize: '13px', fontWeight: '600', marginBottom: '2px' } }, label),
-        React.createElement('div', { style: { fontSize: '13px', color: palette.mid, lineHeight: 1.4 } }, description)
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: '600', marginBottom: '2px' } }, label),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.4 } }, description)
       ),
       React.createElement('button', {
         onClick: () => togglePref(key),
@@ -101,7 +102,7 @@ export const NotificationSettings = ({ palette, t }) => {
             background: isGranted ? palette.sage : isDenied ? palette.rose : palette.gold,
           }
         }),
-        React.createElement('span', { style: { fontSize: '13px', fontWeight: '600' } },
+        React.createElement('span', { style: { fontSize: text.sm, fontWeight: '600' } },
           isGranted ? t('notifications.enabled') :
           isDenied ? t('notifications.blocked') :
           !isSupported ? t('notifications.notSupported') :
@@ -114,18 +115,18 @@ export const NotificationSettings = ({ palette, t }) => {
         style: {
           padding: '10px 16px', background: palette.sand, color: '#000',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
-          fontWeight: '600', fontSize: '13px', fontFamily: 'DM Sans, sans-serif',
+          fontWeight: '600', fontSize: text.sm, fontFamily: 'DM Sans, sans-serif',
         }
       }, t('notifications.enable')),
 
       isDenied && React.createElement('p', {
-        style: { fontSize: '13px', color: palette.mid, marginTop: '4px' }
+        style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' }
       }, t('notifications.blockedHint'))
     ),
 
     // Notification types
     React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: '13px', fontWeight: '600', color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
+      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: '600', color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
         t('notifications.categories')
       ),
 
@@ -149,13 +150,13 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Privacy note
     React.createElement('div', {
-      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: '13px', color: palette.mid }
+      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: text.sm, color: palette.mid }
     },
       '○ ' + t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: '13px', color: palette.sage, textAlign: 'center' }
+      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: text.sm, color: palette.sage, textAlign: 'center' }
     }, '✓ ' + t('common.saved'))
   );
 };
