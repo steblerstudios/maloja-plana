@@ -310,6 +310,7 @@ export default {
       emptyState: 'Dein Kanton bestimmt Steuer, IPV und Sozialhilfe — zwei Angaben genügen.',
       emptyStateHint: 'Vorname und Wohnkanton eintragen — dauert 10 Sekunden.',
       icon: '◎',
+      benefits: ['Steuerrechner', 'Sozialhilfe', 'IPV-Prüfung', 'Lohn-Check'],
       fields: {
         firstName: 'Vorname',
         middleName: 'Zweiter Vorname',
@@ -353,6 +354,7 @@ export default {
       emptyState: 'Deine Miete fliesst in Budget und Sozialhilfe-Berechnung ein.',
       emptyStateHint: 'Adresse oder Miete eintragen — den Rest kannst Du später ergänzen.',
       icon: '⌂',
+      benefits: ['Sozialhilfe', 'Budget-Übersicht', 'Wohnkostenanteil'],
       fields: {
         address: 'Strasse & Hausnummer',
         postalCode: 'PLZ',
@@ -380,6 +382,7 @@ export default {
       emptyState: 'Dein Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.',
       emptyStateHint: 'Monatslohn eintragen — dauert 10 Sekunden.',
       icon: '◇',
+      benefits: ['Steuerrechner', 'IPV-Prüfung', 'Sozialhilfe', 'Mindestlohn-Check'],
       fields: {
         monthlyIncome: 'Monatliches Einkommen CHF',
         incomeType: { label: 'Einkommensart', options: { netto: 'Netto (was ich erhalte)', brutto: 'Brutto (vor Abzügen)' } },
@@ -431,6 +434,7 @@ export default {
       emptyState: 'Deine KK-Prämie bestimmt, ob Du Anspruch auf Prämienverbilligung hast.',
       emptyStateHint: 'Krankenkasse eintragen — den Rest kannst Du später ergänzen.',
       icon: '◰',
+      benefits: ['IPV-Prüfung', 'Prämienvergleich', 'Vorsorge-Rechner'],
       fields: {
         kkInsurer: 'Krankenkasse',
         kkModel: { label: 'KK-Modell', options: { basic: 'Basic', standard: 'Standard', comfort: 'Comfort' } },
@@ -471,6 +475,7 @@ export default {
       emptyState: 'Beruf und Beschäftigungsgrad fliessen in Steuer und Vorsorge-Überblick ein.',
       emptyStateHint: 'Aktueller Beruf oder Ausbildung eintragen — 30 Sekunden.',
       icon: '✦',
+      benefits: ['Mindestlohn-Check', 'Steuerrechner'],
       fields: {
         schoolName: 'Schule/Universität',
         educationLevel: { label: 'Höchster Abschluss', options: { mandatory: 'Obligatorische Schule', apprenticeship: 'Lehre EFZ', vocMatura: 'Berufsmaturität', matura: 'Matura', bachelor: 'Bachelor', master: 'Master', doctorate: 'Doktorat' } },
@@ -496,6 +501,7 @@ export default {
       emptyState: 'Behördenkontakte griffbereit — spart Zeit beim nächsten Termin oder Anruf.',
       emptyStateHint: 'Sozialdienst, Steuerverwaltung, Beistand — trage ein, was Du weisst.',
       icon: '◉',
+      benefits: ['Steuerrechner', 'Direkt-Links'],
       fields: {
         cantoneOfTaxation: 'Steuerkanton',
         taxId: 'Steuernummer',
@@ -522,6 +528,7 @@ export default {
       emptyState: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.',
       emptyStateHint: 'Ein Kontakt mit Telefonnummer genügt als Anfang.',
       icon: '⚠',
+      benefits: ['Notfallkarte', 'Vorsorge-Übersicht'],
       fields: {
         emergencyContact: 'Notfall-Kontaktperson',
         emergencyPhone: 'Telefon Notfall',
@@ -621,6 +628,7 @@ export default {
   },
 
   chapterView: {
+    benefitsLabel: 'Deine Daten fliessen in:',
     emptyState: 'Noch leer — ein paar Angaben genügen, und Maloja arbeitet für Dich.',
     emptyStateHint: 'Du kannst jederzeit ergänzen. Nichts muss auf einmal erledigt werden.',
     fields: 'Angaben',

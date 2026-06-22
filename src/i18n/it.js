@@ -309,6 +309,7 @@ export default {
       emptyState: 'Il tuo cantone determina imposte, riduzione premi e assistenza sociale — bastano due dati.',
       emptyStateHint: 'Nome e cantone — 10 secondi.',
       icon: '◎',
+      benefits: ['Calcolatore fiscale', 'Assistenza sociale', 'Riduzione premi', 'Salario minimo'],
       fields: {
         firstName: 'Nome',
         middleName: 'Secondo nome',
@@ -352,6 +353,7 @@ export default {
       emptyState: 'Il tuo affitto alimenta il budget e il calcolo dell\'assistenza sociale.',
       emptyStateHint: 'Indirizzo o affitto — il resto puoi aggiungerlo dopo.',
       icon: '⌂',
+      benefits: ['Assistenza sociale', 'Panoramica budget', 'Quota affitto'],
       fields: {
         address: 'Via e numero civico',
         postalCode: 'Codice postale',
@@ -379,6 +381,7 @@ export default {
       emptyState: 'Il tuo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.',
       emptyStateHint: 'Inserisci il salario mensile — 10 secondi.',
       icon: '◇',
+      benefits: ['Calcolatore fiscale', 'Riduzione premi', 'Assistenza sociale', 'Salario minimo'],
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
         incomeType: { label: 'Tipo di reddito', options: { netto: 'Netto (quello che ricevo)', brutto: 'Lordo (prima delle deduzioni)' } },
@@ -430,6 +433,7 @@ export default {
       emptyState: 'Il tuo premio cassa malati determina se hai diritto alla riduzione dei premi.',
       emptyStateHint: 'Inserisci la cassa malati — il resto puoi aggiungerlo dopo.',
       icon: '◰',
+      benefits: ['Riduzione premi', 'Confronto premi', 'Calcolatore previdenza'],
       fields: {
         kkInsurer: 'Cassa malati',
         kkModel: { label: 'Modello assicurativo', options: { basic: 'Base', standard: 'Standard', comfort: 'Comfort' } },
@@ -470,6 +474,7 @@ export default {
       emptyState: 'La tua professione e il grado di occupazione alimentano la panoramica fiscale e previdenziale.',
       emptyStateHint: 'Professione o formazione attuale — 30 secondi.',
       icon: '✦',
+      benefits: ['Salario minimo', 'Calcolatore fiscale'],
       fields: {
         schoolName: 'Scuola / Università',
         educationLevel: { label: 'Qualifica più alta', options: { mandatory: 'Scuola dell\'obbligo', apprenticeship: 'Apprendistato (AFC)', vocMatura: 'Maturità professionale', matura: 'Maturità', bachelor: 'Bachelor', master: 'Master', doctorate: 'Dottorato' } },
@@ -495,6 +500,7 @@ export default {
       emptyState: 'Contatti con le autorità a portata di mano — risparmia tempo al prossimo appuntamento.',
       emptyStateHint: 'Servizio sociale, amministrazione fiscale, curatore — inserisci quello che sai.',
       icon: '◉',
+      benefits: ['Calcolatore fiscale', 'Link diretti'],
       fields: {
         cantoneOfTaxation: 'Cantone fiscale',
         taxId: 'Numero fiscale',
@@ -521,6 +527,7 @@ export default {
       emptyState: 'La tua scheda di emergenza — pronta in 2 minuti, lì quando serve.',
       emptyStateHint: 'Un contatto con un numero di telefono basta per iniziare.',
       icon: '⚠',
+      benefits: ["Scheda d'emergenza", 'Panoramica previdenza'],
       fields: {
         emergencyContact: 'Persona di contatto in caso di emergenza',
         emergencyPhone: 'Telefono di emergenza',
@@ -620,6 +627,7 @@ export default {
   },
 
   chapterView: {
+    benefitsLabel: 'I tuoi dati confluiscono in:',
     fields: 'Dati',
     documents: 'Documenti',
     selectOption: '— Seleziona —',
