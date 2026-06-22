@@ -6,7 +6,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius , space, fontFamily } from './config/tokens.js';
+import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -40,7 +40,7 @@ export const NotificationSettings = ({ palette, t }) => {
     background: enabled ? palette.sage : palette.up,
     border: '1px solid ' + (enabled ? palette.sage : palette.border),
     cursor: 'pointer', position: 'relative',
-    transition: 'all 0.2s', flexShrink: 0,
+    transition: `all ${duration.normal}ms ${ease}`, flexShrink: 0,
   });
 
   const toggleDot = (enabled) => ({
@@ -48,7 +48,7 @@ export const NotificationSettings = ({ palette, t }) => {
     background: enabled ? '#fff' : palette.mid,
     position: 'absolute', top: '2px',
     left: enabled ? '22px' : '2px',
-    transition: 'all 0.2s',
+    transition: `all ${duration.normal}ms ${ease}`,
   });
 
   const renderToggle = (key, label, description) => {

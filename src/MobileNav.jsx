@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, space, shadow } from './config/tokens.js';
+import { text, weight, space, shadow, ease, duration } from './config/tokens.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -41,7 +41,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
-        transition: 'background 0.15s',
+        transition: `background ${duration.fast}ms ${ease}`,
       }
     },
       React.createElement('div', { style: { color: isActive ? palette.sand : palette.mid, flexShrink: 0 } },
@@ -159,7 +159,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           display: 'flex', alignItems: 'center', gap: space.sm,
         }
       },
-        React.createElement('span', { style: { fontSize: '9px', transition: 'transform 0.2s', transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
+        React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
         t('nav.moreTools')
       ),
 

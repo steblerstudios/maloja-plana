@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius , leading , space } from './config/tokens.js';
+import { text, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
 const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
@@ -14,7 +14,7 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
       padding: '20px', background: palette.up, borderRadius: radius.sm,
       border: '1px solid ' + palette.border, marginBottom: '12px',
       cursor: isClickable ? 'pointer' : 'default',
-      transition: 'border-color 0.15s',
+      transition: `border-color ${duration.fast}ms ${ease}`,
     }
   },
     React.createElement('div', {

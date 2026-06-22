@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { text, weight } from './config/tokens.js';
+import { text, weight, ease, duration } from './config/tokens.js';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
   const [visible, setVisible] = useState(false);
@@ -31,7 +31,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
       gap: '5px',
       zIndex: 100,
       opacity: visible ? 1 : 0,
-      transition: 'opacity 0.4s ease',
+      transition: `opacity ${duration.slow}ms ${ease}`,
       pointerEvents: 'none',
     }
   },
