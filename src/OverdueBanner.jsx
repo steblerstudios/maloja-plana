@@ -62,16 +62,16 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
 
     React.createElement('div', { style: { flex: 1 } },
       overdue.length > 0 && React.createElement('div', {
-        style: { fontSize: '13px', fontWeight: '600', marginBottom: dueToday.length > 0 ? '2px' : 0 }
+        style: { fontSize: text.sm, fontWeight: '600', marginBottom: dueToday.length > 0 ? '2px' : 0 }
       }, t ? t('overdue.overdueCount', { count: overdue.length }) : overdue.length + ' overdue'),
 
       dueToday.length > 0 && React.createElement('div', {
-        style: { fontSize: '13px', color: palette.mid }
+        style: { fontSize: text.sm, color: palette.mid }
       }, t ? t('overdue.dueTodayCount', { count: dueToday.length }) : dueToday.length + ' due today')
     ),
 
     React.createElement('span', {
-      style: { fontSize: '13px', color: palette.mid, flexShrink: 0 }
+      style: { fontSize: text.sm, color: palette.mid, flexShrink: 0 }
     }, '→')
   );
 };
