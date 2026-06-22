@@ -1708,6 +1708,7 @@ export default {
     leave: 'Beispiel verlassen',
     enterLink: 'Beispiel ansehen',
     enterSubtitle: 'So sieht ein ausgefüllter Lebensordner aus.',
+    ctaButton: 'Beispiel ansehen — so sieht ein ausgefüllter Ordner aus',
     footerLink: 'Beispiel',
     readOnlyHint: 'Im Beispiel-Modus können keine Daten bearbeitet werden.',
     exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
