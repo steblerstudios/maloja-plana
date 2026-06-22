@@ -259,7 +259,9 @@ export function calculateSozialhilfe(data) {
   };
 }
 
-// Kantonale IPV-Berechnung (ersetzt die alte pauschale Logik)
+// Kantonale IPV-Berechnung — einkommensabhängig
+// Modell: linearer Abbau der Verbilligung zwischen 0 und maxIncome.
+// Bei Einkommen = 0 → voller Betrag, bei maxIncome → 0.
 export function calculateIPV(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
@@ -273,17 +275,27 @@ export function calculateIPV(data) {
     return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
   }
 
-  let monthlySubsidy;
+  let maxAnnualSubsidy;
   if (childrenCount > 0) {
-    monthlySubsidy = Math.round((ipvData.subsidyFamily + childrenCount * ipvData.subsidyChild) / 12);
+    maxAnnualSubsidy = ipvData.subsidyFamily + childrenCount * ipvData.subsidyChild;
   } else {
-    monthlySubsidy = Math.round(ipvData.subsidySingle / 12);
+    maxAnnualSubsidy = ipvData.subsidySingle;
+  }
+
+  const reductionFactor = income > 0 ? Math.max(0, 1 - (income / ipvData.maxIncome)) : 1;
+  const annualSubsidy = Math.round(maxAnnualSubsidy * reductionFactor);
+  const monthlySubsidy = Math.round(annualSubsidy / 12);
+
+  if (annualSubsidy <= 0) {
+    return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
   }
 
   return {
     eligible: true,
     amount: monthlySubsidy,
-    annual: monthlySubsidy * 12,
+    annual: annualSubsidy,
+    maxAnnual: maxAnnualSubsidy,
+    reductionPercent: Math.round(reductionFactor * 100),
     noteKey: ipvData.noteKey,
     noteParams: ipvData.noteParams || {},
     canton,
