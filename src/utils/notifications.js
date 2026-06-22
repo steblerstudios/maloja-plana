@@ -11,7 +11,7 @@ const SW_PATH = '/sw.js';
 // ─── Service Worker Registration ───────────────────────────
 export const registerServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) {
-    console.log('[Notifications] Service workers not supported');
+    console.info('[Notifications] Service workers not supported');
     return null;
   }
 
@@ -19,7 +19,7 @@ export const registerServiceWorker = async () => {
     const registration = await navigator.serviceWorker.register(SW_PATH, {
       scope: '/',
     });
-    console.log('[Notifications] SW registered:', registration.scope);
+    console.info('[Notifications] SW registered:', registration.scope);
     return registration;
   } catch (error) {
     console.error('[Notifications] SW registration failed:', error);
