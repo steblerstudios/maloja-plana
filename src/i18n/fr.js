@@ -1108,6 +1108,8 @@ export default {
     notEligible: 'Non éligible',
     monthlySubsidy: 'Subside mensuel',
     annualSubsidy: 'Subside annuel',
+    reductionNote: 'Selon le revenu ({percent}% du maximum)',
+    maxPossible: 'Maximum: CHF {value}/an',
     taxSavings: 'Économies d\'impôts',
     compareCantons: 'Comparer tous les cantons',
     requiredDocs: 'Documents requis',

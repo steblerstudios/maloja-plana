@@ -10,7 +10,7 @@
 |---|---|---|
 | **Sozialhilfe: Haushalt** | Berechnung nimmt `1 + Abhängige` statt differenzierte SKOS-Zusammensetzung (Erwachsene vs. Kinder) | Betrag kann bei Familien leicht abweichen |
 | **Steuerrechner** | Kantonale Schätzung basiert auf Hauptort-Multiplikatoren, nicht auf exaktem kantonalem Tarif | Betrag kann je nach Gemeinde abweichen |
-| **IPV** | Pauschale Schätzung, nicht kantonal differenziert | Anspruch kann kantonal anders sein |
+| **IPV** | Lineares Modell (Abbau bis maxIncome) statt exaktem kantonalem Stufentarif | Betrag ist Orientierung, nicht verbindlich |
 
 ## Visuelle Inkonsistenzen
 

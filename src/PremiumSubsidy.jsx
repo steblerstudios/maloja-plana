@@ -87,11 +87,17 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: space.md } },
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.monthlySubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + ipvResult.amount)
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + ipvResult.amount),
+          ipvResult.reductionPercent != null && ipvResult.reductionPercent < 100 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+            t('premium.reductionNote', { percent: ipvResult.reductionPercent })
+          )
         ),
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.annualSubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (ipvResult.annual || 0))
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (ipvResult.annual || 0)),
+          ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+            t('premium.maxPossible', { value: ipvResult.maxAnnual })
+          )
         ),
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.taxSavings')),
