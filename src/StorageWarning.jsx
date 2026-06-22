@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getStorageStatus } from './utils/storageMonitor.js';
-import { space, text, radius, leading } from './config/tokens.js';
+import { space, text, radius, leading, weight } from './config/tokens.js';
 
 // ─── Storage Warning Banner ─────────────────────────────────
 // Shows a calm, non-intrusive banner when localStorage usage
@@ -53,7 +53,7 @@ export const StorageWarning = ({ palette, t }) => {
 
     React.createElement('div', { style: { flex: 1 } },
       React.createElement('div', {
-        style: { fontWeight: '600', marginBottom: '2px' }
+        style: { fontWeight: weight.semi, marginBottom: '2px' }
       }, t('storage.warningTitle')),
       React.createElement('div', {
         style: { color: palette.mid }

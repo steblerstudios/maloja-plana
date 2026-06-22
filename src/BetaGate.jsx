@@ -44,7 +44,7 @@ export const BetaGate = ({ children }) => {
       }
     },
       React.createElement('h1', {
-        style: { fontSize: '20px', fontWeight: '600', marginBottom: '8px', color: palette.text }
+        style: { fontSize: '20px', fontWeight: weight.semi, marginBottom: '8px', color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: '1.5' }
@@ -70,7 +70,7 @@ export const BetaGate = ({ children }) => {
         style: {
           marginTop: '16px', width: '100%', padding: '10px', fontSize: text.body,
           background: palette.sand, color: '#fff', border: 'none',
-          borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontFamily: 'inherit',
+          borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
       }, t('beta.enter'))
     )

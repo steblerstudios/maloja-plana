@@ -151,7 +151,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
     // Debts View
     view === 'debts' && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('schulden.addDebt')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.addDebt')),
 
       React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', marginBottom: '16px', border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), style: inputStyle }),
@@ -170,7 +170,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
-            React.createElement('span', { style: { fontWeight: '600', color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.rose : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.rose : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             debt.dueDate + ' | ' + debt.status
@@ -184,7 +184,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       ),
 
       debtPlan && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px', maxHeight: '400px', overflowY: 'auto' } },
-        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: '600', marginBottom: '8px' } }, t('schulden.paymentPlanTitle', { amount: 500 })),
+        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '8px' } }, t('schulden.paymentPlanTitle', { amount: 500 })),
         debtPlan.slice(0, 12).map((month, idx) => React.createElement('div', { key: idx, style: { fontSize: text.xs, padding: '4px', borderBottom: '1px solid ' + palette.border } },
           '#' + month.month + ': CHF ' + month.payment + ' (' + t('budgetSync.remaining') + ': CHF ' + month.remaining + ')'
         ))
@@ -193,7 +193,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
     // Betreibung View
     view === 'betreibung' && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('schulden.debtCollection')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.debtCollection')),
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: '16px' } }, '+ ' + t('schulden.addDebt')),
 
@@ -201,7 +201,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, background: entry.status === 'erledigt' ? palette.up : palette.rose + '22' } },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, entry.creditor || t('schulden.creditor')),
-            React.createElement('span', { style: { fontWeight: '600', color: palette.rose } }, 'CHF ' + entry.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: palette.rose } }, 'CHF ' + entry.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             entry.registerDate + ' | ' + entry.status
@@ -212,7 +212,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
     // Verlustscheine View
     view === 'verlustscheine' && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('schulden.lossReceipts')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.lossReceipts')),
 
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: '16px' } }, '+ ' + t('schulden.lossReceipts')),
 
@@ -220,7 +220,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, entry.creditor),
-            React.createElement('span', { style: { fontWeight: '600' } }, 'CHF ' + entry.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + entry.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             entry.date + ' | ' + (entry.court || '—')

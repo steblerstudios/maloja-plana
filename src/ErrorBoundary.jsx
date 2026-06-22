@@ -1,5 +1,5 @@
 import React from 'react';
-import { text } from './config/tokens.js';
+import { text, weight } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -59,7 +59,7 @@ export class ErrorBoundary extends React.Component {
           React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
           React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
         ),
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '8px' } },
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '8px' } },
           t ? t('error.title') : 'Something went wrong'
         ),
         React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: '24px', lineHeight: 1.5 } },
@@ -72,7 +72,7 @@ export class ErrorBoundary extends React.Component {
             style: {
               padding: '10px 20px', background: sand, color: '#000',
               border: 'none', borderRadius: '6px', cursor: 'pointer',
-              fontWeight: '600', fontSize: text.sm
+              fontWeight: weight.semi, fontSize: text.sm
             }
           }, t ? t('error.tryAgain') : 'Try again'),
           React.createElement('button', {
@@ -80,7 +80,7 @@ export class ErrorBoundary extends React.Component {
             style: {
               padding: '10px 20px', background: 'transparent', color: text,
               border: '1px solid ' + border, borderRadius: '6px',
-              cursor: 'pointer', fontWeight: '600', fontSize: text.sm
+              cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }
           }, t ? t('error.reload') : 'Reload page')
         ),
