@@ -154,13 +154,22 @@ export const validateKKData = (data, t) => {
   };
 };
 
+const ALLOWED_KK_FIELDS = ['type', 'insurer', 'cardNumber', 'ahv', 'name', 'firstName', 'birthDate', 'model', 'franchise'];
+
 export const parseKKQRCode = (qrText) => {
+  if (typeof qrText !== 'string' || qrText.length > 2000) return null;
   try {
     const data = JSON.parse(qrText);
-    if (data.type === 'KK_CARD') {
-      return data;
+    if (typeof data !== 'object' || data === null || Array.isArray(data)) return null;
+    if (data.type !== 'KK_CARD') return null;
+    const sanitized = {};
+    for (const key of ALLOWED_KK_FIELDS) {
+      if (key in data && (typeof data[key] === 'string' || typeof data[key] === 'number')) {
+        sanitized[key] = typeof data[key] === 'string' ? data[key].slice(0, 200) : data[key];
+      }
     }
-    return null;
+    if (!sanitized.type) return null;
+    return sanitized;
   } catch (e) {
     return null;
   }
