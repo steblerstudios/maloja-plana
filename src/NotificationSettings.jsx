@@ -83,7 +83,7 @@ export const NotificationSettings = ({ palette, t }) => {
   return React.createElement('div', {
     style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border }
   },
-    React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
       React.createElement(Icon, { name: 'cowbell', size: 20 }), t('notifications.title')
     ),
 

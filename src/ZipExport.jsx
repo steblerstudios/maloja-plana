@@ -223,7 +223,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     // Left column: existing export + new backup export
     React.createElement('div', null,
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, marginBottom: '20px' } },
-        React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'download', size: 20 }), t('zipExport.title')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'download', size: 20 }), t('zipExport.title')),
 
         // Summary
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '12px', marginBottom: '16px' } },
@@ -273,7 +273,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
       // Encrypted backup export
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-        React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'lock', size: 20 }), t('backup.title')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'lock', size: 20 }), t('backup.title')),
 
         sessionBackupCount > 0 && React.createElement('div', {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: '6px' }
@@ -304,11 +304,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     // Right column: import/restore
     React.createElement('div', null,
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-        React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'upload', size: 20 }), t('backup.importFile')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'upload', size: 20 }), t('backup.importFile')),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: '8px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, style: { display: 'none' } }),
-          React.createElement('div', { style: { fontSize: '18px', marginBottom: '4px' } }, '□'),
+          React.createElement('div', { style: { fontSize: text.lg, marginBottom: '4px' } }, '□'),
           React.createElement('div', { style: { fontWeight: '600' } }, t('backup.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } }, t('backup.fileTypes'))
         ),

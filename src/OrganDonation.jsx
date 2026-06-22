@@ -60,7 +60,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
 
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('organ.status')),
       React.createElement('div', { style: { display: 'grid', gap: '8px', marginBottom: '20px' } },
@@ -99,7 +99,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
     // Right: Info & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: '6px', marginBottom: '16px', fontSize: text.sm } },
         React.createElement('strong', null, '✓ ' + t('organ.status') + ': '),
