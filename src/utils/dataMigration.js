@@ -142,19 +142,4 @@ export function migrateData(rawData) {
   return { data: current, migrated: true, fromVersion, toVersion: version, error: null };
 }
 
-/**
- * Strip internal metadata from data before passing to components.
- * Components should never see _version, _migratedAt, etc.
- * Returns the chapter data without metadata keys.
- */
-export function getChapterData(data, chapterKey) {
-  return (data && data[chapterKey]) || {};
-}
 
-/**
- * Check if a pre-migration backup exists.
- * Useful for a future "restore previous version" feature.
- */
-export function hasPreMigrationBackup() {
-  return localStorage.getItem('or5_data_premigration') !== null;
-}
