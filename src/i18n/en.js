@@ -50,7 +50,7 @@ export default {
       contact: 'Who should be contacted first? A name and phone number are enough to start.',
       medical: 'What doctors and paramedics should know about you in an emergency.',
       care: 'Your family doctor and preferred hospital — so this information is findable when needed.',
-      provision: 'Advance directive, power of attorney, funeral wishes. Topics to settle once and file away.',
+      provision: 'Three documents protect you and your family: The advance directive covers medical decisions (CC Art. 370). The power of attorney appoints someone to act on your behalf if incapacitated (CC Art. 360). Both must be handwritten or notarized. Once done — filed for good.',
     },
   },
   common: {
@@ -917,8 +917,9 @@ export default {
     sozialdienst: 'Your municipality\'s social services office is the first point of contact for support. A conversation is non-binding and confidential.',
     steuerverwaltung: 'Filing a tax return is mandatory in Switzerland — even with a low income. The cantonal tax office can help with questions.',
     beruf: 'Your occupation and qualifications are relevant for work permits, insurance, and benefit eligibility.',
-    patientenverfuegung: 'An advance directive records which medical treatments you wish to receive if you can no longer express yourself.',
-    vorsorgeauftrag: 'A power of attorney for personal care determines who makes decisions for you when you no longer can. It must be entirely handwritten.',
+    patientenverfuegung: 'An advance directive records which medical treatments you wish if you can no longer express yourself. Must be handwritten or notarized (CC Art. 370). Templates available from FMH or the Red Cross — best discussed with your family doctor.',
+    vorsorgeauftrag: 'A power of attorney appoints someone to handle your finances, legal affairs, and personal care if you become incapacitated. Must be entirely handwritten or notarized (CC Art. 360). The KESB reviews it when needed. Registration at your municipality recommended.',
+    testament: 'Without a will, Swiss statutory succession applies (CC Art. 457 ff.). A handwritten will must be written entirely by hand, dated, and signed. Notarial authentication is more secure. Deposit with the district court or notary recommended.',
     // ─── P0: Context hints (data-driven) ───────────────────
     contextIpv: 'Depending on your income, you may be eligible for a reduction on your health insurance premium. Check with your municipality or canton.',
     contextFamilienzulagen: 'You are entitled to family allowances for your children. The amount depends on the canton. Your employer can help you with this.',

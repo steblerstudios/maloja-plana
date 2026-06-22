@@ -50,7 +50,7 @@ export default {
       contact: 'Qui doit être informé en premier ? Un nom et un numéro de téléphone suffisent pour commencer.',
       medical: 'Ce que les médecins et secouristes doivent savoir sur vous en cas d\'urgence.',
       care: 'Votre médecin de famille et votre hôpital préféré — pour que cette information soit trouvable quand il le faut.',
-      provision: 'Directives anticipées, mandat pour cause d\'inaptitude, volontés funéraires. Des sujets à régler une fois et à classer.',
+      provision: 'Trois documents vous protègent, vous et vos proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d\'inaptitude désigne qui agit en votre nom (CC art. 360). Les deux doivent être manuscrits ou notariés. Une fois fait — classé pour de bon.',
     },
   },
   common: {
@@ -916,8 +916,9 @@ export default {
     sozialdienst: 'Le service social de ta commune est le premier interlocuteur pour obtenir du soutien. Un entretien est sans engagement et confidentiel.',
     steuerverwaltung: 'La déclaration d\'impôts est obligatoire en Suisse — même avec un petit revenu. L\'administration fiscale cantonale peut t\'aider.',
     beruf: 'Ta profession et tes qualifications sont pertinentes pour les permis de travail, les assurances et les droits aux prestations.',
-    patientenverfuegung: 'Les directives anticipées précisent quels traitements médicaux tu souhaites recevoir si tu ne peux plus t\'exprimer.',
-    vorsorgeauftrag: 'Un mandat pour cause d\'inaptitude désigne la personne qui prendra des décisions pour toi si tu ne le peux plus. Il doit être entièrement rédigé à la main.',
+    patientenverfuegung: 'Les directives anticipées précisent quels traitements médicaux tu souhaites si tu ne peux plus t\'exprimer. Doivent être manuscrites ou notariées (CC art. 370). Des modèles sont disponibles auprès de la FMH ou de la Croix-Rouge — à discuter avec ton médecin.',
+    vorsorgeauftrag: 'Un mandat pour cause d\'inaptitude désigne qui gère tes finances, tes affaires juridiques et ton bien-être si tu deviens incapable de discernement. Doit être entièrement manuscrit ou notarié (CC art. 360). L\'APEA le vérifie le cas échéant. Dépôt auprès de la commune recommandé.',
+    testament: 'Sans testament, la succession légale suisse s\'applique (CC art. 457 ss.). Un testament olographe doit être entièrement écrit à la main, daté et signé. L\'acte authentique chez le notaire est plus sûr. Dépôt auprès du tribunal de district ou du notaire recommandé.',
     // ─── P0 : Indices contextuels (selon les données) ──────
     contextIpv: 'Selon ton revenu, tu pourrais avoir droit à une réduction de ta prime d\'assurance maladie. Renseigne-toi auprès de ta commune ou de ton canton.',
     contextFamilienzulagen: 'Tu as droit à des allocations familiales pour tes enfants. Le montant dépend du canton. Ton employeur peut t\'aider.',
