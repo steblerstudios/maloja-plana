@@ -173,6 +173,8 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           if (results.length === 0) {
             results.push(React.createElement('div', {
               key: 'no-results',
+              role: 'status',
+              'aria-live': 'polite',
               style: { padding: '20px', textAlign: 'center', fontSize: text.sm, color: palette.mid }
             }, t('common.noResults') || 'Keine Ergebnisse'));
           }
