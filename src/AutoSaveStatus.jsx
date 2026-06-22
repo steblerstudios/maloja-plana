@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { text } from './config/tokens.js';
+import { text, weight } from './config/tokens.js';
 
 export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
   const [visible, setVisible] = useState(false);
@@ -23,7 +23,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving }) => {
       padding: '6px 12px',
       borderRadius: '4px',
       fontSize: text.sm,
-      fontWeight: '500',
+      fontWeight: weight.medium,
       color: palette.mid,
       background: 'transparent',
       display: 'flex',

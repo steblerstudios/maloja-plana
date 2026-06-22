@@ -29,7 +29,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     },
       React.createElement('div', {
         style: {
-          fontSize: text.sm, fontWeight: '600', color: palette.text,
+          fontSize: text.sm, fontWeight: weight.semi, color: palette.text,
           marginBottom: '8px', letterSpacing: '0.2px',
         }
       }, section.title),
@@ -43,7 +43,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           }
         },
           React.createElement('span', { style: { color: palette.mid } }, row.label),
-          React.createElement('span', { style: { fontWeight: '500', textAlign: 'right', maxWidth: '55%' } }, row.value)
+          React.createElement('span', { style: { fontWeight: weight.medium, textAlign: 'right', maxWidth: '55%' } }, row.value)
         )
       )
     );
@@ -82,7 +82,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     },
       React.createElement('h2', {
         style: {
-          fontSize: text.lg, fontWeight: '600', marginBottom: '6px',
+          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
           display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px',
         }
       }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
@@ -113,7 +113,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         width: '100%', padding: '12px', marginBottom: '20px',
         background: palette.sand, color: '#fff', border: 'none',
         borderRadius: '6px', cursor: 'pointer',
-        fontSize: text.sm, fontWeight: '500', fontFamily: 'inherit',
+        fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
         letterSpacing: '0.2px',
       }
     }, t('notfallDossier.printAction')),

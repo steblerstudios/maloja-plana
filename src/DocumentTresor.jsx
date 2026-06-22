@@ -137,7 +137,7 @@ export const DocumentTresor = ({
     },
       React.createElement('div', { style: { fontSize: text.sm, minWidth: 0 } },
         React.createElement('div', {
-          style: { fontWeight: '600', marginBottom: '3px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.sm }
+          style: { fontWeight: weight.semi, marginBottom: '3px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.sm }
         },
           React.createElement('span', null, chapter?.icon || '□'),
           doc.type
@@ -175,16 +175,16 @@ export const DocumentTresor = ({
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '4px' } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
-          style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '↙'),
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
-          style: { padding: '10px 12px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '○'),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
-          style: { padding: '10px 12px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: '600', minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '✕'),
       ),
     );
@@ -230,13 +230,13 @@ export const DocumentTresor = ({
           borderColor: !showArchive ? palette.sand : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.sage } }, stats.active),
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.sage } }, stats.active),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active')),
       ),
       React.createElement('div', {
         style: { padding: '10px', background: palette.up, borderRadius: '6px', textAlign: 'center', border: '2px solid ' + palette.border },
       },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.gold } }, stats.expiring),
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.gold } }, stats.expiring),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon')),
       ),
       React.createElement('button', {
@@ -249,7 +249,7 @@ export const DocumentTresor = ({
           borderColor: showArchive ? palette.rose : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: '16px', fontWeight: '600', color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.rose } }, stats.archived),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive')),
       ),
     ),

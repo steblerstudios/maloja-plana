@@ -43,7 +43,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
 
   if (!hasProfile) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: text.sm, color: palette.mid } },
         '○ ' + t('premium.enterCanton')
       )
@@ -51,11 +51,11 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
   }
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '16px', fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: '600', marginBottom: '6px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
         React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
         React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
@@ -66,17 +66,17 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
 
     // Residence type warning
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: '6px', border: '1px solid ' + palette.gold, marginBottom: '16px', fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.gold, marginBottom: '4px' } }, '○ ' + t('premium.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: '4px' } }, '○ ' + t('premium.weeklyResidence')),
       React.createElement('div', null, t('premium.weeklyIpvNote')),
       React.createElement('div', null, t('premium.weeklyKkNote'))
     ),
 
     // Eligibility Status
     ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: '6px', border: '1px solid ' + palette.sage, marginBottom: '16px' } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.sage, marginBottom: '4px' } }, '✓ ' + t('premium.eligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: '4px' } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border, marginBottom: '16px' } },
-      React.createElement('div', { style: { fontWeight: '600', color: palette.mid, marginBottom: '4px' } }, '○ ' + t('premium.notEligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
 
@@ -87,21 +87,21 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '16px' } },
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.monthlySubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: '600', color: palette.text } }, 'CHF ' + ipvResult.amount)
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + ipvResult.amount)
         ),
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.annualSubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: '600', color: palette.text } }, 'CHF ' + (ipvResult.annual || 0))
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (ipvResult.annual || 0))
         ),
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('premium.taxSavings')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: '600', color: palette.text } }, '~ CHF ' + taxSavings + t('common.perYear'))
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + taxSavings + t('common.perYear'))
         )
       ),
 
       // All cantons overview
       React.createElement('details', { style: { marginBottom: '16px' } },
-        React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: '600', color: palette.mid, padding: '8px 0' } }, '◰ ' + t('premium.compareCantons')),
+        React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, '◰ ' + t('premium.compareCantons')),
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px', marginTop: '8px' } },
           Object.entries(CANTONAL_IPV).map(([key, val]) =>
             React.createElement('div', {
@@ -114,7 +114,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
                 fontSize: text.sm
               }
             },
-              React.createElement('div', { style: { fontWeight: '600' } }, key + ' — ' + getCantonName(key, t)),
+              React.createElement('div', { style: { fontWeight: weight.semi } }, key + ' — ' + getCantonName(key, t)),
               React.createElement('div', { style: { color: palette.mid } }, 'Max: CHF ' + val.maxIncome.toLocaleString() + ' | Single: CHF ' + val.subsidySingle + t('common.perYear'))
             )
           )
@@ -123,7 +123,7 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
 
       // Checklist
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '16px' } },
-        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: '600', marginBottom: '10px' } }, '□ ' + t('premium.requiredDocs') + ':'),
+        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, '□ ' + t('premium.requiredDocs') + ':'),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
             React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc)
@@ -136,16 +136,16 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
         React.createElement('button', {
           onClick: handleApplyOnline,
           disabled: !ipvResult.eligible,
-          style: { padding: '10px', background: ipvResult.eligible ? palette.sand : palette.mid, color: '#fff', border: 'none', borderRadius: '6px', cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: '600', fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
+          style: { padding: '10px', background: ipvResult.eligible ? palette.sand : palette.mid, color: '#fff', border: 'none', borderRadius: '6px', cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '↗ ' + t('premium.applyOnline')),
         React.createElement('button', {
           onClick: handleDownloadDocument,
           disabled: !ipvResult.eligible,
-          style: { padding: '10px', background: ipvResult.eligible ? palette.sky : palette.mid, color: '#fff', border: 'none', borderRadius: '6px', cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: '600', fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
+          style: { padding: '10px', background: ipvResult.eligible ? palette.sky : palette.mid, color: '#fff', border: 'none', borderRadius: '6px', cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '□ ' + t('premium.document')),
         React.createElement('button', {
           onClick: () => setShowCalculation(false),
-          style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
+          style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, '✕ ' + t('common.close'))
       )
     ),

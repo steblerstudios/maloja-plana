@@ -109,7 +109,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         },
           React.createElement('div', {
             style: {
-              fontSize: text.xs, fontWeight: '500', color: palette.soft,
+              fontSize: text.xs, fontWeight: weight.medium, color: palette.soft,
               padding: tierIdx === 0 ? '8px 20px 4px 20px' : '12px 20px 4px 20px',
               letterSpacing: '0.3px',
             }

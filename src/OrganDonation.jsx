@@ -49,20 +49,20 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   };
 
   const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm
+    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
   const statusButtonStyle = {
-    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm
+    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('organ.status')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.status')),
       React.createElement('div', { style: { display: 'grid', gap: '8px', marginBottom: '20px' } },
         React.createElement('button', {
           onClick: () => setStatus('registered'),
@@ -78,7 +78,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         }, '✕ ' + t('organ.declined'))
       ),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: '600', marginBottom: '12px' } }, t('organ.organsAndTissue')),
+      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.organsAndTissue')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '16px' } },
         organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: '8px', padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: '6px', cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
@@ -86,7 +86,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         ))
       ),
 
-      React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: '500' } }, t('organ.otherOrgans')),
+      React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: weight.medium } }, t('organ.otherOrgans')),
       React.createElement('input', {
         type: 'text', value: organs.other,
         onChange: (e) => setOrgans(prev => ({ ...prev, other: e.target.value })),
@@ -99,7 +99,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
     // Right: Info & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: '6px', marginBottom: '16px', fontSize: text.sm } },
         React.createElement('strong', null, '✓ ' + t('organ.status') + ': '),
@@ -107,7 +107,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       ),
 
       qrGenerated && React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', textAlign: 'center', marginBottom: '16px' } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: '600', marginBottom: '12px' } }, t('organ.generateQr')),
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.generateQr')),
         React.createElement('div', { id: 'organ-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '8px', minHeight: '220px' } })
       ),
 
@@ -115,7 +115,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('strong', { style: { color: palette.text } }, t('organ.swissOrganDonation')),
           React.createElement('div', { style: { marginTop: '6px' } },
-            React.createElement('a', { href: 'https://www.donorcard.ch', target: '_blank', rel: 'noopener noreferrer', style: { color: palette.sand, textDecoration: 'none', fontWeight: '600' } }, '↗ donorcard.ch')
+            React.createElement('a', { href: 'https://www.donorcard.ch', target: '_blank', rel: 'noopener noreferrer', style: { color: palette.sand, textDecoration: 'none', fontWeight: weight.semi } }, '↗ donorcard.ch')
           )
         )
       )

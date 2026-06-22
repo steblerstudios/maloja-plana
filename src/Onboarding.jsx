@@ -42,7 +42,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
     color: '#000', border: 'none', borderRadius: '8px',
-    cursor: 'pointer', fontWeight: '600', fontSize: text.body,
+    cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: 'DM Sans, sans-serif', marginTop: '16px',
   };
 
@@ -82,7 +82,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               style: {
                 padding: '16px 12px', borderRadius: '10px', cursor: 'pointer',
                 border: '1px solid ' + palette.border, background: palette.up,
-                color: palette.text, fontSize: '15px', fontWeight: '600',
+                color: palette.text, fontSize: '15px', fontWeight: weight.semi,
                 fontFamily: 'DM Sans, sans-serif',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                 transition: 'all 0.2s',
