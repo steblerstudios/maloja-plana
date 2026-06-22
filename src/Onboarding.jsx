@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, radius , leading , space } from './config/tokens.js';
+import { text, weight, radius , leading , space, fontFamily, ease, duration } from './config/tokens.js';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -43,7 +43,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     width: '100%', padding: '14px', background: palette.sand,
     color: '#000', border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
-    fontFamily: 'DM Sans, sans-serif', marginTop: space.md,
+    fontFamily: fontFamily, marginTop: space.md,
   };
 
   const btnSecondary = {
@@ -56,7 +56,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     width: '100%', padding: '12px 16px', borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, fontSize: text.body, boxSizing: 'border-box',
-    fontFamily: 'DM Sans, sans-serif',
+    fontFamily: fontFamily,
   };
 
   // ─── Step 0: Language ────────────────────────────────────
@@ -83,9 +83,9 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
                 padding: '16px 12px', borderRadius: radius.md, cursor: 'pointer',
                 border: '1px solid ' + palette.border, background: palette.up,
                 color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
-                fontFamily: 'DM Sans, sans-serif',
+                fontFamily: fontFamily,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: space.sm,
-                transition: 'all 0.2s',
+                transition: `all ${duration.normal}ms ${ease}`,
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; },
