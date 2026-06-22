@@ -282,6 +282,8 @@ export default {
     openChapter: 'Ouvrir',
     fieldsCount: '{filled}/{total} champs',
     highlightTitle: 'Que pouvez-vous faire tout de suite ?',
+    highlightFinanz: 'Aperçu financier',
+    highlightFinanzSub: 'Impôts, RDP, aide sociale, PC — tout en un coup d\'œil.',
     highlightTax: 'Calculer l\'impôt fédéral',
     highlightTaxSub: 'Dès CHF 800/an — estimez vos impôts en 30 secondes.',
     highlightIpv: 'Vérifier la réduction de primes',

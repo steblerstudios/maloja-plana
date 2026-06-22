@@ -282,6 +282,8 @@ export default {
     openChapter: 'Apri',
     fieldsCount: '{filled}/{total} campi',
     highlightTitle: 'Cosa puoi fare subito?',
+    highlightFinanz: 'Panoramica finanziaria',
+    highlightFinanzSub: 'Imposte, RDP, assistenza sociale, PC — tutto in sintesi.',
     highlightTax: 'Calcola l\'imposta federale',
     highlightTaxSub: 'Da CHF 800/anno — stima le tue imposte in 30 secondi.',
     highlightIpv: 'Verifica riduzione premi',

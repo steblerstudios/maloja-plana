@@ -282,6 +282,8 @@ export default {
     openChapter: 'Open',
     fieldsCount: '{filled}/{total} fields',
     highlightTitle: 'What can you do right away?',
+    highlightFinanz: 'Financial overview',
+    highlightFinanzSub: 'Tax, premium reduction, social assistance, EL — all at a glance.',
     highlightTax: 'Calculate federal tax',
     highlightTaxSub: 'From CHF 800/year — estimate your tax in 30 seconds.',
     highlightIpv: 'Check premium reduction',

@@ -282,6 +282,8 @@ export default {
     openChapter: 'Öffnen',
     fieldsCount: '{filled}/{total} Felder',
     highlightTitle: 'Was kannst Du hier sofort tun?',
+    highlightFinanz: 'Finanz-Übersicht',
+    highlightFinanzSub: 'Steuer, IPV, Sozialhilfe, EL — alles auf einen Blick.',
     highlightTax: 'Bundessteuer berechnen',
     highlightTaxSub: 'Ab CHF 800/Jahr — schätze Deine Steuerlast in 30 Sekunden.',
     highlightIpv: 'IPV-Anspruch prüfen',
