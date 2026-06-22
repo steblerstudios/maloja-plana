@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, Icons } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
 function parseYear(dateStr) {
@@ -109,7 +109,8 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
     React.createElement('div', { style: s.tabRow },
       React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
       React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
-      React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich'))
+      React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
+      React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
     ),
 
     // Input fields
@@ -221,7 +222,57 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
       )
     ),
 
-    !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
+    // Freizügigkeit Tab
+    activeTab === 'fz' && React.createElement(React.Fragment, null,
+      React.createElement('div', { style: { ...s.section, background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm + 'px', color: palette.text } }, t('vr.fzTitle')),
+        React.createElement('div', { style: { color: palette.mid, lineHeight: 1.6 } }, t('vr.fzIntro'))
+      ),
+      [
+        { key: 'job', icon: 'work', color: palette.sage },
+        { key: 'gap', icon: 'timeline', color: palette.gold },
+        { key: 'self', icon: 'selfEmployment', color: palette.sand },
+        { key: 'abroad', icon: 'mobility', color: palette.sky },
+      ].map(sc => {
+        const titleKey = 'vr.fzScenario' + sc.key.charAt(0).toUpperCase() + sc.key.slice(1);
+        const textKey = titleKey + 'Text';
+        const ScIcon = Icons[sc.icon];
+        return React.createElement('div', {
+          key: sc.key,
+          style: { display: 'flex', gap: space.md + 'px', alignItems: 'flex-start', padding: space.md + 'px 0', borderBottom: '1px solid ' + palette.border + '44' }
+        },
+          React.createElement('div', { style: { width: '28px', height: '28px', flexShrink: 0, color: sc.color, marginTop: '2px' } },
+            ScIcon ? ScIcon() : null
+          ),
+          React.createElement('div', null,
+            React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.xs + 'px' } }, t(titleKey)),
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.6 } }, t(textKey))
+          )
+        );
+      }),
+      React.createElement('div', { style: { ...s.highlight, background: palette.gold + '15', border: '1px solid ' + palette.gold + '30', marginTop: space.md + 'px' } },
+        React.createElement('div', { style: { fontSize: text.sm, lineHeight: 1.6 } }, t('vr.fzTip'))
+      ),
+      React.createElement('div', { style: { marginTop: space.md + 'px' } },
+        React.createElement('div', { style: { fontWeight: weight.medium, fontSize: text.sm, marginBottom: space.sm + 'px' } }, t('vr.fzLinks')),
+        [
+          { key: 'BSV', url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/bv/grundlagen-und-gesetze/freizuegigkeit.html' },
+          { key: 'Auffang', url: 'https://www.aeis.ch/' },
+          { key: 'FINMA', url: 'https://www.finma.ch/de/bewilligung/freizuegigkeitsstiftungen/' },
+        ].map(link =>
+          React.createElement('div', { key: link.key, style: { marginBottom: space.xs + 'px' } },
+            React.createElement('a', {
+              href: link.url,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+              style: { fontSize: text.sm, color: palette.sky, textDecoration: 'none' }
+            }, t('vr.fzLink' + link.key) + ' →')
+          )
+        )
+      )
+    ),
+
+    activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
 
     React.createElement('div', { style: s.source },
       t('vr.source')
