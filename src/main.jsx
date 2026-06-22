@@ -47,7 +47,7 @@ import VorsorgeRechner from './VorsorgeRechner.jsx';
 import EOrechner from './EOrechner.jsx';
 import DirektLinks from './DirektLinks.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, space, radius, shadow } from './config/tokens.js';
+import { text, weight, space, radius, shadow, fontFamily } from './config/tokens.js';
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
@@ -289,7 +289,7 @@ const AppInner = () => {
     });
   }
 
-  return React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: 'DM Sans, sans-serif', display: 'flex', flexDirection: 'column' } },
+  return React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column' } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     React.createElement(MobileNav, {

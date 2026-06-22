@@ -4,7 +4,7 @@ import {
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 
@@ -111,7 +111,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       width: '100%', padding: (space.sm + 2) + 'px ' + space.sm + 'px',
       borderRadius: radius.sm, border: '1px solid ' + palette.border,
       background: palette.up, color: palette.text, boxSizing: 'border-box',
-      fontSize: text.body, fontFamily: 'DM Sans, sans-serif', cursor: 'pointer'
+      fontSize: text.body, fontFamily: fontFamily, cursor: 'pointer'
     };
 
     const updateHousehold = (patch) => {
@@ -190,7 +190,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm,
             cursor: 'pointer', color: palette.mid, fontSize: text.sm,
             padding: (space.sm) + 'px ' + space.md + 'px',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: fontFamily,
           }
         }, '+ ' + tr('chapters.basis.fields.household.addChild'))
       )
@@ -235,7 +235,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       color: palette.text,
       boxSizing: 'border-box',
       fontSize: text.body,
-      fontFamily: 'DM Sans, sans-serif',
+      fontFamily: fontFamily,
       ...(demoMode ? { pointerEvents: 'none', opacity: 0.7 } : {}),
     };
 
@@ -1003,7 +1003,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             background: 'none', border: 'none', cursor: 'pointer',
             fontSize: text.sm, color: palette.mid, letterSpacing: '0.3px',
             padding: '8px 16px',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: fontFamily,
           }
         },
           showSecondary
