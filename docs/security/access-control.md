@@ -45,7 +45,7 @@ Maloja Plana has no authentication system. All data is stored locally in the use
 
 ## Security Headers
 
-Set via `vercel.json`:
+Configured via hosting platform:
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: no-referrer`
