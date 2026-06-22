@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease } from './config/tokens.js';
 import { getCantonName } from './config/cantonalData.js';
+import { calculatePremiumSubsidy } from './premiumCalc.js';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -56,6 +57,81 @@ function buildSnippet(chapterKey, chData, allData, t) {
   }
   return null;
 }
+
+const QuickCheck = ({ palette, t, onNavigate }) => {
+  const [income, setIncome] = useState('');
+  const annual = (Number(income) || 0) * 12;
+  const result = annual > 0 ? calculatePremiumSubsidy(annual, 0, 0, t, 1) : null;
+  const hasResult = result && result.eligibleSubsidy > 0;
+  const fmt = (v) => v.toLocaleString('de-CH');
+
+  return React.createElement('div', {
+    style: {
+      marginTop: space.md, marginBottom: space.lg,
+      padding: '20px 24px',
+      background: palette.surface,
+      borderRadius: radius.lg - 4,
+      border: '1px solid ' + palette.border + '88',
+      boxShadow: shadow.sm,
+    }
+  },
+    React.createElement('div', {
+      style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
+    }, t('dashboard.quickCheckTitle')),
+    React.createElement('div', {
+      style: { display: 'flex', gap: space.md, alignItems: 'flex-end', flexWrap: 'wrap' }
+    },
+      React.createElement('div', { style: { flex: '1 1 180px', minWidth: '150px' } },
+        React.createElement('label', {
+          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: '4px' }
+        }, t('dashboard.quickCheckIncome')),
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'numeric',
+          placeholder: t('dashboard.quickCheckPlaceholder'),
+          value: income,
+          onChange: (e) => setIncome(e.target.value),
+          style: {
+            width: '100%', padding: '10px 12px', fontSize: text.body,
+            border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            background: palette.surface, color: palette.text,
+            fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+          }
+        })
+      ),
+      annual > 0 && React.createElement('div', {
+        style: { flex: '2 1 240px', minWidth: '200px' }
+      },
+        React.createElement('div', {
+          style: {
+            padding: '10px 14px',
+            background: hasResult ? palette.sage + '10' : palette.up,
+            borderRadius: radius.sm,
+            border: '1px solid ' + (hasResult ? palette.sage + '30' : palette.border + '44'),
+          }
+        },
+          React.createElement('div', {
+            style: { fontSize: text.sm, color: hasResult ? palette.sageDeep || palette.sage : palette.mid, fontWeight: hasResult ? weight.medium : weight.normal }
+          }, hasResult
+            ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(result.eligibleSubsidy * 12) })
+            : t('dashboard.quickCheckNoResult')
+          ),
+          React.createElement('div', {
+            style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '4px' }
+          }, t('dashboard.quickCheckHint'))
+        )
+      )
+    ),
+    React.createElement('button', {
+      onClick: () => onNavigate('premium'),
+      style: {
+        background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+        fontSize: text.xs, color: palette.sand, fontFamily: 'inherit',
+        fontWeight: weight.medium, marginTop: space.sm,
+      }
+    }, t('dashboard.quickCheckMore'))
+  );
+};
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
@@ -277,6 +353,47 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         })
       )
+    ),
+
+    // ─── Quick check — inline IPV eligibility ───────────────
+    React.createElement(QuickCheck, { palette, t, onNavigate }),
+
+    // ─── Demo — prominent example section ──────────────────
+    !hasMeaningfulProgress && React.createElement('div', {
+      style: {
+        marginBottom: space.lg,
+        padding: '20px 24px',
+        background: palette.sand + '08',
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.sand + '25',
+        display: 'flex', alignItems: 'center', gap: '20px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
+        }, t('dashboard.demoTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
+        }, t('dashboard.demoText'))
+      ),
+      React.createElement('button', {
+        onClick: onEnterDemo,
+        style: {
+          padding: '10px 20px',
+          background: palette.sand,
+          color: '#fff',
+          border: 'none',
+          borderRadius: radius.md,
+          cursor: 'pointer',
+          fontFamily: 'inherit',
+          fontSize: text.sm,
+          fontWeight: weight.medium,
+          whiteSpace: 'nowrap',
+          flexShrink: 0,
+        }
+      }, t('dashboard.demoButton'))
     ),
 
     // ─── Maloja Pass — interactive topographic map ─────────
@@ -511,21 +628,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             item.label
           )
         )
-      ),
-      React.createElement('div', {
-        style: { marginTop: space.md, paddingTop: space.sm, borderTop: '1px solid ' + palette.border + '44' }
-      },
-        React.createElement('button', {
-          onClick: onEnterDemo,
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium,
-            textAlign: 'left',
-          }
-        }, t('demo.enterLink')),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
-        }, t('demo.enterSubtitle'))
       )
     ),
 
