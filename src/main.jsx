@@ -130,6 +130,7 @@ const AppInner = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
   const [demoMode, setDemoMode] = useState(false);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const activeData = demoMode ? DEMO_DATA : data;
 
   // Build translated chapters — recalculates when language changes
@@ -182,6 +183,13 @@ const AppInner = () => {
   }, [documents]);
 
   useEffect(() => { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); }, [isDarkMode]);
+  useEffect(() => {
+    const on = () => setIsOffline(false);
+    const off = () => setIsOffline(true);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', off);
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
+  }, []);
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
@@ -278,6 +286,10 @@ const AppInner = () => {
       setLegalSection(extra);
     }
     setView(viewName);
+    requestAnimationFrame(() => {
+      const main = document.getElementById('mp-main');
+      if (main) { main.scrollTop = 0; main.focus({ preventScroll: true }); }
+    });
   };
 
   // ─── Onboarding gate ─────────────────────────────────────
@@ -343,7 +355,11 @@ const AppInner = () => {
         React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
         React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
       ),
-      React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge'))
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
+      isOffline && React.createElement('span', {
+        role: 'status',
+        style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
+      }, '· offline')
     ),
     demoMode && React.createElement('div', {
       role: 'status',
@@ -368,7 +384,7 @@ const AppInner = () => {
         }
       }, t('demo.leave'))
     ),
-    React.createElement('main', { id: 'mp-main', role: 'main', style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px' } },
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none' } },
       view !== 'dashboard' && React.createElement('button', {
         onClick: () => setView('dashboard'),
         style: {
