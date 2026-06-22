@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const STORAGE_KEY = 'or5_reminders';
@@ -169,7 +169,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
     width: '100%', padding: '10px 12px', borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
-    fontFamily: 'DM Sans, sans-serif', marginBottom: '12px'
+    fontFamily: fontFamily, marginBottom: '12px'
   };
 
   const renderReminderCard = (r) => {

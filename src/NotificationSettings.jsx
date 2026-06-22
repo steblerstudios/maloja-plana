@@ -6,7 +6,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius , space } from './config/tokens.js';
+import { text, weight, radius , space, fontFamily } from './config/tokens.js';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -115,7 +115,7 @@ export const NotificationSettings = ({ palette, t }) => {
         style: {
           padding: '10px 16px', background: palette.sand, color: '#000',
           border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-          fontWeight: weight.semi, fontSize: text.sm, fontFamily: 'DM Sans, sans-serif',
+          fontWeight: weight.semi, fontSize: text.sm, fontFamily: fontFamily,
         }
       }, t('notifications.enable')),
 

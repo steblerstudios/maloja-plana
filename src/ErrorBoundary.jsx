@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, radius , leading , space } from './config/tokens.js';
+import { text, weight, radius , leading , space, fontFamily } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -43,7 +43,7 @@ export class ErrorBoundary extends React.Component {
       role: 'alert',
       style: {
         width: '100vw', height: '100vh', background: bg, color: text,
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: fontFamily,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '20px', boxSizing: 'border-box'
       }
