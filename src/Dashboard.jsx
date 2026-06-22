@@ -138,7 +138,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     role: 'status',
     'data-alpha-banner': true,
     style: {
-      padding: '12px 16px', marginBottom: '20px', borderRadius: '8px',
+      padding: '12px 16px', marginBottom: '20px', borderRadius: radius.sm,
       background: palette.up, border: '1px solid ' + palette.border + '88',
       boxShadow: shadow.sm,
     }
@@ -275,6 +275,61 @@ const BetaFeedback = ({ palette, t }) => {
         fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
       }
     }, t('beta.feedback.submit'))
+  );
+};
+
+const FortschrittsKarte = ({ palette, t, openChapters, onSelectChapter, text, weight, leading, space, radius, shadow }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const totalMissing = openChapters.reduce((sum, oc) => sum + oc.missing.length, 0);
+  return React.createElement('div', {
+    style: {
+      marginBottom: space.xl, background: palette.surface,
+      borderRadius: radius.md, border: '1px solid ' + palette.border + '88',
+      boxShadow: shadow.sm, overflow: 'hidden',
+    }
+  },
+    React.createElement('button', {
+      onClick: () => setExpanded(!expanded),
+      style: {
+        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '16px 20px', background: 'none', border: 'none', cursor: 'pointer',
+        fontFamily: 'inherit', color: palette.text,
+      }
+    },
+      React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },
+        t('fortschritt.title')
+      ),
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } },
+        totalMissing + ' ' + t('fortschritt.fieldsOpen') + (expanded ? ' ▴' : ' ▾')
+      )
+    ),
+    expanded && React.createElement('div', { style: { padding: '0 20px 16px' } },
+      openChapters.map(({ ch, idx, missing }) =>
+        React.createElement('div', { key: ch.key, style: { marginBottom: space.md } },
+          React.createElement('div', {
+            style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, letterSpacing: '0.3px', marginBottom: space.xs }
+          }, ch.title + ' (' + missing.length + ')'),
+          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+            missing.slice(0, 6).map(f =>
+              React.createElement('button', {
+                key: f.k,
+                onClick: () => onSelectChapter(idx),
+                style: {
+                  background: palette.up, border: '1px solid ' + palette.border,
+                  borderRadius: radius.sm, padding: '4px 10px', fontSize: text.xs,
+                  color: palette.mid, cursor: 'pointer', fontFamily: 'inherit',
+                },
+                onMouseEnter: (e) => { e.currentTarget.style.color = palette.text; e.currentTarget.style.borderColor = palette.sage; },
+                onMouseLeave: (e) => { e.currentTarget.style.color = palette.mid; e.currentTarget.style.borderColor = palette.border; },
+              }, f.label)
+            ),
+            missing.length > 6 && React.createElement('span', {
+              style: { fontSize: text.xs, color: palette.soft, padding: '4px 6px' }
+            }, '+' + (missing.length - 6))
+          )
+        )
+      )
+    )
   );
 };
 
@@ -455,7 +510,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           },
             React.createElement('div', {
               style: {
-                width: '36px', height: '36px', borderRadius: '10px',
+                width: '36px', height: '36px', borderRadius: radius.md,
                 background: palette.sand + '12',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0, color: palette.sand,
@@ -834,6 +889,20 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       );
     })(),
 
+    // ─── Fortschrittskarte — missing fields per chapter ─────
+    (() => {
+      const openChapters = chapters.map((ch, idx) => {
+        const chData = data[ch.key] || {};
+        const status = getChapterStatus(ch);
+        if (status === 'leer') return null;
+        const missing = ch.fields.filter(f => !f.secondary && !chData[f.k]);
+        if (missing.length === 0) return null;
+        return { ch, idx, missing, status };
+      }).filter(Boolean);
+      if (openChapters.length === 0) return null;
+      return React.createElement(FortschrittsKarte, { palette, t, openChapters, onSelectChapter, text, weight, leading, space, radius, shadow });
+    })(),
+
     // ─── Life chapters — tiered spatial layout ──────────────
     React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
 
@@ -890,7 +959,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             },
               React.createElement('div', {
                 style: {
-                  width: '40px', height: '40px', borderRadius: '10px',
+                  width: '40px', height: '40px', borderRadius: radius.md,
                   background: getIconBg(pct, ch.key),
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
