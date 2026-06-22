@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, radius , space, fontFamily } from './config/tokens.js';
+import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
@@ -46,7 +46,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       textAlign: 'left',
       color: palette.text,
       fontFamily: fontFamily,
-      transition: 'all 0.2s',
+      transition: `all ${duration.normal}ms ${ease}`,
     }
   },
     React.createElement('div', {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily, ease, duration } from './config/tokens.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const STORAGE_KEY = 'or5_reminders';
@@ -185,7 +185,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
         padding: '12px 16px', background: isJustDone ? palette.sage + '12' : palette.up, borderRadius: radius.sm,
         border: '1px solid ' + (isJustDone ? palette.sage : r.done ? palette.sage + '44' : dueColor + '66'),
         marginBottom: space.sm, opacity: r.done && !isJustDone ? 0.7 : 1,
-        transition: 'all 0.4s ease',
+        transition: `all ${duration.slow}ms ${ease}`,
       }
     },
       isJustDone && React.createElement('div', {
@@ -328,7 +328,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
               style: {
                 padding: '8px 12px', background: palette.surface, border: '1px solid ' + palette.border,
                 borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, textAlign: 'left',
-                color: palette.text, transition: 'all 0.2s'
+                color: palette.text, transition: `all ${duration.normal}ms ${ease}`
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; }
