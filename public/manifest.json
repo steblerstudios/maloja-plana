@@ -2,14 +2,20 @@
   "name": "Maloja Plana",
   "short_name": "Maloja",
   "description": "Alles Wichtige an einem Ort. Your Swiss life organizer — 100% private, offline, free.",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#0F0E0C",
-  "theme_color": "#0F0E0C",
+  "background_color": "#F5F2EE",
+  "theme_color": "#F5F2EE",
   "orientation": "portrait-primary",
   "lang": "de-CH",
   "categories": ["lifestyle", "productivity", "utilities"],
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
