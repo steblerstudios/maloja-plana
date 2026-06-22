@@ -1008,6 +1008,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               }
             }
           }
+          if (field.k === 'moveInDate' && chapter.key === 'wohnen' && data[field.k]) {
+            elements.push(
+              React.createElement('div', {
+                key: 'umzug-checklist',
+                style: {
+                  gridColumn: '1 / -1',
+                  background: palette.sageMist || palette.up,
+                  borderRadius: radius.sm,
+                  padding: space.sm + 'px ' + space.md + 'px',
+                  fontSize: text.sm,
+                  color: palette.sageDeep || palette.mid,
+                  lineHeight: leading.relaxed,
+                  marginBottom: space.sm + 'px',
+                }
+              },
+                React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs + 'px' } }, t('wohnen.umzugTitle')),
+                React.createElement('div', null, '○ ' + t('wohnen.umzugGemeinde')),
+                React.createElement('div', null, '○ ' + t('wohnen.umzugKK')),
+                React.createElement('div', null, '○ ' + t('wohnen.umzugPost')),
+              )
+            );
+          }
           if (field.k === 'canton' && chapter.key === 'basis') {
             crosslinkBtn('cantonTax', 'tax', 'nav.crosslink.cantonTaxHint');
             crosslinkBtn('cantonSozial', 'sozialhilfe', 'nav.crosslink.cantonSozialhilfeHint');
