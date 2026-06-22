@@ -588,6 +588,15 @@ const _lebenslauf = () => React.createElement('svg', { viewBox: '0 0 24 24', fil
 );
 
 
+const _vorsorge = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+  React.createElement('path', { d: 'M 12 3 L 12 7', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
+  React.createElement('path', { d: 'M 9.5 5 L 14.5 5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
+  React.createElement('rect', { x: '3', y: '7', width: '18', height: '14', rx: '3', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
+  React.createElement('circle', { cx: '12', cy: '14', r: '3.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.3' }),
+  React.createElement('text', { x: '12', y: '16', textAnchor: 'middle', fontSize: '5', fontWeight: '700', fill: 'currentColor' }, 'Fr')
+);
+
+
 // ═══════════════════════════════════════════════════════════════
 // Feature Icons (20x20 default)
 // ═══════════════════════════════════════════════════════════════
@@ -897,6 +906,7 @@ export const Icons = {
   mietzinsverbilligung: _mietzinsverbilligung,
   sozialhilfe: _sozialhilfe,
   lebenslauf: _lebenslauf,
+  vorsorge: _vorsorge,
 
   // Feature icons
   upload: _upload,
