@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
-import { text, weight, radius , leading } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -24,13 +24,13 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         padding: '14px 16px',
         background: palette.up,
         borderRadius: radius.sm,
-        marginBottom: '8px',
+        marginBottom: space.sm,
       }
     },
       React.createElement('div', {
         style: {
           fontSize: text.sm, fontWeight: weight.semi, color: palette.text,
-          marginBottom: '8px', letterSpacing: '0.2px',
+          marginBottom: space.sm, letterSpacing: '0.2px',
         }
       }, section.title),
       ...section.rows.map((row, i) =>
@@ -70,7 +70,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '4px',
+        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
     }, '← ' + t('notfallDossier.back')),
 
@@ -83,7 +83,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('h2', {
         style: {
           fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px',
+          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
         }
       }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
       React.createElement('div', {
@@ -101,7 +101,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        padding: '10px 14px', marginBottom: '16px',
+        padding: '10px 14px', marginBottom: space.md,
         background: palette.up, borderRadius: radius.sm,
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
@@ -128,7 +128,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
     React.createElement('div', {
       style: {
-        marginTop: '16px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
+        marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
     }, '○ ' + t('notfallDossier.footerPrivacy'))
   );

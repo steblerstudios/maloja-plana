@@ -21,8 +21,8 @@ export const EOrechner = ({ palette, t, data }) => {
     input: { width: '160px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
-    th: { textAlign: 'left', padding: '8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
-    td: { padding: '8px', borderBottom: '1px solid ' + palette.border },
+    th: { textAlign: 'left', padding: space.sm, borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    td: { padding: space.sm, borderBottom: '1px solid ' + palette.border },
     big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sage },
     tag: { display: 'inline-block', padding: '2px 8px', borderRadius: '4px', fontSize: text.xs, background: palette.sage + '22', color: palette.sage, marginLeft: space.xs + 'px' },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
@@ -66,7 +66,7 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.highlight },
         React.createElement('div', { style: s.label }, t('eo.taggeld')),
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(result.mutterschaft.taggeld) + ' / ' + t('eo.tag')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } },
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
           t('eo.entschaedigungssatz') + ': ' + EO_PARAMS.entschaedigungssatz + '% · ' +
           t('eo.maximum') + ': CHF ' + fmt(EO_PARAMS.maxTaggeld) + '/' + t('eo.tag')
         )

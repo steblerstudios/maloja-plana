@@ -164,7 +164,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
           style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border }
         },
           React.createElement('div', {
-            style: { display: 'flex', flexWrap: 'wrap', gap: '8px' }
+            style: { display: 'flex', flexWrap: 'wrap', gap: space.sm }
           },
             chaptersNeeded.map(chKey => {
               const ch = chapters.find(c => c.key === chKey);

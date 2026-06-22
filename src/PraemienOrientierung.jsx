@@ -183,7 +183,7 @@ export const PraemienOrientierung = ({ palette, t, data }) => {
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontStyle: 'italic' } },
       t('po.disclaimer')
     ),
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } },
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
       t('po.source')
     )
   );

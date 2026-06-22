@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, radius , leading } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -50,23 +50,23 @@ export class ErrorBoundary extends React.Component {
     },
       React.createElement('div', {
         style: {
-          maxWidth: '420px', width: '100%', padding: '32px',
+          maxWidth: '420px', width: '100%', padding: space.xl,
           background: surface, borderRadius: radius.md,
           border: '1px solid ' + border, textAlign: 'center'
         }
       },
-        React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: '16px' } },
+        React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: space.md } },
           React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
           React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
         ),
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '8px' } },
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm } },
           t ? t('error.title') : 'Something went wrong'
         ),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: '24px', lineHeight: 1.5 } },
+        React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: space.lg, lineHeight: 1.5 } },
           t ? t('error.message') : 'Your data is safe — it is stored locally on your device. Please try again.'
         ),
 
-        React.createElement('div', { style: { display: 'flex', gap: '8px', justifyContent: 'center' } },
+        React.createElement('div', { style: { display: 'flex', gap: space.sm, justifyContent: 'center' } },
           React.createElement('button', {
             onClick: this.handleReset,
             style: {

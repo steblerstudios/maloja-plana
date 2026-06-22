@@ -75,7 +75,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
-    tabRow: { display: 'flex', gap: '4px', marginBottom: space.md + 'px' },
+    tabRow: { display: 'flex', gap: space.xs, marginBottom: space.md + 'px' },
     tab: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
@@ -137,7 +137,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.highlight },
         React.createElement('div', { style: s.label }, t('vr.ahvRente')),
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente) + ' / ' + t('vr.monat')),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } },
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
           'CHF ' + fmt(ahvResult.jahresrente) + ' / ' + t('vr.jahr')
         )
       ),
@@ -170,7 +170,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
         React.createElement('div', { style: s.highlight },
           React.createElement('div', { style: s.label }, t('vr.bvgRente')),
           React.createElement('div', { style: s.big }, 'CHF ' + fmt(bvgResult.monatsrente) + ' / ' + t('vr.monat')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
             t('vr.bvgGuthabenBei') + ' ' + parsedBezugAlter + ': CHF ' + fmt(bvgResult.guthaben)
           )
         ),
@@ -216,7 +216,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
       ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { ...s.highlight, marginTop: space.md + 'px' } },
         React.createElement('div', { style: s.label }, t('vr.totalRente')),
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + ' / ' + t('vr.monat')),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } },
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
           t('vr.saeulen') + ': AHV CHF ' + fmt(ahvResult.monatsrente) + ' + BVG CHF ' + fmt(bvgResult.monatsrente)
         )
       )

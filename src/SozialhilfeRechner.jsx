@@ -48,9 +48,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', fontSize: text.sm, cursor: 'pointer', marginBottom: space.xs + 'px' },
     highlight: { padding: space.md + 'px', borderRadius: radius.sm + 'px', border: '1px solid ', marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
-    th: { textAlign: 'left', padding: '8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
-    td: { padding: '8px', borderBottom: '1px solid ' + palette.border },
-    tdRight: { padding: '8px', borderBottom: '1px solid ' + palette.border, textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
+    th: { textAlign: 'left', padding: space.sm, borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
+    td: { padding: space.sm, borderBottom: '1px solid ' + palette.border },
+    tdRight: { padding: space.sm, borderBottom: '1px solid ' + palette.border, textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
     big: { fontSize: text.xl, fontWeight: weight.bold },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
   };
