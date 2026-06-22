@@ -29,6 +29,16 @@
 | **Demo-Modus** | «Beispiel ansehen» zeigt eine fiktive Person (Maria Muster). Diese Daten werden nicht gespeichert |
 | **Sprachen** | FR/IT/EN sind maschinell übersetzt und nicht professionell lektoriert |
 
+## Offene Verbesserungen (aus Alpha-Feedback)
+
+| Thema | Feedback | Status |
+|---|---|---|
+| **Budget: Orientierung fehlt** | Budget-Bereich zeigt nur Felder, kein Gesamtbild, keine Orientierungssätze | Geplant |
+| **Franchise: Erklärung fehlt** | Kein Orientierungssatz beim Franchise-Feld (was bedeutet Franchise?) | Geplant |
+| **KVG-Kontext fehlt** | Kein Hinweis zur obligatorischen Grundversicherung bei KK-Feldern | Geplant |
+| **BVG/AHV: In-Context-Hinweis** | Kein Orientierungssatz direkt bei BVG/AHV-Feldern (nur Alpha-Banner) | Geplant |
+| **Sozialhilfe-Disclaimer** | Disclaimer-Text vorhanden, aber visuell zu leise — könnte übersehen werden | Geplant |
+
 ## Nicht-Ziele dieser Beta
 
 - Kein PDF-Export (kommt später)
