@@ -41,6 +41,9 @@
 | **Steuerrechner: Kantonale Steuer** | Erledigt — Kantons-/Gemeindesteuer-Schätzung (26 Kantone, Hauptort-Multiplikatoren) |
 | **PDF-Export: Behörden-Dossier** | Erledigt — Dossier mit Berechnungen für Sozialamt-Termine (Browser-Print) |
 | **BVG-Doppelabzug** | Erledigt — BVG/AHV werden als Referenz geführt, nicht von Ausgaben abgezogen |
+| **Fortschrittskarte: Orientierung** | Erledigt — Status-Label über Berglandschaft (X von Y begonnen · Z abgeschlossen) + Kapitel-Labels unter Icons |
+| **Finanz-Übersicht** | Erledigt — Kompaktansicht aller Rechner-Ergebnisse (Steuern, IPV, Sozialhilfe, EL) auf einen Blick |
+| **Cross-Links Rechner** | Erledigt — Steuer-, IPV- und Sozialhilfe-Rechner verlinken zur Finanz-Übersicht |
 
 ## Nicht-Ziele dieser Beta
 

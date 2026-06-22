@@ -4,7 +4,7 @@ import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, getKantonDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 
-export const TaxCalculator = ({ palette, t, data, onSave }) => {
+export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
     { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: 7056 },
@@ -210,7 +210,12 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, '○ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
     canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION),
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('trust.localOnly')),
+
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('finanzuebersicht'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+    }, '→ ' + t('nav.finanzUebersicht'))
   );
 };
 
