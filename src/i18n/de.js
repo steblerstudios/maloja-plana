@@ -1185,12 +1185,18 @@ export default {
     children: 'Kinder',
     childDeduction: 'Kinderabzug (Bundessteuer)',
     federalOnly: 'nur Bundessteuer',
+    federalTax: 'Bundessteuer',
+    cantonalAndMunicipal: 'Kantons- und Gemeindesteuer',
+    totalEstimate: 'Geschätzte Gesamtsteuer',
+    selectCantonHint: 'Wähle einen Kanton, um die kantonale Steuerbelastung zu sehen.',
+    basedOnHauptort: 'Orientierungswert, basierend auf dem Hauptort des Kantons.',
+    totalNote: 'Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.',
     tariff: 'Tarif',
     singleTariff: 'Grundtarif',
     marriedTariff: 'Verheiratetentarif',
     marginalRate: 'Grenzsteuersatz',
     dataVersion: 'Datenstand',
-    disclaimer: 'Diese Orientierung zeigt die direkte Bundessteuer (DBG Art. 36). Kantons- und Gemeindesteuern kommen hinzu. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung.',
+    disclaimer: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung.',
     netIncomeNote: 'Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.',
   },
 
@@ -1814,6 +1820,11 @@ export default {
     sectionsMissing: '{count} Bereiche noch offen',
     docsIncluded: '{count} Dokumente hinterlegt',
     previewNote: 'Vorschau — so wird deine Lebensmappe aussehen.',
+  },
+
+  pwa: {
+    installHint: 'Maloja Plana als App installieren — offline verfügbar, direkt vom Homescreen.',
+    install: 'Installieren',
   },
 
   beta: {

@@ -42,12 +42,6 @@ export const calculatePremiumSubsidy = (annualIncome, deductions, childrenCount 
 };
 
 // Household-aware wrapper: extracts values from data object
-export const calculatePremiumSubsidyFromData = (data, t) => {
-  const hh = getHouseholdInfo(data);
-  const annualIncome = Number(data?.finanzen?.monthlyIncome || 0) * 12;
-  const deductions = Number(data?.taxData?.totalDeductions || 0);
-  return calculatePremiumSubsidy(annualIncome, deductions, hh.childrenCount, t, hh.adults);
-};
 
 export const estimateTaxSavings = (subsidyAmount) => {
   // Average Swiss tax rate: approx. 12-25%
@@ -56,28 +50,6 @@ export const estimateTaxSavings = (subsidyAmount) => {
   return Math.round(subsidyAmount * taxRate * 12);
 };
 
-export const checkEligibility = (income, deductions, t) => {
-  const taxableIncome = Math.max(0, income - deductions);
-  const maxThreshold = 80000;
-
-  return {
-    eligible: taxableIncome <= maxThreshold,
-    reason: taxableIncome > maxThreshold
-      ? (t ? t('premiumCalc.incomeToHigh', { value: maxThreshold }) : 'Income too high (over CHF ' + maxThreshold + ')')
-      : (t ? t('premiumCalc.eligible') : 'Eligible for premium subsidy'),
-    requiredDocuments: t ? [
-      t('premiumCalc.doc1'),
-      t('premiumCalc.doc2'),
-      t('premiumCalc.doc3'),
-      t('premiumCalc.doc4'),
-    ] : [
-      'Tax return (last 2 years)',
-      'Pay slips',
-      'Family certificate',
-      'Health insurance premium confirmation'
-    ]
-  };
-};
 
 export const getKVGApplicationLink = (canton) => {
   const links = {
@@ -91,40 +63,3 @@ export const getKVGApplicationLink = (canton) => {
   return links[canton] || links.default;
 };
 
-export const generateKVGDocument = (data, subsidyData, t) => {
-  return {
-    title: t ? t('premiumCalc.docTitle') : 'KVG §67 Application data',
-    date: new Date().toLocaleDateString(),
-    applicant: {
-      name: getFullName(data.basis),
-      ahv: data.basis?.ahv,
-      address: data.wohnen?.address,
-      canton: data.basis?.canton
-    },
-    income: {
-      gross: data.finanzen?.monthlyIncome,
-      deductions: data.taxData?.totalDeductions || 0,
-      taxable: subsidyData.taxableIncome
-    },
-    subsidy: {
-      monthlyEligible: subsidyData.eligibleSubsidy,
-      annualEligible: subsidyData.eligibleSubsidy * 12,
-      estimatedTaxSavings: estimateTaxSavings(subsidyData.eligibleSubsidy)
-    },
-    checklistItems: t ? [
-      t('premiumCalc.check1'),
-      t('premiumCalc.check2'),
-      t('premiumCalc.check3'),
-      t('premiumCalc.check4'),
-      t('premiumCalc.check5'),
-      t('premiumCalc.check6'),
-    ] : [
-      '☐ Attach previous year tax return',
-      '☐ Current premium invoice from insurer',
-      '☐ Pay slip / income confirmation',
-      '☐ Rental contract (if applicable)',
-      '☐ Family certificate (if applicable)',
-      '☐ Maintenance payment confirmation (if applicable)'
-    ]
-  };
-};
