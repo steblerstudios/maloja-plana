@@ -773,7 +773,7 @@ export default {
       sourceTitle: 'Codice sorgente',
       source1: 'Il codice sorgente completo è disponibile su: github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Librerie di terze parti',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL), Cormorant Garamond (OFL). Tutte le licenze sono compatibili con AGPL-3.0.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL). Tutte le licenze sono compatibili con AGPL-3.0.',
     },
   },
 
