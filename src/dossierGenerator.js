@@ -743,6 +743,85 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   return sections;
 }
 
+export function generateBehoerdenJSON(data, calculations) {
+  const basis = data.basis || {};
+  const finanzen = data.finanzen || {};
+  const wohnen = data.wohnen || {};
+  const versicherungen = data.versicherungen || {};
+  const { sozialhilfe, ipv, el, tax } = calculations || {};
+
+  const dossier = {
+    schema: 'maloja-plana-dossier',
+    version: '1.0',
+    exportedAt: new Date().toISOString(),
+    person: {
+      firstName: basis.firstName || '',
+      lastName: basis.lastName || '',
+      dateOfBirth: basis.dateOfBirth || '',
+      ahvNumber: basis.ahv || '',
+      nationality: basis.nationality || '',
+      civilStatus: basis.maritalStatus || '',
+      phone: basis.phone || '',
+      email: basis.email || '',
+    },
+    address: {
+      street: wohnen.address || '',
+      postalCode: wohnen.postalCode || '',
+      city: wohnen.city || '',
+      canton: basis.canton || '',
+      moveInDate: wohnen.moveInDate || '',
+    },
+    finances: {
+      monthlyIncome: parseFloat(finanzen.monthlyIncome) || 0,
+      employmentType: finanzen.employmentType || '',
+      employer: finanzen.employer || '',
+      rent: parseFloat(wohnen.rentAmount) || 0,
+      utilities: parseFloat(wohnen.utilities) || 0,
+    },
+    insurance: {
+      insurer: versicherungen.kkInsurer || '',
+      model: versicherungen.kkModel || '',
+      premium: parseFloat(versicherungen.kkPremium) || 0,
+      franchise: versicherungen.franchise || '',
+    },
+    calculations: {},
+  };
+
+  if (sozialhilfe) {
+    dossier.calculations.sozialhilfe = {
+      eligible: !!sozialhilfe.eligible,
+      grundbedarf: sozialhilfe.grundbedarf || 0,
+      effectiveRent: sozialhilfe.effectiveRent || 0,
+      rentLimit: sozialhilfe.rentLimit || 0,
+      effectiveKK: sozialhilfe.effectiveKK || 0,
+      totalBedarf: sozialhilfe.totalBedarf || 0,
+      income: sozialhilfe.income || 0,
+      deficit: sozialhilfe.deficit || 0,
+      householdSize: sozialhilfe.householdSize || 1,
+    };
+  }
+  if (ipv) {
+    dossier.calculations.ipv = {
+      eligible: !!ipv.eligible,
+      monthlyAmount: ipv.amount || 0,
+      annualAmount: (ipv.amount || 0) * 12,
+    };
+  }
+  if (el) {
+    dossier.calculations.el = { eligible: !!el.eligible };
+  }
+  if (tax && tax.total > 0) {
+    dossier.calculations.tax = {
+      taxableIncome: tax.taxableIncome || 0,
+      federalTax: tax.total || 0,
+      cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : 0,
+      totalEstimate: tax.kantonal ? tax.kantonal.total : tax.total,
+    };
+  }
+
+  return dossier;
+}
+
 export function getBehoerdenDossierPreview(data, chapters, t, calculations) {
   const sections = getBehoerdenSections(data, chapters, t, calculations);
   const filledSections = sections.filter(s => s.rows.length > 0 || s.status);

@@ -1798,6 +1798,7 @@ export default {
     subtitle: 'Per il tuo appuntamento presso l\'assistenza sociale, il comune o un servizio specializzato.',
     openDossier: 'Apri il dossier',
     printAction: 'Stampa come PDF',
+    exportJSON: 'Esporta file dossier',
     generated: 'Creato il {date}',
     disclaimer: 'Questo dossier serve come orientamento. I calcoli si basano sui tuoi dati e non sostituiscono una verifica ufficiale da parte dell\'ufficio competente.',
     sectionPerson: 'Persona',
@@ -2070,5 +2071,11 @@ export default {
     alle: 'Tutti',
     antragsstelle: 'Ufficio competente',
     source: 'Link ufficiali da ch.ch, UFSP, UFAS e altre autorità federali.',
+    cantonalTitle: 'Il tuo cantone: {canton}',
+    cantonal: {
+      steuererklaerung: 'Dichiarazione fiscale online',
+      sozialdienst: 'Servizio sociale',
+      ipv: 'Richiedere la riduzione dei premi',
+    },
   },
 };
