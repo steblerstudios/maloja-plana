@@ -118,7 +118,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
       React.createElement('iframe', {
         srcDoc: previewHtml,
         style: { width: '100%', height: '700px', border: 'none' },
-        title: 'Letter preview',
+        title: t('backup.letterPreview'),
       })
     ),
   );
