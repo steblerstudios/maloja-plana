@@ -1334,6 +1334,12 @@ export default {
     errorCardNumber: 'Numéro de carte invalide',
     errorAhvFormat: 'Format du numéro AVS invalide',
     scanRequiresInternet: 'Le scan nécessite une connexion internet. Vous pouvez aussi saisir les données manuellement.',
+    conflictTitle: 'Différences détectées',
+    conflictHint: 'Le scan a retourné des valeurs différentes de vos données actuelles.',
+    conflictCurrent: 'Actuel',
+    conflictScanned: 'Scanné',
+    conflictAccept: 'Utiliser les valeurs scannées',
+    conflictKeep: 'Garder les valeurs actuelles',
   },
 
   budgetImport: {
@@ -1820,6 +1826,11 @@ export default {
     sectionsMissing: '{count} sections encore ouvertes',
     docsIncluded: '{count} documents enregistrés',
     previewNote: 'Aperçu — voici à quoi ressemblera votre dossier de vie.',
+  },
+
+  pwa: {
+    installHint: 'Installer Maloja Plana comme application — disponible hors ligne, directement depuis l\'écran d\'accueil.',
+    install: 'Installer',
   },
 
   beta: {
