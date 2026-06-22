@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
-import { text as textTokens, weight, radius } from './config/tokens.js';
+import { text as textTokens, weight, radius , leading } from './config/tokens.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -69,7 +69,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
             style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: '4px' }
           }, tmpl.title),
           React.createElement('div', {
-            style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.5' }
+            style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal }
           }, tmpl.description),
           tmpl.legalRef && React.createElement('div', {
             style: { fontSize: textTokens.xs, color: palette.soft, marginTop: '4px' }
