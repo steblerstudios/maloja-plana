@@ -303,23 +303,6 @@ export function calculateIPV(data) {
   };
 }
 
-export function getResidenceInfo(residenceType) {
-  if (residenceType === 'wochenaufenthalt') {
-    return {
-      taxNoteKey: 'residence.taxNote',
-      kkNoteKey: 'residence.kkNote',
-      ipvNoteKey: 'residence.ipvNote',
-      votingNoteKey: 'residence.votingNote',
-    };
-  }
-  return {
-    taxNoteKey: 'residence.taxNoteMain',
-    kkNoteKey: 'residence.kkNoteMain',
-    ipvNoteKey: 'residence.ipvNoteMain',
-    votingNoteKey: '',
-  };
-}
-
 // EL (Ergänzungsleistungen) Berechtigungsprüfung
 export function checkELEligibility(data) {
   const income = Number(data.finanzen?.monthlyIncome || 0);

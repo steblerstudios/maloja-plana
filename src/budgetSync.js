@@ -15,7 +15,7 @@ export const BUDGET_GROUPS = [
   { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
 ];
 
-export const syncBudgetFromChapters = (data) => {
+const syncBudgetFromChapters = (data) => {
   const netIncome = Number(data.finanzen?.monthlyIncome || 0);
   const familienzulagen = Number(data.finanzen?.familienzulagen || 0);
   const alimenteReceived = Number(data.finanzen?.alimenteReceived || 0);
@@ -102,7 +102,7 @@ export const calculateMonthlyBudget = (data, t) => {
   };
 };
 
-export const getBudgetRecommendations = (budget, t) => {
+const getBudgetRecommendations = (budget, t) => {
   const recommendations = [];
 
   const rentPercentage = budget.income > 0 ? (budget.expenses.rent / budget.income) * 100 : 0;
