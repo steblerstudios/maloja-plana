@@ -30,5 +30,10 @@ Thumbs.db
 docs/research/
 
 # Deploy artefacts
-maloja-plana-deploy/
+maloja-plana-deploy*/
 maloja-plana-deploy.zip
+
+# Legacy project folders
+ordnung-ruhe/
+ordnung-ruhe-neu/
+maloja-icons/
