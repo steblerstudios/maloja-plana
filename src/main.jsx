@@ -15,34 +15,34 @@ import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 import Dashboard from './Dashboard.jsx';
 import ChapterView from './ChapterView.jsx';
-import DocumentTresor from './DocumentTresor.jsx';
-import KKScanner from './KKScanner.jsx';
-import BudgetImport from './BudgetImport.jsx';
-import SchuldenManager from './SchuldenManager.jsx';
-import TaxCalculator from './TaxCalculator.jsx';
-import OrganDonation from './OrganDonation.jsx';
-import BudgetSync from './BudgetSync.jsx';
-import PremiumSubsidy from './PremiumSubsidy.jsx';
-import CVGenerator from './CVGenerator.jsx';
-import ChartsAdvanced from './ChartsAdvanced.jsx';
-import ZipExport from './ZipExport.jsx';
-import MeineUnterlagen from './MeineUnterlagen.jsx';
-import Lebensmappe from './Lebensmappe.jsx';
-import NotfallDossier from './NotfallDossier.jsx';
-import BriefGenerator from './BriefGenerator.jsx';
-import BehoerdenDossier from './BehoerdenDossier.jsx';
-import SozialhilfeView from './SozialhilfeView.jsx';
-import CalendarReminders from './CalendarReminders.jsx';
 import OverdueBanner from './OverdueBanner.jsx';
-import NotificationSettings from './NotificationSettings.jsx';
 import { Onboarding, isOnboardingDone } from './Onboarding.jsx';
 import { syncDocumentReminders } from './utils/docReminders.js';
 import LegalView from './LegalView.jsx';
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
-import NotfallEinstieg from './NotfallEinstieg.jsx';
 import StorageWarning from './StorageWarning.jsx';
+const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
+const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
+const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
+const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
+const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
+const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
+const BudgetSync = React.lazy(() => import('./BudgetSync.jsx'));
+const PremiumSubsidy = React.lazy(() => import('./PremiumSubsidy.jsx'));
+const CVGenerator = React.lazy(() => import('./CVGenerator.jsx'));
+const ChartsAdvanced = React.lazy(() => import('./ChartsAdvanced.jsx'));
+const ZipExport = React.lazy(() => import('./ZipExport.jsx'));
+const MeineUnterlagen = React.lazy(() => import('./MeineUnterlagen.jsx'));
+const Lebensmappe = React.lazy(() => import('./Lebensmappe.jsx'));
+const NotfallDossier = React.lazy(() => import('./NotfallDossier.jsx'));
+const BriefGenerator = React.lazy(() => import('./BriefGenerator.jsx'));
+const BehoerdenDossier = React.lazy(() => import('./BehoerdenDossier.jsx'));
+const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
+const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
+const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
+const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
@@ -443,71 +443,73 @@ const AppInner = () => {
         onNavigate: handleNavigate,
         demoMode,
       }),
-      view === 'tresor' && React.createElement(DocumentTresor, {
-        palette, t,
-        documents: documents,
-        chapters: chapters,
-        onDownload: handleDownloadDocument,
-        onDelete: handleDeleteDocument,
-        onUpdateExpiry: handleUpdateDocExpiry
-      }),
-      view === 'kk' && React.createElement(KKScanner, {
-        palette, t, data: activeData,
-        onSave: (kkData) => {
-          const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
-          setData(prev => {
-            const next = { ...prev };
-            next.versicherungen = { ...next.versicherungen,
-              kkInsurer: kkData.insurer || next.versicherungen?.kkInsurer || '',
-              kkCardNumber: kkData.cardNumber || next.versicherungen?.kkCardNumber || '',
-              kkModel: kkData.model || next.versicherungen?.kkModel || '',
-            };
-            if (franchiseKey) next.versicherungen.franchise = franchiseKey;
-            if (kkData.ahv && !next.basis?.ahv) {
-              next.basis = { ...next.basis, ahv: kkData.ahv };
-            }
-            return next;
-          });
-        }
-      }),
-      view === 'budget' && React.createElement(BudgetImport, {
-        palette, t,
-        currentBudget: activeData.finanzen || {},
-        onImport: (updated) => setData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
-      }),
-      view === 'schulden' && React.createElement(SchuldenManager, {
-        palette, t,
-        data: activeData,
-        onSave: (schuldenData) => setData(prev => ({ ...prev, ...schuldenData }))
-      }),
-      view === 'tax' && React.createElement(TaxCalculator, {
-        palette, t,
-        data: activeData,
-        onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData }))
-      }),
-      view === 'organ' && React.createElement(OrganDonation, {
-        palette, t,
-        data: activeData,
-        onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
-      }),
-      view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
-      view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
-      view === 'praemien' && React.createElement(React.Suspense, { fallback: null }, React.createElement(PraemienOrientierung, { palette, t, data: activeData })),
-      view === 'vorsorge' && React.createElement(React.Suspense, { fallback: null }, React.createElement(VorsorgeRechner, { palette, t, data: activeData })),
-      view === 'eo' && React.createElement(React.Suspense, { fallback: null }, React.createElement(EOrechner, { palette, t, data: activeData })),
-      view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
-      view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
-      view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
-      view === 'direktlinks' && React.createElement(React.Suspense, { fallback: null }, React.createElement(DirektLinks, { palette, t })),
-      view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
-      view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
-      view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-      view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-      view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
-      view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-      view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
-      view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
-      view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+      React.createElement(React.Suspense, { fallback: null },
+        view === 'tresor' && React.createElement(DocumentTresor, {
+          palette, t,
+          documents: documents,
+          chapters: chapters,
+          onDownload: handleDownloadDocument,
+          onDelete: handleDeleteDocument,
+          onUpdateExpiry: handleUpdateDocExpiry
+        }),
+        view === 'kk' && React.createElement(KKScanner, {
+          palette, t, data: activeData,
+          onSave: (kkData) => {
+            const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
+            setData(prev => {
+              const next = { ...prev };
+              next.versicherungen = { ...next.versicherungen,
+                kkInsurer: kkData.insurer || next.versicherungen?.kkInsurer || '',
+                kkCardNumber: kkData.cardNumber || next.versicherungen?.kkCardNumber || '',
+                kkModel: kkData.model || next.versicherungen?.kkModel || '',
+              };
+              if (franchiseKey) next.versicherungen.franchise = franchiseKey;
+              if (kkData.ahv && !next.basis?.ahv) {
+                next.basis = { ...next.basis, ahv: kkData.ahv };
+              }
+              return next;
+            });
+          }
+        }),
+        view === 'budget' && React.createElement(BudgetImport, {
+          palette, t,
+          currentBudget: activeData.finanzen || {},
+          onImport: (updated) => setData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
+        }),
+        view === 'schulden' && React.createElement(SchuldenManager, {
+          palette, t,
+          data: activeData,
+          onSave: (schuldenData) => setData(prev => ({ ...prev, ...schuldenData }))
+        }),
+        view === 'tax' && React.createElement(TaxCalculator, {
+          palette, t,
+          data: activeData,
+          onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData }))
+        }),
+        view === 'organ' && React.createElement(OrganDonation, {
+          palette, t,
+          data: activeData,
+          onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
+        }),
+        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
+        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
+        view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
+        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData }),
+        view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
+        view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
+        view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
+        view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
+        view === 'direktlinks' && React.createElement(DirektLinks, { palette, t }),
+        view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
+        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
+        view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
+        view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
+        view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+      ),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
