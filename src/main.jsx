@@ -331,6 +331,20 @@ const AppInner = () => {
         )
       )
     ),
+    view === 'dashboard' && !demoMode && React.createElement('div', {
+      style: {
+        padding: '6px 16px',
+        background: palette.sage + '0A',
+        borderBottom: '1px solid ' + palette.sage + '15',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+      }
+    },
+      React.createElement('svg', { width: '12', height: '12', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' },
+        React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
+        React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+      ),
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge'))
+    ),
     demoMode && React.createElement('div', {
       role: 'status',
       style: {

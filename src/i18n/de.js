@@ -668,6 +668,8 @@ export default {
     footer: 'Nur auf diesem Gerät · Kein Server',
     emergency: 'Diese Informationen werden nur lokal gespeichert.',
     localOnly: 'Deine Daten bleiben auf diesem Gerät.',
+    localBadge: '100% lokal — Deine Daten bleiben auf diesem Gerät',
+    chapterTrust: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.',
   },
 
   legal: {
