@@ -3,10 +3,11 @@
 // Keeps up to 3 rolling backups (one per day max).
 // Restores are manual — user must explicitly trigger.
 //
-// Storage: IndexedDB 'ordnung-ruhe-backups' store.
+// Storage: IndexedDB 'maloja-plana-backups' store.
 // No network. No cloud. Fully local.
 
-const BACKUP_DB_NAME = 'ordnung-ruhe-backups';
+const BACKUP_DB_NAME = 'maloja-plana-backups';
+const OLD_BACKUP_DB_NAME = 'ordnung-ruhe-backups';
 const BACKUP_STORE = 'snapshots';
 const BACKUP_DB_VERSION = 1;
 const MAX_BACKUPS = 3;
@@ -15,24 +16,51 @@ const BACKUP_TIMESTAMP_KEY = 'or5_last_backup';
 
 let backupDb = null;
 
-const openBackupDB = () => {
-  if (backupDb) return Promise.resolve(backupDb);
+const openBDB = (name) => new Promise((resolve, reject) => {
+  const request = indexedDB.open(name, BACKUP_DB_VERSION);
+  request.onerror = () => reject(new Error('Backup DB open failed'));
+  request.onsuccess = () => resolve(request.result);
+  request.onupgradeneeded = (e) => {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains(BACKUP_STORE)) {
+      const store = db.createObjectStore(BACKUP_STORE, { keyPath: 'id' });
+      store.createIndex('createdAt', 'createdAt', { unique: false });
+    }
+  };
+});
 
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(BACKUP_DB_NAME, BACKUP_DB_VERSION);
-    request.onerror = () => reject(new Error('Backup DB open failed'));
-    request.onsuccess = () => {
-      backupDb = request.result;
-      resolve(backupDb);
-    };
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains(BACKUP_STORE)) {
-        const store = db.createObjectStore(BACKUP_STORE, { keyPath: 'id' });
-        store.createIndex('createdAt', 'createdAt', { unique: false });
-      }
-    };
-  });
+const migrateOldBackups = async (newDb) => {
+  try {
+    const dbs = await indexedDB.databases();
+    if (!dbs.some(d => d.name === OLD_BACKUP_DB_NAME)) return;
+
+    const oldDb = await openBDB(OLD_BACKUP_DB_NAME);
+    const tx = oldDb.transaction(BACKUP_STORE, 'readonly');
+    const items = await new Promise((res, rej) => {
+      const req = tx.objectStore(BACKUP_STORE).getAll();
+      req.onsuccess = () => res(req.result || []);
+      req.onerror = () => rej(req.error);
+    });
+
+    if (items.length > 0) {
+      const tx2 = newDb.transaction(BACKUP_STORE, 'readwrite');
+      const store2 = tx2.objectStore(BACKUP_STORE);
+      for (const item of items) store2.put(item);
+      console.info('[backup] Migrated', items.length, 'snapshots from', OLD_BACKUP_DB_NAME);
+    }
+
+    oldDb.close();
+    indexedDB.deleteDatabase(OLD_BACKUP_DB_NAME);
+  } catch (e) {
+    console.warn('[backup] Old DB migration skipped:', e.message);
+  }
+};
+
+const openBackupDB = async () => {
+  if (backupDb) return backupDb;
+  backupDb = await openBDB(BACKUP_DB_NAME);
+  await migrateOldBackups(backupDb);
+  return backupDb;
 };
 
 /**
