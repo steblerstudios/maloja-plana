@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -35,13 +35,13 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const cardStyle = {
     maxWidth: '440px', width: '100%', padding: '32px',
-    background: palette.surface, borderRadius: '16px',
+    background: palette.surface, borderRadius: radius.lg,
     border: '1px solid ' + palette.border,
   };
 
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
-    color: '#000', border: 'none', borderRadius: '8px',
+    color: '#000', border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: 'DM Sans, sans-serif', marginTop: '16px',
   };
@@ -53,7 +53,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   };
 
   const inputStyle = {
-    width: '100%', padding: '12px 16px', borderRadius: '8px',
+    width: '100%', padding: '12px 16px', borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.up,
     color: palette.text, fontSize: text.body, boxSizing: 'border-box',
     fontFamily: 'DM Sans, sans-serif',
@@ -80,7 +80,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               key: lang,
               onClick: () => { setLanguage(lang); setStep(1); },
               style: {
-                padding: '16px 12px', borderRadius: '10px', cursor: 'pointer',
+                padding: '16px 12px', borderRadius: radius.md, cursor: 'pointer',
                 border: '1px solid ' + palette.border, background: palette.up,
                 color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
                 fontFamily: 'DM Sans, sans-serif',
@@ -181,7 +181,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         t('onboarding.readyMessage')
       ),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', padding: '16px', background: palette.up, borderRadius: '8px', marginBottom: '16px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
         [
           t('onboarding.tip1'),
           t('onboarding.tip2'),

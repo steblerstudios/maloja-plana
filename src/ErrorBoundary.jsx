@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a
@@ -51,7 +51,7 @@ export class ErrorBoundary extends React.Component {
       React.createElement('div', {
         style: {
           maxWidth: '420px', width: '100%', padding: '32px',
-          background: surface, borderRadius: '12px',
+          background: surface, borderRadius: radius.md,
           border: '1px solid ' + border, textAlign: 'center'
         }
       },
@@ -71,7 +71,7 @@ export class ErrorBoundary extends React.Component {
             onClick: this.handleReset,
             style: {
               padding: '10px 20px', background: sand, color: '#000',
-              border: 'none', borderRadius: '6px', cursor: 'pointer',
+              border: 'none', borderRadius: radius.sm, cursor: 'pointer',
               fontWeight: weight.semi, fontSize: text.sm
             }
           }, t ? t('error.tryAgain') : 'Try again'),
@@ -79,7 +79,7 @@ export class ErrorBoundary extends React.Component {
             onClick: this.handleHardReset,
             style: {
               padding: '10px 20px', background: 'transparent', color: text,
-              border: '1px solid ' + border, borderRadius: '6px',
+              border: '1px solid ' + border, borderRadius: radius.sm,
               cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }
           }, t ? t('error.reload') : 'Reload page')

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, shadow } from './config/tokens.js';
+import { text, weight, shadow, radius } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -116,7 +116,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
   return React.createElement('div', {
     style: {
-      background: palette.surface, padding: '20px', borderRadius: '8px',
+      background: palette.surface, padding: '20px', borderRadius: radius.sm,
       border: '1px solid ' + palette.border, maxWidth: '520px',
       boxShadow: shadow.sm
     }
@@ -156,7 +156,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Empty state guidance (only when no income) ===
     budget.income <= 0 && React.createElement('div', {
       style: {
-        padding: '12px 14px', background: palette.up, borderRadius: '6px',
+        padding: '12px 14px', background: palette.up, borderRadius: radius.sm,
         fontSize: text.sm, lineHeight: '1.6', color: palette.mid, marginBottom: '12px'
       }
     }, t('budgetSync.emptyStateGuide')),
@@ -213,7 +213,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     budget.householdContext && budget.income > 0 && React.createElement('div', {
       style: {
         marginTop: '12px', padding: '10px 14px', background: palette.up,
-        borderRadius: '6px', fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
+        borderRadius: radius.sm, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
       }
     },
       React.createElement('div', { style: { marginBottom: '4px' } },
@@ -234,7 +234,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       budget.recommendations.map((rec, idx) => React.createElement('div', {
         key: idx,
         style: {
-          padding: '10px 12px', background: palette.up, borderRadius: '6px',
+          padding: '10px 12px', background: palette.up, borderRadius: radius.sm,
           fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
           marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
         }
@@ -265,7 +265,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         style: {
           flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
           color: showAnnual ? '#fff' : palette.mid, border: '1px solid ' + palette.border,
-          borderRadius: '6px', cursor: 'pointer', fontSize: text.sm,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
       }, showAnnual ? '○ ' + t('budgetSync.title') : '○ ' + t('budgetSync.annualView')),
@@ -273,7 +273,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         onClick: handleExportReport,
         style: {
           padding: '9px 14px', background: palette.up, color: palette.mid,
-          border: '1px solid ' + palette.border, borderRadius: '6px',
+          border: '1px solid ' + palette.border, borderRadius: radius.sm,
           cursor: 'pointer', fontSize: text.sm
         }
       }, t('nav.export'))

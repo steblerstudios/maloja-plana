@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
 
 export const TaxCalculator = ({ palette, t, data, onSave }) => {
@@ -57,7 +57,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
     width: '100%',
     padding: '8px',
     marginBottom: '8px',
-    borderRadius: '6px',
+    borderRadius: radius.sm,
     border: '1px solid ' + palette.border,
     background: palette.surface,
     color: palette.text,
@@ -70,13 +70,13 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
     background: palette.sand,
     color: '#fff',
     border: 'none',
-    borderRadius: '6px',
+    borderRadius: radius.sm,
     cursor: 'pointer',
     fontWeight: weight.semi,
     fontSize: text.sm
   };
 
-  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+  return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'money', size: 20 }), t('tax.title')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' } },
@@ -107,7 +107,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '4px', fontWeight: weight.medium } }, t('tax.grossIncome')),
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sand, padding: '8px', background: palette.up, borderRadius: '6px', marginBottom: '4px' } }, 'CHF ' + income.toFixed(0)),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sand, padding: '8px', background: palette.up, borderRadius: radius.sm, marginBottom: '4px' } }, 'CHF ' + income.toFixed(0)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('budgetSync.bvgReferenceNote')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '16px', fontStyle: 'italic' } }, '○ ' + t('tax.netIncomeNote')),
 
@@ -126,7 +126,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
       ),
 
       // Right side: Result
-      React.createElement('div', { style: { background: palette.up, padding: '16px', borderRadius: '8px', border: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { background: palette.up, padding: '16px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
         React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '16px' } }, '◇ ' + t('tax.calculation')),
 
         React.createElement('div', { style: { marginBottom: '12px' } },
@@ -143,7 +143,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.surface, borderRadius: '6px', border: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('tax.taxableIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0))
         ),
@@ -155,7 +155,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { marginBottom: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } },
             t('tax.estimatedTax') + ' (' + t('tax.federalOnly') + ')',
             taxResult ? ' ~' + taxResult.effektiverSatz + '%' : ''
@@ -167,7 +167,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
           )
         ),
 
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', border: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('tax.netIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (income - estimatedTax).toFixed(0))
         )
@@ -176,7 +176,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
 
-    React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px', fontSize: text.sm, color: palette.mid } },
+    React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
       '○ ' + t('tax.disclaimer')
     ),
 
