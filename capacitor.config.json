@@ -1,0 +1,13 @@
+{
+  "appId": "com.steblerstudios.malojaplana",
+  "appName": "Maloja Plana",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#F5F2EE",
+    "preferredContentMode": "mobile"
+  },
+  "server": {
+    "iosScheme": "capacitor"
+  }
+}
