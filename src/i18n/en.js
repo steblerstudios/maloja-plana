@@ -1335,6 +1335,12 @@ export default {
     errorCardNumber: 'Card number invalid',
     errorAhvFormat: 'AHV number format invalid',
     scanRequiresInternet: 'Scanning requires an internet connection. You can also enter the data manually.',
+    conflictTitle: 'Differences detected',
+    conflictHint: 'The scan returned different values than your existing data.',
+    conflictCurrent: 'Current',
+    conflictScanned: 'Scanned',
+    conflictAccept: 'Use scanned values',
+    conflictKeep: 'Keep current values',
   },
 
   budgetImport: {
