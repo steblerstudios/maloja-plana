@@ -190,6 +190,7 @@ const AppInner = () => {
     window.addEventListener('offline', off);
     return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
   }, []);
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
