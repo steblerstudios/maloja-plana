@@ -821,8 +821,15 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
         ),
-        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0 } },
+        React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
+        ),
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sage, opacity: 0.8 } },
+          React.createElement('svg', { width: '11', height: '11', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+            React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
+            React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+          ),
+          tr('trust.chapterTrust')
         )
       ),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
