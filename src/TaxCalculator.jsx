@@ -155,7 +155,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
             t('tax.estimatedTax') + ' (' + t('tax.federalOnly') + ')',
             taxResult ? ' ~' + taxResult.effektiverSatz + '%' : ''
