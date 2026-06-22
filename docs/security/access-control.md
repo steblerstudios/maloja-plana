@@ -35,11 +35,10 @@ Maloja Plana has no authentication system. All data is stored locally in the use
 - Defer to OS/browser-level biometrics (not implemented by app)
 - Users are advised to use device screen lock
 
-## Vercel Deployment Access
+## Deployment Access
 
 - GitHub repository: private (steblerstudios only)
-- Vercel deployment: public URL for alpha testing
-- No server-side access control on Vercel free tier
+- GitHub Pages: public URL for alpha testing
 - Alpha testers access via shared URL (no authentication)
 - Production deployment will require access control evaluation
 
