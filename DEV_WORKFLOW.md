@@ -23,9 +23,6 @@ npm run build
 
 git push origin main
 
-## Verify production (legacy domain)
-curl -s https://ordnung-ruhe-neu.vercel.app/ | grep -o 'index-[^"]*.js'
-
 ## Sync back
 git checkout dev
 git merge main

@@ -24,7 +24,7 @@ export const DirektLinks = ({ palette, t }) => {
     linkUrl: { fontSize: text.xs, color: palette.sage, textDecoration: 'none', wordBreak: 'break-all' },
     linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: space.xs },
     katLabel: { fontSize: text.xs, color: palette.mid, display: 'inline-block', padding: '1px 6px', borderRadius: '4px', background: palette.surface, marginBottom: space.xs },
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
   };
 
   return React.createElement('div', { style: s.card },

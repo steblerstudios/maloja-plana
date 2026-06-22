@@ -40,6 +40,14 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     setBetreibung([...betreibung, entry]);
   };
 
+  const handleUpdateBetreibung = (id, field, value) => {
+    setBetreibung(betreibung.map(e => e.id === id ? { ...e, [field]: field === 'amount' ? Number(value) || 0 : value } : e));
+  };
+
+  const handleDeleteBetreibung = (id) => {
+    setBetreibung(betreibung.filter(e => e.id !== id));
+  };
+
   const handleAddVerlustschein = () => {
     const entry = formatVerlustschein({
       debtor: '',
@@ -50,6 +58,14 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       status: 'active'
     });
     setVerlustscheine([...verlustscheine, entry]);
+  };
+
+  const handleUpdateVerlustschein = (id, field, value) => {
+    setVerlustscheine(verlustscheine.map(e => e.id === id ? { ...e, [field]: field === 'amount' ? Number(value) || 0 : value } : e));
+  };
+
+  const handleDeleteVerlustschein = (id) => {
+    setVerlustscheine(verlustscheine.filter(e => e.id !== id));
   };
 
   const handleDeleteDebt = (id) => {
@@ -198,14 +214,17 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
 
       betreibung.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
-        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, background: entry.status === 'erledigt' ? palette.up : palette.rose + '22' } },
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-            React.createElement('strong', null, entry.creditor || t('schulden.creditor')),
-            React.createElement('span', { style: { fontWeight: weight.semi, color: palette.rose } }, 'CHF ' + entry.amount.toFixed(2))
+        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.rose + '12' } },
+          React.createElement('input', { type: 'text', value: entry.creditor, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
+          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+            React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
+            React.createElement('input', { type: 'date', value: entry.registerDate || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
+            React.createElement('select', { value: entry.status, onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
+              React.createElement('option', { value: 'active' }, t('schulden.statusOpen')),
+              React.createElement('option', { value: 'erledigt' }, t('schulden.statusPaid'))
+            )
           ),
-          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
-            entry.registerDate + ' | ' + entry.status
-          )
+          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...buttonStyle, background: palette.rose, marginTop: space.xs } }, '✕ ' + t('common.delete'))
         ))
       )
     ),
@@ -217,15 +236,19 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
 
       verlustscheine.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
-        verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: cardStyle },
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-            React.createElement('strong', null, entry.creditor),
-            React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + entry.amount.toFixed(2))
+        verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
+          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+            React.createElement('input', { type: 'text', value: entry.creditor || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), style: { ...inputStyle, flex: '1 1 200px', marginBottom: 0 } }),
+            React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } })
           ),
-          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
-            entry.date + ' | ' + (entry.court || '—')
+          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
+            React.createElement('input', { type: 'text', value: entry.debtor || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'debtor', e.target.value), placeholder: t('schulden.debtor') || 'Schuldner', style: { ...inputStyle, flex: '1 1 200px', marginBottom: 0 } }),
+            React.createElement('input', { type: 'text', value: entry.court || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'court', e.target.value), placeholder: t('schulden.court') || 'Betreibungsamt', style: { ...inputStyle, flex: '1 1 160px', marginBottom: 0 } })
           ),
-          React.createElement('div', { style: { color: palette.mid, fontSize: text.sm } }, entry.debtor)
+          React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
+            React.createElement('input', { type: 'date', value: entry.date || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
+            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: { ...buttonStyle, background: palette.rose } }, '✕ ' + t('common.delete'))
+          )
         ))
       )
     ),

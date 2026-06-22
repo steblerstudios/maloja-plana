@@ -1,8 +1,8 @@
 # Maloja Plana Beta-Test — Kurzskript
 
 Dauer: 10–15 Minuten
-URL: https://ordnung-ruhe-neu.vercel.app
-Version: v0.1.0-alpha
+URL: https://ordnung-ruhe.vercel.app
+Version: Beta (Stand 2026-06-22)
 Beta-Code: maloja2026
 
 > Tester-Erwartungen und Signal-Kriterien: siehe [feedback-rekonstruktion.md](../ux/feedback-rekonstruktion.md)
