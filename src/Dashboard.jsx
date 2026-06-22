@@ -627,7 +627,33 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
-      style: { margin: '20px -8px 28px -8px', lineHeight: 0, position: 'relative' }
+      style: { margin: '20px -8px 0 -8px' }
+    },
+      React.createElement('div', {
+        style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          padding: '0 8px ' + space.sm + 'px 8px',
+        }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid }
+        },
+          (() => {
+            const started = chapterCompletions.filter(p => p > 0).length;
+            const done = chapterCompletions.filter(p => p >= 100).length;
+            const total = chapterCompletions.length;
+            if (done === total) return t('progress.allDone');
+            if (started === 0) return t('progress.notStarted');
+            return t('progress.status', { started, done, total });
+          })()
+        ),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.sage, fontWeight: weight.medium }
+        }, Math.round(completion) + '%')
+      )
+    ),
+    React.createElement('div', {
+      style: { margin: '0 -8px 28px -8px', lineHeight: 0, position: 'relative' }
     },
       React.createElement('svg', {
         viewBox: '0 0 720 200',
