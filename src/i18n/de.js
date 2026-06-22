@@ -158,6 +158,7 @@ export default {
       budgetHint: 'Miete erfasst → Dein Budget im Überblick →',
       vorsorgeHint: 'BVG-Beitrag hinterlegt → berechne Deine Rente →',
       praemienHint: 'Krankenkasse hinterlegt → vergleiche Deine Prämie →',
+      mindestlohnHint: 'Dein Kanton hat einen Mindestlohn → Lohn prüfen →',
     },
     backToDashboard: 'Übersicht',
   },
