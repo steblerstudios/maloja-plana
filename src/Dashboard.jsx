@@ -580,6 +580,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm }
       },
         [
+          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget' },
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
           { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
           { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
