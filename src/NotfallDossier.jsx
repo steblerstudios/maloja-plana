@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , leading } from './config/tokens.js';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -87,7 +87,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         }
       }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
       React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '14px' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),
 
       hasSections && React.createElement('div', {
@@ -103,7 +103,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         padding: '10px 14px', marginBottom: '16px',
         background: palette.up, borderRadius: radius.sm,
-        fontSize: text.sm, color: palette.mid, lineHeight: '1.5',
+        fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
     }, '○ ' + t('notfallDossier.privacyNote')),
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , leading } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
 const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
@@ -34,7 +34,7 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
           style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
         }, title),
         React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '8px' }
         }, description),
         React.createElement('div', {
           style: {
@@ -70,7 +70,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('unterlagen.title')),
       React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('unterlagen.subtitle'))
     ),
 
@@ -129,7 +129,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
             style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
           }, t('unterlagen.backup.title')),
           React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }
+            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '10px' }
           }, t('unterlagen.backup.description')),
           React.createElement('button', {
             onClick: () => onNavigate('export'),

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , leading } from './config/tokens.js';
 
 const BETA_CODE = 'maloja2026';
 const STORAGE_KEY = 'or5_beta_access';
@@ -47,7 +47,7 @@ export const BetaGate = ({ children }) => {
         style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '8px', color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: '1.5' }
+        style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: leading.normal }
       }, t('beta.gateMessage')),
       React.createElement('input', {
         type: 'text',
