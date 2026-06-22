@@ -40,7 +40,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 |----|-------|----------|--------|
 | KI-001 | SKOS Grundbedarf: pauschal nach Haushaltsgrösse, keine Kinder-Differenzierung | Minor | Bewusste Vereinfachung — SKOS-Tabelle korrekt, Kinder-Zuschläge kantonal verschieden |
 | KI-002 | BVG double deduction | Critical | **Fixed** (2026-05-16) |
-| KI-003 | KK/AHV duplicate entry | Important | **Partially fixed** — autofill + persist done; conflict warnings pending (Slice C) |
+| KI-003 | KK/AHV duplicate entry | Important | **Fixed** (2026-06-22) — autofill + persist + Slice C conflict warnings |
 | KI-004 | Hardcoded German in schuldenCalc.js | Important | **Fixed** (2026-06-22) — Severity-Keys + Recommendations als i18n-Keys |
 | KI-005 | QR code external CDN dependency | Important | **Fixed** — vendor/qrcodejs.js lokal eingebunden |
 | KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
@@ -49,7 +49,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 
 ## Next Recommended Implementation Candidates
 
-1. **KK Scanner Slice C** — conflict warnings when scanned values differ, AHV display masking (small, UI only)
+1. **"Nutzen vor Dateneingabe" vertiefen** — Demo-Modus erweitern, Tooltips in Highlight Tools
 2. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
 3. **Bundle-Optimierung** — 357/360 KB gzipped, Code-Splitting oder manualChunks prüfen
 
