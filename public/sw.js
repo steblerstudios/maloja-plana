@@ -7,7 +7,7 @@
 // - Background sync for reminders
 // - Offline document access
 
-const CACHE_NAME = 'ordnung-ruhe-v1';
+const CACHE_NAME = 'ordnung-ruhe-v2';
 const OFFLINE_URL = '/';
 
 // ─── Install: cache the app shell ──────────────────────────
