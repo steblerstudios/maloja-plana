@@ -100,6 +100,7 @@
   --mp-duration-fast: 150ms;
   --mp-duration-normal: 250ms;
   --mp-duration-slow: 400ms;
+  --mp-duration-cinematic: 600ms;
 
   /* ─── Shadows (subtle, premium) ───────────────────────── */
   --mp-shadow-sm:  0 1px 3px rgba(0,0,0,0.06);

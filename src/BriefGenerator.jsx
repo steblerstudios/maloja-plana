@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
-import { text as textTokens, weight, radius , leading , space } from './config/tokens.js';
+import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -60,7 +60,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           border: '1px solid ' + (selected === tmpl.key ? palette.accent : palette.border),
           borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
           display: 'flex', alignItems: 'flex-start', gap: '12px',
-          transition: 'border-color 0.2s',
+          transition: `border-color ${duration.normal}ms ${ease}`,
         }
       },
         React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.accent : palette.mid }),
