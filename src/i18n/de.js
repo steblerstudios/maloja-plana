@@ -1108,6 +1108,8 @@ export default {
     notEligible: 'Nicht berechtigt',
     monthlySubsidy: 'Monatliche Förderung',
     annualSubsidy: 'Jährliche Förderung',
+    reductionNote: 'Einkommensabhängig ({percent}% des Maximums)',
+    maxPossible: 'Maximum: CHF {value}/Jahr',
     taxSavings: 'Steuerersparnis',
     compareCantons: 'Alle Kantone vergleichen',
     requiredDocs: 'Benötigte Dokumente',
