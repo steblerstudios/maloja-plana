@@ -118,6 +118,7 @@ export default {
     budget: 'Budget',
     debts: 'Dettes',
     taxes: 'Impôts',
+    finanzUebersicht: 'Aperçu financier',
     organDonation: 'Don d\'organes',
     budgetSync: 'Sync budget',
     kvgIpv: 'Réduction de primes (IPV)',
