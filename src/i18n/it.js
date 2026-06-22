@@ -73,6 +73,7 @@ export default {
     download: 'Scarica',
     upload: 'Carica',
     search: 'Cerca...',
+    noResults: 'Nessun risultato',
     loading: 'Caricamento...',
     saving: 'Salvataggio...',
     skipToContent: 'Vai al contenuto',
@@ -168,6 +169,13 @@ export default {
       finanzuebersichtHint: 'Tutti i calcoli in un colpo d\'occhio →',
     },
     backToDashboard: 'Panoramica',
+  },
+
+  wohnen: {
+    umzugTitle: 'Checklist dopo il trasloco',
+    umzugGemeinde: 'Comune: registrazione entro 14 giorni',
+    umzugKK: 'Assicurazione malattia: comunicare il cambio di indirizzo',
+    umzugPost: 'Posta: attivare la deviazione della corrispondenza',
   },
 
   theme: {
