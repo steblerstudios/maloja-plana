@@ -79,7 +79,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Scanner
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'barcode', size: 20 }), t('kkScanner.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'barcode', size: 20 }), t('kkScanner.title')),
 
       React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '16px' } },
         React.createElement('button', {
@@ -96,7 +96,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '8px', fontStyle: 'italic' } }, '○ ' + t('kkScanner.scanRequiresInternet')),
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: '8px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
-          React.createElement('div', { style: { fontSize: '18px', marginBottom: '4px' } }, '○'),
+          React.createElement('div', { style: { fontSize: text.lg, marginBottom: '4px' } }, '○'),
           React.createElement('div', { style: { fontWeight: '600' } }, t('kkScanner.selectImage')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } }, t('kkScanner.qrBarcode'))
         ),
@@ -138,7 +138,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
     // Right: Preview & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'document', size: 20 }), t('kkScanner.dataPreview')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'document', size: 20 }), t('kkScanner.dataPreview')),
 
       React.createElement('div', { style: { display: 'grid', gap: '8px', marginBottom: '16px' } },
         [
