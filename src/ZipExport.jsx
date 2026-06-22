@@ -203,7 +203,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   };
 
   const inputStyle = {
-    width: '100%', padding: '8px', marginBottom: '8px', borderRadius: radius.sm,
+    width: '100%', padding: space.sm, marginBottom: space.sm, borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
@@ -223,28 +223,28 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     // Left column: existing export + new backup export
     React.createElement('div', null,
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '20px' } },
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'download', size: 20 }), t('zipExport.title')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'download', size: 20 }), t('zipExport.title')),
 
         // Summary
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '12px', marginBottom: '16px' } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '12px', marginBottom: space.md } },
           React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('zipExport.person')),
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('zipExport.person')),
             React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, dataSummary.person)
           ),
           React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('zipExport.documents')),
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('zipExport.documents')),
             React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, dataSummary.documentsCount)
           ),
           React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('zipExport.dataSize')),
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('zipExport.dataSize')),
             React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, (dataSummary.dataSize / 1024).toFixed(1) + ' KB')
           )
         ),
 
         // Export formats
-        React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', border: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
           React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, '↙ ' + t('zipExport.exportFormats')),
-          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px' } },
+          React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: handleExportJSON, disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
@@ -262,7 +262,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         // Info
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '8px' } }, '○ ' + t('zipExport.whatIsExported')),
+          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, '○ ' + t('zipExport.whatIsExported')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },
             React.createElement('div', null, '✓ ' + t('zipExport.allChapterData')),
             React.createElement('div', null, '✓ ' + t('zipExport.documentMetadata')),
@@ -273,7 +273,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
       // Encrypted backup export
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'lock', size: 20 }), t('backup.title')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'lock', size: 20 }), t('backup.title')),
 
         sessionBackupCount > 0 && React.createElement('div', {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
@@ -290,38 +290,38 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           type: 'password', value: passphraseConfirm, placeholder: t('backup.passphraseConfirm'),
           onChange: (e) => setPassphraseConfirm(e.target.value), style: inputStyle
         }),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '8px' } }, t('backup.passphraseHint')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('backup.passphraseHint')),
         React.createElement('button', {
           onClick: handleExportEncryptedBackup,
           disabled: !passphrase || passphrase.length < 4 || passphrase !== passphraseConfirm,
           style: btnStyle(passphrase && passphrase.length >= 4 && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
         }, '◉ ' + t('backup.exportEncrypted')),
 
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', padding: '8px', background: palette.up, borderRadius: '4px' } }, t('backup.encryptionInfo'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', padding: space.sm, background: palette.up, borderRadius: '4px' } }, t('backup.encryptionInfo'))
       )
     ),
 
     // Right column: import/restore
     React.createElement('div', null,
       React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'upload', size: 20 }), t('backup.importFile')),
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'upload', size: 20 }), t('backup.importFile')),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, style: { display: 'none' } }),
-          React.createElement('div', { style: { fontSize: text.lg, marginBottom: '4px' } }, '□'),
+          React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.xs } }, '□'),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('backup.selectFile')),
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' } }, t('backup.fileTypes'))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('backup.fileTypes'))
         ),
 
         // Decrypt passphrase prompt (shown for encrypted files)
-        importing && React.createElement('div', { style: { padding: '16px', background: palette.gold + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.gold } },
-          React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '8px' } }, t('backup.passphrase')),
+        importing && React.createElement('div', { style: { padding: space.md, background: palette.gold + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.gold } },
+          React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('backup.passphrase')),
           React.createElement('input', {
             type: 'password', value: importPassphrase, placeholder: t('backup.passphrase'),
             onChange: (e) => setImportPassphrase(e.target.value), style: inputStyle,
             autoFocus: true
           }),
-          React.createElement('div', { style: { display: 'flex', gap: '8px' } },
+          React.createElement('div', { style: { display: 'flex', gap: space.sm } },
             React.createElement('button', {
               onClick: handleDecryptAndImport, disabled: !importPassphrase,
               style: { ...btnStyle(importPassphrase ? palette.gold : palette.mid, '#000'), flex: 1 }

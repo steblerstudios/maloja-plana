@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, shadow, radius , leading } from './config/tokens.js';
+import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -93,11 +93,11 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const renderGroup = (group) => {
     const pct = groupPercent(group.total);
     const singleField = group.items.length === 1;
-    return React.createElement('div', { key: group.key, style: { marginBottom: '4px' } },
+    return React.createElement('div', { key: group.key, style: { marginBottom: space.xs } },
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
         React.createElement('span', null, t('budgetSync.group.' + group.key)),
-        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: '8px' } },
+        React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm } },
           group.total > 0
             ? React.createElement('span', null, formatCHF(group.total * mult))
             : React.createElement('span', { style: emptyValueStyle }, '—'),
@@ -125,8 +125,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px',
-        display: 'flex', alignItems: 'center', gap: '8px'
+        fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md,
+        display: 'flex', alignItems: 'center', gap: space.sm
       }
     }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
 
@@ -166,13 +166,13 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // IPV relief (shown only when eligible)
     budget.ipvRelief > 0 && budget.expenses.healthInsurance > 0 && React.createElement('div', {
-      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: text.sm, lineHeight: leading.normal }
+      style: { marginTop: space.xs, padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: text.sm, lineHeight: leading.normal }
     },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', color: palette.mid } },
         React.createElement('span', null, t('budgetSync.ipvRelief')),
         React.createElement('span', null, '− ' + formatCHF(budget.ipvRelief * mult))
       ),
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: weight.semi, marginTop: '4px', fontSize: text.sm } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontWeight: weight.semi, marginTop: space.xs, fontSize: text.sm } },
         React.createElement('span', null, t('budgetSync.ipvEffective')),
         React.createElement('span', null, formatCHF(Math.max(0, budget.expenses.healthInsurance - budget.ipvRelief) * mult))
       )
@@ -181,7 +181,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // BVG/AHV reference note (if any exist)
     bvgAhvTotal > 0 && React.createElement('div', {
       style: {
-        marginTop: '8px', padding: '8px 12px', background: palette.up,
+        marginTop: space.sm, padding: '8px 12px', background: palette.up,
         borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
     }, '○ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
@@ -216,7 +216,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         borderRadius: radius.sm, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
       }
     },
-      React.createElement('div', { style: { marginBottom: '4px' } },
+      React.createElement('div', { style: { marginBottom: space.xs } },
         '○ ' + t('budgetSync.skosOrientation', {
           size: budget.householdContext.size,
           amount: formatCHF(budget.householdContext.skosGrundbedarf),
@@ -229,7 +229,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // === Recommendations (calm, info-level only) ===
     budget.recommendations && budget.recommendations.length > 0 && React.createElement('div', {
-      style: { marginTop: '16px' }
+      style: { marginTop: space.md }
     },
       budget.recommendations.map((rec, idx) => React.createElement('div', {
         key: idx,
@@ -257,7 +257,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Footer: annual toggle + export ===
     React.createElement('div', {
       style: {
-        marginTop: '16px', display: 'flex', gap: '8px'
+        marginTop: space.md, display: 'flex', gap: space.sm
       }
     },
       React.createElement('button', {

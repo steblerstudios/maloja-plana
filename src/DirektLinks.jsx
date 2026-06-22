@@ -22,8 +22,8 @@ export const DirektLinks = ({ palette, t }) => {
     linkName: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: '2px' },
     linkDesc: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px' },
     linkUrl: { fontSize: text.xs, color: palette.sage, textDecoration: 'none', wordBreak: 'break-all' },
-    linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: '4px' },
-    katLabel: { fontSize: text.xs, color: palette.mid, display: 'inline-block', padding: '1px 6px', borderRadius: '4px', background: palette.surface, marginBottom: '4px' },
+    linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: space.xs },
+    katLabel: { fontSize: text.xs, color: palette.mid, display: 'inline-block', padding: '1px 6px', borderRadius: '4px', background: palette.surface, marginBottom: space.xs },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
   };
 

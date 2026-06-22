@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
-import { text, weight, radius , leading } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 
 const BETA_CODE = 'maloja2026';
 const STORAGE_KEY = 'or5_beta_access';
@@ -44,10 +44,10 @@ export const BetaGate = ({ children }) => {
       }
     },
       React.createElement('h1', {
-        style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '8px', color: palette.text }
+        style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: leading.normal }
+        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.lg, lineHeight: leading.normal }
       }, t('beta.gateMessage')),
       React.createElement('input', {
         type: 'text',
@@ -63,12 +63,12 @@ export const BetaGate = ({ children }) => {
         }
       }),
       error && React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.rose, marginTop: '8px' }
+        style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
       }, t('beta.codeWrong')),
       React.createElement('button', {
         type: 'submit',
         style: {
-          marginTop: '16px', width: '100%', padding: '10px', fontSize: text.body,
+          marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body,
           background: palette.sand, color: '#fff', border: 'none',
           borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }

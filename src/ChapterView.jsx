@@ -122,7 +122,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
 
       // Adults
-      React.createElement('div', { style: { marginBottom: '16px' } },
+      React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.adults')),
         React.createElement('select', {
           value: String(adults),
@@ -134,7 +134,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       ),
 
       // Retired
-      React.createElement('div', { style: { marginBottom: '16px' } },
+      React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.retired')),
         React.createElement('select', {
           value: isRetired ? 'yes' : 'no',
@@ -147,12 +147,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       ),
 
       // Children section — full width
-      React.createElement('div', { style: { gridColumn: '1 / -1', marginBottom: '16px' } },
+      React.createElement('div', { style: { gridColumn: '1 / -1', marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.children')),
 
-        children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' } },
+        children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm, marginBottom: '12px' } },
           children.map((child, idx) =>
-            React.createElement('div', { key: idx, style: { display: 'flex', alignItems: 'center', gap: '8px' } },
+            React.createElement('div', { key: idx, style: { display: 'flex', alignItems: 'center', gap: space.sm } },
               React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, minWidth: '36px' } }, tr('chapters.basis.fields.household.childAge')),
               React.createElement('input', {
                 type: 'number',
@@ -347,7 +347,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             style: {
               position: 'absolute', right: '36px', top: '50%', transform: 'translateY(-50%)',
               background: 'none', border: 'none', cursor: 'pointer',
-              color: palette.mid, fontSize: text.body, padding: '4px', lineHeight: 1,
+              color: palette.mid, fontSize: text.body, padding: space.xs, lineHeight: 1,
             }
           }, '✕')
         )
@@ -587,7 +587,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         ...sections.map((sec, i) =>
           React.createElement('div', { key: i, style: { marginBottom: i < sections.length - 1 ? space.sm + 'px' : 0 } },
             React.createElement('div', {
-              style: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }
+              style: { fontSize: text.xs, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: space.xs }
             }, sec.title),
             ...sec.rows.map((row, j) =>
               React.createElement('div', { key: j, style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed } }, row)
@@ -599,7 +599,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Notfallkarte export — quiet text link (below mirror cards)
     isNotfall && hasMedical && React.createElement('div', {
-      style: { marginBottom: '16px' }
+      style: { marginBottom: space.md }
     },
       React.createElement('span', {
         onClick: handleSaveCard,
@@ -785,6 +785,39 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         }
       }, '○ ' + tr('orientation.contextFamilienzulagen')),
 
+    // "Was Du davon hast" — shows which tools benefit from this chapter's data
+    (() => {
+      const benefitsKey = 'chapters.' + chapter.key + '.benefits';
+      const benefits = tr(benefitsKey);
+      if (benefits === benefitsKey || !Array.isArray(benefits)) return null;
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.md + 'px',
+          padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sand + '0C',
+          borderRadius: radius.sm,
+          border: '1px solid ' + palette.sand + '20',
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px',
+        }
+      },
+        React.createElement('span', {
+          style: { fontSize: text.xs, color: palette.mid, marginRight: '2px' }
+        }, tr('chapterView.benefitsLabel')),
+        benefits.map((b, i) =>
+          React.createElement('span', {
+            key: i,
+            style: {
+              fontSize: text.xs, color: palette.sage,
+              padding: '2px 8px',
+              background: palette.sage + '0D',
+              borderRadius: radius.sm,
+              whiteSpace: 'nowrap',
+            }
+          }, '→ ' + b)
+        )
+      );
+    })(),
+
     // Tabs
     React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
@@ -957,7 +990,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       // Progressive disclosure toggle
       hasSecondaryFields && React.createElement('div', {
         style: {
-          marginTop: '24px',
+          marginTop: space.lg,
           paddingTop: '16px',
           borderTop: '1px solid ' + palette.border,
           textAlign: 'center',
@@ -978,13 +1011,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             : '○ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sage, marginTop: '4px' }
+          style: { fontSize: text.xs, color: palette.sage, marginTop: space.xs }
         }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
       ),
 
       // Secondary fields
       hasSecondaryFields && showSecondary && React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px', marginTop: '8px' }
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px', marginTop: space.sm }
       },
         chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => {
           const elements = [];
@@ -1040,7 +1073,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
 
       // Upload Form
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', border: '2px dashed ' + palette.border } },
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
           React.createElement('div', null,
             React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
@@ -1131,7 +1164,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { padding: space.sm + 4, background: palette.up, borderRadius: radius.sm } },
         React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 2 } }, '□ ' + tr('chapterView.requiredDocs')),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
-          chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: '4px' } }, doc.label))
+          chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc.label))
         )
       ),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', letterSpacing: '0.2px' } },
