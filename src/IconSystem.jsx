@@ -982,48 +982,4 @@ export const Icon = ({ name, size = 16, color, style = {} }) => {
 
 
 // ═══════════════════════════════════════════════════════════════
-// Legacy Components — preserved for backward compatibility
-// ═══════════════════════════════════════════════════════════════
-
-export const IconWithLabel = ({ icon, label, color = '#8A8478', onClick = null, style = {} }) => {
-  const baseStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '6px',
-    cursor: onClick ? 'pointer' : 'default',
-    ...style
-  };
-
-  const content = [
-    React.createElement(Icon, { key: 'icon', name: icon, size: 32, color }),
-    React.createElement('div', { key: 'label', style: { fontSize: text.sm, color, textAlign: 'center', fontWeight: '500' } }, label)
-  ];
-
-  return onClick
-    ? React.createElement('button', { type: 'button', style: { ...baseStyle, background: 'none', border: 'none', padding: 0, font: 'inherit' }, onClick }, content)
-    : React.createElement('div', { style: baseStyle }, content);
-};
-
-
-export const IconButton = ({ icon, color = '#EDE8E0', onClick, title = '', size = '20px' }) => {
-  const numSize = parseInt(size, 10) || 20;
-  return React.createElement('button', {
-    onClick,
-    title,
-    'aria-label': title,
-    style: {
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      padding: '4px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  },
-    React.createElement(Icon, { name: icon, size: numSize, color })
-  );
-};
-
 export default Icons;
