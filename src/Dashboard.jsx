@@ -517,6 +517,44 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, '○ ' + t('demo.ctaButton'))
     ),
 
+    // ─── Demo — prominent example section (before tools for new users) ──
+    !hasMeaningfulProgress && !demoMode && React.createElement('div', {
+      style: {
+        marginTop: space.lg, marginBottom: space.md,
+        padding: '20px 24px',
+        background: palette.sand + '08',
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.sand + '25',
+        display: 'flex', alignItems: 'center', gap: '20px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
+        }, t('dashboard.demoTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
+        }, t('dashboard.demoText'))
+      ),
+      React.createElement('button', {
+        onClick: onEnterDemo,
+        style: {
+          padding: '10px 20px',
+          background: palette.sand,
+          color: '#fff',
+          border: 'none',
+          borderRadius: radius.md,
+          cursor: 'pointer',
+          fontFamily: 'inherit',
+          fontSize: text.sm,
+          fontWeight: weight.medium,
+          whiteSpace: 'nowrap',
+          flexShrink: 0,
+        }
+      }, t('dashboard.demoButton'))
+    ),
+
     // ─── Highlight tools — immediate value ──────────────────
     React.createElement('div', {
       style: {
@@ -585,44 +623,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Quick check — inline IPV eligibility ───────────────
     React.createElement(QuickCheck, { palette, t, onNavigate }),
-
-    // ─── Demo — prominent example section ──────────────────
-    !hasMeaningfulProgress && React.createElement('div', {
-      style: {
-        marginBottom: space.lg,
-        padding: '20px 24px',
-        background: palette.sand + '08',
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.sand + '25',
-        display: 'flex', alignItems: 'center', gap: '20px',
-        flexWrap: 'wrap',
-      }
-    },
-      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
-        }, t('dashboard.demoTitle')),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
-        }, t('dashboard.demoText'))
-      ),
-      React.createElement('button', {
-        onClick: onEnterDemo,
-        style: {
-          padding: '10px 20px',
-          background: palette.sand,
-          color: '#fff',
-          border: 'none',
-          borderRadius: radius.md,
-          cursor: 'pointer',
-          fontFamily: 'inherit',
-          fontSize: text.sm,
-          fontWeight: weight.medium,
-          whiteSpace: 'nowrap',
-          flexShrink: 0,
-        }
-      }, t('dashboard.demoButton'))
-    ),
 
     // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
