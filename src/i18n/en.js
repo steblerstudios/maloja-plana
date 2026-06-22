@@ -158,6 +158,7 @@ export default {
       budgetHint: 'Rent entered → see your budget overview →',
       vorsorgeHint: 'BVG contribution entered → calculate your pension →',
       praemienHint: 'Health insurer entered → compare your premium →',
+      mindestlohnHint: 'Your canton has a minimum wage → check your salary →',
     },
     backToDashboard: 'Overview',
   },

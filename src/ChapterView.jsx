@@ -901,6 +901,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
             crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
           }
+          if (field.k === 'jobTitle' && chapter.key === 'ausbildung') {
+            const kanton = allData && allData.basis && allData.basis.canton;
+            if (kanton && kantonHatMindestlohn(kanton)) {
+              crosslinkBtn('mindestlohn', 'finanzen', 'nav.crosslink.mindestlohnHint');
+            }
+          }
           if (field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
             crosslinkBtn('tax', 'tax', 'nav.crosslink.taxHint');
             crosslinkBtn('ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome');

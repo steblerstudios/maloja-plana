@@ -158,6 +158,7 @@ export default {
       budgetHint: 'Loyer saisi → aperçu de ton budget →',
       vorsorgeHint: 'Cotisation LPP saisie → calcule ta rente →',
       praemienHint: 'Caisse maladie saisie → compare ta prime →',
+      mindestlohnHint: 'Ton canton a un salaire minimum → vérifier ton salaire →',
     },
     backToDashboard: 'Aperçu',
   },
