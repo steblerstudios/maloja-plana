@@ -1186,12 +1186,18 @@ export default {
     children: 'Children',
     childDeduction: 'Child deduction (federal tax)',
     federalOnly: 'federal tax only',
+    federalTax: 'Federal tax',
+    cantonalAndMunicipal: 'Cantonal and municipal tax',
+    totalEstimate: 'Estimated total tax',
+    selectCantonHint: 'Select a canton to see the cantonal tax estimate.',
+    basedOnHauptort: 'Approximate, based on the cantonal capital.',
+    totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
     tariff: 'Tariff',
     singleTariff: 'Basic tariff',
     marriedTariff: 'Married tariff',
     marginalRate: 'Marginal rate',
     dataVersion: 'Data version',
-    disclaimer: 'This orientation shows the direct federal tax (DBG Art. 36). Cantonal and municipal taxes are additional. You can find exact amounts at your cantonal tax authority.',
+    disclaimer: 'This orientation shows the estimated tax burden (federal, cantonal, municipal). Cantonal values are based on the cantonal capital. You can find exact amounts at your cantonal tax authority.',
     netIncomeNote: 'Projection based on your net salary × 12. Actual tax liability may differ.',
   },
 
@@ -1815,6 +1821,11 @@ export default {
     sectionsMissing: '{count} sections still open',
     docsIncluded: '{count} documents stored',
     previewNote: 'Preview — this is how your life folder will look.',
+  },
+
+  pwa: {
+    installHint: 'Install Maloja Plana as an app — available offline, right from your home screen.',
+    install: 'Install',
   },
 
   beta: {

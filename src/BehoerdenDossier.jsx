@@ -3,6 +3,7 @@ import { Icon } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
+import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
@@ -12,15 +13,21 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
   const el = checkELEligibility(data);
 
   const income = parseFloat((data.finanzen || {}).monthlyIncome) || 0;
+  const canton = (data.basis || {}).canton || '';
   const taxResult = income > 0
     ? berechneBundessteuer({ bruttoEinkommen: income * 12, verheiratet: (data.basis || {}).maritalStatus === 'married', kinder: 0 })
     : null;
+  const kantonal = taxResult && canton ? schaetzeKantonaleSteuer(taxResult.steuer, canton) : null;
 
   const calculations = {
     sozialhilfe,
     ipv,
     el,
-    tax: taxResult ? { total: taxResult.steuer, taxableIncome: taxResult.steuerBaresEinkommen } : null,
+    tax: taxResult ? {
+      total: taxResult.steuer,
+      taxableIncome: taxResult.steuerBaresEinkommen,
+      kantonal,
+    } : null,
   };
 
   const preview = getBehoerdenDossierPreview(data, chapters, t, calculations);

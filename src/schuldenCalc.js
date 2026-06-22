@@ -25,10 +25,6 @@ export const calculateDebtStatus = (debts) => {
   return { totalDebt, overdue, upcoming, paid, remaining: totalDebt - paid };
 };
 
-export const calculateDebtInterest = (principal, interestRate, months) => {
-  // Zinsberechnung: K * r * t
-  return (principal * (interestRate / 100) * (months / 12)).toFixed(2);
-};
 
 export const createDebtPlan = (totalDebt, monthlyPayment, interestRate = 0) => {
   const plan = [];
@@ -54,19 +50,6 @@ export const createDebtPlan = (totalDebt, monthlyPayment, interestRate = 0) => {
   return plan;
 };
 
-export const validateBetreibungsRegisterEntry = (entry) => {
-  const errors = [];
-
-  if (!entry.creditor) errors.push('debtValidation.creditorRequired');
-  if (!entry.amount || Number(entry.amount) <= 0) errors.push('debtValidation.amountInvalid');
-  if (!entry.registerDate) errors.push('debtValidation.dateRequired');
-  if (!entry.documentFile) errors.push('debtValidation.documentRequired');
-
-  return {
-    valid: errors.length === 0,
-    errors
-  };
-};
 
 export const calculateBetreibungsRegisterImpact = (registerEntries, income) => {
   const totalDebt = registerEntries.reduce((sum, e) => sum + Number(e.amount || 0), 0);

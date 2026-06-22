@@ -721,13 +721,22 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   }
 
   if (tax && tax.total > 0) {
+    const taxRows = [
+      { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
+      { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear') },
+    ];
+    if (tax.kantonal) {
+      taxRows.push(
+        { label: t('tax.cantonalAndMunicipal') + ' (' + tax.kantonal.hauptort + ')', value: formatCHF(tax.kantonal.kantonalUndGemeinde) + t('common.perYear') },
+        { label: t('tax.totalEstimate'), value: formatCHF(tax.kantonal.total) + t('common.perYear'), bold: true },
+      );
+    } else {
+      taxRows[taxRows.length - 1].bold = true;
+    }
     sections.push({
       key: 'steuern',
       title: t('behoerdenDossier.sectionSteuern'),
-      rows: [
-        { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
-        { label: t('tax.estimatedTax') + ' (' + t('tax.federalOnly') + ')', value: formatCHF(tax.total) + t('common.perYear'), bold: true },
-      ].filter(r => r.value),
+      rows: taxRows.filter(r => r.value),
     });
   }
 

@@ -99,16 +99,6 @@ export const validateDate = (date, t) => {
   };
 };
 
-export const validatePercentage = (value, t) => {
-  const num = Number(value);
-  const isValid = !isNaN(num) && num >= 0 && num <= 100;
-  return {
-    isValid,
-    value: isValid ? num : 0,
-    error: !isValid ? (t ? t('validation.percentRange') : 'Percentage must be between 0 and 100') : ''
-  };
-};
-
 // Expiry date logic
 export const getExpiryStatus = (expiryDate, t) => {
   if (!expiryDate) return { status: 'unknown', days: null, label: t ? t('validation.unknown') : 'Unknown' };
@@ -144,35 +134,12 @@ export const getFileExpiryHint = (documentType, t) => {
   return t ? t('expiryHints.unknown') : 'Validity unknown';
 };
 
-// Conditional Fields (which fields to show based on input)
-export const getConditionalFields = (chapter, fieldKey, value) => {
-  const conditions = {
-    'mortgageStatus': (val) => val === 'fixedRate' || val === 'variable' ? ['mortgagePayment', 'mortgageRate', 'lender'] : [],
-    'employmentType': (val) => val === 'selfEmployed' || val === 'freelance' ? ['businessName', 'businessNumber'] : [],
-    'investmentFunds': (val) => val !== 'no' ? ['investmentAmount', 'brokerName'] : [],
-    'bvgInsurer': (val) => val ? ['bvgContribution', 'bvgBalance'] : [],
-    'willMade': (val) => val !== 'no' ? ['willDate', 'lawyerName'] : [],
-    'courtCases': (val) => val === 'yes' ? ['caseDescription', 'courtName'] : [],
-  };
-
-  return conditions[fieldKey]?.(value) || [];
-};
-
 // Formatting for display
 export const formatPhoneForDisplay = (phone) => {
   if (!phone) return '';
   return formatPhoneOnBlur(phone) || phone;
 };
 
-export const formatAHVForDisplay = (ahv) => {
-  if (!ahv) return '';
-  return ahv.replace(/(\d{3})(\d{4})(\d{4})(\d{2})/, '$1.$2.$3.$4');
-};
-
-export const formatCurrencyForDisplay = (value) => {
-  const num = Number(value || 0);
-  return 'CHF ' + num.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-};
 
 export const formatDateForDisplay = (date, locale) => {
   if (!date) return '';
@@ -180,7 +147,3 @@ export const formatDateForDisplay = (date, locale) => {
   return new Date(date).toLocaleDateString(loc);
 };
 
-// Build field with unit
-export const buildFieldWithUnit = (value, unit) => {
-  return value + ' ' + unit;
-};
