@@ -123,6 +123,8 @@ export default {
     kvgIpv: 'Riduzione dei premi (IPV)',
     sozialhilfe: 'Assistenza sociale',
     praemien: 'Orientamento premi',
+    vorsorge: 'Calcolatore previdenza',
+    eo: 'Indennità per perdita di guadagno (IPG)',
     direktlinks: 'Link ufficiali',
     cv: 'Creazione CV',
     charts: 'Grafici',
@@ -1118,6 +1120,7 @@ export default {
     weeklyResidence: 'Residenza settimanale rilevata',
     weeklyIpvNote: 'La richiesta IPV va presentata nel cantone di residenza principale, non nel luogo di lavoro.',
     weeklyKkNote: 'Il premio dell\'assicurazione malattia si basa sul cantone di residenza principale.',
+    disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
   },
 
   sozialhilfe: {
