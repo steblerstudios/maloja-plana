@@ -97,9 +97,9 @@ SICHERHEITSHINWEISE:
 
 WEITERE INFORMATIONEN:
 ──────────────────────
-Webseite: https://malojaplana.ch
-Kontakt: support@malojaplana.ch
-Dokumentation: https://docs.malojaplana.ch
+Webseite: https://steblerstudios.github.io/maloja-plana/
+Kontakt: sophie.stebler@gmail.com
+Quellcode: https://github.com/steblerstudios/maloja-plana
 
 ════════════════════════════════════════
 © 2026 Maloja Plana — Alle Rechte vorbehalten

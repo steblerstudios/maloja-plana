@@ -105,6 +105,7 @@ export default {
     advanced: 'Advanced',
     person: '{count} person',
     persons: '{count} persons',
+    switchLang: 'Switch language: {lang}',
   },
 
   nav: {
@@ -703,7 +704,7 @@ export default {
     privacy: {
       responsibleTitle: 'Responsible person',
       responsible1: 'Sophie Stebler, Basel, Switzerland',
-      responsible2: 'Contact: info@malojaplana.ch',
+      responsible2: 'Contact: sophie.stebler@gmail.com',
       responsible3: 'Maloja Plana is a non-commercial open-source project. All data is processed exclusively on your device.',
       localTitle: 'Local data storage',
       local1: 'Maloja Plana is a local-first web application. All personal data is stored exclusively on your device — in your browser\'s localStorage and IndexedDB.',
@@ -755,8 +756,8 @@ export default {
       operator1: 'Sophie Stebler',
       operator2: 'Basel, Switzerland',
       contactTitle: 'Contact',
-      contact1: 'Email: info@malojaplana.ch',
-      contact2: 'Web: malojaplana.ch',
+      contact1: 'Email: sophie.stebler@gmail.com',
+      contact2: 'Web: steblerstudios.github.io/maloja-plana',
       projectTitle: 'Project',
       project1: 'Maloja Plana is a non-commercial open-source project under active development. The source code is publicly available.',
       disclaimerTitle: 'Disclaimer',
@@ -1407,6 +1408,20 @@ export default {
     medium: 'medium',
     high: 'high',
     critical: 'critical',
+  },
+
+  debtRecommendations: {
+    low: 'Debt is under control. Keep paying regularly.',
+    medium: 'Debt should be reduced. Consider creating a payment plan.',
+    high: 'Debt is significant. Professional advice is recommended.',
+    critical: 'Critical debt situation. Seek debt counselling immediately!',
+  },
+
+  debtValidation: {
+    creditorRequired: 'Creditor required',
+    amountInvalid: 'Amount invalid',
+    dateRequired: 'Registration date required',
+    documentRequired: 'Supporting document required',
   },
 
   residence: {
