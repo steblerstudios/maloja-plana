@@ -937,6 +937,13 @@ export default {
     eo: 'Bei Militärdienst, Zivildienst oder Mutterschaft erhältst Du einen Ersatz für den entgangenen Lohn.',
   },
 
+  contextLinks: {
+    kkWechsel: { label: 'Krankenkasse vergleichen (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
+    ahv: { label: 'AHV-Rente: Merkblatt 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.d' },
+    testament: { label: 'Testament und Erbvertrag (ch.ch)', url: 'https://www.ch.ch/de/familie-und-partnerschaft/erbschaft/testament-und-erbvertrag/' },
+    patientenverfuegung: { label: 'Patientenverfügung (ch.ch)', url: 'https://www.ch.ch/de/gesundheit/patientenverfugung/' },
+  },
+
   tresor: {
     title: 'Dokumentenablage',
     active: 'Aktiv',
