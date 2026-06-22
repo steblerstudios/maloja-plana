@@ -726,7 +726,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionSteuern'),
       rows: [
         { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
-        { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear'), bold: true },
+        { label: t('tax.estimatedTax') + ' (' + t('tax.federalOnly') + ')', value: formatCHF(tax.total) + t('common.perYear'), bold: true },
       ].filter(r => r.value),
     });
   }

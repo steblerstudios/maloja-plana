@@ -30,6 +30,7 @@ import MeineUnterlagen from './MeineUnterlagen.jsx';
 import Lebensmappe from './Lebensmappe.jsx';
 import NotfallDossier from './NotfallDossier.jsx';
 import BriefGenerator from './BriefGenerator.jsx';
+import BehoerdenDossier from './BehoerdenDossier.jsx';
 import SozialhilfeView from './SozialhilfeView.jsx';
 import CalendarReminders from './CalendarReminders.jsx';
 import OverdueBanner from './OverdueBanner.jsx';
@@ -479,6 +480,7 @@ const AppInner = () => {
       view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
       view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
       view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+      view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
       view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
       view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
       view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),

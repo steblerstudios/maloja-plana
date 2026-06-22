@@ -1711,9 +1711,12 @@ export default {
         description: 'Important information for your next of kin. Contacts, medical details, directives.',
       },
       behoerden: {
+        title: 'Authority Dossier',
+        description: 'All details and calculations for your next appointment with the authorities.',
+      },
+      briefe: {
         title: 'Letter templates',
         description: 'Swiss template letters — lease termination, tax extension, insurance switch.',
-        status: 'Letter templates',
       },
     },
     backup: {
@@ -1748,6 +1751,26 @@ export default {
     fileTypes: '.json or .maloja',
     validationErrors: 'Validation warnings',
     restored: 'Restored',
+  },
+
+  behoerdenDossier: {
+    title: 'Authority Dossier',
+    subtitle: 'For your appointment at the social services office, municipality or advisory centre.',
+    openDossier: 'Open dossier',
+    printAction: 'Print as PDF',
+    generated: 'Generated on {date}',
+    disclaimer: 'This dossier is for orientation purposes. Calculations are based on your entries and do not replace an official assessment by the responsible authority.',
+    sectionPerson: 'Person',
+    sectionFinanzen: 'Financial Situation',
+    sectionSozialhilfe: 'Social Assistance Orientation (SKOS)',
+    sectionIPV: 'Premium Reduction (IPV)',
+    sectionEL: 'Supplementary Benefits (EL)',
+    sectionSteuern: 'Federal Tax Orientation',
+    elNotApplicable: 'Not applicable (AHV/IV recipients only)',
+    footerPrivacy: 'This document was created locally. No data was transmitted.',
+    footerCredit: 'Maloja Plana — Swiss Life Organiser (Open Source)',
+    empty: 'First fill in your personal details and finances so the dossier can be generated.',
+    previewNote: 'Preview — this is what your dossier will look like:',
   },
 
   notfallDossier: {
