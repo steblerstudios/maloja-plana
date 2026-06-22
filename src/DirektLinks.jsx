@@ -15,7 +15,7 @@ export const DirektLinks = ({ palette, t }) => {
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
     chips: { display: 'flex', gap: space.xs + 'px', flexWrap: 'wrap', marginBottom: space.md + 'px' },
     chip: (active) => ({
-      padding: '4px 12px', borderRadius: '16px', fontSize: text.xs, cursor: 'pointer', border: '1px solid ' + (active ? palette.sage : palette.border),
+      padding: '4px 12px', borderRadius: radius.lg, fontSize: text.xs, cursor: 'pointer', border: '1px solid ' + (active ? palette.sage : palette.border),
       background: active ? palette.sage + '22' : palette.up, color: active ? palette.sage : palette.text, fontWeight: active ? weight.semi : weight.normal,
     }),
     linkCard: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.sm + 'px', border: '1px solid ' + palette.border },

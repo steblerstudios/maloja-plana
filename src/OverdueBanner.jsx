@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 
 // ─── Overdue Reminders Banner ──────────────────────────────
@@ -38,7 +38,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
         ? 'linear-gradient(135deg, ' + palette.rose + '22, ' + palette.rose + '11)'
         : 'linear-gradient(135deg, ' + palette.gold + '22, ' + palette.gold + '11)',
       border: '1px solid ' + (overdue.length > 0 ? palette.rose + '44' : palette.gold + '44'),
-      borderRadius: '8px',
+      borderRadius: radius.sm,
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',

@@ -359,7 +359,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       return React.createElement('div', { key: field.k, style: baseStyle },
         React.createElement('label', { style: labelStyle }, field.label),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
-          React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: '6px', borderLeft: '1px solid ' + palette.border } }, 'CHF'),
+          React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: radius.sm, borderLeft: '1px solid ' + palette.border } }, 'CHF'),
           React.createElement('input', {
             type: 'number',
             inputMode: 'decimal',
@@ -1033,14 +1033,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
 
       // Upload Form
-      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: '6px', marginBottom: '16px', border: '2px dashed ' + palette.border } },
+      React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', border: '2px dashed ' + palette.border } },
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
           React.createElement('div', null,
             React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
             React.createElement('select', {
               value: uploadType,
               onChange: (e) => setUploadType(e.target.value),
-              style: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             },
               React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
               chapter.docs.map((doc, idx) => React.createElement('option', { key: idx, value: doc.k }, doc.label))
@@ -1052,13 +1052,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               type: 'date',
               value: uploadExpiry,
               onChange: (e) => setUploadExpiry(e.target.value),
-              style: { width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
+              style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
             uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + getFileExpiryHint(uploadType, tr))
           )
         ),
 
-        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: '6px', textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
+        React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           '□ ' + tr('chapterView.selectFile'),
           React.createElement('input', {
             type: 'file',
@@ -1112,7 +1112,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             background: uploadFile && uploadType && uploadExpiry ? palette.sage : palette.mid,
             color: '#000',
             border: 'none',
-            borderRadius: '6px',
+            borderRadius: radius.sm,
             cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',
             fontWeight: weight.semi,
             fontSize: text.sm

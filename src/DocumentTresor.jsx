@@ -98,7 +98,7 @@ export const DocumentTresor = ({
   };
 
   const inputStyle = {
-    width: '100%', padding: '8px', borderRadius: '6px',
+    width: '100%', padding: '8px', borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
   };
@@ -130,7 +130,7 @@ export const DocumentTresor = ({
     return React.createElement('div', {
       key: doc.id,
       style: {
-        padding: '10px 12px', background: palette.up, borderRadius: '6px',
+        padding: '10px 12px', background: palette.up, borderRadius: radius.sm,
         border: '1px solid ' + (status.status === 'expired' ? palette.rose : palette.border),
         display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px',
       }
@@ -191,7 +191,7 @@ export const DocumentTresor = ({
   };
 
   return React.createElement('div', {
-    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: shadow.sm }
+    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     // Title with folder icon
     React.createElement('h2', {
@@ -200,7 +200,7 @@ export const DocumentTresor = ({
 
     // Ordner status — warm language
     React.createElement('div', {
-      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '12px' }
+      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: radius.sm, display: 'flex', alignItems: 'center', gap: '12px' }
     },
       React.createElement(OrdnerIcon, { palette, fillLevel: documents.length }),
       React.createElement('div', { style: { flex: 1 } },
@@ -224,7 +224,7 @@ export const DocumentTresor = ({
         type: 'button', 'aria-pressed': !showArchive,
         onClick: () => setShowArchive(false),
         style: {
-          padding: '10px', background: palette.up, color: palette.text, borderRadius: '6px',
+          padding: '10px', background: palette.up, color: palette.text, borderRadius: radius.sm,
           textAlign: 'center', cursor: 'pointer', font: 'inherit',
           borderWidth: '2px', borderStyle: 'solid',
           borderColor: !showArchive ? palette.sand : palette.border,
@@ -234,7 +234,7 @@ export const DocumentTresor = ({
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active')),
       ),
       React.createElement('div', {
-        style: { padding: '10px', background: palette.up, borderRadius: '6px', textAlign: 'center', border: '2px solid ' + palette.border },
+        style: { padding: '10px', background: palette.up, borderRadius: radius.sm, textAlign: 'center', border: '2px solid ' + palette.border },
       },
         React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.gold } }, stats.expiring),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon')),
@@ -243,7 +243,7 @@ export const DocumentTresor = ({
         type: 'button', 'aria-pressed': showArchive,
         onClick: () => setShowArchive(true),
         style: {
-          padding: '10px', background: palette.up, color: palette.text, borderRadius: '6px',
+          padding: '10px', background: palette.up, color: palette.text, borderRadius: radius.sm,
           textAlign: 'center', cursor: 'pointer', font: 'inherit',
           borderWidth: '2px', borderStyle: 'solid',
           borderColor: showArchive ? palette.rose : palette.border,
@@ -292,7 +292,7 @@ export const DocumentTresor = ({
     // Document list
     sortedDocs.length === 0
       ? React.createElement('div', {
-          style: { padding: '40px 20px', background: palette.up, borderRadius: '8px', border: '1px solid ' + palette.border, textAlign: 'center' }
+          style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' }
         },
           React.createElement('div', { style: { marginBottom: '12px' } },
             React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
