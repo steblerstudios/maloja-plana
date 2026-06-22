@@ -102,7 +102,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
             ? React.createElement('span', null, formatCHF(group.total * mult))
             : React.createElement('span', { style: emptyValueStyle }, '—'),
           pct && React.createElement('span', {
-            style: { fontSize: text.sm, color: palette.soft, fontWeight: '400', minWidth: '28px', textAlign: 'right' }
+            style: { fontSize: text.sm, color: palette.soft, fontWeight: weight.normal, minWidth: '28px', textAlign: 'right' }
           }, pct)
         )
       ),
@@ -198,7 +198,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Available line ===
     React.createElement('div', {
       style: {
-        ...lineStyle, fontWeight: weight.semi, fontSize: '15px', paddingTop: '8px'
+        ...lineStyle, fontWeight: weight.semi, fontSize: text.sm, paddingTop: '8px'
       }
     },
       React.createElement('span', null,
