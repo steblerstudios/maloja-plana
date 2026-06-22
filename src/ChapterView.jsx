@@ -786,6 +786,17 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
       }, '○ ' + tr('orientation.contextIpv')),
+    chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
+      React.createElement('button', {
+        onClick: () => onNavigate('finanzuebersicht'),
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sageMist || palette.up,
+          border: 'none', borderRadius: radius.sm,
+          fontSize: text.sm, color: palette.sageDeep || palette.mid,
+          cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%',
+        }
+      }, t('nav.crosslink.finanzuebersichtHint')),
 
     // Familienzulagen: shown in basis when children exist
     chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
@@ -996,6 +1007,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }
               }
             }
+          }
+          if (field.k === 'canton' && chapter.key === 'basis') {
+            crosslinkBtn('cantonTax', 'tax', 'nav.crosslink.cantonTaxHint');
+            crosslinkBtn('cantonSozial', 'sozialhilfe', 'nav.crosslink.cantonSozialhilfeHint');
+          }
+          if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
+            crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');
+          }
+          if (field.k === 'emergencyContact' && chapter.key === 'notfall') {
+            crosslinkBtn('notfallkarte', 'notfalleinstieg', 'nav.crosslink.notfallkarteHint');
           }
           return elements;
         })
