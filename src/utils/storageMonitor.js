@@ -81,16 +81,3 @@ export function getStorageStatus() {
  * Test if localStorage can accept a write of approximately `bytes` size.
  * Tries a test write and catches QuotaExceededError.
  */
-export function canWrite(bytes) {
-  const testKey = '__or5_storage_test__';
-  try {
-    // Create a string of approximate target size (2 bytes per char)
-    const testValue = 'x'.repeat(Math.ceil(bytes / 2));
-    localStorage.setItem(testKey, testValue);
-    localStorage.removeItem(testKey);
-    return true;
-  } catch {
-    localStorage.removeItem(testKey);
-    return false;
-  }
-}
