@@ -59,7 +59,7 @@ export class ErrorBoundary extends React.Component {
           React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
           React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
         ),
-        React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '8px' } },
+        React.createElement('h2', { style: { fontSize: text.lg, fontWeight: '600', marginBottom: '8px' } },
           t ? t('error.title') : 'Something went wrong'
         ),
         React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: '24px', lineHeight: 1.5 } },

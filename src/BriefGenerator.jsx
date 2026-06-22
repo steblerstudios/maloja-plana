@@ -39,7 +39,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: '18px', fontWeight: '600', marginBottom: '8px',
+        fontSize: textTokens.lg, fontWeight: '600', marginBottom: '8px',
         display: 'flex', alignItems: 'center', gap: '8px',
       }
     }, React.createElement(Icon, { name: 'document', size: 20 }), t('briefe.title')),
