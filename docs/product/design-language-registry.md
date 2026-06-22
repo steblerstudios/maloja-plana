@@ -67,7 +67,7 @@ Maloja Plana fühlt sich an wie ein ruhiger, vertrauter Ort — nicht wie ein Sa
 | `gold` | `#C9A96E` | Wert, Qualität | Akzente, CTAs, Highlights |
 | `sage` | `#7B9E8C` | Natur, Beruhigung | Erfolg, positive Zustände |
 | `rose` | `#B87070` | Wärme, Aufmerksamkeit | Sanfte Warnungen |
-| `sky` | `#6E90B0` | Himmel, Information | Links, informative Hinweise |
+| `sky` | `#6E90B0` | Himmel, Information | Links, Quellenangaben, Info-Hinweise, Versicherungen-Akzent |
 | `sand` | `#B8956A` | Erde, Navigation | Focus-Ringe, Navigation, Interaktion |
 
 ### 2.2 Farbregeln
@@ -143,15 +143,31 @@ Warum DM Sans:
 | xl | `--mp-radius-xl` | 24px | Feature-Bereiche |
 | full | `--mp-radius-full` | 9999px | Runde Elemente, Avatare |
 
-### 4.3 Schatten
+### 4.3 Schatten & Elevation-Hierarchie
 | Stufe | CSS Variable | Wert | Verwendung |
 |-------|-------------|------|------------|
 | sm | `--mp-shadow-sm` | `0 1px 3px rgba(0,0,0,0.06)` | Subtile Erhebung |
 | md | `--mp-shadow-md` | `0 2px 8px rgba(0,0,0,0.08)` | Karten, Panels |
 | lg | `--mp-shadow-lg` | `0 4px 16px rgba(0,0,0,0.10)` | Modale, Overlays |
-| xl | `--mp-shadow-xl` | `0 8px 32px rgba(0,0,0,0.12)` | Hervorgehobene Elemente |
+| xl | `--mp-shadow-xl` | `0 8px 32px rgba(0,0,0,0.12)` | Reserviert (noch ungenutzt) |
 
 Schatten sind bewusst dezent — kein Material-Design-Elevation-System.
+
+#### Elevation-Regeln (aus Code abgeleitet)
+| Ebene | Schatten | Wann verwenden | Beispiele |
+|-------|----------|----------------|-----------|
+| Basis | keiner | Hintergrund-Flächen, inline Elemente | Kapitelzeilen, Formularfelder |
+| Ruhend | `shadow.sm` | Cards, Panels, sticky Header | Dashboard-Cards, AlphaBanner, QuickCheck, Rechner-Container, App-Header |
+| Hervorgehoben | `shadow.md` | Wichtige Container, aktive Zustände | ChapterView-Header, MirrorCards (expandiert), Guided-Start-Card |
+| Schwebend | `shadow.lg` | Elemente die über dem Content schweben | MobileNav-Drawer |
+
+#### Spezial-Schatten (semantisch gefärbt)
+| Kontext | Wert | Zweck |
+|---------|------|-------|
+| Kapitel 100% | `0 1px 6px ${palette.sage}25` | Salbei-Schimmer bei vollständigem Kapitel |
+| Pass-Icon (complete) | `shadow.md` + `0 0 0 3px ${palette.sage}15` | Halo-Ring bei abgeschlossener Station |
+
+Die semantisch gefärbten Schatten sind bewusste Ausnahmen — sie visualisieren Fortschritt als Micro-Delight (kein Gamification).
 
 ---
 

@@ -3,7 +3,7 @@
 > Zentrales Gedächtnis aller Produkt-, Design- und Architekturentscheidungen.
 > Verhindert, dass wichtige Ideen und Regeln in Chats verloren gehen.
 
-Stand: 2026-05-26
+Stand: 2026-06-22
 
 ---
 
@@ -215,7 +215,7 @@ Stand: 2026-05-26
 
 ---
 
-## 7. Implementierte Features (Stand 2026-05-26)
+## 7. Implementierte Features (Stand 2026-06-22)
 
 ### 7.1 Kernfunktionen
 | Feature | Datei(en) | Phase |
@@ -225,11 +225,25 @@ Stand: 2026-05-26
 | Auto-Save (5s-Intervall) | main.jsx, AutoSaveStatus.jsx | Phase 1 |
 | Hash-Routing | hashRouter.js | Phase 1 |
 | Theme Toggle (Hell/Dunkel) | ThemeToggle.jsx | Phase 2 |
-| Onboarding | Onboarding.jsx | Phase 5 |
+| Onboarding (mit Trust-Hinweis) | Onboarding.jsx | Phase 5 |
 | Mobile Navigation | MobileNav.jsx | Phase 4 |
 | Fehlerbehandlung | ErrorBoundary.jsx | Phase 1 |
 | Storage-Warnung | StorageWarning.jsx | Phase 1 |
 | Überfällig-Banner | OverdueBanner.jsx | Phase 5 |
+| Demo-Person (Maria Muster) | demoData.js, Dashboard.jsx | E-09 |
+| Fortschrittskarte | Dashboard.jsx | C8 |
+| Trust-Badge (Dashboard) | main.jsx | A2 |
+| Trust im Empty State | ChapterView.jsx | A2 |
+| «Deine Daten fliessen in» | ChapterView.jsx | A1/A3 |
+| Live-Verbindungen «Daten wirken» | Dashboard.jsx (DatenWirken) | A1/A3 |
+| Kontextuelle Links (offizielle Quellen) | ChapterView.jsx, constants.js | C9 |
+| Mindestlohn-Cross-Link | ChapterView.jsx | C7 |
+| MirrorCards (Zusammenfassungen) | MirrorCards.jsx | E-01 |
+| MVO (Minimum Viable Order) | Dashboard.jsx | E-02 |
+| Kapitelabschlüsse | ChapterView.jsx | E-05 |
+| Synthesen | Dashboard.jsx | E-06 |
+| Farbdramaturgie (kapitelspezifisch) | Dashboard.jsx, ChapterView.jsx | E-07 |
+| Beta-Feedback-Formular | Dashboard.jsx | E-09 |
 
 ### 7.2 Schweizer Logik
 | Feature | Datei(en) | Swiss-Specificity |
@@ -272,7 +286,7 @@ Stand: 2026-05-26
 ## 8. Bekannte Risiken & Bugs
 
 ### 8.1 Architektur
-- QR-Code-CDN-Abhängigkeit in OrganDonation + KKScanner → Offline-Ausfall
+- QR-Code-CDN-Abhängigkeit in OrganDonation (KKScanner jsQR jetzt lokal) → Teilweise behoben
 - ~80 Button-Unicode-Präfixe inkonsistent mit SVG-Iconsystem (niedrige Priorität)
 - Kein globaler Runtime-React-Context/Hook Layer
 
@@ -283,24 +297,30 @@ Stand: 2026-05-26
 
 ---
 
-## 9. Geplante Phasen (Roadmap-Übersicht)
+## 9. Phasen (Roadmap-Übersicht)
+
+> Vollständige Roadmap: `docs/roadmap/master-roadmap.md`
 
 | Phase | Thema | Status |
 |-------|-------|--------|
-| 0 | i18n (4 Sprachen) | Abgeschlossen |
-| 1 | Foundation (Migration, Backup, Routing) | Abgeschlossen |
-| 2 | Visual Rebrand "Maloja Plana" | Abgeschlossen |
-| 2.5 | SVG Pictogram System | Abgeschlossen |
-| 3 | Accessibility Pass | Abgeschlossen |
-| 4 | Responsive Polish (375px+) | Abgeschlossen |
-| 5 | Feature-Erweiterung (Sozialhilfe, IPV, etc.) | Teilweise |
-| 7 | Dokument-Tresor Erweiterung | Geplant |
-| 9 | Household Model | Geplant |
-| 10 | Template Engine Core | Geplant |
-| 11 | Kantonale Varianten, PDF-Export | Geplant |
-| 12 | Vorsorge-Erweiterung | Geplant |
-| 13 | Eligibility Hints, Decision Trees | Geplant |
-| 14 | Full Template Library, DOCX/LaTeX | Geplant |
+| 0 | i18n (4 Sprachen) | ✅ Abgeschlossen |
+| 1 | Foundation (Migration, Backup, Routing) | ✅ Abgeschlossen |
+| 2 | Visual Rebrand "Maloja Plana" | ✅ Abgeschlossen |
+| 2.5 | SVG Pictogram System | ✅ Abgeschlossen |
+| 3 | Accessibility Pass | ✅ Abgeschlossen |
+| 4 | Responsive Polish (375px+) | ✅ Abgeschlossen |
+| Iter. 0 | ADRs, CI/CD, Build Budget | ✅ Abgeschlossen |
+| P1-001/002 | State Machine, EventBus, Runtime Singleton | ✅ Abgeschlossen |
+| A-024 | Input Trust + Versicherungsfelder | ✅ Abgeschlossen |
+| E-01–E-08 | Execution (MirrorCards bis Ikonographie) | ✅ Abgeschlossen |
+| B1–B3 | BVG, UVG/KTG, Vorsorge/Nachlass | ✅ Abgeschlossen |
+| C7–C9 | Mindestlohn-Link, Fortschrittskarte, Kontextlinks | ✅ Abgeschlossen |
+| A1–A3 | Nutzen, Vertrauen, Verbindungen + Demo-Person | ✅ Abgeschlossen |
+| **E-09** | **Beta mit echten Menschen** | **Aktuell** |
+| — | Generatoren (Briefe, Einsprachen, IPV-Anträge) | Geplant |
+| — | Export-Architektur (PDF, DOCX, CSV) | Geplant |
+| — | Household Model (SKOS-konform) | Geplant |
+| — | Template Engine | Geplant |
 
 ---
 
