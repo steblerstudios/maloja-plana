@@ -56,7 +56,7 @@ export const showLocalNotification = (title, body, tag) => {
     const notification = new Notification(title, {
       body,
       icon: '/icon-192.png',
-      tag: tag || 'ordnung-ruhe-reminder',
+      tag: tag || 'maloja-plana-reminder',
       silent: true, // respectful: no sound
     });
 
