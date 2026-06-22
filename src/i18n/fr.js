@@ -1361,7 +1361,7 @@ export default {
     security: 'Sécurité',
     securityNote: 'Le fichier exporté contient des données personnelles. Conservez-le en lieu sûr.',
     manifest: {
-      header: 'ORDNUNG & RUHE — SAUVEGARDE DES DONNÉES',
+      header: 'MALOJA PLANA — SAUVEGARDE DES DONNÉES',
       exportDate: 'Date d\'export',
       version: 'Version',
       person: 'Personne',
