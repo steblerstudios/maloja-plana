@@ -151,6 +151,11 @@ export default {
     crosslink: {
       ipvHint: 'Premi alti? Verifica il tuo diritto alla riduzione →',
       taxHint: 'Stima dell\'imposta federale →',
+      ipvFromIncome: 'Reddito inserito → verifica il tuo diritto alla riduzione premi →',
+      sozialhilfeHint: 'Orientamento: a cosa hai diritto secondo le norme COSAS? →',
+      budgetHint: 'Affitto inserito → panoramica del tuo budget →',
+      vorsorgeHint: 'Contributo LPP inserito → calcola la tua pensione →',
+      praemienHint: 'Cassa malati inserita → confronta il tuo premio →',
     },
     backToDashboard: 'Panoramica',
   },

@@ -153,6 +153,11 @@ export default {
     crosslink: {
       ipvHint: 'High premiums? Check your IPV eligibility →',
       taxHint: 'Estimate federal tax →',
+      ipvFromIncome: 'Income entered → check your premium subsidy eligibility →',
+      sozialhilfeHint: 'Orientation: What are you entitled to under SKOS? →',
+      budgetHint: 'Rent entered → see your budget overview →',
+      vorsorgeHint: 'BVG contribution entered → calculate your pension →',
+      praemienHint: 'Health insurer entered → compare your premium →',
     },
     backToDashboard: 'Overview',
   },
