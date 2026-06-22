@@ -277,7 +277,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         sessionBackupCount > 0 && React.createElement('div', {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
-        }, 'Sitzung: ' + sessionBackupCount + (sessionBackupCount === 1 ? ' Backup erstellt' : ' Backups erstellt')),
+        }, t(sessionBackupCount === 1 ? 'backup.sessionCount' : 'backup.sessionCountPlural', { count: sessionBackupCount })),
 
         React.createElement('button', { onClick: handleExportPlainBackup, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
 
