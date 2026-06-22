@@ -1796,6 +1796,7 @@ export default {
     subtitle: 'Pour ton rendez-vous auprès de l\'aide sociale, de la commune ou d\'un service spécialisé.',
     openDossier: 'Ouvrir le dossier',
     printAction: 'Imprimer en PDF',
+    exportJSON: 'Exporter le fichier dossier',
     generated: 'Créé le {date}',
     disclaimer: 'Ce dossier sert d\'orientation. Les calculs sont basés sur tes données et ne remplacent pas une évaluation officielle par l\'autorité compétente.',
     sectionPerson: 'Personne',
@@ -2065,5 +2066,11 @@ export default {
     alle: 'Tous',
     antragsstelle: 'Point de contact',
     source: 'Liens officiels de ch.ch, OFSP, OFAS et autres autorités fédérales.',
+    cantonalTitle: 'Ton canton : {canton}',
+    cantonal: {
+      steuererklaerung: 'Déclaration d\'impôts en ligne',
+      sozialdienst: 'Service social',
+      ipv: 'Demander une réduction de primes',
+    },
   },
 };

@@ -139,6 +139,63 @@ export const KATEGORIEN = {
   recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'dokumentTresor' },
 };
 
+export const CANTONAL_LINKS = {
+  ZH: {
+    steuererklaerung: 'https://www.zh.ch/de/steuern-finanzen/steuern/steuererklarung.html',
+    sozialdienst: 'https://www.zh.ch/de/soziales/sozialhilfe.html',
+    ipv: 'https://www.zh.ch/de/gesundheit/krankenversicherung/praemienverbilligung.html',
+  },
+  BE: {
+    steuererklaerung: 'https://www.taxme.ch/',
+    sozialdienst: 'https://www.be.ch/de/themen/soziales/sozialhilfe.html',
+    ipv: 'https://www.be.ch/de/themen/gesundheit/krankenversicherung/praemienverbilligung.html',
+  },
+  LU: {
+    steuererklaerung: 'https://steuern.lu.ch/',
+    sozialdienst: 'https://disg.lu.ch/themen/sozialhilfe',
+    ipv: 'https://www.lu.ch/verwaltung/DISG/disg_dienststellen/dienststelle_gesundheit_und_sport/praemienverbilligung',
+  },
+  BS: {
+    steuererklaerung: 'https://www.steuerverwaltung.bs.ch/',
+    sozialdienst: 'https://www.sozialhilfe.bs.ch/',
+    ipv: 'https://www.praemienverbilligung.bs.ch/',
+  },
+  GE: {
+    steuererklaerung: 'https://ge.ch/tax/',
+    sozialdienst: 'https://www.ge.ch/aide-sociale',
+    ipv: 'https://www.ge.ch/demander-subsides-assurance-maladie',
+  },
+  VD: {
+    steuererklaerung: 'https://www.vd.ch/themes/etat-droit-finances/impots/',
+    sozialdienst: 'https://www.vd.ch/themes/sante-soins-handicap/aide-sociale/',
+    ipv: 'https://www.vd.ch/themes/sante-soins-handicap/assurance-maladie/subsides/',
+  },
+  AG: {
+    steuererklaerung: 'https://www.ag.ch/de/verwaltung/dfr/steuern',
+    sozialdienst: 'https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/sozialhilfe',
+    ipv: 'https://www.ag.ch/de/verwaltung/dgs/gesundheit/praemienverbilligung',
+  },
+  SG: {
+    steuererklaerung: 'https://www.sg.ch/steuern-finanzen/steuern.html',
+    sozialdienst: 'https://www.sg.ch/gesundheit-soziales/soziales/sozialhilfe.html',
+    ipv: 'https://www.sg.ch/gesundheit-soziales/gesundheit/praemienverbilligung.html',
+  },
+  TI: {
+    steuererklaerung: 'https://www4.ti.ch/dfe/dc/dichiarazione/',
+    sozialdienst: 'https://www4.ti.ch/dss/dasf/prestazioni-sociali/',
+    ipv: 'https://www.ti.ch/riduzione-premi',
+  },
+  ZG: {
+    steuererklaerung: 'https://www.zg.ch/behoerden/finanzdirektion/steuerverwaltung',
+    sozialdienst: 'https://www.zg.ch/behoerden/direktion-des-innern/kantonales-sozialamt',
+    ipv: 'https://www.zg.ch/behoerden/gesundheitsdirektion/amt-fuer-gesundheit/praemienverbilligung',
+  },
+};
+
+export function getCantonalLinks(canton) {
+  return CANTONAL_LINKS[canton] || null;
+}
+
 export function getLinksByKategorie(kategorie) {
   return DIREKTLINKS.filter(l => l.kategorie === kategorie);
 }
