@@ -34,30 +34,45 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// ─── Fetch: network-first with offline fallback ────────────
+// ─── Fetch strategy ────────────────────────────────────────
+// Hashed assets (JS/CSS in /assets/): cache-first (immutable)
+// Everything else: network-first with offline fallback
 self.addEventListener('fetch', (event) => {
-  // Only cache GET requests for same-origin
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Cache successful responses
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, clone);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        // Offline fallback
-        return caches.match(event.request).then((cached) => {
-          return cached || caches.match(OFFLINE_URL);
+  const url = new URL(event.request.url);
+  const isHashedAsset = url.pathname.startsWith('/assets/');
+
+  if (isHashedAsset) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request).then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
         });
       })
-  );
+    );
+  } else {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cached) => {
+            return cached || caches.match(OFFLINE_URL);
+          });
+        })
+    );
+  }
 });
 
 // ─── Push notification scaffold ────────────────────────────

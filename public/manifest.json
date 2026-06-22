@@ -29,6 +29,31 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Steuerrechner",
+      "short_name": "Steuern",
+      "url": "./#/tax",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "IPV-Rechner",
+      "short_name": "IPV",
+      "url": "./#/premium",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Notfallkarte",
+      "short_name": "Notfall",
+      "url": "./#/notfalleinstieg",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Dokument-Tresor",
+      "short_name": "Tresor",
+      "url": "./#/tresor",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    }
+  ],
   "prefer_related_applications": false
 }
