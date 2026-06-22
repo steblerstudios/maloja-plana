@@ -483,15 +483,26 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     'AB+': palette.sage, 'AB-': palette.sage,
   };
 
+  const chapterAccent = {
+    basis: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
+    wohnen: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
+    finanzen: { bg: palette.gold + '0A', border: palette.gold, icon: palette.gold },
+    versicherungen: { bg: palette.sky + '0A', border: palette.sky, icon: palette.sky },
+    ausbildung: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
+    behoerden: { bg: palette.rose + '08', border: palette.rose, icon: palette.rose },
+    notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.rose },
+  };
+  const accent = chapterAccent[chapter.key] || chapterAccent.basis;
+
   return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.md } },
     // Header — expressive chapter entrance with landscape continuity
-    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: palette.sageMist, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + palette.sage + '20' } },
-      React.createElement('div', { style: { marginBottom: space.md + 'px', color: palette.sageDeep } },
+    React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
+      React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
         React.createElement(Icon, { name: chapter.key, size: 48 })
       ),
       React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
-      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
+      hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
 
     demoMode && React.createElement('div', {
