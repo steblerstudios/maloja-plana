@@ -71,6 +71,7 @@ export const duration = {
   fast:   150,
   normal: 250,
   slow:   400,
+  cinematic: 600,
 };
 
 // ─── Font stack ─────────────────────────────────────────────
