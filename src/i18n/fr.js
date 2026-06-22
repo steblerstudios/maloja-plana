@@ -1708,6 +1708,7 @@ export default {
     leave: 'Quitter l\'exemple',
     enterLink: 'Voir l\'exemple',
     enterSubtitle: 'Découvrez à quoi ressemble un dossier de vie rempli.',
+    ctaButton: 'Voir un exemple — à quoi ressemble un dossier rempli',
     footerLink: 'Exemple',
     readOnlyHint: 'Les données ne peuvent pas être modifiées en mode exemple.',
     exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',

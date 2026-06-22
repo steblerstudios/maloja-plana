@@ -497,7 +497,24 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.taglineBenefit')),
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0', opacity: 0.7, lineHeight: leading.normal }
-      }, t('alpha.noAdviceHint'))
+      }, t('alpha.noAdviceHint')),
+
+      !demoMode && mvo.pct < 50 && React.createElement('button', {
+        onClick: onEnterDemo,
+        style: {
+          marginTop: space.md + 'px',
+          padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sand + '18',
+          border: '1px solid ' + palette.sand + '35',
+          borderRadius: radius.sm,
+          cursor: 'pointer',
+          fontSize: text.sm,
+          color: palette.text,
+          fontFamily: 'inherit',
+          fontWeight: weight.medium,
+          display: 'inline-flex', alignItems: 'center', gap: '6px',
+        }
+      }, '○ ' + t('demo.ctaButton'))
     ),
 
     // ─── Highlight tools — immediate value ──────────────────
