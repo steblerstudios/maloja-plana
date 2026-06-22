@@ -453,7 +453,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0, color: palette.sand,
               }
-            }, IconFn ? React.createElement('div', { style: { width: '18px', height: '18px' } }, IconFn()) : null),
+            }, IconFn ? React.createElement('div', { style: { width: '22px', height: '22px' } }, IconFn()) : null),
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
               React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
               React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed } }, item.sub)
@@ -636,8 +636,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
           // Maturity stages: sketch → emerging → maturing → complete
           const maturity = pct === 0 ? 'sketch' : pct < 50 ? 'emerging' : pct < 100 ? 'maturing' : 'complete';
-          const sizes = { sketch: 26, emerging: 30, maturing: 32, complete: 34 };
-          const iconSizes = { sketch: 14, emerging: 17, maturing: 19, complete: 20 };
+          const sizes = { sketch: 30, emerging: 34, maturing: 38, complete: 40 };
+          const iconSizes = { sketch: 18, emerging: 22, maturing: 24, complete: 26 };
           const colors = { sketch: palette.mid, emerging: palette.sand, maturing: palette.sand, complete: palette.sage };
           const opacities = { sketch: 0.45, emerging: 0.75, maturing: 0.88, complete: 1 };
           const borders = {
@@ -982,8 +982,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
-            React.createElement('div', { style: { color: palette.mid, width: '16px', height: '16px', flexShrink: 0 } },
-              IconFn ? React.createElement('div', { style: { width: '16px', height: '16px' } }, IconFn()) : null
+            React.createElement('div', { style: { color: palette.mid, width: '20px', height: '20px', flexShrink: 0 } },
+              IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null
             ),
             React.createElement('div', null,
               React.createElement('div', { style: { fontWeight: weight.medium, fontSize: text.sm } }, tool.label),
