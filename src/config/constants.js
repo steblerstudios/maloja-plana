@@ -222,7 +222,7 @@ export function getChapters(t) {
       fields: [
         { k: 'cantoneOfTaxation', label: fl(t, 'behoerden', 'cantoneOfTaxation'), type: 'select', options: cantonOptions(t), mvo: true, section: t('sections.behoerden.taxes'), sectionIntro: si(t, 'behoerden', 'taxes'), orientation: or(t, 'steuerverwaltung') },
         { k: 'taxId', label: fl(t, 'behoerden', 'taxId'), type: 'text' },
-        { k: 'taxFillingDeadline', label: fl(t, 'behoerden', 'taxFillingDeadline'), type: 'date' },
+        { k: 'taxFilingDeadline', label: fl(t, 'behoerden', 'taxFilingDeadline'), type: 'date' },
         { k: 'pendingTaxReturns', label: fl(t, 'behoerden', 'pendingTaxReturns'), type: 'text' },
         { k: 'registryOffice', label: fl(t, 'behoerden', 'registryOffice'), type: 'text', section: t('sections.behoerden.legal'), sectionIntro: si(t, 'behoerden', 'legal'), orientation: or(t, 'sozialdienst') },
         { k: 'betreibungsStatus', label: fl(t, 'behoerden', 'betreibungsStatus'), type: 'select', options: opts(t, 'behoerden', 'betreibungsStatus'), orientation: or(t, 'betreibung') },
@@ -282,13 +282,13 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 
 // Field keys per chapter (for data initialization — no translations needed)
 const FIELD_KEYS = {
-  basis: ['firstName', 'lastName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus', 'dependents'],
+  basis: ['firstName', 'middleName', 'lastName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
-  finanzen: ['monthlyIncome', 'employer', 'employmentType', 'startDate', 'monthlyTax', 'groceries', 'communication', 'mobility', 'otherInsurance', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3b', 'investmentFunds'],
+  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3b', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'bvgInsurer', 'bvgContribution', 'uvg', 'liabilityInsurance', 'liabilityAmount', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
-  behoerden: ['cantoneOfTaxation', 'taxId', 'taxFillingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
-  notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor'],
+  behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
+  notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
 };
 
 export const DEFAULT_DATA = CHAPTER_KEYS.reduce((acc, key) => {

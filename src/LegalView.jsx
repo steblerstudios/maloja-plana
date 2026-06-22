@@ -161,6 +161,32 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.imprint.disclaimerTitle'), palette, children: [
         P({ children: t('legal.imprint.disclaimer1') }),
+      ]}),
+      Section({ title: t('legal.imprint.jurisdictionTitle'), palette, children: [
+        P({ children: t('legal.imprint.jurisdiction1') }),
+      ]})
+    ),
+
+    // ─── License / Lizenz ─────────────────────────────────
+    activeSection === 'license' && React.createElement('div', null,
+      Section({ title: t('legal.license.agplTitle'), palette, children: [
+        P({ children: t('legal.license.agpl1') }),
+        P({ children: t('legal.license.agpl2') }),
+        P({ children: t('legal.license.agpl3') }),
+        P({ children: t('legal.license.agpl4') }),
+      ]}),
+      Section({ title: t('legal.license.dualTitle'), palette, children: [
+        P({ children: t('legal.license.dual1') }),
+        P({ children: t('legal.license.dual2') }),
+      ]}),
+      Section({ title: t('legal.license.trademarkTitle'), palette, children: [
+        P({ children: t('legal.license.trademark1') }),
+      ]}),
+      Section({ title: t('legal.license.sourceTitle'), palette, children: [
+        P({ children: t('legal.license.source1') }),
+      ]}),
+      Section({ title: t('legal.license.thirdPartyTitle'), palette, children: [
+        P({ children: t('legal.license.thirdParty1') }),
       ]})
     ),
 

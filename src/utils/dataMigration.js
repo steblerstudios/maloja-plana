@@ -9,7 +9,7 @@
 //   3. Unknown versions are left untouched (no silent corruption)
 //   4. Failures leave original data intact
 
-export const CURRENT_DATA_VERSION = 3;
+export const CURRENT_DATA_VERSION = 4;
 
 // ─── Migration functions ────────────────────────────────────
 // Each takes a data object at version N and returns version N+1.
@@ -61,6 +61,16 @@ const migrations = {
     };
 
     return { ...data, basis, _version: 3, _migratedAt: new Date().toISOString() };
+  },
+
+  // v3 → v4: Rename taxFillingDeadline → taxFilingDeadline (typo fix)
+  3: (data) => {
+    const behoerden = { ...(data.behoerden || {}) };
+    if (behoerden.taxFillingDeadline !== undefined) {
+      behoerden.taxFilingDeadline = behoerden.taxFillingDeadline;
+      delete behoerden.taxFillingDeadline;
+    }
+    return { ...data, behoerden, _version: 4, _migratedAt: new Date().toISOString() };
   },
 };
 

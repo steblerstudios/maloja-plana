@@ -505,7 +505,7 @@ export default {
       fields: {
         cantoneOfTaxation: 'Canton d\'imposition',
         taxId: 'Numéro fiscal',
-        taxFillingDeadline: 'Délai de la déclaration d\'impôts',
+        taxFilingDeadline: 'Délai de la déclaration d\'impôts',
         pendingTaxReturns: 'Déclarations d\'impôts en attente',
         registryOffice: 'Office des poursuites',
         betreibungsStatus: { label: 'Registre des poursuites', options: { none: 'Aucune inscription', entries: 'Inscriptions existantes', unknown: 'Inconnu' } },
@@ -692,7 +692,7 @@ export default {
 
   legal: {
     title: 'Mentions légales',
-    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum' },
+    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence' },
     footerLink: 'Confidentialité & Mentions légales',
     lastUpdated: 'Mis à jour : juin 2026 · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
     privacy: {
@@ -713,7 +713,7 @@ export default {
       sensitive1: 'Selon vos saisies, Maloja Plana peut contenir des données de santé (médicaments, don d\'organes), des données relatives à l\'aide sociale ou des convictions religieuses.',
       sensitive2: 'Ces données étant stockées exclusivement en local et jamais transmises à un serveur, le risque pour vos droits de la personnalité est faible.',
       hostingTitle: 'Hébergement',
-      hosting1: 'L\'application web statique (sans données utilisateur) est hébergée par Vercel. Lors de l\'accès au site, des données techniques (adresse IP, type de navigateur) sont traitées dans les logs serveur et automatiquement supprimées.',
+      hosting1: 'L\'application web statique (sans données utilisateur) est hébergée par GitHub Pages. Lors de l\'accès au site, des données techniques (adresse IP, type de navigateur) sont traitées dans les logs serveur et automatiquement supprimées.',
       hosting2: 'Il n\'y a pas de cookies d\'analyse, pas de suivi, pas de plugins de réseaux sociaux et pas de publicité.',
       backupTitle: 'Sauvegardes',
       backup1: 'Les sauvegardes sont stockées localement dans votre navigateur. Vous pouvez exporter vos données sous forme de fichier ZIP chiffré à tout moment. Ce fichier ne quitte votre appareil que si vous le partagez activement.',
@@ -756,6 +756,25 @@ export default {
       project1: 'Maloja Plana est un projet open source non commercial en développement actif. Le code source est accessible publiquement.',
       disclaimerTitle: 'Clause de non-responsabilité',
       disclaimer1: 'Le contenu de cette application a été créé avec le plus grand soin. Aucune garantie n\'est donnée quant à l\'exactitude, l\'exhaustivité ou l\'actualité des informations.',
+      jurisdictionTitle: 'Droit applicable',
+      jurisdiction1: 'Le droit suisse s\'applique. Le for juridique est Bâle-Ville, Suisse.',
+    },
+    license: {
+      title: 'Licence open source',
+      agplTitle: 'GNU Affero General Public License v3.0 (AGPL-3.0)',
+      agpl1: 'Le code source de Maloja Plana est sous licence AGPL-3.0. Cela signifie :',
+      agpl2: '→ Vous pouvez lire, copier, modifier et redistribuer le code.',
+      agpl3: '→ Toute personne qui déploie publiquement une version modifiée doit également publier le code source complet.',
+      agpl4: '→ La licence protège l\'ouverture du projet : personne ne peut reprendre le code et l\'exploiter comme produit fermé.',
+      dualTitle: 'Licence commerciale (Dual Licensing)',
+      dual1: 'Une licence commerciale séparée est disponible pour l\'utilisation en marque blanche et en entreprise, sans obligation de divulgation.',
+      dual2: 'Contact : steblerstudios@gmail.com',
+      trademarkTitle: 'Marque',
+      trademark1: 'Le nom « Maloja Plana », le logo et l\'identité visuelle ne sont pas couverts par l\'AGPL et ne peuvent pas être utilisés pour des projets dérivés sans autorisation écrite.',
+      sourceTitle: 'Code source',
+      source1: 'Le code source complet est disponible sur : github.com/steblerstudios/maloja-plana',
+      thirdPartyTitle: 'Bibliothèques tierces',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL), Cormorant Garamond (OFL). Toutes les licences sont compatibles avec l\'AGPL-3.0.',
     },
   },
 

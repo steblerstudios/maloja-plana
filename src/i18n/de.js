@@ -505,7 +505,7 @@ export default {
       fields: {
         cantoneOfTaxation: 'Steuerkanton',
         taxId: 'Steuernummer',
-        taxFillingDeadline: 'Steuererklärung fällig',
+        taxFilingDeadline: 'Steuererklärung fällig',
         pendingTaxReturns: 'Offene Steuererklärungen',
         registryOffice: 'Betreibungsamt',
         betreibungsStatus: { label: 'Betreibungsregister', options: { none: 'Keine Einträge', entries: 'Einträge vorhanden', unknown: 'Unbekannt' } },
@@ -692,7 +692,7 @@ export default {
 
   legal: {
     title: 'Rechtliches',
-    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum' },
+    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum', license: 'Lizenz' },
     footerLink: 'Datenschutz & Rechtliches',
     lastUpdated: 'Stand: Juni 2026 · Gemäss nDSG (in Kraft seit 1.9.2023)',
     privacy: {
@@ -713,7 +713,7 @@ export default {
       sensitive1: 'Je nach Eingabe kann Maloja Plana Gesundheitsdaten (Medikamente, Organspende), Daten zu Sozialhilfemassnahmen oder religiöse Überzeugungen enthalten.',
       sensitive2: 'Da diese Daten ausschliesslich lokal gespeichert werden und nie an einen Server übertragen werden, ist das Risiko für Deine Persönlichkeitsrechte gering.',
       hostingTitle: 'Hosting',
-      hosting1: 'Die statische Webanwendung (ohne Nutzerdaten) wird über Vercel gehostet. Beim Abruf der Webseite werden standardmässig technische Daten (IP-Adresse, Browsertyp) in Server-Logs verarbeitet und automatisch gelöscht.',
+      hosting1: 'Die statische Webanwendung (ohne Nutzerdaten) wird über GitHub Pages gehostet. Beim Abruf der Webseite werden standardmässig technische Daten (IP-Adresse, Browsertyp) in Server-Logs verarbeitet und automatisch gelöscht.',
       hosting2: 'Es gibt keine Analyse-Cookies, kein Tracking, keine Social-Media-Plugins und keine Werbung.',
       backupTitle: 'Backups',
       backup1: 'Backups werden lokal im Browser gespeichert. Du kannst Deine Daten jederzeit als verschlüsselte ZIP-Datei exportieren. Diese Datei verlässt Dein Gerät nur, wenn Du sie aktiv weitergibst.',
@@ -756,6 +756,25 @@ export default {
       project1: 'Maloja Plana ist ein nicht-kommerzielles Open-Source-Projekt in aktiver Entwicklung. Der Quellcode ist öffentlich einsehbar.',
       disclaimerTitle: 'Haftungsausschluss',
       disclaimer1: 'Die Inhalte dieser Anwendung wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen.',
+      jurisdictionTitle: 'Anwendbares Recht',
+      jurisdiction1: 'Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.',
+    },
+    license: {
+      title: 'Open-Source-Lizenz',
+      agplTitle: 'GNU Affero General Public License v3.0 (AGPL-3.0)',
+      agpl1: 'Der Quellcode von Maloja Plana ist unter der AGPL-3.0 lizenziert. Das bedeutet:',
+      agpl2: '→ Du darfst den Code lesen, kopieren, verändern und weitergeben.',
+      agpl3: '→ Wer eine veränderte Version öffentlich betreibt, muss den vollständigen Quellcode ebenfalls veröffentlichen.',
+      agpl4: '→ Die Lizenz schützt die Offenheit des Projekts: Niemand kann den Code nehmen und als geschlossenes Produkt weiterbetreiben.',
+      dualTitle: 'Kommerzielle Lizenz (Dual Licensing)',
+      dual1: 'Für White-Label- und Enterprise-Nutzung ist eine separate kommerzielle Lizenz verfügbar, die keine Offenlegungspflicht beinhaltet.',
+      dual2: 'Kontakt: steblerstudios@gmail.com',
+      trademarkTitle: 'Markenhinweis',
+      trademark1: 'Der Name „Maloja Plana", das Logo und die visuelle Identität sind nicht durch die AGPL abgedeckt und dürfen ohne schriftliche Genehmigung nicht für abgeleitete Projekte verwendet werden.',
+      sourceTitle: 'Quellcode',
+      source1: 'Der vollständige Quellcode ist einsehbar unter: github.com/steblerstudios/maloja-plana',
+      thirdPartyTitle: 'Verwendete Bibliotheken',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL), Cormorant Garamond (OFL). Alle Lizenzen sind mit AGPL-3.0 kompatibel.',
     },
   },
 

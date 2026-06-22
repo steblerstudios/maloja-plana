@@ -506,7 +506,7 @@ export default {
       fields: {
         cantoneOfTaxation: 'Tax canton',
         taxId: 'Tax number',
-        taxFillingDeadline: 'Tax return deadline',
+        taxFilingDeadline: 'Tax return deadline',
         pendingTaxReturns: 'Pending tax returns',
         registryOffice: 'Debt collection office',
         betreibungsStatus: { label: 'Debt register', options: { none: 'No entries', entries: 'Entries exist', unknown: 'Unknown' } },
@@ -693,7 +693,7 @@ export default {
 
   legal: {
     title: 'Legal',
-    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint' },
+    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint', license: 'License' },
     footerLink: 'Privacy & Legal',
     lastUpdated: 'As of: June 2026 · In accordance with the Swiss nDSG (in effect since 1.9.2023)',
     privacy: {
@@ -714,7 +714,7 @@ export default {
       sensitive1: 'Depending on your input, Maloja Plana may contain health data (medications, organ donation), data on social assistance measures, or religious beliefs.',
       sensitive2: 'Since this data is stored exclusively locally and never transmitted to a server, the risk to your personal rights is low.',
       hostingTitle: 'Hosting',
-      hosting1: 'The static web application (without user data) is hosted via Vercel. When accessing the website, technical data (IP address, browser type) is processed in server logs and automatically deleted.',
+      hosting1: 'The static web application (without user data) is hosted via GitHub Pages. When accessing the website, technical data (IP address, browser type) is processed in server logs and automatically deleted.',
       hosting2: 'There are no analytics cookies, no tracking, no social media plugins, and no advertising.',
       backupTitle: 'Backups',
       backup1: 'Backups are stored locally in your browser. You can export your data as an encrypted ZIP file at any time. This file only leaves your device if you actively share it.',
@@ -757,6 +757,25 @@ export default {
       project1: 'Maloja Plana is a non-commercial open-source project under active development. The source code is publicly available.',
       disclaimerTitle: 'Disclaimer',
       disclaimer1: 'The content of this application has been created with the greatest care. No guarantee is given for the accuracy, completeness, or timeliness of the information.',
+      jurisdictionTitle: 'Applicable law',
+      jurisdiction1: 'Swiss law applies. Place of jurisdiction is Basel-Stadt, Switzerland.',
+    },
+    license: {
+      title: 'Open Source License',
+      agplTitle: 'GNU Affero General Public License v3.0 (AGPL-3.0)',
+      agpl1: 'The source code of Maloja Plana is licensed under AGPL-3.0. This means:',
+      agpl2: '→ You may read, copy, modify, and redistribute the code.',
+      agpl3: '→ Anyone who publicly deploys a modified version must also publish the complete source code.',
+      agpl4: '→ The license protects the openness of the project: nobody can take the code and run it as a closed product.',
+      dualTitle: 'Commercial License (Dual Licensing)',
+      dual1: 'A separate commercial license is available for white-label and enterprise use, with no disclosure obligation.',
+      dual2: 'Contact: steblerstudios@gmail.com',
+      trademarkTitle: 'Trademark notice',
+      trademark1: 'The name "Maloja Plana", the logo, and the visual identity are not covered by the AGPL and may not be used for derivative projects without written permission.',
+      sourceTitle: 'Source code',
+      source1: 'The full source code is available at: github.com/steblerstudios/maloja-plana',
+      thirdPartyTitle: 'Third-party libraries',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL), Cormorant Garamond (OFL). All licenses are compatible with AGPL-3.0.',
     },
   },
 

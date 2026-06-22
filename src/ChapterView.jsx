@@ -665,8 +665,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Behörden-Zeitstatus — temporal overview of official matters
     chapter.key === 'behoerden' && (() => {
       const rows = [];
-      if (data.taxFillingDeadline) {
-        const deadline = new Date(data.taxFillingDeadline);
+      if (data.taxFilingDeadline) {
+        const deadline = new Date(data.taxFilingDeadline);
         const now = new Date();
         const diffMs = deadline.getTime() - now.getTime();
         const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
