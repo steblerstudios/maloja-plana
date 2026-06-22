@@ -43,10 +43,10 @@ import MobileNav from './MobileNav.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import NotfallEinstieg from './NotfallEinstieg.jsx';
 import StorageWarning from './StorageWarning.jsx';
-import PraemienOrientierung from './PraemienOrientierung.jsx';
-import VorsorgeRechner from './VorsorgeRechner.jsx';
-import EOrechner from './EOrechner.jsx';
-import DirektLinks from './DirektLinks.jsx';
+const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
+const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
+const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
+const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily } from './config/tokens.js';
 
@@ -470,13 +470,13 @@ const AppInner = () => {
       }),
       view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
       view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
-      view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
-      view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData }),
-      view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
+      view === 'praemien' && React.createElement(React.Suspense, { fallback: null }, React.createElement(PraemienOrientierung, { palette, t, data: activeData })),
+      view === 'vorsorge' && React.createElement(React.Suspense, { fallback: null }, React.createElement(VorsorgeRechner, { palette, t, data: activeData })),
+      view === 'eo' && React.createElement(React.Suspense, { fallback: null }, React.createElement(EOrechner, { palette, t, data: activeData })),
       view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
       view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
       view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
-      view === 'direktlinks' && React.createElement(DirektLinks, { palette, t }),
+      view === 'direktlinks' && React.createElement(React.Suspense, { fallback: null }, React.createElement(DirektLinks, { palette, t })),
       view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
       view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
       view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
