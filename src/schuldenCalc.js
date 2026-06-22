@@ -57,10 +57,10 @@ export const createDebtPlan = (totalDebt, monthlyPayment, interestRate = 0) => {
 export const validateBetreibungsRegisterEntry = (entry) => {
   const errors = [];
 
-  if (!entry.creditor) errors.push('Gläubiger erforderlich');
-  if (!entry.amount || Number(entry.amount) <= 0) errors.push('Betrag ungültig');
-  if (!entry.registerDate) errors.push('Registrationsdatum erforderlich');
-  if (!entry.documentFile) errors.push('Nachweis-Dokument erforderlich');
+  if (!entry.creditor) errors.push('debtValidation.creditorRequired');
+  if (!entry.amount || Number(entry.amount) <= 0) errors.push('debtValidation.amountInvalid');
+  if (!entry.registerDate) errors.push('debtValidation.dateRequired');
+  if (!entry.documentFile) errors.push('debtValidation.documentRequired');
 
   return {
     valid: errors.length === 0,
@@ -72,27 +72,17 @@ export const calculateBetreibungsRegisterImpact = (registerEntries, income) => {
   const totalDebt = registerEntries.reduce((sum, e) => sum + Number(e.amount || 0), 0);
   const debtToIncomeRatio = (totalDebt / income * 100).toFixed(1);
   
-  let severity = 'niedrig';
-  if (debtToIncomeRatio > 50) severity = 'kritisch';
-  else if (debtToIncomeRatio > 25) severity = 'hoch';
-  else if (debtToIncomeRatio > 10) severity = 'mittel';
+  let severity = 'low';
+  if (debtToIncomeRatio > 50) severity = 'critical';
+  else if (debtToIncomeRatio > 25) severity = 'high';
+  else if (debtToIncomeRatio > 10) severity = 'medium';
 
   return {
     totalDebt,
     debtToIncomeRatio: parseFloat(debtToIncomeRatio),
     severity,
-    recommendation: getSeverityRecommendation(severity)
+    recommendationKey: 'debtRecommendations.' + severity,
   };
-};
-
-const getSeverityRecommendation = (severity) => {
-  const recommendations = {
-    niedrig: 'Schulden sind unter Kontrolle. Weiterhin regelmäßig zahlen.',
-    mittel: 'Schulden sollten reduziert werden. Einen Zahlungsplan erstellen.',
-    hoch: 'Schulden sind erheblich. Fachliche Beratung wird empfohlen.',
-    kritisch: 'Kritische Schuldenlage. Sofortige Schuldenberatung erforderlich!'
-  };
-  return recommendations[severity] || '';
 };
 
 export const formatVerlustschein = (verlustschein) => {
