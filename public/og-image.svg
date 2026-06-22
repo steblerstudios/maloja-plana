@@ -1,0 +1,9 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F5F2EE"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#C8B68E"/>
+  <text x="600" y="240" text-anchor="middle" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#2C2C2C">Maloja Plana</text>
+  <text x="600" y="320" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" fill="#6B6560">Dein Schweizer Lebensordner</text>
+  <text x="600" y="400" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#9B9590">Steuerrechner · Sozialhilfe · IPV · Notfallkarte</text>
+  <text x="600" y="460" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" fill="#C8B68E">100% privat · offline · kostenlos · open source</text>
+  <rect x="0" y="626" width="1200" height="4" fill="#C8B68E"/>
+</svg>
