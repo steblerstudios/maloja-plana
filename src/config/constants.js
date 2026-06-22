@@ -302,9 +302,3 @@ export const DEFAULT_DATA = CHAPTER_KEYS.reduce((acc, key) => {
 // Default household for new installs (v3+)
 DEFAULT_DATA.basis.household = { adults: 1, children: [], isRetired: false };
 
-export const CH_SUPPORT_LINKS = {
-  ahv: 'https://www.ahv-iv.ch',
-  kk: 'https://www.monokk.ch',
-  betreibung: 'https://www.betreibungsamt.ch',
-  taxes: 'https://www.estv.admin.ch'
-};

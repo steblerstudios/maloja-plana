@@ -44,62 +44,6 @@ export const generateCVTemplate = (data, t) => {
   };
 };
 
-export const formatCVForPDF = (cvData, t) => {
-  const labelPersonal = t ? t('cv.personalData') : 'PERSONAL DATA';
-  const labelExperience = t ? t('cv.experience') : 'WORK EXPERIENCE';
-  const labelEducation = t ? t('cv.education') : 'EDUCATION AND QUALIFICATIONS';
-  const labelLanguages = t ? t('cv.languages') : 'LANGUAGES';
-  const labelReferences = t ? t('cv.references') : 'REFERENCES';
-  const labelNoJob = t ? t('cv.noCurrentJob') : 'No current employment';
-  const labelDob = t ? t('cv.labelDob') : 'Date of birth';
-  const labelNationality = t ? t('cv.labelNationality') : 'Nationality';
-  const labelMaritalStatus = t ? t('cv.labelMaritalStatus') : 'Marital status';
-  const labelHighest = t ? t('cv.labelHighest') : 'Highest qualification';
-  const labelSchool = t ? t('cv.labelSchool') : 'School/University';
-  const labelEfz = t ? t('cv.labelEfz') : 'EFZ/Designation';
-  const labelCerts = t ? t('cv.labelCerts') : 'Other certificates';
-  const labelSince = t ? t('cv.labelSince') : 'since';
-  const createdWith = t ? t('cv.createdWith') : 'This document was created with Maloja Plana.';
-
-  return `
-CV
-
-${cvData.header.name.toUpperCase()}
-${cvData.header.phone} | ${cvData.header.email}
-${cvData.header.address}, ${cvData.header.city}
-
-${labelPersonal}
-─────────────────
-${labelDob}: ${cvData.personal.dateOfBirth}
-${labelNationality}: ${cvData.personal.nationality}
-${labelMaritalStatus}: ${cvData.personal.maritalStatus}
-
-${labelExperience}
-────────────────────
-${cvData.experience.current.title ? `${cvData.experience.current.title}
-${cvData.experience.current.company}
-${labelSince} ${cvData.experience.current.startDate}
-${cvData.experience.current.description}` : labelNoJob}
-
-${labelEducation}
-──────────────────────────────
-${labelHighest}: ${cvData.education.highest}
-${labelSchool}: ${cvData.education.school}
-${cvData.education.efz ? `${labelEfz}: ${cvData.education.efz}` : ''}
-${cvData.education.certifications ? `${labelCerts}:\n${cvData.education.certifications}` : ''}
-
-${labelLanguages}
-────────
-${cvData.languages.list}
-
-${labelReferences}
-──────────
-${cvData.references.note}
-
-────────────────────────────────────
-${createdWith}
-`;
-};
 
 export const generateCVHTML = (cvData, t) => {
   const labelPersonal = t ? t('cv.personalData') : 'PERSONAL DATA';

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
+import { schaetzeKantonaleSteuer, getKantonDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 
 export const TaxCalculator = ({ palette, t, data, onSave }) => {
   const deductions = [
@@ -155,21 +156,48 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
-            t('tax.estimatedTax') + ' (' + t('tax.federalOnly') + ')',
+            t('tax.federalTax'),
             taxResult ? ' ~' + taxResult.effektiverSatz + '%' : ''
           ),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + estimatedTax.toFixed(0)),
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + estimatedTax.toFixed(0)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('tax.tariff') + ': ' + (verheiratet ? t('tax.marriedTariff') : t('tax.singleTariff')),
             ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet).toFixed(2) + '%'
           )
         ),
 
+        (() => {
+          const kantonal = canton ? schaetzeKantonaleSteuer(estimatedTax, canton) : null;
+          if (!kantonal) return React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px dashed ' + palette.border } },
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.soft, fontStyle: 'italic' } }, t('tax.selectCantonHint'))
+          );
+          return React.createElement(React.Fragment, null,
+            React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
+                t('tax.cantonalAndMunicipal') + ' (' + kantonal.hauptort + ')'
+              ),
+              React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.kantonalUndGemeinde),
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+                t('tax.basedOnHauptort')
+              )
+            ),
+            React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },
+              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.totalEstimate')),
+              React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.total),
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+                t('tax.totalNote')
+              )
+            )
+          );
+        })(),
+
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.netIncome')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (income - estimatedTax).toFixed(0))
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
+            'CHF ' + (income - (canton ? (schaetzeKantonaleSteuer(estimatedTax, canton) || { total: estimatedTax }).total : estimatedTax)).toFixed(0)
+          )
         )
       )
     ),
@@ -180,7 +208,8 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
       '○ ' + t('tax.disclaimer')
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, '○ DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, '○ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('trust.localOnly'))
   );
 };

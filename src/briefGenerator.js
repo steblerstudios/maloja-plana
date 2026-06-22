@@ -218,9 +218,3 @@ export function generateLetter(templateKey, data, t) {
   return gen(data, t);
 }
 
-export function getLetterPreviewData(templateKey, data, t) {
-  if (templateKey === 'leaseTermination') return getLeaseTerminationFields(data, t);
-  if (templateKey === 'taxExtension') return getTaxExtensionFields(data, t);
-  if (templateKey === 'insuranceSwitch') return getInsuranceSwitchFields(data, t);
-  return {};
-}
