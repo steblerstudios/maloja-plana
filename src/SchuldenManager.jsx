@@ -161,7 +161,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { fontSize: text.sm, marginBottom: space.sm } },
           t('schulden.debtRatio') + ': ' + betreibungImpact.debtToIncomeRatio + '% (' + t('debtLevels.' + betreibungImpact.severity) + ')'
         ),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, betreibungImpact.recommendation)
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, background: palette.surface, padding: space.sm, borderRadius: radius.sm } }, t(betreibungImpact.recommendationKey))
       )
     ),
 
