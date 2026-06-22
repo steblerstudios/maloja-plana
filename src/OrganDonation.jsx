@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
@@ -11,6 +11,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     pancreas: false, corneas: false, bone: false, tissue: false, other: ''
   });
   const [qrGenerated, setQRGenerated] = useState(false);
+  const qrRef = useRef(null);
 
   const organOptions = [
     { key: 'heart', label: '◉ ' + t('organ.heart') },
@@ -37,7 +38,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     });
 
     setTimeout(() => {
-      const cont = document.getElementById('organ-qr-output');
+      const cont = qrRef.current;
       if (cont) { cont.innerHTML = ''; new QRCode(cont, { text: qrData, width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface }); }
     }, 100);
 
@@ -108,7 +109,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
       qrGenerated && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center', marginBottom: space.md } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.generateQr')),
-        React.createElement('div', { id: 'organ-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: space.sm, minHeight: '220px' } })
+        React.createElement('div', { ref: qrRef, style: { display: 'flex', justifyContent: 'center', marginBottom: space.sm, minHeight: '220px' } })
       ),
 
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },

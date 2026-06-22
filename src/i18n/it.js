@@ -504,7 +504,7 @@ export default {
       fields: {
         cantoneOfTaxation: 'Cantone fiscale',
         taxId: 'Numero fiscale',
-        taxFillingDeadline: 'Scadenza dichiarazione fiscale',
+        taxFilingDeadline: 'Scadenza dichiarazione fiscale',
         pendingTaxReturns: 'Dichiarazioni fiscali in sospeso',
         registryOffice: 'Ufficio esecuzione',
         betreibungsStatus: { label: 'Registro esecuzioni', options: { none: 'Nessuna voce', entries: 'Voci presenti', unknown: 'Sconosciuto' } },
@@ -691,7 +691,7 @@ export default {
 
   legal: {
     title: 'Note legali',
-    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum' },
+    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum', license: 'Licenza' },
     footerLink: 'Privacy & Note legali',
     lastUpdated: 'Aggiornato: giugno 2026 · Conformemente alla nLPD (in vigore dal 1.9.2023)',
     privacy: {
@@ -712,7 +712,7 @@ export default {
       sensitive1: 'A seconda dei tuoi inserimenti, Maloja Plana può contenere dati sanitari (farmaci, donazione di organi), dati relativi all\'assistenza sociale o convinzioni religiose.',
       sensitive2: 'Poiché questi dati vengono archiviati esclusivamente in locale e non vengono mai trasmessi a un server, il rischio per i tuoi diritti della personalità è basso.',
       hostingTitle: 'Hosting',
-      hosting1: 'L\'applicazione web statica (senza dati utente) è ospitata da Vercel. All\'accesso al sito vengono elaborati dati tecnici (indirizzo IP, tipo di browser) nei log del server, che vengono automaticamente cancellati.',
+      hosting1: 'L\'applicazione web statica (senza dati utente) è ospitata da GitHub Pages. All\'accesso al sito vengono elaborati dati tecnici (indirizzo IP, tipo di browser) nei log del server, che vengono automaticamente cancellati.',
       hosting2: 'Non ci sono cookie di analisi, nessun tracciamento, nessun plugin social media e nessuna pubblicità.',
       backupTitle: 'Backup',
       backup1: 'I backup vengono salvati localmente nel browser. Puoi esportare i tuoi dati come file ZIP crittografato in qualsiasi momento. Questo file lascia il tuo dispositivo solo se lo condividi attivamente.',
@@ -755,6 +755,25 @@ export default {
       project1: 'Maloja Plana è un progetto open source non commerciale in sviluppo attivo. Il codice sorgente è accessibile pubblicamente.',
       disclaimerTitle: 'Esclusione di responsabilità',
       disclaimer1: 'I contenuti di questa applicazione sono stati creati con la massima cura. Non si assume alcuna garanzia per la correttezza, completezza o attualità delle informazioni.',
+      jurisdictionTitle: 'Diritto applicabile',
+      jurisdiction1: 'Si applica il diritto svizzero. Il foro competente è Basilea-Città, Svizzera.',
+    },
+    license: {
+      title: 'Licenza open source',
+      agplTitle: 'GNU Affero General Public License v3.0 (AGPL-3.0)',
+      agpl1: 'Il codice sorgente di Maloja Plana è sotto licenza AGPL-3.0. Ciò significa:',
+      agpl2: '→ Puoi leggere, copiare, modificare e ridistribuire il codice.',
+      agpl3: '→ Chiunque distribuisca pubblicamente una versione modificata deve pubblicare anche il codice sorgente completo.',
+      agpl4: '→ La licenza protegge l\'apertura del progetto: nessuno può prendere il codice e gestirlo come prodotto chiuso.',
+      dualTitle: 'Licenza commerciale (Dual Licensing)',
+      dual1: 'Una licenza commerciale separata è disponibile per l\'uso white-label e aziendale, senza obbligo di divulgazione.',
+      dual2: 'Contatto: sophie.stebler@gmail.com',
+      trademarkTitle: 'Marchio',
+      trademark1: 'Il nome «Maloja Plana», il logo e l\'identità visiva non sono coperti dall\'AGPL e non possono essere utilizzati per progetti derivati senza autorizzazione scritta.',
+      sourceTitle: 'Codice sorgente',
+      source1: 'Il codice sorgente completo è disponibile su: github.com/steblerstudios/maloja-plana',
+      thirdPartyTitle: 'Librerie di terze parti',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL), Cormorant Garamond (OFL). Tutte le licenze sono compatibili con AGPL-3.0.',
     },
   },
 

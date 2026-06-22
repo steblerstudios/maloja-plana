@@ -277,7 +277,7 @@ function buildBehoerdenSections(data, t) {
   // Section: Steuersituation
   const taxRows = [];
   if (data.cantoneOfTaxation) taxRows.push({ label: t('mirror.behoerden.taxCanton'), value: getCantonName(data.cantoneOfTaxation, t) });
-  if (data.taxFillingDeadline) taxRows.push({ label: t('mirror.behoerden.taxDeadline'), value: formatDate(data.taxFillingDeadline) });
+  if (data.taxFilingDeadline) taxRows.push({ label: t('mirror.behoerden.taxDeadline'), value: formatDate(data.taxFilingDeadline) });
   if (data.pendingTaxReturns) taxRows.push({ label: t('mirror.behoerden.pendingReturns'), value: data.pendingTaxReturns });
 
   if (taxRows.length > 0) {
