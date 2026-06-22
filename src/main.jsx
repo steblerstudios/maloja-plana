@@ -302,7 +302,7 @@ const AppInner = () => {
       chapters,
       completion: calculateCompletion()
     }),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '10px' }
@@ -314,7 +314,7 @@ const AppInner = () => {
         ),
         t('common.appName')
       ),
-      React.createElement('div', { style: { display: 'flex', gap: '8px', alignItems: 'center' } },
+      React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
@@ -476,7 +476,7 @@ const AppInner = () => {
         opacity: 0.7,
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '8px',
+        gap: space.sm,
         alignItems: 'center',
         padding: '16px 20px',
       }

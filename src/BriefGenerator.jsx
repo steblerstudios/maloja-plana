@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
-import { text as textTokens, weight, radius , leading } from './config/tokens.js';
+import { text as textTokens, weight, radius , leading , space } from './config/tokens.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -39,8 +39,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: textTokens.lg, fontWeight: weight.semi, marginBottom: '8px',
-        display: 'flex', alignItems: 'center', gap: '8px',
+        fontSize: textTokens.lg, fontWeight: weight.semi, marginBottom: space.sm,
+        display: 'flex', alignItems: 'center', gap: space.sm,
       }
     }, React.createElement(Icon, { name: 'document', size: 20 }), t('briefe.title')),
 
@@ -66,13 +66,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.accent : palette.mid }),
         React.createElement('div', null,
           React.createElement('div', {
-            style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: '4px' }
+            style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
           }, tmpl.title),
           React.createElement('div', {
             style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal }
           }, tmpl.description),
           tmpl.legalRef && React.createElement('div', {
-            style: { fontSize: textTokens.xs, color: palette.soft, marginTop: '4px' }
+            style: { fontSize: textTokens.xs, color: palette.soft, marginTop: space.xs }
           }, tmpl.legalRef)
         )
       ))
@@ -80,7 +80,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
 
     // Actions
     selected && React.createElement('div', {
-      style: { display: 'flex', gap: '8px', marginBottom: '16px' }
+      style: { display: 'flex', gap: space.sm, marginBottom: space.md }
     },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
@@ -104,7 +104,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
       style: {
         padding: '10px 14px', background: palette.up, borderRadius: radius.sm,
         fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
-        marginBottom: '16px',
+        marginBottom: space.md,
       }
     }, '○ ' + t('briefe.dataNote')),
 

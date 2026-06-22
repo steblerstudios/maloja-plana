@@ -38,7 +38,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       style: {
         background: 'none', border: 'none', cursor: 'pointer',
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
-        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '4px',
+        fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
     }, '← ' + t('common.back')),
 
@@ -53,7 +53,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     // Tabs
     React.createElement('div', {
       style: {
-        display: 'flex', gap: '4px', marginBottom: '24px',
+        display: 'flex', gap: space.xs, marginBottom: space.lg,
         borderBottom: '1px solid ' + palette.border, paddingBottom: '12px',
         flexWrap: 'wrap',
       }

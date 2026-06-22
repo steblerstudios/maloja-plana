@@ -152,11 +152,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         onClick: () => setShowAdvanced(!showAdvanced),
         style: {
           width: '100%', background: 'none', border: 'none',
-          borderTop: '1px solid ' + palette.border, marginTop: '8px',
+          borderTop: '1px solid ' + palette.border, marginTop: space.sm,
           padding: '14px 20px', cursor: 'pointer',
           fontSize: text.xs, color: palette.soft, fontFamily: 'inherit',
           textAlign: 'left', letterSpacing: '0.3px',
-          display: 'flex', alignItems: 'center', gap: '8px',
+          display: 'flex', alignItems: 'center', gap: space.sm,
         }
       },
         React.createElement('span', { style: { fontSize: '9px', transition: 'transform 0.2s', transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius , leading } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
 const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
@@ -31,10 +31,10 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
       }, React.createElement(Icon, { name: icon, size: 22 })),
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
+          style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.xs }
         }, title),
         React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '8px' }
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm }
         }, description),
         React.createElement('div', {
           style: {
@@ -66,7 +66,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       React.createElement('h2', {
         style: {
           fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px',
+          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('unterlagen.title')),
       React.createElement('div', {
@@ -126,7 +126,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
         }, React.createElement(Icon, { name: 'lock', size: 22 })),
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', {
-            style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
+            style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.xs }
           }, t('unterlagen.backup.title')),
           React.createElement('div', {
             style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '10px' }
@@ -146,7 +146,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     // Privacy note
     React.createElement('div', {
       style: {
-        marginTop: '8px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
+        marginTop: space.sm, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
     }, '○ ' + t('unterlagen.note'))
   );

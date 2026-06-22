@@ -98,7 +98,7 @@ export const DocumentTresor = ({
   };
 
   const inputStyle = {
-    width: '100%', padding: '8px', borderRadius: radius.sm,
+    width: '100%', padding: space.sm, borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.surface,
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
   };
@@ -146,7 +146,7 @@ export const DocumentTresor = ({
           style: { color: palette.mid, fontSize: text.xs, marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
         }, doc.fileName),
         React.createElement('div', {
-          style: { color: palette.mid, fontSize: text.xs, marginBottom: '4px' }
+          style: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs }
         }, t('tresor.uploadedInfo', { date: doc.uploadDate, size: doc.fileSize })),
 
         isEditing
@@ -156,7 +156,7 @@ export const DocumentTresor = ({
                 onChange: (e) => setEditingExpiry(e.target.value),
                 style: { ...inputStyle, marginBottom: '6px', padding: '6px' },
               }),
-              React.createElement('div', { style: { display: 'flex', gap: '4px' } },
+              React.createElement('div', { style: { display: 'flex', gap: space.xs } },
                 React.createElement('button', {
                   onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
                   style: { flex: 1, padding: '4px 8px', background: palette.sage, color: '#000', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
@@ -172,7 +172,7 @@ export const DocumentTresor = ({
             }, status.label + ' · ' + t('tresor.expiryDate', { date: doc.expiryDate })),
       ),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '4px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
           style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
@@ -195,12 +195,12 @@ export const DocumentTresor = ({
   },
     // Title with folder icon
     React.createElement('h2', {
-      style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: '8px' }
+      style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm }
     }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
 
     // Ordner status — warm language
     React.createElement('div', {
-      style: { marginBottom: '16px', padding: '12px 14px', background: palette.up, borderRadius: radius.sm, display: 'flex', alignItems: 'center', gap: '12px' }
+      style: { marginBottom: space.md, padding: '12px 14px', background: palette.up, borderRadius: radius.sm, display: 'flex', alignItems: 'center', gap: '12px' }
     },
       React.createElement(OrdnerIcon, { palette, fillLevel: documents.length }),
       React.createElement('div', { style: { flex: 1 } },
@@ -218,7 +218,7 @@ export const DocumentTresor = ({
 
     // Stats row
     React.createElement('div', {
-      style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '16px' }
+      style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: space.sm, marginBottom: space.md }
     },
       React.createElement('button', {
         type: 'button', 'aria-pressed': !showArchive,
@@ -272,7 +272,7 @@ export const DocumentTresor = ({
 
     // Search + Sort
     React.createElement('div', {
-      style: { display: 'flex', gap: '8px', marginBottom: '12px' }
+      style: { display: 'flex', gap: space.sm, marginBottom: '12px' }
     },
       React.createElement('input', {
         placeholder: t('common.search'), value: searchTerm,
@@ -306,7 +306,7 @@ export const DocumentTresor = ({
         )
       : activeTab === 'all'
         // Grouped view — documents under chapter dividers
-        ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '16px', maxHeight: '600px', overflowY: 'auto' } },
+        ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, maxHeight: '600px', overflowY: 'auto' } },
             Object.keys(groupedByChapter).map(chKey => {
               const chapter = chapterList.find(c => c.key === chKey);
               const docs = groupedByChapter[chKey];
@@ -316,7 +316,7 @@ export const DocumentTresor = ({
                   style: {
                     fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
                     textTransform: 'uppercase', letterSpacing: '0.5px',
-                    paddingBottom: '6px', marginBottom: '8px',
+                    paddingBottom: '6px', marginBottom: space.sm,
                     borderBottom: '1px solid ' + palette.border,
                     display: 'flex', alignItems: 'center', gap: '6px',
                   },

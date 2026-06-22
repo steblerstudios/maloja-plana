@@ -83,7 +83,7 @@ const QuickCheck = ({ palette, t, onNavigate }) => {
     },
       React.createElement('div', { style: { flex: '1 1 180px', minWidth: '150px' } },
         React.createElement('label', {
-          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: '4px' }
+          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
         }, t('dashboard.quickCheckIncome')),
         React.createElement('input', {
           type: 'number',
@@ -117,7 +117,7 @@ const QuickCheck = ({ palette, t, onNavigate }) => {
             : t('dashboard.quickCheckNoResult')
           ),
           React.createElement('div', {
-            style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '4px' }
+            style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.xs }
           }, t('dashboard.quickCheckHint'))
         )
       )
@@ -156,14 +156,14 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
           t('alpha.summary')
         ),
         React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.relaxed }
+          style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: leading.relaxed }
         }, t('alpha.disclaimer'))
       ),
       React.createElement('button', {
         onClick: onDismiss,
         'aria-label': t('common.close'),
         style: {
-          background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
+          background: 'none', border: 'none', cursor: 'pointer', padding: space.xs,
           color: palette.mid, fontSize: text.body, lineHeight: 1, flexShrink: 0,
         }
       }, '×')
@@ -481,7 +481,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         }, t('dashboard.highlightPrivacy'))
       ),
       React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '8px' }
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm }
       },
         [
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
@@ -542,7 +542,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     },
       React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
         React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
         }, t('dashboard.demoTitle')),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
@@ -940,7 +940,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               key: ch.key,
               onClick: () => onSelectChapter(chIdx),
               style: {
-                display: 'flex', alignItems: 'center', gap: '16px',
+                display: 'flex', alignItems: 'center', gap: space.md,
                 padding: '20px 4px',
                 background: 'transparent',
                 border: 'none',
@@ -988,7 +988,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 status !== 'leer' && (() => {
                   const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
                   return snippet ? React.createElement('div', {
-                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: '4px', fontStyle: 'italic' }
+                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
                   }, snippet) : null;
                 })(),
               ),
@@ -1000,7 +1000,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Tips — open editorial section ─────────────────────
     React.createElement('div', {
-      style: { padding: '0 2px', marginBottom: '24px', borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
+      style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
       React.createElement('h3', {
         style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
@@ -1018,7 +1018,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }
+        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs }
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
