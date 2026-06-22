@@ -1706,6 +1706,7 @@ export default {
     leave: 'Esci dall\'esempio',
     enterLink: 'Vedi esempio',
     enterSubtitle: 'Scopri come appare una cartella della vita compilata.',
+    ctaButton: 'Vedi esempio — come appare una cartella compilata',
     footerLink: 'Esempio',
     readOnlyHint: 'I dati non possono essere modificati in modalità esempio.',
     exportBlocked: 'L\'esportazione non è disponibile in modalità esempio.',

@@ -1709,6 +1709,7 @@ export default {
     leave: 'Leave example',
     enterLink: 'View example',
     enterSubtitle: 'See what a completed life folder looks like.',
+    ctaButton: 'See example — what a completed folder looks like',
     footerLink: 'Example',
     readOnlyHint: 'Data cannot be edited in example mode.',
     exportBlocked: 'Export is not available in example mode.',
