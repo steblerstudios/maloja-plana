@@ -23,11 +23,11 @@ export const space = {
 
 // ─── Typography scale ───────────────────────────────────────
 export const text = {
-  xs:   12,
-  sm:   14,
-  body: 15,
-  lg:   18,
-  xl:   22,
+  xs:   13,
+  sm:   15,
+  body: 16,
+  lg:   19,
+  xl:   23,
   '2xl': 28,
   '3xl': 36,
 };
