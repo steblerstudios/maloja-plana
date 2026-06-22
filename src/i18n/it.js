@@ -1109,6 +1109,8 @@ export default {
     notEligible: 'Non avente diritto',
     monthlySubsidy: 'Riduzione mensile',
     annualSubsidy: 'Riduzione annuale',
+    reductionNote: 'In base al reddito ({percent}% del massimo)',
+    maxPossible: 'Massimo: CHF {value}/anno',
     taxSavings: 'Risparmio fiscale',
     compareCantons: 'Confronta tutti i cantoni',
     requiredDocs: 'Documenti richiesti',
