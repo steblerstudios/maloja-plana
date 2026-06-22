@@ -5,7 +5,7 @@ import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
-export const PremiumSubsidy = ({ palette, t, data }) => {
+export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
   const [showCalculation, setShowCalculation] = useState(true);
 
   const canton = data.basis?.canton || '';
@@ -156,7 +156,12 @@ export const PremiumSubsidy = ({ palette, t, data }) => {
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly')),
+
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('finanzuebersicht'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+    }, '→ ' + t('nav.finanzUebersicht'))
   );
 };
 

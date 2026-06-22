@@ -4,7 +4,7 @@ import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
-export const SozialhilfeView = ({ palette, t, data }) => {
+export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const canton = data.basis?.canton || '';
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
@@ -168,7 +168,12 @@ export const SozialhilfeView = ({ palette, t, data }) => {
 
     React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(SozialhilfeRechner, { palette, t, data })
-    )
+    ),
+
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('finanzuebersicht'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+    }, '→ ' + t('nav.finanzUebersicht'))
   );
 };
 
