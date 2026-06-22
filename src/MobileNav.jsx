@@ -7,6 +7,7 @@ import { text, weight, space, shadow, ease, duration } from './config/tokens.js'
 
 export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
 
   // Icon mapping for chapters
@@ -88,94 +89,172 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         }, t('nav.completion', { value: completion }))
       ),
 
-      // Dashboard
-      navItem('dashboard', t('nav.dashboard'), 'dashboard',
-        () => { onNavigate('dashboard'); onClose(); },
-        activeView === 'dashboard'
-      ),
-
-      // Chapters — tiered grouping
-      ...[
-        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
-        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
-        { label: t('dashboard.tierProtective'), indices: [5, 6] },
-      ].map((tier, tierIdx) =>
+      // Search
+      React.createElement('div', {
+        style: { padding: '12px 20px 8px 20px' }
+      },
         React.createElement('div', {
-          key: 'tier-' + tierIdx,
-          style: {
-            padding: tierIdx === 0 ? '8px 0 4px 0' : '4px 0',
-            borderBottom: tierIdx === 2 ? '1px solid ' + palette.border : 'none',
-          }
+          style: { display: 'flex', alignItems: 'center', gap: '8px', background: palette.up, borderRadius: '8px', padding: '8px 12px', border: '1px solid ' + palette.border }
         },
-          React.createElement('div', {
+          React.createElement('div', { style: { color: palette.mid, flexShrink: 0, width: '16px', height: '16px' } }, renderIcon('search', '16px')),
+          React.createElement('input', {
+            type: 'text',
+            value: searchQuery,
+            onChange: (e) => setSearchQuery(e.target.value),
+            placeholder: t('common.search') || 'Suchen…',
+            autoFocus: true,
             style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.soft,
-              padding: tierIdx === 0 ? '8px 20px 4px 20px' : '12px 20px 4px 20px',
-              letterSpacing: '0.3px',
+              flex: 1, border: 'none', background: 'transparent', outline: 'none',
+              fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
             }
-          }, tier.label),
-          ...(tier.indices.map(idx => {
-            const ch = (chapters || [])[idx];
-            if (!ch) return null;
-            const iconKey = chapterIcons[ch.key];
-            const isActive = activeView === 'chapter' && activeChapter === idx;
-            return navItem(ch.key, ch.title, iconKey,
-              () => { onNavigate('chapter', idx); onClose(); },
-              isActive
-            );
-          }))
+          }),
+          searchQuery && React.createElement('button', {
+            onClick: () => setSearchQuery(''),
+            'aria-label': t('common.clear') || 'Clear',
+            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '14px', padding: '0 2px', lineHeight: 1 }
+          }, '×')
         )
       ),
 
-      // Tools
-      React.createElement('div', {
-        style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.mid, padding: space.md + 'px 20px ' + space.sm + 'px 20px', textTransform: 'uppercase', letterSpacing: '0.5px' }
-      }, t('nav.tools')),
+      // Build searchable items
+      ...(() => {
+        const q = searchQuery.toLowerCase().trim();
 
-      ...[
-        { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: 'budget' },
-        { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
-        { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
-        { key: 'kk', label: t('nav.kkScanner'), icon: 'barcode' },
-        { key: 'budget', label: t('nav.budget'), icon: 'csv' },
-        { key: 'schulden', label: t('nav.debts'), icon: 'debt' },
-        { key: 'tax', label: t('nav.taxes'), icon: 'money' },
-        { key: 'sozialhilfe', label: t('nav.sozialhilfe'), icon: 'document' },
-        { key: 'organ', label: t('nav.organDonation'), icon: 'health' },
-      ].map(tool => navItem(tool.key, tool.label, tool.icon,
-        () => { onNavigate(tool.key); onClose(); },
-        activeView === tool.key
-      )),
+        const allTools = [
+          { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: 'budget' },
+          { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
+          { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
+          { key: 'kk', label: t('nav.kkScanner'), icon: 'barcode' },
+          { key: 'budget', label: t('nav.budget'), icon: 'csv' },
+          { key: 'schulden', label: t('nav.debts'), icon: 'debt' },
+          { key: 'tax', label: t('nav.taxes'), icon: 'money' },
+          { key: 'sozialhilfe', label: t('nav.sozialhilfe'), icon: 'document' },
+          { key: 'organ', label: t('nav.organDonation'), icon: 'health' },
+          { key: 'calendar', label: t('nav.calendar'), icon: 'calendar' },
+          { key: 'sync', label: t('nav.budgetSync'), icon: 'money' },
+          { key: 'premium', label: t('nav.kvgIpv'), icon: 'health' },
+          { key: 'cv', label: t('nav.cv'), icon: 'document' },
+          { key: 'charts', label: t('nav.charts'), icon: 'dashboard' },
+          { key: 'export', label: t('nav.export'), icon: 'download' },
+          { key: 'notifications', label: t('nav.notifications'), icon: 'settings' },
+        ];
 
-      // Advanced — collapsed behind disclosure
-      React.createElement('button', {
-        key: 'advanced-toggle',
-        onClick: () => setShowAdvanced(!showAdvanced),
-        style: {
-          width: '100%', background: 'none', border: 'none',
-          borderTop: '1px solid ' + palette.border, marginTop: space.sm,
-          padding: '14px 20px', cursor: 'pointer',
-          fontSize: text.xs, color: palette.soft, fontFamily: 'inherit',
-          textAlign: 'left', letterSpacing: '0.3px',
-          display: 'flex', alignItems: 'center', gap: space.sm,
+        // Search mode — flat filtered list
+        if (q) {
+          const results = [];
+
+          // Dashboard
+          if ((t('nav.dashboard') || 'Dashboard').toLowerCase().includes(q)) {
+            results.push(navItem('dashboard', t('nav.dashboard'), 'dashboard',
+              () => { onNavigate('dashboard'); onClose(); }, activeView === 'dashboard'));
+          }
+
+          // Chapters
+          (chapters || []).forEach((ch, idx) => {
+            const match = ch.title.toLowerCase().includes(q) ||
+              (ch.description || '').toLowerCase().includes(q) ||
+              ch.key.toLowerCase().includes(q);
+            if (match) {
+              const iconKey = chapterIcons[ch.key];
+              results.push(navItem(ch.key, ch.title, iconKey,
+                () => { onNavigate('chapter', idx); onClose(); },
+                activeView === 'chapter' && activeChapter === idx));
+            }
+          });
+
+          // Tools
+          allTools.forEach(tool => {
+            if (tool.label.toLowerCase().includes(q) || tool.key.toLowerCase().includes(q)) {
+              results.push(navItem(tool.key, tool.label, tool.icon,
+                () => { onNavigate(tool.key); onClose(); }, activeView === tool.key));
+            }
+          });
+
+          if (results.length === 0) {
+            results.push(React.createElement('div', {
+              key: 'no-results',
+              style: { padding: '20px', textAlign: 'center', fontSize: text.sm, color: palette.mid }
+            }, t('common.noResults') || 'Keine Ergebnisse'));
+          }
+
+          return results;
         }
-      },
-        React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
-        t('nav.moreTools')
-      ),
 
-      ...(showAdvanced ? [
-        { key: 'calendar', label: t('nav.calendar'), icon: 'calendar' },
-        { key: 'sync', label: t('nav.budgetSync'), icon: 'money' },
-        { key: 'premium', label: t('nav.kvgIpv'), icon: 'health' },
-        { key: 'cv', label: t('nav.cv'), icon: 'document' },
-        { key: 'charts', label: t('nav.charts'), icon: 'dashboard' },
-        { key: 'export', label: t('nav.export'), icon: 'download' },
-        { key: 'notifications', label: t('nav.notifications'), icon: 'settings' },
-      ].map(tool => navItem(tool.key, tool.label, tool.icon,
-        () => { onNavigate(tool.key); onClose(); },
-        activeView === tool.key
-      )) : []),
+        // Normal mode — grouped navigation
+        return [
+          // Dashboard
+          navItem('dashboard', t('nav.dashboard'), 'dashboard',
+            () => { onNavigate('dashboard'); onClose(); },
+            activeView === 'dashboard'
+          ),
+
+          // Chapters — tiered grouping
+          ...[
+            { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
+            { label: t('dashboard.tierSupporting'), indices: [3, 4] },
+            { label: t('dashboard.tierProtective'), indices: [5, 6] },
+          ].map((tier, tierIdx) =>
+            React.createElement('div', {
+              key: 'tier-' + tierIdx,
+              style: {
+                padding: tierIdx === 0 ? '8px 0 4px 0' : '4px 0',
+                borderBottom: tierIdx === 2 ? '1px solid ' + palette.border : 'none',
+              }
+            },
+              React.createElement('div', {
+                style: {
+                  fontSize: text.xs, fontWeight: weight.medium, color: palette.soft,
+                  padding: tierIdx === 0 ? '8px 20px 4px 20px' : '12px 20px 4px 20px',
+                  letterSpacing: '0.3px',
+                }
+              }, tier.label),
+              ...(tier.indices.map(idx => {
+                const ch = (chapters || [])[idx];
+                if (!ch) return null;
+                const iconKey = chapterIcons[ch.key];
+                const isActive = activeView === 'chapter' && activeChapter === idx;
+                return navItem(ch.key, ch.title, iconKey,
+                  () => { onNavigate('chapter', idx); onClose(); },
+                  isActive
+                );
+              }))
+            )
+          ),
+
+          // Tools
+          React.createElement('div', {
+            key: 'tools-header',
+            style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.mid, padding: space.md + 'px 20px ' + space.sm + 'px 20px', textTransform: 'uppercase', letterSpacing: '0.5px' }
+          }, t('nav.tools')),
+
+          ...allTools.slice(0, 9).map(tool => navItem(tool.key, tool.label, tool.icon,
+            () => { onNavigate(tool.key); onClose(); },
+            activeView === tool.key
+          )),
+
+          // Advanced — collapsed behind disclosure
+          React.createElement('button', {
+            key: 'advanced-toggle',
+            onClick: () => setShowAdvanced(!showAdvanced),
+            style: {
+              width: '100%', background: 'none', border: 'none',
+              borderTop: '1px solid ' + palette.border, marginTop: space.sm,
+              padding: '14px 20px', cursor: 'pointer',
+              fontSize: text.xs, color: palette.soft, fontFamily: 'inherit',
+              textAlign: 'left', letterSpacing: '0.3px',
+              display: 'flex', alignItems: 'center', gap: space.sm,
+            }
+          },
+            React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
+            t('nav.moreTools')
+          ),
+
+          ...(showAdvanced ? allTools.slice(9).map(tool => navItem(tool.key, tool.label, tool.icon,
+            () => { onNavigate(tool.key); onClose(); },
+            activeView === tool.key
+          )) : []),
+        ];
+      })(),
 
       // Spacer
       React.createElement('div', { style: { flex: 1 } }),
