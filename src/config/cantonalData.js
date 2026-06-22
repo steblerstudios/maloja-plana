@@ -1,10 +1,3 @@
-import { cantonFromPLZPrecise, lookupPLZ, primaryGemeinde } from '../data/plzGemeinde.js';
-import { getRegionInfo, getAveragePremium } from '../data/praemienRegionen.js';
-import { getAllInsurers, searchInsurers } from '../data/versichererListe.js';
-import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, ERW_FRA, KIN_FRA } from '../data/praemienDetail.js';
-export { lookupPLZ, primaryGemeinde, getRegionInfo, getAveragePremium, getAllInsurers, searchInsurers };
-export { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, ERW_FRA, KIN_FRA };
-
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
   { from: 1000, to: 1099, canton: 'VD' },
@@ -98,11 +91,19 @@ const PLZ_RANGES = [
   { from: 9900, to: 9999, canton: 'SG' },
 ];
 
+let _plzModule = null;
+
 export function cantonFromPLZ(plz) {
-  const precise = cantonFromPLZPrecise(plz);
-  if (precise) return precise;
   const num = parseInt(plz, 10);
   if (isNaN(num) || num < 1000 || num > 9999) return null;
+
+  if (_plzModule) {
+    const precise = _plzModule.cantonFromPLZPrecise(plz);
+    if (precise) return precise;
+  } else {
+    import('../data/plzGemeinde.js').then(m => { _plzModule = m; });
+  }
+
   const match = PLZ_RANGES.find(r => num >= r.from && num <= r.to);
   return match ? match.canton : null;
 }
