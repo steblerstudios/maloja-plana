@@ -44,7 +44,7 @@ export const BetaGate = ({ children }) => {
       }
     },
       React.createElement('h1', {
-        style: { fontSize: '20px', fontWeight: weight.semi, marginBottom: '8px', color: palette.text }
+        style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '8px', color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: '1.5' }
