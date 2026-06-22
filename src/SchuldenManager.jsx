@@ -220,8 +220,8 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
             React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
             React.createElement('input', { type: 'date', value: entry.registerDate || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
             React.createElement('select', { value: entry.status, onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
-              React.createElement('option', { value: 'active' }, t('schulden.statusOpen')),
-              React.createElement('option', { value: 'erledigt' }, t('schulden.statusPaid'))
+              React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
+              React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
             )
           ),
           React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...buttonStyle, background: palette.rose, marginTop: space.xs } }, '✕ ' + t('common.delete'))

@@ -94,7 +94,7 @@ export const formatVerlustschein = (verlustschein) => {
     creditor: verlustschein.creditor || '',
     reason: verlustschein.reason || '',
     court: verlustschein.court || '',
-    status: verlustschein.status || 'aktiv',
+    status: verlustschein.status || 'open',
     notes: verlustschein.notes || '',
     uploadedFile: verlustschein.uploadedFile || null
   };
@@ -107,7 +107,7 @@ export const createBetreibungsAuszugTemplate = () => {
     requestedFrom: 'Betreibungsamt',
     canton: '',
     holder: '',
-    status: 'angefordert',
+    status: 'requested',
     results: []
   };
 };
@@ -125,7 +125,7 @@ export const parseBetreibungsAuszugFile = (fileContent) => {
         creditor: extractValue(lines, i, 'Gläubiger'),
         amount: extractAmount(lines, i),
         registerDate: extractDate(lines, i),
-        status: extractValue(lines, i, 'Status') || 'aktiv'
+        status: extractValue(lines, i, 'Status') || 'open'
       };
 
       if (entry.amount > 0) {
