@@ -156,6 +156,7 @@ export default {
       budgetHint: 'Affitto inserito → panoramica del tuo budget →',
       vorsorgeHint: 'Contributo LPP inserito → calcola la tua pensione →',
       praemienHint: 'Cassa malati inserita → confronta il tuo premio →',
+      mindestlohnHint: 'Il tuo cantone ha un salario minimo → verifica il tuo stipendio →',
     },
     backToDashboard: 'Panoramica',
   },
