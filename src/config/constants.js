@@ -223,7 +223,7 @@ export function getChapters(t) {
         { k: 'courtCases', label: fl(t, 'behoerden', 'courtCases'), type: 'select', options: opts(t, 'behoerden', 'courtCases') },
         { k: 'legalRepresentative', label: fl(t, 'behoerden', 'legalRepresentative'), type: 'text', section: t('sections.behoerden.representation'), sectionIntro: si(t, 'behoerden', 'representation') },
         { k: 'representativePhone', label: fl(t, 'behoerden', 'representativePhone'), type: 'tel' },
-        { k: 'willMade', label: fl(t, 'behoerden', 'willMade'), type: 'select', options: opts(t, 'behoerden', 'willMade') },
+        { k: 'willMade', label: fl(t, 'behoerden', 'willMade'), type: 'select', options: opts(t, 'behoerden', 'willMade'), orientation: or(t, 'testament') },
       ],
       docs: [
         { k: 'betreibungsauszug', label: dl(t, 'behoerden', 'betreibungsauszug') },
