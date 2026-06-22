@@ -52,7 +52,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     td: { padding: space.sm, borderBottom: '1px solid ' + palette.border },
     tdRight: { padding: space.sm, borderBottom: '1px solid ' + palette.border, textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
     big: { fontSize: text.xl, fontWeight: weight.bold },
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
+    source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
