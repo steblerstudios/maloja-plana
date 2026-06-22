@@ -485,7 +485,8 @@ const AppInner = () => {
         view === 'tax' && React.createElement(TaxCalculator, {
           palette, t,
           data: activeData,
-          onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData }))
+          onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData })),
+          onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
           palette, t,
@@ -493,15 +494,15 @@ const AppInner = () => {
           onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
         }),
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
-        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData }),
+        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
-        view === 'direktlinks' && React.createElement(DirektLinks, { palette, t }),
+        view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: allData }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
@@ -515,7 +516,8 @@ const AppInner = () => {
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
-    React.createElement('div', {
+    React.createElement('footer', {
+      role: 'contentinfo',
       style: {
         fontSize: text.xs,
         color: palette.mid,
