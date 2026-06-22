@@ -1712,9 +1712,12 @@ export default {
         description: 'Informazioni importanti per i tuoi familiari. Contatti, medicina, direttive.',
       },
       behoerden: {
+        title: 'Dossier autorità',
+        description: 'Tutti i dati e i calcoli per il tuo prossimo appuntamento ufficiale.',
+      },
+      briefe: {
         title: 'Modelli di lettere',
         description: 'Lettere tipo svizzere — disdetta locazione, proroga fiscale, cambio cassa malati.',
-        status: 'Modelli di lettere',
       },
     },
     backup: {
@@ -1749,6 +1752,26 @@ export default {
     fileTypes: '.json o .maloja',
     validationErrors: 'Avvisi di validazione',
     restored: 'Ripristinato',
+  },
+
+  behoerdenDossier: {
+    title: 'Dossier per le autorità',
+    subtitle: 'Per il tuo appuntamento presso l\'assistenza sociale, il comune o un servizio specializzato.',
+    openDossier: 'Apri il dossier',
+    printAction: 'Stampa come PDF',
+    generated: 'Creato il {date}',
+    disclaimer: 'Questo dossier serve come orientamento. I calcoli si basano sui tuoi dati e non sostituiscono una verifica ufficiale da parte dell\'ufficio competente.',
+    sectionPerson: 'Persona',
+    sectionFinanzen: 'Situazione finanziaria',
+    sectionSozialhilfe: 'Orientamento assistenza sociale (COSAS)',
+    sectionIPV: 'Riduzione dei premi (IPV)',
+    sectionEL: 'Prestazioni complementari (PC)',
+    sectionSteuern: 'Orientamento imposta federale',
+    elNotApplicable: 'Non applicabile (solo per beneficiari AVS/AI)',
+    footerPrivacy: 'Questo documento è stato creato localmente. Nessun dato è stato trasmesso.',
+    footerCredit: 'Maloja Plana — Organizzatore di vita svizzero (Open Source)',
+    empty: 'Compila prima i tuoi dati personali e finanziari affinché il dossier possa essere generato.',
+    previewNote: 'Anteprima — ecco come apparirà il tuo dossier:',
   },
 
   notfallDossier: {

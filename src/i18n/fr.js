@@ -1710,9 +1710,12 @@ export default {
         description: 'Informations importantes pour vos proches. Contacts, médecine, directives.',
       },
       behoerden: {
+        title: 'Dossier autorités',
+        description: 'Toutes les informations et calculs pour ton prochain rendez-vous officiel.',
+      },
+      briefe: {
         title: 'Modèles de lettres',
         description: 'Lettres types suisses — résiliation de bail, prolongation fiscale, changement de caisse.',
-        status: 'Modèles de lettres',
       },
     },
     backup: {
@@ -1747,6 +1750,26 @@ export default {
     fileTypes: '.json ou .maloja',
     validationErrors: 'Avertissements de validation',
     restored: 'Restauré',
+  },
+
+  behoerdenDossier: {
+    title: 'Dossier pour les autorités',
+    subtitle: 'Pour ton rendez-vous auprès de l\'aide sociale, de la commune ou d\'un service spécialisé.',
+    openDossier: 'Ouvrir le dossier',
+    printAction: 'Imprimer en PDF',
+    generated: 'Créé le {date}',
+    disclaimer: 'Ce dossier sert d\'orientation. Les calculs sont basés sur tes données et ne remplacent pas une évaluation officielle par l\'autorité compétente.',
+    sectionPerson: 'Personne',
+    sectionFinanzen: 'Situation financière',
+    sectionSozialhilfe: 'Orientation aide sociale (CSIAS)',
+    sectionIPV: 'Réduction de primes (IPV)',
+    sectionEL: 'Prestations complémentaires (PC)',
+    sectionSteuern: 'Orientation impôt fédéral',
+    elNotApplicable: 'Non applicable (uniquement pour les bénéficiaires AVS/AI)',
+    footerPrivacy: 'Ce document a été créé localement. Aucune donnée n\'a été transmise.',
+    footerCredit: 'Maloja Plana — Classeur de vie suisse (Open Source)',
+    empty: 'Remplis d\'abord tes données personnelles et financières pour que le dossier puisse être généré.',
+    previewNote: 'Aperçu — voici à quoi ressemblera ton dossier :',
   },
 
   notfallDossier: {

@@ -1710,9 +1710,12 @@ export default {
         description: 'Wichtige Informationen für Angehörige. Kontakte, Medizin, Verfügungen.',
       },
       behoerden: {
+        title: 'Behörden-Dossier',
+        description: 'Alle Angaben und Berechnungen für Deinen nächsten Behördentermin.',
+      },
+      briefe: {
         title: 'Briefvorlagen',
         description: 'Schweizer Musterbriefe — Kündigung, Fristverlängerung, Krankenkassenwechsel.',
-        status: 'Briefvorlagen',
       },
     },
     backup: {
@@ -1747,6 +1750,26 @@ export default {
     fileTypes: '.json oder .maloja',
     validationErrors: 'Validierungswarnungen',
     restored: 'Wiederhergestellt',
+  },
+
+  behoerdenDossier: {
+    title: 'Behörden-Dossier',
+    subtitle: 'Für Deinen Termin beim Sozialamt, der Gemeinde oder einer Fachstelle.',
+    openDossier: 'Dossier öffnen',
+    printAction: 'Als PDF drucken',
+    generated: 'Erstellt am {date}',
+    disclaimer: 'Dieses Dossier dient der Orientierung. Die Berechnungen basieren auf Deinen Angaben und ersetzen keine verbindliche Prüfung durch die zuständige Stelle.',
+    sectionPerson: 'Person',
+    sectionFinanzen: 'Finanzielle Situation',
+    sectionSozialhilfe: 'Sozialhilfe-Orientierung (SKOS)',
+    sectionIPV: 'Prämienverbilligung (IPV)',
+    sectionEL: 'Ergänzungsleistungen (EL)',
+    sectionSteuern: 'Bundessteuer-Orientierung',
+    elNotApplicable: 'Nicht anwendbar (nur für AHV/IV-Bezüger)',
+    footerPrivacy: 'Dieses Dokument wurde lokal erstellt. Keine Daten wurden übermittelt.',
+    footerCredit: 'Maloja Plana — Schweizer Lebensordner (Open Source)',
+    empty: 'Fülle zuerst Deine persönlichen Angaben und Finanzen aus, damit das Dossier erstellt werden kann.',
+    previewNote: 'Vorschau — so wird Dein Dossier aussehen:',
   },
 
   notfallDossier: {
