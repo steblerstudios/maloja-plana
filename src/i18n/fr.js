@@ -937,6 +937,13 @@ export default {
     eo: 'En cas de service militaire, service civil ou maternité, tu reçois une compensation pour le revenu perdu.',
   },
 
+  contextLinks: {
+    kkWechsel: { label: 'Comparer les caisses maladie (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
+    ahv: { label: 'Rente AVS : mémento 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.f' },
+    testament: { label: 'Testament et pacte successoral (ch.ch)', url: 'https://www.ch.ch/fr/famille-et-partenariat/heritage/testament-et-pacte-successoral/' },
+    patientenverfuegung: { label: 'Directives anticipées (ch.ch)', url: 'https://www.ch.ch/fr/sante/directives-anticipees/' },
+  },
+
   tresor: {
     title: 'Classeur de documents',
     active: 'Actifs',

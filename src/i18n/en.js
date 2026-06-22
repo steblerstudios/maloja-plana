@@ -938,6 +938,13 @@ export default {
     eo: 'During military service, civil service, or maternity, you receive compensation for lost earnings.',
   },
 
+  contextLinks: {
+    kkWechsel: { label: 'Compare health insurers (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
+    ahv: { label: 'OASI pension: Factsheet 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.d' },
+    testament: { label: 'Will and inheritance contract (ch.ch)', url: 'https://www.ch.ch/en/family-and-partnership/inheritance/will-and-inheritance-contract/' },
+    patientenverfuegung: { label: 'Advance directive (ch.ch)', url: 'https://www.ch.ch/en/health/advance-directive/' },
+  },
+
   tresor: {
     title: 'Document folder',
     active: 'Active',
