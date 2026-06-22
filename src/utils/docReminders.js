@@ -99,18 +99,3 @@ export const syncDocumentReminders = (documents, t) => {
   return { created, updated, removed };
 };
 
-/**
- * Check if a document has a linked reminder
- */
-export const hasDocumentReminder = (docId) => {
-  const reminders = loadReminders();
-  return reminders.some(r => r.id === docReminderId(docId));
-};
-
-/**
- * Get the reminder linked to a document
- */
-export const getDocumentReminder = (docId) => {
-  const reminders = loadReminders();
-  return reminders.find(r => r.id === docReminderId(docId)) || null;
-};
