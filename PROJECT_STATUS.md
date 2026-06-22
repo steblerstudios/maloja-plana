@@ -50,13 +50,12 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 ## Next Recommended Implementation Candidates
 
 1. **KK Scanner Slice C** — conflict warnings when scanned values differ, AHV display masking (small, UI only)
-2. **Hardcoded German in cantonalData.js** — replace German return values with i18n keys (medium, i18n only)
-3. **Alpha banner BVG note update** — BVG item now says "reference values" but could be removed entirely since it's fixed
+2. **Alpha banner BVG note update** — BVG item now says "reference values" but could be removed entirely since it's fixed
 4. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
 
 ## Do Not Touch Yet
 
-- SKOS/Sozialhilfe calculation (requires Phase 9 household model)
+- SKOS/Sozialhilfe: bewusste Vereinfachung, kein Refactoring nötig
 - PremiumSubsidy/IPV calculation
 - Data schema or localStorage keys (no migrations without explicit approval)
 - Cloud sync, accounts, or server-side components
