@@ -5,9 +5,7 @@ export const initBarcodeScanner = async () => {
     if (!document.getElementById('jsqr')) {
       const script = document.createElement('script');
       script.id = 'jsqr';
-      script.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
-      script.integrity = 'sha384-b5Ya4Bq3qCyz39m2ISh+4DxjAIljdeFwK/BsXLuj9gugaNwAcj/ia15fxNZL9Nlx';
-      script.crossOrigin = 'anonymous';
+      script.src = '/vendor/jsQR.js';
       document.head.appendChild(script);
     }
 

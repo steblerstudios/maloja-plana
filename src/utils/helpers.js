@@ -111,9 +111,7 @@ export async function generatePDF({ title, chapters, data, filename }) {
 
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-    script.integrity = 'sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk';
-    script.crossOrigin = 'anonymous';
+    script.src = '/vendor/jspdf.umd.min.js';
 
     script.onload = () => {
       try {
