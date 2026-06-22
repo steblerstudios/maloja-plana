@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , leading } from './config/tokens.js';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
@@ -95,7 +95,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('lebensmappe.title')),
       React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '14px' }
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('lebensmappe.subtitle')),
 
       // Status summary

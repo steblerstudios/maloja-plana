@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, shadow, radius } from './config/tokens.js';
+import { text, weight, shadow, radius , leading } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -40,7 +40,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Shared styles
   const lineStyle = {
     display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-    padding: '5px 0', fontSize: text.sm, lineHeight: '1.5'
+    padding: '5px 0', fontSize: text.sm, lineHeight: leading.normal
   };
   const itemLineStyle = {
     ...lineStyle, paddingLeft: '16px', color: palette.mid, fontSize: text.sm
@@ -166,7 +166,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
     // IPV relief (shown only when eligible)
     budget.ipvRelief > 0 && budget.expenses.healthInsurance > 0 && React.createElement('div', {
-      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: text.sm, lineHeight: '1.5' }
+      style: { marginTop: '4px', padding: '8px 12px', background: palette.up, borderRadius: '4px', fontSize: text.sm, lineHeight: leading.normal }
     },
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', color: palette.mid } },
         React.createElement('span', null, t('budgetSync.ipvRelief')),
@@ -182,7 +182,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     bvgAhvTotal > 0 && React.createElement('div', {
       style: {
         marginTop: '8px', padding: '8px 12px', background: palette.up,
-        borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: '1.5'
+        borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
     }, '○ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
@@ -247,7 +247,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Empty fields note ===
     emptyCount > 0 && React.createElement('div', {
       style: {
-        marginTop: '14px', fontSize: text.sm, color: palette.soft, lineHeight: '1.5'
+        marginTop: '14px', fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
       }
     }, emptyCount === 1
       ? t('budgetSync.emptyNoteSingle')
