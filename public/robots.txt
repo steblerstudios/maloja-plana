@@ -1,2 +1,5 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /assets/
+
+Sitemap: https://steblerstudios.github.io/maloja-plana/sitemap.xml

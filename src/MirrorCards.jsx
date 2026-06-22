@@ -364,6 +364,7 @@ function buildNotfallSections(data, t) {
   const provRows = [];
   if (data.patientenverfuegung) provRows.push({ label: t('mirror.notfall.patientenverfuegung'), value: vorsorgeStatus(data.patientenverfuegung, t) });
   if (data.vorsorgeauftrag) provRows.push({ label: t('mirror.notfall.vorsorgeauftrag'), value: vorsorgeStatus(data.vorsorgeauftrag, t) });
+  if (data.bestattungswuensche) provRows.push({ label: t('mirror.notfall.bestattungswuensche'), value: vorsorgeStatus(data.bestattungswuensche, t) });
   if (data.organDonor) provRows.push({ label: t('mirror.notfall.organDonor'), value: selectLabel(t, 'notfall', 'organDonor', data.organDonor) });
 
   if (provRows.length > 0) {

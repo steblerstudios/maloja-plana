@@ -28,6 +28,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     { key: 'terms', label: t('legal.tabs.terms') },
     { key: 'imprint', label: t('legal.tabs.imprint') },
     { key: 'license', label: t('legal.tabs.license') },
+    { key: 'ethics', label: t('legal.tabs.ethics') },
   ];
 
   return React.createElement('div', {
@@ -188,6 +189,38 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.license.thirdPartyTitle'), palette, children: [
         P({ children: t('legal.license.thirdParty1') }),
+      ]})
+    ),
+
+    // ─── Ethics & Sustainability / Ethik & Nachhaltigkeit ────
+    activeSection === 'ethics' && React.createElement('div', null,
+      Section({ title: t('legal.ethics.valuesTitle'), palette, children: [
+        P({ children: t('legal.ethics.values1') }),
+        P({ children: t('legal.ethics.values2') }),
+        P({ children: t('legal.ethics.values3') }),
+        P({ children: t('legal.ethics.values4') }),
+      ]}),
+      Section({ title: t('legal.ethics.principlesTitle'), palette, children: [
+        P({ children: t('legal.ethics.principles1') }),
+        P({ children: t('legal.ethics.principles2') }),
+        P({ children: t('legal.ethics.principles3') }),
+        P({ children: t('legal.ethics.principles4') }),
+        P({ children: t('legal.ethics.principles5') }),
+      ]}),
+      Section({ title: t('legal.ethics.noTitle'), palette, children: [
+        P({ children: t('legal.ethics.no1') }),
+        P({ children: t('legal.ethics.no2') }),
+        P({ children: t('legal.ethics.no3') }),
+      ]}),
+      Section({ title: t('legal.ethics.sustainTitle'), palette, children: [
+        P({ children: t('legal.ethics.sustain1') }),
+        P({ children: t('legal.ethics.sustain2') }),
+        P({ children: t('legal.ethics.sustain3') }),
+        P({ children: t('legal.ethics.sustain4') }),
+      ]}),
+      Section({ title: t('legal.ethics.contactTitle'), palette, children: [
+        P({ children: t('legal.ethics.contact1') }),
+        P({ children: t('legal.ethics.contact2') }),
       ]})
     ),
 
