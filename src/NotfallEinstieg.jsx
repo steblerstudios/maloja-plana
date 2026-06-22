@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 
 const SCENARIOS = [
   {
@@ -127,7 +127,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
               width: pct + '%', height: '100%',
               background: allDone ? palette.sage : palette.sand,
               borderRadius: '2px',
-              transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: `width ${duration.slow}ms ${ease}`,
             }
           })
         ),
