@@ -134,6 +134,7 @@ const AppInner = () => {
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
   const [demoMode, setDemoMode] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [installPrompt, setInstallPrompt] = useState(null);
   const activeData = demoMode ? DEMO_DATA : data;
 
   // Build translated chapters — recalculates when language changes
@@ -194,6 +195,11 @@ const AppInner = () => {
     return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
   }, []);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setInstallPrompt(e); };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
@@ -401,6 +407,22 @@ const AppInner = () => {
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
+        installPrompt && React.createElement('div', {
+          style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
+        },
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
+          React.createElement('div', { style: { display: 'flex', gap: space.xs } },
+            React.createElement('button', {
+              onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: palette.sand, color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
+            }, t('pwa.install')),
+            React.createElement('button', {
+              onClick: () => setInstallPrompt(null),
+              'aria-label': t('common.close'),
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
+            }, '×')
+          )
+        ),
         React.createElement(Dashboard, {
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => { setActiveChapter(idx); setView('chapter'); },

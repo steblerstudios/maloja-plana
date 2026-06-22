@@ -1334,6 +1334,12 @@ export default {
     errorCardNumber: 'Kartennummer ungültig',
     errorAhvFormat: 'AHV-Format ungültig',
     scanRequiresInternet: 'Scannen benötigt eine Internetverbindung. Du kannst die Daten auch manuell eingeben.',
+    conflictTitle: 'Abweichungen erkannt',
+    conflictHint: 'Der Scan liefert andere Werte als deine bisherigen Daten.',
+    conflictCurrent: 'Aktuell',
+    conflictScanned: 'Gescannt',
+    conflictAccept: 'Gescannte Werte übernehmen',
+    conflictKeep: 'Bisherige Werte behalten',
   },
 
   budgetImport: {
