@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 const BETA_CODE = 'maloja2026';
 const STORAGE_KEY = 'or5_beta_access';
@@ -38,7 +38,7 @@ export const BetaGate = ({ children }) => {
     React.createElement('form', {
       onSubmit: handleSubmit,
       style: {
-        background: palette.surface, padding: '40px', borderRadius: '12px',
+        background: palette.surface, padding: '40px', borderRadius: radius.md,
         border: '1px solid ' + palette.border, maxWidth: '360px', width: '100%',
         textAlign: 'center',
       }
@@ -58,7 +58,7 @@ export const BetaGate = ({ children }) => {
         style: {
           width: '100%', padding: '10px 14px', fontSize: text.body,
           border: '1px solid ' + (error ? palette.rose : palette.border),
-          borderRadius: '6px', background: palette.up, color: palette.text,
+          borderRadius: radius.sm, background: palette.up, color: palette.text,
           outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
         }
       }),
@@ -70,7 +70,7 @@ export const BetaGate = ({ children }) => {
         style: {
           marginTop: '16px', width: '100%', padding: '10px', fontSize: text.body,
           background: palette.sand, color: '#fff', border: 'none',
-          borderRadius: '6px', cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
+          borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
       }, t('beta.enter'))
     )
