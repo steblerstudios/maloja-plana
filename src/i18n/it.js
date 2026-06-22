@@ -50,7 +50,7 @@ export default {
       contact: 'Chi deve essere informato per primo? Un nome e un numero di telefono bastano per iniziare.',
       medical: 'Quello che medici e soccorritori dovrebbero sapere su di te in caso di emergenza.',
       care: 'Il tuo medico di famiglia e l\'ospedale preferito — affinché queste informazioni siano reperibili quando servono.',
-      provision: 'Direttive anticipate, mandato precauzionale, volontà funerarie. Temi da chiarire una volta e archiviare.',
+      provision: 'Tre documenti proteggono te e i tuoi cari: le direttive anticipate regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per te in caso di incapacità (CC art. 360). Entrambi devono essere manoscritti o autenticati dal notaio. Una volta fatto — archiviato per sempre.',
     },
   },
   common: {
@@ -915,8 +915,9 @@ export default {
     sozialdienst: 'Il servizio sociale del tuo comune è il primo punto di contatto per ricevere supporto. Un colloquio è senza impegno e riservato.',
     steuerverwaltung: 'La dichiarazione fiscale è obbligatoria in Svizzera — anche con un reddito basso. L\'amministrazione fiscale cantonale può aiutarti.',
     beruf: 'La tua professione e le tue qualifiche sono rilevanti per i permessi di lavoro, le assicurazioni e il diritto alle prestazioni.',
-    patientenverfuegung: 'Le direttive anticipate indicano quali trattamenti medici desideri ricevere se non sei in grado di esprimerti.',
-    vorsorgeauftrag: 'Il mandato precauzionale designa chi prenderà decisioni per te quando non puoi più farlo. Deve essere scritto interamente a mano.',
+    patientenverfuegung: 'Le direttive anticipate indicano quali trattamenti medici desideri se non puoi più esprimerti. Devono essere manoscritte o autenticate dal notaio (CC art. 370). Modelli disponibili presso la FMH o la Croce Rossa — da discutere con il tuo medico.',
+    vorsorgeauftrag: 'Il mandato precauzionale designa chi gestisce le tue finanze, gli affari legali e la cura personale in caso di incapacità di discernimento. Deve essere interamente manoscritto o autenticato dal notaio (CC art. 360). L\'APMA lo verifica all\'occorrenza. Deposito presso il comune raccomandato.',
+    testament: 'Senza testamento si applica la successione legale svizzera (CC art. 457 ss.). Un testamento olografo deve essere scritto interamente a mano, datato e firmato. L\'atto pubblico dal notaio è più sicuro. Deposito presso il tribunale distrettuale o il notaio raccomandato.',
     // ─── P0: Indicazioni contestuali (in base ai dati) ────
     contextIpv: 'In base al tuo reddito, potresti avere diritto a una riduzione del premio dell\'assicurazione malattia. Informati presso il tuo comune o il tuo cantone.',
     contextFamilienzulagen: 'Hai diritto agli assegni familiari per i tuoi figli. L\'importo dipende dal cantone. Il tuo datore di lavoro può aiutarti.',
