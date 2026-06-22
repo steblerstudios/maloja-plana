@@ -61,6 +61,12 @@ function si(t, chapterKey, sectionKey) {
   return val && val !== 'sectionIntros.' + chapterKey + '.' + sectionKey ? val : '';
 }
 
+// Get contextual official link for a field
+function lk(t, linkKey) {
+  const val = t('contextLinks.' + linkKey);
+  return val && typeof val === 'object' && val.url ? val : null;
+}
+
 // Get translated doc label
 function dl(t, chapterKey, docKey) {
   return t('chapters.' + chapterKey + '.docs.' + docKey);
@@ -159,7 +165,7 @@ export function getChapters(t) {
       description: t('chapters.versicherungen.description'),
       icon: t('chapters.versicherungen.icon'),
       fields: [
-        { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), mvo: true, section: t('sections.versicherungen.basic'), sectionIntro: si(t, 'versicherungen', 'basic'), orientation: or(t, 'kvg') },
+        { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), mvo: true, section: t('sections.versicherungen.basic'), sectionIntro: si(t, 'versicherungen', 'basic'), orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
         { k: 'kkModel', label: fl(t, 'versicherungen', 'kkModel'), type: 'select', options: opts(t, 'versicherungen', 'kkModel') },
         { k: 'kkPremium', label: fl(t, 'versicherungen', 'kkPremium'), type: 'currency', mvo: true },
         { k: 'franchise', label: fl(t, 'versicherungen', 'franchise'), type: 'select', options: opts(t, 'versicherungen', 'franchise'), mvo: true, orientation: or(t, 'franchise') },
@@ -175,7 +181,7 @@ export function getChapters(t) {
         { k: 'cyberInsurance', label: fl(t, 'versicherungen', 'cyberInsurance'), type: 'select', options: opts(t, 'versicherungen', 'cyberInsurance'), secondary: true },
         { k: 'autoInsurance', label: fl(t, 'versicherungen', 'autoInsurance'), type: 'select', options: opts(t, 'versicherungen', 'autoInsurance'), section: t('sections.versicherungen.mobility'), sectionIntro: si(t, 'versicherungen', 'mobility'), secondary: true },
         { k: 'autoInsuranceAmount', label: fl(t, 'versicherungen', 'autoInsuranceAmount'), type: 'currency', secondary: true },
-        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social'), sectionIntro: si(t, 'versicherungen', 'social'), orientation: or(t, 'ahvBeitrag') },
+        { k: 'ahvContribution', label: fl(t, 'versicherungen', 'ahvContribution'), type: 'currency', section: t('sections.versicherungen.social'), sectionIntro: si(t, 'versicherungen', 'social'), orientation: or(t, 'ahvBeitrag'), link: lk(t, 'ahv') },
       ],
       docs: [
         { k: 'kkcard', label: dl(t, 'versicherungen', 'kkcard') },
@@ -223,7 +229,7 @@ export function getChapters(t) {
         { k: 'courtCases', label: fl(t, 'behoerden', 'courtCases'), type: 'select', options: opts(t, 'behoerden', 'courtCases') },
         { k: 'legalRepresentative', label: fl(t, 'behoerden', 'legalRepresentative'), type: 'text', section: t('sections.behoerden.representation'), sectionIntro: si(t, 'behoerden', 'representation') },
         { k: 'representativePhone', label: fl(t, 'behoerden', 'representativePhone'), type: 'tel' },
-        { k: 'willMade', label: fl(t, 'behoerden', 'willMade'), type: 'select', options: opts(t, 'behoerden', 'willMade'), orientation: or(t, 'testament') },
+        { k: 'willMade', label: fl(t, 'behoerden', 'willMade'), type: 'select', options: opts(t, 'behoerden', 'willMade'), orientation: or(t, 'testament'), link: lk(t, 'testament') },
       ],
       docs: [
         { k: 'betreibungsauszug', label: dl(t, 'behoerden', 'betreibungsauszug') },
@@ -248,7 +254,7 @@ export function getChapters(t) {
         { k: 'doctorPhone', label: fl(t, 'notfall', 'doctorPhone'), type: 'tel' },
         { k: 'hospital', label: fl(t, 'notfall', 'hospital'), type: 'text' },
         { k: 'organDonor', label: fl(t, 'notfall', 'organDonor'), type: 'select', options: opts(t, 'notfall', 'organDonor'), section: t('sections.notfall.provision'), sectionIntro: si(t, 'notfall', 'provision'), secondary: true },
-        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung'), orientation: or(t, 'patientenverfuegung'), secondary: true },
+        { k: 'patientenverfuegung', label: fl(t, 'notfall', 'patientenverfuegung'), type: 'select', options: opts(t, 'notfall', 'patientenverfuegung'), hint: hn(t, 'notfall', 'patientenverfuegung'), orientation: or(t, 'patientenverfuegung'), link: lk(t, 'patientenverfuegung'), secondary: true },
         { k: 'vorsorgeauftrag', label: fl(t, 'notfall', 'vorsorgeauftrag'), type: 'select', options: opts(t, 'notfall', 'vorsorgeauftrag'), hint: hn(t, 'notfall', 'vorsorgeauftrag'), orientation: or(t, 'vorsorgeauftrag'), secondary: true },
         { k: 'bestattungswuensche', label: fl(t, 'notfall', 'bestattungswuensche'), type: 'select', options: opts(t, 'notfall', 'bestattungswuensche'), hint: hn(t, 'notfall', 'bestattungswuensche'), secondary: true },
       ],
