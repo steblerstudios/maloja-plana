@@ -1796,6 +1796,7 @@ export default {
     subtitle: 'Für Deinen Termin beim Sozialamt, der Gemeinde oder einer Fachstelle.',
     openDossier: 'Dossier öffnen',
     printAction: 'Als PDF drucken',
+    exportJSON: 'Dossier-Datei exportieren',
     generated: 'Erstellt am {date}',
     disclaimer: 'Dieses Dossier dient der Orientierung. Die Berechnungen basieren auf Deinen Angaben und ersetzen keine verbindliche Prüfung durch die zuständige Stelle.',
     sectionPerson: 'Person',
@@ -2065,5 +2066,11 @@ export default {
     alle: 'Alle',
     antragsstelle: 'Antragsstelle',
     source: 'Offizielle Links von ch.ch, BAG, BSV und weiteren Bundesbehörden.',
+    cantonalTitle: 'Dein Kanton: {canton}',
+    cantonal: {
+      steuererklaerung: 'Steuererklärung online',
+      sozialdienst: 'Sozialdienst',
+      ipv: 'Prämienverbilligung beantragen',
+    },
   },
 };

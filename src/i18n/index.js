@@ -5,7 +5,7 @@
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
 const STORAGE_KEY = 'or5_lang';
-const SUPPORTED = ['en', 'de', 'fr', 'it'];
+const SUPPORTED = ['en', 'de', 'fr', 'it', 'rm'];
 const DEFAULT_LANG = 'en';
 
 const loaders = {
@@ -13,6 +13,7 @@ const loaders = {
   de: () => import('./de.js'),
   fr: () => import('./fr.js'),
   it: () => import('./it.js'),
+  rm: () => import('./rm.js'),
 };
 
 const cache = {};
@@ -54,7 +55,7 @@ function createT(translations, lang) {
   };
 }
 
-const I18nContext = createContext(null);
+export const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
   const [lang, setLangState] = useState(detectLanguage);

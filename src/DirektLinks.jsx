@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { DIREKTLINKS, KATEGORIEN, getAllKategorien, getLinksByKategorie } from './data/direktLinks.js';
+import { DIREKTLINKS, KATEGORIEN, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
+import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
-export const DirektLinks = ({ palette, t }) => {
+export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
   const [aktiv, setAktiv] = useState(null);
   const links = aktiv ? getLinksByKategorie(aktiv) : DIREKTLINKS;
@@ -44,6 +45,26 @@ export const DirektLinks = ({ palette, t }) => {
           style: s.chip(aktiv === k.id),
           onClick: () => setAktiv(aktiv === k.id ? null : k.id),
         }, l(k))
+      )
+    ),
+
+    data && data.basis?.canton && getCantonalLinks(data.basis.canton) && React.createElement('div', {
+      style: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', border: '1px solid ' + palette.sage + '33' }
+    },
+      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage } },
+        t('dl.cantonalTitle', { canton: getCantonName(data.basis.canton, t) })
+      ),
+      Object.entries(getCantonalLinks(data.basis.canton)).map(([key, url]) =>
+        React.createElement('div', { key, style: { marginBottom: space.xs + 'px' } },
+          React.createElement('a', {
+            href: url,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            style: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' },
+          },
+            t('dl.cantonal.' + key) + ' →'
+          )
+        )
       )
     ),
 

@@ -1797,6 +1797,7 @@ export default {
     subtitle: 'For your appointment at the social services office, municipality or advisory centre.',
     openDossier: 'Open dossier',
     printAction: 'Print as PDF',
+    exportJSON: 'Export dossier file',
     generated: 'Generated on {date}',
     disclaimer: 'This dossier is for orientation purposes. Calculations are based on your entries and do not replace an official assessment by the responsible authority.',
     sectionPerson: 'Person',
@@ -2066,5 +2067,11 @@ export default {
     alle: 'All',
     antragsstelle: 'Filing office',
     source: 'Official links from ch.ch, FOPH, FSIO, and other federal authorities.',
+    cantonalTitle: 'Your canton: {canton}',
+    cantonal: {
+      steuererklaerung: 'Tax return online',
+      sozialdienst: 'Social services',
+      ipv: 'Apply for premium subsidy',
+    },
   },
 };
