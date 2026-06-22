@@ -105,6 +105,7 @@ export default {
     advanced: 'Avanzato',
     person: '{count} persona',
     persons: '{count} persone',
+    switchLang: 'Cambia lingua: {lang}',
   },
 
   nav: {
@@ -701,7 +702,7 @@ export default {
     privacy: {
       responsibleTitle: 'Persona responsabile',
       responsible1: 'Sophie Stebler, Basilea, Svizzera',
-      responsible2: 'Contatto: info@malojaplana.ch',
+      responsible2: 'Contatto: sophie.stebler@gmail.com',
       responsible3: 'Maloja Plana è un progetto open source non commerciale. Tutti i dati vengono elaborati esclusivamente sul tuo dispositivo.',
       localTitle: 'Archiviazione locale dei dati',
       local1: 'Maloja Plana è un\'applicazione web local-first. Tutti i dati personali vengono archiviati esclusivamente sul tuo dispositivo — nel localStorage e nell\'IndexedDB del tuo browser.',
@@ -753,8 +754,8 @@ export default {
       operator1: 'Sophie Stebler',
       operator2: 'Basilea, Svizzera',
       contactTitle: 'Contatto',
-      contact1: 'E-mail: info@malojaplana.ch',
-      contact2: 'Web: malojaplana.ch',
+      contact1: 'E-mail: sophie.stebler@gmail.com',
+      contact2: 'Web: steblerstudios.github.io/maloja-plana',
       projectTitle: 'Progetto',
       project1: 'Maloja Plana è un progetto open source non commerciale in sviluppo attivo. Il codice sorgente è accessibile pubblicamente.',
       disclaimerTitle: 'Esclusione di responsabilità',
@@ -1404,6 +1405,20 @@ export default {
     medium: 'medio',
     high: 'alto',
     critical: 'critico',
+  },
+
+  debtRecommendations: {
+    low: 'I debiti sono sotto controllo. Continua a pagare regolarmente.',
+    medium: 'I debiti dovrebbero essere ridotti. Crea un piano di pagamento.',
+    high: 'I debiti sono considerevoli. Si consiglia una consulenza professionale.',
+    critical: 'Situazione debitoria critica. Consulta immediatamente un servizio di consulenza debiti!',
+  },
+
+  debtValidation: {
+    creditorRequired: 'Creditore richiesto',
+    amountInvalid: 'Importo non valido',
+    dateRequired: 'Data di registrazione richiesta',
+    documentRequired: 'Documento giustificativo richiesto',
   },
 
   residence: {

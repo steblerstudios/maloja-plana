@@ -58,6 +58,8 @@ const LanguageSwitcher = ({ palette }) => {
     supportedLanguages.map(l =>
       React.createElement('button', {
         key: l,
+        'aria-label': t('common.switchLang', { lang: labels[l] || l.toUpperCase() }),
+        'aria-pressed': l === lang,
         onClick: () => setLanguage(l),
         style: {
           padding: '4px 6px',
@@ -501,7 +503,7 @@ const AppInner = () => {
       React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v0.1.0-alpha'),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('a', {
-        href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
+        href: 'mailto:sophie.stebler@gmail.com?subject=Maloja%20Plana%20Beta%20Feedback',
         style: {
           color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
           letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',

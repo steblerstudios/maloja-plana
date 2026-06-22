@@ -11,7 +11,7 @@
 |---|---|
 | **Name** | Sophie Stebler |
 | **Adresse** | Basel, Schweiz |
-| **Kontakt** | info@malojaplana.ch |
+| **Kontakt** | sophie.stebler@gmail.com |
 | **Datenschutzberater** | Keiner bestellt (keine gesetzliche Pflicht für Einzelpersonen/nicht-kommerzielle Projekte) |
 
 ---

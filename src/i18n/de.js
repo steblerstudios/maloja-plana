@@ -105,6 +105,7 @@ export default {
     advanced: 'Fortgeschritten',
     person: '{count} Person',
     persons: '{count} Personen',
+    switchLang: 'Sprache wechseln: {lang}',
   },
 
   nav: {
@@ -702,7 +703,7 @@ export default {
     privacy: {
       responsibleTitle: 'Verantwortliche Person',
       responsible1: 'Sophie Stebler, Basel, Schweiz',
-      responsible2: 'Kontakt: info@malojaplana.ch',
+      responsible2: 'Kontakt: sophie.stebler@gmail.com',
       responsible3: 'Maloja Plana ist ein nicht-kommerzielles Open-Source-Projekt. Alle Daten werden ausschliesslich lokal auf Deinem Gerät verarbeitet.',
       localTitle: 'Lokale Datenspeicherung',
       local1: 'Maloja Plana ist eine Local-First-Webanwendung. Alle persönlichen Daten werden ausschliesslich auf Deinem Gerät gespeichert — im localStorage und in der IndexedDB Deines Browsers.',
@@ -754,8 +755,8 @@ export default {
       operator1: 'Sophie Stebler',
       operator2: 'Basel, Schweiz',
       contactTitle: 'Kontakt',
-      contact1: 'E-Mail: info@malojaplana.ch',
-      contact2: 'Web: malojaplana.ch',
+      contact1: 'E-Mail: sophie.stebler@gmail.com',
+      contact2: 'Web: steblerstudios.github.io/maloja-plana',
       projectTitle: 'Projekt',
       project1: 'Maloja Plana ist ein nicht-kommerzielles Open-Source-Projekt in aktiver Entwicklung. Der Quellcode ist öffentlich einsehbar.',
       disclaimerTitle: 'Haftungsausschluss',
@@ -1406,6 +1407,20 @@ export default {
     medium: 'mittel',
     high: 'hoch',
     critical: 'kritisch',
+  },
+
+  debtRecommendations: {
+    low: 'Schulden sind unter Kontrolle. Weiterhin regelmässig zahlen.',
+    medium: 'Schulden sollten reduziert werden. Einen Zahlungsplan erstellen.',
+    high: 'Schulden sind erheblich. Fachliche Beratung wird empfohlen.',
+    critical: 'Kritische Schuldenlage. Sofortige Schuldenberatung erforderlich!',
+  },
+
+  debtValidation: {
+    creditorRequired: 'Gläubiger erforderlich',
+    amountInvalid: 'Betrag ungültig',
+    dateRequired: 'Registrationsdatum erforderlich',
+    documentRequired: 'Nachweis-Dokument erforderlich',
   },
 
   residence: {
