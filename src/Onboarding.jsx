@@ -70,7 +70,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
             React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
           ),
-          React.createElement('h1', { style: { fontSize: '22px', fontWeight: '700', color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
+          React.createElement('h1', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
 
@@ -82,7 +82,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               style: {
                 padding: '16px 12px', borderRadius: '10px', cursor: 'pointer',
                 border: '1px solid ' + palette.border, background: palette.up,
-                color: palette.text, fontSize: '15px', fontWeight: weight.semi,
+                color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
                 fontFamily: 'DM Sans, sans-serif',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                 transition: 'all 0.2s',
@@ -105,7 +105,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
-          React.createElement('h2', { style: { fontSize: '20px', fontWeight: '700', color: palette.text, marginBottom: '4px' } }, t('onboarding.welcomeTitle')),
+          React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: '4px' } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
@@ -171,7 +171,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         margin: '0 auto 20px auto', fontSize: '32px',
       } }, '✓'),
 
-      React.createElement('h2', { style: { fontSize: '20px', fontWeight: '700', color: palette.text, marginBottom: '8px' } },
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: '8px' } },
         firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })
           : t('onboarding.readyTitleGeneric')

@@ -131,14 +131,14 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('tax.grossIncome')),
-          React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.text } }, 'CHF ' + income.toFixed(0))
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + income.toFixed(0))
         ),
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('common.total') + ' (-)'),
-          React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.text } }, '- CHF ' + (income - taxableIncome).toFixed(0))
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- CHF ' + (income - taxableIncome).toFixed(0))
         ),
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
@@ -150,7 +150,7 @@ export const TaxCalculator = ({ palette, t, data, onSave }) => {
 
         taxResult && kinder > 0 ? React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, t('tax.childDeduction')),
-          React.createElement('div', { style: { fontSize: '16px', fontWeight: weight.semi, color: palette.text } }, '- CHF ' + taxResult.kinderabzug)
+          React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- CHF ' + taxResult.kinderabzug)
         ) : null,
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
