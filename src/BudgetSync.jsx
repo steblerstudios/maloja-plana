@@ -125,7 +125,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: '18px', fontWeight: '600', marginBottom: '16px',
+        fontSize: text.lg, fontWeight: '600', marginBottom: '16px',
         display: 'flex', alignItems: 'center', gap: '8px'
       }
     }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
