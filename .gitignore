@@ -33,6 +33,12 @@ docs/research/
 maloja-plana-deploy*/
 maloja-plana-deploy.zip
 
+# iOS build artefacts
+ios/App/App/public/
+ios/App/Pods/
+ios/App/output/
+*.xcworkspace/xcuserdata/
+
 # Legacy project folders
 ordnung-ruhe/
 ordnung-ruhe-neu/
