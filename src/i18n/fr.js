@@ -105,6 +105,7 @@ export default {
     advanced: 'Avancé',
     person: '{count} personne',
     persons: '{count} personnes',
+    switchLang: 'Changer de langue : {lang}',
   },
 
   nav: {
@@ -702,7 +703,7 @@ export default {
     privacy: {
       responsibleTitle: 'Personne responsable',
       responsible1: 'Sophie Stebler, Bâle, Suisse',
-      responsible2: 'Contact : info@malojaplana.ch',
+      responsible2: 'Contact : steblerstudios@gmail.com',
       responsible3: 'Maloja Plana est un projet open source non commercial. Toutes les données sont traitées exclusivement sur votre appareil.',
       localTitle: 'Stockage local des données',
       local1: 'Maloja Plana est une application web local-first. Toutes les données personnelles sont stockées exclusivement sur votre appareil — dans le localStorage et l\'IndexedDB de votre navigateur.',
@@ -754,8 +755,8 @@ export default {
       operator1: 'Sophie Stebler',
       operator2: 'Bâle, Suisse',
       contactTitle: 'Contact',
-      contact1: 'E-mail : info@malojaplana.ch',
-      contact2: 'Web : malojaplana.ch',
+      contact1: 'E-mail : steblerstudios@gmail.com',
+      contact2: 'Web : steblerstudios.github.io/maloja-plana',
       projectTitle: 'Projet',
       project1: 'Maloja Plana est un projet open source non commercial en développement actif. Le code source est accessible publiquement.',
       disclaimerTitle: 'Clause de non-responsabilité',
@@ -1406,6 +1407,20 @@ export default {
     medium: 'moyen',
     high: 'élevé',
     critical: 'critique',
+  },
+
+  debtRecommendations: {
+    low: 'Les dettes sont sous contrôle. Continuez à payer régulièrement.',
+    medium: 'Les dettes devraient être réduites. Établissez un plan de paiement.',
+    high: 'Les dettes sont considérables. Un conseil professionnel est recommandé.',
+    critical: 'Situation d\'endettement critique. Consultez un service de désendettement immédiatement !',
+  },
+
+  debtValidation: {
+    creditorRequired: 'Créancier requis',
+    amountInvalid: 'Montant invalide',
+    dateRequired: 'Date d\'enregistrement requise',
+    documentRequired: 'Document justificatif requis',
   },
 
   residence: {
