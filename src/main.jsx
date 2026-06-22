@@ -51,7 +51,7 @@ import { text, weight, space, radius, shadow, fontFamily } from './config/tokens
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
-  const { lang, setLanguage, supportedLanguages } = useT();
+  const { t, lang, setLanguage, supportedLanguages } = useT();
   const labels = { en: 'EN', de: 'DE', fr: 'FR', it: 'IT' };
 
   return React.createElement('div', { style: { display: 'flex', gap: '2px', background: palette.up, borderRadius: '4px', padding: '2px' } },

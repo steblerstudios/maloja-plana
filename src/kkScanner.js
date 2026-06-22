@@ -9,14 +9,8 @@ export const initBarcodeScanner = async () => {
       document.head.appendChild(script);
     }
 
-    if (!document.getElementById('tesseract')) {
-      const script = document.createElement('script');
-      script.id = 'tesseract';
-      script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js';
-      script.integrity = 'sha384-llrj4SUC221pVa/E3xKZwmp2zd8q9ReUcs9N37u6A5pQhjiymLsQRg+1AysLVKOZ';
-      script.crossOrigin = 'anonymous';
-      document.head.appendChild(script);
-    }
+    // OCR (Tesseract) removed — blocked by CSP (script-src 'self')
+    // and too large (~4MB) for offline bundling. QR/barcode scan works offline.
   } catch {
     // Offline: scanning features unavailable, manual input still works
   }
@@ -68,24 +62,8 @@ export const scanBarcodeFromImage = async (imageFile) => {
   });
 };
 
-export const performOCR = async (imageFile) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        if (window.Tesseract) {
-          window.Tesseract.recognize(e.target.result, 'deu').then(result => {
-            resolve(result.data.text);
-          }).catch(reject);
-        } else {
-          reject(new Error('Tesseract nicht geladen'));
-        }
-      } catch (err) {
-        reject(err);
-      }
-    };
-    reader.readAsDataURL(imageFile);
-  });
+export const performOCR = async () => {
+  throw new Error('OCR not available — use QR/barcode scan or manual input');
 };
 
 export const extractKKDataFromText = (text) => {

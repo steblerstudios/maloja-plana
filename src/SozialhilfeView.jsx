@@ -118,7 +118,7 @@ export const SozialhilfeView = ({ palette, t, data }) => {
     ),
 
     // Orientation note
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md, fontStyle: 'italic' } },
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border } },
       '○ ' + t('sozialhilfe.orientationNote')
     ),
 
