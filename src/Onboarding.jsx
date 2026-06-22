@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , leading } from './config/tokens.js';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -109,8 +109,14 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
-        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '16px', lineHeight: 1.5, textAlign: 'center' } },
-          t('onboarding.privacyNote')
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '16px', padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
+          React.createElement('svg', { width: '13', height: '13', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round', style: { flexShrink: 0 } },
+            React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
+            React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+          ),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.sage, lineHeight: 1.4 } },
+            t('onboarding.privacyNote')
+          )
         ),
 
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' } },
