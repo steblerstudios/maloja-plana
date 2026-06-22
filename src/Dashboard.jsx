@@ -428,16 +428,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   const getIconBg = (pct, chKey) => {
     const accent = chapterAccentColor[chKey] || palette.sand;
-    if (pct === 0) return accent + '0C';
-    if (pct < 50) return palette.sand + '18';
-    if (pct < 100) return palette.sand + '28';
-    return palette.sage + '20';
+    if (pct === 0) return accent + '18';
+    if (pct < 50) return palette.sand + '22';
+    if (pct < 100) return palette.sand + '30';
+    return palette.sage + '24';
   };
 
   const getIconOpacity = (pct) => {
-    if (pct === 0) return 0.55;
-    if (pct < 50) return 0.65;
-    if (pct < 100) return 0.78;
+    if (pct === 0) return 0.7;
+    if (pct < 50) return 0.78;
+    if (pct < 100) return 0.88;
     return 1;
   };
 
@@ -786,7 +786,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const sizes = { sketch: 30, emerging: 34, maturing: 38, complete: 40 };
           const iconSizes = { sketch: 18, emerging: 22, maturing: 24, complete: 26 };
           const colors = { sketch: palette.mid, emerging: palette.sand, maturing: palette.sand, complete: palette.sage };
-          const opacities = { sketch: 0.45, emerging: 0.75, maturing: 0.88, complete: 1 };
+          const opacities = { sketch: 0.65, emerging: 0.8, maturing: 0.9, complete: 1 };
           const borders = {
             sketch: '1px dashed ' + palette.border,
             emerging: '1.5px solid ' + palette.sand + '88',
@@ -800,7 +800,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             complete: '0 2px 8px rgba(0,0,0,0.1), 0 0 0 3px ' + palette.sage + '15',
           };
           const bgs = {
-            sketch: 'transparent',
+            sketch: palette.surface,
             emerging: palette.surface,
             maturing: palette.surface,
             complete: palette.surface,
