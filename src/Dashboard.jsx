@@ -808,40 +808,56 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const sz = sizes[maturity];
           const iconOp = opacities[maturity];
 
-          return React.createElement('button', {
+          const chapterTitle = chapters[i] ? chapters[i].title : station.key;
+          const shortLabel = chapterTitle.split(/[\s–—]/)[0];
+          return React.createElement('div', {
             key: station.key,
-            onClick: () => onSelectChapter(i),
-            'aria-label': chapters[i] ? chapters[i].title : station.key,
             style: {
               position: 'absolute',
               left: station.x + '%',
               top: station.y + '%',
               transform: 'translate(-50%, -50%)',
-              width: sz + 'px', height: sz + 'px',
-              background: bgs[maturity],
-              border: borders[maturity],
-              borderRadius: '50%',
-              padding: '0',
-              cursor: 'pointer',
               pointerEvents: 'auto',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: colors[maturity],
-              opacity: iconOp,
-              transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: shadows[maturity],
-            },
-            onMouseEnter: (e) => {
-              e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.12)';
-            },
-            onMouseLeave: (e) => {
-              e.currentTarget.style.opacity = String(iconOp);
-              e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
-            },
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
+            }
           },
-            React.createElement('div', {
-              style: { width: iconSizes[maturity] + 'px', height: iconSizes[maturity] + 'px', transition: 'width 0.6s, height 0.6s' }
-            }, IconFn ? IconFn() : null)
+            React.createElement('button', {
+              onClick: () => onSelectChapter(i),
+              'aria-label': chapterTitle,
+              style: {
+                width: sz + 'px', height: sz + 'px',
+                background: bgs[maturity],
+                border: borders[maturity],
+                borderRadius: '50%',
+                padding: '0',
+                cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: colors[maturity],
+                opacity: iconOp,
+                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: shadows[maturity],
+              },
+              onMouseEnter: (e) => {
+                e.currentTarget.style.opacity = '1';
+                e.currentTarget.style.transform = 'scale(1.12)';
+              },
+              onMouseLeave: (e) => {
+                e.currentTarget.style.opacity = String(iconOp);
+                e.currentTarget.style.transform = 'scale(1)';
+              },
+            },
+              React.createElement('div', {
+                style: { width: iconSizes[maturity] + 'px', height: iconSizes[maturity] + 'px', transition: 'width 0.6s, height 0.6s' }
+              }, IconFn ? IconFn() : null)
+            ),
+            React.createElement('span', {
+              style: {
+                fontSize: '9px', color: palette.mid, whiteSpace: 'nowrap',
+                opacity: maturity === 'sketch' ? 0.5 : 0.75,
+                fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
+                transition: 'opacity 0.6s ease',
+              }
+            }, shortLabel)
           );
         })
       )
