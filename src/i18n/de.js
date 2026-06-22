@@ -50,7 +50,7 @@ export default {
       contact: 'Wer soll zuerst informiert werden? Ein Name und eine Telefonnummer genügen als Anfang.',
       medical: 'Was Ärzte und Rettungskräfte im Notfall über Dich wissen sollten.',
       care: 'Dein Hausarzt und Dein bevorzugtes Spital — damit diese Information auffindbar ist, wenn sie gebraucht wird.',
-      provision: 'Patientenverfügung, Vorsorgeauftrag, Bestattungswünsche. Themen, die man einmal klären und dann ablegen kann.',
+      provision: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Beides muss handschriftlich sein oder notariell beurkundet. Einmal erledigt — dauerhaft abgelegt.',
     },
   },
   common: {
@@ -916,8 +916,9 @@ export default {
     sozialdienst: 'Der Sozialdienst deiner Gemeinde ist die erste Anlaufstelle für Unterstützung. Ein Gespräch ist unverbindlich und vertraulich.',
     steuerverwaltung: 'Die Steuererklärung ist in der Schweiz obligatorisch — auch mit kleinem Einkommen. Die kantonale Steuerverwaltung hilft bei Fragen.',
     beruf: 'Dein Beruf und deine Qualifikationen sind relevant für Arbeitsbewilligungen, Versicherungen und Unterstützungsansprüche.',
-    patientenverfuegung: 'Eine Patientenverfügung hält fest, welche medizinischen Behandlungen du wünschst, falls du dich nicht mehr äussern kannst.',
-    vorsorgeauftrag: 'Ein Vorsorgeauftrag bestimmt, wer für dich entscheidet, wenn du es nicht mehr selbst kannst. Er muss vollständig handschriftlich verfasst sein.',
+    patientenverfuegung: 'Eine Patientenverfügung hält fest, welche medizinischen Behandlungen Du wünschst, falls Du Dich nicht mehr äussern kannst. Muss handschriftlich oder notariell sein (ZGB Art. 370). Vorlagen gibt es bei der FMH oder beim SRK — am besten mit Deinem Hausarzt besprechen.',
+    vorsorgeauftrag: 'Ein Vorsorgeauftrag bestimmt, wer für Dich entscheidet bei Urteilsunfähigkeit — Finanzen, Rechtsverkehr, Personensorge. Muss vollständig handschriftlich oder notariell beurkundet sein (ZGB Art. 360). Die KESB prüft ihn im Ernstfall. Hinterlegung bei der Wohnsitzgemeinde empfohlen.',
+    testament: 'In der Schweiz gilt ohne Testament die gesetzliche Erbfolge (ZGB Art. 457 ff.). Ein handschriftliches Testament muss vollständig von Hand geschrieben, datiert und unterschrieben sein. Die öffentliche Beurkundung beim Notar ist sicherer. Hinterlegung beim Bezirksgericht oder Notar empfohlen.',
     // ─── P0: Kontexthinweise (datenabhängig) ───────────────
     contextIpv: 'Je nach Einkommen hast Du möglicherweise Anspruch auf eine Vergünstigung bei der Krankenkasse. Erkundige Dich bei Deiner Gemeinde oder Deinem Kanton.',
     contextFamilienzulagen: 'Für Deine Kinder stehen Dir Familienzulagen zu. Die Höhe hängt vom Kanton ab. Dein Arbeitgeber kann Dir weiterhelfen.',
