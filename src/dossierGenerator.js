@@ -7,6 +7,8 @@
 //   getLebensMappePreview(data, chapters, t, documents) → structured data for React preview
 //   generateNotfallDossier(data, chapters, t) → HTML string
 //   getNotfallDossierPreview(data, chapters, t) → structured data for React preview
+//   generateBehoerdenDossier(data, chapters, t, calculations) → HTML string
+//   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
 
@@ -621,6 +623,286 @@ export function generateNotfallDossier(data, chapters, t) {
 
     <button class="nd-print-btn" onclick="window.print()">
       ${esc(t('notfallDossier.printAction'))}
+    </button>
+  </div>
+</body>
+</html>`;
+}
+
+// ─── Behörden-Dossier ───────────────────────────────────
+// Comprehensive dossier for meetings with authorities:
+// personal data + all calculation results (Sozialhilfe, IPV, Steuern).
+
+function getBehoerdenSections(data, chapters, t, calculations) {
+  const d = (chapterKey, fieldKey) => (data[chapterKey] || {})[fieldKey] || '';
+  const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
+  const chf = (chapterKey, fieldKey) => formatCHF(d(chapterKey, fieldKey));
+  const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
+  const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
+  const { sozialhilfe, ipv, el, tax } = calculations || {};
+
+  const sections = [
+    {
+      key: 'person',
+      title: t('behoerdenDossier.sectionPerson'),
+      rows: [
+        { label: t('lebensmappe.name'), value: getFullName(data.basis) },
+        { label: lbl('basis', 'dateOfBirth'), value: dt('basis', 'dateOfBirth') },
+        { label: lbl('basis', 'ahv'), value: d('basis', 'ahv') },
+        { label: lbl('basis', 'nationality'), value: sel('basis', 'nationality') },
+        { label: lbl('basis', 'maritalStatus'), value: sel('basis', 'maritalStatus') },
+        { label: lbl('basis', 'canton'), value: sel('basis', 'canton') },
+        { label: t('lebensmappe.address'), value: [d('wohnen', 'address'), [d('wohnen', 'postalCode'), d('wohnen', 'city')].filter(Boolean).join(' ')].filter(Boolean).join(', ') },
+        { label: lbl('basis', 'phone'), value: d('basis', 'phone') },
+        { label: lbl('basis', 'email'), value: d('basis', 'email') },
+      ].filter(r => r.value),
+    },
+    {
+      key: 'finanzen',
+      title: t('behoerdenDossier.sectionFinanzen'),
+      rows: [
+        { label: lbl('finanzen', 'monthlyIncome'), value: chf('finanzen', 'monthlyIncome') },
+        { label: lbl('finanzen', 'employmentType'), value: sel('finanzen', 'employmentType') },
+        { label: lbl('finanzen', 'employer'), value: d('finanzen', 'employer') },
+        { label: lbl('wohnen', 'rentAmount'), value: chf('wohnen', 'rentAmount') },
+        { label: lbl('versicherungen', 'kkPremium'), value: chf('versicherungen', 'kkPremium') },
+        { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
+      ].filter(r => r.value),
+    },
+  ];
+
+  if (sozialhilfe) {
+    const sRows = [
+      { label: t('sozialhilfe.basicNeeds'), value: formatCHF(sozialhilfe.grundbedarf) },
+      { label: t('sozialhilfe.housingCosts'), value: formatCHF(sozialhilfe.effectiveRent) },
+      { label: t('sozialhilfe.healthInsurance'), value: formatCHF(sozialhilfe.effectiveKK) },
+      { label: t('sozialhilfe.totalNeeds'), value: formatCHF(sozialhilfe.totalBedarf), bold: true },
+      { label: t('sozialhilfe.deductIncome'), value: '− ' + formatCHF(sozialhilfe.income) },
+      { label: t('sozialhilfe.deficit'), value: formatCHF(sozialhilfe.deficit) + t('common.perMonth'), bold: true },
+    ].filter(r => r.value);
+    const status = sozialhilfe.eligible
+      ? t('sozialhilfe.entitled')
+      : t('sozialhilfe.notEntitled');
+    sections.push({
+      key: 'sozialhilfe',
+      title: t('behoerdenDossier.sectionSozialhilfe'),
+      rows: sRows,
+      status,
+      statusColor: sozialhilfe.eligible ? '#7A8B6F' : '#6B6560',
+    });
+  }
+
+  if (ipv) {
+    const iRows = [];
+    if (ipv.eligible) {
+      iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
+      iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
+    }
+    const status = ipv.eligible
+      ? t('premium.eligible')
+      : t('premium.notEligible');
+    sections.push({
+      key: 'ipv',
+      title: t('behoerdenDossier.sectionIPV'),
+      rows: iRows,
+      status,
+      statusColor: ipv.eligible ? '#7A8B6F' : '#6B6560',
+    });
+  }
+
+  if (el) {
+    sections.push({
+      key: 'el',
+      title: t('behoerdenDossier.sectionEL'),
+      rows: [],
+      status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
+      statusColor: el.eligible ? '#7A8B6F' : '#6B6560',
+    });
+  }
+
+  if (tax && tax.total > 0) {
+    sections.push({
+      key: 'steuern',
+      title: t('behoerdenDossier.sectionSteuern'),
+      rows: [
+        { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
+        { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear'), bold: true },
+      ].filter(r => r.value),
+    });
+  }
+
+  return sections;
+}
+
+export function getBehoerdenDossierPreview(data, chapters, t, calculations) {
+  const sections = getBehoerdenSections(data, chapters, t, calculations);
+  const filledSections = sections.filter(s => s.rows.length > 0 || s.status);
+
+  return {
+    name: getFullName(data.basis),
+    sections: filledSections,
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+export function generateBehoerdenDossier(data, chapters, t, calculations) {
+  const sections = getBehoerdenSections(data, chapters, t, calculations);
+  const name = getFullName(data.basis) || t('lebensmappe.untitled');
+  const now = new Date();
+  const dateStr = [
+    String(now.getDate()).padStart(2, '0'),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    now.getFullYear(),
+  ].join('.');
+
+  const sectionHtml = sections
+    .filter(s => s.rows.length > 0 || s.status)
+    .map(s => `
+      <div class="bd-section">
+        <h2>${esc(s.title)}</h2>
+        ${s.status ? `<div class="bd-status" style="color:${s.statusColor || '#6B6560'}">${esc(s.status)}</div>` : ''}
+        ${s.rows.length > 0 ? `<table>
+          ${s.rows.map(r => `
+            <tr>
+              <td class="bd-label">${esc(r.label)}</td>
+              <td class="bd-value${r.bold ? ' bd-bold' : ''}">${esc(r.value)}</td>
+            </tr>
+          `).join('')}
+        </table>` : ''}
+      </div>
+    `).join('');
+
+  return `<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(t('behoerdenDossier.title'))} — ${esc(name)}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1C1A17;
+      background: #F5F2EE;
+      padding: 40px 20px;
+    }
+    .bd-container {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #DDD8D0;
+      border-radius: 8px;
+      padding: 40px 36px;
+    }
+    .bd-header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #DDD8D0;
+    }
+    .bd-header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+    .bd-header .bd-name {
+      font-size: 15px;
+      color: #6B6560;
+      margin-bottom: 2px;
+    }
+    .bd-header .bd-date {
+      font-size: 11px;
+      color: #A89F94;
+    }
+    .bd-section {
+      margin-bottom: 24px;
+    }
+    .bd-section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #6B6560;
+      letter-spacing: 0.3px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #EAE5DD;
+    }
+    .bd-status {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    tr { border-bottom: 1px solid #F0EDE8; }
+    tr:last-child { border-bottom: none; }
+    td { padding: 5px 0; vertical-align: top; }
+    .bd-label { width: 55%; font-size: 12px; color: #6B6560; }
+    .bd-value { font-size: 12px; font-weight: 500; text-align: right; }
+    .bd-bold { font-weight: 700; }
+    .bd-disclaimer {
+      background: #F5F2EE;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 24px;
+      font-size: 11px;
+      color: #6B6560;
+      line-height: 1.5;
+    }
+    .bd-footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #DDD8D0;
+      text-align: center;
+      font-size: 10px;
+      color: #A89F94;
+      line-height: 1.6;
+    }
+    .bd-print-btn {
+      display: block;
+      margin: 24px auto 0;
+      padding: 10px 24px;
+      background: #B8956A;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .bd-print-btn:hover { opacity: 0.9; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .bd-container { border: none; border-radius: 0; padding: 0; max-width: none; }
+      .bd-print-btn { display: none; }
+      .bd-section { break-inside: avoid; }
+      @page { margin: 2cm; size: A4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bd-container">
+    <div class="bd-header">
+      <h1>${esc(t('behoerdenDossier.title'))}</h1>
+      <div class="bd-name">${esc(name)}</div>
+      <div class="bd-date">${esc(t('behoerdenDossier.generated', { date: dateStr }))}</div>
+    </div>
+
+    <div class="bd-disclaimer">
+      ${esc(t('behoerdenDossier.disclaimer'))}
+    </div>
+
+    ${sectionHtml}
+
+    <div class="bd-footer">
+      ${esc(t('behoerdenDossier.footerPrivacy'))}<br>
+      ${esc(t('behoerdenDossier.footerCredit'))}
+    </div>
+
+    <button class="bd-print-btn" onclick="window.print()">
+      ${esc(t('behoerdenDossier.printAction'))}
     </button>
   </div>
 </body>
