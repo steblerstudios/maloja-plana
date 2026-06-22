@@ -18,7 +18,6 @@
 | Thema | Was passiert |
 |---|---|
 | **Button-Icons** | ~80 Buttons verwenden Unicode-Zeichen (←, →, ○) statt SVG-Icons |
-| **Organspende-QR** | QR-Generator lädt noch via CDN (rest der App ist offline-fähig) |
 
 ## Funktionale Hinweise
 
@@ -28,16 +27,23 @@
 | **Kein Account** | Kein Login, keine Cloud-Sync. Daten existieren nur auf diesem Gerät/Browser |
 | **Demo-Modus** | «Beispiel ansehen» zeigt eine fiktive Person (Maria Muster). Diese Daten werden nicht gespeichert |
 | **Sprachen** | FR/IT/EN sind maschinell übersetzt und nicht professionell lektoriert |
+| **OCR-Scan** | KK-Karten OCR-Erkennung (Tesseract) entfernt — QR/Barcode-Scan funktioniert weiterhin offline |
 
 ## Offene Verbesserungen (aus Alpha-Feedback)
 
 | Thema | Feedback | Status |
 |---|---|---|
-| **Budget: Orientierung fehlt** | Budget-Bereich zeigt nur Felder, kein Gesamtbild, keine Orientierungssätze | Geplant |
-| **Franchise: Erklärung fehlt** | Kein Orientierungssatz beim Franchise-Feld (was bedeutet Franchise?) | Geplant |
-| **KVG-Kontext fehlt** | Kein Hinweis zur obligatorischen Grundversicherung bei KK-Feldern | Geplant |
-| **BVG/AHV: In-Context-Hinweis** | Kein Orientierungssatz direkt bei BVG/AHV-Feldern (nur Alpha-Banner) | Geplant |
 | **Sozialhilfe-Disclaimer** | Disclaimer-Text vorhanden, aber visuell zu leise — könnte übersehen werden | Geplant |
+
+### Erledigte Verbesserungen
+
+| Thema | Status |
+|---|---|
+| **Budget: Orientierung** | Erledigt — BudgetSync zeigt Gesamtbild mit Gruppen |
+| **Franchise: Erklärung** | Erledigt — Orientierungssatz auf Feld (4 Sprachen) |
+| **KVG-Kontext** | Erledigt — Orientierungssatz auf KK-Feldern (4 Sprachen) |
+| **BVG/AHV: In-Context-Hinweis** | Erledigt — Orientierungssätze auf BVG/AHV-Feldern |
+| **QR via CDN** | Erledigt — QR-Generierung war bereits lokal (qrcodejs vendor), Tesseract-CDN entfernt |
 
 ## Nicht-Ziele dieser Beta
 
