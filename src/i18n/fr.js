@@ -1830,6 +1830,26 @@ export default {
     previewNote: 'Aperçu — voici à quoi ressemblera votre dossier de vie.',
   },
 
+  finanzUebersicht: {
+    title: 'Aperçu financier',
+    subtitle: 'Votre situation en un coup d\'œil — basé sur vos données.',
+    monthlyIncome: 'Revenu mensuel',
+    canton: 'Canton',
+    taxes: 'Impôts',
+    ipv: 'Réduction de primes (RDP)',
+    sozialhilfe: 'Aide sociale (orientation)',
+    el: 'Prestations complémentaires (PC)',
+    noIncome: 'Aucun revenu enregistré',
+    noData: 'Pas encore de données financières. Saisissez votre revenu pour voir l\'aperçu.',
+    enterIncome: 'Saisir le revenu',
+    notEligible: 'Pas de droit',
+    notApplicable: 'Non applicable',
+    selectCanton: 'Sélectionnez un canton pour le calcul cantonal',
+    toBudget: 'Aperçu budget',
+    toDossier: 'Dossier autorités',
+    disclaimer: 'Toutes les valeurs sont indicatives. Pour des informations contraignantes, contactez l\'autorité compétente.',
+  },
+
   pwa: {
     installHint: 'Installer Maloja Plana comme application — disponible hors ligne, directement depuis l\'écran d\'accueil.',
     install: 'Installer',

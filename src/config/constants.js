@@ -16,10 +16,8 @@ export const LIGHT_PALETTE = {
   sageMist: '#E8F0EC', sageDew: '#D4E5DB', sageDeep: '#5C7D6C'
 };
 
-export const CANTONS = ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'];
-
-import { getCantonName } from './cantonalData.js';
-const cantonOptions = (t) => CANTONS.map(c => ({ value: c, label: getCantonName(c, t) }));
+import { getCantonName, CANTON_CODES } from './cantonalData.js';
+const cantonOptions = (t) => CANTON_CODES.map(c => ({ value: c, label: getCantonName(c, t) }));
 
 // Helper: create select options from translation keys
 // Returns [{value: 'key', label: 'Translated label'}]
@@ -292,13 +290,4 @@ const FIELD_KEYS = {
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
   notfall: ['emergencyContact', 'emergencyPhone', 'bloodType', 'allergies', 'medications', 'chronicDiseases', 'doctor', 'doctorPhone', 'hospital', 'organDonor', 'patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'],
 };
-
-export const DEFAULT_DATA = CHAPTER_KEYS.reduce((acc, key) => {
-  acc[key] = {};
-  (FIELD_KEYS[key] || []).forEach(f => acc[key][f] = '');
-  return acc;
-}, {});
-
-// Default household for new installs (v3+)
-DEFAULT_DATA.basis.household = { adults: 1, children: [], isRetired: false };
 

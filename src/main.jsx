@@ -46,6 +46,7 @@ const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
+const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily } from './config/tokens.js';
@@ -498,6 +499,7 @@ const AppInner = () => {
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
+        view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
