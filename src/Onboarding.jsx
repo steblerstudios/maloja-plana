@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, radius , leading } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -34,7 +34,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   };
 
   const cardStyle = {
-    maxWidth: '440px', width: '100%', padding: '32px',
+    maxWidth: '440px', width: '100%', padding: space.xl,
     background: palette.surface, borderRadius: radius.lg,
     border: '1px solid ' + palette.border,
   };
@@ -43,7 +43,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     width: '100%', padding: '14px', background: palette.sand,
     color: '#000', border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
-    fontFamily: 'DM Sans, sans-serif', marginTop: '16px',
+    fontFamily: 'DM Sans, sans-serif', marginTop: space.md,
   };
 
   const btnSecondary = {
@@ -65,16 +65,16 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { style: cardStyle },
-        React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
+        React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: palette.sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: '12px' } },
             React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
             React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
           ),
-          React.createElement('h1', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: '4px', letterSpacing: '0.5px' } }, 'Maloja Plana'),
+          React.createElement('h1', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs, letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
 
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm } },
           supportedLanguages.map(lang =>
             React.createElement('button', {
               key: lang,
@@ -84,7 +84,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
                 border: '1px solid ' + palette.border, background: palette.up,
                 color: palette.text, fontSize: text.sm, fontWeight: weight.semi,
                 fontFamily: 'DM Sans, sans-serif',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: space.sm,
                 transition: 'all 0.2s',
               },
               onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sand; },
@@ -104,12 +104,12 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { style: cardStyle },
-        React.createElement('div', { style: { textAlign: 'center', marginBottom: '24px' } },
-          React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: '4px' } }, t('onboarding.welcomeTitle')),
+        React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
+          React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '16px', padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
           React.createElement('svg', { width: '13', height: '13', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round', style: { flexShrink: 0 } },
             React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
             React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
@@ -119,7 +119,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           )
         ),
 
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: space.md } },
           React.createElement('div', null,
             React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
             React.createElement('input', {
@@ -141,7 +141,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           )
         ),
 
-        React.createElement('div', { style: { marginBottom: '8px' } },
+        React.createElement('div', { style: { marginBottom: space.sm } },
           React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
           React.createElement('select', {
             value: canton, onChange: (e) => setCanton(e.target.value),
@@ -159,7 +159,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('button', {
           onClick: () => setStep(2),
-          style: { ...btnSecondary, marginTop: '8px' },
+          style: { ...btnSecondary, marginTop: space.sm },
         }, t('onboarding.skipForNow'))
       )
     );
@@ -177,22 +177,22 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         margin: '0 auto 20px auto', fontSize: '32px',
       } }, '✓'),
 
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: '8px' } },
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.sm } },
         firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })
           : t('onboarding.readyTitleGeneric')
       ),
 
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: '8px' } },
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } },
         t('onboarding.readyMessage')
       ),
 
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left', padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
         [
           t('onboarding.tip1'),
           t('onboarding.tip2'),
           t('onboarding.tip3'),
-        ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, display: 'flex', gap: '8px' } },
+        ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, display: 'flex', gap: space.sm } },
           React.createElement('span', { style: { color: palette.sage } }, '✓'),
           tip
         ))

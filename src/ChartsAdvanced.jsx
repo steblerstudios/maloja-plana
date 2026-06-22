@@ -1,10 +1,10 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, shadow, radius } from './config/tokens.js';
+import { text, weight, shadow, radius , space } from './config/tokens.js';
 
 const PieChart = ({ data, labels, colors, title, palette }) => {
   const total = data.reduce((a, b) => a + b, 0);
-  if (total === 0) return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
+  if (total === 0) return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
     React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: text.sm, padding: '20px' } }, '—')
   );
@@ -37,10 +37,10 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
     );
   });
 
-  return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
+  return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
     React.createElement('svg', { width: '200', height: '200', viewBox: '0 0 200 200', style: { margin: '0 auto', display: 'block' } }, segments),
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px', marginTop: '12px', fontSize: text.xs } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm, marginTop: '12px', fontSize: text.xs } },
       labels.map((label, idx) => React.createElement('div', { key: idx, style: { display: 'flex', gap: '6px', alignItems: 'center' } },
         React.createElement('div', { style: { width: '10px', height: '10px', background: colors[idx], borderRadius: '2px', flexShrink: 0 } }),
         React.createElement('span', null, label + ' (' + Math.round((data[idx] / total) * 100) + '%)')
@@ -51,14 +51,14 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
 
 const BarChart = ({ data, labels, colors, title, palette }) => {
   const maxValue = Math.max(...data);
-  if (maxValue === 0) return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
+  if (maxValue === 0) return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
     React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontSize: text.sm, padding: '20px' } }, '—')
   );
 
   const barWidth = Math.min(50, 300 / data.length);
 
-  return React.createElement('div', { style: { padding: '16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px' } },
+  return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
     React.createElement('svg', { width: '100%', height: '250', viewBox: '0 0 400 250', preserveAspectRatio: 'xMidYMid meet' },
       data.map((val, idx) => {
@@ -86,7 +86,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
 
   if (!hasData) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
       React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' } },
         React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'finanzen', size: 28 })),
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('charts.noData')),
@@ -96,7 +96,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   }
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
 
     React.createElement(PieChart, {
       palette,

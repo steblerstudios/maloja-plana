@@ -6,7 +6,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius , space } from './config/tokens.js';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -83,19 +83,19 @@ export const NotificationSettings = ({ palette, t }) => {
   return React.createElement('div', {
     style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border }
   },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } },
       React.createElement(Icon, { name: 'cowbell', size: 20 }), t('notifications.title')
     ),
 
     // Permission status
     React.createElement('div', {
       style: {
-        padding: '16px', borderRadius: radius.sm, marginBottom: '16px',
+        padding: space.md, borderRadius: radius.sm, marginBottom: space.md,
         background: isGranted ? palette.sage + '11' : palette.up,
         border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
       }
     },
-      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' } },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: space.sm } },
         React.createElement('div', {
           style: {
             width: '10px', height: '10px', borderRadius: '50%',
@@ -120,13 +120,13 @@ export const NotificationSettings = ({ palette, t }) => {
       }, t('notifications.enable')),
 
       isDenied && React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginTop: '4px' }
+        style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs }
       }, t('notifications.blockedHint'))
     ),
 
     // Notification types
-    React.createElement('div', { style: { marginBottom: '16px' } },
-      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: '4px', textTransform: 'uppercase' } },
+    React.createElement('div', { style: { marginBottom: space.md } },
+      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs, textTransform: 'uppercase' } },
         t('notifications.categories')
       ),
 
@@ -156,7 +156,7 @@ export const NotificationSettings = ({ palette, t }) => {
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sage, textAlign: 'center' }
+      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sage, textAlign: 'center' }
     }, '✓ ' + t('common.saved'))
   );
 };
