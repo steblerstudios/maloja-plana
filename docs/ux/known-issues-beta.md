@@ -29,13 +29,7 @@
 | **Sprachen** | FR/IT/EN sind maschinell übersetzt und nicht professionell lektoriert |
 | **OCR-Scan** | KK-Karten OCR-Erkennung (Tesseract) entfernt — QR/Barcode-Scan funktioniert weiterhin offline |
 
-## Offene Verbesserungen (aus Alpha-Feedback)
-
-| Thema | Feedback | Status |
-|---|---|---|
-| **Sozialhilfe-Disclaimer** | Disclaimer-Text vorhanden, aber visuell zu leise — könnte übersehen werden | Geplant |
-
-### Erledigte Verbesserungen
+## Erledigte Verbesserungen (aus Alpha-Feedback)
 
 | Thema | Status |
 |---|---|
@@ -44,6 +38,7 @@
 | **KVG-Kontext** | Erledigt — Orientierungssatz auf KK-Feldern (4 Sprachen) |
 | **BVG/AHV: In-Context-Hinweis** | Erledigt — Orientierungssätze auf BVG/AHV-Feldern |
 | **QR via CDN** | Erledigt — QR-Generierung war bereits lokal (qrcodejs vendor), Tesseract-CDN entfernt |
+| **Sozialhilfe-Disclaimer** | Erledigt — Gold-Rand + Hintergrund, visuell deutlich sichtbar |
 
 ## Nicht-Ziele dieser Beta
 
