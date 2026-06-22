@@ -33,11 +33,11 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   };
 
   const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px'
+    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm
   };
 
   const inputStyle = {
-    width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: '13px'
+    width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
@@ -46,7 +46,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } }, React.createElement(Icon, { name: 'csv', size: 20 }), t('budgetImport.title')),
 
-      React.createElement('label', { style: { display: 'block', fontSize: '13px', color: palette.mid, marginBottom: '8px', fontWeight: '500' } }, t('budgetImport.fileFormat')),
+      React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: '8px', fontWeight: '500' } }, t('budgetImport.fileFormat')),
       React.createElement('select', { value: importType, onChange: (e) => setImportType(e.target.value), style: { ...inputStyle, marginBottom: '16px' } },
         React.createElement('option', { value: 'csv' }, t('budgetImport.csv')),
         React.createElement('option', { value: 'excel' }, t('budgetImport.excel')),
@@ -81,8 +81,8 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       preview ? React.createElement('div', null,
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px', marginBottom: '12px' } },
           React.createElement('div', { style: { fontWeight: '600', marginTop: '4px' } }, preview.fileName),
-          React.createElement('div', { style: { fontSize: '13px', color: palette.mid, marginTop: '6px' } }, preview.count + ' entries'),
-          React.createElement('div', { style: { fontSize: '13px', color: palette.mid } }, t('common.total') + ': CHF ' + preview.totalAmount.toFixed(2))
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px' } }, preview.count + ' entries'),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('common.total') + ': CHF ' + preview.totalAmount.toFixed(2))
         ),
 
         React.createElement('div', { style: { maxHeight: '300px', overflowY: 'auto', marginBottom: '12px' } },
@@ -97,7 +97,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
 
         React.createElement('div', { style: { display: 'flex', gap: '8px' } },
           React.createElement('button', { onClick: handleImportConfirm, style: { ...buttonStyle, flex: 1 } }, '✓ ' + t('common.save')),
-          React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px', color: palette.text } }, t('common.cancel'))
+          React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm, color: palette.text } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
         React.createElement('div', { style: { fontSize: '18px', marginBottom: '8px' } }, '□'),

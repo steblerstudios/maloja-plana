@@ -23,26 +23,26 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '○ ' + t('cv.phone')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.header.phone)
+        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.header.phone)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '◇ ' + t('cv.profession')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.experience.current.title || '—')
+        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.experience.current.title || '—')
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: '6px' } },
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } }, '✦ ' + t('cv.qualification')),
-        React.createElement('div', { style: { fontWeight: '600', fontSize: '13px' } }, cv.education.highest || '—')
+        React.createElement('div', { style: { fontWeight: '600', fontSize: text.sm } }, cv.education.highest || '—')
       )
     ),
 
     React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '16px' } },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
-        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }
+        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
       }, preview ? '✕ ' + t('common.close') : '◉ ' + t('cv.preview')),
       React.createElement('button', {
         onClick: handleDownload,
-        style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '13px' }
+        style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: text.sm }
       }, '↙ ' + t('cv.downloadHtml'))
     ),
 

@@ -62,7 +62,7 @@ export class ErrorBoundary extends React.Component {
         React.createElement('h2', { style: { fontSize: '18px', fontWeight: '600', marginBottom: '8px' } },
           t ? t('error.title') : 'Something went wrong'
         ),
-        React.createElement('p', { style: { fontSize: '13px', color: palette?.mid || '#888', marginBottom: '24px', lineHeight: 1.5 } },
+        React.createElement('p', { style: { fontSize: text.sm, color: palette?.mid || '#888', marginBottom: '24px', lineHeight: 1.5 } },
           t ? t('error.message') : 'Your data is safe — it is stored locally on your device. Please try again.'
         ),
 
@@ -72,7 +72,7 @@ export class ErrorBoundary extends React.Component {
             style: {
               padding: '10px 20px', background: sand, color: '#000',
               border: 'none', borderRadius: '6px', cursor: 'pointer',
-              fontWeight: '600', fontSize: '13px'
+              fontWeight: '600', fontSize: text.sm
             }
           }, t ? t('error.tryAgain') : 'Try again'),
           React.createElement('button', {
@@ -80,7 +80,7 @@ export class ErrorBoundary extends React.Component {
             style: {
               padding: '10px 20px', background: 'transparent', color: text,
               border: '1px solid ' + border, borderRadius: '6px',
-              cursor: 'pointer', fontWeight: '600', fontSize: '13px'
+              cursor: 'pointer', fontWeight: '600', fontSize: text.sm
             }
           }, t ? t('error.reload') : 'Reload page')
         ),
