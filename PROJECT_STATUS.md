@@ -43,7 +43,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 | KI-003 | KK/AHV duplicate entry | Important | **Fixed** (2026-06-22) — autofill + persist + Slice C conflict warnings |
 | KI-004 | Hardcoded German in schuldenCalc.js | Important | **Fixed** (2026-06-22) — Severity-Keys + Recommendations als i18n-Keys |
 | KI-005 | QR code external CDN dependency | Important | **Fixed** — vendor/qrcodejs.js lokal eingebunden |
-| KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
+| KI-006 | Single SKOS table (national only) | Important | **Fixed** (2026-06-22) — Mietlimiten für alle 26 Kantone |
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
 | KI-008 | Auto-save 5-second interval | Minor | **OK** — Dirty-Check via Ref-Vergleich bereits implementiert |
 

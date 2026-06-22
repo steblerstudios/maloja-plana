@@ -73,6 +73,7 @@ export default {
     download: 'Herunterladen',
     upload: 'Hochladen',
     search: 'Suchen...',
+    noResults: 'Keine Ergebnisse',
     loading: 'Laden...',
     saving: 'Speichern...',
     skipToContent: 'Zum Inhalt springen',
@@ -168,6 +169,13 @@ export default {
       finanzuebersichtHint: 'Alle Berechnungen auf einen Blick →',
     },
     backToDashboard: 'Übersicht',
+  },
+
+  wohnen: {
+    umzugTitle: 'Checkliste nach Umzug',
+    umzugGemeinde: 'Wohngemeinde: Anmeldung innert 14 Tagen',
+    umzugKK: 'Krankenkasse: Adressänderung melden',
+    umzugPost: 'Post: Nachsendeauftrag einrichten',
   },
 
   theme: {

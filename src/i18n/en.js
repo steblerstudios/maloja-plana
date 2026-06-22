@@ -73,6 +73,7 @@ export default {
     download: 'Download',
     upload: 'Upload',
     search: 'Search...',
+    noResults: 'No results',
     loading: 'Loading...',
     saving: 'Saving...',
     skipToContent: 'Skip to content',
@@ -168,6 +169,13 @@ export default {
       finanzuebersichtHint: 'All calculations at a glance →',
     },
     backToDashboard: 'Overview',
+  },
+
+  wohnen: {
+    umzugTitle: 'Moving checklist',
+    umzugGemeinde: 'Municipality: register within 14 days',
+    umzugKK: 'Health insurance: report address change',
+    umzugPost: 'Post: set up mail forwarding',
   },
 
   theme: {
