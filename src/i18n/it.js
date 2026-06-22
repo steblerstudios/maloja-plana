@@ -1105,6 +1105,7 @@ export default {
     note: 'Nota: {value}',
     enterCanton: 'Inserisci il tuo cantone in "Dati personali" o il codice postale in "Abitazione".',
     eligible: 'Avente diritto',
+    disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
     notEligible: 'Non avente diritto',
     monthlySubsidy: 'Riduzione mensile',
     annualSubsidy: 'Riduzione annuale',
