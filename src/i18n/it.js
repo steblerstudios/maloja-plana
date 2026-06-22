@@ -1832,6 +1832,26 @@ export default {
     previewNote: 'Anteprima — ecco come apparirà la tua cartella della vita.',
   },
 
+  finanzUebersicht: {
+    title: 'Panoramica finanziaria',
+    subtitle: 'La tua situazione in sintesi — basata sui tuoi dati.',
+    monthlyIncome: 'Reddito mensile',
+    canton: 'Cantone',
+    taxes: 'Imposte',
+    ipv: 'Riduzione dei premi (RDP)',
+    sozialhilfe: 'Assistenza sociale (orientamento)',
+    el: 'Prestazioni complementari (PC)',
+    noIncome: 'Nessun reddito registrato',
+    noData: 'Ancora nessun dato finanziario. Inserisci il tuo reddito per vedere la panoramica.',
+    enterIncome: 'Inserire il reddito',
+    notEligible: 'Nessun diritto',
+    notApplicable: 'Non applicabile',
+    selectCanton: 'Seleziona un cantone per il calcolo cantonale',
+    toBudget: 'Panoramica budget',
+    toDossier: 'Dossier autorità',
+    disclaimer: 'Tutti i valori sono indicativi. Per informazioni vincolanti, contattare l\'autorità competente.',
+  },
+
   pwa: {
     installHint: 'Installa Maloja Plana come app — disponibile offline, direttamente dalla schermata iniziale.',
     install: 'Installa',
