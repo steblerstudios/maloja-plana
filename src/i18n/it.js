@@ -1336,6 +1336,12 @@ export default {
     errorCardNumber: 'Numero tessera non valido',
     errorAhvFormat: 'Formato numero AVS non valido',
     scanRequiresInternet: 'La scansione richiede una connessione internet. Puoi anche inserire i dati manualmente.',
+    conflictTitle: 'Differenze rilevate',
+    conflictHint: 'La scansione ha restituito valori diversi dai tuoi dati attuali.',
+    conflictCurrent: 'Attuale',
+    conflictScanned: 'Scansionato',
+    conflictAccept: 'Usa i valori scansionati',
+    conflictKeep: 'Mantieni i valori attuali',
   },
 
   budgetImport: {
@@ -1822,6 +1828,11 @@ export default {
     sectionsMissing: '{count} sezioni ancora aperte',
     docsIncluded: '{count} documenti salvati',
     previewNote: 'Anteprima — ecco come apparirà la tua cartella della vita.',
+  },
+
+  pwa: {
+    installHint: 'Installa Maloja Plana come app — disponibile offline, direttamente dalla schermata iniziale.',
+    install: 'Installa',
   },
 
   beta: {
