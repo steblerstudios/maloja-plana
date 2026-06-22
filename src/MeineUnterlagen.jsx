@@ -31,7 +31,7 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
       }, React.createElement(Icon, { name: icon, size: 22 })),
       React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { fontSize: text.body, fontWeight: '600', marginBottom: '4px' }
+          style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
         }, title),
         React.createElement('div', {
           style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '8px' }
@@ -65,7 +65,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     },
       React.createElement('h2', {
         style: {
-          fontSize: text.lg, fontWeight: '600', marginBottom: '6px',
+          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
           display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px',
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('unterlagen.title')),
@@ -126,7 +126,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
         }, React.createElement(Icon, { name: 'lock', size: 22 })),
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', {
-            style: { fontSize: text.body, fontWeight: '600', marginBottom: '4px' }
+            style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '4px' }
           }, t('unterlagen.backup.title')),
           React.createElement('div', {
             style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginBottom: '10px' }

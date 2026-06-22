@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
-import { text as textTokens } from './config/tokens.js';
+import { text as textTokens, weight } from './config/tokens.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -39,7 +39,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: textTokens.lg, fontWeight: '600', marginBottom: '8px',
+        fontSize: textTokens.lg, fontWeight: weight.semi, marginBottom: '8px',
         display: 'flex', alignItems: 'center', gap: '8px',
       }
     }, React.createElement(Icon, { name: 'document', size: 20 }), t('briefe.title')),
@@ -66,7 +66,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.accent : palette.mid }),
         React.createElement('div', null,
           React.createElement('div', {
-            style: { fontWeight: '600', fontSize: textTokens.body, marginBottom: '4px' }
+            style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: '4px' }
           }, tmpl.title),
           React.createElement('div', {
             style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.5' }
@@ -86,7 +86,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         onClick: () => setPreview(!preview),
         style: {
           padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: '6px', cursor: 'pointer', fontSize: textTokens.sm, fontWeight: '500',
+          borderRadius: '6px', cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
       React.createElement('button', {
@@ -94,7 +94,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         style: {
           padding: '10px 16px', background: palette.accent, color: '#fff',
           border: 'none', borderRadius: '6px', cursor: 'pointer',
-          fontSize: textTokens.sm, fontWeight: '500',
+          fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, t('briefe.printLetter'))
     ),
