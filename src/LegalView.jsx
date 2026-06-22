@@ -27,6 +27,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     { key: 'privacy', label: t('legal.tabs.privacy') },
     { key: 'terms', label: t('legal.tabs.terms') },
     { key: 'imprint', label: t('legal.tabs.imprint') },
+    { key: 'license', label: t('legal.tabs.license') },
   ];
 
   return React.createElement('div', {

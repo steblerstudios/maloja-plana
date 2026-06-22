@@ -247,9 +247,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Text Input
     if (field.type === 'text') {
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label + (field.required ? ' *' : '')),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label + (field.required ? ' *' : '')),
         React.createElement('input', {
+          id: fieldId,
           type: 'text',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
@@ -276,8 +278,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const activeCode = detectedCode ? detectedCode.code : '+41';
       const localPart = detectedCode ? value.slice(detectedCode.code.length).replace(/^\s+/, '') : (value.startsWith('0') ? value.slice(1) : value);
 
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
           React.createElement('select', {
             value: activeCode,
@@ -292,6 +295,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             phoneCodes.map(p => React.createElement('option', { key: p.code, value: p.code }, p.label))
           ),
           React.createElement('input', {
+            id: fieldId,
             type: 'tel',
             value: localPart,
             onChange: (e) => {
@@ -313,9 +317,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Email
     if (field.type === 'email') {
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('input', {
+          id: fieldId,
           type: 'email',
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
@@ -329,10 +335,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Date
     if (field.type === 'date') {
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('div', { style: { position: 'relative' } },
           React.createElement('input', {
+            id: fieldId,
             key: field.k + '_' + (value || 'empty'),
             type: 'date',
             value: value || '',
@@ -356,11 +364,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Currency
     if (field.type === 'currency') {
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
           React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: radius.sm, borderLeft: '1px solid ' + palette.border } }, 'CHF'),
           React.createElement('input', {
+            id: fieldId,
             type: 'number',
             inputMode: 'decimal',
             value: value,
@@ -382,9 +392,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         return { value: opt, label: opt };
       });
 
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('select', {
+          id: fieldId,
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           style: { ...inputStyle, cursor: 'pointer' }
@@ -399,9 +411,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Textarea
     if (field.type === 'textarea') {
+      const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { style: labelStyle }, field.label),
+        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
         React.createElement('textarea', {
+          id: fieldId,
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           placeholder: field.placeholder || '',
