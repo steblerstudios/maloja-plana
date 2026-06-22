@@ -45,7 +45,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 | KI-005 | QR code external CDN dependency | Important | **Fixed** — vendor/qrcodejs.js lokal eingebunden |
 | KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
-| KI-008 | Auto-save 5-second interval (no dirty flag) | Minor | Open — Phase 15 |
+| KI-008 | Auto-save 5-second interval | Minor | **OK** — Dirty-Check via Ref-Vergleich bereits implementiert |
 
 ## Next Recommended Implementation Candidates
 
