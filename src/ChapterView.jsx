@@ -489,7 +489,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     finanzen: { bg: palette.gold + '0A', border: palette.gold, icon: palette.gold },
     versicherungen: { bg: palette.sky + '0A', border: palette.sky, icon: palette.sky },
     ausbildung: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
-    behoerden: { bg: palette.rose + '08', border: palette.rose, icon: palette.rose },
+    behoerden: { bg: palette.sand + '0A', border: palette.sand, icon: palette.sand },
     notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.rose },
   };
   const accent = chapterAccent[chapter.key] || chapterAccent.basis;
