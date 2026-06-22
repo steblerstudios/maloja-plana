@@ -680,6 +680,16 @@ export default {
     chapterTrust: 'Tes données sont stockées uniquement en local. Aucun serveur, aucun compte.',
   },
 
+  datenWirken: {
+    title: 'Tes données sont déjà actives :',
+    tax: 'Calculateur fiscal personnalisé',
+    ipv: 'Vérification réduction de primes active',
+    sozial: 'Orientation aide sociale active',
+    lohn: 'Vérification salaire minimum active',
+    notfall: "Carte d'urgence prête",
+    budget: 'Aperçu budget actif',
+  },
+
   legal: {
     title: 'Mentions légales',
     tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum' },

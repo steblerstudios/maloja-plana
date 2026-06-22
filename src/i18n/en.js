@@ -681,6 +681,16 @@ export default {
     chapterTrust: 'Your entries are stored locally only. No server, no account.',
   },
 
+  datenWirken: {
+    title: 'Your data is already working:',
+    tax: 'Tax calculator personalised',
+    ipv: 'Premium reduction check active',
+    sozial: 'Social assistance orientation active',
+    lohn: 'Minimum wage check active',
+    notfall: 'Emergency card ready',
+    budget: 'Budget overview active',
+  },
+
   legal: {
     title: 'Legal',
     tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint' },
