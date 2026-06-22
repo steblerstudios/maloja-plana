@@ -49,9 +49,9 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 
 ## Next Recommended Implementation Candidates
 
-1. **"Nutzen vor Dateneingabe" vertiefen** — Demo-Modus erweitern, Tooltips in Highlight Tools
-2. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
-3. **Bundle-Optimierung** — 357/360 KB gzipped, Code-Splitting oder manualChunks prüfen
+1. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
+2. **KI-006 Kantonale SKOS** — kantonsspezifische Mietlimiten und Zuschläge (Phase 13)
+3. **Verbindungen vertiefen** — mehr Crosslinks zwischen Kapiteln, Daten-Wiederverwendung sichtbar machen
 
 ## Do Not Touch Yet
 
