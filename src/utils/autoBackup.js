@@ -10,7 +10,7 @@ const BACKUP_DB_NAME = 'maloja-plana-backups';
 const OLD_BACKUP_DB_NAME = 'ordnung-ruhe-backups';
 const BACKUP_STORE = 'snapshots';
 const BACKUP_DB_VERSION = 1;
-const MAX_BACKUPS = 3;
+const MAX_BACKUPS = 5;
 const MIN_BACKUP_INTERVAL_MS = 12 * 60 * 60 * 1000; // 12 hours minimum between backups
 const BACKUP_TIMESTAMP_KEY = 'or5_last_backup';
 
@@ -196,6 +196,104 @@ export async function listBackups() {
   } catch (e) {
     console.error('[backup] List failed:', e.message);
     return [];
+  }
+}
+
+/**
+ * Compare current data with a backup snapshot.
+ * Returns { added: [...], removed: [...], changed: [...] }
+ * where each entry is { chapter, field, oldValue, newValue }.
+ */
+export async function compareWithBackup(backupId) {
+  try {
+    const db = await openBackupDB();
+    const tx = db.transaction(BACKUP_STORE, 'readonly');
+    const store = tx.objectStore(BACKUP_STORE);
+
+    const snapshot = await new Promise((resolve, reject) => {
+      const req = store.get(backupId);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(new Error('Backup not found'));
+    });
+
+    if (!snapshot || !snapshot.data) return { added: [], removed: [], changed: [] };
+
+    const oldData = JSON.parse(snapshot.data);
+    const currentRaw = localStorage.getItem('or5_data');
+    const currentData = currentRaw ? JSON.parse(currentRaw) : {};
+
+    const added = [];
+    const removed = [];
+    const changed = [];
+
+    const allChapters = new Set([...Object.keys(oldData), ...Object.keys(currentData)]);
+    for (const chapter of allChapters) {
+      if (chapter === '_version' || chapter === '_meta') continue;
+      const oldChapter = oldData[chapter] || {};
+      const newChapter = currentData[chapter] || {};
+      const allFields = new Set([...Object.keys(oldChapter), ...Object.keys(newChapter)]);
+      for (const field of allFields) {
+        const oldVal = oldChapter[field];
+        const newVal = newChapter[field];
+        if (oldVal === undefined && newVal !== undefined && newVal !== '') {
+          added.push({ chapter, field, newValue: newVal });
+        } else if (newVal === undefined && oldVal !== undefined && oldVal !== '') {
+          removed.push({ chapter, field, oldValue: oldVal });
+        } else if (JSON.stringify(oldVal) !== JSON.stringify(newVal) && (oldVal || newVal)) {
+          changed.push({ chapter, field, oldValue: oldVal, newValue: newVal });
+        }
+      }
+    }
+
+    return { added, removed, changed };
+  } catch (e) {
+    console.error('[backup] Compare failed:', e.message);
+    return { added: [], removed: [], changed: [] };
+  }
+}
+
+/**
+ * Force-create a backup regardless of time interval.
+ * Returns same shape as createBackup().
+ */
+export async function createManualBackup() {
+  try {
+    const data = localStorage.getItem('or5_data');
+    const docs = localStorage.getItem('or5_docs');
+    const reminders = localStorage.getItem('or5_reminders');
+
+    if (!data || data === '{}') {
+      return { success: false, id: null, error: 'empty_data' };
+    }
+
+    const snapshot = {
+      id: 'manual_' + Date.now(),
+      createdAt: new Date().toISOString(),
+      data,
+      docs,
+      reminders,
+      sizeBytes: (data?.length || 0) + (docs?.length || 0) + (reminders?.length || 0),
+      manual: true,
+    };
+
+    const db = await openBackupDB();
+    const tx = db.transaction(BACKUP_STORE, 'readwrite');
+    const store = tx.objectStore(BACKUP_STORE);
+
+    await new Promise((resolve, reject) => {
+      const req = store.put(snapshot);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(new Error('Manual backup write failed'));
+    });
+
+    localStorage.setItem(BACKUP_TIMESTAMP_KEY, snapshot.createdAt);
+    await pruneOldBackups(db);
+
+    console.info('[backup] Manual snapshot created:', snapshot.id);
+    return { success: true, id: snapshot.id, error: null };
+  } catch (e) {
+    console.error('[backup] Manual backup failed:', e.message);
+    return { success: false, id: null, error: e.message };
   }
 }
 

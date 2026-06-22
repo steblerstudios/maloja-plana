@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { getBehoerdenDossierPreview, generateBehoerdenDossier } from './dossierGenerator.js';
+import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
@@ -40,6 +40,19 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       win.document.write(html);
       win.document.close();
     }
+  };
+
+  const handleExportJSON = () => {
+    const dossier = generateBehoerdenJSON(data, calculations);
+    const json = JSON.stringify(dossier, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const name = (data.basis?.lastName || 'dossier').toLowerCase().replace(/[^a-z0-9]/g, '_');
+    a.download = 'dossier_' + name + '_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const renderSection = (section) =>
@@ -126,16 +139,28 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       }, t('behoerdenDossier.subtitle'))
     ),
 
-    hasSections && React.createElement('button', {
-      onClick: handlePrint,
-      style: {
-        width: '100%', padding: '12px', marginBottom: '20px',
-        background: palette.sand, color: '#fff', border: 'none',
-        borderRadius: radius.sm, cursor: 'pointer',
-        fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        letterSpacing: '0.2px',
-      }
-    }, t('behoerdenDossier.printAction')),
+    hasSections && React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: '20px' } },
+      React.createElement('button', {
+        onClick: handlePrint,
+        style: {
+          flex: 1, padding: '12px',
+          background: palette.sand, color: '#fff', border: 'none',
+          borderRadius: radius.sm, cursor: 'pointer',
+          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
+          letterSpacing: '0.2px',
+        }
+      }, t('behoerdenDossier.printAction')),
+      React.createElement('button', {
+        onClick: handleExportJSON,
+        style: {
+          flex: 1, padding: '12px',
+          background: palette.sage, color: '#fff', border: 'none',
+          borderRadius: radius.sm, cursor: 'pointer',
+          fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
+          letterSpacing: '0.2px',
+        }
+      }, t('behoerdenDossier.exportJSON'))
+    ),
 
     hasSections && React.createElement('div', {
       style: { fontSize: text.sm, color: palette.soft, marginBottom: '12px' }
