@@ -33,76 +33,78 @@ export const prepareDataForExport = (data, docs = []) => {
   };
 };
 
-export const generateZipManifest = (data) => {
-  return `ORDNUNG & RUHE — DATENSICHERUNG
+export const generateZipManifest = (data, t) => {
+  const m = (key, params) => t ? t('zipExport.manifest.' + key, params) : key;
+  const dash = '—';
+  return `${m('header')}
 ═════════════════════════════════════════
 
-Exportdatum: ${new Date().toLocaleDateString('de-CH')} ${new Date().toLocaleTimeString('de-CH')}
-Version: 5.0
-Person: ${data.person.name}
+${m('exportDate')}: ${new Date().toLocaleDateString('de-CH')} ${new Date().toLocaleTimeString('de-CH')}
+${m('version')}: 5.0
+${m('person')}: ${data.person.name}
 
-INHALT DER DATENSICHERUNG:
+${m('contents')}:
 ──────────────────────────
 
-1. PERSÖNLICHE DATEN (basis)
-   - Name: ${[data.chapters.basis?.firstName, data.chapters.basis?.middleName, data.chapters.basis?.lastName].filter(Boolean).join(' ') || data.chapters.basis?.fullName || '—'}
-   - Geburtsdatum: ${data.chapters.basis?.dateOfBirth || '—'}
-   - AHV: ${data.chapters.basis?.ahv || '—'}
-   - Telefon: ${data.chapters.basis?.phone || '—'}
-   - E-Mail: ${data.chapters.basis?.email || '—'}
+${m('chBasis')}
+   - ${m('name')}: ${[data.chapters.basis?.firstName, data.chapters.basis?.middleName, data.chapters.basis?.lastName].filter(Boolean).join(' ') || data.chapters.basis?.fullName || dash}
+   - ${m('dateOfBirth')}: ${data.chapters.basis?.dateOfBirth || dash}
+   - ${m('ahv')}: ${data.chapters.basis?.ahv || dash}
+   - ${m('phone')}: ${data.chapters.basis?.phone || dash}
+   - ${m('email')}: ${data.chapters.basis?.email || dash}
 
-2. WOHNEN & LEBEN (wohnen)
-   - Adresse: ${data.chapters.wohnen?.address || '—'}
-   - Miete: CHF ${data.chapters.wohnen?.rentAmount || '0'}/Monat
-   - Nebenkosten: CHF ${data.chapters.wohnen?.utilities || '0'}/Monat
+${m('chWohnen')}
+   - ${m('address')}: ${data.chapters.wohnen?.address || dash}
+   - ${m('rent')}: CHF ${data.chapters.wohnen?.rentAmount || '0'}${m('perMonth')}
+   - ${m('utilities')}: CHF ${data.chapters.wohnen?.utilities || '0'}${m('perMonth')}
 
-3. FINANZEN (finanzen)
-   - Monatseinkommen: CHF ${data.chapters.finanzen?.monthlyIncome || '0'}
-   - Employer: ${data.chapters.finanzen?.employer || '—'}
-   - 3. Säule A: CHF ${data.chapters.finanzen?.pension3a || '0'}/Jahr
+${m('chFinanzen')}
+   - ${m('monthlyIncome')}: CHF ${data.chapters.finanzen?.monthlyIncome || '0'}
+   - ${m('employer')}: ${data.chapters.finanzen?.employer || dash}
+   - ${m('pillar3a')}: CHF ${data.chapters.finanzen?.pension3a || '0'}${m('perYear')}
 
-4. VERSICHERUNGEN (versicherungen)
-   - Krankenkasse: ${data.chapters.versicherungen?.kkInsurer || '—'}
-   - Prämie: CHF ${data.chapters.versicherungen?.kkPremium || '0'}/Monat
-   - Franchise: CHF ${data.chapters.versicherungen?.franchise || '0'}
-   - BVG: CHF ${data.chapters.versicherungen?.bvgContribution || '0'}/Monat
+${m('chVersicherungen')}
+   - ${m('healthInsurer')}: ${data.chapters.versicherungen?.kkInsurer || dash}
+   - ${m('premium')}: CHF ${data.chapters.versicherungen?.kkPremium || '0'}${m('perMonth')}
+   - ${m('franchise')}: CHF ${data.chapters.versicherungen?.franchise || '0'}
+   - ${m('bvg')}: CHF ${data.chapters.versicherungen?.bvgContribution || '0'}${m('perMonth')}
 
-5. AUSBILDUNG (ausbildung)
-   - Beruf: ${data.chapters.ausbildung?.jobTitle || '—'}
-   - Arbeitgeber: ${data.chapters.ausbildung?.employer || '—'}
-   - Höchster Abschluss: ${data.chapters.ausbildung?.educationLevel || '—'}
+${m('chAusbildung')}
+   - ${m('jobTitle')}: ${data.chapters.ausbildung?.jobTitle || dash}
+   - ${m('employer')}: ${data.chapters.ausbildung?.employer || dash}
+   - ${m('educationLevel')}: ${data.chapters.ausbildung?.educationLevel || dash}
 
-6. BEHÖRDEN (behoerden)
-   - Steuerkanton: ${data.chapters.behoerden?.cantoneOfTaxation || '—'}
-   - Betreibungsstatus: ${data.chapters.behoerden?.betreibungsStatus || 'Unbekannt'}
-   - Testament: ${data.chapters.behoerden?.willMade || 'Nein'}
+${m('chBehoerden')}
+   - ${m('taxCanton')}: ${data.chapters.behoerden?.cantoneOfTaxation || dash}
+   - ${m('debtStatus')}: ${data.chapters.behoerden?.betreibungsStatus || m('unknown')}
+   - ${m('will')}: ${data.chapters.behoerden?.willMade || m('no')}
 
-7. NOTFALL (notfall)
-   - Blutgruppe: ${data.chapters.notfall?.bloodType || '—'}
-   - Notfall-Kontakt: ${data.chapters.notfall?.emergencyContact || '—'}
-   - Allergien: ${data.chapters.notfall?.allergies || '—'}
-   - Organspender: ${data.chapters.notfall?.organDonor || 'Unbekannt'}
+${m('chNotfall')}
+   - ${m('bloodType')}: ${data.chapters.notfall?.bloodType || dash}
+   - ${m('emergencyContact')}: ${data.chapters.notfall?.emergencyContact || dash}
+   - ${m('allergies')}: ${data.chapters.notfall?.allergies || dash}
+   - ${m('organDonor')}: ${data.chapters.notfall?.organDonor || m('unknown')}
 
-DOKUMENTE (${data.documents.count} Dateien):
+${m('documents', { count: data.documents.count })}:
 ──────────────────────────────────────
 ${data.documents.list.map(d => `• ${d.type} — ${d.fileName} (${d.uploadDate})`).join('\n')}
 
-SICHERHEITSHINWEISE:
+${m('securityTitle')}:
 ────────────────────
-- Diese Datei enthält vertrauliche persönliche Daten
-- Lagern Sie die ZIP-Datei sicher (z.B. mit Passwort verschlüsselt)
-- Speichern Sie mehrere Kopien an unterschiedlichen Orten
-- Testen Sie regelmäßig die Wiederherstellung
-- Datenschutz beachten (DSGVO/Swiss DPA)
+- ${m('securityTip1')}
+- ${m('securityTip2')}
+- ${m('securityTip3')}
+- ${m('securityTip4')}
+- ${m('securityTip5')}
 
-WEITERE INFORMATIONEN:
+${m('moreInfo')}:
 ──────────────────────
 Webseite: https://steblerstudios.github.io/maloja-plana/
 Kontakt: sophie.stebler@gmail.com
 Quellcode: https://github.com/steblerstudios/maloja-plana
 
 ════════════════════════════════════════
-© 2026 Maloja Plana — Alle Rechte vorbehalten
+${m('copyright')}
 `;
 };
 
@@ -125,9 +127,10 @@ export const createJSONBackup = (data, docs = []) => {
   return JSON.stringify(backup, null, 2);
 };
 
-export const generateCSVBackup = (data) => {
+export const generateCSVBackup = (data, t) => {
+  const m = (key) => t ? t('zipExport.manifest.' + key) : key;
   const rows = [
-    ['Kategorie', 'Feld', 'Wert'],
+    [m('csvCategory'), m('csvField'), m('csvValue')],
     ...Object.entries(data).flatMap(([chapter, fields]) =>
       Object.entries(fields).map(([key, value]) => [
         chapter.toUpperCase(),
@@ -140,11 +143,11 @@ export const generateCSVBackup = (data) => {
   return rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
 };
 
-export const prepareDownloadFiles = (data, docs = []) => {
+export const prepareDownloadFiles = (data, docs = [], t) => {
   return {
     manifest: {
       filename: 'MANIFEST.txt',
-      content: generateZipManifest(prepareDataForExport(data, docs))
+      content: generateZipManifest(prepareDataForExport(data, docs), t)
     },
     json: {
       filename: `backup_${(getFullName(data.basis) || 'export').replace(/\s/g, '_')}_${new Date().toISOString().split('T')[0]}.json`,
@@ -152,7 +155,7 @@ export const prepareDownloadFiles = (data, docs = []) => {
     },
     csv: {
       filename: `data_export_${new Date().toISOString().split('T')[0]}.csv`,
-      content: generateCSVBackup(data)
+      content: generateCSVBackup(data, t)
     }
   };
 };
