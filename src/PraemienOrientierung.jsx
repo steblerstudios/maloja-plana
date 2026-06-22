@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { lookupPLZ, getRegionInfo, getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, ERW_FRA, KIN_FRA } from './config/cantonalData.js';
+import { lookupPLZ } from './data/plzGemeinde.js';
+import { getRegionInfo } from './data/praemienRegionen.js';
+import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
