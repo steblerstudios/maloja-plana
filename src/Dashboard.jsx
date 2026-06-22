@@ -170,6 +170,114 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     )
   );
 
+const BetaFeedback = ({ palette, t }) => {
+  const storageKey = 'or5_beta_feedback';
+  const [submitted, setSubmitted] = useState(() => {
+    try { return localStorage.getItem(storageKey) === 'done'; } catch { return false; }
+  });
+  const [expanded, setExpanded] = useState(false);
+  const [q1, setQ1] = useState('');
+  const [q2, setQ2] = useState('');
+  const [q3, setQ3] = useState('');
+
+  if (submitted) {
+    return React.createElement('div', {
+      style: {
+        textAlign: 'center', padding: space.lg + 'px', margin: space.xl + 'px 0',
+        background: palette.sageMist || palette.up, borderRadius: radius.md,
+      }
+    },
+      React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.medium, color: palette.text } }, t('beta.feedback.thanks')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, t('beta.feedback.thanksDetail'))
+    );
+  }
+
+  if (!expanded) {
+    return React.createElement('div', { style: { textAlign: 'center', margin: space.xl + 'px 0' } },
+      React.createElement('button', {
+        onClick: () => setExpanded(true),
+        style: {
+          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.md,
+          padding: space.sm + 'px ' + space.lg + 'px', cursor: 'pointer',
+          color: palette.mid, fontSize: text.sm, fontFamily: 'inherit',
+        }
+      }, t('beta.feedback.title') + ' →')
+    );
+  }
+
+  const radioStyle = (selected) => ({
+    padding: space.sm + 'px ' + space.md + 'px', borderRadius: radius.sm, cursor: 'pointer',
+    border: '1px solid ' + (selected ? (palette.sage || palette.accent) : palette.border),
+    background: selected ? (palette.sageMist || palette.up) : 'transparent',
+    color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
+    fontWeight: selected ? weight.medium : weight.normal, transition: 'all 0.15s',
+  });
+
+  const handleSubmit = () => {
+    const feedback = { q1, q2, q3, timestamp: new Date().toISOString() };
+    try {
+      localStorage.setItem(storageKey, 'done');
+      localStorage.setItem(storageKey + '_data', JSON.stringify(feedback));
+    } catch { /* ignore */ }
+    setSubmitted(true);
+  };
+
+  return React.createElement('div', {
+    style: {
+      margin: space.xl + 'px 0', padding: space.lg + 'px', borderRadius: radius.md,
+      background: palette.sageMist || palette.up, border: '1px solid ' + palette.border + '44',
+    }
+  },
+    React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text, marginBottom: space.xs + 'px' } }, t('beta.feedback.title')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.lg + 'px' } }, t('beta.feedback.subtitle')),
+
+    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q1')),
+      React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        React.createElement('button', { onClick: () => setQ1('yes'), style: radioStyle(q1 === 'yes') }, t('beta.feedback.scaleYes')),
+        React.createElement('button', { onClick: () => setQ1('mostly'), style: radioStyle(q1 === 'mostly') }, t('beta.feedback.scaleMostly')),
+        React.createElement('button', { onClick: () => setQ1('unclear'), style: radioStyle(q1 === 'unclear') }, t('beta.feedback.scaleUnclear'))
+      )
+    ),
+
+    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q2')),
+      React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', flexWrap: 'wrap' } },
+        React.createElement('button', { onClick: () => setQ2('high'), style: radioStyle(q2 === 'high') }, t('beta.feedback.trustHigh')),
+        React.createElement('button', { onClick: () => setQ2('ok'), style: radioStyle(q2 === 'ok') }, t('beta.feedback.trustOk')),
+        React.createElement('button', { onClick: () => setQ2('low'), style: radioStyle(q2 === 'low') }, t('beta.feedback.trustLow'))
+      )
+    ),
+
+    React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q3')),
+      React.createElement('textarea', {
+        value: q3, onChange: (e) => setQ3(e.target.value),
+        placeholder: t('beta.feedback.q3placeholder'),
+        rows: 3,
+        style: {
+          width: '100%', padding: space.sm + 'px', fontSize: text.sm, fontFamily: 'inherit',
+          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          background: palette.surface, color: palette.text, resize: 'vertical',
+          boxSizing: 'border-box',
+        }
+      })
+    ),
+
+    React.createElement('button', {
+      onClick: handleSubmit,
+      disabled: !q1 && !q2 && !q3,
+      style: {
+        padding: space.sm + 'px ' + space.lg + 'px', borderRadius: radius.sm,
+        border: 'none', cursor: (!q1 && !q2 && !q3) ? 'default' : 'pointer',
+        background: (!q1 && !q2 && !q3) ? palette.border : (palette.sage || palette.accent),
+        color: (!q1 && !q2 && !q3) ? palette.mid : '#fff',
+        fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
+      }
+    }, t('beta.feedback.submit'))
+  );
+};
+
 export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
@@ -720,7 +828,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     })(),
 
     // ─── Life chapters — tiered spatial layout ──────────────
-    React.createElement('div', { style: { marginBottom: '40px', marginTop: '40px' } },
+    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
 
       // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
       ...[
@@ -730,12 +838,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ].map((tier, tierIdx) =>
         React.createElement('div', {
           key: 'tier-' + tierIdx,
-          style: { marginTop: tierIdx === 0 ? '0' : '28px' }
+          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
         },
           React.createElement('div', {
             style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.soft,
-              letterSpacing: '0.3px', padding: '0 4px 10px 4px',
+              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
+              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
               borderBottom: '1px solid ' + palette.border,
             }
           }, tier.label),
@@ -884,7 +992,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         })
       )
-    )
+    ),
+
+    !demoMode && React.createElement(BetaFeedback, { palette, t })
   );
 };
 
