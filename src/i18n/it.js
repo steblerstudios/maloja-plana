@@ -118,6 +118,7 @@ export default {
     budget: 'Budget',
     debts: 'Debiti',
     taxes: 'Imposte',
+    finanzUebersicht: 'Panoramica finanziaria',
     organDonation: 'Donazione di organi',
     budgetSync: 'Sincr. budget',
     kvgIpv: 'Riduzione dei premi (IPV)',
