@@ -3,7 +3,7 @@ import QRCode from './vendor/qrcodejs.js';
 import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
-import { text, radius , space } from './config/tokens.js';
+import { text, weight, radius, space } from './config/tokens.js';
 
 export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
@@ -19,8 +19,15 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanResult, setScanResult] = useState(null);
   const [scanning, setScanning] = useState(false);
   const [qrCode, setQRCode] = useState(null);
+  const [conflicts, setConflicts] = useState(null);
 
   React.useEffect(() => { initBarcodeScanner(); }, []);
+
+  const detectConflicts = (scanned) => {
+    const fields = ['insurer', 'cardNumber', 'ahv', 'franchise', 'model'];
+    const diffs = fields.filter(f => scanned[f] && kkData[f] && scanned[f] !== kkData[f]);
+    return diffs.length > 0 ? { fields: diffs, scanned } : null;
+  };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -29,11 +36,20 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     try {
       const result = await scanBarcodeFromImage(file);
       setScanResult(result);
+      let scanned = null;
       if (result.type === 'qr') {
-        const parsed = parseKKQRCode(result.data);
-        if (parsed) setKKData(parsed);
+        scanned = parseKKQRCode(result.data);
       } else if (result.type === 'ocr') {
-        setKKData(result.data);
+        scanned = result.data;
+      }
+      if (scanned) {
+        const c = detectConflicts(scanned);
+        if (c) {
+          setConflicts(c);
+        } else {
+          setKKData(prev => ({ ...prev, ...scanned }));
+          setConflicts(null);
+        }
       }
     } catch (error) {
       // scan failed
@@ -128,8 +144,36 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         )
       ),
 
-      scanResult && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px', fontSize: text.sm } },
+      scanResult && !conflicts && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px', fontSize: text.sm } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sage } }, '✓ ' + t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
+      ),
+
+      conflicts && React.createElement('div', { style: { padding: space.md, background: palette.gold + '15', border: '1px solid ' + palette.gold, borderRadius: radius.sm, marginBottom: '12px' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm, fontSize: text.sm } }, '○ ' + t('kkScanner.conflictTitle')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('kkScanner.conflictHint')),
+        React.createElement('div', { style: { display: 'grid', gap: space.xs, marginBottom: space.md } },
+          conflicts.fields.map(field =>
+            React.createElement('div', { key: field, style: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: space.xs, padding: space.xs, background: palette.surface, borderRadius: radius.sm, fontSize: text.xs } },
+              React.createElement('div', { style: { fontWeight: weight.medium } }, t('kkScanner.' + field) || field),
+              React.createElement('div', { style: { color: palette.mid } }, kkData[field] || '—'),
+              React.createElement('div', { style: { color: palette.sage, fontWeight: weight.medium } }, conflicts.scanned[field] || '—')
+            )
+          )
+        ),
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.xs, fontSize: text.xs } },
+          React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontWeight: weight.medium } }, t('kkScanner.conflictCurrent')),
+          React.createElement('div', { style: { textAlign: 'center', color: palette.sage, fontWeight: weight.medium } }, t('kkScanner.conflictScanned'))
+        ),
+        React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.md } },
+          React.createElement('button', {
+            onClick: () => { setKKData(prev => ({ ...prev, ...conflicts.scanned })); setConflicts(null); },
+            style: { ...buttonStyle, flex: 1, background: palette.sage }
+          }, t('kkScanner.conflictAccept')),
+          React.createElement('button', {
+            onClick: () => setConflicts(null),
+            style: { ...buttonStyle, flex: 1, background: palette.mid }
+          }, t('kkScanner.conflictKeep'))
+        )
       ),
 
       React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save')),
