@@ -317,23 +317,30 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     return 'begonnen';
   };
 
-  const getStatusColor = (pct) => {
-    if (pct === 0) return palette.soft;
+  const chapterAccentColor = {
+    basis: palette.sage, wohnen: palette.sage, finanzen: palette.gold,
+    versicherungen: palette.sky, ausbildung: palette.sage,
+    behoerden: palette.sand, notfall: palette.rose,
+  };
+
+  const getStatusColor = (pct, chKey) => {
+    if (pct === 0) return chapterAccentColor[chKey] || palette.soft;
     if (pct < 50) return palette.gold;
     if (pct < 100) return palette.sage;
     return palette.sage;
   };
 
-  const getIconBg = (pct) => {
-    if (pct === 0) return palette.up;
+  const getIconBg = (pct, chKey) => {
+    const accent = chapterAccentColor[chKey] || palette.sand;
+    if (pct === 0) return accent + '0C';
     if (pct < 50) return palette.sand + '18';
     if (pct < 100) return palette.sand + '28';
     return palette.sage + '20';
   };
 
   const getIconOpacity = (pct) => {
-    if (pct === 0) return 0.44;
-    if (pct < 50) return 0.55;
+    if (pct === 0) return 0.55;
+    if (pct < 50) return 0.65;
     if (pct < 100) return 0.78;
     return 1;
   };
@@ -852,11 +859,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             const ch = chapters[chIdx];
             if (!ch) return null;
             const { pct } = calculateChapterCompletion(ch.key);
-            const statusColor = getStatusColor(pct);
+            const statusColor = getStatusColor(pct, ch.key);
             const iconKey = chapterIcons[ch.key];
             const IconFn = iconKey && Icons[iconKey];
             const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
-            const rowOpacity = pct === 0 ? 0.68 : 1;
+            const rowOpacity = pct === 0 ? 0.72 : 1;
             const status = getChapterStatus(ch);
             const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
 
@@ -884,7 +891,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               React.createElement('div', {
                 style: {
                   width: '40px', height: '40px', borderRadius: '10px',
-                  background: getIconBg(pct),
+                  background: getIconBg(pct, ch.key),
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
                   transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
