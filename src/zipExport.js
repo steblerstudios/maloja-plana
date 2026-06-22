@@ -33,7 +33,7 @@ export const prepareDataForExport = (data, docs = []) => {
   };
 };
 
-export const generateZipManifest = (data, t) => {
+const generateZipManifest = (data, t) => {
   const m = (key, params) => t ? t('zipExport.manifest.' + key, params) : key;
   const dash = '—';
   return `${m('header')}
@@ -108,7 +108,7 @@ ${m('copyright')}
 `;
 };
 
-export const createJSONBackup = (data, docs = []) => {
+const createJSONBackup = (data, docs = []) => {
   const backup = {
     created: new Date().toISOString(),
     version: '5.0',
@@ -127,7 +127,7 @@ export const createJSONBackup = (data, docs = []) => {
   return JSON.stringify(backup, null, 2);
 };
 
-export const generateCSVBackup = (data, t) => {
+const generateCSVBackup = (data, t) => {
   const m = (key) => t ? t('zipExport.manifest.' + key) : key;
   const rows = [
     [m('csvCategory'), m('csvField'), m('csvValue')],
