@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, leading, space, radius, shadow, ease } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName } from './config/cantonalData.js';
 import { calculatePremiumSubsidy } from './premiumCalc.js';
 
@@ -210,7 +210,7 @@ const BetaFeedback = ({ palette, t }) => {
     border: '1px solid ' + (selected ? (palette.sage || palette.accent) : palette.border),
     background: selected ? (palette.sageMist || palette.up) : 'transparent',
     color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
-    fontWeight: selected ? weight.medium : weight.normal, transition: 'all 0.15s',
+    fontWeight: selected ? weight.medium : weight.normal, transition: `all ${duration.fast}ms ${ease}`,
   });
 
   const handleSubmit = () => {
@@ -328,6 +328,47 @@ const FortschrittsKarte = ({ palette, t, openChapters, onSelectChapter, text, we
             }, '+' + (missing.length - 6))
           )
         )
+      )
+    )
+  );
+};
+
+const DatenWirken = ({ palette, t, data, text, weight, space, radius }) => {
+  const connections = [
+    { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
+    { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.finanzen?.monthlyIncome && data.versicherungen?.kkPremium) },
+    { key: 'sozial', label: t('datenWirken.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
+    { key: 'lohn', label: t('datenWirken.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
+    { key: 'notfall', label: t('datenWirken.notfall'), active: !!(data.notfall?.emergencyContact) },
+    { key: 'budget', label: t('datenWirken.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
+  ];
+  const active = connections.filter(c => c.active);
+  if (active.length === 0) return null;
+  return React.createElement('div', {
+    style: {
+      margin: space.md + 'px 0',
+      padding: space.sm + 'px ' + space.md + 'px',
+      background: palette.sage + '08',
+      borderRadius: radius.md,
+      border: '1px solid ' + palette.sage + '15',
+    }
+  },
+    React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.mid, marginBottom: '6px', fontWeight: weight.medium }
+    }, t('datenWirken.title')),
+    React.createElement('div', {
+      style: { display: 'flex', flexWrap: 'wrap', gap: '5px' }
+    },
+      active.map(c =>
+        React.createElement('span', {
+          key: c.key,
+          style: {
+            fontSize: text.xs, color: palette.sage,
+            padding: '2px 8px',
+            background: palette.sage + '0D',
+            borderRadius: radius.sm,
+          }
+        }, '✓ ' + c.label)
       )
     )
   );
@@ -503,7 +544,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               fontFamily: 'inherit',
               textAlign: 'left',
               color: palette.text,
-              transition: 'background 0.2s, border-color 0.2s',
+              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
@@ -903,6 +944,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       return React.createElement(FortschrittsKarte, { palette, t, openChapters, onSelectChapter, text, weight, leading, space, radius, shadow });
     })(),
 
+    // ─── Live connections — what user data powers ──────────
+    React.createElement(DatenWirken, { palette, t, data, text, weight, space, radius }),
+
     // ─── Life chapters — tiered spatial layout ──────────────
     React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
 
@@ -1052,7 +1096,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               cursor: 'pointer',
               fontFamily: 'inherit',
               display: 'flex', alignItems: 'center', gap: space.sm,
-              transition: 'background 0.2s',
+              transition: `background ${duration.normal}ms ${ease}`,
               textAlign: 'left',
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },

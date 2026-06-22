@@ -680,6 +680,16 @@ export default {
     chapterTrust: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.',
   },
 
+  datenWirken: {
+    title: 'Deine Daten wirken bereits:',
+    tax: 'Steuerrechner personalisiert',
+    ipv: 'IPV-Prüfung aktiv',
+    sozial: 'Sozialhilfe-Orientierung aktiv',
+    lohn: 'Mindestlohn-Check aktiv',
+    notfall: 'Notfallkarte bereit',
+    budget: 'Budget-Übersicht aktiv',
+  },
+
   legal: {
     title: 'Rechtliches',
     tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum' },
