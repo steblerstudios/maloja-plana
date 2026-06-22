@@ -47,7 +47,7 @@ export const BetaGate = ({ children }) => {
         style: { fontSize: '20px', fontWeight: '600', marginBottom: '8px', color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
-        style: { fontSize: '13px', color: palette.mid, marginBottom: '24px', lineHeight: '1.5' }
+        style: { fontSize: text.sm, color: palette.mid, marginBottom: '24px', lineHeight: '1.5' }
       }, t('beta.gateMessage')),
       React.createElement('input', {
         type: 'text',
@@ -63,7 +63,7 @@ export const BetaGate = ({ children }) => {
         }
       }),
       error && React.createElement('p', {
-        style: { fontSize: '13px', color: palette.rose, marginTop: '8px' }
+        style: { fontSize: text.sm, color: palette.rose, marginTop: '8px' }
       }, t('beta.codeWrong')),
       React.createElement('button', {
         type: 'submit',
