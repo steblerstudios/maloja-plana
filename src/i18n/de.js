@@ -1650,6 +1650,23 @@ export default {
     bannerLabel: 'Geschlossene Beta',
     feedbackMail: 'Feedback per E-Mail',
     feedbackForm: 'Feedback-Formular',
+    feedback: {
+      title: 'Dein Feedback zur Beta',
+      subtitle: 'Hilf uns, Maloja Plana besser zu machen. Alles bleibt auf Deinem Gerät.',
+      q1: 'Hast Du den Nutzen von Maloja Plana in der ersten Minute verstanden?',
+      q2: 'Wie sicher fühlst Du Dich, dass Deine Daten privat bleiben?',
+      q3: 'Was hat Dir gefallen oder gefehlt?',
+      q3placeholder: 'Optional — aber sehr hilfreich für uns.',
+      scaleYes: 'Ja, sofort',
+      scaleMostly: 'Grösstenteils',
+      scaleUnclear: 'War unklar',
+      trustHigh: 'Sehr sicher',
+      trustOk: 'Eher sicher',
+      trustLow: 'Unsicher',
+      submit: 'Feedback senden',
+      thanks: 'Danke für Dein Feedback!',
+      thanksDetail: 'Deine Rückmeldung hilft uns, Maloja Plana zu verbessern.',
+    },
   },
 
   demo: {
