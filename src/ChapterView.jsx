@@ -845,47 +845,41 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             }
           }
           elements.push(renderField(field));
-          if (onNavigate && field.k === 'kkPremium' && chapter.key === 'versicherungen') {
-            elements.push(
-              React.createElement('button', {
-                key: 'crosslink-ipv',
-                onClick: () => onNavigate('premium'),
-                style: {
-                  gridColumn: '1 / -1',
-                  background: palette.sageMist || palette.up,
-                  border: 'none',
-                  borderRadius: radius.sm,
-                  padding: space.sm + 'px ' + space.md + 'px',
-                  fontSize: text.sm,
-                  color: palette.sageDeep || palette.mid,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  fontFamily: 'inherit',
-                  marginBottom: space.sm + 'px',
-                }
-              }, t('nav.crosslink.ipvHint'))
-            );
+          const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
+            React.createElement('button', {
+              key: 'crosslink-' + key,
+              onClick: () => onNavigate(view),
+              style: {
+                gridColumn: '1 / -1',
+                background: palette.sageMist || palette.up,
+                border: 'none',
+                borderRadius: radius.sm,
+                padding: space.sm + 'px ' + space.md + 'px',
+                fontSize: text.sm,
+                color: palette.sageDeep || palette.mid,
+                cursor: 'pointer',
+                textAlign: 'left',
+                fontFamily: 'inherit',
+                marginBottom: space.sm + 'px',
+              }
+            }, t(textKey))
+          );
+          if (field.k === 'kkPremium' && chapter.key === 'versicherungen') {
+            crosslinkBtn('ipv', 'premium', 'nav.crosslink.ipvHint');
           }
-          if (onNavigate && field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
-            elements.push(
-              React.createElement('button', {
-                key: 'crosslink-tax',
-                onClick: () => onNavigate('tax'),
-                style: {
-                  gridColumn: '1 / -1',
-                  background: palette.sageMist || palette.up,
-                  border: 'none',
-                  borderRadius: radius.sm,
-                  padding: space.sm + 'px ' + space.md + 'px',
-                  fontSize: text.sm,
-                  color: palette.sageDeep || palette.mid,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  fontFamily: 'inherit',
-                  marginBottom: space.sm + 'px',
-                }
-              }, t('nav.crosslink.taxHint'))
-            );
+          if (field.k === 'kkInsurer' && chapter.key === 'versicherungen') {
+            crosslinkBtn('praemien', 'praemien', 'nav.crosslink.praemienHint');
+          }
+          if (field.k === 'bvgContribution' && chapter.key === 'versicherungen') {
+            crosslinkBtn('vorsorge', 'vorsorge', 'nav.crosslink.vorsorgeHint');
+          }
+          if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
+            crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
+          }
+          if (field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
+            crosslinkBtn('tax', 'tax', 'nav.crosslink.taxHint');
+            crosslinkBtn('ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome');
+            crosslinkBtn('sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint');
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;

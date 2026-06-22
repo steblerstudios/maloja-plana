@@ -153,6 +153,11 @@ export default {
     crosslink: {
       ipvHint: 'Primes élevées ? Vérifie ton droit à la réduction →',
       taxHint: 'Estimer l\'impôt fédéral →',
+      ipvFromIncome: 'Revenu saisi → vérifie ton droit à la réduction de primes →',
+      sozialhilfeHint: 'Orientation : à quoi as-tu droit selon les normes CSIAS ? →',
+      budgetHint: 'Loyer saisi → aperçu de ton budget →',
+      vorsorgeHint: 'Cotisation LPP saisie → calcule ta rente →',
+      praemienHint: 'Caisse maladie saisie → compare ta prime →',
     },
     backToDashboard: 'Aperçu',
   },
