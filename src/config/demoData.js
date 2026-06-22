@@ -88,7 +88,7 @@ export const DEMO_DATA = {
   behoerden: {
     cantoneOfTaxation: 'ZH',
     taxId: 'ZH-2024-123456',
-    taxFillingDeadline: '2026-09-30',
+    taxFilingDeadline: '2026-09-30',
     pendingTaxReturns: '0',
     registryOffice: 'Kreisbüro 4',
     betreibungsStatus: 'none',
