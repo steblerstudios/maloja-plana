@@ -42,7 +42,7 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 | KI-002 | BVG double deduction | Critical | **Fixed** (2026-05-16) |
 | KI-003 | KK/AHV duplicate entry | Important | **Partially fixed** — autofill + persist done; conflict warnings pending (Slice C) |
 | KI-004 | Hardcoded German in schuldenCalc.js | Important | **Fixed** (2026-06-22) — Severity-Keys + Recommendations als i18n-Keys |
-| KI-005 | QR code external CDN dependency | Important | Open — Phase 15 |
+| KI-005 | QR code external CDN dependency | Important | **Fixed** — vendor/qrcodejs.js lokal eingebunden |
 | KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
 | KI-008 | Auto-save 5-second interval (no dirty flag) | Minor | Open — Phase 15 |
@@ -50,8 +50,8 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 ## Next Recommended Implementation Candidates
 
 1. **KK Scanner Slice C** — conflict warnings when scanned values differ, AHV display masking (small, UI only)
-2. **Alpha banner BVG note update** — BVG item now says "reference values" but could be removed entirely since it's fixed
-4. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
+2. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
+3. **Bundle-Optimierung** — 357/360 KB gzipped, Code-Splitting oder manualChunks prüfen
 
 ## Do Not Touch Yet
 
