@@ -170,6 +170,12 @@ export default {
     dark: 'Scuro',
   },
 
+  progress: {
+    notStarted: 'Il tuo percorso inizia qui',
+    status: '{started} di {total} iniziati · {done} completati',
+    allDone: 'Tutte le sezioni completate',
+  },
+
   guidedStart: {
     title: 'Pronto in pochi minuti',
     text: 'Tre piccoli passi — poi Maloja Plana lavora per te.',
