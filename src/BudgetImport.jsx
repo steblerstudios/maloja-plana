@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 
 export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   const [importing, setImporting] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [importError, setImportError] = useState(null);
   const [importType, setImportType] = useState('csv');
 
   const handleFileSelect = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setImporting(true);
+    setImportError(null);
     try {
       const entries = await importBudgetFromFile(file);
       setPreview({
@@ -19,7 +21,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         totalAmount: entries.reduce((sum, e) => sum + e.amount, 0)
       });
     } catch (error) {
-      // import failed
+      setImportError(t('budgetImport.importFailed') || 'Import fehlgeschlagen');
     } finally {
       setImporting(false);
     }
@@ -62,6 +64,8 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       ),
 
       importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.gold, fontWeight: weight.semi } }, '○ ' + t('budgetImport.importing')),
+
+      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.rose, fontWeight: weight.semi, marginTop: space.sm } }, '✕ ' + importError),
 
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, '□ ' + t('budgetImport.formatExample') + ':'),
