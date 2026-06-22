@@ -667,6 +667,8 @@ export default {
     footer: 'Solo su questo dispositivo · Nessun server',
     emergency: 'Queste informazioni vengono salvate solo localmente.',
     localOnly: 'I tuoi dati restano su questo dispositivo.',
+    localBadge: '100% locale — i tuoi dati restano su questo dispositivo',
+    chapterTrust: 'I tuoi dati vengono salvati solo localmente. Nessun server, nessun account.',
   },
 
   legal: {
