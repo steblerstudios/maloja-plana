@@ -77,7 +77,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
     tabRow: { display: 'flex', gap: space.xs, marginBottom: space.md + 'px' },
     tab: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.mid },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
   };
 

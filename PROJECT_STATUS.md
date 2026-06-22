@@ -5,7 +5,7 @@ A privacy-first Swiss life organizer for immigrants, refugees, and expats.
 
 **Date**: 2026-05-16
 **Branch**: `dev`
-**Live alpha**: https://ordnung-ruhe-neu.vercel.app
+**Live alpha**: https://steblerstudios.github.io/maloja-plana
 **Repository**: https://github.com/steblerstudios/maloja-plana (private)
 **Build**: 447 KB (121 KB gzipped), 75 modules, zero runtime dependencies
 

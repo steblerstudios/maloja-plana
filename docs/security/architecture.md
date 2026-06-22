@@ -71,7 +71,7 @@ Maloja Plana follows a **local-first, zero-backend** architecture. There are no 
 
 ## Security Headers
 
-Configured in `vercel.json`:
+Configured via hosting platform:
 - `X-Content-Type-Options: nosniff` — prevents MIME sniffing
 - `X-Frame-Options: DENY` — prevents clickjacking
 - `Referrer-Policy: no-referrer` — no referrer leakage
