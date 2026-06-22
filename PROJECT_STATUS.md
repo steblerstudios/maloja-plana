@@ -38,10 +38,10 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 
 | ID | Issue | Severity | Status |
 |----|-------|----------|--------|
-| KI-001 | SKOS household composition bug (children counted as adults) | Critical | Open — requires Phase 9 household model |
+| KI-001 | SKOS Grundbedarf: pauschal nach Haushaltsgrösse, keine Kinder-Differenzierung | Minor | Bewusste Vereinfachung — SKOS-Tabelle korrekt, Kinder-Zuschläge kantonal verschieden |
 | KI-002 | BVG double deduction | Critical | **Fixed** (2026-05-16) |
 | KI-003 | KK/AHV duplicate entry | Important | **Partially fixed** — autofill + persist done; conflict warnings pending (Slice C) |
-| KI-004 | Hardcoded German in cantonalData.js | Important | Open — Phase 6 |
+| KI-004 | Hardcoded German in schuldenCalc.js | Important | **Fixed** (2026-06-22) — Severity-Keys + Recommendations als i18n-Keys |
 | KI-005 | QR code external CDN dependency | Important | Open — Phase 15 |
 | KI-006 | Single SKOS table (national only) | Important | Open — Phase 13 |
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
