@@ -699,7 +699,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         rows.push({ label: tr('behördenStatus.betreibung'), value: opts[data.betreibungsStatus] || data.betreibungsStatus });
       }
       if (data.courtCases) {
-        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || 'Ja') : (tr('chapters.behoerden.fields.courtCases.options.no') || 'Nein');
+        const val = data.courtCases === 'yes' ? (tr('chapters.behoerden.fields.courtCases.options.yes') || data.courtCases) : (tr('chapters.behoerden.fields.courtCases.options.no') || data.courtCases);
         rows.push({ label: tr('behördenStatus.courtCases'), value: val });
       }
       if (data.willMade) {
