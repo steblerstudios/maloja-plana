@@ -197,6 +197,20 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     );
   };
 
+  const renderOrientation = (field) => {
+    const parts = [];
+    if (field.orientation) {
+      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation));
+    }
+    if (field.link) {
+      parts.push(React.createElement('a', {
+        key: 'lk', href: field.link.url, target: '_blank', rel: 'noopener noreferrer',
+        style: { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.xs + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+      }, '→ ' + field.link.label));
+    }
+    return parts.length > 0 ? parts : null;
+  };
+
   const renderField = (field) => {
     if (field.type === 'household') return renderHouseholdFields();
     const value = data[field.k] || '';
@@ -244,7 +258,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           style: inputStyle
         }),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation),
+        renderOrientation(field),
         error && React.createElement('div', { style: errorStyle }, error)
       );
     }
@@ -357,7 +371,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           })
         ),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation)
+        renderOrientation(field)
       );
     }
 
@@ -379,7 +393,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
         ),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
-        field.orientation && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation)
+        renderOrientation(field)
       );
     }
 
