@@ -310,6 +310,7 @@ export default {
       emptyState: 'Ton canton détermine impôts, réduction de primes et aide sociale — deux indications suffisent.',
       emptyStateHint: 'Prénom et canton — 10 secondes.',
       icon: '◎',
+      benefits: ['Calculateur fiscal', 'Aide sociale', 'Réduction de primes', 'Salaire minimum'],
       fields: {
         firstName: 'Prénom',
         middleName: 'Deuxième prénom',
@@ -353,6 +354,7 @@ export default {
       emptyState: 'Ton loyer alimente le budget et le calcul d\'aide sociale.',
       emptyStateHint: 'Adresse ou loyer — tu pourras compléter le reste plus tard.',
       icon: '⌂',
+      benefits: ['Aide sociale', 'Aperçu budget', 'Part du loyer'],
       fields: {
         address: 'Rue et numéro',
         postalCode: 'Code postal',
@@ -380,6 +382,7 @@ export default {
       emptyState: 'Ton revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.',
       emptyStateHint: 'Indique ton salaire mensuel — 10 secondes.',
       icon: '◇',
+      benefits: ['Calculateur fiscal', 'Réduction de primes', 'Aide sociale', 'Salaire minimum'],
       fields: {
         monthlyIncome: 'Revenu mensuel (CHF)',
         incomeType: { label: 'Type de revenu', options: { netto: 'Net (ce que je reçois)', brutto: 'Brut (avant déductions)' } },
@@ -431,6 +434,7 @@ export default {
       emptyState: 'Ta prime d\'assurance maladie détermine si tu as droit à une réduction de primes.',
       emptyStateHint: 'Indique ta caisse maladie — tu pourras compléter le reste plus tard.',
       icon: '◰',
+      benefits: ['Réduction de primes', 'Comparaison de primes', 'Calculateur prévoyance'],
       fields: {
         kkInsurer: 'Caisse maladie',
         kkModel: { label: 'Modèle d\'assurance', options: { basic: 'Base', standard: 'Standard', comfort: 'Confort' } },
@@ -471,6 +475,7 @@ export default {
       emptyState: 'Ta profession et ton taux d\'occupation alimentent l\'aperçu fiscal et prévoyance.',
       emptyStateHint: 'Métier ou formation actuelle — 30 secondes.',
       icon: '✦',
+      benefits: ['Salaire minimum', 'Calculateur fiscal'],
       fields: {
         schoolName: 'École / Université',
         educationLevel: { label: 'Plus haut diplôme', options: { mandatory: 'École obligatoire', apprenticeship: 'Apprentissage (CFC)', vocMatura: 'Maturité professionnelle', matura: 'Maturité', bachelor: 'Bachelor', master: 'Master', doctorate: 'Doctorat' } },
@@ -496,6 +501,7 @@ export default {
       emptyState: 'Tes contacts administratifs à portée de main — du temps gagné pour le prochain rendez-vous.',
       emptyStateHint: 'Service social, administration fiscale, curateur — indique ce que tu sais.',
       icon: '◉',
+      benefits: ['Calculateur fiscal', 'Liens directs'],
       fields: {
         cantoneOfTaxation: 'Canton d\'imposition',
         taxId: 'Numéro fiscal',
@@ -522,6 +528,7 @@ export default {
       emptyState: 'Ta carte d\'urgence — prête en 2 minutes, là quand ça compte.',
       emptyStateHint: 'Un contact avec un numéro de téléphone suffit pour commencer.',
       icon: '⚠',
+      benefits: ["Carte d'urgence", 'Aperçu prévoyance'],
       fields: {
         emergencyContact: 'Personne de contact d\'urgence',
         emergencyPhone: 'Téléphone d\'urgence',
@@ -621,6 +628,7 @@ export default {
   },
 
   chapterView: {
+    benefitsLabel: 'Tes données alimentent :',
     emptyState: 'Encore vide — quelques indications suffisent pour que Maloja travaille pour toi.',
     emptyStateHint: 'Tu peux compléter à tout moment. Rien ne doit être fait d\'un coup.',
     fields: 'Informations',

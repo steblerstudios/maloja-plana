@@ -311,6 +311,7 @@ export default {
       emptyState: 'Your canton determines tax, premium reduction and social assistance — two entries are enough.',
       emptyStateHint: 'First name and canton — takes 10 seconds.',
       icon: '◎',
+      benefits: ['Tax calculator', 'Social assistance', 'Premium reduction', 'Wage check'],
       fields: {
         firstName: 'First name',
         middleName: 'Middle name',
@@ -354,6 +355,7 @@ export default {
       emptyState: 'Your rent feeds into your budget and social assistance calculation.',
       emptyStateHint: 'Enter your address or rent — you can add the rest later.',
       icon: '⌂',
+      benefits: ['Social assistance', 'Budget overview', 'Housing cost ratio'],
       fields: {
         address: 'Street and house number',
         postalCode: 'Postal code',
@@ -381,6 +383,7 @@ export default {
       emptyState: 'Your income unlocks the tax calculator, premium reduction check and minimum wage check.',
       emptyStateHint: 'Enter your monthly salary — takes 10 seconds.',
       icon: '◇',
+      benefits: ['Tax calculator', 'Premium reduction', 'Social assistance', 'Minimum wage check'],
       fields: {
         monthlyIncome: 'Monthly income (CHF)',
         incomeType: { label: 'Income type', options: { netto: 'Net (what I receive)', brutto: 'Gross (before deductions)' } },
@@ -432,6 +435,7 @@ export default {
       emptyState: 'Your health insurance premium determines whether you qualify for premium reduction.',
       emptyStateHint: 'Enter your health insurer — you can add the rest later.',
       icon: '◰',
+      benefits: ['Premium reduction', 'Premium comparison', 'Pension calculator'],
       fields: {
         kkInsurer: 'Health insurer',
         kkModel: { label: 'Insurance model', options: { basic: 'Basic', standard: 'Standard', comfort: 'Comfort' } },
@@ -472,6 +476,7 @@ export default {
       emptyState: 'Your occupation and employment level feed into tax and pension overview.',
       emptyStateHint: 'Current job or education — 30 seconds.',
       icon: '✦',
+      benefits: ['Minimum wage check', 'Tax calculator'],
       fields: {
         schoolName: 'School / University',
         educationLevel: { label: 'Highest qualification', options: { mandatory: 'Mandatory school', apprenticeship: 'Apprenticeship (EFZ)', vocMatura: 'Vocational baccalaureate', matura: 'Matura', bachelor: 'Bachelor', master: 'Master', doctorate: 'Doctorate' } },
@@ -497,6 +502,7 @@ export default {
       emptyState: 'Authority contacts at your fingertips — saves time at your next appointment or call.',
       emptyStateHint: 'Social services, tax office, legal guardian — enter what you know.',
       icon: '◉',
+      benefits: ['Tax calculator', 'Direct links'],
       fields: {
         cantoneOfTaxation: 'Tax canton',
         taxId: 'Tax number',
@@ -523,6 +529,7 @@ export default {
       emptyState: 'Your emergency card — ready in 2 minutes, there when it matters.',
       emptyStateHint: 'One contact with a phone number is enough to start.',
       icon: '⚠',
+      benefits: ['Emergency card', 'Provision overview'],
       fields: {
         emergencyContact: 'Emergency contact person',
         emergencyPhone: 'Emergency phone',
@@ -622,6 +629,7 @@ export default {
   },
 
   chapterView: {
+    benefitsLabel: 'Your data feeds into:',
     emptyState: 'Empty for now — a few entries and Maloja starts working for you.',
     emptyStateHint: 'You can add more any time. Nothing needs to be done all at once.',
     fields: 'Details',
