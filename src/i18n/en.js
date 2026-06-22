@@ -211,6 +211,10 @@ export default {
     taxCanton: 'Tax canton {canton}',
     emergencyContact: 'In an emergency: {name}',
   },
+  fortschritt: {
+    title: 'Open fields',
+    fieldsOpen: 'open',
+  },
   chapterStatus: {
     leer: 'Ready to fill in',
     begonnen: 'Started',
