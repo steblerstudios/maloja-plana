@@ -63,7 +63,7 @@ export const EOrechner = ({ palette, t, data }) => {
     ),
 
     result && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: s.highlight },
+      React.createElement('div', { 'aria-live': 'polite', style: s.highlight },
         React.createElement('div', { style: s.label }, t('eo.taggeld')),
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(result.mutterschaft.taggeld) + ' / ' + t('eo.tag')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },

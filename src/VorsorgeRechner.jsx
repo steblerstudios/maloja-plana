@@ -134,7 +134,7 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
 
     // AHV Tab
     activeTab === 'ahv' && ahvResult && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: s.highlight },
+      React.createElement('div', { 'aria-live': 'polite', style: s.highlight },
         React.createElement('div', { style: s.label }, t('vr.ahvRente')),
         React.createElement('div', { style: s.big }, 'CHF ' + fmt(ahvResult.monatsrente) + ' / ' + t('vr.monat')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
