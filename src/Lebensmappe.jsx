@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
@@ -28,7 +28,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       style: {
         padding: '14px 16px',
         background: palette.up,
-        borderRadius: '6px',
+        borderRadius: radius.sm,
         marginBottom: '8px',
       }
     },
@@ -58,7 +58,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     React.createElement('div', {
       style: {
         padding: '32px 20px', textAlign: 'center',
-        background: palette.up, borderRadius: '8px',
+        background: palette.up, borderRadius: radius.sm,
         border: '1px solid ' + palette.border,
       }
     },
@@ -84,7 +84,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     // ─── Header ─────────────────────────────────────────
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: '8px',
+        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
@@ -116,7 +116,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       style: {
         width: '100%', padding: '12px', marginBottom: '20px',
         background: palette.sand, color: '#fff', border: 'none',
-        borderRadius: '6px', cursor: 'pointer',
+        borderRadius: radius.sm, cursor: 'pointer',
         fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
         letterSpacing: '0.2px',
       }
@@ -135,7 +135,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     // ─── Document references ────────────────────────────
     hasSections && preview.docCount > 0 && React.createElement('div', {
       style: {
-        padding: '14px 16px', background: palette.up, borderRadius: '6px',
+        padding: '14px 16px', background: palette.up, borderRadius: radius.sm,
         marginBottom: '8px',
       }
     },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
 const DossierCard = ({ palette, title, description, status, icon, onClick }) => {
@@ -11,7 +11,7 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
     tabIndex: isClickable ? 0 : undefined,
     onKeyDown: isClickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined,
     style: {
-      padding: '20px', background: palette.up, borderRadius: '8px',
+      padding: '20px', background: palette.up, borderRadius: radius.sm,
       border: '1px solid ' + palette.border, marginBottom: '12px',
       cursor: isClickable ? 'pointer' : 'default',
       transition: 'border-color 0.15s',
@@ -59,7 +59,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     // Title
     React.createElement('div', {
       style: {
-        background: palette.surface, padding: '24px 20px', borderRadius: '8px',
+        background: palette.surface, padding: '24px 20px', borderRadius: radius.sm,
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
@@ -110,7 +110,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     // Backup section — links to existing backup view
     React.createElement('div', {
       style: {
-        padding: '20px', background: palette.surface, borderRadius: '8px',
+        padding: '20px', background: palette.surface, borderRadius: radius.sm,
         border: '1px solid ' + palette.border, marginBottom: '12px',
       }
     },
@@ -136,7 +136,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
             style: {
               padding: '8px 14px', background: palette.up,
               color: palette.mid, border: '1px solid ' + palette.border,
-              borderRadius: '6px', cursor: 'pointer', fontSize: text.sm,
+              borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
             }
           }, t('unterlagen.backup.action'))
         )

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
-import { text as textTokens, weight } from './config/tokens.js';
+import { text as textTokens, weight, radius } from './config/tokens.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -58,7 +58,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.accent : palette.border),
-          borderRadius: '8px', cursor: 'pointer', textAlign: 'left',
+          borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
           display: 'flex', alignItems: 'flex-start', gap: '12px',
           transition: 'border-color 0.2s',
         }
@@ -86,14 +86,14 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         onClick: () => setPreview(!preview),
         style: {
           padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: '6px', cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
       React.createElement('button', {
         onClick: handlePrint,
         style: {
           padding: '10px 16px', background: palette.accent, color: '#fff',
-          border: 'none', borderRadius: '6px', cursor: 'pointer',
+          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, t('briefe.printLetter'))
@@ -102,7 +102,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     // Data status
     selected && React.createElement('div', {
       style: {
-        padding: '10px 14px', background: palette.up, borderRadius: '6px',
+        padding: '10px 14px', background: palette.up, borderRadius: radius.sm,
         fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
         marginBottom: '16px',
       }
@@ -111,7 +111,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     // Preview
     preview && previewHtml && React.createElement('div', {
       style: {
-        border: '1px solid ' + palette.border, borderRadius: '8px',
+        border: '1px solid ' + palette.border, borderRadius: radius.sm,
         overflow: 'hidden', background: '#fff',
       }
     },

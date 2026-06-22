@@ -6,7 +6,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight } from './config/tokens.js';
+import { text, weight, radius } from './config/tokens.js';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -36,7 +36,7 @@ export const NotificationSettings = ({ palette, t }) => {
   };
 
   const toggleStyle = (enabled) => ({
-    width: '44px', height: '24px', borderRadius: '12px',
+    width: '44px', height: '24px', borderRadius: radius.md,
     background: enabled ? palette.sage : palette.up,
     border: '1px solid ' + (enabled ? palette.sage : palette.border),
     cursor: 'pointer', position: 'relative',
@@ -81,7 +81,7 @@ export const NotificationSettings = ({ palette, t }) => {
   };
 
   return React.createElement('div', {
-    style: { background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border }
+    style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border }
   },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' } },
       React.createElement(Icon, { name: 'cowbell', size: 20 }), t('notifications.title')
@@ -90,7 +90,7 @@ export const NotificationSettings = ({ palette, t }) => {
     // Permission status
     React.createElement('div', {
       style: {
-        padding: '16px', borderRadius: '8px', marginBottom: '16px',
+        padding: '16px', borderRadius: radius.sm, marginBottom: '16px',
         background: isGranted ? palette.sage + '11' : palette.up,
         border: '1px solid ' + (isGranted ? palette.sage + '33' : palette.border),
       }
@@ -114,7 +114,7 @@ export const NotificationSettings = ({ palette, t }) => {
         onClick: handleRequestPermission,
         style: {
           padding: '10px 16px', background: palette.sand, color: '#000',
-          border: 'none', borderRadius: '6px', cursor: 'pointer',
+          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontWeight: weight.semi, fontSize: text.sm, fontFamily: 'DM Sans, sans-serif',
         }
       }, t('notifications.enable')),
@@ -150,13 +150,13 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Privacy note
     React.createElement('div', {
-      style: { padding: '12px', background: palette.up, borderRadius: '6px', fontSize: text.sm, color: palette.mid }
+      style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid }
     },
       '○ ' + t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: '6px', fontSize: text.sm, color: palette.sage, textAlign: 'center' }
+      style: { marginTop: '12px', padding: '8px', background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sage, textAlign: 'center' }
     }, '✓ ' + t('common.saved'))
   );
 };

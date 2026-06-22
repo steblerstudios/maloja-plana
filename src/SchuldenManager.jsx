@@ -153,7 +153,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     view === 'debts' && React.createElement('div', null,
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.addDebt')),
 
-      React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: '8px', marginBottom: '16px', border: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { background: palette.surface, padding: '16px', borderRadius: radius.sm, marginBottom: '16px', border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), style: inputStyle }),
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), style: inputStyle }),
         React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), style: inputStyle }),
@@ -179,11 +179,11 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         ))
       ),
 
-      schulden.some(d => d.interestRate > 0) && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px' } },
+      schulden.some(d => d.interestRate > 0) && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm } },
         React.createElement('button', { onClick: () => setDebtPlan(createDebtPlan(debtStatus.totalDebt, 500, schulden[0]?.interestRate || 0)), style: buttonStyle }, '◰ ' + t('schulden.paymentPlan'))
       ),
 
-      debtPlan && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: '6px', maxHeight: '400px', overflowY: 'auto' } },
+      debtPlan && React.createElement('div', { style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, maxHeight: '400px', overflowY: 'auto' } },
         React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '8px' } }, t('schulden.paymentPlanTitle', { amount: 500 })),
         debtPlan.slice(0, 12).map((month, idx) => React.createElement('div', { key: idx, style: { fontSize: text.xs, padding: '4px', borderBottom: '1px solid ' + palette.border } },
           '#' + month.month + ': CHF ' + month.payment + ' (' + t('budgetSync.remaining') + ': CHF ' + month.remaining + ')'
