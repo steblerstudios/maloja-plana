@@ -90,7 +90,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     },
       React.createElement('h2', {
         style: {
-          fontSize: '17px', fontWeight: '600', marginBottom: '6px',
+          fontSize: text.lg, fontWeight: '600', marginBottom: '6px',
           display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '0.2px',
         }
       }, React.createElement(Icon, { name: 'documents', size: 18 }), t('lebensmappe.title')),

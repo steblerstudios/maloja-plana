@@ -45,7 +45,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     // Title
     React.createElement('h2', {
       style: {
-        fontSize: '17px', fontWeight: weight.semi, marginBottom: space.md,
+        fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md,
         letterSpacing: '0.2px',
       }
     }, t('legal.title')),
