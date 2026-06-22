@@ -47,11 +47,17 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
 | KI-008 | Auto-save 5-second interval | Minor | **OK** — Dirty-Check via Ref-Vergleich bereits implementiert |
 
+## Recently Completed (2026-06-22)
+
+- **KI-006 Kantonale SKOS** — Mietlimiten für alle 26 Kantone in `cantonalData.js`
+- **Crosslinks** — 5 neue Crosslinks (Kanton→Steuer/Sozialhilfe, KK-Modell→Prämien, Notfall→Karte, Finanzen→Übersicht)
+- **Vorsorge Slice B (Teil 1)** — Umzugs-Checkliste bei Einzugsdatum (Gemeinde, KK, Post)
+
 ## Next Recommended Implementation Candidates
 
-1. **Vorsorge Slice B** — document uploads to Dokument-Tresor, municipality registration reminders, canton-specific form links
-2. **KI-006 Kantonale SKOS** — kantonsspezifische Mietlimiten und Zuschläge (Phase 13)
-3. **Verbindungen vertiefen** — mehr Crosslinks zwischen Kapiteln, Daten-Wiederverwendung sichtbar machen
+1. **Vorsorge Slice B (Teil 2)** — Dokument-Uploads zum Tresor, kantonsspezifische Formular-Links
+2. **Behörden-Dossier** — PDF-Export der gesammelten Daten als Behörden-Zusammenfassung
+3. **Offline-Sync** — IndexedDB-Backup/Restore mit Versionierung
 
 ## Do Not Touch Yet
 
