@@ -3,7 +3,7 @@
 > Zentrales Verzeichnis der visuellen Identität, UX-Philosophie und Designsprache.
 > Dieses Dokument ist Teil der Produktidentität und darf nicht verloren gehen.
 
-Stand: 2026-05-26
+Stand: 2026-06-22
 
 ---
 
@@ -47,7 +47,7 @@ Maloja Plana fühlt sich an wie ein ruhiger, vertrauter Ort — nicht wie ein Sa
 | `border` | `#DDD8D0` | Rahmen, Separatoren |
 | `text` | `#1C1A17` | Haupttext — fast schwarz, warm |
 | `mid` | `#6B6560` | Sekundärtext, Labels |
-| `soft` | `#A89F94` | Deaktivierte Elemente, Hints |
+| `soft` | `#B8B4AC` | Deaktivierte Elemente, Hints |
 
 #### Dark Mode
 | Token | Hex | Verwendung |
@@ -101,11 +101,11 @@ Warum DM Sans:
 ### 3.3 Grössenskala
 | Stufe | CSS Variable | Pixel | Verwendung |
 |-------|-------------|-------|------------|
-| xs | `--mp-text-xs` | 11px | Legal Disclaimer, Fussnoten |
-| sm | `--mp-text-sm` | 13px | Labels, Hilfstext, Tags |
-| body | `--mp-text-body` | 15px | Fliesstext, Eingabefelder |
-| lg | `--mp-text-lg` | 18px | Unterüberschriften, Sektionsnamen |
-| xl | `--mp-text-xl` | 22px | Kapitelüberschriften |
+| xs | `--mp-text-xs` | 13px | Legal Disclaimer, Fussnoten |
+| sm | `--mp-text-sm` | 15px | Labels, Hilfstext, Tags |
+| body | `--mp-text-body` | 16px | Fliesstext, Eingabefelder |
+| lg | `--mp-text-lg` | 19px | Unterüberschriften, Sektionsnamen |
+| xl | `--mp-text-xl` | 23px | Kapitelüberschriften |
 | 2xl | `--mp-text-2xl` | 28px | Seitenüberschriften |
 | 3xl | `--mp-text-3xl` | 36px | Dashboard-Titel, Hero |
 
@@ -164,6 +164,7 @@ Schatten sind bewusst dezent — kein Material-Design-Elevation-System.
 | fast | `--mp-duration-fast` | 150ms | Hover-States, Toggles |
 | normal | `--mp-duration-normal` | 250ms | Standard-Übergänge |
 | slow | `--mp-duration-slow` | 400ms | Layout-Änderungen, Modale |
+| cinematic | `--mp-duration-cinematic` | 600ms | Progress-Bars, Reveals |
 
 ### 5.2 Keyframe-Animationen
 | Name | Effekt | Verwendung |
@@ -334,7 +335,7 @@ Alle Animationen werden respektiert — kein Bewegung ohne Zustimmung.
 ```javascript
 const LIGHT_PALETTE = {
   bg: '#F5F2EE', surface: '#FFFFFF', up: '#F0EDE8',
-  text: '#1C1A17', mid: '#6B6560', soft: '#A89F94',
+  text: '#1C1A17', mid: '#6B6560', soft: '#B8B4AC',
   gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070',
   sky: '#6E90B0', sand: '#B8956A'
 };
