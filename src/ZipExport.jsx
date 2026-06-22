@@ -31,7 +31,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
   const handleExportJSON = () => {
     setExporting(true);
-    const files = prepareDownloadFiles(data, documents);
+    const files = prepareDownloadFiles(data, documents, t);
     setTimeout(() => {
       initiateBrowserDownload(files.json.filename, files.json.content, 'application/json');
       setExporting(false);
@@ -40,7 +40,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
   const handleExportCSV = () => {
     setExporting(true);
-    const files = prepareDownloadFiles(data, documents);
+    const files = prepareDownloadFiles(data, documents, t);
     setTimeout(() => {
       initiateBrowserDownload(files.csv.filename, files.csv.content, 'text/csv');
       setExporting(false);
@@ -49,7 +49,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
   const handleExportManifest = () => {
     setExporting(true);
-    const { manifest } = prepareDownloadFiles(data, documents);
+    const { manifest } = prepareDownloadFiles(data, documents, t);
     setTimeout(() => {
       initiateBrowserDownload(manifest.filename, manifest.content, 'text/plain');
       setExporting(false);
