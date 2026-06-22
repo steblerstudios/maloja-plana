@@ -679,6 +679,16 @@ export default {
     chapterTrust: 'I tuoi dati vengono salvati solo localmente. Nessun server, nessun account.',
   },
 
+  datenWirken: {
+    title: 'I tuoi dati sono già attivi:',
+    tax: 'Calcolatore fiscale personalizzato',
+    ipv: 'Verifica riduzione premi attiva',
+    sozial: 'Orientamento assistenza sociale attivo',
+    lohn: 'Verifica salario minimo attiva',
+    notfall: "Scheda d'emergenza pronta",
+    budget: 'Panoramica budget attiva',
+  },
+
   legal: {
     title: 'Note legali',
     tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum' },
