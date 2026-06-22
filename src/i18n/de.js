@@ -153,6 +153,11 @@ export default {
     crosslink: {
       ipvHint: 'Hohe Prämien? Prüfe Deinen IPV-Anspruch →',
       taxHint: 'Bundessteuer abschätzen →',
+      ipvFromIncome: 'Einkommen eingetragen → prüfe Deinen IPV-Anspruch →',
+      sozialhilfeHint: 'Orientierung: Was steht Dir gemäss SKOS zu? →',
+      budgetHint: 'Miete erfasst → Dein Budget im Überblick →',
+      vorsorgeHint: 'BVG-Beitrag hinterlegt → berechne Deine Rente →',
+      praemienHint: 'Krankenkasse hinterlegt → vergleiche Deine Prämie →',
     },
     backToDashboard: 'Übersicht',
   },
