@@ -9,8 +9,7 @@
 | Thema | Was passiert | Auswirkung |
 |---|---|---|
 | **Sozialhilfe: Haushalt** | Berechnung nimmt `1 + Abhängige` statt differenzierte SKOS-Zusammensetzung (Erwachsene vs. Kinder) | Betrag kann bei Familien leicht abweichen |
-| **BVG-Abzug** | Nettolohn enthält bereits BVG, App subtrahiert nochmals | Verfügbares Einkommen wird leicht zu tief angezeigt |
-| **Steuerrechner** | Nur Bundessteuer (DBG Art. 36), keine Kantons-/Gemeindesteuer | Betrag ist tiefer als reale Steuerlast |
+| **Steuerrechner** | Kantonale Schätzung basiert auf Hauptort-Multiplikatoren, nicht auf exaktem kantonalem Tarif | Betrag kann je nach Gemeinde abweichen |
 | **IPV** | Pauschale Schätzung, nicht kantonal differenziert | Anspruch kann kantonal anders sein |
 
 ## Visuelle Inkonsistenzen
@@ -39,11 +38,12 @@
 | **BVG/AHV: In-Context-Hinweis** | Erledigt — Orientierungssätze auf BVG/AHV-Feldern |
 | **QR via CDN** | Erledigt — QR-Generierung war bereits lokal (qrcodejs vendor), Tesseract-CDN entfernt |
 | **Sozialhilfe-Disclaimer** | Erledigt — Gold-Rand + Hintergrund, visuell deutlich sichtbar |
+| **Steuerrechner: Kantonale Steuer** | Erledigt — Kantons-/Gemeindesteuer-Schätzung (26 Kantone, Hauptort-Multiplikatoren) |
+| **PDF-Export: Behörden-Dossier** | Erledigt — Dossier mit Berechnungen für Sozialamt-Termine (Browser-Print) |
+| **BVG-Doppelabzug** | Erledigt — BVG/AHV werden als Referenz geführt, nicht von Ausgaben abgezogen |
 
 ## Nicht-Ziele dieser Beta
 
-- Kein PDF-Export (kommt später)
-- Keine Briefgeneratoren (kommt später)
 - Keine Formulare für Behörden (kommt später)
 - Kein Multi-Gerät-Sync (bewusste Designentscheidung: local-first)
 
