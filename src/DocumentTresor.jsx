@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, shadow } from './config/tokens.js';
 
 const getDaysUntilExpiry = (expiryDate) => {
   const today = new Date();
@@ -191,7 +191,7 @@ export const DocumentTresor = ({
   };
 
   return React.createElement('div', {
-    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }
+    style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: '8px', border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     // Title with folder icon
     React.createElement('h2', {

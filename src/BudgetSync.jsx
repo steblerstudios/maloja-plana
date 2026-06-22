@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight } from './config/tokens.js';
+import { text, weight, shadow } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -118,7 +118,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     style: {
       background: palette.surface, padding: '20px', borderRadius: '8px',
       border: '1px solid ' + palette.border, maxWidth: '520px',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.06)'
+      boxShadow: shadow.sm
     }
   },
 
