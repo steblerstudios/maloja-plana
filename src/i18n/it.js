@@ -238,7 +238,7 @@ export default {
     bloodType: 'Gruppo sanguigno {type}',
   },
   fortschritt: {
-    title: 'Campi aperti',
+    title: 'Il tuo progresso',
     fieldsOpen: 'aperti',
   },
   chapterStatus: {
@@ -1643,6 +1643,7 @@ export default {
     tryAgain: 'Riprova',
     reload: 'Ricarica la pagina',
     privacy: 'Nessun dato è stato inviato. Tutto rimane sul tuo dispositivo.',
+    viewCrash: 'Questa sezione ha riscontrato un errore. I tuoi dati sono al sicuro.',
   },
 
   overdue: {
@@ -1931,6 +1932,9 @@ export default {
     median: 'Mediana CH',
     branchenvergleich: 'Il tuo stipendio per settore (salario lordo mediano):',
     branchenQuelle: 'Fonte: UST Rilevazione svizzera della struttura dei salari 2022',
+    household: 'Nucleo familiare',
+    householdDetail: '{adults} adulti, {children} bambini',
+    adults: 'adulti',
   },
 
   branche: {
@@ -1957,6 +1961,11 @@ export default {
   pwa: {
     installHint: 'Installa Maloja Plana come app — disponibile offline, direttamente dalla schermata iniziale.',
     install: 'Installa',
+  },
+
+  vorlesen: {
+    toggle: 'Lettura vocale on/off',
+    label: 'Leggi ad alta voce',
   },
 
   beta: {
