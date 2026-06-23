@@ -585,11 +585,12 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
           { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
           { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
-        ].map(item => {
+          !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
+        ].filter(Boolean).map(item => {
           const IconFn = Icons[item.icon];
           return React.createElement('button', {
             key: item.view,
-            onClick: () => onNavigate(item.view),
+            onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
             style: {
               display: 'flex', alignItems: 'center', gap: '14px',
               padding: '14px 16px',
