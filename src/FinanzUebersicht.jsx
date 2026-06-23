@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName } from './config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
-import { text, weight, radius, leading, space } from './config/tokens.js';
+import { text, weight, radius, leading, space, duration, ease } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 
@@ -97,12 +97,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const annualIncome = income * 12;
   const canton = data.basis?.canton || '';
   const verheiratet = data.basis?.maritalStatus === 'married';
+  const hh = getHouseholdInfo(data);
 
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
   const el = checkELEligibility(data);
   const taxResult = annualIncome > 0
-    ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: 0 })
+    ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount })
     : null;
   const kantonal = taxResult && canton ? schaetzeKantonaleSteuer(taxResult.steuer, canton) : null;
 
@@ -182,6 +183,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       ),
       canton && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } },
         t('finanzUebersicht.canton') + ': ' + getCantonName(canton, t)
+      ),
+      hh.householdSize > 1 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+        t('finanzUebersicht.household') + ': ' + (
+          hh.childrenCount > 0
+            ? t('finanzUebersicht.householdDetail', { adults: hh.adults, children: hh.childrenCount })
+            : hh.adults + ' ' + t('finanzUebersicht.adults')
+        )
       )
     ),
 
@@ -203,7 +211,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
         ),
         React.createElement('div', { style: { height: '4px', background: palette.border, borderRadius: '2px', overflow: 'hidden', marginBottom: '4px' } },
-          React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: 'width 0.3s ease' } })
+          React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: `width ${duration.normal}ms ${ease}` } })
         ),
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
           React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
