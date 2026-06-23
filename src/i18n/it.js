@@ -1902,6 +1902,14 @@ export default {
     freeAmount: 'Disponibile',
     printAction: 'Stampare panoramica / salvare come PDF',
     disclaimer: 'Tutti i valori sono indicativi. Per informazioni vincolanti, contattare l\'autorità competente.',
+    incomePosition: 'Posizionamento',
+    belowPoverty: 'Sotto la soglia di povertà',
+    nearPoverty: 'Vicino alla soglia di povertà',
+    belowMedian: 'Sotto la mediana',
+    aboveMedian: 'Sopra la mediana',
+    highIncome: 'Nettamente sopra la mediana',
+    povertyLine: 'Soglia di povertà',
+    median: 'Mediana CH',
   },
 
   pwa: {

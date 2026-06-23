@@ -1901,6 +1901,14 @@ export default {
     freeAmount: 'Available',
     printAction: 'Print overview / save as PDF',
     disclaimer: 'All values are for orientation only. For binding information, contact the responsible authority.',
+    incomePosition: 'Position',
+    belowPoverty: 'Below poverty line',
+    nearPoverty: 'Near poverty line',
+    belowMedian: 'Below median',
+    aboveMedian: 'Above median',
+    highIncome: 'Well above median',
+    povertyLine: 'Poverty line',
+    median: 'Median CH',
   },
 
   pwa: {
