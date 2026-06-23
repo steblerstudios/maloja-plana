@@ -2332,6 +2332,7 @@ export default {
     title: 'Liens officiels & Demandes',
     alle: 'Tous',
     antragsstelle: 'Point de contact',
+    mirrorTitle: 'Service officiel & demande',
     source: 'Liens officiels de ch.ch, OFSP, OFAS et autres autorités fédérales.',
     cantonalTitle: 'Ton canton : {canton}',
     cantonal: {

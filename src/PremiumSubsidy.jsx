@@ -3,6 +3,7 @@ import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData
 import { getKVGApplicationLink, estimateTaxSavings } from './premiumCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
+import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
 export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
@@ -157,6 +158,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
         }, '✕ ' + t('common.close'))
       )
     ),
+
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
 

@@ -1167,6 +1167,7 @@ export default {
     title: 'Links uffizials & dumondas',
     alle: 'Tuts',
     antragsstelle: 'Post da dumonda',
+    mirrorTitle: 'Post uffizial & dumonda',
     source: 'Links uffizials da ch.ch, BAG, BSV ed autras autoritads federalas.',
     cantonalTitle: 'Tes chantun: {canton}',
     cantonal: {
