@@ -745,10 +745,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.demoButton'))
     ),
 
-    // ─── Maloja Pass — interactive topographic map ─────────
-    React.createElement('div', {
-      style: { margin: '20px -8px 0 -8px' }
-    },
+    // ─── Maloja Pass — interactive topographic map (collapsible) ─────────
+    React.createElement('details', { style: { margin: '20px -8px 0 -8px' } },
+      React.createElement('summary', {
+        style: { cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, padding: '0 8px ' + space.sm + 'px 8px', letterSpacing: '0.3px' }
+      }, t('dashboard.mapToggle')),
+      React.createElement('div', {
+        style: { margin: '12px -8px 0 -8px' }
+      },
       React.createElement('div', {
         style: {
           display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
@@ -982,6 +986,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         })
       )
+    )
     ),
 
     // ─── Guided start — calm first-use card ───────────────

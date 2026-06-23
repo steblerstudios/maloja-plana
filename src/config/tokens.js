@@ -75,4 +75,5 @@ export const duration = {
 };
 
 // ─── Font stack ─────────────────────────────────────────────
-export const fontFamily = "'DM Sans', sans-serif";
+export const fontFamily = "'Lexend', sans-serif";
+export const fontFamilyDisplay = "'Hanken Grotesk', sans-serif";
