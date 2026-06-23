@@ -1083,6 +1083,8 @@ export default {
     sectionProvision: 'Prevenziun & disposiziuns',
     sectionInsurance: 'Assicuranza',
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",
+    qrTitle: 'QR d’urgenza per ils squadruns da salvament',
+    qrHint: 'Scannabel cun mintga smartphone — mussa las infurmaziuns d’urgenza pli impurtantas offline, senza internet. Stampar per purtar cun sai (p.ex. en il portamonnaida).',
     footerCredit: 'Creà cun Maloja Plana',
     privacyNote: 'Quest dossier cuntegna infurmaziuns persunalas da sanadad.',
     generated: 'Creà ils {date}',

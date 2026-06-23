@@ -1938,6 +1938,8 @@ export default {
     sectionProvision: 'Advance directives',
     sectionInsurance: 'Insurance',
     footerPrivacy: 'This dossier contains personal health information. Please store it carefully.',
+    qrTitle: 'Emergency QR for first responders',
+    qrHint: 'Scannable with any smartphone — shows the key emergency info offline, without internet. Print it to carry along (e.g. in your wallet).',
     footerCredit: 'Created with Maloja Plana',
     privacyNote: 'This dossier contains personal health information.',
     generated: 'Created on {date}',

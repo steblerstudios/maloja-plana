@@ -1939,6 +1939,8 @@ export default {
     sectionProvision: 'Direttive anticipate',
     sectionInsurance: 'Assicurazione',
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
+    qrTitle: 'QR d’emergenza per i soccorritori',
+    qrHint: 'Scansionabile con qualsiasi smartphone — mostra le informazioni d’emergenza principali offline, senza internet. Da stampare e portare con sé (p.es. nel portafoglio).',
     footerCredit: 'Creato con Maloja Plana',
     privacyNote: 'Questo dossier contiene informazioni sanitarie personali.',
     generated: 'Creato il {date}',

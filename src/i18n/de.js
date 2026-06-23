@@ -1937,6 +1937,8 @@ export default {
     sectionProvision: 'Vorsorge & Verfügungen',
     sectionInsurance: 'Versicherung',
     footerPrivacy: 'Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.',
+    qrTitle: 'Notfall-QR für Rettungskräfte',
+    qrHint: 'Scannbar mit jedem Smartphone — zeigt die wichtigsten Notfall-Infos offline an, ohne Internet. Zum Mitführen ausdrucken (z.B. ins Portemonnaie).',
     footerCredit: 'Erstellt mit Maloja Plana',
     privacyNote: 'Dieses Dossier enthält persönliche Gesundheitsinformationen.',
     generated: 'Erstellt am {date}',
