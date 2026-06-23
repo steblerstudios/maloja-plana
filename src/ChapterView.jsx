@@ -268,6 +268,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           onBlur: (e) => handleFieldBlur(field.k, e.target.value),
           placeholder: field.placeholder || '',
+          autoComplete: field.autoComplete || 'off',
           style: inputStyle
         }),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
@@ -319,6 +320,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               handleFieldBlur(field.k, full);
             },
             placeholder: field.placeholder || '79 123 45 67',
+            autoComplete: field.autoComplete || 'off',
             style: { ...inputStyle, flex: 1 }
           })
         ),
@@ -338,6 +340,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           onBlur: (e) => { handleEmailBlur(field.k, e.target.value); handleFieldBlur(field.k, e.target.value); },
           placeholder: 'name@example.com',
+          autoComplete: field.autoComplete || 'off',
           style: inputStyle
         }),
         error && React.createElement('div', { style: errorStyle }, error)
@@ -357,6 +360,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             value: value || '',
             onChange: (e) => handleFieldChange(field.k, e.target.value),
             onInput: (e) => { if (!e.target.value && value) handleFieldChange(field.k, ''); },
+            autoComplete: field.autoComplete || 'off',
             style: inputStyle
           }),
           value && React.createElement('button', {

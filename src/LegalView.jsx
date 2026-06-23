@@ -146,6 +146,22 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.terms.responsibilityTitle'), palette, children: [
         P({ children: t('legal.terms.responsibility1') }),
+      ]}),
+      Section({ title: t('legal.terms.ipTitle'), palette, children: [
+        P({ children: t('legal.terms.ip1') }),
+        P({ children: t('legal.terms.ip2') }),
+      ]}),
+      Section({ title: t('legal.terms.availabilityTitle'), palette, children: [
+        P({ children: t('legal.terms.availability1') }),
+        P({ children: t('legal.terms.availability2') }),
+      ]}),
+      Section({ title: t('legal.terms.dataLossTitle'), palette, children: [
+        P({ children: t('legal.terms.dataLoss1') }),
+        P({ children: t('legal.terms.dataLoss2') }),
+      ]}),
+      Section({ title: t('legal.terms.changesTitle'), palette, children: [
+        P({ children: t('legal.terms.changes1') }),
+        P({ children: t('legal.terms.changes2') }),
       ]})
     ),
 
