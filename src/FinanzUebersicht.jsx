@@ -5,6 +5,7 @@ import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -207,7 +208,35 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
           React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
           React.createElement('span', null, t('finanzUebersicht.median') + ' CHF 6’788')
-        )
+        ),
+        (() => {
+          const vgl = getBranchenvergleich(income);
+          if (!vgl) return null;
+          const near = vgl.naechsteUeber || vgl.naechsteUnter;
+          return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
+            React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
+              t('finanzUebersicht.branchenvergleich')
+            ),
+            React.createElement('div', {
+              style: { display: 'flex', flexWrap: 'wrap', gap: '4px' }
+            },
+              BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b =>
+                React.createElement('span', {
+                  key: b.key,
+                  style: {
+                    fontSize: '10px', padding: '2px 6px', borderRadius: '3px',
+                    background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '60'),
+                    color: income >= b.lohn ? palette.text : palette.soft,
+                    whiteSpace: 'nowrap',
+                  }
+                }, t('branche.' + b.key))
+              )
+            ),
+            React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
+              t('finanzUebersicht.branchenQuelle')
+            )
+          );
+        })()
       );
     })(),
 
