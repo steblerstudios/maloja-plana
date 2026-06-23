@@ -242,7 +242,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       marginBottom: space.sm - 2
     };
 
-    const renderLabel = (fieldId, labelText, hint) => React.createElement('label', { htmlFor: fieldId, style: labelStyle },
+    const renderLabel = (fieldId, labelText, hint) => React.createElement('label', { id: fieldId + '-label', htmlFor: fieldId, style: labelStyle },
       labelText,
       vorlesen?.enabled && React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid })
     );
