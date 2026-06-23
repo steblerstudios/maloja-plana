@@ -224,6 +224,9 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       Section({ title: t('legal.imprint.projectTitle'), palette, children: [
         P({ children: t('legal.imprint.project1') }),
       ]}),
+      Section({ title: t('legal.imprint.hostingTitle'), palette, children: [
+        P({ children: t('legal.imprint.hosting1') }),
+      ]}),
       Section({ title: t('legal.imprint.disclaimerTitle'), palette, children: [
         P({ children: t('legal.imprint.disclaimer1') }),
       ]}),

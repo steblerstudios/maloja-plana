@@ -829,6 +829,8 @@ export default {
       contact2: 'Web: https://malojaplana.ch',
       projectTitle: 'Progetto',
       project1: 'Maloja Plana è un progetto open source indipendente di Stebler Studios in sviluppo attivo. Il codice sorgente è accessibile pubblicamente.',
+      hostingTitle: 'Hosting & dominio',
+      hosting1: 'L’hosting e il dominio sono forniti da Infomaniak Network SA (Ginevra, Svizzera) — un provider svizzero con data center in Svizzera, alimentati con energia rinnovabile.',
       disclaimerTitle: 'Esclusione di responsabilità',
       disclaimer1: 'I contenuti di questa applicazione sono stati creati con la massima cura. Non si assume alcuna garanzia per la correttezza, completezza o attualità delle informazioni.',
       jurisdictionTitle: 'Diritto applicabile',
