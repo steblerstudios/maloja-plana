@@ -2368,6 +2368,15 @@ export default {
     hint: 'Inizia a digitare — i medicamenti comuni verranno suggeriti.',
     migrated: 'Precedente inserimento a testo libero:',
   },
+  saeule3a: {
+    add: 'Aggiungi versamento',
+    ofMax: 'su {max}',
+    remaining: 'ancora {amount} fino al massimo',
+    maxReached: 'Massimo raggiunto — ottimo.',
+    date: 'Data',
+    amount: 'Importo (CHF)',
+    selfEmployedNote: 'Massimo 2026 con cassa pensioni: CHF 7’258. Indipendenti senza cassa pensioni: fino al 20 % del reddito (max. CHF 36’288).',
+  },
   diseases: {
     add: 'Aggiungi malattia',
     label: 'Malattia {nr}',

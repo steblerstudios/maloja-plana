@@ -2364,6 +2364,15 @@ export default {
     hint: 'Start typing — common medications will be suggested.',
     migrated: 'Previous free-text entry:',
   },
+  saeule3a: {
+    add: 'Add contribution',
+    ofMax: 'of {max}',
+    remaining: '{amount} left to the maximum',
+    maxReached: 'Maximum reached — well done.',
+    date: 'Date',
+    amount: 'Amount (CHF)',
+    selfEmployedNote: 'Maximum 2026 with pension fund: CHF 7,258. Self-employed without pension fund: up to 20% of income (max. CHF 36,288).',
+  },
   diseases: {
     add: 'Add condition',
     label: 'Condition {nr}',
