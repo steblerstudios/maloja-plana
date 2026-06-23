@@ -147,9 +147,7 @@
   outline-offset: 2px;
 }
 
-/* Ensure buttons and interactive elements always show focus ring.
-   Inline styles cannot override :focus-visible because outline
-   is not set inline. This guarantees keyboard users always see it. */
+/* Ensure focus ring always wins over inline outline:none */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -157,8 +155,8 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #B8956A;
-  outline-offset: 2px;
+  outline: 2px solid #B8956A !important;
+  outline-offset: 2px !important;
   z-index: 1;
 }
 
