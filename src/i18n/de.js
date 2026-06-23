@@ -895,6 +895,11 @@ export default {
       ombuds2: 'Bankenombudsman — bankingombudsman.ch — Vermittlung bei Konflikten mit Banken.',
       ombuds3: 'Mieterverband — mieterverband.ch — Beratung und Schlichtung bei Mietstreitigkeiten.',
       ombuds4: 'Konsumentenschutz — konsumentenschutz.ch — Unabhängige Beratung für Verbraucherrechte.',
+      heartfeltTitle: 'Herzensempfehlungen',
+      heartfeltIntro: 'Dienste und Projekte, die wir persönlich schätzen — unbezahlt empfohlen, ohne Gegenleistung.',
+      heartfelt1: 'Ecosia — ecosia.org — Suchmaschine, die ihre Einnahmen in Aufforstung steckt.',
+      heartfelt2: 'Infomaniak — infomaniak.com — Schweizer Hosting mit Ökostrom und eigenen, ressourcenschonenden Rechenzentren.',
+      heartfelt3: 'Posteo — posteo.de — Werbefreier, datenschutzfreundlicher E-Mail-Dienst, betrieben mit Ökostrom.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',

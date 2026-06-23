@@ -895,6 +895,11 @@ export default {
       ombuds2: 'Ombudsman des banques — bankingombudsman.ch — Médiation en cas de conflit avec les banques.',
       ombuds3: 'Association des locataires — asloca.ch — Conseil et médiation pour les litiges locatifs.',
       ombuds4: 'Protection des consommateurs — konsumentenschutz.ch — Conseil indépendant pour les droits des consommateurs.',
+      heartfeltTitle: 'Recommandations de cœur',
+      heartfeltIntro: 'Des services et projets que nous apprécions personnellement — recommandés gratuitement, sans contrepartie.',
+      heartfelt1: 'Ecosia — ecosia.org — Moteur de recherche qui investit ses recettes dans le reboisement.',
+      heartfelt2: 'Infomaniak — infomaniak.com — Hébergement suisse à énergie verte, avec ses propres centres de données économes en ressources.',
+      heartfelt3: 'Posteo — posteo.de — Service de messagerie sans publicité, respectueux de la vie privée, alimenté en énergie verte.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
