@@ -137,11 +137,24 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
   );
 };
 
+const useViewport = () => {
+  const [w, setW] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 400);
+  useEffect(() => {
+    const h = () => setW(window.innerWidth);
+    window.addEventListener('resize', h);
+    return () => window.removeEventListener('resize', h);
+  }, []);
+  return w;
+};
+
 const AppInner = () => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
   const vorlesen = useVorlesen(lang);
+  const vw = useViewport();
+  const isTablet = vw >= 768;
+  const contentMax = vw >= 1024 ? '780px' : isTablet ? '680px' : '520px';
 
   // ─── Data loading with migration ──────────────────────────
   const [data, setData] = useState(() => {
@@ -443,7 +456,7 @@ const AppInner = () => {
       React.createElement('div', {
         style: {
           padding: '8px 16px 12px', fontSize: text.xs, color: palette.mid,
-          lineHeight: '1.6', maxWidth: '520px', margin: '0 auto',
+          lineHeight: '1.6', maxWidth: contentMax, margin: '0 auto',
         }
       },
         React.createElement('div', { style: { marginBottom: '4px' } }, t('trust.detail1')),
@@ -512,6 +525,7 @@ const AppInner = () => {
           demoMode,
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
           onLeaveDemo: () => setDemoMode(false),
+          isTablet,
         })
       ),
       view === 'chapter' && React.createElement(ChapterView, {
