@@ -214,6 +214,7 @@ export default {
     expenses: 'expensas registradas',
     taxCanton: 'Chantun da taglia {canton}',
     emergencyContact: "En cas d'urgenza: {name}",
+    freePerMonth: "liber/mais",
   },
 
   fortschritt: {
@@ -649,6 +650,30 @@ export default {
     footerCredit: 'Maloja Plana — Organisatur svizzer da vita (Open Source)',
     empty: 'Emplenescha emprim Tias indicaziuns persunalas e finanzas per che il dossier possia vegnir creà.',
     previewNote: 'Prevista — uschia vesa Tes dossier ora:',
+  },
+
+  finanzUebersicht: {
+    title: 'Survista da finanzas',
+    subtitle: 'Tia situaziun en in'egliada — basond sin Tias indicaziuns.',
+    monthlyIncome: 'Entrada mensiala',
+    canton: 'Chantun',
+    taxes: 'Taglientas',
+    ipv: 'Reducziun da premias (IPV)',
+    sozialhilfe: "Orientaziun d'agid social",
+    el: 'Prestaziuns cumplementaras (PC)',
+    noIncome: 'Nagina entrada registrada',
+    noData: "Anc naginas datas finanzialas avant maun. Endatescha Tia entrada per vesair la survista.",
+    enterIncome: "Endatar l'entrada",
+    notEligible: 'Nagin dretg',
+    notApplicable: 'Betg applitgabel',
+    selectCanton: 'Tscherna in chantun per la calculaziun chantunalas',
+    toBudget: 'Survista dal budget',
+    toDossier: "Dossier d'autoritads",
+    budgetBalance: 'Budget mensil',
+    totalIncome: 'Entradas',
+    totalExpenses: 'Expensas',
+    freeAmount: 'A disposiziun',
+    disclaimer: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta.",
   },
 
   cantons: {

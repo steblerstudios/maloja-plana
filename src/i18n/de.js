@@ -648,6 +648,17 @@ export default {
     recorded: 'erfasst',
   },
 
+  checklist: {
+    title: 'Behörden-Checkliste',
+    intro: 'Häufige Behördengänge und Dokumente — hake ab, was du bereits erledigt hast.',
+    betreibungsauszug: 'Betreibungsauszug bestellt',
+    steuererklaerung: 'Steuererklärung eingereicht',
+    wohnsitzbestaetigung: 'Wohnsitzbestätigung geholt',
+    ausweisRenewal: 'Ausweis / Pass erneuert',
+    strafregisterauszug: 'Strafregisterauszug bestellt',
+    patientenverfuegung: 'Patientenverfügung hinterlegt',
+  },
+
   wohnkostenanteil: {
     intro: 'Die erfassten Wohnkosten im Verhältnis zum erfassten Einkommen.',
     housing: 'Wohnkosten',
@@ -1883,6 +1894,7 @@ export default {
     totalIncome: 'Einnahmen',
     totalExpenses: 'Ausgaben',
     freeAmount: 'Frei verfügbar',
+    printAction: 'Übersicht drucken / als PDF speichern',
     disclaimer: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle.',
   },
 
