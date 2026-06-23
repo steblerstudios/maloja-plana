@@ -80,7 +80,9 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'money', size: 20 }), t('tax.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'money', size: 20 }), t('tax.title')),
+
+    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('tax.intro')),
 
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: space.md, marginBottom: '20px' } },
       // Left side: Input

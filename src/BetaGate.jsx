@@ -47,8 +47,27 @@ export const BetaGate = ({ children }) => {
         style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, color: palette.text }
       }, 'Maloja Plana'),
       React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.lg, lineHeight: leading.normal }
+        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
       }, t('beta.gateMessage')),
+      React.createElement('div', {
+        style: {
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+          marginBottom: space.lg, padding: '8px 12px',
+          background: palette.sage + '0A', borderRadius: radius.sm,
+        }
+      },
+        React.createElement('svg', {
+          width: '14', height: '14', viewBox: '0 0 16 16', fill: 'none',
+          stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round',
+          'aria-hidden': 'true',
+        },
+          React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
+          React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+        ),
+        React.createElement('span', {
+          style: { fontSize: text.xs, color: palette.sage, lineHeight: leading.normal }
+        }, t('trust.localBadge'))
+      ),
       React.createElement('input', {
         type: 'text',
         value: input,

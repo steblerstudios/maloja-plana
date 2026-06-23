@@ -214,7 +214,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
 
       betreibung.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
-        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.rose + '12' } },
+        betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },
           React.createElement('input', { type: 'text', value: entry.creditor, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
             React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
