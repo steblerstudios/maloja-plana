@@ -58,7 +58,7 @@ function buildSnippet(chapterKey, chData, allData, t) {
   if (chapterKey === 'behoerden') {
     if (!chData.cantoneOfTaxation) return null;
     const parts = [t('synthesis.taxCanton', { canton: getCantonName(chData.cantoneOfTaxation, t) })];
-    if (chData.taxDeadline) parts.push(t('synthesis.taxDeadline', { date: chData.taxDeadline }));
+    if (chData.taxFilingDeadline) parts.push(t('synthesis.taxDeadline', { date: chData.taxFilingDeadline }));
     try {
       const cl = JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}');
       const done = Object.values(cl).filter(Boolean).length;
