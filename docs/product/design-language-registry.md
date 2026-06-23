@@ -47,7 +47,7 @@ Maloja Plana fühlt sich an wie ein ruhiger, vertrauter Ort — nicht wie ein Sa
 | `border` | `#DDD8D0` | Rahmen, Separatoren |
 | `text` | `#1C1A17` | Haupttext — fast schwarz, warm |
 | `mid` | `#6B6560` | Sekundärtext, Labels |
-| `soft` | `#B8B4AC` | Deaktivierte Elemente, Hints |
+| `soft` | `#A89F94` | Deaktivierte Elemente, Hints |
 
 #### Dark Mode
 | Token | Hex | Verwendung |
