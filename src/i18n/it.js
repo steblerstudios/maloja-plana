@@ -2369,6 +2369,18 @@ export default {
     hint: 'Inizia a digitare — i medicamenti comuni verranno suggeriti.',
     migrated: 'Precedente inserimento a testo libero:',
   },
+  edu: {
+    pathsTitle: 'Nessun titolo professionale? Come ottenerlo da adulto/a',
+    pathsIntro: 'Anche senza un tirocinio classico puoi ottenere un attestato federale di capacità (AFC) o un certificato (CFP). Quattro vie portano al titolo:',
+    path1Title: 'Tirocinio regolare o abbreviato',
+    path1: 'Una formazione con contratto di tirocinio — possibile anche da adulto/a. Formazione ed esperienza precedenti possono essere computate e il tirocinio abbreviato.',
+    path2Title: 'Ammissione diretta all’esame finale — art. 32 OFPr',
+    path2: 'Sostieni solo l’esame finale, senza contratto di tirocinio. Requisito: almeno 5 anni di esperienza professionale, in parte nella professione scelta. Le lacune teoriche si colmano con corsi.',
+    path3Title: 'Convalida degli apprendimenti — art. 31 OFPr',
+    path3: 'Dimostri le tue competenze in un dossier — senza esame. Requisito: almeno 5 anni di esperienza. Possibile solo nelle professioni con una procedura di convalida riconosciuta.',
+    pathsHow: 'Come arrivarci: il primo punto di contatto è l’orientamento professionale cantonale (OPUC) — gratuito e senza impegno. Chiarisce quale via fa per te.',
+    pathsLink: 'berufsbildung.ch — Titolo professionale per adulti',
+  },
   saeule3a: {
     add: 'Aggiungi versamento',
     ofMax: 'su {max}',

@@ -2451,6 +2451,18 @@ export default {
     hint: 'Cumenza a tippar — medicaments frequents vegnan proponids.',
     migrated: 'Anteriura endataziun en text liber:',
   },
+  edu: {
+    pathsTitle: 'Nagin diplom professiunal? Co al cuntanscher sco creschida/creschì',
+    pathsIntro: 'Era senza in emprendissadi classic pos ti cuntanscher in attestat federal da capacitad (AFC) u in certificat (CFP). Quatter vias mainan al diplom:',
+    path1Title: 'Emprendissadi regular u accurzà',
+    path1: 'Ina furmaziun cun contract d’emprendissadi — pussaivel era sco creschida/creschì. Furmaziun ed experientscha precedentas pon vegnir quintadas tperiu e l’emprendissadi accurzà.',
+    path2Title: 'Admissiun directa a l’examen final — art. 32 OFPr',
+    path2: 'Ti fas mo l’examen final, senza contract d’emprendissadi. Premissa: almain 5 onns experientscha professiunala, ina part en la professiun giavischada. Lacunas teoreticas vegnan serradas cun curs.',
+    path3Title: 'Validaziun da prestaziuns da furmaziun — art. 31 OFPr',
+    path3: 'Ti cumprovas tias cumpetenzas en in dossier — senza examen. Premissa: almain 5 onns experientscha. Pussaivel mo en professiuns cun ina procedura da validaziun renconuschida.',
+    pathsHow: 'Co arrivar là: l’emprim contact è la cussegliaziun professiunala chantunala (BSLB) — gratuita e senza obligaziun. Ella declera tge via che para a tai.',
+    pathsLink: 'berufsbildung.ch — Diplom professiunal per creschids',
+  },
   saeule3a: {
     add: 'Agiuntar pajament',
     ofMax: 'da {max}',

@@ -2364,6 +2364,18 @@ export default {
     hint: 'Tippe den Namen ein — häufige Medikamente werden vorgeschlagen.',
     migrated: 'Früherer Freitext-Eintrag:',
   },
+  edu: {
+    pathsTitle: 'Kein Berufsabschluss? So holst Du ihn als Erwachsene/r nach',
+    pathsIntro: 'Auch ohne klassische Lehre kannst Du ein eidgenössisches Fähigkeitszeugnis (EFZ) oder Berufsattest (EBA) erlangen. Vier Wege führen zum Abschluss:',
+    path1Title: 'Reguläre oder verkürzte Lehre',
+    path1: 'Eine Grundbildung mit Lehrvertrag — auch als Erwachsene/r. Frühere Bildung und Erfahrung können angerechnet und die Lehre verkürzt werden.',
+    path2Title: 'Direkte Zulassung zur Abschlussprüfung — Art. 32 BBV',
+    path2: 'Du machst nur die Abschlussprüfung, ohne Lehrvertrag. Voraussetzung: mind. 5 Jahre Berufserfahrung, ein Teil davon im Zielberuf. Fehlende Theorie holst Du in Kursen nach.',
+    path3Title: 'Validierung von Bildungsleistungen — Art. 31 BBV',
+    path3: 'Du weist Deine Kompetenzen in einem Dossier nach — ohne Prüfung. Voraussetzung: mind. 5 Jahre Erfahrung. Möglich nur in Berufen mit anerkanntem Validierungsverfahren.',
+    pathsHow: 'Wie Du dahin kommst: Erste Anlaufstelle ist die kantonale Berufs-, Studien- und Laufbahnberatung (BSLB) — kostenlos und unverbindlich. Sie klärt, welcher Weg zu Dir passt.',
+    pathsLink: 'berufsbildung.ch — Berufsabschluss für Erwachsene',
+  },
   saeule3a: {
     add: 'Einzahlung hinzufügen',
     ofMax: 'von {max}',

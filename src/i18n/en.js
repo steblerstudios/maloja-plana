@@ -2365,6 +2365,18 @@ export default {
     hint: 'Start typing — common medications will be suggested.',
     migrated: 'Previous free-text entry:',
   },
+  edu: {
+    pathsTitle: 'No vocational qualification? How to obtain one as an adult',
+    pathsIntro: 'Even without a classic apprenticeship you can earn a Federal VET Diploma (EFZ) or Certificate (EBA). Four routes lead to a qualification:',
+    path1Title: 'Regular or shortened apprenticeship',
+    path1: 'Vocational training with an apprenticeship contract — also possible as an adult. Prior education and experience can be credited and the training shortened.',
+    path2Title: 'Direct admission to the final exam — Art. 32 VTO',
+    path2: 'You only take the final examination, without an apprenticeship contract. Requirement: at least 5 years of work experience, part of it in the target profession. Missing theory is closed in courses.',
+    path3Title: 'Validation of learning achievements — Art. 31 VTO',
+    path3: 'You demonstrate your competencies in a dossier — without an exam. Requirement: at least 5 years of experience. Only possible in professions with a recognised validation procedure.',
+    pathsHow: 'How to get there: the first point of contact is your cantonal career guidance service (BSLB) — free and non-binding. It clarifies which route fits you.',
+    pathsLink: 'berufsbildung.ch — Vocational qualification for adults',
+  },
   saeule3a: {
     add: 'Add contribution',
     ofMax: 'of {max}',
