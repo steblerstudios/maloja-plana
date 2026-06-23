@@ -50,6 +50,7 @@ const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
+const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 
@@ -583,6 +584,7 @@ const AppInner = () => {
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
+        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
