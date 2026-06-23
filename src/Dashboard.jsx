@@ -809,9 +809,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           };
           const bgs = {
             sketch: palette.surface,
-            emerging: palette.surface,
-            maturing: palette.surface,
-            complete: palette.surface,
+            emerging: palette.sand + '08',
+            maturing: palette.sand + '12',
+            complete: palette.sage + '10',
           };
           const sz = sizes[maturity];
           const iconOp = opacities[maturity];
