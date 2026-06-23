@@ -169,11 +169,17 @@ export default {
       kkModelHint: 'Modell hinterlegt → vergleiche Alternativen →',
       notfallkarteHint: 'Kontakt hinterlegt → Notfallkarte erstellen →',
       finanzuebersichtHint: 'Alle Berechnungen auf einen Blick →',
+      addressInWohnen: 'Deine Adresse ist im Kapitel «Wohnen» hinterlegt →',
+      employerInFinanzen: 'Arbeitgeber & Einkommen → im Kapitel «Finanzen» →',
+      educationTaxHint: 'Fortbildungskosten? Bis CHF 10\'000 steuerlich absetzbar →',
+      taxFromBehoerdenHint: 'Steuerbelastung abschätzen → zum Steuerrechner →',
+      schuldenFromBehoerdenHint: 'Betreibungen verwalten → zur Schuldenübersicht →',
     },
     backToDashboard: 'Übersicht',
   },
 
   wohnen: {
+    nkEstimate: 'Nebenkosten: CHF {monthly}/Mt. → ca. CHF {annual}/Jahr. Bei Genossenschaften kommt oft eine jährliche Abrechnung hinzu.',
     umzugTitle: 'Checkliste nach Umzug',
     umzugGemeinde: 'Wohngemeinde: Anmeldung innert 14 Tagen',
     umzugKK: 'Krankenkasse: Adressänderung melden',
@@ -364,6 +370,7 @@ export default {
           childLabel: 'Kind {nr}',
           addChild: 'Kind hinzufügen',
           removeChild: 'Entfernen',
+          childAgeAuto: 'Alter wird automatisch aus dem Geburtsdatum berechnet',
           retired: 'Pensioniert',
           retiredYes: 'Ja',
           retiredNo: 'Nein',
@@ -1196,6 +1203,7 @@ export default {
 
   premium: {
     title: 'Prämienverbilligung (IPV)',
+    subtitle: 'Individuelle Prämienverbilligung — der Kanton übernimmt einen Teil Deiner Krankenkassenprämie, wenn Dein Einkommen unter einer bestimmten Grenze liegt.',
     canton: 'Kanton: {name}',
     cantonUnknown: 'Nicht erkannt',
     model: 'Modell: {value}',
@@ -1272,6 +1280,7 @@ export default {
 
   tax: {
     title: 'Steuer-Orientierung',
+    intro: 'Diese Übersicht zeigt dir eine grobe Einschätzung deiner Steuerbelastung — als Orientierung, nicht als Steuerberatung. Du kannst Abzüge ausprobieren und sehen, wie sich deine Situation verändert.',
     inputs: 'Eingaben',
     taxCanton: 'Steuerkanton',
     grossIncome: 'Jahreseinkommen (basierend auf Nettolohn)',

@@ -182,11 +182,17 @@ export default {
       kkModelHint: 'Model deponì → cumparegliescha alternativas →',
       notfallkarteHint: "Contact deponì → crear la carta d'urgenza →",
       finanzuebersichtHint: "Tut las calculaziuns en ina egliada →",
+      addressInWohnen: "Tia adressa è deponida en il chapitel «Abitar» →",
+      employerInFinanzen: "Patrun & entrada → en il chapitel «Finanzas» →",
+      educationTaxHint: "Custs da furmaziun? Fin a CHF 10'000 deducibels da las taglias →",
+      taxFromBehoerdenHint: "Stimar la chargia fiscala → al calculatur da taglias →",
+      schuldenFromBehoerdenHint: "Administrar las esecuziuns → a la survista dals debits →",
     },
     backToDashboard: 'Survista',
   },
 
   wohnen: {
+    nkEstimate: "Custs accessorics: CHF {monthly}/mais → ca. CHF {annual}/onn. Tar cooperativas vegn savens agiuntà in quint annual.",
     umzugTitle: 'Glista da controlla suenter la spendrà',
     umzugGemeinde: 'Vischnanca: annunzia entaifer 14 dis',
     umzugKK: 'Cassa da malsauns: annunziar la midada da adressa',
@@ -356,6 +362,7 @@ export default {
           childLabel: 'Uffant {nr}',
           addChild: 'Agiuntar in uffant',
           removeChild: 'Allontanar',
+          childAgeAuto: "La vegliadegna vegn calculada automaticamain da la data da naschientscha",
           retired: 'Pensiunà/ada',
           retiredYes: 'Gea',
           retiredNo: 'Na',
@@ -1526,6 +1533,7 @@ export default {
 
   premium: {
     title: 'Reducziun da premias (IPV)',
+    subtitle: "Reducziun individuala da premias — il chantun surpiglia ina part da Tia premia da cassa da malsauns sche Tia entrada è sut in tschert cunfin.",
     canton: 'Chantun: {name}',
     cantonUnknown: 'Betg enconuschent',
     model: 'Model: {value}',
@@ -1597,6 +1605,7 @@ export default {
 
   tax: {
     title: 'Orientaziun da taglia',
+    intro: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida.",
     inputs: 'Endataziuns',
     taxCanton: 'Chantun da taglia',
     grossIncome: "Entrada annaira (basà sin il salari net)",
