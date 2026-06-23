@@ -851,6 +851,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               }, IconFn ? IconFn() : null)
             ),
             React.createElement('span', {
+              className: 'mountain-label',
               style: {
                 fontSize: '9px', color: palette.mid, whiteSpace: 'nowrap',
                 opacity: maturity === 'sketch' ? 0.5 : 0.75,
