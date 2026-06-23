@@ -328,6 +328,8 @@ const AppInner = () => {
     React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
+        role: 'link', tabIndex: 0,
+        onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setView('dashboard'); } },
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '10px' }
       },
         // Logo mark — abstract topographic line
@@ -414,6 +416,7 @@ const AppInner = () => {
     React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none' } },
       view !== 'dashboard' && React.createElement('button', {
         onClick: () => setView('dashboard'),
+        'aria-label': t('nav.backToDashboard'),
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           padding: '0 0 ' + space.md + 'px 0', fontSize: text.sm,
