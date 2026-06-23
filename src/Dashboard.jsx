@@ -527,22 +527,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
       }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')),
 
-      !demoMode && mvo.pct < 50 && React.createElement('button', {
-        onClick: onEnterDemo,
-        style: {
-          marginTop: space.md + 'px',
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sand + '18',
-          border: '1px solid ' + palette.sand + '35',
-          borderRadius: radius.sm,
-          cursor: 'pointer',
-          fontSize: text.sm,
-          color: palette.text,
-          fontFamily: 'inherit',
-          fontWeight: weight.medium,
-          display: 'inline-flex', alignItems: 'center', gap: '6px',
-        }
-      }, '○ ' + t('demo.ctaButton'))
+      null
     ),
 
     // ─── Demo — prominent example section (before tools for new users) ──
