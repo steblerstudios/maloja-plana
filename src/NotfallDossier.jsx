@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -10,11 +11,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
   const handlePrint = () => {
     const html = generateNotfallDossier(data, chapters, t);
-    const win = window.open('', '_blank');
-    if (win) {
-      win.document.write(html);
-      win.document.close();
-    }
+    openPrintWindow(html);
   };
 
   const renderSection = (section) =>

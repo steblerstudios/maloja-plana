@@ -5,6 +5,7 @@ import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -35,11 +36,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
 
   const handlePrint = () => {
     const html = generateBehoerdenDossier(data, chapters, t, calculations);
-    const win = window.open('', '_blank');
-    if (win) {
-      win.document.write(html);
-      win.document.close();
-    }
+    openPrintWindow(html);
   };
 
   const handleExportJSON = () => {
