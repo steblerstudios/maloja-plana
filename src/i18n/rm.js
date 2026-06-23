@@ -363,6 +363,8 @@ export default {
           addChild: 'Agiuntar in uffant',
           removeChild: 'Allontanar',
           childAgeAuto: "La vegliadegna vegn calculada automaticamain da la data da naschientscha",
+          partnerIncome: "Salari net dal partenari/da la partenaria (CHF/mais)",
+          partnerIncomeHint: "Entrada netta mensiala da la segunda persuna en il menaschi. Vegn duvrada per il calcul da taglias, reducziun da premias e agid social.",
           retired: 'Pensiunà/ada',
           retiredYes: 'Gea',
           retiredNo: 'Na',
