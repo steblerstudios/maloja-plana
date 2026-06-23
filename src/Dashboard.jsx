@@ -609,6 +609,101 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       })()
     ),
 
+    // ─── Life chapters — moved up: the core action, immediately visible ──
+    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space.xl + 'px' } },
+
+      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
+      ...[
+        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
+        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
+        { label: t('dashboard.tierProtective'), indices: [5, 6] },
+      ].map((tier, tierIdx) =>
+        React.createElement('div', {
+          key: 'tier-' + tierIdx,
+          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
+        },
+          React.createElement('div', {
+            style: {
+              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
+              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
+              borderBottom: '1px solid ' + palette.border,
+            }
+          }, tier.label),
+
+          ...tier.indices.map((chIdx) => {
+            const ch = chapters[chIdx];
+            if (!ch) return null;
+            const { pct } = calculateChapterCompletion(ch.key);
+            const statusColor = getStatusColor(pct, ch.key);
+            const iconKey = chapterIcons[ch.key];
+            const IconFn = iconKey && Icons[iconKey];
+            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
+            const rowOpacity = pct === 0 ? 0.72 : 1;
+            const status = getChapterStatus(ch);
+            const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
+
+            return React.createElement('button', {
+              key: ch.key,
+              onClick: () => onSelectChapter(chIdx),
+              style: {
+                display: 'flex', alignItems: 'center', gap: space.md,
+                padding: '20px 4px',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
+                borderRadius: 0,
+                cursor: 'pointer',
+                textAlign: 'left',
+                color: palette.text,
+                fontFamily: 'inherit',
+                opacity: rowOpacity,
+                transition: `opacity ${duration.cinematic}ms ${ease}`,
+                width: '100%',
+              },
+              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
+              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
+            },
+              React.createElement('div', {
+                style: {
+                  width: '40px', height: '40px', borderRadius: radius.md,
+                  background: getIconBg(pct, ch.key),
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
+                  transition: `all ${duration.cinematic}ms ${ease}`,
+                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
+                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
+                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
+                }
+              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
+
+              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+                React.createElement('div', {
+                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
+                },
+                  React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi } }, ch.title),
+                  React.createElement('span', {
+                    style: {
+                      fontSize: text.xs, fontWeight: weight.medium,
+                      color: statusColors[status],
+                      flexShrink: 0, letterSpacing: '0.2px',
+                      transition: `color ${duration.cinematic}ms ${ease}`,
+                    }
+                  }, t('chapterStatus.' + status))
+                ),
+                React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
+                status !== 'leer' && (() => {
+                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
+                  return snippet ? React.createElement('div', {
+                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
+                  }, snippet) : null;
+                })(),
+              ),
+            );
+          })
+        )
+      )
+    ),
+
     // ─── Quick check — inline IPV eligibility ───────────────
     React.createElement(QuickCheck, { palette, t, onNavigate, savedIncome: data?.finanzen?.monthlyIncome || '' }),
 
@@ -1067,101 +1162,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Live connections — what user data powers ──────────
     React.createElement(DatenWirken, { palette, t, data, text, weight, space, radius }),
-
-    // ─── Life chapters — tiered spatial layout ──────────────
-    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space['2xl'] + 'px' } },
-
-      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
-      ...[
-        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
-        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
-        { label: t('dashboard.tierProtective'), indices: [5, 6] },
-      ].map((tier, tierIdx) =>
-        React.createElement('div', {
-          key: 'tier-' + tierIdx,
-          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
-        },
-          React.createElement('div', {
-            style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
-              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
-              borderBottom: '1px solid ' + palette.border,
-            }
-          }, tier.label),
-
-          ...tier.indices.map((chIdx) => {
-            const ch = chapters[chIdx];
-            if (!ch) return null;
-            const { pct } = calculateChapterCompletion(ch.key);
-            const statusColor = getStatusColor(pct, ch.key);
-            const iconKey = chapterIcons[ch.key];
-            const IconFn = iconKey && Icons[iconKey];
-            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
-            const rowOpacity = pct === 0 ? 0.72 : 1;
-            const status = getChapterStatus(ch);
-            const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
-
-            return React.createElement('button', {
-              key: ch.key,
-              onClick: () => onSelectChapter(chIdx),
-              style: {
-                display: 'flex', alignItems: 'center', gap: space.md,
-                padding: '20px 4px',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
-                borderRadius: 0,
-                cursor: 'pointer',
-                textAlign: 'left',
-                color: palette.text,
-                fontFamily: 'inherit',
-                opacity: rowOpacity,
-                transition: `opacity ${duration.cinematic}ms ${ease}`,
-                width: '100%',
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
-            },
-              React.createElement('div', {
-                style: {
-                  width: '40px', height: '40px', borderRadius: radius.md,
-                  background: getIconBg(pct, ch.key),
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: `all ${duration.cinematic}ms ${ease}`,
-                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
-                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
-                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
-                }
-              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
-
-              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-                React.createElement('div', {
-                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
-                },
-                  React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi } }, ch.title),
-                  React.createElement('span', {
-                    style: {
-                      fontSize: text.xs, fontWeight: weight.medium,
-                      color: statusColors[status],
-                      flexShrink: 0, letterSpacing: '0.2px',
-                      transition: `color ${duration.cinematic}ms ${ease}`,
-                    }
-                  }, t('chapterStatus.' + status))
-                ),
-                React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
-                status !== 'leer' && (() => {
-                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
-                  return snippet ? React.createElement('div', {
-                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
-                  }, snippet) : null;
-                })(),
-              ),
-            );
-          })
-        )
-      )
-    ),
 
     // ─── Tips — open editorial section ─────────────────────
     React.createElement('div', {
