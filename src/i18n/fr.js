@@ -1900,6 +1900,14 @@ export default {
     freeAmount: 'Disponible',
     printAction: 'Imprimer l\'aperçu / enregistrer en PDF',
     disclaimer: 'Toutes les valeurs sont indicatives. Pour des informations contraignantes, contactez l\'autorité compétente.',
+    incomePosition: 'Positionnement',
+    belowPoverty: 'Sous le seuil de pauvreté',
+    nearPoverty: 'Proche du seuil de pauvreté',
+    belowMedian: 'Sous la médiane',
+    aboveMedian: 'Au-dessus de la médiane',
+    highIncome: 'Nettement au-dessus de la médiane',
+    povertyLine: 'Seuil de pauvreté',
+    median: 'Médiane CH',
   },
 
   pwa: {
