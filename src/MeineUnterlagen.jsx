@@ -157,7 +157,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       style: {
         marginTop: space.sm, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, '○ ' + t('unterlagen.note'))
+    }, 'ⓘ ' + t('unterlagen.note'))
   );
 };
 

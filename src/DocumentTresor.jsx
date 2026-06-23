@@ -342,7 +342,7 @@ export const DocumentTresor = ({
     // Local-only note
     React.createElement('div', {
       style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' }
-    }, '○ ' + t('trust.localOnly')),
+    }, 'ⓘ ' + t('trust.localOnly')),
   );
 };
 

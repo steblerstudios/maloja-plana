@@ -99,7 +99,7 @@ const KatalogTab = ({ palette, t, filterCat }) => {
             marginTop: '4px',
             fontWeight: weight.medium,
           }
-        }, '○ ' + t('kvg.' + item.intervalKey))
+        }, 'ⓘ ' + t('kvg.' + item.intervalKey))
       )
     )
   );
@@ -334,7 +334,7 @@ const RechnungTab = ({ palette, t, data }) => {
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
-      }, '○ ' + t('kvg.tpwNote'))
+      }, 'ⓘ ' + t('kvg.tpwNote'))
     )
   );
 };
@@ -406,9 +406,9 @@ export const KVGLeistungen = ({ palette, t, data }) => {
     React.createElement('div', {
       style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
     },
-      '○ ' + t('kvg.disclaimer'),
+      'ⓘ ' + t('kvg.disclaimer'),
       React.createElement('br'),
-      '○ ' + t('kvg.source') + ' · v' + KVG_DATA_VERSION
+      'ⓘ ' + t('kvg.source') + ' · v' + KVG_DATA_VERSION
     )
   );
 };
