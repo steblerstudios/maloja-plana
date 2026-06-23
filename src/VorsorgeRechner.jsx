@@ -256,9 +256,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { marginTop: space.md + 'px' } },
         React.createElement('div', { style: { fontWeight: weight.medium, fontSize: text.sm, marginBottom: space.sm + 'px' } }, t('vr.fzLinks')),
         [
-          { key: 'BSV', url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/bv/grundlagen-und-gesetze/freizuegigkeit.html' },
+          { key: 'BSV', url: 'https://www.bsv.admin.ch/de/bv-gesetze-verordnungen' },
           { key: 'Auffang', url: 'https://www.aeis.ch/' },
-          { key: 'FINMA', url: 'https://www.finma.ch/de/bewilligung/freizuegigkeitsstiftungen/' },
+          { key: 'FINMA', url: 'https://www.finma.ch/en/authorisation/types-of-licensing/' },
         ].map(link =>
           React.createElement('div', { key: link.key, style: { marginBottom: space.xs + 'px' } },
             React.createElement('a', {
