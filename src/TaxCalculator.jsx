@@ -86,9 +86,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('tax.inputs')),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.taxCanton')),
-        React.createElement('select', { value: canton, onChange: (e) => setCanton(e.target.value), style: { ...inputStyle, marginBottom: space.md } },
-          React.createElement('option', { value: '' }, t('common.select')),
-          ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
+        React.createElement('div', { style: { position: 'relative', marginBottom: space.md } },
+          React.createElement('select', { value: canton, onChange: (e) => setCanton(e.target.value), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
+            React.createElement('option', { value: '' }, t('common.select')),
+            ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
+          ),
+          React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
         ),
 
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md } },
@@ -103,8 +106,11 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.children')),
-        React.createElement('select', { value: kinder, onChange: (e) => setKinder(Number(e.target.value)), style: { ...inputStyle, marginBottom: space.md } },
-          [0, 1, 2, 3, 4, 5, 6].map(n => React.createElement('option', { key: n, value: n }, n))
+        React.createElement('div', { style: { position: 'relative', marginBottom: space.md } },
+          React.createElement('select', { value: kinder, onChange: (e) => setKinder(Number(e.target.value)), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
+            [0, 1, 2, 3, 4, 5, 6].map(n => React.createElement('option', { key: n, value: n }, n))
+          ),
+          React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
