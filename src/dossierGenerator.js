@@ -740,6 +740,33 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     });
   }
 
+  try {
+    const checklistRaw = localStorage.getItem('or5_behoerden_checklist');
+    if (checklistRaw) {
+      const checked = JSON.parse(checklistRaw);
+      const items = [
+        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
+        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
+        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
+        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
+        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
+        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
+      ];
+      const rows = items.map(item => ({
+        label: t(item.key),
+        value: checked[item.id] ? '✓' : '—',
+      }));
+      const done = items.filter(i => checked[i.id]).length;
+      if (done > 0) {
+        sections.push({
+          key: 'checklist',
+          title: t('checklist.title') + ' (' + done + '/' + items.length + ')',
+          rows,
+        });
+      }
+    }
+  } catch {}
+
   return sections;
 }
 
