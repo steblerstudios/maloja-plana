@@ -723,6 +723,9 @@ export default {
     localOnly: 'I tuoi dati restano su questo dispositivo.',
     localBadge: '100% locale — i tuoi dati restano su questo dispositivo',
     chapterTrust: 'I tuoi dati vengono salvati solo localmente. Nessun server, nessun account.',
+    detail1: 'Nessun account, nessun login, nessun server. I tuoi dati esistono solo in questo browser.',
+    detail2: 'Niente viene inviato, salvato o tracciato — nemmeno da noi. Codice sorgente aperto su GitHub.',
+    detail3: 'Consiglio: crea regolarmente un backup (esportazione JSON) per proteggere i tuoi dati.',
   },
 
   datenWirken: {
@@ -737,7 +740,7 @@ export default {
 
   legal: {
     title: 'Note legali',
-    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica' },
+    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Risorse' },
     footerLink: 'Privacy & Note legali',
     lastUpdated: 'Aggiornato: giugno 2026 · Conformemente alla nLPD (in vigore dal 1.9.2023)',
     privacy: {
@@ -845,6 +848,22 @@ export default {
       contactTitle: 'Donazioni & Contribuire',
       contact1: 'Maloja Plana è un progetto open source senza scopo di lucro. Se vuoi aiutare — con codice, traduzioni, feedback o una donazione — contattaci.',
       contact2: 'Contatto: steblerstudios@gmail.com · GitHub: github.com/steblerstudios/maloja-plana',
+    },
+    resources: {
+      secureTitle: 'Comunicazione sicura',
+      secure1: 'Per lo scambio sicuro con le autorità e i professionisti consigliamo:',
+      threema: 'Threema — Messenger svizzero, crittografia end-to-end, utilizzabile senza numero di telefono.',
+      secureSafe: 'SecureSafe — Cassaforte digitale svizzera per password e documenti (protezione segreto bancario).',
+      incamail: 'IncaMail (Posta) — E-mail raccomandata della Posta Svizzera, valore giuridico.',
+      petitionTitle: 'Petizioni & Iniziative civiche',
+      petition1: 'In Svizzera hai il diritto di presentare petizioni (art. 33 Cost.). Piattaforme:',
+      petition2: 'petitionen.ch — Piattaforma svizzera per petizioni',
+      petition3: 'Sito del tuo comune — Per le questioni locali, direttamente presso il tuo comune.',
+      helpTitle: 'Linee di aiuto',
+      help1: 'Telefono Amico: Tel. 143 — 24/7, gratuito, anonimo.',
+      help2: 'Pro Juventute: Tel. 147 — Consulenza per bambini e giovani.',
+      help3: 'Aiuto alle vittime: aiuto-alle-vittime.ch — Consulenza gratuita per vittime di reati.',
+      help4: 'Case delle donne: frauenhaus-schweiz.ch — Protezione e consulenza in caso di violenza domestica.',
     },
   },
 
