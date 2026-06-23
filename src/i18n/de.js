@@ -1900,6 +1900,14 @@ export default {
     freeAmount: 'Frei verfügbar',
     printAction: 'Übersicht drucken / als PDF speichern',
     disclaimer: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle.',
+    incomePosition: 'Einordnung',
+    belowPoverty: 'Unter Armutsgrenze',
+    nearPoverty: 'Knapp über Armutsgrenze',
+    belowMedian: 'Unter Median',
+    aboveMedian: 'Über Median',
+    highIncome: 'Deutlich über Median',
+    povertyLine: 'Armutsgrenze',
+    median: 'Median CH',
   },
 
   pwa: {
