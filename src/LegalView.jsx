@@ -30,6 +30,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     { key: 'license', label: t('legal.tabs.license') },
     { key: 'ethics', label: t('legal.tabs.ethics') },
     { key: 'resources', label: t('legal.tabs.resources') },
+    { key: 'faq', label: t('legal.tabs.faq') },
   ];
 
   return React.createElement('div', {
@@ -265,6 +266,17 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
         P({ children: '→ ' + t('legal.resources.ombuds3') }),
         P({ children: '→ ' + t('legal.resources.ombuds4') }),
       ]})
+    ),
+
+    activeSection === 'faq' && React.createElement('div', null,
+      Section({ title: t('legal.faq.q1'), palette, children: [P({ children: t('legal.faq.a1') })] }),
+      Section({ title: t('legal.faq.q2'), palette, children: [P({ children: t('legal.faq.a2') })] }),
+      Section({ title: t('legal.faq.q3'), palette, children: [P({ children: t('legal.faq.a3') })] }),
+      Section({ title: t('legal.faq.q4'), palette, children: [P({ children: t('legal.faq.a4') })] }),
+      Section({ title: t('legal.faq.q5'), palette, children: [P({ children: t('legal.faq.a5') })] }),
+      Section({ title: t('legal.faq.q6'), palette, children: [P({ children: t('legal.faq.a6') })] }),
+      Section({ title: t('legal.faq.q7'), palette, children: [P({ children: t('legal.faq.a7') })] }),
+      Section({ title: t('legal.faq.q8'), palette, children: [P({ children: t('legal.faq.a8') })] })
     ),
 
     // Footer

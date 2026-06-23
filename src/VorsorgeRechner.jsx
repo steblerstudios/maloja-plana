@@ -29,6 +29,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [bvgGuthaben, setBvgGuthaben] = useState('');
   const [activeTab, setActiveTab] = useState('ahv');
 
+  const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
+  const saeule3aAnnual = Number(data.finanzen?.pension3a) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
   const parsedBezugAlter = Number(bezugAlter) || 65;
@@ -219,7 +221,27 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
           t('vr.saeulen') + ': AHV CHF ' + fmt(ahvResult.monatsrente) + ' + BVG CHF ' + fmt(bvgResult.monatsrente)
         )
-      )
+      ),
+
+      // 3a forecast
+      (() => {
+        const has3a = saeule3aBalance > 0 || saeule3aAnnual > 0;
+        const yearsLeft = alter ? Math.max(0, parsedBezugAlter - alter) : 0;
+        const projected3a = saeule3aBalance + (saeule3aAnnual * yearsLeft);
+        if (!has3a) return React.createElement('div', { style: { ...s.section, color: palette.mid, marginTop: space.md + 'px' } },
+          'ⓘ ' + t('vr.saeule3aHint')
+        );
+        return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
+          React.createElement('div', { style: s.label }, t('vr.saeule3a')),
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sky } }, 'CHF ' + fmt(projected3a)),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+            t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
+          ),
+          ahvResult && bvgResult && bvgResult.versichert && React.createElement('div', { style: { marginTop: space.sm + 'px', fontWeight: weight.semi, fontSize: text.sm } },
+            t('vr.totalMitSaeule3a') + ': CHF ' + fmt(ahvResult.monatsrente + bvgResult.monatsrente) + '/' + t('vr.monat') + ' + CHF ' + fmt(projected3a) + ' ' + t('vr.saeule3a')
+          )
+        );
+      })()
     ),
 
     // Freizügigkeit Tab

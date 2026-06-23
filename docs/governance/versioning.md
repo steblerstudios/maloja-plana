@@ -12,17 +12,21 @@ Maloja Plana follows semantic versioning: `MAJOR.MINOR.PATCH-QUALIFIER`
 | QUALIFIER | `alpha`, `beta`, or omitted for stable |
 
 ### Current Version
-`0.5.0-alpha` — Phase 5 complete (encrypted backup, data validation, print CSS)
+`0.1.0-beta` — Beta launch (all 7 chapters, 5 languages, operations infrastructure)
 
 ### Version History
 
-| Version | Phase | Key Changes |
-|---------|-------|-------------|
-| 0.1.0-alpha | 1 | Core app, chapters, dashboard |
-| 0.2.0-alpha | 2 | Tools (budget, tax, CV, emergency) |
-| 0.3.0-alpha | 3 | Document Tresor, KK Scanner |
-| 0.4.0-alpha | 4 | Charts, theme toggle, dark mode |
-| 0.5.0-alpha | 5 | Encrypted backup, data validation, print CSS |
+| Version | Date | Key Changes |
+|---------|------|-------------|
+| 0.1.0-beta | 2026-06-23 | Beta: Wartungs-Infra, Ticketing, Changelog, A11y, RM 100% |
+| 0.1.0-alpha.8 | 2026-06-23 | Print, Emoji-Fix, CTA-Bereinigung |
+| 0.1.0-alpha.7 | 2026-06-23 | Bundle-Splitting, Error Boundaries, A11y, RM 100% |
+| 0.1.0-alpha.6 | 2026-06-22 | Trust-Panel, SEO, Ressourcen, KVG-Leistungen |
+| 0.1.0-alpha.5 | 2026-06-21 | Finanz-Übersicht, Cross-Links, Dashboard-Snippets |
+| 0.1.0-alpha.4 | 2026-06-20 | Fortschrittskarte, Rätoromanisch, 3a-Feld |
+| 0.1.0-alpha.3 | 2026-06-19 | Kantonale Links, Dossier-Export |
+| 0.1.0-alpha.2 | 2026-06-18 | Design-Audit, Link-Fixes, SW-Cache v7 |
+| 0.1.0-alpha.1 | 2026-06 | Phase 1–5 komplett |
 
 ## Data Version
 
