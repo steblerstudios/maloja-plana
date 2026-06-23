@@ -354,23 +354,39 @@ const AppInner = () => {
         )
       )
     ),
-    view === 'dashboard' && !demoMode && React.createElement('div', {
+    view === 'dashboard' && !demoMode && React.createElement('details', {
       style: {
-        padding: '6px 16px',
         background: palette.sage + '0A',
         borderBottom: '1px solid ' + palette.sage + '15',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
       }
     },
-      React.createElement('svg', { width: '12', height: '12', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' },
-        React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-        React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+      React.createElement('summary', {
+        style: {
+          padding: '6px 16px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+          cursor: 'pointer', listStyle: 'none', WebkitAppearance: 'none',
+        }
+      },
+        React.createElement('svg', { width: '12', height: '12', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round' },
+          React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
+          React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
+        ),
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
+        isOffline && React.createElement('span', {
+          role: 'status',
+          style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
+        }, '· offline')
       ),
-      React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
-      isOffline && React.createElement('span', {
-        role: 'status',
-        style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
-      }, '· offline')
+      React.createElement('div', {
+        style: {
+          padding: '8px 16px 12px', fontSize: text.xs, color: palette.mid,
+          lineHeight: '1.6', maxWidth: '520px', margin: '0 auto',
+        }
+      },
+        React.createElement('div', { style: { marginBottom: '4px' } }, t('trust.detail1')),
+        React.createElement('div', { style: { marginBottom: '4px' } }, t('trust.detail2')),
+        React.createElement('div', null, t('trust.detail3'))
+      )
     ),
     demoMode && React.createElement('div', {
       role: 'status',
