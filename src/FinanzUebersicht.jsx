@@ -184,6 +184,33 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
+    hasData && income > 0 && (() => {
+      const thresholds = [
+        { max: 2279, key: 'belowPoverty', color: palette.gold || '#c47a20' },
+        { max: 4000, key: 'nearPoverty', color: palette.sand },
+        { max: 6788, key: 'belowMedian', color: palette.mid },
+        { max: 10000, key: 'aboveMedian', color: palette.sage },
+        { max: Infinity, key: 'highIncome', color: palette.sage },
+      ];
+      const band = thresholds.find(th => income <= th.max);
+      const pct = Math.min(100, Math.round((income / 6788) * 100));
+      return React.createElement('div', {
+        style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
+      },
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
+          React.createElement('span', null, t('finanzUebersicht.incomePosition')),
+          React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
+        ),
+        React.createElement('div', { style: { height: '4px', background: palette.border, borderRadius: '2px', overflow: 'hidden', marginBottom: '4px' } },
+          React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: 'width 0.3s ease' } })
+        ),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
+          React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
+          React.createElement('span', null, t('finanzUebersicht.median') + ' CHF 6’788')
+        )
+      );
+    })(),
+
     hasData && React.createElement(StatusCard, {
       palette, icon: 'money',
       title: t('finanzUebersicht.taxes'),
