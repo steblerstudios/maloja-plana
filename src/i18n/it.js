@@ -2374,6 +2374,15 @@ export default {
     hint: 'Inizia a digitare — i medicamenti comuni verranno suggeriti.',
     migrated: 'Precedente inserimento a testo libero:',
   },
+  langSkill: {
+    add: 'Aggiungi lingua',
+    name: 'Lingua',
+    namePlaceholder: 'p.es. Inglese',
+    level: 'Livello',
+    hint: 'Inserisci più lingue con il loro livello (Quadro europeo comune).',
+    migrated: 'Inserimento precedente:',
+    levels: { native: 'Madrelingua' },
+  },
   edu: {
     pathsTitle: 'Nessun titolo professionale? Come ottenerlo da adulto/a',
     pathsIntro: 'Anche senza un tirocinio classico puoi ottenere un attestato federale di capacità (AFC) o un certificato (CFP). Quattro vie portano al titolo:',

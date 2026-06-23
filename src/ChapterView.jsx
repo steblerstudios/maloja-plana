@@ -14,6 +14,7 @@ const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
+const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const vorlesen = useVorlesenContext();
@@ -599,6 +600,36 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('medications.migrated')),
+          React.createElement('div', null, oldText)
+        )
+      );
+    }
+
+    // Languages — structured input (language + CEFR level) instead of textarea
+    if (field.k === 'languages' && chapter.key === 'ausbildung') {
+      const langList = Array.isArray(data.languagesList) ? data.languagesList : [];
+      const oldText = typeof data.languages === 'string' ? data.languages : '';
+      const handleLangs = (langs) => {
+        onUpdate('languagesList', langs);
+        const joined = langs.filter(x => x.name).map(x => {
+          const lvl = x.level === 'native' ? tr('langSkill.levels.native') : x.level;
+          return x.name + (lvl ? ' (' + lvl + ')' : '');
+        }).join(', ');
+        onUpdate('languages', joined);
+      };
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('langSkill.hint')),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(LanguageManager, {
+            palette, t: tr, languages: langList,
+            onChange: handleLangs,
+          })
+        ),
+        oldText && !langList.length && React.createElement('div', {
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('langSkill.migrated')),
           React.createElement('div', null, oldText)
         )
       );
