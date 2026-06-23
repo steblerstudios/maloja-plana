@@ -66,11 +66,17 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
-          React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', style: { marginBottom: '12px' }, 'aria-hidden': 'true' },
-            React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: palette.text, strokeWidth: '2.2', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-            React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: palette.gold })
+          React.createElement('h1', {
+            'aria-label': 'Maloja Plana',
+            style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs, letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '2px' }
+          },
+            // Das «M» von Maloja ist der Gipfel (Maloja-Pass)
+            React.createElement('svg', { width: '20', height: '23', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
+              React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+              React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
+            ),
+            'aloja Plana'
           ),
-          React.createElement('h1', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs, letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
 
