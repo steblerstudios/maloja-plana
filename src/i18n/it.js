@@ -353,7 +353,7 @@ export default {
         phone: 'Telefono',
         email: 'E-mail',
         ahv: 'Numero AVS',
-        maritalStatus: { label: 'Stato civile', options: { single: 'Celibe/Nubile', married: 'Coniugato/a', divorced: 'Divorziato/a', widowed: 'Vedovo/a' } },
+        maritalStatus: { label: 'Stato civile', options: { single: 'Celibe/Nubile', married: 'Coniugato/a', cohabiting: 'Concubinato', divorced: 'Divorziato/a', widowed: 'Vedovo/a' } },
         dependents: 'Numero di figli',
         household: {
           adults: 'Adulti nel nucleo familiare',

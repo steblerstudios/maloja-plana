@@ -352,7 +352,7 @@ export default {
         phone: 'Téléphone',
         email: 'E-mail',
         ahv: 'Numéro AVS',
-        maritalStatus: { label: 'État civil', options: { single: 'Célibataire', married: 'Marié(e)', divorced: 'Divorcé(e)', widowed: 'Veuf/veuve' } },
+        maritalStatus: { label: 'État civil', options: { single: 'Célibataire', married: 'Marié(e)', cohabiting: 'Concubinage', divorced: 'Divorcé(e)', widowed: 'Veuf/veuve' } },
         dependents: 'Nombre d\'enfants',
         household: {
           adults: 'Adultes dans le ménage',
