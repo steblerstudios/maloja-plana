@@ -44,9 +44,12 @@ function buildSnippet(chapterKey, chData, allData, t) {
   }
   if (chapterKey === 'versicherungen') {
     if (!chData.kkInsurer) return null;
+    const parts = [chData.kkInsurer];
     const prem = fmtCHF(chData.kkPremium);
-    if (prem) return chData.kkInsurer + ', ' + prem + '.';
-    return chData.kkInsurer + '.';
+    if (prem) parts.push(prem);
+    if (chData.franchise) parts.push(t('synthesis.franchise', { value: chData.franchise }));
+    if (chData.kkModel) parts.push(chData.kkModel);
+    return parts.join(', ') + '.';
   }
   if (chapterKey === 'ausbildung') {
     const parts = [chData.jobTitle, chData.employer].filter(Boolean);
@@ -54,12 +57,21 @@ function buildSnippet(chapterKey, chData, allData, t) {
   }
   if (chapterKey === 'behoerden') {
     if (!chData.cantoneOfTaxation) return null;
-    const canton = getCantonName(chData.cantoneOfTaxation, t);
-    return t('synthesis.taxCanton', { canton }) + '.';
+    const parts = [t('synthesis.taxCanton', { canton: getCantonName(chData.cantoneOfTaxation, t) })];
+    if (chData.taxDeadline) parts.push(t('synthesis.taxDeadline', { date: chData.taxDeadline }));
+    try {
+      const cl = JSON.parse(localStorage.getItem('or5_behoerden_checklist') || '{}');
+      const done = Object.values(cl).filter(Boolean).length;
+      if (done > 0) parts.push(done + '/6 ' + t('synthesis.checklistDone'));
+    } catch {}
+    return parts.join(' · ') + '.';
   }
   if (chapterKey === 'notfall') {
     if (!chData.emergencyContact) return null;
-    return t('synthesis.emergencyContact', { name: chData.emergencyContact }) + '.';
+    const parts = [t('synthesis.emergencyContact', { name: chData.emergencyContact })];
+    if (chData.bloodType) parts.push(t('synthesis.bloodType', { type: chData.bloodType }));
+    if (chData.allergies) parts.push(chData.allergies);
+    return parts.join(' · ') + '.';
   }
   return null;
 }

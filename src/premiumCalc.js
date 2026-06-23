@@ -53,11 +53,11 @@ export const estimateTaxSavings = (subsidyAmount) => {
 
 export const getKVGApplicationLink = (canton) => {
   const links = {
-    'ZH': 'https://www.zh.ch/de/soziales/versicherungen-und-beitraege/krankenversicherung/praemienverbilligung.html',
-    'BE': 'https://www.be.ch/de/start/themen/gesundheit-und-krankenkasse/praemienverbilligung.html',
-    'GE': 'https://www.ge.ch/dossier/sante-et-assurance-maladie',
-    'VD': 'https://www.vd.ch/themes/sante/assurance-maladie/',
-    'default': 'https://www.kvg.info'
+    'ZH': 'https://www.zh.ch/de/gesundheit/praemienverbilligung_krankenversicherung.html',
+    'BE': 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
+    'GE': 'https://www.ge.ch/informations-generales-subside-assurance-maladie',
+    'VD': 'https://www.vd.ch/sante-soins-et-handicap/assurance-maladie/subside-a-lassurance-maladie',
+    'default': 'https://www.bag.admin.ch/de/krankenversicherung-praemienverbilligung'
   };
 
   return links[canton] || links.default;

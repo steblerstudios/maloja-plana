@@ -10,7 +10,7 @@ import {
 
 describe('DIREKTLINKS', () => {
   it('exports version', () => {
-    expect(DIREKTLINKS_VERSION).toBe('2025-06');
+    expect(DIREKTLINKS_VERSION).toBe('2026-06');
   });
 
   it('has at least 10 links', () => {
