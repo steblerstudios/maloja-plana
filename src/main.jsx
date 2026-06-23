@@ -402,15 +402,16 @@ const AppInner = () => {
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
         role: 'link', tabIndex: 0,
+        'aria-label': t('common.appName'),
         onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setView('dashboard'); } },
-        style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '10px' }
+        style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '2px' }
       },
-        // Logo mark — Gipfel-M (Maloja-Pass): zwei Berggipfel + Goldpunkt
-        React.createElement('svg', { width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': 'true' },
-          React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: palette.text, strokeWidth: '2.2', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-          React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: palette.gold })
+        // Wortmarke — das «M» von Maloja IST der Gipfel (Maloja-Pass)
+        React.createElement('svg', { width: '17', height: '19', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
+          React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.4', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+          React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.7', fill: palette.gold })
         ),
-        t('common.appName')
+        'aloja Plana'
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
         React.createElement(VorlesenToggle, { palette, t, vorlesen }),
