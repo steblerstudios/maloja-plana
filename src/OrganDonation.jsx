@@ -72,7 +72,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('button', {
           onClick: () => setStatus('not_registered'),
           style: { ...statusButtonStyle, background: status === 'not_registered' ? palette.up : palette.up }
-        }, '○ ' + t('organ.notRegistered')),
+        }, 'ⓘ ' + t('organ.notRegistered')),
         React.createElement('button', {
           onClick: () => setStatus('declined'),
           style: { ...statusButtonStyle, background: status === 'declined' ? palette.rose : palette.up, color: status === 'declined' ? '#fff' : palette.text }
@@ -95,7 +95,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       }),
 
       React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, '○ ' + t('organ.generateQr'))
+      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, 'ⓘ ' + t('organ.generateQr'))
     ),
 
     // Right: Info & QR
@@ -122,7 +122,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly'))
   ));
 };
 

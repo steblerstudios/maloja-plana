@@ -102,7 +102,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         background: palette.up, borderRadius: radius.sm,
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
-    }, '○ ' + t('notfallDossier.privacyNote')),
+    }, 'ⓘ ' + t('notfallDossier.privacyNote')),
 
     hasSections && React.createElement('button', {
       onClick: handlePrint,
@@ -127,7 +127,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, '○ ' + t('notfallDossier.footerPrivacy'))
+    }, 'ⓘ ' + t('notfallDossier.footerPrivacy'))
   );
 };
 

@@ -384,7 +384,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
     // Disclaimer
     React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid } },
-      '○ ' + t('calendar.disclaimer')
+      'ⓘ ' + t('calendar.disclaimer')
     )
   );
 };

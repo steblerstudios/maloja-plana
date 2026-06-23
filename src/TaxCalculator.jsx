@@ -117,8 +117,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
         React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sand, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, '○ ' + t('budgetSync.bvgReferenceNote')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, '○ ' + t('tax.netIncomeNote')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t('tax.netIncomeNote')),
 
         deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
           React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, ded.label),
@@ -213,12 +213,12 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-      '○ ' + t('tax.disclaimer')
+      'ⓘ ' + t('tax.disclaimer')
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, '○ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
-    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION),
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, '○ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, 'ⓘ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),

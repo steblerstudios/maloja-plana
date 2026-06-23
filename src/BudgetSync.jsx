@@ -23,7 +23,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     setBudget(synced);
   }, [data]);
 
-  if (!budget) return React.createElement('div', null, '○ ' + t('common.loading'));
+  if (!budget) return React.createElement('div', null, 'ⓘ ' + t('common.loading'));
 
   const handleExportReport = () => {
     const report = createBudgetReport(data, t);
@@ -184,7 +184,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         marginTop: space.sm, padding: '8px 12px', background: palette.up,
         borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
-    }, '○ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+    }, 'ⓘ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
     // Separator before total
     React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),
@@ -217,7 +217,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       }
     },
       React.createElement('div', { style: { marginBottom: space.xs } },
-        '○ ' + t('budgetSync.skosOrientation', {
+        'ⓘ ' + t('budgetSync.skosOrientation', {
           size: budget.householdContext.size,
           amount: formatCHF(budget.householdContext.skosGrundbedarf),
         })
@@ -268,7 +268,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
-      }, showAnnual ? '○ ' + t('budgetSync.title') : '○ ' + t('budgetSync.annualView')),
+      }, showAnnual ? 'ⓘ ' + t('budgetSync.title') : 'ⓘ ' + t('budgetSync.annualView')),
       React.createElement('button', {
         onClick: handleExportReport,
         style: {
@@ -284,7 +284,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       style: {
         marginTop: '10px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4'
       }
-    }, '○ ' + t('budgetSync.autoUpdateNote'))
+    }, 'ⓘ ' + t('budgetSync.autoUpdateNote'))
   );
 };
 

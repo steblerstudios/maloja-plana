@@ -101,7 +101,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
         marginBottom: space.md,
       }
-    }, '○ ' + t('briefe.dataNote')),
+    }, 'ⓘ ' + t('briefe.dataNote')),
 
     // Preview
     preview && previewHtml && React.createElement('div', {
