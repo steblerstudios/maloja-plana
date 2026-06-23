@@ -372,6 +372,8 @@ export default {
           addChild: 'Add child',
           removeChild: 'Remove',
           childAgeAuto: 'Age is automatically calculated from the date of birth',
+          partnerIncome: 'Partner net salary (CHF/month)',
+          partnerIncomeHint: 'Monthly net income of the second person in the household. Used for tax, premium subsidy and social assistance calculations.',
           retired: 'Retired',
           retiredYes: 'Yes',
           retiredNo: 'No',

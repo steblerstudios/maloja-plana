@@ -372,6 +372,8 @@ export default {
           addChild: 'Aggiungi figlio',
           removeChild: 'Rimuovi',
           childAgeAuto: 'L\'età viene calcolata automaticamente dalla data di nascita',
+          partnerIncome: 'Stipendio netto partner (CHF/mese)',
+          partnerIncomeHint: 'Reddito netto mensile della seconda persona nel nucleo familiare. Utilizzato per il calcolo delle imposte, della riduzione dei premi e dell\'assistenza sociale.',
           retired: 'Pensionato/a',
           retiredYes: 'Sì',
           retiredNo: 'No',
