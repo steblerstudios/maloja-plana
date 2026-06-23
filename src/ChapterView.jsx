@@ -1248,6 +1248,29 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'bvgContribution' && chapter.key === 'versicherungen') {
             crosslinkBtn('vorsorge', 'vorsorge', 'nav.crosslink.vorsorgeHint');
           }
+          if (field.k === 'educationLevel' && chapter.key === 'ausbildung') {
+            const eduLink = { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' };
+            const pathItem = (titleKey, bodyKey) => React.createElement('div', { key: titleKey, style: { marginBottom: space.sm + 'px' } },
+              React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, tr('edu.' + titleKey)),
+              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, tr('edu.' + bodyKey))
+            );
+            elements.push(
+              React.createElement('details', {
+                key: 'edu-paths',
+                style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.sm + 'px' }
+              },
+                React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, 'ⓘ ' + tr('edu.pathsTitle')),
+                React.createElement('div', { style: { marginTop: space.md + 'px' } },
+                  React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md + 'px' } }, tr('edu.pathsIntro')),
+                  pathItem('path1Title', 'path1'),
+                  pathItem('path2Title', 'path2'),
+                  pathItem('path3Title', 'path3'),
+                  React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' } }, tr('edu.pathsHow')),
+                  React.createElement('a', { href: 'https://www.berufsbildung.ch/de/lexikon/berufsabschluss-fuer-erwachsene', target: '_blank', rel: 'noopener noreferrer', style: eduLink }, '→ ' + tr('edu.pathsLink'))
+                )
+              )
+            );
+          }
           if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
             crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
           }
