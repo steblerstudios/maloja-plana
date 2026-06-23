@@ -1188,6 +1188,8 @@ export default {
     household: 'Chasada',
     householdDetail: '{adults} creschids, {children} uffants',
     adults: 'creschids',
+    branchenvergleich: 'Tes salari en cumparegliaziun da la branscha (salari brut median):',
+    branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022',
   },
 
   notfallSummary: {
