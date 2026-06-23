@@ -405,10 +405,10 @@ const AppInner = () => {
         onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setView('dashboard'); } },
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '10px' }
       },
-        // Logo mark — abstract topographic line
-        React.createElement('svg', { width: '22', height: '22', viewBox: '0 0 24 24', fill: 'none', stroke: palette.sand, strokeWidth: '1.8', strokeLinecap: 'round' },
-          React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
-          React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
+        // Logo mark — Gipfel-M (Maloja-Pass): zwei Berggipfel + Goldpunkt
+        React.createElement('svg', { width: '24', height: '24', viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': 'true' },
+          React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: palette.text, strokeWidth: '2.2', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+          React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: palette.gold })
         ),
         t('common.appName')
       ),
