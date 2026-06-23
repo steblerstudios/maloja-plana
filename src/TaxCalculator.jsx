@@ -3,8 +3,10 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, getKantonDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
+import { getHouseholdInfo } from './config/cantonalData.js';
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
+  const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
     { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: 7056 },
@@ -16,8 +18,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
   const [taxData, setTaxData] = useState(data.taxData || {});
   const [canton, setCanton] = useState(data.basis?.canton || '');
-  const [verheiratet, setVerheiratet] = useState(data.basis?.married || false);
-  const [kinder, setKinder] = useState(Number(data.basis?.children || 0));
+  const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
+  const [kinder, setKinder] = useState(hh.childrenCount);
   const [taxableIncome, setTaxableIncome] = useState(0);
   const [estimatedTax, setEstimatedTax] = useState(0);
   const [taxResult, setTaxResult] = useState(null);
