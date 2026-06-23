@@ -100,7 +100,7 @@ ${m('securityTitle')}:
 ${m('moreInfo')}:
 ──────────────────────
 Webseite: https://steblerstudios.github.io/maloja-plana/
-Kontakt: steblerstudios@gmail.com
+Kontakt: info@malojaplana.ch
 Quellcode: https://github.com/steblerstudios/maloja-plana
 
 ════════════════════════════════════════
