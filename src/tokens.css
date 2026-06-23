@@ -141,6 +141,13 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── Force text rendering for Unicode symbols ───────────
+   Prevents ✓ ← → ◇ ▶ etc. from rendering as color emoji
+   on Android/Samsung devices. */
+button, [role="button"], summary {
+  font-variant-emoji: text;
+}
+
 /* ─── Focus styles (accessibility) ──────────────────────── */
 :focus-visible {
   outline: 2px solid #B8956A;

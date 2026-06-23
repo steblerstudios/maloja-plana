@@ -6,13 +6,17 @@
 @media print {
   /* Hide non-essential UI */
   header[role="banner"],
+  footer[role="contentinfo"],
   .mp-skip-link,
   nav[role="navigation"],
-  button,
-  input,
-  select,
-  textarea,
-  [aria-live] {
+  details > summary,
+  [aria-live],
+  [data-alpha-banner] {
+    display: none !important;
+  }
+
+  /* Hide interactive elements but keep labels */
+  button, input, select, textarea {
     display: none !important;
   }
 
@@ -39,10 +43,10 @@
     overflow: visible !important;
   }
 
-  /* Cards and sections: remove dark backgrounds, add borders */
-  div[style*="background"] {
-    background: #fff !important;
+  /* Cards and sections: clean borders for print */
+  div[style*="border-radius"] {
     border: 1px solid #ccc !important;
+    background: #fff !important;
     color: #000 !important;
     break-inside: avoid;
     margin-bottom: 8pt;
@@ -88,11 +92,6 @@
   span[style*="color: rgb(128"],
   span[style*="color: rgb(140"] {
     color: #555 !important;
-  }
-
-  /* Hide alpha banner in print */
-  [data-alpha-banner] {
-    display: none !important;
   }
 
   /* SVG icons: ensure visible in print */
