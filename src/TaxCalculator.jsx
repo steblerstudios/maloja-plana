@@ -9,7 +9,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
-    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: 7056 },
+    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: 7258 },
     { label: t('tax.debtInterest'), key: 'debtInterest', default: 0, max: 50000 },
     { label: t('tax.maintenance'), key: 'maintenance', default: 0, max: 50000 },
     { label: t('tax.education'), key: 'education', default: 0, max: 10000 },
