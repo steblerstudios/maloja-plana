@@ -471,7 +471,7 @@ const AppInner = () => {
         }
       }, t('demo.leave'))
     ),
-    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none' } },
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
       view !== 'dashboard' && React.createElement('button', {
         onClick: () => setView('dashboard'),
         'aria-label': t('nav.backToDashboard'),
@@ -608,6 +608,11 @@ const AppInner = () => {
         gap: space.sm,
         alignItems: 'center',
         padding: '16px 20px',
+        width: '100%',
+        maxWidth: contentMax,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        boxSizing: 'border-box',
       }
     },
       React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v0.1.0-beta'),

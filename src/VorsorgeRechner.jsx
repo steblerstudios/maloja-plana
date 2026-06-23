@@ -125,9 +125,15 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
         React.createElement('div', null,
-          React.createElement('label', { style: s.checkbox },
-            React.createElement('input', { type: 'checkbox', checked: verheiratet, onChange: e => setVerheiratet(e.target.checked) }),
-            t('vr.verheiratet')
+          React.createElement('div', { style: s.label }, t('vr.verheiratet')),
+          React.createElement('div', { style: { display: 'flex', gap: '6px' } },
+            [{ v: false, l: t('common.no') }, { v: true, l: t('common.yes') }].map((o, i) =>
+              React.createElement('button', {
+                key: i, type: 'button',
+                onClick: () => setVerheiratet(o.v),
+                style: s.tab(verheiratet === o.v)
+              }, o.l)
+            )
           )
         ),
         verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000' })
