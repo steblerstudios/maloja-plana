@@ -313,9 +313,11 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
         P({ children: t('legal.resources.heartfeltIntro') }),
-        P({ children: '→ ' + t('legal.resources.heartfelt1') }),
-        P({ children: '→ ' + t('legal.resources.heartfelt2') }),
-        P({ children: '→ ' + t('legal.resources.heartfelt3') }),
+        ...['heartfelt1', 'heartfelt2', 'heartfelt3', 'heartfelt4', 'heartfelt5', 'heartfelt6', 'heartfelt7', 'heartfelt8', 'heartfelt9', 'heartfelt10']
+          .map(k => t('legal.resources.' + k))
+          .filter(s => s && s.indexOf('legal.resources.') !== 0)
+          .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+          .map(s => P({ children: '→ ' + s })),
       ]})
     ),
 

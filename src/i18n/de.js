@@ -2369,6 +2369,15 @@ export default {
     hint: 'Tippe den Namen ein — häufige Medikamente werden vorgeschlagen.',
     migrated: 'Früherer Freitext-Eintrag:',
   },
+  langSkill: {
+    add: 'Sprache hinzufügen',
+    name: 'Sprache',
+    namePlaceholder: 'z.B. Englisch',
+    level: 'Niveau',
+    hint: 'Erfasse mehrere Sprachen mit ihrem Niveau (Europäischer Referenzrahmen).',
+    migrated: 'Früherer Eintrag:',
+    levels: { native: 'Muttersprache' },
+  },
   edu: {
     pathsTitle: 'Kein Berufsabschluss? So holst Du ihn als Erwachsene/r nach',
     pathsIntro: 'Auch ohne klassische Lehre kannst Du ein eidgenössisches Fähigkeitszeugnis (EFZ) oder Berufsattest (EBA) erlangen. Vier Wege führen zum Abschluss:',
