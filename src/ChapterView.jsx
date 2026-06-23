@@ -154,42 +154,52 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { gridColumn: '1 / -1', marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.children')),
 
-        children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm, marginBottom: '12px' } },
-          children.map((child, idx) =>
-            React.createElement('div', { key: idx, style: { display: 'flex', alignItems: 'center', gap: space.sm } },
-              React.createElement('span', { style: { fontSize: text.sm, color: palette.mid, minWidth: '36px' } }, tr('chapters.basis.fields.household.childAge')),
-              React.createElement('input', {
-                type: 'number',
-                inputMode: 'numeric',
-                min: 0,
-                max: 25,
-                value: child.age === 0 ? '0' : (child.age || ''),
-                onChange: (e) => {
-                  const updated = children.map((c, i) => i === idx ? { ...c, age: Math.max(0, Math.min(25, Number(e.target.value) || 0)) } : c);
-                  updateHousehold({ children: updated });
-                },
-                style: { ...hhSelect, width: '72px', cursor: 'text' }
-              }),
-              React.createElement('button', {
-                type: 'button',
-                onClick: () => {
-                  const updated = children.filter((_, i) => i !== idx);
-                  updateHousehold({ children: updated });
-                },
-                'aria-label': tr('chapters.basis.fields.household.removeChild'),
-                style: {
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  color: palette.mid, fontSize: text.sm, padding: '4px 8px',
-                  borderRadius: radius.sm,
-                }
-              }, tr('chapters.basis.fields.household.removeChild'))
-            )
-          )
+        children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, marginBottom: '12px' } },
+          children.map((child, idx) => {
+            const updateChild = (patch) => {
+              const updated = children.map((c, i) => i === idx ? { ...c, ...patch } : c);
+              updateHousehold({ children: updated });
+            };
+            const childInput = { ...hhSelect, cursor: 'text', width: '100%' };
+            return React.createElement('div', {
+              key: idx,
+              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+            },
+              React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm } },
+                React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+                  tr('chapters.basis.fields.household.childLabel', { nr: idx + 1 })
+                ),
+                React.createElement('button', {
+                  type: 'button',
+                  onClick: () => updateHousehold({ children: children.filter((_, i) => i !== idx) }),
+                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '2px 6px', fontFamily: fontFamily }
+                }, tr('chapters.basis.fields.household.removeChild'))
+              ),
+              React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm } },
+                React.createElement('div', null,
+                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
+                  React.createElement('input', { type: 'text', value: child.name || '', onChange: (e) => updateChild({ name: e.target.value }), placeholder: '–', style: childInput })
+                ),
+                React.createElement('div', null,
+                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childBirthDate')),
+                  React.createElement('input', { type: 'date', value: child.birthDate || '', onChange: (e) => updateChild({ birthDate: e.target.value }), style: childInput })
+                ),
+                React.createElement('div', null,
+                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childAge')),
+                  React.createElement('input', { type: 'number', inputMode: 'numeric', min: 0, max: 25, value: child.age === 0 ? '0' : (child.age || ''), onChange: (e) => updateChild({ age: Math.max(0, Math.min(25, Number(e.target.value) || 0)) }), style: childInput })
+                ),
+                React.createElement('div', null,
+                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childInsurer')),
+                  React.createElement('input', { type: 'text', value: child.insurer || '', onChange: (e) => updateChild({ insurer: e.target.value }), placeholder: '–', style: childInput })
+                )
+              )
+            );
+          })
         ),
 
         React.createElement('button', {
           type: 'button',
-          onClick: () => updateHousehold({ children: [...children, { age: 0 }] }),
+          onClick: () => updateHousehold({ children: [...children, { age: 0, name: '', birthDate: '', insurer: '' }] }),
           style: {
             background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm,
             cursor: 'pointer', color: palette.mid, fontSize: text.sm,
