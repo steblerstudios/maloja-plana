@@ -3,7 +3,7 @@ import { prepareDataForExport, prepareDownloadFiles, initiateBrowserDownload } f
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius } from './config/tokens.js';
+import { text, weight, radius, space } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 

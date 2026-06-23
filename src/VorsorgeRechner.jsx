@@ -16,7 +16,7 @@ function currentAge(dateStr) {
   return now.getFullYear() - birth.getFullYear() - (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
 }
 
-export const VorsorgeRechner = ({ palette, t, data }) => {
+export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const birthYear = parseYear(data.basis?.dateOfBirth);
   const alter = currentAge(data.basis?.dateOfBirth);
 
@@ -276,7 +276,12 @@ export const VorsorgeRechner = ({ palette, t, data }) => {
 
     React.createElement('div', { style: s.source },
       t('vr.source')
-    )
+    ),
+
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('finanzuebersicht'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+    }, '→ ' + t('nav.finanzUebersicht'))
   );
 };
 
