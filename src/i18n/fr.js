@@ -238,7 +238,7 @@ export default {
     bloodType: 'Groupe sanguin {type}',
   },
   fortschritt: {
-    title: 'Champs ouverts',
+    title: 'Ta progression',
     fieldsOpen: 'ouverts',
   },
   chapterStatus: {
@@ -1641,6 +1641,7 @@ export default {
     tryAgain: 'Réessayer',
     reload: 'Recharger la page',
     privacy: 'Aucune donnée n\'a été envoyée. Tout reste sur votre appareil.',
+    viewCrash: 'Cette section a rencontré une erreur. Vos données sont en sécurité.',
   },
 
   overdue: {
@@ -1929,6 +1930,9 @@ export default {
     median: 'Médiane CH',
     branchenvergleich: 'Ton salaire par branche (salaire brut médian) :',
     branchenQuelle: 'Source : OFS Enquête suisse sur la structure des salaires 2022',
+    household: 'Ménage',
+    householdDetail: '{adults} adultes, {children} enfants',
+    adults: 'adultes',
   },
 
   branche: {
@@ -1955,6 +1959,11 @@ export default {
   pwa: {
     installHint: 'Installer Maloja Plana comme application — disponible hors ligne, directement depuis l\'écran d\'accueil.',
     install: 'Installer',
+  },
+
+  vorlesen: {
+    toggle: 'Lecture vocale on/off',
+    label: 'Lire à voix haute',
   },
 
   beta: {

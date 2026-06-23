@@ -238,7 +238,7 @@ export default {
     bloodType: 'Blood type {type}',
   },
   fortschritt: {
-    title: 'Open fields',
+    title: 'Your progress',
     fieldsOpen: 'open',
   },
   chapterStatus: {
@@ -1695,6 +1695,7 @@ export default {
     tryAgain: 'Try again',
     reload: 'Reload page',
     privacy: 'No data was sent anywhere. Everything stays on your device.',
+    viewCrash: 'This section encountered an error. Your data is safe.',
   },
 
   overdue: {
@@ -1930,6 +1931,9 @@ export default {
     median: 'Median CH',
     branchenvergleich: 'Your salary compared by industry (gross median):',
     branchenQuelle: 'Source: FSO Swiss Earnings Structure Survey 2022',
+    household: 'Household',
+    householdDetail: '{adults} adults, {children} children',
+    adults: 'adults',
   },
 
   branche: {
@@ -1956,6 +1960,11 @@ export default {
   pwa: {
     installHint: 'Install Maloja Plana as an app — available offline, right from your home screen.',
     install: 'Install',
+  },
+
+  vorlesen: {
+    toggle: 'Read aloud on/off',
+    label: 'Read aloud',
   },
 
   beta: {
