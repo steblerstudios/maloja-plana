@@ -34,7 +34,7 @@ export class ErrorBoundary extends React.Component {
 
     const { palette, t } = this.props;
     const bg = palette?.bg || '#1a1a18';
-    const text = palette?.text || '#e8e6e0';
+    const textColor = palette?.text || '#e8e6e0';
     const surface = palette?.surface || '#2a2a28';
     const border = palette?.border || '#3a3a38';
     const sand = palette?.sand || '#c8a96e';
@@ -42,7 +42,7 @@ export class ErrorBoundary extends React.Component {
     return React.createElement('div', {
       role: 'alert',
       style: {
-        width: '100vw', height: '100vh', background: bg, color: text,
+        width: '100vw', height: '100vh', background: bg, color: textColor,
         fontFamily: fontFamily,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '20px', boxSizing: 'border-box'
@@ -78,7 +78,7 @@ export class ErrorBoundary extends React.Component {
           React.createElement('button', {
             onClick: this.handleHardReset,
             style: {
-              padding: '10px 20px', background: 'transparent', color: text,
+              padding: '10px 20px', background: 'transparent', color: textColor,
               border: '1px solid ' + border, borderRadius: radius.sm,
               cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
             }
