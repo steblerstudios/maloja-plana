@@ -2370,6 +2370,15 @@ export default {
     hint: 'Start typing — common medications will be suggested.',
     migrated: 'Previous free-text entry:',
   },
+  langSkill: {
+    add: 'Add language',
+    name: 'Language',
+    namePlaceholder: 'e.g. English',
+    level: 'Level',
+    hint: 'Add several languages with their level (Common European Framework).',
+    migrated: 'Previous entry:',
+    levels: { native: 'Native' },
+  },
   edu: {
     pathsTitle: 'No vocational qualification? How to obtain one as an adult',
     pathsIntro: 'Even without a classic apprenticeship you can earn a Federal VET Diploma (EFZ) or Certificate (EBA). Four routes lead to a qualification:',
