@@ -901,6 +901,11 @@ export default {
       heartfelt1: 'Ecosia — ecosia.org — Search engine that invests its revenue in reforestation.',
       heartfelt2: 'Infomaniak — infomaniak.com — Swiss hosting powered by green energy with its own resource-efficient data centres.',
       heartfelt3: 'Posteo — posteo.de — Ad-free, privacy-friendly email service running on green energy.',
+      heartfelt4: 'artfuljana — artfuljana.ch — Handmade polymer-clay jewellery and travel photography.',
+      heartfelt5: 'Baukunst Nick — baukunst-nick.ch — Plastering, painting and tiling in the Basel region.',
+      heartfelt6: 'Living Dream Design — ld-design.ch — Construction and landscaping from Pratteln: timber, gardens, flooring, green roofs.',
+      heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — Switzerland’s largest children’s and youth movement (Scouts).',
+      heartfelt8: 'Tierschutz beider Basel — tbb.ch — Animal shelter, rehoming and animal-welfare advice in the Basel region.',
     },
     faq: {
       q1: 'Where is my data stored?',
