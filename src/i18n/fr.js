@@ -231,6 +231,7 @@ export default {
     expenses: 'dépenses enregistrées',
     taxCanton: 'Canton fiscal {canton}',
     emergencyContact: 'En cas d\'urgence : {name}',
+    freePerMonth: 'libre/mois',
   },
   fortschritt: {
     title: 'Champs ouverts',
@@ -645,6 +646,17 @@ export default {
     ago: 'il y a {n} mois',
     agoDays: 'il y a {n} jours',
     recorded: 'documenté',
+  },
+
+  checklist: {
+    title: 'Check-list administrative',
+    intro: 'Démarches et documents courants — cochez ce que vous avez déjà accompli.',
+    betreibungsauszug: 'Extrait des poursuites commandé',
+    steuererklaerung: 'Déclaration d\'impôts déposée',
+    wohnsitzbestaetigung: 'Attestation de domicile obtenue',
+    ausweisRenewal: 'Carte d\'identité / passeport renouvelé',
+    strafregisterauszug: 'Extrait du casier judiciaire commandé',
+    patientenverfuegung: 'Directives anticipées déposées',
   },
 
   wohnkostenanteil: {
@@ -1882,6 +1894,7 @@ export default {
     totalIncome: 'Revenus',
     totalExpenses: 'Dépenses',
     freeAmount: 'Disponible',
+    printAction: 'Imprimer l\'aperçu / enregistrer en PDF',
     disclaimer: 'Toutes les valeurs sont indicatives. Pour des informations contraignantes, contactez l\'autorité compétente.',
   },
 

@@ -493,17 +493,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement('h1', {
-        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 6px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
+        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
-        style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.normal }
-      }, t('dashboard.tagline')),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.text, margin: '6px 0 0 0', lineHeight: leading.normal, opacity: 0.75 }
-      }, t('dashboard.taglineBenefit')),
-      React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.mid, margin: '6px 0 0 0', opacity: 0.7, lineHeight: leading.normal }
-      }, t('alpha.noAdviceHint')),
+        style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
+      }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')),
 
       !demoMode && mvo.pct < 50 && React.createElement('button', {
         onClick: onEnterDemo,
@@ -582,26 +576,25 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { fontSize: text.xs - 1, color: palette.sage, opacity: 0.8 }
         }, t('dashboard.highlightPrivacy'))
       ),
-      React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.sm }
-      },
-        [
-          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget' },
+      (() => {
+        const items = [
+          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
           { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
           { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
           { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
           { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
           !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
-        ].filter(Boolean).map(item => {
+        ].filter(Boolean);
+        const renderItem = (item) => {
           const IconFn = Icons[item.icon];
           return React.createElement('button', {
             key: item.view,
             onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
             style: {
-              display: 'flex', alignItems: 'center', gap: '14px',
-              padding: '14px 16px',
-              background: 'transparent',
-              border: '1px solid ' + palette.border + '44',
+              display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
+              padding: item.primary ? '18px 20px' : '12px 14px',
+              background: item.primary ? palette.sand + '08' : 'transparent',
+              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
               borderRadius: radius.md,
               cursor: 'pointer',
               fontFamily: 'inherit',
@@ -610,23 +603,31 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
           },
             React.createElement('div', {
               style: {
-                width: '36px', height: '36px', borderRadius: radius.md,
-                background: palette.sand + '12',
+                width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
+                background: palette.sand + (item.primary ? '18' : '0C'),
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0, color: palette.sand,
               }
-            }, IconFn ? React.createElement('div', { style: { width: '22px', height: '22px' } }, IconFn()) : null),
+            }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed } }, item.sub)
+              React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
             )
           );
-        })
-      )
+        };
+        const primary = items.find(i => i.primary);
+        const rest = items.filter(i => !i.primary);
+        return React.createElement(React.Fragment, null,
+          primary && renderItem(primary),
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+          }, rest.map(renderItem))
+        );
+      })()
     ),
 
     // ─── Quick check — inline IPV eligibility ───────────────
