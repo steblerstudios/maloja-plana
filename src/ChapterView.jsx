@@ -10,7 +10,9 @@ import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
-import { MedicationManager } from './MedicationManager.jsx';
+const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
+const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
+const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const vorlesen = useVorlesenContext();
@@ -298,6 +300,32 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       marginTop: space.xs
     };
 
+    // Doctors — structured input instead of plain text fields
+    if (field.k === 'doctor' && chapter.key === 'notfall') {
+      const docList = Array.isArray(data.doctorsList) ? data.doctorsList : [];
+      const oldDoctor = typeof data.doctor === 'string' ? data.doctor : '';
+      const oldPhone = typeof data.doctorPhone === 'string' ? data.doctorPhone : '';
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('doctors.hint')),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(DoctorManager, {
+            palette, t: tr, doctors: docList,
+            onChange: (list) => onUpdate('doctorsList', list),
+          })
+        ),
+        oldDoctor && !docList.length && React.createElement('div', {
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('doctors.migrated')),
+          React.createElement('div', null, oldDoctor + (oldPhone ? ' · ' + oldPhone : ''))
+        )
+      );
+    }
+    if ((field.k === 'doctorPhone') && chapter.key === 'notfall') {
+      return null;
+    }
+
     // Text Input
     if (field.type === 'text') {
       const fieldId = chapter.key + '-' + field.k;
@@ -518,14 +546,38 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
-        React.createElement(MedicationManager, {
-          palette, t: tr, medications: medList,
-          onChange: (list) => onUpdate('medicationsList', list),
-        }),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(MedicationManager, {
+            palette, t: tr, medications: medList,
+            onChange: (list) => onUpdate('medicationsList', list),
+          })
+        ),
         oldText && !medList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
         },
           React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('medications.migrated')),
+          React.createElement('div', null, oldText)
+        )
+      );
+    }
+
+    // Chronic diseases — structured input with ICD-10 autocomplete instead of textarea
+    if (field.k === 'chronicDiseases' && chapter.key === 'notfall') {
+      const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList : [];
+      const oldText = typeof data.chronicDiseases === 'string' ? data.chronicDiseases : '';
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('diseases.hint')),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(DiseaseManager, {
+            palette, t: tr, diseases: dList,
+            onChange: (list) => onUpdate('chronicDiseasesList', list),
+          })
+        ),
+        oldText && !dList.length && React.createElement('div', {
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('diseases.migrated')),
           React.createElement('div', null, oldText)
         )
       );
@@ -582,7 +634,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
   const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
   const showSummary = hasContact || hasBlood || hasVorsorge;
-  const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || data.doctor);
+  const hasDoctors = Array.isArray(data.doctorsList) && data.doctorsList.some(d => d.name);
+  const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || hasDoctors || data.doctor);
 
   const handleSaveCard = () => {
     const basis = allData && allData.basis || {};
@@ -606,9 +659,15 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => m.name + (m.dose ? ' ' + m.dose + ' ' + m.unit : '')).join(', ') + '</div>');
     else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
-    if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
+    if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => d.name + (d.code ? ' (' + d.code + ')' : '')).join(', ') + '</div>');
+    else if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
-    if (data.doctor) {
+    const docList = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
+    if (docList.length) {
+      const rows = docList.map(d => '<div>' + d.name + (d.phone ? ' · ' + d.phone : '') + '</div>');
+      sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
+    } else if (data.doctor) {
       const rows = ['<div>' + data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : '') + '</div>'];
       sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     }
@@ -738,10 +797,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const medList2 = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
       if (medList2.length) medRows.push(tr('notfallSummary.handoverMedications') + ': ' + medList2.map(m => m.name).join(', '));
       else if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
-      if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
+      const dList2 = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
+      if (dList2.length) medRows.push(tr('notfallSummary.handoverChronic') + ': ' + dList2.map(d => d.name).join(', '));
+      else if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
       if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), rows: medRows });
       const careRows = [];
-      if (data.doctor) careRows.push(data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : ''));
+      const docList3 = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
+      if (docList3.length) docList3.forEach(d => careRows.push(d.name + (d.phone ? ' · ' + d.phone : '')));
+      else if (data.doctor) careRows.push(data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : ''));
       if (data.hospital) careRows.push(data.hospital);
       if (careRows.length) sections.push({ title: tr('notfallSummary.handoverCare'), rows: careRows });
       const provRows = [];
