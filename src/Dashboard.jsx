@@ -33,8 +33,14 @@ function buildSnippet(chapterKey, chData, allData, t) {
     exp += Number(allData?.wohnen?.rentAmount) || 0;
     exp += Number(allData?.wohnen?.utilities) || 0;
     exp += Number(allData?.versicherungen?.kkPremium) || 0;
-    if (exp > 0) return income + ', ' + fmtCHF(exp) + ' ' + t('synthesis.expenses') + '.';
-    return income + '.';
+    const parts = [income];
+    if (exp > 0) parts.push(fmtCHF(exp) + ' ' + t('synthesis.expenses'));
+    const annual = (Number(chData.monthlyIncome) || 0) * 12;
+    if (annual > 0 && exp > 0) {
+      const frei = Number(chData.monthlyIncome) - exp;
+      if (frei > 0) parts.push(fmtCHF(Math.round(frei)) + ' ' + t('synthesis.freePerMonth'));
+    }
+    return parts.join(', ') + '.';
   }
   if (chapterKey === 'versicherungen') {
     if (!chData.kkInsurer) return null;

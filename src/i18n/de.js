@@ -231,6 +231,7 @@ export default {
     expenses: 'erfasste Ausgaben',
     taxCanton: 'Steuerkanton {canton}',
     emergencyContact: 'Im Notfall: {name}',
+    freePerMonth: 'frei/Mt.',
   },
   fortschritt: {
     title: 'Offene Felder',
@@ -424,6 +425,7 @@ export default {
         childcare: 'Kinderbetreuung CHF',
         otherInsurance: 'Weitere Versicherungen CHF',
         pension3a: '3. Säule A eingezahlt CHF/Jahr',
+        pension3aBalance: '3. Säule A Guthaben CHF',
         familienzulagen: 'Familienzulagen pro Monat CHF',
         alimenteReceived: 'Alimente erhalten pro Monat CHF',
         alimentePaid: 'Alimente bezahlt pro Monat CHF',
@@ -1182,6 +1184,10 @@ export default {
     householdAdultsChildren: 'Haushalt: {adults} Erwachsene + {children} Kinder',
     childrenNote: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.',
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
+    repaymentTitle: 'Rückzahlung von Sozialhilfe',
+    repaymentText: 'In den meisten Kantonen muss erhaltene Sozialhilfe zurückgezahlt werden, wenn sich die finanzielle Situation verbessert (z.B. durch Erbschaft, neues Einkommen oder Vermögenszuwachs).',
+    repaymentVaries: 'Die Frist und Bedingungen variieren je nach Kanton (meist 10–15 Jahre). Einige Kantone (z.B. Waadt) haben die Rückzahlungspflicht abgeschafft.',
+    repaymentAdvice: 'Erkundige dich beim Sozialdienst deiner Gemeinde über die geltenden Regeln in deinem Kanton.',
   },
 
   lohnCheck: {
@@ -1873,6 +1879,10 @@ export default {
     selectCanton: 'Kanton wählen für kantonale Berechnung',
     toBudget: 'Budget-Übersicht',
     toDossier: 'Behörden-Dossier',
+    budgetBalance: 'Monatsbudget',
+    totalIncome: 'Einnahmen',
+    totalExpenses: 'Ausgaben',
+    freeAmount: 'Frei verfügbar',
     disclaimer: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle.',
   },
 
