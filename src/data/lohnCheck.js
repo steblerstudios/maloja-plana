@@ -57,3 +57,39 @@ export function alleMindestlohnKantone() {
     monatBrutto: Math.round(v.chfStunde * STUNDEN_PRO_MONAT),
   }));
 }
+
+// Wochenstunden → Monats-/Jahresstunden (52 Wochen / 12 Monate)
+export function stundenAufMonat(stundenProWoche) {
+  const w = Number(stundenProWoche) || 0;
+  return Math.round((w * 52 / 12) * 10) / 10;
+}
+
+export function stundenAufJahr(stundenProWoche) {
+  const w = Number(stundenProWoche) || 0;
+  return Math.round(w * 52);
+}
+
+// Stundenlohn aus Monatslohn + tatsächlichen Wochenstunden (genauer als die 182h-Annahme).
+// Prüft gegen den kantonalen Mindestlohn, falls vorhanden.
+export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton) {
+  const lohn = Number(monatslohnChf) || 0;
+  const stundenMonat = stundenAufMonat(stundenProWoche);
+  if (lohn <= 0 || stundenMonat <= 0) return { status: 'unvollstaendig' };
+
+  const lohnStunde = Math.round((lohn / stundenMonat) * 100) / 100;
+  const ml = MINDESTLOHN[kanton];
+  const base = { lohnStunde, stundenMonat, kanton };
+  if (!ml) return { ...base, status: 'keinGesetz' };
+
+  if (lohnStunde < ml.chfStunde) {
+    return {
+      ...base,
+      status: 'unterMindestlohn',
+      mindestStunde: ml.chfStunde,
+      mindestMonat: Math.round(ml.chfStunde * stundenMonat),
+      differenzMonat: Math.round(ml.chfStunde * stundenMonat - lohn),
+      jahr: ml.jahr,
+    };
+  }
+  return { ...base, status: 'ok', mindestStunde: ml.chfStunde, jahr: ml.jahr };
+}
