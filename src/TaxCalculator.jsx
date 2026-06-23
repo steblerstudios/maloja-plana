@@ -24,7 +24,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [estimatedTax, setEstimatedTax] = useState(0);
   const [taxResult, setTaxResult] = useState(null);
 
-  const income = Number(data.finanzen?.monthlyIncome || 0) * 12;
+  const partnerIncome = Number(data.basis?.household?.partnerIncome || 0);
+  const income = (Number(data.finanzen?.monthlyIncome || 0) + partnerIncome) * 12;
 
   React.useEffect(() => {
     calculateTax();
