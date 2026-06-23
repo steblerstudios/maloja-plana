@@ -461,6 +461,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     prevFilledRef.current = filledCount;
   }, [filledCount, ankunftKey]);
 
+  const CHECKLIST_STORAGE_KEY = 'or5_behoerden_checklist';
+  const [checklistChecked, setChecklistChecked] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY)) || {}; } catch { return {}; }
+  });
+
   const introText = tr('chapters.' + chapter.key + '.intro');
   const hasIntro = introText && introText !== 'chapters.' + chapter.key + '.intro';
 
@@ -752,7 +757,6 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Behörden-Checkliste — interactive checklist for common official tasks
     chapter.key === 'behoerden' && (() => {
-      const STORAGE_KEY = 'or5_behoerden_checklist';
       const items = [
         { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
         { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
@@ -761,13 +765,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
         { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
       ];
-      const [checked, setCheckedState] = React.useState(() => {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
-      });
+      const checked = checklistChecked;
       const toggle = (id) => {
         const next = { ...checked, [id]: !checked[id] };
-        setCheckedState(next);
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch {}
+        setChecklistChecked(next);
+        try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(next)); } catch {}
       };
       const done = items.filter(i => checked[i.id]).length;
       return React.createElement('details', {
