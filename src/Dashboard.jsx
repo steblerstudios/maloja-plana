@@ -296,57 +296,73 @@ const BetaFeedback = ({ palette, t }) => {
   );
 };
 
-const FortschrittsKarte = ({ palette, t, openChapters, onSelectChapter, text, weight, leading, space, radius, shadow }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const totalMissing = openChapters.reduce((sum, oc) => sum + oc.missing.length, 0);
+const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }) => {
+  const statusLabels = { leer: t('chapterStatus.leer'), begonnen: t('chapterStatus.begonnen'), grundordnung: t('chapterStatus.grundordnung'), vertieft: t('chapterStatus.vertieft') };
+  const totalPct = chapters.length > 0 ? Math.round(chapterCompletions.reduce((a, b) => a + b, 0) / chapters.length) : 0;
   return React.createElement('div', {
     style: {
       marginBottom: space.xl, background: palette.surface,
       borderRadius: radius.md, border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm, overflow: 'hidden',
+      boxShadow: shadow.sm, padding: '20px',
     }
   },
-    React.createElement('button', {
-      onClick: () => setExpanded(!expanded),
-      style: {
-        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '16px 20px', background: 'none', border: 'none', cursor: 'pointer',
-        fontFamily: 'inherit', color: palette.text,
-      }
+    React.createElement('div', {
+      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
     },
-      React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } },
+      React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
         t('fortschritt.title')
       ),
       React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } },
-        totalMissing + ' ' + t('fortschritt.fieldsOpen') + (expanded ? ' ▴' : ' ▾')
+        totalPct + '%'
       )
     ),
-    expanded && React.createElement('div', { style: { padding: '0 20px 16px' } },
-      openChapters.map(({ ch, idx, missing }) =>
-        React.createElement('div', { key: ch.key, style: { marginBottom: space.md } },
+    React.createElement('div', {
+      style: { height: '4px', background: palette.border, borderRadius: '2px', marginBottom: space.lg, overflow: 'hidden' }
+    },
+      React.createElement('div', {
+        style: { height: '100%', width: totalPct + '%', background: palette.sage, borderRadius: '2px', transition: `width ${duration.cinematic}ms ${ease}` }
+      })
+    ),
+    React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '2px' } },
+      chapters.map((ch, idx) => {
+        const pct = chapterCompletions[idx];
+        const status = chapterStatuses[idx];
+        const accent = chapterAccentColor[ch.key] || palette.sage;
+        return React.createElement('button', {
+          key: ch.key,
+          onClick: () => onSelectChapter(idx),
+          'aria-label': ch.title + ' — ' + pct + '%',
+          style: {
+            display: 'flex', alignItems: 'center', gap: space.sm + 2,
+            padding: '10px 8px', background: 'transparent', border: 'none',
+            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
+            color: palette.text, width: '100%', textAlign: 'left',
+            transition: `background ${duration.fast}ms ${ease}`,
+          },
+          onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+          onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+        },
+          React.createElement('span', { style: { fontSize: text.sm, width: '22px', textAlign: 'center', flexShrink: 0 } }, ch.icon),
+          React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, flex: '0 0 auto', minWidth: '90px' } }, ch.title),
           React.createElement('div', {
-            style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, letterSpacing: '0.3px', marginBottom: space.xs }
-          }, ch.title + ' (' + missing.length + ')'),
-          React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
-            missing.slice(0, 6).map(f =>
-              React.createElement('button', {
-                key: f.k,
-                onClick: () => onSelectChapter(idx),
-                style: {
-                  background: palette.up, border: '1px solid ' + palette.border,
-                  borderRadius: radius.sm, padding: '4px 10px', fontSize: text.xs,
-                  color: palette.mid, cursor: 'pointer', fontFamily: 'inherit',
-                },
-                onMouseEnter: (e) => { e.currentTarget.style.color = palette.text; e.currentTarget.style.borderColor = palette.sage; },
-                onMouseLeave: (e) => { e.currentTarget.style.color = palette.mid; e.currentTarget.style.borderColor = palette.border; },
-              }, f.label)
-            ),
-            missing.length > 6 && React.createElement('span', {
-              style: { fontSize: text.xs, color: palette.soft, padding: '4px 6px' }
-            }, '+' + (missing.length - 6))
-          )
-        )
-      )
+            style: { flex: 1, height: '6px', background: palette.border + '80', borderRadius: '3px', overflow: 'hidden', margin: '0 4px' }
+          },
+            React.createElement('div', {
+              style: {
+                height: '100%', width: pct + '%', borderRadius: '3px',
+                background: pct === 100 ? palette.sage : pct > 0 ? accent : 'transparent',
+                transition: `width ${duration.cinematic}ms ${ease}`,
+              }
+            })
+          ),
+          React.createElement('span', {
+            style: { fontSize: text.xs, color: pct === 100 ? palette.sage : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
+          }, pct + '%'),
+          React.createElement('span', {
+            style: { fontSize: '10px', color: palette.soft, width: '80px', textAlign: 'right', flexShrink: 0, display: pct === 0 ? 'none' : 'block' }
+          }, statusLabels[status] || '')
+        );
+      })
     )
   );
 };
@@ -854,7 +870,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: colors[maturity],
                 opacity: iconOp,
-                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: `all ${duration.cinematic}ms ${ease}`,
                 boxShadow: shadows[maturity],
               },
               onMouseEnter: (e) => {
@@ -867,7 +883,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               },
             },
               React.createElement('div', {
-                style: { width: iconSizes[maturity] + 'px', height: iconSizes[maturity] + 'px', transition: 'width 0.6s, height 0.6s' }
+                style: { width: iconSizes[maturity] + 'px', height: iconSizes[maturity] + 'px', transition: `width ${duration.cinematic}ms, height ${duration.cinematic}ms` }
               }, IconFn ? IconFn() : null)
             ),
             React.createElement('span', {
@@ -876,7 +892,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 fontSize: '9px', color: palette.mid, whiteSpace: 'nowrap',
                 opacity: maturity === 'sketch' ? 0.5 : 0.75,
                 fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
-                transition: 'opacity 0.6s ease',
+                transition: `opacity ${duration.cinematic}ms ease`,
               }
             }, shortLabel)
           );
@@ -931,7 +947,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         borderRadius: radius.md,
         border: '1px solid ' + (mvo.pct === 100 ? palette.sage + '40' : palette.border + '88'),
         boxShadow: shadow.sm,
-        transition: 'background 0.6s ease, border-color 0.6s ease',
+        transition: `background ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
       }
     },
       React.createElement('div', {
@@ -952,7 +968,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             width: mvo.pct + '%', height: '100%',
             background: mvo.pct === 100 ? palette.sage : palette.sand,
             borderRadius: '2px',
-            transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: `width ${duration.cinematic}ms ${ease}`,
           }
         })
       ),
@@ -1011,19 +1027,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       );
     })(),
 
-    // ─── Fortschrittskarte — missing fields per chapter ─────
-    (() => {
-      const openChapters = chapters.map((ch, idx) => {
-        const chData = data[ch.key] || {};
-        const status = getChapterStatus(ch);
-        if (status === 'leer') return null;
-        const missing = ch.fields.filter(f => !f.secondary && !chData[f.k]);
-        if (missing.length === 0) return null;
-        return { ch, idx, missing, status };
-      }).filter(Boolean);
-      if (openChapters.length === 0) return null;
-      return React.createElement(FortschrittsKarte, { palette, t, openChapters, onSelectChapter, text, weight, leading, space, radius, shadow });
-    })(),
+    // ─── Fortschrittskarte — visual progress per chapter ─────
+    React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }),
 
     // ─── Live connections — what user data powers ──────────
     React.createElement(DatenWirken, { palette, t, data, text, weight, space, radius }),
@@ -1076,7 +1081,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 color: palette.text,
                 fontFamily: 'inherit',
                 opacity: rowOpacity,
-                transition: 'opacity 0.6s ease',
+                transition: `opacity ${duration.cinematic}ms ${ease}`,
                 width: '100%',
               },
               onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
@@ -1088,7 +1093,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   background: getIconBg(pct, ch.key),
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: `all ${duration.cinematic}ms ${ease}`,
                   boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
                   border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
                   animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
@@ -1105,7 +1110,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                       fontSize: text.xs, fontWeight: weight.medium,
                       color: statusColors[status],
                       flexShrink: 0, letterSpacing: '0.2px',
-                      transition: 'color 0.6s ease',
+                      transition: `color ${duration.cinematic}ms ${ease}`,
                     }
                   }, t('chapterStatus.' + status))
                 ),
