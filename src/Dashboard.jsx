@@ -99,8 +99,8 @@ const QuickCheck = ({ palette, t, onNavigate }) => {
     React.createElement('div', {
       style: { display: 'flex', gap: space.md, alignItems: 'flex-end', flexWrap: 'wrap' }
     },
-      React.createElement('div', { style: { flex: '1 1 180px', minWidth: '150px' } },
-        React.createElement('label', {
+      React.createElement('label', { style: { flex: '1 1 180px', minWidth: '150px', display: 'block' } },
+        React.createElement('span', {
           style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
         }, t('dashboard.quickCheckIncome')),
         React.createElement('input', {
@@ -408,7 +408,7 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius }) => {
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
