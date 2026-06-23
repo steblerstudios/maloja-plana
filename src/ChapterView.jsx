@@ -126,18 +126,38 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       onUpdate('household', next);
     };
 
+    // Pill-group — consistent with field-based pills (Zivilstand)
+    const hhPills = (labelText, opts, current, onSelect) =>
+      React.createElement('div', { style: { marginBottom: space.md } },
+        React.createElement('div', { style: hhLabel }, labelText),
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+          opts.map((opt, idx) => {
+            const selected = current === opt.value;
+            return React.createElement('button', {
+              key: idx, type: 'button',
+              onClick: () => onSelect(opt.value),
+              style: {
+                padding: '7px 14px', fontSize: text.sm, fontFamily: 'inherit',
+                fontWeight: selected ? weight.semi : weight.normal,
+                border: '1px solid ' + (selected ? palette.sage : palette.border),
+                borderRadius: radius.sm + 'px',
+                background: selected ? palette.sage + '18' : palette.surface,
+                color: selected ? palette.sage : palette.text,
+                cursor: 'pointer', transition: 'all ' + duration.fast + 'ms ' + ease,
+              }
+            }, opt.label);
+          })
+        )
+      );
+
     return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
 
       // Adults
-      React.createElement('div', { style: { marginBottom: space.md } },
-        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.adults')),
-        React.createElement('select', {
-          value: String(adults),
-          onChange: (e) => updateHousehold({ adults: Number(e.target.value) }),
-          style: hhSelect
-        },
-          [1, 2, 3, 4].map(n => React.createElement('option', { key: n, value: String(n) }, String(n)))
-        )
+      hhPills(
+        tr('chapters.basis.fields.household.adults'),
+        [1, 2, 3, 4].map(n => ({ value: n, label: String(n) })),
+        adults,
+        (v) => updateHousehold({ adults: Number(v) })
       ),
 
       // Partner income — only when 2+ adults
@@ -156,16 +176,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       ),
 
       // Retired
-      React.createElement('div', { style: { marginBottom: space.md } },
-        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.retired')),
-        React.createElement('select', {
-          value: isRetired ? 'yes' : 'no',
-          onChange: (e) => updateHousehold({ isRetired: e.target.value === 'yes' }),
-          style: hhSelect
-        },
-          React.createElement('option', { value: 'no' }, tr('chapters.basis.fields.household.retiredNo')),
-          React.createElement('option', { value: 'yes' }, tr('chapters.basis.fields.household.retiredYes'))
-        )
+      hhPills(
+        tr('chapters.basis.fields.household.retired'),
+        [
+          { value: 'no', label: tr('chapters.basis.fields.household.retiredNo') },
+          { value: 'yes', label: tr('chapters.basis.fields.household.retiredYes') }
+        ],
+        isRetired ? 'yes' : 'no',
+        (v) => updateHousehold({ isRetired: v === 'yes' })
       ),
 
       // Children section — full width
