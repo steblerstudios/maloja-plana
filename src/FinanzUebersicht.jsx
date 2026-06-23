@@ -4,6 +4,7 @@ import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName }
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -44,6 +45,52 @@ const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick
     }, detail)
   );
 
+const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses) => {
+  const name = [data.basis?.firstName, data.basis?.lastName].filter(Boolean).join(' ') || '';
+  const date = new Date().toLocaleDateString('de-CH');
+  const fmt = (v) => formatCHF(v);
+  const rows = [];
+
+  rows.push('<tr><td>' + t('finanzUebersicht.monthlyIncome') + '</td><td class="r">' + fmt(income) + ' ' + t('common.perMonth') + '</td></tr>');
+  if (canton) rows.push('<tr><td>' + t('finanzUebersicht.canton') + '</td><td class="r">' + getCantonName(canton, t) + '</td></tr>');
+
+  if (kantonal) {
+    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.taxes') + '</td><td class="r">~ ' + fmt(kantonal.total) + ' ' + t('common.perYear') + '</td></tr>');
+  } else if (taxResult) {
+    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>');
+  }
+
+  rows.push('<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipv.eligible ? '✓ ' + fmt(ipv.amount) + ' ' + t('common.perMonth') : t('finanzUebersicht.notEligible')) + '</td></tr>');
+  rows.push('<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (sozialhilfe.eligible ? fmt(sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>');
+  rows.push('<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (el.eligible ? fmt(el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>');
+
+  if (hasExpenses) {
+    rows.push('<tr class="sep"><td colspan="2" style="font-weight:600;padding-top:12px">' + t('finanzUebersicht.budgetBalance') + '</td></tr>');
+    rows.push('<tr><td>' + t('finanzUebersicht.totalIncome') + '</td><td class="r">' + fmt(totalIncome) + '</td></tr>');
+    rows.push('<tr><td>' + t('finanzUebersicht.totalExpenses') + '</td><td class="r">− ' + fmt(totalExpenses) + '</td></tr>');
+    rows.push('<tr class="total"><td>' + t('finanzUebersicht.freeAmount') + '</td><td class="r ' + (freeAmount >= 0 ? 'pos' : 'neg') + '">' + fmt(freeAmount) + '</td></tr>');
+  }
+
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + t('finanzUebersicht.title') + '</title><style>'
+    + 'body{font-family:system-ui,sans-serif;max-width:600px;margin:40px auto;color:#333;padding:0 20px}'
+    + 'h1{font-size:20px;margin-bottom:4px}'
+    + '.sub{color:#888;font-size:13px;margin-bottom:24px}'
+    + 'table{width:100%;border-collapse:collapse}'
+    + 'td{padding:7px 0;border-bottom:1px solid #eee;font-size:14px}'
+    + '.r{text-align:right;font-weight:500}'
+    + '.sep td{border-top:2px solid #ddd}'
+    + '.total td{border-top:2px solid #333;font-weight:600}'
+    + '.pos{color:#5a7a5a}.neg{color:#a85454}'
+    + '.footer{margin-top:32px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:12px}'
+    + '@media print{body{margin:20px}}'
+    + '</style></head><body>'
+    + '<h1>' + t('finanzUebersicht.title') + (name ? ' — ' + name : '') + '</h1>'
+    + '<div class="sub">' + t('finanzUebersicht.subtitle') + ' · ' + date + '</div>'
+    + '<table>' + rows.join('') + '</table>'
+    + '<div class="footer">○ ' + t('finanzUebersicht.disclaimer') + '<br>Maloja Plana · maloja-plana.ch</div>'
+    + '</body></html>';
+};
+
 export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
@@ -76,6 +123,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const totalIncome = income + Number(data.finanzen?.familienzulagen || 0) + Number(data.finanzen?.alimenteReceived || 0);
   const freeAmount = totalIncome - totalExpenses;
   const hasExpenses = totalExpenses > 0;
+
+  const handlePrint = () => {
+    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses);
+    openPrintWindow(html);
+  };
 
   return React.createElement('div', { style: { maxWidth: '520px' } },
 
@@ -237,7 +289,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontFamily: 'inherit', textAlign: 'left',
         }
-      }, '◇ ' + t('finanzUebersicht.toDossier'))
+      }, '◇ ' + t('finanzUebersicht.toDossier')),
+      React.createElement('button', {
+        onClick: handlePrint,
+        style: {
+          padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          fontFamily: 'inherit', textAlign: 'left', gridColumn: '1 / -1',
+        }
+      }, '◇ ' + t('finanzUebersicht.printAction'))
     ),
 
     React.createElement('div', {

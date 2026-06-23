@@ -232,6 +232,10 @@ export default {
     taxCanton: 'Cantone fiscale {canton}',
     emergencyContact: 'In caso di emergenza: {name}',
     freePerMonth: 'libero/mese',
+    franchise: 'Franchigia {value}',
+    taxDeadline: 'Scadenza {date}',
+    checklistDone: 'fatti',
+    bloodType: 'Gruppo sanguigno {type}',
   },
   fortschritt: {
     title: 'Campi aperti',
