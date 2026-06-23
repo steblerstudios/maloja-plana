@@ -13,6 +13,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
+const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const vorlesen = useVorlesenContext();
@@ -461,6 +462,30 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               color: palette.mid, fontSize: text.body, padding: space.xs, lineHeight: 1,
             }
           }, '✕')
+        )
+      );
+    }
+
+    // Säule 3a — deposit tracker instead of single currency input
+    if (field.k === 'pension3a' && chapter.key === 'finanzen') {
+      const fieldId = chapter.key + '-' + field.k;
+      // Migrate an old single annual value into one deposit row for display
+      const rawDeposits = Array.isArray(data.pension3aDeposits)
+        ? data.pension3aDeposits
+        : (Number(data.pension3a) > 0 ? [{ date: '', amount: Number(data.pension3a) }] : []);
+      const handleDeposits = (deposits) => {
+        const sum = deposits.reduce((s, d) => s + (Number(d.amount) || 0), 0);
+        onUpdate('pension3aDeposits', deposits);
+        onUpdate('pension3a', sum ? String(sum) : '');
+      };
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(fieldId, field.label, field.hint),
+        renderOrientation(field),
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(Saeule3aTracker, {
+            palette, t: tr, deposits: rawDeposits,
+            onChange: handleDeposits,
+          })
         )
       );
     }

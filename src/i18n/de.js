@@ -2363,6 +2363,15 @@ export default {
     hint: 'Tippe den Namen ein — häufige Medikamente werden vorgeschlagen.',
     migrated: 'Früherer Freitext-Eintrag:',
   },
+  saeule3a: {
+    add: 'Einzahlung hinzufügen',
+    ofMax: 'von {max}',
+    remaining: 'noch {amount} bis zum Maximum',
+    maxReached: 'Maximum erreicht — gut gemacht.',
+    date: 'Datum',
+    amount: 'Betrag (CHF)',
+    selfEmployedNote: 'Maximum 2026 mit Pensionskasse: CHF 7’258. Selbständige ohne Pensionskasse: bis 20 % des Einkommens (max. CHF 36’288).',
+  },
   diseases: {
     add: 'Erkrankung hinzufügen',
     label: 'Erkrankung {nr}',

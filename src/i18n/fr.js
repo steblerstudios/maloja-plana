@@ -2363,6 +2363,15 @@ export default {
     hint: 'Commence à taper — les médicaments courants seront suggérés.',
     migrated: 'Ancienne saisie en texte libre :',
   },
+  saeule3a: {
+    add: 'Ajouter un versement',
+    ofMax: 'sur {max}',
+    remaining: 'encore {amount} jusqu’au maximum',
+    maxReached: 'Maximum atteint — bravo.',
+    date: 'Date',
+    amount: 'Montant (CHF)',
+    selfEmployedNote: 'Maximum 2026 avec caisse de pension : CHF 7’258. Indépendants sans caisse de pension : jusqu’à 20 % du revenu (max. CHF 36’288).',
+  },
   diseases: {
     add: 'Ajouter une maladie',
     label: 'Maladie {nr}',

@@ -2450,6 +2450,15 @@ export default {
     hint: 'Cumenza a tippar — medicaments frequents vegnan proponids.',
     migrated: 'Anteriura endataziun en text liber:',
   },
+  saeule3a: {
+    add: 'Agiuntar pajament',
+    ofMax: 'da {max}',
+    remaining: 'anc {amount} fin al maximum',
+    maxReached: 'Maximum cuntanschì — fitg bain.',
+    date: 'Data',
+    amount: 'Import (CHF)',
+    selfEmployedNote: 'Maximum 2026 cun cassa da pensiun: CHF 7’258. Independents senza cassa da pensiun: fin 20 % da l’entrada (max. CHF 36’288).',
+  },
   diseases: {
     add: 'Agiuntar malsogna',
     label: 'Malsogna {nr}',
