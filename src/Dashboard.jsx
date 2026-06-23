@@ -423,16 +423,20 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const calculateMvo = () => {
     let filled = 0;
     let total = 0;
-    chapters.forEach(ch => {
+    const fields = [];
+    chapters.forEach((ch, chIdx) => {
       const chapterData = data[ch.key] || {};
       ch.fields.filter(f => f.mvo).forEach(f => {
+        const done = Boolean(chapterData[f.k]);
         total++;
-        if (chapterData[f.k]) filled++;
+        if (done) filled++;
+        fields.push({ key: f.k, label: f.label, done, chapterIdx: chIdx, chapterTitle: ch.title, chapterIcon: ch.icon });
       });
     });
-    return { filled, total, pct: total > 0 ? Math.round((filled / total) * 100) : 0 };
+    return { filled, total, pct: total > 0 ? Math.round((filled / total) * 100) : 0, fields };
   };
   const mvo = calculateMvo();
+  const [mvoExpanded, setMvoExpanded] = useState(false);
 
   const getChapterStatus = (chapter) => {
     const chapterData = data[chapter.key] || {};
@@ -935,15 +939,26 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         transition: `background ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
       }
     },
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.sm }
+      React.createElement('button', {
+        onClick: () => setMvoExpanded(!mvoExpanded),
+        'aria-expanded': mvoExpanded,
+        style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+          background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit',
+          marginBottom: space.sm, color: palette.text,
+        }
       },
         React.createElement('span', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+          style: { fontSize: text.sm, fontWeight: weight.semi }
         }, t('mvo.title')),
-        React.createElement('span', {
-          style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? palette.sage : palette.mid }
-        }, mvo.filled + '/' + mvo.total)
+        React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } },
+          React.createElement('span', {
+            style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? palette.sage : palette.mid }
+          }, mvo.filled + '/' + mvo.total),
+          React.createElement('span', {
+            style: { fontSize: '10px', color: palette.mid, transition: `transform ${duration.fast}ms ${ease}`, transform: mvoExpanded ? 'rotate(180deg)' : 'rotate(0)' }
+          }, '▾')
+        )
       ),
       React.createElement('div', {
         style: { width: '100%', height: '4px', background: palette.up, borderRadius: '2px', overflow: 'hidden', marginBottom: space.sm }
@@ -959,7 +974,42 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       ),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-      }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress'))
+      }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress')),
+
+      mvoExpanded && React.createElement('div', {
+        style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: '3px' }
+      },
+        (() => {
+          let lastChapter = null;
+          return mvo.fields.map((f, i) => {
+            const showHeader = f.chapterTitle !== lastChapter;
+            lastChapter = f.chapterTitle;
+            return React.createElement(React.Fragment, { key: f.key },
+              showHeader && React.createElement('div', {
+                style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
+              }, f.chapterIcon + ' ' + f.chapterTitle),
+              React.createElement('button', {
+                onClick: () => onSelectChapter(f.chapterIdx),
+                style: {
+                  display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
+                  padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
+                  cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
+                  textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
+                },
+                onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+                onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
+              },
+                React.createElement('span', {
+                  style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
+                }, f.done ? '✓' : '○'),
+                React.createElement('span', {
+                  style: { color: f.done ? palette.mid : palette.text }
+                }, f.label)
+              )
+            );
+          });
+        })()
+      )
     ),
 
     // ─── Overview — calm editorial section ──────────────────
