@@ -4,6 +4,7 @@ import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, getKantonDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo } from './config/cantonalData.js';
+import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const hh = getHouseholdInfo(data);
@@ -221,6 +222,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, 'ⓘ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
     canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION),
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
+
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
