@@ -169,11 +169,17 @@ export default {
       kkModelHint: 'Model set → compare alternatives →',
       notfallkarteHint: 'Contact saved → create emergency card →',
       finanzuebersichtHint: 'All calculations at a glance →',
+      addressInWohnen: 'Your address is stored in the "Housing" chapter →',
+      employerInFinanzen: 'Employer & income → in the "Finances" chapter →',
+      educationTaxHint: 'Training costs? Up to CHF 10,000 tax-deductible →',
+      taxFromBehoerdenHint: 'Estimate your tax burden → to the tax calculator →',
+      schuldenFromBehoerdenHint: 'Manage debt collection → to debt overview →',
     },
     backToDashboard: 'Overview',
   },
 
   wohnen: {
+    nkEstimate: 'Utilities: CHF {monthly}/mo. → approx. CHF {annual}/year. In cooperatives, an annual settlement is often added.',
     umzugTitle: 'Moving checklist',
     umzugGemeinde: 'Municipality: register within 14 days',
     umzugKK: 'Health insurance: report address change',
@@ -365,6 +371,7 @@ export default {
           childLabel: 'Child {nr}',
           addChild: 'Add child',
           removeChild: 'Remove',
+          childAgeAuto: 'Age is automatically calculated from the date of birth',
           retired: 'Retired',
           retiredYes: 'Yes',
           retiredNo: 'No',
@@ -1197,6 +1204,7 @@ export default {
 
   premium: {
     title: 'Premium subsidy (IPV)',
+    subtitle: 'Individual premium reduction — the canton covers part of your health insurance premium if your income is below a certain threshold.',
     canton: 'Canton: {name}',
     cantonUnknown: 'Not recognized',
     model: 'Model: {value}',
@@ -1273,6 +1281,7 @@ export default {
 
   tax: {
     title: 'Tax orientation',
+    intro: 'This overview gives you a rough estimate of your tax burden — as orientation, not tax advice. You can try different deductions and see how your situation changes.',
     inputs: 'Inputs',
     taxCanton: 'Tax canton',
     grossIncome: 'Annual income (based on net monthly)',

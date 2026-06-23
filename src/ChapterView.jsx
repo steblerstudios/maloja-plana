@@ -123,7 +123,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       onUpdate('household', next);
     };
 
-    return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
+    return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
 
       // Adults
       React.createElement('div', { style: { marginBottom: space.md } },
@@ -186,7 +186,23 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 ),
                 React.createElement('div', null,
                   React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childAge')),
-                  React.createElement('input', { type: 'number', inputMode: 'numeric', min: 0, max: 25, value: child.age === 0 ? '0' : (child.age || ''), onChange: (e) => updateChild({ age: Math.max(0, Math.min(25, Number(e.target.value) || 0)) }), style: childInput })
+                  React.createElement('input', {
+                    type: 'number', inputMode: 'numeric', min: 0, max: 25,
+                    value: (() => {
+                      if (child.birthDate) {
+                        const bd = new Date(child.birthDate);
+                        const now = new Date();
+                        let age = now.getFullYear() - bd.getFullYear();
+                        if (now.getMonth() < bd.getMonth() || (now.getMonth() === bd.getMonth() && now.getDate() < bd.getDate())) age--;
+                        return Math.max(0, age);
+                      }
+                      return child.age === 0 ? '0' : (child.age || '');
+                    })(),
+                    readOnly: !!child.birthDate,
+                    onChange: (e) => !child.birthDate && updateChild({ age: Math.max(0, Math.min(25, Number(e.target.value) || 0)) }),
+                    style: { ...childInput, ...(child.birthDate ? { opacity: 0.7, cursor: 'default' } : {}) },
+                    title: child.birthDate ? tr('chapters.basis.fields.household.childAgeAuto') || '' : ''
+                  })
                 ),
                 React.createElement('div', null,
                   React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childInsurer')),
@@ -596,7 +612,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   };
   const accent = chapterAccent[chapter.key] || chapterAccent.basis;
 
-  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.md } },
+  return React.createElement('div', { style: { background: palette.surface, padding: space.md + 4 + 'px ' + space.md + 'px', borderRadius: radius.md, border: '1px solid ' + palette.border + '88', boxShadow: shadow.sm } },
     // Header — expressive chapter entrance with landscape continuity
     React.createElement('div', { style: { textAlign: 'center', marginBottom: space.xl + 'px', paddingTop: space.lg + 'px', paddingBottom: space.lg + 'px', background: accent.bg, borderRadius: radius.md, marginLeft: '-' + space.md + 'px', marginRight: '-' + space.md + 'px', marginTop: '-' + (space.md + 4) + 'px', borderBottom: '1px solid ' + accent.border + '20' } },
       React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
@@ -617,6 +633,39 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
       }
     }, tr('demo.readOnlyHint')),
+
+    // "Was Du davon hast" — shows which tools benefit from this chapter's data (before fields)
+    (() => {
+      const benefitsKey = 'chapters.' + chapter.key + '.benefits';
+      const benefits = tr(benefitsKey);
+      if (benefits === benefitsKey || !Array.isArray(benefits)) return null;
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.md + 'px',
+          padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.sand + '0C',
+          borderRadius: radius.sm,
+          border: '1px solid ' + palette.sand + '20',
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px',
+        }
+      },
+        React.createElement('span', {
+          style: { fontSize: text.xs, color: palette.mid, marginRight: '2px' }
+        }, tr('chapterView.benefitsLabel')),
+        benefits.map((b, i) =>
+          React.createElement('span', {
+            key: i,
+            style: {
+              fontSize: text.xs, color: palette.sage,
+              padding: '2px 8px',
+              background: palette.sage + '0D',
+              borderRadius: radius.sm,
+              whiteSpace: 'nowrap',
+            }
+          }, '→ ' + b)
+        )
+      );
+    })(),
 
     // Ankunftsmoment — calm acknowledgment on first data entry
     !demoMode && showAnkunft && React.createElement('div', {
@@ -933,39 +982,6 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         }
       }, 'ⓘ ' + tr('orientation.contextFamilienzulagen')),
 
-    // "Was Du davon hast" — shows which tools benefit from this chapter's data
-    (() => {
-      const benefitsKey = 'chapters.' + chapter.key + '.benefits';
-      const benefits = tr(benefitsKey);
-      if (benefits === benefitsKey || !Array.isArray(benefits)) return null;
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.md + 'px',
-          padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.sand + '0C',
-          borderRadius: radius.sm,
-          border: '1px solid ' + palette.sand + '20',
-          display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px',
-        }
-      },
-        React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.mid, marginRight: '2px' }
-        }, tr('chapterView.benefitsLabel')),
-        benefits.map((b, i) =>
-          React.createElement('span', {
-            key: i,
-            style: {
-              fontSize: text.xs, color: palette.sage,
-              padding: '2px 8px',
-              background: palette.sage + '0D',
-              borderRadius: radius.sm,
-              whiteSpace: 'nowrap',
-            }
-          }, '→ ' + b)
-        )
-      );
-    })(),
-
     // Tabs
     React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
@@ -1013,7 +1029,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           tr('trust.chapterTrust')
         )
       ),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px' } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
         chapter.fields.filter(f => !f.secondary).map((field, idx, primaryFields) => {
           const elements = [];
           if (field.section) {
@@ -1089,16 +1105,60 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
             crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
           }
+          if (field.k === 'utilities' && chapter.key === 'wohnen') {
+            const monthlyNK = parseFloat(data.utilities) || 0;
+            if (monthlyNK > 0) {
+              elements.push(
+                React.createElement('div', {
+                  key: 'nk-hint',
+                  style: {
+                    gridColumn: '1 / -1',
+                    background: palette.sageMist || palette.up,
+                    borderRadius: radius.sm,
+                    padding: space.sm + 'px ' + space.md + 'px',
+                    fontSize: text.sm,
+                    color: palette.sageDeep || palette.mid,
+                    lineHeight: leading.relaxed,
+                    marginBottom: space.sm + 'px',
+                  }
+                }, 'ⓘ ' + t('wohnen.nkEstimate', { monthly: Math.round(monthlyNK), annual: Math.round(monthlyNK * 12) }))
+              );
+            }
+          }
           if (field.k === 'jobTitle' && chapter.key === 'ausbildung') {
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
-              crosslinkBtn('mindestlohn', 'finanzen', 'nav.crosslink.mindestlohnHint');
+              onNavigate && elements.push(
+                React.createElement('button', {
+                  key: 'crosslink-mindestlohn',
+                  onClick: () => onNavigate('chapter', 2),
+                  style: {
+                    gridColumn: '1 / -1',
+                    background: palette.sageMist || palette.up,
+                    border: 'none', borderRadius: radius.sm,
+                    padding: space.sm + 'px ' + space.md + 'px',
+                    fontSize: text.sm, color: palette.sageDeep || palette.mid,
+                    cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                    marginBottom: space.sm + 'px',
+                  }
+                }, t('nav.crosslink.mindestlohnHint'))
+              );
             }
+          }
+          if (field.k === 'educationLevel' && chapter.key === 'ausbildung') {
+            crosslinkBtn('educationTax', 'tax', 'nav.crosslink.educationTaxHint');
+          }
+          if (field.k === 'taxFilingDeadline' && chapter.key === 'behoerden') {
+            crosslinkBtn('taxFromBehoerden', 'tax', 'nav.crosslink.taxFromBehoerdenHint');
+          }
+          if (field.k === 'betreibungsStatus' && chapter.key === 'behoerden') {
+            crosslinkBtn('schuldenFromBehoerden', 'schulden', 'nav.crosslink.schuldenFromBehoerdenHint');
           }
           if (field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
             crosslinkBtn('tax', 'tax', 'nav.crosslink.taxHint');
             crosslinkBtn('ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome');
             crosslinkBtn('sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint');
+            crosslinkBtn('finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint');
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;
@@ -1156,6 +1216,25 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'canton' && chapter.key === 'basis') {
             crosslinkBtn('cantonTax', 'tax', 'nav.crosslink.cantonTaxHint');
             crosslinkBtn('cantonSozial', 'sozialhilfe', 'nav.crosslink.cantonSozialhilfeHint');
+            onNavigate && elements.push(
+              React.createElement('button', {
+                key: 'crosslink-addressWohnen',
+                onClick: () => onNavigate('chapter', 1),
+                style: {
+                  gridColumn: '1 / -1',
+                  background: palette.sageMist || palette.up,
+                  border: 'none',
+                  borderRadius: radius.sm,
+                  padding: space.sm + 'px ' + space.md + 'px',
+                  fontSize: text.sm,
+                  color: palette.sageDeep || palette.mid,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  marginBottom: space.sm + 'px',
+                }
+              }, t('nav.crosslink.addressInWohnen'))
+            );
           }
           if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
             crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');
@@ -1197,7 +1276,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
       // Secondary fields
       hasSecondaryFields && showSecondary && React.createElement('div', {
-        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '0 16px', marginTop: space.sm }
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px', marginTop: space.sm }
       },
         chapter.fields.filter(f => f.secondary).map((field, idx, secFields) => {
           const elements = [];

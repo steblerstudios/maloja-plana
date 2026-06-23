@@ -169,11 +169,17 @@ export default {
       kkModelHint: 'Modèle défini → compare les alternatives →',
       notfallkarteHint: 'Contact enregistré → crée ta carte d\'urgence →',
       finanzuebersichtHint: 'Tous les calculs en un coup d\'œil →',
+      addressInWohnen: 'Ton adresse est enregistrée dans le chapitre «Logement» →',
+      employerInFinanzen: 'Employeur & revenu → dans le chapitre «Finances» →',
+      educationTaxHint: 'Frais de formation ? Jusqu\'à CHF 10\'000 déductibles des impôts →',
+      taxFromBehoerdenHint: 'Estimer ta charge fiscale → vers le calculateur d\'impôts →',
+      schuldenFromBehoerdenHint: 'Gérer les poursuites → vers l\'aperçu des dettes →',
     },
     backToDashboard: 'Aperçu',
   },
 
   wohnen: {
+    nkEstimate: 'Charges: CHF {monthly}/mois → env. CHF {annual}/an. En coopérative, un décompte annuel s\'ajoute souvent.',
     umzugTitle: 'Checklist après déménagement',
     umzugGemeinde: 'Commune: inscription dans les 14 jours',
     umzugKK: 'Assurance maladie: signaler le changement d\'adresse',
@@ -364,6 +370,7 @@ export default {
           childLabel: 'Enfant {nr}',
           addChild: 'Ajouter un enfant',
           removeChild: 'Retirer',
+          childAgeAuto: 'L\'âge est calculé automatiquement à partir de la date de naissance',
           retired: 'Retraité(e)',
           retiredYes: 'Oui',
           retiredNo: 'Non',
@@ -1196,6 +1203,7 @@ export default {
 
   premium: {
     title: 'Réduction de primes (IPV)',
+    subtitle: 'Réduction individuelle des primes — le canton prend en charge une partie de ta prime d\'assurance maladie si ton revenu est inférieur à un certain seuil.',
     canton: 'Canton : {name}',
     cantonUnknown: 'Non reconnu',
     model: 'Modèle : {value}',
@@ -1272,6 +1280,7 @@ export default {
 
   tax: {
     title: 'Orientation fiscale',
+    intro: 'Cet aperçu te donne une estimation approximative de ta charge fiscale — à titre indicatif, pas de conseil fiscal. Tu peux essayer différentes déductions et voir comment ta situation évolue.',
     inputs: 'Données',
     taxCanton: 'Canton d\'imposition',
     grossIncome: 'Revenu annuel (basé sur le salaire net mensuel)',
