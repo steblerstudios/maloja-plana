@@ -4,7 +4,7 @@ import {
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, leading, space, radius, shadow, fontFamily } from './config/tokens.js';
+import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -408,31 +408,62 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       });
 
       const fieldId = chapter.key + '-' + field.k;
+      const usePills = options.length > 0 && options.length <= 6;
+
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(fieldId, field.label, field.hint),
-        React.createElement('div', { style: { position: 'relative' } },
-          React.createElement('select', {
-            id: fieldId,
-            value: value,
-            onChange: (e) => handleFieldChange(field.k, e.target.value),
-            style: {
-              ...inputStyle,
-              cursor: 'pointer',
-              appearance: 'none',
-              WebkitAppearance: 'none',
-              paddingRight: '36px',
-            }
-          },
-            React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
-            options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
-          ),
-          React.createElement('div', {
-            style: {
-              position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
-              pointerEvents: 'none', color: palette.mid, fontSize: '10px',
-            }
-          }, '▾')
-        ),
+        usePills
+          ? React.createElement('div', {
+              role: 'radiogroup',
+              'aria-labelledby': fieldId + '-label',
+              style: { display: 'flex', flexWrap: 'wrap', gap: '6px' }
+            },
+              options.map((opt, idx) => {
+                const selected = value === opt.value;
+                return React.createElement('button', {
+                  key: idx,
+                  type: 'button',
+                  role: 'radio',
+                  'aria-checked': selected,
+                  onClick: () => handleFieldChange(field.k, selected ? '' : opt.value),
+                  style: {
+                    padding: '7px 14px',
+                    fontSize: text.sm,
+                    fontFamily: 'inherit',
+                    fontWeight: selected ? weight.semi : weight.normal,
+                    border: '1px solid ' + (selected ? palette.sage : palette.border),
+                    borderRadius: radius.sm + 'px',
+                    background: selected ? palette.sage + '18' : palette.surface,
+                    color: selected ? palette.sage : palette.text,
+                    cursor: 'pointer',
+                    transition: 'all ' + duration.fast + 'ms ' + ease,
+                  }
+                }, opt.label);
+              })
+            )
+          : React.createElement('div', { style: { position: 'relative' } },
+              React.createElement('select', {
+                id: fieldId,
+                value: value,
+                onChange: (e) => handleFieldChange(field.k, e.target.value),
+                style: {
+                  ...inputStyle,
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  paddingRight: '36px',
+                }
+              },
+                React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
+                options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
+              ),
+              React.createElement('div', {
+                style: {
+                  position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+                  pointerEvents: 'none', color: palette.mid, fontSize: '10px',
+                }
+              }, '▾')
+            ),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field)
       );

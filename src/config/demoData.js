@@ -62,6 +62,8 @@ export const DEMO_DATA = {
     kkCardNumber: '80756 012345678',
     bvgInsurer: 'BVK Personalvorsorge',
     bvgContribution: '420',
+    bvgBalance: '45000',
+    ktg: 'employer',
     uvg: 'employer',
     liabilityInsurance: 'yes',
     liabilityAmount: '35',
