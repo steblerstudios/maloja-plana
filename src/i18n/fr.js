@@ -424,6 +424,7 @@ export default {
         childcare: 'Garde d\'enfants (CHF)',
         otherInsurance: 'Autres assurances (CHF)',
         pension3a: 'Pilier 3a versé (CHF/an)',
+        pension3aBalance: 'Pilier 3a avoir (CHF)',
         familienzulagen: 'Allocations familiales par mois (CHF)',
         alimenteReceived: 'Pension alimentaire reçue par mois (CHF)',
         alimentePaid: 'Pension alimentaire versée par mois (CHF)',
@@ -1182,6 +1183,10 @@ export default {
     householdAdultsChildren: 'Ménage : {adults} adulte(s) + {children} enfant(s)',
     childrenNote: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.',
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
+    repaymentTitle: 'Remboursement de l\'aide sociale',
+    repaymentText: 'Dans la plupart des cantons, l\'aide sociale reçue doit être remboursée si ta situation financière s\'améliore (p. ex. héritage, nouveaux revenus ou augmentation de fortune).',
+    repaymentVaries: 'Le délai et les conditions varient selon le canton (en général 10 à 15 ans). Certains cantons (p. ex. Vaud) ont supprimé l\'obligation de remboursement.',
+    repaymentAdvice: 'Renseigne-toi auprès du service social de ta commune sur les règles en vigueur dans ton canton.',
   },
 
   lohnCheck: {
@@ -1873,6 +1878,10 @@ export default {
     selectCanton: 'Sélectionnez un canton pour le calcul cantonal',
     toBudget: 'Aperçu budget',
     toDossier: 'Dossier autorités',
+    budgetBalance: 'Budget mensuel',
+    totalIncome: 'Revenus',
+    totalExpenses: 'Dépenses',
+    freeAmount: 'Disponible',
     disclaimer: 'Toutes les valeurs sont indicatives. Pour des informations contraignantes, contactez l\'autorité compétente.',
   },
 

@@ -52,12 +52,16 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 - **KI-006 Kantonale SKOS** — Mietlimiten für alle 26 Kantone in `cantonalData.js`
 - **Crosslinks** — 5 neue Crosslinks (Kanton→Steuer/Sozialhilfe, KK-Modell→Prämien, Notfall→Karte, Finanzen→Übersicht)
 - **Vorsorge Slice B (Teil 1)** — Umzugs-Checkliste bei Einzugsdatum (Gemeinde, KK, Post)
+- **Kantonale Links** — DirektLinks zeigt kantonsspezifische URLs (Steuererklärung, Sozialdienst, IPV) für 10 Kantone
+- **Behörden-Dossier JSON** — Strukturierter JSON-Export (Schema `maloja-plana-dossier` v1.0) für System-Import
+- **Backup-Versionierung** — `compareWithBackup()` + `createManualBackup()`, MAX_BACKUPS 3→5
+- **Romanisch (RM)** — 5. Sprache komplett mit ~565 Zeilen Übersetzungen
 
 ## Next Recommended Implementation Candidates
 
 1. **Vorsorge Slice B (Teil 2)** — Dokument-Uploads zum Tresor, kantonsspezifische Formular-Links
-2. **Behörden-Dossier** — PDF-Export der gesammelten Daten als Behörden-Zusammenfassung
-3. **Offline-Sync** — IndexedDB-Backup/Restore mit Versionierung
+2. **Notfall-Dossier Ausbau** — Vollständigeres Notfall-Dossier mit medizinischen Daten
+3. **Export-Erweiterung** — CSV/ZIP-Export neben bestehendem JSON
 
 ## Do Not Touch Yet
 

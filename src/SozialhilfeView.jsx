@@ -89,6 +89,16 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
+    // Repayment info
+    React.createElement('details', { style: { marginBottom: space.md } },
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, '○ ' + t('sozialhilfe.repaymentTitle')),
+      React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
+        React.createElement('p', { style: { marginBottom: space.sm } }, t('sozialhilfe.repaymentText')),
+        React.createElement('p', { style: { marginBottom: space.sm, color: palette.mid } }, t('sozialhilfe.repaymentVaries')),
+        React.createElement('p', { style: { fontWeight: weight.medium } }, t('sozialhilfe.repaymentAdvice'))
+      )
+    ),
+
     // IPV Info
     React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.ipvSection')),
