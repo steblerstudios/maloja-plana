@@ -1290,6 +1290,8 @@ export default {
   lohnCheck: {
     unterMindestlohn: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei der kantonalen Arbeitsinspektorat. Stand 2025.',
     keinMindestlohn: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.',
+    hoursEquiv: '≈ {month} Std./Monat · {year} Std./Jahr',
+    hourlyWage: 'Stundenlohn (aus Monatslohn ÷ tatsächliche Stunden): CHF {wage}',
   },
 
   tax: {

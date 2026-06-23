@@ -6,7 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
-import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -1302,6 +1302,35 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               )
             );
           }
+          if (field.k === 'workHoursPerWeek' && chapter.key === 'ausbildung') {
+            const hrs = parseFloat(String(data.workHoursPerWeek || '').replace(',', '.')) || 0;
+            if (hrs > 0) {
+              const perMonth = stundenAufMonat(hrs);
+              const perYear = stundenAufJahr(hrs);
+              const kanton = allData && allData.basis && allData.basis.canton;
+              const monthlyIncome = parseFloat(allData && allData.finanzen && allData.finanzen.monthlyIncome) || 0;
+              const check = monthlyIncome > 0 ? pruefeStundenlohn(monthlyIncome, hrs, kanton) : null;
+              elements.push(
+                React.createElement('div', {
+                  key: 'hours-calc',
+                  style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                },
+                  React.createElement('div', null, tr('lohnCheck.hoursEquiv', { month: String(perMonth), year: String(perYear) })),
+                  check && check.lohnStunde != null && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: check.lohnStunde.toFixed(2) }))
+                )
+              );
+              if (check && check.status === 'unterMindestlohn') {
+                elements.push(
+                  React.createElement('div', {
+                    key: 'hours-minwage-warn',
+                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.rose, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                  },
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2) })
+                  )
+                );
+              }
+            }
+          }
           if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
             crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
           }
@@ -1363,7 +1392,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
-                const result = pruefeLohn(lohn, kanton);
+                // Use actual weekly hours when available (accurate), else fall back to the 182h assumption
+                const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
+                const result = wHrs > 0 ? pruefeStundenlohn(lohn, wHrs, kanton) : pruefeLohn(lohn, kanton);
                 if (result.status === 'unterMindestlohn') {
                   elements.push(
                     React.createElement('div', {

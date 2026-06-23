@@ -1290,6 +1290,8 @@ export default {
   lohnCheck: {
     unterMindestlohn: 'Remarque : Ton salaire (CHF {lohnStunde}/h) est inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h). Vérifie tes droits auprès de l\'inspection cantonale du travail. État 2025.',
     keinMindestlohn: 'Ton canton n\'a pas de salaire minimum légal.',
+    hoursEquiv: '≈ {month} h/mois · {year} h/an',
+    hourlyWage: 'Salaire horaire (salaire mensuel ÷ heures réelles) : CHF {wage}',
   },
 
   tax: {

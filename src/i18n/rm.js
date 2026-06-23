@@ -1439,6 +1439,8 @@ export default {
   lohnCheck: {
     unterMindestlohn: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi 2025.",
     keinMindestlohn: 'En Tes chantun na datti nagin salari minimal legal.',
+    hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
+    hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
   },
 
   charts: {
