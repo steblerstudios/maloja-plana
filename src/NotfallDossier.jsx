@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -8,6 +9,24 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
   const preview = getNotfallDossierPreview(data, chapters, t);
   const hasSections = preview.sections.length > 0;
+
+  // Compact, offline emergency payload for the QR (first responders scan → read plain text)
+  const qrText = preview.sections
+    .map(s => s.title + ':\n' + s.rows.map(r => '  ' + r.label + ': ' + r.value).join('\n'))
+    .join('\n')
+    .slice(0, 1200);
+
+  const qrRef = useRef(null);
+  useEffect(() => {
+    if (!hasSections || !qrRef.current) return;
+    qrRef.current.innerHTML = '';
+    try {
+      new QRCode(qrRef.current, {
+        text: qrText, width: 180, height: 180,
+        colorDark: '#1a1a1a', colorLight: '#ffffff',
+      });
+    } catch (e) { /* QR generation failed silently */ }
+  }, [qrText, hasSections]);
 
   const handlePrint = () => {
     const html = generateNotfallDossier(data, chapters, t);
@@ -114,6 +133,24 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         letterSpacing: '0.2px',
       }
     }, t('notfallDossier.printAction')),
+
+    hasSections && React.createElement('div', {
+      style: {
+        background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+        padding: '16px', marginBottom: '20px', textAlign: 'center',
+      }
+    },
+      React.createElement('div', {
+        style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
+      }, t('notfallDossier.qrTitle')),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+      }, t('notfallDossier.qrHint')),
+      React.createElement('div', {
+        ref: qrRef,
+        style: { display: 'inline-block', padding: '10px', background: '#ffffff', borderRadius: radius.sm },
+      })
+    ),
 
     hasSections && React.createElement('div', {
       style: { fontSize: text.sm, color: palette.soft, marginBottom: '12px' }

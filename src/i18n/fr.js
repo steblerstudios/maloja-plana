@@ -1937,6 +1937,8 @@ export default {
     sectionProvision: 'Directives anticipées',
     sectionInsurance: 'Assurance',
     footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',
+    qrTitle: 'QR d’urgence pour les secours',
+    qrHint: 'Scannable avec n’importe quel smartphone — affiche les informations d’urgence essentielles hors ligne, sans internet. À imprimer pour l’emporter (p.ex. dans le portefeuille).',
     footerCredit: 'Créé avec Maloja Plana',
     privacyNote: 'Ce dossier contient des informations de santé personnelles.',
     generated: 'Créé le {date}',
