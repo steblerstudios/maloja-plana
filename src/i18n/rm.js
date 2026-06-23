@@ -797,6 +797,11 @@ export default {
       heartfelt1: 'Ecosia — ecosia.org — Maschina da tschertgar che investescha sias entradas en il reboschiment.',
       heartfelt2: 'Infomaniak — infomaniak.com — Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
       heartfelt3: 'Posteo — posteo.de — Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',
+      heartfelt4: 'artfuljana — artfuljana.ch — Bischuts fatgs a maun da pasta polimera e fotografias da viadi.',
+      heartfelt5: 'Baukunst Nick — baukunst-nick.ch — Lavurs da gipsader, pictur e plattas en la regiun da Basilea.',
+      heartfelt6: 'Living Dream Design — ld-design.ch — Construcziun e curtinaria da Pratteln: lain, curtins, plauns, enverdiment.',
+      heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — La pli gronda organisaziun da uffants e giuvenils da la Svizra.',
+      heartfelt8: 'Tierschutz beider Basel — tbb.ch — Refugi d’animals, intermediaziun e cussegliaziun da protecziun d’animals en la regiun da Basilea.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',

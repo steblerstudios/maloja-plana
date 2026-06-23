@@ -3,17 +3,17 @@
 // Field values stored in localStorage remain language-independent (using option keys)
 
 export const DARK_PALETTE = {
-  bg: '#1A1816', surface: '#211F1C', up: '#282623', top: '#302E2A',
-  border: '#38352F', text: '#EDE8E0', mid: '#8A8478', soft: '#5A564F',
-  gold: '#D4B478', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#D4A65C',
-  sageMist: '#1E2924', sageDew: '#24332D', sageDeep: '#8FB5A0'
+  bg: '#24262A', surface: '#2A2C30', up: '#303237', top: '#383A3F',
+  border: '#3E4146', text: '#EDECE8', mid: '#9CA0A6', soft: '#5E626A',
+  gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
 export const LIGHT_PALETTE = {
-  bg: '#F5F2EE', surface: '#FFFFFF', up: '#F0EDE8', top: '#EAE5DD',
-  border: '#DDD8D0', text: '#1C1A17', mid: '#6B6560', soft: '#A89F94',
-  gold: '#D4B478', sage: '#7B9E8C', rose: '#B87070', sky: '#6E90B0', sand: '#D4A65C',
-  sageMist: '#E8F0EC', sageDew: '#D4E5DB', sageDeep: '#5C7D6C'
+  bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
+  border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#9CA0A6',
+  gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 
 import { getCantonName, CANTON_CODES } from './cantonalData.js';
