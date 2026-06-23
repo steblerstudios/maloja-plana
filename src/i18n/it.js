@@ -169,11 +169,17 @@ export default {
       kkModelHint: 'Modello impostato → confronta le alternative →',
       notfallkarteHint: 'Contatto salvato → crea la tua carta d\'emergenza →',
       finanzuebersichtHint: 'Tutti i calcoli in un colpo d\'occhio →',
+      addressInWohnen: 'Il tuo indirizzo è salvato nel capitolo «Abitazione» →',
+      employerInFinanzen: 'Datore di lavoro & reddito → nel capitolo «Finanze» →',
+      educationTaxHint: 'Costi di formazione? Fino a CHF 10\'000 deducibili dalle imposte →',
+      taxFromBehoerdenHint: 'Stimare il carico fiscale → al calcolatore delle imposte →',
+      schuldenFromBehoerdenHint: 'Gestire le esecuzioni → alla panoramica dei debiti →',
     },
     backToDashboard: 'Panoramica',
   },
 
   wohnen: {
+    nkEstimate: 'Spese accessorie: CHF {monthly}/mese → ca. CHF {annual}/anno. Nelle cooperative, si aggiunge spesso un conteggio annuale.',
     umzugTitle: 'Checklist dopo il trasloco',
     umzugGemeinde: 'Comune: registrazione entro 14 giorni',
     umzugKK: 'Assicurazione malattia: comunicare il cambio di indirizzo',
@@ -365,6 +371,7 @@ export default {
           childLabel: 'Figlio/a {nr}',
           addChild: 'Aggiungi figlio',
           removeChild: 'Rimuovi',
+          childAgeAuto: 'L\'età viene calcolata automaticamente dalla data di nascita',
           retired: 'Pensionato/a',
           retiredYes: 'Sì',
           retiredNo: 'No',
@@ -1197,6 +1204,7 @@ export default {
 
   premium: {
     title: 'Riduzione dei premi (IPV)',
+    subtitle: 'Riduzione individuale dei premi — il cantone copre una parte del tuo premio di assicurazione malattia se il tuo reddito è inferiore a una certa soglia.',
     canton: 'Cantone: {name}',
     cantonUnknown: 'Non riconosciuto',
     model: 'Modello: {value}',
@@ -1269,6 +1277,7 @@ export default {
 
   tax: {
     title: 'Orientamento fiscale',
+    intro: 'Questa panoramica ti offre una stima approssimativa del tuo carico fiscale — come orientamento, non come consulenza fiscale. Puoi provare diverse deduzioni e vedere come cambia la tua situazione.',
     inputs: 'Dati',
     taxCanton: 'Cantone fiscale',
     grossIncome: 'Reddito annuale (basato sul salario netto mensile)',

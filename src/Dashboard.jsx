@@ -76,8 +76,8 @@ function buildSnippet(chapterKey, chData, allData, t) {
   return null;
 }
 
-const QuickCheck = ({ palette, t, onNavigate }) => {
-  const [income, setIncome] = useState('');
+const QuickCheck = ({ palette, t, onNavigate, savedIncome }) => {
+  const [income, setIncome] = useState(savedIncome || '');
   const annual = (Number(income) || 0) * 12;
   const result = annual > 0 ? calculatePremiumSubsidy(annual, 0, 0, t, 1) : null;
   const hasResult = result && result.eligibleSubsidy > 0;
@@ -534,45 +534,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       null
     ),
 
-    // ─── Demo — prominent example section (before tools for new users) ──
-    !hasMeaningfulProgress && !demoMode && React.createElement('div', {
-      style: {
-        marginTop: space.lg, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.sand + '08',
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.sand + '25',
-        display: 'flex', alignItems: 'center', gap: '20px',
-        flexWrap: 'wrap',
-      }
-    },
-      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
-        }, t('dashboard.demoTitle')),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
-        }, t('dashboard.demoText'))
-      ),
-      React.createElement('button', {
-        onClick: onEnterDemo,
-        style: {
-          padding: '10px 20px',
-          background: palette.sand,
-          color: '#fff',
-          border: 'none',
-          borderRadius: radius.md,
-          cursor: 'pointer',
-          fontFamily: 'inherit',
-          fontSize: text.sm,
-          fontWeight: weight.medium,
-          whiteSpace: 'nowrap',
-          flexShrink: 0,
-        }
-      }, t('dashboard.demoButton'))
-    ),
-
-    // ─── Highlight tools — immediate value ──────────────────
+    // ─── Highlight tools — immediate value (first for new users) ──
     React.createElement('div', {
       style: {
         marginTop: space.lg, marginBottom: space.md,
@@ -648,7 +610,45 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Quick check — inline IPV eligibility ───────────────
-    React.createElement(QuickCheck, { palette, t, onNavigate }),
+    React.createElement(QuickCheck, { palette, t, onNavigate, savedIncome: data?.finanzen?.monthlyIncome || '' }),
+
+    // ─── Demo — example section (after tools, before pass) ──
+    !hasMeaningfulProgress && !demoMode && React.createElement('div', {
+      style: {
+        marginTop: space.md, marginBottom: space.md,
+        padding: '20px 24px',
+        background: palette.sand + '08',
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.sand + '25',
+        display: 'flex', alignItems: 'center', gap: '20px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
+        }, t('dashboard.demoTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
+        }, t('dashboard.demoText'))
+      ),
+      React.createElement('button', {
+        onClick: onEnterDemo,
+        style: {
+          padding: '10px 20px',
+          background: palette.sand,
+          color: '#fff',
+          border: 'none',
+          borderRadius: radius.md,
+          cursor: 'pointer',
+          fontFamily: 'inherit',
+          fontSize: text.sm,
+          fontWeight: weight.medium,
+          whiteSpace: 'nowrap',
+          flexShrink: 0,
+        }
+      }, t('dashboard.demoButton'))
+    ),
 
     // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
@@ -897,7 +897,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         background: palette.surface,
         borderRadius: radius.lg - 4,
         border: '1px solid ' + palette.border + '88',
-        boxShadow: shadow.md
+        boxShadow: shadow.sm
       }
     },
       React.createElement('div', {
