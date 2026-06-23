@@ -88,7 +88,7 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
     + '<h1>' + t('finanzUebersicht.title') + (name ? ' — ' + name : '') + '</h1>'
     + '<div class="sub">' + t('finanzUebersicht.subtitle') + ' · ' + date + '</div>'
     + '<table>' + rows.join('') + '</table>'
-    + '<div class="footer">○ ' + t('finanzUebersicht.disclaimer') + '<br>Maloja Plana · maloja-plana.ch</div>'
+    + '<div class="footer">ⓘ ' + t('finanzUebersicht.disclaimer') + '<br>Maloja Plana · maloja-plana.ch</div>'
     + '</body></html>';
 };
 
@@ -366,7 +366,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
 
     React.createElement('div', {
       style: { marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4' }
-    }, '○ ' + t('finanzUebersicht.disclaimer'))
+    }, 'ⓘ ' + t('finanzUebersicht.disclaimer'))
   );
 };
 

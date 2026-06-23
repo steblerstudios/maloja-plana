@@ -45,7 +45,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-        '○ ' + t('premium.enterCanton')
+        'ⓘ ' + t('premium.enterCanton')
       )
     );
   }
@@ -55,7 +55,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, 'ⓘ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
         React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
         React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
@@ -66,7 +66,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
 
     // Residence type warning
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, '○ ' + t('premium.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, 'ⓘ ' + t('premium.weeklyResidence')),
       React.createElement('div', null, t('premium.weeklyIpvNote')),
       React.createElement('div', null, t('premium.weeklyKkNote'))
     ),
@@ -76,7 +76,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, '○ ' + t('premium.notEligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
 
@@ -156,7 +156,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),

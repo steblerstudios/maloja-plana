@@ -152,7 +152,7 @@ export const NotificationSettings = ({ palette, t }) => {
     React.createElement('div', {
       style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid }
     },
-      '○ ' + t('notifications.privacyNote')
+      'ⓘ ' + t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {

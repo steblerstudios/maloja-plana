@@ -22,7 +22,7 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
         React.createElement('div', { style: { fontWeight: weight.semi } }, cv.header.name)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '○ ' + t('cv.phone')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('cv.phone')),
         React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, cv.header.phone)
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
@@ -46,7 +46,7 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       }, '↙ ' + t('cv.downloadHtml'))
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, '○ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
 
     preview && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, maxHeight: '500px', overflowY: 'auto', fontSize: text.sm, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
       React.createElement('div', null,

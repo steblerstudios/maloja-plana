@@ -28,7 +28,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.lg, marginTop: space.sm, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('sozialhilfe.intro')),
         React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-          '○ ' + t('sozialhilfe.enterCanton')
+          'ⓘ ' + t('sozialhilfe.enterCanton')
         )
       ),
       React.createElement('div', { style: { marginTop: space.xl + 'px' } },
@@ -44,7 +44,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Canton
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.lg, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, '○ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, 'ⓘ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       React.createElement('div', { style: { color: palette.mid } },
         sozialhilfe.childrenCount > 0
           ? t('sozialhilfe.householdAdultsChildren', { adults: sozialhilfe.adults, children: sozialhilfe.childrenCount })
@@ -55,7 +55,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Residence type
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, '○ ' + t('sozialhilfe.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, 'ⓘ ' + t('sozialhilfe.weeklyResidence')),
       React.createElement('div', null, t('residence.taxNote')),
       React.createElement('div', null, t('sozialhilfe.weeklyNote'))
     ),
@@ -82,16 +82,16 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Status
     sozialhilfe.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, '○ ' + t('sozialhilfe.entitled')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, 'ⓘ ' + t('sozialhilfe.entitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, '○ ' + t('sozialhilfe.notEntitled')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('sozialhilfe.notEntitled')),
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
     // Repayment info
     React.createElement('details', { style: { marginBottom: space.md } },
-      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, '○ ' + t('sozialhilfe.repaymentTitle')),
+      React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, 'ⓘ ' + t('sozialhilfe.repaymentTitle')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
         React.createElement('p', { style: { marginBottom: space.sm } }, t('sozialhilfe.repaymentText')),
         React.createElement('p', { style: { marginBottom: space.sm, color: palette.mid } }, t('sozialhilfe.repaymentVaries')),
@@ -109,7 +109,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
             )
           : React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs, fontSize: text.sm } }, '○ ' + t(ipv.noteKey, ipv.noteParams))
+              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs, fontSize: text.sm } }, 'ⓘ ' + t(ipv.noteKey, ipv.noteParams))
             )
       )
     ),
@@ -119,7 +119,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.sm + 4 } }, '◰ ' + t('sozialhilfe.elSection')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: weight.semi, color: el.eligible ? palette.sage : palette.mid, marginBottom: space.xs, fontSize: text.sm } },
-          el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : '○ ' + t(el.noteKey, el.noteParams)
+          el.eligible ? '✓ ' + t('sozialhilfe.elPossible') : 'ⓘ ' + t(el.noteKey, el.noteParams)
         ),
         el.isAHVIV && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } },
           t('sozialhilfe.totalIncome', { value: el.totalIncome }) + ' | ' + t('sozialhilfe.totalExpenses', { value: el.totalExpenses })
@@ -129,7 +129,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Orientation note — visually distinct so users don't overlook it
     React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, marginBottom: space.md, padding: space.md + 'px', background: palette.gold + '15', borderRadius: radius.sm + 'px', borderLeft: '3px solid ' + palette.gold } },
-      '○ ' + t('sozialhilfe.orientationNote')
+      'ⓘ ' + t('sozialhilfe.orientationNote')
     ),
 
     // Children context (only when children present)
@@ -174,7 +174,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
 
     React.createElement('div', { style: { marginTop: space.xl + 'px' } },
       React.createElement(SozialhilfeRechner, { palette, t, data })

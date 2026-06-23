@@ -171,7 +171,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, '○ ' + t('behoerdenDossier.footerPrivacy'))
+    }, 'ⓘ ' + t('behoerdenDossier.footerPrivacy'))
   );
 };
 
