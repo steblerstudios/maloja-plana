@@ -310,6 +310,12 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
         P({ children: '→ ' + t('legal.resources.ombuds2') }),
         P({ children: '→ ' + t('legal.resources.ombuds3') }),
         P({ children: '→ ' + t('legal.resources.ombuds4') }),
+      ]}),
+      Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
+        P({ children: t('legal.resources.heartfeltIntro') }),
+        P({ children: '→ ' + t('legal.resources.heartfelt1') }),
+        P({ children: '→ ' + t('legal.resources.heartfelt2') }),
+        P({ children: '→ ' + t('legal.resources.heartfelt3') }),
       ]})
     ),
 
