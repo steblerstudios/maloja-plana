@@ -792,6 +792,11 @@ export default {
       ombuds2: 'Ombudsman da las bancas — bankingombudsman.ch — Mediaziun tar conflicts cun bancas.',
       ombuds3: 'Associaziun dals abitants — mieterverband.ch — Cussegliaziun e mediaziun tar dispitas da localitad.',
       ombuds4: 'Protecziun dals consumaders — konsumentenschutz.ch — Cussegliaziun independenta per dretgs dals consumaders.',
+      heartfeltTitle: 'Recumandaziuns dal cor',
+      heartfeltIntro: 'Servetschs e projects che nus stimain persunalmain — recumandads gratuitamain, senza cuntraprestaziun.',
+      heartfelt1: 'Ecosia — ecosia.org — Maschina da tschertgar che investescha sias entradas en il reboschiment.',
+      heartfelt2: 'Infomaniak — infomaniak.com — Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
+      heartfelt3: 'Posteo — posteo.de — Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
