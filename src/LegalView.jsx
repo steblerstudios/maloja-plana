@@ -17,8 +17,53 @@ const Section = ({ title, children, palette }) =>
     }, Array.isArray(children) ? children.map((c, i) => React.cloneElement(c, { key: i })) : children)
   );
 
-const P = ({ children }) =>
-  React.createElement('p', { style: { margin: '0 0 8px 0' } }, children);
+const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '2px' };
+
+const LEGAL_LINKS = {
+  'Art. 28 nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de#art_28',
+  'Art. 7': 'https://www.fedlex.admin.ch/eli/cc/1994/1837_1837_1837/de#art_7',
+  'Art. 266a': 'https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de#art_266_a',
+  'Art. 169': 'https://www.fedlex.admin.ch/eli/cc/24/233_245_233/de#art_169',
+  'edoeb.admin.ch': 'https://www.edoeb.admin.ch',
+  'nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de',
+};
+
+const autoLink = (text, palette) => {
+  if (typeof text !== 'string') return text;
+  const parts = [];
+  let rest = text;
+  const urlRe = /((https?:\/\/[^\s,)]+)|([\w.+-]+@[\w.-]+\.\w{2,}))/g;
+  let match;
+  let lastIdx = 0;
+  while ((match = urlRe.exec(rest)) !== null) {
+    if (match.index > lastIdx) parts.push(rest.slice(lastIdx, match.index));
+    const val = match[0];
+    if (val.includes('@')) {
+      parts.push(React.createElement('a', { key: match.index, href: 'mailto:' + val, style: linkStyle }, val));
+    } else {
+      const label = val.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      parts.push(React.createElement('a', { key: match.index, href: val, target: '_blank', rel: 'noopener', style: linkStyle }, label));
+    }
+    lastIdx = match.index + val.length;
+  }
+  if (lastIdx < rest.length) parts.push(rest.slice(lastIdx));
+  for (const [term, url] of Object.entries(LEGAL_LINKS)) {
+    for (let i = 0; i < parts.length; i++) {
+      if (typeof parts[i] === 'string' && parts[i].includes(term)) {
+        const idx = parts[i].indexOf(term);
+        const before = parts[i].slice(0, idx);
+        const after = parts[i].slice(idx + term.length);
+        const link = React.createElement('a', { key: 'law-' + i, href: url, target: '_blank', rel: 'noopener', style: linkStyle }, term);
+        parts.splice(i, 1, before, link, after);
+        i += 2;
+      }
+    }
+  }
+  return parts.length === 1 && typeof parts[0] === 'string' ? parts[0] : parts;
+};
+
+const P = ({ children, palette }) =>
+  React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
 export const LegalView = ({ palette, t, onNavigate, section }) => {
   const activeSection = section || 'privacy';
