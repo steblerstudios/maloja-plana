@@ -10,6 +10,7 @@ import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { MedicationManager } from './MedicationManager.jsx';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const vorlesen = useVorlesenContext();
@@ -510,6 +511,26 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       );
     }
 
+    // Medications — structured input instead of textarea
+    if (field.k === 'medications' && chapter.key === 'notfall') {
+      const medList = Array.isArray(data.medicationsList) ? data.medicationsList : [];
+      const oldText = typeof data.medications === 'string' ? data.medications : '';
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
+        React.createElement(MedicationManager, {
+          palette, t: tr, medications: medList,
+          onChange: (list) => onUpdate('medicationsList', list),
+        }),
+        oldText && !medList.length && React.createElement('div', {
+          style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, marginBottom: space.xs } }, tr('medications.migrated')),
+          React.createElement('div', null, oldText)
+        )
+      );
+    }
+
     // Textarea
     if (field.type === 'textarea') {
       const fieldId = chapter.key + '-' + field.k;
@@ -561,7 +582,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const vorsorgeKeys = ['patientenverfuegung', 'vorsorgeauftrag', 'bestattungswuensche'];
   const hasVorsorge = isNotfall && vorsorgeKeys.some(k => data[k]);
   const showSummary = hasContact || hasBlood || hasVorsorge;
-  const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || data.doctor);
+  const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || data.doctor);
 
   const handleSaveCard = () => {
     const basis = allData && allData.basis || {};
@@ -582,7 +603,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const medRows = [];
     if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + data.bloodType + '</strong></div>');
     if (data.allergies) medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
-    if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
+    if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => m.name + (m.dose ? ' ' + m.dose + ' ' + m.unit : '')).join(', ') + '</div>');
+    else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
     if (data.doctor) {
@@ -712,7 +735,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const medRows = [];
       if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
       if (data.allergies) medRows.push(tr('notfallSummary.handoverAllergies'));
-      if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
+      const medList2 = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
+      if (medList2.length) medRows.push(tr('notfallSummary.handoverMedications') + ': ' + medList2.map(m => m.name).join(', '));
+      else if (data.medications) medRows.push(tr('notfallSummary.handoverMedications'));
       if (data.chronicDiseases) medRows.push(tr('notfallSummary.handoverChronic'));
       if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), rows: medRows });
       const careRows = [];
