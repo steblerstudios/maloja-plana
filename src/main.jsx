@@ -6,6 +6,8 @@ import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
+import { useVorlesen } from './hooks/useVorlesen.js';
+import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
@@ -49,7 +51,31 @@ const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
-import { text, weight, space, radius, shadow, fontFamily } from './config/tokens.js';
+import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+
+// Per-view error boundary — catches crashes in individual tools
+// without taking down the entire app
+class ViewErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false }; }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(err, info) { console.error('[Maloja Plana] View error:', err, info?.componentStack); }
+  render() {
+    if (!this.state.hasError) return this.props.children;
+    const { palette, t } = this.props;
+    return React.createElement('div', {
+      role: 'alert',
+      style: { padding: space.xl + 'px', textAlign: 'center', color: palette?.mid || '#888' }
+    },
+      React.createElement('p', { style: { fontSize: text.body, marginBottom: space.md + 'px' } },
+        t ? t('error.viewCrash') : 'This section encountered an error.'
+      ),
+      React.createElement('button', {
+        onClick: () => this.setState({ hasError: false }),
+        style: { padding: space.sm + 'px ' + space.md + 'px', background: palette?.sand || '#c8a96e', color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm + 'px' }
+      }, t ? t('error.tryAgain') : 'Try again')
+    );
+  }
+}
 
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
@@ -79,10 +105,42 @@ const LanguageSwitcher = ({ palette }) => {
   );
 };
 
+const VorlesenToggle = ({ palette, t, vorlesen }) => {
+  return React.createElement('button', {
+    'aria-label': t('vorlesen.toggle'),
+    'aria-pressed': vorlesen.enabled,
+    onClick: vorlesen.toggle,
+    title: t('vorlesen.toggle'),
+    style: {
+      padding: '6px 8px',
+      background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
+      color: vorlesen.enabled ? palette.sand : palette.mid,
+      border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid transparent',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      fontSize: '11px',
+      lineHeight: 1,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      transition: `all ${duration.normal}ms ${ease}`,
+    },
+  },
+    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'currentColor' },
+      React.createElement('path', { d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0012 8.5v1.06a3.5 3.5 0 010 4.88V15.5a4.5 4.5 0 004.5-3.5z' })
+    ),
+    React.createElement('span', {
+      style: { display: 'none' },
+      className: 'mp-vorlesen-label',
+    }, t('vorlesen.label'))
+  );
+};
+
 const AppInner = () => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
+  const vorlesen = useVorlesen(lang);
 
   // ─── Data loading with migration ──────────────────────────
   const [data, setData] = useState(() => {
@@ -312,7 +370,8 @@ const AppInner = () => {
     });
   }
 
-  return React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column' } },
+  return React.createElement(VorlesenContext.Provider, { value: vorlesen },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column' } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     React.createElement(MobileNav, {
@@ -340,6 +399,7 @@ const AppInner = () => {
         t('common.appName')
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
+        React.createElement(VorlesenToggle, { palette, t, vorlesen }),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
@@ -463,6 +523,7 @@ const AppInner = () => {
         onNavigate: handleNavigate,
         demoMode,
       }),
+      React.createElement(ViewErrorBoundary, { palette, t, key: view },
       React.createElement(React.Suspense, { fallback: null },
         view === 'tresor' && React.createElement(DocumentTresor, {
           palette, t,
@@ -531,7 +592,7 @@ const AppInner = () => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
-      ),
+      )),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
@@ -579,7 +640,7 @@ const AppInner = () => {
         }
       }, demoMode ? t('demo.leave') : t('demo.footerLink'))
     )
-  );
+  ));
 };
 
 // Wrap in I18nProvider + ErrorBoundary + BetaGate
