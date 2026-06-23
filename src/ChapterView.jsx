@@ -395,14 +395,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
         React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
-        React.createElement('select', {
-          id: fieldId,
-          value: value,
-          onChange: (e) => handleFieldChange(field.k, e.target.value),
-          style: { ...inputStyle, cursor: 'pointer' }
-        },
-          React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
-          options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
+        React.createElement('div', { style: { position: 'relative' } },
+          React.createElement('select', {
+            id: fieldId,
+            value: value,
+            onChange: (e) => handleFieldChange(field.k, e.target.value),
+            style: {
+              ...inputStyle,
+              cursor: 'pointer',
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              paddingRight: '36px',
+            }
+          },
+            React.createElement('option', { value: '' }, tr('chapterView.selectOption')),
+            options.map((opt, idx) => React.createElement('option', { key: idx, value: opt.value }, opt.label))
+          ),
+          React.createElement('div', {
+            style: {
+              position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+              pointerEvents: 'none', color: palette.mid, fontSize: '10px',
+            }
+          }, '▾')
         ),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
         renderOrientation(field)
