@@ -2337,6 +2337,7 @@ export default {
     title: 'Link ufficiali e richieste',
     alle: 'Tutti',
     antragsstelle: 'Ufficio competente',
+    mirrorTitle: 'Ufficio ufficiale & domanda',
     source: 'Link ufficiali da ch.ch, UFSP, UFAS e altre autorità federali.',
     cantonalTitle: 'Il tuo cantone: {canton}',
     cantonal: {

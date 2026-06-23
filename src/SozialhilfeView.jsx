@@ -1,6 +1,7 @@
 import React from 'react';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
+import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
@@ -173,6 +174,8 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         el.eligible && React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step5'))
       )
     ),
+
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: 'sozialhilfe', cantonalKey: 'sozialdienst' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
 

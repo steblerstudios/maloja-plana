@@ -2333,6 +2333,7 @@ export default {
     title: 'Official Links & Applications',
     alle: 'All',
     antragsstelle: 'Filing office',
+    mirrorTitle: 'Official office & application',
     source: 'Official links from ch.ch, FOPH, FSIO, and other federal authorities.',
     cantonalTitle: 'Your canton: {canton}',
     cantonal: {
