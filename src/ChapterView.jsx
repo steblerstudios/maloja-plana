@@ -7,6 +7,7 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily } from './config/tokens.js';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -514,8 +515,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       '<p class="subtitle">' + tr('notfallSummary.handoverIntro') + '</p>' +
       sectionHtml +
       '<div class="footer">' + tr('notfallSummary.cardFooter') + '</div></div></body></html>';
-    const w = window.open('', '_blank');
-    if (w) { w.document.write(html); w.document.close(); }
+    openPrintWindow(html);
   };
 
   const bloodTypeColors = {

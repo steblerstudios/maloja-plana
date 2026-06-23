@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
@@ -14,11 +15,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
 
   const handlePrint = () => {
     const html = generateLebensmappe(data, chapters, t, documents);
-    const win = window.open('', '_blank');
-    if (win) {
-      win.document.write(html);
-      win.document.close();
-    }
+    openPrintWindow(html);
   };
 
   // ─── Section preview card ───────────────────────────────
