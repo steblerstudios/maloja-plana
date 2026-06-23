@@ -722,6 +722,9 @@ export default {
     localOnly: 'Deine Daten bleiben auf diesem Gerät.',
     localBadge: '100% lokal — Deine Daten bleiben auf diesem Gerät',
     chapterTrust: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.',
+    detail1: 'Kein Konto, kein Login, kein Server. Deine Daten existieren nur im Browser dieses Geräts.',
+    detail2: 'Nichts wird gesendet, gespeichert oder getrackt — auch nicht von uns. Quellcode offen auf GitHub.',
+    detail3: 'Tipp: Erstelle regelmässig eine Sicherung (JSON-Export), damit Deine Daten bei Browser-Reset nicht verloren gehen.',
   },
 
   datenWirken: {
@@ -736,7 +739,7 @@ export default {
 
   legal: {
     title: 'Rechtliches',
-    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum', license: 'Lizenz', ethics: 'Ethik' },
+    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum', license: 'Lizenz', ethics: 'Ethik', resources: 'Ressourcen' },
     footerLink: 'Datenschutz & Rechtliches',
     lastUpdated: 'Stand: Juni 2026 · Gemäss nDSG (in Kraft seit 1.9.2023)',
     privacy: {
@@ -844,6 +847,22 @@ export default {
       contactTitle: 'Spenden & Mitmachen',
       contact1: 'Maloja Plana ist ein gemeinnütziges Open-Source-Projekt. Wenn Du helfen möchtest — mit Code, Übersetzungen, Feedback oder einer Spende — melde Dich gerne.',
       contact2: 'Kontakt: steblerstudios@gmail.com · GitHub: github.com/steblerstudios/maloja-plana',
+    },
+    resources: {
+      secureTitle: 'Sichere Kommunikation',
+      secure1: 'Für den sicheren Austausch mit Behörden und Fachstellen empfehlen wir:',
+      threema: 'Threema — Schweizer Messenger, Ende-zu-Ende verschlüsselt, ohne Telefonnummer nutzbar.',
+      secureSafe: 'SecureSafe — Schweizer Datentresor für Passwörter und Dokumente (Bankgeheimnis-Schutz).',
+      incamail: 'IncaMail (Post) — Eingeschriebene E-Mail der Schweizerischen Post, rechtsgültig.',
+      petitionTitle: 'Petitionen & Bürgerinitiativen',
+      petition1: 'In der Schweiz hast Du das Recht, Petitionen einzureichen (Art. 33 BV). Plattformen:',
+      petition2: 'petitionen.ch — Schweizerische Petitionsplattform',
+      petition3: 'Gemeinde-Website — Für lokale Anliegen direkt bei Deiner Gemeinde.',
+      helpTitle: 'Beratungsstellen',
+      help1: 'Dargebotene Hand: Tel. 143 — Rund um die Uhr, kostenlos, anonym.',
+      help2: 'Pro Juventute: Tel. 147 — Beratung für Kinder und Jugendliche.',
+      help3: 'Opferhilfe Schweiz: opferhilfe-schweiz.ch — Kostenlose Beratung für Betroffene von Straftaten.',
+      help4: 'Frauenhaus-Netz: frauenhaus-schweiz.ch — Schutz und Beratung bei häuslicher Gewalt.',
     },
   },
 
