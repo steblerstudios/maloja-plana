@@ -14,8 +14,10 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) return 'vendor';
+          if (id.includes('data/plzGemeinde')) return 'plzGemeinde';
+          if (id.includes('data/praemienDetail')) return 'praemienDetail';
         },
       },
     },
