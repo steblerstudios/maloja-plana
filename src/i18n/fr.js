@@ -722,6 +722,9 @@ export default {
     localOnly: 'Vos données restent sur cet appareil.',
     localBadge: '100% local — tes données restent sur cet appareil',
     chapterTrust: 'Tes données sont stockées uniquement en local. Aucun serveur, aucun compte.',
+    detail1: 'Pas de compte, pas de connexion, pas de serveur. Tes données existent uniquement dans ce navigateur.',
+    detail2: 'Rien n\'est envoyé, stocké ou suivi — même pas par nous. Code source ouvert sur GitHub.',
+    detail3: 'Conseil : crée régulièrement une sauvegarde (export JSON) pour protéger tes données.',
   },
 
   datenWirken: {
@@ -736,7 +739,7 @@ export default {
 
   legal: {
     title: 'Mentions légales',
-    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence', ethics: 'Éthique' },
+    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence', ethics: 'Éthique', resources: 'Ressources' },
     footerLink: 'Confidentialité & Mentions légales',
     lastUpdated: 'Mis à jour : juin 2026 · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
     privacy: {
@@ -844,6 +847,22 @@ export default {
       contactTitle: 'Dons & Contribution',
       contact1: 'Maloja Plana est un projet open source à but non lucratif. Si tu veux aider — avec du code, des traductions, des retours ou un don — contacte-nous.',
       contact2: 'Contact : sophie.stebler@gmail.com · GitHub : github.com/steblerstudios/maloja-plana',
+    },
+    resources: {
+      secureTitle: 'Communication sécurisée',
+      secure1: 'Pour les échanges sécurisés avec les autorités et professionnels, nous recommandons :',
+      threema: 'Threema — Messagerie suisse, chiffrement de bout en bout, utilisable sans numéro.',
+      secureSafe: 'SecureSafe — Coffre-fort suisse pour mots de passe et documents (protection du secret bancaire).',
+      incamail: 'IncaMail (Poste) — Courrier recommandé électronique de la Poste Suisse, valeur juridique.',
+      petitionTitle: 'Pétitions & Initiatives citoyennes',
+      petition1: 'En Suisse, tu as le droit de déposer des pétitions (art. 33 Cst.). Plateformes :',
+      petition2: 'petitionen.ch — Plateforme suisse de pétitions',
+      petition3: 'Site de ta commune — Pour les préoccupations locales, directement auprès de ta commune.',
+      helpTitle: 'Lignes d\'aide',
+      help1: 'La Main Tendue : Tél. 143 — 24h/24, gratuit, anonyme.',
+      help2: 'Pro Juventute : Tél. 147 — Conseil pour enfants et jeunes.',
+      help3: 'Aide aux victimes : aide-aux-victimes.ch — Conseil gratuit pour les victimes d\'infractions.',
+      help4: 'Maisons des femmes : frauenhaus-schweiz.ch — Protection et conseil en cas de violence domestique.',
     },
   },
 

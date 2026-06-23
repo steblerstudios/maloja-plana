@@ -723,6 +723,9 @@ export default {
     localOnly: 'Your data stays on this device.',
     localBadge: '100% local — your data stays on this device',
     chapterTrust: 'Your entries are stored locally only. No server, no account.',
+    detail1: 'No account, no login, no server. Your data exists only in this browser on this device.',
+    detail2: 'Nothing is sent, stored, or tracked — not even by us. Source code is open on GitHub.',
+    detail3: 'Tip: Create regular backups (JSON export) so your data is safe if the browser cache is cleared.',
   },
 
   datenWirken: {
@@ -737,7 +740,7 @@ export default {
 
   legal: {
     title: 'Legal',
-    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint', license: 'License', ethics: 'Ethics' },
+    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint', license: 'License', ethics: 'Ethics', resources: 'Resources' },
     footerLink: 'Privacy & Legal',
     lastUpdated: 'As of: June 2026 · In accordance with the Swiss nDSG (in effect since 1.9.2023)',
     privacy: {
@@ -845,6 +848,22 @@ export default {
       contactTitle: 'Donate & Contribute',
       contact1: 'Maloja Plana is a non-profit open-source project. If you want to help — with code, translations, feedback, or a donation — please get in touch.',
       contact2: 'Contact: sophie.stebler@gmail.com · GitHub: github.com/steblerstudios/maloja-plana',
+    },
+    resources: {
+      secureTitle: 'Secure Communication',
+      secure1: 'For secure exchange with authorities and professionals, we recommend:',
+      threema: 'Threema — Swiss messenger, end-to-end encrypted, usable without phone number.',
+      secureSafe: 'SecureSafe — Swiss data vault for passwords and documents (banking secrecy protection).',
+      incamail: 'IncaMail (Post) — Registered email by Swiss Post, legally valid.',
+      petitionTitle: 'Petitions & Civic Initiatives',
+      petition1: 'In Switzerland, you have the right to submit petitions (Art. 33 Federal Constitution). Platforms:',
+      petition2: 'petitionen.ch — Swiss petition platform',
+      petition3: 'Municipal website — For local concerns, directly with your municipality.',
+      helpTitle: 'Helplines',
+      help1: 'Die Dargebotene Hand: Tel. 143 — 24/7, free, anonymous.',
+      help2: 'Pro Juventute: Tel. 147 — Counselling for children and young people.',
+      help3: 'Victim Aid Switzerland: opferhilfe-schweiz.ch — Free counselling for crime victims.',
+      help4: 'Women\'s shelter network: frauenhaus-schweiz.ch — Protection and counselling for domestic violence.',
     },
   },
 
