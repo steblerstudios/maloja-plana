@@ -353,7 +353,7 @@ export default {
         phone: 'Phone',
         email: 'Email',
         ahv: 'AHV number',
-        maritalStatus: { label: 'Marital status', options: { single: 'Single', married: 'Married', divorced: 'Divorced', widowed: 'Widowed' } },
+        maritalStatus: { label: 'Marital status', options: { single: 'Single', married: 'Married', cohabiting: 'Cohabiting', divorced: 'Divorced', widowed: 'Widowed' } },
         dependents: 'Number of children',
         household: {
           adults: 'Adults in household',
