@@ -371,6 +371,8 @@ export default {
           addChild: 'Kind hinzufügen',
           removeChild: 'Entfernen',
           childAgeAuto: 'Alter wird automatisch aus dem Geburtsdatum berechnet',
+          partnerIncome: 'Nettolohn Partner/in (CHF/Mt.)',
+          partnerIncomeHint: 'Monatliches Nettoeinkommen der zweiten Person im Haushalt. Fliesst in Steuer-, IPV- und Sozialhilfe-Berechnung ein.',
           retired: 'Pensioniert',
           retiredYes: 'Ja',
           retiredNo: 'Nein',

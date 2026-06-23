@@ -1,4 +1,4 @@
-# Known Issues — Beta (Stand 2026-06-23)
+# Known Issues — Beta (Stand 2026-06-23, Update 2026-06-23)
 
 > Diese Liste ist für Tester gedacht. Hier stehen Dinge, die wir kennen und bewusst noch nicht behoben haben.
 
@@ -11,7 +11,7 @@
 | **Sozialhilfe: Haushalt** | Berechnung nimmt `1 + Abhängige` statt differenzierte SKOS-Zusammensetzung (Erwachsene vs. Kinder) | Betrag kann bei Familien leicht abweichen |
 | **Steuerrechner** | Kantonale Schätzung basiert auf Hauptort-Multiplikatoren, nicht auf exaktem kantonalem Tarif | Betrag kann je nach Gemeinde abweichen |
 | **IPV** | Lineares Modell (Abbau bis maxIncome) statt exaktem kantonalem Stufentarif | Betrag ist Orientierung, nicht verbindlich |
-| **Mehrpersonen-Haushalte** | Alle Rechner sind für Einzelpersonen. Familien/Paare noch nicht unterstützt | Grösste offene Lücke |
+| **Mehrpersonen-Haushalte** | Partner-Einkommen fliesst in alle Rechner ein (Steuer, IPV, Sozialhilfe, EL). Feld erscheint bei 2+ Erwachsenen | Erledigt — Basisversion |
 
 ## Funktionale Hinweise
 
@@ -53,6 +53,15 @@
 | **Print-Stylesheet** | Erledigt — Footer/Header ausgeblendet, sauberes A4-Layout |
 | **Unicode-Icons** | Erledigt — font-variant-emoji:text verhindert Emoji-Rendering |
 | **Button-Icons** | Bewusste Designentscheidung — typografische Zeichen (←, ○, ◇) als ruhiges Stilmittel |
+| **Amanda: IPV-Erklärung** | Erledigt — premium.subtitle erklärt IPV in allen 5 Sprachen |
+| **Amanda: Kind-Alter** | Erledigt — Alter wird automatisch aus Geburtsdatum berechnet, Feld wird readonly |
+| **Amanda: Adresse-Crosslink** | Erledigt — Crosslink von Basis → Wohnen (Kapitel 1) nach Kanton-Feld |
+| **Amanda: Nebenkosten-Hinweis** | Erledigt — Monats→Jahresschätzung + Genossenschafts-Hinweis bei NK > 0 |
+| **Amanda: QuickCheck auto-fill** | Erledigt — Dashboard-QuickCheck übernimmt gespeichertes Einkommen |
+| **Amanda: Crosslink-Audit** | Erledigt — Mindestlohn-Bug gefixt, 3 neue Crosslinks (Ausbildung→Tax, Behörden→Tax, Behörden→Schulden) |
+| **Benefits vor Formular** | Erledigt — "Was Du davon hast"-Block direkt nach Header, vor Tabs |
+| **Emotionale Differenzierung** | Erledigt — tax.intro, Betreibung gold statt rose, Schatten reduziert |
+| **Mobile Grid-Overflow** | Erledigt — minmax(min(320px,100%),1fr) verhindert Feldabschneidung auf Mobilgeräten |
 
 ## Nicht-Ziele dieser Beta
 

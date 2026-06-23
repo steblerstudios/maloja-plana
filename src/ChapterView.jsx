@@ -137,6 +137,21 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         )
       ),
 
+      // Partner income — only when 2+ adults
+      adults >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
+        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
+        React.createElement('input', {
+          type: 'number', inputMode: 'decimal',
+          value: household.partnerIncome || '',
+          onChange: (e) => updateHousehold({ partnerIncome: e.target.value }),
+          placeholder: '0',
+          style: { ...hhSelect, cursor: 'text' }
+        }),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+          tr('chapters.basis.fields.household.partnerIncomeHint')
+        )
+      ),
+
       // Retired
       React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.retired')),
