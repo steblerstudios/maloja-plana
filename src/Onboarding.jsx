@@ -66,9 +66,9 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
-          React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', stroke: palette.sand, strokeWidth: '1.8', strokeLinecap: 'round', style: { marginBottom: '12px' } },
-            React.createElement('path', { d: 'M 3 17 Q 7 9 12 12 Q 17 15 21 7' }),
-            React.createElement('path', { d: 'M 3 20 Q 8 14 12 16 Q 16 18 21 13', opacity: '0.4' })
+          React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', style: { marginBottom: '12px' }, 'aria-hidden': 'true' },
+            React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: palette.text, strokeWidth: '2.2', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+            React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: palette.gold })
           ),
           React.createElement('h1', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs, letterSpacing: '0.5px' } }, 'Maloja Plana'),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
