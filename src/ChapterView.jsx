@@ -750,6 +750,58 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       );
     })(),
 
+    // Behörden-Checkliste — interactive checklist for common official tasks
+    chapter.key === 'behoerden' && (() => {
+      const STORAGE_KEY = 'or5_behoerden_checklist';
+      const items = [
+        { id: 'betreibungsauszug', key: 'checklist.betreibungsauszug' },
+        { id: 'steuererklaerung', key: 'checklist.steuererklaerung' },
+        { id: 'wohnsitzbestaetigung', key: 'checklist.wohnsitzbestaetigung' },
+        { id: 'ausweisRenewal', key: 'checklist.ausweisRenewal' },
+        { id: 'strafregisterauszug', key: 'checklist.strafregisterauszug' },
+        { id: 'patientenverfuegung', key: 'checklist.patientenverfuegung' },
+      ];
+      const [checked, setCheckedState] = React.useState(() => {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+      });
+      const toggle = (id) => {
+        const next = { ...checked, [id]: !checked[id] };
+        setCheckedState(next);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch {}
+      };
+      const done = items.filter(i => checked[i.id]).length;
+      return React.createElement('details', {
+        style: { marginBottom: space.lg + 'px' }
+      },
+        React.createElement('summary', {
+          style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
+        }, '□ ' + tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
+        React.createElement('div', {
+          style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
+        },
+          React.createElement('p', {
+            style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed }
+          }, tr('checklist.intro')),
+          ...items.map(item =>
+            React.createElement('label', {
+              key: item.id,
+              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm }
+            },
+              React.createElement('input', {
+                type: 'checkbox',
+                checked: !!checked[item.id],
+                onChange: () => toggle(item.id),
+                style: { accentColor: palette.sand, flexShrink: 0 }
+              }),
+              React.createElement('span', {
+                style: { color: checked[item.id] ? palette.mid : palette.text, textDecoration: checked[item.id] ? 'line-through' : 'none' }
+              }, tr(item.key))
+            )
+          )
+        )
+      );
+    })(),
+
     // Wohnkostenanteil — housing cost share when both costs and income are recorded
     chapter.key === 'wohnen' && allData && (() => {
       const rent = parseFloat(data.rentAmount) || 0;

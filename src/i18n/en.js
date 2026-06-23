@@ -231,6 +231,7 @@ export default {
     expenses: 'recorded expenses',
     taxCanton: 'Tax canton {canton}',
     emergencyContact: 'In an emergency: {name}',
+    freePerMonth: 'free/mo.',
   },
   fortschritt: {
     title: 'Open fields',
@@ -646,6 +647,17 @@ export default {
     ago: '{n} months ago',
     agoDays: '{n} days ago',
     recorded: 'recorded',
+  },
+
+  checklist: {
+    title: 'Official checklist',
+    intro: 'Common official tasks and documents — check off what you have already completed.',
+    betreibungsauszug: 'Debt collection extract ordered',
+    steuererklaerung: 'Tax return filed',
+    wohnsitzbestaetigung: 'Residence confirmation obtained',
+    ausweisRenewal: 'ID / passport renewed',
+    strafregisterauszug: 'Criminal record extract ordered',
+    patientenverfuegung: 'Advance directive filed',
   },
 
   wohnkostenanteil: {
@@ -1883,6 +1895,7 @@ export default {
     totalIncome: 'Income',
     totalExpenses: 'Expenses',
     freeAmount: 'Available',
+    printAction: 'Print overview / save as PDF',
     disclaimer: 'All values are for orientation only. For binding information, contact the responsible authority.',
   },
 
