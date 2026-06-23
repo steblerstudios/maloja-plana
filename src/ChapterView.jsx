@@ -8,8 +8,11 @@ import { text, weight, leading, space, radius, shadow, fontFamily } from './conf
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
+  const vorlesen = useVorlesenContext();
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
@@ -220,12 +223,19 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const baseStyle = { marginBottom: space.lg + 'px' };
 
     const labelStyle = {
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
       fontSize: text.sm,
       fontWeight: weight.medium,
       color: palette.mid,
       marginBottom: space.sm - 2
     };
+
+    const renderLabel = (fieldId, labelText, hint) => React.createElement('label', { htmlFor: fieldId, style: labelStyle },
+      labelText,
+      vorlesen?.enabled && React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid })
+    );
 
     const inputStyle = {
       width: '100%',
@@ -250,7 +260,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.type === 'text') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label + (field.required ? ' *' : '')),
+        renderLabel(fieldId, field.label + (field.required ? ' *' : ''), field.hint),
         React.createElement('input', {
           id: fieldId,
           type: 'text',
@@ -281,7 +291,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
           React.createElement('select', {
             value: activeCode,
@@ -320,7 +330,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.type === 'email') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('input', {
           id: fieldId,
           type: 'email',
@@ -338,7 +348,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.type === 'date') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { position: 'relative' } },
           React.createElement('input', {
             id: fieldId,
@@ -367,7 +377,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.type === 'currency') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { display: 'flex', gap: '6px' } },
           React.createElement('span', { style: { padding: '10px 12px', background: palette.up, borderRadius: radius.sm, borderLeft: '1px solid ' + palette.border } }, 'CHF'),
           React.createElement('input', {
@@ -395,7 +405,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { position: 'relative' } },
           React.createElement('select', {
             id: fieldId,
@@ -428,7 +438,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.type === 'textarea') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        React.createElement('label', { htmlFor: fieldId, style: labelStyle }, field.label),
+        renderLabel(fieldId, field.label, field.hint),
         React.createElement('textarea', {
           id: fieldId,
           value: value,
