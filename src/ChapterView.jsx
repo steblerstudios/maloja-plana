@@ -15,6 +15,7 @@ const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
+const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
   const vorlesen = useVorlesenContext();
@@ -1330,6 +1331,20 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 );
               }
             }
+            // Multi-Job — weitere / frühere Anstellungen
+            const additionalJobs = Array.isArray(data.additionalJobs) ? data.additionalJobs : [];
+            elements.push(
+              React.createElement('div', { key: 'jobs-section', style: { gridColumn: '1 / -1', marginTop: space.md + 'px', marginBottom: space.md + 'px' } },
+                React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, tr('jobs.sectionTitle')),
+                React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', marginBottom: space.sm + 'px' } }, tr('jobs.sectionHint')),
+                React.createElement(React.Suspense, { fallback: null },
+                  React.createElement(JobManager, {
+                    palette, t: tr, jobs: additionalJobs,
+                    onChange: (jobs) => onUpdate('additionalJobs', jobs),
+                  })
+                )
+              )
+            );
           }
           if (field.k === 'rentAmount' && chapter.key === 'wohnen') {
             crosslinkBtn('budget', 'sync', 'nav.crosslink.budgetHint');
