@@ -2369,6 +2369,15 @@ export default {
     hint: 'Commence à taper — les médicaments courants seront suggérés.',
     migrated: 'Ancienne saisie en texte libre :',
   },
+  langSkill: {
+    add: 'Ajouter une langue',
+    name: 'Langue',
+    namePlaceholder: 'p.ex. Anglais',
+    level: 'Niveau',
+    hint: 'Saisis plusieurs langues avec leur niveau (Cadre européen commun).',
+    migrated: 'Ancienne saisie :',
+    levels: { native: 'Langue maternelle' },
+  },
   edu: {
     pathsTitle: 'Pas de diplôme professionnel ? Comment l’obtenir à l’âge adulte',
     pathsIntro: 'Même sans apprentissage classique, tu peux obtenir un certificat fédéral de capacité (CFC) ou une attestation (AFP). Quatre voies mènent au diplôme :',

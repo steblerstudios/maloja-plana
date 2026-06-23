@@ -2456,6 +2456,15 @@ export default {
     hint: 'Cumenza a tippar — medicaments frequents vegnan proponids.',
     migrated: 'Anteriura endataziun en text liber:',
   },
+  langSkill: {
+    add: 'Agiuntar lingua',
+    name: 'Lingua',
+    namePlaceholder: 'p.ex. Englais',
+    level: 'Nivel',
+    hint: 'Endatescha pliras linguas cun lur nivel (rom da referenza europeic).',
+    migrated: 'Endataziun precedenta:',
+    levels: { native: 'Lingua materna' },
+  },
   edu: {
     pathsTitle: 'Nagin diplom professiunal? Co al cuntanscher sco creschida/creschì',
     pathsIntro: 'Era senza in emprendissadi classic pos ti cuntanscher in attestat federal da capacitad (AFC) u in certificat (CFP). Quatter vias mainan al diplom:',
