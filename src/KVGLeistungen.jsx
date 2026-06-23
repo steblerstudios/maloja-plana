@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius, leading } from './config/tokens.js';
+import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 
 const STATUS_COLORS = (palette) => ({
@@ -133,7 +133,7 @@ const FranchiseTab = ({ palette, t, data }) => {
     width: (max > 0 ? Math.min(100, (value / max) * 100) : 0) + '%',
     background: color,
     borderRadius: '4px',
-    transition: 'width 0.3s ease',
+    transition: `width ${duration.slow}ms ${ease}`,
   });
 
   return React.createElement('div', null,
