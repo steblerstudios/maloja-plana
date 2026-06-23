@@ -1,7 +1,7 @@
 // Offizielle Schweizer Antrags- und Informationslinks
 // Nur verifizierte URLs von Bundesbehörden und ch.ch
 
-export const DIREKTLINKS_VERSION = '2025-06';
+export const DIREKTLINKS_VERSION = '2026-06';
 
 export const DIREKTLINKS = [
   {
@@ -10,7 +10,7 @@ export const DIREKTLINKS = [
     name: { de: 'Prämienverbilligung', en: 'Premium subsidy', fr: 'Réduction de primes' },
     beschreibung: { de: 'Verbilligung der Krankenkassenprämie bei tiefem Einkommen', en: 'Health insurance premium reduction for low income', fr: 'Réduction de la prime d\'assurance maladie en cas de faible revenu' },
     url: 'https://www.ch.ch/de/gesundheit/krankenkasse/kosten-fur-krankenkasse/',
-    urlBag: 'https://www.bag.admin.ch/bag/de/home/versicherungen/krankenversicherung/krankenversicherung-versicherte-mit-wohnsitz-in-der-schweiz/praemienverbilligung.html',
+    urlBag: 'https://www.bag.admin.ch/de/krankenversicherung-praemienverbilligung',
     antragsstelle: { de: 'Kantonale Behörde', en: 'Cantonal authority', fr: 'Autorité cantonale' },
   },
   {
@@ -141,19 +141,19 @@ export const KATEGORIEN = {
 
 export const CANTONAL_LINKS = {
   ZH: {
-    steuererklaerung: 'https://www.zh.ch/de/steuern-finanzen/steuern/steuererklarung.html',
+    steuererklaerung: 'https://www.zh.ch/de/steuern-finanzen/steuern.html',
     sozialdienst: 'https://www.zh.ch/de/soziales/sozialhilfe.html',
-    ipv: 'https://www.zh.ch/de/gesundheit/krankenversicherung/praemienverbilligung.html',
+    ipv: 'https://www.zh.ch/de/gesundheit/praemienverbilligung_krankenversicherung.html',
   },
   BE: {
     steuererklaerung: 'https://www.taxme.ch/',
-    sozialdienst: 'https://www.be.ch/de/themen/soziales/sozialhilfe.html',
-    ipv: 'https://www.be.ch/de/themen/gesundheit/krankenversicherung/praemienverbilligung.html',
+    sozialdienst: 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
+    ipv: 'https://www.asv.dij.be.ch/de/start/themen/pv.html',
   },
   LU: {
     steuererklaerung: 'https://steuern.lu.ch/',
     sozialdienst: 'https://disg.lu.ch/themen/sozialhilfe',
-    ipv: 'https://www.lu.ch/verwaltung/DISG/disg_dienststellen/dienststelle_gesundheit_und_sport/praemienverbilligung',
+    ipv: 'https://www.lu.ch/verwaltung/GSD/Praemienverbilligung',
   },
   BS: {
     steuererklaerung: 'https://www.steuerverwaltung.bs.ch/',
@@ -162,33 +162,113 @@ export const CANTONAL_LINKS = {
   },
   GE: {
     steuererklaerung: 'https://ge.ch/tax/',
-    sozialdienst: 'https://www.ge.ch/aide-sociale',
-    ipv: 'https://www.ge.ch/demander-subsides-assurance-maladie',
+    sozialdienst: 'https://www.ge.ch/informations-generales-subside-assurance-maladie',
+    ipv: 'https://www.ge.ch/demander-subside-assurance-maladie-2026',
   },
   VD: {
     steuererklaerung: 'https://www.vd.ch/themes/etat-droit-finances/impots/',
-    sozialdienst: 'https://www.vd.ch/themes/sante-soins-handicap/aide-sociale/',
-    ipv: 'https://www.vd.ch/themes/sante-soins-handicap/assurance-maladie/subsides/',
+    sozialdienst: 'https://www.vd.ch/prestation/demander-des-subsides-a-lassurance-maladie',
+    ipv: 'https://www.vd.ch/sante-soins-et-handicap/assurance-maladie/subside-a-lassurance-maladie',
   },
   AG: {
     steuererklaerung: 'https://www.ag.ch/de/verwaltung/dfr/steuern',
     sozialdienst: 'https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/sozialhilfe',
-    ipv: 'https://www.ag.ch/de/verwaltung/dgs/gesundheit/praemienverbilligung',
+    ipv: 'https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/praemienverbilligung',
   },
   SG: {
     steuererklaerung: 'https://www.sg.ch/steuern-finanzen/steuern.html',
     sozialdienst: 'https://www.sg.ch/gesundheit-soziales/soziales/sozialhilfe.html',
-    ipv: 'https://www.sg.ch/gesundheit-soziales/gesundheit/praemienverbilligung.html',
+    ipv: 'https://www.sg.ch/gesundheit-soziales/gesundheit/krankenversicherung0/praemienverbilligung.html',
   },
   TI: {
     steuererklaerung: 'https://www4.ti.ch/dfe/dc/dichiarazione/',
-    sozialdienst: 'https://www4.ti.ch/dss/dasf/prestazioni-sociali/',
-    ipv: 'https://www.ti.ch/riduzione-premi',
+    sozialdienst: 'https://www4.ti.ch/dss/dasf/temi/sostegno-sociale/prestazioni-finanziarie-di-sostegno-sociale/prestazioni-assistenziali/calcolo-e-funzionamento-della-prestazione-assistenziale-ordinaria',
+    ipv: 'https://www4.ti.ch/dss/ias/prestazioni-e-contributi/scheda/p/s/dettaglio/riduzione-dei-premi-dellassicurazione-malattia-ripam-1/riduzione-dei-premi-dellassicurazione-malattia-ripam',
   },
   ZG: {
-    steuererklaerung: 'https://www.zg.ch/behoerden/finanzdirektion/steuerverwaltung',
-    sozialdienst: 'https://www.zg.ch/behoerden/direktion-des-innern/kantonales-sozialamt',
-    ipv: 'https://www.zg.ch/behoerden/gesundheitsdirektion/amt-fuer-gesundheit/praemienverbilligung',
+    steuererklaerung: 'https://zg.ch/de/steuern-finanzen/steuern/natuerliche-personen/steuerabzuege',
+    sozialdienst: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
+    ipv: 'https://zg.ch/de/gesundheit/krankenversicherung/praemienverbilligung',
+  },
+  BL: {
+    steuererklaerung: 'https://www.baselland.ch/politik-und-behorden/direktionen/finanz-und-kirchendirektion/steuerverwaltung',
+    sozialdienst: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage',
+    ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
+  },
+  SO: {
+    steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/kantonales-steueramt/',
+    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-soziale-sicherheit/',
+    ipv: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-soziale-sicherheit/praemienverbilligung/',
+  },
+  FR: {
+    steuererklaerung: 'https://www.fr.ch/de/steuern',
+    sozialdienst: 'https://www.fr.ch/de/gesundheit-und-soziales/sozialhilfe',
+    ipv: 'https://www.fr.ch/de/gesundheit-und-soziales/praemienverbilligung',
+  },
+  TG: {
+    steuererklaerung: 'https://steuerverwaltung.tg.ch/',
+    sozialdienst: 'https://sozialamt.tg.ch/',
+    ipv: 'https://gesundheitsamt.tg.ch/praemienverbilligung.html',
+  },
+  GR: {
+    steuererklaerung: 'https://www.gr.ch/DE/institutionen/verwaltung/dfg/stv/Seiten/default.aspx',
+    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/sa/Seiten/default.aspx',
+    ipv: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/praemienverbilligung/Seiten/default.aspx',
+  },
+  SH: {
+    steuererklaerung: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Finanzdepartement/Steuerverwaltung-3854.html',
+    sozialdienst: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Sozialamt-7390907.html',
+    ipv: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Gesundheitsamt/Pr-mienverbilligung-7390913.html',
+  },
+  NE: {
+    steuererklaerung: 'https://www.ne.ch/autorites/DFS/SCCO/Pages/accueil.aspx',
+    sozialdienst: 'https://www.ne.ch/autorites/DEAS/SASO/Pages/accueil.aspx',
+    ipv: 'https://www.ne.ch/autorites/DEAS/SASO/subsides-assurance-maladie/Pages/accueil.aspx',
+  },
+  VS: {
+    steuererklaerung: 'https://www.vs.ch/de/web/scc',
+    sozialdienst: 'https://www.vs.ch/de/web/sas',
+    ipv: 'https://www.vs.ch/de/web/sas/praemienverbilligung',
+  },
+  JU: {
+    steuererklaerung: 'https://www.jura.ch/DFI/CCO.html',
+    sozialdienst: 'https://www.jura.ch/DAS/SAS.html',
+    ipv: 'https://www.jura.ch/DAS/SSA/Subsides-a-l-assurance-maladie.html',
+  },
+  UR: {
+    steuererklaerung: 'https://www.ur.ch/dienstleistungen/3040',
+    sozialdienst: 'https://www.ur.ch/dienstleistungen/3002',
+    ipv: 'https://www.ur.ch/dienstleistungen/2991',
+  },
+  SZ: {
+    steuererklaerung: 'https://www.sz.ch/steuern.html',
+    sozialdienst: 'https://www.sz.ch/soziales.html',
+    ipv: 'https://www.sz.ch/gesundheit/krankenversicherung/praemienverbilligung.html',
+  },
+  OW: {
+    steuererklaerung: 'https://www.ow.ch/de/verwaltung/finanzdepartement/steuerverwaltung/',
+    sozialdienst: 'https://www.ow.ch/de/verwaltung/sicherheits-und-justizdepartement/sozialamt/',
+    ipv: 'https://www.ow.ch/de/verwaltung/sicherheits-und-justizdepartement/sozialamt/praemienverbilligung/',
+  },
+  NW: {
+    steuererklaerung: 'https://www.nw.ch/steueramt',
+    sozialdienst: 'https://www.nw.ch/sozialamt',
+    ipv: 'https://www.nw.ch/gesundheitsamt/praemienverbilligung',
+  },
+  GL: {
+    steuererklaerung: 'https://www.gl.ch/verwaltung/finanzen-und-gesundheit/hauptabteilung-steuern.html',
+    sozialdienst: 'https://www.gl.ch/verwaltung/bildung-und-kultur/hauptabteilung-soziales.html',
+    ipv: 'https://www.gl.ch/verwaltung/finanzen-und-gesundheit/hauptabteilung-gesundheit/praemienverbilligung.html',
+  },
+  AR: {
+    steuererklaerung: 'https://www.ar.ch/verwaltung/departement-finanzen/steuerverwaltung/',
+    sozialdienst: 'https://www.ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-soziales/',
+    ipv: 'https://www.ar.ch/verwaltung/departement-gesundheit-und-soziales/amt-fuer-gesundheit/praemienverbilligung/',
+  },
+  AI: {
+    steuererklaerung: 'https://www.ai.ch/themen/finanzen-und-steuern/steuern',
+    sozialdienst: 'https://www.ai.ch/themen/soziales/sozialhilfe',
+    ipv: 'https://www.ai.ch/themen/gesundheit/praemienverbilligung',
   },
 };
 
