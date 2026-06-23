@@ -2364,6 +2364,18 @@ export default {
     hint: 'Commence à taper — les médicaments courants seront suggérés.',
     migrated: 'Ancienne saisie en texte libre :',
   },
+  edu: {
+    pathsTitle: 'Pas de diplôme professionnel ? Comment l’obtenir à l’âge adulte',
+    pathsIntro: 'Même sans apprentissage classique, tu peux obtenir un certificat fédéral de capacité (CFC) ou une attestation (AFP). Quatre voies mènent au diplôme :',
+    path1Title: 'Apprentissage ordinaire ou raccourci',
+    path1: 'Une formation avec contrat d’apprentissage — possible aussi à l’âge adulte. La formation et l’expérience antérieures peuvent être prises en compte et l’apprentissage raccourci.',
+    path2Title: 'Admission directe à l’examen final — art. 32 OFPr',
+    path2: 'Tu passes uniquement l’examen final, sans contrat d’apprentissage. Condition : au moins 5 ans d’expérience professionnelle, dont une partie dans le métier visé. Les lacunes théoriques se comblent par des cours.',
+    path3Title: 'Validation des acquis — art. 31 OFPr',
+    path3: 'Tu démontres tes compétences dans un dossier — sans examen. Condition : au moins 5 ans d’expérience. Possible uniquement dans les métiers disposant d’une procédure de validation reconnue.',
+    pathsHow: 'Comment y arriver : le premier interlocuteur est l’orientation professionnelle cantonale (OPUC) — gratuite et sans engagement. Elle détermine la voie qui te convient.',
+    pathsLink: 'berufsbildung.ch — Diplôme professionnel pour adultes',
+  },
   saeule3a: {
     add: 'Ajouter un versement',
     ofMax: 'sur {max}',
