@@ -1,4 +1,4 @@
-# Known Issues — Beta (Stand 2026-06-22)
+# Known Issues — Beta (Stand 2026-06-23)
 
 > Diese Liste ist für Tester gedacht. Hier stehen Dinge, die wir kennen und bewusst noch nicht behoben haben.
 
@@ -43,7 +43,11 @@
 | **BVG-Doppelabzug** | Erledigt — BVG/AHV werden als Referenz geführt, nicht von Ausgaben abgezogen |
 | **Fortschrittskarte: Orientierung** | Erledigt — Status-Label über Berglandschaft (X von Y begonnen · Z abgeschlossen) + Kapitel-Labels unter Icons |
 | **Finanz-Übersicht** | Erledigt — Kompaktansicht aller Rechner-Ergebnisse (Steuern, IPV, Sozialhilfe, EL) auf einen Blick |
-| **Cross-Links Rechner** | Erledigt — Steuer-, IPV- und Sozialhilfe-Rechner verlinken zur Finanz-Übersicht |
+| **Cross-Links Rechner** | Erledigt — Steuer-, IPV-, Sozialhilfe- und Vorsorge-Rechner verlinken zur Finanz-Übersicht |
+| **Dropdown-UX** | Erledigt — Custom Chevron + appearance:none für alle Selects (ChapterView, TaxCalculator, SozialhilfeRechner) |
+| **Dashboard-Snippets** | Erledigt — Finanzen-Snippet zeigt freies Budget pro Monat |
+| **Behörden-Checkliste** | Erledigt — Interaktive Checkliste für häufige Behördengänge (localStorage-persistent, 5 Sprachen) |
+| **Demo-Einstieg** | Erledigt — Quick-Action Card im Dashboard für alle Nutzer sichtbar |
 
 ## Nicht-Ziele dieser Beta
 
