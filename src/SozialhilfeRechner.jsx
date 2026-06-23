@@ -44,7 +44,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     inputRow: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px' },
     input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    select: { width: '80px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
+    select: { width: '80px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer' },
+    selectWrap: { position: 'relative', display: 'inline-block' },
+    selectChevron: { position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', fontSize: text.sm, cursor: 'pointer', marginBottom: space.xs + 'px' },
     highlight: { padding: space.md + 'px', borderRadius: radius.sm + 'px', border: '1px solid ', marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
@@ -85,24 +87,30 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.inputRow },
         React.createElement('div', { style: s.inputGroup },
           React.createElement('div', { style: s.label }, t('sh.erwachsene')),
-          React.createElement('select', {
-            style: s.select, value: adults,
-            onChange: e => setAdults(Number(e.target.value)),
-          },
-            [1,2,3,4].map(n =>
-              React.createElement('option', { key: n, value: n }, n)
-            )
+          React.createElement('div', { style: s.selectWrap },
+            React.createElement('select', {
+              style: s.select, value: adults,
+              onChange: e => setAdults(Number(e.target.value)),
+            },
+              [1,2,3,4].map(n =>
+                React.createElement('option', { key: n, value: n }, n)
+              )
+            ),
+            React.createElement('div', { style: s.selectChevron }, '▾')
           )
         ),
         React.createElement('div', { style: s.inputGroup },
           React.createElement('div', { style: s.label }, t('sh.kinder')),
-          React.createElement('select', {
-            style: s.select, value: kinderCount,
-            onChange: e => setKinderCount(Number(e.target.value)),
-          },
-            [0,1,2,3,4,5].map(n =>
-              React.createElement('option', { key: n, value: n }, n)
-            )
+          React.createElement('div', { style: s.selectWrap },
+            React.createElement('select', {
+              style: s.select, value: kinderCount,
+              onChange: e => setKinderCount(Number(e.target.value)),
+            },
+              [0,1,2,3,4,5].map(n =>
+                React.createElement('option', { key: n, value: n }, n)
+              )
+            ),
+            React.createElement('div', { style: s.selectChevron }, '▾')
           )
         ),
         field('sh.miete', miete, setMiete, '1200'),

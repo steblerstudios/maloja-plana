@@ -425,6 +425,7 @@ export default {
         childcare: 'Childcare (CHF)',
         otherInsurance: 'Other insurance (CHF)',
         pension3a: 'Pillar 3a paid (CHF/year)',
+        pension3aBalance: 'Pillar 3a balance (CHF)',
         familienzulagen: 'Family allowances per month (CHF)',
         alimenteReceived: 'Maintenance received per month (CHF)',
         alimentePaid: 'Maintenance paid per month (CHF)',
@@ -1183,6 +1184,10 @@ export default {
     householdAdultsChildren: 'Household: {adults} adult(s) + {children} child(ren)',
     childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
     childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',
+    repaymentTitle: 'Repayment of social assistance',
+    repaymentText: 'In most cantons, social assistance received must be repaid if your financial situation improves (e.g. through inheritance, new income, or increased assets).',
+    repaymentVaries: 'The timeframe and conditions vary by canton (typically 10–15 years). Some cantons (e.g. Vaud) have abolished the repayment obligation.',
+    repaymentAdvice: 'Contact the social services office in your municipality for the rules that apply in your canton.',
   },
 
   lohnCheck: {
@@ -1874,6 +1879,10 @@ export default {
     selectCanton: 'Select a canton for cantonal calculation',
     toBudget: 'Budget overview',
     toDossier: 'Authority dossier',
+    budgetBalance: 'Monthly budget',
+    totalIncome: 'Income',
+    totalExpenses: 'Expenses',
+    freeAmount: 'Available',
     disclaimer: 'All values are for orientation only. For binding information, contact the responsible authority.',
   },
 

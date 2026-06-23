@@ -425,6 +425,7 @@ export default {
         mobility: 'Mobilità (CHF)',
         otherInsurance: 'Altre assicurazioni (CHF)',
         pension3a: 'Pilastro 3a versato (CHF/anno)',
+        pension3aBalance: 'Pilastro 3a avere (CHF)',
         familienzulagen: 'Assegni familiari al mese (CHF)',
         alimenteReceived: 'Alimenti ricevuti al mese (CHF)',
         alimentePaid: 'Alimenti versati al mese (CHF)',
@@ -1184,6 +1185,10 @@ export default {
     householdAdultsChildren: 'Nucleo familiare: {adults} adulto/i + {children} bambino/i',
     childrenNote: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.',
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
+    repaymentTitle: 'Rimborso dell\'aiuto sociale',
+    repaymentText: 'Nella maggior parte dei cantoni, l\'aiuto sociale ricevuto deve essere rimborsato se la situazione finanziaria migliora (p. es. eredità, nuovi redditi o aumento del patrimonio).',
+    repaymentVaries: 'I termini e le condizioni variano a seconda del cantone (in genere 10–15 anni). Alcuni cantoni (p. es. Vaud) hanno abolito l\'obbligo di rimborso.',
+    repaymentAdvice: 'Informati presso il servizio sociale del tuo comune sulle regole vigenti nel tuo cantone.',
   },
 
   tax: {
@@ -1875,6 +1880,10 @@ export default {
     selectCanton: 'Seleziona un cantone per il calcolo cantonale',
     toBudget: 'Panoramica budget',
     toDossier: 'Dossier autorità',
+    budgetBalance: 'Budget mensile',
+    totalIncome: 'Entrate',
+    totalExpenses: 'Uscite',
+    freeAmount: 'Disponibile',
     disclaimer: 'Tutti i valori sono indicativi. Per informazioni vincolanti, contattare l\'autorità competente.',
   },
 

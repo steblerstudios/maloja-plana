@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
@@ -60,6 +60,23 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
 
   const hasData = income > 0;
 
+  const rent = Number(data.wohnen?.rentAmount || 0);
+  const utilities = Number(data.wohnen?.utilities || 0);
+  const kkPremium = Number(data.versicherungen?.kkPremium || 0);
+  const groceries = Number(data.finanzen?.groceries || 0);
+  const communication = Number(data.finanzen?.communication || 0);
+  const mobility = Number(data.finanzen?.mobility || 0);
+  const childcare = Number(data.finanzen?.childcare || 0);
+  const otherIns = Number(data.finanzen?.otherInsurance || 0);
+  const monthlyTax = Number(data.finanzen?.monthlyTax || 0);
+  const debtPay = Number(data.finanzen?.debtPayments || 0);
+  const alimentePaid = Number(data.finanzen?.alimentePaid || 0);
+
+  const totalExpenses = rent + utilities + kkPremium + groceries + communication + mobility + childcare + otherIns + monthlyTax + debtPay + alimentePaid;
+  const totalIncome = income + Number(data.finanzen?.familienzulagen || 0) + Number(data.finanzen?.alimenteReceived || 0);
+  const freeAmount = totalIncome - totalExpenses;
+  const hasExpenses = totalExpenses > 0;
+
   return React.createElement('div', { style: { maxWidth: '520px' } },
 
     React.createElement('div', {
@@ -111,7 +128,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         formatCHF(income) + ' ' + t('common.perMonth')
       ),
       canton && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } },
-        t('finanzUebersicht.canton') + ': ' + canton
+        t('finanzUebersicht.canton') + ': ' + getCantonName(canton, t)
       )
     ),
 
@@ -165,6 +182,38 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       statusColor: el.eligible ? palette.gold : palette.mid,
       detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
     }),
+
+    hasData && hasExpenses && React.createElement('div', {
+      style: {
+        padding: '16px', background: freeAmount >= 0 ? palette.sage + '12' : palette.rose + '12',
+        borderRadius: radius.sm, border: '1px solid ' + (freeAmount >= 0 ? palette.sage + '30' : palette.rose + '30'),
+        marginBottom: '16px',
+      }
+    },
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '4px' } },
+        t('finanzUebersicht.budgetBalance')
+      ),
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }
+      },
+        React.createElement('span', { style: { fontSize: text.sm } }, t('finanzUebersicht.totalIncome')),
+        React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.sm } }, formatCHF(totalIncome))
+      ),
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }
+      },
+        React.createElement('span', { style: { fontSize: text.sm } }, t('finanzUebersicht.totalExpenses')),
+        React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.sm } }, '− ' + formatCHF(totalExpenses))
+      ),
+      React.createElement('div', {
+        style: { borderTop: '1px solid ' + palette.border, paddingTop: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }
+      },
+        React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, t('finanzUebersicht.freeAmount')),
+        React.createElement('span', {
+          style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? palette.sage : palette.rose }
+        }, formatCHF(freeAmount))
+      )
+    ),
 
     hasData && React.createElement('div', {
       style: { borderTop: '1px solid ' + palette.border, margin: '16px 0' }

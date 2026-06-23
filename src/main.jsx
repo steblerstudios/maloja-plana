@@ -54,7 +54,7 @@ import { text, weight, space, radius, shadow, fontFamily } from './config/tokens
 // Language switcher component
 const LanguageSwitcher = ({ palette }) => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
-  const labels = { en: 'EN', de: 'DE', fr: 'FR', it: 'IT' };
+  const labels = { en: 'EN', de: 'DE', fr: 'FR', it: 'IT', rm: 'RM' };
 
   return React.createElement('div', { style: { display: 'flex', gap: '2px', background: palette.up, borderRadius: '4px', padding: '2px' } },
     supportedLanguages.map(l =>
@@ -496,7 +496,7 @@ const AppInner = () => {
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
-        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData }),
+        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
