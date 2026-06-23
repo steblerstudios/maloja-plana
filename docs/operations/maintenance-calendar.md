@@ -76,3 +76,40 @@
 | EO-Taggeld | 2026 | 2026-06 | 2027-01 |
 | 3a-Maximum | 2026 (CHF 7'056) | 2026-06 | 2027-01 |
 | Kantonale IPV-Modelle | 2026 | 2026-06 | 2027-01 |
+
+---
+
+## Wartungsprotokolle
+
+### 2026-06-23 — Erste Baseline (Q2)
+
+**npm audit:**
+- 2 Vulnerabilities: esbuild ≤0.24.2 (moderate), vite ≤6.4.2 (high)
+- Fix erfordert Vite 8 Major-Upgrade (breaking change) — zurückgestellt
+- Risiko: nur Dev-Server betroffen, nicht Production-Build
+
+**Dependency-Status:**
+| Package | Installiert | Latest | Aktion |
+|---|---|---|---|
+| vite | 4.5.14 | 8.0.16 | Major-Upgrade evaluieren (Q3) |
+| react | 18.3.1 | 19.2.7 | Major-Upgrade evaluieren (React 19 Compiler) |
+| react-dom | 18.3.1 | 19.2.7 | Mit React zusammen |
+| @vitejs/plugin-react | 4.7.0 | 6.0.3 | Mit Vite zusammen |
+
+**Build (Production):**
+| Metrik | Wert |
+|---|---|
+| Module | 115 |
+| Build-Zeit | 1.44s |
+| Grösster Chunk | index: 243KB (56KB gzip) |
+| Vendor | 141KB (45KB gzip) |
+| Sprach-Chunks | 95–105KB (33–36KB gzip) |
+| Daten-Chunks | plzGemeinde: 165KB, praemienDetail: 124KB |
+| Total CSS | 5.9KB (1.6KB gzip) |
+
+**A11y-Audit:**
+- 0 Issues nach Fix (Dashboard-Input Label verknüpft)
+- Skip-Link: vorhanden
+- Landmarks: banner, main, contentinfo vorhanden
+- Focus-Visible: aktiv
+- 59 Buttons, alle mit Accessible Name
