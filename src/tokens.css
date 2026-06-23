@@ -150,7 +150,7 @@ button, [role="button"], summary {
 
 /* ─── Focus styles (accessibility) ──────────────────────── */
 :focus-visible {
-  outline: 2px solid #B8956A;
+  outline: 2px solid #C4A870;
   outline-offset: 2px;
 }
 
@@ -162,7 +162,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #B8956A !important;
+  outline: 2px solid #C4A870 !important;
   outline-offset: 2px !important;
   z-index: 1;
 }
@@ -174,7 +174,7 @@ textarea:focus-visible,
   top: 8px;
   z-index: 10000;
   padding: 8px 16px;
-  background: #B8956A;
+  background: #C4A870;
   color: #000;
   font-weight: 600;
   font-size: 14px;
@@ -204,7 +204,7 @@ html {
 
 /* ─── Selection color ───────────────────────────────────── */
 ::selection {
-  background: rgba(184, 149, 106, 0.3);
+  background: rgba(196, 168, 112, 0.3);
 }
 
 /* ─── Micro-feedback animations ────────────────────────── */

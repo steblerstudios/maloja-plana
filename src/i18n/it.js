@@ -901,6 +901,11 @@ export default {
       heartfelt1: 'Ecosia — ecosia.org — Motore di ricerca che investe i ricavi nella riforestazione.',
       heartfelt2: 'Infomaniak — infomaniak.com — Hosting svizzero a energia verde, con data center propri ed efficienti.',
       heartfelt3: 'Posteo — posteo.de — Servizio email senza pubblicità, rispettoso della privacy, alimentato a energia verde.',
+      heartfelt4: 'artfuljana — artfuljana.ch — Gioielli fatti a mano in pasta polimerica e fotografie di viaggio.',
+      heartfelt5: 'Baukunst Nick — baukunst-nick.ch — Lavori di gessatura, pittura e piastrellatura nella regione di Basilea.',
+      heartfelt6: 'Living Dream Design — ld-design.ch — Edilizia e giardinaggio da Pratteln: legno, giardini, pavimenti, inverdimento.',
+      heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — La più grande organizzazione giovanile della Svizzera (scout).',
+      heartfelt8: 'Tierschutz beider Basel — tbb.ch — Rifugio, affido animali e consulenza per la protezione degli animali nella regione di Basilea.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',
