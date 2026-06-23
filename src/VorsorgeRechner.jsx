@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
+import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
 function parseYear(dateStr) {
@@ -301,6 +302,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     ),
 
     activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
+
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen'] }),
 
     React.createElement('div', { style: s.source },
       t('vr.source')

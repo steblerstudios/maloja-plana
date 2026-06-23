@@ -2332,6 +2332,7 @@ export default {
     title: 'Offizielle Links & Anträge',
     alle: 'Alle',
     antragsstelle: 'Antragsstelle',
+    mirrorTitle: 'Offizielle Stelle & Antrag',
     source: 'Offizielle Links von ch.ch, BAG, BSV und weiteren Bundesbehörden.',
     cantonalTitle: 'Dein Kanton: {canton}',
     cantonal: {
