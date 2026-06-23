@@ -238,7 +238,7 @@ export default {
     bloodType: 'Blutgruppe {type}',
   },
   fortschritt: {
-    title: 'Offene Felder',
+    title: 'Dein Fortschritt',
     fieldsOpen: 'offen',
   },
   chapterStatus: {
@@ -1641,6 +1641,7 @@ export default {
     tryAgain: 'Erneut versuchen',
     reload: 'Seite neu laden',
     privacy: 'Es wurden keine Daten gesendet. Alles bleibt auf deinem Gerät.',
+    viewCrash: 'Dieser Bereich hat einen Fehler. Deine Daten sind sicher.',
   },
 
   overdue: {
@@ -1929,6 +1930,9 @@ export default {
     median: 'Median CH',
     branchenvergleich: 'Dein Lohn im Branchenvergleich (Median-Bruttolohn):',
     branchenQuelle: 'Quelle: BFS Lohnstrukturerhebung 2022',
+    household: 'Haushalt',
+    householdDetail: '{adults} Erwachsene, {children} Kinder',
+    adults: 'Erwachsene',
   },
 
   branche: {
@@ -1955,6 +1959,11 @@ export default {
   pwa: {
     installHint: 'Maloja Plana als App installieren — offline verfügbar, direkt vom Homescreen.',
     install: 'Installieren',
+  },
+
+  vorlesen: {
+    toggle: 'Vorlesen ein/aus',
+    label: 'Vorlesen',
   },
 
   beta: {
