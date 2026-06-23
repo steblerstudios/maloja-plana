@@ -467,7 +467,7 @@ export default {
       benefits: ['Premium reduction', 'Premium comparison', 'Pension calculator'],
       fields: {
         kkInsurer: 'Health insurer',
-        kkModel: { label: 'Insurance model', options: { basic: 'Basic', standard: 'Standard', comfort: 'Comfort' } },
+        kkModel: { label: 'Insurance model', options: { standard: 'Standard (free doctor choice)', hausarzt: 'Family doctor model', hmo: 'HMO (group practice)', telmed: 'Telmed (phone first)', apotheke: 'Pharmacy model' } },
         kkPremium: 'Monthly premium (CHF)',
         franchise: { label: 'Deductible (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Insurance card number',
