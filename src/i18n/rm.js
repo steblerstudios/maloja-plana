@@ -215,6 +215,10 @@ export default {
     taxCanton: 'Chantun da taglia {canton}',
     emergencyContact: "En cas d'urgenza: {name}",
     freePerMonth: "liber/mais",
+    franchise: "Franschisa {value}",
+    taxDeadline: "Termin {date}",
+    checklistDone: "fatgs",
+    bloodType: "Grupa da sang {type}",
   },
 
   fortschritt: {
