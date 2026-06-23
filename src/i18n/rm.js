@@ -344,7 +344,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
