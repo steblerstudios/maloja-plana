@@ -148,7 +148,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
       expenseItems.map((item, idx) => React.createElement(HorizontalBar, { key: idx, label: item.label, value: item.value, maxValue: maxExpense, color: item.color, palette, t }))
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, '○ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly'))
   );
 };
 

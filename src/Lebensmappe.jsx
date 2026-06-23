@@ -143,7 +143,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         React.createElement('div', {
           key: i,
           style: { fontSize: text.sm, color: palette.mid, padding: '2px 0' }
-        }, '○ ' + doc.name)
+        }, 'ⓘ ' + doc.name)
       )
     ),
 
@@ -152,7 +152,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, '○ ' + t('lebensmappe.footerPrivacy'))
+    }, 'ⓘ ' + t('lebensmappe.footerPrivacy'))
   );
 };
 

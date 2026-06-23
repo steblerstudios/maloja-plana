@@ -248,21 +248,21 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: handleExportJSON, disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? '○ ' + t('zipExport.exporting') : '□ JSON'),
+            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ JSON'),
             React.createElement('button', {
               onClick: handleExportCSV, disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sky, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? '○ ' + t('zipExport.exporting') : '◰ CSV'),
+            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '◰ CSV'),
             React.createElement('button', {
               onClick: handleExportManifest, disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sage, color: exporting ? '#fff' : '#000', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? '○ ' + t('zipExport.exporting') : '□ Manifest')
+            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ Manifest')
           )
         ),
 
         // Info
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, '○ ' + t('zipExport.whatIsExported')),
+          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, 'ⓘ ' + t('zipExport.whatIsExported')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },
             React.createElement('div', null, '✓ ' + t('zipExport.allChapterData')),
             React.createElement('div', null, '✓ ' + t('zipExport.documentMetadata')),

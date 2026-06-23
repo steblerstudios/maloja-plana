@@ -204,7 +204,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const renderOrientation = (field) => {
     const parts = [];
     if (field.orientation) {
-      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, '○ ' + field.orientation));
+      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + field.orientation));
     }
     if (field.link) {
       parts.push(React.createElement('a', {
@@ -271,7 +271,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           autoComplete: field.autoComplete || 'off',
           style: inputStyle
         }),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field),
         error && React.createElement('div', { style: errorStyle }, error)
       );
@@ -395,7 +395,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             style: { ...inputStyle, flex: 1 }
           })
         ),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field)
       );
     }
@@ -433,7 +433,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             }
           }, '▾')
         ),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field)
       );
     }
@@ -867,7 +867,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           borderLeft: '3px solid ' + palette.sage + '50',
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
-      }, '○ ' + tr('orientation.contextIpv')),
+      }, 'ⓘ ' + tr('orientation.contextIpv')),
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
       React.createElement('button', {
         onClick: () => onNavigate('finanzuebersicht'),
@@ -890,7 +890,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           borderLeft: '3px solid ' + palette.sage + '50',
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
-      }, '○ ' + tr('orientation.contextFamilienzulagen')),
+      }, 'ⓘ ' + tr('orientation.contextFamilienzulagen')),
 
     // "Was Du davon hast" — shows which tools benefit from this chapter's data
     (() => {
@@ -1106,9 +1106,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }
               },
                 React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs + 'px' } }, t('wohnen.umzugTitle')),
-                React.createElement('div', null, '○ ' + t('wohnen.umzugGemeinde')),
-                React.createElement('div', null, '○ ' + t('wohnen.umzugKK')),
-                React.createElement('div', null, '○ ' + t('wohnen.umzugPost')),
+                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugGemeinde')),
+                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugKK')),
+                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugPost')),
               )
             );
           }
@@ -1146,8 +1146,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           }
         },
           showSecondary
-            ? '○ ' + tr('chapterView.disclosure.' + chapter.key + '.less')
-            : '○ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
+            ? 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.less')
+            : 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sage, marginTop: space.xs }
@@ -1233,7 +1233,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               onChange: (e) => setUploadExpiry(e.target.value),
               style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
-            uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, '○ ' + getFileExpiryHint(uploadType, tr))
+            uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + getFileExpiryHint(uploadType, tr))
           )
         ),
 
