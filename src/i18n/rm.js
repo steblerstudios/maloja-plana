@@ -654,7 +654,7 @@ export default {
 
   finanzUebersicht: {
     title: 'Survista da finanzas',
-    subtitle: 'Tia situaziun en in'egliada — basond sin Tias indicaziuns.',
+    subtitle: "Tia situaziun en in'egliada — basond sin Tias indicaziuns.",
     monthlyIncome: 'Entrada mensiala',
     canton: 'Chantun',
     taxes: 'Taglientas',

@@ -232,6 +232,10 @@ export default {
     taxCanton: 'Steuerkanton {canton}',
     emergencyContact: 'Im Notfall: {name}',
     freePerMonth: 'frei/Mt.',
+    franchise: 'Franchise {value}',
+    taxDeadline: 'Frist {date}',
+    checklistDone: 'erledigt',
+    bloodType: 'Blutgruppe {type}',
   },
   fortschritt: {
     title: 'Offene Felder',

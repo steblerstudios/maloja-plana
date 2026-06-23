@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
+import { openPrintWindow } from './utils/helpers.js';
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
@@ -12,13 +13,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const handlePrint = () => {
     if (!selected) return;
     const html = generateLetter(selected, data, t);
-    const win = window.open('', '_blank');
-    if (win) {
-      win.document.write(html);
-      win.document.close();
-      win.focus();
-      win.print();
-    }
+    openPrintWindow(html);
   };
 
   const previewHtml = selected ? generateLetter(selected, data, t) : '';

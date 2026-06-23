@@ -47,15 +47,19 @@ Passes cleanly: `npm run build` produces 75 modules, zero warnings, zero errors.
 | KI-007 | No Web Crypto fallback | Minor | Open — low priority |
 | KI-008 | Auto-save 5-second interval | Minor | **OK** — Dirty-Check via Ref-Vergleich bereits implementiert |
 
-## Recently Completed (2026-06-22)
+## Recently Completed (2026-06-23)
 
+- **Monatsbudget-Bilanz** — Einnahmen/Ausgaben/Frei verfügbar in der Finanz-Übersicht, farbcodiert
+- **Finanz-Übersicht Drucken** — Print-Button öffnet druckbare HTML-Zusammenfassung mit allen Berechnungen
+- **Kantonale Links komplett** — DirektLinks für alle 26 Kantone (vorher 10), je Steuererklärung, Sozialdienst, IPV
+- **RM Finanz-Übersicht** — 18 Keys für die Finanz-Übersicht auf Romanisch übersetzt
 - **KI-006 Kantonale SKOS** — Mietlimiten für alle 26 Kantone in `cantonalData.js`
 - **Crosslinks** — 5 neue Crosslinks (Kanton→Steuer/Sozialhilfe, KK-Modell→Prämien, Notfall→Karte, Finanzen→Übersicht)
 - **Vorsorge Slice B (Teil 1)** — Umzugs-Checkliste bei Einzugsdatum (Gemeinde, KK, Post)
-- **Kantonale Links** — DirektLinks zeigt kantonsspezifische URLs (Steuererklärung, Sozialdienst, IPV) für 10 Kantone
+- **Kantonale Links** — DirektLinks zeigt kantonsspezifische URLs (Steuererklärung, Sozialdienst, IPV)
 - **Behörden-Dossier JSON** — Strukturierter JSON-Export (Schema `maloja-plana-dossier` v1.0) für System-Import
 - **Backup-Versionierung** — `compareWithBackup()` + `createManualBackup()`, MAX_BACKUPS 3→5
-- **Romanisch (RM)** — 5. Sprache komplett mit ~565 Zeilen Übersetzungen
+- **Romanisch (RM)** — 5. Sprache komplett mit ~600 Zeilen Übersetzungen
 
 ## Next Recommended Implementation Candidates
 
