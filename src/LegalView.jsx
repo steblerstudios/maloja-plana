@@ -258,6 +258,12 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
         P({ children: t('legal.resources.help2') }),
         P({ children: t('legal.resources.help3') }),
         P({ children: t('legal.resources.help4') }),
+      ]}),
+      Section({ title: t('legal.resources.ombudsTitle'), palette, children: [
+        P({ children: '→ ' + t('legal.resources.ombuds1') }),
+        P({ children: '→ ' + t('legal.resources.ombuds2') }),
+        P({ children: '→ ' + t('legal.resources.ombuds3') }),
+        P({ children: '→ ' + t('legal.resources.ombuds4') }),
       ]})
     ),
 
