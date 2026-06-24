@@ -850,7 +850,7 @@ export default {
       sourceTitle: 'Quellcode',
       source1: 'Der vollständige Quellcode ist einsehbar unter: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Verwendete Bibliotheken',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL). Alle Lizenzen sind mit AGPL-3.0 kompatibel.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), Lexend, Hanken Grotesk (OFL). Alle Lizenzen sind mit AGPL-3.0 kompatibel.',
     },
     ethics: {
       valuesTitle: 'Unsere Haltung',
@@ -1224,6 +1224,7 @@ export default {
     maxIncome: 'Max. Einkommen: CHF {value}',
     note: 'Hinweis: {value}',
     enterCanton: 'Bitte gib Deinen Kanton unter "Persönliche Basis" oder Deine PLZ unter "Wohnen" ein.',
+    enterIncome: 'Dein Kanton ist übernommen. Gib jetzt Dein monatliches Einkommen unter "Finanzen" ein, um Deinen IPV-Anspruch zu berechnen.',
     eligible: 'Berechtigt',
     disclaimer: 'Orientierungshilfe. Der tatsächliche Anspruch wird von der zuständigen Stelle geprüft.',
     notEligible: 'Nicht berechtigt',
