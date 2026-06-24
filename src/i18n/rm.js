@@ -83,6 +83,7 @@ export default {
     open: 'Avrir',
     edit: 'Modifitgar',
     delete: 'Allontanar',
+    readable: 'Meglra legibilitad',
     download: 'Telechargiar',
     upload: 'Chargiar si',
     search: 'Tschertgar...',

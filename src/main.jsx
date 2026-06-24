@@ -166,6 +166,7 @@ const useViewport = () => {
 const AppInner = () => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
+  const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -276,6 +277,7 @@ const AppInner = () => {
   }, [documents]);
 
   useEffect(() => { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); }, [isDarkMode]);
+  useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {
     const on = () => setIsOffline(false);
     const off = () => setIsOffline(true);
@@ -431,6 +433,14 @@ const AppInner = () => {
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
         React.createElement(VorlesenToggle, { palette, t, vorlesen }),
+        React.createElement('button', {
+          'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
+          onClick: () => setReadable(r => !r),
+          style: { padding: '6px 9px', background: readable ? palette.sage + '22' : 'transparent', color: readable ? palette.sage : palette.mid, border: '1px solid ' + (readable ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'baseline', gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" }
+        },
+          React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
+          React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
+        ),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
