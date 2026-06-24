@@ -134,7 +134,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           { key: 'sync', label: t('nav.budgetSync'), icon: 'money' },
           { key: 'premium', label: t('nav.kvgIpv'), icon: 'health' },
           { key: 'cv', label: t('nav.cv'), icon: 'document' },
-          { key: 'charts', label: t('nav.charts'), icon: 'dashboard' },
+          { key: 'charts', label: t('nav.charts'), icon: 'chartsSchoko' },
           { key: 'export', label: t('nav.export'), icon: 'download' },
           { key: 'notifications', label: t('nav.notifications'), icon: 'settings' },
         ];
