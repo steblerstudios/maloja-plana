@@ -839,6 +839,7 @@ export default {
 
   beta: {
     bannerLabel: 'Beta segira',
+    intro: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline, gratuit.",
     gateMessage: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access.",
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',

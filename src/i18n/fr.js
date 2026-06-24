@@ -2166,6 +2166,7 @@ export default {
   },
 
   beta: {
+    intro: 'Votre aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, hors ligne, gratuit.',
     gateMessage: 'Cette application est en bêta fermée. Veuillez entrer le code d\'accès.',
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
