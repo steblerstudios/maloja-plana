@@ -88,6 +88,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
       React.createElement('select', {
         value: doc.specialty || 'hausarzt',
         onChange: (e) => onUpdate({ specialty: e.target.value }),
+        'aria-label': t('doctors.specialty'),
         style: { ...inputStyle, cursor: 'pointer' },
       },
         SPECIALTIES.map(s =>
@@ -103,6 +104,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'text', value: doc.name || '',
         onChange: (e) => onUpdate({ name: e.target.value }),
         placeholder: t('doctors.namePlaceholder'),
+        'aria-label': t('doctors.name'),
         style: inputStyle,
       })
     ),
@@ -114,6 +116,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'tel', value: doc.phone || '',
         onChange: (e) => onUpdate({ phone: e.target.value }),
         placeholder: '+41 44 123 45 67',
+        'aria-label': t('doctors.phone'),
         style: inputStyle,
       })
     ),
@@ -125,6 +128,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'text', value: doc.notes || '',
         onChange: (e) => onUpdate({ notes: e.target.value }),
         placeholder: t('doctors.notesPlaceholder'),
+        'aria-label': t('doctors.notes'),
         style: inputStyle,
       })
     )

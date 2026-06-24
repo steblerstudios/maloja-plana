@@ -152,6 +152,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         onFocus: () => { if (suggestions.length > 0) setShowSuggestions(true); },
         onKeyDown: handleKeyDown,
         placeholder: t('medications.namePlaceholder'),
+        'aria-label': t('medications.name'),
         style: inputStyle,
         autoComplete: 'off',
         role: 'combobox',
@@ -202,6 +203,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'text', value: med.substance || '',
         onChange: (e) => onUpdate({ substance: e.target.value }),
         placeholder: t('medications.substancePlaceholder'),
+        'aria-label': t('medications.substance'),
         style: inputStyle,
       })
     ),
@@ -216,6 +218,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
           type: 'text', value: med.dose || '',
           onChange: (e) => onUpdate({ dose: e.target.value }),
           placeholder: '500',
+          'aria-label': t('medications.dose'),
           style: inputStyle,
         })
       ),
@@ -224,6 +227,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         React.createElement('select', {
           value: med.unit || 'mg',
           onChange: (e) => onUpdate({ unit: e.target.value }),
+          'aria-label': t('medications.unit'),
           style: { ...inputStyle, cursor: 'pointer' },
         },
           ['mg', 'µg', 'g', 'ml', 'IE', 'Tropfen', 'Hübe'].map(u =>
@@ -261,6 +265,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         type: 'text', value: med.notes || '',
         onChange: (e) => onUpdate({ notes: e.target.value }),
         placeholder: t('medications.notesPlaceholder'),
+        'aria-label': t('medications.notes'),
         style: inputStyle,
       })
     ),
