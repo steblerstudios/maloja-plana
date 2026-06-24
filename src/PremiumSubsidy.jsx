@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
-import { getKVGApplicationLink, estimateTaxSavings } from './premiumCalc.js';
+import { getKVGApplicationLink } from './premiumCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -14,7 +14,6 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : residenceType === 'nebenwohnsitz' ? 'nebenwohnsitz' : 'hauptwohnsitz';
   const kvgLink = getKVGApplicationLink(canton);
-  const taxSavings = ipvResult.eligible ? estimateTaxSavings(ipvResult.amount) : 0;
 
   const handleApplyOnline = () => {
     window.open(kvgLink, '_blank');
@@ -105,10 +104,6 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
           ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.maxPossible', { value: ipvResult.maxAnnual })
           )
-        ),
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.taxSavings')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + taxSavings + t('common.perYear'))
         )
       ),
 

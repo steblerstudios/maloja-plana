@@ -1,3 +1,7 @@
+// Datenstand der kantonalen Werte (SKOS-Grundbedarf, IPV, EL, Mietzinsmaxima).
+// Diese ändern jährlich — bei Aktualisierung hochzählen.
+export const CANTONAL_DATA_VERSION = '2024/2025';
+
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
   { from: 1000, to: 1099, canton: 'VD' },
