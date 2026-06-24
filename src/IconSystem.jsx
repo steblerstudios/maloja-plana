@@ -642,11 +642,13 @@ const _warning = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('circle', { cx: '12', cy: '17', r: '1', fill: 'white' })
 );
 
+// Übersicht / Dashboard — Schweizer Sackmesser («alle Werkzeuge an einem Ort»)
+// Generisch (kein Victorinox-Kreuz, kein Export-Pfeil; Schutzrecht).
 const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
-  React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
-  React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
-  React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
-  React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+  React.createElement('rect', { x: '4', y: '9', width: '16', height: '6', rx: '3', fill: 'currentColor' }),
+  React.createElement('path', { d: 'M 16 9 L 21 3 L 21.5 3.8 L 17.5 9.5', fill: 'currentColor', opacity: '0.8' }),
+  React.createElement('path', { d: 'M 16 15 L 20 19.5 L 19.3 20 L 15.5 15.5', fill: 'currentColor', opacity: '0.6' }),
+  React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' })
 );
 
 const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round' },
