@@ -40,9 +40,11 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
     URL.revokeObjectURL(url);
   };
 
-  const hasProfile = canton && data.finanzen;
+  const hasIncome = !!(data.finanzen && data.finanzen.monthlyIncome);
 
-  if (!hasProfile) {
+  // Only block when the canton is genuinely missing. If the canton is set but the
+  // income isn't yet, we still show the canton-specific info and prompt for income.
+  if (!canton) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle')),
@@ -74,8 +76,10 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', null, t('premium.weeklyKkNote'))
     ),
 
-    // Eligibility Status
-    ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
+    // Eligibility Status — only once income is present; otherwise prompt for income
+    !hasIncome ? React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, 'ⓘ ' + t('premium.enterIncome'))
+    ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
@@ -85,7 +89,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '12px', fontStyle: 'italic' } }, t('premium.disclaimer')),
 
-    showCalculation && React.createElement('div', null,
+    hasIncome && showCalculation && React.createElement('div', null,
       // Results
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: space.md } },
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
