@@ -288,8 +288,8 @@ export default {
     next: 'Zurück zur Übersicht',
   },
   dashboard: {
-    welcome: 'Prüfe Deine Ansprüche. Ordne Dein Leben.',
-    tagline: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.',
+    welcome: { sie: 'Prüfen Sie Ihre Ansprüche. Ordnen Sie Ihr Leben.', du: 'Prüfe Deine Ansprüche. Ordne Dein Leben.' },
+    tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.' },
     taglineBenefit: 'Steuerrechner, IPV, Sozialhilfe, Notfallkarte — ohne Anmeldung nutzbar.',
     progress: 'Dein Fortschritt',
     progressComplete: 'Dein Lebensordner steht. Ruhe.',
@@ -740,7 +740,7 @@ export default {
     footer: 'Nur auf diesem Gerät · Kein Server',
     emergency: 'Diese Informationen werden nur lokal gespeichert.',
     localOnly: 'Deine Daten bleiben auf diesem Gerät.',
-    localBadge: '100% lokal — Deine Daten bleiben auf diesem Gerät',
+    localBadge: { sie: '100% lokal — Ihre Daten bleiben auf diesem Gerät', du: '100% lokal — Deine Daten bleiben auf diesem Gerät' },
     chapterTrust: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.',
     detail1: 'Kein Konto, kein Login, kein Server. Deine Daten existieren nur im Browser dieses Geräts.',
     detail2: 'Nichts wird gesendet, gespeichert oder getrackt — auch nicht von uns. Quellcode offen auf GitHub.',
@@ -1797,7 +1797,7 @@ export default {
     firstNamePlaceholder: 'Vorname',
     lastNamePlaceholder: 'Nachname',
     yourCanton: 'Dein Kanton',
-    privacyNote: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.',
+    privacyNote: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.', du: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.' },
     skipForNow: 'Vorerst überspringen',
     readyTitle: 'Bereit, {name}!',
     readyTitleGeneric: 'Alles ist bereit!',
@@ -2167,7 +2167,7 @@ export default {
   },
 
   beta: {
-    intro: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.',
+    intro: { sie: 'Ihr ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.', du: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.' },
     gateMessage: 'Diese App befindet sich in der geschlossenen Beta. Bitte gib den Zugangscode ein.',
     codePlaceholder: 'Zugangscode',
     codeWrong: 'Dieser Code ist leider nicht gültig.',

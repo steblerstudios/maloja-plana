@@ -164,7 +164,7 @@ const useViewport = () => {
 };
 
 const AppInner = () => {
-  const { t, lang, setLanguage, supportedLanguages } = useT();
+  const { t, lang, setLanguage, supportedLanguages, anrede, setAnrede } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
@@ -441,6 +441,11 @@ const AppInner = () => {
           React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
           React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
         ),
+        lang === 'de' && React.createElement('button', {
+          'aria-label': 'Anrede: ' + (anrede === 'du' ? 'Du' : 'Sie'), title: 'Anrede: Sie / Du',
+          onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
+          style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
+        }, anrede === 'du' ? 'Du' : 'Sie'),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
