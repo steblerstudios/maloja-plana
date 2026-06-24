@@ -910,6 +910,7 @@ export default {
       heartfelt6: 'Living Dream Design — ld-design.ch — Bau- und Gartengewerbe aus Pratteln: Holzbau, Gartenbau, Bodenbeläge, Gebäudebegrünung.',
       heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — Der grösste Kinder- und Jugendverband der Schweiz.',
       heartfelt8: 'Tierschutz beider Basel — tbb.ch — Tierheim, Tiervermittlung und Tierschutzberatung in der Region Basel.',
+      heartfelt9: 'Abschiedsagentur — abschiedsagentur.ch — Betreuung zu Hause, Vorsorge-Beratung und einfühlsame Begleitung im Todesfall, mit Sitz in Münchenstein.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
