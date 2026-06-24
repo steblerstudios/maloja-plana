@@ -16,6 +16,11 @@ Hanken Grotesk
   https://github.com/marcologous/hanken-grotesk
   Verwendung: Wortmarke und Überschriften
 
+Atkinson Hyperlegible
+  Copyright © Braille Institute of America, Inc.
+  https://www.brailleinstitute.org/freefont
+  Verwendung: optionaler Lesbarkeits-Modus (Accessibility)
+
 Vollständiger Lizenztext (SIL Open Font License 1.1):
   https://openfontlicense.org/open-font-license-official-text/
   (alternativ: https://scripts.sil.org/OFL)
@@ -23,7 +28,3 @@ Vollständiger Lizenztext (SIL Open Font License 1.1):
 Die OFL erlaubt ausdrücklich die Nutzung der Schriften zur Erstellung von Logos,
 Wortmarken und Dokumenten. Die so erzeugten Inhalte (z. B. die Wortmarke „Maloja
 Plana") unterliegen nicht der OFL und gehören Stebler Studios.
-
-Hinweis: Atkinson Hyperlegible (Copyright © Braille Institute of America, Inc.,
-ebenfalls OFL-1.1) ist als optionale Accessibility-Schrift vorgesehen und wird
-ergänzt, sobald der Lesbarkeits-Umschalter implementiert ist.
