@@ -911,6 +911,7 @@ export default {
       heartfelt6: 'Living Dream Design — ld-design.ch — Edilizia e giardinaggio da Pratteln: legno, giardini, pavimenti, inverdimento.',
       heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — La più grande organizzazione giovanile della Svizzera (scout).',
       heartfelt8: 'Tierschutz beider Basel — tbb.ch — Rifugio, affido animali e consulenza per la protezione degli animali nella regione di Basilea.',
+      heartfelt9: 'Abschiedsagentur — abschiedsagentur.ch — Assistenza a domicilio, consulenza previdenziale e accompagnamento empatico in caso di decesso, con sede a Münchenstein.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',
