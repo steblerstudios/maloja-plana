@@ -296,76 +296,8 @@ const BetaFeedback = ({ palette, t }) => {
   );
 };
 
-const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }) => {
-  const statusLabels = { leer: t('chapterStatus.leer'), begonnen: t('chapterStatus.begonnen'), grundordnung: t('chapterStatus.grundordnung'), vertieft: t('chapterStatus.vertieft') };
-  const totalPct = chapters.length > 0 ? Math.round(chapterCompletions.reduce((a, b) => a + b, 0) / chapters.length) : 0;
-  return React.createElement('div', {
-    style: {
-      marginBottom: space.xl, background: palette.surface,
-      borderRadius: radius.md, border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm, padding: '20px',
-    }
-  },
-    React.createElement('div', {
-      style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
-    },
-      React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
-        t('fortschritt.title')
-      ),
-      React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } },
-        totalPct + '%'
-      )
-    ),
-    React.createElement('div', {
-      style: { height: '4px', background: palette.border, borderRadius: '2px', marginBottom: space.lg, overflow: 'hidden' }
-    },
-      React.createElement('div', {
-        style: { height: '100%', width: totalPct + '%', background: palette.sage, borderRadius: '2px', transition: `width ${duration.cinematic}ms ${ease}` }
-      })
-    ),
-    React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '2px' } },
-      chapters.map((ch, idx) => {
-        const pct = chapterCompletions[idx];
-        const status = chapterStatuses[idx];
-        const accent = chapterAccentColor[ch.key] || palette.sage;
-        return React.createElement('button', {
-          key: ch.key,
-          onClick: () => onSelectChapter(idx),
-          'aria-label': ch.title + ' — ' + pct + '%',
-          style: {
-            display: 'flex', alignItems: 'center', gap: space.sm + 2,
-            padding: '10px 8px', background: 'transparent', border: 'none',
-            borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
-            color: palette.text, width: '100%', textAlign: 'left',
-            transition: `background ${duration.fast}ms ${ease}`,
-          },
-          onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-          onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
-        },
-          React.createElement('span', { style: { fontSize: text.sm, width: '22px', textAlign: 'center', flexShrink: 0 } }, ch.icon),
-          React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, flex: '0 0 auto', minWidth: '90px' } }, ch.title),
-          React.createElement('div', {
-            style: { flex: 1, height: '6px', background: palette.border + '80', borderRadius: '3px', overflow: 'hidden', margin: '0 4px' }
-          },
-            React.createElement('div', {
-              style: {
-                height: '100%', width: pct + '%', borderRadius: '3px',
-                background: pct === 100 ? palette.sage : pct > 0 ? accent : 'transparent',
-                transition: `width ${duration.cinematic}ms ${ease}`,
-              }
-            })
-          ),
-          React.createElement('span', {
-            style: { fontSize: text.xs, color: pct === 100 ? palette.sage : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
-          }, pct + '%'),
-          React.createElement('span', {
-            style: { fontSize: '10px', color: palette.soft, width: '80px', textAlign: 'right', flexShrink: 0, display: pct === 0 ? 'none' : 'block' }
-          }, statusLabels[status] || '')
-        );
-      })
-    )
-  );
-};
+// FortschrittsKarte entfernt (2026-06-24): zeigte Fortschritt redundant zur
+// Kapitelliste + Maloja-Pass. Weniger ist mehr — die Karte beruhigt das Dashboard.
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
 const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius }) => {
@@ -1152,8 +1084,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       );
     })(),
 
-    // ─── Fortschrittskarte — visual progress per chapter ─────
-    React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }),
+    // Fortschrittskarte entfernt — Fortschritt zeigen bereits Kapitelliste + Maloja-Pass
 
     // ─── Status & live connections — merged: progress + backup + active data ──
     React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),

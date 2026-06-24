@@ -16,7 +16,7 @@ const KOORDINATIONSABZUG = 25725; // BVG-Koordinationsabzug 2026
 const MAX_VERSICHERTES_EINKOMMEN = 88200; // Obere Grenze massgebendes Einkommen
 
 // Vorbezug/Aufschub
-const VORBEZUG_KUERZUNG_PRO_MONAT = 0.004167; // ~0.5% pro Monat ≈ 5% pro Jahr (vereinfacht)
+const VORBEZUG_KUERZUNG_PRO_MONAT = 0.005667; // 6.8% pro Jahr (gesetzlicher AHV-Vorbezugssatz)
 const AUFSCHUB_ZUSCHLAG_PRO_MONAT = 0.002667;  // ~3.2% pro Jahr ≈ 0.267% pro Monat
 
 // Erziehungsgutschriften pro Kind (pauschal, jährlich, geteilt bei gemeinsamer elterlicher Sorge)
