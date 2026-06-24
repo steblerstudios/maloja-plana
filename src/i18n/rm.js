@@ -708,7 +708,7 @@ export default {
       responsibilityTitle: 'Atgna responsabladad',
       responsibility1: "Ti es sez responsabel da controllar l'exactezza da Tias indicaziuns e l'actualitad da Tes documents. Maloja Plana n'accepta nagina responsabladad per decisiuns che vegnan presas sin basa da las infurmaziuns mussadas.",
       ipTitle: 'Dretg intellectual',
-      ip1: 'Maloja Plana è in project open source. Il code fundamental è disponibel sut la licenza MIT. Ti pos al guardar, copiar e sviluppar vinavant.',
+      ip1: 'Maloja Plana è in project open source. Il code fundamental è disponibel sut la licenza AGPL-3.0. Ti pos al guardar, copiar e sviluppar vinavant.',
       ip2: "Il num, il logo ed il design da Maloja Plana èn protegids e na dastgan betg vegnir duvrads per auters projects senza permissiun.",
       availabilityTitle: 'Disponibladad',
       availability1: "Maloja Plana è in'applicaziun offline. Ella funcziuna senza connexiun d'internet uschè prest ch'ella è chargiada. I na dat nagina dependenza da server e nagin SLA.",

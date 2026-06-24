@@ -811,7 +811,7 @@ export default {
       responsibilityTitle: 'Eigenverantwortung',
       responsibility1: 'Du bist selbst dafür verantwortlich, die Richtigkeit Deiner Angaben und die Aktualität Deiner Dokumente zu prüfen. Maloja Plana übernimmt keine Haftung für Entscheidungen, die auf Basis der angezeigten Informationen getroffen werden.',
       ipTitle: 'Geistiges Eigentum',
-      ip1: 'Maloja Plana ist ein Open-Source-Projekt. Der Quellcode steht unter der MIT-Lizenz. Du darfst ihn einsehen, kopieren und weiterentwickeln.',
+      ip1: 'Maloja Plana ist ein Open-Source-Projekt. Der Quellcode steht unter der AGPL-3.0-Lizenz. Du darfst ihn einsehen, kopieren und weiterentwickeln.',
       ip2: 'Name, Logo und Design von Maloja Plana sind geschützt und dürfen nicht ohne Erlaubnis für andere Projekte verwendet werden.',
       availabilityTitle: 'Verfügbarkeit',
       availability1: 'Maloja Plana ist eine Offline-Anwendung. Sie funktioniert ohne Internetverbindung, sobald sie einmal geladen wurde. Es gibt keine Server-Abhängigkeit und kein SLA.',
