@@ -47,6 +47,7 @@ const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
+const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
@@ -578,6 +579,7 @@ const AppInner = () => {
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
+        view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
