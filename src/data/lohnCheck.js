@@ -4,10 +4,11 @@
 
 const MINDESTLOHN = {
   GE: { chfStunde: 24.32, jahr: 2025, indexiert: true },
-  NE: { chfStunde: 21.09, jahr: 2024, indexiert: true },
+  NE: { chfStunde: 21.31, jahr: 2025, indexiert: true },
   JU: { chfStunde: 21.40, jahr: 2025, indexiert: false },
   BS: { chfStunde: 21.00, jahr: 2025, indexiert: false },
-  TI: { chfStunde: 19.75, jahr: 2025, indexiert: false },
+  // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert
+  TI: { chfStunde: 20.00, jahr: 2025, indexiert: false },
 };
 
 const STUNDEN_PRO_MONAT = 182;
