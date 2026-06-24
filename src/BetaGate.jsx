@@ -84,6 +84,8 @@ export const BetaGate = ({ children }) => {
         onChange: (e) => { setInput(e.target.value); setError(false); },
         placeholder: t('beta.codePlaceholder'),
         autoFocus: true,
+        'aria-invalid': error ? 'true' : undefined,
+        'aria-describedby': error ? 'beta-error' : undefined,
         style: {
           width: '100%', padding: '10px 14px', fontSize: text.body,
           border: '1px solid ' + (error ? palette.rose : palette.border),
@@ -92,6 +94,8 @@ export const BetaGate = ({ children }) => {
         }
       }),
       error && React.createElement('p', {
+        id: 'beta-error',
+        role: 'alert',
         style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
       }, t('beta.codeWrong')),
       React.createElement('button', {
