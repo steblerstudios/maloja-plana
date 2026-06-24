@@ -2336,6 +2336,7 @@ export default {
     vermoegen: 'Assets (CHF)',
     erwerbstaetig: 'Employed',
     integration: 'Integration measure',
+    integrationHint: "e.g. regular volunteering, programmes or internships — supplement CHF 100–300/month, at the social authority's discretion.",
     anspruch: 'Social assistance entitlement',
     monat: 'month',
     keinAnspruch: 'No entitlement',

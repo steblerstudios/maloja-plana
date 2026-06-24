@@ -1830,6 +1830,7 @@ export default {
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',
     integration: "Mesira d'integraziun",
+    integrationHint: "p.ex. lavur voluntara regulara, programs u stages — supplement CHF 100–300/mais, tenor il giudizi da l'autoritad sociala.",
     anspruch: "Dretg d'agid social",
     monat: 'Mais',
     keinAnspruch: 'Nagin dretg',
