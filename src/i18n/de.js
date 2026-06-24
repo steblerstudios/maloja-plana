@@ -2166,6 +2166,7 @@ export default {
   },
 
   beta: {
+    intro: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.',
     gateMessage: 'Diese App befindet sich in der geschlossenen Beta. Bitte gib den Zugangscode ein.',
     codePlaceholder: 'Zugangscode',
     codeWrong: 'Dieser Code ist leider nicht gültig.',
