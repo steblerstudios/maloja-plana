@@ -2168,6 +2168,7 @@ export default {
   },
 
   beta: {
+    intro: 'La tua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. 100% privato, offline, gratuito.',
     gateMessage: 'Questa app è in beta chiusa. Inserisci il codice di accesso.',
     codePlaceholder: 'Codice di accesso',
     codeWrong: 'Questo codice non è valido.',

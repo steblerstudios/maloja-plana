@@ -44,8 +44,18 @@ export const BetaGate = ({ children }) => {
       }
     },
       React.createElement('h1', {
-        style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, color: palette.text }
-      }, 'Maloja Plana'),
+        'aria-label': 'Maloja Plana',
+        style: { fontSize: text.xl, fontWeight: weight.bold, margin: '0 0 ' + space.sm + 'px', color: palette.text, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }
+      },
+        React.createElement('svg', { width: '20', height: '23', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
+          React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+          React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
+        ),
+        'aloja Plana'
+      ),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
+      }, t('beta.intro')),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
       }, t('beta.gateMessage')),
@@ -88,10 +98,13 @@ export const BetaGate = ({ children }) => {
         type: 'submit',
         style: {
           marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body,
-          background: palette.sand, color: '#fff', border: 'none',
+          background: palette.sand, color: '#000', border: 'none',
           borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
-      }, t('beta.enter'))
+      }, t('beta.enter')),
+      React.createElement('p', {
+        style: { fontSize: text.xs, color: palette.soft, marginTop: space.md }
+      }, 'Stebler Studios · Basel')
     )
   );
 };
