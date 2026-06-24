@@ -80,30 +80,35 @@ class ViewErrorBoundary extends React.Component {
 }
 
 // Language switcher component
+// Native language names — ready to scale to many more languages (asylum focus)
+const LANGUAGE_NATIVE_NAMES = {
+  de: 'Deutsch', en: 'English', fr: 'Français', it: 'Italiano', rm: 'Rumantsch',
+};
+
 const LanguageSwitcher = ({ palette }) => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
-  const labels = { en: 'EN', de: 'DE', fr: 'FR', it: 'IT', rm: 'RM' };
 
-  return React.createElement('div', { style: { display: 'flex', gap: '2px', background: palette.up, borderRadius: '4px', padding: '2px' } },
-    supportedLanguages.map(l =>
-      React.createElement('button', {
-        key: l,
-        'aria-label': t('common.switchLang', { lang: labels[l] || l.toUpperCase() }),
-        'aria-pressed': l === lang,
-        onClick: () => setLanguage(l),
-        style: {
-          padding: '4px 6px',
-          background: l === lang ? palette.sand : 'transparent',
-          color: l === lang ? '#000' : palette.mid,
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer',
-          fontSize: text.xs,
-          fontWeight: l === lang ? '700' : '500',
-          lineHeight: 1,
-        }
-      }, labels[l] || l.toUpperCase())
-    )
+  return React.createElement('div', { style: { position: 'relative', display: 'inline-flex', alignItems: 'center' } },
+    React.createElement('select', {
+      value: lang,
+      onChange: (e) => setLanguage(e.target.value),
+      'aria-label': t('common.selectLanguage'),
+      style: {
+        appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
+        background: palette.up, color: palette.text,
+        border: '1px solid ' + palette.border, borderRadius: '6px',
+        padding: '5px 26px 5px 10px', fontSize: text.xs, fontWeight: '600',
+        cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
+      }
+    },
+      supportedLanguages.map(l =>
+        React.createElement('option', { key: l, value: l }, LANGUAGE_NATIVE_NAMES[l] || l.toUpperCase())
+      )
+    ),
+    React.createElement('span', {
+      'aria-hidden': 'true',
+      style: { position: 'absolute', right: '9px', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
+    }, '▾')
   );
 };
 

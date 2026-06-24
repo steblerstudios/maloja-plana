@@ -120,6 +120,7 @@ export default {
     person: '{count} persuna',
     persons: '{count} persunas',
     switchLang: 'Midar la lingua: {lang}',
+    selectLanguage: 'Tscherner la lingua',
   },
 
   nav: {
