@@ -21,12 +21,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const birthYear = parseYear(data.basis?.dateOfBirth);
   const alter = currentAge(data.basis?.dateOfBirth);
 
-  const [einkommen, setEinkommen] = useState(data.finanzen?.income || '');
+  const [einkommen, setEinkommen] = useState(data.finanzen?.monthlyIncome ? String(Math.round(Number(data.finanzen.monthlyIncome) * 12)) : '');
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState('65');
-  const [verheiratet, setVerheiratet] = useState(data.basis?.civilStatus === 'married');
-  const [einkommenPartner, setEinkommenPartner] = useState('');
+  const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
+  const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
   const [bvgGuthaben, setBvgGuthaben] = useState('');
   const [activeTab, setActiveTab] = useState('ahv');
 

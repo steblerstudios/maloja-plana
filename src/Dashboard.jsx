@@ -371,7 +371,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius }) => {
   const connections = [
     { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.finanzen?.monthlyIncome && data.versicherungen?.kkPremium) },
+    { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
     { key: 'sozial', label: t('datenWirken.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
     { key: 'lohn', label: t('datenWirken.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
     { key: 'notfall', label: t('datenWirken.notfall'), active: !!(data.notfall?.emergencyContact) },
@@ -1185,7 +1185,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.toolsSubtitle')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' } },
         [
-          { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'kalenderUhr' },
+          { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
           { label: t('nav.budgetSync'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
           { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
           { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
