@@ -196,14 +196,14 @@ export const CANTONAL_LINKS = {
     ipv: 'https://www.baselland.ch/politik-und-behorden/direktionen/volkswirtschafts-und-gesundheitsdirektion/amt-fur-sozialbeitrage/praemienverbilligung',
   },
   SO: {
-    steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/kantonales-steueramt/',
-    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-soziale-sicherheit/',
-    ipv: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-soziale-sicherheit/praemienverbilligung/',
+    steuererklaerung: 'https://so.ch/verwaltung/finanzdepartement/steueramt/',
+    sozialdienst: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/sozialhilfe-und-asyl/sozialhilfe/',
+    ipv: 'https://www.akso.ch/produkte/individuelle-praemienverbilligung-ipv/',
   },
   FR: {
     steuererklaerung: 'https://www.fr.ch/de/steuern',
-    sozialdienst: 'https://www.fr.ch/de/gesundheit-und-soziales/sozialhilfe',
-    ipv: 'https://www.fr.ch/de/gesundheit-und-soziales/praemienverbilligung',
+    sozialdienst: 'https://www.fr.ch/dsas/sasoc',
+    ipv: 'https://www.fr.ch/vie-quotidienne/assurances/assurance-maladie-et-assurance-accident/primes-maladie-changement-de-caisse-maladie-assurance-maladie-et-reduction-de-primes',
   },
   TG: {
     steuererklaerung: 'https://steuerverwaltung.tg.ch/',
@@ -211,19 +211,19 @@ export const CANTONAL_LINKS = {
     ipv: 'https://gesundheitsamt.tg.ch/praemienverbilligung.html',
   },
   GR: {
-    steuererklaerung: 'https://www.gr.ch/DE/institutionen/verwaltung/dfg/stv/Seiten/default.aspx',
-    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/sa/Seiten/default.aspx',
-    ipv: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/praemienverbilligung/Seiten/default.aspx',
+    steuererklaerung: 'https://www.gr.ch/DE/institutionen/verwaltung/dfg/stv/Seiten/startseite.aspx',
+    sozialdienst: 'https://www.gr.ch/DE/institutionen/verwaltung/dvs/soa/home/Seiten/Sozialamt.aspx',
+    ipv: 'https://www.sva.gr.ch/praemienverbilligung.html',
   },
   SH: {
-    steuererklaerung: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Finanzdepartement/Steuerverwaltung-3854.html',
-    sozialdienst: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Sozialamt-7390907.html',
-    ipv: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Gesundheitsamt/Pr-mienverbilligung-7390913.html',
+    steuererklaerung: 'https://www.steuern.sh.ch/',
+    sozialdienst: 'https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Departement-des-Innern/Sozialamt-2795-DE.html',
+    ipv: 'https://www.svash.ch/ipv/',
   },
   NE: {
-    steuererklaerung: 'https://www.ne.ch/autorites/DFS/SCCO/Pages/accueil.aspx',
-    sozialdienst: 'https://www.ne.ch/autorites/DEAS/SASO/Pages/accueil.aspx',
-    ipv: 'https://www.ne.ch/autorites/DEAS/SASO/subsides-assurance-maladie/Pages/accueil.aspx',
+    steuererklaerung: 'https://www.ne.ch/themes/Pages/impots.aspx',
+    sozialdienst: 'https://www.ne.ch/autorites/DECS/SASO/Pages/accueil.aspx',
+    ipv: 'https://www.ne.ch/autorites/DECS/SASO/assurance-maladie/subsidesLAMal/Pages/accueil.aspx',
   },
   VS: {
     steuererklaerung: 'https://www.vs.ch/de/web/scc',
