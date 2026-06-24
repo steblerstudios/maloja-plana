@@ -86,7 +86,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
 
   if (!hasData) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
+      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'chartsSchoko', size: 20 }), t('charts.title')),
       React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' } },
         React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'finanzen', size: 28 })),
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('charts.noData')),
@@ -118,7 +118,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
   pieColors.push('#C9D4C5');
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'dashboard', size: 20 }), t('charts.title')),
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'chartsSchoko', size: 20 }), t('charts.title')),
 
     income > 0 && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: space.sm } },
       React.createElement('div', null,
