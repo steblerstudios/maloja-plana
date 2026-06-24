@@ -2442,6 +2442,7 @@ export default {
   },
   doctors: {
     add: 'Aggiungi medico',
+    label: 'Medico {nr}',
     specialty: 'Specialità',
     name: 'Nome',
     namePlaceholder: 'p.es. Dr. Rossi',
