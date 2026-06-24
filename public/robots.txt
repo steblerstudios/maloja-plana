@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /assets/
 
-Sitemap: https://steblerstudios.github.io/maloja-plana/sitemap.xml
+Sitemap: https://malojaplana.ch/sitemap.xml
