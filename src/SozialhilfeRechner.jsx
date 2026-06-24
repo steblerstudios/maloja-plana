@@ -64,6 +64,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.label }, t(labelKey)),
       React.createElement('input', {
         style: s.input, type: 'number', inputMode: 'decimal', value, placeholder,
+        'aria-label': t(labelKey),
         onChange: e => setter(e.target.value),
       })
     );
@@ -90,6 +91,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
           React.createElement('div', { style: s.selectWrap },
             React.createElement('select', {
               style: s.select, value: adults,
+              'aria-label': t('sh.erwachsene'),
               onChange: e => setAdults(Number(e.target.value)),
             },
               [1,2,3,4].map(n =>
@@ -104,6 +106,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
           React.createElement('div', { style: s.selectWrap },
             React.createElement('select', {
               style: s.select, value: kinderCount,
+              'aria-label': t('sh.kinder'),
               onChange: e => setKinderCount(Number(e.target.value)),
             },
               [0,1,2,3,4,5].map(n =>

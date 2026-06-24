@@ -42,6 +42,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
             type: 'text', value: job.employer || '',
             onChange: (e) => updateJob(idx, { employer: e.target.value }),
             placeholder: t('jobs.employerPlaceholder'),
+            'aria-label': t('jobs.employer'),
             style: inputStyle,
           })
         ),
@@ -51,6 +52,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
             type: 'text', value: job.jobTitle || '',
             onChange: (e) => updateJob(idx, { jobTitle: e.target.value }),
             placeholder: t('jobs.jobTitlePlaceholder'),
+            'aria-label': t('jobs.jobTitle'),
             style: inputStyle,
           })
         ),
@@ -61,6 +63,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
               type: 'text', inputMode: 'numeric', value: job.pensum || '',
               onChange: (e) => updateJob(idx, { pensum: e.target.value }),
               placeholder: '80%',
+              'aria-label': t('jobs.pensum'),
               style: inputStyle,
             })
           ),
@@ -70,6 +73,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
               type: 'text', value: job.period || '',
               onChange: (e) => updateJob(idx, { period: e.target.value }),
               placeholder: t('jobs.periodPlaceholder'),
+              'aria-label': t('jobs.period'),
               style: inputStyle,
             })
           )

@@ -132,6 +132,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               type: 'text', value: firstName,
               onChange: (e) => setFirstName(e.target.value),
               placeholder: t('onboarding.firstNamePlaceholder'),
+              'aria-label': t('onboarding.firstName'),
               style: inputStyle,
               autoFocus: true,
             })
@@ -142,6 +143,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               type: 'text', value: lastName,
               onChange: (e) => setLastName(e.target.value),
               placeholder: t('onboarding.lastNamePlaceholder'),
+              'aria-label': t('onboarding.lastName'),
               style: inputStyle,
             })
           )
@@ -151,6 +153,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
           React.createElement('select', {
             value: canton, onChange: (e) => setCanton(e.target.value),
+            'aria-label': t('onboarding.yourCanton'),
             style: { ...inputStyle, appearance: 'auto' },
           },
             React.createElement('option', { value: '' }, t('common.select')),
