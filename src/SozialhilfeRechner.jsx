@@ -127,6 +127,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },
         toggle('sh.erwerbstaetig', erwerbstaetig, setErwerbstaetig),
         toggle('sh.integration', integration, setIntegration),
+        React.createElement('div', { style: { ...s.hint, marginTop: '2px', marginLeft: '24px' } }, t('sh.integrationHint'))
       )
     ),
 

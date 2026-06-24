@@ -17,9 +17,12 @@ const GBL_TABELLE = [
 const GBL_PRO_WEITERE = 216;
 
 // Integrationszulage (IZU) – SKOS C.6.1
+// Für besondere Integrationsleistungen (z.B. regelmässige Freiwilligenarbeit,
+// Programme, Praktika): CHF 100–300/Monat, im Ermessen der Sozialbehörde.
+// Wir rechnen konservativ mit dem garantierten Mindestbetrag (nie über-versprechen).
 const IZU_MIN = 100;
 const IZU_MAX = 300;
-const IZU_STANDARD = 200;
+const IZU_STANDARD = IZU_MIN;
 
 // Einkommensfreibetrag (EFB) – SKOS C.6.2
 const EFB_PAUSCHAL = 400;
