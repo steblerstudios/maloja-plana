@@ -367,7 +367,8 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
   );
 };
 
-const DatenWirken = ({ palette, t, data, text, weight, space, radius }) => {
+// Merged status surface: progress sentence + last backup + active "Daten wirken" chips
+const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius }) => {
   const connections = [
     { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
     { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.finanzen?.monthlyIncome && data.versicherungen?.kkPremium) },
@@ -377,20 +378,30 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius }) => {
     { key: 'budget', label: t('datenWirken.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
   ];
   const active = connections.filter(c => c.active);
-  if (active.length === 0) return null;
+  const progressMsg = completion === 100 ? t('dashboard.progressComplete')
+    : completion === 0 ? t('dashboard.progressStart')
+    : completion <= 30 ? t('dashboard.progressEarly')
+    : completion <= 60 ? t('dashboard.progressMid')
+    : t('dashboard.progressLate');
   return React.createElement('div', {
     style: {
       margin: space.md + 'px 0',
-      padding: space.sm + 'px ' + space.md + 'px',
+      padding: space.md + 'px',
       background: palette.sage + '08',
       borderRadius: radius.md,
       border: '1px solid ' + palette.sage + '15',
     }
   },
     React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, marginBottom: '6px', fontWeight: weight.medium }
+      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+    }, progressMsg),
+    lastBackup && React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, opacity: 0.7 }
+    }, t('dashboard.lastBackup', { date: lastBackup })),
+    active.length > 0 && React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.title')),
-    React.createElement('div', {
+    active.length > 0 && React.createElement('div', {
       style: { display: 'flex', flexWrap: 'wrap', gap: '5px' }
     },
       active.map(c =>
@@ -745,14 +756,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.demoButton'))
     ),
 
-    // ─── Maloja Pass — interactive topographic map (collapsible) ─────────
-    React.createElement('details', { style: { margin: '20px -8px 0 -8px' } },
-      React.createElement('summary', {
-        style: { cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium, color: palette.mid, padding: '0 8px ' + space.sm + 'px 8px', letterSpacing: '0.3px' }
-      }, t('dashboard.mapToggle')),
-      React.createElement('div', {
-        style: { margin: '12px -8px 0 -8px' }
-      },
+    // ─── Maloja Pass — interactive topographic map ─────────
+    React.createElement('div', {
+      style: { margin: '20px -8px 0 -8px' }
+    },
       React.createElement('div', {
         style: {
           display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
@@ -986,7 +993,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           );
         })
       )
-    )
     ),
 
     // ─── Guided start — calm first-use card ───────────────
@@ -1112,22 +1118,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Overview — calm editorial section ──────────────────
-    React.createElement('div', {
-      style: { marginBottom: '28px', padding: '0 2px' }
-    },
-      React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-      }, completion === 100 ? t('dashboard.progressComplete')
-        : completion === 0 ? t('dashboard.progressStart')
-        : completion <= 30 ? t('dashboard.progressEarly')
-        : completion <= 60 ? t('dashboard.progressMid')
-        : t('dashboard.progressLate')),
-      lastBackup && React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, opacity: 0.7 }
-      }, t('dashboard.lastBackup', { date: lastBackup }))
-    ),
-
     // ─── Export reminder — calm data safety nudge ────────────
     (() => {
       const hasData = chapters.some(ch => {
@@ -1165,8 +1155,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Fortschrittskarte — visual progress per chapter ─────
     React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }),
 
-    // ─── Live connections — what user data powers ──────────
-    React.createElement(DatenWirken, { palette, t, data, text, weight, space, radius }),
+    // ─── Status & live connections — merged: progress + backup + active data ──
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
 
     // ─── Tips — open editorial section ─────────────────────
     React.createElement('div', {
