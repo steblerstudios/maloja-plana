@@ -41,16 +41,6 @@ export const calculatePremiumSubsidy = (annualIncome, deductions, childrenCount 
   };
 };
 
-// Household-aware wrapper: extracts values from data object
-
-export const estimateTaxSavings = (subsidyAmount) => {
-  // Average Swiss tax rate: approx. 12-25%
-  // Conservative: 15%
-  const taxRate = 0.15;
-  return Math.round(subsidyAmount * taxRate * 12);
-};
-
-
 export const getKVGApplicationLink = (canton) => {
   const links = {
     'ZH': 'https://www.zh.ch/de/gesundheit/praemienverbilligung_krankenversicherung.html',
