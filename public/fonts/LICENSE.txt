@@ -1,0 +1,29 @@
+Schriften / Fonts — Lizenzhinweis
+=================================
+
+Maloja Plana bündelt die folgenden Schriften als lokale WOFF2-Dateien. Alle stehen
+unter der SIL Open Font License, Version 1.1 (OFL-1.1) und dürfen frei verwendet,
+eingebettet und weitergegeben werden — auch kommerziell. Verkauft werden dürfen die
+Schriftdateien selbst nicht; dieser Lizenzhinweis ist mitzuführen.
+
+Lexend
+  Copyright © The Lexend Project Authors
+  https://github.com/googlefonts/lexend
+  Verwendung: Fliesstext (Body, Bedienoberfläche)
+
+Hanken Grotesk
+  Copyright © The Hanken Grotesk Project Authors
+  https://github.com/marcologous/hanken-grotesk
+  Verwendung: Wortmarke und Überschriften
+
+Vollständiger Lizenztext (SIL Open Font License 1.1):
+  https://openfontlicense.org/open-font-license-official-text/
+  (alternativ: https://scripts.sil.org/OFL)
+
+Die OFL erlaubt ausdrücklich die Nutzung der Schriften zur Erstellung von Logos,
+Wortmarken und Dokumenten. Die so erzeugten Inhalte (z. B. die Wortmarke „Maloja
+Plana") unterliegen nicht der OFL und gehören Stebler Studios.
+
+Hinweis: Atkinson Hyperlegible (Copyright © Braille Institute of America, Inc.,
+ebenfalls OFL-1.1) ist als optionale Accessibility-Schrift vorgesehen und wird
+ergänzt, sobald der Lesbarkeits-Umschalter implementiert ist.
