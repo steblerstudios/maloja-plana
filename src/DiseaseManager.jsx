@@ -61,8 +61,11 @@ export const DiseaseManager = ({ palette, t, diseases, onChange }) => {
 const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, onRemove }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(-1);
   const nameRef = useRef(null);
   const sugRef = useRef(null);
+  const listboxId = 'disease-listbox-' + idx;
+  const optionId = (i) => 'disease-opt-' + idx + '-' + i;
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -76,6 +79,7 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
 
   const handleNameChange = async (val) => {
     onUpdate({ name: val });
+    setHighlightIndex(-1);
     if (val.length >= 2) {
       const search = await getSearch();
       const results = search(val);
@@ -90,6 +94,15 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
   const selectSuggestion = (s) => {
     onUpdate({ name: s.name, code: s.code });
     setShowSuggestions(false);
+    setHighlightIndex(-1);
+  };
+
+  const handleKeyDown = (e) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); setHighlightIndex(i => Math.min(i + 1, suggestions.length - 1)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setHighlightIndex(i => Math.max(i - 1, 0)); }
+    else if (e.key === 'Enter' && highlightIndex >= 0) { e.preventDefault(); selectSuggestion(suggestions[highlightIndex]); }
+    else if (e.key === 'Escape') { setShowSuggestions(false); setHighlightIndex(-1); }
   };
 
   return React.createElement('div', {
@@ -118,11 +131,19 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
         ref: nameRef, type: 'text', value: item.name || '',
         onChange: (e) => handleNameChange(e.target.value),
         onFocus: () => { if (suggestions.length > 0) setShowSuggestions(true); },
+        onKeyDown: handleKeyDown,
         placeholder: t('diseases.namePlaceholder'),
         style: inputStyle, autoComplete: 'off',
+        role: 'combobox',
+        'aria-expanded': showSuggestions,
+        'aria-controls': listboxId,
+        'aria-autocomplete': 'list',
+        'aria-activedescendant': highlightIndex >= 0 ? optionId(highlightIndex) : undefined,
       }),
       showSuggestions && React.createElement('div', {
         ref: sugRef,
+        id: listboxId,
+        role: 'listbox',
         style: {
           position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10,
           background: palette.surface, border: '1px solid ' + palette.border,
@@ -132,14 +153,18 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
       },
         suggestions.map((s, i) =>
           React.createElement('div', {
-            key: i, onClick: () => selectSuggestion(s),
+            key: i,
+            id: optionId(i),
+            role: 'option',
+            'aria-selected': i === highlightIndex,
+            onClick: () => selectSuggestion(s),
+            onMouseMove: () => setHighlightIndex(i),
             style: {
               padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer',
               borderBottom: i < suggestions.length - 1 ? '1px solid ' + palette.border : 'none',
               fontSize: text.sm,
+              background: i === highlightIndex ? palette.up : 'transparent',
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
             React.createElement('div', { style: { fontWeight: weight.semi } }, s.name),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, 'ICD-10: ' + s.code)
