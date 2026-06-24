@@ -22,7 +22,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const [lastName, setLastName] = useState('');
   const [canton, setCanton] = useState('');
 
-  const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano' };
+  const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano', rm: 'Rumantsch' };
 
 
   const finish = () => {
