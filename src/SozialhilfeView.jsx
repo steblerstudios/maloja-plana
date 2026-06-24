@@ -21,9 +21,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('span', { style: { fontWeight: weight.semi, color: color || palette.text } }, value)
     );
 
-  const hasProfile = canton && data.finanzen;
-
-  if (!hasProfile) {
+  // Only block when the canton is genuinely missing — the SKOS Grundbedarf is
+  // household-based and useful even before income is entered.
+  if (!canton) {
     return React.createElement(React.Fragment, null,
       React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: space.lg, borderRadius: radius.md, border: '1px solid ' + palette.border, boxShadow: shadow.sm } },
         React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('sozialhilfe.title')),
