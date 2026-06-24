@@ -74,6 +74,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
       }, specLabel || t('doctors.label', { nr: idx + 1 })),
       React.createElement('button', {
         onClick: onRemove,
+        'aria-label': t('common.delete') || 'Entfernen',
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily, padding: '2px 6px',

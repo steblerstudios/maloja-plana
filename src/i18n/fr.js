@@ -2437,6 +2437,7 @@ export default {
   },
   doctors: {
     add: 'Ajouter un médecin',
+    label: 'Médecin {nr}',
     specialty: 'Spécialité',
     name: 'Nom',
     namePlaceholder: 'p.ex. Dr Dupont',

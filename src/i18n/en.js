@@ -2438,6 +2438,7 @@ export default {
   },
   doctors: {
     add: 'Add doctor',
+    label: 'Doctor {nr}',
     specialty: 'Specialty',
     name: 'Name',
     namePlaceholder: 'e.g. Dr. Smith',

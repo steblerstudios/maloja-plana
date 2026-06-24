@@ -2524,6 +2524,7 @@ export default {
   },
   doctors: {
     add: 'Agiuntar medi / media',
+    label: 'Medi / Media {nr}',
     specialty: 'Spezialisaziun',
     name: 'Num',
     namePlaceholder: 'p.ex. Dr. med. Caflisch',

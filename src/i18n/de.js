@@ -2437,6 +2437,7 @@ export default {
   },
   doctors: {
     add: 'Ärztin / Arzt hinzufügen',
+    label: 'Ärztin / Arzt {nr}',
     specialty: 'Fachrichtung',
     name: 'Name',
     namePlaceholder: 'z.B. Dr. med. Müller',
