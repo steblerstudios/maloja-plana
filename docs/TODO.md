@@ -6,6 +6,18 @@ Braindumps. Schnellste Wins zuerst. ✅ = erledigt · 🔴 hoch · 🟠 mittel �
 > ⏳ **In Arbeit (Hintergrund-Agenten):** Website/UX-Experte + Marketing-Review — Feedback
 > wird hier ergänzt, sobald sie liefern.
 
+## ✅ Erledigt 2026-06-24 (diese Session)
+
+**Von mir (committet):** Domain-Fix (SEO) · README neu (on-brand, „Menschen in der Schweiz") ·
+BetaGate-Intro (Gesicht vor dem Passwort + Kontrast-Fix) · Lizenz MIT→AGPL (5 Sprachen) ·
+Benachrichtigungen→Kuhglocke · og-image (Granit + Gipfel-M) · OFL-Lizenzhinweis ·
+Abschiedsagentur-Empfehlung · Bergketten-Karte (Granit-Opacity).
+**Von Agenten (committet):** Autocomplete-A11y (Combobox) · palette.soft-Kontrast (AA) ·
+Service-Worker-Offline-Fix · doctors.label · Fortschrittskarte-Icons · IPV-Crosslinks.
+
+**Noch offen → siehe unten.** Die meisten verbleibenden Punkte sind grösser (Voice-Toggle,
+Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
+
 ---
 
 ## A — Schnelle Wins (Accessibility & i18n, aus Experten-Audit)
