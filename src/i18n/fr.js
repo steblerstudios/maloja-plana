@@ -70,6 +70,7 @@ export default {
     open: 'Ouvrir',
     edit: 'Modifier',
     delete: 'Retirer',
+    readable: 'Meilleure lisibilité',
     download: 'Télécharger',
     upload: 'Importer',
     search: 'Rechercher...',
