@@ -1,215 +1,96 @@
 # Maloja Plana
 
-**Privacy-first Swiss Life Organizer — 100% lokal, sicher, strukturiert**
+**Dein ruhiger Überblick über das Leben in der Schweiz — privat, offline, kostenlos.**
 
-![Version](https://img.shields.io/badge/version-0.1.0--alpha-blue)
-![License](https://img.shields.io/badge/license-AGPL--3.0-green)
+![Version](https://img.shields.io/badge/version-0.1.0--beta-7E9F8C)
+![License](https://img.shields.io/badge/license-AGPL--3.0-C4A870)
 
----
+Maloja Plana hilft Menschen in der Schweiz, zu verstehen, was ihnen zusteht und was als
+Nächstes ansteht — von Steuern über Prämienverbilligung und Sozialhilfe bis zur Notfallkarte.
+In fünf Sprachen, ohne Konto, ohne dass die Daten das Gerät verlassen.
 
-## 🎯 Vision
-
-Maloja Plana ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
-
-**Kern:**
-- ✅ 100% lokal (Deine Daten gehören dir)
-- ✅ Privat (kein Tracking, keine Server)
-- ✅ Strukturiert (7 Kapitel, alle CH-relevanten Felder)
-- ✅ Druckbar (PDF-Export, einfach ablegen)
-- ✅ Offen (Open Source, später auch API)
+**Live:** [malojaplana.ch](https://malojaplana.ch) · von Stebler Studios (Basel)
 
 ---
 
-## 📂 Struktur
+## Was es ausmacht
 
-```
-maloja-plana/
-├── public/                   ← HTML Entry Point
-│   └── index.html
-├── src/
-│   ├── components/           ← UI Components (SoftCard, Field, etc.)
-│   ├── pages/                ← Ganze Screens (Landing, App, etc.)
-│   ├── api/                  ← API Stubs (Compendium, ICD, etc.)
-│   ├── storage/              ← localStorage + IndexedDB Handler
-│   ├── hooks/                ← Custom React Hooks
-│   ├── utils/                ← Helper (QR, PDF, Hash, etc.)
-│   ├── config/               ← Konstanten, Chapters, API-Endpoints
-│   └── main.jsx              ← Entry Point (React)
-├── docs/
-│   ├── ARCHITECTURE.md       ← Wie alles zusammenhängt
-│   ├── API-ROADMAP.md        ← API-Pläne
-│   └── SCHEMA.md             ← Datenstruktur
-├── README.md                 ← Diese Datei
-├── CONTRIBUTING.md           ← Für Community (später)
-├── LICENSE                   ← AGPL-3.0
-├── package.json
-├── vite.config.js
-└── .env.example
-```
+- **Lokal & privat** — alle Daten bleiben auf deinem Gerät (localStorage + IndexedDB). Kein
+  Server, kein Konto, kein Tracking.
+- **Offline** — funktioniert nach dem ersten Laden vollständig ohne Internet (PWA + Service Worker).
+- **Mehrsprachig** — Deutsch, Französisch, Italienisch, Englisch, Rätoromanisch.
+- **Kostenlos & quelloffen** — AGPL-3.0. Jede und jeder kann nachprüfen, was die App tut.
+- **Orientierung, keine Beratung** — die Rechner und Übersichten sind Orientierungshilfen auf
+  Basis öffentlicher Daten, keine Rechts- oder Finanzberatung.
 
 ---
 
-## 🚀 Quick Start
+## Die sieben Lebensbereiche
 
-### Voraussetzungen
-- **Node.js 18+**
-- **npm 9+**
-- Git
+| Bereich | Inhalt |
+|---------|--------|
+| Persönliche Basis | Name, Geburt, AHV, Adresse, Haushalt |
+| Wohnen & Leben | Wohnsituation, Miete, Vermieter |
+| Finanzen & Geld | Einkommen, Bank, Budget |
+| Versicherungen & Vorsorge | Krankenkasse, BVG, Säule 3a |
+| Ausbildung & Arbeit | Qualifikationen, Arbeitgeber, Lebenslauf |
+| Behörden & Rechtliches | Steuern, Vollmachten, Verfügungen |
+| Notfall | Notfallkontakte, Gesundheit, Notfall-Karte |
 
-### Installation
+Dazu Werkzeuge: Steuerrechner, Prämienverbilligungs-Check (IPV), Sozialhilfe-Orientierung,
+Vorsorge- und Mindestlohn-Rechner, Dokumentenablage und eine offline scannbare Notfall-Karte.
+
+---
+
+## Technik
+
+- **React 18 + Vite**, ohne Runtime-Abhängigkeiten (bewusst schlank).
+- **100 % client-seitig** — localStorage + IndexedDB, kein Backend.
+- **Strikte Content-Security-Policy** (`script-src 'self'`) — keine externen Requests, keine Cookies.
+- **Lokal gehostete Schriften** (Lexend für den Text, Hanken Grotesk für die Wortmarke).
+- **5 Sprachen** über ein eigenes, schlankes i18n-System.
+
+---
+
+## Entwicklung
+
+Voraussetzungen: **Node.js 18+** und npm.
 
 ```bash
-# 1. Repo klonen (privat)
 git clone https://github.com/steblerstudios/maloja-plana.git
 cd maloja-plana
-
-# 2. Dependencies installieren
 npm install
-
-# 3. Dev-Server starten
-npm run dev
+npm run dev      # Dev-Server (Vite)
+npm run build    # Production-Build
+npx vitest run   # Tests
 ```
 
-Der Server startet auf **http://localhost:5173**
+---
+
+## Status
+
+**0.1.0-beta** — live und in ruhiger, aktiver Weiterentwicklung. Bewusst **ohne Backend, ohne
+Konten, ohne Cloud** — und das bleibt so.
 
 ---
 
-## 📝 7 Kapitel
+## Datenschutz & Haftung
 
-| Kapitel | Icon | Beschreibung |
-|---------|------|-------------|
-| **Persönliche Basis** | ◎ | Name, Geburt, AHV, Adresse |
-| **Wohnen & Leben** | ⌂ | Haushalt, Miete, Hausschlüssel |
-| **Finanzen & Geld** | ◇ | Banken, Budget, Einnahmen/Ausgaben |
-| **Versicherungen** | ◰ | KK, BVG, Säule 3a/3b |
-| **Ausbildung & Arbeit** | ✦ | EFZ, Diplom, Arbeitgeber |
-| **Behörden & Rechtliches** | ◉ | Steuern, Testament, Patientenverfügung |
-| **Notfall** | ⚠ | Notfallkontakte, Gesundheit, Notfall-QR |
+Alle Daten bleiben lokal auf deinem Gerät. Sichere dein Gerät und exportiere regelmässig ein
+Backup (ZIP-Export). Die Rechner sind Orientierungshilfen auf Basis öffentlicher Quellen;
+verbindliche Auskünfte erteilt die zuständige Behörde oder Fachstelle. Details findest du in der
+App unter **Datenschutz** und **Impressum**.
 
 ---
 
-## 💾 Speicherung
+## Lizenz
 
-**Lokal im Browser:**
-- `localStorage` — Texte, Einstellungen, Passwort-Hash
-- `IndexedDB` — Dokumente, Blobs, Dateien
-
-**Wird NICHT übertragen:**
-- Kein Server, keine Cloud
-- Kein Tracking
-- Keine Datenverkehr
+**AGPL-3.0** — quelloffen. Siehe [LICENSE](LICENSE). Der Name „Maloja Plana", das Logo und die
+visuelle Identität sind nicht durch die AGPL abgedeckt.
 
 ---
 
-## 🔐 Sicherheit
+## Von
 
-- **SHA-256 Passwort-Hash** (lokal, keine Übertragung)
-- **Base64 QR-Verschlüsselung** (für Notfall)
-- **Keine Cookies, kein Tracking**
-
----
-
-## 🎨 Design
-
-**Fonts:**
-- `Cormorant Garamond` — Titel (elegant, Swiss)
-- `DM Sans` — Body (clean, modern)
-
-**Farben (Dark & Light):**
-- Dark: `#0F0E0C` (bg) → `#EDE8E0` (text)
-- Light: `#F5F2EE` (bg) → `#1C1A17` (text)
-
-**Icons:**
-- Nur Unicode (◎ ⌂ ◇ ◰ ✦ ◉ ⚠ ☀ ◐)
-- Keine Emojis, keine Icon-Fonts
-
----
-
-## 🔄 Budget-Sync
-
-Einnahmen/Ausgaben werden **automatisch** aus den Feldern synchronisiert:
-
-- `finanzen.monthlyIncome` → Income
-- `wohnen.rentAmount` → Expense (Wohnen)
-- `wohnen.utilities` → Expense (Wohnen)
-- `versicherungen.healthPremium` → Expense (Versicherungen)
-
-**Live-Berechnung:** Einkommen - Ausgaben = Restbetrag
-
----
-
-## 📲 Export
-
-- **PDF** — Alle Daten oder einzelne Kapitel (jsPDF via CDN)
-- **XLSX** — Budget-History (SheetJS, später)
-- **JSON** — Backup/Restore
-
----
-
-## 🛣️ Roadmap (v0.1 → v1.0)
-
-### v0.1-alpha (JETZT)
-- [x] 7 Kapitel + Felder
-- [x] localStorage + IndexedDB
-- [x] PDF-Export
-- [x] Dark/Light Mode
-- [ ] Notfall-QR (WIP)
-- [ ] Dokumenten-Upload (WIP)
-
-### v0.2-beta
-- [ ] API-Stubs (Compendium, ICD, etc.)
-- [ ] Budget-Diagramme
-- [ ] Lebenslauf-Generator
-- [ ] Kontakt-Import (Handy)
-
-### v0.5-rc
-- [ ] eBill-Integration
-- [ ] Steuerkanton-APIs
-- [ ] BlueBudget-Sync
-- [ ] Infomaniak Secure Safe
-
-### v1.0-stable
-- [ ] Vollständige API-Integrationen
-- [ ] Mobile App (PWA)
-- [ ] B2B Versionen (Behörden, Banken)
-- [ ] Open Source Release
-
----
-
-## 📚 Dokumentation
-
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** — Code-Struktur
-- **[API-ROADMAP.md](docs/API-ROADMAP.md)** — API-Pläne
-- **[SCHEMA.md](docs/SCHEMA.md)** — Datenstruktur
-
----
-
-## 🤝 Contributing
-
-Später! Im Moment privat. Nach Open Source Release siehe `CONTRIBUTING.md`
-
----
-
-## 📄 Lizenz
-
-**AGPL-3.0** — Später Open Source!
-
----
-
-## 👤 Author
-
-**Sophie Stebler**  
-Email: sophie@stebler.ch  
-Location: Switzerland
-
----
-
-## ⚖️ Disclaimer
-
-- Keine Garantie für Datensicherheit
-- Keine Haftung bei Datenverlust
-- Sichern Sie Ihre Daten regelmässig (PDF-Export)
-
----
-
-**Made with ❤️ in Switzerland**
+**Stebler Studios** — Sophie Stebler, Basel. Kontakt über das Impressum auf
+[malojaplana.ch](https://malojaplana.ch).
