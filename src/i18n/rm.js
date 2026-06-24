@@ -294,7 +294,6 @@ export default {
     tierSupporting: 'Tia segirezza',
     tierProtective: 'Tia protecziun',
     toolsAndFeatures: 'Utensils & funcziuns',
-    mapToggle: 'Mussar tia charta',
     toolsSubtitle: 'Calculaturs ed agids — independents da Tes datas da chapitels.',
     tipsTitle: 'Tips per cumenzar:',
     tip1: 'Cumenza cun il chapitel "Basa persunala"',
