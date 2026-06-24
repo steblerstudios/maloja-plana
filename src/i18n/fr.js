@@ -302,7 +302,6 @@ export default {
     tierSupporting: 'Ta couverture',
     tierProtective: 'Ta protection',
     toolsAndFeatures: 'Outils et fonctionnalités',
-    mapToggle: 'Afficher ta carte',
     toolsSubtitle: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.',
     tipsTitle: 'Conseils pour commencer :',
     tip1: 'Commencez par le chapitre « Données personnelles »',
