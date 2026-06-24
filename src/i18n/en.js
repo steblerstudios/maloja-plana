@@ -2167,6 +2167,7 @@ export default {
   },
 
   beta: {
+    intro: 'Your calm overview of life in Switzerland — taxes, insurance, documents. 100% private, offline, free.',
     gateMessage: 'This app is in closed beta. Please enter the access code.',
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
