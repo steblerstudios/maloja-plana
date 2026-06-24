@@ -7,18 +7,20 @@
 // - Background sync for reminders
 // - Offline document access
 
-const CACHE_NAME = 'maloja-plana-v7';
+const CACHE_NAME = 'maloja-plana-v8';
 const OFFLINE_URL = '/';
 
 // ─── Install: cache the app shell ──────────────────────────
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
+      // Cache each asset individually (allSettled) so one missing/renamed file
+      // can never abort the whole install and break offline caching.
+      return Promise.allSettled([
         OFFLINE_URL,
-        '/fonts/dm-sans-latin-400-normal.woff2',
-        '/fonts/dm-sans-latin-600-normal.woff2',
-      ]);
+        '/fonts/lexend-latin-400-normal.woff2',
+        '/fonts/lexend-latin-600-normal.woff2',
+      ].map((url) => cache.add(url)));
     })
   );
   self.skipWaiting();
