@@ -540,7 +540,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
-      React.createElement('h1', {
+      React.createElement('h2', {
         style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
@@ -1174,7 +1174,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement('div', {
       style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
-      React.createElement('h3', {
+      React.createElement('h2', {
         style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
       }, t('dashboard.tipsTitle')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },

@@ -1271,6 +1271,34 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               }
             }, t(textKey))
           );
+          // Mehrere verwandte Links zu einem Feld → eine ruhige Box statt gestapelter Buttons
+          const crosslinkBundle = (items) => onNavigate && elements.push(
+            React.createElement('div', {
+              key: 'crosslink-bundle-' + field.k,
+              style: {
+                gridColumn: '1 / -1',
+                background: palette.sageMist || palette.up,
+                borderRadius: radius.sm,
+                padding: space.sm + 'px ' + space.md + 'px',
+                marginBottom: space.sm + 'px',
+              }
+            },
+              React.createElement('div', {
+                style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep || palette.mid, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: space.xs + 'px' }
+              }, t('nav.crosslink.relatedTitle')),
+              items.map(([key, view, textKey]) => React.createElement('button', {
+                key: 'crosslink-' + key,
+                onClick: () => onNavigate(view),
+                style: {
+                  display: 'block', width: '100%',
+                  background: 'transparent', border: 'none',
+                  padding: space.xs + 'px 0',
+                  fontSize: text.sm, color: palette.sageDeep || palette.mid,
+                  cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                }
+              }, t(textKey)))
+            )
+          );
           if (field.k === 'kkPremium' && chapter.key === 'versicherungen') {
             crosslinkBtn('ipv', 'premium', 'nav.crosslink.ipvHint');
           }
@@ -1399,10 +1427,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             crosslinkBtn('schuldenFromBehoerden', 'schulden', 'nav.crosslink.schuldenFromBehoerdenHint');
           }
           if (field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
-            crosslinkBtn('tax', 'tax', 'nav.crosslink.taxHint');
-            crosslinkBtn('ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome');
-            crosslinkBtn('sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint');
-            crosslinkBtn('finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint');
+            crosslinkBundle([
+              ['tax', 'tax', 'nav.crosslink.taxHint'],
+              ['ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome'],
+              ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
+              ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint'],
+            ]);
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;

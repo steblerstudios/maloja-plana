@@ -160,6 +160,7 @@ export default {
     },
     mindestlohn: 'Salaire minimum',
     crosslink: {
+      relatedTitle: 'Outils associés',
       ipvHint: 'Primes élevées ? Vérifie ton droit à la réduction →',
       taxHint: 'Estimer l\'impôt fédéral →',
       ipvFromIncome: 'Revenu saisi → vérifie ton droit à la réduction de primes →',
