@@ -850,7 +850,7 @@ export default {
       sourceTitle: 'Code source',
       source1: 'Le code source complet est disponible sur : https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Bibliothèques tierces',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL). Toutes les licences sont compatibles avec l\'AGPL-3.0.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), Lexend, Hanken Grotesk (OFL). Toutes les licences sont compatibles avec l\'AGPL-3.0.',
     },
     ethics: {
       valuesTitle: 'Nos valeurs',
@@ -1224,6 +1224,7 @@ export default {
     maxIncome: 'Revenu max. : CHF {value}',
     note: 'Remarque : {value}',
     enterCanton: 'Veuillez entrer votre canton sous « Données personnelles » ou votre code postal sous « Logement ».',
+    enterIncome: 'Ton canton a été repris. Saisis maintenant ton revenu mensuel sous « Finances » pour calculer ta réduction de primes.',
     eligible: 'Éligible',
     disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',

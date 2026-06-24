@@ -851,7 +851,7 @@ export default {
       sourceTitle: 'Source code',
       source1: 'The full source code is available at: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Third-party libraries',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL). All licenses are compatible with AGPL-3.0.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), Lexend, Hanken Grotesk (OFL). All licenses are compatible with AGPL-3.0.',
     },
     ethics: {
       valuesTitle: 'Our Values',
@@ -1225,6 +1225,7 @@ export default {
     maxIncome: 'Max. income: CHF {value}',
     note: 'Note: {value}',
     enterCanton: 'Please enter your canton under "Personal basics" or your postal code under "Housing".',
+    enterIncome: 'Your canton has been carried over. Now enter your monthly income under "Finances" to calculate your premium subsidy.',
     eligible: 'Eligible',
     disclaimer: 'For orientation only. Actual entitlement is determined by the responsible authority.',
     notEligible: 'Not eligible',

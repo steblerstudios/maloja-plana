@@ -31,7 +31,10 @@ docs/research/
 
 # Deploy artefacts
 maloja-plana-deploy*/
-maloja-plana-deploy.zip
+maloja-plana-*.zip
+
+# Versehentliche Build-Kopien (Finder-Duplikate)
+dist */
 
 # iOS build artefacts
 ios/App/App/public/

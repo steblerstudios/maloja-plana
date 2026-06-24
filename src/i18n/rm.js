@@ -747,7 +747,7 @@ export default {
       sourceTitle: 'Code-source',
       source1: 'Il code-source cumplet è accessibel sut: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Bibliotecas utilisadas',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), DM Sans (OFL). Tut las licenzas èn cumpatiblas cun AGPL-3.0.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), Lexend, Hanken Grotesk (OFL). Tut las licenzas èn cumpatiblas cun AGPL-3.0.',
     },
     ethics: {
       valuesTitle: 'Nossa posiziun',
@@ -1559,6 +1559,7 @@ export default {
     maxIncome: 'Entrada max.: CHF {value}',
     note: 'Indicaziun: {value}',
     enterCanton: 'Per plaschair endatescha Tes chantun sut "Basa persunala" u Tia PLZ sut "Abitar".',
+    enterIncome: 'Tes chantun è vegnì surpiglià. Endatescha ussa Tia entrada mensila sut "Finanzas" per calcular Tia reducziun da premias.',
     eligible: 'Autorisà',
     disclaimer: "Agid d'orientaziun. Il dretg effectiv vegn examinà da la post cumpetenta.",
     notEligible: 'Betg autorisà',
