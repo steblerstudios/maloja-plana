@@ -160,6 +160,7 @@ export default {
     },
     mindestlohn: 'Salario minimo',
     crosslink: {
+      relatedTitle: 'Strumenti correlati',
       ipvHint: 'Premi alti? Verifica il tuo diritto alla riduzione →',
       taxHint: 'Stima dell\'imposta federale →',
       ipvFromIncome: 'Reddito inserito → verifica il tuo diritto alla riduzione premi →',

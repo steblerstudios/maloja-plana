@@ -173,6 +173,7 @@ export default {
     },
     mindestlohn: 'Salari minimal',
     crosslink: {
+      relatedTitle: 'Utensils correspundents',
       ipvHint: 'Premias autas? Examinescha Tes dretg IPV →',
       taxHint: 'Stimar la taglia federala →',
       ipvFromIncome: 'Entrada endatada → examinescha Tes dretg IPV →',

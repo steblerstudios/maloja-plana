@@ -77,7 +77,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('div', {
         style: { marginBottom: space.md + 'px', color: palette.sageDeep || palette.sage }
       }, React.createElement(Icon, { name: 'notfall', size: 40 })),
-      React.createElement('h1', {
+      React.createElement('h2', {
         style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', letterSpacing: '-0.3px' }
       }, t('notfallEinstieg.title')),
       React.createElement('p', {
