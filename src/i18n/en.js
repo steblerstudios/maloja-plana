@@ -160,6 +160,7 @@ export default {
     },
     mindestlohn: 'Minimum wage check',
     crosslink: {
+      relatedTitle: 'Related tools',
       ipvHint: 'High premiums? Check your IPV eligibility →',
       taxHint: 'Estimate federal tax →',
       ipvFromIncome: 'Income entered → check your premium subsidy eligibility →',
