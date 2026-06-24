@@ -2339,6 +2339,7 @@ export default {
     vermoegen: 'Patrimonio (CHF)',
     erwerbstaetig: 'Occupato/a',
     integration: 'Misura d\'integrazione',
+    integrationHint: "p. es. volontariato regolare, programmi o stage — supplemento CHF 100–300/mese, a discrezione dell'autorità sociale.",
     anspruch: 'Diritto all\'aiuto sociale',
     monat: 'Mese',
     keinAnspruch: 'Nessun diritto',

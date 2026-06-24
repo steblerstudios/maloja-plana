@@ -2335,6 +2335,7 @@ export default {
     vermoegen: 'Fortune (CHF)',
     erwerbstaetig: 'En emploi',
     integration: 'Mesure d\'intégration',
+    integrationHint: "p. ex. bénévolat régulier, programmes ou stages — supplément CHF 100–300/mois, à l'appréciation de l'autorité sociale.",
     anspruch: 'Droit à l\'aide sociale',
     monat: 'mois',
     keinAnspruch: 'Pas de droit',

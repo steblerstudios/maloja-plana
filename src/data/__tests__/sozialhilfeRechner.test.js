@@ -14,7 +14,7 @@ describe('SKOS_PARAMS', () => {
     expect(SKOS_DATA_VERSION).toBe('2025-01');
     expect(SKOS_PARAMS.gblEinperson).toBe(1061);
     expect(SKOS_PARAMS.efbMax).toBe(700);
-    expect(SKOS_PARAMS.izuStandard).toBe(200);
+    expect(SKOS_PARAMS.izuStandard).toBe(100);
     expect(SKOS_PARAMS.franchiseStandard).toBe(300);
   });
 });
@@ -93,8 +93,8 @@ describe('berechneSozialhilfe', () => {
       integrationsMassnahme: true,
       erwerbstaetig: false,
     });
-    expect(r.izu).toBe(200);
-    expect(r.totalUnterstuetzung).toBe(r.sozialhilfeAnspruch + 200);
+    expect(r.izu).toBe(100);
+    expect(r.totalUnterstuetzung).toBe(r.sozialhilfeAnspruch + 100);
   });
 
   it('no IZU when employed', () => {
