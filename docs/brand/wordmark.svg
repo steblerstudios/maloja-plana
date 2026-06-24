@@ -1,0 +1,26 @@
+<svg viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maloja Plana">
+  <title>Maloja Plana — Wortmarke</title>
+  <!--
+    Maloja Plana Wortmarke.
+    Das "M" ist als zwei Berggipfel gezeichnet (Maloja-Pass), Goldpunkt am höheren Gipfel.
+    "aloja" Hanken Grotesk 700, "Plana" Hanken Grotesk 600 in Gold — ein Wort, normaler Abstand.
+    PRODUKTION: Text vor Auslieferung in Pfade outlinen (keine Font-Abhängigkeit).
+  -->
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;display=swap');
+      .word { font-family: 'Hanken Grotesk', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Gipfel-M: bottom-left → peak1 → valley → peak2(höher) → bottom-right -->
+  <polyline points="14,150 32,104 44,128 58,98 74,150"
+            fill="none" stroke="#24262A" stroke-width="10"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Goldpunkt (Sonne / Markierung) am höheren Gipfel -->
+  <circle cx="58" cy="98" r="6" fill="#C4A870"/>
+
+  <!-- "aloja Plana" als ein Textfluss: natürlicher Abstand via dx -->
+  <text x="82" y="150" class="word" font-size="74" fill="#24262A"
+        font-weight="700">aloja<tspan dx="16" font-weight="600" fill="#C4A870">Plana</tspan></text>
+</svg>

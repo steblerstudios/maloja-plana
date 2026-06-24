@@ -1,0 +1,12 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Maloja Plana">
+  <title>Maloja Plana — App-Icon</title>
+  <!-- Das Gipfel-"M" als App-Icon / Favicon. Dunkler Granit-Grund, Goldpunkt am höheren Gipfel. -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="#24262A"/>
+
+  <!-- Gipfel-M: bottom-left → peak1 → valley → peak2(höher) → bottom-right -->
+  <polyline points="156,360 212,180 250,250 296,150 356,360"
+            fill="none" stroke="#EDE8E0" stroke-width="32"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Goldpunkt am höheren Gipfel -->
+  <circle cx="296" cy="150" r="17" fill="#C4A870"/>
+</svg>
