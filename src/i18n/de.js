@@ -107,6 +107,7 @@ export default {
     person: '{count} Person',
     persons: '{count} Personen',
     switchLang: 'Sprache wechseln: {lang}',
+    selectLanguage: 'Sprache wählen',
   },
 
   nav: {
