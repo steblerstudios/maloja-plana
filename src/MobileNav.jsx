@@ -136,7 +136,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           { key: 'cv', label: t('nav.cv'), icon: 'document' },
           { key: 'charts', label: t('nav.charts'), icon: 'chartsSchoko' },
           { key: 'export', label: t('nav.export'), icon: 'download' },
-          { key: 'notifications', label: t('nav.notifications'), icon: 'settings' },
+          { key: 'notifications', label: t('nav.notifications'), icon: 'cowbell' },
         ];
 
         // Search mode — flat filtered list
