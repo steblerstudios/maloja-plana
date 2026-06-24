@@ -89,6 +89,16 @@ const LanguageSwitcher = ({ palette }) => {
   const { t, lang, setLanguage, supportedLanguages } = useT();
 
   return React.createElement('div', { style: { position: 'relative', display: 'inline-flex', alignItems: 'center' } },
+    // Globe — universal "language" symbol, recognisable without reading
+    React.createElement('span', {
+      'aria-hidden': 'true',
+      style: { position: 'absolute', left: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
+    },
+      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+        React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
+        React.createElement('path', { d: 'M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18' })
+      )
+    ),
     React.createElement('select', {
       value: lang,
       onChange: (e) => setLanguage(e.target.value),
@@ -97,7 +107,7 @@ const LanguageSwitcher = ({ palette }) => {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: palette.text,
         border: '1px solid ' + palette.border, borderRadius: '6px',
-        padding: '5px 26px 5px 10px', fontSize: text.xs, fontWeight: '600',
+        padding: '5px 26px 5px 30px', fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
       }
     },
