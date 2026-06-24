@@ -668,7 +668,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           value: value,
           onChange: (e) => handleFieldChange(field.k, e.target.value),
           placeholder: field.placeholder || '',
-          style: { ...inputStyle, minHeight: '100px', fontFamily: 'DM Sans, monospace', resize: 'vertical' }
+          style: { ...inputStyle, minHeight: '100px', fontFamily: 'Lexend, monospace', resize: 'vertical' }
         })
       );
     }
