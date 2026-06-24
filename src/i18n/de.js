@@ -302,6 +302,7 @@ export default {
     tierSupporting: 'Deine Absicherung',
     tierProtective: 'Dein Schutz',
     toolsAndFeatures: 'Werkzeuge & Features',
+    detailProgress: 'Detaillierter Fortschritt pro Kapitel',
     toolsSubtitle: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: 'Beginne mit dem Kapitel "Persönliche Basis"',
