@@ -2455,6 +2455,15 @@ export default {
     ravBody: "Register with the RAV (regional employment centre) as early as possible — ideally on your first day of unemployment. Entitlement does not start retroactively.",
     cantonLink: "Your canton: {canton} → find the RAV and contact points",
   },
+  alimentInfo: {
+    title: "Alimony / maintenance",
+    summaryNA: "does not apply to you right now — tap to explore",
+    summaryActive: "Orientation on child maintenance",
+    noFormula: "Child maintenance is set individually — depending on both parents' income, the number and age of the children and who provides care. There is no simple formula.",
+    magnitude: "Rough magnitude of the pure child costs (direct needs, NOT the maintenance contribution): roughly CHF 1,200–1,900 per month and child depending on age (Zurich child-costs table, last published 2025).",
+    binding: "The actual maintenance contribution depends on the specific situation. The competent court, the KESB or a specialist advice service decide bindingly.",
+    linkLabel: "Maintenance calculation explained (Zurich courts)",
+  },
   stip: {
     title: 'Scholarships & education grants',
     intro: 'Education grants (scholarships and loans) help finance an education. They are regulated cantonally — this overview gives orientation, not a binding commitment.',

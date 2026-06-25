@@ -1426,6 +1426,40 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'betreibungsStatus' && chapter.key === 'behoerden') {
             crosslinkBtn('schuldenFromBehoerden', 'schulden', 'nav.crosslink.schuldenFromBehoerdenHint');
           }
+          // Nicht-zutreffende Sektion (Alimente ohne Kinder): eingeklappt + gedämpft,
+          // aber erkundbar — mit ehrlicher Orientierung statt Zahlen-Versprechen.
+          if (field.k === 'alimentePaid' && chapter.key === 'finanzen') {
+            const kids = (allData && allData.basis && allData.basis.household && Array.isArray(allData.basis.household.children)) ? allData.basis.household.children.length : 0;
+            const notApplicable = kids === 0;
+            elements.push(
+              React.createElement('details', {
+                key: 'alimente-orientierung',
+                open: !notApplicable,
+                style: {
+                  gridColumn: '1 / -1',
+                  background: notApplicable ? palette.up : (palette.sageMist || palette.up),
+                  borderRadius: radius.sm,
+                  padding: space.sm + 'px ' + space.md + 'px',
+                  marginBottom: space.sm + 'px',
+                  opacity: notApplicable ? 0.72 : 1,
+                }
+              },
+                React.createElement('summary', {
+                  style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: notApplicable ? palette.mid : (palette.sageDeep || palette.text) }
+                }, 'ⓘ ' + tr('alimentInfo.title') + ' — ' + tr(notApplicable ? 'alimentInfo.summaryNA' : 'alimentInfo.summaryActive')),
+                React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } },
+                  React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.noFormula')),
+                  React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.magnitude')),
+                  React.createElement('p', { style: { margin: 0 } }, tr('alimentInfo.binding')),
+                  React.createElement('a', {
+                    href: 'https://www.gerichte-zh.ch/themen/partnerschaft/hilfen/unterhaltsberechnung.html',
+                    target: '_blank', rel: 'noopener noreferrer',
+                    style: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sky, textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+                  }, '→ ' + tr('alimentInfo.linkLabel'))
+                )
+              )
+            );
+          }
           if (field.k === 'monthlyIncome' && chapter.key === 'finanzen') {
             crosslinkBundle([
               ['tax', 'tax', 'nav.crosslink.taxHint'],

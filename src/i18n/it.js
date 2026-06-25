@@ -2459,6 +2459,15 @@ export default {
     ravBody: "Annunciati all'URC (ufficio regionale di collocamento) il prima possibile — idealmente il primo giorno di disoccupazione. Il diritto non inizia retroattivamente.",
     cantonLink: "Il tuo cantone: {canton} → trova l’URC e i punti di contatto",
   },
+  alimentInfo: {
+    title: "Alimenti / mantenimento",
+    summaryNA: "al momento non ti riguarda — tocca per esplorare",
+    summaryActive: "Orientamento sul mantenimento dei figli",
+    noFormula: "Il mantenimento dei figli è stabilito individualmente — a seconda del reddito di entrambi i genitori, del numero e dell'età dei figli e della cura. Non esiste una formula semplice.",
+    magnitude: "Ordine di grandezza dei costi puri del figlio (fabbisogno diretto, NON il contributo di mantenimento): circa CHF 1’200–1’900 al mese per figlio a seconda dell'età (tabella zurighese dei costi dei figli, ultima edizione 2025).",
+    binding: "Il contributo di mantenimento effettivo dipende dalla situazione concreta. Decidono in modo vincolante il tribunale competente, l'ARP o un servizio specializzato.",
+    linkLabel: "Calcolo del mantenimento spiegato (tribunali ZH)",
+  },
   stip: {
     title: 'Borse di studio & sussidi di formazione',
     intro: 'I sussidi di formazione (borse di studio e prestiti) aiutano a finanziare una formazione. Sono regolati a livello cantonale — questa panoramica offre orientamento, non un impegno vincolante.',

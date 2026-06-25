@@ -2541,6 +2541,15 @@ export default {
     ravBody: "Annunzia tai al RAV (center regiunal da plazzament) uschè baud sco pussaivel — il meglier l'emprim di da dischoccupaziun. Il dretg na cumenza betg retroactivamain.",
     cantonLink: "Tes chantun: {canton} → chattar il RAV e ils posts da contact",
   },
+  alimentInfo: {
+    title: "Alimentaziun / mantegniment",
+    summaryNA: "na pertucca actualmain betg a Ti — tutga per explorar",
+    summaryActive: "Orientaziun davart il mantegniment dals uffants",
+    noFormula: "Il mantegniment dals uffants vegn fixà individualmain — tut tenor l'entrada da omadus geniturs, il dumber e l'età dals uffants sco era la tgira. I na dat nagina formla simpla.",
+    magnitude: "Grossezza approximativa dals pirs custs da l'uffant (basegns directs, BETG la contribuziun da mantegniment): radund CHF 1’200–1’900 per mais ed uffant tut tenor l'età (tabella turitgaisa dals custs dals uffants, l'ultima giada 2025).",
+    binding: "La contribuziun da mantegniment effectiva dependa da la situaziun concreta. Il tribunal cumpetent, l'APEA u in post spezialisà decidan obligatoricamain.",
+    linkLabel: "Quint dal mantegniment declerà (tribunals ZH)",
+  },
   stip: {
     title: 'Stipendis & contribuziuns da furmaziun',
     intro: 'Contribuziuns da furmaziun (stipendis e mutgs) gidan a finanziar ina furmaziun. Ellas èn regladas chantunalmain — questa survista dat orientaziun, betg ina garanzia.',
