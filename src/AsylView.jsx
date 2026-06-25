@@ -1,5 +1,5 @@
 import React from 'react';
-import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS } from './data/asylData.js';
+import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
@@ -24,6 +24,11 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     orgPhone: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
     officialTag: { fontSize: text.xs, color: palette.sageDeep || palette.sage, background: palette.sage + '22', padding: '1px 6px', borderRadius: radius.sm + 'px', fontWeight: weight.medium },
     crosslink: { display: 'block', width: '100%', background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', marginTop: space.md + 'px' },
+    rightItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '6px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
+    rightDot: { flexShrink: 0, color: palette.sage, marginTop: '1px' },
+    fristen: { background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
+    fristenTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs + 'px' },
+    fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
   };
 
   return React.createElement('div', { style: s.card },
@@ -59,8 +64,25 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
+    // ── Deine Rechte ──
+    React.createElement('div', { style: s.sectionTitle }, t('asyl.rightsTitle')),
+    React.createElement('div', null,
+      ASYL_RIGHTS.map((r) =>
+        React.createElement('div', { key: r, style: s.rightItem },
+          React.createElement('span', { style: s.rightDot }, '•'),
+          React.createElement('span', null, t('asyl.rights.' + r))
+        )
+      )
+    ),
+
+    // ── Wichtig: kurze Fristen ──
+    React.createElement('div', { style: s.fristen },
+      React.createElement('div', { style: s.fristenTitle }, '⚠ ' + t('asyl.fristenTitle')),
+      React.createElement('div', { style: s.fristenBody }, t('asyl.fristenBody'))
+    ),
+
     // ── Wo Hilfe holen ──
-    React.createElement('div', { style: s.sectionTitle }, t('asyl.orgsTitle')),
+    React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.orgsTitle')),
     React.createElement('div', null,
       ASYL_ORGS.map((org, i) =>
         React.createElement('a', {
