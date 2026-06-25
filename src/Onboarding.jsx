@@ -64,7 +64,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     return React.createElement('div', {
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
-      React.createElement('div', { style: cardStyle },
+      React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement('h1', {
             'aria-label': 'Maloja Plana',
@@ -109,7 +109,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     return React.createElement('div', {
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
-      React.createElement('div', { style: cardStyle },
+      React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
@@ -178,7 +178,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   return React.createElement('div', {
     style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
   },
-    React.createElement('div', { style: { ...cardStyle, textAlign: 'center' } },
+    React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, textAlign: 'center' } },
       React.createElement('div', { style: {
         width: '80px', height: '80px', borderRadius: '50%',
         background: 'linear-gradient(135deg, ' + palette.sand + ', ' + palette.sage + ')',
