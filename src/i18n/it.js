@@ -1146,7 +1146,7 @@ export default {
     kkWechsel: { label: 'Confrontare le casse malati (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
     ahv: { label: 'Rendita AVS: promemoria 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.i' },
     testament: { label: 'Testamento e contratto successorio (ch.ch)', url: 'https://www.ch.ch/it/famiglia-e-unione-domestica/eredita/testamento-e-contratto-successorio/' },
-    patientenverfuegung: { label: 'Direttive anticipate (ch.ch)', url: 'https://www.ch.ch/it/salute/direttive-anticipate/' },
+    patientenverfuegung: { label: 'Direttive anticipate (ch.ch)', url: 'https://www.ch.ch/it/salute/direttive-del-paziente/' },
   },
 
   tresor: {

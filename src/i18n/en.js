@@ -1145,8 +1145,8 @@ export default {
   contextLinks: {
     kkWechsel: { label: 'Compare health insurers (priminfo.admin.ch)', url: 'https://www.priminfo.admin.ch/de/praemien' },
     ahv: { label: 'OASI pension: Factsheet 3.01 (ahv-iv.ch)', url: 'https://www.ahv-iv.ch/p/3.01.d' },
-    testament: { label: 'Will and inheritance contract (ch.ch)', url: 'https://www.ch.ch/en/family-and-partnership/inheritance/will-and-inheritance-contract/' },
-    patientenverfuegung: { label: 'Advance directive (ch.ch)', url: 'https://www.ch.ch/en/health/advance-directive/' },
+    testament: { label: 'Will and inheritance contract (ch.ch)', url: 'https://www.ch.ch/en/family-and-partnership/inheritance/wills-and-contracts-of-succession/' },
+    patientenverfuegung: { label: 'Advance directive (ch.ch)', url: 'https://www.ch.ch/en/documents-and-register-extracts/patient-decree/' },
   },
 
   tresor: {
