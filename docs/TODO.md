@@ -18,32 +18,40 @@ Service-Worker-Offline-Fix · doctors.label · Fortschrittskarte-Icons · IPV-Cr
 **Noch offen → siehe unten.** Die meisten verbleibenden Punkte sind grösser (Voice-Toggle,
 Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
+## ✅ Erledigt 2026-06-25 (Fortsetzungs-Session)
+
+- **Heading-Hierarchie** app-weit gefixt (genau ein h1/View) · **Crosslinks gebündelt**
+  (monthlyIncome → eine „Passende Werkzeuge"-Box) — `50a56b0`
+- **Arbeitslosenkassen-Rechner** (ALV-Taggeld, verifizierte SECO-Werte 2025, +15 Tests) — `21ceab9`
+- **Freiwilligenarbeit/Integrationszulage** im Sozialhilfe-Rechner sichtbar (CHF 100, SKOS) — `f03fb26`
+- **Architektur-Check:** Kantonsdaten bereits sauber; verwaistes `name`-Feld entfernt — `a2e0c7f`
+- **Bedingte Sektion** (Alimente klappt ohne Kinder ein, bleibt erkundbar; ehrliche
+  Orientierung statt Zahlen-Rechner) — `fe333b2`
+- **Stipendien Inkr. 2** (interaktiver Berechtigungs-Check statt 26 Einkommensgrenzen) — `efe7174`
+- A11y-Audit-Wins bereits zuvor erledigt: Autocomplete-Combobox, ✕-Button-`aria-label`,
+  Feld-Labels, `doctors.label` (5 Sprachen).
+
 ---
 
 ## A — Schnelle Wins (Accessibility & i18n, aus Experten-Audit)
 
-- 🔴 **Autocomplete tastaturbedienbar** machen (`MedicationManager.jsx`, `DiseaseManager.jsx`) —
-  klickbare divs → `role=listbox/option`, Pfeiltasten/Enter, `aria-activedescendant`. Gravierend
-  für die Vorlese-Zielgruppe.
-- 🟠 **✕-Buttons `aria-label`** ergänzen (`DoctorManager`, `MedicationManager`, `DiseaseManager`)
-  — schnellster Win. Vorbild: JobManager/LanguageManager.
-- 🟠 **Labels `htmlFor`/`id`** verknüpfen (DoctorManager, MedicationManager, DiseaseManager,
-  Onboarding, SozialhilfeRechner).
-- 🟠 **`doctors.label`** in alle 5 i18n ergänzen (sonst roher Key bei unbekanntem Fachgebiet).
+- ✅ **Autocomplete tastaturbedienbar** (Medication/Disease → WCAG-Combobox, Pfeiltasten/Enter).
+- ✅ **✕-Buttons `aria-label`** (DoctorManager, MedicationManager, DiseaseManager).
+- ✅ **Feld-Labels** verknüpft (per `aria-label` an allen Manager-Feldern + Onboarding/Sozialhilfe).
+- ✅ **`doctors.label`** in allen 5 i18n vorhanden.
 - 🟡 `rm.js` verwaiste Alt-Keys (~85) gegen `de.js` bereinigen.
 
 ## B — Berechnungen (vor Fixes offizielle Quelle prüfen!)
 
-- 🔴 `estimateTaxSavings` entfernen/als Heuristik labeln (IPV ist steuerfrei). *(evtl. schon via
-  IPV-Agenten erledigt — prüfen)*
-- 🟠 AHV Vorbezug-Kürzung **5% → 6.8%/Jahr** (`ahvRechner.js`).
-- 🟠 Mindestlohn TI/NE 2025 prüfen · AHV-Rente als Schätzung labeln · `CANTONAL_DATA_VERSION`.
+- ✅ `estimateTaxSavings` + irreführende Kachel entfernt (IPV ist steuerfrei).
+- ✅ AHV Vorbezug-Kürzung war bereits 6.8 %/Jahr (korrekt).
+- ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt. 🟡 AHV-Rente als Schätzung labeln (offen, tolerierbar).
 
 ## C — Design / Calm-UX (aus Audit)
 
-- 🟠 IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht).
-- 🟠 Zu viele Crosslink-Buttons bündeln (max. 1/Feld oder ans Sektionsende).
-- 🟡 Hover `scale(1.12)`→`1.04`; Token-Ausreisser (`radius`, hartcodierte px/Farben).
+- 🟠 IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht). *(noch offen)*
+- ✅ Zu viele Crosslink-Buttons gebündelt (monthlyIncome → eine „Passende Werkzeuge"-Box).
+- 🟡 Hover `scale(1.12)`→`1.04`; Token-Ausreisser (`radius`, hartcodierte px/Farben). *(noch offen)*
 - Prinzip: Entschlacken via Disclosure/Dropdown, **nie löschen** (Landkarte = Identität).
 
 ## D — Brand Identity (Rest der Umsetzung)
@@ -69,11 +77,11 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 ## F — Grössere Features (Sophie wählt Reihenfolge)
 
-- 🟡 **Stipendien** — präziser Kanton-Rechner + Antrags-Generator (Inkrement 1/Ansicht ✅).
-- 🟡 **Arbeitslosenkassen-Rechner** (ALV-Taggeld 70/80%, Wartetage, Höchstbetrag; Quelle SECO).
+- ✅ **Stipendien** — Berechtigungs-Check (Inkr. 2). Offen: Antrags-Generator; präziser Betrags-Rechner bewusst nicht gebaut.
+- ✅ **Arbeitslosenkassen-Rechner** (ALV-Taggeld 70/80%, Wartetage, Höchstbetrag; SECO 2025).
 - 🟡 **Adressen-Autocomplete** (Nominatim/OSM, CSP-konform).
 - 🟡 **SEO** verbessern (mehrsprachig, hreflang, CH-Keywords).
-- 🟡 **Architektur aufräumen.**
+- ✅ **Architektur aufräumen** (Kantonsdaten-Check: bereits sauber; verwaistes name-Feld entfernt).
 - 🔵 **Asylwesen** + Sprach-Dropdown (mehr Sprachen) — eigenes grosses strategisches Thema.
 
 ## G — Legal / Stebler Studios
