@@ -975,7 +975,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               },
               onMouseEnter: (e) => {
                 e.currentTarget.style.opacity = '1';
-                e.currentTarget.style.transform = 'scale(1.12)';
+                e.currentTarget.style.transform = 'scale(1.04)';
               },
               onMouseLeave: (e) => {
                 e.currentTarget.style.opacity = String(iconOp);
