@@ -90,17 +90,21 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
 
     hasIncome && showCalculation && React.createElement('div', null,
       // Results
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: space.md } },
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.monthlySubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + ipvResult.amount),
+      React.createElement('div', { style: { border: '1px solid ' + palette.border + '66', borderRadius: radius.sm, background: palette.up, marginBottom: space.md } },
+        React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px', borderBottom: '1px solid ' + palette.border + '33' } },
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
+            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.monthlySubsidy')),
+            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, 'CHF ' + ipvResult.amount)
+          ),
           ipvResult.reductionPercent != null && ipvResult.reductionPercent < 100 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.reductionNote', { percent: ipvResult.reductionPercent })
           )
         ),
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, '◇ ' + t('premium.annualSubsidy')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + (ipvResult.annual || 0)),
+        React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
+            React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.annualSubsidy')),
+            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, 'CHF ' + (ipvResult.annual || 0))
+          ),
           ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.maxPossible', { value: ipvResult.maxAnnual })
           )
