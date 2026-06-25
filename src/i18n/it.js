@@ -201,17 +201,17 @@ export default {
   },
 
   progress: {
-    notStarted: 'Il tuo percorso inizia qui',
+    notStarted: { sie: 'Il Suo percorso inizia qui', du: 'Il tuo percorso inizia qui' },
     status: '{started} di {total} iniziati · {done} completati',
     allDone: 'Tutte le sezioni completate',
   },
 
   guidedStart: {
     title: 'Pronto in pochi minuti',
-    text: 'Tre piccoli passi — poi Maloja Plana lavora per te.',
-    basicInfo: 'Imposta il tuo cantone — per imposte e riduzione premi',
+    text: { sie: 'Tre piccoli passi — poi Maloja Plana lavora per Lei.', du: 'Tre piccoli passi — poi Maloja Plana lavora per te.' },
+    basicInfo: { sie: 'Imposti il Suo cantone — per imposte e riduzione premi', du: 'Imposta il tuo cantone — per imposte e riduzione premi' },
     documents: 'Archivia un documento in sicurezza — 30 secondi',
-    emergency: 'Prepara la tua scheda d\'emergenza — 2 minuti',
+    emergency: { sie: 'Prepari la Sua scheda d\'emergenza — 2 minuti', du: 'Prepara la tua scheda d\'emergenza — 2 minuti' },
   },
 
   emergencyCardEntry: {
@@ -1397,14 +1397,14 @@ export default {
 
   briefe: {
     title: 'Modelli di lettere',
-    intro: 'Lettere tipo svizzere, precompilate con i tuoi dati. Verifica e adatta prima dell\'invio.',
+    intro: { sie: 'Lettere tipo svizzere, precompilate con i Suoi dati. Verifichi e adatti prima dell\'invio.', du: 'Lettere tipo svizzere, precompilate con i tuoi dati. Verifica e adatta prima dell\'invio.' },
     backToUnterlagen: 'Torna a I miei documenti',
     recipientPlaceholder: '[Inserire il destinatario qui]',
     fillIn: '[da completare]',
     showPreview: 'Anteprima',
     hidePreview: 'Chiudi anteprima',
     printLetter: 'Stampa / PDF',
-    dataNote: 'I tuoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.',
+    dataNote: { sie: 'I Suoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.', du: 'I tuoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.' },
     leaseTermination: {
       title: 'Disdetta del contratto di locazione',
       description: 'Disdetta ordinaria del contratto di locazione con i termini legali.',
@@ -1647,11 +1647,11 @@ export default {
   },
 
   budget: {
-    rentInfo: 'I costi abitativi rappresentano una parte importante del tuo budget. In molte città svizzere questo non è insolito.',
-    budgetTight: 'Il tuo budget è stretto. Esistono servizi gratuiti di consulenza sul budget — ad esempio presso la Caritas o il tuo comune.',
-    deficitInfo: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del tuo cantone può aiutarti.',
-    budgetCalm: 'Hai una panoramica delle tue finanze. Ogni ambito registrato aiuta.',
-    ipvHint: 'Potresti avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il tuo comune o la cassa di compensazione cantonale.',
+    rentInfo: { sie: 'I costi abitativi rappresentano una parte importante del Suo budget. In molte città svizzere questo non è insolito.', du: 'I costi abitativi rappresentano una parte importante del tuo budget. In molte città svizzere questo non è insolito.' },
+    budgetTight: { sie: 'Il Suo budget è stretto. Esistono servizi gratuiti di consulenza sul budget — ad esempio presso la Caritas o il Suo comune.', du: 'Il tuo budget è stretto. Esistono servizi gratuiti di consulenza sul budget — ad esempio presso la Caritas o il tuo comune.' },
+    deficitInfo: { sie: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del Suo cantone può aiutarLa.', du: 'Le uscite superano attualmente le entrate. Può essere una situazione temporanea — il servizio di consulenza sui debiti del tuo cantone può aiutarti.' },
+    budgetCalm: { sie: 'Ha una panoramica delle Sue finanze. Ogni ambito registrato aiuta.', du: 'Hai una panoramica delle tue finanze. Ogni ambito registrato aiuta.' },
+    ipvHint: { sie: 'Potrebbe avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il Suo comune o la cassa di compensazione cantonale.', du: 'Potresti avere diritto alla riduzione dei premi (RDP) — ca. CHF {amount}/mese. La domanda può essere presentata presso il tuo comune o la cassa di compensazione cantonale.' },
     sozialhilfeHint: 'Il tuo reddito è inferiore al fabbisogno di base COSAS. L\'aiuto sociale può essere un\'opzione — la consulenza è confidenziale e gratuita.',
     elHint: 'Con un reddito modesto in pensione, le prestazioni complementari (PC) possono entrare in considerazione. La tua agenzia AVS ti consiglia gratuitamente.',
   },
@@ -1717,11 +1717,11 @@ export default {
 
   error: {
     title: 'Qualcosa è andato storto',
-    message: 'I tuoi dati sono al sicuro — sono memorizzati localmente sul tuo dispositivo. Riprova.',
-    tryAgain: 'Riprova',
-    reload: 'Ricarica la pagina',
-    privacy: 'Nessun dato è stato inviato. Tutto rimane sul tuo dispositivo.',
-    viewCrash: 'Questa sezione ha riscontrato un errore. I tuoi dati sono al sicuro.',
+    message: { sie: 'I Suoi dati sono al sicuro — sono memorizzati localmente sul Suo dispositivo. Riprovi.', du: 'I tuoi dati sono al sicuro — sono memorizzati localmente sul tuo dispositivo. Riprova.' },
+    tryAgain: { sie: 'Riprovi', du: 'Riprova' },
+    reload: { sie: 'Ricarichi la pagina', du: 'Ricarica la pagina' },
+    privacy: { sie: 'Nessun dato è stato inviato. Tutto rimane sul Suo dispositivo.', du: 'Nessun dato è stato inviato. Tutto rimane sul tuo dispositivo.' },
+    viewCrash: { sie: 'Questa sezione ha riscontrato un errore. I Suoi dati sono al sicuro.', du: 'Questa sezione ha riscontrato un errore. I tuoi dati sono al sicuro.' },
   },
 
   overdue: {
@@ -1729,7 +1729,7 @@ export default {
     overdueCount: '{count} in ritardo',
     dueTodayCount: '{count} in scadenza oggi',
     notificationTitle: '{count} promemoria scaduto/i',
-    notificationBody: 'Apri Maloja Plana per controllare i tuoi promemoria.',
+    notificationBody: { sie: 'Apra Maloja Plana per controllare i Suoi promemoria.', du: 'Apri Maloja Plana per controllare i tuoi promemoria.' },
   },
 
   calendar: {
@@ -1739,7 +1739,7 @@ export default {
     completed: 'Completato',
     addReminder: 'Aggiungi promemoria',
     editReminder: 'Modifica promemoria',
-    noReminders: 'Nessun promemoria. Aggiungi il tuo primo promemoria per restare organizzato.',
+    noReminders: { sie: 'Nessun promemoria. Aggiunga il Suo primo promemoria per restare organizzato.', du: 'Nessun promemoria. Aggiungi il tuo primo promemoria per restare organizzato.' },
     today: 'Oggi',
     thisWeek: 'Questa settimana',
     thisMonth: 'Questo mese',
@@ -1794,23 +1794,23 @@ export default {
   },
 
   onboarding: {
-    chooseLanguage: 'Scegli la tua lingua',
+    chooseLanguage: { sie: 'Scelga la Sua lingua', du: 'Scegli la tua lingua' },
     welcomeTitle: 'Qualche dato veloce',
-    welcomeSubtitle: 'Questo ci aiuta a configurare il tuo organizzatore. Puoi modificare tutto in seguito.',
-    yourName: 'Il tuo nome',
+    welcomeSubtitle: { sie: 'Questo ci aiuta a configurare il Suo organizzatore. Può modificare tutto in seguito.', du: 'Questo ci aiuta a configurare il tuo organizzatore. Puoi modificare tutto in seguito.' },
+    yourName: { sie: 'Il Suo nome', du: 'Il tuo nome' },
     namePlaceholder: 'Nome e cognome',
     firstName: 'Nome',
     lastName: 'Cognome',
     firstNamePlaceholder: 'Nome',
     lastNamePlaceholder: 'Cognome',
-    yourCanton: 'Il tuo cantone',
-    privacyNote: 'I tuoi dati restano su questo dispositivo. Nessun account. Nessun cloud.',
+    yourCanton: { sie: 'Il Suo cantone', du: 'Il tuo cantone' },
+    privacyNote: { sie: 'I Suoi dati restano su questo dispositivo. Nessun account. Nessun cloud.', du: 'I tuoi dati restano su questo dispositivo. Nessun account. Nessun cloud.' },
     skipForNow: 'Salta per ora',
     readyTitle: 'Pronto, {name}!',
     readyTitleGeneric: 'Tutto è pronto!',
-    readyMessage: 'Il tuo organizzatore di vita svizzero è configurato.',
-    tip1: 'Inizia con «Base personale» per salvare le tue informazioni principali',
-    tip2: 'Carica i documenti importanti nell\'archivio',
+    readyMessage: { sie: 'Il Suo organizzatore di vita svizzero è configurato.', du: 'Il tuo organizzatore di vita svizzero è configurato.' },
+    tip1: { sie: 'Inizi con «Base personale» per salvare le Sue informazioni principali', du: 'Inizia con «Base personale» per salvare le tue informazioni principali' },
+    tip2: { sie: 'Carichi i documenti importanti nell\'archivio', du: 'Carica i documenti importanti nell\'archivio' },
     tip3: 'Imposta promemoria per permessi, assicurazioni e appuntamenti',
     getStarted: 'Iniziamo',
   },
@@ -1832,7 +1832,7 @@ export default {
     healthRemindersDesc: 'Promemoria medico, dentista e vaccinazioni.',
     adminDeadlines: 'Scadenze amministrative',
     adminDeadlinesDesc: 'Rinnovi permessi, scadenze fiscali, appuntamenti URC.',
-    privacyNote: 'Le notifiche vengono elaborate localmente sul tuo dispositivo. Nessun dato viene inviato a server.',
+    privacyNote: { sie: 'Le notifiche vengono elaborate localmente sul Suo dispositivo. Nessun dato viene inviato a server.', du: 'Le notifiche vengono elaborate localmente sul tuo dispositivo. Nessun dato viene inviato a server.' },
   },
 
   docReminder: {
