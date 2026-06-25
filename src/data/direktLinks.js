@@ -43,7 +43,7 @@ export const DIREKTLINKS = [
     kategorie: 'arbeit',
     name: { de: 'Arbeitslosengeld', en: 'Unemployment benefits', fr: 'Indemnités de chômage' },
     beschreibung: { de: 'Arbeitslosenentschädigung bei Stellenverlust', en: 'Unemployment compensation upon job loss', fr: 'Indemnisation chômage en cas de perte d\'emploi' },
-    url: 'https://www.arbeit.swiss/secoalv/de/home/menue/stellensuchende.html',
+    url: 'https://www.arbeit.swiss/de/stellensuchende',
     antragsstelle: { de: 'RAV (Regionales Arbeitsvermittlungszentrum)', en: 'RAV (Regional employment centre)', fr: 'ORP (Office régional de placement)' },
   },
   {
