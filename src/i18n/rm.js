@@ -2544,6 +2544,14 @@ export default {
       heks: "Posts da cussegliaziun giuridica per petents d'asil en plirs chantuns.",
       srk: "Cussegliaziun e sustegn per persunas migrantas en dumondas impurtantas da la vita.",
     },
+    rightsTitle: "Tes dretgs en la procedura",
+    rights: {
+      rechtsvertretung: "Represchentanza giuridica gratuita: en il center federal d'asil At vegn attribuida ina represchentanza giuridica gratuita che T'accumpogna tras la procedura. Acceptescha la — quai è Tes dretg.",
+      anhoerung: "Audiziun & interpret: Ti has dretg ad ina audiziun davart Tes motivs da fugia, cun translaziun.",
+      beschwerde: "Recurs: Ti pos contestar ina decisiun negativa — Tia represchentanza giuridica At sustegna.",
+    },
+    fristenTitle: "Impurtant: ils termins èn curts",
+    fristenBody: "En la procedura accelerada stos Ti far recurs entaifer 7 dis da lavur, en la procedura extendida entaifer 30 dis. Na spetga betg — contactescha immediatamain Tia represchentanza giuridica u in post da cussegliaziun.",
     cantonLink: "Tes chantun: {canton} → chattar cussegliaziun d'asil & autoritads",
   },
   alv: {

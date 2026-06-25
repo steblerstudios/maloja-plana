@@ -2462,6 +2462,14 @@ export default {
       heks: "Consultori giuridici per richiedenti l'asilo in diversi cantoni.",
       srk: "Consulenza e sostegno alle persone migranti nelle questioni importanti della vita.",
     },
+    rightsTitle: "I tuoi diritti nella procedura",
+    rights: {
+      rechtsvertretung: "Rappresentanza legale gratuita: nel centro federale d'asilo ti viene assegnata una rappresentanza legale gratuita che ti accompagna durante la procedura. Accettala — è un tuo diritto.",
+      anhoerung: "Audizione e interprete: hai diritto a un'audizione sui tuoi motivi di fuga, con interpretariato.",
+      beschwerde: "Ricorso: puoi contestare una decisione negativa — la tua rappresentanza legale ti sostiene.",
+    },
+    fristenTitle: "Importante: i termini sono brevi",
+    fristenBody: "Nella procedura celere devi presentare ricorso entro 7 giorni lavorativi, nella procedura ampliata entro 30 giorni. Non aspettare — contatta subito la tua rappresentanza legale o un consultorio.",
     cantonLink: "Il tuo cantone: {canton} → trova consulenza d'asilo e autorità",
   },
   alv: {
