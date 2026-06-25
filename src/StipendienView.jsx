@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getCantonName } from './config/cantonalData.js';
 import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
@@ -6,6 +6,19 @@ import { text, weight, leading, space, radius } from './config/tokens.js';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const canton = data?.basis?.canton || '';
+
+  // Kurz-Check Berechtigung (harmonisierte Mindestkriterien, Orientierung)
+  const [status, setStatus] = useState('');
+  const [scope, setScope] = useState('');
+  const eligibleStatus = ['swiss', 'foreigner5y', 'euefta', 'refugee'];
+  const eligibleScope = ['sekII', 'tertiaer', 'bridge'];
+  let resultKey = null, resultTone = 'neutral';
+  if (status && scope) {
+    if (status === 'onlyEducation') { resultKey = 'stip.resultNotEligible'; resultTone = 'no'; }
+    else if (scope === 'other') { resultKey = 'stip.resultScopeOther'; resultTone = 'maybe'; }
+    else if (eligibleStatus.includes(status) && eligibleScope.includes(scope)) { resultKey = 'stip.resultEligible'; resultTone = 'yes'; }
+    else { resultKey = 'stip.resultUnclear'; resultTone = 'maybe'; }
+  }
 
   const card = {
     maxWidth: '720px', background: palette.surface, padding: space.lg + 'px',
@@ -23,6 +36,25 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     React.createElement('span', null, txt)
   );
 
+  const checkGroup = (label, options, value, setter) => React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, label),
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+      options.map(([v, l]) => React.createElement('button', {
+        key: v, type: 'button',
+        'aria-pressed': value === v,
+        onClick: () => setter(value === v ? '' : v),
+        style: {
+          padding: '6px 12px', fontSize: text.sm, fontFamily: 'inherit', cursor: 'pointer',
+          borderRadius: radius.sm,
+          border: '1px solid ' + (value === v ? palette.sage : palette.border),
+          background: value === v ? palette.sage + '22' : palette.surface,
+          color: value === v ? (palette.sageDeep || palette.sage) : palette.text,
+          fontWeight: value === v ? weight.semi : weight.normal,
+        }
+      }, l))
+    )
+  );
+
   const costStyle = (cost) => ({
     fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
@@ -35,6 +67,29 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       React.createElement(Icon, { name: 'ausbildung', size: 20 }), t('stip.title')
     ),
     React.createElement('p', { style: { ...intro, marginBottom: space.md + 'px' } }, t('stip.intro')),
+
+    // ── Kurz-Check Berechtigung ──
+    React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.lg + 'px' } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 'px' } }, t('stip.checkTitle')),
+      checkGroup(t('stip.checkStatusQ'), [
+        ['swiss', t('stip.who.swiss')], ['foreigner5y', t('stip.who.foreigner5y')],
+        ['euefta', t('stip.who.euefta')], ['refugee', t('stip.who.refugee')],
+        ['onlyEducation', t('stip.checkStatusOnlyEducation')],
+      ], status, setStatus),
+      checkGroup(t('stip.checkScopeQ'), [
+        ['sekII', t('stip.scope.sekII')], ['tertiaer', t('stip.scope.tertiaer')],
+        ['bridge', t('stip.scope.bridge')], ['other', t('stip.checkScopeOther')],
+      ], scope, setScope),
+      resultKey && React.createElement('div', {
+        'aria-live': 'polite',
+        style: {
+          marginTop: space.sm + 'px', padding: space.md + 'px', borderRadius: radius.sm, fontSize: text.sm, lineHeight: leading.relaxed,
+          background: (resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold) + '18',
+          border: '1px solid ' + (resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold) + '66',
+          color: palette.text,
+        }
+      }, (resultTone === 'yes' ? '✓ ' : 'ⓘ ') + t(resultKey))
+    ),
 
     // Wer kann beantragen?
     React.createElement('div', { style: sectionTitle }, t('stip.eligibilityTitle')),
