@@ -48,4 +48,10 @@ export const ASYL_ORGS = [
 // Grobe Verfahrensschritte (Beschreibung in i18n asyl.process.<key>).
 export const ASYL_PROCESS = ['gesuch', 'baz', 'verfahren', 'entscheid', 'beschwerde'];
 
+// Rechte im Verfahren (Beschreibung in i18n asyl.rights.<key>).
+// Verifiziert (fluechtlingshilfe.ch / SEM): unentgeltliche Rechtsvertretung wird
+// im Bundesasylzentrum zugewiesen; Anspruch auf Anhörung mit Dolmetschen;
+// Beschwerdefristen kurz (beschleunigt 7 Arbeitstage, erweitert 30 Tage).
+export const ASYL_RIGHTS = ['rechtsvertretung', 'anhoerung', 'beschwerde'];
+
 export const ASYL_DATA_VERSION = '2025';

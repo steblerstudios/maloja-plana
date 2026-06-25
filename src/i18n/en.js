@@ -2458,6 +2458,14 @@ export default {
       heks: "Legal advice offices for asylum seekers in several cantons.",
       srk: "Advice and support for migrants on important life matters.",
     },
+    rightsTitle: "Your rights in the procedure",
+    rights: {
+      rechtsvertretung: "Free legal representation: in the Federal Asylum Centre you are assigned free legal representation that accompanies you through the procedure. Accept it — it is your right.",
+      anhoerung: "Hearing & interpreter: you have the right to a hearing about your reasons for fleeing, with interpretation.",
+      beschwerde: "Appeal: you can challenge a negative decision — your legal representation supports you.",
+    },
+    fristenTitle: "Important: deadlines are short",
+    fristenBody: "In the accelerated procedure you must appeal within 7 working days, in the extended procedure within 30 days. Don't wait — contact your legal representation or an advice office immediately.",
     cantonLink: "Your canton: {canton} → find asylum advice & authorities",
   },
   alv: {
