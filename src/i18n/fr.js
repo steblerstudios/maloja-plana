@@ -2454,6 +2454,15 @@ export default {
     ravBody: "Annonce-toi à l'ORP (office régional de placement) le plus tôt possible — idéalement le premier jour de chômage. Le droit ne commence pas rétroactivement.",
     cantonLink: "Ton canton : {canton} → trouver l’ORP et les points de contact",
   },
+  alimentInfo: {
+    title: "Pension alimentaire / entretien",
+    summaryNA: "ne te concerne pas actuellement — appuie pour explorer",
+    summaryActive: "Orientation sur l'entretien de l'enfant",
+    noFormula: "L'entretien de l'enfant est fixé individuellement — selon le revenu des deux parents, le nombre et l'âge des enfants et la prise en charge. Il n'existe pas de formule simple.",
+    magnitude: "Ordre de grandeur des coûts purs de l'enfant (besoins directs, PAS la contribution d'entretien) : environ CHF 1’200–1’900 par mois et par enfant selon l'âge (table zurichoise des coûts de l'enfant, dernière édition 2025).",
+    binding: "La contribution d'entretien effective dépend de la situation concrète. Le tribunal compétent, l'APEA ou un service spécialisé tranchent de manière contraignante.",
+    linkLabel: "Calcul de l'entretien expliqué (tribunaux ZH)",
+  },
   stip: {
     title: 'Bourses & subsides de formation',
     intro: 'Les subsides de formation (bourses et prêts) aident à financer une formation. Ils sont réglés au niveau cantonal — cet aperçu donne une orientation, pas un engagement ferme.',
