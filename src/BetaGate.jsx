@@ -30,6 +30,8 @@ export const BetaGate = ({ children }) => {
   const palette = LIGHT_PALETTE;
 
   return React.createElement('div', {
+    role: 'main',
+    'aria-label': 'Maloja Plana',
     style: {
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: palette.bg, fontFamily: 'inherit',
