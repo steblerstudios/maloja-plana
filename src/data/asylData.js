@@ -41,7 +41,7 @@ export const ASYL_ORGS = [
   {
     id: 'srk',
     name: 'Schweizerisches Rotes Kreuz — Migration',
-    url: 'https://www.redcross.ch/de/unser-engagement/menschen-der-schweiz/gesundheit-und-integration',
+    url: 'https://www.redcross.ch/de/unser-engagement/unsere-schwerpunkte/migration-und-flucht',
   },
 ];
 
