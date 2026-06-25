@@ -557,7 +557,7 @@ const AppInner = () => {
         demoMode,
       }),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
-      React.createElement(React.Suspense, { fallback: null },
+      React.createElement(React.Suspense, { fallback: React.createElement('div', { style: { padding: space.xl + 'px', textAlign: 'center', color: palette.soft, fontSize: text.sm }, role: 'status', 'aria-live': 'polite' }, t('common.loading')) },
         view === 'tresor' && React.createElement(DocumentTresor, {
           palette, t,
           documents: documents,
