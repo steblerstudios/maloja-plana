@@ -97,7 +97,9 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   Goldpunkt, Granit-Palette, Hanken-Wortmarke; PNG regeneriert (`public/og-image.{svg,png}`).
 - 🟡 Signet-Farben (Ordner+Berg+Pass) an Granit angleichen
 - 🟡 **Voice/Anrede-Toggle (Sie/Du)** implementieren + Atkinson-Font wiren (Accessibility)
-- 🟡 OFL-Lizenztexte zu den WOFF2 legen · Wortmarke für Produktion in Pfade outlinen
+- ✅ OFL-Lizenztexte zu den WOFF2 legen — `public/fonts/OFL.txt` (exakte Upstream-Header + voller
+  OFL-1.1-Text) + `README.md`; wird nach `dist/fonts/` ausgeliefert (Commit `5f1c40d`).
+- 🟡 Wortmarke für Produktion in Pfade outlinen *(Design-Asset, offen)*
 - ✅ Brand Guidelines in *ein* Dokument bündeln → `docs/brand/brand-guidelines.md`
 
 ## E — Inhalt
