@@ -58,7 +58,8 @@ function resolve(obj, path) {
   return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
 }
 
-function createT(translations, lang, anrede) {
+// Exportiert für Unit-Tests (reine Funktion: Translations-Objekt rein, t() raus).
+export function createT(translations, lang, anrede) {
   return function t(key, params) {
     let val = resolve(translations[lang], key);
     if (val === undefined && lang !== DEFAULT_LANG) val = resolve(translations[DEFAULT_LANG], key);
