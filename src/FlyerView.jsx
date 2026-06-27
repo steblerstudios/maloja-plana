@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { buildFlyerHtml } from './flyerGenerator.js';
@@ -29,6 +29,18 @@ export const FlyerView = ({ palette, t, lang }) => {
     openPrintWindow(buildFlyerHtml({ t, qrDataUrl }));
   };
 
+  // App teilen: native Teilen-Dialog (Handy) oder Fallback „Link kopiert".
+  const [shared, setShared] = useState(false);
+  const handleShare = async () => {
+    const data = { title: 'Maloja Plana', text: t('flyer.shareText'), url };
+    try {
+      if (navigator.share) { await navigator.share(data); return; }
+      await navigator.clipboard.writeText(url);
+      setShared(true);
+      setTimeout(() => setShared(false), 2500);
+    } catch (e) { /* abgebrochen oder nicht unterstützt */ }
+  };
+
   const s = {
     card: { maxWidth: '640px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
@@ -38,7 +50,10 @@ export const FlyerView = ({ palette, t, lang }) => {
     claim: { fontSize: text.sm, color: palette.sageDeep || palette.mid, marginTop: space.xs + 'px' },
     qrWrap: { display: 'inline-block', marginTop: space.md + 'px', background: '#fff', padding: space.sm + 'px', borderRadius: radius.sm + 'px' },
     urlText: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginTop: space.sm + 'px' },
-    button: { marginTop: space.lg + 'px', background: palette.sage, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    actions: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.lg + 'px', alignItems: 'center' },
+    button: { background: palette.sage, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    shareButton: { background: 'none', color: palette.sageDeep || palette.sage, border: '1px solid ' + palette.sage, borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    copied: { fontSize: text.xs, color: palette.sageDeep || palette.mid },
     hint: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.md + 'px', maxWidth: '520px' },
   };
 
@@ -56,7 +71,11 @@ export const FlyerView = ({ palette, t, lang }) => {
       React.createElement('div', { style: s.urlText }, 'malojaplana.ch')
     ),
 
-    React.createElement('button', { style: s.button, onClick: handlePrint }, t('flyer.print')),
+    React.createElement('div', { style: s.actions },
+      React.createElement('button', { style: s.button, onClick: handlePrint }, t('flyer.print')),
+      React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
+      shared && React.createElement('span', { style: s.copied, role: 'status' }, '✓ ' + t('flyer.copied'))
+    ),
     React.createElement('p', { style: s.hint }, t('flyer.langHint'))
   );
 };
