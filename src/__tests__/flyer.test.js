@@ -41,7 +41,7 @@ describe.each([['en', en], ['fr', frLang], ['rm', rm]])('flyer i18n (%s)', (lang
   });
 
   it('flyer-Namespace vollständig', () => {
-    for (const k of ['title', 'intro', 'claim', 'lead', 'point1', 'point2', 'point3', 'scan', 'foot', 'print', 'langHint']) {
+    for (const k of ['title', 'intro', 'claim', 'lead', 'point1', 'point2', 'point3', 'scan', 'foot', 'print', 'langHint', 'share', 'shareText', 'copied']) {
       expect(present(dict.flyer?.[k]), `${lang}: flyer.${k}`).toBe(true);
     }
   });
