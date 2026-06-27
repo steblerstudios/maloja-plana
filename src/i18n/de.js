@@ -924,6 +924,7 @@ export default {
       heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — Der grösste Kinder- und Jugendverband der Schweiz.',
       heartfelt8: 'Tierschutz beider Basel — tbb.ch — Tierheim, Tiervermittlung und Tierschutzberatung in der Region Basel.',
       heartfelt9: 'Abschiedsagentur — abschiedsagentur.ch — Betreuung zu Hause, Vorsorge-Beratung und einfühlsame Begleitung im Todesfall, mit Sitz in Münchenstein.',
+      heartfelt10: 'Xdo – die Todo-App (App Store, Rau Media) — Eine ruhige, minimalistische To-do-App. Kein Konto, kein Tracking, die Daten bleiben auf dem Gerät.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
