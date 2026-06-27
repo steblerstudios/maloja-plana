@@ -443,11 +443,12 @@ const AppInner = () => {
           React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
           React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
         ),
-        lang === 'de' && React.createElement('button', {
-          'aria-label': 'Anrede: ' + (anrede === 'du' ? 'Du' : 'Sie'), title: 'Anrede: Sie / Du',
+        (lang === 'de' || lang === 'it') && React.createElement('button', {
+          'aria-label': 'Anrede: ' + (anrede === 'du' ? (lang === 'it' ? 'Tu' : 'Du') : (lang === 'it' ? 'Lei' : 'Sie')),
+          title: lang === 'it' ? 'Forma di cortesia: Lei / Tu' : 'Anrede: Sie / Du',
           onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
           style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
-        }, anrede === 'du' ? 'Du' : 'Sie'),
+        }, anrede === 'du' ? (lang === 'it' ? 'Tu' : 'Du') : (lang === 'it' ? 'Lei' : 'Sie')),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
