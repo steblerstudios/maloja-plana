@@ -2467,6 +2467,10 @@ export default {
     fristenTitle: "Important: deadlines are short",
     fristenBody: "In the accelerated procedure you must appeal within 7 working days, in the extended procedure within 30 days. Don't wait — contact your legal representation or an advice office immediately.",
     cantonLink: "Your canton: {canton} → find asylum advice & authorities",
+    cantonOfficeTitle: "Advice in your canton ({canton})",
+    counseling: {
+      desc: "Free, confidential legal advice on asylum and migration law. They support you personally with your procedure.",
+    },
   },
   alv: {
     title: "Unemployment benefit",
