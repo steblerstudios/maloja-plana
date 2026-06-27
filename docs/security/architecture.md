@@ -33,7 +33,7 @@ Maloja Plana follows a **local-first, zero-backend** architecture. There are no 
          │  Static files only (initial load)
          ▼
 ┌─────────────────────┐
-│  GitHub Pages       │
+│  Infomaniak (CH)    │
 │  (static hosting)   │
 │  No server logic    │
 │  No analytics       │
@@ -50,7 +50,7 @@ Maloja Plana follows a **local-first, zero-backend** architecture. There are no 
 | State | React useState + prop drilling | No state management library, no middleware |
 | Persistence | localStorage + IndexedDB | Browser-native, same-origin protected |
 | Encryption | Web Crypto API | Browser-native, no JS crypto libraries |
-| Deployment | GitHub Pages (static) | No server-side code, no environment variables |
+| Deployment | Infomaniak (static hosting, CH) | No server-side code, no environment variables |
 | Dependencies | React + ReactDOM only | Minimal attack surface |
 
 ## Data Boundaries
@@ -101,5 +101,5 @@ Configured via hosting platform:
 
 - **Repository**: GitHub private (steblerstudios only)
 - **Branch strategy**: main (stable, tagged) → dev (active) → feature branches
-- **Deployment**: GitHub Pages auto-deploy from main
+- **Deployment**: Infomaniak (Geneva, CH), static hosting at malojaplana.ch
 - **Alpha access**: Public URL, no authentication (acceptable for alpha)

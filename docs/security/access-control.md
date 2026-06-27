@@ -38,7 +38,7 @@ Maloja Plana has no authentication system. All data is stored locally in the use
 ## Deployment Access
 
 - GitHub repository: private (steblerstudios only)
-- GitHub Pages: public URL for alpha testing
+- Infomaniak (CH): public hosting at malojaplana.ch
 - Alpha testers access via shared URL (no authentication)
 - Production deployment will require access control evaluation
 

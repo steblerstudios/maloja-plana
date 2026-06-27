@@ -52,8 +52,7 @@
 
 ### Swiss Made Software
 - Entwicklung: Schweiz (Basel)
-- Hosting: GitHub Pages (Microsoft/US) — **nicht qualifizierend**
-- Alternative für Qualifikation: Hosting bei Schweizer Provider (Infomaniak, Hostpoint)
+- Hosting: Infomaniak (Genf, CH) — **qualifizierend** (Schweizer Provider, Rechenzentren in der Schweiz)
 
 ### Digital Trust Label (Swiss Digital Initiative)
 Anforderungen und Status:
