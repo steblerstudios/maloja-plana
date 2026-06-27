@@ -2597,4 +2597,22 @@ export default {
       other: 'Altra specialità',
     },
   },
+
+  // Volantino — mancava in it.js (gli utenti vedevano il fallback inglese).
+  flyer: {
+    title: 'Volantino da condividere',
+    intro: 'Un volantino stampabile con codice QR per Maloja Plana — ideale per consultori, comuni e bacheche.',
+    claim: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
+    lead: 'La Sua panoramica serena della vita in Svizzera.',
+    point1: '100% privato — tutto resta sul Suo dispositivo',
+    point2: 'Gratuito e offline, senza account',
+    point3: 'Disponibile in più lingue',
+    scan: 'Scansionare e iniziare:',
+    foot: 'Locale, privato, gratuito · by Stebler Studios',
+    print: 'Stampare / salvare in PDF',
+    share: 'Condividere il link',
+    shareText: 'Maloja Plana — la Sua panoramica serena della vita in Svizzera. Privata, offline, gratuita.',
+    copied: 'Link copiato',
+    langHint: "Il volantino viene creato nella lingua attualmente selezionata. Per un'altra lingua, cambiare prima la lingua in alto.",
+  },
 };
