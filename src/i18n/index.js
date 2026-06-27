@@ -26,6 +26,12 @@ async function loadTranslation(lang) {
 }
 
 function detectLanguage() {
+  // 1) Sprach-URL hat Vorrang (geteilte Links wie ?lang=fr funktionieren sofort)
+  try {
+    const urlLang = (new URLSearchParams(window.location.search).get('lang') || '').toLowerCase();
+    if (urlLang && SUPPORTED.includes(urlLang)) return urlLang;
+  } catch (e) { /* kein window/URL */ }
+
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored && SUPPORTED.includes(stored)) return stored;
@@ -89,6 +95,12 @@ export function I18nProvider({ children }) {
     if (SUPPORTED.includes(newLang)) {
       setLangState(newLang);
       try { localStorage.setItem(STORAGE_KEY, newLang); } catch (e) { /* */ }
+      // URL ohne Reload aktualisieren, damit Link/SEO der aktiven Sprache entspricht
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', newLang);
+        window.history.replaceState({}, '', url);
+      } catch (e) { /* History API nicht verfügbar */ }
       document.documentElement.lang = newLang;
     }
   }, []);
