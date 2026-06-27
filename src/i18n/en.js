@@ -2232,6 +2232,13 @@ export default {
     },
   },
 
+  sandbox: {
+    bannerTitle: 'Sandbox mode',
+    bannerText: 'Try out calculations freely — your saved data stays untouched.',
+    footerLink: 'Sandbox',
+    discard: 'Discard',
+    apply: 'Apply to my data',
+  },
   demo: {
     bannerTitle: 'Example: Maria Muster, 34, Zurich',
     bannerText: 'This is what a completed life folder could look like.',

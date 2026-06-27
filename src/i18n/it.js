@@ -2211,6 +2211,13 @@ export default {
     },
   },
 
+  sandbox: {
+    bannerTitle: 'Modalità prova',
+    bannerText: 'Qui si può calcolare liberamente — i dati salvati restano intatti.',
+    footerLink: 'Prova',
+    discard: 'Annulla',
+    apply: 'Applica ai miei dati',
+  },
   demo: {
     bannerTitle: 'Esempio: Maria Muster, 34 anni, Zurigo',
     bannerText: 'Ecco come potrebbe apparire una cartella della vita compilata.',
