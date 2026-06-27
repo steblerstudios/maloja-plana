@@ -3,7 +3,7 @@
 **Version**: 0.5.0-alpha (Phase 5 complete)  
 **Date**: 2026-05-15  
 **License**: AGPL-3.0  
-**Live alpha**: https://steblerstudios.github.io/maloja-plana  
+**Live**: https://malojaplana.ch  
 **Repository**: https://github.com/steblerstudios/maloja-plana (private)
 
 ## Completed Phases
