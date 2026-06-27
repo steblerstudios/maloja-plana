@@ -9,8 +9,10 @@ name: Deploy to Infomaniak
 #   FTP_PASSWORD  – FTP-Passwort
 # Der FTP-Server (ftp.hosting-ik.com) und das Zielverzeichnis sind unten gesetzt.
 # Kein BASE_URL nötig: base default '/' passt für die Root-Domain.
-# Kein .htaccess wird hochgeladen (dist/ enthält keins) — Security-Header laufen
-# über das Infomaniak-Panel.
+# WICHTIG: public/.htaccess wird beim Build nach dist/ kopiert, verursacht auf
+# Infomaniak aber einen 503 → wird vor dem Upload entfernt (Schritt unten).
+# Security-Header laufen übers Infomaniak-Panel; die App nutzt Hash-Routing
+# (#/…) und braucht keine Server-Rewrites.
 
 on:
   push:
@@ -30,6 +32,9 @@ jobs:
 
       - run: npm install
       - run: npm run build
+
+      # Infomaniak liefert 503, wenn ein .htaccess vorhanden ist → vor dem Upload entfernen.
+      - run: rm -f dist/.htaccess
 
       - name: Deploy to Infomaniak via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
