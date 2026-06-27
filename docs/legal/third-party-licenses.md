@@ -45,7 +45,7 @@
 
 | Dienst | Zweck | Datenfluss |
 |---|---|---|
-| GitHub Pages | Hosting der statischen Anwendung | Keine Nutzerdaten — nur statische Dateien |
+| Infomaniak (Genf, CH) | Hosting der statischen Anwendung | Keine Nutzerdaten — nur statische Dateien |
 | Google Fonts CDN | **Nicht verwendet** — Schriften lokal eingebunden | Kein Datenfluss |
 | Vercel | **Nicht mehr verwendet** (Stand Juni 2026) | Kein Datenfluss |
 

@@ -19,11 +19,8 @@ Maloja Plana ist so gebaut, dass sie möglichst wenig Energie verbraucht:
 
 ### Hosting
 
-**Aktuell: GitHub Pages**  
-GitHub betreibt Rechenzentren, die seit 2019 zu 100% mit erneuerbarer Energie betrieben werden (Microsoft/GitHub Sustainability Report).
-
-**Geplant: Infomaniak (Schweiz)**  
-Für eine zukünftige Custom-Domain (malojaplana.ch) ist Infomaniak als Hosting-Partner vorgesehen:
+**Infomaniak (Schweiz)**  
+Maloja Plana wird über die Domain malojaplana.ch bei Infomaniak Network SA (Genf, Schweiz) gehostet:
 - Rechenzentren in der Schweiz (Genf, Winterthur)
 - 100% erneuerbare Energie (Schweizer Wasserkraft)
 - ISO 14001 zertifiziert (Umweltmanagement)
