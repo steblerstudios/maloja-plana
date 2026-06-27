@@ -141,6 +141,7 @@ export default {
     export: 'Export',
     calendar: 'Calendrier',
     merkliste: 'Mon aide-mémoire',
+    search: 'Recherche',
     notifications: 'Notifications',
     menu: 'Menu',
     completion: '{value}% complété',
@@ -148,6 +149,7 @@ export default {
     sub: {
       calendar: 'Délais & rendez-vous',
       merkliste: 'Notes & prochaines étapes',
+      search: 'Trouver outils & chapitres',
       budgetSync: 'Import CSV',
       kvgIpv: 'Vérifier le droit',
       praemien: 'Comparer les modèles',
@@ -1732,6 +1734,14 @@ export default {
     dueTodayCount: '{count} à faire aujourd\'hui',
     notificationTitle: '{count} rappel(s) en retard',
     notificationBody: 'Ouvrez Maloja Plana pour consulter vos rappels.',
+  },
+
+  search: {
+    title: 'Recherche',
+    placeholder: 'Rechercher outils et chapitres…',
+    empty: 'Rien trouvé pour « {query} ». Essayez un autre terme.',
+    toolsTitle: 'Outils',
+    chaptersTitle: 'Chapitres',
   },
 
   merkliste: {
