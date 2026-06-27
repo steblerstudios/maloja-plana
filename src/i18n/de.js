@@ -2532,4 +2532,79 @@ export default {
       other: 'Andere Fachrichtung',
     },
   },
+
+  // Asyl-Orientierung — fehlte in de.js (Nutzer sahen den englischen Fallback).
+  // Schweizer Rechtsbegriffe; rechtlich sensibel → fachliche Review vor Deploy empfohlen.
+  asyl: {
+    title: 'Asyl & Schutz in der Schweiz',
+    intro: { sie: 'Das Asylverfahren ist komplex und oft belastend. Diese Seite gibt Ihnen eine ruhige erste Orientierung: welche Status es gibt, wie das Verfahren abläuft und wo es persönliche Beratung gibt.', du: 'Das Asylverfahren ist komplex und oft belastend. Diese Seite gibt dir eine ruhige erste Orientierung: welche Status es gibt, wie das Verfahren abläuft und wo es persönliche Beratung gibt.' },
+    disclaimer: { sie: 'Das ist eine Orientierung, keine Rechtsberatung. Für Ihre konkrete Situation helfen Ihnen die unten genannten Stellen kostenlos und vertraulich.', du: 'Das ist eine Orientierung, keine Rechtsberatung. Für deine konkrete Situation helfen dir die unten genannten Stellen kostenlos und vertraulich.' },
+    statusTitle: 'Die wichtigsten Status',
+    status: {
+      n: { label: 'Ausweis N — Asylsuchende', desc: { sie: 'Sie haben ein Asylgesuch gestellt und warten auf den Entscheid des SEM. Der Ausweis N bestätigt das laufende Verfahren — er ist keine Aufenthaltsbewilligung.', du: 'Du hast ein Asylgesuch gestellt und wartest auf den Entscheid des SEM. Der Ausweis N bestätigt das laufende Verfahren — er ist keine Aufenthaltsbewilligung.' } },
+      s: { label: 'Status S — Schutzbedürftige', desc: 'Kollektiver, schneller Schutz für eine bestimmte Gruppe während einer schweren Gefährdung — erstmals 2022 für Menschen aus der Ukraine aktiviert. Erlaubt einen vorübergehenden Aufenthalt.' },
+      f: { label: 'Ausweis F — vorläufig aufgenommen', desc: 'Eine Wegweisung ist derzeit nicht zulässig, zumutbar oder möglich. Der Aufenthalt ist vorläufig — als Flüchtling oder als ausländische Person.' },
+      b: { label: 'Ausweis B — anerkannte Flüchtlinge', desc: 'Die Flüchtlingseigenschaft ist anerkannt und Asyl gewährt. Damit ist eine Aufenthaltsbewilligung verbunden.' },
+    },
+    processTitle: 'Das Verfahren in Kürze',
+    process: {
+      gesuch: 'Ein Asylgesuch stellen — an der Grenze oder in einem Bundesasylzentrum (BAZ).',
+      baz: 'Aufenthalt im Bundesasylzentrum während des Verfahrens (in der Regel bis zu 140 Tage).',
+      verfahren: 'Prüfung durch das SEM — beschleunigtes, erweitertes oder Dublin-Verfahren.',
+      entscheid: 'Entscheid: Asyl, vorläufige Aufnahme oder Wegweisung.',
+      beschwerde: { sie: 'Gegen einen negativen Entscheid können Sie beim Bundesverwaltungsgericht Beschwerde einlegen — lassen Sie sich dabei beraten.', du: 'Gegen einen negativen Entscheid kannst du beim Bundesverwaltungsgericht Beschwerde einlegen — lass dich dabei beraten.' },
+    },
+    orgsTitle: 'Wo es Hilfe gibt',
+    official: 'Behörde',
+    phone: 'Tel.',
+    org: {
+      sem: 'Bundesbehörde, zuständig für das Asylverfahren und alle Entscheide.',
+      sfh: 'Dachorganisation: Rechtsschutz, Verzeichnis der Beratungsstellen und verlässliche Informationen.',
+      caritas: 'Kostenlose Rechtsberatung und -vertretung im Asyl- und Migrationsrecht.',
+      heks: 'Rechtsberatungsstellen für Asylsuchende in mehreren Kantonen.',
+      srk: 'Beratung und Unterstützung für Migrantinnen und Migranten in wichtigen Lebensfragen.',
+    },
+    rightsTitle: { sie: 'Ihre Rechte im Verfahren', du: 'Deine Rechte im Verfahren' },
+    rights: {
+      rechtsvertretung: { sie: 'Kostenlose Rechtsvertretung: Im Bundesasylzentrum wird Ihnen eine kostenlose Rechtsvertretung zugeteilt, die Sie durch das Verfahren begleitet. Nehmen Sie sie an — das ist Ihr Recht.', du: 'Kostenlose Rechtsvertretung: Im Bundesasylzentrum wird dir eine kostenlose Rechtsvertretung zugeteilt, die dich durch das Verfahren begleitet. Nimm sie an — das ist dein Recht.' },
+      anhoerung: { sie: 'Anhörung & Dolmetschen: Sie haben das Recht auf eine Anhörung zu Ihren Fluchtgründen, mit Übersetzung.', du: 'Anhörung & Dolmetschen: Du hast das Recht auf eine Anhörung zu deinen Fluchtgründen, mit Übersetzung.' },
+      beschwerde: { sie: 'Beschwerde: Sie können einen negativen Entscheid anfechten — Ihre Rechtsvertretung unterstützt Sie.', du: 'Beschwerde: Du kannst einen negativen Entscheid anfechten — deine Rechtsvertretung unterstützt dich.' },
+    },
+    fristenTitle: 'Wichtig: Die Fristen sind kurz',
+    fristenBody: { sie: 'Im beschleunigten Verfahren müssen Sie innert 7 Arbeitstagen Beschwerde einlegen, im erweiterten Verfahren innert 30 Tagen. Warten Sie nicht — kontaktieren Sie umgehend Ihre Rechtsvertretung oder eine Beratungsstelle.', du: 'Im beschleunigten Verfahren musst du innert 7 Arbeitstagen Beschwerde einlegen, im erweiterten Verfahren innert 30 Tagen. Warte nicht — kontaktiere umgehend deine Rechtsvertretung oder eine Beratungsstelle.' },
+    cantonLink: { sie: 'Ihr Kanton: {canton} → Asylberatung & Behörden finden', du: 'Dein Kanton: {canton} → Asylberatung & Behörden finden' },
+    cantonOfficeTitle: { sie: 'Beratung in Ihrem Kanton ({canton})', du: 'Beratung in deinem Kanton ({canton})' },
+    counseling: {
+      desc: { sie: 'Kostenlose, vertrauliche Rechtsberatung im Asyl- und Ausländerrecht. Die Stelle begleitet Sie persönlich in Ihrem Verfahren.', du: 'Kostenlose, vertrauliche Rechtsberatung im Asyl- und Ausländerrecht. Die Stelle begleitet dich persönlich in deinem Verfahren.' },
+    },
+    nextStepsTitle: 'Nächste Schritte',
+    linkDocs: { sie: 'Ihre Dokumente sicher aufbewahren → Dokumententresor', du: 'Deine Dokumente sicher aufbewahren → Dokumententresor' },
+    linkEmergency: 'Notfall-Informationen vorbereiten → Notfall',
+    linkAhvIntl: 'AHV mit Auslandbezug → Vorsorge',
+    alltagTitle: { sie: 'Was Ihr Status im Alltag bedeutet', du: 'Was dein Status im Alltag bedeutet' },
+    alltagIntro: { sie: 'Eine grobe Orientierung zu Arbeiten, Familiennachzug und Reisen. Die Regeln sind detailliert und ändern sich — die oben genannten Beratungsstellen klären Ihren konkreten Fall.', du: 'Eine grobe Orientierung zu Arbeiten, Familiennachzug und Reisen. Die Regeln sind detailliert und ändern sich — die oben genannten Beratungsstellen klären deinen konkreten Fall.' },
+    alltag: {
+      dim: { arbeit: 'Arbeiten', familie: 'Familiennachzug', reisen: 'Reisen' },
+      n: {
+        arbeit: 'Nur mit vorheriger Bewilligung des Kantons und nicht während des Aufenthalts in einem Bundesasylzentrum. Ausbildungsprogramme sind möglich.',
+        familie: 'Während des laufenden Verfahrens nicht möglich.',
+        reisen: 'Nur ausnahmsweise, mit Bewilligung des SEM aus wichtigen Gründen (z. B. schwere Krankheit oder Tod eines nahen Angehörigen).',
+      },
+      s: {
+        arbeit: 'Erlaubt, ohne Wartefrist — die Arbeitgeberin meldet die Stelle einfach an.',
+        familie: 'Ehepartnerin oder Ehepartner und minderjährige Kinder können nachkommen und erhalten ebenfalls den Status S.',
+        reisen: { sie: 'Sie dürfen ohne Reisebewilligung ins Ausland reisen und in die Schweiz zurückkehren.', du: 'Du darfst ohne Reisebewilligung ins Ausland reisen und in die Schweiz zurückkehren.' },
+      },
+      f: {
+        arbeit: 'In der ganzen Schweiz erlaubt, keine Wartefrist — die Arbeitgeberin meldet die Stelle einfach an.',
+        familie: 'Frühestens nach einer Wartefrist (rund 3 Jahre) möglich, mit Bedingungen: keine Sozialhilfeabhängigkeit und eine geeignete Wohnung.',
+        reisen: { sie: 'Keine freie Reise — Ihr Pass wird beim SEM hinterlegt. Ein Rückreisevisum wird nur aus wichtigen Gründen erteilt. Nie ins Herkunftsland.', du: 'Keine freie Reise — dein Pass wird beim SEM hinterlegt. Ein Rückreisevisum wird nur aus wichtigen Gründen erteilt. Nie ins Herkunftsland.' },
+      },
+      b: {
+        arbeit: 'In der ganzen Schweiz erlaubt, keine Wartefrist — die Arbeitgeberin meldet die Stelle einfach an.',
+        familie: 'Privilegiert: Ehepartnerin oder Ehepartner und durch die Flucht getrennte minderjährige Kinder können nachkommen und werden in die Flüchtlingseigenschaft einbezogen.',
+        reisen: 'Reisen ist mit einem Reiseausweis für Flüchtlinge möglich — aber nie ins Herkunftsland.',
+      },
+    },
+  },
 };
