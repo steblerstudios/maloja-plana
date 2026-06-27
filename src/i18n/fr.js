@@ -295,7 +295,7 @@ export default {
     next: 'Retour à l\'aperçu',
   },
   dashboard: {
-    welcome: 'Vérifiez vos droits. Organisez votre vie.',
+    welcome: 'Comprendre vos droits. Organiser ce qui vous attend.',
     tagline: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.',
     taglineBenefit: 'Calculateur d\'impôts, réduction de primes, aide sociale, carte d\'urgence — sans inscription.',
     progress: 'Votre progression',
