@@ -95,7 +95,11 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 - 🟡 **Uhr → Frist/Zeit** Verwendungsstellen finden
 - ✅ `og-image.svg` aufs Gipfel-M + Granit — bereits erledigt: SVG hat Maloja-Pass-Polyline +
   Goldpunkt, Granit-Palette, Hanken-Wortmarke; PNG regeneriert (`public/og-image.{svg,png}`).
-- 🟡 Signet-Farben (Ordner+Berg+Pass) an Granit angleichen
+- ⏭️ Signet-Farben (Ordner+Berg+Pass) an Granit — **gegenstandslos (2026-06-27):** das
+  illustrative Ordner+Berg+Pass-Signet existiert nur als Brief (`logo-brief.md`), nicht als
+  Asset. Aktiv genutzt wird das Gipfel-M (Wortmarke/App-Icon), bereits Granit. `src/assets/logo.svg`
+  ist ein ungenutztes (kein Import), farb-neutrales Bergketten-Linien-Icon → nichts umzufärben.
+  Erst relevant, falls das Signet wirklich gebaut wird.
 - 🟡 **Voice/Anrede-Toggle (Sie/Du)** implementieren + Atkinson-Font wiren (Accessibility)
 - ✅ OFL-Lizenztexte zu den WOFF2 legen — `public/fonts/OFL.txt` (exakte Upstream-Header + voller
   OFL-1.1-Text) + `README.md`; wird nach `dist/fonts/` ausgeliefert (Commit `5f1c40d`).
