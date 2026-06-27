@@ -90,9 +90,11 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 - ✅ Icons: Übersicht=Sackmesser, Charts=Schoggi, Kalender=heutiger Tag, Schutzrecht-Fixes
 - ✅ Bergketten-Karte sichtbar (Granit-Opacity nachgezogen)
 - 🟠 **Export-Icon** — neue Metapher (warten auf Tester-Feedback)
-- 🟠 **Benachrichtigungen → Kuhglocke** (MobileNav nutzt noch `settings`/Zahnrad)
+- ✅ **Benachrichtigungen → Kuhglocke** — bereits erledigt: `cowbell` konsistent in MobileNav,
+  CalendarReminders, NotificationSettings, OverdueBanner; kein Zahnrad mehr dafür (per Grep 2026-06-27).
 - 🟡 **Uhr → Frist/Zeit** Verwendungsstellen finden
-- 🟡 `og-image.svg` aufs Gipfel-M + Granit
+- ✅ `og-image.svg` aufs Gipfel-M + Granit — bereits erledigt: SVG hat Maloja-Pass-Polyline +
+  Goldpunkt, Granit-Palette, Hanken-Wortmarke; PNG regeneriert (`public/og-image.{svg,png}`).
 - 🟡 Signet-Farben (Ordner+Berg+Pass) an Granit angleichen
 - 🟡 **Voice/Anrede-Toggle (Sie/Du)** implementieren + Atkinson-Font wiren (Accessibility)
 - 🟡 OFL-Lizenztexte zu den WOFF2 legen · Wortmarke für Produktion in Pfade outlinen
