@@ -120,8 +120,10 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 - **README neu schreiben** — aktuell „0.1.0-alpha", emoji-lastig, „später Open Source",
   „B2B-Versionen (Behörden/Banken)" → ruhige, öffentliche, on-brand Front-Tür (widerspricht sonst
   der Live-Beta).
-- **Funktionale Claim-Unterzeile:** „Verstehen, was zusteht. Ordnen, was ansteht." (Marke „Dein
-  Leben. Deine Übersicht." bleibt). `appTagline` → „Alles Wichtige an einem Ort — auf deinem Gerät."
+- ✅ **Funktionale Claim-Unterzeile:** „Verstehen, was zusteht. Ordnen, was ansteht." ist jetzt
+  das Hero-H2 (`dashboard.welcome`) in allen 5 Sprachen — infinitiv-neutral, keine Sie/Du-Variante.
+  Ersetzt das wortgleiche „Prüfen Sie Ihre Ansprüche…". Marke „Dein Leben. Deine Übersicht." bleibt.
+  🟡 Offen: toter `appTagline`-Key („— auf deinem Gerät." anhängen; wird nirgends gerendert).
 
 **🟠 Positionierung & Trust:**
 - Orientierung vor Organisation kommunizieren (nicht „Lebensordner" als Lead-Wort).
