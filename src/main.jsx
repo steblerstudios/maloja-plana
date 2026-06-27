@@ -624,7 +624,7 @@ const AppInner = () => {
           onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
         }),
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
-        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
