@@ -112,6 +112,26 @@ export function cantonFromPLZ(plz) {
   return match ? match.canton : null;
 }
 
+// PLZ-Modul aktiv vorladen UND `_plzModule` setzen (anders als ein roher dynamic import,
+// der nur den Cache wärmt). So greifen präzise Kanton- und Gemeinde-Lookups schon beim
+// ersten PLZ-Eintrag.
+export function preloadPLZ() {
+  if (!_plzModule) import('../data/plzGemeinde.js').then(m => { _plzModule = m; }).catch(() => {});
+}
+
+// Primäre Gemeinde aus PLZ (lokal). Braucht das geladene PLZ-Modul; vorher null
+// (kein Range-Fallback für Namen). Stösst den Lazy-Load an wie cantonFromPLZ.
+export function gemeindeFromPLZ(plz) {
+  const num = parseInt(plz, 10);
+  if (isNaN(num) || num < 1000 || num > 9999) return null;
+  if (_plzModule) {
+    const primary = _plzModule.primaryGemeinde(plz);
+    return primary ? primary.gemeinde : null;
+  }
+  import('../data/plzGemeinde.js').then(m => { _plzModule = m; });
+  return null;
+}
+
 export const CANTON_CODES = [
   'AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR',
   'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG',

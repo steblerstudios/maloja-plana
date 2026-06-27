@@ -30,5 +30,32 @@ export function allPLZ() {
   return [...PLZ_MAP.keys()];
 }
 
+// Lokale Autocomplete-Suche (komplett offline, kein externer Call).
+// Query = PLZ-Ziffern → Prefix-Match auf PLZ; Query = Text → Teiltreffer auf Gemeindename.
+// Liefert bis zu `limit` Treffer als { plz, gemeinde, bfsNr, kanton }.
+export function searchPLZ(query, limit = 8) {
+  const q = String(query == null ? '' : query).trim().toLowerCase();
+  if (q.length < 2) return [];
+  const isNumeric = /^\d+$/.test(q);
+  const out = [];
+  for (const [plz, matches] of PLZ_MAP) {
+    if (isNumeric) {
+      if (!plz.startsWith(q)) continue;
+      for (const [gemeinde, bfsNr, kanton] of matches) {
+        out.push({ plz, gemeinde, bfsNr, kanton });
+        if (out.length >= limit) return out;
+      }
+    } else {
+      for (const [gemeinde, bfsNr, kanton] of matches) {
+        if (gemeinde.toLowerCase().includes(q)) {
+          out.push({ plz, gemeinde, bfsNr, kanton });
+          if (out.length >= limit) return out;
+        }
+      }
+    }
+  }
+  return out;
+}
+
 export const PLZ_DATA_VERSION = '2025';
 export const PLZ_DATA_SOURCE = 'swisstopo Amtliches Ortschaftenverzeichnis';
