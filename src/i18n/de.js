@@ -489,7 +489,7 @@ export default {
       benefits: ['IPV-Prüfung', 'Prämienvergleich', 'Vorsorge-Rechner'],
       fields: {
         kkInsurer: 'Krankenkasse',
-        kkModel: { label: 'KK-Modell', options: { standard: 'Standard (freie Arztwahl)', hausarzt: 'Hausarztmodell', hmo: 'HMO (Gruppenpraxis)', telmed: 'Telmed (tel. Erstberatung)', apotheke: 'Apothekenmodell' } },
+        kkModel: { label: 'KK-Modell', options: { basic: 'Basic', comfort: 'Comfort', standard: 'Standard (freie Arztwahl)', hausarzt: 'Hausarztmodell', hmo: 'HMO (Gruppenpraxis)', telmed: 'Telmed (tel. Erstberatung)', apotheke: 'Apothekenmodell' } },
         kkPremium: 'KK-Prämie monatlich CHF',
         franchise: { label: 'Franchise CHF', options: { f300: '300', f500: '500', f1000: '1\'000', f1500: '1\'500', f2500: '2\'500', 300: '300', 500: '500', 1000: '1\'000', 1500: '1\'500', 2500: '2\'500' } },
         kkCardNumber: 'KK-Kartennummer',
