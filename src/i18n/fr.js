@@ -2179,6 +2179,7 @@ export default {
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
     enter: 'Ouvrir',
+    legalLink: 'Confidentialité & mentions légales',
     bannerLabel: 'Bêta fermée',
     feedbackMail: 'Feedback par e-mail',
     feedbackForm: 'Formulaire de feedback',
