@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+
+const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
 const BETA_CODE = 'maloja2026';
 const STORAGE_KEY = 'or5_beta_access';
@@ -13,8 +15,28 @@ export const BetaGate = ({ children }) => {
   });
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
+  // Rechtliches muss auch OHNE Code lesbar sein (Vertrauen/Transparenz vor der Hürde).
+  const [legalSection, setLegalSection] = useState(null); // null | 'privacy' | 'imprint' | …
 
   if (granted) return children;
+
+  const palette = LIGHT_PALETTE;
+
+  // Rechtliche Ansicht ohne Zugangscode — LegalView mit eigener Tab-Navigation.
+  if (legalSection) {
+    return React.createElement('div', {
+      role: 'main', 'aria-label': 'Maloja Plana',
+      style: { minHeight: '100vh', background: palette.bg, padding: space.lg + 'px ' + space.md + 'px' }
+    },
+      React.createElement(Suspense, { fallback: React.createElement('div', { style: { textAlign: 'center', color: palette.mid, padding: space.xl + 'px' } }, t('common.loading')) },
+        React.createElement(LegalView, {
+          palette, t, section: legalSection,
+          // 'dashboard' (Zurück) → zur Code-Wand; 'legal' + key → Tab wechseln.
+          onNavigate: (view, _idx, key) => setLegalSection(view === 'legal' && key ? key : null),
+        })
+      )
+    );
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,8 +48,6 @@ export const BetaGate = ({ children }) => {
       setInput('');
     }
   };
-
-  const palette = LIGHT_PALETTE;
 
   return React.createElement('div', {
     role: 'main',
@@ -108,8 +128,17 @@ export const BetaGate = ({ children }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
       }, t('beta.enter')),
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => setLegalSection('privacy'),
+        style: {
+          marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
+          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
+          textDecoration: 'underline', padding: '4px',
+        }
+      }, t('beta.legalLink')),
       React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: space.md }
+        style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm }
       }, 'Stebler Studios · Basel')
     )
   );
