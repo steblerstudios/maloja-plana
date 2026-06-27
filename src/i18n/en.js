@@ -142,12 +142,14 @@ export default {
     export: 'Export',
     calendar: 'Calendar',
     merkliste: 'My checklist',
+    search: 'Search',
     menu: 'Menu',
     completion: '{value}% complete',
     privacyNote: '100% local. No data leaves your device.',
     sub: {
       calendar: 'Deadlines & dates',
       merkliste: 'Notes & next steps',
+      search: 'Find tools & chapters',
       budgetSync: 'CSV import',
       kvgIpv: 'Check eligibility',
       praemien: 'Compare models',
@@ -1786,6 +1788,14 @@ export default {
     dueTodayCount: '{count} due today',
     notificationTitle: '{count} overdue reminder(s)',
     notificationBody: 'Open Maloja Plana to review your reminders.',
+  },
+
+  search: {
+    title: 'Search',
+    placeholder: 'Search tools and chapters…',
+    empty: 'Nothing found for “{query}”. Try a different term.',
+    toolsTitle: 'Tools',
+    chaptersTitle: 'Chapters',
   },
 
   merkliste: {
