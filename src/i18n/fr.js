@@ -2470,6 +2470,31 @@ export default {
     counseling: {
       desc: { sie: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service vous accompagne personnellement dans votre procédure.", du: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service t'accompagne personnellement dans ta procédure." },
     },
+    alltagTitle: "Ce que votre statut signifie au quotidien",
+    alltagIntro: "Une orientation générale sur le travail, le regroupement familial et les voyages. Les règles sont détaillées et évoluent — les services de conseil ci-dessus clarifient votre situation précise.",
+    alltag: {
+      dim: { arbeit: "Travail", familie: "Regroupement familial", reisen: "Voyages" },
+      n: {
+        arbeit: "Uniquement avec une autorisation préalable du canton, et pas dans un centre fédéral pour requérants d'asile. Les programmes de formation sont possibles.",
+        familie: "Pas possible pendant la procédure en cours.",
+        reisen: "Seulement à titre exceptionnel, avec l'autorisation du SEM pour des motifs importants (p. ex. maladie grave ou décès d'un proche).",
+      },
+      s: {
+        arbeit: "Autorisé, sans délai d'attente — l'employeur annonce simplement l'emploi.",
+        familie: "Le conjoint et les enfants mineurs peuvent venir et reçoivent également le statut S.",
+        reisen: "Voyages à l'étranger possibles sans autorisation de voyage, avec retour en Suisse.",
+      },
+      f: {
+        arbeit: "Autorisé dans toute la Suisse, sans délai d'attente — l'employeur annonce simplement l'emploi.",
+        familie: "Possible au plus tôt après un délai d'attente (environ 3 ans), sous conditions : aucune dépendance à l'aide sociale et un logement approprié.",
+        reisen: "Pas de voyage libre — le passeport est déposé auprès du SEM. Un visa de retour n'est accordé que pour des motifs importants. Jamais vers le pays d'origine.",
+      },
+      b: {
+        arbeit: "Autorisé dans toute la Suisse, sans délai d'attente — l'employeur annonce simplement l'emploi.",
+        familie: "Privilégié : le conjoint et les enfants mineurs séparés par la fuite peuvent venir et sont inclus dans le statut de réfugié.",
+        reisen: "Les voyages sont possibles avec un document de voyage pour réfugiés — mais jamais vers le pays d'origine.",
+      },
+    },
   },
   alv: {
     title: "Indemnités de chômage",
