@@ -28,6 +28,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # TEMP-Diagnose: kann der Runner den SSH-Host überhaupt per TCP erreichen?
+      - name: Diagnose SSH-Erreichbarkeit
+        run: |
+          echo "TCP-Connect-Test et9l2r.ftp.infomaniak.com:22 vom GitHub-Runner:"
+          timeout 15 bash -c 'exec 3<>/dev/tcp/et9l2r.ftp.infomaniak.com/22 && head -c 50 <&3' \
+            && echo "" && echo "→ ERREICHBAR (SSH-Banner oben sichtbar)" \
+            || echo "→ BLOCKIERT / Timeout (Infomaniak filtert die Runner-IP)"
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
