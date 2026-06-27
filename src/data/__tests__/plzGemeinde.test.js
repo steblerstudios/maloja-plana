@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lookupPLZ, primaryGemeinde, cantonFromPLZPrecise, allPLZ } from '../plzGemeinde.js';
+import { lookupPLZ, primaryGemeinde, cantonFromPLZPrecise, allPLZ, searchPLZ } from '../plzGemeinde.js';
 
 describe('plzGemeinde', () => {
   describe('lookupPLZ', () => {
@@ -82,6 +82,31 @@ describe('plzGemeinde', () => {
       expect(plzs.length).toBeGreaterThan(3000);
       expect(plzs).toContain('8001');
       expect(plzs).toContain('1000');
+    });
+  });
+
+  describe('searchPLZ', () => {
+    it('matches by PLZ prefix and returns full entry', () => {
+      const r = searchPLZ('8001', 5);
+      expect(r.length).toBeGreaterThan(0);
+      expect(r[0]).toMatchObject({ plz: '8001', gemeinde: 'Zürich', kanton: 'ZH' });
+    });
+
+    it('matches by Gemeinde name (case-insensitive)', () => {
+      const r = searchPLZ('basel', 5);
+      expect(r.length).toBeGreaterThan(0);
+      expect(r.every(x => x.gemeinde.toLowerCase().includes('basel'))).toBe(true);
+      expect(r[0].kanton).toBe('BS');
+    });
+
+    it('respects the limit', () => {
+      expect(searchPLZ('80', 3).length).toBeLessThanOrEqual(3);
+    });
+
+    it('returns empty for too-short or empty/null query', () => {
+      expect(searchPLZ('8')).toEqual([]);
+      expect(searchPLZ('')).toEqual([]);
+      expect(searchPLZ(null)).toEqual([]);
     });
   });
 });
