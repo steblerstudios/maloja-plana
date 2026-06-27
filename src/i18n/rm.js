@@ -1310,7 +1310,7 @@ export default {
 
   checklist: {
     title: "Glista da controlla d'autoritads",
-    intro: "Frequents contacts cun autoritads e documents — stritga giu quai che Ti has gia fatg.",
+    intro: { sie: "Frequents contacts cun autoritads e documents — stritgai giu quai che Vus avais gia fatg.", du: "Frequents contacts cun autoritads e documents — stritga giu quai che Ti has gia fatg." },
     betreibungsauszug: 'Extract da scussiun empustà',
     steuererklaerung: 'Decleraziun da taglia inoltrada',
     wohnsitzbestaetigung: 'Conferma da domicil retschavida',
@@ -1320,9 +1320,9 @@ export default {
   },
 
   chapterView: {
-    benefitsLabel: 'Tes datas flueschan en:',
-    emptyState: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Tai.',
-    emptyStateHint: 'Ti pos adina cumplettar. Nagut sto vegnir fatg en ina giada.',
+    benefitsLabel: { sie: 'Vossas datas flueschan en:', du: 'Tes datas flueschan en:' },
+    emptyState: { sie: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Vus.', du: 'Anc vid — in pèr indicaziuns bastan, e Maloja lavura per Tai.' },
+    emptyStateHint: { sie: 'Vus pudais adina cumplettar. Nagut sto vegnir fatg en ina giada.', du: 'Ti pos adina cumplettar. Nagut sto vegnir fatg en ina giada.' },
     fields: 'Indicaziuns',
     documents: 'Documents',
     selectOption: '— Tscherner —',
@@ -1336,7 +1336,7 @@ export default {
     uploadError: 'Errur cun chargiar si',
     uploadSuccess: 'Document agiunschì',
     hint: 'Indicaziun',
-    trustDocuments: 'Tes documents restan sin quest apparat.',
+    trustDocuments: { sie: 'Voss documents restan sin quest apparat.', du: 'Tes documents restan sin quest apparat.' },
     showMore: 'Mussar ulteriurs secturs',
     showLess: 'Mussar pli pauc',
     hasHiddenData: 'Tscherts secturs zuppads cuntegnan gia datas.',
@@ -1365,13 +1365,13 @@ export default {
   },
 
   budget: {
-    rentInfo: "Tes custs d'abitar fan ora ina gronda part da Tes budget. En bleras citads svizras n'è quai betg extraordinari.",
-    budgetTight: "Tes budget è stretg. I dat posts da cussegliaziun da budget gratuitas — per exempel tar la Caritas u Tia vischnanca.",
-    deficitInfo: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Tes chantun chattas Ti agid.",
-    budgetCalm: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.',
-    ipvHint: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas.",
-    sozialhilfeHint: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.",
-    elHint: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Tia filiala AVS Ta cussegliescha gratuitamain.",
+    rentInfo: { sie: "Voss custs d'abitar fan ora ina gronda part da Voss budget. En bleras citads svizras n'è quai betg extraordinari.", du: "Tes custs d'abitar fan ora ina gronda part da Tes budget. En bleras citads svizras n'è quai betg extraordinari." },
+    budgetTight: { sie: "Voss budget è stretg. I dat posts da cussegliaziun da budget gratuitas — per exempel tar la Caritas u Vossa vischnanca.", du: "Tes budget è stretg. I dat posts da cussegliaziun da budget gratuitas — per exempel tar la Caritas u Tia vischnanca." },
+    deficitInfo: { sie: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Voss chantun chattais Vus agid.", du: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Tes chantun chattas Ti agid." },
+    budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
+    ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
+    sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },
+    elHint: { sie: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Vossa filiala AVS As cussegliescha gratuitamain.", du: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Tia filiala AVS Ta cussegliescha gratuitamain." },
   },
 
   overdue: {
@@ -1379,29 +1379,29 @@ export default {
     overdueCount: '{count} scadì',
     dueTodayCount: "{count} scada oz",
     notificationTitle: '{count} commemoraziun(s) scadida(s)',
-    notificationBody: 'Avra Maloja Plana per examinar Tias commemoraziuns.',
+    notificationBody: { sie: 'Avri Maloja Plana per examinar Vossas commemoraziuns.', du: 'Avra Maloja Plana per examinar Tias commemoraziuns.' },
   },
 
   emergencyCardEntry: {
     title: "Preparar la carta d'urgenza",
-    text: 'Ina persuna da contact e Tia gruppa da sang bastan sco cumenzament.',
+    text: { sie: 'Ina persuna da contact e Vossa gruppa da sang bastan sco cumenzament.', du: 'Ina persuna da contact e Tia gruppa da sang bastan sco cumenzament.' },
     action: "Avrir la carta d'urgenza",
   },
 
   notfallEinstieg: {
-    title: "Tge dovras Ti en cas d'urgenza?",
-    subtitle: 'Trais scenaris — e tge indicaziuns che Ti duessas avair prontas.',
+    title: { sie: "Tge dovrais Vus en cas d'urgenza?", du: "Tge dovras Ti en cas d'urgenza?" },
+    subtitle: { sie: 'Trais scenaris — e tge indicaziuns che Vus duessas avair prontas.', du: 'Trais scenaris — e tge indicaziuns che Ti duessas avair prontas.' },
     back: 'Enavos tar la survista',
     allDone: 'Tut las indicaziuns avant maun.',
-    unfall: { title: 'Accident', description: "Ti has gì in accident. Tge dovran las forzas da salvament e la clinica?" },
-    spital: { title: 'Dimora en la clinica', description: "Ti stos en la clinica. Tge dovra l'admissiun?" },
-    behoerde: { title: "Contact cun l'autoritad", description: 'Ti vas sin in uffizi. Tge stos Ti avair cun tai?' },
+    unfall: { title: 'Accident', description: { sie: "Vus avais gì in accident. Tge dovran las forzas da salvament e la clinica?", du: "Ti has gì in accident. Tge dovran las forzas da salvament e la clinica?" } },
+    spital: { title: 'Dimora en la clinica', description: { sie: "Vus stuais en la clinica. Tge dovra l'admissiun?", du: "Ti stos en la clinica. Tge dovra l'admissiun?" } },
+    behoerde: { title: "Contact cun l'autoritad", description: { sie: 'Vus vais sin in uffizi. Tge stuais Vus avair cun Vus?', du: 'Ti vas sin in uffizi. Tge stos Ti avair cun tai?' } },
   },
 
   ruhe: {
     basis: 'Il maletg stat.',
-    wohnen: 'Tia chasa ha in lieu.',
-    finanzen: 'Las cifras sa chattan davant tai.',
+    wohnen: { sie: 'Vossa chasa ha in lieu.', du: 'Tia chasa ha in lieu.' },
+    finanzen: { sie: 'Las cifras sa chattan davant Vus.', du: 'Las cifras sa chattan davant tai.' },
     versicherungen: 'La protecziun è registrada.',
     ausbildung: 'Il percurs è documentà.',
     behoerden: 'Il stadi è documentà.',
@@ -1409,19 +1409,19 @@ export default {
   },
 
   stille: {
-    basis: 'Ti has traversà quest chapitel cumplettamain. El è pront cura che Ti al dovras.',
-    wohnen: 'Tut quai che importa da Tia chasa è registrà.',
-    finanzen: 'Tia survista finanziala è cumpleta.',
-    versicherungen: 'Tia protecziun dad assicuranza è documentada.',
-    ausbildung: 'Tes fund professiunal e scolastic è documentà.',
-    behoerden: "Tia situaziun d'autoritads è cumplettamain registrada.",
+    basis: { sie: 'Vus avais traversà quest chapitel cumplettamain. El è pront cura che Vus al dovrais.', du: 'Ti has traversà quest chapitel cumplettamain. El è pront cura che Ti al dovras.' },
+    wohnen: { sie: 'Tut quai che importa da Vossa chasa è registrà.', du: 'Tut quai che importa da Tia chasa è registrà.' },
+    finanzen: { sie: 'Vossa survista finanziala è cumpleta.', du: 'Tia survista finanziala è cumpleta.' },
+    versicherungen: { sie: 'Vossa protecziun dad assicuranza è documentada.', du: 'Tia protecziun dad assicuranza è documentada.' },
+    ausbildung: { sie: 'Voss fund professiunal e scolastic è documentà.', du: 'Tes fund professiunal e scolastic è documentà.' },
+    behoerden: { sie: "Vossa situaziun d'autoritads è cumplettamain registrada.", du: "Tia situaziun d'autoritads è cumplettamain registrada." },
     notfall: "En cas d'urgenza è tut quai ch'è impurtant chattabel.",
     next: 'Enavos tar la survista',
   },
 
   versicherungsübersicht: {
     title: "Survista d'assicuranzas",
-    intro: "Quests secturs èn visibels en Tia deposita. «Betg registrà» na vul betg dir «betg avant maun».",
+    intro: { sie: "Quests secturs èn visibels en Vossa deposita. «Betg registrà» na vul betg dir «betg avant maun».", du: "Quests secturs èn visibels en Tia deposita. «Betg registrà» na vul betg dir «betg avant maun»." },
     erfasst: 'Registrà',
     nichtErfasst: 'Betg registrà',
     kvg: 'Assicuranza da basa (LAMal)',
@@ -2557,6 +2557,9 @@ export default {
     counseling: {
       desc: "Cussegliaziun giuridica gratuita e confidenziala en il dretg d'asil e d'esters. Quel post t'accumpogna persunalmain en tia procedura.",
     },
+    nextStepsTitle: "Proxims pass",
+    linkDocs: "Tegnair tes documents segirs → Cassaforte da documents",
+    linkEmergency: "Preparar infurmaziuns d'urgenza → Urgenza",
     alltagTitle: "Tge che tes status munta en il mintgadi",
     alltagIntro: "Ina orientaziun grossa davart lavurar, la reuniun da la famiglia ed il viagiar. Las reglas èn detagliadas e sa midan — ils posts da cussegliaziun survart cleran tes cas concret.",
     alltag: {
