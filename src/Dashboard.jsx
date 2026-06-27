@@ -87,10 +87,8 @@ const QuickCheck = ({ palette, t, onNavigate, savedIncome }) => {
     style: {
       marginTop: space.md, marginBottom: space.lg,
       padding: '20px 24px',
-      background: palette.surface,
-      borderRadius: radius.lg - 4,
-      border: '1px solid ' + palette.border + '88',
-      boxShadow: shadow.sm,
+      background: palette.up,
+      borderRadius: radius.md,
     }
   },
     React.createElement('div', {
@@ -1005,10 +1003,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       style: {
         marginBottom: space.xl,
         padding: '20px 24px',
-        background: palette.surface,
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border + '88',
-        boxShadow: shadow.sm
+        background: palette.up,
+        borderRadius: radius.md,
       }
     },
       React.createElement('div', {
