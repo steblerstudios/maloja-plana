@@ -45,9 +45,12 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
     (Wortgrenze): **129 Pfade sind nachweislich tot** (in en abwesend + 0 Code-Referenzen) — alte
     Alt-Keys aus früherer Struktur (`sections`/`sectionIntros`/`chapterStatus`/`guidedStart`/
     `progress`/alte `onboarding.*`/`trust.*`/`error.*`/`storage`/`backup` + viele `chapters.*.fields/docs/options`).
-  - **Kein „ganzer Block"-Shortcut:** alle 129 sind verstreute Einzel-Keys in gemischten Blöcken →
-    129 chirurgische Löschungen, fehleranfällig, **0 sichtbarer Nutzen** (nur ~10 kB Bundle). Lohnt
-    sich nur als vorsichtiger Skript-Pass, wenn rm.js ruhig ist (Agenten editieren es laufend).
+  - **Kein „ganzer Block"-Shortcut:** alle 129 sind verstreute Einzel-Keys in gemischten Blöcken.
+  - **Skript-Pass als nicht praktikabel erwiesen (2026-06-27):** viele Orphans liegen als
+    inline-Mehrfach-Key-Objekte auf *einer* Zeile (`finanzen: { income:…, expenses:…, budget:… }`)
+    → zeilenweises Löschen unzuverlässig (Scanner-Test: 294 verfehlt/81 falsch); sauber ginge nur
+    ein AST-Parser + Reprint, der aber die ganze Datei neu formatiert (riesiger Diff, Kollision mit
+    Agenten). **0 sichtbarer Nutzen** (~10 kB) → Bulk-Löschung bewusst gelassen, Analyse dokumentiert.
   - ✅ **Nebenbefund behoben:** 2 der Kandidaten (`kkModel.options.basic`/`.comfort`) waren NICHT
     tot — KKScanner nutzt sie, aber sie fehlten in en/de/fr/it → Dropdown zeigte rohen Key-String.
     Keys ergänzt (Commit zu kkModel basic/comfort).
