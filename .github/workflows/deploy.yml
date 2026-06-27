@@ -39,12 +39,12 @@ jobs:
 
       # Deploy via SFTP (Port 22) mit lftp. FTP (Port 21) ist von GitHub-Runnern
       # aus nicht erreichbar (Infomaniak blockt FTP von CI-IPs); SFTP über SSH geht.
-      # mirror -R = Inhalt von dist/ hochladen, --delete=false = nichts auf dem
-      # Server löschen (nicht-destruktiv).
+      # mirror -R = Inhalt von dist/ hochladen. Ohne --delete bleibt es
+      # nicht-destruktiv (lftp löscht standardmässig keine Server-Dateien).
       - name: Deploy to Infomaniak via SFTP
         env:
           SFTP_USER: ${{ secrets.FTP_USERNAME }}
           SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -c "set sftp:auto-confirm yes; open -u \"$SFTP_USER\",\"$SFTP_PASS\" sftp://ftp.hosting-ik.com; mirror -R --verbose --delete=false ./dist/ /home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/"
+          lftp -c "set sftp:auto-confirm yes; open -u \"$SFTP_USER\",\"$SFTP_PASS\" sftp://ftp.hosting-ik.com; mirror -R --verbose ./dist/ /home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/"
