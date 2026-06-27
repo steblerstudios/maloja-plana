@@ -107,7 +107,13 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 - ✅ **Stipendien** — Berechtigungs-Check (Inkr. 2). Offen: Antrags-Generator; präziser Betrags-Rechner bewusst nicht gebaut.
 - ✅ **Arbeitslosenkassen-Rechner** (ALV-Taggeld 70/80%, Wartetage, Höchstbetrag; SECO 2025).
-- 🟡 **Adressen-Autocomplete** (Nominatim/OSM, CSP-konform).
+- ✅ **Adressen-Autocomplete (lokal)** — PLZ→Gemeinde/Kanton offline aus der geb. PLZ-DB
+  (`searchPLZ`/`gemeindeFromPLZ`); PLZ-Eingabe füllt jetzt Stadt **und** Kanton automatisch.
+  Kein externer Call, CSP bleibt strikt. Privacy-konform — passt zur Marke. (Commit `e7c104e`)
+  - 🔵 **Backlog (Erweiterung):** Strassen-Level via Nominatim/OSM — nur falls gewünscht;
+    bräuchte externe Calls + CSP-Lockerung + Adress-PII verlässt das Gerät (bricht
+    Offline-/Privacy-Versprechen, heikel für Asyl-Zielgruppe). `searchPLZ` ist schon als
+    Fundament für ein lokales Vorschlags-Dropdown da, falls man das vorher ausbauen will.
 - 🟡 **SEO** verbessern (mehrsprachig, hreflang, CH-Keywords).
 - ✅ **Architektur aufräumen** (Kantonsdaten-Check: bereits sauber; verwaistes name-Feld entfernt).
 - 🔵 **Asylwesen** + Sprach-Dropdown (mehr Sprachen) — eigenes grosses strategisches Thema.
