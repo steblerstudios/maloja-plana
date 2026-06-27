@@ -104,8 +104,10 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 - 🟠 **Herzensempfehlung Leihlager** (`heartfelt10`) — braucht Name + URL von Sophie.
 - ✅ Abschiedsagentur (`heartfelt9`, alle 5 Sprachen)
-- 🟡 **Quellen/Links-Check** — „alle Links müssen funktionieren" (Link-Checker), Crosslinks
-  vervollständigen.
+- ✅ **Quellen/Links-Check** (erneut 2026-06-27): 121 externe URLs geprüft (27 neue Asyl/Stipendien
+  + 94 direktLinks). **0 echte tote Links** — alle 2xx/3xx; einzig 3× `baselland.ch` 403 = bekannter
+  WAF-False-Positive (im echten Browser gültig, siehe [[link-check]]). Asyl-Orgs (SEM/Caritas/HEKS/
+  SFH/SRK/EPER) + Stipendien (EDK/SBFI/stipendium.ch) alle 200.
 
 ## F — Grössere Features (Sophie wählt Reihenfolge)
 
