@@ -528,7 +528,7 @@ function buildLifeSentence(chapterKey, data, allData, t) {
 
 // ─── Mirror section builders ───────────────────────────────
 
-function buildBasisSections(data, t) {
+function buildBasisSections(data, t, allData) {
   const sections = [];
 
   // Section: Person
@@ -547,7 +547,12 @@ function buildBasisSections(data, t) {
   }
 
   // Section: Contact (E-Mail excluded — no identity/mirror value)
+  // Address is stored in the Wohnen chapter, but people instinctively look for
+  // it under Basis. Mirror it here (read-only from allData.wohnen) so it is
+  // findable where it is expected.
   const contactRows = [];
+  const addr = allData && allData.wohnen ? addressLine(allData.wohnen) : null;
+  if (addr) contactRows.push({ label: t('mirror.wohnen.address'), value: addr });
   if (data.phone) contactRows.push({ label: t('mirror.basis.phone'), value: data.phone });
 
   if (contactRows.length > 0) {
@@ -676,7 +681,7 @@ function buildFinanzenSections(data, allData, t) {
 }
 
 function buildMirrorSections(chapterKey, data, t, allData) {
-  if (chapterKey === 'basis') return buildBasisSections(data, t);
+  if (chapterKey === 'basis') return buildBasisSections(data, t, allData);
   if (chapterKey === 'wohnen') return buildWohnenSections(data, t);
   if (chapterKey === 'finanzen') return buildFinanzenSections(data, allData, t);
   if (chapterKey === 'behoerden') return buildBehoerdenSections(data, t);
