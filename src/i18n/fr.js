@@ -2470,6 +2470,9 @@ export default {
     counseling: {
       desc: { sie: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service vous accompagne personnellement dans votre procédure.", du: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service t'accompagne personnellement dans ta procédure." },
     },
+    nextStepsTitle: "Prochaines étapes",
+    linkDocs: "Conserver vos documents en sécurité → Coffre-fort de documents",
+    linkEmergency: "Préparer les informations d'urgence → Urgence",
     alltagTitle: "Ce que votre statut signifie au quotidien",
     alltagIntro: "Une orientation générale sur le travail, le regroupement familial et les voyages. Les règles sont détaillées et évoluent — les services de conseil ci-dessus clarifient votre situation précise.",
     alltag: {
