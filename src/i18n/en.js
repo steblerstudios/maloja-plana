@@ -1792,6 +1792,8 @@ export default {
     overdue: 'Overdue',
     completed: 'Completed',
     addReminder: 'Add reminder',
+    exportIcs: 'Export calendar (.ics)',
+    exportIcsHint: 'Add your reminders to your phone or computer calendar.',
     editReminder: 'Edit reminder',
     noReminders: 'No reminders yet. Add your first reminder to stay organized.',
     today: 'Today',

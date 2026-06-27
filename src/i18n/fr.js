@@ -1738,6 +1738,8 @@ export default {
     overdue: 'En retard',
     completed: 'Terminé',
     addReminder: 'Ajouter un rappel',
+    exportIcs: 'Exporter le calendrier (.ics)',
+    exportIcsHint: 'Ajoutez vos rappels au calendrier de votre téléphone ou ordinateur.',
     editReminder: 'Modifier un rappel',
     noReminders: 'Pas encore de rappels. Ajoutez votre premier rappel pour rester organisé.',
     today: 'Aujourd\'hui',
