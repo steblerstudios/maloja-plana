@@ -103,10 +103,47 @@ describe('plzGemeinde', () => {
       expect(searchPLZ('80', 3).length).toBeLessThanOrEqual(3);
     });
 
-    it('returns empty for too-short or empty/null query', () => {
+    it('returns empty for too-short or empty/null/undefined query', () => {
       expect(searchPLZ('8')).toEqual([]);
       expect(searchPLZ('')).toEqual([]);
       expect(searchPLZ(null)).toEqual([]);
+      expect(searchPLZ(undefined)).toEqual([]);
+    });
+
+    it('trims surrounding whitespace', () => {
+      const r = searchPLZ('  8001  ', 5);
+      expect(r.some((x) => x.plz === '8001')).toBe(true);
+    });
+
+    it('returns [] for numeric queries longer than a PLZ (no 5-digit PLZ)', () => {
+      expect(searchPLZ('80011')).toEqual([]);
+    });
+
+    it('numeric prefix only matches PLZ starting with it', () => {
+      const r = searchPLZ('80', 50);
+      expect(r.length).toBeGreaterThan(0);
+      expect(r.every((x) => x.plz.startsWith('80'))).toBe(true);
+    });
+
+    it('returns every Gemeinde for an ambiguous PLZ', () => {
+      const names = searchPLZ('1008', 8).map((x) => x.gemeinde);
+      expect(names).toContain('Prilly');
+      expect(names).toContain('Jouxtens-Mézery');
+    });
+
+    it('returns [] when nothing matches', () => {
+      expect(searchPLZ('Qwertzuiopxyz', 5)).toEqual([]);
+    });
+
+    it('every result carries plz, gemeinde, bfsNr, kanton', () => {
+      const r = searchPLZ('300', 5);
+      expect(r.length).toBeGreaterThan(0);
+      for (const x of r) {
+        expect(typeof x.plz).toBe('string');
+        expect(typeof x.gemeinde).toBe('string');
+        expect(typeof x.bfsNr).toBe('string');
+        expect(typeof x.kanton).toBe('string');
+      }
     });
   });
 });
