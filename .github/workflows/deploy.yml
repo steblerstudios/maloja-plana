@@ -3,18 +3,15 @@ name: Deploy to Infomaniak
 # Baut die statische App und lädt den Inhalt von dist/ per SFTP zu Infomaniak
 # (malojaplana.ch).
 #
-# ⚠️ AUTO-TRIGGER VORERST DEAKTIVIERT (nur workflow_dispatch / manuell):
-# Weder FTP (Port 21) noch SFTP via ftp.hosting-ik.com (Port 22) sind von
-# GitHub-Runnern erreichbar (Connect-Timeout, von zwei Stellen bestätigt).
-# Der funktionierende SSH-Zugang läuft über einen anderen, noch zu klärenden
-# Host. Bis das geklärt ist, kein Auto-Deploy bei Push — sonst schlägt jeder
-# Push fehl. Reaktivieren: `push:`-Block unten wieder einkommentieren.
+# SFTP-Host: et9l2r.ftp.infomaniak.com (Port 22, SSH für et9l2r_admin aktiviert).
+# NICHT ftp.hosting-ik.com — der ist von aussen auf 21/22 nicht erreichbar.
+# Auto-Trigger (push) ist noch auskommentiert: erst ein kontrollierter manueller
+# Lauf (workflow_dispatch) zum Verifizieren, dann push-Trigger reaktivieren.
 #
 # Benötigte GitHub-Secrets (Repo → Settings → Secrets and variables → Actions):
 #   FTP_USERNAME  – FTP-Benutzername von Infomaniak
 #   FTP_PASSWORD  – FTP-Passwort
-# Upload via SFTP (Port 22, ftp.hosting-ik.com) — FTP/Port 21 ist von CI-Runnern
-# aus blockiert (Infomaniak). Zielpfad unten gesetzt.
+# Upload via SFTP (Port 22). Zielpfad absolut, unten gesetzt.
 # Kein BASE_URL nötig: base default '/' passt für die Root-Domain.
 # WICHTIG: public/.htaccess wird beim Build nach dist/ kopiert, verursacht auf
 # Infomaniak aber einen 503 → wird vor dem Upload entfernt (Schritt unten).
@@ -56,4 +53,4 @@ jobs:
           SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -c "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; open -u \"$SFTP_USER\",\"$SFTP_PASS\" sftp://ftp.hosting-ik.com; mirror -R --verbose ./dist/ /home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/"
+          lftp -c "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; open -u \"$SFTP_USER\",\"$SFTP_PASS\" sftp://et9l2r.ftp.infomaniak.com; mirror -R --verbose ./dist/ /home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/"
