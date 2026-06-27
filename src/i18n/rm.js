@@ -857,7 +857,7 @@ export default {
       subtitle: { sie: 'Gidai nus a meglierar Maloja Plana. Tut resta sin Voss apparat.', du: 'Gida nus a meglierar Maloja Plana. Tut resta sin Tes apparat.' },
       q1: { sie: 'Avais Vus chapì il niz da Maloja Plana en la emprima minuta?', du: 'Has Ti chapì il niz da Maloja Plana en la emprima minuta?' },
       q2: { sie: 'Quant segir As sentais Vus che Vossas datas restan privatas?', du: 'Quant segir Ta sentas Ti che Tes datas restan privatas?' },
-      q3: "Tge T'ha plaschair u mancà?",
+      q3: { sie: "Tge As ha plaschair u mancà?", du: "Tge T'ha plaschair u mancà?" },
       q3placeholder: 'Facultativ — ma fitg util per nus.',
       scaleYes: 'Gea, immediat',
       scaleMostly: 'Per gronda part',
