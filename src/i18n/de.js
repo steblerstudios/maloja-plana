@@ -2209,6 +2209,13 @@ export default {
     },
   },
 
+  sandbox: {
+    bannerTitle: 'Probier-Modus aktiv',
+    bannerText: 'Hier lässt sich frei rechnen — der gespeicherte Stand bleibt unberührt.',
+    footerLink: 'Probier-Modus',
+    discard: 'Verwerfen',
+    apply: 'In den Stand übernehmen',
+  },
   demo: {
     bannerTitle: 'Beispiel: Maria Muster, 34, Zürich',
     bannerText: 'So könnte ein ausgefüllter Lebensordner aussehen.',

@@ -237,9 +237,17 @@ const AppInner = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
   const [demoMode, setDemoMode] = useState(false);
+  const [sandboxMode, setSandboxMode] = useState(false);
+  const [sandboxData, setSandboxData] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [installPrompt, setInstallPrompt] = useState(null);
-  const activeData = demoMode ? DEMO_DATA : data;
+  const sandboxActive = sandboxMode && sandboxData;
+  const activeData = demoMode ? DEMO_DATA : (sandboxActive ? sandboxData : data);
+  // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
+  const writeData = sandboxActive ? setSandboxData : setData;
+  const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
+  const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
+  const applySandbox = () => { if (sandboxData) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -333,7 +341,7 @@ const AppInner = () => {
 
   const updateData = (chapter, field, value) => {
     if (demoMode) return;
-    setData(prev => {
+    writeData(prev => {
       const next = { ...prev, [chapter]: { ...prev[chapter], [field]: value } };
 
       // PLZ->Kanton + PLZ->Gemeinde auto-sync (lokal, offline)
@@ -530,6 +538,39 @@ const AppInner = () => {
         }
       }, t('demo.leave'))
     ),
+    sandboxActive && React.createElement('div', {
+      role: 'status',
+      style: {
+        padding: '10px 16px',
+        background: palette.sage + '18',
+        borderBottom: '1px solid ' + palette.sage + '30',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('sandbox.bannerTitle')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText'))
+      ),
+      React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
+        React.createElement('button', {
+          onClick: discardSandbox,
+          style: {
+            padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
+            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+            color: palette.text, fontFamily: 'inherit',
+          }
+        }, t('sandbox.discard')),
+        React.createElement('button', {
+          onClick: applySandbox,
+          style: {
+            padding: '6px 14px', background: palette.sage, border: 'none',
+            borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
+            color: '#fff', fontFamily: 'inherit',
+          }
+        }, t('sandbox.apply'))
+      )
+    ),
     React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
       view !== 'dashboard' && React.createElement('button', {
         onClick: () => setView('dashboard'),
@@ -595,7 +636,7 @@ const AppInner = () => {
           palette, t, data: activeData,
           onSave: (kkData) => {
             const franchiseKey = kkData.franchise ? 'f' + kkData.franchise : '';
-            setData(prev => {
+            writeData(prev => {
               const next = { ...prev };
               next.versicherungen = { ...next.versicherungen,
                 kkInsurer: kkData.insurer || next.versicherungen?.kkInsurer || '',
@@ -613,23 +654,23 @@ const AppInner = () => {
         view === 'budget' && React.createElement(BudgetImport, {
           palette, t,
           currentBudget: activeData.finanzen || {},
-          onImport: (updated) => setData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
+          onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
           palette, t,
           data: activeData,
-          onSave: (schuldenData) => setData(prev => ({ ...prev, ...schuldenData }))
+          onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {
           palette, t,
           data: activeData,
-          onSave: (updatedData) => setData(prev => ({ ...prev, ...updatedData })),
+          onSave: (updatedData) => writeData(prev => ({ ...prev, ...updatedData })),
           onNavigate: handleNavigate,
         }),
         view === 'organ' && React.createElement(OrganDonation, {
           palette, t,
           data: activeData,
-          onSave: (organData) => setData(prev => ({ ...prev, ...organData }))
+          onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
@@ -701,14 +742,26 @@ const AppInner = () => {
       }, t('legal.footerLink')),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('button', {
-        onClick: () => { setDemoMode(!demoMode); setView('dashboard'); },
+        onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.xs, padding: 0,
           fontFamily: 'inherit', letterSpacing: '0.3px',
           textDecoration: 'underline', textUnderlineOffset: '2px',
         }
-      }, demoMode ? t('demo.leave') : t('demo.footerLink'))
+      }, demoMode ? t('demo.leave') : t('demo.footerLink')),
+      !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
+        React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+        React.createElement('button', {
+          onClick: enterSandbox,
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: palette.mid, fontSize: text.xs, padding: 0,
+            fontFamily: 'inherit', letterSpacing: '0.3px',
+            textDecoration: 'underline', textUnderlineOffset: '2px',
+          }
+        }, t('sandbox.footerLink'))
+      )
     )
   ));
 };
