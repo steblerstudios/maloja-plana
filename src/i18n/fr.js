@@ -2526,6 +2526,9 @@ export default {
     scan: "Scanner & commencer :",
     foot: "Local, privé, gratuit · par Stebler Studios",
     print: "Imprimer / enregistrer en PDF",
+    share: "Partager le lien",
+    shareText: "Maloja Plana — votre aperçu serein de la vie en Suisse. Privé, hors ligne, gratuit.",
+    copied: "Lien copié",
     langHint: "Le flyer est créé dans la langue actuellement sélectionnée. Pour une autre langue, changez d'abord la langue en haut.",
   },
   alv: {

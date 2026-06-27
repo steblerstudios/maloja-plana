@@ -2527,6 +2527,9 @@ export default {
     scan: "Scan & get started:",
     foot: "Local, private, free · by Stebler Studios",
     print: "Print / save as PDF",
+    share: "Share link",
+    shareText: "Maloja Plana — your calm overview of life in Switzerland. Private, offline, free.",
+    copied: "Link copied",
     langHint: "The flyer is created in the currently selected language. For another language, switch the language at the top first.",
   },
   alv: {
