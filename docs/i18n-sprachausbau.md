@@ -64,10 +64,36 @@ Wenn eine verifizierte Sprachdatei `src/i18n/<code>.js` vorliegt:
 
 - `i18n/index.js` setzt `<html dir="rtl">` automatisch für RTL-Sprachen
   (`isRTL()` / `applyHtmlLang()`).
-- Vor Aktivierung von `ar`: Layout im Preview prüfen — die Inline-Styles nutzen
-  teils feste `left/right`-Werte (z.B. Sprach-Combobox, Icons). Diese auf
-  logische Eigenschaften (`inset-inline-start/-end`) bzw. `dir`-bewusste Werte
-  umstellen, wo die Spiegelung sonst falsch sitzt.
+- Die App ist vollständig inline-gestylt. RTL-Korrektheit = **physische
+  Richtungs-Properties durch logische ersetzen** (rendern in LTR identisch,
+  spiegeln in RTL automatisch via `dir`, kein JS nötig):
+
+  | physisch | logisch |
+  |---|---|
+  | `textAlign: 'left'/'right'` | `textAlign: 'start'/'end'` |
+  | `borderLeft`/`borderRight` | `borderInlineStart`/`borderInlineEnd` |
+  | `marginLeft`/`marginRight` | `marginInlineStart`/`marginInlineEnd` |
+  | `paddingLeft`/`paddingRight` | `paddingInlineStart`/`paddingInlineEnd` |
+  | `left:`/`right:` (absolute) | `insetInlineStart`/`insetInlineEnd` |
+
+  Achtung: Icons mit Richtungssinn (Pfeile „→", „←", Chevrons) müssen ggf.
+  zusätzlich gespiegelt werden (`transform: scaleX(-1)` unter `[dir=rtl]`).
+
+### Status der RTL-Umstellung
+
+- ✅ **Erledigt** (Kern, geprüft unter `dir=rtl`): globaler `LanguageSwitcher`
+  (main.jsx) und `AsylView.jsx`.
+- ⏳ **Offen** (~21 Dateien mit physischen Richtungs-Properties) — vor
+  `ar`-Aktivierung umstellen. Erfassen mit:
+
+  ```sh
+  grep -rlE "left: '|right: '|marginLeft|marginRight|paddingLeft|paddingRight|textAlign: 'left'|borderLeft|borderRight" src --include="*.jsx"
+  ```
+
+  Betrifft u.a. Dashboard, ChapterView, MobileNav, Onboarding, NotfallEinstieg,
+  TaxCalculator, SozialhilfeView, PraemienOrientierung, StipendienView u.a.
+  Empfehlung: als **eigener, fokussierter Refactor** machen, wenn eine
+  RTL-Übersetzung tatsächlich beauftragt ist (nicht spekulativ vorab).
 
 ## Offen / nächster Schritt
 
