@@ -2231,6 +2231,13 @@ export default {
     },
   },
 
+  sandbox: {
+    bannerTitle: 'Mode brouillon',
+    bannerText: 'Essayez des calculs librement — vos données enregistrées restent intactes.',
+    footerLink: 'Brouillon',
+    discard: 'Annuler',
+    apply: 'Appliquer à mes données',
+  },
   demo: {
     bannerTitle: 'Exemple : Maria Muster, 34 ans, Zurich',
     bannerText: 'Voici à quoi pourrait ressembler un dossier de vie rempli.',

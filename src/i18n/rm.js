@@ -886,6 +886,13 @@ export default {
     complete: { sie: 'Vossa urden essentiala stat. Il fundament è mess.', du: 'Tia urden essentiala stat. Il fundament è mess.' },
   },
 
+  sandbox: {
+    bannerTitle: 'Modus da prova',
+    bannerText: 'Qua sa po far quint libramain — las datas memorisadas restan intactas.',
+    footerLink: 'Prova',
+    discard: 'Annullar',
+    apply: 'Surpigliar las datas',
+  },
   demo: {
     footerLink: 'Exempel',
     leave: "Bandunar l'exempel",
