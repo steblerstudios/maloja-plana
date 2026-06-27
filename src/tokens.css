@@ -81,6 +81,10 @@
   --mp-shadow-md:  0 2px 8px rgba(0,0,0,0.08);
   --mp-shadow-lg:  0 4px 16px rgba(0,0,0,0.10);
   --mp-shadow-xl:  0 8px 32px rgba(0,0,0,0.12);
+
+  /* ─── Accent (Gold) — Fokus-Ringe & Auswahl ───────────── */
+  /* Einziger Farb-Token in CSS; restliche Farben kommen aus den JS-Paletten. */
+  --mp-accent: #C4A870;
 }
 
 /* ─── Global animation keyframes ────────────────────────── */
@@ -108,7 +112,7 @@ button, [role="button"], summary {
 
 /* ─── Focus styles (accessibility) ──────────────────────── */
 :focus-visible {
-  outline: 2px solid #C4A870;
+  outline: 2px solid var(--mp-accent);
   outline-offset: 2px;
 }
 
@@ -120,7 +124,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #C4A870 !important;
+  outline: 2px solid var(--mp-accent) !important;
   outline-offset: 2px !important;
   z-index: 1;
 }
@@ -132,7 +136,7 @@ textarea:focus-visible,
   top: 8px;
   z-index: 10000;
   padding: 8px 16px;
-  background: #C4A870;
+  background: var(--mp-accent);
   color: #000;
   font-weight: 600;
   font-size: 14px;
