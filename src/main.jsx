@@ -346,16 +346,23 @@ const AppInner = () => {
     writeData(prev => {
       const next = { ...prev, [chapter]: { ...prev[chapter], [field]: value } };
 
-      // PLZ->Kanton + PLZ->Gemeinde auto-sync (lokal, offline)
+      // PLZ->Kanton + PLZ->Gemeinde auto-sync (lokal, offline).
+      // WICHTIG: nur befüllen, wenn die präzise PLZ-DB geladen ist (gemeinde != null).
+      // Sonst liefert cantonFromPLZ den ~18% ungenauen Range-Fallback, der wegen der
+      // "fill-if-empty"-Semantik als FALSCHER Kanton kleben bliebe und Steuer/IPV
+      // falsch triebe. gemeindeFromPLZ hat keinen Range-Fallback -> != null heisst
+      // Modul geladen -> cantonFromPLZ liefert dann den präzisen Kanton.
       if (chapter === 'wohnen' && field === 'postalCode' && value.length === 4) {
-        const detected = cantonFromPLZ(value);
-        if (detected) {
-          next.basis = { ...next.basis, canton: next.basis?.canton || detected };
-          next.behoerden = { ...next.behoerden, cantoneOfTaxation: next.behoerden?.cantoneOfTaxation || detected };
-        }
         const gemeinde = gemeindeFromPLZ(value);
-        if (gemeinde && !next.wohnen?.city) {
-          next.wohnen = { ...next.wohnen, city: gemeinde };
+        if (gemeinde) {
+          const detected = cantonFromPLZ(value); // Modul geladen -> präzise
+          if (detected) {
+            next.basis = { ...next.basis, canton: next.basis?.canton || detected };
+            next.behoerden = { ...next.behoerden, cantoneOfTaxation: next.behoerden?.cantoneOfTaxation || detected };
+          }
+          if (!next.wohnen?.city) {
+            next.wohnen = { ...next.wohnen, city: gemeinde };
+          }
         }
       }
 
