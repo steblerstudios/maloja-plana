@@ -118,8 +118,10 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   Kein externer Call, CSP bleibt strikt. Privacy-konform — passt zur Marke. (Commit `e7c104e`)
   - 🔵 **Backlog (Erweiterung):** Strassen-Level via Nominatim/OSM — nur falls gewünscht;
     bräuchte externe Calls + CSP-Lockerung + Adress-PII verlässt das Gerät (bricht
-    Offline-/Privacy-Versprechen, heikel für Asyl-Zielgruppe). `searchPLZ` ist schon als
-    Fundament für ein lokales Vorschlags-Dropdown da, falls man das vorher ausbauen will.
+    Offline-/Privacy-Versprechen, heikel für Asyl-Zielgruppe).
+  - ✅ **Lokales Vorschlags-Dropdown gebaut** (`PLZAutocomplete.jsx`, Commit `7dcc7f3`): PLZ tippen →
+    „PLZ — Gemeinde (Kanton)"-Vorschläge, Auswahl füllt PLZ + Stadt (löst Mehrdeutigkeit), Kanton via
+    Sync. ARIA-Combobox, Pfeiltasten/Enter/Escape. Im Wohnen-Feld aktiv. Offline, CSP strikt.
 - 🟡 **SEO** verbessern (mehrsprachig, hreflang, CH-Keywords).
 - ✅ **Architektur aufräumen** (Kantonsdaten-Check: bereits sauber; verwaistes name-Feld entfernt).
 - 🔵 **Asylwesen** + Sprach-Dropdown (mehr Sprachen) — eigenes grosses strategisches Thema.
