@@ -1,5 +1,4 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { searchPLZ } from './data/plzGemeinde.js';
 import { text, space, radius, weight } from './config/tokens.js';
 
 // Lokales, offline PLZ→Gemeinde-Autocomplete für das Wohnen-Postleitzahl-Feld.
@@ -7,22 +6,35 @@ import { text, space, radius, weight } from './config/tokens.js';
 // aus der gebündelten Schweizer PLZ-Datenbank (kein externer Call). Auswahl füllt
 // PLZ + Stadt; der Kanton wird vom bestehenden PLZ→Kanton-Sync in main.jsx gesetzt.
 //
+// Die ~165 kB PLZ-Daten werden bewusst NICHT statisch importiert (sonst landen sie
+// im eager-Bundle und laden bei jedem Seitenaufruf). Stattdessen dynamisch beim
+// Mounten der Komponente, also erst wenn das Wohnen-Kapitel geöffnet wird. main.jsx
+// wärmt denselben Chunk via preloadPLZ() schon nach dem App-Mount vor.
+//
 // Barrierearm: ARIA-Combobox-Muster (role=combobox/listbox/option), Pfeiltasten,
 // Enter zum Wählen, Escape zum Schliessen.
-export const PLZAutocomplete = ({ value, onChange, onPick, palette, inputStyle, fieldId, placeholder }) => {
+export const PLZAutocomplete = ({ value, onChange, onBlur, onPick, palette, inputStyle, fieldId, placeholder }) => {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [searchFn, setSearchFn] = useState(null);
   const blurTimer = useRef(null);
 
+  // PLZ-Modul beim Mounten (Kapitel-Öffnen) laden, nicht im eager-Bundle.
+  useEffect(() => {
+    let alive = true;
+    import('./data/plzGemeinde.js').then((m) => { if (alive) setSearchFn(() => m.searchPLZ); }).catch(() => {});
+    return () => { alive = false; clearTimeout(blurTimer.current); };
+  }, []);
+
   const suggestions = useMemo(() => {
+    if (!searchFn) return [];
     const q = String(value || '').trim();
-    // Nur ab 2 Ziffern vorschlagen; nicht, wenn eine 4-stellige PLZ exakt eine
-    // Gemeinde hat (dann ist die Sache klar, Liste wäre Lärm).
     if (q.length < 2) return [];
-    const res = searchPLZ(q, 8);
+    const res = searchFn(q, 8);
+    // Bei eindeutiger 4-stelliger PLZ (genau eine Gemeinde) keine Liste — wäre Lärm.
     if (q.length === 4 && res.length === 1) return [];
     return res;
-  }, [value]);
+  }, [value, searchFn]);
 
   useEffect(() => { setActiveIndex(-1); }, [value]);
 
@@ -62,14 +74,17 @@ export const PLZAutocomplete = ({ value, onChange, onPick, palette, inputStyle, 
       // ARIA-Combobox
       role: 'combobox',
       'aria-expanded': showList,
-      'aria-controls': listId,
+      'aria-controls': showList ? listId : undefined,
       'aria-autocomplete': 'list',
       'aria-activedescendant': activeIndex >= 0 ? listId + '-' + activeIndex : undefined,
       value: value,
       placeholder: placeholder || '',
       onChange: (e) => { onChange(e.target.value.replace(/\D/g, '').slice(0, 4)); setOpen(true); },
       onFocus: () => setOpen(true),
-      onBlur: () => { blurTimer.current = setTimeout(() => setOpen(false), 150); },
+      onBlur: (e) => {
+        if (onBlur) onBlur(e.target.value);
+        blurTimer.current = setTimeout(() => setOpen(false), 150);
+      },
       onKeyDown,
       style: inputStyle
     }),

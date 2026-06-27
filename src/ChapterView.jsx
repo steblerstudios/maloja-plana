@@ -359,6 +359,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           fieldId, value, palette, inputStyle,
           placeholder: field.placeholder || '',
           onChange: (v) => handleFieldChange('postalCode', v),
+          onBlur: (v) => handleFieldBlur('postalCode', v),
           onPick: (s) => { handleFieldChange('postalCode', s.plz); onUpdate('city', s.gemeinde); }
         }),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
