@@ -140,12 +140,14 @@ export default {
     flyer: 'Flyer à partager',
     export: 'Export',
     calendar: 'Calendrier',
+    merkliste: 'Mon aide-mémoire',
     notifications: 'Notifications',
     menu: 'Menu',
     completion: '{value}% complété',
     privacyNote: { sie: '100% local. Aucune donnée ne quitte votre appareil.', du: '100% local. Aucune donnée ne quitte ton appareil.' },
     sub: {
       calendar: 'Délais & rendez-vous',
+      merkliste: 'Notes & prochaines étapes',
       budgetSync: 'Import CSV',
       kvgIpv: 'Vérifier le droit',
       praemien: 'Comparer les modèles',
@@ -1730,6 +1732,20 @@ export default {
     dueTodayCount: '{count} à faire aujourd\'hui',
     notificationTitle: '{count} rappel(s) en retard',
     notificationBody: 'Ouvrez Maloja Plana pour consulter vos rappels.',
+  },
+
+  merkliste: {
+    title: 'Mon aide-mémoire',
+    intro: "Vous avez remarqué quelque chose à régler plus tard — par exemple « je pourrais demander la réduction de primes » ? Notez-le ici et reliez-le directement au bon outil, pour le retrouver quand vous aurez le temps.",
+    placeholder: 'Que souhaitez-vous retenir ?',
+    linkLabel: 'Relier à',
+    linkNone: 'Aucun lien',
+    add: 'Ajouter',
+    empty: 'Votre aide-mémoire est vide. Ajoutez une première note ci-dessus.',
+    openTitle: 'À faire',
+    doneTitle: 'Fait',
+    markDone: 'Marquer comme fait',
+    undo: 'Marquer comme à faire',
   },
 
   calendar: {
