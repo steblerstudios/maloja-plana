@@ -2180,6 +2180,7 @@ export default {
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
     enter: 'Open',
+    legalLink: 'Privacy & legal notice',
     bannerLabel: 'Closed Beta',
     feedbackMail: 'Feedback by email',
     feedbackForm: 'Feedback form',
