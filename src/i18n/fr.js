@@ -493,7 +493,7 @@ export default {
       benefits: ['Réduction de primes', 'Comparaison de primes', 'Calculateur prévoyance'],
       fields: {
         kkInsurer: 'Caisse maladie',
-        kkModel: { label: 'Modèle d\'assurance', options: { standard: 'Standard (libre choix)', hausarzt: 'Médecin de famille', hmo: 'HMO (cabinet de groupe)', telmed: 'Telmed (appel préalable)', apotheke: 'Modèle pharmacie' } },
+        kkModel: { label: 'Modèle d\'assurance', options: { basic: 'Basic', comfort: 'Comfort', standard: 'Standard (libre choix)', hausarzt: 'Médecin de famille', hmo: 'HMO (cabinet de groupe)', telmed: 'Telmed (appel préalable)', apotheke: 'Modèle pharmacie' } },
         kkPremium: 'Prime mensuelle (CHF)',
         franchise: { label: 'Franchise (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numéro de carte d\'assurance',
