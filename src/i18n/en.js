@@ -295,7 +295,7 @@ export default {
     next: 'Back to overview',
   },
   dashboard: {
-    welcome: 'Check your entitlements. Organize your life.',
+    welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
     tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',
     taglineBenefit: 'Tax calculator, premium subsidies, social assistance, emergency card — no sign-up needed.',
     progress: 'Your progress',
