@@ -2613,6 +2613,9 @@ export default {
     scan: "Scannegiar & cumenzar:",
     foot: "Local, privat, gratuit · da Stebler Studios",
     print: "Stampar / memorisar sco PDF",
+    share: "Cundivider il link",
+    shareText: "Maloja Plana — tia survista calma da la vita en Svizra. Privat, offline, gratuit.",
+    copied: "Link copià",
     langHint: "Il flyer vegn creà en la lingua tschernida actualmain. Per in'autra lingua, mida l'emprim la lingua sura.",
   },
   alv: {
