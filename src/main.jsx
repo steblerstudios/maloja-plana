@@ -102,7 +102,7 @@ const LanguageSwitcher = ({ palette }) => {
     // Globe — universal "language" symbol, recognisable without reading
     React.createElement('span', {
       'aria-hidden': 'true',
-      style: { position: 'absolute', left: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
+      style: { position: 'absolute', insetInlineStart: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
     },
       React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
         React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
@@ -117,7 +117,8 @@ const LanguageSwitcher = ({ palette }) => {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: palette.text,
         border: '1px solid ' + palette.border, borderRadius: '6px',
-        padding: '5px 26px 5px 30px', fontSize: text.xs, fontWeight: '600',
+        paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
+        fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
       }
     },
@@ -127,7 +128,7 @@ const LanguageSwitcher = ({ palette }) => {
     ),
     React.createElement('span', {
       'aria-hidden': 'true',
-      style: { position: 'absolute', right: '9px', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
+      style: { position: 'absolute', insetInlineEnd: '9px', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
     }, '▾')
   );
 };
