@@ -2471,6 +2471,31 @@ export default {
     counseling: {
       desc: "Free, confidential legal advice on asylum and migration law. They support you personally with your procedure.",
     },
+    alltagTitle: "What your status means in everyday life",
+    alltagIntro: "A rough orientation on working, family reunification and travel. The rules are detailed and change — the advice offices above clarify your specific case.",
+    alltag: {
+      dim: { arbeit: "Work", familie: "Family reunification", reisen: "Travel" },
+      n: {
+        arbeit: "Only with prior authorisation from the canton, and not while in a Federal Asylum Centre. Training programmes are possible.",
+        familie: "Not possible during the ongoing procedure.",
+        reisen: "Only exceptionally, with SEM authorisation for important reasons (e.g. serious illness or death of a close relative).",
+      },
+      s: {
+        arbeit: "Allowed, with no waiting period — the employer simply reports the job.",
+        familie: "Spouse and minor children can join and likewise receive status S.",
+        reisen: "You may travel abroad without a travel permit and return to Switzerland.",
+      },
+      f: {
+        arbeit: "Allowed across Switzerland, no waiting period — the employer simply reports the job.",
+        familie: "Possible at the earliest after a waiting period (around 3 years), with conditions: no reliance on social assistance and suitable housing.",
+        reisen: "No free travel — your passport is deposited with the SEM. A return visa is granted only for important reasons. Never to your country of origin.",
+      },
+      b: {
+        arbeit: "Allowed across Switzerland, no waiting period — the employer simply reports the job.",
+        familie: "Privileged: a spouse and minor children separated by flight can join and are included in refugee status.",
+        reisen: "Travel is possible with a refugee travel document — but never to your country of origin.",
+      },
+    },
   },
   alv: {
     title: "Unemployment benefit",

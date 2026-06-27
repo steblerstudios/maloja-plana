@@ -1,5 +1,5 @@
 import React from 'react';
-import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, counselingForCanton } from './data/asylData.js';
+import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
@@ -34,6 +34,13 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.sky, fontSize: text.sm, fontWeight: weight.semi },
     cantonOfficePhone: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
     cantonDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: space.xs + 'px' },
+    alltagDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
+    alltagSummary: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, cursor: 'pointer', listStyle: 'none' },
+    alltagIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: space.sm + 'px 0' },
+    alltagStatus: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
+    alltagStatusLabel: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, marginBottom: space.xs + 'px' },
+    alltagRow: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.xs, color: palette.mid, lineHeight: 1.5, padding: '2px 0' },
+    alltagDim: { flexShrink: 0, width: '110px', color: palette.text, fontWeight: weight.medium },
   };
 
   return React.createElement('div', { style: s.card },
@@ -53,6 +60,23 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
           React.createElement('div', null,
             React.createElement('div', { style: s.statusLabel }, t('asyl.status.' + st.key + '.label')),
             React.createElement('div', { style: s.statusDesc }, t('asyl.status.' + st.key + '.desc'))
+          )
+        )
+      )
+    ),
+
+    // ── Mein Status im Alltag (einklappbar) ──
+    React.createElement('details', { style: s.alltagDetails },
+      React.createElement('summary', { style: s.alltagSummary }, t('asyl.alltagTitle')),
+      React.createElement('p', { style: s.alltagIntro }, t('asyl.alltagIntro')),
+      ASYL_STATUS.map((st) =>
+        React.createElement('div', { key: st.key, style: s.alltagStatus },
+          React.createElement('div', { style: s.alltagStatusLabel }, st.ausweis + ' · ' + t('asyl.status.' + st.key + '.label')),
+          ASYL_ALLTAG_DIMS.map((dim) =>
+            React.createElement('div', { key: dim, style: s.alltagRow },
+              React.createElement('span', { style: s.alltagDim }, t('asyl.alltag.dim.' + dim)),
+              React.createElement('span', null, t('asyl.alltag.' + st.key + '.' + dim))
+            )
           )
         )
       )

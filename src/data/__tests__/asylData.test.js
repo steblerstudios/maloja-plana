@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_DATA_VERSION, ASYL_COUNSELING, CANTON_COUNSELING, counselingForCanton } from '../asylData.js';
+import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, ASYL_DATA_VERSION, ASYL_COUNSELING, CANTON_COUNSELING, counselingForCanton } from '../asylData.js';
 import en from '../../i18n/en.js';
 import frLang from '../../i18n/fr.js';
 import itLang from '../../i18n/it.js';
@@ -71,6 +71,19 @@ describe.each([['en', en], ['fr', frLang], ['rm', rm]])('asyl Beratung i18n (%s)
   it('cantonOfficeTitle + counseling.desc vorhanden', () => {
     expect(present(dict.asyl.cantonOfficeTitle), `${lang}: asyl.cantonOfficeTitle`).toBe(true);
     expect(present(dict.asyl.counseling?.desc), `${lang}: asyl.counseling.desc`).toBe(true);
+  });
+
+  it('alltag: Titel, Intro, Dimensions-Labels + je Status×Dimension ein Text', () => {
+    expect(present(dict.asyl.alltagTitle), `${lang}: asyl.alltagTitle`).toBe(true);
+    expect(present(dict.asyl.alltagIntro), `${lang}: asyl.alltagIntro`).toBe(true);
+    for (const dim of ASYL_ALLTAG_DIMS) {
+      expect(present(dict.asyl.alltag?.dim?.[dim]), `${lang}: asyl.alltag.dim.${dim}`).toBe(true);
+    }
+    for (const st of ASYL_STATUS) {
+      for (const dim of ASYL_ALLTAG_DIMS) {
+        expect(present(dict.asyl.alltag?.[st.key]?.[dim]), `${lang}: asyl.alltag.${st.key}.${dim}`).toBe(true);
+      }
+    }
   });
 });
 
