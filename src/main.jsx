@@ -54,6 +54,7 @@ const EOrechner = React.lazy(() => import('./EOrechner.jsx'));
 const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
+const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 
@@ -452,12 +453,18 @@ const AppInner = () => {
           React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
           React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
         ),
-        (lang === 'de' || lang === 'it') && React.createElement('button', {
-          'aria-label': 'Anrede: ' + (anrede === 'du' ? (lang === 'it' ? 'Tu' : 'Du') : (lang === 'it' ? 'Lei' : 'Sie')),
-          title: lang === 'it' ? 'Forma di cortesia: Lei / Tu' : 'Anrede: Sie / Du',
-          onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-          style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
-        }, anrede === 'du' ? (lang === 'it' ? 'Tu' : 'Du') : (lang === 'it' ? 'Lei' : 'Sie')),
+        (lang === 'de' || lang === 'it' || lang === 'rm') && (() => {
+          const formal = lang === 'it' ? 'Lei' : lang === 'rm' ? 'Vus' : 'Sie';
+          const informal = lang === 'it' ? 'Tu' : lang === 'rm' ? 'Ti' : 'Du';
+          const tooltip = lang === 'it' ? 'Forma di cortesia: Lei / Tu' : lang === 'rm' ? 'Furma da curtaschia: Vus / Ti' : 'Anrede: Sie / Du';
+          const current = anrede === 'du' ? informal : formal;
+          return React.createElement('button', {
+            'aria-label': 'Anrede: ' + current,
+            title: tooltip,
+            onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
+            style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
+          }, current);
+        })(),
         React.createElement(LanguageSwitcher, { palette }),
         React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
         React.createElement('button', {
@@ -622,6 +629,7 @@ const AppInner = () => {
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
