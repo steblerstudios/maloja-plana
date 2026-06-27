@@ -51,7 +51,13 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 - 🟠 IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht). *(noch offen)*
 - ✅ Zu viele Crosslink-Buttons gebündelt (monthlyIncome → eine „Passende Werkzeuge"-Box).
-- 🟡 Hover `scale(1.12)`→`1.04`; Token-Ausreisser (`radius`, hartcodierte px/Farben). *(noch offen)*
+- ✅ Hover `scale(1.12)`→`1.04` — bereits erledigt (Dashboard nutzt 1.04; keine 1.12-Hover mehr;
+  die einzigen grösseren Scales sind legitime One-Shot-Keyframes `mp-stamp`/`mp-check-pop`).
+- ⏭️ Token-Ausreisser (px/Farben) — **untersucht (2026-06-27), grösstenteils False-Positive,
+  nicht weiterverfolgt:** die häufigen borderRadius 2/3/4px haben kein Token-Äquivalent (kleinstes
+  = sm=6); die meisten „hartcodierten" Hex stecken in Print-/Export-HTML-Strings (können die
+  JS-Palette nicht nutzen) oder sind Kontrast-/Verlaufsfarben. 155-Stellen-Sweep = Regressionsrisiko
+  bei ~null sichtbarem Nutzen. Bei Bedarf gezielt einzelne echte Fälle, nicht als Sweep.
 - Prinzip: Entschlacken via Disclosure/Dropdown, **nie löschen** (Landkarte = Identität).
 
 ## D — Brand Identity (Rest der Umsetzung)
