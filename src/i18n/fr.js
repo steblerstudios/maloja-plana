@@ -2466,6 +2466,10 @@ export default {
     fristenTitle: "Important : les délais sont courts",
     fristenBody: { sie: "Dans la procédure accélérée, vous devez faire recours dans les 7 jours ouvrables, dans la procédure étendue dans les 30 jours. N'attendez pas — contactez immédiatement votre représentation juridique ou un service de conseil.", du: "Dans la procédure accélérée, tu dois faire recours dans les 7 jours ouvrables, dans la procédure étendue dans les 30 jours. N'attends pas — contacte immédiatement ta représentation juridique ou un service de conseil." },
     cantonLink: { sie: "Votre canton : {canton} → trouver conseils d'asile & autorités", du: "Ton canton : {canton} → trouver conseils d'asile & autorités" },
+    cantonOfficeTitle: "Conseil dans votre canton ({canton})",
+    counseling: {
+      desc: { sie: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service vous accompagne personnellement dans votre procédure.", du: "Conseil juridique gratuit et confidentiel en droit d'asile et des étrangers. Ce service t'accompagne personnellement dans ta procédure." },
+    },
   },
   alv: {
     title: "Indemnités de chômage",

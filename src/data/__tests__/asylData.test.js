@@ -1,8 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_DATA_VERSION } from '../asylData.js';
+import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_DATA_VERSION, ASYL_COUNSELING, CANTON_COUNSELING, counselingForCanton } from '../asylData.js';
 import en from '../../i18n/en.js';
+import frLang from '../../i18n/fr.js';
 import itLang from '../../i18n/it.js';
 import rm from '../../i18n/rm.js';
+
+// Alle 26 Kantone (2-stellige Codes).
+const ALL_CANTONS = ['ZH','BE','LU','UR','SZ','OW','NW','GL','ZG','FR','SO','BS','BL','SH','AR','AI','SG','GR','AG','TG','TI','VD','VS','NE','GE','JU'];
 
 // Wert kann String ODER Anrede-Objekt { sie, du } sein → beides gilt als vorhanden.
 const present = (v) => typeof v === 'string' ? v.length > 0 : (v && typeof v === 'object' && (present(v.sie) || present(v.du)));
@@ -32,6 +36,41 @@ describe('asylData Struktur', () => {
 
   it('hat eine Daten-Version', () => {
     expect(ASYL_DATA_VERSION).toBeTruthy();
+  });
+});
+
+describe('asyl kantonale Beratung — Struktur', () => {
+  it('alle 26 Kantone sind einer Beratungsstelle zugeordnet', () => {
+    for (const c of ALL_CANTONS) {
+      expect(CANTON_COUNSELING[c], `Kanton ${c} fehlt in CANTON_COUNSELING`).toBeTruthy();
+    }
+    expect(Object.keys(CANTON_COUNSELING).length).toBe(26);
+  });
+
+  it('jede referenzierte Stelle existiert und hat Name + https-URL', () => {
+    for (const [canton, id] of Object.entries(CANTON_COUNSELING)) {
+      const o = ASYL_COUNSELING[id];
+      expect(o, `${canton} → ${id} fehlt in ASYL_COUNSELING`).toBeTruthy();
+      expect(o.name, `${id}.name`).toBeTruthy();
+      expect(o.url, `${id}.url`).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('counselingForCanton liefert Stelle inkl. id; null bei Unbekannt', () => {
+    const zh = counselingForCanton('ZH');
+    expect(zh.id).toBe('heks_zh');
+    expect(zh.url).toMatch(/^https:\/\//);
+    expect(counselingForCanton('XX')).toBeNull();
+    expect(counselingForCanton(undefined)).toBeNull();
+  });
+});
+
+// i18n der neuen Beratungs-Keys in den Sprachen, die diese Session pflegt (en/fr/rm).
+// it/de ergänzt die Anrede-Parallel-Session (it.js gerade in Arbeit).
+describe.each([['en', en], ['fr', frLang], ['rm', rm]])('asyl Beratung i18n (%s)', (lang, dict) => {
+  it('cantonOfficeTitle + counseling.desc vorhanden', () => {
+    expect(present(dict.asyl.cantonOfficeTitle), `${lang}: asyl.cantonOfficeTitle`).toBe(true);
+    expect(present(dict.asyl.counseling?.desc), `${lang}: asyl.counseling.desc`).toBe(true);
   });
 });
 
