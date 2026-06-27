@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { isRTL, SUPPORTED_LANGUAGES, resolveInitialLang } from '../index.js';
+import { isRTL, SUPPORTED_LANGUAGES, resolveInitialLang, createT } from '../index.js';
 import en from '../en.js';
 import de from '../de.js';
 import fr from '../fr.js';
@@ -174,4 +174,66 @@ describe('i18n Anrede-Objekte sind vollständig (sie UND du als String)', () => 
       ).toEqual([]);
     });
   }
+});
+
+// Der Übersetzungs-Kern selbst (Schlüssel-Auflösung, Fallback-Kette, Sie/Du-Wahl,
+// Param-Interpolation) — mit kontrollierten Fixtures statt der echten Sprachdateien.
+// DEFAULT_LANG ist 'en' (Fallback-Sprache).
+describe('createT (Übersetzungs-Kern)', () => {
+  const fixtures = {
+    en: {
+      greet: 'Hello',
+      nested: { deep: 'Deep EN' },
+      withParam: 'Hi {name}',
+      count: 'Count: {n}',
+      onlyEn: 'EN only',
+      emptyStr: '',
+    },
+    de: {
+      greet: { sie: 'Guten Tag', du: 'Hallo' },
+      nested: { deep: 'Tief DE' },
+      withParam: 'Hallo {name}',
+    },
+  };
+
+  it('löst einen einfachen Key in der aktiven Sprache auf', () => {
+    expect(createT(fixtures, 'de', 'sie')('nested.deep')).toBe('Tief DE');
+  });
+
+  it('fällt auf DEFAULT_LANG (en) zurück, wenn der Key in der Sprache fehlt', () => {
+    expect(createT(fixtures, 'de', 'sie')('onlyEn')).toBe('EN only');
+  });
+
+  it('gibt den Key-String zurück, wenn nirgends vorhanden', () => {
+    expect(createT(fixtures, 'de', 'sie')('does.not.exist')).toBe('does.not.exist');
+  });
+
+  it('{sie,du}: Standard Sie, Du nur bei anrede="du"', () => {
+    expect(createT(fixtures, 'de', 'sie')('greet')).toBe('Guten Tag');
+    expect(createT(fixtures, 'de', 'du')('greet')).toBe('Hallo');
+    expect(createT(fixtures, 'de', undefined)('greet')).toBe('Guten Tag'); // kein anrede → Sie
+  });
+
+  it('interpoliert {param}', () => {
+    expect(createT(fixtures, 'de', 'sie')('withParam', { name: 'Sofie' })).toBe('Hallo Sofie');
+  });
+
+  it('interpoliert den Wert 0 korrekt (kein Falsy-Zero-Bug)', () => {
+    expect(createT(fixtures, 'de', 'sie')('count', { n: 0 })).toBe('Count: 0');
+  });
+
+  it('lässt unaufgelöste {param} sichtbar stehen', () => {
+    expect(createT(fixtures, 'de', 'sie')('withParam', {})).toBe('Hallo {name}');
+    expect(createT(fixtures, 'de', 'sie')('withParam')).toBe('Hallo {name}');
+  });
+
+  it('gibt einen leeren String zurück (nicht Fallback) bei absichtlich leerem Wert', () => {
+    expect(createT(fixtures, 'en', 'sie')('emptyStr')).toBe('');
+  });
+
+  it('ist robust bei nicht geladener Sprache (translations[lang] undefined)', () => {
+    // de fehlt 'count' → Fallback en; aber wenn die Sprache ganz fehlt:
+    expect(createT(fixtures, 'xx', 'sie')('onlyEn')).toBe('EN only'); // Fallback en greift
+    expect(createT(fixtures, 'xx', 'sie')('greet')).toBe('Hello');    // en-Wert (plain)
+  });
 });
