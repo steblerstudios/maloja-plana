@@ -10,6 +10,7 @@ import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, prue
 import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
@@ -348,6 +349,24 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     }
 
     // Text Input
+    // Postleitzahl: lokales PLZ→Gemeinde-Autocomplete (offline). Auswahl füllt
+    // PLZ + Stadt; der Kanton kommt aus dem PLZ→Kanton-Sync in main.jsx.
+    if (field.k === 'postalCode') {
+      const fieldId = chapter.key + '-' + field.k;
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(fieldId, field.label + (field.required ? ' *' : ''), field.hint),
+        React.createElement(PLZAutocomplete, {
+          fieldId, value, palette, inputStyle,
+          placeholder: field.placeholder || '',
+          onChange: (v) => handleFieldChange('postalCode', v),
+          onPick: (s) => { handleFieldChange('postalCode', s.plz); onUpdate('city', s.gemeinde); }
+        }),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        renderOrientation(field),
+        error && React.createElement('div', { style: errorStyle }, error)
+      );
+    }
+
     if (field.type === 'text') {
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
