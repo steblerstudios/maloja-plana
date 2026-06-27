@@ -1451,8 +1451,8 @@ export default {
   },
 
   lohnCheck: {
-    unterMindestlohn: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi 2025.",
-    keinMindestlohn: 'En Tes chantun na datti nagin salari minimal legal.',
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar l'inspectorat chantunal da lavur. Stadi 2025.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi 2025." },
+    keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
     hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
   },
@@ -1460,7 +1460,7 @@ export default {
   charts: {
     title: 'Graficas',
     noData: 'Anc naginas graficas',
-    noDataHint: 'Endatescha Tia entrada e Tias expensas en ils chapitels per vesair qua graficas.',
+    noDataHint: { sie: 'Endatai Vossa entrada e Vossas expensas en ils chapitels per vesair qua graficas.', du: 'Endatescha Tia entrada e Tias expensas en ils chapitels per vesair qua graficas.' },
   },
 
   expiryHints: {
