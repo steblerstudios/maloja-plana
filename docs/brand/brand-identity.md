@@ -2,7 +2,9 @@
 
 **Stand:** Juni 2026 · **Firma:** Stebler Studios (Sophie Stebler, Basel)
 
-Lebendes Dokument. Hier werden alle Marken-Entscheidungen festgehalten.
+Lebendes Dokument. Hier werden alle Marken-**Entscheidungen** (inkl. Herleitung + Verworfenes)
+festgehalten. Für die kompakte, gebündelte Anwendungs-Referenz siehe
+[`brand-guidelines.md`](brand-guidelines.md) — das eine kanonische Übersichtsdokument.
 
 ---
 
@@ -123,7 +125,11 @@ jede:r selbst (= euer «der Mensch hat die Kontrolle»-Prinzip, wie beim Lesbark
   sie als kompetente Erwachsene. (2) Interkulturell sicher — Formalität = Respekt in vielen
   Kulturen. (3) Passt zur bestehenden Stimme («Ihre Angaben»).
 
-**Umsetzung (später):** Texte grundsätzlich in «Sie» schreiben, «Du» ist die gespiegelte
+**Umsetzung — erledigt (Juni 2026):** Toggle live für DE (Sie/Du), IT (Lei/tu), RM (Vus/ti,
+braucht muttersprachliche Review); FR konsistent vous; EN ohne T-V-Distinktion. Status-Tabelle
+in [`brand-guidelines.md` §6](brand-guidelines.md). Prinzip unten weiterhin gültig:
+
+**Umsetzung (Prinzip):** Texte grundsätzlich in «Sie» schreiben, «Du» ist die gespiegelte
 Fassung. Nur Strings mit *direkter Anrede* (du/Sie, dein/Ihr, dich/Sie) brauchen zwei Varianten
 — Labels/Substantive/Buttons bleiben gleich. Englisch nicht betroffen («you»), FR/IT spiegeln
 tu/vous bzw. tu/Lei mit demselben Schalter. Technisch: Setting `or5_anrede: 'sie'|'du'`, das
@@ -162,5 +168,5 @@ und Druck?»
 - [ ] Editoriale Headline-Schrift final entscheiden (Lora vs. Hanken Bold)
 - [ ] Bildsprache (Icons, Illustrationen)
 - [ ] Signet-Farben an Granit angleichen
-- [ ] Brand Guidelines zusammenführen
+- [x] Brand Guidelines zusammenführen → [`brand-guidelines.md`](brand-guidelines.md)
 - [ ] Umsetzung im Code (`constants.js`, `tokens.css`) — erst NACH vollständiger Definition
