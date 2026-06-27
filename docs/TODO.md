@@ -45,7 +45,10 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 - ✅ `estimateTaxSavings` + irreführende Kachel entfernt (IPV ist steuerfrei).
 - ✅ AHV Vorbezug-Kürzung war bereits 6.8 %/Jahr (korrekt).
-- ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt. 🟡 AHV-Rente als Schätzung labeln (offen, tolerierbar).
+- ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt.
+- ✅ AHV-Rente als Schätzung labeln — bereits erledigt: Label „Geschätzte AHV-Altersrente"/
+  „Geschätzte BVG-Rente" + gerenderte Source-Zeile „Schätzung nach AHVG/BVG … Keine
+  rechtsverbindliche Auskunft." (`VorsorgeRechner.jsx:309`).
 
 ## C — Design / Calm-UX (aus Audit)
 
