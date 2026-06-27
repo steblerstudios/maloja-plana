@@ -6,7 +6,7 @@ import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
-export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
+export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const [showCalculation, setShowCalculation] = useState(true);
 
   const canton = data.basis?.canton || '';
@@ -77,7 +77,22 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate }) => {
 
     // Eligibility Status — only once income is present; otherwise prompt for income
     !hasIncome ? React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, 'ⓘ ' + t('premium.enterIncome'))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: onUpdateData ? space.sm : 0 } }, 'ⓘ ' + t('premium.enterIncome')),
+      // Inline income field — entering it here triggers the calculation immediately
+      // (writes to data.finanzen.monthlyIncome, the same field used everywhere else).
+      onUpdateData && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm } },
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'numeric',
+          min: '0',
+          value: data.finanzen?.monthlyIncome ?? '',
+          onChange: (e) => onUpdateData('finanzen', 'monthlyIncome', e.target.value),
+          'aria-label': t('premium.enterIncome'),
+          placeholder: '0',
+          style: { width: '140px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' }
+        }),
+        React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
+      )
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
