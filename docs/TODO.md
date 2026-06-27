@@ -97,8 +97,6 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 - **BetaGate = nackte Passwort-Wand** (`BetaGate.jsx`, wrappt App in `main.jsx:662`) → ruhige
   Intro + Lokal-Badge + Impressum/Datenschutz-Link + „von Stebler Studios, Basel" davor. Idee:
   Legal-Seiten ohne Code erreichbar machen, nur die App gaten.
-- **Domain-Mismatch in `index.html`** → `steblerstudios.github.io/maloja-plana/` überall durch
-  `https://malojaplana.ch/` ersetzen (og:url, og:image, twitter:image, canonical, Schema.org).
 - **Lizenz-Widerspruch** → `legal.terms.ip1` sagt MIT, Projekt ist AGPL-3.0 → in allen 5 i18n fixen.
 
 **🟠 Mittel:**

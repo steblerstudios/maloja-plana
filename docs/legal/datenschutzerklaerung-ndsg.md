@@ -10,7 +10,7 @@
 Sophie Stebler
 Basel, Schweiz
 E-Mail: sophie.stebler@gmail.com
-Web: steblerstudios.github.io/maloja-plana
+Web: https://malojaplana.ch
 
 Maloja Plana ist ein nicht-kommerzielles Open-Source-Projekt. Es gibt keinen Datenschutzberater im Sinne von Art. 10 nDSG, da die Datenbearbeitung ausschliesslich lokal auf dem Gerät der nutzenden Person stattfindet.
 
