@@ -54,8 +54,10 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   - ✅ **Nebenbefund behoben:** 2 der Kandidaten (`kkModel.options.basic`/`.comfort`) waren NICHT
     tot — KKScanner nutzt sie, aber sie fehlten in en/de/fr/it → Dropdown zeigte rohen Key-String.
     Keys ergänzt (Commit zu kkModel basic/comfort).
-  - 🟠 **Offener Nebenbefund:** `de.js` fehlen die Blöcke `asyl` + `flyer` komplett → deutsche
-    Nutzer sehen Asyl-/Flyer-Texte auf **Englisch** (Fallback). Eigene Übersetzungs-Aufgabe.
+  - ✅ **Nebenbefund behoben:** `de.js` fehlten `asyl` (de) + `flyer` (de+it) komplett → deutsche/
+    italienische Nutzer sahen den **englischen** Fallback. Beide Blöcke übersetzt & ergänzt
+    (Commits `feccf55` asyl-de, flyer-de+it), Key-Parität mit en verifiziert, im Preview bestätigt.
+    asyl ⚠️ rechtlich sensibel → fachliche Review vor Deploy empfohlen.
 
 ## B — Berechnungen (vor Fixes offizielle Quelle prüfen!)
 
