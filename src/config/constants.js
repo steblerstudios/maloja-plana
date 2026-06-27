@@ -3,8 +3,8 @@
 // Field values stored in localStorage remain language-independent (using option keys)
 
 export const DARK_PALETTE = {
-  bg: '#24262A', surface: '#2A2C30', up: '#303237', top: '#383A3F',
-  border: '#3E4146', text: '#EDECE8', mid: '#9CA0A6', soft: '#8E929A',
+  bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
+  border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
