@@ -2471,6 +2471,9 @@ export default {
     counseling: {
       desc: "Free, confidential legal advice on asylum and migration law. They support you personally with your procedure.",
     },
+    nextStepsTitle: "Next steps",
+    linkDocs: "Keep your documents safe → Document vault",
+    linkEmergency: "Prepare emergency information → Emergency",
     alltagTitle: "What your status means in everyday life",
     alltagIntro: "A rough orientation on working, family reunification and travel. The rules are detailed and change — the advice offices above clarify your specific case.",
     alltag: {

@@ -147,7 +147,20 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     canton && onNavigate && React.createElement('button', {
       style: s.crosslink,
       onClick: () => onNavigate('direktlinks'),
-    }, t('asyl.cantonLink', { canton }))
+    }, t('asyl.cantonLink', { canton })),
+
+    // ── Nächste Schritte: ruhige Crosslinks zu Dokumenten & Notfall ──
+    onNavigate && React.createElement('div', { key: 'next-steps' },
+      React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.nextStepsTitle')),
+      React.createElement('button', {
+        style: { ...s.crosslink, marginTop: space.xs + 'px' },
+        onClick: () => onNavigate('tresor'),
+      }, t('asyl.linkDocs')),
+      React.createElement('button', {
+        style: { ...s.crosslink, marginTop: space.xs + 'px' },
+        onClick: () => onNavigate('notfalleinstieg'),
+      }, t('asyl.linkEmergency'))
+    )
   );
 };
 
