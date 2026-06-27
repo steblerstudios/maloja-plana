@@ -8,6 +8,16 @@ const STORAGE_KEY = 'or5_lang';
 const SUPPORTED = ['en', 'de', 'fr', 'it', 'rm'];
 const DEFAULT_LANG = 'en';
 
+// Sprachen mit Rechts-nach-links-Schrift. Vorbereitet für den Asyl-Sprachausbau
+// (z.B. Arabisch). Setzt <html dir="rtl"> für korrektes Layout.
+const RTL_LANGUAGES = ['ar', 'fa', 'ur', 'he'];
+export function isRTL(lang) { return RTL_LANGUAGES.includes(lang); }
+function applyHtmlLang(lang) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRTL(lang) ? 'rtl' : 'ltr';
+}
+
 const loaders = {
   en: () => import('./en.js'),
   de: () => import('./de.js'),
@@ -101,7 +111,7 @@ export function I18nProvider({ children }) {
         url.searchParams.set('lang', newLang);
         window.history.replaceState({}, '', url);
       } catch (e) { /* History API nicht verfügbar */ }
-      document.documentElement.lang = newLang;
+      applyHtmlLang(newLang);
     }
   }, []);
 
@@ -112,7 +122,7 @@ export function I18nProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = lang;
+    applyHtmlLang(lang);
   }, [lang]);
 
   const t = useMemo(() => {

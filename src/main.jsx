@@ -82,9 +82,17 @@ class ViewErrorBoundary extends React.Component {
 }
 
 // Language switcher component
-// Native language names — ready to scale to many more languages (asylum focus)
+// Native language names — ready to scale to many more languages (asylum focus).
+// Geplante Asyl-Sprachen sind hier schon erfasst (native Schreibweise), damit
+// die Aktivierung nur noch je einen Eintrag in i18n/index.js SUPPORTED + loaders
+// braucht, sobald eine professionell übersetzte Sprachdatei vorliegt.
+// Siehe docs/i18n-sprachausbau.md.
 const LANGUAGE_NATIVE_NAMES = {
   de: 'Deutsch', en: 'English', fr: 'Français', it: 'Italiano', rm: 'Rumantsch',
+  // Geplant (noch nicht in SUPPORTED — erst mit verifizierter Übersetzung):
+  ti: 'ትግርኛ',          // Tigrinya (Eritrea/Äthiopien)
+  sq: 'Shqip',          // Albanisch (Westbalkan)
+  ar: 'العربية',        // Arabisch (RTL)
 };
 
 const LanguageSwitcher = ({ palette }) => {
