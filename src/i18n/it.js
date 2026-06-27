@@ -293,7 +293,7 @@ export default {
     next: 'Torna alla panoramica',
   },
   dashboard: {
-    welcome: { sie: 'Verifichi i Suoi diritti. Organizzi la Sua vita.', du: 'Verifica i tuoi diritti. Organizza la tua vita.' },
+    welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
     tagline: { sie: 'Il Suo organizzatore di vita svizzero — 100% privato, offline, gratuito.', du: 'Il tuo organizzatore di vita svizzero — 100% privato, offline, gratuito.' },
     taglineBenefit: 'Calcolatore fiscale, riduzione premi, assistenza sociale, scheda d\'emergenza — senza registrazione.',
     progress: { sie: 'Il Suo progresso', du: 'Il tuo progresso' },

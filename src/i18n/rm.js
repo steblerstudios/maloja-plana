@@ -287,7 +287,7 @@ export default {
   },
 
   dashboard: {
-    welcome: { sie: 'Examinai Voss dretgs. Ordinai Vossa vita.', du: 'Examinescha Tes dretgs. Ordinescha Tia vita.' },
+    welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
     tagline: { sie: 'Voss organisatur svizzer persunala — 100% privat, offline, gratuit.', du: 'Tes organisatur svizzer persunala — 100% privat, offline, gratuit.' },
     taglineBenefit: "Calculatur da taglia, IPV, agid social, carta d'urgenza — senza annunzia.",
     progress: { sie: 'Voss progress', du: 'Tes progress' },
