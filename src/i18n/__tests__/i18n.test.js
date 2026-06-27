@@ -106,3 +106,72 @@ describe('i18n-Parität (jede Sprache deckt den en-Kanon ab)', () => {
     });
   }
 });
+
+// path -> Wert (Blatt). { sie, du } zählt als ein Blatt-Wert.
+function flattenEntries(obj, prefix = '', out = {}) {
+  for (const [k, v] of Object.entries(obj)) {
+    const path = prefix ? `${prefix}.${k}` : k;
+    if (v && typeof v === 'object' && !Array.isArray(v) && !('sie' in v || 'du' in v)) {
+      flattenEntries(v, path, out);
+    } else {
+      out[path] = v;
+    }
+  }
+  return out;
+}
+
+function placeholderTokens(v) {
+  const s = v && typeof v === 'object' ? `${v.sie || ''} ${v.du || ''}` : String(v == null ? '' : v);
+  return [...new Set([...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]))].sort();
+}
+
+// Fängt vertippte/weggelassene {param}-Platzhalter: wenn en "{query}" hat, eine
+// Übersetzung aber "{querry}" oder den Platzhalter ganz weglässt, bricht die
+// Interpolation still (Nutzer sieht "{query}" oder einen leeren Wert).
+describe('i18n-Platzhalter-Parität ({param}-Tokens stimmen mit en überein)', () => {
+  const enEntries = flattenEntries(en);
+
+  for (const [name, dict] of Object.entries({ de, fr, it: itTranslations, rm })) {
+    it(`${name}.js: keine vertippten/fehlenden {platzhalter}`, () => {
+      const langEntries = flattenEntries(dict);
+      const mismatches = [];
+      for (const [path, enVal] of Object.entries(enEntries)) {
+        if (!(path in langEntries)) continue; // fehlende Keys deckt der Paritäts-Test ab
+        const a = placeholderTokens(enVal).join(',');
+        const b = placeholderTokens(langEntries[path]).join(',');
+        if (a !== b) mismatches.push(`${path} (en:[${a}] ${name}:[${b}])`);
+      }
+      expect(
+        mismatches,
+        `${mismatches.length} Platzhalter-Abweichung(en): ${mismatches.slice(0, 15).join(' · ')}`
+      ).toEqual([]);
+    });
+  }
+});
+
+// Ein { sie } oder { du } ohne Gegenstück wird von createT NICHT aufgelöst
+// (verlangt beide als String) und als rohes Objekt zurückgegeben -> React-Crash
+// "Objects are not valid as a React child". Dieser Test fängt das vorab.
+describe('i18n Anrede-Objekte sind vollständig (sie UND du als String)', () => {
+  function findHalfAnrede(obj, path, out) {
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return;
+    if ('sie' in obj || 'du' in obj) {
+      if (typeof obj.sie !== 'string' || typeof obj.du !== 'string') {
+        out.push(`${path} (sie:${typeof obj.sie}, du:${typeof obj.du})`);
+      }
+      return;
+    }
+    for (const [k, v] of Object.entries(obj)) findHalfAnrede(v, path ? `${path}.${k}` : k, out);
+  }
+
+  for (const [name, dict] of Object.entries({ en, de, fr, it: itTranslations, rm })) {
+    it(`${name}.js: kein unvollständiges { sie }/{ du }-Objekt`, () => {
+      const bad = [];
+      findHalfAnrede(dict, '', bad);
+      expect(
+        bad,
+        `${name}.js hat ${bad.length} unvollständige Anrede-Objekte: ${bad.slice(0, 15).join(' · ')}`
+      ).toEqual([]);
+    });
+  }
+});
