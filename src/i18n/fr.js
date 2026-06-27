@@ -924,6 +924,7 @@ export default {
       heartfelt7: 'Pfadibewegung Schweiz — pfadi.swiss — Le plus grand mouvement de jeunesse de Suisse (scoutisme).',
       heartfelt8: 'Tierschutz beider Basel — tbb.ch — Refuge, placement d’animaux et conseil en protection animale dans la région de Bâle.',
       heartfelt9: 'Abschiedsagentur — abschiedsagentur.ch — Accompagnement à domicile, conseil en prévoyance et soutien bienveillant en cas de décès, basée à Münchenstein.',
+      heartfelt10: 'Xdo – l’app de tâches (App Store, Rau Media) — Une app de tâches minimaliste et sereine. Sans compte, sans pistage, vos données restent sur votre appareil.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
