@@ -492,7 +492,7 @@ export default {
       benefits: ['Riduzione premi', 'Confronto premi', 'Calcolatore previdenza'],
       fields: {
         kkInsurer: 'Cassa malati',
-        kkModel: { label: 'Modello assicurativo', options: { standard: 'Standard (libera scelta)', hausarzt: 'Medico di famiglia', hmo: 'HMO (studio di gruppo)', telmed: 'Telmed (consulto telefonico)', apotheke: 'Modello farmacia' } },
+        kkModel: { label: 'Modello assicurativo', options: { basic: 'Basic', comfort: 'Comfort', standard: 'Standard (libera scelta)', hausarzt: 'Medico di famiglia', hmo: 'HMO (studio di gruppo)', telmed: 'Telmed (consulto telefonico)', apotheke: 'Modello farmacia' } },
         kkPremium: 'Premio mensile (CHF)',
         franchise: { label: 'Franchigia (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numero tessera assicurazione',
