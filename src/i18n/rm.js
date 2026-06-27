@@ -2450,6 +2450,16 @@ export default {
     fzLinkBSV: 'UFAS — Liber passadi explicà',
     fzLinkAuffang: 'Instituziun suppletiva LPP',
     fzLinkFINMA: 'FINMA — Cumparegliar contos da liber passadi',
+    intlTitle: "L'AVS cun referenza internaziunala",
+    intlIntro: "Has ti lavurà u vivì a l'exteriur, bandunas ti la Svizra, u has ti pajà l'AVS qua e ta n'es ì? Ils cas internaziunals da la 1. colonna vegnan tractads da la Centrala da cumpensaziun (ZAS) e da la Cassa svizra da cumpensaziun (SAK) a Genevra. Quai è ina orientaziun — la SAK clerescha tes cas concret.",
+    intlLeavingTitle: "Bandunar la Svizra",
+    intlLeavingText: "Ina renta AVS po vegnir pajada a l'exteriur. Burgais svizzers mantegnan lur dretg; per persunas estras dependa quai d'ina cunvegna da segirezza sociala tranter la Svizra e lur pajais.",
+    intlVoluntaryTitle: "AVS/AI facultativa",
+    intlVoluntaryText: "Burgais svizzers e dad UE/AELS che sa stabileschan ordaifer l'UE/AELS pon cuntinuar a pajar contribuziuns — sch'els eran assicurads almain 5 onns consecutivs avant. La participaziun sto succeder entaifer 12 mais suenter la partenza.",
+    intlRefundTitle: "Restituziun da las contribuziuns",
+    intlRefundText: "Persunas estras dad in pajais senza cunvegna da segirezza sociala pon, cur ch'ellas bandunan la Svizra definitivamain, dumandar la restituziun da lur contribuziuns AVS (suenter almain in onn da contribuziuns) — empè d'ina renta pli tard.",
+    intlContact: "Post da contact: Cassa svizra da cumpensaziun (SAK) / ZAS, Genevra",
+    intlMore: "Dapli tar la ZAS →",
   },
 
   cantons: {
@@ -2563,6 +2573,7 @@ export default {
     nextStepsTitle: "Proxims pass",
     linkDocs: { sie: "Tegnair Voss documents segirs → Cassaforte da documents", du: "Tegnair tes documents segirs → Cassaforte da documents" },
     linkEmergency: "Preparar infurmaziuns d'urgenza → Urgenza",
+    linkAhvIntl: "L'AVS cun referenza internaziunala → Prevenziun",
     alltagTitle: { sie: "Tge che Voss status munta en il mintgadi", du: "Tge che tes status munta en il mintgadi" },
     alltagIntro: { sie: "Ina orientaziun grossa davart lavurar, la reuniun da la famiglia ed il viagiar. Las reglas èn detagliadas e sa midan — ils posts da cussegliaziun survart cleran Voss cas concret.", du: "Ina orientaziun grossa davart lavurar, la reuniun da la famiglia ed il viagiar. Las reglas èn detagliadas e sa midan — ils posts da cussegliaziun survart cleran tes cas concret." },
     alltag: {
