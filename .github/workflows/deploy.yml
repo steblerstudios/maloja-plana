@@ -1,21 +1,24 @@
-name: Deploy to GitHub Pages
+name: Deploy to Infomaniak
+
+# Baut die statische App und lädt den Inhalt von dist/ per FTPS zu Infomaniak
+# (malojaplana.ch). Läuft automatisch bei jedem Push auf dev und kann manuell
+# über "Run workflow" (workflow_dispatch) ausgelöst werden.
+#
+# Benötigte GitHub-Secrets (Repo → Settings → Secrets and variables → Actions):
+#   FTP_USERNAME  – FTP-Benutzername von Infomaniak
+#   FTP_PASSWORD  – FTP-Passwort
+# Der FTP-Server (ftp.hosting-ik.com) und das Zielverzeichnis sind unten gesetzt.
+# Kein BASE_URL nötig: base default '/' passt für die Root-Domain.
+# Kein .htaccess wird hochgeladen (dist/ enthält keins) — Security-Header laufen
+# über das Infomaniak-Panel.
 
 on:
   push:
     branches: [dev]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,19 +30,13 @@ jobs:
 
       - run: npm install
       - run: npm run build
-        env:
-          BASE_URL: /maloja-plana/
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Infomaniak via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          server: ftp.hosting-ik.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: sites/malojaplana.ch/
