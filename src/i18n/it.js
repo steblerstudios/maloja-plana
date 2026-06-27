@@ -1849,13 +1849,13 @@ export default {
   alpha: {
     title: 'Versione preliminare',
     summary: 'Maloja Plana è in fase di sviluppo. I calcoli servono come orientamento — non sostituiscono una consulenza legale o finanziaria.',
-    disclaimer: 'Verifica le informazioni presso la tua autorità cantonale o uno specialista. I tuoi dati restano interamente su questo dispositivo.',
+    disclaimer: { sie: 'Verifichi le informazioni presso la Sua autorità cantonale o uno specialista. I Suoi dati restano interamente su questo dispositivo.', du: 'Verifica le informazioni presso la tua autorità cantonale o uno specialista. I tuoi dati restano interamente su questo dispositivo.' },
     noAdviceHint: 'Maloja Plana serve come orientamento e non sostituisce una consulenza legale, fiscale o assicurativa.',
   },
 
   unterlagen: {
     title: 'I miei documenti',
-    subtitle: 'I tuoi dossier di vita, ordinati con calma.',
+    subtitle: { sie: 'I Suoi dossier di vita, ordinati con calma.', du: 'I tuoi dossier di vita, ordinati con calma.' },
     dossier: {
       lebensmappe: {
         title: 'Cartella della vita',
@@ -1864,7 +1864,7 @@ export default {
       },
       notfall: {
         title: 'Dossier di emergenza',
-        description: 'Informazioni importanti per i tuoi familiari. Contatti, medicina, direttive.',
+        description: { sie: 'Informazioni importanti per i Suoi familiari. Contatti, medicina, direttive.', du: 'Informazioni importanti per i tuoi familiari. Contatti, medicina, direttive.' },
       },
       behoerden: {
         title: 'Dossier autorità',
@@ -1877,7 +1877,7 @@ export default {
     },
     backup: {
       title: 'Backup dei dati',
-      description: 'Salva o ripristina i tuoi dati localmente.',
+      description: { sie: 'Salvi o ripristini i Suoi dati localmente.', du: 'Salva o ripristina i tuoi dati localmente.' },
       action: 'Backup e ripristino',
     },
     note: 'Tutti i documenti restano sul tuo dispositivo. Nulla viene caricato.',
@@ -1904,7 +1904,7 @@ export default {
     sessionCountPlural: 'Sessione: {count} backup creati',
     letterPreview: 'Anteprima della lettera',
     confirmRestore: 'Questo sostituirà i tuoi dati attuali. Continuare?',
-    encryptionInfo: 'Crittografia AES-256, elaborata localmente. La tua password non lascia mai questo dispositivo.',
+    encryptionInfo: { sie: 'Crittografia AES-256, elaborata localmente. La Sua password non lascia mai questo dispositivo.', du: 'Crittografia AES-256, elaborata localmente. La tua password non lascia mai questo dispositivo.' },
     noWebCrypto: 'Il backup crittografato richiede HTTPS o localhost.',
     selectFile: 'Seleziona file',
     fileTypes: '.json o .maloja',
@@ -1914,7 +1914,7 @@ export default {
 
   behoerdenDossier: {
     title: 'Dossier per le autorità',
-    subtitle: 'Per il tuo appuntamento presso l\'assistenza sociale, il comune o un servizio specializzato.',
+    subtitle: { sie: 'Per il Suo appuntamento presso l\'assistenza sociale, il comune o un servizio specializzato.', du: 'Per il tuo appuntamento presso l\'assistenza sociale, il comune o un servizio specializzato.' },
     openDossier: 'Apri il dossier',
     printAction: 'Stampa come PDF',
     exportJSON: 'Esporta file dossier',
@@ -1929,8 +1929,8 @@ export default {
     elNotApplicable: 'Non applicabile (solo per beneficiari AVS/AI)',
     footerPrivacy: 'Questo documento è stato creato localmente. Nessun dato è stato trasmesso.',
     footerCredit: 'Maloja Plana — Organizzatore di vita svizzero (Open Source)',
-    empty: 'Compila prima i tuoi dati personali e finanziari affinché il dossier possa essere generato.',
-    previewNote: 'Anteprima — ecco come apparirà il tuo dossier:',
+    empty: { sie: 'Compili prima i Suoi dati personali e finanziari affinché il dossier possa essere generato.', du: 'Compila prima i tuoi dati personali e finanziari affinché il dossier possa essere generato.' },
+    previewNote: { sie: 'Anteprima — ecco come apparirà il Suo dossier:', du: 'Anteprima — ecco come apparirà il tuo dossier:' },
   },
 
   notfallDossier: {
@@ -1938,8 +1938,8 @@ export default {
     subtitle: 'Informazioni importanti per quando qualcun altro deve aiutare.',
     back: 'Torna a I miei documenti',
     printAction: 'Stampa / Salva come PDF',
-    previewNote: 'Anteprima — ecco come apparirà il tuo dossier di emergenza.',
-    empty: 'Il tuo dossier di emergenza ti aspetta. Inizia nel capitolo « Emergenza » — anche un contatto e il tuo gruppo sanguigno aiutano.',
+    previewNote: { sie: 'Anteprima — ecco come apparirà il Suo dossier di emergenza.', du: 'Anteprima — ecco come apparirà il tuo dossier di emergenza.' },
+    empty: { sie: 'Il Suo dossier di emergenza La aspetta. Inizi nel capitolo « Emergenza » — anche un contatto e il Suo gruppo sanguigno aiutano.', du: 'Il tuo dossier di emergenza ti aspetta. Inizia nel capitolo « Emergenza » — anche un contatto e il tuo gruppo sanguigno aiutano.' },
     sectionsIncluded: '{count} sezioni con dati',
     sectionsMissing: '{count} sezioni ancora aperte',
     openDossier: 'Apri dossier di emergenza',
@@ -1976,12 +1976,12 @@ export default {
     sectionsIncluded: '{count} sezioni con dati',
     sectionsMissing: '{count} sezioni ancora aperte',
     docsIncluded: '{count} documenti salvati',
-    previewNote: 'Anteprima — ecco come apparirà la tua cartella della vita.',
+    previewNote: { sie: 'Anteprima — ecco come apparirà la Sua cartella della vita.', du: 'Anteprima — ecco come apparirà la tua cartella della vita.' },
   },
 
   finanzUebersicht: {
     title: 'Panoramica finanziaria',
-    subtitle: 'La tua situazione in sintesi — basata sui tuoi dati.',
+    subtitle: { sie: 'La Sua situazione in sintesi — basata sui Suoi dati.', du: 'La tua situazione in sintesi — basata sui tuoi dati.' },
     monthlyIncome: 'Reddito mensile',
     canton: 'Cantone',
     taxes: 'Imposte',
@@ -1989,7 +1989,7 @@ export default {
     sozialhilfe: 'Assistenza sociale (orientamento)',
     el: 'Prestazioni complementari (PC)',
     noIncome: 'Nessun reddito registrato',
-    noData: 'Ancora nessun dato finanziario. Inserisci il tuo reddito per vedere la panoramica.',
+    noData: { sie: 'Ancora nessun dato finanziario. Inserisca il Suo reddito per vedere la panoramica.', du: 'Ancora nessun dato finanziario. Inserisci il tuo reddito per vedere la panoramica.' },
     enterIncome: 'Inserire il reddito',
     notEligible: 'Nessun diritto',
     notApplicable: 'Non applicabile',
@@ -2010,7 +2010,7 @@ export default {
     highIncome: 'Nettamente sopra la mediana',
     povertyLine: 'Soglia di povertà',
     median: 'Mediana CH',
-    branchenvergleich: 'Il tuo stipendio per settore (salario lordo mediano):',
+    branchenvergleich: { sie: 'Il Suo stipendio per settore (salario lordo mediano):', du: 'Il tuo stipendio per settore (salario lordo mediano):' },
     branchenQuelle: 'Fonte: UST Rilevazione svizzera della struttura dei salari 2022',
     household: 'Nucleo familiare',
     householdDetail: '{adults} adulti, {children} bambini',
@@ -2183,11 +2183,11 @@ export default {
     feedbackMail: 'Feedback via e-mail',
     feedbackForm: 'Modulo di feedback',
     feedback: {
-      title: 'Il tuo feedback sulla beta',
-      subtitle: 'Aiutaci a migliorare Maloja Plana. Tutto resta sul tuo dispositivo.',
-      q1: 'Hai capito l\'utilità di Maloja Plana nel primo minuto?',
-      q2: 'Quanto ti senti sicuro/a che i tuoi dati restino privati?',
-      q3: 'Cosa ti è piaciuto o cosa mancava?',
+      title: { sie: 'Il Suo feedback sulla beta', du: 'Il tuo feedback sulla beta' },
+      subtitle: { sie: 'Ci aiuti a migliorare Maloja Plana. Tutto resta sul Suo dispositivo.', du: 'Aiutaci a migliorare Maloja Plana. Tutto resta sul tuo dispositivo.' },
+      q1: { sie: 'Ha capito l\'utilità di Maloja Plana nel primo minuto?', du: 'Hai capito l\'utilità di Maloja Plana nel primo minuto?' },
+      q2: { sie: 'Quanto si sente sicuro/a che i Suoi dati restino privati?', du: 'Quanto ti senti sicuro/a che i tuoi dati restino privati?' },
+      q3: { sie: 'Cosa Le è piaciuto o cosa mancava?', du: 'Cosa ti è piaciuto o cosa mancava?' },
       q3placeholder: 'Opzionale — ma molto utile per noi.',
       scaleYes: 'Sì, subito',
       scaleMostly: 'In gran parte',
@@ -2196,8 +2196,8 @@ export default {
       trustOk: 'Abbastanza sicuro/a',
       trustLow: 'Poco sicuro/a',
       submit: 'Invia feedback',
-      thanks: 'Grazie per il tuo feedback!',
-      thanksDetail: 'Il tuo riscontro ci aiuta a migliorare Maloja Plana.',
+      thanks: { sie: 'Grazie per il Suo feedback!', du: 'Grazie per il tuo feedback!' },
+      thanksDetail: { sie: 'Il Suo riscontro ci aiuta a migliorare Maloja Plana.', du: 'Il tuo riscontro ci aiuta a migliorare Maloja Plana.' },
     },
   },
 
