@@ -1,10 +1,11 @@
 import React from 'react';
-import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS } from './data/asylData.js';
+import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, counselingForCanton } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 
 export const AsylView = ({ palette, t, data, onNavigate }) => {
   const canton = data.basis?.canton;
+  const cantonOffice = canton ? counselingForCanton(canton) : null;
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -29,6 +30,10 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     fristen: { background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
     fristenTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs + 'px' },
     fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
+    cantonBox: { background: palette.sageMist || palette.up, border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm + 'px', padding: space.md + 'px', marginTop: space.sm + 'px' },
+    cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.sky, fontSize: text.sm, fontWeight: weight.semi },
+    cantonOfficePhone: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
+    cantonDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: space.xs + 'px' },
   };
 
   return React.createElement('div', { style: s.card },
@@ -97,6 +102,21 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
           React.createElement('div', { style: s.orgDesc }, t('asyl.org.' + org.id)),
           org.phone && React.createElement('div', { style: s.orgPhone }, t('asyl.phone') + ' ' + org.phone)
         )
+      )
+    ),
+
+    // ── Beratung in Ihrem Kanton ──
+    cantonOffice && React.createElement('div', { key: 'canton-office' },
+      React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } },
+        t('asyl.cantonOfficeTitle', { canton: t('cantons.' + canton) || canton })),
+      React.createElement('div', { style: s.cantonBox },
+        React.createElement('a', {
+          href: cantonOffice.url, target: '_blank', rel: 'noopener noreferrer',
+          style: s.cantonOfficeLink,
+        }, cantonOffice.name + ' →'),
+        cantonOffice.phone && React.createElement('div', { style: s.cantonOfficePhone },
+          t('asyl.phone') + ' ' + cantonOffice.phone),
+        React.createElement('div', { style: s.cantonDesc }, t('asyl.counseling.desc'))
       )
     ),
 
