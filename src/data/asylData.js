@@ -54,6 +54,16 @@ export const ASYL_PROCESS = ['gesuch', 'baz', 'verfahren', 'entscheid', 'beschwe
 // Beschwerdefristen kurz (beschleunigt 7 Arbeitstage, erweitert 30 Tage).
 export const ASYL_RIGHTS = ['rechtsvertretung', 'anhoerung', 'beschwerde'];
 
+// «Mein Status im Alltag»: pro Status (n/s/f/b) die wichtigsten Alltagsfragen.
+// Texte in i18n asyl.alltag.<status>.<dim>, Dimensions-Labels asyl.alltag.dim.<dim>.
+// Verifiziert (SEM erwerbstaetige_asylbereich, fluechtlingshilfe.ch):
+//  - Arbeit: N nur mit Bewilligung (nicht im BAZ); F/B/S erlaubt, Meldeverfahren.
+//  - Familiennachzug: B privilegiert (Ehepartner+min. Kinder); F nach ~3 J. Wartefrist
+//    + Bedingungen; N nicht im Verfahren; S Ehepartner+Kinder, ebenfalls Status S.
+//  - Reisen: B Reisedokument (nie Herkunftsland); F Pass beim SEM, Rückreisevisum nur
+//    aus triftigen Gründen; N nur ausnahmsweise; S frei ins Ausland und zurück.
+export const ASYL_ALLTAG_DIMS = ['arbeit', 'familie', 'reisen'];
+
 // ── Kantonale/regionale Asyl-Rechtsberatung ──
 // Quelle: SFH/OSAR-Adressliste (fluechtlingshilfe.ch, RBSadr_extern.pdf) +
 // HEKS/Caritas/CSP-Stellen, alle URLs einzeln verifiziert (Stand 2025/2026).
