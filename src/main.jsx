@@ -4,7 +4,7 @@ import './tokens.css';
 import './print.css';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
-import { cantonFromPLZ } from './config/cantonalData.js';
+import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
@@ -272,6 +272,8 @@ const AppInner = () => {
   useEffect(() => {
     registerServiceWorker();
     checkOverdueReminders(t);
+    // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
+    preloadPLZ();
   }, []);
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
@@ -332,12 +334,16 @@ const AppInner = () => {
     setData(prev => {
       const next = { ...prev, [chapter]: { ...prev[chapter], [field]: value } };
 
-      // PLZ->Kanton auto-sync
+      // PLZ->Kanton + PLZ->Gemeinde auto-sync (lokal, offline)
       if (chapter === 'wohnen' && field === 'postalCode' && value.length === 4) {
         const detected = cantonFromPLZ(value);
         if (detected) {
           next.basis = { ...next.basis, canton: next.basis?.canton || detected };
           next.behoerden = { ...next.behoerden, cantoneOfTaxation: next.behoerden?.cantoneOfTaxation || detected };
+        }
+        const gemeinde = gemeindeFromPLZ(value);
+        if (gemeinde && !next.wohnen?.city) {
+          next.wohnen = { ...next.wohnen, city: gemeinde };
         }
       }
 
