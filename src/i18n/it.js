@@ -140,10 +140,16 @@ export default {
     export: 'Esportazione',
     calendar: 'Calendario',
     notifications: 'Notifiche',
+    flyer: 'Volantino da condividere',
+    merkliste: 'Promemoria',
+    search: 'Cerca',
     menu: 'Menu',
     completion: '{value}% completato',
     privacyNote: { sie: '100% locale. Nessun dato lascia il Suo dispositivo.', du: '100% locale. Nessun dato lascia il tuo dispositivo.' },
     sub: {
+      flyer: 'Volantino QR stampabile',
+      merkliste: 'Note e prossimi passi',
+      search: 'Trova strumenti e capitoli',
       calendar: 'Scadenze e appuntamenti',
       budgetSync: 'Importazione CSV',
       kvgIpv: 'Verifica il diritto',
@@ -1734,6 +1740,8 @@ export default {
 
   calendar: {
     title: 'Calendario e promemoria',
+    exportIcs: 'Esporta calendario (.ics)',
+    exportIcsHint: { sie: 'Aggiunga i Suoi promemoria al calendario del telefono o del computer.', du: 'Aggiungi i tuoi promemoria al calendario del telefono o del computer.' },
     upcoming: 'In arrivo',
     overdue: 'In ritardo',
     completed: 'Completato',
@@ -2176,6 +2184,7 @@ export default {
   beta: {
     intro: 'La tua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. 100% privato, offline, gratuito.',
     gateMessage: 'Questa app è in beta chiusa. Inserisci il codice di accesso.',
+    legalLink: 'Privacy e note legali',
     codePlaceholder: 'Codice di accesso',
     codeWrong: 'Questo codice non è valido.',
     enter: 'Apri',
@@ -2239,6 +2248,16 @@ export default {
 
   vr: {
     title: 'Calcolatore previdenza',
+    intlTitle: "AVS con riferimento all'estero",
+    intlIntro: { sie: "Ha lavorato o vissuto all'estero, sta lasciando la Svizzera, oppure ha versato l'AVS qui e si è trasferito? I casi internazionali del 1° pilastro sono gestiti dall'Ufficio centrale di compensazione (UCC) e dalla Cassa svizzera di compensazione (CSC) a Ginevra. Questo è un orientamento — la CSC chiarisce il Suo caso specifico.", du: "Hai lavorato o vissuto all'estero, stai lasciando la Svizzera, oppure hai versato l'AVS qui e ti sei trasferito? I casi internazionali del 1° pilastro sono gestiti dall'Ufficio centrale di compensazione (UCC) e dalla Cassa svizzera di compensazione (CSC) a Ginevra. Questo è un orientamento — la CSC chiarisce il tuo caso specifico." },
+    intlLeavingTitle: 'Partenza dalla Svizzera',
+    intlLeavingText: "Una rendita AVS può essere versata all'estero. I cittadini svizzeri mantengono il diritto; per i cittadini stranieri dipende da un accordo di sicurezza sociale tra la Svizzera e il loro Paese.",
+    intlVoluntaryTitle: 'AVS/AI facoltativa',
+    intlVoluntaryText: { sie: "I cittadini svizzeri e dell'UE/AELS che si trasferiscono fuori dall'UE/AELS possono continuare a versare contributi — se prima erano assicurati per almeno 5 anni consecutivi. Deve aderire entro 12 mesi dalla partenza.", du: "I cittadini svizzeri e dell'UE/AELS che si trasferiscono fuori dall'UE/AELS possono continuare a versare contributi — se prima erano assicurati per almeno 5 anni consecutivi. Devi aderire entro 12 mesi dalla partenza." },
+    intlRefundTitle: 'Rimborso dei contributi',
+    intlRefundText: "I cittadini stranieri di un Paese senza accordo di sicurezza sociale possono, alla partenza definitiva dalla Svizzera, chiedere il rimborso dei loro contributi AVS (dopo almeno un anno di contributi) — invece di una rendita futura.",
+    intlContact: 'Punto di contatto: Cassa svizzera di compensazione (CSC) / UCC, Ginevra',
+    intlMore: "Maggiori informazioni presso l'UCC →",
     tabAhv: 'Rendita AVS',
     tabBvg: 'Cassa pensioni (LPP)',
     tabVergleich: 'Confronto',
@@ -2471,6 +2490,39 @@ export default {
     fristenTitle: "Importante: i termini sono brevi",
     fristenBody: { sie: "Nella procedura celere deve presentare ricorso entro 7 giorni lavorativi, nella procedura ampliata entro 30 giorni. Non aspetti — contatti subito la Sua rappresentanza legale o un consultorio.", du: "Nella procedura celere devi presentare ricorso entro 7 giorni lavorativi, nella procedura ampliata entro 30 giorni. Non aspettare — contatta subito la tua rappresentanza legale o un consultorio." },
     cantonLink: { sie: "Il Suo cantone: {canton} → trovi consulenza d'asilo e autorità", du: "Il tuo cantone: {canton} → trova consulenza d'asilo e autorità" },
+    cantonOfficeTitle: { sie: "Consulenza nel Suo Cantone ({canton})", du: "Consulenza nel tuo Cantone ({canton})" },
+    counseling: {
+      desc: { sie: "Consulenza legale gratuita e riservata in materia di diritto d'asilo e degli stranieri. Il servizio La accompagna personalmente nella Sua procedura.", du: "Consulenza legale gratuita e riservata in materia di diritto d'asilo e degli stranieri. Il servizio ti accompagna personalmente nella tua procedura." },
+    },
+    nextStepsTitle: "Prossimi passi",
+    linkDocs: { sie: "Conservi i Suoi documenti al sicuro → Cassaforte documenti", du: "Conserva i tuoi documenti al sicuro → Cassaforte documenti" },
+    linkEmergency: "Preparare le informazioni d'emergenza → Emergenza",
+    linkAhvIntl: "AVS con riferimento all'estero → Previdenza",
+    alltagTitle: { sie: "Cosa significa il Suo status nella vita quotidiana", du: "Cosa significa il tuo status nella vita quotidiana" },
+    alltagIntro: { sie: "Un orientamento generale su lavoro, ricongiungimento familiare e viaggi. Le regole sono dettagliate e cambiano — i consultori sopra indicati chiariscono il Suo caso specifico.", du: "Un orientamento generale su lavoro, ricongiungimento familiare e viaggi. Le regole sono dettagliate e cambiano — i consultori sopra indicati chiariscono il tuo caso specifico." },
+    alltag: {
+      dim: { arbeit: "Lavoro", familie: "Ricongiungimento familiare", reisen: "Viaggi" },
+      n: {
+        arbeit: "Solo con autorizzazione preventiva del Cantone e non durante il soggiorno in un Centro federale d'asilo. I programmi di formazione sono possibili.",
+        familie: "Non possibile durante la procedura in corso.",
+        reisen: "Solo in via eccezionale, con autorizzazione della SEM per motivi importanti (ad es. malattia grave o decesso di un parente stretto).",
+      },
+      s: {
+        arbeit: "Consentito, senza periodo di attesa — il datore di lavoro notifica semplicemente l'impiego.",
+        familie: "Il coniuge e i figli minorenni possono raggiungere la persona e ricevono anch'essi lo status S.",
+        reisen: { sie: "Può viaggiare all'estero senza permesso di viaggio e rientrare in Svizzera.", du: "Puoi viaggiare all'estero senza permesso di viaggio e rientrare in Svizzera." },
+      },
+      f: {
+        arbeit: "Consentito in tutta la Svizzera, senza periodo di attesa — il datore di lavoro notifica semplicemente l'impiego.",
+        familie: "Possibile al più presto dopo un periodo di attesa (circa 3 anni), a determinate condizioni: nessuna dipendenza dall'aiuto sociale e un alloggio adeguato.",
+        reisen: { sie: "Nessun viaggio libero — il Suo passaporto è depositato presso la SEM. Un visto di ritorno è concesso solo per motivi importanti. Mai verso il Paese d'origine.", du: "Nessun viaggio libero — il tuo passaporto è depositato presso la SEM. Un visto di ritorno è concesso solo per motivi importanti. Mai verso il Paese d'origine." },
+      },
+      b: {
+        arbeit: "Consentito in tutta la Svizzera, senza periodo di attesa — il datore di lavoro notifica semplicemente l'impiego.",
+        familie: "Privilegiato: il coniuge e i figli minorenni separati dalla fuga possono raggiungere la persona e sono inclusi nello status di rifugiato.",
+        reisen: "I viaggi sono possibili con un documento di viaggio per rifugiati — ma mai verso il Paese d'origine.",
+      },
+    },
   },
   alv: {
     title: "Indennità di disoccupazione",
@@ -2614,5 +2666,27 @@ export default {
     shareText: 'Maloja Plana — la Sua panoramica serena della vita in Svizzera. Privata, offline, gratuita.',
     copied: 'Link copiato',
     langHint: "Il volantino viene creato nella lingua attualmente selezionata. Per un'altra lingua, cambiare prima la lingua in alto.",
+  },
+
+  search: {
+    title: 'Cerca',
+    placeholder: 'Cerca strumenti e capitoli…',
+    empty: { sie: 'Nessun risultato per «{query}». Provi un altro termine.', du: 'Nessun risultato per «{query}». Prova un altro termine.' },
+    toolsTitle: 'Strumenti',
+    chaptersTitle: 'Capitoli',
+  },
+
+  merkliste: {
+    title: 'Promemoria',
+    intro: { sie: 'Le è venuto in mente qualcosa da sistemare più tardi — ad esempio «Potrei richiedere la riduzione dei premi»? Lo annoti qui e lo colleghi direttamente allo strumento giusto, così ritrova la strada quando ha tempo.', du: 'Ti è venuto in mente qualcosa da sistemare più tardi — ad esempio «Potrei richiedere la riduzione dei premi»? Annotalo qui e collegalo direttamente allo strumento giusto, così ritrovi la strada quando hai tempo.' },
+    placeholder: { sie: 'Cosa vuole ricordare?', du: 'Cosa vuoi ricordare?' },
+    linkLabel: 'Collega a',
+    linkNone: 'Nessun collegamento',
+    add: 'Aggiungi',
+    empty: { sie: 'Il Suo promemoria è vuoto. Aggiunga una prima nota qui sopra.', du: 'Il tuo promemoria è vuoto. Aggiungi una prima nota qui sopra.' },
+    openTitle: 'Da fare',
+    doneTitle: 'Fatto',
+    markDone: 'Segna come fatto',
+    undo: 'Segna come non fatto',
   },
 };
