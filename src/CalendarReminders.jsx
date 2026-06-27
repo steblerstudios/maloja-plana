@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
+import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration } from './config/tokens.js';
 
 // ─── Helpers ────────────────────────────────────────────────
@@ -231,6 +232,20 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'cowbell', size: 20 }), t('calendar.title')),
+
+    // Kalender-Export (.ics) — Termine ins eigene Kalender-App übernehmen
+    upcoming.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => downloadICS(upcoming, t),
+        style: {
+          background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          padding: space.xs + 'px ' + space.md + 'px', fontSize: text.xs, color: palette.mid,
+          cursor: 'pointer', fontFamily: 'inherit',
+        }
+      }, '↧ ' + t('calendar.exportIcs')),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('calendar.exportIcsHint'))
+    ),
 
     // Stats
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: space.sm, marginBottom: space.md } },
