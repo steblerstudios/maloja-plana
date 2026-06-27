@@ -248,6 +248,8 @@ const AppInner = () => {
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   const applySandbox = () => { if (sandboxData) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
+  // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
+  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -582,6 +584,16 @@ const AppInner = () => {
           display: 'flex', alignItems: 'center', gap: '6px',
         },
       }, '← ', t('nav.backToDashboard')),
+      !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
+        onClick: enterSandbox,
+        style: {
+          display: 'inline-flex', alignItems: 'center', gap: '6px',
+          margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px',
+          background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          color: palette.sage, fontFamily: 'inherit',
+        },
+      }, '△ ' + t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
