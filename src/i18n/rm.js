@@ -154,6 +154,7 @@ export default {
     export: 'Export',
     calendar: 'Chalender',
     merkliste: 'Mia glista da memoria',
+    search: 'Tschertgar',
     notifications: 'Communicaziuns',
     menu: 'Menu',
     completion: '{value}% cumplet',
@@ -161,6 +162,7 @@ export default {
     sub: {
       calendar: 'Termins & scadenzas',
       merkliste: 'Notizias & proxims pass',
+      search: 'Chattar utensils & chapitels',
       budgetSync: 'Import CSV',
       kvgIpv: 'Examinar il dretg',
       praemien: 'Cumparegliar models',
@@ -2304,6 +2306,14 @@ export default {
     check4: '☐ Contract da locaziun (sche avant maun)',
     check5: '☐ Attestat da famiglia (sche relevant)',
     check6: '☐ Conferma da pajaments da mantegniment (sche applitgabel)',
+  },
+
+  search: {
+    title: 'Tschertgar',
+    placeholder: 'Tschertgar utensils e chapitels…',
+    empty: 'Nagut chattà per «{query}». Emprova in auter term.',
+    toolsTitle: 'Utensils',
+    chaptersTitle: 'Chapitels',
   },
 
   merkliste: {
