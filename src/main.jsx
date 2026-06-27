@@ -55,6 +55,7 @@ const FinanzUebersicht = React.lazy(() => import('./FinanzUebersicht.jsx'));
 const DirektLinks = React.lazy(() => import('./DirektLinks.jsx'));
 const KVGLeistungen = React.lazy(() => import('./KVGLeistungen.jsx'));
 const FlyerView = React.lazy(() => import('./FlyerView.jsx'));
+const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 
@@ -636,6 +637,7 @@ const AppInner = () => {
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
+        view === 'merkliste' && React.createElement(MerklisteView, { palette, t, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
