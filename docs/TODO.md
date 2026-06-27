@@ -66,7 +66,7 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 - 🟡 Signet-Farben (Ordner+Berg+Pass) an Granit angleichen
 - 🟡 **Voice/Anrede-Toggle (Sie/Du)** implementieren + Atkinson-Font wiren (Accessibility)
 - 🟡 OFL-Lizenztexte zu den WOFF2 legen · Wortmarke für Produktion in Pfade outlinen
-- 🟡 Brand Guidelines in *ein* Dokument bündeln
+- ✅ Brand Guidelines in *ein* Dokument bündeln → `docs/brand/brand-guidelines.md`
 
 ## E — Inhalt
 
