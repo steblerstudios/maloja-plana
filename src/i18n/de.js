@@ -291,7 +291,7 @@ export default {
     next: 'Zurück zur Übersicht',
   },
   dashboard: {
-    welcome: { sie: 'Prüfen Sie Ihre Ansprüche. Ordnen Sie Ihr Leben.', du: 'Prüfe Deine Ansprüche. Ordne Dein Leben.' },
+    welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
     tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.' },
     taglineBenefit: 'Steuerrechner, IPV, Sozialhilfe, Notfallkarte — ohne Anmeldung nutzbar.',
     progress: { sie: 'Ihr Fortschritt', du: 'Dein Fortschritt' },
