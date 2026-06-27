@@ -852,6 +852,7 @@ export default {
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
     enter: 'Avrir',
+    legalLink: 'Protecziun da datas & infurmaziuns giuridicas',
     feedbackMail: 'Feedback via e-mail',
     feedbackForm: 'Formular da feedback',
     feedback: {
