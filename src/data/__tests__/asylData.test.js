@@ -73,8 +73,8 @@ describe.each([['en', en], ['fr', frLang], ['rm', rm]])('asyl Beratung i18n (%s)
     expect(present(dict.asyl.counseling?.desc), `${lang}: asyl.counseling.desc`).toBe(true);
   });
 
-  it('Crosslink-Keys (nextSteps/docs/emergency) vorhanden', () => {
-    for (const k of ['nextStepsTitle', 'linkDocs', 'linkEmergency']) {
+  it('Crosslink-Keys (nextSteps/docs/emergency/ahvIntl) vorhanden', () => {
+    for (const k of ['nextStepsTitle', 'linkDocs', 'linkEmergency', 'linkAhvIntl']) {
       expect(present(dict.asyl[k]), `${lang}: asyl.${k}`).toBe(true);
     }
   });
