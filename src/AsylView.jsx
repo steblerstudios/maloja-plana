@@ -159,7 +159,11 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', {
         style: { ...s.crosslink, marginTop: space.xs + 'px' },
         onClick: () => onNavigate('notfalleinstieg'),
-      }, t('asyl.linkEmergency'))
+      }, t('asyl.linkEmergency')),
+      React.createElement('button', {
+        style: { ...s.crosslink, marginTop: space.xs + 'px' },
+        onClick: () => onNavigate('vorsorge'),
+      }, t('asyl.linkAhvIntl'))
     )
   );
 };
