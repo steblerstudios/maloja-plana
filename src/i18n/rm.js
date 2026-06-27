@@ -153,12 +153,14 @@ export default {
     flyer: 'Flyer per derasar',
     export: 'Export',
     calendar: 'Chalender',
+    merkliste: 'Mia glista da memoria',
     notifications: 'Communicaziuns',
     menu: 'Menu',
     completion: '{value}% cumplet',
     privacyNote: { sie: 'Naginas datas bandunan Voss apparat.', du: 'Naginas datas bandunan Tes apparat.' },
     sub: {
       calendar: 'Termins & scadenzas',
+      merkliste: 'Notizias & proxims pass',
       budgetSync: 'Import CSV',
       kvgIpv: 'Examinar il dretg',
       praemien: 'Cumparegliar models',
@@ -2302,6 +2304,20 @@ export default {
     check4: '☐ Contract da locaziun (sche avant maun)',
     check5: '☐ Attestat da famiglia (sche relevant)',
     check6: '☐ Conferma da pajaments da mantegniment (sche applitgabel)',
+  },
+
+  merkliste: {
+    title: 'Mia glista da memoria',
+    intro: "Has ti remartgà insatge che ti vuls reglar pli tard — p.ex. «jau pudess dumandar la reducziun da premias»? Notescha quai qua e collia el directamain cun l'utensil dretg, per chattar enavos la via cura che ti has temp.",
+    placeholder: 'Tge vuls ti tegnair endament?',
+    linkLabel: 'Colliar cun',
+    linkNone: 'Nagin link',
+    add: 'Agiuntar',
+    empty: 'Tia glista da memoria è vida. Agiuntescha ina emprima notizia survart.',
+    openTitle: 'Da far',
+    doneTitle: 'Fatg',
+    markDone: 'Marcar sco fatg',
+    undo: 'Marcar sco betg fatg',
   },
 
   calendar: {

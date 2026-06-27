@@ -141,11 +141,13 @@ export default {
     flyer: 'Flyer to share',
     export: 'Export',
     calendar: 'Calendar',
+    merkliste: 'My checklist',
     menu: 'Menu',
     completion: '{value}% complete',
     privacyNote: '100% local. No data leaves your device.',
     sub: {
       calendar: 'Deadlines & dates',
+      merkliste: 'Notes & next steps',
       budgetSync: 'CSV import',
       kvgIpv: 'Check eligibility',
       praemien: 'Compare models',
@@ -1784,6 +1786,20 @@ export default {
     dueTodayCount: '{count} due today',
     notificationTitle: '{count} overdue reminder(s)',
     notificationBody: 'Open Maloja Plana to review your reminders.',
+  },
+
+  merkliste: {
+    title: 'My checklist',
+    intro: 'Noticed something you want to deal with later — like “I could apply for premium reduction”? Note it here and link it directly to the right tool, so you find your way back when you have time.',
+    placeholder: 'What would you like to remember?',
+    linkLabel: 'Link to',
+    linkNone: 'No link',
+    add: 'Add',
+    empty: 'Your checklist is empty. Add a first note above.',
+    openTitle: 'To do',
+    doneTitle: 'Done',
+    markDone: 'Mark as done',
+    undo: 'Mark as not done',
   },
 
   calendar: {
