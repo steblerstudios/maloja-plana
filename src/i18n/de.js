@@ -2607,4 +2607,22 @@ export default {
       },
     },
   },
+
+  // Verteil-Flyer — fehlte in de.js (Nutzer sahen den englischen Fallback).
+  flyer: {
+    title: 'Flyer zum Teilen',
+    intro: 'Ein druckbarer Flyer mit QR-Code zu Maloja Plana — ideal für Beratungsstellen, Gemeinden und Anschlagbretter.',
+    claim: 'Verstehen, was zusteht. Ordnen, was ansteht.',
+    lead: 'Ihre ruhige Übersicht über das Leben in der Schweiz.',
+    point1: '100% privat — alles bleibt auf Ihrem Gerät',
+    point2: 'Kostenlos & offline, ohne Konto',
+    point3: 'In mehreren Sprachen verfügbar',
+    scan: 'Scannen & loslegen:',
+    foot: 'Lokal, privat, kostenlos · von Stebler Studios',
+    print: 'Drucken / als PDF speichern',
+    share: 'Link teilen',
+    shareText: 'Maloja Plana — Ihre ruhige Übersicht über das Leben in der Schweiz. Privat, offline, kostenlos.',
+    copied: 'Link kopiert',
+    langHint: 'Der Flyer wird in der aktuell gewählten Sprache erstellt. Für eine andere Sprache zuerst oben die Sprache wechseln.',
+  },
 };
