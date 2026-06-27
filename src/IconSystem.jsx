@@ -885,7 +885,7 @@ const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // Icon Registry
 // ═══════════════════════════════════════════════════════════════
 
-export const Icons = {
+const _iconFactories = {
   // Chapter icons
   basis: _basis,
   wohnen: _wohnen,
@@ -954,6 +954,17 @@ export const Icons = {
   lock: _lock,
   cowbell: _cowbell,
 };
+
+// iOS Safari collapses an <svg> that has a viewBox but no explicit width/height
+// to 0×0 inside flex containers, so icons disappeared on iPhones while desktop
+// Chrome rendered them fine. Wrap every factory so the returned SVG always fills
+// its (already sized) parent wrapper on all browsers.
+export const Icons = Object.fromEntries(
+  Object.entries(_iconFactories).map(([key, fn]) => [
+    key,
+    () => React.cloneElement(fn(), { width: '100%', height: '100%' }),
+  ])
+);
 
 
 // ═══════════════════════════════════════════════════════════════

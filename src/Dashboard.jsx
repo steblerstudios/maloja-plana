@@ -690,7 +690,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
                   animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
                 }
-              }, IconFn ? IconFn() : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
+              }, IconFn ? React.createElement('div', { style: { width: '24px', height: '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
 
               React.createElement('div', { style: { flex: 1, minWidth: 0 } },
                 React.createElement('div', {
