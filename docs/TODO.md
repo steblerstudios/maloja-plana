@@ -49,7 +49,10 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 ## C — Design / Calm-UX (aus Audit)
 
-- 🟠 IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht). *(noch offen)*
+- ✅ IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht).
+  `PremiumSubsidy.jsx` rendert das Ergebnis als umrandete Box mit gestapelten Label/Wert-Zeilen
+  (`text.body`, dezente Trenner) — keine grossen KPI-Zahlen mehr. Kantons-Vergleich liegt im
+  eingeklappten `<details>`. (Per Code-Inspektion 2026-06-27 verifiziert.)
 - ✅ Zu viele Crosslink-Buttons gebündelt (monthlyIncome → eine „Passende Werkzeuge"-Box).
 - ✅ Hover `scale(1.12)`→`1.04` — bereits erledigt (Dashboard nutzt 1.04; keine 1.12-Hover mehr;
   die einzigen grösseren Scales sind legitime One-Shot-Keyframes `mp-stamp`/`mp-check-pop`).
