@@ -39,7 +39,20 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 - ✅ **✕-Buttons `aria-label`** (DoctorManager, MedicationManager, DiseaseManager).
 - ✅ **Feld-Labels** verknüpft (per `aria-label` an allen Manager-Feldern + Onboarding/Sozialhilfe).
 - ✅ **`doctors.label`** in allen 5 i18n vorhanden.
-- 🟡 `rm.js` verwaiste Alt-Keys (~85) gegen `de.js` bereinigen.
+- 🟡 `rm.js` verwaiste Alt-Keys bereinigen — **analysiert 2026-06-27**, Bulk-Löschung
+  zurückgestellt (siehe Begründung):
+  - Referenz ist **en.js** (`DEFAULT_LANG = 'en'`, nicht de). Vergleich rm↔en + Code-Referenz-Check
+    (Wortgrenze): **129 Pfade sind nachweislich tot** (in en abwesend + 0 Code-Referenzen) — alte
+    Alt-Keys aus früherer Struktur (`sections`/`sectionIntros`/`chapterStatus`/`guidedStart`/
+    `progress`/alte `onboarding.*`/`trust.*`/`error.*`/`storage`/`backup` + viele `chapters.*.fields/docs/options`).
+  - **Kein „ganzer Block"-Shortcut:** alle 129 sind verstreute Einzel-Keys in gemischten Blöcken →
+    129 chirurgische Löschungen, fehleranfällig, **0 sichtbarer Nutzen** (nur ~10 kB Bundle). Lohnt
+    sich nur als vorsichtiger Skript-Pass, wenn rm.js ruhig ist (Agenten editieren es laufend).
+  - ✅ **Nebenbefund behoben:** 2 der Kandidaten (`kkModel.options.basic`/`.comfort`) waren NICHT
+    tot — KKScanner nutzt sie, aber sie fehlten in en/de/fr/it → Dropdown zeigte rohen Key-String.
+    Keys ergänzt (Commit zu kkModel basic/comfort).
+  - 🟠 **Offener Nebenbefund:** `de.js` fehlen die Blöcke `asyl` + `flyer` komplett → deutsche
+    Nutzer sehen Asyl-/Flyer-Texte auf **Englisch** (Fallback). Eigene Übersetzungs-Aufgabe.
 
 ## B — Berechnungen (vor Fixes offizielle Quelle prüfen!)
 
