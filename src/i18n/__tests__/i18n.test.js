@@ -1,6 +1,25 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { isRTL, SUPPORTED_LANGUAGES, resolveInitialLang } from '../index.js';
+import en from '../en.js';
+import de from '../de.js';
+import fr from '../fr.js';
+import itTranslations from '../it.js'; // nicht `it` — kollidiert mit vitest it()
+import rm from '../rm.js';
+
+// Sammelt alle Blatt-Pfade. Ein { sie, du }-Objekt zählt als EIN Blatt
+// (Anrede-Variante), nicht als zwei verschachtelte Keys.
+function flattenKeys(obj, prefix = '', out = []) {
+  for (const [k, v] of Object.entries(obj)) {
+    const path = prefix ? `${prefix}.${k}` : k;
+    if (v && typeof v === 'object' && !Array.isArray(v) && !('sie' in v || 'du' in v)) {
+      flattenKeys(v, path, out);
+    } else {
+      out.push(path);
+    }
+  }
+  return out;
+}
 
 describe('i18n Infrastruktur', () => {
   it('aktuelle Sprachen sind alle LTR', () => {
@@ -66,4 +85,24 @@ describe('hreflang-Vollständigkeit (index.html)', () => {
   it('x-default ist gesetzt', () => {
     expect(hreflangs).toContain('x-default');
   });
+});
+
+// Fängt Übersetzungs-Drift: Wenn ein Feature einen Key in en (DEFAULT_LANG /
+// Fallback) ergänzt, aber eine Sprache nicht nachzieht, sehen deren Nutzer den
+// englischen Fallback. Dieser Test verlangt, dass jede Sprache den en-Kanon
+// vollständig abdeckt. (Zusätzliche, ungenutzte Keys in einer Sprache sind
+// erlaubt — sie schaden nicht; nur fehlende sind ein Problem.)
+describe('i18n-Parität (jede Sprache deckt den en-Kanon ab)', () => {
+  const enKeys = flattenKeys(en);
+
+  for (const [name, dict] of Object.entries({ de, fr, it: itTranslations, rm })) {
+    it(`${name}.js hat keine fehlenden Keys gegenüber en`, () => {
+      const have = new Set(flattenKeys(dict));
+      const missing = enKeys.filter((k) => !have.has(k));
+      expect(
+        missing,
+        `${name}.js fehlen ${missing.length} Keys (fallen auf EN zurück): ${missing.slice(0, 25).join(', ')}`
+      ).toEqual([]);
+    });
+  }
 });
