@@ -3,10 +3,17 @@ name: Deploy to Infomaniak
 # Baut die statische App und lädt den Inhalt von dist/ per SFTP zu Infomaniak
 # (malojaplana.ch).
 #
-# SFTP-Host: et9l2r.ftp.infomaniak.com (Port 22, SSH für et9l2r_admin aktiviert).
-# NICHT ftp.hosting-ik.com — der ist von aussen auf 21/22 nicht erreichbar.
-# Auto-Trigger (push) ist noch auskommentiert: erst ein kontrollierter manueller
-# Lauf (workflow_dispatch) zum Verifizieren, dann push-Trigger reaktivieren.
+# SFTP-Host: et9l2r.ftp.infomaniak.com (Port 22, SSH für et9l2r_admin aktiviert),
+# Zielpfad unten. Host/Pfad/Creds sind verifiziert korrekt.
+#
+# ⚠️ FUNKTIONIERT NICHT VON GITHUB-HOSTED RUNNERN: Infomaniak filtert SSH/FTP nach
+# IP und blockt GitHub-Actions-Rechenzentren (TCP-Connect zu Port 22 läuft vom
+# Runner in den Timeout; vom Entwickler-Standort kommt sofort ein SSH-Banner).
+# Nicht im Workflow lösbar. Optionen: (a) Infomaniak-IP-Allowlist (GitHub-Ranges
+# riesig/rotierend → unpraktisch), (b) Self-hosted Runner mit erlaubter IP,
+# (c) Infomaniak-natives Git-Deploy (Panel → Erweiterte Tools), (d) manueller
+# Deploy (funktioniert). Auto-Trigger daher aus; Workflow ist startklar, falls
+# Variante (a)/(b) je eingerichtet wird.
 #
 # Benötigte GitHub-Secrets (Repo → Settings → Secrets and variables → Actions):
 #   FTP_USERNAME  – FTP-Benutzername von Infomaniak
@@ -28,14 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # TEMP-Diagnose: kann der Runner den SSH-Host überhaupt per TCP erreichen?
-      - name: Diagnose SSH-Erreichbarkeit
-        run: |
-          echo "TCP-Connect-Test et9l2r.ftp.infomaniak.com:22 vom GitHub-Runner:"
-          timeout 15 bash -c 'exec 3<>/dev/tcp/et9l2r.ftp.infomaniak.com/22 && head -c 50 <&3' \
-            && echo "" && echo "→ ERREICHBAR (SSH-Banner oben sichtbar)" \
-            || echo "→ BLOCKIERT / Timeout (Infomaniak filtert die Runner-IP)"
-
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
