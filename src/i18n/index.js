@@ -35,23 +35,23 @@ async function loadTranslation(lang) {
   return cache[lang];
 }
 
+// Reine, testbare Sprachauswahl: Vorrang URL → gespeichert → Browser → Default.
+// Nimmt nur Rohwerte entgegen, kein window/localStorage-Zugriff (deterministisch).
+export function resolveInitialLang({ urlLang, stored, navLang } = {}) {
+  const url = (urlLang || '').toLowerCase();
+  if (SUPPORTED.includes(url)) return url;                 // 1) geteilter Link ?lang=
+  if (stored && SUPPORTED.includes(stored)) return stored; // 2) frühere Wahl
+  const prefix = (navLang || '').toLowerCase().split('-')[0];
+  if (SUPPORTED.includes(prefix)) return prefix;           // 3) Browsersprache
+  return DEFAULT_LANG;                                      // 4) Fallback
+}
+
 function detectLanguage() {
-  // 1) Sprach-URL hat Vorrang (geteilte Links wie ?lang=fr funktionieren sofort)
-  try {
-    const urlLang = (new URLSearchParams(window.location.search).get('lang') || '').toLowerCase();
-    if (urlLang && SUPPORTED.includes(urlLang)) return urlLang;
-  } catch (e) { /* kein window/URL */ }
-
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && SUPPORTED.includes(stored)) return stored;
-  } catch (e) { /* localStorage unavailable */ }
-
-  const nav = (navigator.language || '').toLowerCase();
-  const prefix = nav.split('-')[0];
-  if (SUPPORTED.includes(prefix)) return prefix;
-
-  return DEFAULT_LANG;
+  let urlLang = '', stored = '', navLang = '';
+  try { urlLang = new URLSearchParams(window.location.search).get('lang') || ''; } catch (e) { /* kein window/URL */ }
+  try { stored = localStorage.getItem(STORAGE_KEY) || ''; } catch (e) { /* localStorage unavailable */ }
+  try { navLang = navigator.language || ''; } catch (e) { /* kein navigator */ }
+  return resolveInitialLang({ urlLang, stored, navLang });
 }
 
 function resolve(obj, path) {
