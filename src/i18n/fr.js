@@ -2301,6 +2301,16 @@ export default {
     fzLinkBSV: 'OFAS — Libre passage expliqué',
     fzLinkAuffang: 'Institution supplétive LPP',
     fzLinkFINMA: 'FINMA — Comparer les comptes de libre passage',
+    intlTitle: "L'AVS avec un lien international",
+    intlIntro: "Avez-vous travaillé ou vécu à l'étranger, quittez-vous la Suisse, ou avez-vous cotisé à l'AVS ici avant de partir ? Les cas internationaux du 1er pilier sont traités par la Centrale de compensation (CdC) et la Caisse suisse de compensation (CSC) à Genève. Ceci est une orientation — la CSC clarifie votre cas précis.",
+    intlLeavingTitle: "Quitter la Suisse",
+    intlLeavingText: "Une rente AVS peut être versée à l'étranger. Les ressortissant·e·s suisses conservent leur droit ; pour les ressortissant·e·s étrangers, cela dépend d'une convention de sécurité sociale entre la Suisse et leur pays.",
+    intlVoluntaryTitle: "AVS/AI facultative",
+    intlVoluntaryText: "Les ressortissant·e·s suisses et UE/AELE qui s'établissent hors UE/AELE peuvent continuer à cotiser — s'ils étaient assurés au moins 5 ans consécutifs auparavant. L'adhésion doit se faire dans les 12 mois suivant le départ.",
+    intlRefundTitle: "Remboursement des cotisations",
+    intlRefundText: "Les ressortissant·e·s d'un pays sans convention de sécurité sociale peuvent, en quittant définitivement la Suisse, demander le remboursement de leurs cotisations AVS (après au moins une année de cotisations) — au lieu d'une rente ultérieure.",
+    intlContact: "Point de contact : Caisse suisse de compensation (CSC) / CdC, Genève",
+    intlMore: "Plus d'informations auprès de la CdC →",
   },
 
   eo: {
@@ -2476,6 +2486,7 @@ export default {
     nextStepsTitle: "Prochaines étapes",
     linkDocs: "Conserver vos documents en sécurité → Coffre-fort de documents",
     linkEmergency: "Préparer les informations d'urgence → Urgence",
+    linkAhvIntl: "L'AVS avec un lien international → Prévoyance",
     alltagTitle: "Ce que votre statut signifie au quotidien",
     alltagIntro: "Une orientation générale sur le travail, le regroupement familial et les voyages. Les règles sont détaillées et évoluent — les services de conseil ci-dessus clarifient votre situation précise.",
     alltag: {

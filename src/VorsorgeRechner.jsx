@@ -82,6 +82,14 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     tab: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
+    intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
+    intlSummary: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, cursor: 'pointer' },
+    intlIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.6, margin: space.sm + 'px 0' },
+    intlSit: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
+    intlSitTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text },
+    intlSitText: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '2px 0 4px' },
+    intlLink: { fontSize: text.xs, color: palette.sky, textDecoration: 'none' },
+    intlContact: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontWeight: weight.medium },
   };
 
   const field = (labelText, value, setter, opts = {}) =>
@@ -168,6 +176,24 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
           t('vr.minMax') + ': CHF ' + fmt(AHV_PARAMS.minRente) + ' – ' + fmt(AHV_PARAMS.maxRente) + ' / ' + t('vr.monat')
         )
       )
+    ),
+
+    // AHV mit Auslandbezug (Orientierung) — immer im AHV-Tab, einklappbar
+    activeTab === 'ahv' && React.createElement('details', { style: s.intlDetails },
+      React.createElement('summary', { style: s.intlSummary }, t('vr.intlTitle')),
+      React.createElement('p', { style: s.intlIntro }, t('vr.intlIntro')),
+      [
+        { key: 'leaving', title: 'vr.intlLeavingTitle', text: 'vr.intlLeavingText', url: 'https://www.zas.admin.ch/de/verlassen-der-schweiz' },
+        { key: 'voluntary', title: 'vr.intlVoluntaryTitle', text: 'vr.intlVoluntaryText', url: 'https://www.zas.admin.ch/de/freiwillige-ahviv' },
+        { key: 'refund', title: 'vr.intlRefundTitle', text: 'vr.intlRefundText', url: 'https://www.zas.admin.ch/de/rueckverguetungen' },
+      ].map(sit =>
+        React.createElement('div', { key: sit.key, style: s.intlSit },
+          React.createElement('div', { style: s.intlSitTitle }, t(sit.title)),
+          React.createElement('div', { style: s.intlSitText }, t(sit.text)),
+          React.createElement('a', { href: sit.url, target: '_blank', rel: 'noopener noreferrer', style: s.intlLink }, t('vr.intlMore'))
+        )
+      ),
+      React.createElement('div', { style: s.intlContact }, t('vr.intlContact'))
     ),
 
     // BVG Tab

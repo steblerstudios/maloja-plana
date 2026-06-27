@@ -2302,6 +2302,16 @@ export default {
     fzLinkBSV: 'FSIO — Vested benefits explained',
     fzLinkAuffang: 'Substitute Institution BVG',
     fzLinkFINMA: 'FINMA — Compare vested benefits accounts',
+    intlTitle: 'AHV with an international connection',
+    intlIntro: 'Did you work or live abroad, are you leaving Switzerland, or did you pay AHV here and move away? The international cases of the 1st pillar are handled by the Central Compensation Office (ZAS) and the Swiss Compensation Office (SAK) in Geneva. This is orientation — the SAK clarifies your specific case.',
+    intlLeavingTitle: 'Leaving Switzerland',
+    intlLeavingText: 'An AHV pension can be paid abroad. Swiss citizens keep their entitlement; for foreign nationals it depends on a social-security agreement between Switzerland and their country.',
+    intlVoluntaryTitle: 'Voluntary AHV/IV',
+    intlVoluntaryText: 'Swiss and EU/EFTA citizens who move outside the EU/EFTA can continue contributing — if they were insured for at least 5 consecutive years beforehand. You must join within 12 months of leaving.',
+    intlRefundTitle: 'Refund of contributions',
+    intlRefundText: 'Foreign nationals from a country without a social-security agreement can, on leaving Switzerland permanently, claim a refund of their AHV contributions (after at least one year of contributions) — instead of a later pension.',
+    intlContact: 'Contact point: Swiss Compensation Office (SAK) / ZAS, Geneva',
+    intlMore: 'More at the ZAS →',
   },
 
   eo: {
@@ -2477,6 +2487,7 @@ export default {
     nextStepsTitle: "Next steps",
     linkDocs: "Keep your documents safe → Document vault",
     linkEmergency: "Prepare emergency information → Emergency",
+    linkAhvIntl: "AHV with an international connection → Pension",
     alltagTitle: "What your status means in everyday life",
     alltagIntro: "A rough orientation on working, family reunification and travel. The rules are detailed and change — the advice offices above clarify your specific case.",
     alltag: {
