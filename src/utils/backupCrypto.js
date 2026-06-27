@@ -30,7 +30,7 @@ async function deriveKey(passphrase, salt) {
 
 /**
  * Collect all Maloja Plana data into a single backup object.
- * Includes or5_data, or5_docs, or5_reminders, or5_contacts (if present).
+ * Includes or5_data, or5_docs, or5_reminders, or5_contacts, or5_merkliste (if present).
  */
 export function collectBackupData() {
   const backup = {
@@ -43,6 +43,7 @@ export function collectBackupData() {
   try { backup.docs = JSON.parse(localStorage.getItem('or5_docs') || '[]'); } catch { backup.docs = []; }
   try { backup.reminders = JSON.parse(localStorage.getItem('or5_reminders') || '[]'); } catch { backup.reminders = []; }
   try { backup.contacts = JSON.parse(localStorage.getItem('or5_contacts') || '[]'); } catch { backup.contacts = []; }
+  try { backup.merkliste = JSON.parse(localStorage.getItem('or5_merkliste') || '[]'); } catch { backup.merkliste = []; }
 
   backup.meta = {
     theme: localStorage.getItem('or5_theme'),
@@ -180,7 +181,7 @@ export function detectBackupType(arrayBuffer) {
  */
 export function createPreRestoreSnapshot() {
   const snapshot = {};
-  for (const key of ['or5_data', 'or5_docs', 'or5_reminders', 'or5_contacts']) {
+  for (const key of ['or5_data', 'or5_docs', 'or5_reminders', 'or5_contacts', 'or5_merkliste']) {
     const val = localStorage.getItem(key);
     if (val) {
       localStorage.setItem(key + '_prerestore', val);
@@ -215,6 +216,10 @@ export function applyBackup(backup) {
     if (backup.contacts !== undefined) {
       localStorage.setItem('or5_contacts', JSON.stringify(backup.contacts));
       restored.push('or5_contacts');
+    }
+    if (backup.merkliste !== undefined) {
+      localStorage.setItem('or5_merkliste', JSON.stringify(backup.merkliste));
+      restored.push('or5_merkliste');
     }
     if (backup.meta) {
       if (backup.meta.theme) localStorage.setItem('or5_theme', backup.meta.theme);
