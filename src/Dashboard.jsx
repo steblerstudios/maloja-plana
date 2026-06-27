@@ -1214,6 +1214,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
           { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           { label: t('nav.unterlagen'), sub: t('nav.sub.unterlagen'), view: 'unterlagen', icon: 'documents' },
+          { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
         ].map(tool => {
           const IconFn = Icons[tool.icon];
           return React.createElement('button', {
