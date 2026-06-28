@@ -780,7 +780,21 @@ export default {
 
   legal: {
     title: 'Rechtliches',
-    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum', license: 'Lizenz', ethics: 'Ethik', resources: 'Ressourcen', faq: 'FAQ' },
+    tabs: { privacy: 'Datenschutz', terms: 'Nutzung', imprint: 'Impressum', license: 'Lizenz', ethics: 'Ethik', resources: 'Ressourcen', faq: 'FAQ', support: 'Beitrag' },
+    support: {
+      whatTitle: 'Was Maloja kostet',
+      intro1: 'Maloja Plana ist und bleibt für alle nutzbar — auch ganz ohne Bezahlung. Wer knapp bei Kasse ist, soll alles uneingeschränkt nutzen können.',
+      intro2: 'Transparent gesagt: Damit das so bleibt, bitten wir jene, die es sich leisten können, um einen freiwilligen Beitrag. So bleibt Maloja für Menschen mit wenig Geld kostenlos — kein Zwang, keine Einkommensprüfung, keine gesperrten Funktionen.',
+      scaleTitle: 'Beitrag nach Möglichkeit',
+      tierLow: 'Knapp bei Kasse: 0 CHF — völlig in Ordnung, ohne schlechtes Gewissen.',
+      tierMid: 'Es geht einigermassen: ein kleiner einmaliger Beitrag hilft schon.',
+      tierHigh: 'Es geht mir gut: ein regelmässiger Beitrag hält Maloja für andere offen.',
+      medianNote: 'Zur Orientierung: Der Schweizer Medianlohn liegt bei rund 6800 CHF brutto im Monat. Wer darüber liegt und etwas übrig hat, trägt vorerst mit — mit jedem Partner, den wir gewinnen, wird Maloja günstiger.',
+      howTitle: 'So kannst du beitragen',
+      contributeCta: 'Freiwilligen Beitrag leisten',
+      paymentPending: 'Ein Zahlungsweg wird gerade eingerichtet — hier erscheint bald die Möglichkeit, beizutragen. Danke für die Geduld.',
+      transparency: 'Uns ist Transparenz wichtig: Maloja bleibt Open Source, lokal und werbefrei. Beiträge fliessen in Betrieb, Datenpflege und Weiterentwicklung.',
+    },
     footerLink: 'Datenschutz & Rechtliches',
     lastUpdated: 'Stand: Juni 2026 · Gemäss nDSG (in Kraft seit 1.9.2023)',
     privacy: {
@@ -925,6 +939,8 @@ export default {
       ombuds4: 'Konsumentenschutz — konsumentenschutz.ch — Unabhängige Beratung für Verbraucherrechte.',
       heartfeltTitle: 'Herzensempfehlungen',
       heartfeltIntro: 'Dienste und Projekte, die wir persönlich schätzen — unbezahlt empfohlen, ohne Gegenleistung.',
+      heartfeltIntroAffiliate: 'Dienste und Projekte, die wir persönlich schätzen. Die meisten empfehlen wir unbezahlt; mit „Affiliate" markierte Links bringen Maloja eine kleine Provision — ohne dass es dich etwas kostet.',
+      affiliateMarker: 'Affiliate',
       heartfelt1: 'Suchmaschine, die ihre Einnahmen in Aufforstung steckt.',
       heartfelt2: 'Schweizer Hosting mit Ökostrom und eigenen, ressourcenschonenden Rechenzentren.',
       heartfelt3: 'Werbefreier, datenschutzfreundlicher E-Mail-Dienst, betrieben mit Ökostrom.',

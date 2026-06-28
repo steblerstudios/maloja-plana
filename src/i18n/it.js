@@ -781,7 +781,21 @@ export default {
 
   legal: {
     title: 'Note legali',
-    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Risorse', faq: 'FAQ' },
+    tabs: { privacy: 'Privacy', terms: 'Condizioni', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Risorse', faq: 'FAQ', support: 'Contributo' },
+    support: {
+      whatTitle: 'Quanto costa Maloja',
+      intro1: 'Maloja Plana rimane utilizzabile da tutti — del tutto gratis se necessario. Se i soldi scarseggiano, devi poter usare tutto senza limiti.',
+      intro2: 'In tutta trasparenza: perché resti così, chiediamo a chi può permetterselo un contributo volontario. Così Maloja resta gratuito per chi ha pochi mezzi — senza obbligo, senza verifica del reddito, senza funzioni bloccate.',
+      scaleTitle: 'Contribuire secondo le possibilità',
+      tierLow: 'Budget stretto: 0 CHF — del tutto giusto, senza sensi di colpa.',
+      tierMid: 'Si tira avanti: un piccolo contributo una tantum aiuta già.',
+      tierHigh: 'Va bene: un contributo regolare tiene Maloja aperto agli altri.',
+      medianNote: 'Per orientamento: il salario mediano svizzero è di circa 6800 CHF lordi al mese. Chi lo supera e ha un margine sostiene per ora — e con ogni partner, Maloja diventa più conveniente.',
+      howTitle: 'Come contribuire',
+      contributeCta: 'Dare un contributo volontario',
+      paymentPending: 'Un metodo di pagamento è in fase di attivazione — la possibilità di contribuire apparirà presto qui. Grazie per la pazienza.',
+      transparency: 'La trasparenza è importante per noi: Maloja resta open source, locale e senza pubblicità. I contributi finanziano funzionamento, cura dei dati e sviluppo.',
+    },
     footerLink: 'Privacy & Note legali',
     lastUpdated: 'Aggiornato: giugno 2026 · Conformemente alla nLPD (in vigore dal 1.9.2023)',
     privacy: {
@@ -926,6 +940,8 @@ export default {
       ombuds4: 'Protezione dei consumatori — konsumentenschutz.ch — Consulenza indipendente per i diritti dei consumatori.',
       heartfeltTitle: 'Raccomandazioni del cuore',
       heartfeltIntro: 'Servizi e progetti che apprezziamo personalmente — consigliati gratuitamente, senza contropartita.',
+      heartfeltIntroAffiliate: 'Servizi e progetti che apprezziamo personalmente. La maggior parte è consigliata senza compenso; i link contrassegnati con « Affiliate » fanno guadagnare a Maloja una piccola commissione — senza costi per te.',
+      affiliateMarker: 'Affiliate',
       heartfelt1: 'Motore di ricerca che investe i ricavi nella riforestazione.',
       heartfelt2: 'Hosting svizzero a energia verde, con data center propri ed efficienti.',
       heartfelt3: 'Servizio email senza pubblicità, rispettoso della privacy, alimentato a energia verde.',

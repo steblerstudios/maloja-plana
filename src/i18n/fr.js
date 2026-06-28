@@ -780,7 +780,21 @@ export default {
 
   legal: {
     title: 'Mentions légales',
-    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence', ethics: 'Éthique', resources: 'Ressources', faq: 'FAQ' },
+    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence', ethics: 'Éthique', resources: 'Ressources', faq: 'FAQ', support: 'Contribution' },
+    support: {
+      whatTitle: 'Ce que coûte Maloja',
+      intro1: 'Maloja Plana reste utilisable par tous — entièrement gratuit si nécessaire. Si l’argent manque, vous devez pouvoir tout utiliser sans limite.',
+      intro2: 'En toute transparence : pour que cela reste ainsi, nous demandons à celles et ceux qui le peuvent une contribution volontaire. Maloja reste ainsi gratuit pour les personnes à faible revenu — sans contrainte, sans contrôle des revenus, sans fonctions bloquées.',
+      scaleTitle: 'Contribuer selon ses moyens',
+      tierLow: 'Budget serré : 0 CHF — tout à fait correct, sans culpabilité.',
+      tierMid: 'Ça va à peu près : une petite contribution unique aide déjà.',
+      tierHigh: 'Tout va bien : une contribution régulière garde Maloja ouvert aux autres.',
+      medianNote: 'Pour information : le salaire médian suisse est d’environ 6800 CHF brut par mois. Celles et ceux qui le dépassent et ont un peu de marge soutiennent pour l’instant — et avec chaque partenaire, Maloja devient moins cher.',
+      howTitle: 'Comment contribuer',
+      contributeCta: 'Faire une contribution volontaire',
+      paymentPending: 'Un moyen de paiement est en cours de mise en place — la possibilité de contribuer apparaîtra bientôt ici. Merci de votre patience.',
+      transparency: 'La transparence nous tient à cœur : Maloja reste open source, local et sans publicité. Les contributions financent le fonctionnement, l’entretien des données et le développement.',
+    },
     footerLink: 'Confidentialité & Mentions légales',
     lastUpdated: 'Mis à jour : juin 2026 · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
     privacy: {
@@ -925,6 +939,8 @@ export default {
       ombuds4: 'Protection des consommateurs — konsumentenschutz.ch — Conseil indépendant pour les droits des consommateurs.',
       heartfeltTitle: 'Recommandations de cœur',
       heartfeltIntro: 'Des services et projets que nous apprécions personnellement — recommandés gratuitement, sans contrepartie.',
+      heartfeltIntroAffiliate: 'Services et projets que nous apprécions personnellement. La plupart sont recommandés sans rémunération ; les liens marqués « Affiliate » rapportent à Maloja une petite commission — sans coût pour vous.',
+      affiliateMarker: 'Affiliate',
       heartfelt1: 'Moteur de recherche qui investit ses recettes dans le reboisement.',
       heartfelt2: 'Hébergement suisse à énergie verte, avec ses propres centres de données économes en ressources.',
       heartfelt3: 'Service de messagerie sans publicité, respectueux de la vie privée, alimenté en énergie verte.',
