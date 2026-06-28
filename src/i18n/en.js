@@ -147,6 +147,7 @@ export default {
     taxImport: 'Tax import',
     search: 'Search',
     menu: 'Menu',
+    settings: 'View & language',
     completion: '{value}% complete',
     privacyNote: '100% local. No data leaves your device.',
     sub: {
