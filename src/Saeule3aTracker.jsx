@@ -85,6 +85,10 @@ export const Saeule3aTracker = ({ palette, t, deposits, max, onChange }) => {
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } },
       t('saeule3a.selfEmployedNote')
+    ),
+
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', lineHeight: 1.5, fontStyle: 'italic' } },
+      t('alpha.noAdviceHint')
     )
   );
 };
