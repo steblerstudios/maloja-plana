@@ -3,6 +3,7 @@ import { Icon } from './IconSystem.jsx';
 import { getCantonName } from './config/cantonalData.js';
 import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
 import { text, weight, leading, space, radius } from './config/tokens.js';
+import { linkifyDomains } from './utils/linkifyDomains.js';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const canton = data?.basis?.canton || '';
@@ -133,7 +134,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ['checklist1', 'checklist2', 'checklist3', 'checklist4'].map(k => li(t('stip.' + k), k)),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
-      'ⓘ ' + t('stip.source')
+      'ⓘ ', linkifyDomains(t('stip.source'))
     )
   );
 };
