@@ -246,6 +246,21 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       Section({ title: t('legal.privacy.hostingTitle'), palette, children: [
         P({ children: t('legal.privacy.hosting1') }),
         P({ children: t('legal.privacy.hosting2') }),
+        // Offizielles Green-Web-Badge — lokal gehostet (kein externer Request/IP-Leak),
+        // verlinkt auf den Live-Check der Green Web Foundation.
+        React.createElement('a', {
+          href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
+          target: '_blank', rel: 'noopener noreferrer',
+          style: { display: 'inline-block', marginTop: space.xs },
+        },
+          React.createElement('img', {
+            src: '/green-hosting-badge.png',
+            alt: t('greenHostingFooter'),
+            width: 200, height: 95,
+            loading: 'lazy',
+            style: { maxWidth: '100%', height: 'auto', borderRadius: radius.sm, display: 'block' },
+          })
+        ),
       ]}),
       Section({ title: t('legal.privacy.backupTitle'), palette, children: [
         P({ children: t('legal.privacy.backup1') }),
