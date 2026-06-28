@@ -249,7 +249,9 @@ const AppInner = () => {
   const writeData = sandboxActive ? setSandboxData : setData;
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
-  const applySandbox = () => { if (sandboxData) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
+  // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde
+  // aber via setData({}) alle Kapitel löschen (siehe blankSandbox).
+  const applySandbox = () => { if (sandboxData && Object.keys(sandboxData).length > 0) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
   // Leere Tafel im Probier-Modus: für ein frisches Beispiel (z.B. jemandem zeigen),
   // ohne die eigenen Zahlen — nichts wird persistiert.
   const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setDemoMode(false); };
