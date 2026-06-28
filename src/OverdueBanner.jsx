@@ -34,10 +34,8 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       width: '100%',
       padding: '12px 16px',
       marginBottom: space.md,
-      background: overdue.length > 0
-        ? 'linear-gradient(135deg, ' + palette.rose + '22, ' + palette.rose + '11)'
-        : 'linear-gradient(135deg, ' + palette.gold + '22, ' + palette.gold + '11)',
-      border: '1px solid ' + (overdue.length > 0 ? palette.rose + '44' : palette.gold + '44'),
+      background: palette.up,
+      border: '1px solid ' + (overdue.length > 0 ? palette.rose + '33' : palette.gold + '33'),
       borderRadius: radius.sm,
       cursor: 'pointer',
       display: 'flex',
@@ -56,7 +54,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
     },
       React.createElement(Icon, { name: 'cowbell', size: 18, color: overdue.length > 0 ? palette.rose : palette.gold }),
       React.createElement('span', {
-        style: { fontWeight: weight.bold, fontSize: text.body, color: overdue.length > 0 ? palette.rose : palette.gold }
+        style: { fontWeight: weight.semi, fontSize: text.body, color: palette.text }
       }, total)
     ),
 

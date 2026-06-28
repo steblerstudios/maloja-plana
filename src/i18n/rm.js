@@ -1346,6 +1346,7 @@ export default {
     printAction: 'Stampar la survista / memorisar sco PDF',
     disclaimer: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta.",
     incomePosition: 'Classificaziun',
+    showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
     nearPoverty: 'Stretgamain sur la limita da povrezza',
     belowMedian: 'Sut la mediana',
