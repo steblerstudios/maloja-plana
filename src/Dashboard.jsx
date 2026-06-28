@@ -412,28 +412,45 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
       style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.title')),
     active.length > 0 && (() => {
-      const h = Math.max(active.length * 32 + 12, 64);
+      const n = active.length;
+      const rowH = 32;
+      const h = Math.max(n * rowH + 20, 90);
+      const trunkX = 70;
+      const baseY = h - 4;
+      const trunkTopY = Math.max(10, h - n * rowH - 6);
+      const attachY = (i) => n === 1 ? (baseY + trunkTopY) / 2 : trunkTopY + (baseY - trunkTopY) * (i / (n - 1));
       return React.createElement('svg', {
-        viewBox: '0 0 330 ' + h,
+        viewBox: '0 0 340 ' + h,
         width: '100%',
         role: 'img',
         'aria-label': t('datenWirken.title'),
-        style: { display: 'block', maxWidth: '360px', marginTop: '2px' },
+        style: { display: 'block', maxWidth: '380px', marginTop: '2px' },
       },
-        ...active.map((c, i) => {
-          const cy = 6 + i * 32 + 13;
-          return React.createElement('line', {
-            key: 'l-' + c.key, x1: 62, y1: h / 2, x2: 148, y2: cy,
-            stroke: palette.sage, strokeWidth: 1, opacity: 0.35,
-          });
+        // Stamm — deine Angaben
+        React.createElement('line', {
+          x1: trunkX, y1: baseY, x2: trunkX, y2: trunkTopY,
+          stroke: palette.sage, strokeWidth: 3, strokeLinecap: 'round', opacity: 0.55,
         }),
-        React.createElement('circle', { cx: 46, cy: h / 2, r: 16, fill: palette.sage + '1A', stroke: palette.sage + '55', strokeWidth: 1 }),
-        React.createElement('circle', { cx: 46, cy: h / 2, r: 4, fill: palette.sage }),
+        // Krone — wächst mit der Zahl der Verbindungen
+        ...(n >= 2 ? [
+          React.createElement('circle', { key: 'cr1', cx: trunkX - 5, cy: trunkTopY - 2, r: 3, fill: palette.sage, opacity: 0.5 }),
+          React.createElement('circle', { key: 'cr2', cx: trunkX + 5, cy: trunkTopY - 1, r: 3, fill: palette.sage, opacity: 0.5 }),
+          React.createElement('circle', { key: 'cr3', cx: trunkX, cy: trunkTopY - 6, r: 3.5, fill: palette.sage, opacity: 0.6 }),
+        ] : []),
+        // Äste + Blatt-Labels
         ...active.map((c, i) => {
-          const top = 6 + i * 32;
-          return React.createElement('g', { key: 'n-' + c.key },
-            React.createElement('rect', { x: 148, y: top, width: 176, height: 26, rx: 6, fill: palette.sage + '10', stroke: palette.sage + '33', strokeWidth: 1 }),
-            React.createElement('text', { x: 158, y: top + 17, fontSize: 11, fill: palette.sageDeep || palette.sage, fontFamily: 'inherit' }, c.label)
+          const top = 10 + i * rowH;
+          const leafY = top + 13;
+          const ay = attachY(i);
+          const cx = (trunkX + 150) / 2;
+          return React.createElement('g', { key: 'b-' + c.key },
+            React.createElement('path', {
+              d: 'M ' + trunkX + ' ' + ay + ' Q ' + cx + ' ' + ((ay + leafY) / 2 - 6) + ' 146 ' + leafY,
+              fill: 'none', stroke: palette.sage, strokeWidth: 1.2, opacity: 0.5, strokeLinecap: 'round',
+            }),
+            React.createElement('circle', { cx: 144, cy: leafY, r: 2.5, fill: palette.sage, opacity: 0.7 }),
+            React.createElement('rect', { x: 150, y: top, width: 182, height: 26, rx: 6, fill: palette.sage + '10', stroke: palette.sage + '33', strokeWidth: 1 }),
+            React.createElement('text', { x: 160, y: top + 17, fontSize: 11, fill: palette.sageDeep || palette.sage, fontFamily: 'inherit' }, c.label)
           );
         })
       );
