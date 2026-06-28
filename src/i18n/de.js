@@ -446,6 +446,8 @@ export default {
       benefits: ['Steuerrechner', 'IPV-Prüfung', 'Sozialhilfe', 'Mindestlohn-Check'],
       fields: {
         monthlyIncome: 'Monatliches Einkommen CHF',
+        sideIncome: 'Nebenerwerb pro Monat CHF',
+        taxableIncome: 'Steuerbares Einkommen pro Jahr CHF',
         incomeType: { label: 'Einkommensart', options: { netto: 'Netto (was ich erhalte)', brutto: 'Brutto (vor Abzügen)' } },
         employer: 'Arbeitgeber',
         employmentType: { label: 'Anstellungstyp', options: { employed: 'Angestellt', selfEmployed: 'Selbstständig', freelance: 'Freiberufler', retired: 'Rentner' } },
@@ -474,6 +476,8 @@ export default {
       },
       hints: {
         monthlyIncome: { sie: 'Ihr Einkommen — Netto ist was auf Ihrem Konto ankommt.', du: 'Dein Einkommen — Netto ist was auf deinem Konto ankommt.' },
+        sideIncome: 'Zusätzliches Einkommen neben dem Hauptjob (Nebenjob, Honorare). Wird zum Einkommen gezählt.',
+        taxableIncome: 'Steuerbares Einkommen aus der Steuererklärung (pro Jahr, nach Abzügen). Nur zur Orientierung — kann den Steuer-Rechner füttern.',
         monthlyTax: 'Geschätzt oder laut Steuerrechnung.',
         groceries: 'Lebensmittel, Drogerie, Haushaltsbedarf pro Monat.',
         communication: 'Internet, Mobiltelefon, Festnetz pro Monat.',
@@ -1355,6 +1359,7 @@ export default {
     dataVersion: 'Datenstand',
     disclaimer: { sie: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge finden Sie bei Ihrer kantonalen Steuerverwaltung.', du: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung.' },
     netIncomeNote: { sie: 'Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.', du: 'Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.' },
+    useImportedTaxable: 'Amtliches steuerbares Einkommen verwenden (CHF {value}/Jahr). Abzüge werden dann ignoriert.',
   },
 
   schulden: {
@@ -1516,6 +1521,8 @@ export default {
     keptHint: 'Bleibt unverändert.',
     annualNote: 'Jahreswert {annual} → monatlich',
     field: {
+      taxableIncome: 'Steuerbares Einkommen',
+      sideIncome: 'Nebenerwerb',
       income: 'Einkommen',
       securities: 'Wertschriften / Depot',
       savings: 'Ersparnisse',

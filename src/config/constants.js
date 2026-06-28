@@ -128,6 +128,8 @@ export function getChapters(t) {
       icon: t('chapters.finanzen.icon'),
       fields: [
         { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyIncome'), mvo: true, section: t('sections.finanzen.income'), sectionIntro: si(t, 'finanzen', 'income'), orientation: or(t, 'einkommen') },
+        { k: 'sideIncome', label: fl(t, 'finanzen', 'sideIncome'), type: 'currency', hint: hn(t, 'finanzen', 'sideIncome') },
+        { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
         { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', mvo: true },
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
