@@ -198,6 +198,9 @@ const AppInner = () => {
   // + automatisches Vorlesen. Persistent, geräteweit.
   const [simpleView, setSimpleView] = useState(() => { try { return localStorage.getItem('or5_simpleView') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_simpleView', simpleView ? '1' : '0'); } catch {} }, [simpleView]);
+  // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
+  const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -507,10 +510,22 @@ const AppInner = () => {
         React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
       )
     ),
+    React.createElement('button', {
+      key: 'grayscale',
+      'aria-label': t('common.grayscale'), 'aria-pressed': grayscale, title: t('common.grayscale'),
+      onClick: () => setGrayscale(g => !g),
+      style: { padding: '6px 9px', background: grayscale ? palette.mid + '22' : 'transparent', color: grayscale ? palette.text : palette.mid, border: '1px solid ' + (grayscale ? palette.mid + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: halb gefüllter Kreis = Kontrast / Schwarzweiss
+      React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 24 24', 'aria-hidden': 'true' },
+        React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
+        React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
+      )
+    ),
   ].filter(Boolean);
 
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column' } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     React.createElement(MobileNav, {
