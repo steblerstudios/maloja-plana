@@ -19,6 +19,22 @@ const Section = ({ title, children, palette }) =>
 
 const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '2px' };
 
+// Herzensempfehlungen: Name + Ziel-Link sind sprachunabhängig (Eigennamen),
+// nur die Beschreibung kommt aus i18n (heartfeltN). url: null = bewusst kein Link
+// (App-Store-App ohne Website, oder Website mit defektem HTTPS-Zertifikat).
+const HEARTFELT = [
+  { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org' },
+  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com' },
+  { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de' },
+  { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch' },
+  { key: 'heartfelt5', name: 'Baukunst Nick', url: null }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt6', name: 'Living Dream Design', url: null }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss' },
+  { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch' },
+  { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch' },
+  { key: 'heartfelt10', name: 'Xdo', url: null }, // App Store (Rau Media), keine Website
+];
+
 const LEGAL_LINKS = {
   'Art. 28 nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de#art_28',
   'Art. 7': 'https://www.fedlex.admin.ch/eli/cc/1994/1837_1837_1837/de#art_7',
@@ -316,11 +332,17 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
         P({ children: t('legal.resources.heartfeltIntro') }),
-        ...['heartfelt1', 'heartfelt2', 'heartfelt3', 'heartfelt4', 'heartfelt5', 'heartfelt6', 'heartfelt7', 'heartfelt8', 'heartfelt9', 'heartfelt10']
-          .map(k => t('legal.resources.' + k))
-          .filter(s => s && s.indexOf('legal.resources.') !== 0)
-          .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
-          .map(s => P({ children: '→ ' + s })),
+        ...HEARTFELT
+          .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
+          .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
+          .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }))
+          .map(({ item, desc }) => React.createElement('p', { key: item.key, style: { margin: '0 0 8px 0' } },
+            '→ ',
+            item.url
+              ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
+              : item.name,
+            ' — ' + desc
+          )),
       ]})
     ),
 
