@@ -114,24 +114,33 @@ const LanguageSwitcher = ({ palette }) => {
         React.createElement('path', { d: 'M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18' })
       )
     ),
+    // Eingeklappt zeigen wir nur das Kürzel (DE) über ein Overlay; die aufgeklappte
+    // Auswahlliste zeigt die ausgeschriebenen Namen (Deutsch, English …). Dazu wird
+    // der Select-Text transparent gemacht und die feste Breite hält ihn kompakt.
     React.createElement('select', {
       value: lang,
       onChange: (e) => setLanguage(e.target.value),
       'aria-label': t('common.selectLanguage'),
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
-        background: palette.up, color: palette.text,
+        background: palette.up, color: 'transparent',
         border: '1px solid ' + palette.border, borderRadius: '6px',
         paddingBlock: '5px', paddingInlineStart: '30px', paddingInlineEnd: '26px',
         fontSize: text.xs, fontWeight: '600',
         cursor: 'pointer', fontFamily: 'inherit', lineHeight: 1,
+        width: '72px',
       }
     },
       supportedLanguages.map(l =>
-        // Kompaktes Sprachkürzel (DE/EN/FR/IT/RM); voller Name bleibt als title/Tooltip erhalten
-        React.createElement('option', { key: l, value: l, title: LANGUAGE_NATIVE_NAMES[l] || l.toUpperCase() }, l.toUpperCase())
+        // Aufgeklappte Auswahl: ausgeschriebener nativer Name (für alle Sprachen)
+        React.createElement('option', { key: l, value: l, style: { color: palette.text, background: palette.up } }, LANGUAGE_NATIVE_NAMES[l] || l.toUpperCase())
       )
     ),
+    // Overlay: kompaktes Kürzel der aktuell gewählten Sprache (DE/EN/FR/IT/RM)
+    React.createElement('span', {
+      'aria-hidden': 'true',
+      style: { position: 'absolute', insetInlineStart: '30px', pointerEvents: 'none', color: palette.text, fontSize: text.xs, fontWeight: '600', lineHeight: 1 }
+    }, lang.toUpperCase()),
     React.createElement('span', {
       'aria-hidden': 'true',
       style: { position: 'absolute', insetInlineEnd: '9px', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
