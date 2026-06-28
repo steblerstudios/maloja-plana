@@ -53,6 +53,16 @@ export const parseSwissNumber = (raw) => {
 // period: 'annual' => Jahreswert -> /12 für monatliche Maloja-Felder.
 //         'value'  => Bestandeswert (Vermögen) -> 1:1.
 // Reihenfolge zählt: das erste passende Keyword gewinnt.
+//
+// Bewusst NICHT zugeordnet (sonst falsche Zahlen statt Orientierung):
+//   • Gesamtvermögen ('steuerbares Vermögen', 'Reinvermögen', 'Vermögen',
+//     'Fortune', 'Patrimonio'): enthält bereits Wertschriften + Sparkonto.
+//     Würde es in otherAssets landen, zählte FinanzUebersicht/Sozialhilfe es
+//     doppelt. otherAssets fängt nur explizit „übriges/anderes" Vermögen.
+//   • Netto-/steuerbares Einkommen ('Reineinkommen', 'steuerbares Einkommen',
+//     'Nettoeinkommen'): ist nach Abzügen. monthlyIncome wird in der App als
+//     Brutto behandelt (TaxCalculator zieht Abzüge selbst ab) — ein Nettowert
+//     hier würde doppelt abgezogen. Darum nur explizite Brutto-Begriffe.
 export const FIELD_MAP = [
   { target: 'securitiesValue', labelKey: 'taxImport.field.securities', period: 'value',
     keywords: ['wertschrift', 'wertschriftenverzeichnis', 'securities', 'titres', 'titoli', 'depot', 'portefeuille', 'investiziun'] },
@@ -63,9 +73,9 @@ export const FIELD_MAP = [
   { target: 'monthlyTax', labelKey: 'taxImport.field.tax', period: 'annual',
     keywords: ['steuerbetrag', 'geschuldete steuer', 'total steuer', 'impôt', 'impot', 'imposta', 'tax amount', 'taglia'] },
   { target: 'monthlyIncome', labelKey: 'taxImport.field.income', period: 'annual',
-    keywords: ['reineinkommen', 'steuerbares einkommen', 'nettoeinkommen', 'einkommen', 'revenu', 'reddito', 'income', 'entrada'] },
+    keywords: ['bruttolohn', 'bruttoeinkommen', 'bruttoeinkünfte', 'bruttoeinkuenfte', 'salaire brut', 'revenu brut', 'salario lordo', 'reddito lordo', 'gross salary', 'gross income', 'salari brut'] },
   { target: 'otherAssets', labelKey: 'taxImport.field.otherAssets', period: 'value',
-    keywords: ['übriges vermögen', 'ubriges vermögen', 'steuerbares vermögen', 'reinvermögen', 'vermögen', 'vermoegen', 'fortune', 'patrimonio', 'facultad', 'assets', 'wealth'] },
+    keywords: ['übriges vermögen', 'ubriges vermögen', 'übrige vermögenswerte', 'autres actifs', 'autre fortune', 'altri beni', 'autra facultad', 'other assets'] },
 ];
 
 const normalize = (s) => String(s || '').toLowerCase().normalize('NFC').replace(/\s+/g, ' ').trim();
@@ -104,6 +114,8 @@ export const parseKeyValue = (text) => {
 // Wir kennen die proprietären Schemata nicht im Detail; darum scannen wir
 // generisch: jedes Element mit Textinhalt liefert Tagname -> Wert, plus
 // numerische Attribute. Die Feld-Zuordnung filtert danach das Relevante.
+// Mehrere Knoten desselben Postens (z.B. Steuer für Bund/Kanton/Gemeinde)
+// sind erwünscht — mapTaxFields wählt daraus den Gesamtwert (siehe pickTotal).
 export const parseTaxXML = (text) => {
   const out = [];
   const src = String(text || '');
@@ -123,21 +135,49 @@ export const parseTaxXML = (text) => {
   return out;
 };
 
+// ── Total-Erkennung bei Mehrfach-Treffern ─────────────────────────────────
+// Eine echte eTax-/eCH-0196-XML listet denselben Posten oft mehrfach auf
+// (z.B. <Steuerbetrag> für Bund, Kanton und Gemeinde) plus deren Gesamtsumme.
+// Würde der erste Treffer gewinnen, übernähmen wir nur eine Teilsumme (z.B.
+// die Bundessteuer) statt des Totals. Darum wählen wir bei mehreren Treffern
+// fürs gleiche Feld einen explizit als Total markierten Knoten; gibt es keinen,
+// den grössten Betrag (das Total ist nie kleiner als eine seiner Komponenten).
+// Deterministisch und unabhängig von der Reihenfolge im Dokument.
+const TOTAL_MARKERS = ['total', 'gesamt', 'summe', 'totale', 'général', 'general'];
+
+const isTotalMarked = (rawKey) => {
+  const key = normalize(rawKey);
+  return TOTAL_MARKERS.some(k => key.includes(k));
+};
+
+// Wählt aus mehreren Kandidaten fürs gleiche Zielfeld den Gesamtwert aus:
+// als Total markierte zuerst, darunter (oder sonst) der grösste Betrag.
+const pickTotal = (cands) => {
+  const totals = cands.filter(c => isTotalMarked(c.entry.rawKey));
+  const pool = totals.length ? totals : cands;
+  return pool.reduce((best, c) => (c.num > best.num ? c : best));
+};
+
 // ── Roh-Einträge -> zugeordnete Felder ────────────────────────────────────
-// Pro Zielfeld nur den ersten plausiblen Treffer (Wert > 0) übernehmen.
+// Pro Zielfeld einen Treffer (Wert > 0) übernehmen. Bei mehreren Treffern
+// fürs gleiche Feld gewinnt der Gesamtwert (siehe pickTotal), nicht der erste.
 export const mapTaxFields = (rawEntries) => {
-  const matched = [];
-  const seen = new Set();
+  const candidates = new Map(); // target -> [{ def, num, entry }]
+  const order = [];             // erst-gesehene Reihenfolge der Zielfelder
   const unmatched = [];
   for (const entry of rawEntries || []) {
     const def = matchField(entry.rawKey);
     if (!def) { unmatched.push(entry); continue; }
-    if (seen.has(def.target)) continue;
     const num = parseSwissNumber(entry.rawValue);
     if (num === null || num <= 0) continue;
+    if (!candidates.has(def.target)) { candidates.set(def.target, []); order.push(def.target); }
+    candidates.get(def.target).push({ def, num, entry });
+  }
+  const matched = order.map((target) => {
+    const cands = candidates.get(target);
+    const { def, num, entry } = cands.length > 1 ? pickTotal(cands) : cands[0];
     const value = def.period === 'annual' ? Math.round(num / 12) : Math.round(num);
-    seen.add(def.target);
-    matched.push({
+    return {
       target: def.target,
       labelKey: def.labelKey,
       period: def.period,
@@ -145,8 +185,8 @@ export const mapTaxFields = (rawEntries) => {
       rawValue: entry.rawValue,
       annualValue: def.period === 'annual' ? Math.round(num) : null,
       value,
-    });
-  }
+    };
+  });
   return { matched, unmatched };
 };
 
