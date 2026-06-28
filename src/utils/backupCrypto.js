@@ -2,6 +2,7 @@
 // Browser-native Web Crypto API (AES-256-GCM + PBKDF2).
 // No external dependencies. No network calls.
 // Encryption is optional — plaintext export always available.
+import { getDocBlob, saveDocBlob, stripBlob } from './docBlobs.js';
 
 const ALGO = 'AES-GCM';
 const KEY_LENGTH = 256;
@@ -55,10 +56,29 @@ export function collectBackupData() {
 }
 
 /**
+ * Wie collectBackupData(), aber hydriert Dokument-Blobs aus IndexedDB in
+ * backup.docs[].data → das Backup bleibt selbst-enthaltend und portabel.
+ * (or5_docs trägt seit der idb-Umstellung nur noch Metadaten.)
+ */
+export async function collectBackupDataAsync() {
+  const backup = collectBackupData();
+  if (Array.isArray(backup.docs)) {
+    backup.docs = await Promise.all(backup.docs.map(async (doc) => {
+      if (doc && doc.id != null && doc.data == null) {
+        const dataUrl = await getDocBlob(doc.id);
+        if (dataUrl != null) return { ...doc, data: dataUrl };
+      }
+      return doc;
+    }));
+  }
+  return backup;
+}
+
+/**
  * Export backup as plaintext JSON string.
  */
-export function exportPlaintext() {
-  const backup = collectBackupData();
+export async function exportPlaintext() {
+  const backup = await collectBackupDataAsync();
   return JSON.stringify(backup, null, 2);
 }
 
@@ -74,7 +94,7 @@ export async function exportEncrypted(passphrase) {
     throw new Error('Passphrase must be at least 4 characters.');
   }
 
-  const backup = collectBackupData();
+  const backup = await collectBackupDataAsync();
   const json = JSON.stringify(backup);
   const enc = new TextEncoder();
   const plaintext = enc.encode(json);
@@ -197,7 +217,7 @@ export function createPreRestoreSnapshot() {
  * MUST call createPreRestoreSnapshot() before this.
  * Returns { success, restored: string[], error }
  */
-export function applyBackup(backup) {
+export async function applyBackup(backup) {
   const restored = [];
 
   try {
@@ -206,7 +226,16 @@ export function applyBackup(backup) {
       restored.push('or5_data');
     }
     if (backup.docs !== undefined) {
-      localStorage.setItem('or5_docs', JSON.stringify(backup.docs));
+      // Inline-Blobs aus dem Backup nach IndexedDB schreiben, in or5_docs nur
+      // Metadaten ablegen. Rückwärtskompatibel: Alt-Backups tragen .data inline,
+      // neue Backups wurden via collectBackupDataAsync hydriert.
+      const docs = Array.isArray(backup.docs) ? backup.docs : [];
+      for (const doc of docs) {
+        if (doc && doc.id != null && doc.data != null) {
+          await saveDocBlob(doc.id, doc.data);
+        }
+      }
+      localStorage.setItem('or5_docs', JSON.stringify(docs.map(stripBlob)));
       restored.push('or5_docs');
     }
     if (backup.reminders !== undefined) {
