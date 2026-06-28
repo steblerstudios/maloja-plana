@@ -5,7 +5,7 @@ export default defineConfig({
   base: process.env.BASE_URL || '/',
   plugins: [react()],
   server: {
-    port: 5174,
+    port: Number(process.env.PORT) || 5174,
     host: '127.0.0.1',
     open: false,
   },
