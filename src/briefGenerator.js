@@ -85,7 +85,7 @@ function getTaxExtensionFields(data, t) {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
     taxYear: year - 1,
-    canton: data.wohnen?.canton || '',
+    canton: data.basis?.canton || data.wohnen?.canton || '',
     filled: {
       name: !!getFullName(data.basis),
       address: !!data.wohnen?.address,
