@@ -388,11 +388,6 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     { key: 'budget', label: t('datenWirken.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
   ];
   const active = connections.filter(c => c.active);
-  const progressMsg = completion === 100 ? t('dashboard.progressComplete')
-    : completion === 0 ? t('dashboard.progressStart')
-    : completion <= 30 ? t('dashboard.progressEarly')
-    : completion <= 60 ? t('dashboard.progressMid')
-    : t('dashboard.progressLate');
   return React.createElement('div', {
     style: {
       margin: space.md + 'px 0',
@@ -403,14 +398,8 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     }
   },
     React.createElement('div', {
-      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-    }, progressMsg),
-    lastBackup && React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, opacity: 0.7 }
-    }, t('dashboard.lastBackup', { date: lastBackup })),
-    active.length > 0 && React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 6px 0', fontWeight: weight.medium }
-    }, t('datenWirken.title')),
+      style: { fontSize: text.xs, color: palette.mid, margin: '0 0 6px 0', fontWeight: weight.medium }
+    }, t('datenWirken.treeCaption')),
     (() => {
       const n = active.length;
       const rowH = 32;
@@ -424,7 +413,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
         width: '100%',
         role: 'img',
         'aria-label': t('datenWirken.title'),
-        style: { display: 'block', maxWidth: '380px', marginTop: '2px' },
+        style: { display: 'block', maxWidth: n === 0 ? '170px' : '380px', marginTop: '2px' },
       },
         // Stamm — deine Angaben
         React.createElement('line', {
@@ -1246,7 +1235,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('summary', {
               style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
             },
-              React.createElement('span', null, g.label),
+              React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, '▸'),
+                g.label
+              ),
               React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
             ),
             React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
