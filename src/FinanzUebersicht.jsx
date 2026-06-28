@@ -46,7 +46,7 @@ const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick
     }, detail)
   );
 
-const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses) => {
+const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets) => {
   const name = [data.basis?.firstName, data.basis?.lastName].filter(Boolean).join(' ') || '';
   const date = new Date().toLocaleDateString('de-CH');
   const fmt = (v) => formatCHF(v);
@@ -64,6 +64,10 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
   rows.push('<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipv.eligible ? '✓ ' + fmt(ipv.amount) + ' ' + t('common.perMonth') : t('finanzUebersicht.notEligible')) + '</td></tr>');
   rows.push('<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (sozialhilfe.eligible ? fmt(sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>');
   rows.push('<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (el.eligible ? fmt(el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>');
+
+  if (hasAssets) {
+    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(totalAssets) + '</td></tr>');
+  }
 
   if (hasExpenses) {
     rows.push('<tr class="sep"><td colspan="2" style="font-weight:600;padding-top:12px">' + t('finanzUebersicht.budgetBalance') + '</td></tr>');
@@ -134,7 +138,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const hasExpenses = totalExpenses > 0;
 
   const handlePrint = () => {
-    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses);
+    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets);
     openPrintWindow(html);
   };
 
