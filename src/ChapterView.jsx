@@ -1788,6 +1788,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             if (!uploadFile) { setUploadError(tr('chapterView.selectFile')); return; }
             if (!uploadType) { setUploadError(tr('chapterView.selectDocType')); return; }
             if (!uploadExpiry) { setUploadError(tr('chapterView.selectExpiry')); return; }
+            // Grössen-Guard: Dokumente liegen (noch) als base64 im begrenzten
+            // localStorage. Grosse Dateien würden das Kontingent sprengen und
+            // könnten still verloren gehen → vorher ruhig abweisen.
+            const MAX_DOC_BYTES = 1.5 * 1024 * 1024;
+            if (uploadFile.size > MAX_DOC_BYTES) { setUploadError(tr('chapterView.fileTooLarge', { max: '1.5 MB' })); return; }
             setUploadError('');
             const reader = new FileReader();
             reader.onload = () => {
