@@ -22,7 +22,12 @@ export const generateCVTemplate = (data, t) => {
         startDate: data.ausbildung?.employmentStart || '',
         description: t ? t('cv.taskDescription') : 'Tasks and responsibilities'
       },
-      previous: []
+      previous: (Array.isArray(data.additionalJobs) ? data.additionalJobs : []).map(j => ({
+        title: j.jobTitle || '',
+        company: j.employer || '',
+        period: j.period || '',
+        pensum: j.pensum || ''
+      }))
     },
     education: {
       highest: data.ausbildung?.educationLevel || '',
@@ -114,7 +119,13 @@ export const generateCVHTML = (cvData, t) => {
       <div class="entry-subtitle">${cvData.experience.current.company} | ${labelSince} ${cvData.experience.current.startDate}</div>
       <div class="entry-text">${cvData.experience.current.description}</div>
     </div>
-    ` : '<p>' + labelNoJob + '</p>'}
+    ` : ''}
+    ${(cvData.experience.previous || []).map(job => `
+    <div class="entry">
+      <div class="entry-title">${job.title || ''}</div>
+      <div class="entry-subtitle">${job.company || ''}${job.period ? ' | ' + job.period : ''}${job.pensum ? ' · ' + job.pensum : ''}</div>
+    </div>`).join('')}
+    ${(!cvData.experience.current.title && (cvData.experience.previous || []).length === 0) ? '<p>' + labelNoJob + '</p>' : ''}
   </div>
 
   <div class="section">
@@ -172,11 +183,15 @@ export const generateJSONResume = (data, t) => {
   const languages = (a.languages || '')
     .split(/[,;\n]/).map(s => s.trim()).filter(Boolean)
     .map(language => ({ language }));
-  const work = (a.jobTitle || a.employer) ? [{
-    name: a.employer || '',
-    position: a.jobTitle || '',
-    startDate: a.employmentStart || '',
-  }] : [];
+  const work = [];
+  if (a.jobTitle || a.employer) {
+    work.push({ name: a.employer || '', position: a.jobTitle || '', startDate: a.employmentStart || '' });
+  }
+  (Array.isArray(data.additionalJobs) ? data.additionalJobs : []).forEach(j => {
+    if (j.employer || j.jobTitle) {
+      work.push({ name: j.employer || '', position: j.jobTitle || '', summary: [j.pensum, j.period].filter(Boolean).join(' · ') });
+    }
+  });
   const education = (a.schoolName || a.educationLevel) ? [{
     institution: a.schoolName || '',
     studyType: a.educationLevel || '',
