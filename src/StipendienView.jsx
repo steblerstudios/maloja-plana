@@ -93,16 +93,16 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Wer kann beantragen?
-    React.createElement('div', { style: sectionTitle }, t('stip.eligibilityTitle')),
+    React.createElement('h3', { style: sectionTitle }, t('stip.eligibilityTitle')),
     STIPENDIEN_ELIGIBILITY.whoKeys.map(k => li(t('stip.who.' + k), 'who-' + k)),
     React.createElement('div', { style: { ...intro, fontStyle: 'italic', marginTop: space.xs + 'px' } }, 'ⓘ ' + t('stip.notEligible')),
 
     // Was wird unterstützt?
-    React.createElement('div', { style: sectionTitle }, t('stip.scopeTitle')),
+    React.createElement('h3', { style: sectionTitle }, t('stip.scopeTitle')),
     STIPENDIEN_ELIGIBILITY.scopeKeys.map(k => li(t('stip.scope.' + k), 'scope-' + k)),
 
     // Wo beantragen? (+ Kanton-Crosslink)
-    React.createElement('div', { style: sectionTitle }, t('stip.whereTitle')),
+    React.createElement('h3', { style: sectionTitle }, t('stip.whereTitle')),
     React.createElement('p', { style: intro }, t('stip.where')),
     React.createElement('div', {
       style: { marginTop: space.sm + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
@@ -116,11 +116,11 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Stipendium oder Darlehen?
-    React.createElement('div', { style: sectionTitle }, t('stip.formTitle')),
+    React.createElement('h3', { style: sectionTitle }, t('stip.formTitle')),
     React.createElement('p', { style: intro }, t('stip.formNote')),
 
     // Privates Verzeichnis (Rückfall)
-    React.createElement('div', { style: { ...sectionTitle, marginTop: space.xl + 'px' } }, t('stip.privateTitle')),
+    React.createElement('h3', { style: { ...sectionTitle, marginTop: space.xl + 'px' } }, t('stip.privateTitle')),
     React.createElement('p', { style: { ...intro, marginBottom: space.sm + 'px' } }, t('stip.privateIntro')),
     STIPENDIEN_PRIVATE.map(p =>
       React.createElement('div', { key: p.id, style: { ...item, justifyContent: 'space-between' } },
@@ -130,7 +130,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Checkliste bei Ablehnung
-    React.createElement('div', { style: sectionTitle }, t('stip.checklistTitle')),
+    React.createElement('h3', { style: sectionTitle }, t('stip.checklistTitle')),
     ['checklist1', 'checklist2', 'checklist3', 'checklist4'].map(k => li(t('stip.' + k), k)),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
