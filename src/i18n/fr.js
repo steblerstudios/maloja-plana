@@ -1798,6 +1798,7 @@ export default {
     noteAutoTaxData: 'Vérification automatique via les données fiscales',
     noteAutoSam: 'Automatique via le SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton non reconnu',
+    youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
     incomeAboveLimit: 'Revenu supérieur à la limite (CHF {value})',
     eligible: 'Droit à la réduction de primes : CHF {value}/mois',
   },

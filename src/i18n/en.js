@@ -1799,6 +1799,7 @@ export default {
     noteAutoTaxData: 'Automatic verification via tax data',
     noteAutoSam: 'Automatic via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton not recognized',
+    youngAdultsNote: 'Young adults (19–25) in education often have their own, higher subsidy. Please check separately.',
     incomeAboveLimit: 'Income above limit (CHF {value})',
     eligible: 'Entitled to premium subsidy: CHF {value}/month',
   },
