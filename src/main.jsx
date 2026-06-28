@@ -460,7 +460,7 @@ const AppInner = () => {
       chapters,
       completion: calculateCompletion()
     }),
-    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+    React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
         role: 'link', tabIndex: 0,
@@ -475,7 +475,7 @@ const AppInner = () => {
         ),
         'aloja Plana'
       ),
-      React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
+      React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
         React.createElement(VorlesenToggle, { palette, t, vorlesen }),
         React.createElement('button', {
           'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
