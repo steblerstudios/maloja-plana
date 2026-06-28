@@ -1236,7 +1236,7 @@ export default {
     exportEncrypted: 'Export (criptà)',
     importFile: 'Importar ina segirezza',
     passphrase: 'Pled-clav',
-    passphraseHint: "Almain 4 segns. Regorda il — i na dat nagina restituziun.",
+    passphraseHint: "Almain 4 segns — meglier 12 u dapli, per exempel plirs pleds. Regorda il, i na dat nagina restituziun.",
     passphraseConfirm: 'Confermar il pled-clav',
     passphraseMismatch: 'Ils pleds-clavs na correspundan betg.',
     encrypting: 'Criptar...',
