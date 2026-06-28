@@ -332,6 +332,8 @@ export default {
       documents: 'Documents & autoritads',
       organize: 'Organisar & profil',
     },
+    anspruchTitle: 'A tge hai jau dretg?',
+    anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
     tipsTitle: 'Tips per cumenzar:',
     tip1: { sie: 'Cumenzai cun il chapitel "Basa persunala"', du: 'Cumenza cun il chapitel "Basa persunala"' },
     tip2: { sie: 'Chargiai si Voss documents impurtants', du: 'Chargia si Tes documents impurtants' },
