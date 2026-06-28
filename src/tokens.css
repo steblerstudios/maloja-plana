@@ -204,3 +204,11 @@ html.mp-readable body {
   60% { transform: translateY(1px); }
   100% { transform: translateY(0); opacity: 1; }
 }
+
+/* Datumsfelder (ChapterView): natives Picker-Icon ausblenden — wir zeigen ein
+   eigenes, geräteübergreifend sichtbares Kalender-Symbol (iOS rendert das native
+   Icon bei leeren Feldern kaum, dann wirkt das Feld nicht auswählbar). Der
+   versteckte native Indikator bleibt anklickbar (Desktop), das eigene Icon ruft
+   zusätzlich showPicker(). */
+.mp-date-input { cursor: pointer; }
+.mp-date-input::-webkit-calendar-picker-indicator { opacity: 0; cursor: pointer; }

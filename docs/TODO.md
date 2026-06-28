@@ -86,6 +86,15 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   zwischengespeicherte App. Returning Users sehen neue Deploys evtl. erst nach mehrfachem
   Neuladen/App-Schliessen. Prüfen: bumpt der Deploy die SW-Cache-Version, und nutzt der SW
   `skipWaiting` + `clients.claim` für sofortige Aktivierung? Sonst Update-Logik nachziehen.
+- ✅ **Datumsfelder: klares Picker-Symbol — GEFIXT (2026-06-28).** *Gemeldet Sophie: „man kann
+  kein Datum auswählen".* Felder waren seit Anfang `<input type=date>` (nativ pickbar), aber iOS
+  rendert ein leeres Datumsfeld als blanke Box ohne sichtbares Symbol → wirkt nicht auswählbar.
+  **Fix:** eigenes, immer sichtbares Kalender-Symbol in jedem ChapterView-Datumsfeld (ruft
+  `showPicker()` mit `focus()`-Fallback), natives Indikator-Icon via `.mp-date-input` (tokens.css)
+  ausgeblendet → einheitlich auf allen Geräten. Betrifft alle 5 Datumsfelder (Geburtsdatum,
+  Einzugsdatum, Finanz-Startdatum, Anstellung seit, Steuererklärung fällig). Neuer i18n-Key
+  `common.pickDate` (5 Sprachen). Verifiziert: Symbol sichtbar, Datum setzt/löscht sauber, 0
+  Konsolen-Fehler, 354 Tests grün.
 - ✅ IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht).
   `PremiumSubsidy.jsx` rendert das Ergebnis als umrandete Box mit gestapelten Label/Wert-Zeilen
   (`text.body`, dezente Trenner) — keine grossen KPI-Zahlen mehr. Kantons-Vergleich liegt im
