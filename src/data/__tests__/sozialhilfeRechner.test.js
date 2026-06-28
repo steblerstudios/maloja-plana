@@ -116,8 +116,8 @@ describe('berechneSozialhilfe', () => {
       krankenkassePraemie: 380,
       vermoegen: 10000,
     });
-    expect(r.vermoegensfreibetrag).toBe(4000);
-    expect(r.anrechenbaresVermoegen).toBe(6000);
+    expect(r.vermoegensfreibetrag).toBe(6000); // SKOS D.3.1 Einzelperson
+    expect(r.anrechenbaresVermoegen).toBe(4000);
     expect(r.hatAnspruch).toBe(false);
   });
 
@@ -128,7 +128,7 @@ describe('berechneSozialhilfe', () => {
       krankenkassePraemie: 500,
       vermoegen: 8000,
     });
-    expect(r.vermoegensfreibetrag).toBe(10000); // 4000 + 3*2000
+    expect(r.vermoegensfreibetrag).toBe(15000); // 6000 + 3×3000 → 15000
     expect(r.hatAnspruch).toBe(true);
   });
 

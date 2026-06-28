@@ -35,7 +35,7 @@ describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
   });
 });
 
-describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS C.7)', () => {
+describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2026)', () => {
   // Minimal valid data; only the fields the Vermögen logic reads matter here.
   const calc = (overrides = {}) => calculateSozialhilfe({
     basis: { canton: 'ZH' },
@@ -45,24 +45,24 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS C.7)', () => {
     ...overrides,
   });
 
-  it('grants a CHF 4000 allowance for a single person', () => {
-    expect(calc().vermoegensfreibetrag).toBe(4000);
+  it('grants a CHF 6000 allowance for a single person', () => {
+    expect(calc().vermoegensfreibetrag).toBe(6000);
   });
 
-  it('follows the tiered SKOS C.7 schedule (8000 couple, +2000 per minor child, max 10000)', () => {
+  it('follows the tiered SKOS D.3.1 schedule (12000 couple, +3000 per minor child, max 15000)', () => {
     const couple = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [] } } });
-    expect(couple.vermoegensfreibetrag).toBe(8000); // Paar → 8000
+    expect(couple.vermoegensfreibetrag).toBe(12000); // Paar → 12000
 
     const coupleOneChild = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 4 }] } } });
-    expect(coupleOneChild.vermoegensfreibetrag).toBe(10000); // 8000 + 1×2000
+    expect(coupleOneChild.vermoegensfreibetrag).toBe(15000); // 12000 + 1×3000
 
     const family = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 4 }, { age: 8 }] } } });
-    expect(family.vermoegensfreibetrag).toBe(10000); // 8000 + 2×2000 → gedeckelt bei 10000
+    expect(family.vermoegensfreibetrag).toBe(15000); // 12000 + 2×3000 → gedeckelt bei 15000
   });
 
-  it('counts only minor children toward the SKOS C.7 allowance', () => {
+  it('counts only minor children toward the SKOS D.3.1 allowance', () => {
     const adultChild = calc({ basis: { canton: 'ZH', household: { adults: 2, children: [{ age: 20 }] } } });
-    expect(adultChild.vermoegensfreibetrag).toBe(8000); // volljähriges Kind zählt nicht
+    expect(adultChild.vermoegensfreibetrag).toBe(12000); // volljähriges Kind zählt nicht
   });
 
   it('sums securities + otherAssets + savingsAccount into Vermögen', () => {
@@ -71,8 +71,8 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS C.7)', () => {
   });
 
   it('reports the excess above the allowance', () => {
-    const r = calc({ finanzen: { securitiesValue: 20000 } }); // single → allowance 4000
-    expect(r.vermoegenUeberFreibetrag).toBe(16000);
+    const r = calc({ finanzen: { securitiesValue: 20000 } }); // single → allowance 6000
+    expect(r.vermoegenUeberFreibetrag).toBe(14000);
   });
 
   it('reports no excess when assets stay within the allowance', () => {
