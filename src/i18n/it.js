@@ -71,6 +71,7 @@ export default {
     open: 'Apri',
     edit: 'Modifica',
     delete: 'Rimuovi',
+    pickDate: 'Scegli una data',
     readable: 'Migliore leggibilità',
     download: 'Scarica',
     upload: 'Carica',

@@ -71,6 +71,7 @@ export default {
     open: 'Open',
     edit: 'Edit',
     delete: 'Remove',
+    pickDate: 'Pick a date',
     readable: 'Better readability',
     download: 'Download',
     upload: 'Upload',
