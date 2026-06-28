@@ -1994,6 +1994,8 @@ export default {
     title: 'Finanz-Übersicht',
     subtitle: { sie: 'Ihre Situation auf einen Blick — basierend auf Ihren Eingaben.', du: 'Deine Situation auf einen Blick — basierend auf Deinen Eingaben.' },
     monthlyIncome: 'Monatliches Einkommen',
+    assets: 'Vermögen',
+    assetsDetail: 'Wertschriften, Ersparnisse und übriges Vermögen (Steuerwert)',
     canton: 'Kanton',
     taxes: 'Steuern',
     ipv: 'Prämienverbilligung (IPV)',

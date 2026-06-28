@@ -1247,6 +1247,8 @@ export default {
     title: 'Survista da finanzas',
     subtitle: { sie: "Vossa situaziun en in'egliada — basond sin Vossas indicaziuns.", du: "Tia situaziun en in'egliada — basond sin Tias indicaziuns." },
     monthlyIncome: 'Entrada mensiala',
+    assets: 'Facultad',
+    assetsDetail: 'Investiziuns, spargns ed autra facultad (valur fiscala)',
     canton: 'Chantun',
     taxes: 'Taglientas',
     ipv: 'Reducziun da premias (IPV)',
