@@ -284,10 +284,13 @@ export function calculateSozialhilfe(data) {
   const totalBedarf = grundbedarf + effectiveRent + effectiveKK;
   const deficit = totalBedarf - income;
 
-  // Vermögensfreibetrag (SKOS C.7): CHF 4'000 Einzelperson, + CHF 2'000 pro weitere Person.
-  // Orientierung: Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
+  // Vermögensfreibetrag (SKOS-RL C.7, gestaffelt): CHF 4'000 Einzelperson /
+  // CHF 8'000 Paar (Mehrpersonenhaushalt) / + CHF 2'000 pro minderjähriges Kind /
+  // max. CHF 10'000. Orientierung: Vermögen über dem Freibetrag muss i.d.R. zuerst
+  // eingesetzt werden.
   const vermoegen = Number(data.finanzen?.securitiesValue || 0) + Number(data.finanzen?.otherAssets || 0) + Number(data.finanzen?.savingsAccount || 0);
-  const vermoegensfreibetrag = 4000 + Math.max(0, householdSize - 1) * 2000;
+  const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
+  const vermoegensfreibetrag = Math.min(10000, (hh.adults >= 2 ? 8000 : 4000) + minorChildren * 2000);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
 
   return {
