@@ -2147,6 +2147,7 @@ export default {
     printAction: 'Print overview / save as PDF',
     disclaimer: 'All values are for orientation only. For binding information, contact the responsible authority.',
     incomePosition: 'Position',
+    showPosition: 'Show position',
     belowPoverty: 'Below poverty line',
     nearPoverty: 'Near poverty line',
     belowMedian: 'Below median',
