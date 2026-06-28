@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
-import { getCantonName } from './config/cantonalData.js';
-import { calculatePremiumSubsidy } from './premiumCalc.js';
+import { getCantonName, calculateIPV } from './config/cantonalData.js';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -76,11 +75,17 @@ function buildSnippet(chapterKey, chData, allData, t) {
   return null;
 }
 
-const QuickCheck = ({ palette, t, onNavigate, savedIncome }) => {
-  const [income, setIncome] = useState(savedIncome || '');
+const QuickCheck = ({ palette, t, onNavigate, data }) => {
+  const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
-  const result = annual > 0 ? calculatePremiumSubsidy(annual, 0, 0, t, 1) : null;
-  const hasResult = result && result.eligibleSubsidy > 0;
+  const canton = data?.basis?.canton;
+  // Gleiche kantonale Berechnung wie der vollständige IPV-Rechner (calculateIPV),
+  // damit Dashboard-Schnellcheck und Tool nie widersprüchliche Zahlen zeigen.
+  // Ohne Kanton: ehrlich qualitativ statt erfundener nationaler Pauschale.
+  const result = annual > 0 && canton
+    ? calculateIPV({ ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } })
+    : null;
+  const hasResult = result && result.eligible;
   const fmt = (v) => v.toLocaleString('de-CH');
 
   return React.createElement('div', {
@@ -128,9 +133,11 @@ const QuickCheck = ({ palette, t, onNavigate, savedIncome }) => {
         },
           React.createElement('div', {
             style: { fontSize: text.sm, color: hasResult ? palette.sageDeep || palette.sage : palette.mid, fontWeight: hasResult ? weight.medium : weight.normal }
-          }, hasResult
-            ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(result.eligibleSubsidy * 12) })
-            : t('dashboard.quickCheckNoResult')
+          }, !canton
+            ? t('dashboard.quickCheckHint')
+            : hasResult
+              ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(result.annual) })
+              : t('dashboard.quickCheckNoResult')
           ),
           React.createElement('div', {
             style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.xs }
@@ -719,7 +726,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Quick check — inline IPV eligibility ───────────────
-    React.createElement(QuickCheck, { palette, t, onNavigate, savedIncome: data?.finanzen?.monthlyIncome || '' }),
+    React.createElement(QuickCheck, { palette, t, onNavigate, data }),
 
     // ─── Demo — example section (after tools, before pass) ──
     !hasMeaningfulProgress && !demoMode && React.createElement('div', {
