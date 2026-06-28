@@ -258,6 +258,7 @@ const AppInner = () => {
   const [legalSection, setLegalSection] = useState('privacy');
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
   const [demoMode, setDemoMode] = useState(false);
   const [sandboxMode, setSandboxMode] = useState(false);
@@ -351,19 +352,28 @@ const AppInner = () => {
     const timer = setInterval(() => {
       if (data !== lastPersistedData.current || documents !== lastPersistedDocs.current) {
         setIsSaving(true);
-        localStorage.setItem('or5_data', JSON.stringify(data));
-        localStorage.setItem('or5_docs', JSON.stringify(documents));
-        lastPersistedData.current = data;
-        lastPersistedDocs.current = documents;
-        setLastSave(new Date());
-        setIsSaving(false);
-        runtimeEventBus.publish({
-          id: crypto.randomUUID(),
-          eventType: 'DATA_PERSISTED',
-          timestamp: new Date().toISOString(),
-          actor: 'system',
-          workflowId: 'auto-save',
-        });
+        try {
+          localStorage.setItem('or5_data', JSON.stringify(data));
+          localStorage.setItem('or5_docs', JSON.stringify(documents));
+          // Refs nur bei Erfolg vorrücken → bei Fehler Retry in der nächsten Runde.
+          lastPersistedData.current = data;
+          lastPersistedDocs.current = documents;
+          setLastSave(new Date());
+          setSaveError(false);
+          runtimeEventBus.publish({
+            id: crypto.randomUUID(),
+            eventType: 'DATA_PERSISTED',
+            timestamp: new Date().toISOString(),
+            actor: 'system',
+            workflowId: 'auto-save',
+          });
+        } catch (err) {
+          // Quota o.ä.: Loop am Leben halten, ruhig melden statt still scheitern.
+          setSaveError(true);
+          if (typeof console !== 'undefined') console.warn('Auto-Save fehlgeschlagen:', err && err.name);
+        } finally {
+          setIsSaving(false);
+        }
       }
     }, 5000);
     return () => clearInterval(timer);
@@ -809,7 +819,7 @@ const AppInner = () => {
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
     ),
-    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
+    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError }),
     React.createElement('footer', {
       role: 'contentinfo',
       style: {
