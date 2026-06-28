@@ -333,6 +333,13 @@ export default {
     toolsAndFeatures: 'Strumenti e funzioni',
     detailProgress: 'Avanzamento dettagliato per capitolo',
     toolsSubtitle: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.',
+    toolGroups: {
+      money: 'Denaro & imposte',
+      insurance: 'Assicurazione & salute',
+      support: 'Sostegno & diritti',
+      documents: 'Documenti & autorità',
+      organize: 'Organizzare & profilo',
+    },
     tipsTitle: 'Consigli per iniziare:',
     tip1: { sie: 'Inizi con il capitolo "Dati personali"', du: 'Inizia con il capitolo "Dati personali"' },
     tip2: { sie: 'Carichi i Suoi documenti importanti', du: 'Carica i tuoi documenti importanti' },

@@ -325,6 +325,13 @@ export default {
     toolsAndFeatures: 'Utensils & funcziuns',
     detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
+    toolGroups: {
+      money: 'Daners & taglias',
+      insurance: 'Assicuranza & sanadad',
+      support: 'Sustegn & dretgs',
+      documents: 'Documents & autoritads',
+      organize: 'Organisar & profil',
+    },
     tipsTitle: 'Tips per cumenzar:',
     tip1: { sie: 'Cumenzai cun il chapitel "Basa persunala"', du: 'Cumenza cun il chapitel "Basa persunala"' },
     tip2: { sie: 'Chargiai si Voss documents impurtants', du: 'Chargia si Tes documents impurtants' },

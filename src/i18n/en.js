@@ -333,6 +333,13 @@ export default {
     toolsAndFeatures: 'Tools and features',
     detailProgress: 'Detailed progress per chapter',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
+    toolGroups: {
+      money: 'Money & taxes',
+      insurance: 'Insurance & health',
+      support: 'Support & entitlements',
+      documents: 'Documents & authorities',
+      organize: 'Organize & profile',
+    },
     tipsTitle: 'Tips for getting started:',
     tip1: 'Start with the chapter "Personal basics"',
     tip2: 'Upload your important documents',

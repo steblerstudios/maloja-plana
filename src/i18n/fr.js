@@ -333,6 +333,13 @@ export default {
     toolsAndFeatures: 'Outils et fonctionnalités',
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.',
+    toolGroups: {
+      money: 'Argent & impôts',
+      insurance: 'Assurance & santé',
+      support: 'Soutien & droits',
+      documents: 'Documents & autorités',
+      organize: 'Organiser & profil',
+    },
     tipsTitle: 'Conseils pour commencer :',
     tip1: 'Commencez par le chapitre « Données personnelles »',
     tip2: 'Importez vos documents importants',
