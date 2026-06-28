@@ -1124,8 +1124,48 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Quick check — inline IPV eligibility ───────────────
-    React.createElement(QuickCheck, { palette, t, onNavigate, data }),
+    // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
+    React.createElement('div', { style: { marginBottom: space.xl + 'px' } },
+      React.createElement('h2', {
+        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
+      }, t('dashboard.anspruchTitle')),
+      React.createElement('p', {
+        style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
+      }, t('dashboard.anspruchIntro')),
+      React.createElement(QuickCheck, { palette, t, onNavigate, data }),
+      React.createElement('div', {
+        style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+      },
+        [
+          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
+          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
+          { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
+          { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
+          { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
+        ].map(item => {
+          const IconFn = Icons[item.icon];
+          return React.createElement('button', {
+            key: item.view,
+            onClick: () => onNavigate(item.view),
+            style: {
+              display: 'flex', alignItems: 'center', gap: '10px',
+              padding: '12px 14px', background: 'transparent',
+              border: '1px solid ' + palette.border + '44', borderRadius: radius.md,
+              cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', color: palette.text,
+              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = palette.border + '44'; },
+          },
+            React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
+            React.createElement('div', { style: { minWidth: 0 } },
+              React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub)
+            )
+          );
+        })
+      )
+    ),
 
     // ─── Export reminder — calm data safety nudge ────────────
     (() => {

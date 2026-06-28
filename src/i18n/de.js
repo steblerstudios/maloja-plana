@@ -340,6 +340,8 @@ export default {
       documents: 'Dokumente & Behörden',
       organize: 'Organisieren & Profil',
     },
+    anspruchTitle: 'Was steht mir zu?',
+    anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
     tipsTitle: 'Tipps für den Anfang:',
     tip1: { sie: 'Beginnen Sie mit dem Kapitel "Persönliche Basis"', du: 'Beginne mit dem Kapitel "Persönliche Basis"' },
     tip2: { sie: 'Laden Sie Ihre wichtigen Dokumente hoch', du: 'Lade Deine wichtigen Dokumente hoch' },
