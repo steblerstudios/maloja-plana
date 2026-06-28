@@ -27,6 +27,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
       setImportError(t('taxImport.importFailed'));
     } finally {
       setImporting(false);
+      e.target.value = ''; // dieselbe Datei nach Fehler/Vorschau erneut wählbar machen
     }
   };
 
