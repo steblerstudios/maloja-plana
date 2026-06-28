@@ -555,217 +555,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       null
     ),
 
-    // ─── Highlight tools — immediate value (first for new users) ──
-    React.createElement('div', {
-      style: {
-        marginTop: space.lg, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.surface,
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.border + '88',
-        boxShadow: shadow.sm,
-      }
-    },
-      React.createElement('div', {
-        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
-      },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
-        }, t('dashboard.highlightTitle')),
-        React.createElement('div', {
-          style: { fontSize: text.xs - 1, color: palette.sage, opacity: 0.8 }
-        }, t('dashboard.highlightPrivacy'))
-      ),
-      (() => {
-        const items = [
-          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
-          { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
-          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
-          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
-          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
-          !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
-        ].filter(Boolean);
-        const renderItem = (item) => {
-          const IconFn = Icons[item.icon];
-          return React.createElement('button', {
-            key: item.view,
-            onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
-            style: {
-              display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
-              padding: item.primary ? '18px 20px' : '12px 14px',
-              background: item.primary ? palette.sand + '08' : 'transparent',
-              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
-              borderRadius: radius.md,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              textAlign: 'left',
-              color: palette.text,
-              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
-            },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
-          },
-            React.createElement('div', {
-              style: {
-                width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: palette.sand + (item.primary ? '18' : '0C'),
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, color: palette.sand,
-              }
-            }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
-            React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-              React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
-            )
-          );
-        };
-        const primary = items.find(i => i.primary);
-        const rest = items.filter(i => !i.primary);
-        return React.createElement(React.Fragment, null,
-          primary && renderItem(primary),
-          React.createElement('div', {
-            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
-          }, rest.map(renderItem))
-        );
-      })()
-    ),
-
-    // ─── Life chapters — moved up: the core action, immediately visible ──
-    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space.xl + 'px' } },
-
-      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
-      ...[
-        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
-        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
-        { label: t('dashboard.tierProtective'), indices: [5, 6] },
-      ].map((tier, tierIdx) =>
-        React.createElement('div', {
-          key: 'tier-' + tierIdx,
-          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
-        },
-          React.createElement('div', {
-            style: {
-              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
-              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
-              borderBottom: '1px solid ' + palette.border,
-            }
-          }, tier.label),
-
-          ...tier.indices.map((chIdx) => {
-            const ch = chapters[chIdx];
-            if (!ch) return null;
-            const { pct } = calculateChapterCompletion(ch.key);
-            const statusColor = getStatusColor(pct, ch.key);
-            const iconKey = chapterIcons[ch.key];
-            const IconFn = iconKey && Icons[iconKey];
-            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
-            const rowOpacity = pct === 0 ? 0.72 : 1;
-            const status = getChapterStatus(ch);
-            const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
-
-            return React.createElement('button', {
-              key: ch.key,
-              onClick: () => onSelectChapter(chIdx),
-              style: {
-                display: 'flex', alignItems: 'center', gap: space.md,
-                padding: simpleView ? '26px 4px' : '20px 4px',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
-                borderRadius: 0,
-                cursor: 'pointer',
-                textAlign: 'left',
-                color: palette.text,
-                fontFamily: 'inherit',
-                opacity: rowOpacity,
-                transition: `opacity ${duration.cinematic}ms ${ease}`,
-                width: '100%',
-              },
-              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
-              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
-            },
-              React.createElement('div', {
-                style: {
-                  width: simpleView ? '56px' : '40px', height: simpleView ? '56px' : '40px', borderRadius: radius.md,
-                  background: getIconBg(pct, ch.key),
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
-                  transition: `all ${duration.cinematic}ms ${ease}`,
-                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
-                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
-                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
-                }
-              }, IconFn ? React.createElement('div', { style: { width: simpleView ? '34px' : '24px', height: simpleView ? '34px' : '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
-
-              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-                React.createElement('div', {
-                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
-                },
-                  React.createElement('div', { style: { fontSize: simpleView ? text.lg : text.body, fontWeight: weight.semi } }, ch.title),
-                  !simpleView && React.createElement('span', {
-                    style: {
-                      fontSize: text.xs, fontWeight: weight.medium,
-                      color: statusColors[status],
-                      flexShrink: 0, letterSpacing: '0.2px',
-                      transition: `color ${duration.cinematic}ms ${ease}`,
-                    }
-                  }, t('chapterStatus.' + status))
-                ),
-                !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
-                !simpleView && status !== 'leer' && (() => {
-                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
-                  return snippet ? React.createElement('div', {
-                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
-                  }, snippet) : null;
-                })(),
-              ),
-            );
-          })
-        )
-      )
-    ),
-
-    // ─── Quick check — inline IPV eligibility ───────────────
-    React.createElement(QuickCheck, { palette, t, onNavigate, data }),
-
-    // ─── Demo — example section (after tools, before pass) ──
-    !hasMeaningfulProgress && !demoMode && React.createElement('div', {
-      style: {
-        marginTop: space.md, marginBottom: space.md,
-        padding: '20px 24px',
-        background: palette.sand + '08',
-        borderRadius: radius.lg - 4,
-        border: '1px solid ' + palette.sand + '25',
-        display: 'flex', alignItems: 'center', gap: '20px',
-        flexWrap: 'wrap',
-      }
-    },
-      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
-        }, t('dashboard.demoTitle')),
-        React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
-        }, t('dashboard.demoText'))
-      ),
-      React.createElement('button', {
-        onClick: onEnterDemo,
-        style: {
-          padding: '10px 20px',
-          background: palette.sand,
-          color: '#fff',
-          border: 'none',
-          borderRadius: radius.md,
-          cursor: 'pointer',
-          fontFamily: 'inherit',
-          fontSize: text.sm,
-          fontWeight: weight.medium,
-          whiteSpace: 'nowrap',
-          flexShrink: 0,
-        }
-      }, t('dashboard.demoButton'))
-    ),
-
     // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
       style: { margin: '20px -8px 0 -8px' }
@@ -1004,6 +793,219 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         })
       )
     ),
+
+
+    // ─── Highlight tools — immediate value (first for new users) ──
+    React.createElement('div', {
+      style: {
+        marginTop: space.lg, marginBottom: space.md,
+        padding: '20px 24px',
+        background: palette.surface,
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.border + '88',
+        boxShadow: shadow.sm,
+      }
+    },
+      React.createElement('div', {
+        style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
+        }, t('dashboard.highlightTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs - 1, color: palette.sage, opacity: 0.8 }
+        }, t('dashboard.highlightPrivacy'))
+      ),
+      (() => {
+        const items = [
+          { label: t('dashboard.highlightFinanz'), sub: t('dashboard.highlightFinanzSub'), view: 'finanzuebersicht', icon: 'budget', primary: true },
+          { label: t('dashboard.highlightTax'), sub: t('dashboard.highlightTaxSub'), view: 'tax', icon: 'money' },
+          { label: t('dashboard.highlightIpv'), sub: t('dashboard.highlightIpvSub'), view: 'premium', icon: 'praemienverbilligung' },
+          { label: t('dashboard.highlightSozialhilfe'), sub: t('dashboard.highlightSozialhilfeSub'), view: 'sozialhilfe', icon: 'health' },
+          { label: t('dashboard.highlightNotfall'), sub: t('dashboard.highlightNotfallSub'), view: 'notfalleinstieg', icon: 'notfall' },
+          !demoMode && { label: t('dashboard.demoTitle'), sub: t('dashboard.demoText'), view: '_demo', icon: 'basis', isDemo: true },
+        ].filter(Boolean);
+        const renderItem = (item) => {
+          const IconFn = Icons[item.icon];
+          return React.createElement('button', {
+            key: item.view,
+            onClick: () => item.isDemo ? onEnterDemo() : onNavigate(item.view),
+            style: {
+              display: 'flex', alignItems: item.primary ? 'flex-start' : 'center', gap: item.primary ? '16px' : '12px',
+              padding: item.primary ? '18px 20px' : '12px 14px',
+              background: item.primary ? palette.sand + '08' : 'transparent',
+              border: '1px solid ' + (item.primary ? palette.sand + '30' : palette.border + '44'),
+              borderRadius: radius.md,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              textAlign: 'left',
+              color: palette.text,
+              transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
+          },
+            React.createElement('div', {
+              style: {
+                width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
+                background: palette.sand + (item.primary ? '18' : '0C'),
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0, color: palette.sand,
+              }
+            }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
+            React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+              React.createElement('div', { style: { fontSize: item.primary ? text.body : text.sm, fontWeight: item.primary ? weight.semi : weight.medium } }, item.label),
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: item.primary ? '4px' : '2px', lineHeight: leading.relaxed } }, item.sub)
+            )
+          );
+        };
+        const primary = items.find(i => i.primary);
+        const rest = items.filter(i => !i.primary);
+        return React.createElement(React.Fragment, null,
+          primary && renderItem(primary),
+          React.createElement('div', {
+            style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
+          }, rest.map(renderItem))
+        );
+      })()
+    ),
+
+    // ─── Life chapters — moved up: the core action, immediately visible ──
+    React.createElement('div', { style: { marginBottom: space['2xl'] + 'px', marginTop: space.xl + 'px' } },
+
+      // Tier groups: Core (0-2), Supporting (3-4), Protective (5-6)
+      ...[
+        { label: t('dashboard.tierCore'), indices: [0, 1, 2] },
+        { label: t('dashboard.tierSupporting'), indices: [3, 4] },
+        { label: t('dashboard.tierProtective'), indices: [5, 6] },
+      ].map((tier, tierIdx) =>
+        React.createElement('div', {
+          key: 'tier-' + tierIdx,
+          style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
+        },
+          React.createElement('div', {
+            style: {
+              fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
+              letterSpacing: '0.4px', padding: '0 4px 12px 4px',
+              borderBottom: '1px solid ' + palette.border,
+            }
+          }, tier.label),
+
+          ...tier.indices.map((chIdx) => {
+            const ch = chapters[chIdx];
+            if (!ch) return null;
+            const { pct } = calculateChapterCompletion(ch.key);
+            const statusColor = getStatusColor(pct, ch.key);
+            const iconKey = chapterIcons[ch.key];
+            const IconFn = iconKey && Icons[iconKey];
+            const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
+            const rowOpacity = pct === 0 ? 0.72 : 1;
+            const status = getChapterStatus(ch);
+            const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
+
+            return React.createElement('button', {
+              key: ch.key,
+              onClick: () => onSelectChapter(chIdx),
+              style: {
+                display: 'flex', alignItems: 'center', gap: space.md,
+                padding: simpleView ? '26px 4px' : '20px 4px',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
+                borderRadius: 0,
+                cursor: 'pointer',
+                textAlign: 'left',
+                color: palette.text,
+                fontFamily: 'inherit',
+                opacity: rowOpacity,
+                transition: `opacity ${duration.cinematic}ms ${ease}`,
+                width: '100%',
+              },
+              onMouseEnter: (e) => { e.currentTarget.style.opacity = '1'; },
+              onMouseLeave: (e) => { e.currentTarget.style.opacity = String(rowOpacity); },
+            },
+              React.createElement('div', {
+                style: {
+                  width: simpleView ? '56px' : '40px', height: simpleView ? '56px' : '40px', borderRadius: radius.md,
+                  background: getIconBg(pct, ch.key),
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
+                  transition: `all ${duration.cinematic}ms ${ease}`,
+                  boxShadow: pct === 100 ? '0 1px 6px ' + palette.sage + '25' : 'none',
+                  border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
+                  animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
+                }
+              }, IconFn ? React.createElement('div', { style: { width: simpleView ? '34px' : '24px', height: simpleView ? '34px' : '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
+
+              React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+                React.createElement('div', {
+                  style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
+                },
+                  React.createElement('div', { style: { fontSize: simpleView ? text.lg : text.body, fontWeight: weight.semi } }, ch.title),
+                  !simpleView && React.createElement('span', {
+                    style: {
+                      fontSize: text.xs, fontWeight: weight.medium,
+                      color: statusColors[status],
+                      flexShrink: 0, letterSpacing: '0.2px',
+                      transition: `color ${duration.cinematic}ms ${ease}`,
+                    }
+                  }, t('chapterStatus.' + status))
+                ),
+                !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
+                !simpleView && status !== 'leer' && (() => {
+                  const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
+                  return snippet ? React.createElement('div', {
+                    style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
+                  }, snippet) : null;
+                })(),
+              ),
+            );
+          })
+        )
+      )
+    ),
+
+    // ─── Quick check — inline IPV eligibility ───────────────
+    React.createElement(QuickCheck, { palette, t, onNavigate, data }),
+
+    // ─── Demo — example section (after tools) ──
+    !hasMeaningfulProgress && !demoMode && React.createElement('div', {
+      style: {
+        marginTop: space.md, marginBottom: space.md,
+        padding: '20px 24px',
+        background: palette.sand + '08',
+        borderRadius: radius.lg - 4,
+        border: '1px solid ' + palette.sand + '25',
+        display: 'flex', alignItems: 'center', gap: '20px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: '200px' } },
+        React.createElement('div', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs }
+        }, t('dashboard.demoTitle')),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed }
+        }, t('dashboard.demoText'))
+      ),
+      React.createElement('button', {
+        onClick: onEnterDemo,
+        style: {
+          padding: '10px 20px',
+          background: palette.sand,
+          color: '#fff',
+          border: 'none',
+          borderRadius: radius.md,
+          cursor: 'pointer',
+          fontFamily: 'inherit',
+          fontSize: text.sm,
+          fontWeight: weight.medium,
+          whiteSpace: 'nowrap',
+          flexShrink: 0,
+        }
+      }, t('dashboard.demoButton'))
+    ),
+
 
     // ─── Guided start — calm first-use card ───────────────
     !hasMeaningfulProgress && React.createElement('div', {
