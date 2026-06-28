@@ -18,8 +18,36 @@ export const registerServiceWorker = async () => {
   try {
     const registration = await navigator.serviceWorker.register(SW_PATH, {
       scope: '/',
+      // sw.js immer am Netz prüfen (nicht aus dem HTTP-Cache) — sonst bemerkt der
+      // Browser ein Deploy u. U. tagelang nicht.
+      updateViaCache: 'none',
     });
     console.info('[Notifications] SW registered:', registration.scope);
+
+    // Auto-Update: sobald ein neuer Service Worker die Kontrolle übernimmt, die
+    // Seite einmal neu laden, damit ein Deploy ohne manuelles Hard-Refresh ankommt.
+    // Guard: nur, wenn diese Seite schon von einer früheren Version kontrolliert
+    // wurde (kein Reload beim allerersten Install).
+    if (navigator.serviceWorker.controller && !window.__mpSwReloadHooked) {
+      window.__mpSwReloadHooked = true;
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+    }
+
+    // Proaktiv nach einer neueren Version suchen: jetzt + wenn die App wieder
+    // sichtbar wird (PWA aus dem Hintergrund). Fehler bewusst verschluckt.
+    registration.update().catch(() => {});
+    if (!window.__mpSwVisibilityHooked) {
+      window.__mpSwVisibilityHooked = true;
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') registration.update().catch(() => {});
+      });
+    }
+
     return registration;
   } catch (error) {
     console.error('[Notifications] SW registration failed:', error);
