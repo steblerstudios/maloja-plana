@@ -62,6 +62,15 @@ export function einkommensfreibetrag(erwerbseinkommen) {
   return Math.min(Math.max(0, Math.round(efb)), EFB_MAX);
 }
 
+// Vermögensfreibetrag SKOS-RL D.3.1 (ab 1.1.2026; vorher C.7, 36 Jahre unverändert):
+// CHF 6'000 Einzelperson / 12'000 Paar (2+ Erwachsene) + 3'000 pro minderjähriges
+// Kind, max. CHF 15'000 pro Unterstützungseinheit. Einzige Quelle der Wahrheit —
+// auch von config/cantonalData.js genutzt (vorher zwei widersprüchliche Formeln).
+export function vermoegensfreibetragSKOS(adults = 1, minorChildren = 0) {
+  const basis = adults >= 2 ? 12000 : 6000;
+  return Math.min(15000, basis + Math.max(0, minorChildren) * 3000);
+}
+
 export function berechneSozialhilfe({
   haushaltGroesse,
   adults = 1,
@@ -97,8 +106,9 @@ export function berechneSozialhilfe({
   const sozialhilfeAnspruch = Math.max(0, bedarf - anrechenbaresEinkommen);
   const totalUnterstuetzung = sozialhilfeAnspruch + izu;
 
-  // Vermögensfreibetrag (SKOS C.7): CHF 4'000 Einzelperson, +2'000 pro weitere
-  const vermoegensfreibetrag = 4000 + Math.max(0, haushaltGroesse - 1) * 2000;
+  // Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2026) — vereinheitlichter Helper
+  const minderjaehrigeKinder = Math.max(0, haushaltGroesse - adults);
+  const vermoegensfreibetrag = vermoegensfreibetragSKOS(adults, minderjaehrigeKinder);
   const anrechenbaresVermoegen = Math.max(0, vermoegen - vermoegensfreibetrag);
   const hatAnspruch = anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch > 0;
 
