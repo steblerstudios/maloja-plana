@@ -2015,7 +2015,7 @@ export default {
     exportEncrypted: 'Esporta (crittografato)',
     importFile: 'Importa backup',
     passphrase: 'Password',
-    passphraseHint: 'Almeno 4 caratteri. Ricordala — non c\'è recupero.',
+    passphraseHint: 'Almeno 4 caratteri — meglio 12 o più, ad esempio più parole. Ricordala, non c\'è recupero.',
     passphraseConfirm: 'Conferma password',
     passphraseMismatch: 'Le password non corrispondono.',
     encrypting: 'Crittografia...',
