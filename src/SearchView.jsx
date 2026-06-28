@@ -23,6 +23,18 @@ export const SEARCH_VIEWS = [
   { view: 'cv', nav: 'nav.cv', sub: 'nav.sub.cv', icon: 'lebenslauf', aliases: ['cv', 'lebenslauf', 'resume'] },
   { view: 'unterlagen', nav: 'nav.unterlagen', sub: 'nav.sub.unterlagen', icon: 'documents', aliases: ['unterlagen', 'documents'] },
   { view: 'flyer', nav: 'nav.flyer', sub: 'nav.sub.flyer', icon: 'dokumentTresor', aliases: ['qr', 'teilen', 'share', 'flyer'] },
+  // Bisher nicht auffindbar, obwohl über Dashboard/Menü erreichbar (Audit #17).
+  // `sub` ist optional — nicht jedes Werkzeug hat einen Beschreibungs-Key.
+  { view: 'finanzuebersicht', nav: 'nav.finanzUebersicht', icon: 'budget', aliases: ['finanzübersicht', 'übersicht', 'finanzen', 'overview'] },
+  { view: 'sync', nav: 'nav.budgetSync', sub: 'nav.sub.budgetSync', icon: 'budgetWallet', aliases: ['budget', 'sync', 'ausgaben'] },
+  { view: 'taxImport', nav: 'nav.taxImport', sub: 'nav.sub.taxImport', icon: 'document', aliases: ['steuerimport', 'import', 'steuererklärung'] },
+  { view: 'kk', nav: 'nav.kkScanner', icon: 'barcode', aliases: ['kk', 'krankenkasse', 'scanner', 'qr', 'prämie'] },
+  { view: 'budget', nav: 'nav.budget', icon: 'csv', aliases: ['budget', 'haushalt', 'ausgaben'] },
+  { view: 'schulden', nav: 'nav.debts', icon: 'debt', aliases: ['schulden', 'betreibung', 'debt', 'abzahlung'] },
+  { view: 'organ', nav: 'nav.organDonation', icon: 'health', aliases: ['organspende', 'spende', 'organ', 'donation'] },
+  { view: 'charts', nav: 'nav.charts', icon: 'chartsSchoko', aliases: ['charts', 'diagramme', 'statistik', 'grafik'] },
+  { view: 'export', nav: 'nav.export', icon: 'download', aliases: ['export', 'sicherung', 'backup', 'datensicherung'] },
+  { view: 'notifications', nav: 'nav.notifications', icon: 'cowbell', aliases: ['benachrichtigungen', 'erinnerungen', 'notifications'] },
 ];
 
 export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
@@ -31,7 +43,7 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
 
   const hit = (parts) => !q || parts.some(p => (p || '').toLowerCase().includes(q));
 
-  const toolResults = SEARCH_VIEWS.filter(v => hit([t(v.nav), t(v.sub), v.view, ...(v.aliases || [])]));
+  const toolResults = SEARCH_VIEWS.filter(v => hit([t(v.nav), v.sub ? t(v.sub) : '', v.view, ...(v.aliases || [])]));
   const chapterResults = chapters
     .map((ch, idx) => ({ ch, idx }))
     .filter(({ ch }) => hit([ch.title, ch.key]));
@@ -75,7 +87,7 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
 
     toolResults.length > 0 && React.createElement('div', null,
       React.createElement('div', { style: s.sectionTitle }, t('search.toolsTitle')),
-      toolResults.map(v => resultRow(v.view, v.icon, t(v.nav), t(v.sub), () => onNavigate && onNavigate(v.view)))
+      toolResults.map(v => resultRow(v.view, v.icon, t(v.nav), v.sub ? t(v.sub) : null, () => onNavigate && onNavigate(v.view)))
     ),
 
     chapterResults.length > 0 && React.createElement('div', null,
