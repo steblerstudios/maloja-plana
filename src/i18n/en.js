@@ -1307,6 +1307,8 @@ export default {
     householdAdultsChildren: 'Household: {adults} adult(s) + {children} child(ren)',
     childrenNote: 'Additional benefits may be available for children (childcare, school supplies, clothing). Discuss this with social services.',
     childrenEducationNote: 'Children aged 16+ in education may receive training allowances.',
+    assetLimitTitle: 'Assets above the allowance',
+    assetLimitNote: 'Social assistance requires assets to be used up except for an allowance (SKOS: {freibetrag} for this household). The recorded assets are about {ueberschuss} above it — that part generally has to be used first. Orientation, not binding advice.',
     repaymentTitle: 'Repayment of social assistance',
     repaymentText: 'In most cantons, social assistance received must be repaid if your financial situation improves (e.g. through inheritance, new income, or increased assets).',
     repaymentVaries: 'The timeframe and conditions vary by canton (typically 10–15 years). Some cantons (e.g. Vaud) have abolished the repayment obligation.',
