@@ -863,6 +863,7 @@ export default {
       heartfelt14: 'Revista svizra independenta dals consuments — tests, cussegls e dretg dals consuments, senza reclama.',
       heartfelt15: 'Revista da consum davart daners, assicuranzas e prevenziun — independenta e senza reclama.',
       heartfelt16: 'Emissiun da la SRF davart ils consuments — revelescha abus e controllescha products e servetschs.',
+      heartfelt17: 'App cunter il spreder da victualias — gestiunescha tes provisiuns e datas da durabladad. Nagin conto, nagin tracking, nagina pajada cun datas.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',

@@ -128,7 +128,8 @@ const LanguageSwitcher = ({ palette }) => {
       }
     },
       supportedLanguages.map(l =>
-        React.createElement('option', { key: l, value: l }, LANGUAGE_NATIVE_NAMES[l] || l.toUpperCase())
+        // Kompaktes Sprachkürzel (DE/EN/FR/IT/RM); voller Name bleibt als title/Tooltip erhalten
+        React.createElement('option', { key: l, value: l, title: LANGUAGE_NATIVE_NAMES[l] || l.toUpperCase() }, l.toUpperCase())
       )
     ),
     React.createElement('span', {
