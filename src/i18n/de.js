@@ -2013,7 +2013,7 @@ export default {
     exportEncrypted: 'Export (verschlüsselt)',
     importFile: 'Sicherung importieren',
     passphrase: 'Passwort',
-    passphraseHint: { sie: 'Mindestens 4 Zeichen. Merken Sie es sich — es gibt keine Wiederherstellung.', du: 'Mindestens 4 Zeichen. Merke es dir — es gibt keine Wiederherstellung.' },
+    passphraseHint: { sie: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merken Sie es sich, es gibt keine Wiederherstellung.', du: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merke es dir, es gibt keine Wiederherstellung.' },
     passphraseConfirm: 'Passwort bestätigen',
     passphraseMismatch: 'Passwörter stimmen nicht überein.',
     encrypting: 'Verschlüsseln...',
