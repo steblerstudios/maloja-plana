@@ -4,6 +4,7 @@ import { getRegionInfo } from './data/praemienRegionen.js';
 import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { linkifyDomains } from './utils/linkifyDomains.js';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -186,7 +187,7 @@ export const PraemienOrientierung = ({ palette, t, data }) => {
       t('po.disclaimer')
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.sky, marginTop: space.xs } },
-      t('po.source')
+      linkifyDomains(t('po.source'))
     )
   );
 };

@@ -6,6 +6,17 @@ import { getCantonName } from './config/cantonalData.js';
 // hardcodierter URL-Katalog nötig, der veralten könnte.
 const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
 
+// Best-effort-Gemeinde-URL (Sophies Entscheid): die meisten CH-Gemeinden nutzen
+// www.<gemeinde>.ch. Trifft oft, kann gelegentlich danebenliegen — bewusst akzeptiert.
+const communeUrl = (city) => {
+  const slug = String(city).toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+    .replace(/[àâá]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíî]/g, 'i')
+    .replace(/[òóô]/g, 'o').replace(/[ùúû]/g, 'u').replace(/ç/g, 'c').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slug ? 'https://www.' + slug + '.ch' : null;
+};
+
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
     style: { marginBottom: '28px' }
@@ -114,9 +125,9 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
   const activeSection = section || 'privacy';
 
   // Wohngemeinde/-kanton aus den eigenen Daten. Kanton → offizielles Portal
-  // (verlässlich). Gemeinde nur als Text — der Wohnort soll das Gerät NICHT in
-  // einer Such-URL verlassen (100% privat). Fällt auf generischen Text zurück,
-  // wenn nichts erfasst ist.
+  // (verlässlich, www.<code>.ch). Gemeinde → www.<gemeinde>.ch (best effort,
+  // Sophies Entscheid). Direkt-Navigation zur Gemeinde-Seite, keine Such-/
+  // Drittanbieter-URL. Fällt auf generischen Text zurück, wenn nichts erfasst.
   const renderLocalGov = () => {
     const canton = (data && data.basis && data.basis.canton) || '';
     const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
@@ -125,7 +136,12 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       return React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + t('legal.resources.petition3'));
     }
     const parts = ['→ '];
-    if (city) parts.push(city);
+    if (city) {
+      const cUrl = communeUrl(city);
+      parts.push(cUrl
+        ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener', style: linkStyle }, city)
+        : city);
+    }
     if (cantonName) {
       if (city) parts.push(' · ');
       parts.push(React.createElement('a', {
