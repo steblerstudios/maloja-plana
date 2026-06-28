@@ -333,6 +333,13 @@ export default {
     toolsAndFeatures: 'Werkzeuge & Features',
     detailProgress: 'Detaillierter Fortschritt pro Kapitel',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
+    toolGroups: {
+      money: 'Geld & Steuern',
+      insurance: 'Versicherung & Gesundheit',
+      support: 'Unterstützung & Anspruch',
+      documents: 'Dokumente & Behörden',
+      organize: 'Organisieren & Profil',
+    },
     tipsTitle: 'Tipps für den Anfang:',
     tip1: { sie: 'Beginnen Sie mit dem Kapitel "Persönliche Basis"', du: 'Beginne mit dem Kapitel "Persönliche Basis"' },
     tip2: { sie: 'Laden Sie Ihre wichtigen Dokumente hoch', du: 'Lade Deine wichtigen Dokumente hoch' },
