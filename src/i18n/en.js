@@ -805,6 +805,7 @@ export default {
 
   datenWirken: {
     title: 'Your data is already working:',
+    treeCaption: 'What grows from your entries',
     tax: 'Tax calculator personalised',
     ipv: 'Premium reduction check active',
     sozial: 'Social assistance orientation active',

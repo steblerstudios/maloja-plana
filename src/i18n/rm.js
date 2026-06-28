@@ -296,6 +296,7 @@ export default {
 
   datenWirken: {
     title: { sie: 'Vossas datas funcziunan gia:', du: 'Tes datas funcziunan gia:' },
+    treeCaption: { sie: 'Quai che crescha da Vossas datas', du: 'Quai che crescha da Tes datas' },
     tax: 'Calculatur da taglia persunalisà',
     ipv: 'Controlla da reducziun da premias activa',
     sozial: "Orientaziun d'agid social activa",
