@@ -16,9 +16,15 @@ export const parseSwissNumber = (raw) => {
   if (raw === null || raw === undefined) return null;
   let s = String(raw).trim();
   if (!s) return null;
-  const negative = /^-|^\(.*\)$/.test(s);
-  // Nur Ziffern, Trenner und Vorzeichen behalten (CHF, Leerschläge, .- weg).
-  s = s.replace(/[^0-9.,]/g, '');
+  // Negativ erkennen: ein Minus/Gedankenstrich direkt vor der ersten Ziffer
+  // (auch nach Präfix wie "CHF ") oder Buchhalter-Klammern um die ganze Zahl.
+  const negative = /[-–]\s*[\d.,'’ ]*\d/.test(s) || /\(\s*[\d.,'’ ]+\s*\)/.test(s);
+  // Erste zusammenhängende Zahl herauslösen, dann auf Ziffern + Dezimal-/
+  // Tausendertrenner reduzieren. Verhindert, dass Ziffern aus nachgestelltem
+  // Text (z.B. "12'000 (Stand 2024)" -> sonst 120002024) an den Betrag kleben.
+  const token = s.match(/\d[\d.,'’\s]*\d|\d/);
+  if (!token) return null;
+  s = token[0].replace(/[^0-9.,]/g, '');
   if (!s) return null;
   const hasDot = s.includes('.');
   const hasComma = s.includes(',');
