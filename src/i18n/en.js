@@ -112,6 +112,12 @@ export default {
     persons: '{count} persons',
     switchLang: 'Switch language: {lang}',
     selectLanguage: 'Select language',
+    settingsTitle: 'Settings',
+    settingsIntro: 'These settings can be changed at any time.',
+    settingsData: 'Data & backup',
+    settingsTheme: 'Appearance',
+    settingsAnrede: 'Form of address',
+    editPersonalData: 'Edit personal basics',
   },
 
   nav: {

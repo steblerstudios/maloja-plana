@@ -112,6 +112,12 @@ export default {
     persons: '{count} Personen',
     switchLang: 'Sprache wechseln: {lang}',
     selectLanguage: 'Sprache wählen',
+    settingsTitle: 'Einstellungen',
+    settingsIntro: 'Diese Einstellungen lassen sich jederzeit ändern.',
+    settingsData: 'Daten & Sicherung',
+    settingsTheme: 'Erscheinungsbild',
+    settingsAnrede: 'Anrede',
+    editPersonalData: 'Persönliche Basis bearbeiten',
   },
 
   nav: {

@@ -15,6 +15,7 @@ import { createBackup } from './utils/autoBackup.js';
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
+import SettingsView from './SettingsView.jsx';
 import Dashboard from './Dashboard.jsx';
 import ChapterView from './ChapterView.jsx';
 import OverdueBanner from './OverdueBanner.jsx';
@@ -784,6 +785,11 @@ const AppInner = () => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+        view === 'settings' && React.createElement(SettingsView, {
+          palette, t, controls: settingsControls,
+          onEditBasis: () => { setActiveChapter(0); setView('chapter'); },
+          onExport: () => setView('export'),
+        }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
     ),

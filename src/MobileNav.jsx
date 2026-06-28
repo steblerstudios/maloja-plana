@@ -134,6 +134,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         const q = searchQuery.toLowerCase().trim();
 
         const allTools = [
+          { key: 'settings', label: t('common.settingsTitle'), icon: 'settings' },
           { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: 'budget' },
           { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
           { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
