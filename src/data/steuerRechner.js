@@ -1,43 +1,45 @@
 // Steuerrechner – Direkte Bundessteuer (DBG Art. 36)
-// Quelle: DBG Art. 36 Abs. 1 (Grundtarif), Abs. 2 (Verheiratetentarif)
-// Stand: Steuerjahr 2024/2025
-// Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
+// Quelle: EFD-Rundschreiben "Ausgleich der kalten Progression … Steuerjahr 2026"
+//         (Verordnung über die kalte Progression VKP, SR 642.119.2); Tarif 2026 (Art. 36 DBG).
+// Stand: Steuerjahr 2026. Alle Beträge in CHF. Keine Netzwerk-Calls, reine Berechnung.
+//
+// Modell: pro Stufe die offizielle Grundsteuer bei der Untergrenze (ab) + Grenzsatz darüber.
+// Damit deckt sich das Resultat aufs Rappen mit der amtlichen ESTV-Tariftabelle
+// (Prüfanker: 60'000 → 671.40, 100'000 → 2'684.35; Verheiratete 53'400 → 237.00).
 
-// === Grundtarif (Alleinstehende, Art. 36 Abs. 1 DBG) ===
-// Progressiver Stufentarif bis CHF 755'200, darüber 11.5% flat.
+// === Grundtarif (Alleinstehende, Art. 36 Abs. 1 DBG), Tarif 2026 ===
+// ab = Einkommensuntergrenze, grundsteuer = amtliche Steuer bei genau 'ab', satz = Grenzsatz darüber.
 const GRUNDTARIF_STUFEN = [
-  { bis: 14500,  satz: 0 },
-  { bis: 31600,  satz: 0.0077 },
-  { bis: 41400,  satz: 0.0088 },
-  { bis: 55200,  satz: 0.0264 },
-  { bis: 72500,  satz: 0.0297 },
-  { bis: 78100,  satz: 0.0594 },
-  { bis: 103600, satz: 0.0660 },
-  { bis: 134600, satz: 0.0880 },
-  { bis: 176000, satz: 0.1100 },
-  { bis: 755200, satz: 0.1320 },
+  { ab: 15200,  grundsteuer: 0,        satz: 0.0077 },
+  { ab: 33200,  grundsteuer: 138.60,   satz: 0.0088 },
+  { ab: 43500,  grundsteuer: 229.20,   satz: 0.0264 },
+  { ab: 58000,  grundsteuer: 612.00,   satz: 0.0297 },
+  { ab: 76200,  grundsteuer: 1152.50,  satz: 0.0594 },
+  { ab: 82100,  grundsteuer: 1502.95,  satz: 0.0660 },
+  { ab: 108900, grundsteuer: 3271.75,  satz: 0.0880 },
+  { ab: 141500, grundsteuer: 6140.55,  satz: 0.1100 },
+  { ab: 185100, grundsteuer: 10936.55, satz: 0.1320 },
 ];
-const GRUNDTARIF_FLAT_GRENZE = 755200;
+const GRUNDTARIF_FLAT_GRENZE = 793900; // darüber 11.5% des gesamten Einkommens
 const GRUNDTARIF_FLAT_SATZ = 0.115;
 
-// === Verheiratetentarif (Art. 36 Abs. 2 DBG) ===
+// === Verheiratetentarif (Art. 36 Abs. 2 DBG), Tarif 2026 ===
 const VERHEIRATETENTARIF_STUFEN = [
-  { bis: 28300,  satz: 0 },
-  { bis: 50900,  satz: 0.0100 },
-  { bis: 58400,  satz: 0.0200 },
-  { bis: 75300,  satz: 0.0300 },
-  { bis: 90300,  satz: 0.0400 },
-  { bis: 103400, satz: 0.0500 },
-  { bis: 114700, satz: 0.0600 },
-  { bis: 124200, satz: 0.0700 },
-  { bis: 131700, satz: 0.0800 },
-  { bis: 137300, satz: 0.0900 },
-  { bis: 141200, satz: 0.1000 },
-  { bis: 143100, satz: 0.1100 },
-  { bis: 145000, satz: 0.1200 },
-  { bis: 895900, satz: 0.1300 },
+  { ab: 29700,  grundsteuer: 0,       satz: 0.0100 },
+  { ab: 53400,  grundsteuer: 237.00,  satz: 0.0200 },
+  { ab: 61300,  grundsteuer: 395.00,  satz: 0.0300 },
+  { ab: 79100,  grundsteuer: 929.00,  satz: 0.0400 },
+  { ab: 94900,  grundsteuer: 1561.00, satz: 0.0500 },
+  { ab: 108700, grundsteuer: 2251.00, satz: 0.0600 },
+  { ab: 120600, grundsteuer: 2965.00, satz: 0.0700 },
+  { ab: 130500, grundsteuer: 3658.00, satz: 0.0800 },
+  { ab: 138400, grundsteuer: 4290.00, satz: 0.0900 },
+  { ab: 144300, grundsteuer: 4821.00, satz: 0.1000 },
+  { ab: 148300, grundsteuer: 5221.00, satz: 0.1100 },
+  { ab: 150400, grundsteuer: 5452.00, satz: 0.1200 },
+  { ab: 152400, grundsteuer: 5692.00, satz: 0.1300 },
 ];
-const VERHEIRATET_FLAT_GRENZE = 895900;
+const VERHEIRATET_FLAT_GRENZE = 941300;
 const VERHEIRATET_FLAT_SATZ = 0.115;
 
 // Kinderabzug vom Steuerbetrag (Art. 36 Abs. 2bis DBG)
@@ -45,11 +47,11 @@ const KINDERABZUG_PRO_KIND = 263;
 
 // Standardabzüge vom steuerbaren Einkommen (Bundessteuer)
 const ABZUEGE = {
-  versicherung: { alleinstehend: 1800, verheiratet: 3600, proKind: 700 },
+  versicherung: { alleinstehend: 1800, verheiratet: 3700, proKind: 700 },
   saeule3a: { mitBVG: 7258, ohneBVG: 36288 },
   berufsauslagen: { pauschal: 2000, max: 4000 },
-  kinderabzug: 6700,
-  zweiverdiener: 8500,
+  kinderabzug: 6800,
+  zweiverdiener: 8600,
 };
 
 /**
@@ -58,22 +60,22 @@ const ABZUEGE = {
 function berechneStufentarif(einkommen, stufen, flatGrenze, flatSatz) {
   if (einkommen <= 0) return 0;
 
+  // Über der oberen Tarifgrenze: einheitlich 11.5% des gesamten Einkommens.
   if (einkommen > flatGrenze) {
     return Math.round(einkommen * flatSatz * 100) / 100;
   }
 
-  let steuer = 0;
-  let vorherigeBis = 0;
+  // Unterhalb der ersten Stufe (steuerfreies Minimum): keine Steuer.
+  if (einkommen < stufen[0].ab) return 0;
 
-  for (const stufe of stufen) {
-    if (einkommen <= vorherigeBis) break;
-    const steuerbarerTeil = Math.min(einkommen, stufe.bis) - vorherigeBis;
-    if (steuerbarerTeil > 0) {
-      steuer += steuerbarerTeil * stufe.satz;
-    }
-    vorherigeBis = stufe.bis;
+  // Höchste Stufe, deren Untergrenze das Einkommen erreicht; amtliche Grundsteuer + Grenzsatz.
+  let stufe = stufen[0];
+  for (const s of stufen) {
+    if (einkommen >= s.ab) stufe = s;
+    else break;
   }
 
+  const steuer = stufe.grundsteuer + (einkommen - stufe.ab) * stufe.satz;
   return Math.round(steuer * 100) / 100;
 }
 
@@ -166,12 +168,14 @@ export function grenzsteuersatz(einkommen, verheiratet = false) {
   const flatSatz = verheiratet ? VERHEIRATET_FLAT_SATZ : GRUNDTARIF_FLAT_SATZ;
 
   if (einkommen > flatGrenze) return flatSatz * 100;
+  if (einkommen < stufen[0].ab) return 0;
 
-  for (const stufe of stufen) {
-    if (einkommen <= stufe.bis) return stufe.satz * 100;
+  let satz = 0;
+  for (const s of stufen) {
+    if (einkommen >= s.ab) satz = s.satz;
+    else break;
   }
-
-  return 0;
+  return satz * 100;
 }
 
 /**
@@ -199,5 +203,5 @@ export const STEUER_PARAMS = {
   abzuege: ABZUEGE,
 };
 
-export const STEUER_DATA_VERSION = '2024/2025';
-export const STEUER_DATA_SOURCE = 'DBG Art. 36, ESTV Tarife 2024/2025';
+export const STEUER_DATA_VERSION = '2026';
+export const STEUER_DATA_SOURCE = 'DBG Art. 36, ESTV/EFD Tarif 2026 (kalte Progression, VKP SR 642.119.2)';
