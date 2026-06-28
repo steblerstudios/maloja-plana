@@ -1441,6 +1441,8 @@ export default {
     qualification: 'Qualification',
     preview: 'Preview',
     downloadHtml: 'HTML download',
+    downloadJson: 'JSON (ATS)',
+    downloadJsonHint: 'Machine-readable CV in the JSON Resume standard — read by applicant tracking systems (ATS) and career tools.',
     personalData: 'PERSONAL DATA',
     experience: 'WORK EXPERIENCE',
     education: 'EDUCATION AND QUALIFICATIONS',

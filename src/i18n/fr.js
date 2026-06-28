@@ -1440,6 +1440,8 @@ export default {
     qualification: 'Qualification',
     preview: 'Aperçu',
     downloadHtml: 'Télécharger HTML',
+    downloadJson: 'JSON (ATS)',
+    downloadJsonHint: 'CV lisible par machine au standard JSON Resume — lu par les systèmes de recrutement (ATS) et les outils de carrière.',
     personalData: 'DONNÉES PERSONNELLES',
     experience: 'EXPÉRIENCE PROFESSIONNELLE',
     education: 'FORMATION ET QUALIFICATIONS',

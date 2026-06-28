@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { generateCVTemplate, generateCVHTML, downloadCVAsHTML } from './cvGenerator.js';
+import { generateCVTemplate, generateCVHTML, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
@@ -43,7 +43,12 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       React.createElement('button', {
         onClick: handleDownload,
         style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-      }, '↙ ' + t('cv.downloadHtml'))
+      }, '↙ ' + t('cv.downloadHtml')),
+      React.createElement('button', {
+        onClick: () => downloadCVAsJSON(data, t),
+        title: t('cv.downloadJsonHint'),
+        style: { flex: 1, padding: '10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+      }, '{ } ' + t('cv.downloadJson'))
     ),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
