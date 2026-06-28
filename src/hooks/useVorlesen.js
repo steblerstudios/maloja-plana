@@ -39,8 +39,9 @@ export function useVorlesen(lang) {
   }, [lang, stop]);
 
   const toggle = useCallback(() => setEnabled(prev => !prev), []);
+  const enable = useCallback(() => setEnabled(true), []);
 
   useEffect(() => stop, [stop]);
 
-  return { enabled, toggle, speak, stop };
+  return { enabled, toggle, enable, speak, stop };
 }

@@ -183,6 +183,10 @@ const AppInner = () => {
   const { t, lang, setLanguage, supportedLanguages, anrede, setAnrede } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });
+  // „Einfache Ansicht" (Analphabeten-/Low-Literacy-Modus): icon-zentriertes Dashboard
+  // + automatisches Vorlesen. Persistent, geräteweit.
+  const [simpleView, setSimpleView] = useState(() => { try { return localStorage.getItem('or5_simpleView') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('or5_simpleView', simpleView ? '1' : '0'); } catch {} }, [simpleView]);
   const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -477,6 +481,21 @@ const AppInner = () => {
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
     React.createElement(ThemeToggle, { key: 'theme', palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
+    React.createElement('button', {
+      key: 'simpleview',
+      'aria-label': t('common.simpleView'), 'aria-pressed': simpleView, title: t('common.simpleView'),
+      // Beim Einschalten automatisch Vorlesen aktivieren (Inkrement-1-Entscheid).
+      onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
+      style: { padding: '6px 9px', background: simpleView ? palette.sand + '30' : 'transparent', color: simpleView ? palette.sand : palette.mid, border: '1px solid ' + (simpleView ? palette.sand + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: 2×2-Kachelraster = „grosse Symbole"
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+        React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
+        React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
+        React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
+        React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+      )
+    ),
   ].filter(Boolean);
 
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
@@ -656,6 +675,7 @@ const AppInner = () => {
           onSelectChapter: (idx) => { setActiveChapter(idx); setView('chapter'); },
           completion: calculateCompletion(),
           onNavigate: setView,
+          simpleView,
           demoMode,
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
           onLeaveDemo: () => setDemoMode(false),
