@@ -70,15 +70,17 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 ## C — Design / Calm-UX (aus Audit)
 
-- 🔴 **BUG (Handy): Kopfzeile läuft horizontal über** — *gemeldet Sophie 2026-06-28 (iPhone,
-  Screenshots Basis/Wohnen/Steuern/Ausbildung).* Auf schmalen Screens (~375–390 px) ist die
-  Header-Toolbar ~460 px breit (Logo + Vorlesen + Aa + Sie/Du + Sprach-Dropdown + Dunkel + ☰ in
-  EINER nicht-umbrechenden Reihe). `body`/`html` haben `overflow-x: visible` → Seite seitlich
-  scrollbar, rechts ein toter Streifen, Dunkel-Schalter/☰ ragen über den Rand. **Reproduziert im
-  Mobile-Preview @390 px:** `header.scrollWidth 460 > clientWidth 390` (= 70 px Überhang).
-  Fix-Richtung: Toolbar auf Mobile umbrechen oder Sekundär-Controls hinter ☰ einklappen +
-  `overflow-x: hidden` als Schutzgurt. (Die roten Kreise auf den Formularfeldern markieren den
-  toten Rechts-Streifen, nicht die Felder selbst.)
+- ✅ **BUG (Handy): Kopfzeile lief horizontal über — GEFIXT (2026-06-28).** *Gemeldet Sophie
+  (iPhone, Screenshots Basis/Wohnen/Steuern/Ausbildung + Dashboard-Kachel „Dokumentenablage"
+  abgeschnitten).* Ursache: Header-Controls-Reihe (Vorlesen + Aa + Sie/Du + Sprach-Dropdown +
+  Dunkel + ☰) war ~373 px breit, nicht umbrechend → Dokument 460 px > 390 px Viewport (70 px
+  Überhang) → seitlich scrollbar, rechts toter Streifen, rechte Spalte/Kacheltext abgeschnitten.
+  **Fix:** `flexWrap: 'wrap'` auf `<header>` UND auf der Controls-`div` (+ `justifyContent:
+  flex-end`) in `main.jsx` → Controls brechen auf schmalen Screens um statt überzulaufen.
+  **Verifiziert @390 px:** overflow 0 px (war 70), 0 Offender, „Dokumentenablage" vollständig &
+  nicht geclippt; @1280 px Header weiterhin einreihig (kein Desktop-Regress). Build grün, 354
+  Tests grün. Mögliches Polish-Follow-up: Sekundär-Controls auf Mobile ganz ins ☰-Menü einklappen
+  (statt umbrechen) — eigene kleine Aufgabe.
 - 🟠 **Service-Worker liefert alte Version weiter** — *beobachtet 2026-06-28.* Sophies iPhone zeigte
   `v0.1.0-beta`, obwohl `v0.1.1-beta` deployt ist → der SW (`maloja-plana-v7`) serviert die
   zwischengespeicherte App. Returning Users sehen neue Deploys evtl. erst nach mehrfachem
