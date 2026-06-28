@@ -447,6 +447,8 @@ export default {
       benefits: ['Tax calculator', 'Premium reduction', 'Social assistance', 'Minimum wage check'],
       fields: {
         monthlyIncome: 'Monthly income (CHF)',
+        sideIncome: 'Side income per month CHF',
+        taxableIncome: 'Taxable income per year CHF',
         incomeType: { label: 'Income type', options: { netto: 'Net (what I receive)', brutto: 'Gross (before deductions)' } },
         employer: 'Employer',
         employmentType: { label: 'Employment type', options: { employed: 'Employed', selfEmployed: 'Self-employed', freelance: 'Freelancer', retired: 'Retired' } },
@@ -475,6 +477,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Your income — net is what arrives in your account.',
+        sideIncome: 'Additional income alongside your main job (side job, fees). Counted as income.',
+        taxableIncome: 'Taxable income from your tax return (per year, after deductions). For orientation only — can feed the tax calculator.',
         monthlyTax: 'Estimated or from your tax bill.',
         groceries: 'Groceries, toiletries, household supplies per month.',
         communication: 'Internet, mobile, landline per month.',
@@ -1356,6 +1360,7 @@ export default {
     dataVersion: 'Data version',
     disclaimer: 'This orientation shows the estimated tax burden (federal, cantonal, municipal). Cantonal values are based on the cantonal capital. You can find exact amounts at your cantonal tax authority.',
     netIncomeNote: 'Projection based on your net salary × 12. Actual tax liability may differ.',
+    useImportedTaxable: 'Use official taxable income (CHF {value}/year). Deductions are then ignored.',
   },
 
   schulden: {
@@ -1517,6 +1522,8 @@ export default {
     keptHint: 'Kept unchanged.',
     annualNote: 'Annual value {annual} → monthly',
     field: {
+      taxableIncome: 'Taxable income',
+      sideIncome: 'Side income',
       income: 'Income',
       securities: 'Securities / portfolio',
       savings: 'Savings',

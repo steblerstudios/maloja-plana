@@ -446,6 +446,8 @@ export default {
       benefits: ['Calculateur fiscal', 'Réduction de primes', 'Aide sociale', 'Salaire minimum'],
       fields: {
         monthlyIncome: 'Revenu mensuel (CHF)',
+        sideIncome: 'Revenu accessoire par mois CHF',
+        taxableIncome: 'Revenu imposable par an CHF',
         incomeType: { label: 'Type de revenu', options: { netto: 'Net (ce que je reçois)', brutto: 'Brut (avant déductions)' } },
         employer: 'Employeur',
         employmentType: { label: 'Type d\'emploi', options: { employed: 'Salarié(e)', selfEmployed: 'Indépendant(e)', freelance: 'Freelance', retired: 'Retraité(e)' } },
@@ -474,6 +476,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Votre revenu — le net est ce qui arrive sur votre compte.',
+        sideIncome: 'Revenu supplémentaire en plus de l’activité principale (petit boulot, honoraires). Compté comme revenu.',
+        taxableIncome: 'Revenu imposable de la déclaration d’impôt (par an, après déductions). À titre indicatif — peut alimenter le calculateur d’impôt.',
         monthlyTax: 'Estimation ou selon votre avis d\'imposition.',
         groceries: 'Alimentation, droguerie, articles ménagers par mois.',
         communication: 'Internet, téléphone mobile, ligne fixe par mois.',
@@ -1355,6 +1359,7 @@ export default {
     dataVersion: 'Version des données',
     disclaimer: 'Cette orientation montre la charge fiscale estimée (fédérale, cantonale, communale). Les valeurs cantonales sont basées sur le chef-lieu. Les montants exacts se trouvent auprès de votre administration fiscale cantonale.',
     netIncomeNote: 'Projection basée sur votre salaire net × 12. La charge fiscale réelle peut varier.',
+    useImportedTaxable: 'Utiliser le revenu imposable officiel (CHF {value}/an). Les déductions sont alors ignorées.',
   },
 
   schulden: {
@@ -1516,6 +1521,8 @@ export default {
     keptHint: 'Conservé tel quel.',
     annualNote: 'Valeur annuelle {annual} → par mois',
     field: {
+      taxableIncome: 'Revenu imposable',
+      sideIncome: 'Revenu accessoire',
       income: 'Revenu',
       securities: 'Titres / portefeuille',
       savings: 'Épargne',
