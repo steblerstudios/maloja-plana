@@ -5,6 +5,19 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.3-beta] — 2026-06-28
+
+### Hinzugefügt
+- **Schulden-Abbau-Plan**: Konsequenz-Priorität nach Schweizer Beratungs-Praxis (existenzsichernd → amtlich → übrige nach Lawine/Schneeball) + wertungsfreie Beratungs-Box (0800 708 708)
+- **Einfache Ansicht** ausgebaut: Kapitel-Karten icon-forward (nur Symbol + Titel) und grössere, kontrastreiche Formularfelder; Vorlesen pro Feld
+- **Lebenslauf**: alle Anstellungen (Mehrfach-Jobs) erscheinen in Vorschau, HTML und JSON/ATS
+- **Pilot-Einladung / One-Pager** (docs/proof-of-concept.md)
+
+### Behoben
+- Lebenslauf zeigte bisher nur den aktuellen Job, nicht die weiteren Anstellungen
+
+---
+
 ## [0.1.2-beta] — 2026-06-28
 
 ### Hinzugefügt
