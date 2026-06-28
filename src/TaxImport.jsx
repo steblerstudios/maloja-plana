@@ -76,7 +76,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm, marginTop: space.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('taxImport.formatExample') + ':'),
           React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word' } },
-            "Reineinkommen; 60'000\nWertschriften; 12'000\nSparkonto; 18'500\nSteuerbetrag; 4'800")
+            "Bruttolohn; 60'000\nWertschriften; 12'000\nSparkonto; 18'500\nSteuerbetrag; 4'800")
         )
       ),
 
