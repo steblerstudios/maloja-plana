@@ -15,12 +15,14 @@
 //   #/kk               → view='kk'
 //   etc. for all 18 views
 
-// All known view names (must match the view === 'x' checks in main.jsx)
-const VALID_VIEWS = new Set([
+// All known view names (must match the view === 'x' checks in main.jsx).
+// Exported so a guard test can assert every main.jsx view is deep-linkable.
+export const VALID_VIEWS = new Set([
   'dashboard', 'chapter', 'tresor', 'kk', 'budget', 'schulden',
   'tax', 'organ', 'sync', 'premium', 'praemien', 'vorsorge', 'eo', 'cv', 'charts',
   'sozialhilfe', 'direktlinks', 'unterlagen', 'lebensmappe', 'notfalldossier', 'behoerdendossier', 'finanzuebersicht', 'export', 'calendar', 'notifications',
   'notfalleinstieg', 'briefe', 'stipendien', 'alv', 'asyl', 'kvg', 'flyer', 'merkliste', 'search',
+  'settings', 'taxImport', 'legal',
 ]);
 
 /**
