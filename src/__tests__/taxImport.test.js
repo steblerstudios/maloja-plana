@@ -24,6 +24,15 @@ describe('parseSwissNumber', () => {
     expect(parseSwissNumber(null)).toBeNull();
     expect(parseSwissNumber('keine Zahl')).toBeNull();
   });
+  it('erkennt Vorzeichen auch nach Präfix (CHF -2400, Klammern)', () => {
+    expect(parseSwissNumber('CHF -2400')).toBe(-2400);
+    expect(parseSwissNumber("(2'400)")).toBe(-2400);
+    expect(parseSwissNumber("CHF 18'500.-")).toBe(18500); // .- ist kein Minus
+  });
+  it('klebt keine Ziffern aus nachgestelltem Text an den Betrag', () => {
+    expect(parseSwissNumber("12'000 (Stand 2024)")).toBe(12000);
+    expect(parseSwissNumber('Wertschriften 12000')).toBe(12000);
+  });
 });
 
 describe('parseKeyValue', () => {
