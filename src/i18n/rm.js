@@ -677,7 +677,21 @@ export default {
 
   legal: {
     title: 'Giuridic',
-    tabs: { privacy: 'Protecziun da datas', terms: 'Utilisaziun', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Resursas', faq: 'FAQ' },
+    tabs: { privacy: 'Protecziun da datas', terms: 'Utilisaziun', imprint: 'Impressum', license: 'Licenza', ethics: 'Etica', resources: 'Resursas', faq: 'FAQ', support: 'Contribuziun' },
+    support: {
+      whatTitle: 'Quant che Maloja custa',
+      intro1: 'Maloja Plana resta disponibla per tuts — er dal tut gratuit sche necessari. Sche l’argent è stret, stos ti pudair duvrar tut senza limitas.',
+      intro2: 'Transparent ditg: per che quai restia uschia, dumandain nus quels che pon sa la lubir ina contribuziun voluntaria. Uschia resta Maloja gratuit per persunas cun pauc daners — senza sforz, senza controlla da las entradas, senza funcziuns bloccadas.',
+      scaleTitle: 'Contribuir tenor las pussaivladads',
+      tierLow: 'Budget stret: 0 CHF — dal tut en urden, senza mala conscienza.',
+      tierMid: 'I va uschè-uschè: ina pitschna contribuziun ina giada gida gia.',
+      tierHigh: 'I ma va bain: ina contribuziun regulara tegna Maloja avert per auters.',
+      medianNote: 'Per orientaziun: il salari median svizzer è circa 6800 CHF brut al mais. Tgi che è sur quai e ha in pau spazi sustegna per il mument — e cun mintga partener vegn Maloja pli favuraivel.',
+      howTitle: 'Uschia pos ti contribuir',
+      contributeCta: 'Far ina contribuziun voluntaria',
+      paymentPending: 'In med da pajament vegn installà pir — la pussaivladad da contribuir cumpara prest qua. Grazia per la pazienza.',
+      transparency: 'La transparenza è impurtanta per nus: Maloja resta open source, local e senza reclama. Las contribuziuns van en il manaschi, la tgira da datas e la sviluppada.',
+    },
     footerLink: 'Protecziun da datas & dretg',
     lastUpdated: 'Stadi: zercladur 2026 · Tenor la nLPD (en vigur dapi il 1.9.2023)',
     privacy: {
@@ -822,6 +836,8 @@ export default {
       ombuds4: 'Protecziun dals consumaders — konsumentenschutz.ch — Cussegliaziun independenta per dretgs dals consumaders.',
       heartfeltTitle: 'Recumandaziuns dal cor',
       heartfeltIntro: 'Servetschs e projects che nus stimain persunalmain — recumandads gratuitamain, senza cuntraprestaziun.',
+      heartfeltIntroAffiliate: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.',
+      affiliateMarker: 'Affiliate',
       heartfelt1: 'Maschina da tschertgar che investescha sias entradas en il reboschiment.',
       heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
       heartfelt3: 'Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',

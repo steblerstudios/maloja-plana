@@ -781,7 +781,21 @@ export default {
 
   legal: {
     title: 'Legal',
-    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint', license: 'License', ethics: 'Ethics', resources: 'Resources', faq: 'FAQ' },
+    tabs: { privacy: 'Privacy', terms: 'Terms', imprint: 'Imprint', license: 'License', ethics: 'Ethics', resources: 'Resources', faq: 'FAQ', support: 'Contribute' },
+    support: {
+      whatTitle: 'What Maloja costs',
+      intro1: 'Maloja Plana is and stays usable for everyone — entirely free if needed. If money is tight, you should be able to use everything without limits.',
+      intro2: 'To be transparent: so it can stay that way, we ask those who can afford it for a voluntary contribution. That keeps Maloja free for people with little money — no pressure, no income check, no locked features.',
+      scaleTitle: 'Contribute what fits',
+      tierLow: 'Money is tight: 0 CHF — completely fine, no guilt.',
+      tierMid: 'Getting by: a small one-off contribution already helps.',
+      tierHigh: 'Doing well: a regular contribution keeps Maloja open for others.',
+      medianNote: 'For orientation: the Swiss median wage is around 6800 CHF gross per month. Those above it who have something to spare carry the cost for now — and with every partner we gain, Maloja gets cheaper.',
+      howTitle: 'How to contribute',
+      contributeCta: 'Make a voluntary contribution',
+      paymentPending: 'A payment method is being set up — the option to contribute will appear here soon. Thanks for your patience.',
+      transparency: 'Transparency matters to us: Maloja stays open source, local and ad-free. Contributions go into operation, data upkeep and further development.',
+    },
     footerLink: 'Privacy & Legal',
     lastUpdated: 'As of: June 2026 · In accordance with the Swiss nDSG (in effect since 1.9.2023)',
     privacy: {
@@ -926,6 +940,8 @@ export default {
       ombuds4: 'Consumer protection — konsumentenschutz.ch — Independent consumer rights advice.',
       heartfeltTitle: 'Heartfelt recommendations',
       heartfeltIntro: 'Services and projects we personally value — recommended free of charge, with nothing in return.',
+      heartfeltIntroAffiliate: 'Services and projects we personally value. Most we recommend unpaid; links marked “Affiliate” earn Maloja a small commission — at no cost to you.',
+      affiliateMarker: 'Affiliate',
       heartfelt1: 'Search engine that invests its revenue in reforestation.',
       heartfelt2: 'Swiss hosting powered by green energy with its own resource-efficient data centres.',
       heartfelt3: 'Ad-free, privacy-friendly email service running on green energy.',
