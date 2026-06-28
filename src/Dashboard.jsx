@@ -1186,48 +1186,20 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
       }, t('dashboard.toolsSubtitle')),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' } },
-        [
-          { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
-          { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
-          { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
-          { label: t('nav.budgetSync'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
-          { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
-          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
-          { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
-          { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
-          { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-          { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
-          { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
-          { label: t('nav.taxImport'), sub: t('nav.sub.taxImport'), view: 'taxImport', icon: 'document' },
-          { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
-          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
-          { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
-          { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
-          { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
-          { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
-          { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
-          { label: t('nav.unterlagen'), sub: t('nav.sub.unterlagen'), view: 'unterlagen', icon: 'documents' },
-          { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
-        ].map(tool => {
+      (() => {
+        const renderTool = (tool) => {
           const IconFn = Icons[tool.icon];
-          // Einfache Ansicht: grosses Symbol oben, grosses Label, kein Beschreibungstext.
           const iconPx = simpleView ? '40px' : '20px';
           return React.createElement('button', {
             key: tool.key || tool.view,
             onClick: tool.action || (() => onNavigate(tool.view)),
             style: {
               padding: simpleView ? '18px 12px' : '14px 16px',
-              background: 'transparent',
-              color: palette.text,
+              background: 'transparent', color: palette.text,
               border: simpleView ? '1px solid ' + palette.border : 'none',
-              borderRadius: radius.md,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              display: 'flex',
-              flexDirection: simpleView ? 'column' : 'row',
-              alignItems: 'center',
-              justifyContent: simpleView ? 'flex-start' : undefined,
+              borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+              display: 'flex', flexDirection: simpleView ? 'column' : 'row',
+              alignItems: 'center', justifyContent: simpleView ? 'flex-start' : undefined,
               gap: simpleView ? '10px' : space.sm,
               transition: `background ${duration.normal}ms ${ease}`,
               textAlign: simpleView ? 'center' : 'left',
@@ -1243,8 +1215,57 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
             )
           );
-        })
-      )
+        };
+        const groups = [
+          { label: t('dashboard.toolGroups.money'), items: [
+            { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
+            { label: t('nav.taxImport'), sub: t('nav.sub.taxImport'), view: 'taxImport', icon: 'document' },
+            { label: t('nav.budgetSync'), sub: t('nav.sub.budgetSync'), view: 'sync', icon: 'budgetWallet' },
+            { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
+            { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
+          ] },
+          { label: t('dashboard.toolGroups.insurance'), items: [
+            { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
+            { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
+            { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
+          ] },
+          { label: t('dashboard.toolGroups.support'), items: [
+            { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
+            { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
+            { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
+            { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
+          ] },
+          { label: t('dashboard.toolGroups.documents'), items: [
+            { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
+            { label: t('nav.unterlagen'), sub: t('nav.sub.unterlagen'), view: 'unterlagen', icon: 'documents' },
+            { label: t('nav.direktlinks'), sub: t('nav.sub.direktlinks'), view: 'direktlinks', icon: 'dokumentTresor' },
+            { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
+            { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
+          ] },
+          { label: t('dashboard.toolGroups.organize'), items: [
+            { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
+            { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
+            { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
+            { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
+          ] },
+        ];
+        return React.createElement(React.Fragment, null,
+          ...groups.map((g, gi) => React.createElement('details', {
+            key: 'tg-' + gi, open: gi === 0,
+            style: { borderTop: '1px solid ' + palette.border + '66' },
+          },
+            React.createElement('summary', {
+              style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+            },
+              React.createElement('span', null, g.label),
+              React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)
+            ),
+            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px', padding: space.xs + 'px 0 ' + space.md + 'px 0' } },
+              g.items.map(renderTool)
+            )
+          ))
+        );
+      })()
     ),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })
