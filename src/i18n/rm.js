@@ -86,6 +86,7 @@ export default {
     delete: 'Allontanar',
     pickDate: 'Tscherner ina data',
     simpleView: 'Vista simpla',
+    grayscale: 'Stgala da grisch',
     readable: 'Meglra legibilitad',
     download: 'Telechargiar',
     upload: 'Chargiar si',
