@@ -81,8 +81,10 @@ export function getChapters(t) {
         { k: 'firstName', label: fl(t, 'basis', 'firstName'), type: 'text', required: true, mvo: true, autoComplete: 'given-name', section: t('sections.basis.person'), sectionIntro: si(t, 'basis', 'person') },
         { k: 'middleName', label: fl(t, 'basis', 'middleName'), type: 'text', autoComplete: 'additional-name' },
         { k: 'lastName', label: fl(t, 'basis', 'lastName'), type: 'text', required: true, mvo: true, autoComplete: 'family-name' },
+        { k: 'academicTitle', label: fl(t, 'basis', 'academicTitle'), hint: hn(t, 'basis', 'academicTitle'), type: 'text', autoComplete: 'honorific-prefix' },
         { k: 'dateOfBirth', label: fl(t, 'basis', 'dateOfBirth'), type: 'date', required: true, mvo: true, autoComplete: 'bday' },
         { k: 'gender', label: fl(t, 'basis', 'gender'), type: 'select', options: opts(t, 'basis', 'gender') },
+        { k: 'pronouns', label: fl(t, 'basis', 'pronouns'), type: 'select', options: opts(t, 'basis', 'pronouns') },
         { k: 'nationality', label: fl(t, 'basis', 'nationality'), type: 'select', options: opts(t, 'basis', 'nationality') },
         { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: cantonOptions(t), mvo: true },
         { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone'), mvo: true, autoComplete: 'tel', section: t('sections.basis.contact'), sectionIntro: si(t, 'basis', 'contact') },
@@ -275,11 +277,15 @@ export function getChapters(t) {
 // Derive display name from firstName + lastName (backward-compat with legacy fullName)
 export function getFullName(basisData) {
   if (!basisData) return '';
+  // Akademischer/beruflicher Titel (Dr., MSc …) wird dem Namen vorangestellt,
+  // sobald er erfasst ist — wirkt damit überall, wo der Name angezeigt wird.
+  const title = (basisData.academicTitle || '').trim();
   const first = (basisData.firstName || '').trim();
   const middle = (basisData.middleName || '').trim();
   const last = (basisData.lastName || '').trim();
-  if (first || middle || last) return [first, middle, last].filter(Boolean).join(' ');
-  return (basisData.fullName || '').trim();
+  if (first || middle || last) return [title, first, middle, last].filter(Boolean).join(' ');
+  const fallback = (basisData.fullName || '').trim();
+  return fallback ? [title, fallback].filter(Boolean).join(' ') : '';
 }
 
 // Keep CHAPTER_KEYS for data initialization (language-independent)
@@ -287,7 +293,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 
 // Field keys per chapter (for data initialization — no translations needed)
 const FIELD_KEYS = {
-  basis: ['firstName', 'middleName', 'lastName', 'dateOfBirth', 'gender', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
+  basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
   finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],

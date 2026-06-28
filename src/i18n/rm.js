@@ -364,8 +364,10 @@ export default {
         firstName: 'Prenum',
         middleName: 'Segund prenum',
         lastName: 'Surnum',
+        academicTitle: 'Titel',
         dateOfBirth: 'Data da naschientscha',
         gender: { label: 'Schlattaina', options: { male: 'Masculin', female: 'Feminin', diverse: 'Divers' } },
+        pronouns: { label: 'Pronoms', options: { she: 'ella', he: 'el', they: 'they (neutral)', none: 'Nagina indicaziun' } },
         nationality: { label: 'Naziunalitad', options: { swiss: 'Svizzer/a', german: 'Tudestg/a', french: 'Franzos/a', italian: 'Talian/a', austrian: 'Austriac/a', other: 'Auter' } },
         canton: 'Chantun',
         phone: 'Telefon',
@@ -397,6 +399,7 @@ export default {
       },
       hints: {
         ahv: 'Format: 756.1234.5678.90',
+        academicTitle: 'Titel academic u professiunal (p.ex. Dr., MSc) — mussà avant il num.',
       },
       docs: {
         id: "Document d'identitad/passaport",
