@@ -669,6 +669,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         { label: lbl('versicherungen', 'franchise'), value: sel('versicherungen', 'franchise') },
         { label: lbl('finanzen', 'securitiesValue'), value: chf('finanzen', 'securitiesValue') },
         { label: lbl('finanzen', 'otherAssets'), value: chf('finanzen', 'otherAssets') },
+        { label: lbl('finanzen', 'savingsAccount'), value: chf('finanzen', 'savingsAccount') },
       ].filter(r => r.value),
     },
   ];
@@ -808,6 +809,7 @@ export function generateBehoerdenJSON(data, calculations) {
       utilities: parseFloat(wohnen.utilities) || 0,
       securities: parseFloat(finanzen.securitiesValue) || 0,
       otherAssets: parseFloat(finanzen.otherAssets) || 0,
+      savings: parseFloat(finanzen.savingsAccount) || 0,
     },
     insurance: {
       insurer: versicherungen.kkInsurer || '',
