@@ -1,5 +1,7 @@
 import React from 'react';
 import { Icon } from './IconSystem.jsx';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
@@ -97,6 +99,7 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
 };
 
 export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
+  const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
   const canton = data.basis?.canton || '';
@@ -158,7 +161,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       }, React.createElement(Icon, { name: 'budget', size: 18 }), t('finanzUebersicht.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
-      }, t('finanzUebersicht.subtitle'))
+      }, t('finanzUebersicht.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('finanzUebersicht.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }))
     ),
 
     !hasData && React.createElement('div', {
