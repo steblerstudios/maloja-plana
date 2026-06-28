@@ -121,6 +121,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const debtPay = Number(data.finanzen?.debtPayments || 0);
   const alimentePaid = Number(data.finanzen?.alimentePaid || 0);
 
+  // Vermögen (Wertschriften + übriges Vermögen + Ersparnisse) — Steuerwert, ohne gebundenes 3a
+  const securitiesValue = Number(data.finanzen?.securitiesValue || 0);
+  const otherAssets = Number(data.finanzen?.otherAssets || 0);
+  const savingsAccount = Number(data.finanzen?.savingsAccount || 0);
+  const totalAssets = securitiesValue + otherAssets + savingsAccount;
+  const hasAssets = totalAssets > 0;
+
   const totalExpenses = rent + utilities + kkPremium + groceries + communication + mobility + childcare + otherIns + monthlyTax + debtPay + alimentePaid;
   const totalIncome = income + Number(data.finanzen?.familienzulagen || 0) + Number(data.finanzen?.alimenteReceived || 0);
   const freeAmount = totalIncome - totalExpenses;
@@ -297,6 +304,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
           : t('finanzUebersicht.notApplicable'),
       statusColor: el.eligible ? palette.gold : palette.mid,
       detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
+    }),
+
+    hasData && hasAssets && React.createElement(StatusCard, {
+      palette, icon: 'budget',
+      title: t('finanzUebersicht.assets'),
+      status: formatCHF(totalAssets),
+      statusColor: palette.text,
+      detail: t('finanzUebersicht.assetsDetail'),
+      onClick: () => onNavigate('chapter', 2),
     }),
 
     hasData && hasExpenses && React.createElement('div', {

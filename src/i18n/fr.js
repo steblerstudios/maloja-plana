@@ -2016,6 +2016,8 @@ export default {
     title: 'Aperçu financier',
     subtitle: 'Votre situation en un coup d\'œil — basé sur vos données.',
     monthlyIncome: 'Revenu mensuel',
+    assets: 'Patrimoine',
+    assetsDetail: 'Titres, épargne et autres actifs (valeur fiscale)',
     canton: 'Canton',
     taxes: 'Impôts',
     ipv: 'Réduction de primes (RDP)',
