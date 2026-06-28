@@ -2242,6 +2242,7 @@ export default {
     },
   },
 
+  greenHostingFooter: 'Grün gehostet',
   sandbox: {
     bannerTitle: 'Probier-Modus aktiv',
     bannerText: 'Hier lässt sich frei rechnen — der gespeicherte Stand bleibt unberührt.',
