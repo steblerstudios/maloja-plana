@@ -787,6 +787,7 @@ export default {
     emergency: 'This information is stored locally only.',
     localOnly: 'Your data stays on this device.',
     localBadge: '100% local — your data stays on this device',
+    dbBlocked: 'Maloja is open in another tab. Please close the other tabs so documents can be saved.',
     chapterTrust: 'Your entries are stored locally only. No server, no account.',
     detail1: 'No account, no login, no server. Your data exists only in this browser on this device.',
     detail2: 'Nothing is sent, stored, or tracked — not even by us. Source code is open on GitHub.',

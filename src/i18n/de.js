@@ -786,6 +786,7 @@ export default {
     emergency: 'Diese Informationen werden nur lokal gespeichert.',
     localOnly: { sie: 'Ihre Daten bleiben auf diesem Gerät.', du: 'Deine Daten bleiben auf diesem Gerät.' },
     localBadge: { sie: '100% lokal — Ihre Daten bleiben auf diesem Gerät', du: '100% lokal — Deine Daten bleiben auf diesem Gerät' },
+    dbBlocked: { sie: 'Maloja ist in einem weiteren Tab geöffnet. Bitte schliessen Sie die anderen Tabs, damit Dokumente gespeichert werden können.', du: 'Maloja ist in einem weiteren Tab geöffnet. Bitte schliesse die anderen Tabs, damit Dokumente gespeichert werden können.' },
     chapterTrust: { sie: 'Ihre Angaben werden nur lokal gespeichert. Kein Server, kein Konto.', du: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.' },
     detail1: { sie: 'Kein Konto, kein Login, kein Server. Ihre Daten existieren nur im Browser dieses Geräts.', du: 'Kein Konto, kein Login, kein Server. Deine Daten existieren nur im Browser dieses Geräts.' },
     detail2: 'Nichts wird gesendet, gespeichert oder getrackt — auch nicht von uns. Quellcode offen auf GitHub.',

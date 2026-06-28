@@ -6,29 +6,27 @@
 // Storage: IndexedDB 'maloja-plana-backups' store.
 // No network. No cloud. Fully local.
 import { hydrateDocs, saveDocBlob, splitDocsForMigration } from './docBlobs.js';
+import { openIDB, openIDBWithStore } from './idbUtils.js';
 
 const BACKUP_DB_NAME = 'maloja-plana-backups';
 const OLD_BACKUP_DB_NAME = 'ordnung-ruhe-backups';
 const BACKUP_STORE = 'snapshots';
-const BACKUP_DB_VERSION = 1;
 const MAX_BACKUPS = 5;
 const MIN_BACKUP_INTERVAL_MS = 12 * 60 * 60 * 1000; // 12 hours minimum between backups
 const BACKUP_TIMESTAMP_KEY = 'or5_last_backup';
 
 let backupDb = null;
+let backupDbPromise = null;
 
-const openBDB = (name) => new Promise((resolve, reject) => {
-  const request = indexedDB.open(name, BACKUP_DB_VERSION);
-  request.onerror = () => reject(new Error('Backup DB open failed'));
-  request.onsuccess = () => resolve(request.result);
-  request.onupgradeneeded = (e) => {
-    const db = e.target.result;
-    if (!db.objectStoreNames.contains(BACKUP_STORE)) {
-      const store = db.createObjectStore(BACKUP_STORE, { keyPath: 'id' });
-      store.createIndex('createdAt', 'createdAt', { unique: false });
-    }
-  };
-});
+const ensureBackupStore = (db) => {
+  if (!db.objectStoreNames.contains(BACKUP_STORE)) {
+    const store = db.createObjectStore(BACKUP_STORE, { keyPath: 'id' });
+    store.createIndex('createdAt', 'createdAt', { unique: false });
+  }
+};
+
+const openBDB = (name, version) =>
+  openIDB(name, { version, onUpgrade: ensureBackupStore, errorMessage: 'Backup DB open failed' });
 
 const migrateOldBackups = async (newDb) => {
   try {
@@ -59,9 +57,25 @@ const migrateOldBackups = async (newDb) => {
 
 const openBackupDB = async () => {
   if (backupDb) return backupDb;
-  backupDb = await openBDB(BACKUP_DB_NAME);
-  await migrateOldBackups(backupDb);
-  return backupDb;
+  // In-flight-Guard: parallele Erstaufrufe teilen sich EINE Öffnung, sonst
+  // würden mehrere Verbindungen ein erzwungenes Upgrade gegenseitig blockieren.
+  if (!backupDbPromise) {
+    backupDbPromise = (async () => {
+      const db = await openIDBWithStore(BACKUP_DB_NAME, BACKUP_STORE, {
+        onUpgrade: ensureBackupStore,
+        errorMessage: 'Backup DB open failed',
+      });
+      await migrateOldBackups(db);
+      return db;
+    })();
+  }
+  try {
+    backupDb = await backupDbPromise;
+    return backupDb;
+  } catch (e) {
+    backupDbPromise = null; // Fehlschlag nicht cachen → Retry erlauben
+    throw e;
+  }
 };
 
 /**
