@@ -46,7 +46,7 @@ const KINDERABZUG_PRO_KIND = 263;
 // Standardabzüge vom steuerbaren Einkommen (Bundessteuer)
 const ABZUEGE = {
   versicherung: { alleinstehend: 1800, verheiratet: 3600, proKind: 700 },
-  saeule3a: { mitBVG: 7056, ohneBVG: 35280 },
+  saeule3a: { mitBVG: 7258, ohneBVG: 36288 },
   berufsauslagen: { pauschal: 2000, max: 4000 },
   kinderabzug: 6700,
   zweiverdiener: 8500,
