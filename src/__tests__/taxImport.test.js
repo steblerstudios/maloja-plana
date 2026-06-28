@@ -105,6 +105,27 @@ describe('mapTaxFields', () => {
     const { matched } = mapTaxFields([{ rawKey: 'Reineinkommen', rawValue: '60000' }]);
     expect(matched.map(m => m.target)).not.toContain('monthlyIncome');
   });
+  it('verwirft Substring-Fehltreffer via exclude (Ertrag/Kosten/Kaution/Beitrag)', () => {
+    const { matched, unmatched } = mapTaxFields([
+      { rawKey: 'Wertschriftenertrag', rawValue: '2000' },            // Ertrag, kein Vermögenswert
+      { rawKey: 'Wertschriftenverwaltungskosten', rawValue: '300' },  // Aufwand
+      { rawKey: 'Mietkautionsdepot', rawValue: '5400' },              // Mietkaution, kein Portfolio
+      { rawKey: 'Säule 3a-Beitrag', rawValue: '7258' },               // Jahresbeitrag, kein Guthaben
+    ]);
+    const targets = matched.map(m => m.target);
+    expect(targets).not.toContain('securitiesValue');
+    expect(targets).not.toContain('pension3aBalance');
+    expect(unmatched).toHaveLength(4);
+  });
+  it('lässt echte Wertschriften/3a-Guthaben trotz exclude durch', () => {
+    const { matched } = mapTaxFields([
+      { rawKey: 'Wertschriftendepot', rawValue: '12000' },
+      { rawKey: 'Säule 3a-Guthaben', rawValue: '40000' },
+    ]);
+    const byTarget = Object.fromEntries(matched.map(m => [m.target, m.value]));
+    expect(byTarget.securitiesValue).toBe(12000);
+    expect(byTarget.pension3aBalance).toBe(40000);
+  });
   it('mehrere Treffer fürs gleiche Feld: als Total markierter Knoten gewinnt (nicht der erste)', () => {
     const { matched } = mapTaxFields([
       { rawKey: 'Steuerbetrag', rawValue: '1200' },        // Bund (zuerst)
