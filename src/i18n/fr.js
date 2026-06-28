@@ -786,6 +786,7 @@ export default {
     emergency: 'Ces informations sont stockées uniquement localement.',
     localOnly: 'Vos données restent sur cet appareil.',
     localBadge: { sie: '100% local — vos données restent sur cet appareil', du: '100% local — tes données restent sur cet appareil' },
+    dbBlocked: { sie: 'Maloja est ouvert dans un autre onglet. Veuillez fermer les autres onglets pour que les documents puissent être enregistrés.', du: 'Maloja est ouvert dans un autre onglet. Ferme les autres onglets pour que les documents puissent être enregistrés.' },
     chapterTrust: { sie: 'Vos données sont stockées uniquement en local. Aucun serveur, aucun compte.', du: 'Tes données sont stockées uniquement en local. Aucun serveur, aucun compte.' },
     detail1: { sie: 'Pas de compte, pas de connexion, pas de serveur. Vos données existent uniquement dans ce navigateur.', du: 'Pas de compte, pas de connexion, pas de serveur. Tes données existent uniquement dans ce navigateur.' },
     detail2: 'Rien n\'est envoyé, stocké ou suivi — même pas par nous. Code source ouvert sur GitHub.',
