@@ -422,7 +422,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, simpleView }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -1216,30 +1216,36 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('nav.flyer'), sub: t('nav.sub.flyer'), view: 'flyer', icon: 'dokumentTresor' },
         ].map(tool => {
           const IconFn = Icons[tool.icon];
+          // Einfache Ansicht: grosses Symbol oben, grosses Label, kein Beschreibungstext.
+          const iconPx = simpleView ? '40px' : '20px';
           return React.createElement('button', {
             key: tool.key || tool.view,
             onClick: tool.action || (() => onNavigate(tool.view)),
             style: {
-              padding: '14px 16px',
+              padding: simpleView ? '18px 12px' : '14px 16px',
               background: 'transparent',
               color: palette.text,
-              border: 'none',
+              border: simpleView ? '1px solid ' + palette.border : 'none',
               borderRadius: radius.md,
               cursor: 'pointer',
               fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: space.sm,
+              display: 'flex',
+              flexDirection: simpleView ? 'column' : 'row',
+              alignItems: 'center',
+              justifyContent: simpleView ? 'flex-start' : undefined,
+              gap: simpleView ? '10px' : space.sm,
               transition: `background ${duration.normal}ms ${ease}`,
-              textAlign: 'left',
+              textAlign: simpleView ? 'center' : 'left',
             },
             onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
             onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
-            React.createElement('div', { style: { color: palette.mid, width: '20px', height: '20px', flexShrink: 0 } },
-              IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null
+            React.createElement('div', { style: { color: simpleView ? palette.sand : palette.mid, width: iconPx, height: iconPx, flexShrink: 0 } },
+              IconFn ? React.createElement('div', { style: { width: iconPx, height: iconPx } }, IconFn()) : null
             ),
             React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.medium, fontSize: text.sm } }, tool.label),
-              tool.sub ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
+              React.createElement('div', { style: { fontWeight: simpleView ? weight.semi : weight.medium, fontSize: simpleView ? text.body : text.sm } }, tool.label),
+              (tool.sub && !simpleView) ? React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, tool.sub) : null
             )
           );
         })
