@@ -1788,16 +1788,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             if (!uploadFile) { setUploadError(tr('chapterView.selectFile')); return; }
             if (!uploadType) { setUploadError(tr('chapterView.selectDocType')); return; }
             if (!uploadExpiry) { setUploadError(tr('chapterView.selectExpiry')); return; }
-            // Grössen-Guard: Dokumente liegen (noch) als base64 im begrenzten
-            // localStorage. Grosse Dateien würden das Kontingent sprengen und
-            // könnten still verloren gehen → vorher ruhig abweisen.
-            const MAX_DOC_BYTES = 1.5 * 1024 * 1024;
-            if (uploadFile.size > MAX_DOC_BYTES) { setUploadError(tr('chapterView.fileTooLarge', { max: '1.5 MB' })); return; }
+            // Grössen-Guard: Dokumente liegen in IndexedDB (deutlich grösseres
+            // Kontingent als localStorage). Sehr grosse Dateien trotzdem ruhig
+            // begrenzen, damit Backups handhabbar bleiben.
+            const MAX_DOC_BYTES = 20 * 1024 * 1024;
+            if (uploadFile.size > MAX_DOC_BYTES) { setUploadError(tr('chapterView.fileTooLarge', { max: '20 MB' })); return; }
             setUploadError('');
             const reader = new FileReader();
-            reader.onload = () => {
+            reader.onload = async () => {
               try {
-                onAddDocument({
+                await onAddDocument({
                   type: uploadType,
                   fileName: uploadFile.name,
                   fileSize: (uploadFile.size / 1024).toFixed(1) + ' KB',
