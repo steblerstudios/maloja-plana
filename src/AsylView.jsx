@@ -2,8 +2,11 @@ import React from 'react';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 
 export const AsylView = ({ palette, t, data, onNavigate }) => {
+  const vorlesen = useVorlesenContext();
   const canton = data.basis?.canton;
   const cantonOffice = canton ? counselingForCanton(canton) : null;
 
@@ -48,7 +51,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       React.createElement(Icon, { name: 'behoerden', size: 20 }),
       t('asyl.title')
     ),
-    React.createElement('p', { style: s.intro }, t('asyl.intro')),
+    React.createElement('p', { style: s.intro }, t('asyl.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('asyl.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
     React.createElement('div', { style: s.disclaimer }, t('asyl.disclaimer')),
 
     // ── Status-/Ausweistypen ──
