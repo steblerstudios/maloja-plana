@@ -1758,6 +1758,8 @@ export default {
     qualification: 'Diplom',
     preview: 'Prevista',
     downloadHtml: 'Download HTML',
+    downloadJson: 'JSON (ATS)',
+    downloadJsonHint: 'Curriculum legibel da maschina en il standard JSON Resume — vegn legì da sistems da candidatura (ATS) ed utensils da carriera.',
     personalData: 'DATAS PERSUNALAS',
     experience: 'EXPERIENTSCHA PROFESSIUNALA',
     education: 'FURMAZIUN & QUALIFICAZIUNS',

@@ -162,3 +162,65 @@ export const downloadCVAsHTML = (cvData, t) => {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 };
+
+// JSON Resume (jsonresume.org) — maschinenlesbarer, ATS-tauglicher Standard.
+// Bewusst ohne Geburtsdatum/Zivilstand (Datensparsamkeit + anti-diskriminierend).
+export const generateJSONResume = (data, t) => {
+  const b = data.basis || {};
+  const w = data.wohnen || {};
+  const a = data.ausbildung || {};
+  const languages = (a.languages || '')
+    .split(/[,;\n]/).map(s => s.trim()).filter(Boolean)
+    .map(language => ({ language }));
+  const work = (a.jobTitle || a.employer) ? [{
+    name: a.employer || '',
+    position: a.jobTitle || '',
+    startDate: a.employmentStart || '',
+  }] : [];
+  const education = (a.schoolName || a.educationLevel) ? [{
+    institution: a.schoolName || '',
+    studyType: a.educationLevel || '',
+    area: a.certifications || '',
+  }] : [];
+  return {
+    $schema: 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json',
+    basics: {
+      name: getFullName(b) || '',
+      label: a.jobTitle || '',
+      email: b.email || '',
+      phone: b.phone || '',
+      location: {
+        address: w.address || '',
+        postalCode: w.postalCode || '',
+        city: w.city || '',
+        region: b.canton || '',
+        countryCode: 'CH',
+      },
+    },
+    work,
+    education,
+    languages,
+    meta: {
+      generator: 'Maloja Plana',
+      version: 'v1.0.0',
+      lastModified: new Date().toISOString(),
+    },
+  };
+};
+
+export const downloadCVAsJSON = (data, t) => {
+  const resume = generateJSONResume(data, t);
+  const json = JSON.stringify(resume, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  const cvLabel = t ? t('cv.cvTitle') : 'CV';
+  const name = (resume.basics.name || 'CV').replace(/\s/g, '_');
+  link.setAttribute('href', url);
+  link.setAttribute('download', `${cvLabel}_${name}.json`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
