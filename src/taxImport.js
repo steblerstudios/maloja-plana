@@ -59,10 +59,12 @@ export const parseSwissNumber = (raw) => {
 //     'Fortune', 'Patrimonio'): enthält bereits Wertschriften + Sparkonto.
 //     Würde es in otherAssets landen, zählte FinanzUebersicht/Sozialhilfe es
 //     doppelt. otherAssets fängt nur explizit „übriges/anderes" Vermögen.
-//   • Netto-/steuerbares Einkommen ('Reineinkommen', 'steuerbares Einkommen',
-//     'Nettoeinkommen'): ist nach Abzügen. monthlyIncome wird in der App als
-//     Brutto behandelt (TaxCalculator zieht Abzüge selbst ab) — ein Nettowert
-//     hier würde doppelt abgezogen. Darum nur explizite Brutto-Begriffe.
+//   • Netto-/steuerbares Einkommen NICHT nach monthlyIncome: monthlyIncome wird
+//     in der App als Brutto behandelt (TaxCalculator zieht Abzüge selbst ab) —
+//     ein Nettowert dort würde doppelt abgezogen. Darum nur explizite Brutto-
+//     Begriffe für monthlyIncome. 'Reineinkommen'/'steuerbares Einkommen' landen
+//     stattdessen in taxableIncome (eigenes Feld, 1:1 Jahreswert, Orientierung +
+//     füttert den TaxCalculator als bereits steuerbare Basis).
 export const FIELD_MAP = [
   { target: 'securitiesValue', labelKey: 'taxImport.field.securities', period: 'value',
     keywords: ['wertschrift', 'wertschriftenverzeichnis', 'securities', 'titres', 'titoli', 'depot', 'portefeuille', 'investiziun'] },
@@ -74,6 +76,13 @@ export const FIELD_MAP = [
     keywords: ['steuerbetrag', 'geschuldete steuer', 'total steuer', 'impôt', 'impot', 'imposta', 'tax amount', 'taglia'] },
   { target: 'monthlyIncome', labelKey: 'taxImport.field.income', period: 'annual',
     keywords: ['bruttolohn', 'bruttoeinkommen', 'bruttoeinkünfte', 'bruttoeinkuenfte', 'salaire brut', 'revenu brut', 'salario lordo', 'reddito lordo', 'gross salary', 'gross income', 'salari brut'] },
+  // Steuerbares (Rein-)Einkommen: 1:1 Jahreswert (period 'annualRaw', kein /12) in
+  // ein eigenes Feld — nie nach monthlyIncome (Doppel-Abzug, siehe Kommentar oben).
+  { target: 'taxableIncome', labelKey: 'taxImport.field.taxableIncome', period: 'annualRaw',
+    keywords: ['reineinkommen', 'steuerbares einkommen', 'nettoeinkommen', 'revenu net', 'revenu imposable', 'reddito netto', 'reddito imponibile', 'net income', 'taxable income'] },
+  // Nebenerwerb: Jahreswert -> /12 wie Hauptlohn (period 'annual').
+  { target: 'sideIncome', labelKey: 'taxImport.field.sideIncome', period: 'annual',
+    keywords: ['nebenerwerb', 'nebenerwerbseinkommen', 'nebeneinkünfte', 'nebeneinkuenfte', 'nebeneinkommen', 'revenu accessoire', 'reddito accessorio', 'side income'] },
   { target: 'otherAssets', labelKey: 'taxImport.field.otherAssets', period: 'value',
     keywords: ['übriges vermögen', 'ubriges vermögen', 'übrige vermögenswerte', 'autres actifs', 'autre fortune', 'altri beni', 'autra facultad', 'other assets'] },
 ];

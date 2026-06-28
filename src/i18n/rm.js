@@ -438,6 +438,8 @@ export default {
       benefits: ['Calculatur da taglia', 'Examinaziun IPV', 'Agid social', 'Controlla dal salari'],
       fields: {
         monthlyIncome: 'Entrada mensiala CHF',
+        sideIncome: 'Entrada accessorica per mais CHF',
+        taxableIncome: 'Entrada taxabla per onn CHF',
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
         employer: 'Patrun',
         employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
@@ -469,6 +471,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Salari mensil net (quai che arriva sin il conto)',
+        sideIncome: 'Entrada supplementara ultra l’activitad principala. Vegn quintada sco entrada.',
+        taxableIncome: 'Entrada taxabla da la decleraziun da taglia (per onn, suenter deducziuns). Mo per orientaziun — po alimentar il quintader da taglia.',
         familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun",
         monthlyTax: 'Stimà u tenor quint da taglia.',
         groceries: 'Vivondas, drogheria, basegns dal ménaschi per mais.',
@@ -1696,6 +1700,7 @@ export default {
     dataVersion: 'Stadi da las datas',
     disclaimer: "Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.",
     netIncomeNote: { sie: "Projecziun da Voss salari net × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net × 12. La chargia da taglia effectiva po divergiar." },
+    useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
   },
 
   cv: {
@@ -2240,6 +2245,8 @@ export default {
     keptHint: 'Resta nunmüdà.',
     annualNote: 'Valur annuala {annual} → mensila',
     field: {
+      taxableIncome: 'Entrada taxabla',
+      sideIncome: 'Entrada accessorica',
       income: 'Entrada',
       securities: 'Investiziuns / deposit',
       savings: 'Spargn',
