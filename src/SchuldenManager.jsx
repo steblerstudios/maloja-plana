@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 
 export const SchuldenManager = ({ palette, t, data, onSave }) => {
+  const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
@@ -128,7 +131,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginTop: 0, marginBottom: space.sm } }, t('schulden.title')),
-    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro')),
+    React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('schulden.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // Tab Navigation (role=tablist; aktiver Tab via Border+Tint, nicht nur Farbe)
     React.createElement('div', { role: 'tablist', 'aria-label': t('schulden.title'), style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.md, borderBottom: '1px solid ' + palette.border, paddingBottom: space.sm + 4 } },
