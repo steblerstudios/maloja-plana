@@ -21,6 +21,16 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [canton, setCanton] = useState('');
+  // „Einfache Ansicht" gleich am Start anbieten (Icon-Modus + Vorlesen). Schreibt
+  // nur localStorage; die App liest den Wert beim Mount.
+  const [simpleView, setSimpleView] = useState(() => {
+    try { return localStorage.getItem('or5_simpleView') === '1'; } catch { return false; }
+  });
+  const toggleSimpleView = () => setSimpleView(v => {
+    const next = !v;
+    try { localStorage.setItem('or5_simpleView', next ? '1' : '0'); if (next) localStorage.setItem('or5_vorlesen', '1'); } catch {}
+    return next;
+  });
 
   const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano', rm: 'Rumantsch' };
 
@@ -99,6 +109,30 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               langLabels[lang] || lang.toUpperCase()
             )
           )
+        ),
+        // „Einfache Ansicht"-Umschalter (grosse Symbole + Vorlesen)
+        React.createElement('button', {
+          type: 'button',
+          onClick: toggleSimpleView,
+          'aria-pressed': simpleView,
+          title: t('common.simpleView'),
+          style: {
+            marginTop: space.md, width: '100%', padding: '12px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            background: simpleView ? palette.sand + '30' : 'transparent',
+            color: simpleView ? palette.text : palette.mid,
+            border: '1px solid ' + (simpleView ? palette.sand : palette.border),
+            borderRadius: radius.md, cursor: 'pointer', fontFamily: fontFamily,
+            fontSize: text.sm, fontWeight: weight.medium,
+          }
+        },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+            React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
+            React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
+            React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
+            React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+          ),
+          t('common.simpleView')
         )
       )
     );
