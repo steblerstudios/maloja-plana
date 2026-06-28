@@ -130,6 +130,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       onUpdate('household', next);
     };
 
+    // Erwachsene als Liste (wie Kinder). Erste Person = ich selbst (fix).
+    // Bestehende Daten (nur Zahl `adults`) werden beim Rendern als leere
+    // Liste synthetisiert und erst beim Bearbeiten persistiert (keine stille
+    // Migration). `adults` bleibt als Zahl in Sync → Berechnungen unverändert.
+    const adultsList = Array.isArray(household.adultsList)
+      ? household.adultsList
+      : Array.from({ length: Math.max(0, adults - 1) }, () => ({ name: '', relationship: '' }));
+    const adultCount = 1 + adultsList.length;
+    const setAdultsList = (list) => updateHousehold({ adultsList: list, adults: 1 + list.length });
+
     // Pill-group — consistent with field-based pills (Zivilstand)
     const hhPills = (labelText, opts, current, onSelect) =>
       React.createElement('div', { style: { marginBottom: space.md } },
@@ -156,16 +166,61 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
 
-      // Adults
-      hhPills(
-        tr('chapters.basis.fields.household.adults'),
-        [1, 2, 3, 4].map(n => ({ value: n, label: String(n) })),
-        adults,
-        (v) => updateHousehold({ adults: Number(v) })
+      // Adults — als Liste wie Kinder (erste Person = ich selbst, fix)
+      React.createElement('div', { key: 'adults-section', style: { gridColumn: '1 / -1', marginBottom: space.md } },
+        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.adults')),
+
+        // Ich selbst — feste, nicht entfernbare erste Person
+        React.createElement('div', {
+          style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.sm, fontSize: text.sm, color: palette.text, fontWeight: weight.medium }
+        }, tr('chapters.basis.fields.household.adultSelf') + (data.basis && data.basis.firstName ? ' · ' + data.basis.firstName : '')),
+
+        // Weitere Erwachsene
+        adultsList.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, marginBottom: '12px' } },
+          adultsList.map((adult, idx) => {
+            const updateAdult = (patch) => setAdultsList(adultsList.map((a, i) => i === idx ? { ...a, ...patch } : a));
+            return React.createElement('div', {
+              key: idx,
+              style: { padding: space.sm + 'px ' + space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
+            },
+              React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm } },
+                React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } },
+                  tr('chapters.basis.fields.household.adultLabel', { nr: idx + 2 })
+                ),
+                React.createElement('button', {
+                  type: 'button',
+                  onClick: () => setAdultsList(adultsList.filter((_, i) => i !== idx)),
+                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '2px 6px', fontFamily: fontFamily }
+                }, tr('chapters.basis.fields.household.removeChild'))
+              ),
+              React.createElement('div', { style: { marginBottom: space.sm } },
+                React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
+                React.createElement('input', { type: 'text', value: adult.name || '', onChange: (e) => updateAdult({ name: e.target.value }), placeholder: '–', style: { ...hhSelect, cursor: 'text' } })
+              ),
+              hhPills(
+                tr('chapters.basis.fields.household.adultRelationship'),
+                [
+                  { value: 'partner', label: tr('chapters.basis.fields.household.relPartner') },
+                  { value: 'roommate', label: tr('chapters.basis.fields.household.relRoommate') },
+                  { value: 'parent', label: tr('chapters.basis.fields.household.relParent') },
+                  { value: 'other', label: tr('chapters.basis.fields.household.relOther') },
+                ],
+                adult.relationship,
+                (v) => updateAdult({ relationship: v })
+              )
+            );
+          })
+        ),
+
+        React.createElement('button', {
+          type: 'button',
+          onClick: () => setAdultsList([...adultsList, { name: '', relationship: '' }]),
+          style: { background: 'none', border: '1px dashed ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', color: palette.mid, fontSize: text.sm, padding: space.sm + 'px ' + space.md + 'px', fontFamily: fontFamily }
+        }, '+ ' + tr('chapters.basis.fields.household.addAdult'))
       ),
 
       // Partner income — only when 2+ adults
-      adults >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
+      adultCount >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
         React.createElement('input', {
           type: 'number', inputMode: 'decimal',
