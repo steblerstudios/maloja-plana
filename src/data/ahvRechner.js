@@ -119,7 +119,9 @@ export function berechneAltersrente({
 
   return {
     monatsrente: rente,
-    jahresrente: Math.round(rente * 12 * 100) / 100,
+    // 13 Auszahlungen pro Jahr seit 01.01.2026 (13. AHV-Rente)
+    jahresrente: Math.round(rente * 13 * 100) / 100,
+    dreizehnteRente: rente,
     vollrente,
     skalenfaktor: faktor,
     beitragsjahre: Math.min(beitragsjahre, VOLLE_BEITRAGSJAHRE),

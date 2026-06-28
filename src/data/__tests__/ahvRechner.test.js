@@ -28,7 +28,8 @@ describe('ahvRechner', () => {
         beitragsjahre: 44,
       });
       expect(r.monatsrente).toBe(2520);
-      expect(r.jahresrente).toBe(30240);
+      expect(r.jahresrente).toBe(32760); // 13 Auszahlungen ab 2026 (2520 × 13)
+      expect(r.dreizehnteRente).toBe(2520);
       expect(r.skalenfaktor).toBe(1);
       expect(r.fehlendeBeitragsjahre).toBe(0);
     });
