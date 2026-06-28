@@ -55,6 +55,9 @@ const HEARTFELT = [
   { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch' },
   { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch' },
   { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch' },
+  { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch' },
+  { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch' },
+  { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso' },
 ];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
@@ -109,8 +112,10 @@ const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
 // Strukturierter Ressourcen-Link: klickbarer Name statt doppelter Auflistung
-// (Name + nackte Domain). entry = { name, url, desc }; ohne url nur der Name
-// (z. B. defektes HTTPS-Zertifikat). Fällt auf Plain-String zurück.
+// (Name + nackte Domain). entry = { name, url, desc, web? }; ohne url nur der Name
+// (z. B. defektes HTTPS-Zertifikat). Optionales web = zusätzlicher Website-Link
+// (z. B. Beratungsstelle, deren Name auf eine tel:-Nummer zeigt). Fällt auf
+// Plain-String zurück.
 const ResLink = (entry) =>
   entry && typeof entry === 'object'
     ? React.createElement('p', { key: entry.name, style: { margin: '0 0 8px 0' } },
@@ -118,7 +123,12 @@ const ResLink = (entry) =>
         entry.url
           ? React.createElement('a', { href: entry.url, target: '_blank', rel: 'noopener', style: linkStyle }, entry.name)
           : entry.name,
-        ' — ' + entry.desc)
+        ' — ' + entry.desc,
+        entry.web
+          ? React.createElement(React.Fragment, { key: 'web' },
+              ' · ',
+              React.createElement('a', { href: entry.web, target: '_blank', rel: 'noopener', style: linkStyle }, 'Website'))
+          : null)
     : React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + entry);
 
 export const LegalView = ({ palette, t, onNavigate, section, data }) => {
