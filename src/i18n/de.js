@@ -1306,6 +1306,8 @@ export default {
     householdAdultsChildren: 'Haushalt: {adults} Erwachsene + {children} Kinder',
     childrenNote: { sie: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Klären Sie dies mit dem Sozialdienst.', du: 'Für Kinder können zusätzliche Leistungen beantragt werden (Betreuung, Schulmaterial, Bekleidung). Kläre dies mit dem Sozialdienst.' },
     childrenEducationNote: 'Kinder ab 16 in Ausbildung können Ausbildungszulagen erhalten.',
+    assetLimitTitle: 'Vermögen über dem Freibetrag',
+    assetLimitNote: 'Sozialhilfe setzt voraus, dass Vermögen bis auf einen Freibetrag aufgebraucht ist (SKOS: {freibetrag} für diesen Haushalt). Das erfasste Vermögen liegt rund {ueberschuss} darüber — dieser Teil muss in der Regel zuerst eingesetzt werden. Orientierung, keine verbindliche Auskunft.',
     repaymentTitle: 'Rückzahlung von Sozialhilfe',
     repaymentText: 'In den meisten Kantonen muss erhaltene Sozialhilfe zurückgezahlt werden, wenn sich die finanzielle Situation verbessert (z.B. durch Erbschaft, neues Einkommen oder Vermögenszuwachs).',
     repaymentVaries: 'Die Frist und Bedingungen variieren je nach Kanton (meist 10–15 Jahre). Einige Kantone (z.B. Waadt) haben die Rückzahlungspflicht abgeschafft.',
