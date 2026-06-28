@@ -2271,6 +2271,7 @@ export default {
     footerLink: 'Sandbox',
     discard: 'Discard',
     apply: 'Apply to my data',
+    startBlank: 'Start blank',
   },
   demo: {
     bannerTitle: 'Example: Maria Muster, 34, Zurich',

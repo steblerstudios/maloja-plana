@@ -2270,6 +2270,7 @@ export default {
     footerLink: 'Brouillon',
     discard: 'Annuler',
     apply: 'Appliquer à mes données',
+    startBlank: 'Commencer à vide',
   },
   demo: {
     bannerTitle: 'Exemple : Maria Muster, 34 ans, Zurich',
