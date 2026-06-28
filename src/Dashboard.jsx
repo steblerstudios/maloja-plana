@@ -1167,57 +1167,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── Export reminder — calm data safety nudge ────────────
-    (() => {
-      const hasData = chapters.some(ch => {
-        const d = data[ch.key] || {};
-        return ch.fields.some(f => d[f.k]);
-      });
-      if (!hasData) return null;
-      const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
-      const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
-      if (daysSince <= 7) return null;
-      const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
-      return React.createElement('div', {
-        style: {
-          marginBottom: space.xl,
-          padding: '16px 20px',
-          background: palette.sageMist || palette.sage + '08',
-          borderRadius: radius.md,
-          border: '1px solid ' + palette.sage + '25',
-        }
-      },
-        React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: '6px' }
-        }, reason + ' ' + t('dashboard.exportReminder')),
-        React.createElement('button', {
-          onClick: () => onNavigate('export'),
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-            fontSize: text.sm, color: palette.sageDeep || palette.sage,
-            fontFamily: 'inherit', fontWeight: weight.medium,
-          }
-        }, t('dashboard.exportReminderAction'))
-      );
-    })(),
-
-    // ─── Tips — open editorial section ─────────────────────
-    React.createElement('div', {
-      style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
-    },
-      React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
-      }, t('dashboard.tipsTitle')),
-      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
-        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
-          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
-            tip
-          )
-        )
-      )
-    ),
-
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement('h2', {
@@ -1306,6 +1255,57 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           ))
         );
       })()
+    ),
+
+    // ─── Export reminder — calm data safety nudge ────────────
+    (() => {
+      const hasData = chapters.some(ch => {
+        const d = data[ch.key] || {};
+        return ch.fields.some(f => d[f.k]);
+      });
+      if (!hasData) return null;
+      const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;
+      const daysSince = lastBackupMs ? Math.floor((Date.now() - lastBackupMs) / (1000 * 60 * 60 * 24)) : Infinity;
+      if (daysSince <= 7) return null;
+      const reason = lastBackupMs === 0 ? t('dashboard.exportReminderNever') : t('dashboard.exportReminderOld');
+      return React.createElement('div', {
+        style: {
+          marginBottom: space.xl,
+          padding: '16px 20px',
+          background: palette.sageMist || palette.sage + '08',
+          borderRadius: radius.md,
+          border: '1px solid ' + palette.sage + '25',
+        }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: '6px' }
+        }, reason + ' ' + t('dashboard.exportReminder')),
+        React.createElement('button', {
+          onClick: () => onNavigate('export'),
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            fontSize: text.sm, color: palette.sageDeep || palette.sage,
+            fontFamily: 'inherit', fontWeight: weight.medium,
+          }
+        }, t('dashboard.exportReminderAction'))
+      );
+    })(),
+
+    // ─── Tips — open editorial section ─────────────────────
+    React.createElement('div', {
+      style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
+    },
+      React.createElement('h2', {
+        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
+      }, t('dashboard.tipsTitle')),
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
+        [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
+          React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
+            tip
+          )
+        )
+      )
     ),
 
     !demoMode && React.createElement(BetaFeedback, { palette, t })
