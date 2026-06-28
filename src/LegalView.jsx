@@ -1,5 +1,10 @@
 import React from 'react';
 import { text, weight, leading, space, radius } from './config/tokens.js';
+import { getCantonName } from './config/cantonalData.js';
+
+// Alle 26 Kantonsportale folgen dem Muster www.<code>.ch (verifiziert) — kein
+// hardcodierter URL-Katalog nötig, der veralten könnte.
+const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
@@ -36,6 +41,9 @@ const HEARTFELT = [
   { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch' },
   { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch' },
   { key: 'heartfelt10', name: 'Xdo', url: null }, // App Store (Rau Media), keine Website
+  { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch' },
+  { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch' },
+  { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch' },
 ];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
@@ -89,8 +97,44 @@ const autoLink = (text, palette) => {
 const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
-export const LegalView = ({ palette, t, onNavigate, section }) => {
+// Strukturierter Ressourcen-Link: klickbarer Name statt doppelter Auflistung
+// (Name + nackte Domain). entry = { name, url, desc }; ohne url nur der Name
+// (z. B. defektes HTTPS-Zertifikat). Fällt auf Plain-String zurück.
+const ResLink = (entry) =>
+  entry && typeof entry === 'object'
+    ? React.createElement('p', { key: entry.name, style: { margin: '0 0 8px 0' } },
+        '→ ',
+        entry.url
+          ? React.createElement('a', { href: entry.url, target: '_blank', rel: 'noopener', style: linkStyle }, entry.name)
+          : entry.name,
+        ' — ' + entry.desc)
+    : React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + entry);
+
+export const LegalView = ({ palette, t, onNavigate, section, data }) => {
   const activeSection = section || 'privacy';
+
+  // Wohngemeinde/-kanton aus den eigenen Daten. Kanton → offizielles Portal
+  // (verlässlich). Gemeinde nur als Text — der Wohnort soll das Gerät NICHT in
+  // einer Such-URL verlassen (100% privat). Fällt auf generischen Text zurück,
+  // wenn nichts erfasst ist.
+  const renderLocalGov = () => {
+    const canton = (data && data.basis && data.basis.canton) || '';
+    const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
+    const cantonName = canton ? getCantonName(canton, t) : '';
+    if (!city && !cantonName) {
+      return React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + t('legal.resources.petition3'));
+    }
+    const parts = ['→ '];
+    if (city) parts.push(city);
+    if (cantonName) {
+      if (city) parts.push(' · ');
+      parts.push(React.createElement('a', {
+        key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener', style: linkStyle,
+      }, t('legal.resources.cantonPortal', { canton: cantonName })));
+    }
+    parts.push(' — ' + t('legal.resources.localGovDesc'));
+    return React.createElement('p', { style: { margin: '0 0 8px 0' } }, parts);
+  };
 
   const tabs = [
     { key: 'privacy', label: t('legal.tabs.privacy') },
@@ -346,27 +390,24 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     activeSection === 'resources' && React.createElement('div', null,
       Section({ title: t('legal.resources.secureTitle'), palette, children: [
         P({ children: t('legal.resources.secure1') }),
-        P({ children: '→ ' + t('legal.resources.threema') }),
-        P({ children: '→ ' + t('legal.resources.secureSafe') }),
-        P({ children: '→ ' + t('legal.resources.incamail') }),
+        ResLink(t('legal.resources.threema')),
+        ResLink(t('legal.resources.secureSafe')),
+        ResLink(t('legal.resources.incamail')),
       ]}),
       Section({ title: t('legal.resources.petitionTitle'), palette, children: [
         P({ children: t('legal.resources.petition1') }),
         P({ children: '→ ' + t('legal.resources.petition2') }),
-        P({ children: '→ ' + t('legal.resources.petition3') }),
+        renderLocalGov(),
       ]}),
       Section({ title: t('legal.resources.helpTitle'), palette, children: [
-        P({ children: t('legal.resources.help1') }),
-        P({ children: t('legal.resources.help2') }),
-        P({ children: t('legal.resources.help3') }),
-        P({ children: t('legal.resources.help4') }),
+        ResLink(t('legal.resources.help1')),
+        ResLink(t('legal.resources.help2')),
+        ResLink(t('legal.resources.help3')),
+        ResLink(t('legal.resources.help4')),
       ]}),
-      Section({ title: t('legal.resources.ombudsTitle'), palette, children: [
-        P({ children: '→ ' + t('legal.resources.ombuds1') }),
-        P({ children: '→ ' + t('legal.resources.ombuds2') }),
-        P({ children: '→ ' + t('legal.resources.ombuds3') }),
-        P({ children: '→ ' + t('legal.resources.ombuds4') }),
-      ]}),
+      Section({ title: t('legal.resources.ombudsTitle'), palette, children:
+        ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].map(k => ResLink(t('legal.resources.' + k)))
+      }),
       Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
         P({ children: t(HEARTFELT.some(i => i.affiliate) ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro') }),
         ...HEARTFELT
