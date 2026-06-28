@@ -2265,6 +2265,7 @@ export default {
     },
   },
 
+  greenHostingFooter: 'Green hosting',
   sandbox: {
     bannerTitle: 'Sandbox mode',
     bannerText: 'Try out calculations freely — your saved data stays untouched.',

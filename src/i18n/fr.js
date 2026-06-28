@@ -2264,6 +2264,7 @@ export default {
     },
   },
 
+  greenHostingFooter: 'Hébergement vert',
   sandbox: {
     bannerTitle: 'Mode brouillon',
     bannerText: 'Essayez des calculs librement — vos données enregistrées restent intactes.',
