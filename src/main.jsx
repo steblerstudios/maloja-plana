@@ -717,6 +717,7 @@ const AppInner = () => {
         onAddDocument: handleAddDocument,
         onNavigate: handleNavigate,
         demoMode,
+        simpleView,
       }),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
       React.createElement(React.Suspense, { fallback: React.createElement('div', { style: { padding: space.xl + 'px', textAlign: 'center', color: palette.soft, fontSize: text.sm }, role: 'status', 'aria-live': 'polite' }, t('common.loading')) },

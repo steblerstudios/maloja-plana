@@ -18,7 +18,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView }) => {
   const vorlesen = useVorlesenContext();
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
@@ -347,9 +347,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       display: 'flex',
       alignItems: 'center',
       gap: '4px',
-      fontSize: text.sm,
-      fontWeight: weight.medium,
-      color: palette.mid,
+      fontSize: simpleView ? text.body : text.sm,
+      fontWeight: simpleView ? weight.semi : weight.medium,
+      color: simpleView ? palette.text : palette.mid,
       marginBottom: space.sm - 2
     };
 
@@ -366,8 +366,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       background: palette.up,
       color: palette.text,
       boxSizing: 'border-box',
-      fontSize: text.body,
+      fontSize: simpleView ? text.lg : text.body,
       fontFamily: fontFamily,
+      ...(simpleView ? { padding: space.md + 'px' } : {}),
       ...(demoMode ? { pointerEvents: 'none', opacity: 0.7 } : {}),
     };
 
