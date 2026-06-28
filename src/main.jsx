@@ -187,6 +187,9 @@ const AppInner = () => {
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
   const isTablet = vw >= 768;
+  // Unter dieser Breite passt die volle Kopfzeile (Logo + 5 Bedienelemente + Menü)
+  // nicht mehr in eine Reihe → Sekundär-Bedienelemente wandern ins ☰-Menü.
+  const isMobile = vw < 560;
   const contentMax = vw >= 1024 ? '780px' : isTablet ? '680px' : '520px';
 
   // ─── Data loading with migration ──────────────────────────
@@ -446,6 +449,36 @@ const AppInner = () => {
     });
   }
 
+  // Sekundäre Kopfzeilen-Bedienelemente — auf dem Desktop in der Kopfzeile,
+  // auf dem Handy ins ☰-Menü eingeklappt (ruhigere, nicht überlaufende Kopfzeile).
+  const settingsControls = [
+    React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
+    React.createElement('button', {
+      key: 'readable',
+      'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
+      onClick: () => setReadable(r => !r),
+      style: { padding: '6px 9px', background: readable ? palette.sage + '22' : 'transparent', color: readable ? palette.sage : palette.mid, border: '1px solid ' + (readable ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'baseline', gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" }
+    },
+      React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
+      React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
+    ),
+    (lang === 'de' || lang === 'it' || lang === 'rm') ? (() => {
+      const formal = lang === 'it' ? 'Lei' : lang === 'rm' ? 'Vus' : 'Sie';
+      const informal = lang === 'it' ? 'Tu' : lang === 'rm' ? 'Ti' : 'Du';
+      const tooltip = lang === 'it' ? 'Forma di cortesia: Lei / Tu' : lang === 'rm' ? 'Furma da curtaschia: Vus / Ti' : 'Anrede: Sie / Du';
+      const current = anrede === 'du' ? informal : formal;
+      return React.createElement('button', {
+        key: 'anrede',
+        'aria-label': 'Anrede: ' + current,
+        title: tooltip,
+        onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
+        style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
+      }, current);
+    })() : null,
+    React.createElement(LanguageSwitcher, { key: 'lang', palette }),
+    React.createElement(ThemeToggle, { key: 'theme', palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
+  ].filter(Boolean);
+
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
   React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column' } },
     // Skip-to-content link for keyboard users
@@ -458,7 +491,10 @@ const AppInner = () => {
       activeChapter,
       activeView: view,
       chapters,
-      completion: calculateCompletion()
+      completion: calculateCompletion(),
+      // Auf dem Handy wandern die Kopfzeilen-Bedienelemente hierher.
+      settingsControls: isMobile ? settingsControls : null,
+      settingsLabel: t('nav.settings'),
     }),
     React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
@@ -476,30 +512,10 @@ const AppInner = () => {
         'aloja Plana'
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        React.createElement(VorlesenToggle, { palette, t, vorlesen }),
+        // Desktop: Bedienelemente in der Kopfzeile. Handy: ins ☰-Menü eingeklappt (s. MobileNav).
+        ...(isMobile ? [] : settingsControls),
         React.createElement('button', {
-          'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
-          onClick: () => setReadable(r => !r),
-          style: { padding: '6px 9px', background: readable ? palette.sage + '22' : 'transparent', color: readable ? palette.sage : palette.mid, border: '1px solid ' + (readable ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'baseline', gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" }
-        },
-          React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
-          React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
-        ),
-        (lang === 'de' || lang === 'it' || lang === 'rm') && (() => {
-          const formal = lang === 'it' ? 'Lei' : lang === 'rm' ? 'Vus' : 'Sie';
-          const informal = lang === 'it' ? 'Tu' : lang === 'rm' ? 'Ti' : 'Du';
-          const tooltip = lang === 'it' ? 'Forma di cortesia: Lei / Tu' : lang === 'rm' ? 'Furma da curtaschia: Vus / Ti' : 'Anrede: Sie / Du';
-          const current = anrede === 'du' ? informal : formal;
-          return React.createElement('button', {
-            'aria-label': 'Anrede: ' + current,
-            title: tooltip,
-            onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-            style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
-          }, current);
-        })(),
-        React.createElement(LanguageSwitcher, { palette }),
-        React.createElement(ThemeToggle, { palette, t, isDarkMode, onToggle: () => setIsDarkMode(!isDarkMode) }),
-        React.createElement('button', {
+          key: 'menu',
           'aria-label': t('nav.menu'),
           onClick: () => setMobileNavOpen(!mobileNavOpen),
           style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
