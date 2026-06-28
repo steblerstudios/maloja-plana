@@ -1440,6 +1440,8 @@ export default {
     qualification: 'Abschluss',
     preview: 'Vorschau',
     downloadHtml: 'HTML Download',
+    downloadJson: 'JSON (ATS)',
+    downloadJsonHint: 'Maschinenlesbarer Lebenslauf im JSON-Resume-Standard — wird von Bewerbungssystemen (ATS) und Karriere-Tools gelesen.',
     personalData: 'PERSÖNLICHE DATEN',
     experience: 'BERUFLICHE ERFAHRUNG',
     education: 'AUSBILDUNG & QUALIFIKATIONEN',
