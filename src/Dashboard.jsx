@@ -411,21 +411,33 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     active.length > 0 && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.title')),
-    active.length > 0 && React.createElement('div', {
-      style: { display: 'flex', flexWrap: 'wrap', gap: '5px' }
-    },
-      active.map(c =>
-        React.createElement('span', {
-          key: c.key,
-          style: {
-            fontSize: text.xs, color: palette.sage,
-            padding: '2px 8px',
-            background: palette.sage + '0D',
-            borderRadius: radius.sm,
-          }
-        }, '✓ ' + c.label)
-      )
-    )
+    active.length > 0 && (() => {
+      const h = Math.max(active.length * 32 + 12, 64);
+      return React.createElement('svg', {
+        viewBox: '0 0 330 ' + h,
+        width: '100%',
+        role: 'img',
+        'aria-label': t('datenWirken.title'),
+        style: { display: 'block', maxWidth: '360px', marginTop: '2px' },
+      },
+        ...active.map((c, i) => {
+          const cy = 6 + i * 32 + 13;
+          return React.createElement('line', {
+            key: 'l-' + c.key, x1: 62, y1: h / 2, x2: 148, y2: cy,
+            stroke: palette.sage, strokeWidth: 1, opacity: 0.35,
+          });
+        }),
+        React.createElement('circle', { cx: 46, cy: h / 2, r: 16, fill: palette.sage + '1A', stroke: palette.sage + '55', strokeWidth: 1 }),
+        React.createElement('circle', { cx: 46, cy: h / 2, r: 4, fill: palette.sage }),
+        ...active.map((c, i) => {
+          const top = 6 + i * 32;
+          return React.createElement('g', { key: 'n-' + c.key },
+            React.createElement('rect', { x: 148, y: top, width: 176, height: 26, rx: 6, fill: palette.sage + '10', stroke: palette.sage + '33', strokeWidth: 1 }),
+            React.createElement('text', { x: 158, y: top + 17, fontSize: 11, fill: palette.sageDeep || palette.sage, fontFamily: 'inherit' }, c.label)
+          );
+        })
+      );
+    })()
   );
 };
 
@@ -795,6 +807,99 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
 
+
+    // ─── Berg-Detail — Fortschritt, Grundordnung, Verbindungen (Schicht 1) ──
+    React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
+      React.createElement('summary', {
+        style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, padding: space.sm + 'px 0', letterSpacing: '0.2px' }
+      }, t('dashboard.detailProgress')),
+      React.createElement('div', { style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: space.lg + 'px' } },
+        React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }),
+    mvo.total > 0 && React.createElement('div', {
+      style: {
+        marginBottom: '28px', padding: '20px 24px',
+        background: mvo.pct === 100 ? palette.sage + '12' : palette.surface,
+        borderRadius: radius.md,
+        border: '1px solid ' + (mvo.pct === 100 ? palette.sage + '40' : palette.border + '88'),
+        boxShadow: shadow.sm,
+        transition: `background ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
+      }
+    },
+      React.createElement('button', {
+        onClick: () => setMvoExpanded(!mvoExpanded),
+        'aria-expanded': mvoExpanded,
+        style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+          background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit',
+          marginBottom: space.sm, color: palette.text,
+        }
+      },
+        React.createElement('span', {
+          style: { fontSize: text.sm, fontWeight: weight.semi }
+        }, t('mvo.title')),
+        React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } },
+          React.createElement('span', {
+            style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? palette.sage : palette.mid }
+          }, mvo.filled + '/' + mvo.total),
+          React.createElement('span', {
+            style: { fontSize: '10px', color: palette.mid, transition: `transform ${duration.fast}ms ${ease}`, transform: mvoExpanded ? 'rotate(180deg)' : 'rotate(0)' }
+          }, '▾')
+        )
+      ),
+      React.createElement('div', {
+        style: { width: '100%', height: '4px', background: palette.up, borderRadius: '2px', overflow: 'hidden', marginBottom: space.sm }
+      },
+        React.createElement('div', {
+          style: {
+            width: mvo.pct + '%', height: '100%',
+            background: mvo.pct === 100 ? palette.sage : palette.sand,
+            borderRadius: '2px',
+            transition: `width ${duration.cinematic}ms ${ease}`,
+          }
+        })
+      ),
+      React.createElement('div', {
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+      }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress')),
+
+      mvoExpanded && React.createElement('div', {
+        style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: '3px' }
+      },
+        (() => {
+          let lastChapter = null;
+          return mvo.fields.map((f, i) => {
+            const showHeader = f.chapterTitle !== lastChapter;
+            lastChapter = f.chapterTitle;
+            return React.createElement(React.Fragment, { key: f.key },
+              showHeader && React.createElement('div', {
+                style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
+              }, f.chapterIcon + ' ' + f.chapterTitle),
+              React.createElement('button', {
+                onClick: () => onSelectChapter(f.chapterIdx),
+                style: {
+                  display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
+                  padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
+                  cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
+                  textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
+                },
+                onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+                onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
+              },
+                React.createElement('span', {
+                  style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
+                }, f.done ? '✓' : '○'),
+                React.createElement('span', {
+                  style: { color: f.done ? palette.mid : palette.text }
+                }, f.label)
+              )
+            );
+          });
+        })()
+      )
+    ),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
+      )
+    ),
     // ─── Highlight tools — immediate value (first for new users) ──
     React.createElement('div', {
       style: {
@@ -1044,90 +1149,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-    // ─── MVO — Deine Grundordnung ───────────────────────────
-    mvo.total > 0 && React.createElement('div', {
-      style: {
-        marginBottom: '28px', padding: '20px 24px',
-        background: mvo.pct === 100 ? palette.sage + '12' : palette.surface,
-        borderRadius: radius.md,
-        border: '1px solid ' + (mvo.pct === 100 ? palette.sage + '40' : palette.border + '88'),
-        boxShadow: shadow.sm,
-        transition: `background ${duration.cinematic}ms ${ease}, border-color ${duration.cinematic}ms ${ease}`,
-      }
-    },
-      React.createElement('button', {
-        onClick: () => setMvoExpanded(!mvoExpanded),
-        'aria-expanded': mvoExpanded,
-        style: {
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
-          background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit',
-          marginBottom: space.sm, color: palette.text,
-        }
-      },
-        React.createElement('span', {
-          style: { fontSize: text.sm, fontWeight: weight.semi }
-        }, t('mvo.title')),
-        React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } },
-          React.createElement('span', {
-            style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? palette.sage : palette.mid }
-          }, mvo.filled + '/' + mvo.total),
-          React.createElement('span', {
-            style: { fontSize: '10px', color: palette.mid, transition: `transform ${duration.fast}ms ${ease}`, transform: mvoExpanded ? 'rotate(180deg)' : 'rotate(0)' }
-          }, '▾')
-        )
-      ),
-      React.createElement('div', {
-        style: { width: '100%', height: '4px', background: palette.up, borderRadius: '2px', overflow: 'hidden', marginBottom: space.sm }
-      },
-        React.createElement('div', {
-          style: {
-            width: mvo.pct + '%', height: '100%',
-            background: mvo.pct === 100 ? palette.sage : palette.sand,
-            borderRadius: '2px',
-            transition: `width ${duration.cinematic}ms ${ease}`,
-          }
-        })
-      ),
-      React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-      }, mvo.pct === 100 ? t('mvo.complete') : mvo.pct === 0 ? t('mvo.empty') : t('mvo.progress')),
-
-      mvoExpanded && React.createElement('div', {
-        style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: '3px' }
-      },
-        (() => {
-          let lastChapter = null;
-          return mvo.fields.map((f, i) => {
-            const showHeader = f.chapterTitle !== lastChapter;
-            lastChapter = f.chapterTitle;
-            return React.createElement(React.Fragment, { key: f.key },
-              showHeader && React.createElement('div', {
-                style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginTop: i > 0 ? '8px' : '2px', marginBottom: '2px' }
-              }, f.chapterIcon + ' ' + f.chapterTitle),
-              React.createElement('button', {
-                onClick: () => onSelectChapter(f.chapterIdx),
-                style: {
-                  display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
-                  padding: '5px 8px', background: 'none', border: 'none', borderRadius: radius.sm,
-                  cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: palette.text,
-                  textAlign: 'left', transition: `background ${duration.fast}ms ${ease}`,
-                },
-                onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
-                onMouseLeave: (e) => { e.currentTarget.style.background = 'none'; },
-              },
-                React.createElement('span', {
-                  style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
-                }, f.done ? '✓' : '○'),
-                React.createElement('span', {
-                  style: { color: f.done ? palette.mid : palette.text }
-                }, f.label)
-              )
-            );
-          });
-        })()
-      )
-    ),
-
     // ─── Export reminder — calm data safety nudge ────────────
     (() => {
       const hasData = chapters.some(ch => {
@@ -1161,19 +1182,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         }, t('dashboard.exportReminderAction'))
       );
     })(),
-
-    // ─── Fortschrittskarte — aufklappbar (jede Darstellung hat eigenen Mehrwert) ─────
-    React.createElement('details', { style: { marginBottom: space.xl + 'px' } },
-      React.createElement('summary', {
-        style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, padding: space.sm + 'px 0', letterSpacing: '0.2px' }
-      }, t('dashboard.detailProgress')),
-      React.createElement('div', { style: { marginTop: space.sm + 'px' } },
-        React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow })
-      )
-    ),
-
-    // ─── Status & live connections — merged: progress + backup + active data ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
 
     // ─── Tips — open editorial section ─────────────────────
     React.createElement('div', {
