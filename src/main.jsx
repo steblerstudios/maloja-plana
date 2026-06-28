@@ -23,6 +23,7 @@ import { syncDocumentReminders } from './utils/docReminders.js';
 import LegalView from './LegalView.jsx';
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
+import { Icon } from './IconSystem.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
@@ -805,10 +806,14 @@ const AppInner = () => {
         target: '_blank', rel: 'noopener noreferrer',
         title: t('greenHostingFooter'),
         style: {
-          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
+          color: palette.sage, fontSize: text.xs, fontFamily: 'inherit',
+          letterSpacing: '0.3px', textDecoration: 'none',
+          display: 'inline-flex', alignItems: 'center', gap: '4px',
         }
-      }, t('greenHostingFooter'))
+      },
+        React.createElement(Icon, { name: 'leaf', size: 13 }),
+        React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
+      )
     )
   ));
 };

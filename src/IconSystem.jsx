@@ -880,6 +880,14 @@ const _cowbell = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('circle', { cx: '12.5', cy: '21.5', r: '1.2', fill: 'white', opacity: '0.7' }),
 );
 
+// Leaf — green/eco marker (z.B. „grün gehostet"). Outline-Stil, 2 Elemente.
+const _leaf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+  // Blattkörper — zwei Bögen, von unten-links nach oben-rechts geneigt
+  React.createElement('path', { d: 'M 5 19 C 5 11 11 5 19 5 C 19 13 13 19 5 19 Z', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
+  // Mittelrippe
+  React.createElement('path', { d: 'M 8 16 L 16 8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round' }),
+);
+
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
@@ -953,6 +961,7 @@ const _iconFactories = {
   recurring: _recurring,
   lock: _lock,
   cowbell: _cowbell,
+  leaf: _leaf,
 };
 
 // iOS Safari collapses an <svg> that has a viewBox but no explicit width/height
