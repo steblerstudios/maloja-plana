@@ -55,7 +55,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { style: s.disclaimer }, t('asyl.disclaimer')),
 
     // ── Status-/Ausweistypen ──
-    React.createElement('div', { style: s.sectionTitle }, t('asyl.statusTitle')),
+    React.createElement('h3', { style: s.sectionTitle }, t('asyl.statusTitle')),
     React.createElement('div', null,
       ASYL_STATUS.map((st, i) =>
         React.createElement('div', { key: st.key, style: { ...s.statusRow, ...(i === ASYL_STATUS.length - 1 ? { borderBottom: 'none' } : {}) } },
@@ -86,7 +86,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Verfahren in Kürze ──
-    React.createElement('div', { style: s.sectionTitle }, t('asyl.processTitle')),
+    React.createElement('h3', { style: s.sectionTitle }, t('asyl.processTitle')),
     React.createElement('div', null,
       ASYL_PROCESS.map((p, i) =>
         React.createElement('div', { key: p, style: s.procItem },
@@ -97,7 +97,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Deine Rechte ──
-    React.createElement('div', { style: s.sectionTitle }, t('asyl.rightsTitle')),
+    React.createElement('h3', { style: s.sectionTitle }, t('asyl.rightsTitle')),
     React.createElement('div', null,
       ASYL_RIGHTS.map((r) =>
         React.createElement('div', { key: r, style: s.rightItem },
@@ -114,7 +114,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Wo Hilfe holen ──
-    React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.orgsTitle')),
+    React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.orgsTitle')),
     React.createElement('div', null,
       ASYL_ORGS.map((org, i) =>
         React.createElement('a', {
@@ -134,7 +134,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
     // ── Beratung in Ihrem Kanton ──
     cantonOffice && React.createElement('div', { key: 'canton-office' },
-      React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } },
+      React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } },
         t('asyl.cantonOfficeTitle', { canton: t('cantons.' + canton) || canton })),
       React.createElement('div', { style: s.cantonBox },
         React.createElement('a', {
@@ -154,7 +154,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
     // ── Nächste Schritte: ruhige Crosslinks zu Dokumenten & Notfall ──
     onNavigate && React.createElement('div', { key: 'next-steps' },
-      React.createElement('div', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.nextStepsTitle')),
+      React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.nextStepsTitle')),
       React.createElement('button', {
         style: { ...s.crosslink, marginTop: space.xs + 'px' },
         onClick: () => onNavigate('tresor'),
