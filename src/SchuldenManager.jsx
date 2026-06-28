@@ -256,6 +256,9 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     // Privacy note
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md, padding: 0 } }, 'ⓘ ' + t('trust.localOnly')),
 
+    // Orientierungs-Disclaimer (keine Rechts-/Finanzberatung)
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),
+
     // Save Button
     React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: space.sm, background: palette.sage, color: '#000' } }, '□ ' + t('common.save'))
   );
