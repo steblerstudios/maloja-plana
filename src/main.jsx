@@ -242,6 +242,27 @@ const AppInner = () => {
     } catch { return []; }
   });
 
+  // Einmal-Migration: bestehende Inline-Blobs (alte Stände hielten base64 in
+  // or5_docs) in IndexedDB verschieben, im State nur Metadaten behalten.
+  // Idempotent — nach dem Lauf trägt kein Dokument mehr `data`.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (!needsMigration(documents)) return;
+      try {
+        const { metaDocs, blobs } = splitDocsForMigration(documents);
+        for (const [id, dataUrl] of Object.entries(blobs)) {
+          await saveDocBlob(id, dataUrl);
+        }
+        if (!cancelled) setDocuments(metaDocs);
+      } catch (e) {
+        console.warn('[app] Dokument-Migration übersprungen:', e.message);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // ─── Hash routing: read initial view from URL ─────────────
   const [view, setView] = useState(() => {
     const parsed = parseHash();
