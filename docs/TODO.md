@@ -70,6 +70,20 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
 
 ## C — Design / Calm-UX (aus Audit)
 
+- 🔴 **BUG (Handy): Kopfzeile läuft horizontal über** — *gemeldet Sophie 2026-06-28 (iPhone,
+  Screenshots Basis/Wohnen/Steuern/Ausbildung).* Auf schmalen Screens (~375–390 px) ist die
+  Header-Toolbar ~460 px breit (Logo + Vorlesen + Aa + Sie/Du + Sprach-Dropdown + Dunkel + ☰ in
+  EINER nicht-umbrechenden Reihe). `body`/`html` haben `overflow-x: visible` → Seite seitlich
+  scrollbar, rechts ein toter Streifen, Dunkel-Schalter/☰ ragen über den Rand. **Reproduziert im
+  Mobile-Preview @390 px:** `header.scrollWidth 460 > clientWidth 390` (= 70 px Überhang).
+  Fix-Richtung: Toolbar auf Mobile umbrechen oder Sekundär-Controls hinter ☰ einklappen +
+  `overflow-x: hidden` als Schutzgurt. (Die roten Kreise auf den Formularfeldern markieren den
+  toten Rechts-Streifen, nicht die Felder selbst.)
+- 🟠 **Service-Worker liefert alte Version weiter** — *beobachtet 2026-06-28.* Sophies iPhone zeigte
+  `v0.1.0-beta`, obwohl `v0.1.1-beta` deployt ist → der SW (`maloja-plana-v7`) serviert die
+  zwischengespeicherte App. Returning Users sehen neue Deploys evtl. erst nach mehrfachem
+  Neuladen/App-Schliessen. Prüfen: bumpt der Deploy die SW-Cache-Version, und nutzt der SW
+  `skipWaiting` + `clients.claim` für sofortige Aktivierung? Sonst Update-Logik nachziehen.
 - ✅ IPV-„KPI-Kacheln" → ruhige Zeilen-Liste (Muster ChapterView-Versicherungsübersicht).
   `PremiumSubsidy.jsx` rendert das Ergebnis als umrandete Box mit gestapelten Label/Wert-Zeilen
   (`text.body`, dezente Trenner) — keine grossen KPI-Zahlen mehr. Kantons-Vergleich liegt im
