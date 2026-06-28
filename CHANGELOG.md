@@ -5,6 +5,32 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.4-beta] — 2026-06-28
+
+Sammelrelease der Korrekturen aus dem 6-Domänen-Audit (Architektur, Schweizer Berechnungen, Design, Barrierefreiheit, Mehrsprachigkeit, Governance).
+
+### Behoben
+- **13. AHV-Rente**: Jahresrente rechnet ab 2026 mit ×13 statt ×12
+- **SKOS-Vermögensfreibetrag** vereinheitlicht und auf Stand 2026 (6'000 Alleinstehende / 12'000 Paare / +3'000 pro Kind) — zuvor zwei widersprüchliche Werte
+- **Prämienverbilligung im Dashboard-Schnellcheck** nutzt jetzt den kantonalen Rechner — keine abweichende Pauschalzahl mehr
+- **Datenverlust-Schutz**: Autosave fängt vollen Speicher ab, Datei-Uploads sind grössenbegrenzt
+- **Vertiefte Links** zu Einstellungen, Steuer-Import und Rechtlichem überstehen Neuladen und Teilen
+- Korrekte Domain `malojaplana.ch` in Finanz-Ausdruck und PDF-Fuss
+- Zwei fehlende Übersetzungstexte ergänzt (Generika-Hinweis, AHV-Feld im Kassen-Scanner)
+
+### Geändert
+- **Schulden-Abbau-Plan** ruhiger und barrierearm: klare Überschriften, Tab-Rollen, beschriftete Felder, wertungsfreier Status
+- **Vorlesen** jetzt auch auf Schulden, Sozialhilfe, Asyl, Finanz-Übersicht, Stipendien, Prämienverbilligung und Flyer; Vorlese-Beschriftung in allen Sprachen
+- Überfällig-Hinweis und Armuts-Einordnung optisch beruhigt
+- Junge Erwachsene (19–25) bei der Prämienverbilligung als eigene Kategorie ausgewiesen
+
+### Technisch
+- `@capacitor/cli` in die Entwicklungs-Abhängigkeiten verschoben (Laufzeit bleibt abhängigkeitsfrei)
+- Radius-Token zwischen JS und CSS synchronisiert
+- Ereignis-Bus mit Ringpuffer und Fehler-Isolation gehärtet
+
+---
+
 ## [0.1.3-beta] — 2026-06-28
 
 ### Hinzugefügt
