@@ -27,6 +27,7 @@ export default {
       savings: 'Even small reserves count. This is about the overview, not a target amount.',
       credit: 'Credit cards and current loans — for a complete picture of your financial situation.',
       provision: 'Pillar 3a, 3b, and investments. Voluntary provision you want to keep track of.',
+      assets: 'Assets at tax value — securities, savings, other holdings. Tied pillar 3a stays out of this.',
     },
     versicherungen: {
       basic: 'Everyone in Switzerland has health insurance. Collect the key details here.',

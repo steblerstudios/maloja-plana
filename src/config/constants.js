@@ -147,7 +147,7 @@ export function getChapters(t) {
         { k: 'savingsGoal', label: fl(t, 'finanzen', 'savingsGoal'), type: 'currency', section: t('sections.finanzen.savings'), sectionIntro: si(t, 'finanzen', 'savings') },
         { k: 'savingsAccount', label: fl(t, 'finanzen', 'savingsAccount'), type: 'currency' },
         { k: 'bankName', label: fl(t, 'finanzen', 'bankName'), type: 'text' },
-        { k: 'securitiesValue', label: fl(t, 'finanzen', 'securitiesValue'), type: 'currency', hint: hn(t, 'finanzen', 'securitiesValue'), section: t('sections.finanzen.assets') },
+        { k: 'securitiesValue', label: fl(t, 'finanzen', 'securitiesValue'), type: 'currency', hint: hn(t, 'finanzen', 'securitiesValue'), section: t('sections.finanzen.assets'), sectionIntro: si(t, 'finanzen', 'assets') },
         { k: 'otherAssets', label: fl(t, 'finanzen', 'otherAssets'), type: 'currency', hint: hn(t, 'finanzen', 'otherAssets') },
         { k: 'creditCard', label: fl(t, 'finanzen', 'creditCard'), type: 'select', options: opts(t, 'finanzen', 'creditCard'), section: t('sections.finanzen.credit'), sectionIntro: si(t, 'finanzen', 'credit') },
         { k: 'loans', label: fl(t, 'finanzen', 'loans'), type: 'currency' },

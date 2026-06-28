@@ -28,6 +28,7 @@ export default {
       savings: 'Spargn, banca e cartas da credit.',
       credit: { sie: 'Cartas da credit e imprest currents — per la survista cumulativa da Vossa situaziun finanziala.', du: 'Cartas da credit e imprest currents — per la survista cumulativa da Tia situaziun finanziala.' },
       provision: { sie: 'Pitga 3a, 3b ed investiziuns. Prevenziun voluntara che Vus vulais tegnair en vista.', du: 'Pitga 3a, 3b ed investiziuns. Prevenziun voluntara che Ti vuls tegnair en vista.' },
+      assets: 'Facultad al valur fiscal — actuns, spargn ed auter. La pitga 3a liada resta ord quai.',
       expenses: 'Expensas fixas e variablas.',
       budget: 'Survista dal budget e finamiras.',
     },
