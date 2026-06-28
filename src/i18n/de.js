@@ -2248,6 +2248,7 @@ export default {
     footerLink: 'Probier-Modus',
     discard: 'Verwerfen',
     apply: 'In den Stand übernehmen',
+    startBlank: 'Leer starten',
   },
   demo: {
     bannerTitle: 'Beispiel: Maria Muster, 34, Zürich',
