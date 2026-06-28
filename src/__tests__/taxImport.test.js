@@ -122,6 +122,13 @@ describe('mapTaxFields', () => {
     ]);
     expect(matched.find(m => m.target === 'monthlyTax').annualValue).toBe(1800);
   });
+  it('"general" ist kein Total-Marker: ein kleinerer so benannter Knoten schlägt das echte Total nicht', () => {
+    const { matched } = mapTaxFields([
+      { rawKey: 'GeneralSteuerbetrag', rawValue: '1200' }, // klingt nach Total, ist aber kleiner
+      { rawKey: 'Steuerbetrag', rawValue: '4800' },        // echtes Total, unmarkiert
+    ]);
+    expect(matched.find(m => m.target === 'monthlyTax').annualValue).toBe(4800);
+  });
   it('ignoriert nicht zuordenbare Zeilen und Nullwerte', () => {
     const { matched, unmatched } = mapTaxFields([
       { rawKey: 'Lieblingsfarbe', rawValue: 'blau' },
