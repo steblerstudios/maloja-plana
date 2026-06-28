@@ -58,6 +58,7 @@ const HEARTFELT = [
   { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch' },
   { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch' },
   { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso' },
+  { key: 'heartfelt17', name: 'Foodshiner', url: null }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
 ];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier

@@ -966,6 +966,7 @@ export default {
       heartfelt14: 'Unabhängiges Konsumentenmagazin — Tests, Ratgeber und Verbraucherrecht, werbefrei.',
       heartfelt15: 'Konsumentenmagazin für Geld, Versicherungen und Vorsorge — werbefrei und unabhängig.',
       heartfelt16: 'SRF-Konsumentensendung — deckt Missstände auf und prüft Produkte und Dienstleistungen.',
+      heartfelt17: 'App gegen Food-Waste — verwaltet Lebensmittelvorräte und Haltbarkeitsdaten. Kein Konto, kein Tracking, keine Bezahlung mit Daten.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
