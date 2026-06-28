@@ -125,6 +125,12 @@ export default {
     persons: '{count} persunas',
     switchLang: 'Midar la lingua: {lang}',
     selectLanguage: 'Tscherner la lingua',
+    settingsTitle: 'Configuraziuns',
+    settingsIntro: 'Questas configuraziuns pon vegnir midadas da tut temp.',
+    settingsData: 'Datas e segirezza',
+    settingsTheme: 'Apparientscha',
+    settingsAnrede: 'Furma da curtaschia',
+    editPersonalData: 'Modifitgar las datas persunalas',
   },
 
   nav: {
