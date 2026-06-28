@@ -1996,6 +1996,8 @@ export default {
     title: 'Panoramica finanziaria',
     subtitle: { sie: 'La Sua situazione in sintesi — basata sui Suoi dati.', du: 'La tua situazione in sintesi — basata sui tuoi dati.' },
     monthlyIncome: 'Reddito mensile',
+    assets: 'Patrimonio',
+    assetsDetail: 'Titoli, risparmi e altri beni (valore fiscale)',
     canton: 'Cantone',
     taxes: 'Imposte',
     ipv: 'Riduzione dei premi (RDP)',

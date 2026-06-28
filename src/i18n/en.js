@@ -2017,6 +2017,8 @@ export default {
     title: 'Financial Overview',
     subtitle: 'Your situation at a glance — based on your entries.',
     monthlyIncome: 'Monthly income',
+    assets: 'Assets',
+    assetsDetail: 'Securities, savings and other assets (tax value)',
     canton: 'Canton',
     taxes: 'Taxes',
     ipv: 'Premium reduction (IPV)',
