@@ -967,6 +967,7 @@ export default {
       heartfelt14: 'Rivista svizzera indipendente dei consumatori — test, consigli e diritti dei consumatori, senza pubblicità.',
       heartfelt15: 'Rivista di consumo su denaro, assicurazioni e previdenza — indipendente e senza pubblicità.',
       heartfelt16: 'Trasmissione SRF sui consumatori — svela gli abusi e testa prodotti e servizi.',
+      heartfelt17: 'App contro lo spreco alimentare — gestisce le scorte e le date di scadenza. Nessun account, nessun tracciamento, nessun pagamento con i dati.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',
