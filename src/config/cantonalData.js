@@ -327,6 +327,13 @@ export function calculateIPV(data) {
   const hh = getHouseholdInfo(data);
   const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;
   const childrenCount = hh.childrenCount;
+  // Junge Erwachsene 19–25 in Ausbildung haben in den meisten Kantonen eine
+  // eigene (oft höhere) IPV-Kategorie. Die Kinderverbilligung hier gilt für
+  // Kinder bis 18 — junge Erwachsene werden separat als Hinweis ausgewiesen.
+  const youngAdultsCount = (hh.children || []).filter(c => {
+    const age = Number(c.age);
+    return age >= 19 && age <= 25;
+  }).length;
 
   if (income > ipvData.maxIncome) {
     return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
@@ -355,6 +362,7 @@ export function calculateIPV(data) {
     reductionPercent: Math.round(reductionFactor * 100),
     noteKey: ipvData.noteKey,
     noteParams: ipvData.noteParams || {},
+    youngAdultsCount,
     canton,
     cantonData: ipvData
   };

@@ -1118,6 +1118,7 @@ export default {
     noteAutoTaxData: 'Examinaziun automatica via datas da taglia',
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
+    youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
   },

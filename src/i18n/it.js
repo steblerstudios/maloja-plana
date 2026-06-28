@@ -1800,6 +1800,7 @@ export default {
     noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
     noteAutoSam: 'Automatico tramite il SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Cantone non riconosciuto',
+    youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
     incomeAboveLimit: 'Reddito superiore al limite (CHF {value})',
     eligible: 'Diritto alla riduzione dei premi: CHF {value}/mese',
   },
