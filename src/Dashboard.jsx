@@ -978,41 +978,32 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
           }, rest.map(renderItem))
         );
-      })()
-    ),
-
-    // ─── Guided start — calm first-use card ───────────────
-    !hasMeaningfulProgress && React.createElement('div', {
-      style: {
-        marginBottom: space.xl,
-        padding: '20px 24px',
-        background: palette.up,
-        borderRadius: radius.md,
-      }
-    },
-      React.createElement('div', {
-        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
-      }, t('guidedStart.title')),
-      React.createElement('p', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px 0' }
-      }, t('guidedStart.text')),
-      React.createElement('div', {
-        style: { display: 'flex', flexDirection: 'column', gap: '6px' }
+      })(),
+      // Sanfte Erst-Schritte — eingefaltet in die Highlight-Box (nur neue Nutzer)
+      !hasMeaningfulProgress && React.createElement('div', {
+        style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border + '44' }
       },
-        gentleStartActions.map((item) =>
-          React.createElement('button', {
-            key: item.label,
-            onClick: item.action,
-            style: {
-              background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0',
-              fontSize: text.sm, color: palette.mid, textAlign: 'left', fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: space.sm,
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', fontWeight: weight.medium }
+        }, t('guidedStart.title')),
+        React.createElement('div', {
+          style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px' }
+        },
+          gentleStartActions.map((item) =>
+            React.createElement('button', {
+              key: item.label,
+              onClick: item.action,
+              style: {
+                background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0',
+                fontSize: text.sm, color: palette.sageDeep || palette.sage, textAlign: 'left', fontFamily: 'inherit',
+                display: 'flex', alignItems: 'center', gap: space.xs + 'px',
+              },
+              onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
+              onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
             },
-            onMouseEnter: (e) => { e.currentTarget.style.color = palette.text; },
-            onMouseLeave: (e) => { e.currentTarget.style.color = palette.mid; },
-          },
-            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs } }, '→'),
-            item.label
+              React.createElement('span', { style: { fontSize: text.xs } }, '→'),
+              item.label
+            )
           )
         )
       )
