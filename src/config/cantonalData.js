@@ -271,7 +271,7 @@ export function calculateSozialhilfe(data) {
   const canton = data.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   const householdSize = hh.householdSize;
-  const income = Number(data.finanzen?.monthlyIncome || 0) + hh.partnerIncome;
+  const income = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome;
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
@@ -322,7 +322,7 @@ export function calculateIPV(data) {
   if (!ipvData) return { eligible: false, amount: 0, noteKey: 'ipv.cantonUnknown', noteParams: {}, canton };
 
   const hh = getHouseholdInfo(data);
-  const income = (Number(data.finanzen?.monthlyIncome || 0) + hh.partnerIncome) * 12;
+  const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome) * 12;
   const childrenCount = hh.childrenCount;
 
   if (income > ipvData.maxIncome) {
@@ -360,7 +360,7 @@ export function calculateIPV(data) {
 // EL (Ergänzungsleistungen) Berechtigungsprüfung
 export function checkELEligibility(data) {
   const hh = getHouseholdInfo(data);
-  const income = Number(data.finanzen?.monthlyIncome || 0) + hh.partnerIncome;
+  const income = Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + hh.partnerIncome;
   const rent = Number(data.wohnen?.rentAmount || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
   const ahvRente = Number(data.finanzen?.ahvRente || 0);

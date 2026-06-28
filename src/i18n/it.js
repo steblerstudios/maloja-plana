@@ -447,6 +447,8 @@ export default {
       benefits: ['Calcolatore fiscale', 'Riduzione premi', 'Assistenza sociale', 'Salario minimo'],
       fields: {
         monthlyIncome: 'Reddito netto mensile (CHF)',
+        sideIncome: 'Reddito accessorio al mese CHF',
+        taxableIncome: 'Reddito imponibile all’anno CHF',
         incomeType: { label: 'Tipo di reddito', options: { netto: 'Netto (quello che ricevo)', brutto: 'Lordo (prima delle deduzioni)' } },
         employer: 'Datore di lavoro',
         employmentType: { label: 'Tipo di impiego', options: { employed: 'Dipendente', selfEmployed: 'Indipendente', freelance: 'Freelance', retired: 'In pensione' } },
@@ -475,6 +477,8 @@ export default {
       },
       hints: {
         monthlyIncome: { sie: 'Il Suo salario netto — quello che arriva sul Suo conto.', du: 'Il tuo salario netto — quello che arriva sul tuo conto.' },
+        sideIncome: 'Reddito aggiuntivo oltre all’attività principale (lavoretto, onorari). Conta come reddito.',
+        taxableIncome: 'Reddito imponibile dalla dichiarazione dei redditi (all’anno, dopo le deduzioni). Solo a titolo orientativo — può alimentare il calcolatore delle imposte.',
         monthlyTax: 'Stima o secondo la dichiarazione fiscale.',
         groceries: 'Alimentari, drogheria, articoli per la casa al mese.',
         communication: 'Internet, cellulare, telefono fisso al mese.',
@@ -1350,6 +1354,7 @@ export default {
     dataVersion: 'Dati aggiornati al',
     disclaimer: { sie: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del Suo cantone.', du: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del tuo cantone.' },
     netIncomeNote: { sie: 'Proiezione basata sul Suo salario netto × 12. L\'onere fiscale effettivo può variare.', du: 'Proiezione basata sul tuo salario netto × 12. L\'onere fiscale effettivo può variare.' },
+    useImportedTaxable: 'Usa il reddito imponibile ufficiale (CHF {value}/anno). Le deduzioni vengono ignorate.',
   },
 
   schulden: {
@@ -1518,6 +1523,8 @@ export default {
     keptHint: 'Rimane invariato.',
     annualNote: 'Valore annuo {annual} → mensile',
     field: {
+      taxableIncome: 'Reddito imponibile',
+      sideIncome: 'Reddito accessorio',
       income: 'Reddito',
       securities: 'Titoli / deposito',
       savings: 'Risparmi',

@@ -25,25 +25,30 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [estimatedTax, setEstimatedTax] = useState(0);
   const [taxResult, setTaxResult] = useState(null);
 
+  // Amtlich steuerbares (Rein-)Einkommen aus dem Steuer-Import — bereits nach
+  // Abzügen. Wenn vorhanden, kann es 1:1 als Basis dienen (kein Doppel-Abzug).
+  const importedTaxable = Number(data.finanzen?.taxableIncome || 0);
+  const [useImportedTaxable, setUseImportedTaxable] = useState(importedTaxable > 0);
+
   const partnerIncome = Number(data.basis?.household?.partnerIncome || 0);
-  const income = (Number(data.finanzen?.monthlyIncome || 0) + partnerIncome) * 12;
+  const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + partnerIncome) * 12;
 
   React.useEffect(() => {
     calculateTax();
-  }, [taxData, income, canton, verheiratet, kinder]);
+  }, [taxData, income, canton, verheiratet, kinder, useImportedTaxable]);
 
   const calculateTax = () => {
-    let totalDeductions = 0;
-    for (const ded of deductions) {
-      totalDeductions += Number(taxData[ded.key] || 0);
+    let result;
+    if (useImportedTaxable && importedTaxable > 0) {
+      // Amtlicher Wert ist schon steuerbar: 1:1 als Basis, keine Abzüge mehr.
+      result = berechneBundessteuer({ bruttoEinkommen: importedTaxable, verheiratet, kinder, abzuege: 0 });
+    } else {
+      let totalDeductions = 0;
+      for (const ded of deductions) {
+        totalDeductions += Number(taxData[ded.key] || 0);
+      }
+      result = berechneBundessteuer({ bruttoEinkommen: income, verheiratet, kinder, abzuege: totalDeductions });
     }
-
-    const result = berechneBundessteuer({
-      bruttoEinkommen: income,
-      verheiratet,
-      kinder,
-      abzuege: totalDeductions,
-    });
 
     setTaxableIncome(result.steuerBaresEinkommen);
     setEstimatedTax(result.steuer);
@@ -124,7 +129,19 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t('tax.netIncomeNote')),
 
-        deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
+        importedTaxable > 0 && React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, marginBottom: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+          React.createElement('input', {
+            type: 'checkbox',
+            checked: useImportedTaxable,
+            onChange: (e) => setUseImportedTaxable(e.target.checked),
+            id: 'tax-use-imported',
+            style: { accentColor: palette.sand, marginTop: '2px' }
+          }),
+          React.createElement('label', { htmlFor: 'tax-use-imported', style: { fontSize: text.sm, color: palette.text, cursor: 'pointer' } },
+            t('tax.useImportedTaxable').replace('{value}', importedTaxable.toFixed(0)))
+        ),
+
+        !useImportedTaxable && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
           React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, ded.label),
           React.createElement('input', {
             type: 'number',
