@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Persona', contact: 'Contatto', family: 'Famiglia' },
     wohnen: { address: 'Indirizzo', costs: 'Costi', landlord: 'Locatore', property: 'Proprietà' },
-    finanzen: { income: 'Reddito', budgetLight: 'Spese mensili', obligations: 'Obblighi', savings: 'Risparmio', credit: 'Credito', provision: 'Previdenza' },
+    finanzen: { income: 'Reddito', budgetLight: 'Spese mensili', obligations: 'Obblighi', savings: 'Risparmio', assets: 'Patrimonio e titoli', credit: 'Credito', provision: 'Previdenza' },
     versicherungen: { basic: 'Assicurazione di base', occupational: 'Previdenza professionale', additional: 'Assicurazioni complementari', property: 'Assicurazioni beni & viaggio', mobility: 'Mobilità', social: 'Assicurazione sociale' },
     ausbildung: { education: 'Formazione', work: 'Impiego', languages: 'Lingue' },
     behoerden: { taxes: 'Imposte', legal: 'Diritto', representation: 'Rappresentanza' },
@@ -452,6 +452,8 @@ export default {
         savingsGoal: 'Obiettivo di risparmio (CHF)',
         savingsAccount: 'Risparmi (CHF)',
         bankName: 'Banca',
+        securitiesValue: 'Titoli / deposito (valore fiscale) CHF',
+        otherAssets: 'Altri beni CHF',
         creditCard: { label: 'Carte di credito?', options: { no: 'No', one: 'Sì (1)', multiple: 'Sì (2+)' } },
         loans: 'Prestiti personali (CHF)',
         monthlyTax: 'Imposte mensili (CHF)',
@@ -481,6 +483,8 @@ export default {
         alimenteReceived: 'Contributi di mantenimento che ricevi mensilmente.',
         alimentePaid: 'Contributi di mantenimento che versi mensilmente.',
         debtPayments: 'Rate mensili per debiti o rimborsi in corso.',
+        securitiesValue: 'Valore fiscale di azioni, fondi e obbligazioni al 31.12 — rilevante per l’imposta sul patrimonio.',
+        otherAssets: 'Contanti, metalli preziosi, criptovalute, veicoli, ecc. (valore fiscale).',
       },
       docs: {
         tax_return: 'Dichiarazione fiscale',
