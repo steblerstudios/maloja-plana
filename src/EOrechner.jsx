@@ -101,7 +101,8 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.xs } }, t('eo.erklaerung'))
     ),
 
-    React.createElement('div', { style: s.source }, t('eo.source'))
+    React.createElement('div', { style: s.source }, t('eo.source')),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint'))
   );
 };
 

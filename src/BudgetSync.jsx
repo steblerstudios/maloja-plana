@@ -284,7 +284,14 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       style: {
         marginTop: '10px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4'
       }
-    }, 'ⓘ ' + t('budgetSync.autoUpdateNote'))
+    }, 'ⓘ ' + t('budgetSync.autoUpdateNote')),
+
+    // === Orientierungs-Disclaimer (keine Rechts-/Finanzberatung) ===
+    React.createElement('div', {
+      style: {
+        marginTop: space.sm, fontSize: text.xs, color: palette.soft, lineHeight: '1.4', fontStyle: 'italic'
+      }
+    }, t('alpha.noAdviceHint'))
   );
 };
 
