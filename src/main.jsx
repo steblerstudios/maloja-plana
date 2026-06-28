@@ -739,7 +739,7 @@ const AppInner = () => {
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
       )),
-      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection })
+      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving }),
     React.createElement('footer', {
