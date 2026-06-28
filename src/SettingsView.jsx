@@ -15,6 +15,7 @@ const CONTROL_LABELS = {
   lang: 'common.selectLanguage',
   theme: 'common.settingsTheme',
   simpleview: 'common.simpleView',
+  grayscale: 'common.grayscale',
 };
 
 export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) => {

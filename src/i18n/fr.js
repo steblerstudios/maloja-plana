@@ -73,6 +73,7 @@ export default {
     delete: 'Retirer',
     pickDate: 'Choisir une date',
     simpleView: 'Vue simplifiée',
+    grayscale: 'Niveaux de gris',
     readable: 'Meilleure lisibilité',
     download: 'Télécharger',
     upload: 'Importer',
