@@ -2244,6 +2244,7 @@ export default {
     },
   },
 
+  greenHostingFooter: 'Hosting verde',
   sandbox: {
     bannerTitle: 'Modalità prova',
     bannerText: 'Qui si può calcolare liberamente — i dati salvati restano intatti.',

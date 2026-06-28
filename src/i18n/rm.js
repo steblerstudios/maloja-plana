@@ -892,6 +892,7 @@ export default {
     complete: { sie: 'Vossa urden essentiala stat. Il fundament è mess.', du: 'Tia urden essentiala stat. Il fundament è mess.' },
   },
 
+  greenHostingFooter: 'Hosting verd',
   sandbox: {
     bannerTitle: 'Modus da prova',
     bannerText: 'Qua sa po far quint libramain — las datas memorisadas restan intactas.',

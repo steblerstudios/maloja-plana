@@ -798,7 +798,17 @@ const AppInner = () => {
             textDecoration: 'underline', textUnderlineOffset: '2px',
           }
         }, t('sandbox.footerLink'))
-      )
+      ),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('a', {
+        href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
+        target: '_blank', rel: 'noopener noreferrer',
+        title: t('greenHostingFooter'),
+        style: {
+          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
+          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, t('greenHostingFooter'))
     )
   ));
 };
