@@ -373,8 +373,10 @@ export default {
         firstName: 'Nome',
         middleName: 'Secondo nome',
         lastName: 'Cognome',
+        academicTitle: 'Titolo',
         dateOfBirth: 'Data di nascita',
         gender: { label: 'Genere', options: { male: 'Maschile', female: 'Femminile', diverse: 'Altro' } },
+        pronouns: { label: 'Pronomi', options: { she: 'lei', he: 'lui', they: 'loro (neutro)', none: 'Nessuna indicazione' } },
         nationality: { label: 'Nazionalità', options: { swiss: 'Svizzera', german: 'Tedesca', french: 'Francese', italian: 'Italiana', austrian: 'Austriaca', other: 'Altra' } },
         canton: 'Cantone',
         phone: 'Telefono',
@@ -406,6 +408,7 @@ export default {
       },
       hints: {
         ahv: 'Formato: 756.1234.5678.90',
+        academicTitle: 'Titolo accademico o professionale (es. Dr., MSc) — mostrato prima del nome.',
       },
       docs: {
         id: 'Carta d\'identità / Passaporto',

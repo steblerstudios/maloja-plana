@@ -373,8 +373,10 @@ export default {
         firstName: 'First name',
         middleName: 'Middle name',
         lastName: 'Last name',
+        academicTitle: 'Title',
         dateOfBirth: 'Date of birth',
         gender: { label: 'Gender', options: { male: 'Male', female: 'Female', diverse: 'Diverse' } },
+        pronouns: { label: 'Pronouns', options: { she: 'she', he: 'he', they: 'they', none: 'Prefer not to say' } },
         nationality: { label: 'Nationality', options: { swiss: 'Swiss', german: 'German', french: 'French', italian: 'Italian', austrian: 'Austrian', other: 'Other' } },
         canton: 'Canton',
         phone: 'Phone',
@@ -406,6 +408,7 @@ export default {
       },
       hints: {
         ahv: 'Format: 756.1234.5678.90',
+        academicTitle: 'Academic or professional title (e.g. Dr., MSc) — shown before your name.',
       },
       docs: {
         id: 'ID card / Passport',
