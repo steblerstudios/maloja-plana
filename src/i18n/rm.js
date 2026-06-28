@@ -84,6 +84,7 @@ export default {
     open: 'Avrir',
     edit: 'Modifitgar',
     delete: 'Allontanar',
+    pickDate: 'Tscherner ina data',
     readable: 'Meglra legibilitad',
     download: 'Telechargiar',
     upload: 'Chargiar si',

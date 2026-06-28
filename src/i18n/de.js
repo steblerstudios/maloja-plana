@@ -71,6 +71,7 @@ export default {
     open: 'Öffnen',
     edit: 'Bearbeiten',
     delete: 'Entfernen',
+    pickDate: 'Datum wählen',
     readable: 'Bessere Lesbarkeit',
     download: 'Herunterladen',
     upload: 'Hochladen',

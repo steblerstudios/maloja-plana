@@ -461,6 +461,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Date
     if (field.type === 'date') {
       const fieldId = chapter.key + '-' + field.k;
+      const openPicker = () => {
+        const inp = document.getElementById(fieldId);
+        if (!inp) return;
+        if (typeof inp.showPicker === 'function') { try { inp.showPicker(); return; } catch (_) { /* fällt auf focus zurück */ } }
+        inp.focus();
+      };
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(fieldId, field.label, field.hint),
         React.createElement('div', { style: { position: 'relative' } },
@@ -468,11 +474,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             id: fieldId,
             key: field.k + '_' + (value || 'empty'),
             type: 'date',
+            className: 'mp-date-input',
             value: value || '',
             onChange: (e) => handleFieldChange(field.k, e.target.value),
             onInput: (e) => { if (!e.target.value && value) handleFieldChange(field.k, ''); },
             autoComplete: field.autoComplete || 'off',
-            style: inputStyle
+            style: { ...inputStyle, paddingRight: (value ? 64 : 38) + 'px' }
           }),
           value && React.createElement('button', {
             type: 'button',
@@ -483,7 +490,27 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               background: 'none', border: 'none', cursor: 'pointer',
               color: palette.mid, fontSize: text.body, padding: space.xs, lineHeight: 1,
             }
-          }, '✕')
+          }, '✕'),
+          // Eigenes, immer sichtbares Kalender-Symbol → öffnet den Datepicker
+          !demoMode && React.createElement('button', {
+            type: 'button',
+            onClick: openPicker,
+            tabIndex: -1,
+            'aria-label': tr('common.pickDate'),
+            title: tr('common.pickDate'),
+            style: {
+              position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: palette.mid, padding: space.xs, lineHeight: 0, display: 'flex', alignItems: 'center',
+            }
+          },
+            React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+              React.createElement('rect', { x: '3', y: '4', width: '18', height: '18', rx: '2' }),
+              React.createElement('line', { x1: '16', y1: '2', x2: '16', y2: '6' }),
+              React.createElement('line', { x1: '8', y1: '2', x2: '8', y2: '6' }),
+              React.createElement('line', { x1: '3', y1: '10', x2: '21', y2: '10' })
+            )
+          )
         )
       );
     }
