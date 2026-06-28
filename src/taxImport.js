@@ -143,7 +143,11 @@ export const parseTaxXML = (text) => {
 // fürs gleiche Feld einen explizit als Total markierten Knoten; gibt es keinen,
 // den grössten Betrag (das Total ist nie kleiner als eine seiner Komponenten).
 // Deterministisch und unabhängig von der Reihenfolge im Dokument.
-const TOTAL_MARKERS = ['total', 'gesamt', 'summe', 'totale', 'général', 'general'];
+// Nur eindeutige Total-Begriffe (DE/FR/IT/EN). Bewusst NICHT 'general'/'général':
+// die kämen nur in "total général" vor, wo 'total' ohnehin matcht — als lose
+// Substrings würden sie sonst einen kleineren, fälschlich-markierten Knoten ein
+// grösseres echtes Total schlagen lassen.
+const TOTAL_MARKERS = ['total', 'gesamt', 'summe', 'totale'];
 
 const isTotalMarked = (rawKey) => {
   const key = normalize(rawKey);
