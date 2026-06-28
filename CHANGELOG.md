@@ -5,6 +5,25 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.2-beta] — 2026-06-28
+
+### Hinzugefügt
+- **Einstellungen-Bereich**: zentrale Seite, bündelt Anzeige/Sprache/Anrede u.a. — „jederzeit änderbar", mit Schnellzugriff Daten bearbeiten/sichern
+- **Erwachsene im Haushalt**: einzeln hinzufügen wie Kinder (Vorname + Beziehung)
+- **Schwarzweiss-/Ruhe-Modus**: entsättigte, reizarme Ansicht (dumbphone-nah)
+- **Maschinenlesbarer Lebenslauf**: JSON-Resume-Export (ATS) im CV-Generator
+- **Einfache Ansicht (Inkrement 1)**: Icon-Dashboard + automatisches Vorlesen; Umschalter in Menü, BetaGate und Onboarding
+- **Sonne/Mond-Icons** am Hell/Dunkel-Schalter
+- **Foodshiner** als Herzensempfehlung
+
+### Geändert
+- **Sprachauswahl**: eingeklappt kompaktes Kürzel (DE/EN/FR/IT/RM), aufgeklappt volle native Namen
+
+### Behoben
+- **Kanton-Crosslink** im Steuer-Brief: las `wohnen.canton` statt `basis.canton` → der Brief erhält jetzt den tatsächlich gesetzten Kanton
+
+---
+
 ## [0.1.1-beta] — 2026-06-28
 
 ### Hinzugefügt
