@@ -967,6 +967,7 @@ export default {
       heartfelt14: 'Independent Swiss consumer magazine — tests, advice and consumer rights, ad-free.',
       heartfelt15: 'Consumer magazine on money, insurance and pensions — ad-free and independent.',
       heartfelt16: 'SRF consumer TV programme — exposes problems and tests products and services.',
+      heartfelt17: 'App against food waste — manages your food stocks and expiry dates. No account, no tracking, no paying with data.',
     },
     faq: {
       q1: 'Where is my data stored?',
