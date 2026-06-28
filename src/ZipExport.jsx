@@ -56,10 +56,10 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     }, 500);
   };
 
-  const handleExportPlainBackup = () => {
+  const handleExportPlainBackup = async () => {
     setBackupStatus(null);
     try {
-      const json = exportPlaintext();
+      const json = await exportPlaintext();
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.json', json, 'application/json');
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
@@ -151,7 +151,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     }
   };
 
-  const confirmAndRestore = (backup) => {
+  const confirmAndRestore = async (backup) => {
     const validation = validateBackupPayload(backup);
     if (validation.errors.length > 0) {
       setValidationWarnings(validation.errors);
@@ -163,7 +163,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     }
 
     createPreRestoreSnapshot();
-    const result = applyBackup(backup);
+    const result = await applyBackup(backup);
 
     if (result.success) {
       setBackupStatus({ type: 'success', msg: t('backup.importSuccess') });
