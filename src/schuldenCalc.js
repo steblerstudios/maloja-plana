@@ -148,3 +148,29 @@ const extractDate = (lines, startIdx) => {
   }
   return new Date().toLocaleDateString('de-CH');
 };
+
+// Konsequenz-orientierte Reihenfolge (CH-Schuldenberatungs-Praxis): existenz-
+// sichernde/privilegierte Schulden zuerst (Wohnen, Krankenkasse, Alimente,
+// Bussen), dann amtliche (Steuern), dann die übrigen — diese nach gewählter
+// Methode (Lawine = höchster Zins zuerst; Schneeball = kleinster Betrag zuerst).
+// Reine Orientierung, keine Beratung.
+const CATEGORY_TIER = {
+  wohnen: 1, krankenkasse: 1, alimente: 1, bussen: 1,
+  steuern: 2,
+  kredit: 3, sonstige: 3,
+};
+
+export const prioritizeDebts = (debts, method = 'lawine') => {
+  const tierOf = (d) => CATEGORY_TIER[d.category] || 3;
+  const open = (debts || []).filter(d => d.status !== 'paid');
+  return [...open].sort((a, b) => {
+    const ta = tierOf(a), tb = tierOf(b);
+    if (ta !== tb) return ta - tb;
+    if (ta === 3) {
+      return method === 'schneeball'
+        ? Number(a.amount || 0) - Number(b.amount || 0)
+        : Number(b.interestRate || 0) - Number(a.interestRate || 0);
+    }
+    return Number(b.amount || 0) - Number(a.amount || 0);
+  }).map(d => ({ ...d, tier: tierOf(d) }));
+};

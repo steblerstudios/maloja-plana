@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { calculateDebtStatus, createDebtPlan, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 
@@ -8,8 +8,9 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   const [schulden, setSchulden] = useState(data.schulden || []);
   const [betreibung, setBetreibung] = useState(data.betreibung || []);
   const [verlustscheine, setVerlustscheine] = useState(data.verlustscheine || []);
-  const [newDebt, setNewDebt] = useState({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open' });
+  const [newDebt, setNewDebt] = useState({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open', category: 'sonstige' });
   const [debtPlan, setDebtPlan] = useState(null);
+  const [method, setMethod] = useState('lawine');
 
   const handleAddDebt = () => {
     if (!newDebt.creditor || !newDebt.amount) return;
@@ -21,11 +22,12 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       dueDate: newDebt.dueDate,
       interestRate: Number(newDebt.interestRate) || 0,
       status: newDebt.status,
+      category: newDebt.category || 'sonstige',
       createdAt: new Date().toLocaleDateString('de-CH')
     };
 
     setSchulden([...schulden, debt]);
-    setNewDebt({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open' });
+    setNewDebt({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open', category: 'sonstige' });
   };
 
   const handleAddBetreibung = () => {
@@ -77,6 +79,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   };
 
   const debtStatus = calculateDebtStatus(schulden);
+  const prioritized = prioritizeDebts(schulden, method);
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const betreibungImpact = calculateBetreibungsRegisterImpact(betreibung, income || 1);
 
@@ -126,6 +129,10 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'debts' ? palette.sand : palette.up, color: view === 'debts' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
       }, React.createElement(Icon, { name: 'debt', size: 14 }), ' ' + t('schulden.debts')),
       React.createElement('button', {
+        onClick: () => setView('plan'),
+        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'plan' ? palette.sand : palette.up, color: view === 'plan' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
+      }, React.createElement(Icon, { name: 'timeline', size: 14 }), ' ' + t('schulden.planTab')),
+      React.createElement('button', {
         onClick: () => setView('betreibung'),
         style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'betreibung' ? palette.sand : palette.up, color: view === 'betreibung' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
       }, React.createElement(Icon, { name: 'behoerden', size: 14 }), ' ' + t('schulden.debtCollection')),
@@ -165,6 +172,46 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
       )
     ),
 
+    // Abbau-Plan View (Konsequenz-Priorität + Methode, reine Orientierung)
+    view === 'plan' && React.createElement('div', null,
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.planIntro')),
+
+      // Beratungs-Box — warm, prominent, ohne Wertung
+      React.createElement('div', { style: { padding: space.md + 'px', background: palette.sage + '14', border: '1px solid ' + palette.sage + '55', borderRadius: radius.sm, marginBottom: space.md } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('schulden.helpTitle')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
+        React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
+          React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sage, textDecoration: 'none' } }, '0800 708 708'),
+          React.createElement('a', { href: 'https://schulden.ch', target: '_blank', rel: 'noopener', style: { color: palette.sage, textDecoration: 'none' } }, 'schulden.ch')
+        )
+      ),
+
+      prioritized.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '32px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
+        React.createElement('div', { style: { marginBottom: space.md } },
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('schulden.planMethod')),
+          React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
+            ['lawine', 'schneeball'].map(m => React.createElement('button', {
+              key: m, onClick: () => setMethod(m),
+              style: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.xs, fontWeight: weight.semi, textAlign: 'start', border: '1px solid ' + (method === m ? palette.sand : palette.border), background: method === m ? palette.sand + '22' : palette.surface, color: method === m ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer' }
+            }, t(m === 'lawine' ? 'schulden.methodLawine' : 'schulden.methodSchneeball')))
+          )
+        ),
+        prioritized.map((d, idx) => {
+          const tierLabel = d.tier === 1 ? t('schulden.tier1') : d.tier === 2 ? t('schulden.tier2') : t('schulden.tier3');
+          const tierReason = d.tier === 1 ? t('schulden.tier1Reason') : d.tier === 2 ? t('schulden.tier2Reason') : t('schulden.tier3Reason');
+          const tierColor = d.tier === 1 ? palette.rose : d.tier === 2 ? palette.gold : palette.mid;
+          return React.createElement('div', { key: d.id || idx, style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.sm, border: '1px solid ' + palette.border } },
+            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, marginBottom: '4px' } },
+              React.createElement('span', { style: { fontWeight: weight.semi } }, (idx + 1) + '. ' + (d.creditor || '—')),
+              React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + Number(d.amount || 0).toFixed(2))
+            ),
+            React.createElement('div', { style: { display: 'inline-block', fontSize: text.xs, fontWeight: weight.semi, color: tierColor, marginBottom: '4px' } }, '● ' + tierLabel),
+            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, tierReason)
+          );
+        })
+      )
+    ),
+
     // Debts View
     view === 'debts' && React.createElement('div', null,
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.addDebt')),
@@ -174,6 +221,15 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), style: inputStyle }),
         React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), style: inputStyle }),
         React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), style: inputStyle }),
+        React.createElement('select', { value: newDebt.category, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
+          React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
+          React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
+          React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
+          React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
+          React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
+          React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
+          React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
+        ),
         React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), style: inputStyle },
           React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
           React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
