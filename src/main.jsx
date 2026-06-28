@@ -249,6 +249,9 @@ const AppInner = () => {
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   const applySandbox = () => { if (sandboxData) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
+  // Leere Tafel im Probier-Modus: für ein frisches Beispiel (z.B. jemandem zeigen),
+  // ohne die eigenen Zahlen — nichts wird persistiert.
+  const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setDemoMode(false); };
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht'];
 
@@ -560,7 +563,15 @@ const AppInner = () => {
     },
       React.createElement('div', { style: { flex: 1, minWidth: 0 } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('sandbox.bannerTitle')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText')),
+        React.createElement('button', {
+          onClick: blankSandbox,
+          style: {
+            background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0',
+            fontSize: text.xs, fontWeight: weight.medium, color: palette.sage, fontFamily: 'inherit',
+            textDecoration: 'underline', textUnderlineOffset: '2px',
+          },
+        }, '△ ' + t('sandbox.startBlank'))
       ),
       React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
         React.createElement('button', {

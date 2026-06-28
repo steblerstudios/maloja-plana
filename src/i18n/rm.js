@@ -898,6 +898,7 @@ export default {
     footerLink: 'Prova',
     discard: 'Annullar',
     apply: 'Surpigliar las datas',
+    startBlank: 'Cumenzar vid',
   },
   demo: {
     footerLink: 'Exempel',

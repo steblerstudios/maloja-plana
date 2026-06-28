@@ -2250,6 +2250,7 @@ export default {
     footerLink: 'Prova',
     discard: 'Annulla',
     apply: 'Applica ai miei dati',
+    startBlank: 'Inizia da vuoto',
   },
   demo: {
     bannerTitle: 'Esempio: Maria Muster, 34 anni, Zurigo',
