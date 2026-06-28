@@ -7,7 +7,7 @@
 // - Background sync for reminders
 // - Offline document access
 
-const CACHE_NAME = 'maloja-plana-v8';
+const CACHE_NAME = 'maloja-plana-v9';
 const OFFLINE_URL = '/';
 
 // ─── Install: cache the app shell ──────────────────────────
