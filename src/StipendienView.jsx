@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
 import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { linkifyDomains } from './utils/linkifyDomains.js';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
+  const vorlesen = useVorlesenContext();
   const canton = data?.basis?.canton || '';
 
   // Kurz-Check Berechtigung (harmonisierte Mindestkriterien, Orientierung)
@@ -67,7 +70,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     React.createElement('h2', { style: h2 },
       React.createElement(Icon, { name: 'ausbildung', size: 20 }), t('stip.title')
     ),
-    React.createElement('p', { style: { ...intro, marginBottom: space.md + 'px' } }, t('stip.intro')),
+    React.createElement('p', { style: { ...intro, marginBottom: space.md + 'px' } }, t('stip.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('stip.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // ── Kurz-Check Berechtigung ──
     React.createElement('div', { style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.lg + 'px' } },
