@@ -1798,6 +1798,7 @@ export default {
     noteAutoTaxData: 'Automatische Prüfung via Steuerdaten',
     noteAutoSam: 'Automatisch via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Kanton nicht erkannt',
+    youngAdultsNote: 'Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.',
     incomeAboveLimit: 'Einkommen über Grenze (CHF {value})',
     eligible: 'Anspruch auf Prämienverbilligung: CHF {value}/Monat',
   },

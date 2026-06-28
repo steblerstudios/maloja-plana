@@ -95,7 +95,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
       )
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('ipv.youngAdultsNote'))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
