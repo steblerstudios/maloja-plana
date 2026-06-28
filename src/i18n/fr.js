@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Personne', contact: 'Contact', family: 'Famille' },
     wohnen: { address: 'Adresse', costs: 'Coûts', landlord: 'Bailleur', property: 'Propriété' },
-    finanzen: { income: 'Revenus', budgetLight: 'Dépenses mensuelles', obligations: 'Obligations', savings: 'Épargne', credit: 'Crédit', provision: 'Prévoyance' },
+    finanzen: { income: 'Revenus', budgetLight: 'Dépenses mensuelles', obligations: 'Obligations', savings: 'Épargne', assets: 'Patrimoine & titres', credit: 'Crédit', provision: 'Prévoyance' },
     versicherungen: { basic: 'Assurance de base', occupational: 'Prévoyance professionnelle', additional: 'Assurances complémentaires', property: 'Assurances biens & voyage', mobility: 'Mobilité', social: 'Assurance sociale' },
     ausbildung: { education: 'Formation', work: 'Emploi', languages: 'Langues' },
     behoerden: { taxes: 'Impôts', legal: 'Droit', representation: 'Représentation' },
@@ -451,6 +451,8 @@ export default {
         savingsGoal: 'Objectif d\'épargne (CHF)',
         savingsAccount: 'Épargne (CHF)',
         bankName: 'Banque',
+        securitiesValue: 'Titres / portefeuille (valeur fiscale) CHF',
+        otherAssets: 'Autres actifs CHF',
         creditCard: { label: 'Cartes de crédit ?', options: { no: 'Non', one: 'Oui (1)', multiple: 'Oui (2+)' } },
         loans: 'Prêts personnels (CHF)',
         monthlyTax: 'Impôts mensuels (CHF)',
@@ -480,6 +482,8 @@ export default {
         alimenteReceived: 'Contributions d\'entretien que vous recevez chaque mois.',
         alimentePaid: 'Contributions d\'entretien que vous versez chaque mois.',
         debtPayments: 'Mensualités pour dettes ou remboursements en cours.',
+        securitiesValue: 'Valeur fiscale des actions, fonds et obligations au 31.12 — pertinente pour l’impôt sur la fortune.',
+        otherAssets: 'Espèces, métaux précieux, cryptomonnaies, véhicules, etc. (valeur fiscale).',
       },
       docs: {
         tax_return: 'Déclaration d\'impôts',

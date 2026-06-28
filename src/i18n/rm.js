@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Persuna', contact: 'Contact', family: 'Famiglia' },
     wohnen: { address: 'Adressa', costs: 'Custs', landlord: 'Possessur', property: 'Immobiglia' },
-    finanzen: { income: 'Entrada', budgetLight: 'Expensas mensialas', obligations: 'Obligaziuns', savings: 'Spargn', credit: 'Credit', provision: 'Prevenziun', expenses: 'Expensas', budget: 'Budget' },
+    finanzen: { income: 'Entrada', budgetLight: 'Expensas mensialas', obligations: 'Obligaziuns', savings: 'Spargn', assets: 'Facultad e investiziuns', credit: 'Credit', provision: 'Prevenziun', expenses: 'Expensas', budget: 'Budget' },
     versicherungen: { basic: 'Assicuranza da basa', occupational: 'Prevenziun professiunala', additional: 'Ulteriuras assicuranzas', property: 'Assicuranzas da chaussas & da viadi', mobility: 'Mobilitad', social: 'Assicuranza sociala', health: 'Assicuranza da malsognas', pension: 'Prevenziun', other: 'Autras assicuranzas' },
     ausbildung: { education: 'Furmaziun', work: 'Lavur', languages: 'Linguas', job: 'Professiun', employer: 'Patrun' },
     behoerden: { taxes: 'Taglia', legal: 'Dretgira', representation: 'Represchentanza', tax: 'Taglia', debt: 'Debits' },
@@ -443,6 +443,8 @@ export default {
         savingsGoal: 'Finamira da spargn CHF',
         savingsAccount: 'Spargn CHF',
         bankName: 'Banca principala',
+        securitiesValue: 'Investiziuns / deposit (valur fiscala) CHF',
+        otherAssets: 'Autra facultad CHF',
         creditCard: { label: 'Carta da credit existenta?', options: { no: 'Na', one: 'Gea (1)', multiple: 'Gea (2+)' } },
         loans: 'Imprest persunal CHF',
         monthlyTax: 'Taglia mensiala CHF',
@@ -475,6 +477,8 @@ export default {
         alimenteReceived: { sie: 'Contribuziuns da mantegniment che Vus retschavais per mais.', du: 'Contribuziuns da mantegniment che Ti retschaivas per mais.' },
         alimentePaid: { sie: 'Contribuziuns da mantegniment che Vus pajais per mais.', du: 'Contribuziuns da mantegniment che Ti pajas per mais.' },
         debtPayments: 'Ratas mensualas per debits currents u pajaments.',
+        securitiesValue: 'Valur fiscala d’aczias, fonds ed obligaziuns ils 31.12 — relevant per la taglia sin la facultad.',
+        otherAssets: 'Daners blut, metals prezius, criptomonedas, vehichels e.u.v. (valur fiscala).',
       },
       docs: {
         payslip: 'Quint da paja',

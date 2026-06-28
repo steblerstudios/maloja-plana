@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Person', contact: 'Kontakt', family: 'Familie' },
     wohnen: { address: 'Adresse', costs: 'Kosten', landlord: 'Vermieter', property: 'Eigentum' },
-    finanzen: { income: 'Einkommen', budgetLight: 'Monatliche Ausgaben', obligations: 'Verpflichtungen', savings: 'Sparen', credit: 'Kredit', provision: 'Vorsorge' },
+    finanzen: { income: 'Einkommen', budgetLight: 'Monatliche Ausgaben', obligations: 'Verpflichtungen', savings: 'Sparen', assets: 'Vermögen & Wertschriften', credit: 'Kredit', provision: 'Vorsorge' },
     versicherungen: { basic: 'Grundversicherung', occupational: 'Berufliche Vorsorge', additional: 'Weitere Versicherungen', property: 'Sach- & Reiseversicherungen', mobility: 'Mobilität', social: 'Sozialversicherung' },
     ausbildung: { education: 'Bildung', work: 'Arbeit', languages: 'Sprachen' },
     behoerden: { taxes: 'Steuern', legal: 'Recht', representation: 'Vertretung' },
@@ -451,6 +451,8 @@ export default {
         savingsGoal: 'Sparziel CHF',
         savingsAccount: 'Ersparte CHF',
         bankName: 'Hausbank',
+        securitiesValue: 'Wertschriften / Depot (Steuerwert) CHF',
+        otherAssets: 'Übriges Vermögen CHF',
         creditCard: { label: 'Kreditkarten vorhanden?', options: { no: 'Nein', one: 'Ja (1)', multiple: 'Ja (2+)' } },
         loans: 'Persönliche Darlehen CHF',
         monthlyTax: 'Steuern monatlich CHF',
@@ -480,6 +482,8 @@ export default {
         alimenteReceived: { sie: 'Unterhaltsbeiträge, die Sie monatlich erhalten.', du: 'Unterhaltsbeiträge, die du monatlich erhältst.' },
         alimentePaid: { sie: 'Unterhaltsbeiträge, die Sie monatlich bezahlen.', du: 'Unterhaltsbeiträge, die du monatlich bezahlst.' },
         debtPayments: 'Monatliche Raten für laufende Schulden oder Abzahlungen.',
+        securitiesValue: 'Steuerwert von Aktien, Fonds und Obligationen per 31.12. — relevant für die Vermögenssteuer.',
+        otherAssets: 'Bargeld, Edelmetalle, Kryptowährungen, Fahrzeuge usw. (Steuerwert).',
       },
       docs: {
         tax_return: 'Steuererklärung',
