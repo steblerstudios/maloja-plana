@@ -22,6 +22,9 @@ const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderline
 // Herzensempfehlungen: Name + Ziel-Link sind sprachunabhängig (Eigennamen),
 // nur die Beschreibung kommt aus i18n (heartfeltN). url: null = bewusst kein Link
 // (App-Store-App ohne Website, oder Website mit defektem HTTPS-Zertifikat).
+// affiliate: true → Link bringt eine Provision; wird transparent als "Affiliate"
+// gekennzeichnet und blendet den Intro-Hinweis um. Erst setzen, wenn eine echte
+// Affiliate-Partnerschaft besteht (sonst bliebe der "unbezahlt"-Text unwahr).
 const HEARTFELT = [
   { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org' },
   { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com' },
@@ -34,6 +37,11 @@ const HEARTFELT = [
   { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch' },
   { key: 'heartfelt10', name: 'Xdo', url: null }, // App Store (Rau Media), keine Website
 ];
+
+// Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
+// die URL eintragen (z. B. Twint-Link, Stripe-Payment-Link, Ko-fi, Bank-QR-Seite).
+// Leer => UI zeigt ehrlich "Zahlungsweg folgt" statt eines toten Links.
+const CONTRIBUTION_URL = '';
 
 const LEGAL_LINKS = {
   'Art. 28 nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de#art_28',
@@ -90,6 +98,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
     { key: 'imprint', label: t('legal.tabs.imprint') },
     { key: 'license', label: t('legal.tabs.license') },
     { key: 'ethics', label: t('legal.tabs.ethics') },
+    { key: 'support', label: t('legal.tabs.support') },
     { key: 'resources', label: t('legal.tabs.resources') },
     { key: 'faq', label: t('legal.tabs.faq') },
   ];
@@ -306,6 +315,34 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
       ]})
     ),
 
+    activeSection === 'support' && React.createElement('div', null,
+      Section({ title: t('legal.support.whatTitle'), palette, children: [
+        P({ children: t('legal.support.intro1') }),
+        P({ children: t('legal.support.intro2') }),
+      ]}),
+      Section({ title: t('legal.support.scaleTitle'), palette, children: [
+        P({ children: '→ ' + t('legal.support.tierLow') }),
+        P({ children: '→ ' + t('legal.support.tierMid') }),
+        P({ children: '→ ' + t('legal.support.tierHigh') }),
+        P({ children: t('legal.support.medianNote') }),
+      ]}),
+      Section({ title: t('legal.support.howTitle'), palette, children: [
+        CONTRIBUTION_URL
+          ? React.createElement('a', {
+              href: CONTRIBUTION_URL, target: '_blank', rel: 'noopener',
+              style: {
+                display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
+                background: palette.sand, color: '#fff', borderRadius: radius.sm,
+                textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
+              }
+            }, t('legal.support.contributeCta'))
+          : React.createElement('p', {
+              style: { margin: '0 0 8px 0', fontStyle: 'italic', color: palette.mid }
+            }, t('legal.support.paymentPending')),
+        P({ children: t('legal.support.transparency') }),
+      ]})
+    ),
+
     activeSection === 'resources' && React.createElement('div', null,
       Section({ title: t('legal.resources.secureTitle'), palette, children: [
         P({ children: t('legal.resources.secure1') }),
@@ -331,7 +368,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
         P({ children: '→ ' + t('legal.resources.ombuds4') }),
       ]}),
       Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
-        P({ children: t('legal.resources.heartfeltIntro') }),
+        P({ children: t(HEARTFELT.some(i => i.affiliate) ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro') }),
         ...HEARTFELT
           .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
           .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
@@ -341,6 +378,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
             item.url
               ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
               : item.name,
+            item.affiliate ? React.createElement('span', { style: { color: palette.soft, fontSize: text.xs } }, ' · ' + t('legal.resources.affiliateMarker')) : null,
             ' — ' + desc
           )),
       ]})
