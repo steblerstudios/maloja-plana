@@ -1,3 +1,5 @@
+import { openIDB, openIDBWithStore } from './idbUtils.js';
+
 // ============================================================================
 // LOCALSTORAGE HELPER
 // ============================================================================
@@ -49,21 +51,18 @@ export const storage = {
 const DB_NAME = 'maloja-plana-documents';
 const OLD_DB_NAME = 'ordnung-ruhe-documents';
 const STORE_NAME = 'files';
-const DB_VERSION = 1;
 
 let dbInstance = null;
+let dbPromise = null;
 
-const openDB = (name) => new Promise((resolve, reject) => {
-  const request = indexedDB.open(name, DB_VERSION);
-  request.onerror = () => reject(new Error('IDB open failed'));
-  request.onsuccess = () => resolve(request.result);
-  request.onupgradeneeded = (e) => {
-    const db = e.target.result;
-    if (!db.objectStoreNames.contains(STORE_NAME)) {
-      db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-    }
-  };
-});
+const ensureStore = (db) => {
+  if (!db.objectStoreNames.contains(STORE_NAME)) {
+    db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+  }
+};
+
+const openDB = (name, version) =>
+  openIDB(name, { version, onUpgrade: ensureStore, errorMessage: 'IDB open failed' });
 
 const migrateFromOldDB = async (newDb) => {
   try {
@@ -94,9 +93,25 @@ const migrateFromOldDB = async (newDb) => {
 
 const getDB = async () => {
   if (dbInstance) return dbInstance;
-  dbInstance = await openDB(DB_NAME);
-  await migrateFromOldDB(dbInstance);
-  return dbInstance;
+  // In-flight-Guard: parallele Erstaufrufe teilen sich EINE Öffnung, sonst
+  // würden mehrere Verbindungen ein erzwungenes Upgrade gegenseitig blockieren.
+  if (!dbPromise) {
+    dbPromise = (async () => {
+      const db = await openIDBWithStore(DB_NAME, STORE_NAME, {
+        onUpgrade: ensureStore,
+        errorMessage: 'IDB open failed',
+      });
+      await migrateFromOldDB(db);
+      return db;
+    })();
+  }
+  try {
+    dbInstance = await dbPromise;
+    return dbInstance;
+  } catch (e) {
+    dbPromise = null; // Fehlschlag (z.B. blocked) nicht cachen → Retry erlauben
+    throw e;
+  }
 };
 
 export const idb = {

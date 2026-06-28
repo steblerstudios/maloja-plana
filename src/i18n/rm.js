@@ -684,6 +684,7 @@ export default {
 
   trust: {
     localBadge: { sie: '100% local — Vossas datas restan sin quest apparat', du: '100% local — Tes datas restan sin quest apparat' },
+    dbBlocked: { sie: 'Maloja è avert en in auter tab. Serrai per plaschair ils auters tabs, uschè ch\'ils documents pon vegnir memorisads.', du: 'Maloja è avert en in auter tab. Serra ils auters tabs, uschè ch\'ils documents pon vegnir memorisads.' },
     noCloud: 'Nagin cloud. Nagin tracking. Nagin server.',
     yourData: { sie: 'Vossas datas. Voss apparat. Vossa controlla.', du: 'Tes datas. Tes apparat. Tes controlla.' },
     openSource: 'Open Source — transparent e controllabel.',
