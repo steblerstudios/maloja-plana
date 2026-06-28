@@ -72,6 +72,7 @@ export default {
     edit: 'Bearbeiten',
     delete: 'Entfernen',
     pickDate: 'Datum wählen',
+    simpleView: 'Einfache Ansicht',
     readable: 'Bessere Lesbarkeit',
     download: 'Herunterladen',
     upload: 'Hochladen',
