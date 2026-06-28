@@ -8,9 +8,9 @@ import {
 describe('ahvRechner', () => {
   describe('AHV_PARAMS', () => {
     it('has correct 2026 values', () => {
-      expect(AHV_PARAMS.minRente).toBe(1225);
-      expect(AHV_PARAMS.maxRente).toBe(2450);
-      expect(AHV_PARAMS.maxEhepaar).toBe(3675);
+      expect(AHV_PARAMS.minRente).toBe(1260);
+      expect(AHV_PARAMS.maxRente).toBe(2520);
+      expect(AHV_PARAMS.maxEhepaar).toBe(3780);
       expect(AHV_PARAMS.referenzalter).toBe(65);
       expect(AHV_PARAMS.volleBeitragsjahre).toBe(44);
     });
@@ -24,11 +24,11 @@ describe('ahvRechner', () => {
     it('returns Maximalrente for high income and full contributions', () => {
       const r = berechneAltersrente({
         geburtsjahr: 1961,
-        durchschnittlichesJahreseinkommen: 88200,
+        durchschnittlichesJahreseinkommen: 90720,
         beitragsjahre: 44,
       });
-      expect(r.monatsrente).toBe(2450);
-      expect(r.jahresrente).toBe(29400);
+      expect(r.monatsrente).toBe(2520);
+      expect(r.jahresrente).toBe(30240);
       expect(r.skalenfaktor).toBe(1);
       expect(r.fehlendeBeitragsjahre).toBe(0);
     });
@@ -36,10 +36,10 @@ describe('ahvRechner', () => {
     it('returns Minimalrente for low income', () => {
       const r = berechneAltersrente({
         geburtsjahr: 1961,
-        durchschnittlichesJahreseinkommen: 14700,
+        durchschnittlichesJahreseinkommen: 15120,
         beitragsjahre: 44,
       });
-      expect(r.monatsrente).toBe(1225);
+      expect(r.monatsrente).toBe(1260);
     });
 
     it('scales down with fewer contribution years', () => {
@@ -92,13 +92,13 @@ describe('ahvRechner', () => {
     it('caps married couple pensions (Plafonierung)', () => {
       const r = berechneAltersrente({
         geburtsjahr: 1961,
-        durchschnittlichesJahreseinkommen: 88200,
+        durchschnittlichesJahreseinkommen: 90720,
         beitragsjahre: 44,
         verheiratet: true,
-        einkommenPartner: 88200,
+        einkommenPartner: 90720,
       });
       expect(r.plafoniert).toBe(true);
-      expect(r.totalEhepaar).toBeLessThanOrEqual(3675);
+      expect(r.totalEhepaar).toBeLessThanOrEqual(3780);
     });
 
     it('adds Erziehungsgutschriften', () => {
@@ -150,13 +150,13 @@ describe('ahvRechner', () => {
     it('calculates coordinated salary', () => {
       const r = bvgKoordinationsabzug(80000);
       expect(r.versichert).toBe(true);
-      expect(r.koordinierterLohn).toBe(80000 - 25725);
-      expect(r.koordinationsabzug).toBe(25725);
+      expect(r.koordinierterLohn).toBe(80000 - 26460);
+      expect(r.koordinationsabzug).toBe(26460);
     });
 
     it('caps at maximum', () => {
       const r = bvgKoordinationsabzug(200000);
-      expect(r.koordinierterLohn).toBe(62475);
+      expect(r.koordinierterLohn).toBe(64260);
     });
   });
 
@@ -203,8 +203,8 @@ describe('ahvRechner', () => {
     it('has correct 2026 values', () => {
       expect(BVG_PARAMS.mindestzins).toBe(1.25);
       expect(BVG_PARAMS.umwandlungssatz).toBe(6.8);
-      expect(BVG_PARAMS.eintrittsschwelle).toBe(22050);
-      expect(BVG_PARAMS.koordinationsabzug).toBe(25725);
+      expect(BVG_PARAMS.eintrittsschwelle).toBe(22680);
+      expect(BVG_PARAMS.koordinationsabzug).toBe(26460);
       expect(BVG_PARAMS.gutschriften.length).toBe(4);
     });
   });

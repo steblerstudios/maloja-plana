@@ -6,21 +6,21 @@
 // Alle Beträge in CHF/Monat. Keine Netzwerk-Calls, reine Berechnung.
 
 // === AHV-Parameter 2026 ===
-const AHV_MIN_RENTE = 1225;       // Minimalrente (Vollrente, Skala 44)
-const AHV_MAX_RENTE = 2450;       // Maximalrente (Vollrente, Skala 44)
-const AHV_MAX_EHEPAAR = 3675;     // Plafonierung Ehepaar (150% Maximalrente)
+const AHV_MIN_RENTE = 1260;       // Minimalrente (Vollrente, Skala 44)
+const AHV_MAX_RENTE = 2520;       // Maximalrente (Vollrente, Skala 44)
+const AHV_MAX_EHEPAAR = 3780;     // Plafonierung Ehepaar (150% Maximalrente)
 const REFERENZALTER = 65;
 const MIN_BEITRAGSJAHRE = 1;
 const VOLLE_BEITRAGSJAHRE = 44;   // Skala 44 = Vollrente
-const KOORDINATIONSABZUG = 25725; // BVG-Koordinationsabzug 2026
-const MAX_VERSICHERTES_EINKOMMEN = 88200; // Obere Grenze massgebendes Einkommen
+const KOORDINATIONSABZUG = 26460; // BVG-Koordinationsabzug 2026
+const MAX_VERSICHERTES_EINKOMMEN = 90720; // Obere Grenze massg. Einkommen (= 3× max. jährl. AHV-Rente)
 
 // Vorbezug/Aufschub
 const VORBEZUG_KUERZUNG_PRO_MONAT = 0.005667; // 6.8% pro Jahr (gesetzlicher AHV-Vorbezugssatz)
 const AUFSCHUB_ZUSCHLAG_PRO_MONAT = 0.002667;  // ~3.2% pro Jahr ≈ 0.267% pro Monat
 
 // Erziehungsgutschriften pro Kind (pauschal, jährlich, geteilt bei gemeinsamer elterlicher Sorge)
-const ERZIEHUNGSGUTSCHRIFT_JAHR = 44100; // 3× minimale jährliche Altersrente
+const ERZIEHUNGSGUTSCHRIFT_JAHR = 45360; // 3× minimale jährliche Altersrente (3× 15'120)
 
 // Skala: Beitragsjahre → Bruchteil der Vollrente (Art. 52 AHVV)
 // Skala 1–44, jedes fehlende Jahr reduziert proportional
@@ -36,7 +36,7 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
   if (durchschnittlichesJahreseinkommen <= 0) return 0;
 
   // Unter Minimum → Minimalrente
-  const minEinkommen = 14700;  // Untere Grenze (ergibt Minimalrente)
+  const minEinkommen = 15120;  // Untere Grenze (= 12× Minimalrente, ergibt Minimalrente)
   const maxEinkommen = MAX_VERSICHERTES_EINKOMMEN;
 
   if (durchschnittlichesJahreseinkommen <= minEinkommen) return AHV_MIN_RENTE;
@@ -153,11 +153,11 @@ export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, be
  * Berechne den BVG-Mindestlohn und Koordinationsabzug.
  */
 export function bvgKoordinationsabzug(jahresbruttolohn) {
-  const mindestlohn = 22050; // BVG-Eintrittsschwelle 2026
+  const mindestlohn = 22680; // BVG-Eintrittsschwelle 2026
   if (jahresbruttolohn < mindestlohn) return { versichert: false, koordinierterLohn: 0 };
 
-  const koordinierterLohn = Math.max(3675, jahresbruttolohn - KOORDINATIONSABZUG);
-  const maxKoordinierterLohn = 62475; // Obergrenze
+  const koordinierterLohn = Math.max(3780, jahresbruttolohn - KOORDINATIONSABZUG);
+  const maxKoordinierterLohn = 64260; // Obergrenze (= 90'720 − 26'460)
   return {
     versichert: true,
     koordinierterLohn: Math.min(koordinierterLohn, maxKoordinierterLohn),
@@ -233,7 +233,7 @@ export const AHV_PARAMS = {
 export const BVG_PARAMS = {
   mindestzins: 1.25,
   umwandlungssatz: 6.8,
-  eintrittsschwelle: 22050,
+  eintrittsschwelle: 22680,
   koordinationsabzug: KOORDINATIONSABZUG,
   gutschriften: BVG_GUTSCHRIFTEN,
 };
