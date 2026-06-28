@@ -79,13 +79,14 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   flex-end`) in `main.jsx` → Controls brechen auf schmalen Screens um statt überzulaufen.
   **Verifiziert @390 px:** overflow 0 px (war 70), 0 Offender, „Dokumentenablage" vollständig &
   nicht geclippt; @1280 px Header weiterhin einreihig (kein Desktop-Regress). Build grün, 354
-  Tests grün. Mögliches Polish-Follow-up: Sekundär-Controls auf Mobile ganz ins ☰-Menü einklappen
-  (statt umbrechen) — eigene kleine Aufgabe.
-- 🟠 **Service-Worker liefert alte Version weiter** — *beobachtet 2026-06-28.* Sophies iPhone zeigte
-  `v0.1.0-beta`, obwohl `v0.1.1-beta` deployt ist → der SW (`maloja-plana-v7`) serviert die
-  zwischengespeicherte App. Returning Users sehen neue Deploys evtl. erst nach mehrfachem
-  Neuladen/App-Schliessen. Prüfen: bumpt der Deploy die SW-Cache-Version, und nutzt der SW
-  `skipWaiting` + `clients.claim` für sofortige Aktivierung? Sonst Update-Logik nachziehen.
+  Tests grün. ✅ **Polish-Follow-up erledigt (Commit `774befc`):** Sekundär-Controls auf Mobile
+  (<560px) ins ☰-Menü ("Ansicht & Sprache") eingeklappt → Kopfzeile nur Logo + ☰. Desktop
+  unverändert, keine Dopplung im Drawer.
+- ✅ **Service-Worker-Auto-Update — GEFIXT (2026-06-28, Commit `57f9f6b`).** Registrierung jetzt mit
+  `updateViaCache:'none'`, `controllerchange`→einmaliges Reload, `registration.update()` beim Laden
+  + bei `visibilitychange` (PWA aus Hintergrund). Cache `v8→v9`. HTML war schon network-first.
+  → Deploys kommen ohne Hard-Refresh an. (Einmalig muss ein Altgerät noch raus aus dem alten SW:
+  PWA/Tab ganz schliessen + neu öffnen.)
 - ✅ **Datumsfelder: klares Picker-Symbol — GEFIXT (2026-06-28).** *Gemeldet Sophie: „man kann
   kein Datum auswählen".* Felder waren seit Anfang `<input type=date>` (nativ pickbar), aber iOS
   rendert ein leeres Datumsfeld als blanke Box ohne sichtbares Symbol → wirkt nicht auswählbar.
