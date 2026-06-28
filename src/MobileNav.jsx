@@ -5,7 +5,7 @@ import { text, weight, space, shadow, ease, duration } from './config/tokens.js'
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
-export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion }) => {
+export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
@@ -88,6 +88,19 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           style: { fontSize: text.xs, color: palette.mid }
         }, t('nav.completion', { value: completion }))
       ),
+
+      // Einstellungen (Ansicht & Sprache) — auf dem Handy aus der Kopfzeile hierher eingeklappt
+      (settingsControls && settingsControls.length) ? React.createElement('div', {
+        key: 'settings-section',
+        style: { padding: '14px 20px', borderBottom: '1px solid ' + palette.border }
+      },
+        React.createElement('div', {
+          style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, marginBottom: space.sm, letterSpacing: '0.3px' }
+        }, settingsLabel),
+        React.createElement('div', {
+          style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' }
+        }, settingsControls)
+      ) : null,
 
       // Search
       React.createElement('div', {

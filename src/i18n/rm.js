@@ -160,6 +160,7 @@ export default {
     search: 'Tschertgar',
     notifications: 'Communicaziuns',
     menu: 'Menu',
+    settings: 'Vista e lingua',
     completion: '{value}% cumplet',
     privacyNote: { sie: 'Naginas datas bandunan Voss apparat.', du: 'Naginas datas bandunan Tes apparat.' },
     sub: {
