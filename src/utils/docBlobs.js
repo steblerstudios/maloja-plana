@@ -33,6 +33,18 @@ export const getAllDocBlobs = async () => {
   return out;
 };
 
+// Füllt fehlende `data`-Blobs einer Dokument-Liste aus IndexedDB auf
+// (eine idb-Sammlung). Für selbst-enthaltende Snapshots/Backups.
+export const hydrateDocs = async (docs) => {
+  if (!Array.isArray(docs)) return docs;
+  const blobs = await getAllDocBlobs();
+  return docs.map((d) =>
+    (d && d.id != null && d.data == null && blobs[d.id] != null)
+      ? { ...d, data: blobs[d.id] }
+      : d
+  );
+};
+
 // ── Reine Funktionen (ohne idb, in Node testbar) ──────────────────────────
 
 // Kopie des Dokuments ohne den (potenziell grossen) `data`-Blob.

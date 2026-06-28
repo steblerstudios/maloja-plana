@@ -5,6 +5,7 @@
 //
 // Storage: IndexedDB 'maloja-plana-backups' store.
 // No network. No cloud. Fully local.
+import { hydrateDocs, saveDocBlob, splitDocsForMigration } from './docBlobs.js';
 
 const BACKUP_DB_NAME = 'maloja-plana-backups';
 const OLD_BACKUP_DB_NAME = 'ordnung-ruhe-backups';
@@ -64,6 +65,20 @@ const openBackupDB = async () => {
 };
 
 /**
+ * or5_docs (nur Metadaten) als selbst-enthaltenden String mit aus IndexedDB
+ * hydrierten Dokument-Blobs liefern → Snapshots bleiben vollständig.
+ */
+async function hydratedDocsString() {
+  const raw = localStorage.getItem('or5_docs');
+  try {
+    const parsed = JSON.parse(raw || '[]');
+    return JSON.stringify(await hydrateDocs(parsed));
+  } catch {
+    return raw;
+  }
+}
+
+/**
  * Check if enough time has passed since the last backup.
  */
 function shouldBackup() {
@@ -89,13 +104,14 @@ export async function createBackup() {
 
   try {
     const data = localStorage.getItem('or5_data');
-    const docs = localStorage.getItem('or5_docs');
     const reminders = localStorage.getItem('or5_reminders');
 
     // Don't backup empty data
     if (!data || data === '{}') {
       return { success: false, id: null, error: 'empty_data' };
     }
+
+    const docs = await hydratedDocsString();
 
     const snapshot = {
       id: 'backup_' + Date.now(),
@@ -259,12 +275,13 @@ export async function compareWithBackup(backupId) {
 export async function createManualBackup() {
   try {
     const data = localStorage.getItem('or5_data');
-    const docs = localStorage.getItem('or5_docs');
     const reminders = localStorage.getItem('or5_reminders');
 
     if (!data || data === '{}') {
       return { success: false, id: null, error: 'empty_data' };
     }
+
+    const docs = await hydratedDocsString();
 
     const snapshot = {
       id: 'manual_' + Date.now(),
@@ -329,7 +346,18 @@ export async function restoreBackup(backupId) {
 
     // Restore
     if (snapshot.data) localStorage.setItem('or5_data', snapshot.data);
-    if (snapshot.docs) localStorage.setItem('or5_docs', snapshot.docs);
+    if (snapshot.docs) {
+      // Snapshot-Blobs zurück nach IndexedDB, or5_docs nur Metadaten.
+      try {
+        const { metaDocs, blobs } = splitDocsForMigration(JSON.parse(snapshot.docs));
+        for (const [id, dataUrl] of Object.entries(blobs)) {
+          await saveDocBlob(id, dataUrl);
+        }
+        localStorage.setItem('or5_docs', JSON.stringify(metaDocs));
+      } catch {
+        localStorage.setItem('or5_docs', snapshot.docs);
+      }
+    }
     if (snapshot.reminders) localStorage.setItem('or5_reminders', snapshot.reminders);
 
     console.info('[backup] Restored:', backupId);
