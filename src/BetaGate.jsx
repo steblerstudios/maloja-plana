@@ -17,6 +17,16 @@ export const BetaGate = ({ children }) => {
   const [error, setError] = useState(false);
   // Rechtliches muss auch OHNE Code lesbar sein (Vertrauen/Transparenz vor der Hürde).
   const [legalSection, setLegalSection] = useState(null); // null | 'privacy' | 'imprint' | …
+  // „Einfache Ansicht" schon hier anbieten, damit Betroffene direkt im Icon-Modus
+  // starten. Schreibt nur localStorage; die App liest den Wert beim Start.
+  const [simpleView, setSimpleView] = useState(() => {
+    try { return localStorage.getItem('or5_simpleView') === '1'; } catch { return false; }
+  });
+  const toggleSimpleView = () => setSimpleView(v => {
+    const next = !v;
+    try { localStorage.setItem('or5_simpleView', next ? '1' : '0'); if (next) localStorage.setItem('or5_vorlesen', '1'); } catch {}
+    return next;
+  });
 
   if (granted) return children;
 
@@ -128,6 +138,30 @@ export const BetaGate = ({ children }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
       }, t('beta.enter')),
+      // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
+      React.createElement('button', {
+        type: 'button',
+        onClick: toggleSimpleView,
+        'aria-pressed': simpleView,
+        title: t('common.simpleView'),
+        style: {
+          marginTop: space.md, width: '100%', padding: '10px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+          background: simpleView ? palette.sand + '30' : 'transparent',
+          color: simpleView ? palette.text : palette.mid,
+          border: '1px solid ' + (simpleView ? palette.sand : palette.border),
+          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
+          fontSize: text.sm, fontWeight: weight.medium,
+        }
+      },
+        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+          React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
+          React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
+          React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
+          React.createElement('rect', { x: '13', y: '13', width: '8', height: '8', rx: '2' })
+        ),
+        t('common.simpleView')
+      ),
       React.createElement('button', {
         type: 'button',
         onClick: () => setLegalSection('privacy'),
