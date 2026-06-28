@@ -340,6 +340,8 @@ export default {
       documents: 'Documents & authorities',
       organize: 'Organize & profile',
     },
+    anspruchTitle: 'What am I entitled to?',
+    anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
     tipsTitle: 'Tips for getting started:',
     tip1: 'Start with the chapter "Personal basics"',
     tip2: 'Upload your important documents',
