@@ -11,6 +11,7 @@ import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
+import { saveDocBlob, getDocBlob, deleteDocBlob, stripBlob, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 import { createBackup } from './utils/autoBackup.js';
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
@@ -425,13 +426,22 @@ const AppInner = () => {
     return total > 0 ? Math.round((filled / total) * 100) : 0;
   };
 
-  const handleAddDocument = (doc) => {
-    const newDoc = { ...doc, id: Date.now().toString(), chapter: chapters[activeChapter]?.key || 'basis' };
-    setDocuments(prev => [...prev, newDoc]);
+  const handleAddDocument = async (doc) => {
+    const id = Date.now().toString();
+    const newDoc = { ...doc, id, chapter: chapters[activeChapter]?.key || 'basis' };
+    // Blob (dataURL) wandert nach IndexedDB; im State/localStorage bleiben nur
+    // Metadaten → kein localStorage-Quota-Risiko mehr. Bei idb-Fehler wird der
+    // Fehler geworfen, damit die Upload-UI ihn ruhig anzeigen kann.
+    if (newDoc.data != null) {
+      await saveDocBlob(id, newDoc.data);
+    }
+    setDocuments(prev => [...prev, stripBlob(newDoc)]);
   };
 
   const handleDeleteDocument = (docId) => {
     setDocuments(prev => prev.filter(d => d.id !== docId));
+    // Verwaisten Blob aus IndexedDB entfernen (fire-and-forget).
+    deleteDocBlob(docId).catch((e) => console.warn('[app] Blob-Löschen fehlgeschlagen:', e.message));
     runtimeEventBus.publish({
       id: crypto.randomUUID(),
       eventType: 'DOCUMENT_DELETED',
@@ -441,12 +451,17 @@ const AppInner = () => {
     });
   };
 
-  const handleDownloadDocument = (doc) => {
-    if (doc.data) {
+  const handleDownloadDocument = async (doc) => {
+    // doc.data deckt noch-nicht-migrierte / aus inline-Backup restaurierte
+    // Dokumente ab; sonst aus IndexedDB nachladen.
+    const dataUrl = doc.data || await getDocBlob(doc.id);
+    if (dataUrl) {
       const a = document.createElement('a');
-      a.href = doc.data;
+      a.href = dataUrl;
       a.download = doc.fileName || 'document';
       a.click();
+    } else {
+      console.warn('[app] Kein Dokument-Inhalt gefunden für', doc.id);
     }
   };
 
