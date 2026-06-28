@@ -11,9 +11,11 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
   const [newDebt, setNewDebt] = useState({ creditor: '', amount: '', dueDate: '', interestRate: '', status: 'open', category: 'sonstige' });
   const [debtPlan, setDebtPlan] = useState(null);
   const [method, setMethod] = useState('lawine');
+  const [formError, setFormError] = useState(false);
 
   const handleAddDebt = () => {
-    if (!newDebt.creditor || !newDebt.amount) return;
+    if (!newDebt.creditor || !newDebt.amount) { setFormError(true); return; }
+    setFormError(false);
 
     const debt = {
       id: Date.now(),
@@ -115,51 +117,44 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     fontSize: text.xs
   };
 
+  const statusLabel = (s) => s === 'paid' ? t('schulden.statusPaid') : s === 'overdue' ? t('schulden.overdue') : t('schulden.statusOpen');
+  const tabs = [
+    { key: 'overview', icon: 'dashboard', label: t('schulden.overview') },
+    { key: 'debts', icon: 'debt', label: t('schulden.debts') },
+    { key: 'plan', icon: 'timeline', label: t('schulden.planTab') },
+    { key: 'betreibung', icon: 'behoerden', label: t('schulden.debtCollection') },
+    { key: 'verlustscheine', icon: 'document', label: t('schulden.lossReceipts') },
+  ];
+
   return React.createElement('div', { style: { maxWidth: '720px' } },
+    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginTop: 0, marginBottom: space.sm } }, t('schulden.title')),
     React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro')),
 
-    // Tab Navigation
-    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.md, borderBottom: '1px solid ' + palette.border, paddingBottom: space.sm + 4 } },
-      React.createElement('button', {
-        onClick: () => setView('overview'),
-        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'overview' ? palette.sand : palette.up, color: view === 'overview' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-      }, React.createElement(Icon, { name: 'dashboard', size: 14 }), ' ' + t('schulden.overview')),
-      React.createElement('button', {
-        onClick: () => setView('debts'),
-        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'debts' ? palette.sand : palette.up, color: view === 'debts' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-      }, React.createElement(Icon, { name: 'debt', size: 14 }), ' ' + t('schulden.debts')),
-      React.createElement('button', {
-        onClick: () => setView('plan'),
-        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'plan' ? palette.sand : palette.up, color: view === 'plan' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-      }, React.createElement(Icon, { name: 'timeline', size: 14 }), ' ' + t('schulden.planTab')),
-      React.createElement('button', {
-        onClick: () => setView('betreibung'),
-        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'betreibung' ? palette.sand : palette.up, color: view === 'betreibung' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-      }, React.createElement(Icon, { name: 'behoerden', size: 14 }), ' ' + t('schulden.debtCollection')),
-      React.createElement('button', {
-        onClick: () => setView('verlustscheine'),
-        style: { padding: space.sm + 'px ' + (space.sm + 4) + 'px', background: view === 'verlustscheine' ? palette.sand : palette.up, color: view === 'verlustscheine' ? '#fff' : palette.text, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
-      }, '□ ' + t('schulden.lossReceipts'))
+    // Tab Navigation (role=tablist; aktiver Tab via Border+Tint, nicht nur Farbe)
+    React.createElement('div', { role: 'tablist', 'aria-label': t('schulden.title'), style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, marginBottom: space.md, borderBottom: '1px solid ' + palette.border, paddingBottom: space.sm + 4 } },
+      tabs.map(tab => {
+        const active = view === tab.key;
+        return React.createElement('button', {
+          key: tab.key, role: 'tab', 'aria-selected': active, onClick: () => setView(tab.key),
+          style: { display: 'inline-flex', alignItems: 'center', gap: '4px', padding: space.sm + 'px ' + (space.sm + 4) + 'px', border: '1px solid ' + (active ? palette.sand : palette.border), background: active ? palette.sand + '22' : palette.surface, color: active ? palette.text : palette.mid, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.xs }
+        }, React.createElement(Icon, { name: tab.icon, size: 14 }), ' ' + tab.label);
+      })
     ),
 
     // Overview
-    view === 'overview' && React.createElement('div', null,
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.md, marginBottom: space.lg } },
-        React.createElement('div', { style: { padding: space.lg - 4, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.totalDebt')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.medium, color: palette.text, marginTop: space.xs } }, 'CHF ' + debtStatus.totalDebt.toFixed(2))
-        ),
-        React.createElement('div', { style: { padding: space.lg - 4, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.overdue')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.medium, color: palette.text, marginTop: space.xs } }, 'CHF ' + debtStatus.overdue.toFixed(2))
-        ),
-        React.createElement('div', { style: { padding: space.lg - 4, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.dueSoon')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.medium, color: palette.text, marginTop: space.xs } }, 'CHF ' + debtStatus.upcoming.toFixed(2))
-        ),
-        React.createElement('div', { style: { padding: space.lg - 4, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('schulden.alreadyPaid')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.medium, color: palette.text, marginTop: space.xs } }, 'CHF ' + debtStatus.paid.toFixed(2))
+    view === 'overview' && React.createElement('div', { role: 'tabpanel' },
+      // Ruhige Label-Wert-Zeilenliste statt KPI-Kachelraster (Schulden = sensibel)
+      React.createElement('div', { style: { background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.lg } },
+        [
+          ['totalDebt', debtStatus.totalDebt],
+          ['overdue', debtStatus.overdue],
+          ['dueSoon', debtStatus.upcoming],
+          ['alreadyPaid', debtStatus.paid],
+        ].map(([key, val], i, arr) =>
+          React.createElement('div', { key, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, padding: space.sm + 'px ' + space.md + 'px', borderBottom: i < arr.length - 1 ? '1px solid ' + palette.border + '55' : 'none', fontSize: text.sm } },
+            React.createElement('span', { style: { color: palette.mid } }, t('schulden.' + key)),
+            React.createElement('span', { style: { fontWeight: weight.medium, color: palette.text } }, 'CHF ' + val.toFixed(2))
+          )
         )
       ),
 
@@ -173,7 +168,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     ),
 
     // Abbau-Plan View (Konsequenz-Priorität + Methode, reine Orientierung)
-    view === 'plan' && React.createElement('div', null,
+    view === 'plan' && React.createElement('div', { role: 'tabpanel' },
       React.createElement('p', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.planIntro')),
 
       // Beratungs-Box — warm, prominent, ohne Wertung
@@ -213,29 +208,34 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     ),
 
     // Debts View
-    view === 'debts' && React.createElement('div', null,
+    view === 'debts' && React.createElement('div', { role: 'tabpanel' },
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.addDebt')),
 
       React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
-        React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), style: inputStyle }),
-        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), style: inputStyle }),
-        React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), style: inputStyle }),
-        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), style: inputStyle }),
-        React.createElement('select', { value: newDebt.category, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
-          React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
-          React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
-          React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
-          React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
-          React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
-          React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
-          React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
+        React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
+        React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: newDebt.amount, onChange: (e) => setNewDebt(p => ({ ...p, amount: e.target.value })), placeholder: t('schulden.amount'), 'aria-label': t('schulden.amount'), style: inputStyle }),
+        // Pflicht = Gläubiger + Betrag; alles Weitere optional, eingeklappt
+        React.createElement('details', null,
+          React.createElement('summary', { style: { fontSize: text.sm, color: palette.mid, cursor: 'pointer', marginBottom: space.sm } }, t('schulden.moreDetails')),
+          React.createElement('input', { type: 'date', value: newDebt.dueDate, onChange: (e) => setNewDebt(p => ({ ...p, dueDate: e.target.value })), 'aria-label': t('schulden.dueSoon') + ' (' + t('common.optional') + ')', style: { ...inputStyle, marginTop: space.sm } }),
+          React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.1', value: newDebt.interestRate, onChange: (e) => setNewDebt(p => ({ ...p, interestRate: e.target.value })), placeholder: t('schulden.interestRate'), 'aria-label': t('schulden.interestRate') + ' (' + t('common.optional') + ')', style: inputStyle }),
+          React.createElement('select', { value: newDebt.category, onChange: (e) => setNewDebt(p => ({ ...p, category: e.target.value })), 'aria-label': t('schulden.category'), style: inputStyle },
+            React.createElement('option', { value: 'wohnen' }, t('schulden.catWohnen')),
+            React.createElement('option', { value: 'krankenkasse' }, t('schulden.catKrankenkasse')),
+            React.createElement('option', { value: 'alimente' }, t('schulden.catAlimente')),
+            React.createElement('option', { value: 'bussen' }, t('schulden.catBussen')),
+            React.createElement('option', { value: 'steuern' }, t('schulden.catSteuern')),
+            React.createElement('option', { value: 'kredit' }, t('schulden.catKredit')),
+            React.createElement('option', { value: 'sonstige' }, t('schulden.catSonstige'))
+          ),
+          React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), 'aria-label': t('schulden.statusField'), style: inputStyle },
+            React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
+            React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
+            React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
+          )
         ),
-        React.createElement('select', { value: newDebt.status, onChange: (e) => setNewDebt(p => ({ ...p, status: e.target.value })), style: inputStyle },
-          React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
-          React.createElement('option', { value: 'overdue' }, t('schulden.overdue')),
-          React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
-        ),
-        React.createElement('button', { onClick: handleAddDebt, style: buttonStyle }, '+ ' + t('schulden.addDebt'))
+        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
+        React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
       ),
 
       schulden.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
@@ -245,7 +245,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
             React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.rose : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
-            debt.dueDate + ' | ' + debt.status
+            (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
           ),
           React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, '✕ ' + t('common.delete'))
         ))
@@ -264,7 +264,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     ),
 
     // Betreibung View
-    view === 'betreibung' && React.createElement('div', null,
+    view === 'betreibung' && React.createElement('div', { role: 'tabpanel' },
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.debtCollection')),
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
@@ -275,7 +275,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
             React.createElement('input', { type: 'number', inputMode: 'decimal', step: '0.01', value: entry.amount || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'amount', e.target.value), placeholder: t('schulden.amount'), style: { ...inputStyle, width: '140px', marginBottom: 0 } }),
             React.createElement('input', { type: 'date', value: entry.registerDate || '', onChange: (e) => handleUpdateBetreibung(entry.id, 'registerDate', e.target.value), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            React.createElement('select', { value: entry.status, onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
+            React.createElement('select', { value: entry.status, onChange: (e) => handleUpdateBetreibung(entry.id, 'status', e.target.value), 'aria-label': t('schulden.statusField'), style: { ...inputStyle, width: '140px', marginBottom: 0 } },
               React.createElement('option', { value: 'open' }, t('schulden.statusOpen')),
               React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
             )
@@ -286,7 +286,7 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
     ),
 
     // Verlustscheine View
-    view === 'verlustscheine' && React.createElement('div', null,
+    view === 'verlustscheine' && React.createElement('div', { role: 'tabpanel' },
       React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.lossReceipts')),
 
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
