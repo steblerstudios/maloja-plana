@@ -1308,6 +1308,8 @@ export default {
     householdAdultsChildren: 'Nucleo familiare: {adults} adulto/i + {children} bambino/i',
     childrenNote: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.',
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
+    assetLimitTitle: 'Patrimonio oltre la franchigia',
+    assetLimitNote: 'L’aiuto sociale presuppone che il patrimonio sia utilizzato fino a una franchigia (COSAS: {freibetrag} per questa economia domestica). Il patrimonio registrato la supera di circa {ueberschuss} — questa parte va di norma utilizzata prima. Orientamento, senza carattere vincolante.',
     repaymentTitle: 'Rimborso dell\'aiuto sociale',
     repaymentText: 'Nella maggior parte dei cantoni, l\'aiuto sociale ricevuto deve essere rimborsato se la situazione finanziaria migliora (p. es. eredità, nuovi redditi o aumento del patrimonio).',
     repaymentVaries: 'I termini e le condizioni variano a seconda del cantone (in genere 10–15 anni). Alcuni cantoni (p. es. Vaud) hanno abolito l\'obbligo di rimborso.',

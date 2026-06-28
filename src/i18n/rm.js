@@ -1654,6 +1654,8 @@ export default {
     householdAdultsChildren: 'Ménaschi: {adults} creschids + {children} uffants',
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
+    assetLimitTitle: 'Facultad sur la franchisa',
+    assetLimitNote: 'L’agid social premetta che la facultad vegnia duvrada fin ad ina franchisa (SKOS: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss} — questa part sto per regla vegnir duvrada l’emprim. Orientaziun, nagina infurmaziun obligatorica.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: "En la gronda part dals chantuns sto agid social retschavì vegnir rembursà, sche la situaziun finanziala sa meglierescha essenzialmain (p.ex. pervia d'ina ierta u d'ina auta entrada).",
     repaymentVaries: "Il termin e las cundiziuns varieschan tenor il chantun (per regla 10–15 onns). Tscherts chantuns renunzian al rembursament en cas da paupertad.",

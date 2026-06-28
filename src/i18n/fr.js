@@ -1306,6 +1306,8 @@ export default {
     householdAdultsChildren: 'Ménage : {adults} adulte(s) + {children} enfant(s)',
     childrenNote: 'Des prestations supplémentaires peuvent être demandées pour les enfants (garde, matériel scolaire, habillement). Renseignez-vous auprès du service social.',
     childrenEducationNote: 'Les enfants de 16 ans et plus en formation peuvent bénéficier d\'allocations de formation.',
+    assetLimitTitle: 'Fortune au-dessus de la franchise',
+    assetLimitNote: 'L’aide sociale suppose que la fortune soit utilisée jusqu’à une franchise (CSIAS : {freibetrag} pour ce ménage). La fortune saisie la dépasse d’environ {ueberschuss} — cette part doit en règle générale être utilisée d’abord. Orientation, sans valeur contraignante.',
     repaymentTitle: 'Remboursement de l\'aide sociale',
     repaymentText: { sie: 'Dans la plupart des cantons, l\'aide sociale reçue doit être remboursée si votre situation financière s\'améliore (p. ex. héritage, nouveaux revenus ou augmentation de fortune).', du: 'Dans la plupart des cantons, l\'aide sociale reçue doit être remboursée si ta situation financière s\'améliore (p. ex. héritage, nouveaux revenus ou augmentation de fortune).' },
     repaymentVaries: 'Le délai et les conditions varient selon le canton (en général 10 à 15 ans). Certains cantons (p. ex. Vaud) ont supprimé l\'obligation de remboursement.',
