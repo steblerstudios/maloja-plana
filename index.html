@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'">
   <meta name="description" content="Maloja Plana — Dein Schweizer Lebensordner. Steuerrechner, Sozialhilfe, IPV, Notfallkarte — 100% privat, offline, kostenlos.">
-  <meta name="keywords" content="Schweiz, Lebensordner, Steuerrechner, Sozialhilfe, IPV, Prämienverbilligung, Notfallkarte, Vorsorge, lokal, privat, offline, kostenlos, open source">
+  <meta name="keywords" content="Maloja Plana, Maloja Plana Lebensordner, Stebler Studios, Lebensordner Schweiz, Schweiz, Steuerrechner, Sozialhilfe, IPV, Prämienverbilligung, Notfallkarte, Vorsorge, lokal, privat, offline, kostenlos, open source">
   <meta name="author" content="Sophie Stebler / Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
   <meta name="rating" content="general">
@@ -34,17 +34,43 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Maloja Plana",
-    "url": "https://malojaplana.ch/",
-    "description": "Schweizer Lebensordner — Steuerrechner, Sozialhilfe, IPV, Notfallkarte. 100% lokal, privat, offline, kostenlos.",
-    "applicationCategory": "LifestyleApplication",
-    "operatingSystem": "Web",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CHF" },
-    "author": { "@type": "Organization", "name": "Stebler Studios", "email": "steblerstudios@gmail.com" },
-    "license": "https://www.gnu.org/licenses/agpl-3.0.html",
-    "inLanguage": ["de", "fr", "it", "en", "rm"],
-    "isAccessibleForFree": true
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://malojaplana.ch/#org",
+        "name": "Stebler Studios",
+        "url": "https://malojaplana.ch/",
+        "email": "steblerstudios@gmail.com",
+        "sameAs": ["https://github.com/steblerstudios"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://malojaplana.ch/#website",
+        "name": "Maloja Plana",
+        "alternateName": ["Maloja Plana Lebensordner", "Schweizer Lebensordner", "Ordnung & Ruhe"],
+        "url": "https://malojaplana.ch/",
+        "inLanguage": ["de", "fr", "it", "en", "rm"],
+        "publisher": { "@id": "https://malojaplana.ch/#org" }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://malojaplana.ch/#app",
+        "name": "Maloja Plana",
+        "alternateName": "Maloja Plana — Schweizer Lebensordner",
+        "url": "https://malojaplana.ch/",
+        "description": "Schweizer Lebensordner — Steuerrechner, Sozialhilfe, IPV, Notfallkarte. 100% lokal, privat, offline, kostenlos.",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CHF" },
+        "author": { "@id": "https://malojaplana.ch/#org" },
+        "publisher": { "@id": "https://malojaplana.ch/#org" },
+        "isPartOf": { "@id": "https://malojaplana.ch/#website" },
+        "sameAs": ["https://github.com/steblerstudios/maloja-plana"],
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+        "inLanguage": ["de", "fr", "it", "en", "rm"],
+        "isAccessibleForFree": true
+      }
+    ]
   }
   </script>
 
