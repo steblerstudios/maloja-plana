@@ -90,8 +90,9 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontSize: text.sm } }, t(sozialhilfe.noteKey, sozialhilfe.noteParams))
     ),
 
-    // Vermögensfreibetrag-Orientierung (SKOS C.7) — nur wenn Vermögen über dem Freibetrag liegt
-    sozialhilfe.vermoegenUeberFreibetrag > 0 && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
+    // Vermögensfreibetrag-Orientierung (SKOS C.7) — nur wenn ein Anspruch besteht UND
+    // das Vermögen über dem Freibetrag liegt (sonst ist die Vermögensfrage nicht entscheidungsrelevant)
+    sozialhilfe.eligible && sozialhilfe.vermoegenUeberFreibetrag > 0 && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('sozialhilfe.assetLimitTitle')),
       React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed } }, t('sozialhilfe.assetLimitNote', { freibetrag: formatCHF(sozialhilfe.vermoegensfreibetrag), ueberschuss: formatCHF(sozialhilfe.vermoegenUeberFreibetrag) }))
     ),
