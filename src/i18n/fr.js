@@ -147,6 +147,7 @@ export default {
     search: 'Recherche',
     notifications: 'Notifications',
     menu: 'Menu',
+    settings: 'Affichage et langue',
     completion: '{value}% complété',
     privacyNote: { sie: '100% local. Aucune donnée ne quitte votre appareil.', du: '100% local. Aucune donnée ne quitte ton appareil.' },
     sub: {
