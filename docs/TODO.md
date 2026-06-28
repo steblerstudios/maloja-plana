@@ -231,3 +231,90 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 **Hinweis:** Deploy wartet bewusst (Sophie gibt frei). Detail-Kontext zu jedem Punkt in den
 Memory-Notizen ([[agent-audits]], [[brand-identity]], [[braindump-4]], [[braindump-3]],
 [[stebler-studios-legal]], [[stipendien]], [[asylum-direction]]).
+
+---
+
+# 🔍 AUDIT 2026-06-28 — 6-Domänen-Flotte (read-only)
+
+6 Subagenten parallel, je mit den passenden `maloja-*` Skills: **Architektur/Local-First · CH-Berechnungen ·
+Design/Calm-UX · A11y/Dichte · i18n/Sprache · Governance/Nutzbarkeit.** Kernsysteme laut allen solide.
+Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpunkt v0.1.3-beta (`43593d7`).
+
+## 🔴 Kritisch (Datenverlust / Korrektheit / Vertrauen)
+1. **Dokument-Blobs als base64 in localStorage** (`ChapterView.jsx:1802` → Autosave `main.jsx:355`).
+   1 PDF ≈ sprengt 5-MB-Budget; `setItem` ohne try/catch → QuotaExceeded wirft, Datei NIE gespeichert,
+   aber Upload-Toast meldete Erfolg → stiller Datenverlust. Fix: Blobs in IndexedDB (der `idb`-Helper in
+   `storage.js:102` ist gebaut, aber UNGENUTZT) + Grössen-Guard + try/catch.
+2. **Dashboard-QuickCheck IPV widerspricht dem echten Tool** (`Dashboard.jsx:82`, `premiumCalc.js:6`).
+   QuickCheck nutzt nationale `KVG_BRACKETS_2024` (ignoriert Kanton) und zeigt konkrete CHF-Zahl; die
+   `PremiumSubsidy`-View nutzt kantonales `calculateIPV` → gleicher Nutzer, zwei Zahlen. Fix: QuickCheck
+   über `calculateIPV` oder qualitativ ohne harte CHF; `KVG_BRACKETS_2024` ausmustern.
+3. **SchuldenManager — schwächste neue Komponente (3 Agenten unabhängig).** Inputs/Selects nur
+   `placeholder` als Name, `status`/Betreibung-Selects ohne Namen (`:220-237,274-305`); Tabs ohne
+   `role=tab`/`aria-selected` (`:122-143`); kein `h2` (h1→h3-Sprung); Status nur über Farbe (`:245`);
+   roher Status-Key im Text (`:248`). WCAG 1.3.1/4.1.2/1.4.1/2.4.6. Fix: aria-labels, h2, Tab-Semantik,
+   Status-Text statt nur Farbe, Status via `t()`.
+4. **Vorlesen-Lücke** — `VorlesenButton` nur in ChapterView/Settings/Onboarding/BetaGate; FEHLT in
+   Schulden/Finanzübersicht/Sozialhilfe/Asyl/Stipendien/Prämien/Flyer — genau die jargon-/stress-lastigen
+   Screens für die Low-Literacy/Asyl-Zielgruppe. Zudem `VorlesenButton.jsx:9` aria-label `'Vorlesen'`
+   hartcodiert DE. Fix: Vorlesen in diese Views; aria-label übersetzen.
+5. **Raw-Key-Leak `kvg.generikaNote`** — fehlt in ALLEN 5 Sprachen (`KVGLeistungen.jsx:94`). Generika-Zeile
+   zeigt rohen Key. Fix: in alle 5 ergänzen.
+6. **Raw-Key-Leak `kkScanner.ahv`** — fehlt in ALLEN 5 (`KKScanner.jsx:157`); `|| field`-Fallback schützt
+   NICHT (t() liefert truthy Key). KK-Karten-Konflikttabelle zeigt rohen Key. Fix: in alle 5 ergänzen.
+
+## 🟠 Hoch
+- **SKOS-Vermögensfreibetrag veraltet UND doppelt/widersprüchlich.** `cantonalData.js:293`
+  (8000/4000 +2000, Cap 10000) vs `sozialhilfeRechner.js:101` (4000 +2000, kein Cap) → Paar bekommt
+  8000 vs 6000. Aktuelle SKOS-Empfehlung: **6000 ledig / 12000 Paar / +3000 pro Kind.** Fix: 1 Helper,
+  Werte aktualisieren, als Empfehlung labeln. ⚠️ Tests `cantonalData.test.js:48` + `sozialhilfeRechner.test.js:119` zementieren Altwerte → mit anpassen.
+- **13. AHV-Rente (ab 2026) nicht modelliert** (`ahvRechner.js:122` `×12`). Jahresrente ~8% zu tief.
+  Fix: ×13 bzw. eigene „13. Rente"-Zeile; `monatsrente` bleibt.
+- **Gemeinde-Steuerfuss-Lücke bestätigt** — Rechner modellieren nur direkte Bundessteuer
+  (`berechneBundessteuer`). Jeder Konsument muss explizit „nur direkte Bundessteuer" labeln + Hinweis
+  Kantons-/Gemeindesteuer. (= bekannter P13-Punkt, Impact = systemisch.)
+- **IPV ignoriert Kinderalter** (`cantonalData.js:336`) — junge Erwachsene 19–25 in Ausbildung haben
+  eigene (höhere) Kategorie. `children[].age` ist vorhanden. Min.: „Kinder bis 18" labeln.
+- **`@capacitor/*` Runtime-Deps** (`package.json:24`) gegen Zero-Dep-Constraint. Kein Import in `src/`
+  (nur iOS-Shell). Fix: `@capacitor/cli` → devDeps; CI-Guard gegen `@capacitor`-Import in `src/`.
+- **`radius.md` JS↔CSS desync** (`tokens.js:54`=6 vs `tokens.css:67`=10px) — Single-Source-Bruch,
+  betrifft alle `radius.md`-Flächen. Fix: auf einen Wert einigen.
+- **Finanz-Alarm-Flächen detunen** — Schulden-KPI-Grid (`SchuldenManager.jsx:147`), Finanzübersicht
+  Armuts-Prozentbalken (`FinanzUebersicht.jsx:207`), OverdueBanner-Gradients+rote Bold-Zahl
+  (`OverdueBanner.jsx:37`). Schamsensibelste Stellen + lauteste UI. Fix: Zeilenlisten/`<details>` statt löschen.
+- **Router-Allow-Liste-Drift** (`hashRouter.js:19`) — `settings`, `taxImport`, `legal` fehlen in
+  `VALID_VIEWS` → funktionieren beim Klick, gehen aber bei Reload/PWA-Neustart/geteiltem Link verloren
+  (zurück aufs Dashboard). Gleiche Klasse wie früherer kvg/flyer-Fix. Fix: 3 Strings ergänzen + Guard-Test.
+- **`validation.invalid*` „Ungültig"** (`de.js:1697-1704`) — laut writing-language-Skill verbotenes
+  Fehlerwort. Fix: ruhig umformulieren („… bitte prüfen") in allen 5.
+- **Falsche Domain im Export** (`FinanzUebersicht.jsx:95`) — Print/PDF-Footer `maloja-plana.ch`
+  (Bindestrich) statt live `malojaplana.ch`. Fix: korrigieren.
+- **Schulden-Formular**: 6 Felder ohne Disclosure, nur creditor+amount Pflicht aber nichts markiert;
+  leere Eingabe → `handleAddDebt` returnt still (kein Feedback). Fix: Progressive Disclosure + ruhige Validierung.
+- **Autosave-Block ungeschützt** (`main.jsx:350-370`) — Throw killt Save-Loop, `isSaving` bleibt true.
+  Fix: jedes `setItem` in try/catch + ruhige „Speichern fehlgeschlagen"-Meldung.
+- **Sandbox-Banner** (`main.jsx:618-658`) `role=status` umschliesst 3 Buttons (Live-Region). Fix: Buttons
+  aus der Live-Region nehmen.
+
+## 🟡 Mittel
+- Backup/Export liest Dokumente nur aus localStorage (`autoBackup.js`, `backupCrypto.js:42`) → bei
+  IndexedDB-Migration (s. 🔴 #1) Backups mitziehen, sonst stoppen Datei-Backups still.
+- EventBus wächst unbegrenzt (`event-bus.ts:9`), kein Error-Isolation der Listener → langsames Leck +
+  Throw bricht Bus. Fix: Ring-Buffer + try/catch pro Listener.
+- 3 parallele Tool-Registries driften (`Dashboard.jsx:1196`, `MobileNav.jsx:136`, `SearchView.jsx:8`) —
+  SearchView findet ~10 Tools nicht. Fix: eine geteilte Registry.
+- AsylView/StipendienView Section-Titel sind `<div>` statt `<h3>` → keine In-Page-Heading-Navigation (SR).
+- Backup-Passphrase akzeptiert 4 Zeichen ohne Hinweis (`backupCrypto.js:73`) — ruhige Längen-Empfehlung.
+- Onboarding/Schulden nutzen Unicode-Glyphen (□◰●◇↧✕) statt `IconSystem` → Materialitäts-Inkonsistenz.
+- AHV/ALV-Konstanten 2026 korrekt, aber „recheck Jan 2027"-Wartungsnotiz neben Versions-Tags setzen.
+
+## ✅ Bestätigt solide (nicht anfassen)
+- Migration (`dataMigration.js`): Snapshot, sequenziell v0→v4, restore-on-failure, löscht nie Felder.
+- Service Worker v9: cache-first hashed, network-first sonst, `allSettled`-Precache, Alt-Cache-Cleanup.
+- BVG 2026, EO 220, ALV, DBG-2026-Tarif (auf Rappen), SKOS-GBL 1061 — alle korrekt verifiziert.
+- `backupCrypto` (AES-256-GCM, PBKDF2 100k) korrekt & dependency-free. i18n-Parität 32 Tests grün,
+  `doctors.label`-Leak ist gefixt. Keine verwaiste Komponente, kein toter Generator, kein sichtbarer Stub.
+
+**Meta-Antwort „mehr/andere Experten?":** Nein — keine neuen Agent-Typen nötig. Die ~25 `maloja-*` Skills
+sind die Experten; richtig ist die 6-Domänen→Skill-Kopplung (oben). **„Alles nutzbar wie gedacht?"** →
+Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/taxImport/legal, 🟠 oben).
