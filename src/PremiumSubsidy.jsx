@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink } from './premiumCalc.js';
 import { Icon } from './IconSystem.jsx';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
 export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
+  const vorlesen = useVorlesenContext();
   const [showCalculation, setShowCalculation] = useState(true);
 
   const canton = data.basis?.canton || '';
@@ -46,7 +49,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   if (!canton) {
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
-      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle')),
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
         'ⓘ ' + t('premium.enterCanton')
       )
@@ -55,7 +58,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
-    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle')),
+    React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },

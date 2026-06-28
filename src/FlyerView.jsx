@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
+import { useVorlesenContext } from './hooks/vorlesenContext.js';
+import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { buildFlyerHtml } from './flyerGenerator.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -8,6 +10,7 @@ import { text, weight, space, radius } from './config/tokens.js';
 // Verteil-Flyer mit QR-Code zu malojaplana.ch (in der aktuell gewählten Sprache).
 // Für Beratungsstellen, Gemeinden, Aushänge — niederschwellige Verbreitung.
 export const FlyerView = ({ palette, t, lang }) => {
+  const vorlesen = useVorlesenContext();
   const qrRef = useRef(null);
   const url = 'https://malojaplana.ch/?lang=' + (lang || 'de');
 
@@ -62,7 +65,7 @@ export const FlyerView = ({ palette, t, lang }) => {
       React.createElement(Icon, { name: 'dokumentTresor', size: 20 }),
       t('flyer.title')
     ),
-    React.createElement('p', { style: s.intro }, t('flyer.intro')),
+    React.createElement('p', { style: s.intro }, t('flyer.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('flyer.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     React.createElement('div', { style: s.preview },
       React.createElement('div', { style: s.brand }, 'Maloja Plana'),
