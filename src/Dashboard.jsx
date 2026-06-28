@@ -411,13 +411,13 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     active.length > 0 && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, margin: space.sm + 'px 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.title')),
-    active.length > 0 && (() => {
+    (() => {
       const n = active.length;
       const rowH = 32;
       const h = Math.max(n * rowH + 20, 90);
       const trunkX = 70;
       const baseY = h - 4;
-      const trunkTopY = Math.max(10, h - n * rowH - 6);
+      const trunkTopY = Math.max(10, h - Math.max(n, 1) * rowH - 6);
       const attachY = (i) => n === 1 ? (baseY + trunkTopY) / 2 : trunkTopY + (baseY - trunkTopY) * (i / (n - 1));
       return React.createElement('svg', {
         viewBox: '0 0 340 ' + h,
@@ -431,12 +431,10 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
           x1: trunkX, y1: baseY, x2: trunkX, y2: trunkTopY,
           stroke: palette.sage, strokeWidth: 3, strokeLinecap: 'round', opacity: 0.55,
         }),
-        // Krone — wächst mit der Zahl der Verbindungen
-        ...(n >= 2 ? [
-          React.createElement('circle', { key: 'cr1', cx: trunkX - 5, cy: trunkTopY - 2, r: 3, fill: palette.sage, opacity: 0.5 }),
-          React.createElement('circle', { key: 'cr2', cx: trunkX + 5, cy: trunkTopY - 1, r: 3, fill: palette.sage, opacity: 0.5 }),
-          React.createElement('circle', { key: 'cr3', cx: trunkX, cy: trunkTopY - 6, r: 3.5, fill: palette.sage, opacity: 0.6 }),
-        ] : []),
+        // Krone — immer da (Setzling), wächst mit der Zahl der Verbindungen
+        React.createElement('circle', { key: 'cr1', cx: trunkX - 5, cy: trunkTopY - 2, r: 3, fill: palette.sage, opacity: 0.5 }),
+        React.createElement('circle', { key: 'cr2', cx: trunkX + 5, cy: trunkTopY - 1, r: 3, fill: palette.sage, opacity: 0.5 }),
+        React.createElement('circle', { key: 'cr3', cx: trunkX, cy: trunkTopY - 6, r: 3.5, fill: palette.sage, opacity: 0.6 }),
         // Äste + Blatt-Labels
         ...active.map((c, i) => {
           const top = 10 + i * rowH;
@@ -825,7 +823,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
 
 
-    // ─── Berg-Detail — Fortschritt, Grundordnung, Verbindungen (Schicht 1) ──
+    // ─── Verbindungs-Baum — wächst mit den Angaben (immer sichtbar) ──
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
+
+    // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
       React.createElement('summary', {
         style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, padding: space.sm + 'px 0', letterSpacing: '0.2px' }
@@ -914,7 +915,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         })()
       )
     ),
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
       )
     ),
     // ─── Highlight tools — immediate value (first for new users) ──
