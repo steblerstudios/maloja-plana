@@ -805,6 +805,7 @@ export default {
 
   datenWirken: {
     title: { sie: 'I Suoi dati sono già attivi:', du: 'I tuoi dati sono già attivi:' },
+    treeCaption: { sie: 'Ciò che cresce dai Suoi dati', du: 'Ciò che cresce dai tuoi dati' },
     tax: 'Calcolatore fiscale personalizzato',
     ipv: 'Verifica riduzione premi attiva',
     sozial: 'Orientamento assistenza sociale attivo',
