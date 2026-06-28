@@ -16,25 +16,28 @@ describe('steuerRechner', () => {
       expect(bundessteuerAlleinstehend(-1000)).toBe(0);
     });
 
-    it('returns 0 for income within first bracket (0-14500)', () => {
+    it('returns 0 for income within first bracket (0-15200)', () => {
       expect(bundessteuerAlleinstehend(10000)).toBe(0);
-      expect(bundessteuerAlleinstehend(14500)).toBe(0);
+      expect(bundessteuerAlleinstehend(15200)).toBe(0);
     });
 
-    it('calculates tax for second bracket (14501-31600)', () => {
+    it('calculates tax for second bracket (15201-33200)', () => {
       const tax = bundessteuerAlleinstehend(20000);
-      // (20000 - 14500) * 0.77% = 5500 * 0.0077 = 42.35
-      expect(tax).toBe(42.35);
+      // (20000 - 15200) * 0.77% = 4800 * 0.0077 = 36.96 (amtlicher ESTV-Wert 2026)
+      expect(tax).toBe(36.96);
+    });
+
+    it('matches the official ESTV Tarif 2026 anchor values exactly', () => {
+      expect(bundessteuerAlleinstehend(60000)).toBe(671.40);   // ESTV-Beispiel im Rundschreiben
+      expect(bundessteuerAlleinstehend(100000)).toBe(2684.35);
+      expect(bundessteuerVerheiratet(53400)).toBe(237.00);
     });
 
     it('calculates tax for income at 50000', () => {
       const tax = bundessteuerAlleinstehend(50000);
-      // 0-14500: 0
-      // 14501-31600: 17100 * 0.0077 = 131.67
-      // 31601-41400: 9800 * 0.0088 = 86.24
-      // 41401-50000: 8600 * 0.0264 = 227.04
-      // Total: 444.95
-      expect(tax).toBe(444.95);
+      // Stufe ab 43'500 (amtl. Grundsteuer 229.20) + (50000-43500) * 2.64%
+      // 229.20 + 6500 * 0.0264 = 229.20 + 171.60 = 400.80 (amtlich)
+      expect(tax).toBe(400.80);
     });
 
     it('calculates tax for income at 100000', () => {
@@ -44,7 +47,7 @@ describe('steuerRechner', () => {
       expect(tax).toBeLessThan(5000);
     });
 
-    it('applies flat rate above 755200', () => {
+    it('applies flat rate above 793900', () => {
       const tax = bundessteuerAlleinstehend(800000);
       // 800000 * 11.5% = 92000
       expect(tax).toBe(92000);
@@ -56,18 +59,18 @@ describe('steuerRechner', () => {
   });
 
   describe('bundessteuerVerheiratet (Verheiratetentarif)', () => {
-    it('returns 0 for income <= 28300', () => {
+    it('returns 0 for income <= 29700', () => {
       expect(bundessteuerVerheiratet(0)).toBe(0);
-      expect(bundessteuerVerheiratet(28300)).toBe(0);
+      expect(bundessteuerVerheiratet(29700)).toBe(0);
     });
 
     it('calculates tax for second bracket', () => {
       const tax = bundessteuerVerheiratet(40000);
-      // (40000 - 28300) * 1% = 11700 * 0.01 = 117
-      expect(tax).toBe(117);
+      // (40000 - 29700) * 1% = 10300 * 0.01 = 103
+      expect(tax).toBe(103);
     });
 
-    it('applies flat rate above 895900', () => {
+    it('applies flat rate above 941300', () => {
       const tax = bundessteuerVerheiratet(1000000);
       // 1000000 * 11.5% = 115000
       expect(tax).toBe(115000);
@@ -134,7 +137,7 @@ describe('steuerRechner', () => {
     });
 
     it('returns correct marginal rate for 50000', () => {
-      // 41401-55200 bracket: 2.64%
+      // Stufe 43'500–58'000: 2.64%
       expect(grenzsteuersatz(50000)).toBe(2.64);
     });
 
@@ -144,7 +147,7 @@ describe('steuerRechner', () => {
     });
 
     it('returns married marginal rates', () => {
-      // 28301-50900 bracket: 1%
+      // Stufe 29'700–53'400: 1%
       expect(grenzsteuersatz(40000, true)).toBe(1);
     });
   });
@@ -172,7 +175,7 @@ describe('steuerRechner', () => {
     });
 
     it('exports data version', () => {
-      expect(STEUER_DATA_VERSION).toBe('2024/2025');
+      expect(STEUER_DATA_VERSION).toBe('2026');
     });
   });
 });
