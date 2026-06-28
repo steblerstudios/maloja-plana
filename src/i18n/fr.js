@@ -27,6 +27,7 @@ export default {
       savings: 'Même de petites réserves comptent. Il s\'agit d\'avoir une vue d\'ensemble, pas d\'un objectif.',
       credit: 'Cartes de crédit et prêts en cours — pour une vue complète de votre situation financière.',
       provision: 'Pilier 3a, 3b et placements. Prévoyance volontaire que vous souhaitez suivre.',
+      assets: 'Fortune à la valeur fiscale — titres, épargne, autres avoirs. Le pilier 3a lié reste à part.',
     },
     versicherungen: {
       basic: 'Chaque personne en Suisse a une caisse maladie. Rassemblez ici les informations essentielles.',

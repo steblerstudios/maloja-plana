@@ -27,6 +27,7 @@ export default {
       savings: 'Anche piccole riserve contano. Qui si tratta di avere una visione d\'insieme, non di un obiettivo.',
       credit: { sie: 'Carte di credito e prestiti in corso — per un quadro completo della Sua situazione finanziaria.', du: 'Carte di credito e prestiti in corso — per un quadro completo della tua situazione finanziaria.' },
       provision: { sie: 'Pilastro 3a, 3b e investimenti. Previdenza volontaria che vuole tenere d\'occhio.', du: 'Pilastro 3a, 3b e investimenti. Previdenza volontaria che vuoi tenere d\'occhio.' },
+      assets: 'Sostanza al valore fiscale — titoli, risparmi, altri averi. Il pilastro 3a vincolato resta escluso.',
     },
     versicherungen: {
       basic: { sie: 'Ogni persona in Svizzera ha una cassa malati. Raccolga qui le informazioni principali.', du: 'Ogni persona in Svizzera ha una cassa malati. Raccogli qui le informazioni principali.' },

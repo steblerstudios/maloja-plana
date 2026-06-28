@@ -27,6 +27,7 @@ export default {
       savings: 'Auch kleine Rücklagen zählen. Hier geht es um den Überblick, nicht um einen Zielwert.',
       credit: { sie: 'Kreditkarten und laufende Darlehen — für den Gesamtüberblick über Ihre finanzielle Situation.', du: 'Kreditkarten und laufende Darlehen — für den Gesamtüberblick über Deine finanzielle Situation.' },
       provision: { sie: 'Säule 3a, 3b und Anlagen. Freiwillige Vorsorge, die Sie im Blick behalten wollen.', du: 'Säule 3a, 3b und Anlagen. Freiwillige Vorsorge, die Du im Blick behalten willst.' },
+      assets: 'Vermögen zum Steuerwert — Wertschriften, Sparguthaben, Übriges. Die gebundene Säule 3a bleibt hier aussen vor.',
     },
     versicherungen: {
       basic: { sie: 'Jede Person in der Schweiz hat eine Krankenkasse. Hier sammeln Sie die wichtigsten Angaben dazu.', du: 'Jede Person in der Schweiz hat eine Krankenkasse. Hier sammelst Du die wichtigsten Angaben dazu.' },
