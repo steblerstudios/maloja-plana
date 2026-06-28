@@ -2,7 +2,7 @@ export default {
   sections: {
     basis: { person: 'Person', contact: 'Contact', family: 'Family' },
     wohnen: { address: 'Address', costs: 'Costs', landlord: 'Landlord', property: 'Property' },
-    finanzen: { income: 'Income', budgetLight: 'Monthly expenses', obligations: 'Obligations', savings: 'Savings', credit: 'Credit', provision: 'Provision' },
+    finanzen: { income: 'Income', budgetLight: 'Monthly expenses', obligations: 'Obligations', savings: 'Savings', assets: 'Assets & securities', credit: 'Credit', provision: 'Provision' },
     versicherungen: { basic: 'Basic insurance', occupational: 'Occupational pension', additional: 'Additional insurance', property: 'Property & travel insurance', mobility: 'Mobility', social: 'Social insurance' },
     ausbildung: { education: 'Education', work: 'Employment', languages: 'Languages' },
     behoerden: { taxes: 'Taxes', legal: 'Legal', representation: 'Representation' },
@@ -452,6 +452,8 @@ export default {
         savingsGoal: 'Savings goal (CHF)',
         savingsAccount: 'Savings (CHF)',
         bankName: 'Bank',
+        securitiesValue: 'Securities / portfolio (tax value) CHF',
+        otherAssets: 'Other assets CHF',
         creditCard: { label: 'Credit cards?', options: { no: 'No', one: 'Yes (1)', multiple: 'Yes (2+)' } },
         loans: 'Personal loans (CHF)',
         monthlyTax: 'Monthly taxes (CHF)',
@@ -481,6 +483,8 @@ export default {
         alimenteReceived: 'Maintenance payments you receive monthly.',
         alimentePaid: 'Maintenance payments you make monthly.',
         debtPayments: 'Monthly instalments for ongoing debts or repayments.',
+        securitiesValue: 'Tax value of shares, funds and bonds as of 31 Dec — relevant for wealth tax.',
+        otherAssets: 'Cash, precious metals, cryptocurrencies, vehicles, etc. (tax value).',
       },
       docs: {
         tax_return: 'Tax return',
