@@ -65,11 +65,17 @@ export const parseSwissNumber = (raw) => {
 //     Begriffe für monthlyIncome. 'Reineinkommen'/'steuerbares Einkommen' landen
 //     stattdessen in taxableIncome (eigenes Feld, 1:1 Jahreswert, Orientierung +
 //     füttert den TaxCalculator als bereits steuerbare Basis).
+// `exclude`: Begriffe, die einen sonst passenden Schlüssel wieder verwerfen — gegen
+// Substring-Fehltreffer. 'Wertschriftenertrag'/'…verwaltungskosten' sind Ertrag/Aufwand
+// (kein Vermögenswert), 'Mietkautions-/Mietzinsdepot' ist Mietkaution (kein Portfolio),
+// 'Säule 3a-Beitrag' ist der Jahresbeitrag (kein Guthaben).
 export const FIELD_MAP = [
   { target: 'securitiesValue', labelKey: 'taxImport.field.securities', period: 'value',
-    keywords: ['wertschrift', 'wertschriftenverzeichnis', 'securities', 'titres', 'titoli', 'depot', 'portefeuille', 'investiziun'] },
+    keywords: ['wertschrift', 'wertschriftenverzeichnis', 'securities', 'titres', 'titoli', 'depot', 'portefeuille', 'investiziun'],
+    exclude: ['ertrag', 'verwaltungskosten', 'kaution', 'mietzins', 'garantie'] },
   { target: 'pension3aBalance', labelKey: 'taxImport.field.pension3a', period: 'value',
-    keywords: ['säule 3a', 'saule 3a', 'pilier 3a', 'pilastro 3a', 'pitga 3a', '3a guthaben', '3a balance'] },
+    keywords: ['säule 3a', 'saule 3a', 'pilier 3a', 'pilastro 3a', 'pitga 3a', '3a guthaben', '3a balance'],
+    exclude: ['beitrag', 'einzahlung', 'einlage', 'versement', 'cotisation', 'contributo'] },
   { target: 'savingsAccount', labelKey: 'taxImport.field.savings', period: 'value',
     keywords: ['sparkonto', 'ersparnis', 'épargne', 'epargne', 'risparmi', 'savings', 'spargn', 'sparguthaben'] },
   { target: 'monthlyTax', labelKey: 'taxImport.field.tax', period: 'annual',
@@ -92,6 +98,7 @@ const normalize = (s) => String(s || '').toLowerCase().normalize('NFC').replace(
 const matchField = (rawKey) => {
   const key = normalize(rawKey);
   for (const def of FIELD_MAP) {
+    if (def.exclude?.some(x => key.includes(x))) continue;
     if (def.keywords.some(k => key.includes(k))) return def;
   }
   return null;
