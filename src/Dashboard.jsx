@@ -661,7 +661,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               onClick: () => onSelectChapter(chIdx),
               style: {
                 display: 'flex', alignItems: 'center', gap: space.md,
-                padding: '20px 4px',
+                padding: simpleView ? '26px 4px' : '20px 4px',
                 background: 'transparent',
                 border: 'none',
                 borderBottom: isLastInTier ? 'none' : '1px solid ' + palette.border,
@@ -679,7 +679,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             },
               React.createElement('div', {
                 style: {
-                  width: '40px', height: '40px', borderRadius: radius.md,
+                  width: simpleView ? '56px' : '40px', height: simpleView ? '56px' : '40px', borderRadius: radius.md,
                   background: getIconBg(pct, ch.key),
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0, color: statusColor, opacity: getIconOpacity(pct),
@@ -688,14 +688,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                   border: pct === 100 ? '1px solid ' + palette.sage + '30' : '1px solid transparent',
                   animation: pct === 100 ? 'mp-stamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' : 'none',
                 }
-              }, IconFn ? React.createElement('div', { style: { width: '24px', height: '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
+              }, IconFn ? React.createElement('div', { style: { width: simpleView ? '34px' : '24px', height: simpleView ? '34px' : '24px' } }, IconFn()) : React.createElement('span', { style: { fontSize: text.lg } }, ch.icon)),
 
               React.createElement('div', { style: { flex: 1, minWidth: 0 } },
                 React.createElement('div', {
                   style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: '2px' }
                 },
-                  React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi } }, ch.title),
-                  React.createElement('span', {
+                  React.createElement('div', { style: { fontSize: simpleView ? text.lg : text.body, fontWeight: weight.semi } }, ch.title),
+                  !simpleView && React.createElement('span', {
                     style: {
                       fontSize: text.xs, fontWeight: weight.medium,
                       color: statusColors[status],
@@ -704,8 +704,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                     }
                   }, t('chapterStatus.' + status))
                 ),
-                React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
-                status !== 'leer' && (() => {
+                !simpleView && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, ch.description),
+                !simpleView && status !== 'leer' && (() => {
                   const snippet = buildSnippet(ch.key, data[ch.key] || {}, data, t);
                   return snippet ? React.createElement('div', {
                     style: { fontSize: text.xs, color: palette.sageDeep || palette.sage, lineHeight: leading.normal, marginTop: space.xs, fontStyle: 'italic' }
