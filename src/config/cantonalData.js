@@ -246,19 +246,24 @@ export function getRentLimit(canton, householdSize) {
   return limits.family4;
 }
 
-// SKOS-Grundbedarf (Sozialhilfe) 2024/2025
+// SKOS-Grundbedarf für den Lebensunterhalt (GBL), Stand 2025/2026 (SKOS-RL C.3.1)
+// Quelle: SKOS, bestätigt via Sozialhilfehandbuch Kanton ZH + AG. Ab 8 Personen + CHF 216/Person.
+// Muss mit grundbedarfFuerHaushalt() in data/sozialhilfeRechner.js übereinstimmen (Guard-Test).
 export const SKOS_GRUNDBEDARF = {
-  1: 1031,
-  2: 1577,
-  3: 1918,
-  4: 2201,
-  5: 2446,
-  6: 2691,
-  7: 2891,
+  1: 1061,
+  2: 1624,
+  3: 1974,
+  4: 2271,
+  5: 2568,
+  6: 2784,
+  7: 3000,
 };
+const SKOS_GBL_PRO_WEITERE = 216;
 
 export function getGrundbedarf(householdSize) {
-  return SKOS_GRUNDBEDARF[Math.min(householdSize, 7)] || SKOS_GRUNDBEDARF[1];
+  if (householdSize < 1) return SKOS_GRUNDBEDARF[1];
+  if (householdSize <= 7) return SKOS_GRUNDBEDARF[householdSize];
+  return SKOS_GRUNDBEDARF[7] + (householdSize - 7) * SKOS_GBL_PRO_WEITERE;
 }
 
 // Sozialhilfe-Berechnung (SKOS-basiert, kantonal angepasst)
@@ -279,6 +284,12 @@ export function calculateSozialhilfe(data) {
   const totalBedarf = grundbedarf + effectiveRent + effectiveKK;
   const deficit = totalBedarf - income;
 
+  // Vermögensfreibetrag (SKOS C.7): CHF 4'000 Einzelperson, + CHF 2'000 pro weitere Person.
+  // Orientierung: Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
+  const vermoegen = Number(data.finanzen?.securitiesValue || 0) + Number(data.finanzen?.otherAssets || 0) + Number(data.finanzen?.savingsAccount || 0);
+  const vermoegensfreibetrag = 4000 + Math.max(0, householdSize - 1) * 2000;
+  const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
+
   return {
     grundbedarf,
     effectiveRent,
@@ -288,6 +299,9 @@ export function calculateSozialhilfe(data) {
     income,
     deficit: Math.max(0, deficit),
     eligible: deficit > 0,
+    vermoegen,
+    vermoegensfreibetrag,
+    vermoegenUeberFreibetrag,
     householdSize,
     adults: hh.adults,
     childrenCount: hh.childrenCount,
