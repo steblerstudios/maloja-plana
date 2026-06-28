@@ -286,6 +286,7 @@ const AppInner = () => {
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [dbBlocked, setDbBlocked] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
   const sandboxActive = sandboxMode && sandboxData;
   const activeData = demoMode ? DEMO_DATA : (sandboxActive ? sandboxData : data);
@@ -358,9 +359,15 @@ const AppInner = () => {
   useEffect(() => {
     const on = () => setIsOffline(false);
     const off = () => setIsOffline(true);
+    const blocked = () => setDbBlocked(true);
     window.addEventListener('online', on);
     window.addEventListener('offline', off);
-    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
+    window.addEventListener('maloja:db-blocked', blocked);
+    return () => {
+      window.removeEventListener('online', on);
+      window.removeEventListener('offline', off);
+      window.removeEventListener('maloja:db-blocked', blocked);
+    };
   }, []);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   useEffect(() => {
@@ -637,6 +644,26 @@ const AppInner = () => {
         role: 'status',
         style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
       }, '· offline')
+    ),
+    dbBlocked && React.createElement('div', {
+      role: 'status',
+      style: {
+        padding: '10px 16px',
+        background: palette.sand + '18',
+        borderBottom: '1px solid ' + palette.sand + '30',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px',
+        flexWrap: 'wrap',
+      }
+    },
+      React.createElement('div', { style: { flex: 1, minWidth: 0, fontSize: text.xs, color: palette.mid } }, t('trust.dbBlocked')),
+      React.createElement('button', {
+        onClick: () => setDbBlocked(false),
+        style: {
+          padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
+          color: palette.text, fontFamily: 'inherit', flexShrink: 0,
+        }
+      }, t('common.close'))
     ),
     demoMode && React.createElement('div', {
       role: 'status',
