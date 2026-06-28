@@ -2126,6 +2126,7 @@ export default {
     printAction: 'Stampare panoramica / salvare come PDF',
     disclaimer: 'Tutti i valori sono indicativi. Per informazioni vincolanti, contattare l\'autorità competente.',
     incomePosition: 'Posizionamento',
+    showPosition: 'Mostra posizionamento',
     belowPoverty: 'Sotto la soglia di povertà',
     nearPoverty: 'Vicino alla soglia di povertà',
     belowMedian: 'Sotto la mediana',

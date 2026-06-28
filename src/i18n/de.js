@@ -2124,6 +2124,7 @@ export default {
     printAction: 'Übersicht drucken / als PDF speichern',
     disclaimer: { sie: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wenden Sie sich an die zuständige Stelle.', du: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle.' },
     incomePosition: 'Einordnung',
+    showPosition: 'Einordnung anzeigen',
     belowPoverty: 'Unter Armutsgrenze',
     nearPoverty: 'Knapp über Armutsgrenze',
     belowMedian: 'Unter Median',

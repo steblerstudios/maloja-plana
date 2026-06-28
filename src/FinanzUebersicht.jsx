@@ -221,12 +221,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, t('finanzUebersicht.incomePosition')),
           React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
         ),
-        React.createElement('div', { style: { height: '4px', background: palette.border, borderRadius: '2px', overflow: 'hidden', marginBottom: '4px' } },
-          React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: `width ${duration.normal}ms ${ease}` } })
-        ),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
-          React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
-          React.createElement('span', null, t('finanzUebersicht.median') + ' CHF 6’788')
+        React.createElement('details', { style: { marginBottom: '4px' } },
+          React.createElement('summary', { style: { fontSize: text.xs, color: palette.mid, cursor: 'pointer' } }, t('finanzUebersicht.showPosition')),
+          React.createElement('div', { style: { height: '4px', background: palette.border, borderRadius: '2px', overflow: 'hidden', marginTop: '8px', marginBottom: '4px' } },
+            React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: `width ${duration.normal}ms ${ease}` } })
+          ),
+          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
+            React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
+            React.createElement('span', null, t('finanzUebersicht.median') + ' CHF 6’788')
+          )
         ),
         (() => {
           const vgl = getBranchenvergleich(income);
