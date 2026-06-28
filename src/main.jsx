@@ -28,6 +28,7 @@ import StorageWarning from './StorageWarning.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
 const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
+const TaxImport = React.lazy(() => import('./TaxImport.jsx'));
 const SchuldenManager = React.lazy(() => import('./SchuldenManager.jsx'));
 const TaxCalculator = React.lazy(() => import('./TaxCalculator.jsx'));
 const OrganDonation = React.lazy(() => import('./OrganDonation.jsx'));
@@ -674,6 +675,12 @@ const AppInner = () => {
           palette, t,
           currentBudget: activeData.finanzen || {},
           onImport: (updated) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...updated } }))
+        }),
+        view === 'taxImport' && React.createElement(TaxImport, {
+          palette, t,
+          currentFinanzen: activeData.finanzen || {},
+          onImport: (merged) => writeData(prev => ({ ...prev, finanzen: { ...prev.finanzen, ...merged } })),
+          onNavigate: handleNavigate,
         }),
         view === 'schulden' && React.createElement(SchuldenManager, {
           palette, t,
