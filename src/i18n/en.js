@@ -2036,7 +2036,7 @@ export default {
     exportEncrypted: 'Export (encrypted)',
     importFile: 'Import backup',
     passphrase: 'Passphrase',
-    passphraseHint: 'At least 4 characters. Remember this — there is no recovery.',
+    passphraseHint: 'At least 4 characters — 12 or more recommended, e.g. several words. Remember this, there is no recovery.',
     passphraseConfirm: 'Confirm passphrase',
     passphraseMismatch: 'Passphrases do not match.',
     encrypting: 'Encrypting...',

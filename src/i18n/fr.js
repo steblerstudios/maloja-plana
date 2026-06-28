@@ -2035,7 +2035,7 @@ export default {
     exportEncrypted: 'Export (chiffré)',
     importFile: 'Importer une sauvegarde',
     passphrase: 'Mot de passe',
-    passphraseHint: 'Au moins 4 caractères. Retenez-le — il n\'y a pas de récupération.',
+    passphraseHint: 'Au moins 4 caractères — 12 ou plus recommandés, par exemple plusieurs mots. Retenez-le, il n\'y a pas de récupération.',
     passphraseConfirm: 'Confirmer le mot de passe',
     passphraseMismatch: 'Les mots de passe ne correspondent pas.',
     encrypting: 'Chiffrement...',
