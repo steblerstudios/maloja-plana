@@ -33,6 +33,8 @@ export default {
     wunschKassePlaceholder: 'e.g. Helsana',
     reminderTitleTo: 'Switch to {insurer} — deadline',
     todoText: 'Switch health insurer: compare premiums',
+    path3bCaveat: 'Not every insurer reliably does this — get written confirmation that the old policy was cancelled. Cancelling yourself is always the safe way.',
+    debtNote: 'You can only switch if you have no outstanding premiums or arrears with your current insurer — otherwise it can block the switch. Settle any open amounts first.',
   },
   sections: {
     basis: { person: 'Person', contact: 'Contact', family: 'Family' },

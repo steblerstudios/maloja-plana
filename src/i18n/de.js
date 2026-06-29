@@ -33,6 +33,8 @@ export default {
     wunschKassePlaceholder: 'z.B. Helsana',
     reminderTitleTo: 'Wechsel zu {insurer} — Frist',
     todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
+    path3bCaveat: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.',
+    debtNote: 'Wechseln kannst du nur, wenn du bei deiner aktuellen Kasse keine offenen Prämien oder Ausstände hast — sonst kann sie den Wechsel blockieren. Offene Beträge zuerst begleichen.',
   },
   sections: {
     basis: { person: 'Person', contact: 'Kontakt', family: 'Familie' },
