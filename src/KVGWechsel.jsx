@@ -115,9 +115,13 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
       pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
         React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),
       pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
-        React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')))
+        React.createElement(React.Fragment, null,
+          React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')),
+          React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3bCaveat'))
+        ))
     ),
     React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.uptakeReassure')),
+    React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.debtNote')),
 
     // ── Schritt 3 — Kündigung (passt sich dem gewählten Weg an) ──
     React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step3Title')),
