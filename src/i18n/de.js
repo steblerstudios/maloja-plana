@@ -1015,6 +1015,7 @@ export default {
       heartfeltIntro: 'Dienste und Projekte, die wir persönlich schätzen — unbezahlt empfohlen, ohne Gegenleistung.',
       heartfeltIntroAffiliate: 'Dienste und Projekte, die wir persönlich schätzen. Die meisten empfehlen wir unbezahlt; mit „Affiliate" markierte Links bringen Maloja eine kleine Provision — ohne dass es dich etwas kostet.',
       affiliateMarker: 'Affiliate',
+      heartfeltGroups: { digital: 'Digital & Privatsphäre', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Suchmaschine, die ihre Einnahmen in Aufforstung steckt.',
       heartfelt2: 'Schweizer Hosting mit Ökostrom und eigenen, ressourcenschonenden Rechenzentren.',
       heartfelt3: 'Werbefreier, datenschutzfreundlicher E-Mail-Dienst, betrieben mit Ökostrom.',
