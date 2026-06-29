@@ -106,7 +106,8 @@ const KatalogTab = ({ palette, t, filterCat }) => {
 };
 
 // ─── Franchise Tab ─────────────────────────────────────────
-const FranchiseTab = ({ palette, t, data }) => {
+const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
+  const currentYear = new Date().getFullYear();
   const storedFranchise = (() => {
     const f = data.versicherungen?.franchise;
     if (!f) return 300;
@@ -114,11 +115,33 @@ const FranchiseTab = ({ palette, t, data }) => {
     return FRANCHISE_STUFEN.includes(n) ? n : 300;
   })();
 
+  // Jahres-Verbrauch wird gemerkt — aber nur, wenn er zum laufenden Jahr gehört.
+  // Beim Jahreswechsel startet der Tracker ruhig leer (kein stiller Übertrag).
+  const storedVerbrauch = data.versicherungen?.kkVerbrauchJahr === currentYear
+    ? (data.versicherungen?.kkVerbrauch ?? '')
+    : '';
+
   const [franchise, setFranchise] = useState(storedFranchise);
-  const [kosten, setKosten] = useState('');
+  const [kosten, setKosten] = useState(storedVerbrauch === '' ? '' : String(storedVerbrauch));
+
+  const handleKostenChange = (val) => {
+    setKosten(val);
+    if (onUpdateData) {
+      onUpdateData('versicherungen', 'kkVerbrauch', val === '' ? '' : Number(val));
+      onUpdateData('versicherungen', 'kkVerbrauchJahr', currentYear);
+    }
+  };
 
   const result = berechneFranchise(franchise, Number(kosten) || 0);
   const hasInput = Number(kosten) > 0;
+
+  // Ein ruhiger Standort-Satz: wo stehe ich dieses Jahr? (drei Zonen)
+  const statusMsg = !hasInput ? null
+    : result.selbstbehaltAusgeschoepft
+      ? { text: t('kvg.selbstbehaltDone'), color: palette.sage || '#5a7a5a', icon: '✓' }
+    : result.franchiseOffen > 0
+      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sand, icon: 'ⓘ' }
+      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.gold || '#c47a20', icon: 'ⓘ' };
 
   const barStyle = (value, max, color) => ({
     height: '8px',
@@ -175,19 +198,31 @@ const FranchiseTab = ({ palette, t, data }) => {
         type: 'number',
         inputMode: 'decimal',
         value: kosten,
-        onChange: (e) => setKosten(e.target.value),
+        onChange: (e) => handleKostenChange(e.target.value),
         placeholder: '0',
         style: {
           width: '100%', padding: space.sm, borderRadius: radius.sm,
           border: '1px solid ' + palette.border, background: palette.surface,
           color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
         }
-      })
+      }),
+      hasInput && onUpdateData && React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
+      }, t('kvg.verbrauchSaved', { year: currentYear }))
     ),
 
     hasInput && React.createElement('div', {
       style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border }
     },
+      statusMsg && React.createElement('div', {
+        style: {
+          padding: '10px 12px', background: statusMsg.color + '15',
+          borderRadius: radius.sm, border: '1px solid ' + statusMsg.color + '30',
+          fontSize: text.sm, color: statusMsg.color, marginBottom: '14px',
+          lineHeight: leading.normal,
+        }
+      }, statusMsg.icon + ' ' + statusMsg.text),
+
       React.createElement('div', { style: { marginBottom: '14px' } },
         React.createElement('div', {
           style: { display: 'flex', justifyContent: 'space-between', fontSize: text.sm, marginBottom: '4px' }
@@ -217,14 +252,6 @@ const FranchiseTab = ({ palette, t, data }) => {
           style: { fontSize: text.xs, color: palette.soft }
         }, t('kvg.selbstbehaltMax') + ': CHF ' + result.selbstbehaltMax)
       ),
-
-      result.selbstbehaltAusgeschoepft && React.createElement('div', {
-        style: {
-          padding: '10px 12px', background: (palette.sage || '#5a7a5a') + '15',
-          borderRadius: radius.sm, border: '1px solid ' + (palette.sage || '#5a7a5a') + '30',
-          fontSize: text.sm, color: palette.sage || '#5a7a5a', marginBottom: '14px',
-        }
-      }, '✓ ' + t('kvg.selbstbehaltDone')),
 
       React.createElement('div', {
         style: { height: '1px', background: palette.border, marginBottom: '14px' }
@@ -340,7 +367,7 @@ const RechnungTab = ({ palette, t, data }) => {
 };
 
 // ─── Main Component ────────────────────────────────────────
-export const KVGLeistungen = ({ palette, t, data }) => {
+export const KVGLeistungen = ({ palette, t, data, onUpdateData }) => {
   const [tab, setTab] = useState('katalog');
   const [filterCat, setFilterCat] = useState('all');
 
@@ -400,7 +427,7 @@ export const KVGLeistungen = ({ palette, t, data }) => {
       React.createElement(KatalogTab, { palette, t, filterCat })
     ),
 
-    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data }),
+    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData }),
     tab === 'rechnung' && React.createElement(RechnungTab, { palette, t, data }),
 
     React.createElement('div', {
