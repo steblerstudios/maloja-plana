@@ -29,6 +29,10 @@ export default {
     specialRight: 'Special right of cancellation: if your premium rises, you can cancel within 30 days of notification — even with savings models or a higher deductible.',
     chosen: 'Selected',
     step3Note3b: 'If the new insurer handles the switch, it takes care of the cancellation — you don\'t need to write a letter yourself.',
+    wunschKasseLabel: 'Preferred insurer (optional)',
+    wunschKassePlaceholder: 'e.g. Helsana',
+    reminderTitleTo: 'Switch to {insurer} — deadline',
+    todoText: 'Switch health insurer: compare premiums',
   },
   sections: {
     basis: { person: 'Person', contact: 'Contact', family: 'Family' },

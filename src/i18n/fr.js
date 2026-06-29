@@ -29,6 +29,10 @@ export default {
     specialRight: 'Droit de résiliation extraordinaire : en cas de hausse de prime, vous pouvez résilier dans les 30 jours suivant la notification — même avec des modèles d\'épargne ou une franchise plus élevée.',
     chosen: 'Choisi',
     step3Note3b: 'Si la nouvelle caisse s\'occupe du changement, elle se charge de la résiliation — vous n\'avez pas à écrire de lettre vous-même.',
+    wunschKasseLabel: 'Caisse souhaitée (facultatif)',
+    wunschKassePlaceholder: 'p. ex. Helsana',
+    reminderTitleTo: 'Passage à {insurer} — délai',
+    todoText: 'Changer de caisse-maladie : comparer les primes',
   },
   sections: {
     basis: { person: 'Personne', contact: 'Contact', family: 'Famille' },
