@@ -136,6 +136,12 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     React.createElement('h3', { style: sectionTitle }, t('stip.checklistTitle')),
     ['checklist1', 'checklist2', 'checklist3', 'checklist4'].map(k => li(t('stip.' + k), k)),
 
+    // Crosslink: weiter zu den offiziellen Behörden-Links (Prop war bisher ungenutzt)
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('direktlinks'),
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sage, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.lg + 'px' }
+    }, '→ ' + t('nav.direktlinks')),
+
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
       'ⓘ ', linkifyDomains(t('stip.source'))
     )

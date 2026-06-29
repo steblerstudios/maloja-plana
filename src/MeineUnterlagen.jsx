@@ -75,6 +75,15 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
     ),
 
     // Dossier cards
+    // Der Doku-Hub kennt jetzt seinen eigenen Speicher: die sichere Ablage zuoberst.
+    React.createElement(DossierCard, {
+      palette,
+      title: t('tresor.title'),
+      description: t('nav.sub.tresor'),
+      icon: 'documents',
+      onClick: () => onNavigate('tresor'),
+    }),
+
     React.createElement(DossierCard, {
       palette,
       title: t('unterlagen.dossier.lebensmappe.title'),
