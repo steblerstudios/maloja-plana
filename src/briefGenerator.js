@@ -169,7 +169,7 @@ function generateLeaseTermination(data, t) {
       <p>${esc(t('briefe.leaseTermination.body3'))}</p>
       <p>${esc(t('briefe.leaseTermination.closing'))}</p>
     </div>
-    <div class="signature">${f.sender || fillHint(t)}</div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
     <div class="legal-note">${esc(t('briefe.leaseTermination.legalNote'))}</div>
   `, t);
 }
@@ -190,7 +190,7 @@ function generateTaxExtension(data, t) {
       <p>${esc(t('briefe.taxExtension.body2'))}</p>
       <p>${esc(t('briefe.taxExtension.closing'))}</p>
     </div>
-    <div class="signature">${f.sender || fillHint(t)}</div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
   `, t);
 }
 
@@ -203,7 +203,7 @@ function generateInsuranceSwitch(data, t) {
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
-    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="recipient">${f.currentInsurer ? esc(f.currentInsurer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
     <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.insuranceSwitch.subject'))}</div>
     <div class="body-text">
@@ -213,7 +213,7 @@ function generateInsuranceSwitch(data, t) {
       <p>${esc(t('briefe.insuranceSwitch.body2'))}</p>
       <p>${esc(t('briefe.insuranceSwitch.closing'))}</p>
     </div>
-    <div class="signature">${f.sender || fillHint(t)}</div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
     <div class="legal-note">${esc(t('briefe.insuranceSwitch.legalNote'))}</div>
   `, t);
 }
@@ -237,7 +237,7 @@ function generateKkReklamation(data, t) {
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
-    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="recipient">${f.insurer ? esc(f.insurer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + f.recipient + '</div>'}</div>
     <div class="date-line">${dateStr}</div>
     <div class="subject">${esc(t('briefe.kkReklamation.subject'))}</div>
     <div class="body-text">
@@ -247,7 +247,7 @@ function generateKkReklamation(data, t) {
       <p>${esc(t('briefe.kkReklamation.body3'))}</p>
       <p>${esc(t('briefe.kkReklamation.closing'))}</p>
     </div>
-    <div class="signature">${f.sender || fillHint(t)}</div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
     <div class="legal-note">${esc(t('briefe.kkReklamation.legalNote'))}</div>
   `, t);
 }
