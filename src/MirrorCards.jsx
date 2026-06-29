@@ -257,6 +257,14 @@ function selectLabel(t, chapterKey, fieldKey, value) {
   return t('chapters.' + chapterKey + '.fields.' + fieldKey + '.options.' + value) || value;
 }
 
+// Feld-Label robust holen: Select-Felder sind { label, options }, reine
+// Text-/Währungsfelder sind ein plain String. Spiegelt fl() aus constants.js.
+function fieldLabel(t, chapterKey, fieldKey) {
+  const def = t('chapters.' + chapterKey + '.fields.' + fieldKey);
+  if (def && typeof def === 'object' && def.label) return def.label;
+  return typeof def === 'string' ? def : fieldKey;
+}
+
 // ─── Behörden ─────────────────────────────────────────────
 
 function buildBehoerdenSentence(data, t) {
@@ -432,6 +440,8 @@ function buildVersicherungenSections(data, t) {
   if (data.bvgInsurer) bvgRows.push({ label: t('mirror.versicherungen.bvg'), value: data.bvgInsurer });
   if (data.bvgContribution) bvgRows.push({ label: t('mirror.versicherungen.bvgContribution'), value: formatCHF(data.bvgContribution) + mt });
   if (data.ahvContribution) bvgRows.push({ label: t('mirror.versicherungen.ahv'), value: formatCHF(data.ahvContribution) + yr });
+  if (data.bvgBalance) bvgRows.push({ label: fieldLabel(t, 'versicherungen', 'bvgBalance'), value: formatCHF(data.bvgBalance) });
+  if (data.freizuegigkeit) bvgRows.push({ label: fieldLabel(t, 'versicherungen', 'freizuegigkeit'), value: data.freizuegigkeit });
 
   if (bvgRows.length > 0) {
     sections.push({ title: t('mirror.versicherungen.social'), rows: bvgRows });
@@ -444,6 +454,9 @@ function buildVersicherungenSections(data, t) {
   if (data.travelInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.travel'), value: '✓' });
   if (data.cyberInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.cyber'), value: '✓' });
   if (data.autoInsurance && data.autoInsurance !== 'no') addRows.push({ label: t('mirror.versicherungen.auto'), value: selectLabel(t, 'versicherungen', 'autoInsurance', data.autoInsurance) });
+  if (data.lifeInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'lifeInsurance'), value: '✓' });
+  if (data.legalInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'legalInsurance'), value: '✓' });
+  if (data.childInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'childInsurance'), value: '✓' });
 
   if (addRows.length > 0) {
     sections.push({ title: t('mirror.versicherungen.additional'), rows: addRows });
@@ -533,7 +546,7 @@ function buildBasisSections(data, t, allData) {
 
   // Section: Person
   const personRows = [];
-  const fullName = [(data.firstName || ''), (data.middleName || ''), (data.lastName || '')].filter(Boolean).join(' ');
+  const fullName = [(data.academicTitle || ''), (data.firstName || ''), (data.middleName || ''), (data.lastName || '')].filter(Boolean).join(' ');
   if (fullName) personRows.push({ label: t('mirror.basis.name'), value: fullName });
   if (data.dateOfBirth) personRows.push({ label: t('mirror.basis.dateOfBirth'), value: formatDate(data.dateOfBirth) });
   if (data.canton) personRows.push({ label: t('mirror.basis.canton'), value: getCantonName(data.canton, t) });
@@ -598,6 +611,14 @@ function buildWohnenSections(data, t) {
     sections.push({ title: t('mirror.wohnen.costs'), rows: costRows });
   }
 
+  // Section: Eigentum (nur bei Wohneigentum)
+  const propRows = [];
+  if (data.mortgageStatus && data.mortgageStatus !== 'no') propRows.push({ label: t('mirror.wohnen.mortgage'), value: selectLabel(t, 'wohnen', 'mortgageStatus', data.mortgageStatus) });
+  if (data.propertyValue) propRows.push({ label: fieldLabel(t, 'wohnen', 'propertyValue'), value: formatCHF(data.propertyValue) });
+  if (propRows.length > 0) {
+    sections.push({ title: t('sections.wohnen.property'), rows: propRows });
+  }
+
   return sections;
 }
 
@@ -639,6 +660,8 @@ function buildFinanzenSections(data, allData, t) {
   const savingsRows = [];
   if (data.savingsGoal) savingsRows.push({ label: t('mirror.finanzen.savingsGoal'), value: formatCHF(data.savingsGoal) + '/Mt.' });
   if (data.pension3a) savingsRows.push({ label: t('mirror.finanzen.pension3a'), value: formatCHF(data.pension3a) + '/J.' });
+  if (data.pension3b === 'yes') savingsRows.push({ label: fieldLabel(t, 'finanzen', 'pension3b'), value: '✓' });
+  if (data.investmentFunds === 'yes') savingsRows.push({ label: t('mirror.finanzen.investmentFunds'), value: '✓' });
 
   if (savingsRows.length > 0) {
     sections.push({ title: t('mirror.finanzen.savingsTitle'), rows: savingsRows });
@@ -648,6 +671,7 @@ function buildFinanzenSections(data, allData, t) {
   const obligationRows = [];
   if (data.debtPayments) obligationRows.push({ label: t('mirror.finanzen.debtPayments'), value: formatCHF(data.debtPayments) + '/Mt.' });
   if (data.alimentePaid) obligationRows.push({ label: t('mirror.finanzen.alimentePaid'), value: formatCHF(data.alimentePaid) + '/Mt.' });
+  if (data.creditCard && data.creditCard !== 'no') obligationRows.push({ label: t('mirror.finanzen.creditCard'), value: selectLabel(t, 'finanzen', 'creditCard', data.creditCard) });
 
   if (obligationRows.length > 0) {
     sections.push({ title: t('mirror.finanzen.obligationsTitle'), rows: obligationRows });
