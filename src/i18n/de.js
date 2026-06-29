@@ -1698,6 +1698,12 @@ export default {
       text: { sie: 'Sobald Sie ihn unterschrieben und versendet haben, scannen Sie ihn und legen ihn im Lebensordner ab — so liegt alles am richtigen Ort.', du: 'Sobald du ihn unterschrieben und versendet hast, scanne ihn und lege ihn im Lebensordner ab — so liegt alles am richtigen Ort.' },
       toTresor: 'Im Lebensordner ablegen',
     },
+    kkBelegPicker: {
+      title: 'Welche Belege beanstanden?',
+      intro: { sie: 'Wählen Sie die strittigen Belege aus — Datum und Betrag werden in den Brief übernommen. Ohne Auswahl bleibt ein Feld zum Ausfüllen.', du: 'Wähle die strittigen Belege aus — Datum und Betrag werden in den Brief übernommen. Ohne Auswahl bleibt ein Feld zum Ausfüllen.' },
+      empty: { sie: 'Noch keine Belege erfasst. Sie können sie im Gesundheitskosten-Tracker hinzufügen — oder den Brief von Hand ausfüllen.', du: 'Noch keine Belege erfasst. Du kannst sie im Gesundheitskosten-Tracker hinzufügen — oder den Brief von Hand ausfüllen.' },
+      undated: 'ohne Datum',
+    },
     leaseTermination: {
       title: 'Mietkündigung',
       description: 'Ordentliche Kündigung des Mietvertrags mit den gesetzlichen Fristen.',

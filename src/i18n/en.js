@@ -1699,6 +1699,12 @@ export default {
       text: 'Once you have signed and sent it, scan it and file it in your life folder — so everything is in the right place.',
       toTresor: 'File in life folder',
     },
+    kkBelegPicker: {
+      title: 'Which bills are you disputing?',
+      intro: 'Select the disputed bills — date and amount are inserted into the letter. Without a selection, a fill-in field remains.',
+      empty: 'No bills recorded yet. You can add them in the health-costs tracker — or fill in the letter by hand.',
+      undated: 'no date',
+    },
     leaseTermination: {
       title: 'Lease termination',
       description: 'Standard lease termination with statutory notice periods.',
