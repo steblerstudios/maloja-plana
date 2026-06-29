@@ -1197,6 +1197,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
             { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
             { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
+            { label: t('nav.unfallkrankheit'), sub: t('nav.sub.unfallkrankheit'), view: 'unfallkrankheit', icon: 'notfall' },
           ] },
           { label: t('dashboard.toolGroups.documents'), items: [
             { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
