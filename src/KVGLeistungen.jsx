@@ -679,8 +679,8 @@ const RechnungTab = ({ palette, t, data }) => {
 };
 
 // ─── Main Component ────────────────────────────────────────
-export const KVGLeistungen = ({ palette, t, data, onUpdateData }) => {
-  const [tab, setTab] = useState('katalog');
+export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab }) => {
+  const [tab, setTab] = useState(initialTab || 'katalog');
   const [filterCat, setFilterCat] = useState('all');
 
   const catLabels = {
