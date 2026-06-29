@@ -113,6 +113,13 @@ export const KVG_CATEGORIES = ['arzt', 'vorsorge', 'labor', 'medi', 'spital', 'd
 // KVG-Deckung (Faden 3-II). KEINE Angst-Differenz: bei diesen Screenings deckt die
 // Grundversicherung den empfohlenen Rhythmus — beim Zervix-Screening empfiehlt die WHO
 // sogar längere Intervalle als die Schweizer Praxis (entkräftet den „Pap-Mythos").
-// Quellen: WHO-Leitlinie 2021 (Zervix), WHO/EU (Mammografie), Europäischer Kodex gegen
-// Krebs 5. Auflage (Darmkrebs). Texte + Quellen liegen in i18n (kvg.<key>Empfehlung/Quelle).
-export const VORSORGE_EMPFEHLUNG_KEYS = ['gynaeko', 'mammografie', 'darmkrebs'];
+// Konsistente Referenz-Anker: KVG (Deckung, oben) + WHO + EU — aber EHRLICH pro Screening,
+// nur Anker zeigen, die belegbar existieren. Darmkrebs: die WHO hat KEIN eigenes Screening-
+// Intervall (who:false) → nicht erfinden, nur EU. Texte liegen in i18n
+// (kvg.<key>Who / <key>Eu / <key>Synthese / <key>Quelle).
+// Quellen: WHO-Leitlinie 2021 (Zervix), WHO/ECIBC (Mammografie), Europäischer Kodex gegen Krebs 5. Aufl.
+export const VORSORGE_EMPFEHLUNGEN = {
+  gynaeko:     { who: true,  eu: true },
+  mammografie: { who: true,  eu: true },
+  darmkrebs:   { who: false, eu: true },
+};
