@@ -123,3 +123,12 @@ export const VORSORGE_EMPFEHLUNGEN = {
   mammografie: { who: true,  eu: true },
   darmkrebs:   { who: false, eu: true },
 };
+
+// Belegbare „Was genau gedeckt ist"-Details für Einträge, deren Note zu knapp ist
+// (Faden 3-II). Wert = Anzahl Detail-Zeilen in i18n (kvg.<key>Detail1..N + <key>DetailQuelle).
+// Gleiche einklappbare Mechanik wie die WHO/EU-Empfehlung, ruhige Grunddichte.
+// Quellen: KVG/KLV Art. 13–14 (Schwangerschaft), Schweizerischer Impfplan (Impfungen).
+export const KVG_DETAILS = {
+  schwangerschaft: 3,
+  impfungen: 3,
+};

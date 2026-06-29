@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
@@ -72,6 +72,8 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
   const [open, setOpen] = React.useState(false);
   const emp = VORSORGE_EMPFEHLUNGEN[item.key];
   const sources = emp ? [emp.who && 'WHO', emp.eu && 'EU'].filter(Boolean).join(' · ') : '';
+  const detailCount = KVG_DETAILS[item.key];
+  const expandable = !!emp || !!detailCount;
 
   return React.createElement('div', {
     style: {
@@ -92,8 +94,9 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
         item.intervalKey && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sand, marginTop: '4px', fontWeight: weight.medium }
         }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
-        // Faden 3-II: belegbare internationale Referenz-Anker (WHO + EU), eingeklappt.
-        emp && React.createElement('div', {
+        // Faden 3-II: einklappbarer Detail-Block — entweder die WHO/EU-Empfehlung
+        // (Screenings) oder „Was genau gedeckt ist" (z. B. Schwangerschaft, Impfungen).
+        expandable && React.createElement('div', {
           style: { marginTop: '6px', paddingTop: '6px', borderTop: '1px solid ' + palette.border }
         },
           React.createElement('button', {
@@ -105,8 +108,11 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
               fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
               textAlign: 'left',
             }
-          }, (open ? '▾ ' : '▸ ') + (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))),
-          open && React.createElement('div', {
+          }, (open ? '▾ ' : '▸ ') + (emp
+            ? (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))
+            : (open ? t('kvg.detailHide') : t('kvg.detailShow')))),
+          // Screening-Empfehlung (WHO/EU)
+          open && emp && React.createElement('div', {
             style: { fontSize: text.xs, color: palette.mid, marginTop: '6px', lineHeight: leading.normal }
           },
             emp.who && React.createElement('div', null,
@@ -121,6 +127,18 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             React.createElement('div', {
               style: { color: palette.soft, marginTop: '2px' }
             }, t('kvg.' + item.key + 'Quelle'))
+          ),
+          // „Was genau gedeckt ist" — N belegbare Detail-Zeilen + Quelle
+          open && !emp && detailCount && React.createElement('div', {
+            style: { fontSize: text.xs, color: palette.mid, marginTop: '6px', lineHeight: leading.normal }
+          },
+            Array.from({ length: detailCount }, (_, i) =>
+              React.createElement('div', { key: i, style: i > 0 ? { marginTop: '3px' } : null },
+                t('kvg.' + item.key + 'Detail' + (i + 1)))
+            ),
+            React.createElement('div', {
+              style: { color: palette.soft, marginTop: '4px' }
+            }, t('kvg.' + item.key + 'DetailQuelle'))
           )
         )
       ),
