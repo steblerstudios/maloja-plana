@@ -16,7 +16,8 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const alter = currentAge(data.basis?.dateOfBirth);
   const householdChildren = (data.basis?.household?.children || []).length;
 
-  const [bruttolohn, setBruttolohn] = useState('');
+  // Monatslohn aus den Finanzen vorbefüllen (überschreibbar) — nicht zweimal eingeben.
+  const [bruttolohn, setBruttolohn] = useState(data.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
   const [hatKinder, setHatKinder] = useState(householdChildren > 0);
   const [beitragsmonate, setBeitragsmonate] = useState('');
   const [ivGrad40, setIvGrad40] = useState(false);
