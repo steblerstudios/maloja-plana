@@ -5,6 +5,25 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.5-beta] — 2026-06-29
+
+Geführte Lebensereignis-Abläufe und das UX-Playbook. Schwerpunkt: zusammenhängende
+Wege statt isolierter Werkzeuge (Maloja verwaltet Zusammenhänge, nicht nur Informationen).
+
+### Neu
+- **Wiederverwendbare Ablauf-Schale** und sechs geführte Abläufe: Krankenkasse wechseln, Zusatzversicherung kündigen, **Umzug**, **Unfall oder Krankheit — was tun?**, **Neuer Job**, **Stelle verloren / RAV** — ruhige Orientierung mit Crosslinks, Fristen in den Kalender und Verkettung untereinander
+- **Notrufnummern** (144/1414/145/112) als anrufbare `tel:`-Links im Unfall-/Krankheit-Ablauf
+- **Loop-Closure Brief → Scan → Ablage**: nach dem Brief-Erstellen ruhiger Weg in den Dokumenten-Tresor (vorgefiltert aufs passende Kapitel)
+- **UX-Playbook** (`docs/UX_PLAYBOOK.md`) als „Grundgesetz" + App-Teardowns (Budgetberatung, BlueBudget, Coople)
+- **Persona-Walkthrough** (qualitativer Journey-Test der 8 Personas)
+
+### Behoben
+- BriefGenerator nutzte undefiniertes `palette.accent` → Druck-Button im Hellmodus unsichtbar; auf Palette-Konventionen umgestellt (Theme-sicher)
+- KVG-Kündigungsbrief: Kassenname füllt korrekt (kkInsurer); Frist-Tag zählt; Speicher-Bestätigung nur bei Erfolg
+- KTG-Hinweis konkretisiert (steht meist auf dem Lohnausweis)
+
+---
+
 ## [0.1.4-beta] — 2026-06-28
 
 Sammelrelease der Korrekturen aus dem 6-Domänen-Audit (Architektur, Schweizer Berechnungen, Design, Barrierefreiheit, Mehrsprachigkeit, Governance).

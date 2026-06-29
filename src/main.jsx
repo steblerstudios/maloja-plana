@@ -919,7 +919,7 @@ const AppInner = () => {
         boxSizing: 'border-box',
       }
     },
-      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v0.1.4-beta'),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v0.1.5-beta'),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('a', {
         href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
