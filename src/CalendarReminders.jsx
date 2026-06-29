@@ -2,19 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration } from './config/tokens.js';
+import { loadReminders, saveReminders } from './utils/reminders.js';
 
 // ─── Helpers ────────────────────────────────────────────────
-const STORAGE_KEY = 'or5_reminders';
-
-const loadReminders = () => {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-  catch { return []; }
-};
-
-const saveReminders = (reminders) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders));
-};
-
 const daysBetween = (a, b) => {
   const msPerDay = 86400000;
   return Math.round((new Date(b) - new Date(a)) / msPerDay);
