@@ -1582,6 +1582,11 @@ export default {
     hidePreview: 'Hide preview',
     printLetter: 'Print / PDF',
     dataNote: 'Your saved data is automatically inserted. Missing information is marked.',
+    afterPrint: {
+      title: 'Letter created — what now?',
+      text: 'Once you have signed and sent it, scan it and file it in your life folder — so everything is in the right place.',
+      toTresor: 'File in life folder',
+    },
     leaseTermination: {
       title: 'Lease termination',
       description: 'Standard lease termination with statutory notice periods.',
