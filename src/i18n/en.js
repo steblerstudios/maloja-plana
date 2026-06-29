@@ -87,7 +87,7 @@ export default {
     step2Title: '2 · Pension fund (BVG)',
     step2Text: 'From an annual salary of around CHF 22,000 you are mandatorily in the pension fund (2nd pillar). Your employer registers you — check the salary statement and the BVG deductions.',
     step3Title: '3 · Accident & daily sickness benefits',
-    step3Text: 'From 8 hrs/week you are covered for accidents through your employer (UVG) — you can then deselect accident cover in your health insurance and save premium. Also ask whether there is a daily sickness benefit (KTG).',
+    step3Text: 'From 8 hrs/week you are covered for accidents through your employer (UVG) — you can then deselect accident cover in your health insurance and save premium. Whether a daily sickness benefit (KTG) exists is usually shown on your wage statement (Lohnausweis).',
     step3Link: 'Accident or illness — what to do?',
     step4Title: '4 · Taxes',
     step4Text: 'A new salary changes your taxes. Without a settlement permit (C), your employer deducts withholding tax directly; otherwise you adjust your tax forecast.',

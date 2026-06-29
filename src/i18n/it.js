@@ -87,7 +87,7 @@ export default {
     step2Title: '2 · Cassa pensioni (LPP)',
     step2Text: 'Da un salario annuo di circa 22 000 fr. sei obbligatoriamente nella cassa pensioni (2° pilastro). Il datore di lavoro ti annuncia — verifica il certificato di salario e le deduzioni LPP.',
     step3Title: '3 · Infortunio & indennità giornaliera',
-    step3Text: 'Da 8 ore/settimana sei assicurato contro gli infortuni tramite il datore di lavoro (LAINF) — puoi allora deselezionare la copertura infortuni nella cassa malati e risparmiare premio. Chiedi anche se esiste un\'indennità giornaliera di malattia.',
+    step3Text: 'Da 8 ore/settimana sei assicurato contro gli infortuni tramite il datore di lavoro (LAINF) — puoi allora deselezionare la copertura infortuni nella cassa malati e risparmiare premio. Se esiste un\'indennità giornaliera di malattia è di regola indicato sul certificato di salario.',
     step3Link: 'Infortunio o malattia — cosa fare?',
     step4Title: '4 · Imposte',
     step4Text: 'Un nuovo salario cambia le tue imposte. Senza permesso di domicilio (C), il datore di lavoro preleva l\'imposta alla fonte direttamente; altrimenti adatti la tua previsione fiscale.',
