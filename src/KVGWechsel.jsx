@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
-import { addReminder } from './utils/reminders.js';
 import { addTodo } from './utils/merkliste.js';
+import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 
-// KVG-Wechsel — der erste geführte Ablauf ("Faden"). Verkettet die vorhandenen
-// Bausteine zu einem ruhigen Weg: Vergleich → neue Kasse (zwei Wege, anklickbar)
-// → Kündigung → Frist sichern. Keine Wizard-Hölle: eine editoriale Seite, von oben
-// nach unten. Wird beim 2. Ablauf zur wiederverwendbaren Ablauf-Schale extrahiert.
+// KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
+// Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
+// neue Kasse (zwei Wege, anklickbar) → Kündigung → Frist sichern. Eine editoriale Seite
+// von oben nach unten, keine Wizard-Hölle.
 
 // Nächster ordentlicher Kündigungstermin: 30. November (dieses Jahr, sonst nächstes).
 const nextNov30 = () => {
@@ -20,7 +19,6 @@ const nextNov30 = () => {
 };
 
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
-  const [reminderSet, setReminderSet] = useState(false);
   const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
   const [wunschKasse, setWunschKasse] = useState(data?.versicherungen?.targetInsurer || ''); // Ziel-Kasse, vorbelegt aus dem Vergleich
 
@@ -28,19 +26,11 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const deadline = nextNov30();
   const deadlineYear = deadline.slice(0, 4);
 
+  // Geteilte Schalen-Styles + KVG-eigene Extras (Wege-Karten, Wunsch-Kasse-Input).
   const s = {
-    h2: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    intro: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.lg + 'px' },
-    stepTitle: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: space.lg + 'px 0 ' + space.xs + 'px 0' },
-    stepText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
-    link: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' },
+    ...ablaufStyles(palette),
     pathWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
-    note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
     reassure: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.xs + 'px' },
-    warn: { fontSize: text.sm, color: palette.gold, marginTop: space.xs + 'px' },
-    primaryBtn: { background: palette.sand, color: palette.surface, border: 'none', cursor: 'pointer', padding: '10px 16px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, borderRadius: radius.sm, marginTop: space.sm + 'px' },
-    done: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.sm + 'px' },
-    footer: { fontSize: text.xs, color: palette.soft, marginTop: space.xl + 'px', lineHeight: leading.normal },
     chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sand, marginTop: '6px' },
     inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
     input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
@@ -71,90 +61,80 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     );
   };
 
-  const handleSetReminder = () => {
-    const target = wunschKasse.trim();
-    const saved = addReminder({
-      title: target ? t('kvgWechsel.reminderTitleTo', { insurer: target }) : t('kvgWechsel.reminderTitle'),
-      dueDate: deadline,
-      category: 'insurance',
-      recurrence: 'yearly',
-      notes: t('kvgWechsel.reminderNotes'),
-    });
-    if (!saved) return; // Speicher voll → kein falsches ✓
-    // Rücklink zum Vergleich in die Merkliste — damit man die Wunsch-Kasse wiederfindet.
-    addTodo({ text: t('kvgWechsel.todoText'), link: 'praemien' });
-    setReminderSet(true);
-  };
+  const target = wunschKasse.trim();
 
-  return React.createElement('div', { style: { maxWidth: '560px' } },
-
-    React.createElement('h2', { style: s.h2 },
-      React.createElement(Icon, { name: 'insurance', size: 20 }), t('kvgWechsel.title')),
-    React.createElement('p', { style: s.intro }, t('kvgWechsel.intro')),
-
+  return React.createElement(AblaufContainer, {
+    palette, icon: 'insurance',
+    title: t('kvgWechsel.title'),
+    intro: t('kvgWechsel.intro'),
+  },
     // ── Schritt 1 — Lohnt sich's? ──
-    React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step1Title')),
-    React.createElement('p', { style: s.stepText },
-      currentInsurer
-        ? t('kvgWechsel.step1TextKnown', { insurer: currentInsurer })
-        : t('kvgWechsel.step1Text')),
-    onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('praemien') },
-      '→ ' + t('kvgWechsel.step1Link')),
+    React.createElement(AblaufStep, { palette, title: t('kvgWechsel.step1Title') },
+      React.createElement('p', { style: s.stepText },
+        currentInsurer
+          ? t('kvgWechsel.step1TextKnown', { insurer: currentInsurer })
+          : t('kvgWechsel.step1Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.step1Link'), onClick: () => onNavigate('praemien') })
+    ),
 
     // ── Schritt 2 — Neue Kasse, zwei ruhige Wege (anklickbar) ──
-    React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step2Title')),
-    React.createElement('p', { style: s.stepText }, t('kvgWechsel.step2Intro')),
-    React.createElement('label', { style: s.inputLabel },
-      t('kvgWechsel.wunschKasseLabel'),
-      React.createElement('input', {
-        type: 'text', value: wunschKasse,
-        onChange: (e) => setWunschKasse(e.target.value),
-        placeholder: t('kvgWechsel.wunschKassePlaceholder'),
-        style: s.input,
-      })
+    React.createElement(AblaufStep, { palette, title: t('kvgWechsel.step2Title') },
+      React.createElement('p', { style: s.stepText }, t('kvgWechsel.step2Intro')),
+      React.createElement('label', { style: s.inputLabel },
+        t('kvgWechsel.wunschKasseLabel'),
+        React.createElement('input', {
+          type: 'text', value: wunschKasse,
+          onChange: (e) => setWunschKasse(e.target.value),
+          placeholder: t('kvgWechsel.wunschKassePlaceholder'),
+          style: s.input,
+        })
+      ),
+      React.createElement('div', { style: s.pathWrap },
+        pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
+          React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),
+        pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
+          React.createElement(React.Fragment, null,
+            React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')),
+            React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3bCaveat'))
+          ))
+      ),
+      React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.uptakeReassure')),
+      React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.debtNote'))
     ),
-    React.createElement('div', { style: s.pathWrap },
-      pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
-        React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),
-      pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
-        React.createElement(React.Fragment, null,
-          React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')),
-          React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3bCaveat'))
-        ))
-    ),
-    React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.uptakeReassure')),
-    React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.debtNote')),
 
     // ── Schritt 3 — Kündigung (passt sich dem gewählten Weg an) ──
-    React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step3Title')),
-    chosenPath === '3b'
-      ? React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Note3b'))
-      : React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Text')),
-    onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('briefe') },
-      '→ ' + t('kvgWechsel.step3Link')),
+    React.createElement(AblaufStep, { palette, title: t('kvgWechsel.step3Title') },
+      chosenPath === '3b'
+        ? React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Note3b'))
+        : React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.step3Link'), onClick: () => onNavigate('briefe') })
+    ),
 
     // ── Schritt 4 — Frist sichern ──
-    React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step4Title')),
-    React.createElement('p', { style: s.stepText }, t('kvgWechsel.step4Text', { year: deadlineYear })),
-    reminderSet
-      ? React.createElement('div', null,
-          React.createElement('div', { style: s.done }, '✓ ' + t('kvgWechsel.step4Done')),
-          onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('calendar') },
-            '→ ' + t('kvgWechsel.step4CalendarLink'))
-        )
-      : React.createElement('button', { style: s.primaryBtn, onClick: handleSetReminder },
-          t('kvgWechsel.step4Button', { date: '30.11.' + deadlineYear })),
-    onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('unterlagen') },
-      '→ ' + t('kvgWechsel.policeLink')),
-    onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('zusatzwechsel') },
-      '→ ' + t('zusatzWechsel.title')),
+    React.createElement(AblaufStep, { palette, title: t('kvgWechsel.step4Title') },
+      React.createElement('p', { style: s.stepText }, t('kvgWechsel.step4Text', { year: deadlineYear })),
+      React.createElement(FristButton, {
+        palette, t,
+        buttonLabel: t('kvgWechsel.step4Button', { date: '30.11.' + deadlineYear }),
+        doneLabel: t('kvgWechsel.step4Done'),
+        calendarLabel: t('kvgWechsel.step4CalendarLink'),
+        onNavigate,
+        reminder: {
+          title: target ? t('kvgWechsel.reminderTitleTo', { insurer: target }) : t('kvgWechsel.reminderTitle'),
+          dueDate: deadline,
+          category: 'insurance',
+          recurrence: 'yearly',
+          notes: t('kvgWechsel.reminderNotes'),
+        },
+        // Rücklink zum Vergleich in die Merkliste — damit man die Wunsch-Kasse wiederfindet.
+        onSaved: () => addTodo({ text: t('kvgWechsel.todoText'), link: 'praemien' }),
+      }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.policeLink'), onClick: () => onNavigate('unterlagen') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('zusatzWechsel.title'), onClick: () => onNavigate('zusatzwechsel') })
+    ),
 
     // ── Fuss — Sonderkündigungsrecht + lokal-Hinweis ──
-    React.createElement('div', { style: s.footer },
-      'ⓘ ' + t('kvgWechsel.specialRight'),
-      React.createElement('br'),
-      'ⓘ ' + t('trust.localOnly')
-    )
+    React.createElement(AblaufFooter, { palette, notes: [t('kvgWechsel.specialRight'), t('trust.localOnly')] })
   );
 };
 
