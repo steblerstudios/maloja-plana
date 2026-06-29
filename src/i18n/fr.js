@@ -27,6 +27,8 @@ export default {
     reminderTitle: 'Résilier la caisse-maladie — délai',
     reminderNotes: 'Résiliation ordinaire de l\'assurance de base d\'ici au 30.11. Ne résiliez qu\'une fois l\'admission confirmée par la nouvelle caisse (sauf si la nouvelle caisse s\'en charge).',
     specialRight: 'Droit de résiliation extraordinaire : en cas de hausse de prime, vous pouvez résilier dans les 30 jours suivant la notification — même avec des modèles d\'épargne ou une franchise plus élevée.',
+    chosen: 'Choisi',
+    step3Note3b: 'Si la nouvelle caisse s\'occupe du changement, elle se charge de la résiliation — vous n\'avez pas à écrire de lettre vous-même.',
   },
   sections: {
     basis: { person: 'Personne', contact: 'Contact', family: 'Famille' },

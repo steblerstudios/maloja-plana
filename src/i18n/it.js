@@ -27,6 +27,8 @@ export default {
     reminderTitle: 'Disdire la cassa malati — termine',
     reminderNotes: 'Disdetta ordinaria dell\'assicurazione di base entro il 30.11. Disdici solo quando la nuova cassa conferma l\'ammissione (a meno che se ne occupi la nuova cassa).',
     specialRight: 'Diritto di disdetta straordinario: in caso di aumento del premio puoi disdire entro 30 giorni dalla notifica — anche con modelli di risparmio o franchigia più alta.',
+    chosen: 'Scelto',
+    step3Note3b: 'Se la nuova cassa si occupa del cambio, gestisce lei la disdetta — non devi scrivere tu una lettera.',
   },
   sections: {
     basis: { person: 'Persona', contact: 'Contatto', family: 'Famiglia' },

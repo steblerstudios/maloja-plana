@@ -29,6 +29,8 @@ export default {
     reminderTitle: 'Krankenkasse kündigen — Frist',
     reminderNotes: 'Ordentliche Kündigung der Grundversicherung bis 30.11. Erst kündigen, wenn die neue Kasse die Aufnahme bestätigt hat (ausser die neue Kasse übernimmt den Wechsel).',
     specialRight: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung kannst du innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.',
+    chosen: 'Gewählt',
+    step3Note3b: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.',
   },
   sections: {
     basis: { person: 'Persuna', contact: 'Contact', family: 'Famiglia' },
