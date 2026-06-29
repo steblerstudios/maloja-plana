@@ -2523,6 +2523,7 @@ export default {
     belegNichtGedecktHint: 'Zählt nicht auf Franchise/Selbstbehalt — z.B. Selbstzahler-Leistungen.',
     belegNichtGedecktNote: '+ {amount} nicht gedeckt',
     belegSubmitted: 'bei KK eingereicht',
+    belegRueckwirkend: { sie: 'Belege können Sie bis zu 5 Jahre rückwirkend bei der Krankenkasse einreichen.', du: 'Belege kannst du bis zu 5 Jahre rückwirkend bei der Krankenkasse einreichen.' },
     rechnungTitle: 'Arztrechnung verstehen',
     rechnungExplain: 'Arztrechnungen basieren auf Taxpunkten × kantonalem Taxpunktwert.',
     taxpunkte: 'Taxpunkte auf der Rechnung',

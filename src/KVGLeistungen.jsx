@@ -517,7 +517,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
               React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.belegSum')),
               React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + kosten)
             )
-          )
+          ),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '10px', borderTop: '1px solid ' + palette.border }
+      }, 'ⓘ ' + t('kvg.belegRueckwirkend'))
     ),
 
     hasInput && React.createElement('div', {
