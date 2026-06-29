@@ -1727,6 +1727,17 @@ export default {
       closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
       legalNote: 'Remarque : La résiliation de l\'assurance de base doit parvenir à l\'assureur au plus tard le 30 novembre selon LAMal art. 7. Envoi recommandé conseillé.',
     },
+    kkReklamation: {
+      title: 'Assurance-maladie : contester une facture',
+      description: 'Lorsque l’assureur n’a pas compté une prestation, ou l’a fait de manière incorrecte.',
+      subject: 'Contestation de votre décompte',
+      salutation: 'Madame, Monsieur,',
+      body1: 'je suis au bénéfice de l’assurance de base auprès de {insurer} et j’ai reçu votre décompte. En le vérifiant, j’ai constaté une incohérence.',
+      body2: 'Concrètement, il s’agit de la position suivante : [à compléter — date, montant et ce qui n’a pas ou mal été compté]. Je vous prie de vérifier et de corriger le décompte.',
+      body3: 'Veuillez m’informer par écrit du résultat de votre vérification. Je reste à disposition pour toute question.',
+      closing: 'Meilleures salutations',
+      legalNote: 'Remarque : en cas de décision formelle de l’assureur, le délai d’opposition est de 30 jours (LPGA art. 52). Ce modèle est une aide à l’orientation, pas un conseil juridique. Envoi recommandé conseillé.',
+    },
   },
 
   organ: {

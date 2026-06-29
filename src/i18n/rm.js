@@ -2054,6 +2054,17 @@ export default {
       closing: 'Cun salids amicaivels',
       legalNote: "Indicaziun: La disditga da l'assicuranza da basa sto tenor LAMal art. 7 arrivar tar l'assicurader il pli tard ils 30 da november.",
     },
+    kkReklamation: {
+      title: 'Cassa da malsauns: contestar in quint',
+      description: 'Sche la cassa n’ha betg quintà ina prestaziun, u l’ha fatg fauss.',
+      subject: 'Contestaziun da Voss quint',
+      salutation: 'Stimadas dunnas, stimads signurs,',
+      body1: 'jau sun assicurà en l’assicuranza da basa tar {insurer} ed hai retschavì Voss quint. Cun la verifica hai jau constatà ina incoerenza.',
+      body2: 'Concretamain pertutga quai la suandanta posiziun: [supplir p.pl. — data, import e tge ch’è betg vegnì u fauss quintà]. Jau Vus prej da verifitgar e corriger il quint.',
+      body3: 'Infurmai mai p.pl. en scrit davart il resultat da Vossa verifica. Jau stun a disposiziun per dumondas.',
+      closing: 'Cordials salids',
+      legalNote: 'Nota: en cas d’ina disposiziun formala da la cassa importa il termin d’objecziun 30 dis (LPGA art. 52). Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
+    },
   },
 
   kkScanner: {

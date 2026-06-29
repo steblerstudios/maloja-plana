@@ -1727,6 +1727,17 @@ export default {
       closing: 'Freundliche Grüsse',
       legalNote: 'Hinweis: Die Kündigung der Grundversicherung muss gemäss KVG Art. 7 bis spätestens 30. November beim Versicherer eingehen. Einschreiben empfohlen.',
     },
+    kkReklamation: {
+      title: 'Krankenkasse: Rechnung beanstanden',
+      description: 'Wenn die Kasse eine Leistung nicht oder falsch angerechnet hat.',
+      subject: 'Beanstandung Ihrer Abrechnung',
+      salutation: 'Sehr geehrte Damen und Herren,',
+      body1: 'ich bin bei {insurer} grundversichert und habe Ihre Abrechnung erhalten. Bei der Prüfung ist mir eine Unstimmigkeit aufgefallen.',
+      body2: 'Konkret betrifft es folgende Position: [bitte ergänzen — Datum, Betrag und was nicht oder falsch angerechnet wurde]. Ich bitte Sie, die Abrechnung zu überprüfen und zu korrigieren.',
+      body3: 'Bitte teilen Sie mir das Ergebnis Ihrer Prüfung schriftlich mit. Für Rückfragen stehe ich gerne zur Verfügung.',
+      closing: 'Freundliche Grüsse',
+      legalNote: 'Hinweis: Bei einer förmlichen Verfügung der Krankenkasse beträgt die Einsprachefrist 30 Tage (ATSG Art. 52). Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
+    },
   },
 
   organ: {
