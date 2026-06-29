@@ -48,7 +48,7 @@ const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick
     }, detail)
   );
 
-const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets) => {
+const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten) => {
   const name = [data.basis?.firstName, data.basis?.lastName].filter(Boolean).join(' ') || '';
   const date = new Date().toLocaleDateString('de-CH');
   const fmt = (v) => formatCHF(v);
@@ -69,6 +69,10 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
 
   if (hasAssets) {
     rows.push('<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(totalAssets) + '</td></tr>');
+  }
+
+  if (gesundheitskosten > 0) {
+    rows.push('<tr><td>' + t('finanzUebersicht.healthCosts') + '</td><td class="r">' + fmt(gesundheitskosten) + ' ' + t('common.perYear') + '</td></tr>');
   }
 
   if (hasExpenses) {
@@ -119,6 +123,15 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const rent = Number(data.wohnen?.rentAmount || 0);
   const utilities = Number(data.wohnen?.utilities || 0);
   const kkPremium = Number(data.versicherungen?.kkPremium || 0);
+
+  // Slice B: bezahlte KK-Belege dieses Jahres als Gesundheitskosten spiegeln
+  // (Crosslink KVG-Tracker → Finanzen, kein zweites Eingeben). Offene separat.
+  const currentYear = new Date().getFullYear();
+  const kkBelege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
+  const belegeThisYear = kkBelege.filter(b => !b.datum || String(b.datum).slice(0, 4) === String(currentYear));
+  const gesundheitskosten = belegeThisYear.filter(b => b.status !== 'offen').reduce((s, b) => s + (Number(b.betrag) || 0), 0);
+  const gesundheitskostenOffen = belegeThisYear.filter(b => b.status === 'offen').reduce((s, b) => s + (Number(b.betrag) || 0), 0);
+  const hasGesundheitskosten = (gesundheitskosten + gesundheitskostenOffen) > 0;
   const groceries = Number(data.finanzen?.groceries || 0);
   const communication = Number(data.finanzen?.communication || 0);
   const mobility = Number(data.finanzen?.mobility || 0);
@@ -141,7 +154,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const hasExpenses = totalExpenses > 0;
 
   const handlePrint = () => {
-    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets);
+    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten);
     openPrintWindow(html);
   };
 
@@ -323,6 +336,16 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       statusColor: palette.text,
       detail: t('finanzUebersicht.assetsDetail'),
       onClick: () => onNavigate('chapter', 2),
+    }),
+
+    hasData && hasGesundheitskosten && React.createElement(StatusCard, {
+      palette, icon: 'health',
+      title: t('finanzUebersicht.healthCosts'),
+      status: formatCHF(gesundheitskosten),
+      statusColor: palette.text,
+      detail: t('finanzUebersicht.healthCostsDetail', { year: currentYear })
+        + (gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(gesundheitskostenOffen) }) : ''),
+      onClick: () => onNavigate('kvg'),
     }),
 
     hasData && hasExpenses && React.createElement('div', {
