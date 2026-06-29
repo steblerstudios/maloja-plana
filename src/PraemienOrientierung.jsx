@@ -22,7 +22,7 @@ function parseFranchise(val) {
   return s ? Number(s) : null;
 }
 
-export const PraemienOrientierung = ({ palette, t, data }) => {
+export const PraemienOrientierung = ({ palette, t, data, onNavigate }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
   const [plzInput, setPlzInput] = useState(storedPLZ);
   const [selectedBfs, setSelectedBfs] = useState(null);
@@ -188,7 +188,13 @@ export const PraemienOrientierung = ({ palette, t, data }) => {
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.sky, marginTop: space.xs } },
       linkifyDomains(t('po.source'))
-    )
+    ),
+
+    // Crosslink: vom Vergleich in den geführten Wechsel-Ablauf
+    onNavigate && React.createElement('button', {
+      onClick: () => onNavigate('kvgwechsel'),
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+    }, '→ ' + t('kvgWechsel.title'))
   );
 };
 
