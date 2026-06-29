@@ -66,8 +66,14 @@ const CatButton = ({ active, label, onClick, palette }) =>
 // ─── Katalog Tab ───────────────────────────────────────────
 // Eine Katalog-Zeile (Faden 3-II/1c): kein Box-pro-Eintrag mehr, sondern ruhiger
 // Lese-Rhythmus — Raum + feine Trennlinie. Status rechts, Inhalt links.
-const KatalogRow = ({ palette, t, item, isLast }) =>
-  React.createElement('div', {
+const KatalogRow = ({ palette, t, item, isLast }) => {
+  // Faden 3-II/3 (Layout 3/3): die reiche WHO/EU-Empfehlung startet eingeklappt;
+  // nur auf Wunsch öffnen (Info-Button-Prinzip, ruhige Grunddichte).
+  const [open, setOpen] = React.useState(false);
+  const emp = VORSORGE_EMPFEHLUNGEN[item.key];
+  const sources = emp ? [emp.who && 'WHO', emp.eu && 'EU'].filter(Boolean).join(' · ') : '';
+
+  return React.createElement('div', {
     style: {
       padding: '14px 0',
       borderBottom: isLast ? 'none' : '1px solid ' + palette.border,
@@ -86,26 +92,36 @@ const KatalogRow = ({ palette, t, item, isLast }) =>
         item.intervalKey && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sand, marginTop: '4px', fontWeight: weight.medium }
         }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
-        // Faden 3-II: belegbare internationale Referenz-Anker (WHO + EU) als ruhige
-        // Orientierung neben der KVG-Deckung. Pro Screening nur die belegbaren Anker.
-        VORSORGE_EMPFEHLUNGEN[item.key] && React.createElement('div', {
-          style: {
-            fontSize: text.xs, color: palette.mid, marginTop: '6px', paddingTop: '6px',
-            borderTop: '1px solid ' + palette.border, lineHeight: leading.normal,
-          }
+        // Faden 3-II: belegbare internationale Referenz-Anker (WHO + EU), eingeklappt.
+        emp && React.createElement('div', {
+          style: { marginTop: '6px', paddingTop: '6px', borderTop: '1px solid ' + palette.border }
         },
-          VORSORGE_EMPFEHLUNGEN[item.key].who && React.createElement('div', null,
-            React.createElement('span', { style: { fontWeight: weight.semi } }, 'WHO: '),
-            t('kvg.' + item.key + 'Who')
-          ),
-          VORSORGE_EMPFEHLUNGEN[item.key].eu && React.createElement('div', null,
-            React.createElement('span', { style: { fontWeight: weight.semi } }, 'EU: '),
-            t('kvg.' + item.key + 'Eu')
-          ),
-          React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.' + item.key + 'Synthese')),
-          React.createElement('div', {
-            style: { color: palette.soft, marginTop: '2px' }
-          }, t('kvg.' + item.key + 'Quelle'))
+          React.createElement('button', {
+            type: 'button',
+            onClick: () => setOpen(!open),
+            'aria-expanded': open,
+            style: {
+              background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+              fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
+              textAlign: 'left',
+            }
+          }, (open ? '▾ ' : '▸ ') + (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))),
+          open && React.createElement('div', {
+            style: { fontSize: text.xs, color: palette.mid, marginTop: '6px', lineHeight: leading.normal }
+          },
+            emp.who && React.createElement('div', null,
+              React.createElement('span', { style: { fontWeight: weight.semi } }, 'WHO: '),
+              t('kvg.' + item.key + 'Who')
+            ),
+            emp.eu && React.createElement('div', null,
+              React.createElement('span', { style: { fontWeight: weight.semi } }, 'EU: '),
+              t('kvg.' + item.key + 'Eu')
+            ),
+            React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.' + item.key + 'Synthese')),
+            React.createElement('div', {
+              style: { color: palette.soft, marginTop: '2px' }
+            }, t('kvg.' + item.key + 'Quelle'))
+          )
         )
       ),
       React.createElement('div', { style: { paddingTop: '1px' } },
@@ -117,6 +133,7 @@ const KatalogRow = ({ palette, t, item, isLast }) =>
       )
     )
   );
+};
 
 const KatalogTab = ({ palette, t, filterCat }) => {
   // Editoriale Gruppierung: in der „Alle"-Ansicht nach Kategorie mit ruhigen
