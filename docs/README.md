@@ -16,6 +16,16 @@ The goal is shared understanding.
 
 ---
 
+# Start hier: das UX-Playbook
+
+[`UX_PLAYBOOK.md`](UX_PLAYBOOK.md) — das „Grundgesetz" von Maloja Plana. Bündelt
+Produktphilosophie, Designprinzipien und die zentrale Idee (Maloja verwaltet
+**Zusammenhänge**, nicht Informationen). Lebendes Dokument, wächst mit jeder
+App-Analyse ([`konkurrenzanalyse.md`](konkurrenzanalyse.md)). Erster Referenzpunkt
+bei jeder Design- oder Entwicklungsentscheidung.
+
+---
+
 # Core Documentation Areas
 
 ## Roadmap

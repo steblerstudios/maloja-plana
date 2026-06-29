@@ -92,6 +92,40 @@ Folgende Kombination bietet kein anderes Produkt:
 
 ---
 
+## App-Teardowns (UX-Lernen)
+
+Detaillierte UX-Analysen einzelner Apps. Format: **positiv / Lernen / negativ.**
+Die übertragbaren Lehren fliessen ins [UX-Playbook](UX_PLAYBOOK.md). Wächst mit
+jeder weiteren analysierten App.
+
+### Budgetberatung Schweiz
+- **Positiv:** sehr klar, sehr wenig Ablenkung, Schritt für Schritt, ein Ziel pro Seite.
+- **Lernen:** Progressive Disclosure · nur relevante Informationen zeigen · ein Problem gleichzeitig lösen.
+- **Negativ:** Budget endet beim Budget — keine Verbindung zu Steuern, Sozialhilfe, Versicherungen, Wohnen, Familie.
+
+### BlueBudget
+- **Positiv:** sehr gutes Dashboard, alles wirkt ruhig, nicht verspielt, klare Typografie.
+- **Lernen:** Dashboard zuerst, Details später.
+- **Negativ:** alles dreht sich um Geld; keine Lebensereignisse.
+
+### Coople (Job-Plattform)
+- **Navigation** (Home / Jobs / Planung / Einsätze / Profil): in unter 10 Sekunden verständlich. → *Lernen: Navigation muss sofort verständlich sein.*
+- **Home:** zeigt passende Jobs + Bewerbungen, mehr nicht — reicht, wirkt aber etwas leer. → *Lernen: Dashboard darf fokussiert sein, soll aber „Wie geht es MIR?" zeigen, nicht Werbung.*
+- **Jobkarten:** Stundenlohn, Firma, Ort, Distanz, Datum — mehr braucht es nicht. → *Lernen: geringe Informationsdichte, Entscheidungen ermöglichen statt Texte schreiben.*
+- **Bewerbung** als Zustand (Beworben → Angestellt → Abgeschlossen) statt „Bewerbungsverwaltung". → *Lernen: Menschen denken in Zuständen, nicht in Datenbanken.*
+- **Einsatzplanung:** kein Universal-Kalender, nur „Wann arbeite ich?". → *Lernen: nur den Teil lösen, den der Nutzer braucht.*
+- **Profil:** alles an einem Ort, sauber strukturiert, überall editierbar — aber extrem lang, man scrollt/sucht. → *Lernen: ein Profil ist eine Datenbank, keine Startseite.*
+- **Grösstes Learning:** Coople denkt „ich verwalte deine Jobs", nicht „ich verwalte dein Leben". Maloja denkt vom **Lebensereignis** her (neuer Job → Vertrag, Budget, Pensionskasse, Krankentaggeld, Unfallversicherung, Steuerprognose, Ferienanspruch, Dokumente, Probezeit-Frist).
+
+### Übergreifendes Muster
+Fast alle analysierten Apps sind **horizontal** (in Funktionen) aufgebaut und zeigen
+**Listen**. Maloja soll **vertikal** (in Lebensereignissen) denken und mit
+**Fortschritt/Vollständigkeit** statt Listen arbeiten. Kern-Differenzierung: andere
+Apps verwalten **Informationen**, Maloja verwaltet **Zusammenhänge**. (Ausführlich im
+[UX-Playbook](UX_PLAYBOOK.md).)
+
+---
+
 ## Fazit
 
 Maloja Plana hat **keine direkte Konkurrenz** in seiner spezifischen Nische. Die grössten "Konkurrenten" sind Comparis (kommerziell, datensammelnd) und ch.ch (informativ, aber kein persönliches Tool). Die stärkste Differenzierung ist die Kombination aus Privatsphäre, Offline-Fähigkeit und Schweiz-Expertise in einem einzigen, kostenlosen Werkzeug.
