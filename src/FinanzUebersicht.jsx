@@ -347,7 +347,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       statusColor: palette.text,
       detail: t('finanzUebersicht.healthCostsDetail', { year: currentYear })
         + (gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(gesundheitskostenOffen) }) : ''),
-      onClick: () => onNavigate('kvg'),
+      onClick: () => onNavigate('kvg', undefined, 'franchise'),
     }),
 
     hasData && hasExpenses && React.createElement('div', {

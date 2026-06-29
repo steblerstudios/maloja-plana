@@ -285,6 +285,7 @@ const AppInner = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
+  const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
@@ -520,6 +521,9 @@ const AppInner = () => {
     }
     if (viewName === 'tresor') {
       setTresorInitialTab(extra || 'all');
+    }
+    if (viewName === 'kvg') {
+      setKvgInitialTab(extra || 'katalog');
     }
     setView(viewName);
     requestAnimationFrame(() => {
@@ -888,7 +892,7 @@ const AppInner = () => {
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
-        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData }),
+        view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
