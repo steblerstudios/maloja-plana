@@ -2139,6 +2139,12 @@ export default {
       legal: 'Juridique',
       personal: 'Personnel',
     },
+    coverage: {
+      doctor: 'Les consultations sont prises en charge si elles sont médicalement nécessaires — après la franchise et la quote-part. L’assurance de base ne couvre pas automatiquement un bilan de santé annuel fixe.',
+      dentist: 'Les soins dentaires ne font en général pas partie de l’assurance de base — les coûts sont le plus souvent à votre charge (sauf certaines maladies). Une assurance complémentaire peut en couvrir une partie.',
+      gyn: 'Assurance de base : le dépistage gynécologique du cancer (Pap) est en règle générale pris en charge tous les 3 ans (après deux contrôles annuels sans particularité). Plus souvent est possible — les rendez-vous supplémentaires sont alors à votre charge. Ce qui est médicalement utile est à discuter avec le médecin.',
+      vaccinations: 'Les vaccinations recommandées par l’OFSP sont en général prises en charge (après franchise/quote-part). Les vaccins de voyage en général non.',
+    },
     templates: {
       title: 'Ajout rapide depuis les modèles',
       doctorYearly: 'Visite médicale annuelle',
