@@ -708,6 +708,7 @@ export default {
         kkPremium: 'KK-Prämie monatlich CHF',
         franchise: { label: 'Franchise CHF', options: { f300: '300', f500: '500', f1000: '1\'000', f1500: '1\'500', f2500: '2\'500', 300: '300', 500: '500', 1000: '1\'000', 1500: '1\'500', 2500: '2\'500' } },
         kkCardNumber: 'KK-Kartennummer',
+        policyNumber: 'Policen-Nummer',
         kkZusatz: 'Zusatzversicherung',
         lifeInsurance: { label: 'Lebensversicherung', options: { no: 'Nein', yes: 'Ja' } },
         freizuegigkeit: 'Freizügigkeitskonto/-police',
@@ -736,6 +737,7 @@ export default {
       hints: {
         bvgContribution: 'Nur zur Übersicht — wird im Budget nicht nochmals vom Nettolohn abgezogen.',
         bvgBalance: 'Letzter PK-Ausweis. Fliesst in den Vorsorge-Rechner.',
+        policyNumber: 'Vertrags-/Policennummer der Grundversicherung — steht auf der Police, nicht die Kartennummer.',
         ktg: { sie: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG — sie zahlt 80% Ihres Lohns bei Krankheit.', du: 'Nicht obligatorisch. Viele Arbeitgeber haben eine KTG — sie zahlt 80% Deines Lohns bei Krankheit.' },
       },
       docs: {

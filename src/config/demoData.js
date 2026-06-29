@@ -60,6 +60,7 @@ export const DEMO_DATA = {
     kkPremium: '385',
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
+    policyNumber: 'CSS-2024-7788991',
     bvgInsurer: 'BVK Personalvorsorge',
     bvgContribution: '420',
     bvgBalance: '45000',
