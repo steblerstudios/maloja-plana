@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNG_KEYS, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 
 const STATUS_COLORS = (palette) => ({
@@ -100,7 +100,24 @@ const KatalogTab = ({ palette, t, filterCat }) => {
             marginTop: '4px',
             fontWeight: weight.medium,
           }
-        }, 'ⓘ ' + t('kvg.' + item.intervalKey))
+        }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
+        // Faden 3-II: belegbare internationale Empfehlung als ruhige Orientierung.
+        // Botschaft ist beruhigend (KVG deckt den empfohlenen Rhythmus), kein Alarm.
+        VORSORGE_EMPFEHLUNG_KEYS.includes(item.key) && React.createElement('div', {
+          style: {
+            fontSize: text.xs,
+            color: palette.mid,
+            marginTop: '6px',
+            paddingTop: '6px',
+            borderTop: '1px solid ' + palette.border,
+            lineHeight: leading.normal,
+          }
+        },
+          t('kvg.' + item.key + 'Empfehlung'),
+          React.createElement('div', {
+            style: { color: palette.soft, marginTop: '2px' }
+          }, t('kvg.' + item.key + 'Quelle'))
+        )
       )
     )
   );
