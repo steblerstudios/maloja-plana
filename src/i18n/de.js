@@ -2450,6 +2450,8 @@ export default {
     gynaeko: 'Gynäkologische Vorsorge',
     gynaekoNote: 'PAP-Abstrich alle 3 Jahre nach 2 normalen Befunden (ab 21 J.).',
     gynaeko3j: 'Alle 3 Jahre',
+    empfehlungShow: 'Empfehlung {sources} anzeigen',
+    empfehlungHide: 'Empfehlung ausblenden',
     gynaekoWho: 'HPV-Test alle 5–10 Jahre (ab 30).',
     gynaekoEu: 'HPV-Test mindestens alle 5 Jahre (30–65).',
     gynaekoSynthese: 'Beide empfehlen seltener als die Schweizer Praxis — die Grundversicherung deckt die Vorsorge im empfohlenen Rhythmus.',

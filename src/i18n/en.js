@@ -2473,6 +2473,8 @@ export default {
     gynaeko: 'Gynaecological screening',
     gynaekoNote: 'PAP smear every 3 years after 2 normal results (from age 21).',
     gynaeko3j: 'Every 3 years',
+    empfehlungShow: 'Show {sources} recommendation',
+    empfehlungHide: 'Hide recommendation',
     gynaekoWho: 'HPV test every 5–10 years (from age 30).',
     gynaekoEu: 'HPV test at least every 5 years (ages 30–65).',
     gynaekoSynthese: 'Both recommend less often than Swiss practice — basic insurance covers screening at the recommended interval.',
