@@ -134,6 +134,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
   const [newTp, setNewTp] = useState('');
   const [ngOpen, setNgOpen] = useState(false);
   const [newNichtGedeckt, setNewNichtGedeckt] = useState('');
+  const [newEingereicht, setNewEingereicht] = useState(false);
 
   // Belege, für die schon eine offene Kalender-Erinnerung existiert (für ✓-Feedback,
   // auch nach erneutem Öffnen der Ansicht). addReminder ist ohnehin idempotent.
@@ -165,11 +166,13 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
       // Optionaler nicht-gedeckter Anteil (z.B. Selbstzahler) — zählt NICHT auf
       // Franchise/Selbstbehalt, fliesst aber in die Gesundheitskosten (Finanzen).
       nichtGedeckt: Number(newNichtGedeckt) > 0 ? Number(newNichtGedeckt) : 0,
+      eingereicht: newEingereicht,
     };
     onUpdateData('versicherungen', 'kkBelege', [...belege, beleg]);
     setNewDatum(''); setNewBetrag(''); setNewTp(''); setTpOpen(false);
     setNewStatus('bezahlt'); setNewFrist('');
     setNewNichtGedeckt(''); setNgOpen(false);
+    setNewEingereicht(false);
   };
   const removeBeleg = (id) => {
     if (!onUpdateData) return;
@@ -385,6 +388,17 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
           style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal }
         }, t('kvg.belegNichtGedecktHint'))
       ),
+
+      React.createElement('button', {
+        onClick: () => setNewEingereicht(!newEingereicht),
+        'aria-pressed': newEingereicht ? 'true' : 'false',
+        style: {
+          background: 'none', border: 'none', fontFamily: 'inherit', fontSize: text.sm,
+          padding: '4px 0', marginBottom: '8px', cursor: 'pointer', display: 'block', textAlign: 'left',
+          color: newEingereicht ? (palette.sage || '#5a7a5a') : palette.mid,
+          fontWeight: newEingereicht ? weight.medium : weight.normal,
+        }
+      }, (newEingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted')),
 
       React.createElement('button', {
         onClick: addBeleg,
