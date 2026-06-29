@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo } from './data/praemienRegionen.js';
-import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
+import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { linkifyDomains } from './utils/linkifyDomains.js';
@@ -22,10 +22,11 @@ function parseFranchise(val) {
   return s ? Number(s) : null;
 }
 
-export const PraemienOrientierung = ({ palette, t, data, onNavigate }) => {
+export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const storedPLZ = data.wohnen?.postalCode || '';
   const [plzInput, setPlzInput] = useState(storedPLZ);
   const [selectedBfs, setSelectedBfs] = useState(null);
+  const [detailNr, setDetailNr] = useState(null); // aufgeklappte Kasse im Vergleich
 
   const gemeinden = useMemo(() => {
     const plz = plzInput.trim();
@@ -56,6 +57,18 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate }) => {
     return { allFranchises: allFra, specificPremium };
   }, [insurerNr, regionInfo, ageClass, userFranchise]);
 
+  // ── Marktplatz: alle Kassen vergleichen (günstigste zuerst) ──
+  const targetInsurer = data.versicherungen?.targetInsurer || '';
+  const compFranchise = userFranchise || (ageClass === 'kind' ? KIN_FRA[0] : ERW_FRA[0]);
+  const allInsurers = useMemo(() => {
+    if (!regionInfo) return [];
+    const { kanton, region } = regionInfo;
+    return allInsurerNrs()
+      .map(nr => ({ nr, name: insurerNameFromNr(nr), premium: getInsurerPremium(nr, kanton, region, ageClass, compFranchise) }))
+      .filter(x => x.premium != null && x.premium > 0)
+      .sort((a, b) => a.premium - b.premium);
+  }, [regionInfo, ageClass, compFranchise]);
+
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
@@ -69,6 +82,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate }) => {
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
+    nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
+    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? palette.sage : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
 
   return React.createElement('div', { style: s.card },
@@ -181,6 +196,57 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate }) => {
           )
         )
       )
+    ),
+
+    regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
+      React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
+        t('po.compareFranchiseNote', { franchise: compFranchise.toLocaleString() })),
+      React.createElement('table', { style: s.table },
+        React.createElement('thead', null,
+          React.createElement('tr', null,
+            React.createElement('th', { style: s.th }, t('po.thInsurer')),
+            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.thPremium')),
+            React.createElement('th', { style: s.th })
+          )
+        ),
+        React.createElement('tbody', null,
+          allInsurers.map(ins => {
+            const isCurrent = insurerNr === ins.nr;
+            const isChosen = targetInsurer === ins.name;
+            const isOpen = detailNr === ins.nr;
+            const out = [
+              React.createElement('tr', { key: ins.nr },
+                React.createElement('td', { style: s.td },
+                  React.createElement('button', {
+                    style: { ...s.nameBtn, color: isCurrent ? palette.sage : palette.text },
+                    onClick: () => setDetailNr(isOpen ? null : ins.nr)
+                  }, (isOpen ? '▾ ' : '▸ ') + ins.name + (isCurrent ? ' •' : ''))
+                ),
+                React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, 'CHF ' + ins.premium.toFixed(2)),
+                React.createElement('td', { style: { ...s.td, textAlign: 'right' } },
+                  onUpdateData && React.createElement('button', {
+                    style: s.targetBtn(isChosen),
+                    onClick: () => onUpdateData('versicherungen', 'targetInsurer', isChosen ? '' : ins.name)
+                  }, isChosen ? ('✓ ' + t('po.targetSelected')) : t('po.chooseTarget')))
+              )
+            ];
+            if (isOpen) {
+              const ladder = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass) || [];
+              out.push(React.createElement('tr', { key: ins.nr + '-d' },
+                React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: 3 },
+                  React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } },
+                    ladder.map(f => 'CHF ' + f.franchise.toLocaleString() + ': CHF ' + f.premium.toFixed(2)).join('  ·  ')
+                  )
+                )
+              ));
+            }
+            return out;
+          })
+        )
+      ),
+      targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.sm + 'px', fontWeight: weight.medium } },
+        t('po.targetChosenHint', { insurer: targetInsurer }))
     ),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontStyle: 'italic' } },
