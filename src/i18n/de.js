@@ -1581,6 +1581,11 @@ export default {
     hidePreview: 'Vorschau schliessen',
     printLetter: 'Brief drucken / PDF',
     dataNote: { sie: 'Ihre gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.', du: 'Deine gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.' },
+    afterPrint: {
+      title: 'Brief erstellt — und jetzt?',
+      text: { sie: 'Sobald Sie ihn unterschrieben und versendet haben, scannen Sie ihn und legen ihn im Lebensordner ab — so liegt alles am richtigen Ort.', du: 'Sobald du ihn unterschrieben und versendet hast, scanne ihn und lege ihn im Lebensordner ab — so liegt alles am richtigen Ort.' },
+      toTresor: 'Im Lebensordner ablegen',
+    },
     leaseTermination: {
       title: 'Mietkündigung',
       description: 'Ordentliche Kündigung des Mietvertrags mit den gesetzlichen Fristen.',

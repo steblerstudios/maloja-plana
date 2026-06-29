@@ -1904,6 +1904,12 @@ export default {
     hidePreview: 'Serrar la prevista',
     printLetter: 'Stampar la brev / PDF',
     dataNote: { sie: 'Vossas datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.', du: 'Tes datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.' },
+    // TODO(rm): sauberes Romanisch nachziehen — bewusster DE-Fallback
+    afterPrint: {
+      title: 'Brief erstellt — und jetzt?',
+      text: { sie: 'Sobald Sie ihn unterschrieben und versendet haben, scannen Sie ihn und legen ihn im Lebensordner ab — so liegt alles am richtigen Ort.', du: 'Sobald du ihn unterschrieben und versendet hast, scanne ihn und lege ihn im Lebensordner ab — so liegt alles am richtigen Ort.' },
+      toTresor: 'Im Lebensordner ablegen',
+    },
     leaseTermination: {
       title: 'Disditga dal contract da locaziun',
       description: 'Disditga ordinaria dal contract da locaziun cun ils termins legals.',
