@@ -15,7 +15,9 @@ const EMERGENCY = [
   { num: '112', key: 'euro' },
 ];
 
-export const UnfallKrankheit = ({ palette, t, onNavigate }) => {
+export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
+  // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
+  const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
   const s = {
     ...ablaufStyles(palette),
     cardWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
@@ -62,7 +64,7 @@ export const UnfallKrankheit = ({ palette, t, onNavigate }) => {
     // ── Schritt 3 — Wenn du nicht arbeiten kannst ──
     React.createElement(AblaufStep, { palette, title: t('unfallKrankheit.step3Title') },
       React.createElement('p', { style: s.stepText }, t('unfallKrankheit.step3Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step3Link'), onClick: () => onNavigate('chapter', 3) })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step3Link'), onClick: () => onNavigate('chapter', chapterIdx('versicherungen')) })
     ),
 
     // ── Schritt 4 — Belege sammeln & ablegen ──
