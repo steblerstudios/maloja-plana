@@ -318,3 +318,14 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
 **Meta-Antwort „mehr/andere Experten?":** Nein — keine neuen Agent-Typen nötig. Die ~25 `maloja-*` Skills
 sind die Experten; richtig ist die 6-Domänen→Skill-Kopplung (oben). **„Alles nutzbar wie gedacht?"** →
 Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/taxImport/legal, 🟠 oben).
+
+---
+
+## 🟡 Braindump-Fäden (BD18/19) — geplant, später bauen
+
+*Session 2026-06-29: Faden 1 (Briefe) komplett, Faden 2 (Kalender) komplett + vertieft, Faden 3-I (KK-Last %) gebaut & committet auf `dev` (nicht gepusht). Sophie: Folgendes bewusst zurückgestellt — „erst wenn wir soweit sind".*
+
+- **Petitionsvorlagen-Generator** (BD19, Sophies Idee) — Menschen die Werkzeuge geben, *selbst* zu petitionieren (analog Brief-Generator). Löst den Petitions-Teil von Faden 3 governance-konform: Maloja kampagnisiert nicht, sondern befähigt. Beispiel-Vorlage „max 10% des Einkommens für die KK".
+- **Faden 4 — Haushalts-Budget-Benchmarks** (BD18) — Bund/BFS-Haushaltsbudget-Erhebung als Richtwerte pro Ausgabenkategorie. WICHTIG: belegbar, KEINE erfundenen Einzelpreise („eine WC-Rolle kostet X"). Braucht Daten-Erkundung zuerst.
+- **Faden 3-II** — Differenz-Prinzip (KVG vs WHO/international) an weitere Stellen tragen + belegbare Intervall-Differenzen aus Faden 2.
+- **Führerschein-Thema** (BD19) — Führerausweis ganzheitlich: Erneuerung/Fristen, ärztliche Kontrolluntersuchung ab 75 (alle 2 J.), Ausweis im Dokumenten-Tresor, evtl. Kalender-Vorlage. Orientierung über Pflichten/Fristen. Erst Umfang klären (Swiss-precision: Fakten prüfen).
