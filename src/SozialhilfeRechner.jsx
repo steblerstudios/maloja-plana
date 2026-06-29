@@ -10,9 +10,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
   const [adults, setAdults] = useState(initAdults);
   const [kinderCount, setKinderCount] = useState(initChildren);
-  const [miete, setMiete] = useState('');
-  const [kvg, setKvg] = useState('');
-  const [einkommen, setEinkommen] = useState('');
+  // Vorbefüllen aus bereits erfassten Angaben (überschreibbar) — nicht zweimal eingeben.
+  const [miete, setMiete] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
+  const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
+  const [einkommen, setEinkommen] = useState(data?.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
   const [andereEinkuenfte, setAndereEinkuenfte] = useState('');
   const [vermoegen, setVermoegen] = useState('');
   const [erwerbstaetig, setErwerbstaetig] = useState(false);
