@@ -87,7 +87,7 @@ export default {
     step2Title: '2 · Caisse de pension (LPP)',
     step2Text: 'À partir d\'un salaire annuel d\'environ 22 000 fr., vous êtes obligatoirement affilié à la caisse de pension (2e pilier). Votre employeur vous annonce — vérifiez le certificat de salaire et les déductions LPP.',
     step3Title: '3 · Accident & indemnités journalières',
-    step3Text: 'Dès 8 h/semaine, vous êtes assuré contre les accidents par l\'employeur (LAA) — vous pouvez alors désélectionner la couverture accident dans l\'assurance maladie et économiser la prime. Demandez aussi s\'il existe une indemnité journalière de maladie.',
+    step3Text: 'Dès 8 h/semaine, vous êtes assuré contre les accidents par l\'employeur (LAA) — vous pouvez alors désélectionner la couverture accident dans l\'assurance maladie et économiser la prime. L\'existence d\'une indemnité journalière de maladie figure en général sur le certificat de salaire.',
     step3Link: 'Accident ou maladie — que faire ?',
     step4Title: '4 · Impôts',
     step4Text: 'Un nouveau salaire change vos impôts. Sans permis d\'établissement (C), l\'employeur prélève l\'impôt à la source directement ; sinon, adaptez votre prévision fiscale.',
