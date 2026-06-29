@@ -1209,6 +1209,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.search'), sub: t('nav.sub.search'), view: 'search', icon: 'search' },
             { label: t('nav.merkliste'), sub: t('nav.sub.merkliste'), view: 'merkliste', icon: 'check' },
             { label: t('nav.calendar'), sub: t('nav.sub.calendar'), view: 'calendar', icon: 'calendar' },
+            { label: t('nav.umzug'), sub: t('nav.sub.umzug'), view: 'umzug', icon: 'home' },
             { label: t('nav.cv'), sub: t('nav.sub.cv'), view: 'cv', icon: 'lebenslauf' },
           ] },
         ];
