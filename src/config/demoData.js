@@ -61,6 +61,10 @@ export const DEMO_DATA = {
     franchise: 'f1500',
     kkCardNumber: '80756 012345678',
     policyNumber: 'CSS-2024-7788991',
+    kkBelege: [
+      { id: 'demo1', datum: '2026-03-12', betrag: 240, status: 'bezahlt', frist: '', nichtGedeckt: 0, eingereicht: true },
+      { id: 'demo2', datum: '2026-05-04', betrag: 180, status: 'offen', frist: '2026-06-30', nichtGedeckt: 0, eingereicht: false },
+    ],
     bvgInsurer: 'BVK Personalvorsorge',
     bvgContribution: '420',
     bvgBalance: '45000',

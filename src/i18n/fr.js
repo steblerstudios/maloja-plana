@@ -1698,6 +1698,12 @@ export default {
       text: 'Une fois signée et envoyée, scannez-la et classez-la dans votre classeur de vie — ainsi tout est à la bonne place.',
       toTresor: 'Classer dans le classeur de vie',
     },
+    kkBelegPicker: {
+      title: 'Quelles factures contestez-vous ?',
+      intro: { sie: 'Sélectionnez les factures contestées — la date et le montant sont repris dans la lettre. Sans sélection, un champ à compléter reste.', du: 'Sélectionne les factures contestées — la date et le montant sont repris dans la lettre. Sans sélection, un champ à compléter reste.' },
+      empty: { sie: 'Aucune facture enregistrée pour le moment. Vous pouvez les ajouter dans le suivi des frais de santé — ou compléter la lettre à la main.', du: 'Aucune facture enregistrée pour le moment. Tu peux les ajouter dans le suivi des frais de santé — ou compléter la lettre à la main.' },
+      undated: 'sans date',
+    },
     leaseTermination: {
       title: 'Résiliation du bail',
       description: 'Résiliation ordinaire du contrat de bail avec les délais légaux.',
