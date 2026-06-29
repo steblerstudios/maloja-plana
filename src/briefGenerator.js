@@ -198,8 +198,11 @@ function generateInsuranceSwitch(data, t) {
   const f = getInsuranceSwitchFields(data, t);
   const dateStr = today();
   const cityDate = f.city ? `${esc(f.city)}, ${dateStr}` : dateStr;
-  const insurerLine = f.currentInsurer ? esc(f.currentInsurer) : fillHint(t);
-  const policyLine = f.policyNumber ? esc(f.policyNumber) : '';
+  // Klartext für t()-Interpolation — die Werte landen in einem ${esc(t(...))} und
+  // werden dort einmal escaped. Kein vor-Escapen (sonst doppelt) und kein fillHint-HTML
+  // (sonst würden die <span>-Tags als Text im Brief erscheinen).
+  const insurerLine = f.currentInsurer || t('briefe.fillIn');
+  const policyLine = f.policyNumber || '';
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
@@ -233,7 +236,9 @@ function getKkReklamationFields(data, t) {
 function generateKkReklamation(data, t) {
   const f = getKkReklamationFields(data, t);
   const dateStr = today();
-  const insurerLine = f.insurer ? esc(f.insurer) : fillHint(t);
+  // Klartext für t()-Interpolation (wird im ${esc(t(...))} einmal escaped) — kein
+  // fillHint-HTML, das sonst als Tag-Text im Brief erschiene.
+  const insurerLine = f.insurer || t('briefe.fillIn');
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
