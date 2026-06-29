@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNG_KEYS, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 
 const STATUS_COLORS = (palette) => ({
@@ -101,9 +101,10 @@ const KatalogTab = ({ palette, t, filterCat }) => {
             fontWeight: weight.medium,
           }
         }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
-        // Faden 3-II: belegbare internationale Empfehlung als ruhige Orientierung.
-        // Botschaft ist beruhigend (KVG deckt den empfohlenen Rhythmus), kein Alarm.
-        VORSORGE_EMPFEHLUNG_KEYS.includes(item.key) && React.createElement('div', {
+        // Faden 3-II: belegbare internationale Referenz-Anker (WHO + EU) als ruhige
+        // Orientierung neben der KVG-Deckung. Botschaft ist beruhigend (KVG deckt den
+        // empfohlenen Rhythmus), kein Alarm. Pro Screening nur die belegbaren Anker.
+        VORSORGE_EMPFEHLUNGEN[item.key] && React.createElement('div', {
           style: {
             fontSize: text.xs,
             color: palette.mid,
@@ -113,7 +114,15 @@ const KatalogTab = ({ palette, t, filterCat }) => {
             lineHeight: leading.normal,
           }
         },
-          t('kvg.' + item.key + 'Empfehlung'),
+          VORSORGE_EMPFEHLUNGEN[item.key].who && React.createElement('div', null,
+            React.createElement('span', { style: { fontWeight: weight.semi } }, 'WHO: '),
+            t('kvg.' + item.key + 'Who')
+          ),
+          VORSORGE_EMPFEHLUNGEN[item.key].eu && React.createElement('div', null,
+            React.createElement('span', { style: { fontWeight: weight.semi } }, 'EU: '),
+            t('kvg.' + item.key + 'Eu')
+          ),
+          React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.' + item.key + 'Synthese')),
           React.createElement('div', {
             style: { color: palette.soft, marginTop: '2px' }
           }, t('kvg.' + item.key + 'Quelle'))
