@@ -61,57 +61,34 @@ const CatButton = ({ active, label, onClick, palette }) =>
   }, label);
 
 // ─── Katalog Tab ───────────────────────────────────────────
-const KatalogTab = ({ palette, t, filterCat }) => {
-  const items = filterCat === 'all'
-    ? KVG_KATALOG
-    : KVG_KATALOG.filter(i => i.cat === filterCat);
-
-  return React.createElement('div', null,
-    items.map(item =>
-      React.createElement('div', {
-        key: item.key,
-        style: {
-          padding: '12px 14px',
-          background: palette.up,
-          borderRadius: radius.sm,
-          border: '1px solid ' + palette.border,
-          marginBottom: '8px',
-        }
-      },
+// Eine Katalog-Zeile (Faden 3-II/1c): kein Box-pro-Eintrag mehr, sondern ruhiger
+// Lese-Rhythmus — Raum + feine Trennlinie. Status rechts, Inhalt links.
+const KatalogRow = ({ palette, t, item, isLast }) =>
+  React.createElement('div', {
+    style: {
+      padding: '14px 0',
+      borderBottom: isLast ? 'none' : '1px solid ' + palette.border,
+    }
+  },
+    React.createElement('div', {
+      style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }
+    },
+      React.createElement('div', { style: { flex: 1 } },
         React.createElement('div', {
-          style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '4px' }
-        },
-          React.createElement('span', {
-            style: { fontSize: text.sm, fontWeight: weight.semi }
-          }, t('kvg.' + item.key)),
-          React.createElement(StatusBadge, {
-            status: item.status,
-            label: t('kvg.' + item.status),
-            palette,
-          })
-        ),
+          style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '2px' }
+        }, t('kvg.' + item.key)),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
         }, t('kvg.' + item.key + 'Note')),
         item.intervalKey && React.createElement('div', {
-          style: {
-            fontSize: text.xs,
-            color: palette.sand,
-            marginTop: '4px',
-            fontWeight: weight.medium,
-          }
+          style: { fontSize: text.xs, color: palette.sand, marginTop: '4px', fontWeight: weight.medium }
         }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
         // Faden 3-II: belegbare internationale Referenz-Anker (WHO + EU) als ruhige
-        // Orientierung neben der KVG-Deckung. Botschaft ist beruhigend (KVG deckt den
-        // empfohlenen Rhythmus), kein Alarm. Pro Screening nur die belegbaren Anker.
+        // Orientierung neben der KVG-Deckung. Pro Screening nur die belegbaren Anker.
         VORSORGE_EMPFEHLUNGEN[item.key] && React.createElement('div', {
           style: {
-            fontSize: text.xs,
-            color: palette.mid,
-            marginTop: '6px',
-            paddingTop: '6px',
-            borderTop: '1px solid ' + palette.border,
-            lineHeight: leading.normal,
+            fontSize: text.xs, color: palette.mid, marginTop: '6px', paddingTop: '6px',
+            borderTop: '1px solid ' + palette.border, lineHeight: leading.normal,
           }
         },
           VORSORGE_EMPFEHLUNGEN[item.key].who && React.createElement('div', null,
@@ -127,8 +104,41 @@ const KatalogTab = ({ palette, t, filterCat }) => {
             style: { color: palette.soft, marginTop: '2px' }
           }, t('kvg.' + item.key + 'Quelle'))
         )
+      ),
+      React.createElement('div', { style: { paddingTop: '1px' } },
+        React.createElement(StatusBadge, {
+          status: item.status,
+          label: t('kvg.' + item.status),
+          palette,
+        })
       )
     )
+  );
+
+const KatalogTab = ({ palette, t, filterCat }) => {
+  // Editoriale Gruppierung: in der „Alle"-Ansicht nach Kategorie mit ruhigen
+  // Überschriften als Landmarken; bei aktivem Filter eine einzelne Gruppe ohne
+  // Überschrift (der Chip zeigt die Kategorie bereits an).
+  const cats = filterCat === 'all' ? KVG_CATEGORIES : [filterCat];
+
+  return React.createElement('div', null,
+    cats.map(cat => {
+      const catItems = KVG_KATALOG.filter(i => i.cat === cat);
+      if (catItems.length === 0) return null;
+      return React.createElement('div', { key: cat },
+        filterCat === 'all' && React.createElement('div', {
+          style: {
+            fontSize: text.xs, fontWeight: weight.semi, color: palette.soft,
+            letterSpacing: '0.04em', margin: '20px 0 2px',
+          }
+        }, t('kvg.cat' + cat.charAt(0).toUpperCase() + cat.slice(1))),
+        catItems.map((item, idx) =>
+          React.createElement(KatalogRow, {
+            key: item.key, palette, t, item, isLast: idx === catItems.length - 1,
+          })
+        )
+      );
+    })
   );
 };
 
