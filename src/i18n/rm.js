@@ -913,6 +913,8 @@ export default {
       heartfeltIntro: 'Servetschs e projects che nus stimain persunalmain — recumandads gratuitamain, senza cuntraprestaziun.',
       heartfeltIntroAffiliate: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.',
       affiliateMarker: 'Affiliate',
+      // TODO(rm): provisorischer DE-Fallback — RM nachziehen
+      heartfeltGroups: { digital: 'Digital & Privatsphäre', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Maschina da tschertgar che investescha sias entradas en il reboschiment.',
       heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
       heartfelt3: 'Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',

@@ -41,30 +41,34 @@ const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderline
 // affiliate: true → Link bringt eine Provision; wird transparent als "Affiliate"
 // gekennzeichnet und blendet den Intro-Hinweis um. Erst setzen, wenn eine echte
 // Affiliate-Partnerschaft besteht (sonst bliebe der "unbezahlt"-Text unwahr).
+// group: ordnet jede Empfehlung einer Themengruppe zu (Render gruppiert + Überschriften).
 const HEARTFELT = [
-  { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org' },
-  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com' },
-  { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de' },
-  { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch' },
-  { key: 'heartfelt5', name: 'Baukunst Nick', url: null }, // HTTPS-Zertifikat defekt – vorerst kein Link
-  { key: 'heartfelt6', name: 'Living Dream Design', url: null }, // HTTPS-Zertifikat defekt – vorerst kein Link
-  { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss' },
-  { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch' },
-  { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch' },
-  { key: 'heartfelt10', name: 'Xdo', url: null }, // App Store (Rau Media), keine Website
-  { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch' },
-  { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch' },
-  { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch' },
-  { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch' },
-  { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch' },
-  { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso' },
-  { key: 'heartfelt17', name: 'Foodshiner', url: null }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
-  { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/' },
-  { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko' }, // Tattoo-Artist, z.Zt. nur Instagram
-  { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts' }, // Tattoo-Artist, z.Zt. nur Instagram
-  { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41' }, // keine eigene Website – Gemeinde-Verzeichnis
-  { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/' },
+  { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org', group: 'digital' },
+  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' },
+  { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de', group: 'digital' },
+  { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch', group: 'kunst' },
+  { key: 'heartfelt5', name: 'Baukunst Nick', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt6', name: 'Living Dream Design', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss', group: 'gemeinschaft' },
+  { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch', group: 'tiere' },
+  { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch', group: 'gemeinschaft' },
+  { key: 'heartfelt10', name: 'Xdo', url: null, group: 'digital' }, // App Store (Rau Media), keine Website
+  { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch', group: 'tiere' },
+  { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch', group: 'tiere' },
+  { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch', group: 'gesundheit' },
+  { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch', group: 'konsum' },
+  { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch', group: 'konsum' },
+  { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso', group: 'konsum' },
+  { key: 'heartfelt17', name: 'Foodshiner', url: null, group: 'digital' }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
+  { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/', group: 'digital' },
+  { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41', group: 'kunst' }, // keine eigene Website – Gemeinde-Verzeichnis
+  { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/', group: 'gesundheit' },
 ];
+
+// Reihenfolge der Gruppen in der Anzeige.
+const HEARTFELT_GROUPS = ['digital', 'konsum', 'tiere', 'gesundheit', 'kunst', 'gemeinschaft'];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
 // die URL eintragen (z. B. Twint-Link, Stripe-Payment-Link, Ko-fi, Bank-QR-Seite).
@@ -457,18 +461,26 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       }),
       Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
         P({ children: t(HEARTFELT.some(i => i.affiliate) ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro') }),
-        ...HEARTFELT
-          .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
-          .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
-          .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }))
-          .map(({ item, desc }) => React.createElement('p', { key: item.key, style: { margin: '0 0 8px 0' } },
-            '→ ',
-            item.url
-              ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
-              : item.name,
-            item.affiliate ? React.createElement('span', { style: { color: palette.soft, fontSize: text.xs } }, ' · ' + t('legal.resources.affiliateMarker')) : null,
-            ' — ' + desc
-          )),
+        ...HEARTFELT_GROUPS.flatMap(g => {
+          const items = HEARTFELT
+            .filter(i => i.group === g)
+            .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
+            .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
+            .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
+          if (!items.length) return [];
+          return [
+            React.createElement('p', { key: 'hg-' + g, style: { margin: '14px 0 6px 0', fontWeight: weight.semi, fontSize: text.sm, color: palette.mid } },
+              t('legal.resources.heartfeltGroups.' + g)),
+            ...items.map(({ item, desc }) => React.createElement('p', { key: item.key, style: { margin: '0 0 8px 0' } },
+              '→ ',
+              item.url
+                ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
+                : item.name,
+              item.affiliate ? React.createElement('span', { style: { color: palette.soft, fontSize: text.xs } }, ' · ' + t('legal.resources.affiliateMarker')) : null,
+              ' — ' + desc
+            ))
+          ];
+        }),
       ]})
     ),
 
