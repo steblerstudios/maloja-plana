@@ -52,6 +52,7 @@ const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
 const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
+const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
@@ -860,6 +861,7 @@ const AppInner = () => {
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'umzug' && React.createElement(UmzugAblauf, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
