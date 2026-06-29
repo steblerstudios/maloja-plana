@@ -708,6 +708,7 @@ export default {
         kkPremium: 'Prime mensuelle (CHF)',
         franchise: { label: 'Franchise (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numéro de carte d\'assurance',
+        policyNumber: 'Numéro de police',
         kkZusatz: 'Assurance complémentaire',
         lifeInsurance: { label: 'Assurance vie', options: { no: 'Non', yes: 'Oui' } },
         freizuegigkeit: 'Compte/police de libre passage',
@@ -736,6 +737,7 @@ export default {
       hints: {
         bvgContribution: 'À titre indicatif — ce montant n\'est pas déduit une seconde fois du salaire net dans le budget.',
         bvgBalance: 'Dernier certificat de caisse de pension. Utilisé dans le calculateur de prévoyance.',
+        policyNumber: 'Numéro de contrat/police de l\'assurance de base — figure sur la police, pas le numéro de carte.',
         ktg: 'Pas obligatoire. Beaucoup d\'employeurs ont une IJM — elle verse 80% du salaire en cas de maladie.',
       },
       docs: {

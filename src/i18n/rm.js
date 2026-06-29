@@ -718,6 +718,7 @@ export default {
         ahvContribution: 'Contribuziun AVS CHF/onn',
         uvgPremium: 'Premia LAINF CHF/mais',
         kkCardNumber: 'Nr. da la carta CM',
+        policyNumber: 'Numer da polissa',
         kkZusatz: 'Assicuranza cumplementara',
         lifeInsurance: { label: 'Assicuranza da vita', options: { no: 'Na', yes: 'Gea' } },
         freizuegigkeit: 'Conto/polissa da liber passadi',
@@ -745,6 +746,7 @@ export default {
       hints: {
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",
         bvgBalance: "Ultim attest PC. Flueschan en il calculatur da prevenziun.",
+        policyNumber: 'Numer da contract/polissa da l\'assicuranza da basa — sin la polissa, betg il numer da la carta.',
         ktg: { sie: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Voss salari en cas da malsogna.", du: "Betg obligatoric. Blers patrun han ina ICM — ella paja 80% da Tes salari en cas da malsogna." },
       },
       docs: {
