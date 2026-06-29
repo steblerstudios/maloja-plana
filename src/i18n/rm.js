@@ -105,6 +105,25 @@ export default {
     reminderNotes: 'Während der Probezeit gilt eine kürzere Kündigungsfrist. Die genaue Dauer steht im Arbeitsvertrag (oft 1–3 Monate) — Datum anpassen.',
     footerProbe: 'Die Probezeit-Dauer steht im Vertrag (oft 1–3 Monate); die Erinnerung ist eine Orientierung, pass sie an.',
   },
+  // TODO(rm): provisorischer DE-Fallback für stelleVerloren — sauberes Romanisch nachziehen.
+  stelleVerloren: {
+    title: 'Stelle verloren — was tun?',
+    intro: 'Wenn die Stelle wegfällt, zählt jeder Tag. Hier der ruhige Überblick: zuerst die wichtigste Anmeldung, dann Versicherungen, Vorsorge und Unterlagen.',
+    step1Title: '1 · Beim RAV anmelden — sofort',
+    step1Text: 'Das Arbeitslosentaggeld gibt es erst ab dem Tag der Anmeldung — nicht rückwirkend. Melde dich darum spätestens am ersten Tag ohne Stelle bei deiner Wohngemeinde bzw. dem RAV an. Schon während der Kündigungsfrist solltest du dich bewerben und die Bemühungen festhalten.',
+    step1Link: 'Taggeld abschätzen',
+    step2Title: '2 · Versicherungen — die unsichtbare Lücke',
+    step2Text: 'Die Unfalldeckung über den alten Arbeitgeber endet 31 Tage nach dem Austritt. Danach musst du den Unfall in der Krankenkasse einschliessen (oder eine Abredeversicherung abschliessen). Die Grundversicherung läuft normal weiter.',
+    step2LinkUk: 'Unfall oder Krankheit — was tun?',
+    step2LinkKk: 'Krankenkasse ansehen',
+    step3Title: '3 · Pensionskasse (Freizügigkeit)',
+    step3Text: 'Beim Austritt wird dein Pensionskassen-Guthaben fällig. Übertrag es auf ein Freizügigkeitskonto — sonst geht es an die Auffangeinrichtung. Bei einer neuen Stelle bringst du es dort wieder ein.',
+    step3Link: 'Vorsorge ansehen',
+    step4Title: '4 · Arbeitszeugnis & Unterlagen',
+    step4Text: 'Verlang ein qualifiziertes Arbeitszeugnis. Sammle Kündigung, Lohnabrechnungen und deine Arbeitsbemühungen und leg alles im Lebensordner ab.',
+    step4Link: 'Im Lebensordner ablegen',
+    footerSperrzeit: 'Wenn du selbst kündigst oder die Kündigung verschuldet hast, kann das RAV Einstelltage verhängen — lass dich vorher beraten.',
+  },
   // TODO(rm): provisorischer Fallback auf Deutsch — sauberes Romanisch nachziehen.
   // Bewusst kein erfundenes RM; RM-Sprechende verstehen DE. Übersetzung folgt im i18n-Durchgang.
   kvgWechsel: {
@@ -313,6 +332,7 @@ export default {
     umzug: 'Midada da domicil',
     unfallkrankheit: 'Accident u malsauna',
     neuerjob: 'Nov job',
+    stelleverloren: 'Plazza persa',
     taxImport: 'Import da taglia',
     search: 'Tschertgar',
     notifications: 'Communicaziuns',
@@ -326,6 +346,7 @@ export default {
       umzug: 'Adressa, vischnanca, disditga',
       unfallkrankheit: 'Tge far — e tgi paja',
       neuerjob: 'Contract, prevenziun, taglias, termins',
+      stelleverloren: 'URC, assicuranzas, prevenziun',
       taxImport: 'Surpigliar las valurs centralas da la decleraziun da taglia',
       search: 'Chattar utensils & chapitels',
       budgetSync: 'Import CSV',
