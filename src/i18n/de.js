@@ -87,7 +87,7 @@ export default {
     step2Title: '2 · Pensionskasse (BVG)',
     step2Text: 'Ab einem Jahreslohn von rund 22 000 Fr. bist du obligatorisch in der Pensionskasse (2. Säule). Dein Arbeitgeber meldet dich an — prüfe Lohnausweis und BVG-Abzüge.',
     step3Title: '3 · Unfall & Krankentaggeld',
-    step3Text: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Frag auch, ob ein Krankentaggeld (KTG) besteht.',
+    step3Text: 'Ab 8 Std./Woche bist du über den Arbeitgeber unfallversichert (UVG) — dann kannst du die Unfalldeckung in der Krankenkasse abwählen und sparst Prämie. Ob ein Krankentaggeld (KTG) besteht, steht meist auf dem Lohnausweis.',
     step3Link: 'Unfall oder Krankheit — was tun?',
     step4Title: '4 · Steuern',
     step4Text: 'Ein neuer Lohn ändert deine Steuern. Ohne Niederlassung (C) zieht der Arbeitgeber die Quellensteuer direkt ab; sonst passt du die Steuerprognose an.',
