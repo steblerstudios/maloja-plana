@@ -582,6 +582,10 @@ export default {
         franchise: { label: 'Deductible (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Insurance card number',
         kkZusatz: 'Supplementary insurance',
+        lifeInsurance: { label: 'Life insurance', options: { no: 'No', yes: 'Yes' } },
+        freizuegigkeit: 'Vested benefits account/policy',
+        legalInsurance: { label: 'Legal protection insurance', options: { no: 'No', yes: 'Yes' } },
+        childInsurance: { label: 'Children\'s insurance', options: { no: 'No', yes: 'Yes' } },
         bvgInsurer: 'Pension fund (BVG)',
         bvgContribution: 'BVG contribution monthly (CHF)',
         bvgBalance: 'Current pension fund balance (CHF)',
@@ -600,6 +604,7 @@ export default {
       placeholders: {
         kkInsurer: 'e.g. Swica, Helsana, CSS',
         kkZusatz: 'e.g. Helsana COMPLETA, Sanitas Vital',
+        freizuegigkeit: 'e.g. vested benefits foundation',
       },
       hints: {
         bvgContribution: 'For reference only — not subtracted again from net income in the budget.',

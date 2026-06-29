@@ -581,6 +581,10 @@ export default {
         franchise: { label: 'Franchise CHF', options: { f300: '300', f500: '500', f1000: '1\'000', f1500: '1\'500', f2500: '2\'500', 300: '300', 500: '500', 1000: '1\'000', 1500: '1\'500', 2500: '2\'500' } },
         kkCardNumber: 'KK-Kartennummer',
         kkZusatz: 'Zusatzversicherung',
+        lifeInsurance: { label: 'Lebensversicherung', options: { no: 'Nein', yes: 'Ja' } },
+        freizuegigkeit: 'Freizügigkeitskonto/-police',
+        legalInsurance: { label: 'Rechtsschutzversicherung', options: { no: 'Nein', yes: 'Ja' } },
+        childInsurance: { label: 'Kinderversicherungen', options: { no: 'Nein', yes: 'Ja' } },
         bvgInsurer: 'BVG/Pensionskasse',
         bvgContribution: 'BVG-Beitrag monatlich CHF',
         bvgBalance: 'Aktuelles BVG-Guthaben CHF',
@@ -599,6 +603,7 @@ export default {
       placeholders: {
         kkInsurer: 'z.B. Swica, Helsana, CSS',
         kkZusatz: 'z.B. Helsana COMPLETA, Sanitas Vital',
+        freizuegigkeit: 'z.B. Stiftung Auffangeinrichtung BVG',
       },
       hints: {
         bvgContribution: 'Nur zur Übersicht — wird im Budget nicht nochmals vom Nettolohn abgezogen.',
