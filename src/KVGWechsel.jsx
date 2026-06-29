@@ -144,6 +144,8 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
           t('kvgWechsel.step4Button', { date: '30.11.' + deadlineYear })),
     onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('unterlagen') },
       '→ ' + t('kvgWechsel.policeLink')),
+    onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('zusatzwechsel') },
+      '→ ' + t('zusatzWechsel.title')),
 
     // ── Fuss — Sonderkündigungsrecht + lokal-Hinweis ──
     React.createElement('div', { style: s.footer },
