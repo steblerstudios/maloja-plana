@@ -2117,6 +2117,12 @@ export default {
       legal: 'Recht',
       personal: 'Persönlich',
     },
+    coverage: {
+      doctor: 'Arztbesuche sind gedeckt, wenn medizinisch nötig — nach Franchise und Selbstbehalt. Einen festen jährlichen Gesundheits-Check vergütet die Grundversicherung nicht automatisch.',
+      dentist: 'Zahnbehandlungen sind in der Regel nicht in der Grundversicherung — die Kosten meist selbst zu tragen (ausser bei bestimmten Erkrankungen). Eine Zusatzversicherung kann einen Teil übernehmen.',
+      gyn: 'Grundversicherung: gynäkologische Krebsvorsorge (Pap) i.d.R. alle 3 Jahre (nach zwei unauffälligen jährlichen Kontrollen). Häufiger ist möglich — die zusätzlichen Termine sind dann selbst zu zahlen. Was medizinisch sinnvoll ist, klärt die Ärztin/der Arzt.',
+      vaccinations: 'Vom BAG empfohlene Impfungen sind meist gedeckt (nach Franchise/Selbstbehalt). Reiseimpfungen in der Regel nicht.',
+    },
     templates: {
       title: 'Schnell hinzufügen aus Vorlagen',
       doctorYearly: 'Jährlicher Arztbesuch',
