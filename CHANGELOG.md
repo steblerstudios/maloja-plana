@@ -5,6 +5,22 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.7-beta] — 2026-06-29
+
+Briefe nach Schweizer Norm mit Auto-Feldern, ein mitdenkender Gesundheits-Kalender
+und die KK-Last im Verhältnis zum Einkommen (WHO-Richtwert).
+
+### Neu
+- **Schweizer Geschäftsbrief-Norm** in allen Brief-Vorlagen: Empfängeradresse rechts (fürs Sichtfenster), Absender als Briefkopf, Betreff fett
+- **Policennummer-Feld** bei den Versicherungen — fliesst automatisch in den KK-Kündigungsbrief
+- **KK-Reklamationsbrief mit Beleg-Auswahl**: strittige Belege ankreuzen, Datum + Betrag werden automatisch in den Brief übernommen (Differenz bleibt Selbst-Eintrag)
+- **Gesundheits-Kalender mit Deckungs-Orientierung**: die Vorlagen (Arzt, Zahnarzt, Gynäkologie, Impfungen) zeigen ruhig und sachlich, was die Grundversicherung übernimmt — ohne medizinische Empfehlungen
+- **„Letzter Besuch" → nächster Termin**: beim Gesundheits-Termin den letzten Besuch eintragen, der nächste wird berechnet (egal wann im Jahr man startet)
+- Optionaler **„dieses Jahr gedeckt?"-Marker** pro Gesundheits-Termin
+- **KK-Last-Orientierung**: die Grundversicherungs-Prämie als Anteil des Einkommens, gegen den WHO-Richtwert von 10% (in Prämien-Orientierung und Finanz-Übersicht)
+
+---
+
 ## [0.1.6-beta] — 2026-06-29
 
 KK-Kosten-Tracker (Belege, Franchise/Selbstbehalt), durchgängige Crosslinks
