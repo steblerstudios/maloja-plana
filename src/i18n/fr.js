@@ -2162,6 +2162,10 @@ export default {
       unsure: 'incertain',
       cardPrefix: 'Prise en charge',
     },
+    lastVisit: {
+      label: 'Dernière visite (optionnel)',
+      hint: 'Sert à calculer le prochain rendez-vous suggéré.',
+    },
     templates: {
       title: 'Ajout rapide depuis les modèles',
       doctorYearly: 'Visite médicale annuelle',

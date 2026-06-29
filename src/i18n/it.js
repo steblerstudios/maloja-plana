@@ -2142,6 +2142,10 @@ export default {
       unsure: 'incerto',
       cardPrefix: 'Copertura',
     },
+    lastVisit: {
+      label: 'Ultima visita (opzionale)',
+      hint: 'Serve a calcolare il prossimo appuntamento suggerito.',
+    },
     templates: {
       title: 'Aggiungi rapidamente dai modelli',
       doctorYearly: 'Visita medica annuale',

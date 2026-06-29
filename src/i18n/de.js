@@ -2140,6 +2140,10 @@ export default {
       unsure: 'unsicher',
       cardPrefix: 'Deckung',
     },
+    lastVisit: {
+      label: 'Letzter Besuch (optional)',
+      hint: 'Daraus berechnen wir den nächsten empfohlenen Termin.',
+    },
     templates: {
       title: 'Schnell hinzufügen aus Vorlagen',
       doctorYearly: 'Jährlicher Arztbesuch',
