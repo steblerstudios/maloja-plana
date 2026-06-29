@@ -131,4 +131,6 @@ export const VORSORGE_EMPFEHLUNGEN = {
 export const KVG_DETAILS = {
   schwangerschaft: 3,
   impfungen: 3,
+  transport: 3,
+  ausland: 3,
 };
