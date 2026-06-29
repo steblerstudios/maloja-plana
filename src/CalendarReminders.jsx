@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { downloadICS } from './utils/icsExport.js';
-import { text, weight, space, radius, fontFamily, ease, duration } from './config/tokens.js';
+import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 
 // ─── Helpers ────────────────────────────────────────────────
@@ -24,15 +24,15 @@ const INTERVALS = {
 
 // Pre-built templates for Swiss life
 const TEMPLATES = (t) => [
-  { title: t('calendar.templates.doctorYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 30 },
-  { title: t('calendar.templates.dentistYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 60 },
-  { title: t('calendar.templates.gynYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 90 },
+  { title: t('calendar.templates.doctorYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 30, coverage: t('calendar.coverage.doctor') },
+  { title: t('calendar.templates.dentistYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 60, coverage: t('calendar.coverage.dentist') },
+  { title: t('calendar.templates.gynYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 90, coverage: t('calendar.coverage.gyn') },
   { title: t('calendar.templates.taxDeadline'), category: 'finance', recurrence: 'yearly', daysFromNow: 120 },
   { title: t('calendar.templates.insuranceRenewal'), category: 'insurance', recurrence: 'yearly', daysFromNow: 180 },
   { title: t('calendar.templates.permitRenewal'), category: 'admin', recurrence: 'yearly', daysFromNow: 365 },
   { title: t('calendar.templates.ravAppointment'), category: 'admin', recurrence: 'monthly', daysFromNow: 14 },
   { title: t('calendar.templates.integrationCourse'), category: 'education', recurrence: 'weekly', daysFromNow: 7 },
-  { title: t('calendar.templates.vaccinations'), category: 'health', recurrence: 'yearly', daysFromNow: 180 },
+  { title: t('calendar.templates.vaccinations'), category: 'health', recurrence: 'yearly', daysFromNow: 180, coverage: t('calendar.coverage.vaccinations') },
   { title: t('calendar.templates.kkChange'), category: 'insurance', recurrence: 'yearly', daysFromNow: daysBetween(todayISO(), new Date().getFullYear() + '-11-30') },
 ];
 
@@ -105,7 +105,8 @@ export const CalendarReminders = ({ palette, t, data }) => {
       dueDate,
       category: template.category,
       recurrence: template.recurrence,
-      notes: '',
+      // Deckungs-Orientierung wandert in die Notiz, damit sie am Termin bleibt.
+      notes: template.coverage || '',
       done: false,
       completedDate: null,
       createdDate: todayISO()
@@ -339,7 +340,9 @@ export const CalendarReminders = ({ palette, t, data }) => {
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; }
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } }, React.createElement(Icon, { name: CATEGORY_ICON_KEYS[tmpl.category] || 'basis', size: 14 }), tmpl.title),
-              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, '↻ ' + t('calendar.' + tmpl.recurrence))
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, '↻ ' + t('calendar.' + tmpl.recurrence)),
+              // Ruhige Deckungs-Orientierung (KVG-faktisch, keine medizinische Empfehlung)
+              tmpl.coverage && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', lineHeight: leading.normal, fontStyle: 'italic' } }, 'ⓘ ' + tmpl.coverage)
             )
           )
         )

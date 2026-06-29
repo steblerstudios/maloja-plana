@@ -2193,6 +2193,12 @@ export default {
       legal: 'Legal',
       personal: 'Personal',
     },
+    coverage: {
+      doctor: 'Doctor visits are covered when medically necessary — after deductible and co-payment. Basic insurance does not automatically cover a fixed annual health check.',
+      dentist: 'Dental treatment is generally not part of basic insurance — costs are usually self-paid (except for certain conditions). Supplementary insurance may cover part of it.',
+      gyn: 'Basic insurance: gynaecological cancer screening (Pap) usually every 3 years (after two normal annual check-ups). More often is possible — the extra visits are then self-paid. What is medically sensible is for your doctor to advise.',
+      vaccinations: 'Vaccinations recommended by the FOPH are usually covered (after deductible/co-payment). Travel vaccinations usually are not.',
+    },
     templates: {
       title: 'Quick add from templates',
       doctorYearly: 'Yearly doctor visit',
