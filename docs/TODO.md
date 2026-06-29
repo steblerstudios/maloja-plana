@@ -110,6 +110,32 @@ Atkinson, hreflang) oder brauchen Sophies Entscheid (Hero-Copy, Export-Icon).
   bei ~null sichtbarem Nutzen. Bei Bedarf gezielt einzelne echte Fälle, nicht als Sweep.
 - Prinzip: Entschlacken via Disclosure/Dropdown, **nie löschen** (Landkarte = Identität).
 
+## C2 — 🎨 Design-Vision: Skeuomorphismus als Metaphern-Sammlung (Sophie, BD 2026-06-29)
+
+> **Status: Inspiration / „bis wir dahin kommen" — NICHT jetzt bauen, eigene Design-Phase, schritt-für-schritt gemeinsam.**
+
+**Kern-Prinzip (wichtiger als der Stil):** NICHT „Papiertexturen draufklatschen / alles wie altes Papier". Sondern: *jede Funktion bekommt die Metapher des realen Gegenstands, den unser Gehirn damit verbindet.* Maloja = kein Stil, sondern eine **Sammlung von Metaphern** → eine „sorgfältig zusammengestellte Lebenswerkzeugkiste". Hochwertig, nicht cartoonhaft. (Evolviert die bisherige Papier-Pendant-Optik: Papier ist nur EINE Metapher unter vielen.)
+
+Metaphern-Map pro Bereich:
+- 🏥 **Gesundheit** = Leder-Arztkoffer; KK/Hausarzt/Medikamente/Impfungen/Notfall/KVG „wie Instrumente" darin.
+- 🗂 **KVG-Katalog** = KEIN Papier → **Karteikartenbox / med. Nachschlagewerk** (Register, Trenner, Laschen, Indexkarten, Checkbox-Liste) „wie eine Praxis". ← künftiger Skin für den Katalog, den wir gerade inhaltlich bauen (Faden 3-II).
+- 📂 **Dokumente** = Aktenschrank (Ordner, Mappen, farbige Tabs, herausziehen).
+- 💰 **Budget** = Thermobeleg/Quittung (Coop-Stil) für den **Monatsabschluss** (nicht jede Seite).
+- 💳 **Konto** = schlichtes Banking, KEINE Metapher.
+- 💸 **Schulden** = echter Betreibungs-/Verlustschein-Look (Siegel, Stempel, Aktenzeichen, Wasserzeichen) — offiziell, real, NICHT vergilbt, nicht negativ.
+- 📅 **Kalender** = hochwertiger Planer (Moleskine/Leuchtturm/Apple-Mix), KEIN Papier.
+- 🏠 **Wohnen** = kleines Haus, Zimmer = Themen (Wohnzimmer→Haftpflicht, Küche→Hausrat, Schlafzimmer→Mietvertrag, Bad→Nebenkosten). Subtil.
+- 🚗 **Mobilität** = Fahrzeugmappe (Führerschein→Versicherung→Service→Vignette→Motorfahrzeugsteuer).
+- 👶 **Familie** = elegantes Fotoalbum / Familienordner.
+- ⚖ **Behörden** = grauer Schweizer Verwaltungs-/Bundesordner (Laschen, Register).
+- 💼 **Arbeit** = Bewerbungsmappe (Leder): CV, Zeugnisse, Bewerbungen, Verträge, Lohnabrechnungen.
+- 💡 **Ideen** = Notizbuch (Field Notes / Moleskine).
+- 🌱 **Ziele** = **Lebensbaum als Navigation** (Alleinstellungsmerkmal): Stamm + Äste = Lebensbereiche, hineinzoomen, Äste wachsen, Früchte = erledigte Ziele, Knospen = neue Aufgaben.
+- 🔍 **Schnellchecks** = KEIN Papier → **Instrumente**: Bonität→Tachometer, Versicherung→Schutzschild, Budget→Tankanzeige, Stress→Pulsmesser, Organisation→Kompass.
+- 📈 **Analysen** = modern/„Apple" (Glas, Charts), keine Metapher.
+
+Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen intuitiv mit diesem Lebensbereich verbinden."* Gehört bei Umsetzung ins UX-Playbook.
+
 ## D — Brand Identity (Rest der Umsetzung)
 
 - ✅ Farben (Granit), Wortmarke (Gipfel-M), Typografie (Lexend/Hanken), Voice-Entscheid
