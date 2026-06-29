@@ -1728,6 +1728,17 @@ export default {
       closing: 'Kind regards',
       legalNote: 'Note: Cancellation of basic insurance must reach the insurer by November 30 at the latest per KVG Art. 7. Registered mail recommended.',
     },
+    kkReklamation: {
+      title: 'Health insurer: dispute a bill',
+      description: 'When the insurer did not account for a service, or did so incorrectly.',
+      subject: 'Objection to your statement',
+      salutation: 'Dear Sir or Madam,',
+      body1: 'I hold basic insurance with {insurer} and have received your statement. On review, I noticed a discrepancy.',
+      body2: 'Specifically, it concerns the following item: [please add — date, amount and what was not or incorrectly accounted for]. I kindly ask you to review and correct the statement.',
+      body3: 'Please inform me of the outcome of your review in writing. I am happy to answer any questions.',
+      closing: 'Kind regards',
+      legalNote: 'Note: in the case of a formal ruling by the insurer, the objection period is 30 days (ATSG Art. 52). This template is guidance, not legal advice. Registered mail recommended.',
+    },
   },
 
   organ: {
