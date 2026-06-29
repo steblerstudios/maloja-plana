@@ -29,6 +29,10 @@ export default {
     specialRight: 'Sonderkündigungsrecht: Bei einer Prämienerhöhung kannst du innert 30 Tagen ab Mitteilung kündigen — auch bei Sparmodellen oder höherer Franchise.',
     chosen: 'Gewählt',
     step3Note3b: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.',
+    wunschKasseLabel: 'Wunsch-Kasse (optional)',
+    wunschKassePlaceholder: 'z.B. Helsana',
+    reminderTitleTo: 'Wechsel zu {insurer} — Frist',
+    todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
   },
   sections: {
     basis: { person: 'Person', contact: 'Kontakt', family: 'Familie' },

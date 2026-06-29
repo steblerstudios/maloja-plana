@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
+import { addTodo } from './utils/merkliste.js';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"). Verkettet die vorhandenen
 // Bausteine zu einem ruhigen Weg: Vergleich → neue Kasse (zwei Wege, anklickbar)
@@ -20,6 +21,7 @@ const nextNov30 = () => {
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const [reminderSet, setReminderSet] = useState(false);
   const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
+  const [wunschKasse, setWunschKasse] = useState(''); // optionale Ziel-Kasse aus dem Vergleich
 
   const currentInsurer = data?.versicherungen?.kkInsurer || '';
   const deadline = nextNov30();
@@ -39,6 +41,8 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     done: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.sm + 'px' },
     footer: { fontSize: text.xs, color: palette.soft, marginTop: space.xl + 'px', lineHeight: leading.normal },
     chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sand, marginTop: '6px' },
+    inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
+    input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
   };
 
   // Ruhige Karte für einen der beiden Wege — anklickbar, hebt den gewählten hervor.
@@ -67,13 +71,16 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   };
 
   const handleSetReminder = () => {
+    const target = wunschKasse.trim();
     addReminder({
-      title: t('kvgWechsel.reminderTitle'),
+      title: target ? t('kvgWechsel.reminderTitleTo', { insurer: target }) : t('kvgWechsel.reminderTitle'),
       dueDate: deadline,
       category: 'insurance',
       recurrence: 'yearly',
       notes: t('kvgWechsel.reminderNotes'),
     });
+    // Rücklink zum Vergleich in die Merkliste — damit man die Wunsch-Kasse wiederfindet.
+    addTodo({ text: t('kvgWechsel.todoText'), link: 'praemien' });
     setReminderSet(true);
   };
 
@@ -95,6 +102,15 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     // ── Schritt 2 — Neue Kasse, zwei ruhige Wege (anklickbar) ──
     React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step2Title')),
     React.createElement('p', { style: s.stepText }, t('kvgWechsel.step2Intro')),
+    React.createElement('label', { style: s.inputLabel },
+      t('kvgWechsel.wunschKasseLabel'),
+      React.createElement('input', {
+        type: 'text', value: wunschKasse,
+        onChange: (e) => setWunschKasse(e.target.value),
+        placeholder: t('kvgWechsel.wunschKassePlaceholder'),
+        style: s.input,
+      })
+    ),
     React.createElement('div', { style: s.pathWrap },
       pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
         React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),

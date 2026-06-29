@@ -29,6 +29,10 @@ export default {
     specialRight: 'Diritto di disdetta straordinario: in caso di aumento del premio puoi disdire entro 30 giorni dalla notifica — anche con modelli di risparmio o franchigia più alta.',
     chosen: 'Scelto',
     step3Note3b: 'Se la nuova cassa si occupa del cambio, gestisce lei la disdetta — non devi scrivere tu una lettera.',
+    wunschKasseLabel: 'Cassa desiderata (facoltativo)',
+    wunschKassePlaceholder: 'p. es. Helsana',
+    reminderTitleTo: 'Passaggio a {insurer} — termine',
+    todoText: 'Cambiare cassa malati: confronta i premi',
   },
   sections: {
     basis: { person: 'Persona', contact: 'Contatto', family: 'Famiglia' },
