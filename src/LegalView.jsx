@@ -62,6 +62,8 @@ const HEARTFELT = [
   { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/' },
   { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko' }, // Tattoo-Artist, z.Zt. nur Instagram
   { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41' }, // keine eigene Website – Gemeinde-Verzeichnis
+  { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/' },
 ];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
@@ -441,7 +443,7 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       ]}),
       Section({ title: t('legal.resources.petitionTitle'), palette, children: [
         P({ children: t('legal.resources.petition1') }),
-        P({ children: '→ ' + t('legal.resources.petition2') }),
+        ResLink(t('legal.resources.petition2')),
         renderLocalGov(),
       ]}),
       Section({ title: t('legal.resources.helpTitle'), palette, children: [

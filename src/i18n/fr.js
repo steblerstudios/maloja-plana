@@ -997,7 +997,7 @@ export default {
       incamail: { name: 'IncaMail', url: 'https://www.incamail.com', desc: 'Courrier recommandé électronique de la Poste Suisse, valeur juridique.' },
       petitionTitle: 'Pétitions & Initiatives citoyennes',
       petition1: { sie: 'En Suisse, vous avez le droit de déposer des pétitions (art. 33 Cst.). Plateformes :', du: 'En Suisse, tu as le droit de déposer des pétitions (art. 33 Cst.). Plateformes :' },
-      petition2: 'petitionen.ch — Plateforme suisse de pétitions',
+      petition2: { name: 'petitionen.ch', url: 'https://petitionen.ch', desc: 'Plateforme suisse de pétitions' },
       petition3: { sie: 'Site de votre commune — Pour les préoccupations locales, directement auprès de votre commune.', du: 'Site de ta commune — Pour les préoccupations locales, directement auprès de ta commune.' },
       cantonPortal: 'Canton de {canton} ↗',
       localGovDesc: 'pour les démarches locales — votre commune et votre canton.',
@@ -1035,6 +1035,8 @@ export default {
       heartfelt18: 'Application de clavier suisse qui pense avec vous — respectueuse de la vie privée, sans pistage.',
       heartfelt19: 'Art du tatouage avec sa propre signature — actuellement sur Instagram.',
       heartfelt20: 'Art du tatouage qui nous touche — actuellement sur Instagram.',
+      heartfelt21: 'Entreprise de peinture de Nunningen — un artisanat soigné et personnel.',
+      heartfelt22: 'Médecine traditionnelle chinoise — un traitement attentif et holistique.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
