@@ -538,6 +538,8 @@ function buildBasisSections(data, t, allData) {
   if (data.dateOfBirth) personRows.push({ label: t('mirror.basis.dateOfBirth'), value: formatDate(data.dateOfBirth) });
   if (data.canton) personRows.push({ label: t('mirror.basis.canton'), value: getCantonName(data.canton, t) });
   if (data.maritalStatus) personRows.push({ label: t('mirror.basis.maritalStatus'), value: maritalLabel(data.maritalStatus, t) });
+  // „Keine Angabe" (none) bewusst nicht spiegeln — nur eine aktive Wahl zeigen.
+  if (data.pronouns && data.pronouns !== 'none') personRows.push({ label: t('mirror.basis.pronouns'), value: t('chapters.basis.fields.pronouns.options.' + data.pronouns) });
 
   const hh = householdText(data, t);
   if (hh) personRows.push({ label: t('mirror.basis.household'), value: hh });

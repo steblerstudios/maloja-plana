@@ -1205,6 +1205,7 @@ export default {
       household: 'Ménage',
       phone: 'Téléphone',
       email: 'E-mail',
+      pronouns: 'Pronoms',
       born: 'né(e) en {year}',
       livingIn: 'domicilié(e) dans le canton de {canton}',
       householdAlone: 'vit seul(e)',
