@@ -146,6 +146,9 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
     onUpdateData('versicherungen', 'kkBelege', belege.filter(b => b.id !== id));
   };
   const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
+  // Monospace nur für die Beleg-Zahlen — gibt der Auflistung die Anmutung
+  // eines echten Rückforderungsbelegs, ohne die UI-Schrift (Lexend) anzutasten.
+  const mono = "'SFMono-Regular', ui-monospace, 'Menlo', 'Consolas', monospace";
 
   const result = berechneFranchise(franchise, kosten);
   const hasInput = kosten > 0;
@@ -302,46 +305,82 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
     ),
 
     React.createElement('div', {
-      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
+      style: {
+        background: palette.surface, borderRadius: radius.sm, marginBottom: '16px',
+        border: '1px solid ' + palette.border, overflow: 'hidden',
+      }
     },
+      // Perforations-Kante oben — wie der abgerissene Rand eines echten Belegs
       React.createElement('div', {
-        style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' }
-      }, t('kvg.belegYearTitle', { year: currentYear })),
+        'aria-hidden': 'true',
+        style: {
+          height: '6px',
+          backgroundImage: 'radial-gradient(circle at 4px 4px, ' + palette.border + ' 1.6px, transparent 1.8px)',
+          backgroundSize: '11px 6px',
+        }
+      }),
+      // Kopf-Band
+      React.createElement('div', {
+        style: {
+          display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
+          padding: '10px 14px', background: palette.up, borderBottom: '2px solid ' + palette.border,
+        }
+      },
+        React.createElement('span', {
+          style: { fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.12em', textTransform: 'uppercase', color: palette.mid }
+        }, t('kvg.belegYearTitle', { year: currentYear })),
+        React.createElement('span', {
+          style: { fontFamily: mono, fontSize: text.xs, letterSpacing: '0.1em', color: palette.soft }
+        }, 'KVG')
+      ),
 
-      yearBelege.length === 0
-        ? React.createElement('div', {
-            style: { fontSize: text.sm, color: palette.soft, lineHeight: leading.normal }
-          }, t('kvg.belegEmpty'))
-        : React.createElement('div', null,
-            yearBelege.map(b =>
+      React.createElement('div', { style: { padding: '4px 14px 14px' } },
+        yearBelege.length === 0
+          ? React.createElement('div', {
+              style: { fontSize: text.sm, color: palette.soft, lineHeight: leading.normal, padding: '8px 0' }
+            }, t('kvg.belegEmpty'))
+          : React.createElement('div', null,
+              yearBelege.map(b =>
+                React.createElement('div', {
+                  key: b.id,
+                  style: {
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    gap: '8px', padding: '9px 0', borderBottom: '1px dashed ' + palette.border,
+                  }
+                },
+                  React.createElement('span', {
+                    style: { fontFamily: mono, fontSize: text.sm, color: palette.mid }
+                  }, fmtDatum(b.datum)),
+                  React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
+                    React.createElement('span', {
+                      style: { fontFamily: mono, fontSize: text.sm, fontWeight: weight.medium, fontVariantNumeric: 'tabular-nums' }
+                    }, 'CHF ' + (Number(b.betrag) || 0).toFixed(2)),
+                    React.createElement('button', {
+                      onClick: () => removeBeleg(b.id),
+                      'aria-label': t('kvg.belegRemove'),
+                      style: {
+                        background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
+                        fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                      }
+                    }, '×')
+                  )
+                )
+              ),
               React.createElement('div', {
-                key: b.id,
                 style: {
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  gap: '8px', padding: '8px 0', borderBottom: '1px solid ' + palette.border,
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+                  paddingTop: '10px', marginTop: '2px', borderTop: '3px double ' + palette.mid,
                 }
               },
-                React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
-                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
-                  React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, 'CHF ' + (Number(b.betrag) || 0)),
-                  React.createElement('button', {
-                    onClick: () => removeBeleg(b.id),
-                    'aria-label': t('kvg.belegRemove'),
-                    style: {
-                      background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
-                      fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
-                    }
-                  }, '×')
-                )
+                React.createElement('span', {
+                  style: { fontSize: text.sm, fontWeight: weight.semi, letterSpacing: '0.04em', color: palette.mid }
+                }, t('kvg.belegSum')),
+                React.createElement('span', {
+                  style: { fontFamily: mono, fontSize: text.body, fontWeight: weight.bold, fontVariantNumeric: 'tabular-nums' }
+                }, 'CHF ' + kosten.toFixed(2))
               )
-            ),
-            React.createElement('div', {
-              style: { display: 'flex', justifyContent: 'space-between', paddingTop: '10px', fontSize: text.sm }
-            },
-              React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.belegSum')),
-              React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + kosten)
             )
-          )
+      )
     ),
 
     hasInput && React.createElement('div', {
