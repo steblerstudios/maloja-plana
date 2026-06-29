@@ -49,10 +49,12 @@ export const AblaufLink = ({ palette, label, onClick }) => {
 };
 
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
-export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate }) => {
+// onSaved (optional): wird nach erfolgreichem Speichern aufgerufen — z.B. um zusätzlich
+// ein Merkliste-Todo anzulegen (KVG-Faden).
+export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
   const s = styles(palette);
   const [done, setDone] = useState(false);
-  const handle = () => { if (addReminder(reminder)) setDone(true); }; // nur bestätigen, wenn gespeichert
+  const handle = () => { if (addReminder(reminder)) { if (onSaved) onSaved(); setDone(true); } }; // nur bestätigen, wenn gespeichert
   if (done) {
     return React.createElement('div', null,
       React.createElement('div', { style: s.done }, '✓ ' + doneLabel),
