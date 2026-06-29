@@ -4,7 +4,8 @@
 //
 // Usage:
 //   getLetterTemplates(t) → array of template definitions
-//   generateLetter(templateKey, data, t) → HTML string for print
+//   generateLetter(templateKey, data, t, options) → HTML string for print
+//     options.belege (optional) → für kkReklamation: gewählte kkBelege ({datum,betrag})
 
 import { getFullName } from './config/constants.js';
 
@@ -22,6 +23,20 @@ function today() {
   const day = String(d.getDate()).padStart(2, '0');
   const month = String(d.getMonth() + 1).padStart(2, '0');
   return `${day}.${month}.${d.getFullYear()}`;
+}
+
+// ISO-Datum (YYYY-MM-DD) → Schweizer Format TT.MM.JJJJ; sonst unverändert.
+function formatDate(iso) {
+  if (!iso) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : String(iso);
+}
+
+// Betrag → Schweizer Tausendertrennung; leer bei 0/ungültig.
+function formatAmount(n) {
+  const num = Number(n);
+  if (!isFinite(num) || num <= 0) return '';
+  return num.toLocaleString('de-CH');
 }
 
 function senderBlock(data) {
@@ -236,12 +251,27 @@ function getKkReklamationFields(data, t) {
   };
 }
 
-function generateKkReklamation(data, t) {
+function generateKkReklamation(data, t, options = {}) {
   const f = getKkReklamationFields(data, t);
   const dateStr = today();
   // Klartext für t()-Interpolation (wird im ${esc(t(...))} einmal escaped) — kein
   // fillHint-HTML, das sonst als Tag-Text im Brief erschiene.
   const insurerLine = f.insurer || t('briefe.fillIn');
+
+  // Vom Nutzer gewählte Belege (aus kkBelege). Datum/Betrag werden eingesetzt,
+  // die strittige Differenz bleibt bewusst Selbst-Eintrag (haben wir nicht im Modell).
+  const belege = Array.isArray(options.belege) ? options.belege : [];
+  let positionsHtml;
+  if (belege.length) {
+    const lines = belege.map(b => {
+      const d = formatDate(b.datum) || t('briefe.fillIn');
+      const a = formatAmount(b.betrag) || t('briefe.fillIn');
+      return `<p>– ${esc(t('briefe.kkReklamation.position', { date: d, amount: a }))}</p>`;
+    }).join('');
+    positionsHtml = `<p>${esc(t('briefe.kkReklamation.body2intro'))}</p>${lines}<p>${esc(t('briefe.kkReklamation.body2detail'))}</p>`;
+  } else {
+    positionsHtml = `<p>${esc(t('briefe.kkReklamation.body2intro'))}</p><p>${esc(t('briefe.kkReklamation.positionScaffold'))}</p>`;
+  }
 
   return wrapLetter(`
     <div class="sender">${f.sender || fillHint(t)}</div>
@@ -251,7 +281,8 @@ function generateKkReklamation(data, t) {
     <div class="body-text">
       <p>${esc(t('briefe.kkReklamation.salutation'))}</p>
       <p>${esc(t('briefe.kkReklamation.body1', { insurer: insurerLine }))}</p>
-      <p>${esc(t('briefe.kkReklamation.body2'))}</p>
+      ${positionsHtml}
+      <p>${esc(t('briefe.kkReklamation.body2request'))}</p>
       <p>${esc(t('briefe.kkReklamation.body3'))}</p>
       <p>${esc(t('briefe.kkReklamation.closing'))}</p>
     </div>
@@ -269,9 +300,9 @@ const GENERATORS = {
   kkReklamation: generateKkReklamation,
 };
 
-export function generateLetter(templateKey, data, t) {
+export function generateLetter(templateKey, data, t, options = {}) {
   const gen = GENERATORS[templateKey];
   if (!gen) return '';
-  return gen(data, t);
+  return gen(data, t, options);
 }
 
