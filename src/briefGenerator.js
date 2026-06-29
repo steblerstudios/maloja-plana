@@ -45,6 +45,8 @@ export function getLetterTemplates(t) {
       description: t('briefe.leaseTermination.description'),
       icon: 'home',
       legalRef: 'OR Art. 266a',
+      // Ablage-Kapitel im Dokumenten-Tresor (Loop-Closure Brief→Scan→Ablage)
+      chapter: 'wohnen',
     },
     {
       key: 'taxExtension',
@@ -52,6 +54,7 @@ export function getLetterTemplates(t) {
       description: t('briefe.taxExtension.description'),
       icon: 'calculator',
       legalRef: '',
+      chapter: 'behoerden',
     },
     {
       key: 'insuranceSwitch',
@@ -59,6 +62,7 @@ export function getLetterTemplates(t) {
       description: t('briefe.insuranceSwitch.description'),
       icon: 'shield',
       legalRef: 'KVG Art. 7',
+      chapter: 'versicherungen',
     },
   ];
 }

@@ -280,6 +280,7 @@ const AppInner = () => {
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
+  const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
@@ -505,6 +506,9 @@ const AppInner = () => {
     }
     if (viewName === 'legal' && extra) {
       setLegalSection(extra);
+    }
+    if (viewName === 'tresor') {
+      setTresorInitialTab(extra || 'all');
     }
     setView(viewName);
     requestAnimationFrame(() => {
@@ -802,7 +806,8 @@ const AppInner = () => {
           chapters: chapters,
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
-          onUpdateExpiry: handleUpdateDocExpiry
+          onUpdateExpiry: handleUpdateDocExpiry,
+          initialTab: tresorInitialTab
         }),
         view === 'kk' && React.createElement(KKScanner, {
           palette, t, data: activeData,

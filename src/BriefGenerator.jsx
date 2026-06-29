@@ -7,13 +7,17 @@ import { openPrintWindow } from './utils/helpers.js';
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
   const [preview, setPreview] = useState(false);
+  const [printed, setPrinted] = useState(false);
 
   const templates = getLetterTemplates(t);
+  const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
 
   const handlePrint = () => {
     if (!selected) return;
     const html = generateLetter(selected, data, t);
     openPrintWindow(html);
+    // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
+    setPrinted(true);
   };
 
   const previewHtml = selected ? generateLetter(selected, data, t) : '';
@@ -49,7 +53,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.accent : palette.border),
@@ -102,6 +106,38 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         marginBottom: space.md,
       }
     }, 'ⓘ ' + t('briefe.dataNote')),
+
+    // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
+    printed && React.createElement('div', {
+      style: {
+        padding: '14px 16px', background: palette.sage + '14',
+        border: '1px solid ' + palette.sage + '44', borderRadius: radius.sm,
+        marginBottom: space.md, display: 'flex', flexDirection: 'column', gap: space.sm,
+      }
+    },
+      React.createElement('div', {
+        style: { display: 'flex', alignItems: 'flex-start', gap: '10px' }
+      },
+        React.createElement(Icon, { name: 'document', size: 18, color: palette.sage }),
+        React.createElement('div', null,
+          React.createElement('div', {
+            style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
+          }, t('briefe.afterPrint.title')),
+          React.createElement('div', {
+            style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal }
+          }, t('briefe.afterPrint.text'))
+        )
+      ),
+      React.createElement('button', {
+        onClick: () => onNavigate('tresor', undefined, selectedTmpl?.chapter || 'all'),
+        style: {
+          alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
+          border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm,
+          cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
+          color: palette.text,
+        }
+      }, t('briefe.afterPrint.toTresor') + ' →')
+    ),
 
     // Preview
     preview && previewHtml && React.createElement('div', {

@@ -49,9 +49,10 @@ export const DocumentTresor = ({
   chapters,
   onDownload,
   onDelete,
-  onUpdateExpiry
+  onUpdateExpiry,
+  initialTab
 }) => {
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState(initialTab || 'all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('expiry');
   const [showArchive, setShowArchive] = useState(false);
@@ -84,7 +85,9 @@ export const DocumentTresor = ({
   displayDocs.forEach(d => {
     chapterCounts[d.chapter] = (chapterCounts[d.chapter] || 0) + 1;
   });
-  const chaptersWithDocs = chapterList.filter(c => chapterCounts[c.key] > 0);
+  // Kapitel mit Dokumenten — plus das aktuell gewählte Register (z.B. via Brief→Ablage-Crosslink),
+  // damit man bei leerem Register trotzdem sieht, wo man gelandet ist.
+  const chaptersWithDocs = chapterList.filter(c => chapterCounts[c.key] > 0 || c.key === activeTab);
 
   const stats = {
     active: active.length,

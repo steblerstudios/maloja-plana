@@ -1583,6 +1583,11 @@ export default {
     hidePreview: 'Chiudi anteprima',
     printLetter: 'Stampa / PDF',
     dataNote: { sie: 'I Suoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.', du: 'I tuoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.' },
+    afterPrint: {
+      title: 'Lettera creata — e adesso?',
+      text: { sie: 'Una volta firmata e inviata, la scansioni e la archivi nel Suo raccoglitore di vita — così tutto è al posto giusto.', du: 'Una volta firmata e inviata, scansionala e archiviala nel tuo raccoglitore di vita — così tutto è al posto giusto.' },
+      toTresor: 'Archivia nel raccoglitore di vita',
+    },
     leaseTermination: {
       title: 'Disdetta del contratto di locazione',
       description: 'Disdetta ordinaria del contratto di locazione con i termini legali.',

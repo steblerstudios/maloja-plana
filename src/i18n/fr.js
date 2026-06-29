@@ -1581,6 +1581,11 @@ export default {
     hidePreview: 'Masquer l\'aperçu',
     printLetter: 'Imprimer / PDF',
     dataNote: 'Vos données enregistrées sont insérées automatiquement. Les informations manquantes sont signalées.',
+    afterPrint: {
+      title: 'Lettre créée — et maintenant ?',
+      text: 'Une fois signée et envoyée, scannez-la et classez-la dans votre classeur de vie — ainsi tout est à la bonne place.',
+      toTresor: 'Classer dans le classeur de vie',
+    },
     leaseTermination: {
       title: 'Résiliation du bail',
       description: 'Résiliation ordinaire du contrat de bail avec les délais légaux.',
