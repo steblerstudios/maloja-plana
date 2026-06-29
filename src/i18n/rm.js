@@ -2767,6 +2767,12 @@ export default {
       legal: 'Dretg',
       personal: 'Persunalmain',
     },
+    coverage: {
+      doctor: 'Visitas tar il medi èn cuvridas sch’ellas èn medicinalmain necessarias — suenter la franchisa e la part da quota. L’assicuranza da basa na cuvra betg automaticamain in check-up annual fix.',
+      dentist: 'Tractaments dentals n’èn per regla betg part da l’assicuranza da basa — ils custs ston per ordinari vegnir purtads sez (cun excepziun da tschertas malsognas). In’assicuranza cumplementara po surpigliar ina part.',
+      gyn: 'Assicuranza da basa: la prevenziun ginecologica dal chancer (Pap) vegn per regla pajada mintga 3 onns (suenter dus controls annuals senza disturbis). Pli savens è pussaivel — ils termins supplementars ston lura vegnir pajads sez. Tge ch’è raschunaivel dal puntg da vista medicinal sa decida cun il medi.',
+      vaccinations: 'Vaccinaziuns recumandadas da l’UFSP èn per regla cuvridas (suenter franchisa/part da quota). Vaccinaziuns da viadi per regla betg.',
+    },
     templates: {
       title: 'Agiuntar svelt ord models',
       doctorYearly: 'Visita annuala tar il medi',
