@@ -998,7 +998,7 @@ export default {
       incamail: { name: 'IncaMail', url: 'https://www.incamail.com', desc: 'Registered email by Swiss Post, legally valid.' },
       petitionTitle: 'Petitions & Civic Initiatives',
       petition1: 'In Switzerland, you have the right to submit petitions (Art. 33 Federal Constitution). Platforms:',
-      petition2: 'petitionen.ch — Swiss petition platform',
+      petition2: { name: 'petitionen.ch', url: 'https://petitionen.ch', desc: 'Swiss petition platform' },
       petition3: 'Municipal website — For local concerns, directly with your municipality.',
       cantonPortal: 'Canton of {canton} ↗',
       localGovDesc: 'for local matters — your commune and canton.',
@@ -1036,6 +1036,8 @@ export default {
       heartfelt18: 'Swiss keyboard app that thinks with you — privacy-friendly, no tracking.',
       heartfelt19: 'Tattoo art with its own signature — currently on Instagram.',
       heartfelt20: 'Tattoo art that moves us — currently on Instagram.',
+      heartfelt21: 'Painting business from Nunningen — careful, personal craftsmanship.',
+      heartfelt22: 'Traditional Chinese Medicine — mindful, holistic treatment.',
     },
     faq: {
       q1: 'Where is my data stored?',

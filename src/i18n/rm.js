@@ -895,7 +895,7 @@ export default {
       incamail: { name: 'IncaMail', url: 'https://www.incamail.com', desc: 'E-mail recommandà da la Posta Svizra, giuridicamain valid.' },
       petitionTitle: "Petiziuns & iniziativas da burgais",
       petition1: { sie: "En Svizra avais Vus il dretg da dar en petiziuns (art. 33 CF). Plattafurmas:", du: "En Svizra has Ti il dretg da dar en petiziuns (art. 33 CF). Plattafurmas:" },
-      petition2: 'petitionen.ch — Plattafurma svizra da petiziuns',
+      petition2: { name: 'petitionen.ch', url: 'https://petitionen.ch', desc: 'Plattafurma svizra da petiziuns' },
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
       localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
@@ -934,6 +934,8 @@ export default {
       heartfelt18: 'Schweizer Tastatur-App, die mit dir mitdenkt — datensparsam, ohne Tracking.',
       heartfelt19: 'Tätowier-Kunst mit eigener Handschrift — derzeit auf Instagram zu finden.',
       heartfelt20: 'Tätowier-Kunst, die uns berührt — derzeit auf Instagram zu finden.',
+      heartfelt21: 'Malergeschäft aus Nunningen — sorgfältiges Handwerk, persönlich.',
+      heartfelt22: 'Traditionelle Chinesische Medizin — achtsame, ganzheitliche Behandlung.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
