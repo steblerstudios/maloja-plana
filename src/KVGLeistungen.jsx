@@ -133,6 +133,15 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             React.createElement('div', {
               style: { color: palette.soft, marginTop: '2px' }
             }, t('kvg.' + item.key + 'Quelle')),
+            // Faden 3-II/4: dezentes Evidenz-Label — das empfohlene Intervall ist evidenzbasiert.
+            React.createElement('div', { style: { marginTop: '5px' } },
+              React.createElement('span', {
+                style: {
+                  fontSize: text.xs, color: palette.sage,
+                  border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '1px 6px',
+                }
+              }, t('kvg.evidenceBased'))
+            ),
             // Faden 3-II/2: opt-in persönlicher Abgleich — letzte Untersuchung eintragen,
             // dann ruhig „nächste empfohlene ~MM.JJJJ" + (wenn überfällig) sanfter Hinweis
             // und 1-Klick-Kalendereintrag. Kein Druck, keine Wertung über die Leitlinie hinaus.
@@ -210,8 +219,32 @@ const KatalogTab = ({ palette, t, filterCat }) => {
   // Überschriften als Landmarken; bei aktivem Filter eine einzelne Gruppe ohne
   // Überschrift (der Chip zeigt die Kategorie bereits an).
   const cats = filterCat === 'all' ? KVG_CATEGORIES : [filterCat];
+  // Faden 3-II/4: einmalige, einklappbare Evidenz-Notiz („häufiger besser?") — nur
+  // dort, wo Vorsorge-Screenings sichtbar sind. Ehrlich: mehr ist nicht besser.
+  const [evidenceOpen, setEvidenceOpen] = React.useState(false);
+  const showEvidence = filterCat === 'all' || filterCat === 'vorsorge';
 
   return React.createElement('div', null,
+    showEvidence && React.createElement('div', { style: { marginBottom: '4px' } },
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => setEvidenceOpen(!evidenceOpen),
+        'aria-expanded': evidenceOpen,
+        style: {
+          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
+          textAlign: 'left',
+        }
+      }, (evidenceOpen ? '▾ ' : '▸ ') + t('kvg.evidenceToggle')),
+      evidenceOpen && React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.normal }
+      },
+        React.createElement('div', null, t('kvg.evidenceNote1')),
+        React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.evidenceNote2')),
+        React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.evidenceNote3')),
+        React.createElement('div', { style: { color: palette.soft, marginTop: '4px' } }, t('kvg.evidenceNoteQuelle'))
+      )
+    ),
     cats.map(cat => {
       const catItems = KVG_KATALOG.filter(i => i.cat === cat);
       if (catItems.length === 0) return null;
