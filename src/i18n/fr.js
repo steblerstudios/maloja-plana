@@ -2545,6 +2545,7 @@ export default {
     belegNichtGedecktHint: 'Ne compte pas pour la franchise ni la quote-part — p. ex. prestations à charge propre.',
     belegNichtGedecktNote: '+ {amount} non couvert',
     belegSubmitted: 'Soumis à l\'assureur',
+    belegRueckwirkend: 'Vous pouvez soumettre vos justificatifs à votre assureur jusqu\'à 5 ans rétroactivement.',
     rechnungTitle: 'Comprendre les factures médicales',
     rechnungExplain: 'Les factures médicales sont basées sur les points tarifaires × valeur du point cantonal.',
     taxpunkte: 'Points tarifaires sur la facture',
