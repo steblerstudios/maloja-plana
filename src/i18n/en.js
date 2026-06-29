@@ -2199,6 +2199,13 @@ export default {
       gyn: 'Basic insurance: gynaecological cancer screening (Pap) usually every 3 years (after two normal annual check-ups). More often is possible — the extra visits are then self-paid. What is medically sensible is for your doctor to advise.',
       vaccinations: 'Vaccinations recommended by the FOPH are usually covered (after deductible/co-payment). Travel vaccinations usually are not.',
     },
+    coverageThisYear: {
+      label: 'Covered by basic insurance? (optional)',
+      covered: 'covered',
+      selfpay: 'self-pay',
+      unsure: 'unsure',
+      cardPrefix: 'Coverage',
+    },
     templates: {
       title: 'Quick add from templates',
       doctorYearly: 'Yearly doctor visit',

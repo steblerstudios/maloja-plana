@@ -2123,6 +2123,13 @@ export default {
       gyn: 'Grundversicherung: gynäkologische Krebsvorsorge (Pap) i.d.R. alle 3 Jahre (nach zwei unauffälligen jährlichen Kontrollen). Häufiger ist möglich — die zusätzlichen Termine sind dann selbst zu zahlen. Was medizinisch sinnvoll ist, klärt die Ärztin/der Arzt.',
       vaccinations: 'Vom BAG empfohlene Impfungen sind meist gedeckt (nach Franchise/Selbstbehalt). Reiseimpfungen in der Regel nicht.',
     },
+    coverageThisYear: {
+      label: 'Von der Grundversicherung gedeckt? (optional)',
+      covered: 'gedeckt',
+      selfpay: 'selbst zahlen',
+      unsure: 'unsicher',
+      cardPrefix: 'Deckung',
+    },
     templates: {
       title: 'Schnell hinzufügen aus Vorlagen',
       doctorYearly: 'Jährlicher Arztbesuch',

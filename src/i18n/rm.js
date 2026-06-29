@@ -2773,6 +2773,13 @@ export default {
       gyn: 'Assicuranza da basa: la prevenziun ginecologica dal chancer (Pap) vegn per regla pajada mintga 3 onns (suenter dus controls annuals senza disturbis). Pli savens è pussaivel — ils termins supplementars ston lura vegnir pajads sez. Tge ch’è raschunaivel dal puntg da vista medicinal sa decida cun il medi.',
       vaccinations: 'Vaccinaziuns recumandadas da l’UFSP èn per regla cuvridas (suenter franchisa/part da quota). Vaccinaziuns da viadi per regla betg.',
     },
+    coverageThisYear: {
+      label: 'Cuvrì da l’assicuranza da basa? (opziunal)',
+      covered: 'cuvrì',
+      selfpay: 'pajar sez',
+      unsure: 'nunsegir',
+      cardPrefix: 'Cuvertura',
+    },
     templates: {
       title: 'Agiuntar svelt ord models',
       doctorYearly: 'Visita annuala tar il medi',
