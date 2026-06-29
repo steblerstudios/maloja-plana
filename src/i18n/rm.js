@@ -2790,6 +2790,10 @@ export default {
       unsure: 'nunsegir',
       cardPrefix: 'Cuvertura',
     },
+    lastVisit: {
+      label: 'Ultima visita (opziunal)',
+      hint: 'Quai serva a calcular il proxim termin proponì.',
+    },
     templates: {
       title: 'Agiuntar svelt ord models',
       doctorYearly: 'Visita annuala tar il medi',
