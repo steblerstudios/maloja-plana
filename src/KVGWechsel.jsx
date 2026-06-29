@@ -21,7 +21,7 @@ const nextNov30 = () => {
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const [reminderSet, setReminderSet] = useState(false);
   const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
-  const [wunschKasse, setWunschKasse] = useState(''); // optionale Ziel-Kasse aus dem Vergleich
+  const [wunschKasse, setWunschKasse] = useState(data?.versicherungen?.targetInsurer || ''); // Ziel-Kasse, vorbelegt aus dem Vergleich
 
   const currentInsurer = data?.versicherungen?.kkInsurer || '';
   const deadline = nextNov30();
