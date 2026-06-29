@@ -115,25 +115,40 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
     return FRANCHISE_STUFEN.includes(n) ? n : 300;
   })();
 
-  // Jahres-Verbrauch wird gemerkt — aber nur, wenn er zum laufenden Jahr gehört.
-  // Beim Jahreswechsel startet der Tracker ruhig leer (kein stiller Übertrag).
-  const storedVerbrauch = data.versicherungen?.kkVerbrauchJahr === currentYear
-    ? (data.versicherungen?.kkVerbrauch ?? '')
-    : '';
-
   const [franchise, setFranchise] = useState(storedFranchise);
-  const [kosten, setKosten] = useState(storedVerbrauch === '' ? '' : String(storedVerbrauch));
 
-  const handleKostenChange = (val) => {
-    setKosten(val);
-    if (onUpdateData) {
-      onUpdateData('versicherungen', 'kkVerbrauch', val === '' ? '' : Number(val));
-      onUpdateData('versicherungen', 'kkVerbrauchJahr', currentYear);
-    }
+  // Belege werden einzeln erfasst und zur Jahres-Summe zusammengerechnet.
+  // Diese Summe ist die Quelle des Verbrauchs (zuerst Franchise, dann Selbstbehalt).
+  const belege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
+  // „Dieses Jahr" = Belege mit Datum im laufenden Jahr ODER ohne Datum (gerade bezahlt).
+  const yearBelege = belege.filter(b => !b.datum || String(b.datum).slice(0, 4) === String(currentYear));
+  const kosten = yearBelege.reduce((sum, b) => sum + (Number(b.betrag) || 0), 0);
+
+  // Eingabe-Zustand für „Beleg hinzufügen"
+  const [newDatum, setNewDatum] = useState('');
+  const [newBetrag, setNewBetrag] = useState('');
+  const [tpOpen, setTpOpen] = useState(false);
+  const [newTp, setNewTp] = useState('');
+
+  const canton = data.basis?.canton || '';
+  const tpw = TAXPUNKTWERT[canton] || 0.89;
+  const tpBetrag = newTp ? Math.round(Number(newTp) * tpw * 100) / 100 : 0;
+
+  const addBeleg = () => {
+    const betrag = Number(newBetrag);
+    if (!betrag || betrag <= 0 || !onUpdateData) return;
+    const beleg = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), datum: newDatum || '', betrag };
+    onUpdateData('versicherungen', 'kkBelege', [...belege, beleg]);
+    setNewDatum(''); setNewBetrag(''); setNewTp(''); setTpOpen(false);
   };
+  const removeBeleg = (id) => {
+    if (!onUpdateData) return;
+    onUpdateData('versicherungen', 'kkBelege', belege.filter(b => b.id !== id));
+  };
+  const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
 
-  const result = berechneFranchise(franchise, Number(kosten) || 0);
-  const hasInput = Number(kosten) > 0;
+  const result = berechneFranchise(franchise, kosten);
+  const hasInput = kosten > 0;
 
   // Ein ruhiger Standort-Satz: wo stehe ich dieses Jahr? (drei Zonen)
   const statusMsg = !hasInput ? null
@@ -191,24 +206,142 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
         }, '▾')
       ),
 
+      React.createElement('div', {
+        style: { height: '1px', background: palette.border, margin: '14px 0' }
+      }),
       React.createElement('label', {
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
-      }, t('kvg.costsLabel')),
-      React.createElement('input', {
-        type: 'number',
-        inputMode: 'decimal',
-        value: kosten,
-        onChange: (e) => handleKostenChange(e.target.value),
-        placeholder: '0',
+      }, t('kvg.belegSection')),
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginBottom: '10px' }
+      }, t('kvg.belegHint')),
+
+      React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: '8px' } },
+        React.createElement('input', {
+          type: 'date',
+          'aria-label': t('kvg.belegDatum'),
+          value: newDatum,
+          onChange: (e) => setNewDatum(e.target.value),
+          style: {
+            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.sm,
+            border: '1px solid ' + palette.border, background: palette.surface,
+            color: palette.text, fontSize: text.sm, fontFamily: 'inherit', boxSizing: 'border-box',
+          }
+        }),
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'decimal',
+          'aria-label': t('kvg.belegBetrag'),
+          value: newBetrag,
+          onChange: (e) => setNewBetrag(e.target.value),
+          placeholder: t('kvg.belegBetrag'),
+          style: {
+            flex: '1 1 0', minWidth: 0, padding: space.sm, borderRadius: radius.sm,
+            border: '1px solid ' + palette.border, background: palette.surface,
+            color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
+          }
+        })
+      ),
+
+      React.createElement('button', {
+        onClick: () => setTpOpen(!tpOpen),
         style: {
-          width: '100%', padding: space.sm, borderRadius: radius.sm,
-          border: '1px solid ' + palette.border, background: palette.surface,
-          color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
+          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
+          marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
-      }),
-      hasInput && onUpdateData && React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
-      }, t('kvg.verbrauchSaved', { year: currentYear }))
+      }, (tpOpen ? '▾ ' : '▸ ') + t('kvg.belegFromTp')),
+
+      tpOpen && React.createElement('div', {
+        style: {
+          display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px',
+          padding: '8px 10px', background: palette.surface, borderRadius: radius.sm,
+          border: '1px solid ' + palette.border,
+        }
+      },
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'decimal',
+          'aria-label': t('kvg.taxpunkte'),
+          value: newTp,
+          onChange: (e) => setNewTp(e.target.value),
+          placeholder: t('kvg.taxpunkte'),
+          style: {
+            flex: '1 1 0', minWidth: 0, padding: '6px 8px', borderRadius: radius.sm,
+            border: '1px solid ' + palette.border, background: palette.up,
+            color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
+          }
+        }),
+        React.createElement('span', {
+          style: { fontSize: text.sm, color: palette.mid, whiteSpace: 'nowrap' }
+        }, t('kvg.belegTpResult', { betrag: tpBetrag })),
+        React.createElement('button', {
+          onClick: () => { if (tpBetrag > 0) { setNewBetrag(String(tpBetrag)); setTpOpen(false); } },
+          disabled: !(tpBetrag > 0),
+          style: {
+            padding: '6px 12px', borderRadius: radius.sm, border: 'none',
+            background: tpBetrag > 0 ? palette.sand : palette.border,
+            color: tpBetrag > 0 ? '#000' : palette.soft,
+            fontSize: text.xs, fontWeight: weight.semi, fontFamily: 'inherit',
+            cursor: tpBetrag > 0 ? 'pointer' : 'default', whiteSpace: 'nowrap',
+          }
+        }, t('kvg.belegTpApply'))
+      ),
+
+      React.createElement('button', {
+        onClick: addBeleg,
+        disabled: !(Number(newBetrag) > 0),
+        style: {
+          width: '100%', padding: space.sm, borderRadius: radius.sm, border: 'none',
+          background: Number(newBetrag) > 0 ? palette.sand : palette.border,
+          color: Number(newBetrag) > 0 ? '#000' : palette.soft,
+          fontSize: text.sm, fontWeight: weight.semi, fontFamily: 'inherit',
+          cursor: Number(newBetrag) > 0 ? 'pointer' : 'default',
+        }
+      }, '+ ' + t('kvg.belegAdd'))
+    ),
+
+    React.createElement('div', {
+      style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
+    },
+      React.createElement('div', {
+        style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' }
+      }, t('kvg.belegYearTitle', { year: currentYear })),
+
+      yearBelege.length === 0
+        ? React.createElement('div', {
+            style: { fontSize: text.sm, color: palette.soft, lineHeight: leading.normal }
+          }, t('kvg.belegEmpty'))
+        : React.createElement('div', null,
+            yearBelege.map(b =>
+              React.createElement('div', {
+                key: b.id,
+                style: {
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  gap: '8px', padding: '8px 0', borderBottom: '1px solid ' + palette.border,
+                }
+              },
+                React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
+                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
+                  React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, 'CHF ' + (Number(b.betrag) || 0)),
+                  React.createElement('button', {
+                    onClick: () => removeBeleg(b.id),
+                    'aria-label': t('kvg.belegRemove'),
+                    style: {
+                      background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
+                      fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                    }
+                  }, '×')
+                )
+              )
+            ),
+            React.createElement('div', {
+              style: { display: 'flex', justifyContent: 'space-between', paddingTop: '10px', fontSize: text.sm }
+            },
+              React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.belegSum')),
+              React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + kosten)
+            )
+          )
     ),
 
     hasInput && React.createElement('div', {
