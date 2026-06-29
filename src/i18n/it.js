@@ -33,6 +33,8 @@ export default {
     wunschKassePlaceholder: 'p. es. Helsana',
     reminderTitleTo: 'Passaggio a {insurer} — termine',
     todoText: 'Cambiare cassa malati: confronta i premi',
+    path3bCaveat: 'Non tutte le casse lo fanno in modo affidabile — fatti confermare per iscritto la disdetta della vecchia cassa. Disdire da soli è sempre la via sicura.',
+    debtNote: 'Puoi cambiare solo se non hai premi arretrati o debiti presso la tua cassa attuale — altrimenti può bloccare il cambio. Salda prima gli importi aperti.',
   },
   sections: {
     basis: { person: 'Persona', contact: 'Contatto', family: 'Famiglia' },
