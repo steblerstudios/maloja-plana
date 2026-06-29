@@ -22,6 +22,15 @@ const INTERVALS = {
   yearly: 365,
 };
 
+// Aus letztem Besuch + Intervall den nächsten empfohlenen Termin ableiten —
+// damit man egal wann im Jahr startet sinnvoll geplant wird. Standard: jährlich.
+const nextDueFrom = (lastVisit, recurrence) => {
+  if (!lastVisit) return '';
+  const interval = INTERVALS[recurrence] || 365;
+  const next = new Date(new Date(lastVisit).getTime() + interval * 86400000);
+  return isNaN(next.getTime()) ? '' : next.toISOString().split('T')[0];
+};
+
 // Pre-built templates for Swiss life
 const TEMPLATES = (t) => [
   { title: t('calendar.templates.doctorYearly'), category: 'health', recurrence: 'yearly', daysFromNow: 30, coverage: t('calendar.coverage.doctor') },
@@ -57,6 +66,8 @@ export const CalendarReminders = ({ palette, t, data }) => {
   const [newNotes, setNewNotes] = useState('');
   // Optional, nur bei Gesundheits-Terminen: Deckung dieses Jahr (gedeckt/selbst/unsicher).
   const [newCoverage, setNewCoverage] = useState('');
+  // Optional, nur bei Gesundheit: letzter Besuch → berechnet den nächsten Termin.
+  const [newLastVisit, setNewLastVisit] = useState('');
 
   // Persist on change
   useEffect(() => { saveReminders(reminders); }, [reminders]);
@@ -96,7 +107,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
     };
     setReminders(prev => [...prev, reminder]);
     setNewTitle(''); setNewDate(''); setNewNotes('');
-    setNewCategory('personal'); setNewRecurrence('once'); setNewCoverage('');
+    setNewCategory('personal'); setNewRecurrence('once'); setNewCoverage(''); setNewLastVisit('');
     setView('upcoming');
   };
 
@@ -286,6 +297,18 @@ export const CalendarReminders = ({ palette, t, data }) => {
         )
       ),
 
+      // Optional, nur bei Gesundheit: letzter Besuch → berechnet den nächsten Termin
+      newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
+        React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.lastVisit.label')),
+        React.createElement('input', {
+          type: 'date',
+          value: newLastVisit,
+          onChange: (e) => { const v = e.target.value; setNewLastVisit(v); if (v) setNewDate(nextDueFrom(v, newRecurrence)); },
+          style: { ...inputStyle, marginBottom: '4px' }
+        }),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.soft } }, t('calendar.lastVisit.hint'))
+      ),
+
       // Optional, nur bei Gesundheit: Deckung dieses Jahr (gedeckt/selbst/unsicher; erneut klicken = leer)
       newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
         React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
@@ -314,7 +337,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
           ['once', 'daily', 'weekly', 'monthly', 'quarterly', 'halfYearly', 'yearly'].map(freq =>
             React.createElement('button', {
               key: freq,
-              onClick: () => setNewRecurrence(freq),
+              onClick: () => { setNewRecurrence(freq); if (newLastVisit) setNewDate(nextDueFrom(newLastVisit, freq)); },
               style: {
                 padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
                 fontSize: text.sm, fontWeight: newRecurrence === freq ? '600' : '400',

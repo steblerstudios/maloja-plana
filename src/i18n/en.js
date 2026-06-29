@@ -2216,6 +2216,10 @@ export default {
       unsure: 'unsure',
       cardPrefix: 'Coverage',
     },
+    lastVisit: {
+      label: 'Last visit (optional)',
+      hint: 'We use this to calculate the next suggested appointment.',
+    },
     templates: {
       title: 'Quick add from templates',
       doctorYearly: 'Yearly doctor visit',
