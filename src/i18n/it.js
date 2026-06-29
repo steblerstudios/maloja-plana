@@ -2452,6 +2452,8 @@ export default {
     gynaeko: 'Esame ginecologico preventivo',
     gynaekoNote: 'PAP test ogni 3 anni dopo 2 risultati normali (dai 21 anni).',
     gynaeko3j: 'Ogni 3 anni',
+    empfehlungShow: 'Mostra la raccomandazione {sources}',
+    empfehlungHide: 'Nascondi la raccomandazione',
     gynaekoWho: 'Test HPV ogni 5–10 anni (dai 30 anni).',
     gynaekoEu: 'Test HPV almeno ogni 5 anni (30–65 anni).',
     gynaekoSynthese: 'Entrambi raccomandano meno spesso della prassi svizzera — l’assicurazione di base copre lo screening al ritmo raccomandato.',

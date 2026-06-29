@@ -2472,6 +2472,8 @@ export default {
     gynaeko: 'Examen gynécologique préventif',
     gynaekoNote: 'Frottis PAP tous les 3 ans après 2 résultats normaux (dès 21 ans).',
     gynaeko3j: 'Tous les 3 ans',
+    empfehlungShow: 'Afficher la recommandation {sources}',
+    empfehlungHide: 'Masquer la recommandation',
     gynaekoWho: 'Test HPV tous les 5–10 ans (dès 30 ans).',
     gynaekoEu: 'Test HPV au moins tous les 5 ans (30–65 ans).',
     gynaekoSynthese: 'Les deux recommandent moins souvent que la pratique suisse — l’assurance de base couvre le dépistage au rythme recommandé.',

@@ -2226,6 +2226,8 @@ export default {
     gynaeko: 'Prevenziun ginecologica',
     gynaekoNote: 'PAP-frotis mintga 3 onns suenter 2 resultats normals (a partir da 21 o.).',
     gynaeko3j: 'Mintga 3 onns',
+    empfehlungShow: 'Mussar la recumandaziun {sources}',
+    empfehlungHide: 'Zuppentar la recumandaziun',
     gynaekoWho: 'Test HPV mintga 5–10 onns (a partir da 30 onns).',
     gynaekoEu: 'Test HPV almain mintga 5 onns (30–65 onns).',
     gynaekoSynthese: 'Omadus recumondan main savens che la pratica svizra — l’assicuranza da basa cuvra la prevenziun en il ritmus recumandà.',
