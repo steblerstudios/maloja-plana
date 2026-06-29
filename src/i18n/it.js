@@ -581,6 +581,7 @@ export default {
         kkPremium: 'Premio mensile (CHF)',
         franchise: { label: 'Franchigia (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numero tessera assicurazione',
+        kkZusatz: 'Assicurazione complementare',
         bvgInsurer: 'Cassa pensione (LPP)',
         bvgContribution: 'Contributo LPP mensile (CHF)',
         bvgBalance: 'Avere LPP attuale (CHF)',
@@ -598,6 +599,7 @@ export default {
       },
       placeholders: {
         kkInsurer: 'p.es. Swica, Helsana, CSS',
+        kkZusatz: 'p.es. Helsana COMPLETA, Sanitas Vital',
       },
       hints: {
         bvgContribution: 'Solo a titolo informativo — non viene dedotto nuovamente dal salario netto nel budget.',
