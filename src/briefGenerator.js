@@ -126,11 +126,14 @@ const LETTER_CSS = `
   @page { size: A4; margin: 25mm 20mm 20mm 20mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; padding: 25mm 20mm 20mm 20mm; }
-  .sender { margin-bottom: 8mm; font-size: 10pt; }
-  .recipient { margin-bottom: 12mm; min-height: 30mm; }
+  /* Schweizer Geschäftsbrief-Norm: Absender oben links als Briefkopf,
+     Empfängeradresse rechts (Position fürs rechte Sichtfenster im CH-Couvert),
+     Ort/Datum rechtsbündig, Betreff fett ohne "Betreff:"-Präfix. */
+  .sender { margin-bottom: 12mm; font-size: 9pt; color: #555; }
+  .recipient { width: 85mm; margin: 0 0 12mm auto; min-height: 28mm; }
   .recipient .placeholder { color: #888; font-style: italic; border-bottom: 1px dashed #ccc; padding-bottom: 2px; }
   .date-line { text-align: right; margin-bottom: 10mm; }
-  .subject { font-weight: 600; margin-bottom: 8mm; font-size: 12pt; }
+  .subject { font-weight: 700; margin-bottom: 8mm; font-size: 11pt; }
   .body-text { margin-bottom: 6mm; }
   .body-text p { margin-bottom: 4mm; }
   .signature { margin-top: 15mm; }
