@@ -50,6 +50,7 @@ const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
+const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
@@ -850,7 +851,8 @@ const AppInner = () => {
         }),
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
-        view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData }),
+        view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
