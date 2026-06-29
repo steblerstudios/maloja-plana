@@ -2125,6 +2125,13 @@ export default {
       gyn: 'Assicurazione di base: lo screening ginecologico del cancro (Pap) è di norma rimborsato ogni 3 anni (dopo due controlli annuali senza anomalie). Più spesso è possibile — gli appuntamenti aggiuntivi sono allora a carico proprio. Ciò che è sensato dal punto di vista medico va chiarito con il medico.',
       vaccinations: 'Le vaccinazioni raccomandate dall’UFSP sono di norma coperte (dopo franchigia/aliquota). Le vaccinazioni di viaggio di norma no.',
     },
+    coverageThisYear: {
+      label: 'Coperto dall’assicurazione di base? (opzionale)',
+      covered: 'coperto',
+      selfpay: 'a carico proprio',
+      unsure: 'incerto',
+      cardPrefix: 'Copertura',
+    },
     templates: {
       title: 'Aggiungi rapidamente dai modelli',
       doctorYearly: 'Visita medica annuale',
