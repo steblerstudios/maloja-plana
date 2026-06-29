@@ -2513,6 +2513,7 @@ export default {
     belegNichtGedeckt: 'Non coperto dall\'assicuratore',
     belegNichtGedecktHint: 'Non conta per la franchigia né l\'aliquota — p. es. prestazioni a carico proprio.',
     belegNichtGedecktNote: '+ {amount} non coperto',
+    belegSubmitted: 'Inviato all\'assicuratore',
     rechnungTitle: 'Capire le fatture mediche',
     rechnungExplain: 'Le fatture mediche si basano su punti tariffali × valore del punto cantonale.',
     taxpunkte: 'Punti tariffali sulla fattura',

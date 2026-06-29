@@ -2534,6 +2534,7 @@ export default {
     belegNichtGedeckt: 'Not covered by insurer',
     belegNichtGedecktHint: 'Does not count toward the deductible or co-payment — e.g. self-pay services.',
     belegNichtGedecktNote: '+ {amount} not covered',
+    belegSubmitted: 'Submitted to insurer',
     rechnungTitle: 'Understanding medical bills',
     rechnungExplain: 'Medical bills are based on tax points × cantonal tax point value.',
     taxpunkte: 'Tax points on the bill',

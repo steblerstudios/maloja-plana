@@ -175,6 +175,11 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
     if (!onUpdateData) return;
     onUpdateData('versicherungen', 'kkBelege', belege.filter(b => b.id !== id));
   };
+  // Zweite Dimension: bei der KK eingereicht? (ruhiger Haken, keine falsche Dringlichkeit)
+  const toggleEingereicht = (id) => {
+    if (!onUpdateData) return;
+    onUpdateData('versicherungen', 'kkBelege', belege.map(b => b.id === id ? { ...b, eingereicht: !b.eingereicht } : b));
+  };
   const fmtDatum = (d) => d ? d.split('-').reverse().join('.') : t('kvg.belegNoDate');
 
   const result = berechneFranchise(franchise, kosten);
@@ -455,7 +460,17 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
                 ),
                 b.nichtGedeckt > 0 && React.createElement('div', {
                   style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }
-                }, t('kvg.belegNichtGedecktNote', { amount: 'CHF ' + b.nichtGedeckt }))
+                }, t('kvg.belegNichtGedecktNote', { amount: 'CHF ' + b.nichtGedeckt })),
+                React.createElement('button', {
+                  onClick: () => toggleEingereicht(b.id),
+                  'aria-pressed': b.eingereicht ? 'true' : 'false',
+                  style: {
+                    background: 'none', border: 'none', fontFamily: 'inherit', fontSize: text.xs,
+                    padding: '2px 0', marginTop: '4px', cursor: 'pointer', display: 'block', textAlign: 'left',
+                    color: b.eingereicht ? (palette.sage || '#5a7a5a') : palette.soft,
+                    fontWeight: b.eingereicht ? weight.medium : weight.normal,
+                  }
+                }, (b.eingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted'))
               );
             }),
             React.createElement('div', {
