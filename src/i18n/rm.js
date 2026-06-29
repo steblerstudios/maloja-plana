@@ -2025,6 +2025,12 @@ export default {
       text: { sie: 'Sobald Sie ihn unterschrieben und versendet haben, scannen Sie ihn und legen ihn im Lebensordner ab — so liegt alles am richtigen Ort.', du: 'Sobald du ihn unterschrieben und versendet hast, scanne ihn und lege ihn im Lebensordner ab — so liegt alles am richtigen Ort.' },
       toTresor: 'Im Lebensordner ablegen',
     },
+    kkBelegPicker: {
+      title: 'Tge quints contestais Vus?',
+      intro: { sie: 'Tscherni ils quints contestads — data ed import vegnan surpigliads en la brev. Senza tscherna resta in champ per cumplettar.', du: 'Tscherna ils quints contestads — data ed import vegnan surpigliads en la brev. Senza tscherna resta in champ per cumplettar.' },
+      empty: { sie: 'Anc nagins quints registrads. Vus pudais als agiuntar en il tracker dals custs da sanadad — u cumplettar la brev a maun.', du: 'Anc nagins quints registrads. Ti pos als agiuntar en il tracker dals custs da sanadad — u cumplettar la brev a maun.' },
+      undated: 'senza data',
+    },
     leaseTermination: {
       title: 'Disditga dal contract da locaziun',
       description: 'Disditga ordinaria dal contract da locaziun cun ils termins legals.',

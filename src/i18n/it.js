@@ -1700,6 +1700,12 @@ export default {
       text: { sie: 'Una volta firmata e inviata, la scansioni e la archivi nel Suo raccoglitore di vita — così tutto è al posto giusto.', du: 'Una volta firmata e inviata, scansionala e archiviala nel tuo raccoglitore di vita — così tutto è al posto giusto.' },
       toTresor: 'Archivia nel raccoglitore di vita',
     },
+    kkBelegPicker: {
+      title: 'Quali fatture contesta?',
+      intro: { sie: 'Selezioni le fatture contestate — data e importo vengono inseriti nella lettera. Senza selezione resta un campo da completare.', du: 'Seleziona le fatture contestate — data e importo vengono inseriti nella lettera. Senza selezione resta un campo da completare.' },
+      empty: { sie: 'Nessuna fattura ancora registrata. Può aggiungerle nel tracker dei costi sanitari — oppure completare la lettera a mano.', du: 'Nessuna fattura ancora registrata. Puoi aggiungerle nel tracker dei costi sanitari — oppure completare la lettera a mano.' },
+      undated: 'senza data',
+    },
     leaseTermination: {
       title: 'Disdetta del contratto di locazione',
       description: 'Disdetta ordinaria del contratto di locazione con i termini legali.',

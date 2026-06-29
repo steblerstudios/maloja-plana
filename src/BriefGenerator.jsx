@@ -4,23 +4,39 @@ import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 
+// ISO-Datum → TT.MM.JJJJ für die Anzeige in der Beleg-Auswahl.
+const fmtDate = (iso) => {
+  if (!iso) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : String(iso);
+};
+const fmtAmount = (n) => {
+  const num = Number(n);
+  return isFinite(num) ? num.toLocaleString('de-CH') : String(n);
+};
+
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [selected, setSelected] = useState(null);
   const [preview, setPreview] = useState(false);
   const [printed, setPrinted] = useState(false);
+  // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
+  const [belegIds, setBelegIds] = useState([]);
 
   const templates = getLetterTemplates(t);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
 
+  const kkBelege = Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
+  const reklamationBelege = selected === 'kkReklamation' ? kkBelege.filter(b => belegIds.includes(b.id)) : [];
+
   const handlePrint = () => {
     if (!selected) return;
-    const html = generateLetter(selected, data, t);
+    const html = generateLetter(selected, data, t, { belege: reklamationBelege });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
   };
 
-  const previewHtml = selected ? generateLetter(selected, data, t) : '';
+  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
@@ -53,7 +69,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
@@ -75,6 +91,42 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           }, tmpl.legalRef)
         )
       ))
+    ),
+
+    // Beleg-Auswahl — nur für den Reklamationsbrief: du wählst die strittigen
+    // Belege, Datum + Betrag fliessen in den Brief (Fallback: leeres Gerüst).
+    selected === 'kkReklamation' && React.createElement('div', {
+      style: {
+        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        borderRadius: radius.sm, marginBottom: space.md,
+      }
+    },
+      React.createElement('div', {
+        style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
+      }, t('briefe.kkBelegPicker.title')),
+      React.createElement('div', {
+        style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm }
+      }, t('briefe.kkBelegPicker.intro')),
+      kkBelege.length === 0
+        ? React.createElement('div', {
+            style: { fontSize: textTokens.sm, color: palette.mid, fontStyle: 'italic' }
+          }, t('briefe.kkBelegPicker.empty'))
+        : React.createElement('div', {
+            style: { display: 'flex', flexDirection: 'column', gap: '8px' }
+          },
+            kkBelege.map(b => React.createElement('label', {
+              key: b.id,
+              style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer' }
+            },
+              React.createElement('input', {
+                type: 'checkbox',
+                checked: belegIds.includes(b.id),
+                onChange: () => setBelegIds(ids => ids.includes(b.id) ? ids.filter(x => x !== b.id) : [...ids, b.id]),
+              }),
+              React.createElement('span', null,
+                (fmtDate(b.datum) || t('briefe.kkBelegPicker.undated')) + ' · CHF ' + fmtAmount(b.betrag))
+            ))
+          )
     ),
 
     // Actions
