@@ -1016,6 +1016,7 @@ export default {
       heartfeltIntro: 'Servizi e progetti che apprezziamo personalmente — consigliati gratuitamente, senza contropartita.',
       heartfeltIntroAffiliate: 'Servizi e progetti che apprezziamo personalmente. La maggior parte è consigliata senza compenso; i link contrassegnati con « Affiliate » fanno guadagnare a Maloja una piccola commissione — senza costi per te.',
       affiliateMarker: 'Affiliate',
+      heartfeltGroups: { digital: 'Digitale e privacy', konsum: 'Consumo e media', tiere: 'Animali e assistenza', gesundheit: 'Corpo e salute', kunst: 'Arte e artigianato', gemeinschaft: 'Comunità e transizioni di vita' },
       heartfelt1: 'Motore di ricerca che investe i ricavi nella riforestazione.',
       heartfelt2: 'Hosting svizzero a energia verde, con data center propri ed efficienti.',
       heartfelt3: 'Servizio email senza pubblicità, rispettoso della privacy, alimentato a energia verde.',

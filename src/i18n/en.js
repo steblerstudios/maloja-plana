@@ -1016,6 +1016,7 @@ export default {
       heartfeltIntro: 'Services and projects we personally value — recommended free of charge, with nothing in return.',
       heartfeltIntroAffiliate: 'Services and projects we personally value. Most we recommend unpaid; links marked “Affiliate” earn Maloja a small commission — at no cost to you.',
       affiliateMarker: 'Affiliate',
+      heartfeltGroups: { digital: 'Digital & privacy', konsum: 'Consumer & media', tiere: 'Animals & assistance', gesundheit: 'Body & health', kunst: 'Art & craft', gemeinschaft: 'Community & life transitions' },
       heartfelt1: 'Search engine that invests its revenue in reforestation.',
       heartfelt2: 'Swiss hosting powered by green energy with its own resource-efficient data centres.',
       heartfelt3: 'Ad-free, privacy-friendly email service running on green energy.',
