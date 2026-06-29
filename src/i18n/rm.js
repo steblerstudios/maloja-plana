@@ -930,6 +930,10 @@ export default {
       heartfelt15: 'Revista da consum davart daners, assicuranzas e prevenziun — independenta e senza reclama.',
       heartfelt16: 'Emissiun da la SRF davart ils consuments — revelescha abus e controllescha products e servetschs.',
       heartfelt17: 'App cunter il spreder da victualias — gestiunescha tes provisiuns e datas da durabladad. Nagin conto, nagin tracking, nagina pajada cun datas.',
+      // TODO(rm): provisorischer DE-Fallback — sauberes Romanisch nachziehen
+      heartfelt18: 'Schweizer Tastatur-App, die mit dir mitdenkt — datensparsam, ohne Tracking.',
+      heartfelt19: 'Tätowier-Kunst mit eigener Handschrift — derzeit auf Instagram zu finden.',
+      heartfelt20: 'Tätowier-Kunst, die uns berührt — derzeit auf Instagram zu finden.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
