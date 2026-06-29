@@ -117,12 +117,16 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
   })();
 
   const [franchise, setFranchise] = useState(storedFranchise);
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
-  // Belege werden einzeln erfasst und zur Jahres-Summe zusammengerechnet.
+  // Belege werden einzeln erfasst und pro Jahr zur Summe zusammengerechnet.
   // Diese Summe ist die Quelle des Verbrauchs (zuerst Franchise, dann Selbstbehalt).
   const belege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
-  // „Dieses Jahr" = Belege mit Datum im laufenden Jahr ODER ohne Datum (gerade bezahlt).
-  const yearBelege = belege.filter(b => !b.datum || String(b.datum).slice(0, 4) === String(currentYear));
+  // Jahr eines Belegs: aus dem Datum, ODER laufendes Jahr wenn ohne Datum (gerade bezahlt).
+  const belegYear = (b) => b.datum ? Number(String(b.datum).slice(0, 4)) : currentYear;
+  // Jahre mit Belegen + laufendes Jahr, neueste zuerst — für den Jahr-Umschalter.
+  const availableYears = [...new Set([currentYear, ...belege.map(belegYear)])].sort((a, b) => b - a);
+  const yearBelege = belege.filter(b => belegYear(b) === selectedYear);
   const kosten = yearBelege.reduce((sum, b) => sum + (Number(b.betrag) || 0), 0);
 
   // Eingabe-Zustand für „Beleg hinzufügen"
@@ -169,6 +173,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
       eingereicht: newEingereicht,
     };
     onUpdateData('versicherungen', 'kkBelege', [...belege, beleg]);
+    setSelectedYear(belegYear(beleg)); // den neu erfassten Beleg sofort sichtbar machen
     setNewDatum(''); setNewBetrag(''); setNewTp(''); setTpOpen(false);
     setNewStatus('bezahlt'); setNewFrist('');
     setNewNichtGedeckt(''); setNgOpen(false);
@@ -416,9 +421,28 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
     React.createElement('div', {
       style: { padding: '14px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: '16px' }
     },
+      availableYears.length > 1 && React.createElement('div', {
+        style: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }
+      },
+        availableYears.map(y =>
+          React.createElement('button', {
+            key: y,
+            onClick: () => setSelectedYear(y),
+            'aria-pressed': y === selectedYear ? 'true' : 'false',
+            style: {
+              padding: '4px 10px', borderRadius: '12px', fontFamily: 'inherit', fontSize: text.xs, cursor: 'pointer',
+              border: '1px solid ' + (y === selectedYear ? palette.sand + '40' : palette.border),
+              background: y === selectedYear ? palette.sand + '25' : 'transparent',
+              color: y === selectedYear ? palette.sand : palette.soft,
+              fontWeight: y === selectedYear ? weight.medium : weight.normal,
+            }
+          }, String(y))
+        )
+      ),
+
       React.createElement('div', {
         style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' }
-      }, t('kvg.belegYearTitle', { year: currentYear })),
+      }, t('kvg.belegYearTitle', { year: selectedYear })),
 
       yearBelege.length === 0
         ? React.createElement('div', {
