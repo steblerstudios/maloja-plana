@@ -709,6 +709,7 @@ export default {
         kkPremium: 'Premio mensile (CHF)',
         franchise: { label: 'Franchigia (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numero tessera assicurazione',
+        policyNumber: 'Numero di polizza',
         kkZusatz: 'Assicurazione complementare',
         lifeInsurance: { label: 'Assicurazione sulla vita', options: { no: 'No', yes: 'Sì' } },
         freizuegigkeit: 'Conto/polizza di libero passaggio',
@@ -737,6 +738,7 @@ export default {
       hints: {
         bvgContribution: 'Solo a titolo informativo — non viene dedotto nuovamente dal salario netto nel budget.',
         bvgBalance: 'Dall\'ultimo certificato della cassa pensione. Utilizzato nel calcolatore previdenziale.',
+        policyNumber: 'Numero di contratto/polizza dell\'assicurazione di base — riportato sulla polizza, non il numero della tessera.',
         ktg: 'Non obbligatoria. Molti datori di lavoro hanno un\'IGM — paga l\'80% dello stipendio in caso di malattia.',
       },
       docs: {
