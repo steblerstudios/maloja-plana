@@ -585,6 +585,7 @@ export default {
         ahvContribution: 'Contribuziun AVS CHF/onn',
         uvgPremium: 'Premia LAINF CHF/mais',
         kkCardNumber: 'Nr. da la carta CM',
+        kkZusatz: 'Assicuranza cumplementara',
         bvgInsurer: 'LPP/Cassa da pensiun',
         bvgBalance: 'Avair LPP actual CHF',
         uvg: { label: 'Assicuranza LAINF', options: { yes: 'Gea', employer: 'Via il patrun', private: 'Privat', none: 'Nagina' } },
@@ -603,6 +604,7 @@ export default {
       },
       placeholders: {
         kkInsurer: 'p.ex. Swica, Helsana, CSS',
+        kkZusatz: 'p.ex. Helsana COMPLETA, Sanitas Vital',
       },
       hints: {
         bvgContribution: "Mo per la survista — na vegn betg anc ina giada deducì dal salari net en il budget.",

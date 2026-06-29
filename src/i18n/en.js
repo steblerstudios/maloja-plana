@@ -581,6 +581,7 @@ export default {
         kkPremium: 'Monthly premium (CHF)',
         franchise: { label: 'Deductible (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Insurance card number',
+        kkZusatz: 'Supplementary insurance',
         bvgInsurer: 'Pension fund (BVG)',
         bvgContribution: 'BVG contribution monthly (CHF)',
         bvgBalance: 'Current pension fund balance (CHF)',
@@ -598,6 +599,7 @@ export default {
       },
       placeholders: {
         kkInsurer: 'e.g. Swica, Helsana, CSS',
+        kkZusatz: 'e.g. Helsana COMPLETA, Sanitas Vital',
       },
       hints: {
         bvgContribution: 'For reference only — not subtracted again from net income in the budget.',
