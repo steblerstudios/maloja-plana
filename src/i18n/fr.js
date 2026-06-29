@@ -2145,6 +2145,13 @@ export default {
       gyn: 'Assurance de base : le dépistage gynécologique du cancer (Pap) est en règle générale pris en charge tous les 3 ans (après deux contrôles annuels sans particularité). Plus souvent est possible — les rendez-vous supplémentaires sont alors à votre charge. Ce qui est médicalement utile est à discuter avec le médecin.',
       vaccinations: 'Les vaccinations recommandées par l’OFSP sont en général prises en charge (après franchise/quote-part). Les vaccins de voyage en général non.',
     },
+    coverageThisYear: {
+      label: 'Pris en charge par l’assurance de base ? (optionnel)',
+      covered: 'pris en charge',
+      selfpay: 'à payer soi-même',
+      unsure: 'incertain',
+      cardPrefix: 'Prise en charge',
+    },
     templates: {
       title: 'Ajout rapide depuis les modèles',
       doctorYearly: 'Visite médicale annuelle',
