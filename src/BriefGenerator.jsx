@@ -56,13 +56,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
-          border: '1px solid ' + (selected === tmpl.key ? palette.accent : palette.border),
+          border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
           borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
           display: 'flex', alignItems: 'flex-start', gap: '12px',
           transition: `border-color ${duration.normal}ms ${ease}`,
         }
       },
-        React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.accent : palette.mid }),
+        React.createElement(Icon, { name: tmpl.icon, size: 20, color: selected === tmpl.key ? palette.sage : palette.mid }),
         React.createElement('div', null,
           React.createElement('div', {
             style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
@@ -91,7 +91,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', {
         onClick: handlePrint,
         style: {
-          padding: '10px 16px', background: palette.accent, color: '#fff',
+          padding: '10px 16px', background: palette.sand, color: '#fff',
           border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontSize: textTokens.sm, fontWeight: weight.medium,
         }
