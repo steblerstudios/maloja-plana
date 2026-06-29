@@ -12,6 +12,7 @@ import { addTodo } from './utils/merkliste.js';
 // Nächster ordentlicher Kündigungstermin: 30. November (dieses Jahr, sonst nächstes).
 const nextNov30 = () => {
   const now = new Date();
+  now.setHours(0, 0, 0, 0); // Datum, nicht Uhrzeit vergleichen → der 30.11. selbst zählt noch
   const year = now.getFullYear();
   const nov30 = new Date(year, 10, 30);
   const y = now <= nov30 ? year : year + 1;
@@ -72,13 +73,14 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
 
   const handleSetReminder = () => {
     const target = wunschKasse.trim();
-    addReminder({
+    const saved = addReminder({
       title: target ? t('kvgWechsel.reminderTitleTo', { insurer: target }) : t('kvgWechsel.reminderTitle'),
       dueDate: deadline,
       category: 'insurance',
       recurrence: 'yearly',
       notes: t('kvgWechsel.reminderNotes'),
     });
+    if (!saved) return; // Speicher voll → kein falsches ✓
     // Rücklink zum Vergleich in die Merkliste — damit man die Wunsch-Kasse wiederfindet.
     addTodo({ text: t('kvgWechsel.todoText'), link: 'praemien' });
     setReminderSet(true);

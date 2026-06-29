@@ -12,8 +12,8 @@ export const loadReminders = () => {
 };
 
 export const saveReminders = (reminders) => {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders)); }
-  catch { /* Speicher voll — still scheitern, kein Absturz */ }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders)); return true; }
+  catch { return false; } // Speicher voll — Misserfolg melden statt still schlucken
 };
 
 // Legt eine Erinnerung an. Idempotent: existiert schon eine offene Erinnerung
@@ -35,6 +35,6 @@ export const addReminder = ({ title, dueDate, category = 'personal', recurrence 
     completedDate: null,
     createdDate: todayISO(),
   };
-  saveReminders([...reminders, reminder]);
-  return reminder;
+  // Nur als Erfolg melden, wenn das Speichern wirklich geklappt hat (sonst kein falsches ✓).
+  return saveReminders([...reminders, reminder]) ? reminder : null;
 };
