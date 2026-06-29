@@ -4,26 +4,29 @@ import { text, weight, space, radius, leading, duration, ease } from './config/t
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 
+// Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
+// neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
 const STATUS_COLORS = (palette) => ({
   covered: palette.sage || '#5a7a5a',
-  limited: palette.sand || '#c8a96e',
-  excluded: palette.gold || '#c47a20',
+  limited: palette.gold || '#c47a20',
+  excluded: palette.soft || '#9a978f',
 });
 
+// Ruhiges Status-Signal: feiner Punkt + Wort statt lauter Pille (Faden 3-II/2,
+// Layout-Schritt 2/3). Das Wort steht zurückhaltend in Sekundärfarbe.
 const StatusBadge = ({ status, label, palette }) => {
   const colors = STATUS_COLORS(palette);
-  return React.createElement('span', {
-    style: {
-      display: 'inline-block',
-      padding: '2px 8px',
-      borderRadius: '10px',
-      fontSize: text.xs,
-      fontWeight: weight.medium,
-      background: (colors[status] || palette.mid) + '18',
-      color: colors[status] || palette.mid,
-      whiteSpace: 'nowrap',
-    }
-  }, label);
+  const dot = colors[status] || palette.mid;
+  return React.createElement('div', {
+    style: { display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }
+  },
+    React.createElement('span', {
+      style: { width: '7px', height: '7px', borderRadius: '50%', background: dot, flexShrink: 0 }
+    }),
+    React.createElement('span', {
+      style: { fontSize: text.xs, color: palette.mid }
+    }, label)
+  );
 };
 
 const TabButton = ({ active, label, onClick, palette }) =>
