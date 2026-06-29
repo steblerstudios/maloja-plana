@@ -134,3 +134,13 @@ export const KVG_DETAILS = {
   transport: 3,
   ausland: 3,
 };
+
+// Empfohlenes Intervall in Monaten für den opt-in persönlichen Abgleich (Faden 3-II/2).
+// = KVG-gedeckter / CH-klinischer Rhythmus (konkret + belegbar). Der „liegt länger
+// zurück"-Hinweis ist nie aggressiver als dieser Wert (dignity-first; der WHO/EU-Kontext
+// — z. T. längere Intervalle — steht weiter oben im Empfehlungsblock).
+export const VORSORGE_INTERVAL_MONATE = {
+  gynaeko: 36,
+  mammografie: 24,
+  darmkrebs: 120,
+};

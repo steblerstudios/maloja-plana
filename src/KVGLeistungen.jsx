@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
+import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -74,6 +75,11 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
   const sources = emp ? [emp.who && 'WHO', emp.eu && 'EU'].filter(Boolean).join(' · ') : '';
   const detailCount = KVG_DETAILS[item.key];
   const expandable = !!emp || !!detailCount;
+  // Faden 3-II/2: opt-in persönlicher Intervall-Abgleich (nur für Screenings mit
+  // belegbarem Monats-Intervall). Druckfrei, lokal, nie aggressiver als das Intervall.
+  const recMonths = VORSORGE_INTERVAL_MONATE[item.key];
+  const [lastVisit, setLastVisit] = React.useState(() => recMonths ? (loadVorsorgeDates()[item.key] || '') : '');
+  const [reminderSaved, setReminderSaved] = React.useState(false);
 
   return React.createElement('div', {
     style: {
@@ -126,7 +132,53 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             React.createElement('div', { style: { marginTop: '3px' } }, t('kvg.' + item.key + 'Synthese')),
             React.createElement('div', {
               style: { color: palette.soft, marginTop: '2px' }
-            }, t('kvg.' + item.key + 'Quelle'))
+            }, t('kvg.' + item.key + 'Quelle')),
+            // Faden 3-II/2: opt-in persönlicher Abgleich — letzte Untersuchung eintragen,
+            // dann ruhig „nächste empfohlene ~MM.JJJJ" + (wenn überfällig) sanfter Hinweis
+            // und 1-Klick-Kalendereintrag. Kein Druck, keine Wertung über die Leitlinie hinaus.
+            recMonths && React.createElement('div', {
+              style: { marginTop: '8px', paddingTop: '8px', borderTop: '1px solid ' + palette.border }
+            },
+              React.createElement('label', {
+                style: { display: 'block', color: palette.mid, marginBottom: '3px' }
+              }, t('kvg.lastVisitLabel')),
+              React.createElement('input', {
+                type: 'date',
+                value: lastVisit || '',
+                max: new Date().toISOString().slice(0, 10),
+                onChange: (e) => { const v = e.target.value; setLastVisit(v); saveVorsorgeDate(item.key, v); setReminderSaved(false); },
+                style: {
+                  fontSize: text.xs, padding: '4px 6px', border: '1px solid ' + palette.border,
+                  borderRadius: radius.sm, fontFamily: 'inherit', color: palette.text,
+                  background: 'transparent',
+                }
+              }),
+              lastVisit && (() => {
+                const next = new Date(lastVisit);
+                next.setMonth(next.getMonth() + recMonths);
+                const nextStr = ('0' + (next.getMonth() + 1)).slice(-2) + '.' + next.getFullYear();
+                const overdue = next <= new Date();
+                return React.createElement('div', { style: { marginTop: '5px' } },
+                  React.createElement('div', { style: { color: palette.mid } }, t('kvg.nextRecommended', { date: nextStr })),
+                  overdue && React.createElement('div', { style: { color: palette.mid, marginTop: '3px' } }, t('kvg.overdueHint')),
+                  overdue && (reminderSaved
+                    ? React.createElement('div', { style: { color: palette.sage, marginTop: '4px' } }, '✓ ' + t('kvg.reminderSaved'))
+                    : React.createElement('button', {
+                        type: 'button',
+                        onClick: () => {
+                          const r = addReminder({ title: t('kvg.' + item.key), dueDate: new Date().toISOString().slice(0, 10), category: 'health' });
+                          if (r) setReminderSaved(true);
+                        },
+                        style: {
+                          marginTop: '4px', background: 'none', border: '1px solid ' + palette.border,
+                          borderRadius: radius.sm, padding: '4px 10px', fontSize: text.xs,
+                          color: palette.text, cursor: 'pointer', fontFamily: 'inherit',
+                        }
+                      }, t('kvg.addToCalendar'))
+                  )
+                );
+              })()
+            )
           ),
           // „Was genau gedeckt ist" — N belegbare Detail-Zeilen + Quelle
           open && !emp && detailCount && React.createElement('div', {
