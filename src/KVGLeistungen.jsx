@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { addReminder, loadReminders } from './utils/reminders.js';
 
 const STATUS_COLORS = (palette) => ({
   covered: palette.sage || '#5a7a5a',
@@ -127,8 +128,25 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
   // Eingabe-Zustand für „Beleg hinzufügen"
   const [newDatum, setNewDatum] = useState('');
   const [newBetrag, setNewBetrag] = useState('');
+  const [newStatus, setNewStatus] = useState('bezahlt');
+  const [newFrist, setNewFrist] = useState('');
   const [tpOpen, setTpOpen] = useState(false);
   const [newTp, setNewTp] = useState('');
+
+  // Belege, für die schon eine offene Kalender-Erinnerung existiert (für ✓-Feedback,
+  // auch nach erneutem Öffnen der Ansicht). addReminder ist ohnehin idempotent.
+  const reminderTitle = (b) => t('kvg.belegReminderTitle', { betrag: 'CHF ' + (Number(b.betrag) || 0) });
+  const [remindedIds, setRemindedIds] = useState(() => {
+    const rem = loadReminders();
+    const s = new Set();
+    belege.forEach(b => { if (b.frist && rem.some(r => !r.done && r.dueDate === b.frist && r.title === reminderTitle(b))) s.add(b.id); });
+    return s;
+  });
+  const remindBeleg = (b) => {
+    if (!b.frist) return;
+    const r = addReminder({ title: reminderTitle(b), dueDate: b.frist, category: 'health' });
+    if (r) setRemindedIds(prev => new Set(prev).add(b.id));
+  };
 
   const canton = data.basis?.canton || '';
   const tpw = TAXPUNKTWERT[canton] || 0.89;
@@ -137,9 +155,15 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
   const addBeleg = () => {
     const betrag = Number(newBetrag);
     if (!betrag || betrag <= 0 || !onUpdateData) return;
-    const beleg = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), datum: newDatum || '', betrag };
+    const beleg = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      datum: newDatum || '', betrag,
+      status: newStatus,
+      frist: newStatus === 'offen' ? (newFrist || '') : '',
+    };
     onUpdateData('versicherungen', 'kkBelege', [...belege, beleg]);
     setNewDatum(''); setNewBetrag(''); setNewTp(''); setTpOpen(false);
+    setNewStatus('bezahlt'); setNewFrist('');
   };
   const removeBeleg = (id) => {
     if (!onUpdateData) return;
@@ -243,6 +267,36 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
         })
       ),
 
+      React.createElement('div', { style: { display: 'flex', gap: '8px', marginBottom: newStatus === 'offen' ? '8px' : '8px' } },
+        ['bezahlt', 'offen'].map(s =>
+          React.createElement('button', {
+            key: s,
+            onClick: () => setNewStatus(s),
+            style: {
+              flex: '1 1 0', padding: '8px', borderRadius: radius.sm, fontFamily: 'inherit',
+              fontSize: text.sm, cursor: 'pointer',
+              border: '1px solid ' + (newStatus === s ? palette.sand : palette.border),
+              background: newStatus === s ? palette.sand + '20' : 'transparent',
+              color: newStatus === s ? palette.sand : palette.mid,
+              fontWeight: newStatus === s ? weight.semi : weight.normal,
+            }
+          }, t(s === 'bezahlt' ? 'kvg.belegPaid' : 'kvg.belegOpen'))
+        )
+      ),
+
+      newStatus === 'offen' && React.createElement('input', {
+        type: 'date',
+        'aria-label': t('kvg.belegFrist'),
+        value: newFrist,
+        onChange: (e) => setNewFrist(e.target.value),
+        style: {
+          width: '100%', padding: space.sm, borderRadius: radius.sm,
+          border: '1px solid ' + palette.border, background: palette.surface,
+          color: palette.text, fontSize: text.sm, fontFamily: 'inherit',
+          boxSizing: 'border-box', marginBottom: '8px',
+        }
+      }),
+
       React.createElement('button', {
         onClick: () => setTpOpen(!tpOpen),
         style: {
@@ -313,28 +367,55 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
             style: { fontSize: text.sm, color: palette.soft, lineHeight: leading.normal }
           }, t('kvg.belegEmpty'))
         : React.createElement('div', null,
-            yearBelege.map(b =>
-              React.createElement('div', {
+            yearBelege.map(b => {
+              const offen = b.status === 'offen';
+              const gold = palette.gold || '#c47a20';
+              return React.createElement('div', {
                 key: b.id,
-                style: {
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  gap: '8px', padding: '8px 0', borderBottom: '1px solid ' + palette.border,
-                }
+                style: { padding: '8px 0', borderBottom: '1px solid ' + palette.border }
               },
-                React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
-                React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
-                  React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, 'CHF ' + (Number(b.betrag) || 0)),
+                React.createElement('div', {
+                  style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }
+                },
+                  React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '8px' } },
+                    React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, fmtDatum(b.datum)),
+                    offen && React.createElement('span', {
+                      style: {
+                        fontSize: text.xs, fontWeight: weight.medium, color: gold,
+                        background: gold + '18', padding: '1px 7px', borderRadius: '8px',
+                      }
+                    }, t('kvg.belegOpen'))
+                  ),
+                  React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '10px' } },
+                    React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium } }, 'CHF ' + (Number(b.betrag) || 0)),
+                    React.createElement('button', {
+                      onClick: () => removeBeleg(b.id),
+                      'aria-label': t('kvg.belegRemove'),
+                      style: {
+                        background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
+                        fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                      }
+                    }, '×')
+                  )
+                ),
+                offen && b.frist && React.createElement('div', {
+                  style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginTop: '6px' }
+                },
+                  React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } },
+                    t('kvg.belegFrist') + ': ' + fmtDatum(b.frist)),
                   React.createElement('button', {
-                    onClick: () => removeBeleg(b.id),
-                    'aria-label': t('kvg.belegRemove'),
+                    onClick: () => remindBeleg(b),
+                    disabled: remindedIds.has(b.id),
                     style: {
-                      background: 'none', border: 'none', color: palette.soft, cursor: 'pointer',
-                      fontSize: '16px', lineHeight: 1, padding: '0 2px', fontFamily: 'inherit',
+                      background: 'none', border: 'none', fontFamily: 'inherit',
+                      fontSize: text.xs, fontWeight: weight.medium, padding: '2px 0',
+                      color: remindedIds.has(b.id) ? (palette.sage || '#5a7a5a') : palette.sand,
+                      cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
                     }
-                  }, '×')
+                  }, remindedIds.has(b.id) ? '✓ ' + t('kvg.belegReminded') : t('kvg.belegRemind'))
                 )
-              )
-            ),
+              );
+            }),
             React.createElement('div', {
               style: { display: 'flex', justifyContent: 'space-between', paddingTop: '10px', fontSize: text.sm }
             },
