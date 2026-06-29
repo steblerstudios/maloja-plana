@@ -97,11 +97,11 @@ function getInsuranceSwitchFields(data, t) {
   return {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
-    currentInsurer: data.versicherungen?.healthInsurer || '',
-    policyNumber: data.versicherungen?.policyNumber || '',
+    currentInsurer: data.versicherungen?.kkInsurer || '',
+    policyNumber: data.versicherungen?.kkCardNumber || data.versicherungen?.policyNumber || '',
     filled: {
       name: !!getFullName(data.basis),
-      insurer: !!data.versicherungen?.healthInsurer,
+      insurer: !!data.versicherungen?.kkInsurer,
     },
   };
 }
