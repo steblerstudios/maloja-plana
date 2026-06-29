@@ -1193,6 +1193,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.vorsorge'), sub: t('nav.sub.vorsorge'), view: 'vorsorge', icon: 'vorsorge' },
             { label: t('nav.mindestlohn'), sub: t('nav.sub.mindestlohn'), key: 'mindestlohn', action: () => onSelectChapter(chapters.findIndex(ch => ch.key === 'finanzen')), icon: 'money' },
             { label: t('nav.neuerjob'), sub: t('nav.sub.neuerjob'), view: 'neuerjob', icon: 'lebenslauf' },
+            { label: t('nav.stelleverloren'), sub: t('nav.sub.stelleverloren'), view: 'stelleverloren', icon: 'lebenslauf' },
           ] },
           { label: t('dashboard.toolGroups.insurance'), items: [
             { label: t('nav.kvgIpv'), sub: t('nav.sub.kvgIpv'), view: 'premium', icon: 'praemienverbilligung' },
