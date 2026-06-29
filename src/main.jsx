@@ -444,6 +444,13 @@ const AppInner = () => {
         next.behoerden = { ...next.behoerden, cantoneOfTaxation: next.behoerden?.cantoneOfTaxation || value };
       }
 
+      // Geschlecht → Pronomen-Vorschlag, nur wenn noch keins gesetzt (jederzeit
+      // überschreibbar). „diverse" setzt bewusst nichts — politisch neutral, kein Zwang.
+      if (chapter === 'basis' && field === 'gender' && !next.basis?.pronouns) {
+        const pronounByGender = { male: 'he', female: 'she' };
+        if (pronounByGender[value]) next.basis = { ...next.basis, pronouns: pronounByGender[value] };
+      }
+
       if (chapter === 'finanzen' && field === 'employer' && value) {
         next.ausbildung = { ...next.ausbildung, employer: next.ausbildung?.employer || value };
       }
