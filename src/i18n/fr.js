@@ -581,6 +581,10 @@ export default {
         franchise: { label: 'Franchise (CHF)', options: { f300: '300', f500: '500', f1000: '1000', f1500: '1500', f2500: '2500', 300: '300', 500: '500', 1000: '1000', 1500: '1500', 2500: '2500' } },
         kkCardNumber: 'Numéro de carte d\'assurance',
         kkZusatz: 'Assurance complémentaire',
+        lifeInsurance: { label: 'Assurance vie', options: { no: 'Non', yes: 'Oui' } },
+        freizuegigkeit: 'Compte/police de libre passage',
+        legalInsurance: { label: 'Assurance protection juridique', options: { no: 'Non', yes: 'Oui' } },
+        childInsurance: { label: 'Assurances pour enfants', options: { no: 'Non', yes: 'Oui' } },
         bvgInsurer: 'Caisse de pension (LPP)',
         bvgContribution: 'Cotisation LPP mensuelle (CHF)',
         bvgBalance: 'Avoir LPP actuel (CHF)',
@@ -599,6 +603,7 @@ export default {
       placeholders: {
         kkInsurer: 'p. ex. Swica, Helsana, CSS',
         kkZusatz: 'p. ex. Helsana COMPLETA, Sanitas Vital',
+        freizuegigkeit: 'p. ex. fondation de libre passage',
       },
       hints: {
         bvgContribution: 'À titre indicatif — ce montant n\'est pas déduit une seconde fois du salaire net dans le budget.',
