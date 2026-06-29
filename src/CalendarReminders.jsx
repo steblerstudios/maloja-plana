@@ -55,6 +55,8 @@ export const CalendarReminders = ({ palette, t, data }) => {
   const [newCategory, setNewCategory] = useState('personal');
   const [newRecurrence, setNewRecurrence] = useState('once');
   const [newNotes, setNewNotes] = useState('');
+  // Optional, nur bei Gesundheits-Terminen: Deckung dieses Jahr (gedeckt/selbst/unsicher).
+  const [newCoverage, setNewCoverage] = useState('');
 
   // Persist on change
   useEffect(() => { saveReminders(reminders); }, [reminders]);
@@ -87,13 +89,14 @@ export const CalendarReminders = ({ palette, t, data }) => {
       category: newCategory,
       recurrence: newRecurrence,
       notes: newNotes.trim(),
+      coverageThisYear: newCategory === 'health' ? newCoverage : '',
       done: false,
       completedDate: null,
       createdDate: todayISO()
     };
     setReminders(prev => [...prev, reminder]);
     setNewTitle(''); setNewDate(''); setNewNotes('');
-    setNewCategory('personal'); setNewRecurrence('once');
+    setNewCategory('personal'); setNewRecurrence('once'); setNewCoverage('');
     setView('upcoming');
   };
 
@@ -195,6 +198,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
             React.createElement('span', null, catLabel),
             r.recurrence !== 'once' && React.createElement('span', null, '| ↻ ' + t('calendar.' + r.recurrence))
           ),
+          r.coverageThisYear && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', fontStyle: 'italic' } }, t('calendar.coverageThisYear.cardPrefix') + ': ' + t('calendar.coverageThisYear.' + r.coverageThisYear)),
           r.notes && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px', fontStyle: 'italic' } }, r.notes)
         ),
         React.createElement('div', { style: { display: 'flex', gap: space.xs, flexShrink: 0 } },
@@ -278,6 +282,28 @@ export const CalendarReminders = ({ palette, t, data }) => {
           React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.category')),
           React.createElement('select', { value: newCategory, onChange: (e) => setNewCategory(e.target.value), style: { ...inputStyle, marginBottom: 0 } },
             categories.map(cat => React.createElement('option', { key: cat, value: cat }, t('calendar.categories.' + cat)))
+          )
+        )
+      ),
+
+      // Optional, nur bei Gesundheit: Deckung dieses Jahr (gedeckt/selbst/unsicher; erneut klicken = leer)
+      newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
+        React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
+        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+          ['covered', 'selfpay', 'unsure'].map(opt =>
+            React.createElement('button', {
+              key: opt,
+              type: 'button',
+              'aria-pressed': newCoverage === opt,
+              onClick: () => setNewCoverage(newCoverage === opt ? '' : opt),
+              style: {
+                padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
+                fontSize: text.sm, fontWeight: newCoverage === opt ? '600' : '400',
+                background: newCoverage === opt ? palette.sand : palette.surface,
+                color: newCoverage === opt ? '#fff' : palette.text,
+                border: '1px solid ' + (newCoverage === opt ? palette.sand : palette.border)
+              }
+            }, t('calendar.coverageThisYear.' + opt))
           )
         )
       ),
