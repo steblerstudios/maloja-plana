@@ -1032,6 +1032,9 @@ export default {
       heartfelt15: 'Magazine de consommation sur l’argent, les assurances et la prévoyance — indépendant et sans publicité.',
       heartfelt16: 'Émission de la SRF sur la consommation — révèle les abus et teste produits et services.',
       heartfelt17: 'Application anti-gaspillage alimentaire — gère vos stocks et dates de péremption. Sans compte, sans pistage, sans paiement par les données.',
+      heartfelt18: 'Application de clavier suisse qui pense avec vous — respectueuse de la vie privée, sans pistage.',
+      heartfelt19: 'Art du tatouage avec sa propre signature — actuellement sur Instagram.',
+      heartfelt20: 'Art du tatouage qui nous touche — actuellement sur Instagram.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
