@@ -33,6 +33,8 @@ export default {
     wunschKassePlaceholder: 'p. ex. Helsana',
     reminderTitleTo: 'Passage à {insurer} — délai',
     todoText: 'Changer de caisse-maladie : comparer les primes',
+    path3bCaveat: 'Toutes les caisses ne le font pas de manière fiable — demandez une confirmation écrite de la résiliation de l\'ancienne caisse. Résilier soi-même est toujours la voie sûre.',
+    debtNote: 'Vous ne pouvez changer que si vous n\'avez aucune prime impayée ni arriéré auprès de votre caisse actuelle — sinon elle peut bloquer le changement. Réglez d\'abord les montants ouverts.',
   },
   sections: {
     basis: { person: 'Personne', contact: 'Contact', family: 'Famille' },
