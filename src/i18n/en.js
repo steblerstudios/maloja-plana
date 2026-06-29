@@ -2151,6 +2151,16 @@ export default {
     undo: 'Mark as not done',
   },
 
+  kkLast: {
+    title: 'Your health-premium load',
+    share: 'The basic insurance premium equals {share}% of monthly income.',
+    overNote: 'The premium alone is already above the 10% reference.',
+    underNote: 'The premium alone is below 10% — deductible, co-payment and uncovered costs add to it.',
+    whoNote: 'For context: the WHO counts health spending above 10% of income as burdensome ("catastrophic"). The premium is only one part of health costs.',
+    source: 'Source: WHO / UN SDG indicator 3.8.2.',
+    marker10: 'Reference 10% (WHO)',
+    ipvLink: 'Check premium reduction (IPV) →',
+  },
   calendar: {
     title: 'Calendar and reminders',
     upcoming: 'Upcoming',

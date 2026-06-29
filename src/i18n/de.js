@@ -2075,6 +2075,16 @@ export default {
     notificationBody: { sie: 'Öffnen Sie Maloja Plana, um Ihre Erinnerungen zu prüfen.', du: 'Öffne Maloja Plana, um deine Erinnerungen zu prüfen.' },
   },
 
+  kkLast: {
+    title: 'Deine KK-Last',
+    share: 'Die Grundversicherungs-Prämie entspricht {share}% des monatlichen Einkommens.',
+    overNote: 'Schon die Prämie allein liegt über dem Richtwert von 10%.',
+    underNote: 'Die Prämie allein liegt unter 10% — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu.',
+    whoNote: 'Zur Einordnung: Die WHO zählt Gesundheitsausgaben über 10% des Einkommens zu den belastenden („katastrophalen") Ausgaben. Die Prämie ist nur ein Teil der Gesundheitskosten.',
+    source: 'Quelle: WHO / UNO SDG-Indikator 3.8.2.',
+    marker10: 'Richtwert 10% (WHO)',
+    ipvLink: 'Prämienverbilligung (IPV) prüfen →',
+  },
   calendar: {
     title: 'Kalender und Erinnerungen',
     exportIcs: 'Kalender exportieren (.ics)',

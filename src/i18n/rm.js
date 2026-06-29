@@ -2725,6 +2725,16 @@ export default {
     undo: 'Marcar sco betg fatg',
   },
 
+  kkLast: {
+    title: 'Grevezza da las premias',
+    share: 'La premia da l’assicuranza da basa correspunda a {share}% da l’entrada mensila.',
+    overNote: 'Gia la premia sulet surpassa il valur d’orientaziun da 10%.',
+    underNote: 'La premia sulet è sut 10% — franchisa, part da quota e custs betg cuvrids s’agiuntan.',
+    whoNote: 'Per situar: l’OMS quinta expensas da sanadad sur 10% da l’entrada sco grevas («catastroficas»). La premia è mo ina part dals custs da sanadad.',
+    source: 'Funtauna: OMS / indicatur SDG 3.8.2 da l’ONU.',
+    marker10: 'Valur d’orientaziun 10% (OMS)',
+    ipvLink: 'Verifitgar la reducziun da premias (IPV) →',
+  },
   calendar: {
     title: 'Chalender e commemoraziuns',
     upcoming: 'Proxim',

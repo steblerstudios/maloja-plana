@@ -8,6 +8,7 @@ import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space, duration, ease } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
+import { KKLastCard } from './KKLastCard.jsx';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -349,6 +350,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         + (gesundheitskostenOffen > 0 ? ' · ' + t('finanzUebersicht.healthCostsOpen', { amount: formatCHF(gesundheitskostenOffen) }) : ''),
       onClick: () => onNavigate('kvg', undefined, 'franchise'),
     }),
+
+    // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
+    hasData && React.createElement(KKLastCard, { palette, t, data, onNavigate }),
 
     hasData && hasExpenses && React.createElement('div', {
       style: {
