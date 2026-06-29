@@ -1033,6 +1033,9 @@ export default {
       heartfelt15: 'Rivista di consumo su denaro, assicurazioni e previdenza — indipendente e senza pubblicità.',
       heartfelt16: 'Trasmissione SRF sui consumatori — svela gli abusi e testa prodotti e servizi.',
       heartfelt17: 'App contro lo spreco alimentare — gestisce le scorte e le date di scadenza. Nessun account, nessun tracciamento, nessun pagamento con i dati.',
+      heartfelt18: 'App di tastiera svizzera che pensa con te — rispettosa della privacy, senza tracciamento.',
+      heartfelt19: 'Arte del tatuaggio con una firma propria — attualmente su Instagram.',
+      heartfelt20: 'Arte del tatuaggio che ci tocca — attualmente su Instagram.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',

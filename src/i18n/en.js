@@ -1033,6 +1033,9 @@ export default {
       heartfelt15: 'Consumer magazine on money, insurance and pensions — ad-free and independent.',
       heartfelt16: 'SRF consumer TV programme — exposes problems and tests products and services.',
       heartfelt17: 'App against food waste — manages your food stocks and expiry dates. No account, no tracking, no paying with data.',
+      heartfelt18: 'Swiss keyboard app that thinks with you — privacy-friendly, no tracking.',
+      heartfelt19: 'Tattoo art with its own signature — currently on Instagram.',
+      heartfelt20: 'Tattoo art that moves us — currently on Instagram.',
     },
     faq: {
       q1: 'Where is my data stored?',

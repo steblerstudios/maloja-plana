@@ -59,6 +59,9 @@ const HEARTFELT = [
   { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch' },
   { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso' },
   { key: 'heartfelt17', name: 'Foodshiner', url: null }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
+  { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/' },
+  { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts' }, // Tattoo-Artist, z.Zt. nur Instagram
 ];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
