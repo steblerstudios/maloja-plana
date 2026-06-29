@@ -1198,12 +1198,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
             { label: t('nav.kvgLeistungen'), sub: t('nav.sub.kvgLeistungen'), view: 'kvg', icon: 'health' },
           ] },
-          { label: t('dashboard.toolGroups.support'), items: [
-            { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
-            { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
-            { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
-            { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
-          ] },
           { label: t('dashboard.toolGroups.documents'), items: [
             { label: t('nav.tresor'), sub: t('nav.sub.tresor'), view: 'tresor', icon: 'dokumentTresor' },
             { label: t('nav.unterlagen'), sub: t('nav.sub.unterlagen'), view: 'unterlagen', icon: 'documents' },
