@@ -64,6 +64,14 @@ export function getLetterTemplates(t) {
       legalRef: 'KVG Art. 7',
       chapter: 'versicherungen',
     },
+    {
+      key: 'kkReklamation',
+      title: t('briefe.kkReklamation.title'),
+      description: t('briefe.kkReklamation.description'),
+      icon: 'health',
+      legalRef: 'ATSG Art. 52',
+      chapter: 'versicherungen',
+    },
   ];
 }
 
@@ -210,12 +218,47 @@ function generateInsuranceSwitch(data, t) {
   `, t);
 }
 
+function getKkReklamationFields(data, t) {
+  return {
+    sender: senderBlock(data),
+    recipient: recipientPlaceholder(t),
+    insurer: data.versicherungen?.kkInsurer || '',
+    filled: {
+      name: !!getFullName(data.basis),
+      insurer: !!data.versicherungen?.kkInsurer,
+    },
+  };
+}
+
+function generateKkReklamation(data, t) {
+  const f = getKkReklamationFields(data, t);
+  const dateStr = today();
+  const insurerLine = f.insurer ? esc(f.insurer) : fillHint(t);
+
+  return wrapLetter(`
+    <div class="sender">${f.sender || fillHint(t)}</div>
+    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="date-line">${dateStr}</div>
+    <div class="subject">${esc(t('briefe.kkReklamation.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.kkReklamation.salutation'))}</p>
+      <p>${esc(t('briefe.kkReklamation.body1', { insurer: insurerLine }))}</p>
+      <p>${esc(t('briefe.kkReklamation.body2'))}</p>
+      <p>${esc(t('briefe.kkReklamation.body3'))}</p>
+      <p>${esc(t('briefe.kkReklamation.closing'))}</p>
+    </div>
+    <div class="signature">${f.sender || fillHint(t)}</div>
+    <div class="legal-note">${esc(t('briefe.kkReklamation.legalNote'))}</div>
+  `, t);
+}
+
 // ─── Public API ───────────────────────────────────────────
 
 const GENERATORS = {
   leaseTermination: generateLeaseTermination,
   taxExtension: generateTaxExtension,
   insuranceSwitch: generateInsuranceSwitch,
+  kkReklamation: generateKkReklamation,
 };
 
 export function generateLetter(templateKey, data, t) {

@@ -1729,6 +1729,17 @@ export default {
       closing: 'Distinti saluti',
       legalNote: 'Nota: La disdetta dell\'assicurazione di base deve pervenire all\'assicuratore entro il 30 novembre secondo LAMal art. 7. Si consiglia l\'invio raccomandata.',
     },
+    kkReklamation: {
+      title: 'Cassa malati: contestare una fattura',
+      description: 'Quando l’assicuratore non ha conteggiato una prestazione, o l’ha fatto in modo errato.',
+      subject: 'Contestazione del vostro conteggio',
+      salutation: 'Gentili signore e signori,',
+      body1: 'sono titolare dell’assicurazione di base presso {insurer} e ho ricevuto il vostro conteggio. Verificandolo, ho riscontrato un’incongruenza.',
+      body2: 'Nello specifico riguarda la seguente voce: [da completare — data, importo e cosa non è stato o è stato conteggiato in modo errato]. Vi prego di verificare e correggere il conteggio.',
+      body3: 'Vi prego di comunicarmi per iscritto l’esito della vostra verifica. Resto a disposizione per qualsiasi domanda.',
+      closing: 'Distinti saluti',
+      legalNote: 'Nota: in caso di decisione formale dell’assicuratore, il termine di opposizione è di 30 giorni (LPGA art. 52). Questo modello è un orientamento, non una consulenza legale. Si consiglia la raccomandata.',
+    },
   },
 
   organ: {
