@@ -2314,6 +2314,7 @@ export default {
     belegNichtGedeckt: 'Betg cuvrì da la cassa',
     belegNichtGedecktHint: 'Na quinta betg sin la franschisa/il parteniment — p.ex. prestaziuns pajadas sez.',
     belegNichtGedecktNote: '+ {amount} betg cuvrì',
+    belegSubmitted: 'Inoltrà a la cassa',
     rechnungTitle: 'Chapir il quint dal medi',
     rechnungExplain: 'Quints da medi sa basan sin puncts da taxa × valur chantunalas dal punct da taxa.',
     taxpunkte: 'Puncts da taxa sin il quint',
