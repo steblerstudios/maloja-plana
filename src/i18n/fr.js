@@ -2097,6 +2097,16 @@ export default {
     undo: 'Marquer comme à faire',
   },
 
+  kkLast: {
+    title: 'Charge des primes maladie',
+    share: 'La prime d’assurance de base correspond à {share}% du revenu mensuel.',
+    overNote: 'À elle seule, la prime dépasse déjà le repère de 10%.',
+    underNote: 'À elle seule, la prime est inférieure à 10% — franchise, quote-part et coûts non couverts s’y ajoutent.',
+    whoNote: 'Pour situer : l’OMS considère les dépenses de santé supérieures à 10% du revenu comme lourdes (« catastrophiques »). La prime n’est qu’une partie des coûts de santé.',
+    source: 'Source : OMS / indicateur ODD 3.8.2 de l’ONU.',
+    marker10: 'Repère 10% (OMS)',
+    ipvLink: 'Vérifier la réduction de primes →',
+  },
   calendar: {
     title: 'Calendrier et rappels',
     upcoming: 'A venir',

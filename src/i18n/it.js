@@ -2077,6 +2077,16 @@ export default {
     notificationBody: { sie: 'Apra Maloja Plana per controllare i Suoi promemoria.', du: 'Apri Maloja Plana per controllare i tuoi promemoria.' },
   },
 
+  kkLast: {
+    title: 'Carico dei premi malattia',
+    share: 'Il premio dell’assicurazione di base corrisponde al {share}% del reddito mensile.',
+    overNote: 'Già da solo, il premio supera il valore di riferimento del 10%.',
+    underNote: 'Da solo il premio è sotto il 10% — franchigia, aliquota e costi non coperti si aggiungono.',
+    whoNote: 'Per contestualizzare: l’OMS considera le spese sanitarie superiori al 10% del reddito come gravose (“catastrofiche”). Il premio è solo una parte dei costi sanitari.',
+    source: 'Fonte: OMS / indicatore OSS 3.8.2 dell’ONU.',
+    marker10: 'Riferimento 10% (OMS)',
+    ipvLink: 'Verificare la riduzione dei premi (IPV) →',
+  },
   calendar: {
     title: 'Calendario e promemoria',
     exportIcs: 'Esporta calendario (.ics)',

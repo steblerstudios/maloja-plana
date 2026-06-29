@@ -5,6 +5,7 @@ import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerN
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { linkifyDomains } from './utils/linkifyDomains.js';
+import { KKLastCard } from './KKLastCard.jsx';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -91,6 +92,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       React.createElement(Icon, { name: 'insurance', size: 20 }),
       t('po.title')
     ),
+
+    // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
+    React.createElement(KKLastCard, { palette, t, data, onNavigate }),
 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('po.plzLabel')),
