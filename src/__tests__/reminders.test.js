@@ -47,6 +47,14 @@ describe('addReminder (Kalender-Schreib-API)', () => {
     expect(addReminder({ title: 'X', dueDate: '' })).toBeNull();
     expect(loadReminders()).toHaveLength(0);
   });
+
+  it('gibt null zurück, wenn das Speichern scheitert (Speicher voll) — kein falsches ✓', async () => {
+    const { addReminder } = await reminders();
+    const orig = globalThis.localStorage.setItem;
+    globalThis.localStorage.setItem = () => { throw new Error('QuotaExceeded'); };
+    expect(addReminder({ title: 'KVG kündigen', dueDate: '2026-11-30' })).toBeNull();
+    globalThis.localStorage.setItem = orig;
+  });
 });
 
 describe('addTodo (Merkliste-Schreib-API)', () => {

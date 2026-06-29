@@ -52,7 +52,7 @@ export const AblaufLink = ({ palette, label, onClick }) => {
 export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate }) => {
   const s = styles(palette);
   const [done, setDone] = useState(false);
-  const handle = () => { addReminder(reminder); setDone(true); };
+  const handle = () => { if (addReminder(reminder)) setDone(true); }; // nur bestätigen, wenn gespeichert
   if (done) {
     return React.createElement('div', null,
       React.createElement('div', { style: s.done }, '✓ ' + doneLabel),

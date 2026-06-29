@@ -9,6 +9,7 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 // Jahresende → 30. September (dieses Jahr, sonst nächstes). Bewusst Orientierung, kein Verdikt.
 const nextSep30 = () => {
   const now = new Date();
+  now.setHours(0, 0, 0, 0); // Datum, nicht Uhrzeit vergleichen → der 30.09. selbst zählt noch
   const year = now.getFullYear();
   const sep30 = new Date(year, 8, 30);
   const y = now <= sep30 ? year : year + 1;

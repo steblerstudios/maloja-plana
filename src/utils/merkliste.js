@@ -21,7 +21,7 @@ export const addTodo = ({ text, link = null }) => {
   const items = loadTodos();
   const existing = items.find(i => !i.done && i.text === text && (i.link || null) === link);
   if (existing) return existing;
-  const item = { id: 'm' + Date.now(), text, link, done: false };
+  const item = { id: 'm' + Date.now() + '_' + Math.random().toString(36).slice(2, 8), text, link, done: false };
   saveTodos([...items, item]);
   return item;
 };
