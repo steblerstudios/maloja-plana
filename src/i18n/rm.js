@@ -2323,6 +2323,7 @@ export default {
       household: 'Menaschi',
       phone: 'Telefon',
       email: 'E-mail',
+      pronouns: 'Pronoms',
       born: 'naschì/da {year}',
       livingIn: 'domicilià/ada en il chantun {canton}',
       householdAlone: 'viva sulet/a',
