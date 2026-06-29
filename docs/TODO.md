@@ -136,6 +136,16 @@ Metaphern-Map pro Bereich:
 
 Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen intuitiv mit diesem Lebensbereich verbinden."* Gehört bei Umsetzung ins UX-Playbook.
 
+**Erweiterung 2 — „Lebenswerkstatt" (ganze Welt):** übergeordnetes Prinzip *„Jeder Bildschirm erzählt eine Geschichte und jedes Objekt hat einen Zweck."* Maloja = **digitale Schweizer Lebenszentrale**, kein Finanz-Tool.
+- **Zwei Leit-Symbole:** 🌳 Baum bleibt zentral („Wo stehe ich im Leben?"); 🌊 **Leuchtturm = Guide** (Fristen/Risiken/Lücken/neue Gesetze/Erinnerungen → sendet *Licht* statt roter Warnung, Orientierung statt Angst); 🧭 Kompass = Entscheidungen.
+- **Weitere Modul-Metaphern:** Wanderkarte=Lebensweg · Rucksack=Mitnehmen · Werkzeugkiste=Generatoren · Bibliothek=Wissen (≠ Dokumente) · Bankschalter=Finanzen (modern) · Amtsschalter=Behörden · Briefkasten=Posteingang · Karteikasten=Kontakte · Agenda=Kalender · echte Registerkarten (nicht Tabs) · Labor=Gesundheitswerte · Whiteboard=Analysen · Kartenetui/Ausweismappe=Karten/Ausweise · Tresor=Sicherheit · Wetterstation=Lebensstatus (☀️🌤🌧⛈) · Gewächshaus=langfristige Ziele · Umzugskarton=Umzug · Chronik=Lebensereignisse.
+- **🇨🇭 Schweizer DNA, NIE kitschig** (keine Edelweiss/Kühe), nur Materialien/Details/Easter Eggs; Holz sparsam.
+- **Natur/Berge subtil (Apple-Niveau):** Jahreszeiten, Nebel, Schnee, Tiere (Eichhörnchen/Fuchs/Murmeltier/Steinbock/Bartgeier); Himmel klart auf je organisierter (Nebel→Berge→Panorama).
+- **Lebensbaum mit Jahreszeiten:** Knospen/grün/Früchte/Ruhe; neues Ziel→Ast, neues Kapitel→Stammabschnitt; Früchte je Bereich (Finanzen🍏/Gesundheit🌿/Familie🌸/Beruf🍇).
+- **Achievements OHNE Gamification-Optik:** Schweizer Steine (Bergkristall/Granit/Schiefer), Gipfel=große Ziele, Wanderabzeichen; statt Coins → Kompetenz/Vertrauen/Ordnung. **Stempel als Feedback** (EINGEREICHT/AKZEPTIERT/…). Lagerfeuer=Tagesabschluss, Alphütte=Safe Space, Füllfederhalter=Unterschrift.
+- **Seltene Überraschungen:** 1. August Feuerwerk, Weihnachten Schnee+Lichter, Geburtstag Wimpel, 100% → Eule im Baum für einen Tag.
+- **Kern-These:** *Gamification darf NIE wie Gamification aussehen* — kein XP/Diamanten/Level. Sondern: „das Leben fühlt sich jedes Mal ein bisschen schöner, ruhiger, vollständiger an." Vertrauter Begleiter durchs Leben = Identität. (Volle Map im Gedächtnis-File project_skeuomorphism_metaphors.)
+
 ## D — Brand Identity (Rest der Umsetzung)
 
 - ✅ Farben (Granit), Wortmarke (Gipfel-M), Typografie (Lexend/Hanken), Voice-Entscheid
