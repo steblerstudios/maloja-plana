@@ -2511,6 +2511,7 @@ export default {
     belegNichtGedeckt: 'Nicht von der KK gedeckt',
     belegNichtGedecktHint: 'Zählt nicht auf Franchise/Selbstbehalt — z.B. Selbstzahler-Leistungen.',
     belegNichtGedecktNote: '+ {amount} nicht gedeckt',
+    belegSubmitted: 'bei KK eingereicht',
     rechnungTitle: 'Arztrechnung verstehen',
     rechnungExplain: 'Arztrechnungen basieren auf Taxpunkten × kantonalem Taxpunktwert.',
     taxpunkte: 'Taxpunkte auf der Rechnung',
