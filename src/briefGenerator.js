@@ -98,7 +98,9 @@ function getInsuranceSwitchFields(data, t) {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
     currentInsurer: data.versicherungen?.kkInsurer || '',
-    policyNumber: data.versicherungen?.kkCardNumber || data.versicherungen?.policyNumber || '',
+    // Bewusst NICHT kkCardNumber (Versichertenkarten-Nr. ≠ Policennummer) — sonst stünde
+    // im ausgehenden Kündigungsbrief eine falsche Referenz. Ohne echtes Policennummer-Feld leer.
+    policyNumber: data.versicherungen?.policyNumber || '',
     filled: {
       name: !!getFullName(data.basis),
       insurer: !!data.versicherungen?.kkInsurer,
