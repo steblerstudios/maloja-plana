@@ -5,6 +5,28 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.6-beta] — 2026-06-29
+
+KK-Kosten-Tracker (Belege, Franchise/Selbstbehalt), durchgängige Crosslinks
+(„nie zweimal eingeben") und ein Kohärenz-Audit der erfassten Angaben.
+
+### Neu
+- **KK-Verbrauchs-Tracker / Beleg-Liste**: Arztrechnungen einzeln erfassen (Datum, Betrag, optional aus Taxpunkten berechnet), **Jahres-Auflistung mit Jahr-Umschalter** (auch frühere Jahre), Franchise-/Selbstbehalt-Standort in Klartext (drei Zonen)
+- **Beleg-Status**: bezahlt/offen mit **Zahlungsfrist** + Ein-Klick „im Kalender erinnern"; **„bei KK eingereicht"-Marker**; **gedeckt/nicht-gedeckt-Anteil** getrennt (nur der gedeckte Teil zählt auf die Franchise)
+- **Gesundheitskosten in der Finanz-Übersicht**: bezahlte Belege fliessen als Crosslink in die Finanzen (mit „noch offen"-Hinweis), auch in der Druck-/PDF-Übersicht
+- **KK-Reklamationsbrief** als neue Brief-Vorlage (falls die Kasse eine Leistung nicht oder falsch angerechnet hat)
+- **Pronomen + weitere bisher ungenutzte Angaben** in den Spiegelkarten sichtbar; **Gender → Pronomen-Vorschlag** (überschreibbar, politisch neutral)
+- Hinweis: Belege bis zu **5 Jahre rückwirkend** bei der KK einreichbar
+
+### Verbessert
+- **„Nie zweimal eingeben"**: ALV- und Sozialhilfe-Rechner befüllen Lohn/Miete/KK-Prämie/Einkommen aus den bereits erfassten Angaben vor
+- Brief-Vorlagen: Empfänger ist direkt die hinterlegte Krankenkasse; Signatur unten nur noch der Name (Adresse nicht mehr doppelt)
+
+### Behoben
+- Spiegelkarten zeigten bei reinen Text-/Währungsfeldern rohe i18n-Keys statt der Beschriftung (neuer `fieldLabel`-Helfer)
+
+---
+
 ## [0.1.5-beta] — 2026-06-29
 
 Geführte Lebensereignis-Abläufe und das UX-Playbook. Schwerpunkt: zusammenhängende
