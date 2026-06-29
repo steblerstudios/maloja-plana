@@ -1,5 +1,6 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { inDays, formatDE } from './utils/helpers.js';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
@@ -8,27 +9,14 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 // Orientierungs-Frist: In der Schweiz meldet man sich innert 14 Tagen nach dem Umzug
 // bei der neuen Gemeinde an. Wir kennen das Umzugsdatum nicht → ruhige Erinnerung
 // 14 Tage ab heute (verschiebbar), bewusst Orientierung, kein Verdikt.
-const inDays = (n) => {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + n);
-  // Aus lokalen Teilen bauen — toISOString() würde in UTC umrechnen und in der
-  // CH-Zeitzone um einen Tag verschieben.
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-};
-const formatDE = (iso) => {
-  const [y, m, day] = iso.split('-');
-  return `${day}.${m}.${y}`;
-};
 
-export const UmzugAblauf = ({ palette, t, data, onNavigate }) => {
+export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   const s = ablaufStyles(palette);
   const currentAddress = [data?.wohnen?.address, [data?.wohnen?.postalCode, data?.wohnen?.city].filter(Boolean).join(' ')]
     .filter(Boolean).join(', ');
   const deadline = inDays(14);
+  // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
+  const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
 
   const checklistItems = [
     t('umzug.step3Post'),
@@ -52,7 +40,7 @@ export const UmzugAblauf = ({ palette, t, data, onNavigate }) => {
         currentAddress
           ? t('umzug.step1Known', { address: currentAddress })
           : t('umzug.step1Note')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.step1Link'), onClick: () => onNavigate('chapter', 1) })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.step1Link'), onClick: () => onNavigate('chapter', chapterIdx('wohnen')) })
     ),
 
     // Schritt 2 — An-/Abmelden bei der Gemeinde (14-Tage-Frist)

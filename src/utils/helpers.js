@@ -7,6 +7,36 @@ export function formatDate(dateString) {
   return d.toLocaleDateString('de-CH', { year: 'numeric', month: '2-digit', day: '2-digit' });
 }
 
+// Local-date helpers for the guided flows (Abläufe). Built from local date parts on
+// purpose — toISOString() would convert to UTC and shift the date by a day in the CH
+// timezone. inDays/inMonths return an ISO date (yyyy-mm-dd) n days/months from today;
+// formatDE renders such an ISO date as dd.mm.yyyy.
+const toLocalISO = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+export function inDays(n) {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + n);
+  return toLocalISO(d);
+}
+
+export function inMonths(n) {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setMonth(d.getMonth() + n);
+  return toLocalISO(d);
+}
+
+export function formatDE(iso) {
+  const [y, m, day] = iso.split('-');
+  return `${day}.${m}.${y}`;
+}
+
 // ============================================================================
 // PRINT HELPERS
 // ============================================================================
