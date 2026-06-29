@@ -4,9 +4,9 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"). Verkettet die vorhandenen
-// Bausteine zu einem ruhigen Weg: Vergleich → neue Kasse (zwei Wege) → Kündigung
-// → Frist sichern. Keine Wizard-Hölle: eine editoriale Seite, von oben nach unten.
-// Wird beim 2. Ablauf zur wiederverwendbaren Ablauf-Schale extrahiert.
+// Bausteine zu einem ruhigen Weg: Vergleich → neue Kasse (zwei Wege, anklickbar)
+// → Kündigung → Frist sichern. Keine Wizard-Hölle: eine editoriale Seite, von oben
+// nach unten. Wird beim 2. Ablauf zur wiederverwendbaren Ablauf-Schale extrahiert.
 
 // Nächster ordentlicher Kündigungstermin: 30. November (dieses Jahr, sonst nächstes).
 const nextNov30 = () => {
@@ -19,8 +19,9 @@ const nextNov30 = () => {
 
 export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
   const [reminderSet, setReminderSet] = useState(false);
+  const [chosenPath, setChosenPath] = useState(null); // null | '3a' | '3b'
 
-  const currentInsurer = data?.versicherungen?.healthInsurer || '';
+  const currentInsurer = data?.versicherungen?.kkInsurer || '';
   const deadline = nextNov30();
   const deadlineYear = deadline.slice(0, 4);
 
@@ -31,15 +32,38 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     stepText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
     link: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' },
     pathWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
-    path: { flex: '1 1 240px', padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
-    pathTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
-    pathText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
     note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
     reassure: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.xs + 'px' },
     warn: { fontSize: text.sm, color: palette.gold, marginTop: space.xs + 'px' },
     primaryBtn: { background: palette.sand, color: palette.surface, border: 'none', cursor: 'pointer', padding: '10px 16px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, borderRadius: radius.sm, marginTop: space.sm + 'px' },
     done: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.sm + 'px' },
     footer: { fontSize: text.xs, color: palette.soft, marginTop: space.xl + 'px', lineHeight: leading.normal },
+    chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sand, marginTop: '6px' },
+  };
+
+  // Ruhige Karte für einen der beiden Wege — anklickbar, hebt den gewählten hervor.
+  const pathCard = (id, title, body, footer) => {
+    const isChosen = chosenPath === id;
+    const isDimmed = chosenPath && !isChosen;
+    return React.createElement('button', {
+      type: 'button',
+      onClick: () => setChosenPath(id),
+      'aria-pressed': isChosen,
+      style: {
+        flex: '1 1 240px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+        padding: space.md + 'px',
+        background: isChosen ? palette.surface : palette.up,
+        borderRadius: radius.sm,
+        border: '1.5px solid ' + (isChosen ? palette.sand : palette.border),
+        opacity: isDimmed ? 0.55 : 1,
+        transition: 'opacity 120ms, border-color 120ms',
+      },
+    },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, title),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, body),
+      footer,
+      isChosen && React.createElement('div', { style: s.chosenBadge }, '✓ ' + t('kvgWechsel.chosen'))
+    );
   };
 
   const handleSetReminder = () => {
@@ -68,26 +92,22 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('praemien') },
       '→ ' + t('kvgWechsel.step1Link')),
 
-    // ── Schritt 2 — Neue Kasse, zwei ruhige Wege ──
+    // ── Schritt 2 — Neue Kasse, zwei ruhige Wege (anklickbar) ──
     React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step2Title')),
     React.createElement('p', { style: s.stepText }, t('kvgWechsel.step2Intro')),
     React.createElement('div', { style: s.pathWrap },
-      React.createElement('div', { style: s.path },
-        React.createElement('div', { style: s.pathTitle }, t('kvgWechsel.path3aTitle')),
-        React.createElement('div', { style: s.pathText }, t('kvgWechsel.path3aText')),
-        React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))
-      ),
-      React.createElement('div', { style: s.path },
-        React.createElement('div', { style: s.pathTitle }, t('kvgWechsel.path3bTitle')),
-        React.createElement('div', { style: s.pathText }, t('kvgWechsel.path3bText')),
-        React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure'))
-      )
+      pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
+        React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),
+      pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
+        React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')))
     ),
     React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.uptakeReassure')),
 
-    // ── Schritt 3 — Kündigung ──
+    // ── Schritt 3 — Kündigung (passt sich dem gewählten Weg an) ──
     React.createElement('h3', { style: s.stepTitle }, t('kvgWechsel.step3Title')),
-    React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Text')),
+    chosenPath === '3b'
+      ? React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Note3b'))
+      : React.createElement('p', { style: s.stepText }, t('kvgWechsel.step3Text')),
     onNavigate && React.createElement('button', { style: s.link, onClick: () => onNavigate('briefe') },
       '→ ' + t('kvgWechsel.step3Link')),
 
