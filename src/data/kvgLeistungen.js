@@ -108,3 +108,11 @@ export const KVG_KATALOG = [
 ];
 
 export const KVG_CATEGORIES = ['arzt', 'vorsorge', 'labor', 'medi', 'spital', 'dental', 'therapie', 'divers'];
+
+// Belegbare internationale Vorsorge-Empfehlungen als ruhige Orientierung neben der
+// KVG-Deckung (Faden 3-II). KEINE Angst-Differenz: bei diesen Screenings deckt die
+// Grundversicherung den empfohlenen Rhythmus — beim Zervix-Screening empfiehlt die WHO
+// sogar längere Intervalle als die Schweizer Praxis (entkräftet den „Pap-Mythos").
+// Quellen: WHO-Leitlinie 2021 (Zervix), WHO/EU (Mammografie), Europäischer Kodex gegen
+// Krebs 5. Auflage (Darmkrebs). Texte + Quellen liegen in i18n (kvg.<key>Empfehlung/Quelle).
+export const VORSORGE_EMPFEHLUNG_KEYS = ['gynaeko', 'mammografie', 'darmkrebs'];
