@@ -132,6 +132,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
   const [newFrist, setNewFrist] = useState('');
   const [tpOpen, setTpOpen] = useState(false);
   const [newTp, setNewTp] = useState('');
+  const [ngOpen, setNgOpen] = useState(false);
+  const [newNichtGedeckt, setNewNichtGedeckt] = useState('');
 
   // Belege, für die schon eine offene Kalender-Erinnerung existiert (für ✓-Feedback,
   // auch nach erneutem Öffnen der Ansicht). addReminder ist ohnehin idempotent.
@@ -160,10 +162,14 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
       datum: newDatum || '', betrag,
       status: newStatus,
       frist: newStatus === 'offen' ? (newFrist || '') : '',
+      // Optionaler nicht-gedeckter Anteil (z.B. Selbstzahler) — zählt NICHT auf
+      // Franchise/Selbstbehalt, fliesst aber in die Gesundheitskosten (Finanzen).
+      nichtGedeckt: Number(newNichtGedeckt) > 0 ? Number(newNichtGedeckt) : 0,
     };
     onUpdateData('versicherungen', 'kkBelege', [...belege, beleg]);
     setNewDatum(''); setNewBetrag(''); setNewTp(''); setTpOpen(false);
     setNewStatus('bezahlt'); setNewFrist('');
+    setNewNichtGedeckt(''); setNgOpen(false);
   };
   const removeBeleg = (id) => {
     if (!onUpdateData) return;
@@ -343,6 +349,39 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
       ),
 
       React.createElement('button', {
+        onClick: () => setNgOpen(!ngOpen),
+        style: {
+          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
+          marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium,
+        }
+      }, (ngOpen ? '▾ ' : '▸ ') + t('kvg.belegNichtGedeckt')),
+
+      ngOpen && React.createElement('div', {
+        style: {
+          marginBottom: '10px', padding: '8px 10px', background: palette.surface,
+          borderRadius: radius.sm, border: '1px solid ' + palette.border,
+        }
+      },
+        React.createElement('input', {
+          type: 'number',
+          inputMode: 'decimal',
+          'aria-label': t('kvg.belegNichtGedeckt'),
+          value: newNichtGedeckt,
+          onChange: (e) => setNewNichtGedeckt(e.target.value),
+          placeholder: 'CHF',
+          style: {
+            width: '100%', padding: '6px 8px', borderRadius: radius.sm,
+            border: '1px solid ' + palette.border, background: palette.up,
+            color: palette.text, fontSize: text.sm, boxSizing: 'border-box', marginBottom: '6px',
+          }
+        }),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal }
+        }, t('kvg.belegNichtGedecktHint'))
+      ),
+
+      React.createElement('button', {
         onClick: addBeleg,
         disabled: !(Number(newBetrag) > 0),
         style: {
@@ -413,7 +452,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
                       cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
                     }
                   }, remindedIds.has(b.id) ? '✓ ' + t('kvg.belegReminded') : t('kvg.belegRemind'))
-                )
+                ),
+                b.nichtGedeckt > 0 && React.createElement('div', {
+                  style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }
+                }, t('kvg.belegNichtGedecktNote', { amount: 'CHF ' + b.nichtGedeckt }))
               );
             }),
             React.createElement('div', {
