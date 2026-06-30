@@ -888,6 +888,11 @@ const _leaf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'cu
   React.createElement('path', { d: 'M 8 16 L 16 8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round' }),
 );
 
+// Herz — ruhige Kontur für Lebensereignisse wie Heirat (Granit-Linienstil wie die Kapitel-Icons).
+const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
+  React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
+);
+
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
@@ -953,6 +958,7 @@ const _iconFactories = {
   selfEmployment: _selfEmployment,
   contacts: _contacts,
   family: _family,
+  heart: _heart,
   legal: _legal,
   edit: _edit,
   phone: _phone,
