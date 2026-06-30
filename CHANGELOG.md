@@ -5,6 +5,17 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.11-beta] — 2026-06-30
+
+### Neu
+- **Franchise mit/ohne Unfall einzeln wählbar**: in der Referenzprämien-Tabelle wählt ein Klick auf den Mit- oder Ohne-Preis die Franchise und die Unfall-Variante zusammen
+- **Franchise-Wechsel: wie oft?**: der Franchise-Optimierer zeigt jetzt, dass die Franchise einmal pro Jahr änderbar ist — wirksam auf den 1. Januar, Anmeldung bis Ende November (Kassenwechsel: 30. November), belegt mit KVG Art. 7 und KVV Art. 94
+
+### Quellen
+- KVG Art. 7 (Versichererwechsel) · KVV Art. 94 (Wahlfranchisen) — fedlex
+
+---
+
 ## [0.1.10-beta] — 2026-06-30
 
 Krankenkasse: Unfalldeckung mit/ohne transparent, Wunschkasse genauer wählbar
