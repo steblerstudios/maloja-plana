@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
 import { calculateSozialhilfe } from './config/cantonalData.js';
+import { getRegionalComparison } from './data/praemienRegionen.js';
+import { getRentComparison } from './data/mietpreise.js';
+import { lookupPLZ } from './data/plzGemeinde.js';
+import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
@@ -25,6 +30,17 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const synced = calculateMonthlyBudget(data, t);
     setBudget(synced);
   }, [data]);
+
+  // Regional-KK: Prämie der Wohngemeinde vs. Schweizer Schnitt (BAG) — neben dem
+  // BFS-Ausgaben-Richtwert eine zweite, klar gekennzeichnete KK-Tatsache.
+  // Vor dem early return halten (Rules of Hooks); hängt nur an `data`.
+  const kkComparison = useMemo(() => {
+    const plz = (data.wohnen?.postalCode || '').trim();
+    if (plz.length < 4) return null;
+    const gem = lookupPLZ(plz);
+    if (!gem || gem.length === 0) return null;
+    return getRegionalComparison(gem[0].bfsNr, data.basis?.dateOfBirth);
+  }, [data.wohnen?.postalCode, data.basis?.dateOfBirth]);
 
   if (!budget) return React.createElement('div', null, 'ⓘ ' + t('common.loading'));
 
@@ -80,9 +96,31 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Faden 4 / Inkr. 2 — match BFS benchmarks to the user's household type
   const htype = resolveHouseholdType(budget.householdContext);
 
+  // Regional-Miete: Miete der Wohngemeinde vs. Schweizer Schnitt, size-matched (BFS).
+  // Zimmerzahl aus erfasster Angabe (wohnen.rooms) oder, als Fallback, aus der Haushaltsgrösse.
+  const rentComparison = (() => {
+    const plz = (data.wohnen?.postalCode || '').trim();
+    if (plz.length < 4) return null;
+    const gem = lookupPLZ(plz);
+    if (!gem || gem.length === 0) return null;
+    return getRentComparison(gem[0].kanton, {
+      rooms: data.wohnen?.rooms,
+      householdSize: budget.householdContext?.size,
+    });
+  })();
+
+  // Kanton der Wohngemeinde (für den Mietzinsbeiträge-Hinweis).
+  const userCanton = (() => {
+    const plz = (data.wohnen?.postalCode || '').trim();
+    if (plz.length < 4) return null;
+    const gem = lookupPLZ(plz);
+    return gem && gem.length ? gem[0].kanton : null;
+  })();
+
   // Faden 4 / Inkr. A — collapsible orientation infos (per category + master toggle)
-  const fieldHasInfo = (item) => item.value > 0 &&
-    !!(benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype) || BUDGET_PRICE_TREND.byField[item.key]);
+  const fieldHasInfo = (item) => item.value > 0 && (
+    !!(benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype) || BUDGET_PRICE_TREND.byField[item.key]) ||
+    (item.key === 'rent' && !!rentComparison));
   const groupHasInfo = (group) => group.total > 0 &&
     !!(benchmarkFor(BUDGET_BENCHMARKS.byGroup, group.key, htype) || BUDGET_PRICE_TREND.byGroup[group.key]);
   const skosShown = !!(budget.householdContext && budget.income > 0);
@@ -139,7 +177,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const isEmpty = item.value === 0;
     const bm = isEmpty ? null : benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype);
     const trend = isEmpty ? null : BUDGET_PRICE_TREND.byField[item.key];
-    const info = !!(bm || trend);
+    const rentBaro = !isEmpty && item.key === 'rent' && rentComparison;
+    const info = !!(bm || trend || rentBaro);
     const open = info && openInfo.has(item.key);
     return React.createElement('div', { key: item.key },
       React.createElement('div', { style: itemLineStyle },
@@ -149,7 +188,19 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           : React.createElement('span', null, formatCHF(item.value * mult))
       ),
       open && bm && renderBenchmarkLine(bm, item.key),
-      open && trend && renderTrendLine(trend, item.key)
+      open && trend && renderTrendLine(trend, item.key),
+      // Regional-KK-Barometer (BAG-Prämie) — nur im KK-Feld, klar getrennt vom BFS-Ausgaben-Richtwert
+      open && item.key === 'healthInsurance' && kkComparison && React.createElement('div',
+        { key: 'kk-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
+        React.createElement(RegionalBarometer, { palette, t, comparison: kkComparison, userValue: budget.expenses.healthInsurance || null, kind: 'premium' })
+      ),
+      // Regional-Miete-Barometer (BFS, size-matched) — nur im Miet-Feld
+      open && rentBaro && React.createElement('div',
+        { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
+        React.createElement(RegionalBarometer, { palette, t, comparison: rentComparison, userValue: budget.expenses.rent || null, kind: 'rent' }),
+        // Mietzinsbeiträge-Hinweis (analog IPV) — kantonal/kommunal, würdevoll
+        React.createElement(MietzinsHinweis, { palette, t, canton: userCanton })
+      )
     );
   };
 
