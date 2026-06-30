@@ -41,6 +41,7 @@ export default {
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC è exonerà da las premias; cun in bass retgav ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
+        serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
         sbbBegleitabo: { titel: 'Abunament d’accumpagnament dlas VFF', text: 'Cun ina carta gratuita po ina persuna d’accumpagnament viagiar gratuitamain en il traffic public — er en cas d’impediment dal vesair, dal moviment u spiertal. Dumonda cun conferma medicinala.' },
       },
     },

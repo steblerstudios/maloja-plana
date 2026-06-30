@@ -40,6 +40,7 @@ export default {
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, keine Fürsorge.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, ist von den Prämien befreit; bei tiefem Einkommen besteht sonst oft trotzdem Anspruch auf Hilfe.' },
         steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
+        serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Wer Ergänzungsleistungen (EL) bezieht, ist auf Antrag von der SERAFE-Abgabe befreit — rückwirkend nachforderbar.' },
         sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Mit einer kostenlosen Karte reist eine Begleitperson gratis im öV mit — auch bei Seh-, Geh- oder geistiger Behinderung. Antrag mit ärztlicher Bestätigung.' },
       },
     },

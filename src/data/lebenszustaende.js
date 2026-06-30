@@ -50,7 +50,9 @@ export const LEBENSZUSTAENDE = [
       { key: 'el',                    view: 'finanzuebersicht', quelle: 'BSV',            stand: '2026' },
       { key: 'ipv',                   view: 'premium',         quelle: 'BAG / Kanton',    stand: '2026' },
       { key: 'steuern',               view: 'tax',             quelle: 'ESTV',            stand: '2026' },
-      // Externe offizielle Quelle (kein interner Ablauf): SBB-Begleitabo.
+      // Externe offizielle Quellen (kein interner Ablauf): SERAFE-Befreiung
+      // (an EL-Bezug geknüpft), SBB-Begleitabo.
+      { key: 'serafe', url: 'https://www.serafe.ch/de/abgabebefreiung/personen-mit-ergaenzungsleistungen/', quelle: 'SERAFE / BAKOM', stand: '2026' },
       { key: 'sbbBegleitabo', url: 'https://www.sbb.ch/de/bahnhof-services/reisende-mit-handicap/fahrverguenstigung/ausweiskarte-behinderung.html', quelle: 'SBB', stand: '2026' },
     ],
   },

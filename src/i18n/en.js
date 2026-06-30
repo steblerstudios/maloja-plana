@@ -40,6 +40,7 @@ export default {
         el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not assistance.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Those on supplementary benefits are exempt from premiums; others on a low income still often qualify for help.' },
         steuern: { titel: 'Disability-related tax deductions', text: 'Illness and disability costs — care, aids, transport — can be deducted from taxable income.' },
+        serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
         sbbBegleitabo: { titel: 'SBB companion card', text: 'A free card lets a companion travel with you at no charge on public transport — also for visual, mobility or cognitive disabilities. Apply with a medical confirmation.' },
       },
     },
