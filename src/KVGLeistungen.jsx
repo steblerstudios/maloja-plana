@@ -4,6 +4,7 @@ import { text, weight, space, radius, leading, duration, ease } from './config/t
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
+import { renderSource } from './utils/renderSource.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -906,7 +907,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab }) =>
     },
       'ⓘ ' + t('kvg.disclaimer'),
       React.createElement('br'),
-      'ⓘ ' + t('kvg.source') + ' · v' + KVG_DATA_VERSION
+      'ⓘ ', renderSource(t('kvg.source')), ' · v' + KVG_DATA_VERSION
     )
   );
 };

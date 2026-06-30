@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { berechneSozialhilfe, SKOS_PARAMS } from './data/sozialhilfeRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { renderSource } from './utils/renderSource.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const household = data?.basis?.household;
@@ -206,7 +207,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
 
-    React.createElement('div', { style: s.source }, t('sh.source'))
+    React.createElement('div', { style: s.source }, renderSource(t('sh.source')))
   );
 };
 

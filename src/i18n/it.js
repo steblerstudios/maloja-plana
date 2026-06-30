@@ -2091,13 +2091,18 @@ export default {
     overNote: 'Già da solo, il premio supera il valore di riferimento del 10%.',
     underNote: 'Da solo il premio è sotto il 10% — franchigia, aliquota e costi non coperti si aggiungono.',
     whoNote: 'Per contestualizzare: l’OMS considera le spese sanitarie superiori al 10% del reddito come gravose (“catastrofiche”). Il premio è solo una parte dei costi sanitari.',
-    source: 'Fonte: OMS / indicatore OSS 3.8.2 dell’ONU.',
+    source: 'Fonte: OMS / [[indicatore OSS 3.8.2 dell’ONU|sdgs.un.org]]',
     marker10: 'Riferimento 10% (OMS)',
     ipvLink: 'Verificare la riduzione dei premi (IPV) →',
     ipvRelief: 'Con la riduzione dei premi: −CHF {ipv}/mese → effettivamente {share}% del reddito.',
     ipvNoClaim: 'Nessun diritto alla riduzione dei premi in questa situazione.',
     gapToTen: 'Per arrivare al 10% servirebbe coprire ancora CHF {gap}/mese.',
     underWithIpv: 'Con la riduzione, il premio è sotto il 10%.',
+  },
+  uvgHint: {
+    title: 'Copertura infortuni: risparmiare da dipendente',
+    body: 'Come dipendente sei assicurato/a contro gli infortuni tramite il datore di lavoro — inclusi gli infortuni non professionali da 8 ore/settimana. Puoi escludere la copertura infortuni presso la cassa malati; questo riduce sensibilmente il premio.',
+    fieldSuggest: 'Come dipendente di solito sei coperto/a tramite il datore di lavoro — "Tramite datore di lavoro" è adatto, ed escludere la copertura infortuni presso la cassa riduce il premio.',
   },
   mietzins: {
     title: 'Sussidi per l\'affitto:',
@@ -2634,7 +2639,7 @@ export default {
     berechneterBetrag: 'Importo calcolato',
     tpwNote: 'Il valore del punto varia per cantone.',
     disclaimer: 'Orientamento basato su LAMal/OPre. Per informazioni vincolanti: il vostro assicuratore.',
-    source: 'Fonte: UFSP, LAMal Art. 25–31, OPre',
+    source: 'Fonte: [[UFSP|bag.admin.ch]], [[LAMal Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/it]]',
   },
 
   vorlesen: {
@@ -2693,6 +2698,10 @@ export default {
   },
 
   po: {
+    unfallLabel: 'Copertura infortuni',
+    mitUnfall: 'Con infortuni',
+    ohneUnfall: 'Senza infortuni',
+    unfallSaving: 'Senza copertura infortuni: CHF {diff}/mese in meno — escludibile da dipendente (coperto dal datore di lavoro).',
     title: 'Orientamento premi',
     plzLabel: 'Codice postale',
     selectGemeinde: 'Più comuni — seleziona:',
@@ -2718,7 +2727,7 @@ export default {
     chooseTarget: 'Desiderata',
     targetSelected: 'Desiderata',
     targetChosenHint: 'Cassa desiderata: {insurer} — appare nel processo di cambio.',
-    source: 'Fonte: UFSP priminfo.admin.ch · Modello standard con infortunio · Stato 2026',
+    source: 'Fonte: [[UFSP|priminfo.admin.ch]] · Modello standard con infortunio · Stato 2026',
     disclaimer: { sie: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del Suo assicuratore.', du: 'Solo premi di riferimento. I premi effettivi possono variare — fa fede la polizza del tuo assicuratore.' },
     regionalCompare: {
       national: 'Media svizzera',
@@ -2732,13 +2741,13 @@ export default {
         title: 'Premio: la tua regione vs Svizzera',
         yourVal: { sie: 'Il Suo premio: CHF {amount}', du: 'Il tuo premio: CHF {amount}' },
         structural: 'È soprattutto strutturale — le regioni con più medici e ospedali più costosi hanno premi più alti. Cambiare cassa permette di risparmiare solo all\'interno della regione.',
-        source: 'Fonte: UFSP, premio medio {year} · media di tutti gli assicuratori',
+        source: 'Fonte: [[UFSP|priminfo.admin.ch]], premio medio {year} · media di tutti gli assicuratori',
       },
       rent: {
         title: 'Affitto: la tua regione vs Svizzera',
         yourVal: { sie: 'Il Suo affitto: CHF {amount}', du: 'Il tuo affitto: CHF {amount}' },
         structural: 'È soprattutto strutturale — nelle città e nelle regioni richieste, terreni e abitazioni sono più scarsi e cari. La media svizzera spesso lì non esiste nemmeno.',
-        source: 'Fonte: UST, rilevazione affitti {year} · affitto netto, spese escluse',
+        source: 'Fonte: [[UST|bfs.admin.ch]], rilevazione affitti {year} · affitto netto, spese escluse',
       },
     },
   },
@@ -2800,7 +2809,7 @@ export default {
     saeule3aHint: { sie: 'Inserisca il Suo avere 3a e il versamento annuale sotto Finanze → Previdenza.', du: 'Inserisci il tuo avere 3a e il versamento annuale sotto Finanze → Previdenza.' },
     totalMitSaeule3a: 'Totale 1° + 2° + 3a pilastro',
     einkommenEingeben: { sie: 'Inserisca il Suo reddito annuo per stimare la rendita.', du: 'Inserisci il tuo reddito annuo per stimare la rendita.' },
-    source: 'Stima secondo LAVS Art. 34–40, LPP Art. 16. Nessuna informazione giuridicamente vincolante. Stato 2026.',
+    source: 'Stima secondo [[LAVS Art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it]], [[LPP Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
     tabFreizuegigkeit: 'Libero passaggio',
     fzTitle: { sie: 'Cosa succede al Suo LPP quando cambia lavoro?', du: 'Cosa succede al tuo LPP quando cambi lavoro?' },
     fzIntro: { sie: 'Quando lascia il Suo impiego, il Suo avere previdenziale non viene versato — viene trasferito su un conto di libero passaggio fino al prossimo impiego.', du: 'Quando lasci il tuo impiego, il tuo avere previdenziale non viene versato — viene trasferito su un conto di libero passaggio fino al prossimo impiego.' },
@@ -2842,7 +2851,7 @@ export default {
     hinweisMutterschaft: 'Maternità: 14 settimane dalla nascita. Requisito: almeno 5 mesi di attività lavorativa.',
     hinweisVaterschaft: 'Paternità: 2 settimane, da fruire entro 6 mesi dalla nascita.',
     hinweisAdoption: 'Adozione: 2 settimane, bambino sotto i 4 anni.',
-    source: 'Calcolo secondo LIPG Art. 16a–16n. Nessuna informazione giuridicamente vincolante. Stato 2026.',
+    source: 'Calcolo secondo [[LIPG Art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
   },
 
   sh: {
@@ -2875,7 +2884,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: 'Inserisci affitto e premio LAMal per calcolare il diritto.',
-    source: 'Calcolo secondo le direttive COSAS (stato 1.1.2025). Nessuna informazione giuridicamente vincolante.',
+    source: 'Calcolo secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2025). Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {
@@ -2884,7 +2893,7 @@ export default {
     alle: 'Tutti',
     antragsstelle: 'Ufficio competente',
     mirrorTitle: 'Ufficio ufficiale & domanda',
-    source: 'Link ufficiali da ch.ch, UFSP, UFAS e altre autorità federali.',
+    source: 'Link ufficiali da [[ch.ch|ch.ch]], [[UFSP|bag.admin.ch]], [[UFAS|bsv.admin.ch]] e altre autorità federali.',
     cantonalTitle: { sie: 'Il Suo cantone: {canton}', du: 'Il tuo cantone: {canton}' },
     cantonal: {
       steuererklaerung: 'Dichiarazione fiscale online',
@@ -3104,7 +3113,7 @@ export default {
     checklist2: 'Verificare il termine di opposizione — di solito 30 giorni dalla decisione',
     checklist3: 'Cercare fondazioni private adatte alla formazione e alla situazione',
     checklist4: 'Candidarsi presto — le fondazioni hanno scadenze proprie',
-    source: 'Fonti: CDPE, concordato sulle borse di studio, ch.ch, SEFRI.',
+    source: 'Fonti: [[CDPE|edk.ch]], concordato sulle borse di studio, [[ch.ch|ch.ch]], [[SEFRI|sbfi.admin.ch]].',
   },
   saeule3a: {
     add: 'Aggiungi versamento',

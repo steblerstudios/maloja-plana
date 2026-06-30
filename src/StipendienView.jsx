@@ -5,7 +5,7 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
 import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
 import { text, weight, leading, space, radius } from './config/tokens.js';
-import { linkifyDomains } from './utils/linkifyDomains.js';
+import { renderSource } from './utils/renderSource.js';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -143,7 +143,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     }, '→ ' + t('nav.direktlinks')),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
-      'ⓘ ', linkifyDomains(t('stip.source'))
+      'ⓘ ', renderSource(t('stip.source'))
     )
   );
 };
