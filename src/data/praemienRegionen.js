@@ -32,3 +32,54 @@ export function getRegionInfo(bfsNr) {
 
 export const PRAEMIEN_DATA_VERSION = '2026';
 export const PRAEMIEN_DATA_SOURCE = 'BAG priminfo.admin.ch';
+
+// Nationaler Anker für den regionalen Vergleich (gleiche Definition wie die
+// regionale Durchschnittsprämie `a`/`y`/`c`: mittlere Monatsprämie über alle
+// Versicherer). Population-gewichteter Schweizer Schnitt 2026, vom BAG publiziert.
+// Quelle: BAG „mittlere Prämie 2026" (Erwachsene 465.30 / junge Erw. 326.30 /
+// Kinder 122.50 / Gesamt über alle Altersklassen 393.30).
+export const NATIONAL_AVG_PREMIUM = {
+  erwachsene: 465.3,
+  junge: 326.3,
+  kinder: 122.5,
+  gesamt: 393.3,
+  year: 2026,
+  source: 'BAG',
+};
+
+// Bildet ein Geburtsdatum auf die Prämien-Altersklasse ab (kinder/junge/erwachsene).
+// Fehlt das Datum, wird Erwachsene angenommen (häufigster Fall).
+function ageKeyFromBirth(dateStr) {
+  if (!dateStr) return 'erwachsene';
+  const birth = new Date(dateStr);
+  if (isNaN(birth)) return 'erwachsene';
+  const now = new Date();
+  const age = now.getFullYear() - birth.getFullYear() -
+    (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
+  if (age < 19) return 'kinder';
+  if (age < 26) return 'junge';
+  return 'erwachsene';
+}
+
+// Vergleicht die regionale Durchschnittsprämie mit dem Schweizer Schnitt —
+// dieselbe Quelle, dieselbe Definition (wissenschaftlich sauber vergleichbar).
+// Liefert null, wenn die Gemeinde unbekannt ist oder kein Wert vorliegt.
+export function getRegionalComparison(bfsNr, dateOfBirth) {
+  const info = getRegionInfo(bfsNr);
+  if (!info) return null;
+  const key = ageKeyFromBirth(dateOfBirth);
+  const regional = info.praemien[key];
+  const national = NATIONAL_AVG_PREMIUM[key];
+  if (regional == null || national == null) return null;
+  const diffPct = ((regional - national) / national) * 100;
+  return {
+    regional,
+    national,
+    diffPct,
+    ageKey: key,
+    kanton: info.kanton,
+    gemeinde: info.gemeinde,
+    region: info.region,
+    year: NATIONAL_AVG_PREMIUM.year,
+  };
+}
