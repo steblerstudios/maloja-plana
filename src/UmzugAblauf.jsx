@@ -89,6 +89,10 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
       // wo das Lebensereignis ihn auslöst (bestehende Komponente, kanton-bewusst).
       umzugType !== 'gemeinde' && React.createElement(MietzinsHinweis, { palette, t, canton: userCanton }),
+      // Voller Mietzinsbeiträge-Schnellcheck (mit echten Beträgen), nicht nur der Hinweis.
+      umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkMietzins'), onClick: () => onNavigate('mietzins') }),
+      // Zuzug aus dem Ausland: erstmalige Krankenkassen-Anmeldung (selbst-selektierend formuliert).
+      umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkKkErst'), onClick: () => onNavigate('kkerst') }),
       React.createElement(FristButton, {
         palette, t,
         buttonLabel: t('umzug.step2Button', { date: formatDE(deadline) }),
@@ -110,7 +114,9 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('umzug.step3Text')),
       React.createElement('ul', { style: { ...s.stepText, margin: '8px 0 0 0', paddingLeft: '20px' } },
         checklistItems.map((item, i) => React.createElement('li', { key: i, style: { marginBottom: '4px' } }, item))
-      )
+      ),
+      // Für jede Stelle der Liste den gleichen Adressänderungs-Brief (ein Dokument, wiederverwendbar).
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkAddressChange'), onClick: () => onNavigate('briefe') })
     ),
 
     // Schritt 4 — Alte Wohnung kündigen (→ Briefvorlage)
