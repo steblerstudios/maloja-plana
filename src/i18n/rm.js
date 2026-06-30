@@ -31,6 +31,19 @@ export default {
         steuern: { titel: 'Tarifa per geniturs & deducziun per uffants', text: 'Geniturs suls vegnan taxads cun la tarifa pli bassa per geniturs e pon deducir las custas per uffants e la chüra.' },
       },
     },
+    beeintraechtigung: {
+      label: 'Cun in impediment u ina malsogna cronica',
+      frage: 'Vivais Vus cun in impediment, ina malsogna cronica u in’indicaziun renconuschida?',
+      intro: 'In’indicaziun po avrir in sustegn pli baud u pli ampel che quai ch’ins crai — bler vegn numnà darar ed è facil da surveseir.',
+      berechtigungen: {
+        iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.' },
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
+        ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC è exonerà da las premias; cun in bass retgav ha ins savens tuttina dretg sin in agid.' },
+        steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
+        sbbBegleitabo: { titel: 'Abunament d’accumpagnament dlas VFF', text: 'Cun ina carta gratuita po ina persuna d’accumpagnament viagiar gratuitamain en il traffic public — er en cas d’impediment dal vesair, dal moviment u spiertal. Dumonda cun conferma medicinala.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
