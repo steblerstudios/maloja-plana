@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { text, weight, space, radius, leading } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
+import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
+import { lookupPLZ } from './data/plzGemeinde.js';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
@@ -17,6 +20,31 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
   const deadline = inDays(14);
   // Kapitel-Index über den Schlüssel auflösen (nicht hartkodieren) — robust gegen Umsortierung.
   const chapterIdx = (key) => (chapters ? chapters.findIndex(ch => ch.key === key) : -1);
+
+  // Umzugs-Typ: bestimmt, was sich ändert (Gemeinde/Kanton/Steuern/KK-Prämienregion).
+  // gemeinde = gleiche Gemeinde · kanton = andere Gemeinde, gleicher Kanton · extra = anderer Kanton.
+  const [umzugType, setUmzugType] = useState(null);
+  // Kanton aus der (neuen) PLZ ableiten — für den Mietzinsbeitrags-Hinweis beim Gemeinde-/Kantonswechsel.
+  const userCanton = (() => {
+    const plz = (data?.wohnen?.postalCode || '').trim();
+    if (plz.length < 4) return null;
+    const gem = lookupPLZ(plz);
+    return gem && gem.length ? gem[0].kanton : null;
+  })();
+  const typeCard = (id, label) => {
+    const isChosen = umzugType === id;
+    const isDimmed = umzugType && !isChosen;
+    return React.createElement('button', {
+      type: 'button', key: id, onClick: () => setUmzugType(id), 'aria-pressed': isChosen,
+      style: {
+        flex: '1 1 160px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+        padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.text,
+        background: isChosen ? palette.surface : palette.up, borderRadius: radius.sm,
+        border: '1.5px solid ' + (isChosen ? palette.sand : palette.border),
+        opacity: isDimmed ? 0.55 : 1, transition: 'opacity 120ms, border-color 120ms',
+      },
+    }, (isChosen ? '✓ ' : '') + label);
+  };
 
   const checklistItems = [
     t('umzug.step3Post'),
@@ -43,9 +71,24 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.step1Link'), onClick: () => onNavigate('chapter', chapterIdx('wohnen')) })
     ),
 
-    // Schritt 2 — An-/Abmelden bei der Gemeinde (14-Tage-Frist)
+    // Schritt 2 — An-/Abmelden bei der Gemeinde (14-Tage-Frist), je nach Umzugs-Typ
     React.createElement(AblaufStep, { palette, title: t('umzug.step2Title') },
-      React.createElement('p', { style: s.stepText }, t('umzug.step2Text')),
+      // Typ-Wähler: was sich ändert, hängt davon ab, wie weit der Umzug geht.
+      React.createElement('p', { style: { ...s.stepText, marginBottom: '6px' } }, t('umzug.typeLabel')),
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
+        typeCard('gemeinde', t('umzug.typeGemeinde')),
+        typeCard('kanton', t('umzug.typeKanton')),
+        typeCard('extra', t('umzug.typeExtra'))
+      ),
+      React.createElement('p', { style: s.stepText }, t(umzugType ? 'umzug.step2Text_' + umzugType : 'umzug.step2Text')),
+      // „Das ändert sich" — ruhiger Hinweis je Typ, mit Crosslinks zu Prämie/Steuern wo relevant.
+      umzugType && React.createElement('div', { style: { ...s.note, marginTop: space.sm + 'px' } },
+        'ⓘ ' + t('umzug.changes_' + umzugType)),
+      umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.changesLinkPraemien'), onClick: () => onNavigate('praemien') }),
+      umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.changesLinkTax'), onClick: () => onNavigate('tax') }),
+      // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
+      // wo das Lebensereignis ihn auslöst (bestehende Komponente, kanton-bewusst).
+      umzugType !== 'gemeinde' && React.createElement(MietzinsHinweis, { palette, t, canton: userCanton }),
       React.createElement(FristButton, {
         palette, t,
         buttonLabel: t('umzug.step2Button', { date: formatDE(deadline) }),

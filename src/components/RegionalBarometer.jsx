@@ -64,8 +64,11 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
           border: '2px solid ' + palette.surface,
         },
       }),
-      // Strich = Schweizer Schnitt (Referenz-Marke wie der 10%-Strich)
-      React.createElement('div', { style: { position: 'absolute', top: '-3px', bottom: '-3px', left: nationalPct + '%', width: '2px', background: palette.text } }),
+      // Strich = Schweizer Schnitt (Referenz-Marke wie der 10%-Strich). Ragt bewusst oben
+      // über den Balken hinaus, damit er auch dann sichtbar bleibt, wenn er fast auf dem
+      // Regions-Punkt liegt (Region und Schweizer Schnitt sind nicht immer am selben Ort) —
+      // die dunkle Linie ragt dann klar über den farbigen Punkt.
+      React.createElement('div', { style: { position: 'absolute', top: '-9px', bottom: '-3px', left: nationalPct + '%', width: '2px', background: palette.text } }),
     ),
 
     // Werte als Marken (Farben = Encoding)

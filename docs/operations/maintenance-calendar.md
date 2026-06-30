@@ -13,6 +13,7 @@
 | BAG IPV-Modelle prüfen | ch.ch/de/gesundheit | `src/premiumCalc.js` (kantonale Modelle) | 15 Min |
 | BFS Medianlöhne prüfen | bfs.admin.ch LSE | `src/data/branchenLohn.js` (alle 2 Jahre) | 15 Min |
 | SKOS Grundbedarf prüfen | skos.ch Richtlinien | `src/data/sozialhilfeRechner.js` | 10 Min |
+| Mietzinsbeiträge-Kantone prüfen | bs.ch / baselland.ch / ge.ch / zg.ch (BWO-Übersicht) | `src/data/mietzinsbeitraege.js` (BS/BL/GE/ZG: Einkommensgrenzen, Beträge, Zielgruppe) | 20 Min |
 | Bundessteuer-Tarife prüfen | estv.admin.ch | `src/TaxCalculator.jsx` | 15 Min |
 | BVG-Grenzwerte prüfen | bsv.admin.ch | `src/VorsorgeRechner.jsx` (Koordinationsabzug, Eintrittsschwelle) | 10 Min |
 | 3a-Maximalbetrag prüfen | bsv.admin.ch | `src/VorsorgeRechner.jsx`, `src/TaxCalculator.jsx` | 5 Min |
@@ -72,6 +73,7 @@
 | BFS Medianlöhne (LSE) | 2022 | 2026-06 | 2027-06 |
 | SKOS Grundbedarf | 2026 | 2026-06 | 2027-01 |
 | Bundessteuer-Tarife | 2026 | 2026-06 | 2027-01 |
+| Mietzinsbeiträge (BS/BL/GE/ZG) | 2025 | 2026-06 | 2027-01 |
 | BVG-Grenzwerte | 2026 | 2026-06 | 2027-01 |
 | EO-Taggeld | 2026 | 2026-06 | 2027-01 |
 | 3a-Maximum | 2026 (CHF 7'056) | 2026-06 | 2027-01 |
