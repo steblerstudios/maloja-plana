@@ -313,6 +313,16 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
         t('po.compareFranchiseNote', { franchise: compFranchise.toLocaleString() }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
+      // Franchise direkt hier wählbar (verschiedene Franchisen vergleichen) — treibt dieselbe Vergleichs-Franchise
+      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.xs + 'px', marginBottom: space.sm + 'px' } },
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('po.thFranchise') + ':'),
+        (ageClass === 'kind' ? KIN_FRA : ERW_FRA).map(fr =>
+          React.createElement('button', {
+            key: fr, type: 'button', 'aria-pressed': compFranchise === fr,
+            onClick: () => setPickedFranchise(fr), style: s.gemeindeBtn(compFranchise === fr),
+          }, 'CHF ' + fr.toLocaleString())
+        )
+      ),
       React.createElement('table', { style: s.table },
         React.createElement('thead', null,
           React.createElement('tr', null,
