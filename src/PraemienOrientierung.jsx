@@ -4,10 +4,11 @@ import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
 import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
+import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -80,6 +81,28 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     const specificOhne = userFranchise && ageClass !== 'kind' ? getInsurerPremium(insurerNr, kanton, region, ageClass, userFranchise, false) : null;
     return { allFranchises: allFra, allFranchisesOhne: allFraOhne, specificPremium, specificOhne };
   }, [insurerNr, regionInfo, ageClass, userFranchise]);
+
+  // ── Franchise-Optimierer: lohnt sich eine höhere Franchise? ──
+  // Vergleicht tiefste vs höchste verfügbare Franchise (Mit-Unfall) der eigenen Kasse:
+  // Prämien-Ersparnis/Jahr, max. Eigenanteil/Jahr (Reserve = Franchise + Selbstbehalt-Max)
+  // und Break-even (Gesundheitskosten/Jahr, unter denen die hohe Franchise günstiger ist).
+  const franchiseOpt = useMemo(() => {
+    const fras = referenceData?.allFranchises;
+    if (!fras || fras.length < 2) return null;
+    const low = fras[0], high = fras[fras.length - 1];
+    if (!low.premium || !high.premium || high.franchise <= low.franchise) return null;
+    const annualSaving = Math.round((low.premium - high.premium) * 12);
+    if (annualSaving <= 0) return null;
+    const sbMax = ageClass === 'kind' ? SELBSTBEHALT_MAX_KINDER : SELBSTBEHALT_MAX;
+    const reserve = high.franchise + sbMax; // max. Eigenanteil/Jahr bei hoher Franchise
+    let breakEven = null;
+    for (let c = 0; c <= high.franchise + 8000; c += 50) {
+      const totalLow = low.premium * 12 + berechneFranchise(low.franchise, c).eigenanteil;
+      const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c).eigenanteil;
+      if (totalHigh > totalLow) { breakEven = c; break; }
+    }
+    return { lowFra: low.franchise, highFra: high.franchise, annualSaving, reserve, sbMax, breakEven };
+  }, [referenceData, ageClass]);
 
   // ── Marktplatz: alle Kassen vergleichen (günstigste zuerst) ──
   const targetInsurer = data.versicherungen?.targetInsurer || '';
@@ -271,6 +294,20 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         )
       );
     })(),
+
+    // Franchise-Optimierer: lohnt sich eine höhere Franchise? (Ersparnis vs. Reserve, belegt)
+    franchiseOpt && React.createElement('div', {
+      style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
+    },
+      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, marginBottom: space.xs + 'px' } }, t('po.franchiseOptTitle')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
+        t('po.franchiseOptSaving', { high: franchiseOpt.highFra.toLocaleString(), low: franchiseOpt.lowFra.toLocaleString(), saving: franchiseOpt.annualSaving.toLocaleString() })),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
+        t('po.franchiseOptReserve', { reserve: franchiseOpt.reserve.toLocaleString(), sb: franchiseOpt.sbMax })),
+      franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
+        t('po.franchiseOptBreakeven', { breakeven: franchiseOpt.breakEven.toLocaleString() })),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource')))
+    ),
 
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
