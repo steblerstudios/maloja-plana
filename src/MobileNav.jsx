@@ -136,6 +136,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         const allTools = [
           { key: 'settings', label: t('common.settingsTitle'), icon: 'settings' },
           { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: 'budget' },
+          { key: 'situationen', label: t('lebenszustaende.pageTitle'), icon: 'health' },
           { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
           { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
           { key: 'kk', label: t('nav.kkScanner'), icon: 'barcode' },

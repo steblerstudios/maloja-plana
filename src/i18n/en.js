@@ -6,6 +6,9 @@ export default {
     quelleLabel: 'Source',
     standLabel: 'As of',
     moreInfo: 'Learn more',
+    pageTitle: 'Life situations',
+    pageSub: 'Discover hidden entitlements',
+    dashboardLink: 'Does a situation apply to you? →',
     tiefesEinkommen: {
       label: 'When money is tight',
       frage: 'Income often doesn’t stretch to the end of the month?',
