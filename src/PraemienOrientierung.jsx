@@ -5,8 +5,9 @@ import { RegionalBarometer } from './components/RegionalBarometer.jsx';
 import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
-import { linkifyDomains } from './utils/linkifyDomains.js';
+import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
+import { UvgHinweis } from './components/UvgHinweis.jsx';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -29,6 +30,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const [plzInput, setPlzInput] = useState(storedPLZ);
   const [selectedBfs, setSelectedBfs] = useState(null);
   const [detailNr, setDetailNr] = useState(null); // aufgeklappte Kasse im Vergleich
+  const [withUnfall, setWithUnfall] = useState(true); // UVG: Referenzprämie mit/ohne Unfalldeckung
 
   const gemeinden = useMemo(() => {
     const plz = plzInput.trim();
@@ -72,7 +74,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     const region = regionInfo.region;
     const allFra = getInsurerAllFranchises(insurerNr, kanton, region, ageClass);
     const specificPremium = userFranchise ? getInsurerPremium(insurerNr, kanton, region, ageClass, userFranchise) : null;
-    return { allFranchises: allFra, specificPremium };
+    // UVG: Referenzprämien ohne Unfalldeckung (nur Erw/Jung; Kinder haben keinen Ohne-Tarif)
+    const allFraOhne = ageClass !== 'kind' ? getInsurerAllFranchises(insurerNr, kanton, region, ageClass, false) : null;
+    const specificOhne = userFranchise && ageClass !== 'kind' ? getInsurerPremium(insurerNr, kanton, region, ageClass, userFranchise, false) : null;
+    return { allFranchises: allFra, allFranchisesOhne: allFraOhne, specificPremium, specificOhne };
   }, [insurerNr, regionInfo, ageClass, userFranchise]);
 
   // ── Marktplatz: alle Kassen vergleichen (günstigste zuerst) ──
@@ -82,7 +87,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     if (!regionInfo) return [];
     const { kanton, region } = regionInfo;
     return allInsurerNrs()
-      .map(nr => ({ nr, name: insurerNameFromNr(nr), premium: getInsurerPremium(nr, kanton, region, ageClass, compFranchise) }))
+      .map(nr => ({
+        nr, name: insurerNameFromNr(nr),
+        premium: getInsurerPremium(nr, kanton, region, ageClass, compFranchise),
+        premiumOhne: ageClass !== 'kind' ? getInsurerPremium(nr, kanton, region, ageClass, compFranchise, false) : null,
+      }))
       .filter(x => x.premium != null && x.premium > 0)
       .sort((a, b) => a.premium - b.premium);
   }, [regionInfo, ageClass, compFranchise]);
@@ -112,6 +121,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
     React.createElement(KKLastCard, { palette, t, data, onNavigate }),
+
+    // UVG: Angestellte sind über den Arbeitgeber unfallversichert → Unfalldeckung
+    // bei der Kasse abwählbar (tiefere Prämie). Zeigt nichts, wenn nicht angestellt.
+    React.createElement(UvgHinweis, { palette, t, data }),
 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('po.plzLabel')),
@@ -180,48 +193,76 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))
     ),
 
-    referenceData && referenceData.specificPremium && userPremium && React.createElement('div', { style: s.highlight },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs + 'px' } },
-        t('po.comparison')
-      ),
-      React.createElement('div', { style: { fontSize: text.sm } },
-        t('po.yourPremium', { amount: userPremium.toFixed(2) })
-      ),
-      React.createElement('div', { style: { fontSize: text.sm } },
-        t('po.refPremium', { amount: referenceData.specificPremium.toFixed(2), franchise: userFranchise })
-      ),
-      Math.abs(userPremium - referenceData.specificPremium) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > referenceData.specificPremium ? palette.rose : palette.sage } },
-        t(userPremium > referenceData.specificPremium ? 'po.premiumAbove' : 'po.premiumBelow', {
-          diff: Math.abs(userPremium - referenceData.specificPremium).toFixed(2)
-        })
-      )
-    ),
-
-    referenceData && referenceData.allFranchises && referenceData.allFranchises.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
-      React.createElement('div', { style: { ...s.label, marginBottom: space.sm + 'px' } },
-        t('po.franchiseTable', { insurer: insurer })
-      ),
-      React.createElement('table', { style: s.table },
-        React.createElement('thead', null,
-          React.createElement('tr', null,
-            React.createElement('th', { style: s.th }, t('po.thFranchise')),
-            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.thPremium'))
-          )
+    referenceData && referenceData.specificPremium && userPremium && (() => {
+      const ohne = referenceData.specificOhne;
+      const canToggle = ohne && Math.abs(ohne - referenceData.specificPremium) > 0.5;
+      const shownRef = (!withUnfall && ohne) ? ohne : referenceData.specificPremium;
+      const saving = ohne ? (referenceData.specificPremium - ohne) : 0;
+      return React.createElement('div', { style: s.highlight },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs + 'px' } },
+          t('po.comparison')
         ),
-        React.createElement('tbody', null,
-          referenceData.allFranchises.map(f =>
-            React.createElement('tr', { key: f.franchise },
-              React.createElement('td', { style: f.franchise === userFranchise ? s.tdActive : s.td },
-                'CHF ' + f.franchise.toLocaleString()
-              ),
-              React.createElement('td', { style: { ...(f.franchise === userFranchise ? s.tdActive : s.td), textAlign: 'right' } },
-                'CHF ' + f.premium.toFixed(2)
-              )
+        React.createElement('div', { style: { fontSize: text.sm } },
+          t('po.yourPremium', { amount: userPremium.toFixed(2) })
+        ),
+        // UVG: Mit/Ohne-Unfall-Umschalter — nur wenn ein Ohne-Tarif existiert (Erw/Jung).
+        canToggle && React.createElement('div', { style: { display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: space.xs + 'px', margin: space.xs + 'px 0' } },
+          React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('po.unfallLabel') + ':'),
+          React.createElement('div', { role: 'radiogroup', style: { display: 'flex', gap: '4px' } },
+            [[true, t('po.mitUnfall')], [false, t('po.ohneUnfall')]].map(([val, label]) =>
+              React.createElement('button', {
+                key: String(val), type: 'button', role: 'radio', 'aria-checked': withUnfall === val,
+                onClick: () => setWithUnfall(val), style: s.gemeindeBtn(withUnfall === val),
+              }, label)
             )
           )
+        ),
+        React.createElement('div', { style: { fontSize: text.sm } },
+          t('po.refPremium', { amount: shownRef.toFixed(2), franchise: userFranchise })
+        ),
+        canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginTop: '2px' } },
+          t('po.unfallSaving', { diff: saving.toFixed(2) })
+        ),
+        Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? palette.rose : palette.sage } },
+          t(userPremium > shownRef ? 'po.premiumAbove' : 'po.premiumBelow', {
+            diff: Math.abs(userPremium - shownRef).toFixed(2)
+          })
         )
-      )
-    ),
+      );
+    })(),
+
+    referenceData && referenceData.allFranchises && referenceData.allFranchises.length > 0 && (() => {
+      const ohneList = referenceData.allFranchisesOhne;
+      const hasOhne = ohneList && ohneList.length > 0;
+      const ohneByFra = hasOhne ? Object.fromEntries(ohneList.map(f => [f.franchise, f.premium])) : null;
+      return React.createElement('div', { style: { marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: { ...s.label, marginBottom: space.sm + 'px' } },
+          t('po.franchiseTable', { insurer: insurer })
+        ),
+        React.createElement('table', { style: s.table },
+          React.createElement('thead', null,
+            React.createElement('tr', null,
+              React.createElement('th', { style: s.th }, t('po.thFranchise')),
+              React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, hasOhne ? t('po.mitUnfall') : t('po.thPremium')),
+              hasOhne && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
+            )
+          ),
+          React.createElement('tbody', null,
+            referenceData.allFranchises.map(f => {
+              const active = f.franchise === userFranchise;
+              const cell = active ? s.tdActive : s.td;
+              const ohnePrem = ohneByFra ? ohneByFra[f.franchise] : null;
+              return React.createElement('tr', { key: f.franchise },
+                React.createElement('td', { style: cell }, 'CHF ' + f.franchise.toLocaleString()),
+                React.createElement('td', { style: { ...cell, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
+                hasOhne && React.createElement('td', { style: { ...cell, textAlign: 'right', color: active ? palette.sage : palette.mid } },
+                  ohnePrem != null ? 'CHF ' + ohnePrem.toFixed(2) : '–')
+              );
+            })
+          )
+        )
+      );
+    })(),
 
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
@@ -231,7 +272,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         React.createElement('thead', null,
           React.createElement('tr', null,
             React.createElement('th', { style: s.th }, t('po.thInsurer')),
-            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.thPremium')),
+            React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, ageClass !== 'kind' ? t('po.mitUnfall') : t('po.thPremium')),
+            ageClass !== 'kind' && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall')),
             React.createElement('th', { style: s.th })
           )
         ),
@@ -249,6 +291,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                   }, (isOpen ? '▾ ' : '▸ ') + ins.name + (isCurrent ? ' •' : ''))
                 ),
                 React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, 'CHF ' + ins.premium.toFixed(2)),
+                ageClass !== 'kind' && React.createElement('td', { style: { ...s.td, textAlign: 'right', color: palette.mid } },
+                  ins.premiumOhne != null ? 'CHF ' + ins.premiumOhne.toFixed(2) : '–'),
                 React.createElement('td', { style: { ...s.td, textAlign: 'right' } },
                   onUpdateData && React.createElement('button', {
                     style: s.targetBtn(isChosen),
@@ -259,7 +303,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
             if (isOpen) {
               const ladder = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass) || [];
               out.push(React.createElement('tr', { key: ins.nr + '-d' },
-                React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: 3 },
+                React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: ageClass !== 'kind' ? 4 : 3 },
                   React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } },
                     ladder.map(f => 'CHF ' + f.franchise.toLocaleString() + ': CHF ' + f.premium.toFixed(2)).join('  ·  ')
                   )
@@ -278,7 +322,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       t('po.disclaimer')
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.sky, marginTop: space.xs } },
-      linkifyDomains(t('po.source'))
+      renderSource(t('po.source'))
     ),
 
     // Crosslink: vom Vergleich in den geführten Wechsel-Ablauf

@@ -1494,7 +1494,7 @@ export default {
     alle: 'Tuts',
     antragsstelle: 'Post da dumonda',
     mirrorTitle: 'Post uffizial & dumonda',
-    source: 'Links uffizials da ch.ch, BAG, BSV ed autras autoritads federalas.',
+    source: 'Links uffizials da [[ch.ch|ch.ch]], [[BAG|bag.admin.ch]], [[BSV|bsv.admin.ch]] ed autras autoritads federalas.',
     cantonalTitle: { sie: 'Voss chantun: {canton}', du: 'Tes chantun: {canton}' },
     cantonal: {
       steuererklaerung: 'Decleraziun da taglia online',
@@ -2111,6 +2111,10 @@ export default {
   },
 
   po: {
+    unfallLabel: 'Cuvrida d’accident',
+    mitUnfall: 'Cun accident',
+    ohneUnfall: 'Senza accident',
+    unfallSaving: 'Senza cuvrida d’accident: CHF {diff}/mais damain — deselecziunabel sco emploià (cuvert tras il patrun).',
     title: 'Orientaziun da premias',
     plzLabel: 'Numer postal',
     selectGemeinde: 'Pliras vischnancas — per plaschair tscherner:',
@@ -2136,7 +2140,7 @@ export default {
     chooseTarget: 'Wunsch-Kasse',
     targetSelected: 'Wunsch-Kasse',
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
-    source: 'Funtauna: BAG priminfo.admin.ch · model standard cun accident · stadi 2026',
+    source: 'Funtauna: [[BAG|priminfo.admin.ch]] · model standard cun accident · stadi 2026',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
     regionalCompare: {
       national: 'Media svizra',
@@ -2150,13 +2154,13 @@ export default {
         title: 'Premia regiunala vs. Svizra',
         yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
         structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
-        source: 'Funtauna: BAG, premia media {year} · media da tut ils assicuraders',
+        source: 'Funtauna: [[BAG|priminfo.admin.ch]], premia media {year} · media da tut ils assicuraders',
       },
       rent: {
         title: 'Fittanza regiunala vs. Svizra',
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
-        source: 'Funtauna: UST, dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
+        source: 'Funtauna: [[UST|bfs.admin.ch]], dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
       },
     },
   },
@@ -2184,7 +2188,7 @@ export default {
     hinweisMutterschaft: "Maternitad: 14 emnas a partir da la naschientscha. Cundiziun: almain 5 mais activa.",
     hinweisVaterschaft: 'Paternitad: 2 emnas, retschaviment entaifer 6 mais suenter la naschientscha.',
     hinweisAdoption: "Adopziun: 2 emnas, uffant sut 4 onns.",
-    source: "Calculaziun tenor LEO art. 16a–16n. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.",
+    source: "Calculaziun tenor [[LEO art. 16a–16n|https://www.fedlex.admin.ch/eli/cc/1952/1021_1046_1050/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.",
   },
 
   sh: {
@@ -2217,7 +2221,7 @@ export default {
     vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
     freibetrag: 'Import liber',
     eingeben: "Endatescha il tschains e la premia LAMal per calcular il dretg.",
-    source: 'Calculaziun tenor directivas COSAS (stadi 1.1.2025). Nagina infurmaziun giuridicamain vinculanta.',
+    source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2025). Nagina infurmaziun giuridicamain vinculanta.',
   },
 
   kvg: {
@@ -2411,7 +2415,7 @@ export default {
     berechneterBetrag: 'Import calculà',
     tpwNote: 'La valur dal punct da taxa variescha tenor il chantun.',
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
-    source: 'Funtauna: UFSP, LAMal art. 25–31, OPre',
+    source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },
 
   mirror: {
@@ -2802,13 +2806,18 @@ export default {
     overNote: 'Gia la premia sulet surpassa il valur d’orientaziun da 10%.',
     underNote: 'La premia sulet è sut 10% — franchisa, part da quota e custs betg cuvrids s’agiuntan.',
     whoNote: 'Per situar: l’OMS quinta expensas da sanadad sur 10% da l’entrada sco grevas («catastroficas»). La premia è mo ina part dals custs da sanadad.',
-    source: 'Funtauna: OMS / indicatur SDG 3.8.2 da l’ONU.',
+    source: 'Funtauna: OMS / [[indicatur SDG 3.8.2 da l’ONU|sdgs.un.org]]',
     marker10: 'Valur d’orientaziun 10% (OMS)',
     ipvLink: 'Verifitgar la reducziun da premias (IPV) →',
     ipvRelief: 'Cun la reducziun da premias: −CHF {ipv}/mais → effectivamain {share}% da l\'entrada.',
     ipvNoClaim: 'Nagin dretg sin reducziun da premias en questa situaziun.',
     gapToTen: 'Per arrivar a 10% stuess vegnir surpiglià anc CHF {gap}/mais.',
     underWithIpv: 'Cun la reducziun è la premia sut 10%.',
+  },
+  uvgHint: {
+    title: 'Cuvrida d’accident: spargnar sco emploià',
+    body: 'Sco emploià·da es ti assicurà·da cunter accidents tras tes patrun — inclus accidents na professiunals a partir da 8 uras/emna. Ti pos deselecziunar la cuvrida d’accident tar tia cassa da malsauns; quai diminuescha tia premia notablamain.',
+    fieldSuggest: 'Sco emploià·da es ti per regla cuvert·a tras tes patrun — „Tras il patrun" sa adatta lura, e deselecziunar la cuvrida d’accident tar la cassa diminuescha la premia.',
   },
   mietzins: {
     title: 'Contribuziuns a la fittanza:',
@@ -2966,7 +2975,7 @@ export default {
     saeule3aHint: { sie: 'Endatai Voss avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.', du: 'Endatescha tes avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.' },
     totalMitSaeule3a: 'Total 1. + 2. + 3a pitga',
     einkommenEingeben: { sie: 'Endatai Vossa entrada annaira per stimar la renta.', du: 'Endatescha Tia entrada annaira per stimar la renta.' },
-    source: 'Stimaziun tenor LAVS art. 34–40, LPP art. 16. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.',
+    source: 'Stimaziun tenor [[LAVS art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[LPP art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.',
     tabFreizuegigkeit: 'Liber passadi',
     fzTitle: { sie: 'Tge capita cun Voss LPP tar midada da plazza?', du: 'Tge capita cun Tes LPP tar midada da plazza?' },
     fzIntro: { sie: "Sche Vus bandunais Vossa plazza, na vegn Voss avair LPP betg pajà ora — el mida sin in conto da liber passadi, enfin che Vus entrais ina nova plazza.", du: "Sche Ti bandunas Tia plazza, na vegn Tes avair LPP betg pajà ora — el mida sin in conto da liber passadi, enfin che Ti entras ina nova plazza." },
@@ -3232,7 +3241,7 @@ export default {
     checklist2: 'Controllar il termin d’opposiziun — per ordinari 30 dis suenter la decisiun',
     checklist3: 'Tschertgar fundaziuns privatas adattadas a la furmaziun e situaziun',
     checklist4: 'Postular baud — fundaziuns han lur agens termins',
-    source: 'Funtaunas: CDEP, concordat da stipendis, ch.ch, SEFRI.',
+    source: 'Funtaunas: [[CDEP|edk.ch]], concordat da stipendis, [[ch.ch|ch.ch]], [[SEFRI|sbfi.admin.ch]].',
   },
   saeule3a: {
     add: 'Agiuntar pajament',

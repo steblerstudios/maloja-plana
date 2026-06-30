@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { vergleicheEOLeistungen, EO_PARAMS } from './data/eoRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { renderSource } from './utils/renderSource.js';
 
 export const EOrechner = ({ palette, t, data }) => {
   const prefill = data.finanzen?.monthlyIncome ? Math.round(parseFloat(data.finanzen.monthlyIncome) * 12) : '';
@@ -101,7 +102,7 @@ export const EOrechner = ({ palette, t, data }) => {
       React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.xs } }, t('eo.erklaerung'))
     ),
 
-    React.createElement('div', { style: s.source }, t('eo.source')),
+    React.createElement('div', { style: s.source }, renderSource(t('eo.source'))),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm + 'px', lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint'))
   );
 };
