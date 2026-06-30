@@ -1489,6 +1489,8 @@ export default {
     priceTrend: 'Die Preise hier haben sich seit 2020 um {pct} verändert — allgemein {general} (BFS Teuerung).',
     infoToggle: 'Richtwerte & Teuerung',
     skosTitle: 'SKOS-Grundbedarf (Orientierung)',
+    skosClaim: 'Dein Einkommen liegt unter dem Unterstützungsbudget (≈ {amount}/Mt.) — Sozialhilfe könnte relevant sein.',
+    skosNoClaim: 'Sozialhilfe ist hier voraussichtlich nicht relevant — dein Einkommen liegt über dem, was sie decken würde (≈ {amount}/Mt.).',
   },
 
   premium: {
