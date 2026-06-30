@@ -18,6 +18,18 @@ export default {
         franchise: { titel: 'Vérifier la franchise', text: 'Avec peu de visites médicales, une franchise plus élevée réduit la prime mensuelle — à revoir chaque automne.' },
       },
     },
+    alleinerziehend: {
+      label: 'Élever ses enfants seul·e',
+      frage: 'Élevez-vous un ou plusieurs enfants seul·e ?',
+      intro: 'Les parents seuls portent davantage — et plusieurs aides existent précisément pour cette situation, mais beaucoup restent inutilisées.',
+      berechtigungen: {
+        alimente: { titel: 'Avance sur pensions & aide au recouvrement', text: 'Si les contributions d’entretien n’arrivent pas, la commune peut les avancer et aider à les recouvrer — pour que l’enfant ne manque de rien.' },
+        ipv: { titel: 'Réduction des primes (RIP)', text: 'Les familles monoparentales ont souvent droit à une aide pour les primes d’assurance-maladie — pour le parent et les enfants.' },
+        familienzulagen: { titel: 'Allocations familiales', text: 'Allocations pour enfant et de formation par enfant — récupérables rétroactivement si oubliées. Elles suivent le parent qui travaille.' },
+        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'L’aide sociale reconnaît les besoins accrus d’un ménage monoparental et peut compléter un faible revenu.' },
+        steuern: { titel: 'Barème parental & déduction pour enfants', text: 'Les parents seuls sont imposés au barème parental plus bas et peuvent déduire les frais pour enfants et garde.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',

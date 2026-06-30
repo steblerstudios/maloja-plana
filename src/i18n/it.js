@@ -18,6 +18,18 @@ export default {
         franchise: { titel: 'Verificare la franchigia', text: 'Con poche visite mediche, una franchigia più alta riduce il premio mensile — da rivedere ogni autunno.' },
       },
     },
+    alleinerziehend: {
+      label: 'Crescere i figli da solo/a',
+      frage: 'Cresce uno o più figli da solo/a?',
+      intro: 'Chi cresce i figli da solo porta di più — e proprio per questa situazione esistono diverse forme di sostegno, molte delle quali restano inutilizzate.',
+      berechtigungen: {
+        alimente: { titel: 'Anticipo degli alimenti & aiuto all’incasso', text: 'Se i contributi di mantenimento non arrivano, il Comune può anticiparli e aiutare a incassarli — così il figlio non resta senza.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Le economie domestiche monoparentali hanno spesso diritto a un aiuto per i premi della cassa malati — per il genitore e i figli.' },
+        familienzulagen: { titel: 'Assegni familiari', text: 'Assegni per i figli e di formazione per ogni figlio — recuperabili retroattivamente se dimenticati. Seguono il genitore che lavora.' },
+        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'L’aiuto sociale riconosce il fabbisogno maggiore di un’economia domestica monoparentale e può integrare un reddito basso.' },
+        steuern: { titel: 'Tariffa per genitori & deduzione per figli', text: 'I genitori soli sono tassati con la tariffa per genitori più bassa e possono dedurre le spese per i figli e la custodia.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
