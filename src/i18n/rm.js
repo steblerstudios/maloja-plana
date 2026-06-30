@@ -2611,6 +2611,7 @@ export default {
     incomeAlimente: 'Aliments retschavids',
     ipvRelief: 'Reducziun IPV',
     ipvEffective: 'Grevezza effectiva',
+    benchmark: 'Per orientaziun: ina chasada media dat qua var {amount} (UST 2023). La tia po fitg bain variar.',
   },
 
   taxImport: {

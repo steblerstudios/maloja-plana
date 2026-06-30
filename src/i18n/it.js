@@ -1486,6 +1486,7 @@ export default {
     incomeAlimente: 'Alimenti ricevuti',
     ipvRelief: 'Riduzione IPV',
     ipvEffective: 'Costo effettivo',
+    benchmark: 'Per orientamento: una famiglia media spende qui circa {amount} (UST 2023). La tua può tranquillamente differire.',
   },
 
   premium: {
