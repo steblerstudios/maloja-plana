@@ -1,4 +1,25 @@
 export default {
+  // TODO(rm): Romanisch von Muttersprachler:in prüfen lassen (Rumantsch Grischun, provisorisch).
+  lebenszustaende: {
+    sectionTitle: 'Pertutga ina da questas situaziuns a Vus?',
+    sectionIntro: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda — nagut vegn memorisà sco etichetta, quai mussa mo quai che pudess exister.',
+    selectHint: 'Tutgar ina situaziun per vesair quai che pudess pertutgar.',
+    quelleLabel: 'Funtauna',
+    standLabel: 'Stadi',
+    moreInfo: 'Vinavant',
+    tiefesEinkommen: {
+      label: 'Cura ch’ils raps èn stretgs',
+      frage: 'Il retgav na basta savens betg fin la fin dal mais?',
+      intro: 'Cun in bass retgav existan diversas furmas da sustegn — bleras restan nunduvradas perquai ch’ellas n’èn simplamain betg enconuschentas.',
+      berechtigungen: {
+        ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Il chantun gida a pajar las premias da la cassa da malsauns per bass e mez retgavs. Blers cun dretg na fan mai ina dumonda.' },
+        mietzins: { titel: 'Contribuziun a la pigiun', text: 'Tscherts chantuns e vischnancas sa participeschan a la pigiun, sch’ella pesa memia ferm sin in bass retgav.' },
+        sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sch’il retgav na cuvra betg il necessari, po l’agid social cumplettar. Quai è in dretg, betg ina almosna.' },
+        stipendien: { titel: 'Stipendis', text: 'Per la furmaziun ed ils studis cun in bass retgav existan stipendis — restituibels u betg.' },
+        franchise: { titel: 'Controllar la franchisa', text: 'Cun paucas visitas dal medi reducescha ina franchisa pli auta la premia mensila — da repetir mintga atun.' },
+      },
+    },
+  },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
