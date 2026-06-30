@@ -2615,6 +2615,8 @@ export default {
     priceTrend: 'Qua èn ils pretschs sa midads per {pct} dapi 2020 — en general {general} (rincar UST).',
     infoToggle: 'Valurs d\'orientaziun & rincar',
     skosTitle: 'Basegns da basa SKOS (orientaziun)',
+    skosClaim: 'Tia entrada è sut il budget da sustegn (≈ {amount}/mais) — l\'agid social pudess esser relevant.',
+    skosNoClaim: 'L\'agid social n\'è qua probablamain betg relevant — tia entrada è sur quai ch\'el cuvrissi (≈ {amount}/mais).',
   },
 
   taxImport: {
