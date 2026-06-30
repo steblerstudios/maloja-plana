@@ -2717,6 +2717,11 @@ export default {
     exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',
   },
   po: {
+    franchiseOptTitle: 'Une franchise plus élevée en vaut-elle la peine ?',
+    franchiseOptSaving: 'Avec une franchise de CHF {high} au lieu de CHF {low}, vous économisez environ CHF {saving}/an de primes.',
+    franchiseOptReserve: 'En contrepartie, une mauvaise année, vous payez jusqu\'à CHF {reserve} vous-même (franchise + quote-part max. CHF {sb}). Vous devriez pouvoir mettre ce coussin de côté.',
+    franchiseOptBreakeven: 'La franchise plus élevée est avantageuse tant que vos frais de santé restent en dessous d\'environ CHF {breakeven}/an.',
+    franchiseOptSource: 'Source : [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]] · quote-part 10% / max. CHF 700 (adultes), CHF 350 (enfants).',
     pickFranchiseHint: 'Touchez une franchise pour comparer les caisses à ce niveau.',
     chooseByPrice: 'Touchez un prix (avec/sans accident) pour définir la caisse comme caisse souhaitée.',
     unfallLabel: 'Couverture accidents',
