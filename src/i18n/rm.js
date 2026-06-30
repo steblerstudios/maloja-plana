@@ -19,6 +19,18 @@ export default {
         franchise: { titel: 'Controllar la franchisa', text: 'Cun paucas visitas dal medi reducescha ina franchisa pli auta la premia mensila — da repetir mintga atun.' },
       },
     },
+    alleinerziehend: {
+      label: 'Crescher uffants sulet/sula',
+      frage: 'Creschais Vus in u plirs uffants sulet/sula?',
+      intro: 'Geniturs suls portan dapli — e propri per questa situaziun existan diversas furmas da sustegn, bleras restan dentant nunduvradas.',
+      berechtigungen: {
+        alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
+        ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
+        familienzulagen: { titel: 'Supplements da famiglia', text: 'Supplements per uffants e da furmaziun per mintga uffant — recuperabels retroactivamain sche emblidads. Els suondan il genitur che lavura.' },
+        sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
+        steuern: { titel: 'Tarifa per geniturs & deducziun per uffants', text: 'Geniturs suls vegnan taxads cun la tarifa pli bassa per geniturs e pon deducir las custas per uffants e la chüra.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {

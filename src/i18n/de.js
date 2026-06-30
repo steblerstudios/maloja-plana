@@ -18,6 +18,18 @@ export default {
         franchise: { titel: 'Franchise prüfen', text: 'Bei wenigen Arztbesuchen senkt eine höhere Franchise die monatliche Prämie — lohnt sich jeden Herbst zu prüfen.' },
       },
     },
+    alleinerziehend: {
+      label: 'Kinder allein grossziehen',
+      frage: 'Ziehst du ein oder mehrere Kinder allein gross?',
+      intro: 'Alleinerziehende tragen mehr — und genau für diese Situation gibt es mehrere Formen der Unterstützung, vieles bleibt aber ungenutzt.',
+      berechtigungen: {
+        alimente: { titel: 'Alimentenbevorschussung & Inkassohilfe', text: 'Kommen die Unterhaltszahlungen nicht, kann die Gemeinde sie bevorschussen und beim Inkasso helfen — damit das Kind nicht leer ausgeht.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassen-Prämien — für den Elternteil und die Kinder.' },
+        familienzulagen: { titel: 'Familienzulagen', text: 'Kinder- und Ausbildungszulagen pro Kind — rückwirkend nachforderbar, wenn verpasst. Sie folgen dem arbeitenden Elternteil.' },
+        sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Die Sozialhilfe anerkennt den höheren Bedarf eines Einelternhaushalts und kann ein knappes Einkommen aufstocken.' },
+        steuern: { titel: 'Elterntarif & Kinderabzug', text: 'Alleinerziehende werden zum tieferen Elterntarif besteuert und können Abzüge für Kinder und Betreuung geltend machen.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',

@@ -18,6 +18,18 @@ export default {
         franchise: { titel: 'Check your deductible', text: 'With few doctor visits, a higher deductible lowers the monthly premium — worth reviewing each autumn.' },
       },
     },
+    alleinerziehend: {
+      label: 'Raising children alone',
+      frage: 'Raising one or more children on your own?',
+      intro: 'Single parents carry more — and several forms of support exist precisely for this situation, though many go unclaimed.',
+      berechtigungen: {
+        alimente: { titel: 'Advance on alimony & collection help', text: 'If maintenance payments don’t arrive, the commune can advance them and help collect — so the child doesn’t go without.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'Single-parent households often qualify for help with health-insurance premiums — for the parent and the children.' },
+        familienzulagen: { titel: 'Family allowances', text: 'Child and education allowances per child — claimable retroactively if missed. They follow the working parent.' },
+        sozialhilfe: { titel: 'Supplementary social assistance', text: 'Social assistance recognises the higher needs of a single-parent household and can top up a tight income.' },
+        steuern: { titel: 'Parent tariff & child deduction', text: 'Single parents are taxed at the lower parent tariff and can claim deductions for children and childcare.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',
