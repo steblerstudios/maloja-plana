@@ -1054,7 +1054,7 @@ export default {
       heartfeltIntroAffiliate: 'Servetschs e projects che nus stimain persunalmain. La gronda part recumandain nus senza pajament; colliaziuns marcadas cun « Affiliate » porschan a Maloja ina pitschna provisiun — senza ch’i custia insatge a tai.',
       affiliateMarker: 'Affiliate',
       // TODO(rm): provisorischer DE-Fallback — RM nachziehen
-      heartfeltGroups: { digital: 'Digital & Privatsphäre', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
+      heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Sustegn social', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Maschina da tschertgar che investescha sias entradas en il reboschiment.',
       heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
       heartfelt3: 'Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',
@@ -1078,6 +1078,8 @@ export default {
       heartfelt20: 'Tätowier-Kunst, die uns berührt — derzeit auf Instagram zu finden.',
       heartfelt21: 'Malergeschäft aus Nunningen — sorgfältiges Handwerk, persönlich.',
       heartfelt22: 'Traditionelle Chinesische Medizin — achtsame, ganzheitliche Behandlung.',
+      heartfelt23: 'Überbrückt finanzielle Notlagen, damit Menschen das Nötigste haben und ihre Wohnung nicht verlieren.',
+      heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
@@ -2136,6 +2138,27 @@ export default {
     targetChosenHint: 'Wunsch-Kasse: {insurer} — sie erscheint im Wechsel-Ablauf.',
     source: 'Funtauna: BAG priminfo.admin.ch · model standard cun accident · stadi 2026',
     disclaimer: { sie: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Voss assicurader.", du: "Mo premias da referenza. Premias effectivas pon divergiar — decisiv è la polizza da Tes assicurader." },
+    regionalCompare: {
+      national: 'Media svizra',
+      nationalVal: 'Media svizra: CHF {amount}',
+      regionalVal: { sie: 'Vossa regiun: CHF {amount}', du: 'Tia regiun: CHF {amount}' },
+      above: 'circa {pct} % sur la media svizra',
+      below: 'circa {pct} % sut la media svizra',
+      equal: 'circa en la media svizra',
+      aria: { sie: 'Vossa regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.', du: 'Tia regiun: CHF {regional} per mais, media svizra: CHF {national}. {diff}.' },
+      premium: {
+        title: 'Premia regiunala vs. Svizra',
+        yourVal: { sie: 'Vossa premia: CHF {amount}', du: 'Tia premia: CHF {amount}' },
+        structural: 'Quai è surtut structural — regiuns cun pli blers medis ed ospitals pli chars han premias pli autas. Midar la cassa permetta da spargnar mo entaifer la regiun.',
+        source: 'Funtauna: BAG, premia media {year} · media da tut ils assicuraders',
+      },
+      rent: {
+        title: 'Fittanza regiunala vs. Svizra',
+        yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
+        structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
+        source: 'Funtauna: UST, dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
+      },
+    },
   },
 
   eo: {
@@ -2782,6 +2805,18 @@ export default {
     source: 'Funtauna: OMS / indicatur SDG 3.8.2 da l’ONU.',
     marker10: 'Valur d’orientaziun 10% (OMS)',
     ipvLink: 'Verifitgar la reducziun da premias (IPV) →',
+    ipvRelief: 'Cun la reducziun da premias: −CHF {ipv}/mais → effectivamain {share}% da l\'entrada.',
+    ipvNoClaim: 'Nagin dretg sin reducziun da premias en questa situaziun.',
+    gapToTen: 'Per arrivar a 10% stuess vegnir surpiglià anc CHF {gap}/mais.',
+    underWithIpv: 'Cun la reducziun è la premia sut 10%.',
+  },
+  mietzins: {
+    title: 'Contribuziuns a la fittanza:',
+    has: 'Tes chantun enconuscha contribuziuns a la fittanza tenor l\'entrada. Controllescha il dretg e las cundiziuns tar tia vischnanca u il chantun.',
+    none: 'En tes chantun n\'existan naginas contribuziuns chantunalas a la fittanza.',
+    check: 'Contribuziuns a la fittanza datti mo en singuls chantuns e vischnancas — blers chantuns n\'han naginas, tschertas vischnancas gea. Controllescha tar tia vischnanca u il chantun.',
+    linkCanton: 'Tar l\'uffizi chantunal',
+    linkOverview: 'Survista chantunala (BWO)',
   },
   calendar: {
     title: 'Chalender e commemoraziuns',

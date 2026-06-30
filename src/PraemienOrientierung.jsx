@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { getRegionInfo } from './data/praemienRegionen.js';
+import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
+import { RegionalBarometer } from './components/RegionalBarometer.jsx';
 import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -42,6 +43,12 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     if (!activeBfs) return null;
     return getRegionInfo(activeBfs);
   }, [activeBfs]);
+
+  // Regionale Realität vs. nationaler Durchschnitt — gleiche Quelle/Definition (BAG).
+  const regionalComparison = useMemo(() => {
+    if (!activeBfs) return null;
+    return getRegionalComparison(activeBfs, data.basis?.dateOfBirth);
+  }, [activeBfs, data.basis?.dateOfBirth]);
 
   const insurer = data.versicherungen?.kkInsurer || '';
   const insurerNr = useMemo(() => insurer ? insurerNrFromName(insurer) : null, [insurer]);
@@ -142,7 +149,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           junge: regionInfo.praemien.junge.toFixed(0),
           erwachsene: regionInfo.praemien.erwachsene.toFixed(0)
         })
-      )
+      ),
+      // Regional vs. Schweiz — ruhiges Barometer (Fairness-Vision Stoßrichtung 1)
+      regionalComparison && React.createElement(RegionalBarometer, {
+        palette, t, comparison: regionalComparison, userValue: userPremium, kind: 'premium'
+      })
     ),
 
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
