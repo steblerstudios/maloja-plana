@@ -1,4 +1,24 @@
 export default {
+  lebenszustaende: {
+    sectionTitle: 'Une de ces situations vous concerne-t-elle ?',
+    sectionIntro: 'Certaines aides ne dépendent pas d’un événement précis, mais d’une situation qui dure. Choisissez ce qui correspond — rien n’est enregistré comme étiquette, cela montre seulement ce qui pourrait exister.',
+    selectHint: 'Touchez une situation pour voir ce qui pourrait s’appliquer.',
+    quelleLabel: 'Source',
+    standLabel: 'État',
+    moreInfo: 'En savoir plus',
+    tiefesEinkommen: {
+      label: 'Quand l’argent est juste',
+      frage: 'Le revenu ne suffit souvent pas jusqu’à la fin du mois ?',
+      intro: 'Avec un faible revenu, plusieurs formes de soutien existent — beaucoup restent inutilisées faute d’être connues.',
+      berechtigungen: {
+        ipv: { titel: 'Réduction des primes (RIP)', text: 'Le canton aide à payer les primes d’assurance-maladie pour les revenus bas et moyens. Beaucoup d’ayants droit ne font jamais de demande.' },
+        mietzins: { titel: 'Aide au logement', text: 'Certains cantons et communes participent au loyer lorsqu’il pèse trop lourd sur un faible revenu.' },
+        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre pas l’essentiel, l’aide sociale peut compléter. C’est un droit, pas une charité.' },
+        stipendien: { titel: 'Bourses d’études', text: 'Des bourses existent pour la formation et les études à faible revenu — remboursables ou non.' },
+        franchise: { titel: 'Vérifier la franchise', text: 'Avec peu de visites médicales, une franchise plus élevée réduit la prime mensuelle — à revoir chaque automne.' },
+      },
+    },
+  },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',
     intro: 'L\'assurance complémentaire est distincte de l\'assurance de base — ses propres règles, ses propres délais. Un chemin tranquille en quatre étapes.',
