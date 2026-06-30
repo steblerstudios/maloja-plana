@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
+import { renderSource } from '../utils/renderSource.js';
 
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Sophie):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
@@ -91,7 +92,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Quelle
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
-    }, t(k + 'source', { year })),
+    }, renderSource(t(k + 'source', { year }))),
   );
 };
 

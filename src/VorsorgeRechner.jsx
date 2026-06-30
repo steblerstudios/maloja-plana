@@ -3,6 +3,7 @@ import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, b
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { renderSource } from './utils/renderSource.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -332,7 +333,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen'] }),
 
     React.createElement('div', { style: s.source },
-      t('vr.source')
+      renderSource(t('vr.source'))
     ),
 
     onNavigate && React.createElement('button', {

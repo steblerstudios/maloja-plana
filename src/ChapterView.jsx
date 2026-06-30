@@ -683,6 +683,10 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               }, '▾')
             ),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
+        // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
+        field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && allData.finanzen.employmentType === 'employed' &&
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + tr('uvgHint.fieldSuggest')),
         renderOrientation(field)
       );
     }
