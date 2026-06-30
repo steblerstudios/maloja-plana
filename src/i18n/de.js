@@ -2695,6 +2695,7 @@ export default {
     exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
   },
   po: {
+    franchiseChangeWhen: 'Die Franchise lässt sich einmal pro Jahr ändern — wirksam auf den 1. Januar, Anmeldung bis Ende November (Kassenwechsel: 30. November). Quelle: [[KVG Art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KVV Art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
     franchiseOptTitle: 'Lohnt sich eine höhere Franchise?',
     franchiseOptSaving: { sie: 'Mit Franchise CHF {high} statt CHF {low} sparen Sie rund CHF {saving}/Jahr an Prämien.', du: 'Mit Franchise CHF {high} statt CHF {low} sparst du rund CHF {saving}/Jahr an Prämien.' },
     franchiseOptReserve: { sie: 'Dafür tragen Sie im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster sollten Sie zurücklegen können.', du: 'Dafür trägst du im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster solltest du zurücklegen können.' },

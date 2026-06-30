@@ -2717,6 +2717,7 @@ export default {
     exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',
   },
   po: {
+    franchiseChangeWhen: 'La franchise peut être changée une fois par an — effet au 1er janvier, avis jusqu\'à fin novembre (changement de caisse : 30 novembre). Source : [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/fr]].',
     franchiseOptTitle: 'Une franchise plus élevée en vaut-elle la peine ?',
     franchiseOptSaving: 'Avec une franchise de CHF {high} au lieu de CHF {low}, vous économisez environ CHF {saving}/an de primes.',
     franchiseOptReserve: 'En contrepartie, une mauvaise année, vous payez jusqu\'à CHF {reserve} vous-même (franchise + quote-part max. CHF {sb}). Vous devriez pouvoir mettre ce coussin de côté.',
