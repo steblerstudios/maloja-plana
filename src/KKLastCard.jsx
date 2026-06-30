@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from './IconSystem.jsx';
 import { calculateIPV } from './config/cantonalData.js';
 import { text, weight, space, radius, leading } from './config/tokens.js';
+import { renderSource } from './utils/renderSource.js';
 
 // WHO / UNO SDG-Indikator 3.8.2: Gesundheitsausgaben über 10% des Einkommens
 // gelten als "katastrophale" (belastende) Ausgaben. Ruhige Orientierung, kein Alarm.
@@ -73,7 +74,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       t('kkLast.underWithIpv')
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('kkLast.whoNote')),
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('kkLast.source')),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, renderSource(t('kkLast.source'))),
     over && onNavigate && React.createElement('button', {
       type: 'button',
       onClick: () => onNavigate('premium'),

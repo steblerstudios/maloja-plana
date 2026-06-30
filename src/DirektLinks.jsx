@@ -3,7 +3,7 @@ import { DIREKTLINKS, KATEGORIEN, getAllKategorien, getLinksByKategorie, getCant
 import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
-import { linkifyDomains } from './utils/linkifyDomains.js';
+import { renderSource } from './utils/renderSource.js';
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
@@ -86,7 +86,7 @@ export const DirektLinks = ({ palette, t, data }) => {
       )
     ),
 
-    React.createElement('div', { style: s.source }, linkifyDomains(t('dl.source')))
+    React.createElement('div', { style: s.source }, renderSource(t('dl.source')))
   );
 };
 
