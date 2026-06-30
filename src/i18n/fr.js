@@ -1485,7 +1485,7 @@ export default {
     incomeAlimente: 'Pension alimentaire reçue',
     ipvRelief: 'Réduction IPV',
     ipvEffective: 'Charge effective',
-    benchmark: 'À titre indicatif : un ménage moyen dépense ici environ {amount} (OFS 2023). Le vôtre peut tout à fait différer.',
+    benchmark: 'À titre indicatif : un ménage comparable dépense ici environ {amount} (OFS 2020/21). Le vôtre peut tout à fait différer.',
     priceTrend: 'Ici, les prix ont évolué de {pct} depuis 2020 — ensemble {general} (renchérissement OFS).',
   },
 
