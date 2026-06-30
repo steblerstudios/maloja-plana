@@ -1490,6 +1490,8 @@ export default {
     priceTrend: 'Qui i prezzi sono variati del {pct} dal 2020 — in generale {general} (rincaro UST).',
     infoToggle: 'Valori indicativi e rincaro',
     skosTitle: 'Fabbisogno di base COSAS (orientamento)',
+    skosClaim: 'Il tuo reddito è sotto il fabbisogno (≈ {amount}/mese) — l\'aiuto sociale potrebbe essere rilevante.',
+    skosNoClaim: 'L\'aiuto sociale probabilmente non è rilevante qui — il tuo reddito supera quanto coprirebbe (≈ {amount}/mese).',
   },
 
   premium: {

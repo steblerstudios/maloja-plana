@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
+import { calculateSozialhilfe } from './config/cantonalData.js';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
@@ -85,6 +86,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const groupHasInfo = (group) => group.total > 0 &&
     !!(benchmarkFor(BUDGET_BENCHMARKS.byGroup, group.key, htype) || BUDGET_PRICE_TREND.byGroup[group.key]);
   const skosShown = !!(budget.householdContext && budget.income > 0);
+  // Faden 4 / Inkr. B — Sozialhilfe-Anspruch (ganzes Unterstützungsbudget, nicht nur Grundbedarf)
+  const sozialhilfe = skosShown ? calculateSozialhilfe(data) : null;
   const allInfoKeys = [];
   groupData.forEach(g => {
     if (groupHasInfo(g)) allInfoKeys.push(g.key);
@@ -326,6 +329,18 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
             size: budget.householdContext.size,
             amount: formatCHF(budget.householdContext.skosGrundbedarf),
           })
+        ),
+        // Entitlement orientation: greyed-out "not relevant" when income covers the
+        // full support budget (Grundbedarf + rent + KK) — calm, never a rejection.
+        sozialhilfe && React.createElement('div', {
+          style: {
+            marginBottom: space.xs,
+            color: sozialhilfe.eligible ? palette.mid : palette.soft,
+            fontStyle: sozialhilfe.eligible ? 'normal' : 'italic',
+          }
+        }, sozialhilfe.eligible
+          ? t('budgetSync.skosClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
+          : t('budgetSync.skosNoClaim', { amount: formatCHF(sozialhilfe.totalBedarf) })
         ),
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.soft }

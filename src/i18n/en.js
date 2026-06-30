@@ -1490,6 +1490,8 @@ export default {
     priceTrend: 'Prices here have changed by {pct} since 2020 — overall {general} (FSO inflation index).',
     infoToggle: 'Benchmarks & inflation',
     skosTitle: 'SKOS basic needs (orientation)',
+    skosClaim: 'Your income is below the support budget (≈ {amount}/mo) — social assistance could be relevant.',
+    skosNoClaim: 'Social assistance is probably not relevant here — your income is above what it would cover (≈ {amount}/mo).',
   },
 
   premium: {
