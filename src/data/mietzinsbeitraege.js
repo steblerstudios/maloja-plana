@@ -44,9 +44,12 @@ const PROGRAMS = {
   GE: { state: 'has', group: 'all', incomeLimit: null, residencyYears: 2, benefitMaxRoom: 1400,
         noteKey: 'mietzinsView.cantonNote_GE', stand: '2024',
         url: 'https://www.ge.ch/allocation-logement/allocation-logement-conditions-obligations' },
-  // Zug — Mietzinszuschüsse (WFG). Einkommen nach dir. Bundessteuer ≤ 60'000 (+2'500/Kind,
-  // +20'000 je weitere erwachsene Person); Reinvermögen ≤ 144'000; Wohnung max. 2 Zimmer mehr
-  // als Personen; min. 3 Jahre Wohnsitz/Arbeit; an Vermieter ausbezahlt. Quelle: zg.ch.
+  // Zug — Mietzinszuschüsse (WFG). Einkommen nach dir. Bundessteuer ≤ 60'000 (+2'500/Kind;
+  // die Basisgrenze gilt für ZWEI Erwachsene, erst ab der 3. erwachsenen Person +20'000 je
+  // weitere — siehe mietzinsIncomeLimit `adults - 2`, belegt durch das ZG-Merkblatt
+  // Mietzinsbeiträge Sept. 2025: „Für mehr als zwei erwachsene Personen erhöht sich die
+  // Einkommensgrenze um CHF 20'000 je weitere Person."); Reinvermögen ≤ 144'000; Wohnung
+  // max. 2 Zimmer mehr als Personen; min. 3 Jahre Wohnsitz/Arbeit; an Vermieter. Quelle: zg.ch.
   ZG: { state: 'has', group: 'all', incomeLimit: 60000, incomePerChild: 2500, incomePerAdult: 20000,
         residencyYears: 3, assetLimit: 144000,
         noteKey: 'mietzinsView.cantonNote_ZG', stand: '2025',
@@ -67,6 +70,8 @@ export function mietzinsIncomeLimit(program, householdSize = 1, childrenCount = 
   let limit = program.incomeLimit;
   if (program.incomePerChild) limit += program.incomePerChild * childrenCount;
   if (program.incomePerAdult) {
+    // ZG-Regel: Basisgrenze gilt für zwei Erwachsene, Zuschlag erst ab der 3. Person
+    // („Für mehr als zwei erwachsene Personen … +20'000 je weitere Person", ZG-Merkblatt).
     const adults = Math.max(1, householdSize - childrenCount);
     limit += program.incomePerAdult * Math.max(0, adults - 2);
   }
