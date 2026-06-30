@@ -1216,6 +1216,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.kind'), sub: t('nav.sub.kind'), view: 'kind', icon: 'child' },
             { label: t('nav.trennung'), sub: t('nav.sub.trennung'), view: 'trennung', icon: 'family' },
             { label: t('nav.bewilligung'), sub: t('nav.sub.bewilligung'), view: 'bewilligung', icon: 'behoerden' },
+            { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
+            { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
           ] },
           { label: t('dashboard.toolGroups.money'), items: [
             { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
