@@ -2718,6 +2718,11 @@ export default {
     exportBlocked: 'Export is not available in example mode.',
   },
   po: {
+    franchiseOptTitle: 'Is a higher deductible worth it?',
+    franchiseOptSaving: 'With a CHF {high} deductible instead of CHF {low}, you save about CHF {saving}/year on premiums.',
+    franchiseOptReserve: 'In return, in a bad year you pay up to CHF {reserve} yourself (deductible + max. coinsurance CHF {sb}). You should be able to set this buffer aside.',
+    franchiseOptBreakeven: 'The higher deductible pays off as long as your health costs stay below about CHF {breakeven}/year.',
+    franchiseOptSource: 'Source: [[KVG Art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · coinsurance 10% / max. CHF 700 (adults), CHF 350 (children).',
     pickFranchiseHint: 'Tap a deductible to compare insurers at that level.',
     chooseByPrice: 'Tap a price (with/without accident) to set the insurer as your target.',
     unfallLabel: 'Accident cover',
