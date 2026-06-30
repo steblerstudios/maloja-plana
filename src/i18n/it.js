@@ -40,6 +40,7 @@ export default {
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non assistenza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Chi riceve PC è esentato dai premi; con un reddito basso si ha comunque spesso diritto a un aiuto.' },
         steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
+        serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Chi riceve prestazioni complementari (PC) è esentato dal canone SERAFE su richiesta — recuperabile retroattivamente.' },
         sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Una carta gratuita permette a un accompagnatore di viaggiare gratis sui trasporti pubblici — anche in caso di disabilità visiva, motoria o mentale. Domanda con conferma medica.' },
       },
     },
