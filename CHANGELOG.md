@@ -5,6 +5,25 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.8-beta] — 2026-06-30
+
+Belegbare Haushalts-Budget-Richtwerte (BFS) mit Teuerungs-Gap, abgestimmt auf
+die Haushaltsgrösse — ruhig einklappbar. Und der Lebensbaum wird anklickbar.
+
+### Neu
+- **Budget-Richtwerte pro Kategorie (BFS)**: Zu Wohnen, Mobilität, Lebensmitteln, Kommunikation, Steuern und Krankenkasse zeigt das Monatsbudget ruhig, was ein vergleichbarer Haushalt im Schnitt ausgibt — als Orientierung, nie als Wertung
+- **Nach Haushaltsgrösse abgestimmt**: die Richtwerte passen sich an (Einzelperson, Paar, Familie …) — die Spanne ist gross (z. B. Lebensmittel von ~390 bis ~970)
+- **Teuerung pro Kategorie**: wie stark die Preise seit 2020 gestiegen sind, im Vergleich zur allgemeinen Teuerung — sichtbar wird, dass Wohnen & Energie am stärksten steigt
+- **Alles ruhig einklappbar**: Richtwerte, Teuerung und der SKOS-Block sind standardmässig eingeklappt — ein Schalter blendet alles ein, oder pro Kategorie einzeln
+- **Sozialhilfe-Anspruch im Blick**: liegt das Einkommen über dem, was die Sozialhilfe decken würde, erscheint das ruhig ausgegraut — Orientierung, keine Bewertung
+- **Lebensbaum anklickbar**: die Blätter im Dashboard-Baum führen jetzt direkt zur passenden Ansicht (Budget, Steuern, IPV, Sozialhilfe, Notfall …)
+
+### Quellen
+- BFS Haushaltsbudgeterhebung (HABE) 2023 / nach Haushaltstyp 2020–2021
+- BFS Landesindex der Konsumentenpreise (LIK)
+
+---
+
 ## [0.1.7-beta] — 2026-06-29
 
 Briefe nach Schweizer Norm mit Auto-Feldern, ein mitdenkender Gesundheits-Kalender
