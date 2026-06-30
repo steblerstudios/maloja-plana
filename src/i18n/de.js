@@ -6,6 +6,9 @@ export default {
     quelleLabel: 'Quelle',
     standLabel: 'Stand',
     moreInfo: 'Mehr erfahren',
+    pageTitle: 'Lebenssituationen',
+    pageSub: 'Versteckte Ansprüche entdecken',
+    dashboardLink: 'Trifft eine Situation auf dich zu? →',
     tiefesEinkommen: {
       label: 'Wenn das Geld knapp ist',
       frage: 'Reicht das Einkommen oft nicht bis Ende Monat?',

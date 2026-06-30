@@ -6,6 +6,9 @@ export default {
     quelleLabel: 'Fonte',
     standLabel: 'Stato',
     moreInfo: 'Saperne di più',
+    pageTitle: 'Situazioni di vita',
+    pageSub: 'Scoprire diritti poco noti',
+    dashboardLink: 'Una situazione la riguarda? →',
     tiefesEinkommen: {
       label: 'Quando i soldi non bastano',
       frage: 'Il reddito spesso non arriva a fine mese?',

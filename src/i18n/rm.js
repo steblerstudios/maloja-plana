@@ -7,6 +7,9 @@ export default {
     quelleLabel: 'Funtauna',
     standLabel: 'Stadi',
     moreInfo: 'Vinavant',
+    pageTitle: 'Situaziuns da vita',
+    pageSub: 'Scuvrir dretgs pauc enconuschents',
+    dashboardLink: 'Pertutga ina situaziun a Vus? →',
     tiefesEinkommen: {
       label: 'Cura ch’ils raps èn stretgs',
       frage: 'Il retgav na basta savens betg fin la fin dal mais?',
