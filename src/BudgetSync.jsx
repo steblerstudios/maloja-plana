@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS } from './budgetSync.js';
+import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
@@ -82,10 +82,23 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     }
   }, t('budgetSync.benchmark', { amount: formatCHF(avg * mult) }));
 
+  // Quiet BFS price-trend line (Faden 4 / 3b) — change since the index base, factual.
+  // Signed whole-percent vs. the general index; lets the housing outlier speak for itself.
+  const fmtTrend = (n) => (n >= 0 ? '+' : '−') + Math.abs(Math.round(n)) + ' %';
+  const generalTrend = fmtTrend(BUDGET_PRICE_TREND.total - 100);
+  const renderTrendLine = (index, key, groupLevel) => React.createElement('div', {
+    key: 'tr-' + key,
+    style: {
+      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '6px',
+      fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
+    }
+  }, t('budgetSync.priceTrend', { pct: fmtTrend(index - 100), general: generalTrend }));
+
   // Render a single field line
   const renderItem = (item) => {
     const isEmpty = item.value === 0;
     const bm = isEmpty ? null : BUDGET_BENCHMARKS.byField[item.key];
+    const trend = isEmpty ? null : BUDGET_PRICE_TREND.byField[item.key];
     return React.createElement('div', { key: item.key },
       React.createElement('div', { style: itemLineStyle },
         React.createElement('span', null, item.label),
@@ -93,7 +106,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           ? React.createElement('span', { style: emptyValueStyle }, '—')
           : React.createElement('span', null, formatCHF(item.value * mult))
       ),
-      bm && renderBenchmarkLine(bm, item.key)
+      bm && renderBenchmarkLine(bm, item.key),
+      trend && renderTrendLine(trend, item.key)
     );
   };
 
@@ -108,6 +122,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const pct = groupPercent(group.total);
     const singleField = group.items.length === 1;
     const groupBm = group.total > 0 ? BUDGET_BENCHMARKS.byGroup[group.key] : null;
+    const groupTrend = group.total > 0 ? BUDGET_PRICE_TREND.byGroup[group.key] : null;
     return React.createElement('div', { key: group.key, style: { marginBottom: space.xs } },
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
@@ -123,6 +138,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       ),
       // BFS group-level benchmark (e.g. Housing, Mobility) directly under the header
       groupBm && renderBenchmarkLine(groupBm, group.key, true),
+      // BFS group-level price trend since the index base (e.g. Housing +14%)
+      groupTrend && renderTrendLine(groupTrend, group.key, true),
       // Individual items — skip when group has only one field (avoids redundant line)
       !singleField && group.items.map(renderItem)
     );

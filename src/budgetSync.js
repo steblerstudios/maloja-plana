@@ -37,6 +37,29 @@ export const BUDGET_BENCHMARKS = {
   },
 };
 
+// Faden 4 / Inkrement 3b — Teuerung pro Kategorie seit der Basis (belegbar).
+// Quelle: BFS Landesindex der Konsumentenpreise (LIK), Basis Dezember 2020 = 100,
+// Stand August 2025 (letzter Stand dieser Basisreihe; ab 2026 neu basiert).
+// Zeigt ehrlich, wo die Lebenshaltung wirklich stärker teuerte: Wohnen & Energie (114,4)
+// liegt weit über dem Gesamtschnitt (107,7), während Nahrungsmittel (107,3) im Schnitt
+// und Nachrichtenübermittlung (98,3) sogar darunter liegen — korrigiert die Annahme,
+// Essen/Haushalt seien die Treiber.
+// KK-Prämien und Steuern sind NICHT Teil des LIK → bewusst nicht hinterlegt.
+export const BUDGET_PRICE_TREND = {
+  source: 'BFS LIK',
+  base: 'Dezember 2020 = 100',
+  asOf: 'August 2025',
+  total: 107.7, // Gesamtindex = allgemeine Teuerung
+  byGroup: {
+    housing: 114.4,   // Wohnen und Energie
+    mobility: 109.6,  // Verkehr
+  },
+  byField: {
+    groceries: 107.3,     // Nahrungsmittel und alkoholfreie Getränke
+    communication: 98.3,  // Nachrichtenübermittlung
+  },
+};
+
 const syncBudgetFromChapters = (data) => {
   const netIncome = Number(data.finanzen?.monthlyIncome || 0);
   const familienzulagen = Number(data.finanzen?.familienzulagen || 0);
