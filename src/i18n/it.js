@@ -1488,6 +1488,8 @@ export default {
     ipvEffective: 'Costo effettivo',
     benchmark: "Per orientamento: un'economia domestica simile spende qui circa {amount} (UST 2020/21). La tua può tranquillamente differire.",
     priceTrend: 'Qui i prezzi sono variati del {pct} dal 2020 — in generale {general} (rincaro UST).',
+    infoToggle: 'Valori indicativi e rincaro',
+    skosTitle: 'Fabbisogno di base COSAS (orientamento)',
   },
 
   premium: {
