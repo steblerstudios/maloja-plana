@@ -15,26 +15,48 @@ export const BUDGET_GROUPS = [
   { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
 ];
 
-// Faden 4 / Inkrement 1 — belegbare Haushalts-Budget-Richtwerte (Orientierung, nicht Kontrolle).
-// Quelle: BFS Haushaltsbudgeterhebung (HABE) 2023, Durchschnitt aller Haushalte (⌀ 2,07 Pers.),
-// CHF pro Monat. Bewusst Kategorie-Richtwerte, KEINE erfundenen Einzelpreise.
-// Nur Kategorien mit sauberer 1:1-Entsprechung zur BFS-Kategorie sind hinterlegt.
-// Erweiterbar um Werte nach Haushaltsgrösse (Inkrement 2) — Struktur bleibt stabil.
+// Faden 4 / Inkr. 1+2 — belegbare Haushalts-Budget-Richtwerte (Orientierung, nicht Kontrolle).
+// Quelle: BFS Haushaltsbudgeterhebung (HABE), Tabelle T20.02.01.00.13 „Haushaltseinkommen
+// und -ausgaben nach Haushaltstyp", neuester Stand 2020/21, CHF pro Monat.
+// Bewusst Kategorie-Richtwerte, KEINE erfundenen Einzelpreise. Nur Kategorien mit sauberer
+// 1:1-Entsprechung zur BFS-Kategorie. Werte sind nach Haushaltstyp abgestuft (Inkrement 2):
+// die Spanne zwischen Einpersonen- und Familienhaushalt ist gross (z.B. Lebensmittel 387↔968),
+// darum ist Size-Matching wertvoller als die 2 Jahre jüngeren ⌀-Werte (2023).
+// Typ-Schlüssel: all · single_u65 · single_o65 · couple_u65 · couple_o65 · singleparent · couple_kids
 export const BUDGET_BENCHMARKS = {
-  source: 'BFS HABE 2023',
-  avgHouseholdSize: 2.07,
+  source: 'BFS HABE 2020/21',
   // Auf Gruppenebene gezeigt (Gruppe entspricht einer BFS-Kategorie)
   byGroup: {
-    housing: 1449,   // Wohnen und Energie
-    mobility: 744,   // Verkehr
+    housing:  { all: 1383, single_u65: 1277, single_o65: 1065, couple_u65: 1575, couple_o65: 1111, singleparent: 1593, couple_kids: 1626 }, // Wohnen und Energie
+    mobility: { all: 655,  single_u65: 465,  single_o65: 257,  couple_u65: 881,  couple_o65: 598,  singleparent: 605,  couple_kids: 960 },  // Verkehr
   },
   // Auf Feldebene gezeigt (Feld entspricht einer BFS-Kategorie)
   byField: {
-    groceries: 638,        // Nahrungsmittel und alkoholfreie Getränke
-    communication: 162,    // Nachrichtenübermittlung
-    tax: 1245,             // Steuern
-    healthInsurance: 689,  // Krankenkasse: Prämien für die Grundversicherung
+    groceries:       { all: 665,  single_u65: 387, single_o65: 412, couple_u65: 716,  couple_o65: 795,  singleparent: 648, couple_kids: 968 },  // Nahrungsmittel und alkoholfreie Getränke
+    communication:   { all: 172,  single_u65: 130, single_o65: 116, couple_u65: 194,  couple_o65: 167,  singleparent: 198, couple_kids: 225 },  // Nachrichtenübermittlung
+    tax:             { all: 1201, single_u65: 797, single_o65: 902, couple_u65: 1591, couple_o65: 1477, singleparent: 778, couple_kids: 1420 }, // Steuern
+    healthInsurance: { all: 670,  single_u65: 364, single_o65: 454, couple_u65: 689,  couple_o65: 864,  singleparent: 705, couple_kids: 917 },  // Krankenkasse: Grundversicherung
   },
+};
+
+// Ordnet den Haushalt des Nutzers dem nächstliegenden BFS-Haushaltstyp zu.
+// hc = budget.householdContext { size, adults, children (Anzahl), isRetired }.
+export const resolveHouseholdType = (hc) => {
+  if (!hc) return 'all';
+  const adults = hc.adults || 1;
+  const children = hc.children || 0;
+  const retired = !!hc.isRetired;
+  if (children > 0) return adults >= 2 ? 'couple_kids' : 'singleparent';
+  if (adults >= 2) return retired ? 'couple_o65' : 'couple_u65';
+  if (adults === 1) return retired ? 'single_o65' : 'single_u65';
+  return 'all';
+};
+
+// Liefert den Richtwert einer Kategorie für den aufgelösten Haushaltstyp (Fallback: all).
+export const benchmarkFor = (map, key, htype) => {
+  const entry = map && map[key];
+  if (!entry) return null;
+  return entry[htype] != null ? entry[htype] : entry.all;
 };
 
 // Faden 4 / Inkrement 3b — Teuerung pro Kategorie seit der Basis (belegbar).

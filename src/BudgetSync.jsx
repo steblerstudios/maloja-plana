@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND } from './budgetSync.js';
+import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
@@ -72,6 +72,9 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Multiplier for annual view
   const mult = showAnnual ? 12 : 1;
 
+  // Faden 4 / Inkr. 2 — match BFS benchmarks to the user's household type
+  const htype = resolveHouseholdType(budget.householdContext);
+
   // Quiet BFS benchmark line (Faden 4) — orientation only, never a judgement.
   // groupLevel = no extra indent; field-level lines sit under their indented item.
   const renderBenchmarkLine = (avg, key, groupLevel) => React.createElement('div', {
@@ -97,7 +100,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Render a single field line
   const renderItem = (item) => {
     const isEmpty = item.value === 0;
-    const bm = isEmpty ? null : BUDGET_BENCHMARKS.byField[item.key];
+    const bm = isEmpty ? null : benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype);
     const trend = isEmpty ? null : BUDGET_PRICE_TREND.byField[item.key];
     return React.createElement('div', { key: item.key },
       React.createElement('div', { style: itemLineStyle },
@@ -121,7 +124,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const renderGroup = (group) => {
     const pct = groupPercent(group.total);
     const singleField = group.items.length === 1;
-    const groupBm = group.total > 0 ? BUDGET_BENCHMARKS.byGroup[group.key] : null;
+    const groupBm = group.total > 0 ? benchmarkFor(BUDGET_BENCHMARKS.byGroup, group.key, htype) : null;
     const groupTrend = group.total > 0 ? BUDGET_PRICE_TREND.byGroup[group.key] : null;
     return React.createElement('div', { key: group.key, style: { marginBottom: space.xs } },
       // Group header with label, total, and quiet percentage
