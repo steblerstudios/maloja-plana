@@ -9,13 +9,18 @@ export const SELBSTBEHALT_RATE = 0.10;
 export const SELBSTBEHALT_MAX = 700;
 export const SELBSTBEHALT_MAX_KINDER = 350;
 
-export function berechneFranchise(franchise, kosten) {
-  const fr = Number(franchise) || 300;
+// selbstbehaltMax (optional): Kinder haben CHF 350 statt 700 (SELBSTBEHALT_MAX_KINDER).
+// franchise 0 (Kinder ohne Franchise) ist gültig — daher kein `|| 300` (würde 0 zu 300
+// machen); nur fehlende/ungültige Werte fallen auf 300 zurück.
+export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEHALT_MAX) {
+  const n = Number(franchise);
+  const fr = Number.isFinite(n) ? n : 300;
   const k = Number(kosten) || 0;
+  const sbMax = Number.isFinite(Number(selbstbehaltMax)) ? Number(selbstbehaltMax) : SELBSTBEHALT_MAX;
   const franchiseVerbraucht = Math.min(k, fr);
   const franchiseOffen = fr - franchiseVerbraucht;
   const kostenUeberFranchise = Math.max(0, k - fr);
-  const selbstbehalt = Math.min(kostenUeberFranchise * SELBSTBEHALT_RATE, SELBSTBEHALT_MAX);
+  const selbstbehalt = Math.min(kostenUeberFranchise * SELBSTBEHALT_RATE, sbMax);
   const kasseZahlt = Math.max(0, k - franchiseVerbraucht - selbstbehalt);
   const eigenanteil = franchiseVerbraucht + selbstbehalt;
   return {
@@ -24,10 +29,10 @@ export function berechneFranchise(franchise, kosten) {
     franchiseVerbraucht,
     franchiseOffen,
     selbstbehalt,
-    selbstbehaltMax: SELBSTBEHALT_MAX,
+    selbstbehaltMax: sbMax,
     kasseZahlt,
     eigenanteil,
-    selbstbehaltAusgeschoepft: selbstbehalt >= SELBSTBEHALT_MAX,
+    selbstbehaltAusgeschoepft: selbstbehalt >= sbMax,
   };
 }
 
