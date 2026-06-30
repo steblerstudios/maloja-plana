@@ -1487,6 +1487,8 @@ export default {
     ipvEffective: 'Effektive Belastung',
     benchmark: 'Zur Orientierung: ein vergleichbarer Haushalt gibt hier rund {amount} aus (BFS 2020/21). Deiner kann gut abweichen.',
     priceTrend: 'Die Preise hier haben sich seit 2020 um {pct} verändert — allgemein {general} (BFS Teuerung).',
+    infoToggle: 'Richtwerte & Teuerung',
+    skosTitle: 'SKOS-Grundbedarf (Orientierung)',
   },
 
   premium: {
