@@ -65,10 +65,12 @@ const HEARTFELT = [
   { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
   { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41', group: 'kunst' }, // keine eigene Website – Gemeinde-Verzeichnis
   { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/', group: 'gesundheit' },
+  { key: 'heartfelt23', name: 'Winterhilfe Schweiz', url: 'https://www.winterhilfe.ch', group: 'soziales' },
+  { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.
-const HEARTFELT_GROUPS = ['digital', 'konsum', 'tiere', 'gesundheit', 'kunst', 'gemeinschaft'];
+const HEARTFELT_GROUPS = ['digital', 'soziales', 'konsum', 'tiere', 'gesundheit', 'kunst', 'gemeinschaft'];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
 // die URL eintragen (z. B. Twint-Link, Stripe-Payment-Link, Ko-fi, Bank-QR-Seite).
