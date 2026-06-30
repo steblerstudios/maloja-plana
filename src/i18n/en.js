@@ -43,6 +43,17 @@ export default {
         sbbBegleitabo: { titel: 'SBB companion card', text: 'A free card lets a companion travel with you at no charge on public transport — also for visual, mobility or cognitive disabilities. Apply with a medical confirmation.' },
       },
     },
+    pflegendeAngehoerige: {
+      label: 'Caring for a relative',
+      frage: 'Regularly caring for a relative or close person?',
+      intro: 'Care given quietly is rarely recognised — yet it can build pension credits and entitlements. Relief services and counselling exist too.',
+      berechtigungen: {
+        betreuungsgutschriften: { titel: 'Care credits (AHV)', text: 'Caring for a close relative can be credited to your AHV account and raise your future pension — claimed yearly with the compensation office.' },
+        betreuungsentschaedigung: { titel: 'Care allowance (EO)', text: 'Paid leave to care for a severely ill or injured child, plus short leave to care for a relative — compensated through the EO scheme.' },
+        hilflosenentschaedigung: { titel: 'Helplessness allowance (for the person cared for)', text: 'The person you care for may be entitled to a monthly allowance — which can help fund the care they need.' },
+        steuern: { titel: 'Support deduction', text: 'If you substantially support a person in need, you can claim a deduction for them on your tax return.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',

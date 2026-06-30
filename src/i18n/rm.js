@@ -44,6 +44,17 @@ export default {
         sbbBegleitabo: { titel: 'Abunament d’accumpagnament dlas VFF', text: 'Cun ina carta gratuita po ina persuna d’accumpagnament viagiar gratuitamain en il traffic public — er en cas d’impediment dal vesair, dal moviment u spiertal. Dumonda cun conferma medicinala.' },
       },
     },
+    pflegendeAngehoerige: {
+      label: 'Tgirar confamigliars',
+      frage: 'Tgirais Vus regularmain ina persuna confamigliara u dativa?',
+      intro: 'La tgira ch’ins fa en silenzi resta savens nunconsiderada — e tuttina po ella crear bunificaziuns da renta e dretgs. I dat er servetschs da sgraventada e cussegliaziun.',
+      berechtigungen: {
+        betreuungsgutschriften: { titel: 'Bunificaziuns d’assistenza (AVS)', text: 'La tgira da confamigliars datvis po vegnir scrita sin Voss conto da l’AVS ed augmentar Vossa renta futura — annunziar mintg’onn tar la cassa da cumpensaziun.' },
+        betreuungsentschaedigung: { titel: 'Indemnisaziun da tgira (UCG)', text: 'Congedi pajà per tgirar in uffant grevamain malsaun u accidentà, plis in curt congedi per in confamigliar — indemnisads tras l’UCG.' },
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas (da la persuna tgirada)', text: 'La persuna tgirada po avair dretg sin in import mensil — quai po gidar a finanziar la tgira necessaria.' },
+        steuern: { titel: 'Deducziun per persunas sustegnidas', text: 'Tgi che sustegna essenzialmain ina persuna en basegn po la deducir en la decleraziun da taglia.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
