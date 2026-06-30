@@ -97,8 +97,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     const reserve = high.franchise + sbMax; // max. Eigenanteil/Jahr bei hoher Franchise
     let breakEven = null;
     for (let c = 0; c <= high.franchise + 8000; c += 50) {
-      const totalLow = low.premium * 12 + berechneFranchise(low.franchise, c).eigenanteil;
-      const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c).eigenanteil;
+      const totalLow = low.premium * 12 + berechneFranchise(low.franchise, c, sbMax).eigenanteil;
+      const totalHigh = high.premium * 12 + berechneFranchise(high.franchise, c, sbMax).eigenanteil;
       if (totalHigh > totalLow) { breakEven = c; break; }
     }
     return { lowFra: low.franchise, highFra: high.franchise, annualSaving, reserve, sbMax, breakEven };
