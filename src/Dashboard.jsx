@@ -378,7 +378,12 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius }) => {
+const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }) => {
+  // Each living leaf links to the view it stands for (was decorative-only before).
+  const navMap = {
+    tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
+    lohn: 'finanzuebersicht', notfall: 'notfalleinstieg', budget: 'sync',
+  };
   const connections = [
     { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
     { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
@@ -430,7 +435,17 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
           const leafY = top + 13;
           const ay = attachY(i);
           const cx = (trunkX + 150) / 2;
-          return React.createElement('g', { key: 'b-' + c.key },
+          const target = navMap[c.key];
+          const go = (target && onNavigate) ? () => onNavigate(target) : null;
+          return React.createElement('g', {
+            key: 'b-' + c.key,
+            onClick: go || undefined,
+            onKeyDown: go ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } } : undefined,
+            role: go ? 'button' : undefined,
+            tabIndex: go ? 0 : undefined,
+            'aria-label': go ? c.label : undefined,
+            style: go ? { cursor: 'pointer' } : undefined,
+          },
             React.createElement('path', {
               d: 'M ' + trunkX + ' ' + ay + ' Q ' + cx + ' ' + ((ay + leafY) / 2 - 6) + ' 146 ' + leafY,
               fill: 'none', stroke: palette.sage, strokeWidth: 1.2, opacity: 0.5, strokeLinecap: 'round',
@@ -813,7 +828,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
 
     // ─── Verbindungs-Baum — wächst mit den Angaben (immer sichtbar) ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius }),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }),
 
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
