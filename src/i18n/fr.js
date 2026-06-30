@@ -2717,6 +2717,7 @@ export default {
     exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',
   },
   po: {
+    chooseByPrice: 'Touchez un prix (avec/sans accident) pour définir la caisse comme caisse souhaitée.',
     unfallLabel: 'Couverture accidents',
     mitUnfall: 'Avec accident',
     ohneUnfall: 'Sans accident',

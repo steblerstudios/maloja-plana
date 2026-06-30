@@ -2111,6 +2111,7 @@ export default {
   },
 
   po: {
+    chooseByPrice: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.',
     unfallLabel: 'Cuvrida d’accident',
     mitUnfall: 'Cun accident',
     ohneUnfall: 'Senza accident',
