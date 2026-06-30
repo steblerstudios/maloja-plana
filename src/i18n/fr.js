@@ -30,6 +30,19 @@ export default {
         steuern: { titel: 'Barème parental & déduction pour enfants', text: 'Les parents seuls sont imposés au barème parental plus bas et peuvent déduire les frais pour enfants et garde.' },
       },
     },
+    beeintraechtigung: {
+      label: 'Avec un handicap ou une maladie chronique',
+      frage: 'Vivez-vous avec un handicap, une maladie chronique ou une indication reconnue ?',
+      intro: 'Une indication peut ouvrir un soutien plus tôt ou plus largement qu’on ne le pense — beaucoup de choses sont rarement mentionnées et faciles à manquer.',
+      berechtigungen: {
+        iv: { titel: 'Prestations AI', text: 'Réadaptation avant la rente : mesures professionnelles, moyens auxiliaires et, si nécessaire, une rente. S’annoncer tôt compte le plus.' },
+        hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: 'Un montant mensuel si vous avez besoin d’aide régulière au quotidien — indépendant du revenu, souvent oublié.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si une rente ou un revenu ne couvre pas les frais de vie, les PC complètent. C’est un droit, pas de l’assistance.' },
+        ipv: { titel: 'Réduction des primes (RIP)', text: 'Les bénéficiaires de PC sont exonérés des primes ; avec un faible revenu, on a souvent droit à une aide malgré tout.' },
+        steuern: { titel: 'Déductions fiscales liées au handicap', text: 'Les frais de maladie et de handicap — soins, moyens auxiliaires, déplacements — sont déductibles du revenu imposable.' },
+        sbbBegleitabo: { titel: 'Abonnement pour accompagnateur CFF', text: 'Une carte gratuite permet à un·e accompagnant·e de voyager gratuitement dans les transports publics — aussi en cas de handicap visuel, moteur ou mental. Demande avec attestation médicale.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',
