@@ -1486,7 +1486,7 @@ export default {
     incomeAlimente: 'Maintenance received',
     ipvRelief: 'IPV relief',
     ipvEffective: 'Effective cost',
-    benchmark: 'For orientation: an average household spends about {amount} here (FSO 2023). Yours may well differ.',
+    benchmark: 'For orientation: a comparable household spends about {amount} here (FSO 2020/21). Yours may well differ.',
     priceTrend: 'Prices here have changed by {pct} since 2020 — overall {general} (FSO inflation index).',
   },
 
