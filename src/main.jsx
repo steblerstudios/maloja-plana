@@ -57,6 +57,7 @@ const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
 const UnfallKrankheit = React.lazy(() => import('./UnfallKrankheit.jsx'));
 const NeuerJob = React.lazy(() => import('./NeuerJob.jsx'));
 const StelleVerloren = React.lazy(() => import('./StelleVerloren.jsx'));
+const Lebenssituationen = React.lazy(() => import('./Lebenssituationen.jsx'));
 const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
 const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
 const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
@@ -909,6 +910,7 @@ const AppInner = () => {
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),

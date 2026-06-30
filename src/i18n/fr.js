@@ -6,6 +6,9 @@ export default {
     quelleLabel: 'Source',
     standLabel: 'État',
     moreInfo: 'En savoir plus',
+    pageTitle: 'Situations de vie',
+    pageSub: 'Découvrir des droits méconnus',
+    dashboardLink: 'Une situation vous concerne ? →',
     tiefesEinkommen: {
       label: 'Quand l’argent est juste',
       frage: 'Le revenu ne suffit souvent pas jusqu’à la fin du mois ?',
