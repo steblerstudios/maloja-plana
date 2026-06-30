@@ -5,6 +5,28 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.10-beta] — 2026-06-30
+
+Krankenkasse: Unfalldeckung mit/ohne transparent, Wunschkasse genauer wählbar
+und eine belegte Antwort auf „lohnt sich eine höhere Franchise?". Plus app-weit
+präzisere Quellen-Links.
+
+### Neu
+- **UVG mit/ohne Unfall**: als Angestellte:r bist du über den Arbeitgeber unfallversichert — ein ruhiger Hinweis zeigt, dass du die Unfalldeckung bei der Kasse abwählen kannst, und ein Umschalter zeigt die konkrete Prämien-Differenz
+- **Zwei Referenzspalten (mit/ohne Unfall)** in Franchise-Tabelle und Kassenvergleich
+- **Wunschkasse mit/ohne**: im Kassenvergleich die gewünschte Variante per Klick auf den Preis wählen
+- **Franchise umwählbar**: Franchise direkt anklicken oder im Kassenvergleich auswählen — Tabelle und Vergleich rechnen darauf
+- **Franchise-Optimierer**: Prämien-Ersparnis pro Jahr, die Reserve, die man tragen können sollte (Franchise + max. Selbstbehalt), und bis zu welchen Gesundheitskosten sich die höhere Franchise lohnt (KVG Art. 64)
+- **Aufklappbare Kassen-Detailansicht** als richtige Tabelle (Franchise / Mit / Ohne)
+
+### Verbessert
+- **Quellen-Links aufs Wort**: Quellen verlinken jetzt das Wort selbst (BAG, WHO, SKOS …) statt einer zweiten, lärmenden Domain — und Gesetzesartikel führen auf die amtliche Fassung (fedlex, sprachrichtig)
+
+### Quellen
+- BAG priminfo.admin.ch (Prämien je Tarif/Franchise) · KVG Art. 64 / KLV (Selbstbehalt) · WHO/UNO SDG 3.8.2 · SKOS · fedlex (Gesetzesartikel)
+
+---
+
 ## [0.1.9-beta] — 2026-06-30
 
 Sichtbare Fairness: die Krankenkassen-Prämie und die Miete der eigenen Region
