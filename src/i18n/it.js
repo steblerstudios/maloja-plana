@@ -1487,6 +1487,7 @@ export default {
     ipvRelief: 'Riduzione IPV',
     ipvEffective: 'Costo effettivo',
     benchmark: 'Per orientamento: una famiglia media spende qui circa {amount} (UST 2023). La tua può tranquillamente differire.',
+    priceTrend: 'Qui i prezzi sono variati del {pct} dal 2020 — in generale {general} (rincaro UST).',
   },
 
   premium: {
