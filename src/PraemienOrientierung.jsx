@@ -276,18 +276,38 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           ),
           React.createElement('tbody', null,
             referenceData.allFranchises.map(f => {
-              // aktive Vergleichs-Franchise (angeklickt oder eigene) wird hervorgehoben
-              const active = f.franchise === compFranchise;
-              const cell = active ? s.tdActive : s.td;
+              const franchiseActive = f.franchise === compFranchise;
+              const cell = franchiseActive ? s.tdActive : s.td;
               const ohnePrem = ohneByFra ? ohneByFra[f.franchise] : null;
-              return React.createElement('tr', {
-                key: f.franchise, onClick: () => setPickedFranchise(f.franchise),
-                'aria-pressed': active, style: { cursor: 'pointer' },
-              },
-                React.createElement('td', { style: cell }, (active ? '✓ ' : '') + 'CHF ' + f.franchise.toLocaleString()),
-                React.createElement('td', { style: { ...cell, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
-                hasOhne && React.createElement('td', { style: { ...cell, textAlign: 'right', color: active ? palette.sage : palette.mid } },
-                  ohnePrem != null ? 'CHF ' + ohnePrem.toFixed(2) : '–')
+              // (k) Mit/Ohne-Zelle einzeln anklickbar → wählt Franchise UND Unfall-Variante
+              const variantCell = (variant, amount) => {
+                const isActive = franchiseActive && (variant === 'mit' ? withUnfall : !withUnfall);
+                return React.createElement('td', { key: variant, style: { ...s.td, textAlign: 'right', padding: '2px' } },
+                  amount == null ? '–'
+                    : React.createElement('button', {
+                        type: 'button', 'aria-pressed': isActive,
+                        onClick: () => { setPickedFranchise(f.franchise); setWithUnfall(variant === 'mit'); },
+                        style: {
+                          background: isActive ? palette.sage + '22' : 'none',
+                          border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
+                          borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
+                          cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
+                          color: isActive ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
+                          fontWeight: isActive ? weight.semi : weight.normal,
+                        },
+                      }, (isActive ? '✓ ' : '') + 'CHF ' + amount.toFixed(2))
+                );
+              };
+              return React.createElement('tr', { key: f.franchise },
+                React.createElement('td', { style: { ...cell, padding: 0 } },
+                  React.createElement('button', {
+                    type: 'button', onClick: () => setPickedFranchise(f.franchise),
+                    style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? palette.sage : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                  }, 'CHF ' + f.franchise.toLocaleString())
+                ),
+                hasOhne ? variantCell('mit', f.premium)
+                  : React.createElement('td', { style: { ...cell, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
+                hasOhne && variantCell('ohne', ohnePrem)
               );
             })
           )
@@ -306,6 +326,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.franchiseOptReserve', { reserve: franchiseOpt.reserve.toLocaleString(), sb: franchiseOpt.sbMax })),
       franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
         t('po.franchiseOptBreakeven', { breakeven: franchiseOpt.breakEven.toLocaleString() })),
+      // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'))),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource')))
     ),
 

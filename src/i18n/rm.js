@@ -2111,6 +2111,7 @@ export default {
   },
 
   po: {
+    franchiseChangeWhen: 'La franchisa po vegnir midada ina giada l\'onn — cun effect dal 1. da schaner, communicaziun fin la fin da november (midada da cassa: 30 da november). Funtauna: [[LAMal art. 7|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OAMal art. 94|https://www.fedlex.admin.ch/eli/cc/1995/3867_3867_3867/de]].',
     franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
     franchiseOptSaving: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.',
     franchiseOptReserve: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.',
