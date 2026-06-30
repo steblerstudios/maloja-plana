@@ -2718,6 +2718,7 @@ export default {
     exportBlocked: 'Export is not available in example mode.',
   },
   po: {
+    pickFranchiseHint: 'Tap a deductible to compare insurers at that level.',
     chooseByPrice: 'Tap a price (with/without accident) to set the insurer as your target.',
     unfallLabel: 'Accident cover',
     mitUnfall: 'With accident',

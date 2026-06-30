@@ -2698,6 +2698,7 @@ export default {
   },
 
   po: {
+    pickFranchiseHint: 'Tocca una franchigia per confrontare le casse a quel livello.',
     chooseByPrice: 'Tocca un prezzo (con/senza infortuni) per impostare la cassa come desiderata.',
     unfallLabel: 'Copertura infortuni',
     mitUnfall: 'Con infortuni',

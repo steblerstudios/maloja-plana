@@ -2717,6 +2717,7 @@ export default {
     exportBlocked: 'L\'export n\'est pas disponible en mode exemple.',
   },
   po: {
+    pickFranchiseHint: 'Touchez une franchise pour comparer les caisses à ce niveau.',
     chooseByPrice: 'Touchez un prix (avec/sans accident) pour définir la caisse comme caisse souhaitée.',
     unfallLabel: 'Couverture accidents',
     mitUnfall: 'Avec accident',

@@ -2695,6 +2695,7 @@ export default {
     exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
   },
   po: {
+    pickFranchiseHint: { sie: 'Tippen Sie eine Franchise, um die Kassen damit zu vergleichen.', du: 'Tippe eine Franchise, um die Kassen damit zu vergleichen.' },
     chooseByPrice: { sie: 'Tippen Sie einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.', du: 'Tippe einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.' },
     unfallLabel: 'Unfalldeckung',
     mitUnfall: 'Mit Unfall',
