@@ -1,4 +1,24 @@
 export default {
+  lebenszustaende: {
+    sectionTitle: 'Does one of these situations apply?',
+    sectionIntro: 'Some support depends not on a single event but on an ongoing situation. Choose what fits — nothing is stored as a label, it only shows what might be available.',
+    selectHint: 'Pick a situation to see what could apply.',
+    quelleLabel: 'Source',
+    standLabel: 'As of',
+    moreInfo: 'Learn more',
+    tiefesEinkommen: {
+      label: 'When money is tight',
+      frage: 'Income often doesn’t stretch to the end of the month?',
+      intro: 'On a low income, several forms of support exist — much goes unclaimed simply because people don’t know about it.',
+      berechtigungen: {
+        ipv: { titel: 'Premium reduction (IPV)', text: 'The canton helps pay health-insurance premiums for low and middle incomes. Many who qualify never apply.' },
+        mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs too heavily on a low income.' },
+        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income doesn’t cover the basics, social assistance can top it up. It is a right, not charity.' },
+        stipendien: { titel: 'Education grants', text: 'Grants exist for training and studies on a low income — repayable or not.' },
+        franchise: { titel: 'Check your deductible', text: 'With few doctor visits, a higher deductible lowers the monthly premium — worth reviewing each autumn.' },
+      },
+    },
+  },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',
     intro: 'Supplementary insurance is separate from basic insurance — its own rules, its own deadlines. A calm path in four steps.',
