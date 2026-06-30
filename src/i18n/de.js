@@ -30,6 +30,19 @@ export default {
         steuern: { titel: 'Elterntarif & Kinderabzug', text: 'Alleinerziehende werden zum tieferen Elterntarif besteuert und können Abzüge für Kinder und Betreuung geltend machen.' },
       },
     },
+    beeintraechtigung: {
+      label: 'Mit Beeinträchtigung oder chronischer Krankheit',
+      frage: 'Lebst du mit einer Beeinträchtigung, chronischen Krankheit oder anerkannten Indikation?',
+      intro: 'Eine Indikation kann Unterstützung früher oder breiter eröffnen, als man denkt — vieles wird kaum genannt und leicht übersehen.',
+      berechtigungen: {
+        iv: { titel: 'IV-Leistungen', text: 'Eingliederung vor Rente: berufliche Massnahmen, Hilfsmittel und bei Bedarf eine Rente. Früh anmelden zählt am meisten.' },
+        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen, oft übersehen.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, keine Fürsorge.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, ist von den Prämien befreit; bei tiefem Einkommen besteht sonst oft trotzdem Anspruch auf Hilfe.' },
+        steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
+        sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Mit einer kostenlosen Karte reist eine Begleitperson gratis im öV mit — auch bei Seh-, Geh- oder geistiger Behinderung. Antrag mit ärztlicher Bestätigung.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',

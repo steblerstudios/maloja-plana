@@ -216,32 +216,39 @@ const Lebenssituationen = ({ palette, t, onNavigate }) => {
         React.createElement('p', {
           style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.relaxed }
         }, t('lebenszustaende.' + z.key + '.intro')),
-        z.berechtigungen.map((b) =>
-          React.createElement('button', {
-            key: b.key,
-            onClick: () => onNavigate(b.view),
-            style: {
-              display: 'block', width: '100%', textAlign: 'left',
-              padding: '10px 12px', marginBottom: space.xs + 'px',
-              background: palette.surface, color: palette.text,
-              border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
-              cursor: 'pointer', fontFamily: 'inherit',
-              transition: `border-color ${duration.normal}ms ${ease}`,
-            },
+        z.berechtigungen.map((b) => {
+          const isExternal = !!b.url;
+          const baseKey = 'lebenszustaende.' + z.key + '.berechtigungen.' + b.key;
+          const cardStyle = {
+            display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
+            padding: '10px 12px', marginBottom: space.xs + 'px',
+            background: palette.surface, color: palette.text, textDecoration: 'none',
+            border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+            cursor: 'pointer', fontFamily: 'inherit',
+            transition: `border-color ${duration.normal}ms ${ease}`,
+          };
+          const hover = {
             onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
             onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '44'; },
-          },
+          };
+          const inner = [
             React.createElement('div', {
+              key: 'titel',
               style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text }
-            }, t('lebenszustaende.' + z.key + '.berechtigungen.' + b.key + '.titel')),
+            }, t(baseKey + '.titel') + (isExternal ? ' ↗' : '')),
             React.createElement('div', {
+              key: 'text',
               style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
-            }, t('lebenszustaende.' + z.key + '.berechtigungen.' + b.key + '.text')),
+            }, t(baseKey + '.text')),
             React.createElement('div', {
+              key: 'quelle',
               style: { fontSize: text.xs - 1, color: palette.soft, marginTop: space.xs + 'px' }
             }, t('lebenszustaende.quelleLabel') + ': ' + b.quelle + ' · ' + t('lebenszustaende.standLabel') + ' ' + b.stand)
-          )
-        )
+          ];
+          return isExternal
+            ? React.createElement('a', { key: b.key, href: b.url, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
+            : React.createElement('button', { key: b.key, type: 'button', onClick: () => onNavigate(b.view), style: cardStyle, ...hover }, inner);
+        })
       )
     )
   );
