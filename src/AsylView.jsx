@@ -157,6 +157,10 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.nextStepsTitle')),
       React.createElement('button', {
         style: { ...s.crosslink, marginTop: space.xs + 'px' },
+        onClick: () => onNavigate('kkerst'),
+      }, t('asyl.linkKkErst')),
+      React.createElement('button', {
+        style: { ...s.crosslink, marginTop: space.xs + 'px' },
         onClick: () => onNavigate('tresor'),
       }, t('asyl.linkDocs')),
       React.createElement('button', {

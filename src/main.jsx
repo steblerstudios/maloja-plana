@@ -57,6 +57,14 @@ const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
 const UnfallKrankheit = React.lazy(() => import('./UnfallKrankheit.jsx'));
 const NeuerJob = React.lazy(() => import('./NeuerJob.jsx'));
 const StelleVerloren = React.lazy(() => import('./StelleVerloren.jsx'));
+const KKErstAnmeldung = React.lazy(() => import('./KKErstAnmeldung.jsx'));
+const Pensionierung = React.lazy(() => import('./Pensionierung.jsx'));
+const BetreibungErhalten = React.lazy(() => import('./BetreibungErhalten.jsx'));
+const Selbstaendigkeit = React.lazy(() => import('./Selbstaendigkeit.jsx'));
+const Heirat = React.lazy(() => import('./Heirat.jsx'));
+const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
+const Trennung = React.lazy(() => import('./Trennung.jsx'));
+const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
@@ -881,6 +889,14 @@ const AppInner = () => {
         view === 'unfallkrankheit' && React.createElement(UnfallKrankheit, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'neuerjob' && React.createElement(NeuerJob, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'stelleverloren' && React.createElement(StelleVerloren, { palette, t, onNavigate: handleNavigate }),
+        view === 'kkerst' && React.createElement(KKErstAnmeldung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'pensionierung' && React.createElement(Pensionierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'betreibung' && React.createElement(BetreibungErhalten, { palette, t, onNavigate: handleNavigate }),
+        view === 'selbstaendigkeit' && React.createElement(Selbstaendigkeit, { palette, t, onNavigate: handleNavigate }),
+        view === 'heirat' && React.createElement(Heirat, { palette, t, onNavigate: handleNavigate }),
+        view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),
+        view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate }),
+        view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),

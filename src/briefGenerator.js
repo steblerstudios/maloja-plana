@@ -64,6 +64,14 @@ export function getLetterTemplates(t) {
       chapter: 'wohnen',
     },
     {
+      key: 'addressChange',
+      title: t('briefe.addressChange.title'),
+      description: t('briefe.addressChange.description'),
+      icon: 'home',
+      legalRef: '',
+      chapter: 'wohnen',
+    },
+    {
       key: 'taxExtension',
       title: t('briefe.taxExtension.title'),
       description: t('briefe.taxExtension.description'),
@@ -192,6 +200,45 @@ function generateLeaseTermination(data, t) {
   `, t);
 }
 
+function getAddressChangeFields(data, t) {
+  const street = data.wohnen?.address || '';
+  const cityLine = [(data.wohnen?.postalCode || ''), (data.wohnen?.city || '')].filter(Boolean).join(' ');
+  const newAddress = [street, cityLine].filter(Boolean).join(', ');
+  return {
+    sender: senderBlock(data),
+    recipient: recipientPlaceholder(t),
+    newAddress,
+    city: data.wohnen?.city || '',
+    filled: {
+      name: !!getFullName(data.basis),
+      address: !!street,
+    },
+  };
+}
+
+function generateAddressChange(data, t) {
+  const f = getAddressChangeFields(data, t);
+  const dateStr = today();
+  const cityDate = f.city ? `${esc(f.city)}, ${dateStr}` : dateStr;
+  // Klartext für t()-Interpolation (wird im ${esc(t(...))} einmal escaped).
+  const addressLine = f.newAddress || t('briefe.fillIn');
+
+  return wrapLetter(`
+    <div class="sender">${f.sender || fillHint(t)}</div>
+    <div class="recipient"><div class="placeholder">${f.recipient}</div></div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(t('briefe.addressChange.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.addressChange.salutation'))}</p>
+      <p>${esc(t('briefe.addressChange.body1'))}</p>
+      <p>${esc(t('briefe.addressChange.body2', { address: addressLine }))}</p>
+      <p>${esc(t('briefe.addressChange.body3'))}</p>
+      <p>${esc(t('briefe.addressChange.closing'))}</p>
+    </div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+  `, t);
+}
+
 function generateTaxExtension(data, t) {
   const f = getTaxExtensionFields(data, t);
   const dateStr = today();
@@ -295,6 +342,7 @@ function generateKkReklamation(data, t, options = {}) {
 
 const GENERATORS = {
   leaseTermination: generateLeaseTermination,
+  addressChange: generateAddressChange,
   taxExtension: generateTaxExtension,
   insuranceSwitch: generateInsuranceSwitch,
   kkReklamation: generateKkReklamation,
