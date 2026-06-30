@@ -2695,6 +2695,7 @@ export default {
     exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
   },
   po: {
+    chooseByPrice: { sie: 'Tippen Sie einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.', du: 'Tippe einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.' },
     unfallLabel: 'Unfalldeckung',
     mitUnfall: 'Mit Unfall',
     ohneUnfall: 'Ohne Unfall',

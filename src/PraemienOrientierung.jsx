@@ -267,21 +267,43 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
-        t('po.compareFranchiseNote', { franchise: compFranchise.toLocaleString() })),
+        t('po.compareFranchiseNote', { franchise: compFranchise.toLocaleString() }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
       React.createElement('table', { style: s.table },
         React.createElement('thead', null,
           React.createElement('tr', null,
             React.createElement('th', { style: s.th }, t('po.thInsurer')),
             React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, ageClass !== 'kind' ? t('po.mitUnfall') : t('po.thPremium')),
-            ageClass !== 'kind' && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall')),
-            React.createElement('th', { style: s.th })
+            ageClass !== 'kind' && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
           )
         ),
         React.createElement('tbody', null,
           allInsurers.map(ins => {
             const isCurrent = insurerNr === ins.nr;
-            const isChosen = targetInsurer === ins.name;
             const isOpen = detailNr === ins.nr;
+            const cols = ageClass !== 'kind' ? 3 : 2;
+            // gewählte Wunschkasse-Variante (Alt-Daten ohne targetUvg gelten als 'mit')
+            const chosenVariant = targetInsurer === ins.name ? (data.versicherungen?.targetUvg || 'mit') : null;
+            // Klickbare Preis-Zelle: wählt die Kasse in dieser Unfall-Variante als Wunschkasse
+            const priceCell = (variant, amount) => React.createElement('td', { key: variant, style: { ...s.td, textAlign: 'right', padding: '2px' } },
+              amount == null ? '–'
+                : onUpdateData ? React.createElement('button', {
+                    type: 'button', 'aria-pressed': chosenVariant === variant,
+                    onClick: () => {
+                      const sel = chosenVariant === variant;
+                      onUpdateData('versicherungen', 'targetInsurer', sel ? '' : ins.name);
+                      onUpdateData('versicherungen', 'targetUvg', sel ? '' : variant);
+                    },
+                    style: {
+                      background: chosenVariant === variant ? palette.sage + '22' : 'none',
+                      border: '1px solid ' + (chosenVariant === variant ? palette.sage : 'transparent'),
+                      borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
+                      cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
+                      color: chosenVariant === variant ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
+                      fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
+                    },
+                  }, (chosenVariant === variant ? '✓ ' : '') + 'CHF ' + amount.toFixed(2))
+                : 'CHF ' + amount.toFixed(2)
+            );
             const out = [
               React.createElement('tr', { key: ins.nr },
                 React.createElement('td', { style: s.td },
@@ -290,22 +312,32 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                     onClick: () => setDetailNr(isOpen ? null : ins.nr)
                   }, (isOpen ? '▾ ' : '▸ ') + ins.name + (isCurrent ? ' •' : ''))
                 ),
-                React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, 'CHF ' + ins.premium.toFixed(2)),
-                ageClass !== 'kind' && React.createElement('td', { style: { ...s.td, textAlign: 'right', color: palette.mid } },
-                  ins.premiumOhne != null ? 'CHF ' + ins.premiumOhne.toFixed(2) : '–'),
-                React.createElement('td', { style: { ...s.td, textAlign: 'right' } },
-                  onUpdateData && React.createElement('button', {
-                    style: s.targetBtn(isChosen),
-                    onClick: () => onUpdateData('versicherungen', 'targetInsurer', isChosen ? '' : ins.name)
-                  }, isChosen ? ('✓ ' + t('po.targetSelected')) : t('po.chooseTarget')))
+                priceCell('mit', ins.premium),
+                ageClass !== 'kind' && priceCell('ohne', ins.premiumOhne)
               )
             ];
             if (isOpen) {
-              const ladder = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass) || [];
+              const ladderMit = getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass) || [];
+              const ladderOhne = ageClass !== 'kind' ? (getInsurerAllFranchises(ins.nr, regionInfo.kanton, regionInfo.region, ageClass, false) || []) : null;
+              const ohneMap = ladderOhne ? Object.fromEntries(ladderOhne.map(f => [f.franchise, f.premium])) : null;
               out.push(React.createElement('tr', { key: ins.nr + '-d' },
-                React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: ageClass !== 'kind' ? 4 : 3 },
-                  React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } },
-                    ladder.map(f => 'CHF ' + f.franchise.toLocaleString() + ': CHF ' + f.premium.toFixed(2)).join('  ·  ')
+                React.createElement('td', { style: { ...s.td, paddingLeft: space.md + 'px' }, colSpan: cols },
+                  React.createElement('table', { style: { ...s.table, fontSize: text.xs } },
+                    React.createElement('thead', null,
+                      React.createElement('tr', null,
+                        React.createElement('th', { style: s.th }, t('po.thFranchise')),
+                        React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, ohneMap ? t('po.mitUnfall') : t('po.thPremium')),
+                        ohneMap && React.createElement('th', { style: { ...s.th, textAlign: 'right' } }, t('po.ohneUnfall'))
+                      )
+                    ),
+                    React.createElement('tbody', null,
+                      ladderMit.map(f => React.createElement('tr', { key: f.franchise },
+                        React.createElement('td', { style: s.td }, 'CHF ' + f.franchise.toLocaleString()),
+                        React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
+                        ohneMap && React.createElement('td', { style: { ...s.td, textAlign: 'right', color: palette.mid } },
+                          ohneMap[f.franchise] != null ? 'CHF ' + ohneMap[f.franchise].toFixed(2) : '–')
+                      ))
+                    )
                   )
                 )
               ));
@@ -315,7 +347,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         )
       ),
       targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.sm + 'px', fontWeight: weight.medium } },
-        t('po.targetChosenHint', { insurer: targetInsurer }))
+        t('po.targetChosenHint', { insurer: targetInsurer }) + (ageClass !== 'kind' && data.versicherungen?.targetUvg ? ' (' + (data.versicherungen.targetUvg === 'ohne' ? t('po.ohneUnfall') : t('po.mitUnfall')) + ')' : ''))
     ),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontStyle: 'italic' } },

@@ -2698,6 +2698,7 @@ export default {
   },
 
   po: {
+    chooseByPrice: 'Tocca un prezzo (con/senza infortuni) per impostare la cassa come desiderata.',
     unfallLabel: 'Copertura infortuni',
     mitUnfall: 'Con infortuni',
     ohneUnfall: 'Senza infortuni',
