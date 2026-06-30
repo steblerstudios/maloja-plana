@@ -50,6 +50,7 @@ const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
+const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
 const ZusatzWechsel = React.lazy(() => import('./ZusatzWechsel.jsx'));
 const UmzugAblauf = React.lazy(() => import('./UmzugAblauf.jsx'));
@@ -873,6 +874,7 @@ const AppInner = () => {
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
+        view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'zusatzwechsel' && React.createElement(ZusatzWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'umzug' && React.createElement(UmzugAblauf, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),

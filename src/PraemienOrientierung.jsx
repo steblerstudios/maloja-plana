@@ -104,6 +104,23 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     return { lowFra: low.franchise, highFra: high.franchise, annualSaving, reserve, sbMax, breakEven };
   }, [referenceData, ageClass]);
 
+  // ── Reserve-Check: kann der Maximalfall überhaupt getragen werden? ──
+  // Die hohe Franchise spart Prämie, kostet im schlechten Jahr aber bis zu `reserve`
+  // (Franchise + Selbstbehalt-Max) aus eigener Tasche. Ehrlich statt schönrechnen:
+  // erst sicher, wenn dieses Polster da ist — ruhiger noch, wenn es für zwei Jahre reicht.
+  const reserveCheck = useMemo(() => {
+    if (!franchiseOpt) return null;
+    const savings = parseFloat(data.finanzen?.savingsAccount) || 0;
+    const need = franchiseOpt.reserve;   // Maximalfall einmal
+    const ideal = need * 2;              // Sophies „im Idealfall doppelt"
+    let level;
+    if (savings <= 0) level = 'none';        // nichts erfasst → sanft hinweisen
+    else if (savings >= ideal) level = 'strong';
+    else if (savings >= need) level = 'ok';
+    else level = 'low';
+    return { savings, need, ideal, level };
+  }, [franchiseOpt, data.finanzen?.savingsAccount]);
+
   // ── Marktplatz: alle Kassen vergleichen (günstigste zuerst) ──
   const targetInsurer = data.versicherungen?.targetInsurer || '';
   // Vergleichs-Franchise: angeklickte Wunsch-Franchise, sonst die eigene, sonst tiefste Stufe.
@@ -326,6 +343,25 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.franchiseOptReserve', { reserve: franchiseOpt.reserve.toLocaleString(), sb: franchiseOpt.sbMax })),
       franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
         t('po.franchiseOptBreakeven', { breakeven: franchiseOpt.breakEven.toLocaleString() })),
+      // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
+      reserveCheck && React.createElement('div', {
+        style: {
+          fontSize: text.sm,
+          color: reserveCheck.level === 'strong' ? palette.sage : (reserveCheck.level === 'ok' ? palette.text : palette.gold),
+          lineHeight: leading.normal, marginBottom: space.xs + 'px',
+        },
+      },
+        t('po.reserveCheck_' + reserveCheck.level, {
+          savings: reserveCheck.savings.toLocaleString(),
+          need: reserveCheck.need.toLocaleString(),
+          ideal: reserveCheck.ideal.toLocaleString(),
+        }),
+        // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
+        onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
+          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
+          onClick: () => onNavigate('finanzuebersicht'),
+        }, '→ ' + t('po.reserveCheckLink'))
+      ),
       // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'))),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource')))
