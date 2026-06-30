@@ -1485,6 +1485,7 @@ export default {
     incomeAlimente: 'Alimente erhalten',
     ipvRelief: 'IPV Entlastung',
     ipvEffective: 'Effektive Belastung',
+    benchmark: 'Zur Orientierung: ein Durchschnittshaushalt gibt hier rund {amount} aus (BFS 2023). Deiner kann gut abweichen.',
   },
 
   premium: {
