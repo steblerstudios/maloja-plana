@@ -17,6 +17,8 @@ const formatCHF = (amount) => {
 export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const [budget, setBudget] = useState(null);
   const [showAnnual, setShowAnnual] = useState(false);
+  // Faden 4 / Inkr. A — which orientation infos are expanded (default: none = calm)
+  const [openInfo, setOpenInfo] = useState(() => new Set());
 
   useEffect(() => {
     const synced = calculateMonthlyBudget(data, t);
@@ -43,14 +45,16 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     padding: '5px 0', fontSize: text.sm, lineHeight: leading.normal
   };
   const itemLineStyle = {
-    ...lineStyle, paddingLeft: '16px', color: palette.mid, fontSize: text.sm
+    // shorthand-only padding (avoid mixing padding + paddingLeft → React rerender warning)
+    ...lineStyle, padding: '5px 0 5px 16px', color: palette.mid, fontSize: text.sm
   };
   const emptyValueStyle = { color: palette.soft, fontStyle: 'italic', fontSize: text.sm };
   const separatorStyle = {
     borderTop: '1px solid ' + palette.border, margin: '12px 0'
   };
   const groupHeaderStyle = {
-    ...lineStyle, fontWeight: weight.semi, paddingTop: '10px'
+    // shorthand-only padding (top 10 / bottom 5) — no padding + paddingTop mix
+    ...lineStyle, fontWeight: weight.semi, padding: '10px 0 5px'
   };
 
   // Compute group totals
@@ -74,6 +78,36 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
 
   // Faden 4 / Inkr. 2 — match BFS benchmarks to the user's household type
   const htype = resolveHouseholdType(budget.householdContext);
+
+  // Faden 4 / Inkr. A — collapsible orientation infos (per category + master toggle)
+  const fieldHasInfo = (item) => item.value > 0 &&
+    !!(benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype) || BUDGET_PRICE_TREND.byField[item.key]);
+  const groupHasInfo = (group) => group.total > 0 &&
+    !!(benchmarkFor(BUDGET_BENCHMARKS.byGroup, group.key, htype) || BUDGET_PRICE_TREND.byGroup[group.key]);
+  const skosShown = !!(budget.householdContext && budget.income > 0);
+  const allInfoKeys = [];
+  groupData.forEach(g => {
+    if (groupHasInfo(g)) allInfoKeys.push(g.key);
+    g.items.forEach(it => { if (fieldHasInfo(it)) allInfoKeys.push(it.key); });
+  });
+  if (skosShown) allInfoKeys.push('skos');
+  const anyInfoOpen = allInfoKeys.some(k => openInfo.has(k));
+  const toggleInfo = (k) => setOpenInfo(prev => {
+    const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n;
+  });
+  const toggleAllInfo = () => setOpenInfo(anyInfoOpen ? new Set() : new Set(allInfoKeys));
+  // Clickable category label with a quiet ▸/▾ affordance
+  const infoLabel = (key, label) => React.createElement('button', {
+    type: 'button', onClick: () => toggleInfo(key), 'aria-expanded': openInfo.has(key),
+    style: {
+      background: 'none', border: 'none', padding: 0, font: 'inherit', color: 'inherit',
+      cursor: 'pointer', textAlign: 'left', display: 'inline-flex', alignItems: 'baseline', gap: '5px'
+    }
+  },
+    React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
+      openInfo.has(key) ? '▾' : '▸'),
+    label
+  );
 
   // Quiet BFS benchmark line (Faden 4) — orientation only, never a judgement.
   // groupLevel = no extra indent; field-level lines sit under their indented item.
@@ -102,15 +136,17 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const isEmpty = item.value === 0;
     const bm = isEmpty ? null : benchmarkFor(BUDGET_BENCHMARKS.byField, item.key, htype);
     const trend = isEmpty ? null : BUDGET_PRICE_TREND.byField[item.key];
+    const info = !!(bm || trend);
+    const open = info && openInfo.has(item.key);
     return React.createElement('div', { key: item.key },
       React.createElement('div', { style: itemLineStyle },
-        React.createElement('span', null, item.label),
+        info ? infoLabel(item.key, item.label) : React.createElement('span', null, item.label),
         isEmpty
           ? React.createElement('span', { style: emptyValueStyle }, '—')
           : React.createElement('span', null, formatCHF(item.value * mult))
       ),
-      bm && renderBenchmarkLine(bm, item.key),
-      trend && renderTrendLine(trend, item.key)
+      open && bm && renderBenchmarkLine(bm, item.key),
+      open && trend && renderTrendLine(trend, item.key)
     );
   };
 
@@ -126,10 +162,13 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     const singleField = group.items.length === 1;
     const groupBm = group.total > 0 ? benchmarkFor(BUDGET_BENCHMARKS.byGroup, group.key, htype) : null;
     const groupTrend = group.total > 0 ? BUDGET_PRICE_TREND.byGroup[group.key] : null;
+    const info = !!(groupBm || groupTrend);
+    const open = info && openInfo.has(group.key);
+    const groupLabel = t('budgetSync.group.' + group.key);
     return React.createElement('div', { key: group.key, style: { marginBottom: space.xs } },
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
-        React.createElement('span', null, t('budgetSync.group.' + group.key)),
+        info ? infoLabel(group.key, groupLabel) : React.createElement('span', null, groupLabel),
         React.createElement('span', { style: { display: 'flex', alignItems: 'baseline', gap: space.sm } },
           group.total > 0
             ? React.createElement('span', null, formatCHF(group.total * mult))
@@ -139,10 +178,10 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           }, pct)
         )
       ),
-      // BFS group-level benchmark (e.g. Housing, Mobility) directly under the header
-      groupBm && renderBenchmarkLine(groupBm, group.key, true),
+      // BFS group-level benchmark (e.g. Housing, Mobility) — only when expanded
+      open && groupBm && renderBenchmarkLine(groupBm, group.key, true),
       // BFS group-level price trend since the index base (e.g. Housing +14%)
-      groupTrend && renderTrendLine(groupTrend, group.key, true),
+      open && groupTrend && renderTrendLine(groupTrend, group.key, true),
       // Individual items — skip when group has only one field (avoids redundant line)
       !singleField && group.items.map(renderItem)
     );
@@ -198,6 +237,22 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       }
     }, t('budgetSync.emptyStateGuide')),
 
+    // === Master toggle for all orientation infos (default collapsed = calm) ===
+    allInfoKeys.length > 0 && React.createElement('div', {
+      style: { display: 'flex', justifyContent: 'flex-end', paddingBottom: '2px' }
+    },
+      React.createElement('button', {
+        type: 'button', onClick: toggleAllInfo, 'aria-expanded': anyInfoOpen,
+        style: {
+          background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer',
+          color: palette.soft, fontSize: text.xs, display: 'inline-flex', alignItems: 'center', gap: '5px'
+        }
+      },
+        React.createElement('span', { 'aria-hidden': true }, anyInfoOpen ? '▾' : '▸'),
+        t('budgetSync.infoToggle')
+      )
+    ),
+
     // === Grouped expenses ===
     groupData.map(renderGroup),
 
@@ -235,7 +290,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
     // === Available line ===
     React.createElement('div', {
       style: {
-        ...lineStyle, fontWeight: weight.semi, fontSize: text.sm, paddingTop: '8px'
+        ...lineStyle, fontWeight: weight.semi, fontSize: text.sm, padding: '8px 0 5px'
       }
     },
       React.createElement('span', null,
@@ -246,22 +301,36 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
       }, formatCHF(budget.remaining * mult))
     ),
 
-    // === SKOS household orientation ===
-    budget.householdContext && budget.income > 0 && React.createElement('div', {
+    // === SKOS household orientation (collapsible, default closed) ===
+    skosShown && React.createElement('div', {
       style: {
         marginTop: '12px', padding: '10px 14px', background: palette.up,
         borderRadius: radius.sm, fontSize: text.sm, lineHeight: '1.6', color: palette.mid,
       }
     },
-      React.createElement('div', { style: { marginBottom: space.xs } },
-        'ⓘ ' + t('budgetSync.skosOrientation', {
-          size: budget.householdContext.size,
-          amount: formatCHF(budget.householdContext.skosGrundbedarf),
-        })
+      React.createElement('button', {
+        type: 'button', onClick: () => toggleInfo('skos'), 'aria-expanded': openInfo.has('skos'),
+        style: {
+          background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: palette.mid,
+          fontSize: text.sm, font: 'inherit', display: 'inline-flex', alignItems: 'baseline',
+          gap: '5px', textAlign: 'left'
+        }
+      },
+        React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
+          openInfo.has('skos') ? '▾' : '▸'),
+        t('budgetSync.skosTitle')
       ),
-      React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft }
-      }, t('budgetSync.skosNote'))
+      openInfo.has('skos') && React.createElement('div', { style: { marginTop: space.xs } },
+        React.createElement('div', { style: { marginBottom: space.xs } },
+          t('budgetSync.skosOrientation', {
+            size: budget.householdContext.size,
+            amount: formatCHF(budget.householdContext.skosGrundbedarf),
+          })
+        ),
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.soft }
+        }, t('budgetSync.skosNote'))
+      )
     ),
 
     // === Recommendations (calm, info-level only) ===

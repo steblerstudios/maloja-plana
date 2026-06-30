@@ -2613,6 +2613,8 @@ export default {
     ipvEffective: 'Grevezza effectiva',
     benchmark: 'Per orientaziun: ina chasada cumparabla dat qua var {amount} (UST 2020/21). La tia po fitg bain variar.',
     priceTrend: 'Qua èn ils pretschs sa midads per {pct} dapi 2020 — en general {general} (rincar UST).',
+    infoToggle: 'Valurs d\'orientaziun & rincar',
+    skosTitle: 'Basegns da basa SKOS (orientaziun)',
   },
 
   taxImport: {

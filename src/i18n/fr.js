@@ -1487,6 +1487,8 @@ export default {
     ipvEffective: 'Charge effective',
     benchmark: 'À titre indicatif : un ménage comparable dépense ici environ {amount} (OFS 2020/21). Le vôtre peut tout à fait différer.',
     priceTrend: 'Ici, les prix ont évolué de {pct} depuis 2020 — ensemble {general} (renchérissement OFS).',
+    infoToggle: 'Repères & renchérissement',
+    skosTitle: 'Besoins de base CSIAS (repère)',
   },
 
   premium: {
