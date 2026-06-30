@@ -32,7 +32,17 @@ export const LEBENSZUSTAENDE = [
       { key: 'franchise',   view: 'kvg',         quelle: 'BAG',          stand: '2026' },
     ],
   },
+  {
+    key: 'alleinerziehend',
+    berechtigungen: [
+      { key: 'alimente',        view: 'trennung',    quelle: 'Kanton / BSV', stand: '2026' },
+      { key: 'ipv',             view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
+      { key: 'familienzulagen', view: 'kind',        quelle: 'BSV',          stand: '2026' },
+      { key: 'sozialhilfe',     view: 'sozialhilfe', quelle: 'SKOS',         stand: '2026' },
+      { key: 'steuern',         view: 'tax',         quelle: 'ESTV',         stand: '2026' },
+    ],
+  },
   // Weitere Zustände folgen schritt-für-schritt (Reihenfolge mit Sophie
-  // festgelegt): alleinerziehend → Beeinträchtigung/Indikation →
-  // pflegende Angehörige. Jeweils reine Daten nach diesem Muster.
+  // festgelegt): Beeinträchtigung/Indikation → pflegende Angehörige.
+  // Jeweils reine Daten nach diesem Muster.
 ];
