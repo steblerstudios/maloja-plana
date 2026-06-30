@@ -1489,6 +1489,8 @@ export default {
     priceTrend: 'Ici, les prix ont évolué de {pct} depuis 2020 — ensemble {general} (renchérissement OFS).',
     infoToggle: 'Repères & renchérissement',
     skosTitle: 'Besoins de base CSIAS (repère)',
+    skosClaim: 'Votre revenu est inférieur au budget d\'aide (≈ {amount}/mois) — l\'aide sociale pourrait être pertinente.',
+    skosNoClaim: 'L\'aide sociale n\'est probablement pas pertinente ici — votre revenu dépasse ce qu\'elle couvrirait (≈ {amount}/mois).',
   },
 
   premium: {
