@@ -5,6 +5,26 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.9-beta] — 2026-06-30
+
+Sichtbare Fairness: die Krankenkassen-Prämie und die Miete der eigenen Region
+gegen den Schweizer Schnitt — und was die Prämienverbilligung wirklich ausmacht.
+
+### Neu
+- **Regional-Barometer Krankenkasse**: zeigt ruhig, wie die Durchschnittsprämie deiner Region zum Schweizer Schnitt steht (BAG 2026) — mit deiner eigenen Prämie als Punkt „wo wir sind". In Prämien-Orientierung und Monatsbudget
+- **Regional-Barometer Miete**: deine Region gegen den Schweizer Schnitt, abgestimmt auf die Wohnungsgrösse (BFS) — mit deiner Miete als Punkt, im Budget
+- **Prämienverbilligung sichtbar**: die KK-Last-Karte zeigt, was die IPV abnimmt und wie viel bis zum 10%-Richtwert noch fehlt
+- **Mietzinsbeiträge-Hinweis**: ob es in deinem Kanton Mietzinsbeiträge gibt — würdevoll, ohne falsche Zusage (BWO)
+- **Herzensempfehlungen**: Winterhilfe Schweiz und Stiftung Rheinleben (neue Gruppe „Soziale Unterstützung")
+
+### Verbessert
+- **PLZ nur einmal eingeben**: eine in der Prämien-Orientierung eingegebene PLZ fliesst ins Wohnen-Kapitel zurück und leitet Kanton, IPV und Miet-Vergleich ab
+
+### Quellen
+- BAG mittlere Prämie 2026 · BFS Mietpreise nach Kanton/Zimmerzahl · BWO Kantonale Hilfen
+
+---
+
 ## [0.1.8-beta] — 2026-06-30
 
 Belegbare Haushalts-Budget-Richtwerte (BFS) mit Teuerungs-Gap, abgestimmt auf
