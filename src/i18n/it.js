@@ -43,6 +43,17 @@ export default {
         sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Una carta gratuita permette a un accompagnatore di viaggiare gratis sui trasporti pubblici — anche in caso di disabilità visiva, motoria o mentale. Domanda con conferma medica.' },
       },
     },
+    pflegendeAngehoerige: {
+      label: 'Assistere un familiare',
+      frage: 'Assiste regolarmente un familiare o una persona vicina?',
+      intro: 'L’assistenza prestata in silenzio viene raramente riconosciuta — eppure può creare accrediti di rendita e diritti. Esistono anche servizi di sgravio e consulenza.',
+      berechtigungen: {
+        betreuungsgutschriften: { titel: 'Accrediti per compiti assistenziali (AVS)', text: 'L’assistenza a un familiare stretto può essere accreditata sul suo conto AVS e aumentare la futura rendita — da annunciare ogni anno alla cassa di compensazione.' },
+        betreuungsentschaedigung: { titel: 'Indennità di assistenza (IPG)', text: 'Congedo pagato per assistere un figlio gravemente malato o infortunato, più un breve congedo per un familiare — indennizzati tramite le IPG.' },
+        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi (della persona assistita)', text: 'La persona che assiste può avere diritto a un importo mensile — che può aiutare a finanziare l’assistenza necessaria.' },
+        steuern: { titel: 'Deduzione per persona sostenuta', text: 'Se sostiene in modo sostanziale una persona bisognosa, può dedurla nella dichiarazione d’imposta.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',

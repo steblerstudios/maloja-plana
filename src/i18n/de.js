@@ -43,6 +43,17 @@ export default {
         sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Mit einer kostenlosen Karte reist eine Begleitperson gratis im öV mit — auch bei Seh-, Geh- oder geistiger Behinderung. Antrag mit ärztlicher Bestätigung.' },
       },
     },
+    pflegendeAngehoerige: {
+      label: 'Angehörige pflegen',
+      frage: 'Pflegst du regelmässig eine angehörige oder nahestehende Person?',
+      intro: 'Pflege, die still geleistet wird, bleibt oft unbeachtet — dabei kann sie Rentengutschriften und Ansprüche schaffen. Auch Entlastungsdienste und Beratung gibt es.',
+      berechtigungen: {
+        betreuungsgutschriften: { titel: 'Betreuungsgutschriften (AHV)', text: 'Die Pflege naher Angehöriger kann deinem AHV-Konto gutgeschrieben werden und die spätere Rente erhöhen — jährlich bei der Ausgleichskasse anmelden.' },
+        betreuungsentschaedigung: { titel: 'Betreuungsentschädigung (EO)', text: 'Bezahlter Urlaub zur Pflege eines schwer kranken oder verunfallten Kindes, dazu Kurzurlaub für Angehörige — entschädigt über die EO.' },
+        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung (der gepflegten Person)', text: 'Die gepflegte Person hat allenfalls Anspruch auf einen monatlichen Betrag — der mithilft, die nötige Betreuung zu finanzieren.' },
+        steuern: { titel: 'Unterstützungsabzug', text: 'Wer eine bedürftige Person wesentlich unterstützt, kann dafür einen Abzug in der Steuererklärung geltend machen.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
