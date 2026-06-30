@@ -31,6 +31,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   const [selectedBfs, setSelectedBfs] = useState(null);
   const [detailNr, setDetailNr] = useState(null); // aufgeklappte Kasse im Vergleich
   const [withUnfall, setWithUnfall] = useState(true); // UVG: Referenzprämie mit/ohne Unfalldeckung
+  const [pickedFranchise, setPickedFranchise] = useState(null); // angeklickte Wunsch-Franchise fürs Vergleichen
 
   const gemeinden = useMemo(() => {
     const plz = plzInput.trim();
@@ -82,7 +83,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   // ── Marktplatz: alle Kassen vergleichen (günstigste zuerst) ──
   const targetInsurer = data.versicherungen?.targetInsurer || '';
-  const compFranchise = userFranchise || (ageClass === 'kind' ? KIN_FRA[0] : ERW_FRA[0]);
+  // Vergleichs-Franchise: angeklickte Wunsch-Franchise, sonst die eigene, sonst tiefste Stufe.
+  const compFranchise = pickedFranchise || userFranchise || (ageClass === 'kind' ? KIN_FRA[0] : ERW_FRA[0]);
   const allInsurers = useMemo(() => {
     if (!regionInfo) return [];
     const { kanton, region } = regionInfo;
@@ -236,9 +238,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       const hasOhne = ohneList && ohneList.length > 0;
       const ohneByFra = hasOhne ? Object.fromEntries(ohneList.map(f => [f.franchise, f.premium])) : null;
       return React.createElement('div', { style: { marginBottom: space.md + 'px' } },
-        React.createElement('div', { style: { ...s.label, marginBottom: space.sm + 'px' } },
+        React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } },
           t('po.franchiseTable', { insurer: insurer })
         ),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
+          t('po.pickFranchiseHint')),
         React.createElement('table', { style: s.table },
           React.createElement('thead', null,
             React.createElement('tr', null,
@@ -249,11 +253,15 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           ),
           React.createElement('tbody', null,
             referenceData.allFranchises.map(f => {
-              const active = f.franchise === userFranchise;
+              // aktive Vergleichs-Franchise (angeklickt oder eigene) wird hervorgehoben
+              const active = f.franchise === compFranchise;
               const cell = active ? s.tdActive : s.td;
               const ohnePrem = ohneByFra ? ohneByFra[f.franchise] : null;
-              return React.createElement('tr', { key: f.franchise },
-                React.createElement('td', { style: cell }, 'CHF ' + f.franchise.toLocaleString()),
+              return React.createElement('tr', {
+                key: f.franchise, onClick: () => setPickedFranchise(f.franchise),
+                'aria-pressed': active, style: { cursor: 'pointer' },
+              },
+                React.createElement('td', { style: cell }, (active ? '✓ ' : '') + 'CHF ' + f.franchise.toLocaleString()),
                 React.createElement('td', { style: { ...cell, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
                 hasOhne && React.createElement('td', { style: { ...cell, textAlign: 'right', color: active ? palette.sage : palette.mid } },
                   ohnePrem != null ? 'CHF ' + ohnePrem.toFixed(2) : '–')
