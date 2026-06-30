@@ -30,6 +30,19 @@ export default {
         steuern: { titel: 'Parent tariff & child deduction', text: 'Single parents are taxed at the lower parent tariff and can claim deductions for children and childcare.' },
       },
     },
+    beeintraechtigung: {
+      label: 'Living with a disability or chronic illness',
+      frage: 'Living with a disability, chronic illness or a recognised indication?',
+      intro: 'An indication can open support earlier or more broadly than people expect — much of it is rarely mentioned and easy to miss.',
+      berechtigungen: {
+        iv: { titel: 'Disability insurance (IV)', text: 'Reintegration before pension: vocational measures, aids and, if needed, a pension. Registering early matters most.' },
+        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income, often overlooked.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not assistance.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'Those on supplementary benefits are exempt from premiums; others on a low income still often qualify for help.' },
+        steuern: { titel: 'Disability-related tax deductions', text: 'Illness and disability costs — care, aids, transport — can be deducted from taxable income.' },
+        sbbBegleitabo: { titel: 'SBB companion card', text: 'A free card lets a companion travel with you at no charge on public transport — also for visual, mobility or cognitive disabilities. Apply with a medical confirmation.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',

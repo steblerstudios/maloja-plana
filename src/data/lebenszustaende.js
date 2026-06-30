@@ -42,7 +42,18 @@ export const LEBENSZUSTAENDE = [
       { key: 'steuern',         view: 'tax',         quelle: 'ESTV',         stand: '2026' },
     ],
   },
-  // Weitere Zustände folgen schritt-für-schritt (Reihenfolge mit Sophie
-  // festgelegt): Beeinträchtigung/Indikation → pflegende Angehörige.
-  // Jeweils reine Daten nach diesem Muster.
+  {
+    key: 'beeintraechtigung',
+    berechtigungen: [
+      { key: 'iv',                    view: 'iv',              quelle: 'BSV / IV-Stelle', stand: '2026' },
+      { key: 'hilflosenentschaedigung', view: 'iv',            quelle: 'BSV',             stand: '2026' },
+      { key: 'el',                    view: 'finanzuebersicht', quelle: 'BSV',            stand: '2026' },
+      { key: 'ipv',                   view: 'premium',         quelle: 'BAG / Kanton',    stand: '2026' },
+      { key: 'steuern',               view: 'tax',             quelle: 'ESTV',            stand: '2026' },
+      // Externe offizielle Quelle (kein interner Ablauf): SBB-Begleitabo.
+      { key: 'sbbBegleitabo', url: 'https://www.sbb.ch/de/bahnhof-services/reisende-mit-handicap/fahrverguenstigung/ausweiskarte-behinderung.html', quelle: 'SBB', stand: '2026' },
+    ],
+  },
+  // Weiterer Zustand folgt schritt-für-schritt (Reihenfolge mit Sophie
+  // festgelegt): pflegende Angehörige. Reine Daten nach diesem Muster.
 ];

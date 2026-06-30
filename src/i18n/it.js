@@ -30,6 +30,19 @@ export default {
         steuern: { titel: 'Tariffa per genitori & deduzione per figli', text: 'I genitori soli sono tassati con la tariffa per genitori più bassa e possono dedurre le spese per i figli e la custodia.' },
       },
     },
+    beeintraechtigung: {
+      label: 'Con una disabilità o malattia cronica',
+      frage: 'Vive con una disabilità, una malattia cronica o un’indicazione riconosciuta?',
+      intro: 'Un’indicazione può aprire un sostegno prima o in modo più ampio di quanto si pensi — molte cose vengono menzionate di rado e si perdono facilmente.',
+      berechtigungen: {
+        iv: { titel: 'Prestazioni AI', text: 'Reintegrazione prima della rendita: provvedimenti professionali, mezzi ausiliari e, se necessario, una rendita. Annunciarsi presto conta di più.' },
+        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito, spesso trascurato.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non assistenza.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Chi riceve PC è esentato dai premi; con un reddito basso si ha comunque spesso diritto a un aiuto.' },
+        steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
+        sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Una carta gratuita permette a un accompagnatore di viaggiare gratis sui trasporti pubblici — anche in caso di disabilità visiva, motoria o mentale. Domanda con conferma medica.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
