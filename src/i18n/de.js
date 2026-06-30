@@ -2695,6 +2695,11 @@ export default {
     exportBlocked: 'Export ist im Beispiel-Modus nicht verfügbar.',
   },
   po: {
+    franchiseOptTitle: 'Lohnt sich eine höhere Franchise?',
+    franchiseOptSaving: { sie: 'Mit Franchise CHF {high} statt CHF {low} sparen Sie rund CHF {saving}/Jahr an Prämien.', du: 'Mit Franchise CHF {high} statt CHF {low} sparst du rund CHF {saving}/Jahr an Prämien.' },
+    franchiseOptReserve: { sie: 'Dafür tragen Sie im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster sollten Sie zurücklegen können.', du: 'Dafür trägst du im schlechtesten Jahr bis zu CHF {reserve} selbst (Franchise + max. Selbstbehalt CHF {sb}). Dieses Polster solltest du zurücklegen können.' },
+    franchiseOptBreakeven: { sie: 'Die höhere Franchise lohnt sich, solange Ihre Gesundheitskosten unter rund CHF {breakeven}/Jahr bleiben.', du: 'Die höhere Franchise lohnt sich, solange deine Gesundheitskosten unter rund CHF {breakeven}/Jahr bleiben.' },
+    franchiseOptSource: 'Quelle: [[KVG Art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · Selbstbehalt 10% / max. CHF 700 (Erw.), CHF 350 (Kind).',
     pickFranchiseHint: { sie: 'Tippen Sie eine Franchise, um die Kassen damit zu vergleichen.', du: 'Tippe eine Franchise, um die Kassen damit zu vergleichen.' },
     chooseByPrice: { sie: 'Tippen Sie einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.', du: 'Tippe einen Preis (Mit/Ohne Unfall), um die Kasse als Wunschkasse zu wählen.' },
     unfallLabel: 'Unfalldeckung',

@@ -2111,6 +2111,11 @@ export default {
   },
 
   po: {
+    franchiseOptTitle: 'Vala ina franchisa pli auta la paina?',
+    franchiseOptSaving: 'Cun ina franchisa da CHF {high} enstagl CHF {low} spargnas ti var CHF {saving}/onn da premias.',
+    franchiseOptReserve: 'En picada portas ti en in onn nausch enfin CHF {reserve} sez (franchisa + quota-part max. CHF {sb}). Quest cussin stuessas ti pudair metter da maun.',
+    franchiseOptBreakeven: 'La franchisa pli auta vala la paina, uschelunga tes cuosts da sanadad restan sut var CHF {breakeven}/onn.',
+    franchiseOptSource: 'Funtauna: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]] · quota-part 10% / max. CHF 700 (creschids), CHF 350 (uffants).',
     pickFranchiseHint: 'Tutgia ina franchisa per cumparegliar las cassas a quel nivel.',
     chooseByPrice: 'Tutgia in pretsch (cun/senza accident) per tscherner la cassa sco cassa giavischada.',
     unfallLabel: 'Cuvrida d’accident',

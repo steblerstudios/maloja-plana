@@ -2698,6 +2698,11 @@ export default {
   },
 
   po: {
+    franchiseOptTitle: 'Conviene una franchigia più alta?',
+    franchiseOptSaving: 'Con una franchigia di CHF {high} invece di CHF {low} risparmi circa CHF {saving}/anno di premi.',
+    franchiseOptReserve: 'In cambio, in un anno sfortunato paghi fino a CHF {reserve} di tasca tua (franchigia + aliquota max. CHF {sb}). Dovresti poter mettere da parte questo cuscinetto.',
+    franchiseOptBreakeven: 'La franchigia più alta conviene finché i tuoi costi sanitari restano sotto circa CHF {breakeven}/anno.',
+    franchiseOptSource: 'Fonte: [[LAMal art. 64|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]] · aliquota 10% / max. CHF 700 (adulti), CHF 350 (bambini).',
     pickFranchiseHint: 'Tocca una franchigia per confrontare le casse a quel livello.',
     chooseByPrice: 'Tocca un prezzo (con/senza infortuni) per impostare la cassa come desiderata.',
     unfallLabel: 'Copertura infortuni',
