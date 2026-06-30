@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS } from './budgetSync.js';
+import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
@@ -72,14 +72,28 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   // Multiplier for annual view
   const mult = showAnnual ? 12 : 1;
 
+  // Quiet BFS benchmark line (Faden 4) — orientation only, never a judgement.
+  // groupLevel = no extra indent; field-level lines sit under their indented item.
+  const renderBenchmarkLine = (avg, key, groupLevel) => React.createElement('div', {
+    key: 'bm-' + key,
+    style: {
+      paddingLeft: groupLevel ? '0' : '16px', paddingBottom: '6px',
+      fontSize: text.sm, color: palette.soft, lineHeight: leading.normal
+    }
+  }, t('budgetSync.benchmark', { amount: formatCHF(avg * mult) }));
+
   // Render a single field line
   const renderItem = (item) => {
     const isEmpty = item.value === 0;
-    return React.createElement('div', { key: item.key, style: itemLineStyle },
-      React.createElement('span', null, item.label),
-      isEmpty
-        ? React.createElement('span', { style: emptyValueStyle }, '—')
-        : React.createElement('span', null, formatCHF(item.value * mult))
+    const bm = isEmpty ? null : BUDGET_BENCHMARKS.byField[item.key];
+    return React.createElement('div', { key: item.key },
+      React.createElement('div', { style: itemLineStyle },
+        React.createElement('span', null, item.label),
+        isEmpty
+          ? React.createElement('span', { style: emptyValueStyle }, '—')
+          : React.createElement('span', null, formatCHF(item.value * mult))
+      ),
+      bm && renderBenchmarkLine(bm, item.key)
     );
   };
 
@@ -93,6 +107,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   const renderGroup = (group) => {
     const pct = groupPercent(group.total);
     const singleField = group.items.length === 1;
+    const groupBm = group.total > 0 ? BUDGET_BENCHMARKS.byGroup[group.key] : null;
     return React.createElement('div', { key: group.key, style: { marginBottom: space.xs } },
       // Group header with label, total, and quiet percentage
       React.createElement('div', { style: groupHeaderStyle },
@@ -106,6 +121,8 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
           }, pct)
         )
       ),
+      // BFS group-level benchmark (e.g. Housing, Mobility) directly under the header
+      groupBm && renderBenchmarkLine(groupBm, group.key, true),
       // Individual items — skip when group has only one field (avoids redundant line)
       !singleField && group.items.map(renderItem)
     );
