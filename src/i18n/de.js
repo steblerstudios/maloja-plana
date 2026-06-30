@@ -1,4 +1,24 @@
 export default {
+  lebenszustaende: {
+    sectionTitle: 'Trifft eine dieser Situationen zu?',
+    sectionIntro: 'Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wähle, was passt — es wird nichts als Etikett gespeichert, es zeigt nur, was möglich wäre.',
+    selectHint: 'Eine Situation antippen, um zu sehen, was infrage kommt.',
+    quelleLabel: 'Quelle',
+    standLabel: 'Stand',
+    moreInfo: 'Mehr erfahren',
+    tiefesEinkommen: {
+      label: 'Wenn das Geld knapp ist',
+      frage: 'Reicht das Einkommen oft nicht bis Ende Monat?',
+      intro: 'Bei tiefem Einkommen gibt es mehrere Formen der Unterstützung — vieles bleibt ungenutzt, weil man es schlicht nicht kennt.',
+      berechtigungen: {
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Der Kanton hilft bei den Krankenkassen-Prämien für tiefe und mittlere Einkommen. Viele Berechtigte stellen nie einen Antrag.' },
+        mietzins: { titel: 'Mietzinsbeitrag', text: 'Einzelne Kantone und Gemeinden beteiligen sich an der Miete, wenn sie bei tiefem Einkommen zu schwer wiegt.' },
+        sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht deckt, kann die Sozialhilfe aufstocken. Das ist ein Recht, kein Almosen.' },
+        stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: 'Für Ausbildung und Studium bei tiefem Einkommen gibt es Stipendien — rückzahlbar oder nicht.' },
+        franchise: { titel: 'Franchise prüfen', text: 'Bei wenigen Arztbesuchen senkt eine höhere Franchise die monatliche Prämie — lohnt sich jeden Herbst zu prüfen.' },
+      },
+    },
+  },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
     intro: 'Die Zusatzversicherung ist getrennt von der Grundversicherung — eigene Regeln, eigene Fristen. Ein ruhiger Weg in vier Schritten.',

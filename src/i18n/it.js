@@ -1,4 +1,24 @@
 export default {
+  lebenszustaende: {
+    sectionTitle: 'Una di queste situazioni la riguarda?',
+    sectionIntro: 'Alcuni aiuti non dipendono da un singolo evento, ma da una situazione che dura nel tempo. Scelga ciò che corrisponde — nulla viene salvato come etichetta, mostra solo ciò che potrebbe esserci.',
+    selectHint: 'Tocchi una situazione per vedere cosa potrebbe spettarle.',
+    quelleLabel: 'Fonte',
+    standLabel: 'Stato',
+    moreInfo: 'Saperne di più',
+    tiefesEinkommen: {
+      label: 'Quando i soldi non bastano',
+      frage: 'Il reddito spesso non arriva a fine mese?',
+      intro: 'Con un reddito basso esistono diverse forme di sostegno — molte restano inutilizzate perché semplicemente non si conoscono.',
+      berechtigungen: {
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Il Cantone aiuta a pagare i premi della cassa malati per i redditi bassi e medi. Molti aventi diritto non fanno mai domanda.' },
+        mietzins: { titel: 'Contributo per la pigione', text: 'Alcuni Cantoni e Comuni partecipano alla pigione quando pesa troppo su un reddito basso.' },
+        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre il necessario, l’aiuto sociale può integrarlo. È un diritto, non un’elemosina.' },
+        stipendien: { titel: 'Borse di studio', text: 'Per la formazione e gli studi con un reddito basso esistono borse di studio — rimborsabili o meno.' },
+        franchise: { titel: 'Verificare la franchigia', text: 'Con poche visite mediche, una franchigia più alta riduce il premio mensile — da rivedere ogni autunno.' },
+      },
+    },
+  },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
     intro: 'L\'assicurazione complementare è separata da quella di base — regole proprie, scadenze proprie. Un percorso tranquillo in quattro passi.',
