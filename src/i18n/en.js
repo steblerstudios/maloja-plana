@@ -1486,6 +1486,7 @@ export default {
     incomeAlimente: 'Maintenance received',
     ipvRelief: 'IPV relief',
     ipvEffective: 'Effective cost',
+    benchmark: 'For orientation: an average household spends about {amount} here (FSO 2023). Yours may well differ.',
   },
 
   premium: {

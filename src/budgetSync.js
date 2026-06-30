@@ -15,6 +15,28 @@ export const BUDGET_GROUPS = [
   { key: 'obligations', fields: ['debtPayments', 'alimentePaid'] },
 ];
 
+// Faden 4 / Inkrement 1 — belegbare Haushalts-Budget-Richtwerte (Orientierung, nicht Kontrolle).
+// Quelle: BFS Haushaltsbudgeterhebung (HABE) 2023, Durchschnitt aller Haushalte (⌀ 2,07 Pers.),
+// CHF pro Monat. Bewusst Kategorie-Richtwerte, KEINE erfundenen Einzelpreise.
+// Nur Kategorien mit sauberer 1:1-Entsprechung zur BFS-Kategorie sind hinterlegt.
+// Erweiterbar um Werte nach Haushaltsgrösse (Inkrement 2) — Struktur bleibt stabil.
+export const BUDGET_BENCHMARKS = {
+  source: 'BFS HABE 2023',
+  avgHouseholdSize: 2.07,
+  // Auf Gruppenebene gezeigt (Gruppe entspricht einer BFS-Kategorie)
+  byGroup: {
+    housing: 1449,   // Wohnen und Energie
+    mobility: 744,   // Verkehr
+  },
+  // Auf Feldebene gezeigt (Feld entspricht einer BFS-Kategorie)
+  byField: {
+    groceries: 638,        // Nahrungsmittel und alkoholfreie Getränke
+    communication: 162,    // Nachrichtenübermittlung
+    tax: 1245,             // Steuern
+    healthInsurance: 689,  // Krankenkasse: Prämien für die Grundversicherung
+  },
+};
+
 const syncBudgetFromChapters = (data) => {
   const netIncome = Number(data.finanzen?.monthlyIncome || 0);
   const familienzulagen = Number(data.finanzen?.familienzulagen || 0);
