@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
@@ -38,6 +38,16 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
   const activeBfs = selectedBfs || (gemeinden.length === 1 ? gemeinden[0].bfsNr : null);
   const activeGemeinde = gemeinden.find(g => g.bfsNr === activeBfs) || null;
+
+  // „Nie zweimal eingeben": eine hier eingegebene, gültige PLZ ins Wohnen-Kapitel
+  // zurückspeichern. Der zentrale Handler leitet daraus Kanton (→ IPV/Steuer) und
+  // Gemeinde ab — so propagiert sie nach Budget, Mietzinsbeiträge usw.
+  useEffect(() => {
+    const plz = plzInput.trim();
+    if (onUpdateData && plz.length === 4 && gemeinden.length > 0 && plz !== storedPLZ) {
+      onUpdateData('wohnen', 'postalCode', plz);
+    }
+  }, [plzInput, gemeinden, storedPLZ, onUpdateData]);
 
   const regionInfo = useMemo(() => {
     if (!activeBfs) return null;
