@@ -43,6 +43,17 @@ export default {
         sbbBegleitabo: { titel: 'Abonnement pour accompagnateur CFF', text: 'Une carte gratuite permet à un·e accompagnant·e de voyager gratuitement dans les transports publics — aussi en cas de handicap visuel, moteur ou mental. Demande avec attestation médicale.' },
       },
     },
+    pflegendeAngehoerige: {
+      label: 'Proche aidant·e',
+      frage: 'Vous occupez-vous régulièrement d’un proche ou d’une personne proche ?',
+      intro: 'Les soins donnés en silence sont rarement reconnus — pourtant ils peuvent créer des bonifications de rente et des droits. Des services de relève et des conseils existent aussi.',
+      berechtigungen: {
+        betreuungsgutschriften: { titel: 'Bonifications pour tâches d’assistance (AVS)', text: 'L’assistance à un proche peut être créditée sur votre compte AVS et augmenter votre future rente — à annoncer chaque année à la caisse de compensation.' },
+        betreuungsentschaedigung: { titel: 'Allocation de prise en charge (APG)', text: 'Congé payé pour s’occuper d’un enfant gravement malade ou accidenté, et court congé pour un proche — indemnisés par les APG.' },
+        hilflosenentschaedigung: { titel: 'Allocation pour impotent (de la personne aidée)', text: 'La personne dont vous vous occupez peut avoir droit à un montant mensuel — qui peut aider à financer les soins nécessaires.' },
+        steuern: { titel: 'Déduction pour personne soutenue', text: 'Si vous soutenez de manière substantielle une personne dans le besoin, vous pouvez la déduire dans votre déclaration d’impôt.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',

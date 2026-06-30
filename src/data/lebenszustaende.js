@@ -54,6 +54,15 @@ export const LEBENSZUSTAENDE = [
       { key: 'sbbBegleitabo', url: 'https://www.sbb.ch/de/bahnhof-services/reisende-mit-handicap/fahrverguenstigung/ausweiskarte-behinderung.html', quelle: 'SBB', stand: '2026' },
     ],
   },
-  // Weiterer Zustand folgt schritt-für-schritt (Reihenfolge mit Sophie
-  // festgelegt): pflegende Angehörige. Reine Daten nach diesem Muster.
+  {
+    key: 'pflegendeAngehoerige',
+    berechtigungen: [
+      { key: 'betreuungsgutschriften', view: 'vorsorge', quelle: 'BSV / Ausgleichskasse', stand: '2026' },
+      { key: 'betreuungsentschaedigung', view: 'eo',      quelle: 'BSV',                   stand: '2026' },
+      { key: 'hilflosenentschaedigung',  view: 'iv',      quelle: 'BSV',                   stand: '2026' },
+      { key: 'steuern',                  view: 'tax',     quelle: 'ESTV',                  stand: '2026' },
+    ],
+  },
+  // Mit Sophie vereinbarte 4er-Reihe komplett. Spätere Zustände nach
+  // gleichem Muster (reine Daten + i18n in 5 Sprachen).
 ];
