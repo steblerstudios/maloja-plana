@@ -65,6 +65,32 @@ export const LEBENSZUSTAENDE = [
       { key: 'steuern',                  view: 'tax',     quelle: 'ESTV',                  stand: '2026' },
     ],
   },
-  // Mit Sophie vereinbarte 4er-Reihe komplett. Spätere Zustände nach
-  // gleichem Muster (reine Daten + i18n in 5 Sprachen).
+  {
+    key: 'frischZugezogen',
+    berechtigungen: [
+      { key: 'kkErst',        view: 'kkerst',      quelle: 'BAG / KVG',            stand: '2026' },
+      { key: 'bewilligung',   view: 'bewilligung', quelle: 'SEM / Kanton',         stand: '2026' },
+      { key: 'quellensteuer', view: 'tax',         quelle: 'ESTV / Kanton',        stand: '2026' },
+      { key: 'ipv',           view: 'premium',     quelle: 'BAG / Kanton',         stand: '2026' },
+      { key: 'mietzins',      view: 'mietzins',    quelle: 'Kanton',               stand: '2026' },
+    ],
+  },
+  {
+    key: 'inAusbildung',
+    berechtigungen: [
+      { key: 'stipendien', view: 'stipendien', quelle: 'EDK / Kanton',            stand: '2026' },
+      { key: 'ipv',        view: 'premium',    quelle: 'BAG / Kanton',            stand: '2026' },
+      { key: 'franchise',  view: 'kvg',        quelle: 'BAG',                     stand: '2026' },
+      { key: 'ahv',        view: 'vorsorge',   quelle: 'BSV / Ausgleichskasse',   stand: '2026' },
+    ],
+  },
+  {
+    key: 'asylsuchend',
+    berechtigungen: [
+      { key: 'asyl',   view: 'asyl',    quelle: 'SEM',          stand: '2026' },
+      { key: 'kkErst', view: 'kkerst',  quelle: 'BAG / KVG',    stand: '2026' },
+      { key: 'ipv',    view: 'premium', quelle: 'BAG / Kanton', stand: '2026' },
+    ],
+  },
+  // Spätere Zustände nach gleichem Muster (reine Daten + i18n in 5 Sprachen).
 ];
