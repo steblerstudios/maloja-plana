@@ -267,7 +267,7 @@ const KatalogTab = ({ palette, t, filterCat }) => {
 };
 
 // ─── Franchise Tab ─────────────────────────────────────────
-const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
+const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   const currentYear = new Date().getFullYear();
   const storedFranchise = (() => {
     const f = data.versicherungen?.franchise;
@@ -408,6 +408,17 @@ const FranchiseTab = ({ palette, t, data, onUpdateData }) => {
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
         }, '▾')
       ),
+
+      // Brücke zum Franchise-Optimierer (Prämien-Orientierung): dort steht die
+      // belegte Ersparnis-/Break-even-Rechnung für die eigene Kasse. Keine Waisen.
+      onNavigate && React.createElement('button', {
+        onClick: () => onNavigate('praemien'),
+        style: {
+          display: 'block', width: '100%', textAlign: 'start', background: 'none',
+          border: 'none', padding: '2px 0 4px 0', cursor: 'pointer', fontFamily: 'inherit',
+          fontSize: text.sm, color: palette.sand, fontWeight: weight.medium,
+        }
+      }, t('kvg.franchiseOptimizerLink') + ' →'),
 
       React.createElement('div', {
         style: { height: '1px', background: palette.border, margin: '14px 0' }
@@ -839,7 +850,7 @@ const RechnungTab = ({ palette, t, data }) => {
 };
 
 // ─── Main Component ────────────────────────────────────────
-export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab }) => {
+export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNavigate }) => {
   const [tab, setTab] = useState(initialTab || 'katalog');
   const [filterCat, setFilterCat] = useState('all');
 
@@ -899,7 +910,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab }) =>
       React.createElement(KatalogTab, { palette, t, filterCat })
     ),
 
-    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData }),
+    tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate }),
     tab === 'rechnung' && React.createElement(RechnungTab, { palette, t, data }),
 
     React.createElement('div', {
