@@ -59,6 +59,40 @@ export default {
         steuern: { titel: 'Deducziun per persunas sustegnidas', text: 'Tgi che sustegna essenzialmain ina persuna en basegn po la deducir en la decleraziun da taglia.' },
       },
     },
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    frischZugezogen: {
+      label: 'Nov arrivà en Svizra',
+      frage: 'Arrivà dacurt en Svizra da l’exteriur?',
+      intro: 'Las emnas primaras portan cun sai termins silenzius e dretgs facils da perder — intgins pass fatgs baud spargnan lu problems pli tard.',
+      berechtigungen: {
+        kkErst: { titel: 'S’annunziar tar la cassa da malsauns', text: 'L’assicuranza da basa è obligatorica e sto vegnir concludida entaifer trais mais suenter l’arriv — la protecziun vala lura retroactivamain dapi l’emprim di.' },
+        bewilligung: { titel: 'Annunzia & permiss da dimora', text: 'S’annunziar tar la vischnanca entaifer 14 dis suenter l’arriv; il permiss da dimora suonda. Termins e documents varieschan tenor naziunalitad e chantun.' },
+        quellensteuer: { titel: 'Taglia a la funtauna', text: 'Senza permiss da domicil (C) vegn la taglia deducida directamain dal salari. Deducziuns pon savens vegnir turnadas via ina taxaziun ordinaria posteriura.' },
+        ipv: { titel: 'Reducziun da premias (IPV)', text: 'Novs arrivads cun in bass u med entrada pon retschaiver agid dal chantun per las premias da la cassa da malsauns — gia l’emprim onn.' },
+        mietzins: { titel: 'Agid per la pigiun', text: 'Intgins chantuns e vischnancas participeschan a la pigiun sch’ella grava fitg sin in modest entrada — da controllar suenter il transferiment.' },
+      },
+    },
+    inAusbildung: {
+      label: 'En furmaziun',
+      frage: 'En in emprendissadi, a scola u en il studi?',
+      intro: 'Esser en furmaziun avra sustegns che blers na dumondan mai — e cumenza en silenzi intginas obligaziuns da tegnair en egl.',
+      berechtigungen: {
+        stipendien: { titel: 'Stipendis & contribuziuns da furmaziun', text: 'Stipendis ed emprests chantunals sustegnan emprendissadi e studi — tenor tes entrada e quel da tes geniturs, cun termins d’annunzia.' },
+        ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
+        franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
+        ahv: { titel: 'Contribuziuns AVS & largias', text: 'Dapi l’onn suenter ils 20 onns èn ils contribuziuns AVS debitas era senza lavur — students senza activitad pajan il contribut minimal. Onns che mancan reduceschan la renta futura.' },
+      },
+    },
+    asylsuchend: {
+      label: 'Petent d’asil u cun status da protecziun',
+      frage: 'En la procedura d’asil u cun il status da protecziun S?',
+      intro: 'Da l’exteriur è il sistem grev da chapir. Quests puncts dattan orientaziun — per ils dretgs exacts è in post da cussegliaziun u la SEM la dretga adressa.',
+      berechtigungen: {
+        asyl: { titel: 'Orientaziun en l’asil', text: 'Ina survista da la procedura, dals posts participads e dals proxims pass — che il percurs paria main opac.' },
+        kkErst: { titel: 'Assicuranza da malsauns', text: 'Tuts en Svizra èn assicurads da basa — durant la procedura d’asil vegn l’assicuranza per il pli organisada e pajada dal chantun.' },
+        ipv: { titel: 'Reducziun da premias (IPV)', text: 'Uschespert ch’i dat in agen entrada po il chantun gidar a pajar las premias da la cassa da malsauns — sco per mintgin cun bass entrada.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {

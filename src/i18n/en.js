@@ -58,6 +58,39 @@ export default {
         steuern: { titel: 'Support deduction', text: 'If you substantially support a person in need, you can claim a deduction for them on your tax return.' },
       },
     },
+    frischZugezogen: {
+      label: 'Newly arrived in Switzerland',
+      frage: 'Recently moved to Switzerland from abroad?',
+      intro: 'The first weeks come with quiet deadlines and rights that are easy to miss — a few steps taken early save trouble later.',
+      berechtigungen: {
+        kkErst: { titel: 'Register for health insurance', text: 'Basic health insurance is mandatory and must be arranged within three months of arrival — cover then applies retroactively from day one.' },
+        bewilligung: { titel: 'Registration & residence permit', text: 'Register at your commune within 14 days of arrival; the residence permit follows. Deadlines and documents differ by nationality and canton.' },
+        quellensteuer: { titel: 'Withholding tax (Quellensteuer)', text: 'Without a settlement permit (C), tax is deducted directly from your salary. Deductions can often be reclaimed through a later ordinary assessment.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'New residents on a low or middle income can have the canton help pay health-insurance premiums — from the very first year.' },
+        mietzins: { titel: 'Rent assistance', text: 'Some cantons and communes contribute to rent when it weighs heavily on a modest income — worth checking after moving in.' },
+      },
+    },
+    inAusbildung: {
+      label: 'In education or training',
+      frage: 'In an apprenticeship, at school or studying?',
+      intro: 'Being in education opens support that many never claim — and quietly starts a few obligations worth keeping an eye on.',
+      berechtigungen: {
+        stipendien: { titel: 'Education grants', text: 'Cantonal grants and loans support training and studies — depending on your and your parents’ income, with application deadlines.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'Young adults in education on a low income often qualify for help with health-insurance premiums — for themselves.' },
+        franchise: { titel: 'Choose your deductible', text: 'Under 26 the premium is lower; with few doctor visits a higher deductible saves more — worth reviewing each autumn.' },
+        ahv: { titel: 'AHV contributions & gaps', text: 'From the year after you turn 20, AHV contributions are due even without a job — non-earning students pay the minimum. Missing years lower your future pension.' },
+      },
+    },
+    asylsuchend: {
+      label: 'Seeking asylum or protection status',
+      frage: 'In the asylum process or holding protection status S?',
+      intro: 'The system is hard to navigate from outside. These pointers give orientation — for detailed rights, a counselling service or the SEM is the right place.',
+      berechtigungen: {
+        asyl: { titel: 'Asylum orientation', text: 'An overview of the procedure, the offices involved and the steps ahead — so the process feels less opaque.' },
+        kkErst: { titel: 'Health insurance', text: 'Everyone in Switzerland has basic health insurance — during the asylum process it is usually arranged and paid through the canton.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'Once you have your own income, the canton can help pay health-insurance premiums — as for anyone on a low income.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',
