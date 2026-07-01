@@ -3501,6 +3501,7 @@ export default {
     },
     fristenTitle: "Impurtant: ils termins èn curts",
     fristenBody: { sie: "En la procedura accelerada stuais Vus far recurs entaifer 7 dis da lavur, en la procedura extendida entaifer 30 dis. Na spettai betg — contactai immediatamain Vossa represchentanza giuridica u in post da cussegliaziun.", du: "En la procedura accelerada stos Ti far recurs entaifer 7 dis da lavur, en la procedura extendida entaifer 30 dis. Na spetga betg — contactescha immediatamain Tia represchentanza giuridica u in post da cussegliaziun." },
+    fristenKalender: 'Notar il termin en il chalender',
     cantonLink: { sie: "Voss chantun: {canton} → chattar cussegliaziun d'asil & autoritads", du: "Tes chantun: {canton} → chattar cussegliaziun d'asil & autoritads" },
     cantonOfficeTitle: { sie: "Cussegliaziun en Voss chantun ({canton})", du: "Cussegliaziun en tes chantun ({canton})" },
     counseling: {

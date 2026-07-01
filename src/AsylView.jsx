@@ -108,9 +108,15 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Wichtig: kurze Fristen ──
+    // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
+    // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
     React.createElement('div', { style: s.fristen },
       React.createElement('div', { style: s.fristenTitle }, '⚠ ' + t('asyl.fristenTitle')),
-      React.createElement('div', { style: s.fristenBody }, t('asyl.fristenBody'))
+      React.createElement('div', { style: s.fristenBody }, t('asyl.fristenBody')),
+      onNavigate && React.createElement('button', {
+        style: { ...s.crosslink, marginTop: space.sm + 'px', background: 'transparent', color: palette.gold, fontWeight: weight.medium, padding: space.xs + 'px 0' },
+        onClick: () => onNavigate('calendar'),
+      }, t('asyl.fristenKalender') + ' →')
     ),
 
     // ── Wo Hilfe holen ──
