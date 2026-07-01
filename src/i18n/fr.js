@@ -58,6 +58,39 @@ export default {
         steuern: { titel: 'Déduction pour personne soutenue', text: 'Si vous soutenez de manière substantielle une personne dans le besoin, vous pouvez la déduire dans votre déclaration d’impôt.' },
       },
     },
+    frischZugezogen: {
+      label: 'Nouvel arrivant en Suisse',
+      frage: 'Récemment arrivé en Suisse depuis l’étranger ?',
+      intro: 'Les premières semaines s’accompagnent de délais discrets et de droits faciles à manquer — quelques démarches faites tôt évitent des ennuis plus tard.',
+      berechtigungen: {
+        kkErst: { titel: 'S’affilier à l’assurance-maladie', text: 'L’assurance de base est obligatoire et doit être conclue dans les trois mois suivant l’arrivée — la couverture s’applique alors rétroactivement dès le premier jour.' },
+        bewilligung: { titel: 'Annonce & autorisation de séjour', text: 'S’annoncer à la commune dans les 14 jours suivant l’arrivée ; l’autorisation de séjour suit. Les délais et documents varient selon la nationalité et le canton.' },
+        quellensteuer: { titel: 'Impôt à la source', text: 'Sans permis d’établissement (C), l’impôt est prélevé directement sur le salaire. Les déductions peuvent souvent être récupérées via une taxation ordinaire ultérieure.' },
+        ipv: { titel: 'Réduction de primes (RIP)', text: 'Les nouveaux arrivants à revenu modeste ou moyen peuvent être aidés par le canton pour les primes d’assurance-maladie — dès la première année.' },
+        mietzins: { titel: 'Aide au logement', text: 'Certains cantons et communes participent au loyer lorsqu’il pèse lourd sur un revenu modeste — à vérifier après l’emménagement.' },
+      },
+    },
+    inAusbildung: {
+      label: 'En formation',
+      frage: 'En apprentissage, à l’école ou aux études ?',
+      intro: 'Être en formation ouvre des soutiens que beaucoup ne demandent jamais — et fait naître discrètement quelques obligations à surveiller.',
+      berechtigungen: {
+        stipendien: { titel: 'Bourses d’études', text: 'Les bourses et prêts cantonaux soutiennent l’apprentissage et les études — selon votre revenu et celui de vos parents, avec des délais de dépôt.' },
+        ipv: { titel: 'Réduction de primes (RIP)', text: 'Les jeunes adultes en formation à faible revenu ont souvent droit à une aide pour les primes d’assurance-maladie — pour eux-mêmes.' },
+        franchise: { titel: 'Choisir sa franchise', text: 'Avant 26 ans la prime est plus basse ; avec peu de visites médicales, une franchise élevée fait économiser davantage — à revoir chaque automne.' },
+        ahv: { titel: 'Cotisations AVS & lacunes', text: 'Dès l’année suivant vos 20 ans, les cotisations AVS sont dues même sans emploi — les étudiants sans activité paient la cotisation minimale. Les années manquantes réduisent la rente future.' },
+      },
+    },
+    asylsuchend: {
+      label: 'Demandeur d’asile ou statut de protection',
+      frage: 'Dans la procédure d’asile ou avec le statut de protection S ?',
+      intro: 'De l’extérieur, le système est difficile à comprendre. Ces repères donnent une orientation — pour les droits précis, un service de conseil ou le SEM est le bon interlocuteur.',
+      berechtigungen: {
+        asyl: { titel: 'Orientation dans l’asile', text: 'Un aperçu de la procédure, des services impliqués et des prochaines étapes — pour rendre le parcours moins opaque.' },
+        kkErst: { titel: 'Assurance-maladie', text: 'Toute personne en Suisse est couverte par l’assurance de base — pendant la procédure d’asile, elle est généralement organisée et payée par le canton.' },
+        ipv: { titel: 'Réduction de primes (RIP)', text: 'Dès qu’un revenu propre existe, le canton peut aider à payer les primes d’assurance-maladie — comme pour toute personne à faible revenu.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',

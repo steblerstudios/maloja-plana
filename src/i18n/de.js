@@ -58,6 +58,39 @@ export default {
         steuern: { titel: 'Unterstützungsabzug', text: 'Wer eine bedürftige Person wesentlich unterstützt, kann dafür einen Abzug in der Steuererklärung geltend machen.' },
       },
     },
+    frischZugezogen: {
+      label: 'Neu in der Schweiz',
+      frage: 'Erst kürzlich aus dem Ausland in die Schweiz gezogen?',
+      intro: 'Die ersten Wochen bringen stille Fristen und Rechte mit, die leicht untergehen — ein paar Schritte früh erledigt, erspart später Ärger.',
+      berechtigungen: {
+        kkErst: { titel: 'Krankenkasse anmelden', text: 'Die Grundversicherung ist obligatorisch und muss innert drei Monaten nach Zuzug abgeschlossen werden — der Schutz gilt dann rückwirkend ab dem ersten Tag.' },
+        bewilligung: { titel: 'Anmeldung & Aufenthaltsbewilligung', text: 'Innert 14 Tagen bei der Wohngemeinde anmelden; die Aufenthaltsbewilligung folgt. Fristen und Unterlagen unterscheiden sich je nach Nationalität und Kanton.' },
+        quellensteuer: { titel: 'Quellensteuer', text: 'Ohne Niederlassungsbewilligung (C) wird die Steuer direkt vom Lohn abgezogen. Abzüge lassen sich oft über eine nachträgliche ordentliche Veranlagung zurückholen.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Neu Zugezogene mit tiefem oder mittlerem Einkommen können sich vom Kanton bei den Krankenkassenprämien helfen lassen — schon im ersten Jahr.' },
+        mietzins: { titel: 'Mietzinsbeitrag', text: 'Manche Kantone und Gemeinden zahlen an die Miete, wenn sie ein bescheidenes Einkommen stark belastet — nach dem Einzug prüfen.' },
+      },
+    },
+    inAusbildung: {
+      label: 'In Ausbildung',
+      frage: 'In einer Lehre, an der Schule oder im Studium?',
+      intro: 'Eine Ausbildung öffnet Unterstützung, die viele nie beziehen — und beginnt still ein paar Pflichten, die man im Auge behalten sollte.',
+      berechtigungen: {
+        stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: 'Kantonale Stipendien und Darlehen unterstützen Lehre und Studium — abhängig vom Einkommen von dir und deinen Eltern, und mit Fristen bei der Anmeldung.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Junge Erwachsene in Ausbildung mit tiefem Einkommen haben oft Anspruch auf Hilfe bei den Krankenkassenprämien — für sich selbst.' },
+        franchise: { titel: 'Franchise wählen', text: 'Unter 26 ist die Prämie tiefer; bei wenigen Arztbesuchen spart eine höhere Franchise mehr — jeden Herbst einen Blick wert.' },
+        ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
+      },
+    },
+    asylsuchend: {
+      label: 'Asylsuchend oder mit Schutzstatus',
+      frage: 'Im Asylverfahren oder mit Schutzstatus S?',
+      intro: 'Von aussen ist das System schwer zu durchschauen. Diese Hinweise geben Orientierung — für die genauen Rechte sind eine Beratungsstelle oder das SEM die richtige Adresse.',
+      berechtigungen: {
+        asyl: { titel: 'Orientierung im Asylwesen', text: 'Ein Überblick über das Verfahren, die beteiligten Stellen und die nächsten Schritte — damit der Ablauf weniger undurchsichtig wirkt.' },
+        kkErst: { titel: 'Krankenversicherung', text: 'Alle in der Schweiz sind grundversichert — im Asylverfahren wird die Versicherung meist über den Kanton organisiert und bezahlt.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Sobald ein eigenes Einkommen da ist, kann der Kanton bei den Krankenkassenprämien helfen — wie bei allen mit tiefem Einkommen.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',

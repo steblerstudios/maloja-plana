@@ -58,6 +58,39 @@ export default {
         steuern: { titel: 'Deduzione per persona sostenuta', text: 'Se sostiene in modo sostanziale una persona bisognosa, può dedurla nella dichiarazione d’imposta.' },
       },
     },
+    frischZugezogen: {
+      label: 'Nuovo arrivato in Svizzera',
+      frage: 'Arrivato da poco in Svizzera dall’estero?',
+      intro: 'Le prime settimane portano con sé scadenze silenziose e diritti facili da perdere — poche pratiche svolte per tempo evitano problemi più avanti.',
+      berechtigungen: {
+        kkErst: { titel: 'Iscriversi alla cassa malati', text: 'L’assicurazione di base è obbligatoria e va stipulata entro tre mesi dall’arrivo — la copertura vale poi retroattivamente dal primo giorno.' },
+        bewilligung: { titel: 'Notifica & permesso di soggiorno', text: 'Annunciarsi al comune entro 14 giorni dall’arrivo; il permesso di soggiorno segue. Termini e documenti variano secondo nazionalità e cantone.' },
+        quellensteuer: { titel: 'Imposta alla fonte', text: 'Senza permesso di domicilio (C), l’imposta viene trattenuta direttamente dallo stipendio. Le deduzioni si possono spesso recuperare con una tassazione ordinaria successiva.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I nuovi arrivati con reddito basso o medio possono ricevere dal cantone un aiuto per i premi della cassa malati — già dal primo anno.' },
+        mietzins: { titel: 'Aiuto per la pigione', text: 'Alcuni cantoni e comuni partecipano alla pigione quando pesa troppo su un reddito modesto — da verificare dopo il trasloco.' },
+      },
+    },
+    inAusbildung: {
+      label: 'In formazione',
+      frage: 'In tirocinio, a scuola o all’università?',
+      intro: 'Essere in formazione apre sostegni che molti non richiedono mai — e avvia in sordina alcuni obblighi da tenere d’occhio.',
+      berechtigungen: {
+        stipendien: { titel: 'Borse di studio', text: 'Borse e prestiti cantonali sostengono tirocinio e studi — in base al reddito tuo e dei tuoi genitori, con termini di presentazione.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I giovani adulti in formazione con reddito basso hanno spesso diritto a un aiuto per i premi della cassa malati — per sé stessi.' },
+        franchise: { titel: 'Scegliere la franchigia', text: 'Sotto i 26 anni il premio è più basso; con poche visite mediche una franchigia alta fa risparmiare di più — da rivedere ogni autunno.' },
+        ahv: { titel: 'Contributi AVS & lacune', text: 'Dall’anno successivo ai 20 anni i contributi AVS sono dovuti anche senza lavoro — gli studenti senza attività pagano il contributo minimo. Gli anni mancanti riducono la rendita futura.' },
+      },
+    },
+    asylsuchend: {
+      label: 'Richiedente l’asilo o con statuto di protezione',
+      frage: 'Nella procedura d’asilo o con statuto di protezione S?',
+      intro: 'Dall’esterno il sistema è difficile da capire. Questi riferimenti danno un orientamento — per i diritti precisi, un servizio di consulenza o la SEM è l’interlocutore giusto.',
+      berechtigungen: {
+        asyl: { titel: 'Orientamento nell’asilo', text: 'Una panoramica della procedura, dei servizi coinvolti e dei prossimi passi — perché il percorso risulti meno opaco.' },
+        kkErst: { titel: 'Assicurazione malattia', text: 'Tutte le persone in Svizzera hanno l’assicurazione di base — durante la procedura d’asilo di solito è organizzata e pagata dal cantone.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Non appena c’è un reddito proprio, il cantone può aiutare a pagare i premi della cassa malati — come per chiunque abbia un reddito basso.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
