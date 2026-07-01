@@ -3510,6 +3510,7 @@ export default {
     },
     fristenTitle: 'Wichtig: Die Fristen sind kurz',
     fristenBody: { sie: 'Im beschleunigten Verfahren müssen Sie innert 7 Arbeitstagen Beschwerde einlegen, im erweiterten Verfahren innert 30 Tagen. Warten Sie nicht — kontaktieren Sie umgehend Ihre Rechtsvertretung oder eine Beratungsstelle.', du: 'Im beschleunigten Verfahren musst du innert 7 Arbeitstagen Beschwerde einlegen, im erweiterten Verfahren innert 30 Tagen. Warte nicht — kontaktiere umgehend deine Rechtsvertretung oder eine Beratungsstelle.' },
+    fristenKalender: 'Frist im Kalender notieren',
     cantonLink: { sie: 'Ihr Kanton: {canton} → Asylberatung & Behörden finden', du: 'Dein Kanton: {canton} → Asylberatung & Behörden finden' },
     cantonOfficeTitle: { sie: 'Beratung in Ihrem Kanton ({canton})', du: 'Beratung in deinem Kanton ({canton})' },
     counseling: {
