@@ -2997,6 +2997,7 @@ export default {
     franchiseTitle: 'Deductible & Co-payment',
     franchiseExplain: 'The deductible is your annual excess. After that you pay 10% of costs (max. CHF 700/year).',
     franchiseLabel: 'Your deductible',
+    franchiseOptimizerLink: 'Would a different deductible pay off? Open the deductible optimiser',
     costsLabel: 'Medical costs so far this year',
     franchiseUsed: 'Deductible used',
     franchiseOpen: 'Deductible remaining',

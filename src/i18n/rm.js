@@ -2737,6 +2737,7 @@ export default {
     franchiseTitle: 'Franschisa & parteniment',
     franchiseExplain: { sie: 'La franschisa è Voss parteniment annual. Suenter pajais Vus 10% dals custs (max. CHF 700/onn).', du: 'La franschisa è Tes parteniment annual. Suenter pajas Ti 10% dals custs (max. CHF 700/onn).' },
     franchiseLabel: { sie: 'Vossa franschisa', du: 'Tia franschisa' },
+    franchiseOptimizerLink: 'Vala ina autra franchisa la paina? Avrir l’optimader da franchisa',
     costsLabel: 'Custs da medi fin uss quest onn',
     franchiseUsed: 'Franschisa consumada',
     franchiseOpen: 'Franschisa averta',

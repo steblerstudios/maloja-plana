@@ -2976,6 +2976,7 @@ export default {
     franchiseTitle: 'Franchigia & Aliquota',
     franchiseExplain: 'La franchigia è la vostra quota annuale. Dopodiché pagate il 10% dei costi (max. CHF 700/anno).',
     franchiseLabel: 'La vostra franchigia',
+    franchiseOptimizerLink: 'Conviene un’altra franchigia? Apri l’ottimizzatore della franchigia',
     costsLabel: 'Costi medici finora quest\'anno',
     franchiseUsed: 'Franchigia utilizzata',
     franchiseOpen: 'Franchigia rimanente',

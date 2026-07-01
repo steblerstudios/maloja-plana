@@ -2974,6 +2974,7 @@ export default {
     franchiseTitle: 'Franchise & Selbstbehalt',
     franchiseExplain: { sie: 'Die Franchise ist Ihr jährlicher Selbstbehalt. Danach zahlen Sie 10% der Kosten (max. CHF 700/Jahr).', du: 'Die Franchise ist dein jährlicher Selbstbehalt. Danach zahlst du 10% der Kosten (max. CHF 700/Jahr).' },
     franchiseLabel: { sie: 'Ihre Franchise', du: 'Deine Franchise' },
+    franchiseOptimizerLink: 'Lohnt sich eine andere Franchise? Zum Franchise-Optimierer',
     costsLabel: 'Bisherige Arztkosten dieses Jahr',
     franchiseUsed: 'Franchise verbraucht',
     franchiseOpen: 'Franchise offen',
