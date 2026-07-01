@@ -2996,6 +2996,7 @@ export default {
     franchiseTitle: 'Franchise & Quote-part',
     franchiseExplain: 'La franchise est votre part annuelle. Ensuite, vous payez 10% des coûts (max. CHF 700/an).',
     franchiseLabel: 'Votre franchise',
+    franchiseOptimizerLink: 'Une autre franchise serait-elle avantageuse ? Ouvrir l’optimiseur de franchise',
     costsLabel: 'Frais médicaux jusqu\'ici cette année',
     franchiseUsed: 'Franchise utilisée',
     franchiseOpen: 'Franchise restante',
