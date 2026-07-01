@@ -3387,6 +3387,7 @@ export default {
     },
     fristenTitle: "Importante: i termini sono brevi",
     fristenBody: { sie: "Nella procedura celere deve presentare ricorso entro 7 giorni lavorativi, nella procedura ampliata entro 30 giorni. Non aspetti — contatti subito la Sua rappresentanza legale o un consultorio.", du: "Nella procedura celere devi presentare ricorso entro 7 giorni lavorativi, nella procedura ampliata entro 30 giorni. Non aspettare — contatta subito la tua rappresentanza legale o un consultorio." },
+    fristenKalender: 'Annotare il termine nel calendario',
     cantonLink: { sie: "Il Suo cantone: {canton} → trovi consulenza d'asilo e autorità", du: "Il tuo cantone: {canton} → trova consulenza d'asilo e autorità" },
     cantonOfficeTitle: { sie: "Consulenza nel Suo Cantone ({canton})", du: "Consulenza nel tuo Cantone ({canton})" },
     counseling: {
