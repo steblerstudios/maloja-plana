@@ -113,5 +113,15 @@ export const LEBENSZUSTAENDE = [
       { key: 'steuern',     view: 'tax',         quelle: 'ESTV',         stand: '2026' },
     ],
   },
+  {
+    key: 'verschuldet',
+    berechtigungen: [
+      { key: 'schuldenberatung', view: 'schulden',    quelle: 'Schuldenberatung CH / Caritas', stand: '2026' },
+      { key: 'betreibung',       view: 'betreibung',  quelle: 'SchKG',                         stand: '2026' },
+      { key: 'existenzminimum',  view: 'budget',      quelle: 'SchKG',                         stand: '2026' },
+      { key: 'sozialhilfe',      view: 'sozialhilfe', quelle: 'SKOS',                          stand: '2026' },
+      { key: 'steuern',          view: 'tax',         quelle: 'ESTV / Kanton',                 stand: '2026' },
+    ],
+  },
   // Spätere Zustände nach gleichem Muster (reine Daten + i18n in 5 Sprachen).
 ];

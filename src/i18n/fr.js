@@ -115,6 +115,18 @@ export default {
         steuern: { titel: 'Impôts à revenu réduit', text: 'Les indemnités de chômage sont imposables, mais un revenu annuel plus bas signifie souvent moins d’impôts — l’impôt à la source peut souvent être récupéré.' },
       },
     },
+    verschuldet: {
+      label: 'Endetté ou en poursuite',
+      frage: 'Des dettes ou une poursuite (Betreibung) vous pèsent ?',
+      intro: 'La dette isole, pourtant des droits clairs et une aide gratuite existent — plus tôt on y recourt, plus il reste de marge pour respirer.',
+      berechtigungen: {
+        schuldenberatung: { titel: 'Conseil en désendettement gratuit', text: 'Un service reconnu de désendettement aide gratuitement et en toute confidentialité — il y a un bureau dans chaque canton. Y aller tôt garde plus d’options ouvertes.' },
+        betreibung: { titel: 'Comprendre la poursuite', text: 'Une poursuite est une procédure avec des étapes et des délais clairs — les connaître calmement transforme la peur en quelque chose sur quoi agir.' },
+        existenzminimum: { titel: 'Protéger votre minimum vital', text: 'Lors d’une saisie sur salaire, un minimum vital reste intouchable par la loi — un budget clair aide à le voir et à le défendre.' },
+        sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas de la charité, et indépendant des dettes elles-mêmes.' },
+        steuern: { titel: 'Sursis ou remise d’impôt', text: 'En cas de réelle détresse, l’administration fiscale peut accorder un sursis ou remettre l’impôt — mieux vaut demander que laisser les arriérés grandir.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',
