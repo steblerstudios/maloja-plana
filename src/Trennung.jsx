@@ -2,9 +2,11 @@ import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 
 // Trennung / Scheidung — geführter Ablauf, würdevoll und ruhig (kein Konflikt-Frame).
-// Beratung & Trennung vs. Scheidung, Wohnen & Adresse, Kinder & Unterhalt, Finanzen &
-// Steuern (getrennte Veranlagung, Vorsorgeausgleich). Am Ende „Verwandte Ereignisse"
-// (Umzug). Kein Rat — Orientierung, keine Rechtsberatung.
+// Beratung & Trennung vs. Scheidung, Wohnen & Adresse, Kinder & Unterhalt (inkl.
+// Alimentenbevorschussung), Finanzen & Steuern (getrennte Veranlagung, Tarifwechsel,
+// AHV-Splitting & Vorsorgeausgleich). Schritt 5 prüft neu entstehende Ansprüche (IPV
+// neu berechnen) und führt zum Lebenszustand „Alleinerziehend". Orientierung, keine
+// Rechtsberatung.
 
 export const Trennung = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -28,6 +30,11 @@ export const Trennung = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('trennung.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step4LinkTax'), onClick: () => onNavigate('tax') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step4LinkVorsorge'), onClick: () => onNavigate('vorsorge') })
+    ),
+    React.createElement(AblaufStep, { palette, title: t('trennung.step5Title') },
+      React.createElement('p', { style: s.stepText }, t('trennung.step5Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkIpv'), onClick: () => onNavigate('premium') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('trennung.step5LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
     React.createElement(AblaufFooter, { palette, notes: [t('trennung.footerNote'), t('trust.localOnly')] })
   );
