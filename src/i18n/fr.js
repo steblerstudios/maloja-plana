@@ -79,6 +79,7 @@ export default {
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les jeunes adultes en formation à faible revenu ont souvent droit à une aide pour les primes d’assurance-maladie — pour eux-mêmes.' },
         franchise: { titel: 'Choisir sa franchise', text: 'Avant 26 ans la prime est plus basse ; avec peu de visites médicales, une franchise élevée fait économiser davantage — à revoir chaque automne.' },
         ahv: { titel: 'Cotisations AVS & lacunes', text: 'Dès l’année suivant vos 20 ans, les cotisations AVS sont dues même sans emploi — les étudiants sans activité paient la cotisation minimale. Les années manquantes réduisent la rente future.' },
+        waisenrente: { titel: 'Rente d’orphelin en formation', text: 'Si un parent est décédé, la rente d’orphelin continue pendant la formation — jusqu’à 25 ans. On oublie facilement qu’elle ne s’arrête pas à 18 ans.' },
       },
     },
     asylsuchend: {
@@ -125,6 +126,17 @@ export default {
         existenzminimum: { titel: 'Protéger votre minimum vital', text: 'Lors d’une saisie sur salaire, un minimum vital reste intouchable par la loi — un budget clair aide à le voir et à le défendre.' },
         sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre plus l’essentiel, l’aide sociale peut compléter — un droit, pas de la charité, et indépendant des dettes elles-mêmes.' },
         steuern: { titel: 'Sursis ou remise d’impôt', text: 'En cas de réelle détresse, l’administration fiscale peut accorder un sursis ou remettre l’impôt — mieux vaut demander que laisser les arriérés grandir.' },
+      },
+    },
+    halbwaise: {
+      label: 'Un parent est décédé (rente d’orphelin)',
+      frage: 'Un parent est décédé, et vous ou votre enfant avez moins de 25 ans ou êtes en formation ?',
+      intro: 'Après le décès d’un parent, les enfants ont des droits clairs, faciles à manquer dans un moment difficile — une rente d’orphelin, et un soutien complémentaire si elle ne suffit pas.',
+      berechtigungen: {
+        waisenrente: { titel: 'Rente d’orphelin (AVS/AI)', text: 'Un enfant dont un parent est décédé reçoit une rente mensuelle — jusqu’à 18 ans, ou 25 ans en formation. Elle se demande à la caisse de compensation et démarre souvent trop tard.' },
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente d’orphelin ne couvre pas le coût de la vie, les PC peuvent compléter — aussi pour les enfants et les jeunes en formation. Un droit, pas de la charité.' },
+        stipendien: { titel: 'Bourses d’études', text: 'En plus de la rente d’orphelin, des bourses cantonales peuvent soutenir une formation ou des études — à vérifier en parallèle, avec leurs propres délais.' },
+        steuern: { titel: 'Allègement fiscal', text: 'Le parent survivant peut faire valoir le barème parental et les déductions pour enfants ; certains frais liés au décès peuvent aussi réduire l’impôt.' },
       },
     },
   },

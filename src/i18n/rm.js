@@ -81,6 +81,7 @@ export default {
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Giuvens creschids en furmaziun cun bass entrada han savens dretg sin agid per las premias da la cassa da malsauns — per sasezs.' },
         franchise: { titel: 'Tscherner la franchisa', text: 'Sut 26 onns è la premia pli bassa; cun paucas visitas medicinalas spargna ina franchisa pli auta dapli — da revair mintga atun.' },
         ahv: { titel: 'Contribuziuns AVS & largias', text: 'Dapi l’onn suenter ils 20 onns èn ils contribuziuns AVS debitas era senza lavur — students senza activitad pajan il contribut minimal. Onns che mancan reduceschan la renta futura.' },
+        waisenrente: { titel: 'Renta d’orfen en furmaziun', text: 'Sch’in genitur è mort, cuntinuescha la renta d’orfen durant la furmaziun — fin 25 onns. I va facilmain emblidà ch’ella na finescha betg simplamain cun 18.' },
       },
     },
     asylsuchend: {
@@ -130,6 +131,18 @@ export default {
         existenzminimum: { titel: 'Proteger il minimum d’existenza', text: 'Tar in impegnament dal salari resta in minimum d’existenza protegì intangibel tenor lescha — in budget cler gida a al vesair ed a al mantegnair.' },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sche l’entrada na cuvra betg pli il pli necessari, po l’agid social cumplettar — in dretg, betg carezza, ed independent dals debits sezs.' },
         steuern: { titel: 'Prorogaziun u condonaziun da taglias', text: 'En ina vaira miseria pon las autoritads da taglias prorogar la pajaglia u condonar las taglias — meglier dumandar ch’a laschar crescher ils reataps.' },
+      },
+    },
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    halbwaise: {
+      label: 'In genitur è mort (renta d’orfen)',
+      frage: 'È in genitur mort, e ti u tes uffant avais main che 25 onns u essas en furmaziun?',
+      intro: 'Suenter la mort d’in genitur han ils uffants dretgs clers che van facilmain a perder en in temp grev — ina renta d’orfen, e sustegn cumplementar sch’ella na tanscha betg.',
+      berechtigungen: {
+        waisenrente: { titel: 'Renta d’orfen (AVS/AI)', text: 'In uffant che ha pers in genitur retschaiva ina renta mensila — fin 18 onns, u 25 en furmaziun. Ella vegn dumandada tar la cassa da cumpensaziun e cumenza savens memia tard.' },
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta d’orfen na cuvra betg ils cuosts da viver, pon las PC cumplettar — era per uffants e giuvenils en furmaziun. In dretg, betg carezza.' },
+        stipendien: { titel: 'Stipendis', text: 'Ultra da la renta d’orfen pon stipendis chantunals sustegnair ina furmaziun u studi — controllar en parallel, cun agens termins.' },
+        steuern: { titel: 'Facilitaziun fiscala', text: 'Il genitur survivent po far valair la tarifa parentala e las deducziuns per uffants; era tscherts cuosts en connex cun la mort pon sbassar la taglia.' },
       },
     },
   },
