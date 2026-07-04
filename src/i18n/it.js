@@ -103,6 +103,18 @@ export default {
         serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Le economie domestiche che ricevono prestazioni complementari (PC) sono esentate dal canone SERAFE su richiesta — con rimborso retroattivo.' },
       },
     },
+    erwerbslos: {
+      label: 'Senza lavoro / tra due impieghi',
+      frage: 'Disoccupato, tra due impieghi o a fine diritto?',
+      intro: 'Senza lavoro esistono aiuti che non arrivano da soli — e dopo la fine del diritto ci sono ulteriori sostegni che molti non sanno di poter chiedere.',
+      berechtigungen: {
+        alv: { titel: 'Indennità di disoccupazione (AD)', text: 'Iscriviti all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Un reddito più basso apre spesso un nuovo diritto all’aiuto per i premi della cassa malati — da richiedere di nuovo al cantone, senza attendere.' },
+        sozialhilfe: { titel: 'Aiuto sociale (anche a fine diritto)', text: 'Esaurite le indennità, l’aiuto sociale può colmare il divario. Un diritto, non carità — e distinto dall’URC.' },
+        franchise: { titel: 'Verificare la franchigia', text: 'Con un reddito più basso una franchigia bassa può essere più sicura, una alta più conveniente se vai raramente dal medico — da rivedere ogni autunno.' },
+        steuern: { titel: 'Imposte con reddito ridotto', text: 'Le indennità di disoccupazione sono imponibili, ma un reddito annuo più basso significa di solito meno imposte — l’imposta alla fonte è spesso recuperabile.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
