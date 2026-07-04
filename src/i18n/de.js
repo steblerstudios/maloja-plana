@@ -115,6 +115,18 @@ export default {
         steuern: { titel: 'Steuern bei tieferem Einkommen', text: 'Arbeitslosentaggelder sind steuerbar, doch ein tieferes Jahreseinkommen bedeutet meist weniger Steuern — Quellensteuer lässt sich oft zurückfordern.' },
       },
     },
+    verschuldet: {
+      label: 'Verschuldet oder in Betreibung',
+      frage: 'Belasten dich Schulden oder eine Betreibung?',
+      intro: 'Schulden fühlen sich einsam an, doch es gibt klare Rechte und kostenlose Hilfe — je früher man sie annimmt, desto mehr Luft bleibt.',
+      berechtigungen: {
+        schuldenberatung: { titel: 'Kostenlose Schuldenberatung', text: 'Eine anerkannte Schuldenberatung hilft kostenlos und vertraulich — in jedem Kanton gibt es eine Stelle. Früh hingehen hält mehr Wege offen.' },
+        betreibung: { titel: 'Betreibung verstehen', text: 'Eine Betreibung ist ein Ablauf mit klaren Schritten und Fristen — sie ruhig zu kennen macht aus Angst etwas Handhabbares.' },
+        existenzminimum: { titel: 'Existenzminimum schützen', text: 'Bei einer Lohnpfändung bleibt ein geschütztes Existenzminimum von Gesetzes wegen unantastbar — ein klares Budget hilft, es zu sehen und zu wahren.' },
+        sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht mehr deckt, kann die Sozialhilfe aufstocken — ein Recht, keine Fürsorge, und unabhängig von den Schulden selbst.' },
+        steuern: { titel: 'Steuerstundung oder -erlass', text: 'In einer echten Notlage können die Steuerbehörden die Zahlung stunden oder Steuern erlassen — besser fragen, als Ausstände wachsen lassen.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',

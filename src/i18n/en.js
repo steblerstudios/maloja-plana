@@ -115,6 +115,18 @@ export default {
         steuern: { titel: 'Tax on a lower income', text: 'Unemployment benefits are taxable, but a lower yearly income usually means less tax — and withholding-tax deductions can often be reclaimed.' },
       },
     },
+    verschuldet: {
+      label: 'In debt or facing debt collection',
+      frage: 'Struggling with debts or a debt-collection (Betreibung)?',
+      intro: 'Debt feels isolating, yet clear rights and free help exist — the earlier you reach for them, the more room there is to breathe.',
+      berechtigungen: {
+        schuldenberatung: { titel: 'Free debt counselling', text: 'A recognised debt counselling service helps free of charge and confidentially — there is an office in every canton. Going early keeps more options open.' },
+        betreibung: { titel: 'Understanding debt collection', text: 'A Betreibung is a process with clear steps and deadlines — knowing them calmly turns fear into something you can act on.' },
+        existenzminimum: { titel: 'Protecting your minimum for living', text: 'During a wage seizure a protected minimum stays untouchable by law — a clear budget helps you see and defend it.' },
+        sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not charity, and independent of the debt itself.' },
+        steuern: { titel: 'Tax deferral or remission', text: 'In a genuine hardship, tax authorities can defer payment or waive taxes — worth asking rather than letting arrears grow.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',

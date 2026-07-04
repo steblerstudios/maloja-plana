@@ -119,6 +119,19 @@ export default {
         steuern: { titel: 'Taglias cun in pli bass entrada', text: 'Las indemnisaziuns da dischoccupaziun èn taxablas, ma in pli bass entrada annual munta per ordinari main taglias — la taglia a la funtauna è savens rembursabla.' },
       },
     },
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    verschuldet: {
+      label: 'Endebità u en scussiun',
+      frage: 'Ta grevan debits u ina scussiun (Betreibung)?',
+      intro: 'Ils debits fan sentir sulet, dentant datti dretgs clers ed agid gratuit — pli baud ch’ins als acceptescha, pli blera aria resta.',
+      berechtigungen: {
+        schuldenberatung: { titel: 'Cussegliaziun da debits gratuita', text: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — i dat in post en mintga chantun. Ir baud tegna dapli vias avertas.' },
+        betreibung: { titel: 'Chapir la scussiun', text: 'Ina scussiun è ina procedura cun pass e termins clers — als enconuscher cun calma fa ord la tema insatge maneabel.' },
+        existenzminimum: { titel: 'Proteger il minimum d’existenza', text: 'Tar in impegnament dal salari resta in minimum d’existenza protegì intangibel tenor lescha — in budget cler gida a al vesair ed a al mantegnair.' },
+        sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sche l’entrada na cuvra betg pli il pli necessari, po l’agid social cumplettar — in dretg, betg carezza, ed independent dals debits sezs.' },
+        steuern: { titel: 'Prorogaziun u condonaziun da taglias', text: 'En ina vaira miseria pon las autoritads da taglias prorogar la pajaglia u condonar las taglias — meglier dumandar ch’a laschar crescher ils reataps.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
