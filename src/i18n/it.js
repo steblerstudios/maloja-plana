@@ -443,8 +443,9 @@ export default {
     step2Text: 'Se il credito è fondato, puoi pagare o concordare un pagamento rateale con il creditore — spesso è possibile. Se è del tutto o in parte ingiustificato, fai opposizione; il creditore dovrà allora provare il credito in tribunale. Tieni d’occhio i crediti aperti.',
     step2Link: 'Organizza i debiti',
     step3Title: '3 · Proteggi il budget & chiedi consiglio',
-    step3Text: 'Il tuo minimo vitale è protetto e non può essere pignorato. La consulenza per il debito è gratuita e confidenziale — aiuta a trovare una via prima che l’esecuzione diventi un attestato di carenza beni. Prima è, più margine c’è.',
+    step3Text: 'Il tuo minimo vitale è protetto e non può essere pignorato. La consulenza per il debito è gratuita e confidenziale — aiuta a trovare una via prima che l’esecuzione diventi un attestato di carenza beni. Prima è, più margine c’è. Se l’indebitamento diventa una situazione duratura, non sei solo — lo stato di vita «indebitato o in esecuzione» raccoglie ulteriori sostegni (aiuto sociale, condono fiscale) con calma in un luogo.',
     step3Link: 'Vedi il budget',
+    step3LinkSituation: 'Vedi la situazione «indebitato o in esecuzione»',
     footerNote: 'Un’esecuzione non è un’iscrizione nel casellario giudiziale. Scompare dal registro dopo cinque anni; in caso di esecuzione ingiustificata puoi chiederne la cancellazione. Questo è orientamento, non consulenza legale.',
   },
   pensionierung: {
