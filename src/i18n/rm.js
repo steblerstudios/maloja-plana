@@ -456,8 +456,9 @@ export default {
     step2Text: 'Sche la pretensiun è fundada, pos ti pajar u concordar ina pajaglia a tariffas cul crediturus — quai è savens pussaivel. Sch’ella è dal tut u per part nungiustifitgada, fas ti opposiziun; lura sto il crediturus cumprovar la pretensiun avant dretgira. Mantegna la survista da las pretensiuns avertas.',
     step2Link: 'Ordinar las debitas',
     step3Title: '3 · Proteger il budget & tschertgar cussegl',
-    step3Text: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi.',
+    step3Text: 'Tes minimum existenzial è protegì e na po betg vegnir pegnerà. La cussegliaziun da debitas è gratuita e confidenziala — ella gida a chattar ina via avant che la scussiun vegn in attest da mancanza da bains. Pli baud, dapli spazi. Sche l’indebitament vegn ina situaziun persistenta, n’es ti betg sulet — il stadi da vita «indebità u en scussiun» rimna ulteriurs sustegns (agid social, relasch da taglia) cun calma en in lieu.',
     step3Link: 'Guardar il budget',
+    step3LinkSituation: 'Guardar la situaziun «indebità u en scussiun»',
     footerNote: 'Ina scussiun n’è betg ina inscripziun en il register penal. Ella spararescha dal register suenter tschintg onns; en cas d’ina scussiun nungiustifitgada pos ti dumandar la stizzada. Quai è orientaziun, betg cussegl giuridic.',
   },
   pensionierung: {
