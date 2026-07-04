@@ -465,8 +465,9 @@ export default {
     step3Text: 'Your pillar 3a savings fall due at retirement. Staggering the withdrawal over several years (several accounts) can noticeably reduce the tax burden.',
     step3Link: 'View pension',
     step4Title: '4 · Check supplementary benefits',
-    step4Text: 'If AHV and the pension fund are not enough to live on, you may be entitled to supplementary benefits (EL). This is not charity but a legal entitlement — check it without hesitation.',
+    step4Text: 'If AHV and the pension fund are not enough to live on, you may be entitled to supplementary benefits (EL). This is not charity but a legal entitlement — check it without hesitation. As a pensioner more may apply: premium reduction (IPV), a SERAFE exemption when receiving EL, a helplessness allowance — the “retired” life situation gathers them in one calm place.',
     step4Link: 'Check eligibility',
+    step4LinkSituation: 'View the “retired” situation',
     footerEarly: 'Early retirement reduces the AHV and often the pension-fund pension for life. Work out early what is affordable — and get an official projection from your compensation office.',
   },
   kkErst: {

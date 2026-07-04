@@ -465,8 +465,9 @@ export default {
     step3Text: 'Das Guthaben der Säule 3a wird bei der Pensionierung fällig. Wer den Bezug über mehrere Jahre staffelt (mehrere Konten), kann die Steuerlast spürbar senken.',
     step3Link: 'Vorsorge ansehen',
     step4Title: '4 · Ergänzungsleistungen prüfen',
-    step4Text: 'Reichen AHV und Pensionskasse nicht für den Lebensbedarf, hast du allenfalls Anspruch auf Ergänzungsleistungen (EL). Das ist kein Almosen, sondern ein gesetzlicher Anspruch — prüfe ihn ohne Scheu.',
+    step4Text: 'Reichen AHV und Pensionskasse nicht für den Lebensbedarf, hast du allenfalls Anspruch auf Ergänzungsleistungen (EL). Das ist kein Almosen, sondern ein gesetzlicher Anspruch — prüfe ihn ohne Scheu. Im AHV-Alter kommt oft mehr dazu: Prämienverbilligung (IPV), SERAFE-Befreiung bei EL-Bezug, Hilflosenentschädigung — der Lebenszustand „Pensioniert" sammelt sie an einem ruhigen Ort.',
     step4Link: 'Anspruch prüfen',
+    step4LinkSituation: 'Situation „Pensioniert / im AHV-Alter" ansehen',
     footerEarly: 'Eine Frühpensionierung kürzt die AHV- und oft auch die Pensionskassen-Rente lebenslang. Rechne früh durch, was tragbar ist — und hole eine offizielle Vorausberechnung bei deiner Ausgleichskasse.',
   },
   kkErst: {
