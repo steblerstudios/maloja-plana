@@ -78,10 +78,12 @@ export const LEBENSZUSTAENDE = [
   {
     key: 'inAusbildung',
     berechtigungen: [
-      { key: 'stipendien', view: 'stipendien', quelle: 'EDK / Kanton',            stand: '2026' },
-      { key: 'ipv',        view: 'premium',    quelle: 'BAG / Kanton',            stand: '2026' },
-      { key: 'franchise',  view: 'kvg',        quelle: 'BAG',                     stand: '2026' },
-      { key: 'ahv',        view: 'vorsorge',   quelle: 'BSV / Ausgleichskasse',   stand: '2026' },
+      { key: 'stipendien',  view: 'stipendien', quelle: 'EDK / Kanton',            stand: '2026' },
+      { key: 'ipv',         view: 'premium',    quelle: 'BAG / Kanton',            stand: '2026' },
+      { key: 'franchise',   view: 'kvg',        quelle: 'BAG',                     stand: '2026' },
+      { key: 'ahv',         view: 'vorsorge',   quelle: 'BSV / Ausgleichskasse',   stand: '2026' },
+      // Waisenrente läuft in Ausbildung bis 25 weiter (Überschneidung mit „halbwaise").
+      { key: 'waisenrente', view: 'todesfall',  quelle: 'BSV / Ausgleichskasse',   stand: '2026' },
     ],
   },
   {
@@ -121,6 +123,15 @@ export const LEBENSZUSTAENDE = [
       { key: 'existenzminimum',  view: 'budget',      quelle: 'SchKG',                         stand: '2026' },
       { key: 'sozialhilfe',      view: 'sozialhilfe', quelle: 'SKOS',                          stand: '2026' },
       { key: 'steuern',          view: 'tax',         quelle: 'ESTV / Kanton',                 stand: '2026' },
+    ],
+  },
+  {
+    key: 'halbwaise',
+    berechtigungen: [
+      { key: 'waisenrente', view: 'todesfall',       quelle: 'BSV / Ausgleichskasse', stand: '2026' },
+      { key: 'el',          view: 'finanzuebersicht', quelle: 'BSV',                  stand: '2026' },
+      { key: 'stipendien',  view: 'stipendien',       quelle: 'EDK / Kanton',         stand: '2026' },
+      { key: 'steuern',     view: 'tax',              quelle: 'ESTV',                 stand: '2026' },
     ],
   },
   // Spätere Zustände nach gleichem Muster (reine Daten + i18n in 5 Sprachen).

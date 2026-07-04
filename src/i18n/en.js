@@ -79,6 +79,7 @@ export default {
         ipv: { titel: 'Premium reduction (IPV)', text: 'Young adults in education on a low income often qualify for help with health-insurance premiums — for themselves.' },
         franchise: { titel: 'Choose your deductible', text: 'Under 26 the premium is lower; with few doctor visits a higher deductible saves more — worth reviewing each autumn.' },
         ahv: { titel: 'AHV contributions & gaps', text: 'From the year after you turn 20, AHV contributions are due even without a job — non-earning students pay the minimum. Missing years lower your future pension.' },
+        waisenrente: { titel: 'Orphan’s pension in education', text: 'If a parent has died, an orphan’s pension continues while you are in education — until age 25. It is easy to overlook that it doesn’t simply stop at 18.' },
       },
     },
     asylsuchend: {
@@ -125,6 +126,17 @@ export default {
         existenzminimum: { titel: 'Protecting your minimum for living', text: 'During a wage seizure a protected minimum stays untouchable by law — a clear budget helps you see and defend it.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income no longer covers the basics, social assistance can top it up — a right, not charity, and independent of the debt itself.' },
         steuern: { titel: 'Tax deferral or remission', text: 'In a genuine hardship, tax authorities can defer payment or waive taxes — worth asking rather than letting arrears grow.' },
+      },
+    },
+    halbwaise: {
+      label: 'A parent has died (orphan’s pension)',
+      frage: 'Has a parent died, and are you or your child under 25 or in education?',
+      intro: 'After a parent’s death, children have clear entitlements that are easy to miss in a hard time — an orphan’s pension, and support on top of it if that isn’t enough.',
+      berechtigungen: {
+        waisenrente: { titel: 'Orphan’s pension (AHV/IV)', text: 'A child whose parent has died receives a monthly pension — until 18, or until 25 while in education. It is claimed with the compensation office and often starts late.' },
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the orphan’s pension doesn’t cover living costs, EL can top it up — also for children and young people in education. A right, not charity.' },
+        stipendien: { titel: 'Education grants', text: 'On top of an orphan’s pension, cantonal grants can support training or studies — worth checking alongside, with their own deadlines.' },
+        steuern: { titel: 'Tax relief', text: 'A surviving parent can claim the parent tariff and child deductions; costs linked to the loss may also lower the tax bill.' },
       },
     },
   },
