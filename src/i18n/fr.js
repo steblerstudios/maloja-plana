@@ -465,8 +465,9 @@ export default {
     step3Text: 'Votre avoir du pilier 3a devient exigible à la retraite. Échelonner le retrait sur plusieurs années (plusieurs comptes) peut réduire sensiblement la charge fiscale.',
     step3Link: 'Voir la prévoyance',
     step4Title: '4 · Vérifier les prestations complémentaires',
-    step4Text: 'Si l’AVS et la caisse de pension ne suffisent pas à vivre, vous avez peut-être droit aux prestations complémentaires (PC). Ce n’est pas une aumône mais un droit légal — vérifiez-le sans hésiter.',
+    step4Text: 'Si l’AVS et la caisse de pension ne suffisent pas à vivre, vous avez peut-être droit aux prestations complémentaires (PC). Ce n’est pas une aumône mais un droit légal — vérifiez-le sans hésiter. À l’âge AVS, d’autres droits s’ajoutent souvent : réduction de primes (RIP), exonération SERAFE en cas de PC, allocation pour impotent — la situation de vie « retraité » les rassemble en un endroit calme.',
     step4Link: 'Vérifier le droit',
+    step4LinkSituation: 'Voir la situation « retraité »',
     footerEarly: 'Une retraite anticipée réduit l’AVS et souvent la rente de la caisse de pension à vie. Calculez tôt ce qui est supportable — et demandez un calcul officiel à votre caisse de compensation.',
   },
   kkErst: {
