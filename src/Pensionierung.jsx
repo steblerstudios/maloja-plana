@@ -4,9 +4,10 @@ import { inDays, formatDE } from './utils/helpers.js';
 
 // Pensionierung — geführter Ablauf für den Übergang in den Ruhestand. Ruhige Orientierung
 // mit den Dingen, die NICHT automatisch laufen: AHV anmelden (Rente kommt nicht von selbst),
-// Pensionskasse Rente/Kapital entscheiden, 3. Säule gestaffelt beziehen, EL prüfen. Kein
-// Rat — Orientierung. Wenn das Geburtsdatum erfasst ist, rechnen wir die AHV-Anmelde-
-// Erinnerung ~6 Monate vor dem Referenzalter 65 (nur wenn noch in der Zukunft).
+// Pensionskasse Rente/Kapital entscheiden, 3. Säule gestaffelt beziehen, EL prüfen +
+// leise Brücke zum Lebenszustand „Pensioniert / im AHV-Alter" (bündelt IPV, HE, SERAFE,
+// Steuerabzüge). Kein Rat — Orientierung. Wenn das Geburtsdatum erfasst ist, rechnen wir
+// die AHV-Anmelde-Erinnerung ~6 Monate vor dem Referenzalter 65 (nur wenn noch in der Zukunft).
 
 export const Pensionierung = ({ palette, t, data, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -56,10 +57,12 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step3Link'), onClick: () => onNavigate('vorsorge') })
     ),
 
-    // Schritt 4 — Ergänzungsleistungen prüfen (Anspruch, kein Almosen)
+    // Schritt 4 — Ergänzungsleistungen prüfen (Anspruch, kein Almosen) + Brücke zum
+    // andauernden Lebenszustand „Pensioniert / im AHV-Alter" (bündelt IPV, HE, SERAFE …)
     React.createElement(AblaufStep, { palette, title: t('pensionierung.step4Title') },
       React.createElement('p', { style: s.stepText }, t('pensionierung.step4Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4Link'), onClick: () => onNavigate('sozialhilfe') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4Link'), onClick: () => onNavigate('sozialhilfe') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
 
     React.createElement(AblaufFooter, { palette, notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })
