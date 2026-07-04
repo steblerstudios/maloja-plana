@@ -2,9 +2,11 @@ import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
 
-// Heirat / eingetragene Partnerschaft — geführter Ablauf. Trauung anmelden, Name &
-// Zivilstand, Steuern (gemeinsame Veranlagung), Versicherungen & Vorsorge. Am Ende die
-// „Verwandte Ereignisse"-Ebene (Kind, Trennung). Kein Rat — Orientierung.
+// Heirat / eingetragene Partnerschaft — geführter Ablauf. Trauung anmelden (inkl.
+// Familiennachzug/Bewilligung für ausländische Partner:innen), Name & Zivilstand,
+// Steuern (gemeinsame Veranlagung + IPV neu aufs Paar-Einkommen), Versicherungen &
+// Vorsorge. Am Ende die „Verwandte Ereignisse"-Ebene (Kind, Trennung). Kein Rat —
+// Orientierung.
 
 export const Heirat = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -24,14 +26,16 @@ export const Heirat = ({ palette, t, onNavigate }) => {
         calendarLabel: t('heirat.step1CalendarLink'),
         onNavigate,
         reminder: { title: t('heirat.reminderTitle'), dueDate: deadline, category: 'admin', recurrence: 'once' },
-      })
+      }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step1LinkBewilligung'), onClick: () => onNavigate('bewilligung') })
     ),
     React.createElement(AblaufStep, { palette, title: t('heirat.step2Title') },
       React.createElement('p', { style: s.stepText }, t('heirat.step2Text'))
     ),
     React.createElement(AblaufStep, { palette, title: t('heirat.step3Title') },
       React.createElement('p', { style: s.stepText }, t('heirat.step3Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step3Link'), onClick: () => onNavigate('tax') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step3Link'), onClick: () => onNavigate('tax') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('heirat.step3LinkPremium'), onClick: () => onNavigate('premium') })
     ),
     React.createElement(AblaufStep, { palette, title: t('heirat.step4Title') },
       React.createElement('p', { style: s.stepText }, t('heirat.step4Text')),
