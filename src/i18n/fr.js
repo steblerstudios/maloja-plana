@@ -103,6 +103,18 @@ export default {
         serafe: { titel: 'Exonération de la redevance radio/TV', text: 'Les ménages au bénéfice des prestations complémentaires (PC) sont exonérés de la redevance SERAFE sur demande — avec remboursement rétroactif possible.' },
       },
     },
+    erwerbslos: {
+      label: 'Sans emploi / entre deux postes',
+      frage: 'Au chômage, entre deux emplois ou en fin de droits ?',
+      intro: 'Sans emploi, des aides existent qui ne viennent pas d’elles-mêmes — et après la fin des droits, d’autres soutiens existent que beaucoup ignorent.',
+      berechtigungen: {
+        alv: { titel: 'Indemnités de chômage (AC)', text: 'Inscrivez-vous à l’ORP le plus tôt possible — les indemnités dépendent de vos mois de cotisation, et une inscription tardive coûte des jours.' },
+        ipv: { titel: 'Réduction de primes (RIP)', text: 'Un revenu plus bas ouvre souvent un nouveau droit à l’aide pour les primes d’assurance-maladie — à redemander au canton, sans attendre.' },
+        sozialhilfe: { titel: 'Aide sociale (aussi en fin de droits)', text: 'Une fois les indemnités épuisées, l’aide sociale peut combler l’écart. Un droit, pas de la charité — et distinct de l’ORP.' },
+        franchise: { titel: 'Vérifier la franchise', text: 'Avec un revenu plus bas, une franchise basse peut être plus sûre, une haute plus avantageuse si vous consultez peu — à revoir chaque automne.' },
+        steuern: { titel: 'Impôts à revenu réduit', text: 'Les indemnités de chômage sont imposables, mais un revenu annuel plus bas signifie souvent moins d’impôts — l’impôt à la source peut souvent être récupéré.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',

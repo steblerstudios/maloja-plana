@@ -103,6 +103,18 @@ export default {
         serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
       },
     },
+    erwerbslos: {
+      label: 'Out of work / between jobs',
+      frage: 'Unemployed, between jobs, or your benefits have run out?',
+      intro: 'Being out of work opens support that isn’t automatic — and after unemployment benefits end, further help exists that many don’t know to ask for.',
+      berechtigungen: {
+        alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months, and registering late costs days of cover.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'A lower income often means a new entitlement to help with health-insurance premiums — worth reapplying to the canton, not waiting.' },
+        sozialhilfe: { titel: 'Social assistance (also after benefits end)', text: 'When unemployment benefits are exhausted, social assistance can bridge the gap. It is a right, not charity — and separate from the RAV.' },
+        franchise: { titel: 'Check your deductible', text: 'On a lower income a lower deductible can be safer, a higher one cheaper if you rarely see a doctor — worth reviewing each autumn.' },
+        steuern: { titel: 'Tax on a lower income', text: 'Unemployment benefits are taxable, but a lower yearly income usually means less tax — and withholding-tax deductions can often be reclaimed.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',

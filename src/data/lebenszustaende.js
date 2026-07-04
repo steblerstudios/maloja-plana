@@ -103,5 +103,15 @@ export const LEBENSZUSTAENDE = [
       { key: 'serafe', url: 'https://www.serafe.ch/de/abgabebefreiung/personen-mit-ergaenzungsleistungen/', quelle: 'SERAFE / BAKOM', stand: '2026' },
     ],
   },
+  {
+    key: 'erwerbslos',
+    berechtigungen: [
+      { key: 'alv',         view: 'alv',         quelle: 'SECO / ALV',   stand: '2026' },
+      { key: 'ipv',         view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
+      { key: 'sozialhilfe', view: 'sozialhilfe', quelle: 'SKOS',         stand: '2026' },
+      { key: 'franchise',   view: 'kvg',         quelle: 'BAG',          stand: '2026' },
+      { key: 'steuern',     view: 'tax',         quelle: 'ESTV',         stand: '2026' },
+    ],
+  },
   // Spätere Zustände nach gleichem Muster (reine Daten + i18n in 5 Sprachen).
 ];

@@ -103,6 +103,18 @@ export default {
         serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Haushalte mit Ergänzungsleistungen (EL) werden auf Antrag von der SERAFE-Abgabe befreit — rückwirkend rückforderbar.' },
       },
     },
+    erwerbslos: {
+      label: 'Ohne Arbeit / zwischen Stellen',
+      frage: 'Arbeitslos, zwischen zwei Stellen oder ausgesteuert?',
+      intro: 'Ohne Arbeit öffnet sich Unterstützung, die nicht automatisch kommt — und nach der Aussteuerung gibt es weitere Hilfe, nach der viele gar nicht fragen.',
+      berechtigungen: {
+        alv: { titel: 'Arbeitslosentaggeld (ALV)', text: 'Melde dich so früh wie möglich beim RAV an — die Taggelder hängen von deinen Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Ein tieferes Einkommen bedeutet oft einen neuen Anspruch auf Hilfe bei den Krankenkassenprämien — beim Kanton neu beantragen, nicht warten.' },
+        sozialhilfe: { titel: 'Sozialhilfe (auch nach der Aussteuerung)', text: 'Sind die Taggelder erschöpft, kann die Sozialhilfe die Lücke überbrücken. Ein Recht, keine Fürsorge — und getrennt vom RAV.' },
+        franchise: { titel: 'Franchise prüfen', text: 'Bei tieferem Einkommen kann eine tiefe Franchise sicherer, eine hohe günstiger sein, wenn man selten zum Arzt geht — jeden Herbst prüfen.' },
+        steuern: { titel: 'Steuern bei tieferem Einkommen', text: 'Arbeitslosentaggelder sind steuerbar, doch ein tieferes Jahreseinkommen bedeutet meist weniger Steuern — Quellensteuer lässt sich oft zurückfordern.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',
