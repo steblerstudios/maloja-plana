@@ -443,8 +443,9 @@ export default {
     step2Text: 'Ist die Forderung berechtigt, kannst du zahlen oder mit dem Gläubiger eine Ratenzahlung vereinbaren — das ist oft möglich. Ist sie ganz oder teilweise unberechtigt, erhebst du Rechtsvorschlag; dann muss der Gläubiger den Anspruch vor Gericht beweisen. Behalte den Überblick über offene Forderungen.',
     step2Link: 'Schulden ordnen',
     step3Title: '3 · Budget schützen & Beratung holen',
-    step3Text: 'Dein Existenzminimum ist geschützt und darf nicht gepfändet werden. Eine Schuldenberatung ist kostenlos und vertraulich — sie hilft, einen Weg zu finden, bevor aus der Betreibung ein Verlustschein wird. Je früher, desto mehr Spielraum.',
+    step3Text: 'Dein Existenzminimum ist geschützt und darf nicht gepfändet werden. Eine Schuldenberatung ist kostenlos und vertraulich — sie hilft, einen Weg zu finden, bevor aus der Betreibung ein Verlustschein wird. Je früher, desto mehr Spielraum. Wird die Verschuldung zu einer andauernden Situation, bist du nicht allein — der Lebenszustand „Verschuldet oder in Betreibung" sammelt weitere Unterstützung (Sozialhilfe, Steuererlass) ruhig an einem Ort.',
     step3Link: 'Budget ansehen',
+    step3LinkSituation: 'Situation „Verschuldet oder in Betreibung" ansehen',
     footerNote: 'Eine Betreibung ist kein Strafregister-Eintrag. Sie verschwindet nach fünf Jahren aus dem Register; bei unberechtigter Betreibung kannst du die Löschung verlangen. Dies ist Orientierung, keine Rechtsberatung.',
   },
   pensionierung: {
