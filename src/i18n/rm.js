@@ -106,6 +106,19 @@ export default {
         serafe: { titel: 'Exempziun da la taxa da radio/TV', text: 'Chasadas cun prestaziuns cumplementaras (PC) vegnan exemptadas da la taxa SERAFE sin dumonda — cun rembursament retroactiv.' },
       },
     },
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    erwerbslos: {
+      label: 'Senza lavur / tranter duas plazzas',
+      frage: 'Senza lavur, tranter duas plazzas u sortì da la garanzia?',
+      intro: 'Senza lavur avran ins sustegns che na vegnan betg automaticamain — e suenter la fin dals dretgs datti auters agids che blers na san betg dumandar.',
+      berechtigungen: {
+        alv: { titel: 'Indemnisaziun da dischoccupaziun (AD)', text: 'Annunzia ta uschè baud sco pussaivel tar l’URC — las indemnisaziuns dependan da tes mais da contribuziun, ed ina annunzia tardiva custa dis.' },
+        ipv: { titel: 'Reducziun da premias (IPV)', text: 'In pli bass entrada avra savens in nov dretg sin agid per las premias da la cassa da malsauns — dumandar danovamain tar il chantun, betg spetgar.' },
+        sozialhilfe: { titel: 'Agid social (era suenter la fin dals dretgs)', text: 'Sche las indemnisaziuns èn exauridas, po l’agid social surpuntar la largia. In dretg, betg carezza — e separà da l’URC.' },
+        franchise: { titel: 'Controllar la franchisa', text: 'Cun in pli bass entrada po ina franchisa bassa esser pli segira, ina auta pli favuraivla sche ins va darar tar il medi — controllar mintg’atun.' },
+        steuern: { titel: 'Taglias cun in pli bass entrada', text: 'Las indemnisaziuns da dischoccupaziun èn taxablas, ma in pli bass entrada annual munta per ordinari main taglias — la taglia a la funtauna è savens rembursabla.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
