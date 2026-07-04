@@ -91,6 +91,18 @@ export default {
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Sobald ein eigenes Einkommen da ist, kann der Kanton bei den Krankenkassenprämien helfen — wie bei allen mit tiefem Einkommen.' },
       },
     },
+    rentnerin: {
+      label: 'Pensioniert / im AHV-Alter',
+      frage: 'Beziehst du eine AHV-Rente oder stehst kurz davor?',
+      intro: 'Im Alter bleibt manches ungenutzt — allen voran die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
+      berechtigungen: {
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie — eine der am häufigsten nicht bezogenen Leistungen der Schweiz. Ein Recht, keine Fürsorge.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Rentnerinnen und Rentner mit tiefem Einkommen — und alle mit Ergänzungsleistungen — können sich die Krankenkassenprämien vom Kanton mitfinanzieren lassen.' },
+        hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn man im Alltag regelmässig auf Hilfe angewiesen ist — unabhängig vom Einkommen und getrennt von der EL, doch oft übersehen.' },
+        steuern: { titel: 'Abzüge im Rentenalter', text: 'Krankheits-, Pflege- und behinderungsbedingte Kosten lassen sich vom steuerbaren Einkommen abziehen — die Belege übers Jahr aufzuheben lohnt sich.' },
+        serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Haushalte mit Ergänzungsleistungen (EL) werden auf Antrag von der SERAFE-Abgabe befreit — rückwirkend rückforderbar.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Zusatzversicherung wechseln',

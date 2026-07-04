@@ -91,6 +91,18 @@ export default {
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Non appena c’è un reddito proprio, il cantone può aiutare a pagare i premi della cassa malati — come per chiunque abbia un reddito basso.' },
       },
     },
+    rentnerin: {
+      label: 'In pensione / in età AVS',
+      frage: 'Ricevi una rendita AVS o ci sei vicino?',
+      intro: 'In età avanzata diversi diritti restano inutilizzati — anzitutto le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
+      berechtigungen: {
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano — una delle prestazioni più spesso non richieste in Svizzera. Un diritto, non carità.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I pensionati con reddito basso — e tutti coloro che ricevono prestazioni complementari — possono farsi aiutare dal cantone a pagare i premi della cassa malati.' },
+        hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se hai regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC, ma spesso trascurato.' },
+        steuern: { titel: 'Deduzioni in pensione', text: 'Le spese di malattia, cura e legate alla disabilità si deducono dal reddito imponibile — conviene conservare le ricevute durante l’anno.' },
+        serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Le economie domestiche che ricevono prestazioni complementari (PC) sono esentate dal canone SERAFE su richiesta — con rimborso retroattivo.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
