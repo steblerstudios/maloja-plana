@@ -91,6 +91,18 @@ export default {
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Dès qu’un revenu propre existe, le canton peut aider à payer les primes d’assurance-maladie — comme pour toute personne à faible revenu.' },
       },
     },
+    rentnerin: {
+      label: 'Retraité / à l’âge AVS',
+      frage: 'Vous touchez une rente AVS ou en êtes proche ?',
+      intro: 'À la retraite, plusieurs droits restent inutilisés — les prestations complémentaires avant tout. Beaucoup relèvent d’un droit, pas de l’assistance.',
+      berechtigungen: {
+        el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent — l’une des prestations les plus souvent non demandées en Suisse. Un droit, pas de la charité.' },
+        ipv: { titel: 'Réduction de primes (RIP)', text: 'Les retraités à faible revenu — et toute personne au bénéfice des prestations complémentaires — peuvent faire aider le canton à payer les primes d’assurance-maladie.' },
+        hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: 'Un montant mensuel si vous avez régulièrement besoin d’aide pour les actes quotidiens — indépendant du revenu et distinct des PC, mais souvent oublié.' },
+        steuern: { titel: 'Déductions à la retraite', text: 'Les frais de maladie, de soins et liés au handicap se déduisent du revenu imposable — mieux vaut garder les justificatifs tout au long de l’année.' },
+        serafe: { titel: 'Exonération de la redevance radio/TV', text: 'Les ménages au bénéfice des prestations complémentaires (PC) sont exonérés de la redevance SERAFE sur demande — avec remboursement rétroactif possible.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Changer d\'assurance complémentaire',

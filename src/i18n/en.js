@@ -91,6 +91,18 @@ export default {
         ipv: { titel: 'Premium reduction (IPV)', text: 'Once you have your own income, the canton can help pay health-insurance premiums — as for anyone on a low income.' },
       },
     },
+    rentnerin: {
+      label: 'Retired / at AHV age',
+      frage: 'Drawing an AHV pension, or close to retirement age?',
+      intro: 'Later in life several entitlements go unclaimed — supplementary benefits above all. Much of it is a right, not assistance.',
+      berechtigungen: {
+        el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up — one of Switzerland’s most often unclaimed benefits. It is a right, not charity.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'Pensioners on a low income — and everyone on supplementary benefits — can have the canton help pay health-insurance premiums.' },
+        hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL, yet often overlooked.' },
+        steuern: { titel: 'Deductions for pensioners', text: 'Illness, care and disability costs can be deducted from taxable income — worth keeping the receipts through the year.' },
+        serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Switch supplementary insurance',
