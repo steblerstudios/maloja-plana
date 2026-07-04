@@ -465,8 +465,9 @@ export default {
     step3Text: 'L’avere del pilastro 3a diventa esigibile al pensionamento. Scaglionare il prelievo su più anni (più conti) può ridurre sensibilmente il carico fiscale.',
     step3Link: 'Vedi la previdenza',
     step4Title: '4 · Verificare le prestazioni complementari',
-    step4Text: 'Se l’AVS e la cassa pensioni non bastano per vivere, potresti avere diritto alle prestazioni complementari (PC). Non è un’elemosina ma un diritto legale — verificalo senza esitazione.',
+    step4Text: 'Se l’AVS e la cassa pensioni non bastano per vivere, potresti avere diritto alle prestazioni complementari (PC). Non è un’elemosina ma un diritto legale — verificalo senza esitazione. In età AVS spesso si aggiunge altro: riduzione dei premi (RIP), esenzione SERAFE con le PC, assegno per grandi invalidi — lo stato di vita «pensionato» li raccoglie in un luogo tranquillo.',
     step4Link: 'Verifica il diritto',
+    step4LinkSituation: 'Vedi la situazione «pensionato»',
     footerEarly: 'Un pensionamento anticipato riduce l’AVS e spesso la rendita della cassa pensioni a vita. Calcola per tempo ciò che è sostenibile — e richiedi un calcolo ufficiale alla tua cassa di compensazione.',
   },
   kkErst: {

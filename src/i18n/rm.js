@@ -478,8 +478,9 @@ export default {
     step3Text: 'L’avair dal pilaster 3a vegn exigibel cun il pensiunament. Stgalunar il retrair sur plirs onns (plirs contos) po reducir considerablamain la grevezza fiscala.',
     step3Link: 'Guardar la prevenziun',
     step4Title: '4 · Verifitgar las prestaziuns cumplementaras',
-    step4Text: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma.',
+    step4Text: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.',
     step4Link: 'Verifitgar il dretg',
+    step4LinkSituation: 'Guardar la situaziun «pensiunà»',
     footerEarly: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.',
   },
   kkErst: {
