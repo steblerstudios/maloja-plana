@@ -115,6 +115,18 @@ export default {
         steuern: { titel: 'Imposte con reddito ridotto', text: 'Le indennità di disoccupazione sono imponibili, ma un reddito annuo più basso significa di solito meno imposte — l’imposta alla fonte è spesso recuperabile.' },
       },
     },
+    verschuldet: {
+      label: 'Indebitato o in esecuzione',
+      frage: 'Ti pesano debiti o un’esecuzione (Betreibung)?',
+      intro: 'Il debito fa sentire soli, eppure esistono diritti chiari e aiuto gratuito — prima li si accoglie, più spazio resta per respirare.',
+      berechtigungen: {
+        schuldenberatung: { titel: 'Consulenza debiti gratuita', text: 'Un servizio riconosciuto di consulenza debiti aiuta gratuitamente e in modo riservato — c’è uno sportello in ogni cantone. Andarci presto tiene aperte più possibilità.' },
+        betreibung: { titel: 'Capire l’esecuzione', text: 'Un’esecuzione è una procedura con passi e termini chiari — conoscerli con calma trasforma la paura in qualcosa su cui agire.' },
+        existenzminimum: { titel: 'Proteggere il minimo vitale', text: 'In un pignoramento del salario un minimo vitale resta intoccabile per legge — un budget chiaro aiuta a vederlo e a difenderlo.' },
+        sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre più l’essenziale, l’aiuto sociale può integrare — un diritto, non carità, e indipendente dai debiti stessi.' },
+        steuern: { titel: 'Dilazione o condono d’imposta', text: 'In una reale difficoltà, le autorità fiscali possono dilazionare o condonare le imposte — meglio chiedere che lasciar crescere gli arretrati.' },
+      },
+    },
   },
   zusatzWechsel: {
     title: 'Cambiare assicurazione complementare',
