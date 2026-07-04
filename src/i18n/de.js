@@ -79,6 +79,7 @@ export default {
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Junge Erwachsene in Ausbildung mit tiefem Einkommen haben oft Anspruch auf Hilfe bei den Krankenkassenprämien — für sich selbst.' },
         franchise: { titel: 'Franchise wählen', text: 'Unter 26 ist die Prämie tiefer; bei wenigen Arztbesuchen spart eine höhere Franchise mehr — jeden Herbst einen Blick wert.' },
         ahv: { titel: 'AHV-Beiträge & Lücken', text: 'Ab dem Jahr nach dem 20. Geburtstag sind AHV-Beiträge fällig, auch ohne Job — Studierende ohne Erwerb zahlen den Mindestbeitrag. Fehlende Jahre senken später die Rente.' },
+        waisenrente: { titel: 'Waisenrente in der Ausbildung', text: 'Ist ein Elternteil verstorben, läuft die Waisenrente während der Ausbildung weiter — bis 25. Dass sie nicht einfach mit 18 endet, geht leicht vergessen.' },
       },
     },
     asylsuchend: {
@@ -125,6 +126,17 @@ export default {
         existenzminimum: { titel: 'Existenzminimum schützen', text: 'Bei einer Lohnpfändung bleibt ein geschütztes Existenzminimum von Gesetzes wegen unantastbar — ein klares Budget hilft, es zu sehen und zu wahren.' },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht mehr deckt, kann die Sozialhilfe aufstocken — ein Recht, keine Fürsorge, und unabhängig von den Schulden selbst.' },
         steuern: { titel: 'Steuerstundung oder -erlass', text: 'In einer echten Notlage können die Steuerbehörden die Zahlung stunden oder Steuern erlassen — besser fragen, als Ausstände wachsen lassen.' },
+      },
+    },
+    halbwaise: {
+      label: 'Ein Elternteil ist verstorben (Waisenrente)',
+      frage: 'Ist ein Elternteil verstorben, und bist du oder dein Kind unter 25 oder in Ausbildung?',
+      intro: 'Nach dem Tod eines Elternteils haben Kinder klare Ansprüche, die in einer schweren Zeit leicht untergehen — eine Waisenrente, und ergänzende Hilfe, falls sie nicht reicht.',
+      berechtigungen: {
+        waisenrente: { titel: 'Waisenrente (AHV/IV)', text: 'Ein Kind, dessen Elternteil verstorben ist, erhält eine monatliche Rente — bis 18, in Ausbildung bis 25. Sie wird bei der Ausgleichskasse beantragt und startet oft zu spät.' },
+        el: { titel: 'Ergänzungsleistungen (EL)', text: 'Deckt die Waisenrente die Lebenskosten nicht, kann die EL aufstocken — auch für Kinder und junge Menschen in Ausbildung. Ein Recht, keine Fürsorge.' },
+        stipendien: { titel: 'Stipendien', text: 'Zusätzlich zur Waisenrente können kantonale Stipendien Ausbildung oder Studium unterstützen — parallel prüfen, mit eigenen Fristen.' },
+        steuern: { titel: 'Steuerliche Entlastung', text: 'Ein hinterbliebener Elternteil kann Elterntarif und Kinderabzüge geltend machen; auch Kosten rund um den Verlust können die Steuer senken.' },
       },
     },
   },

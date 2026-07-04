@@ -79,6 +79,7 @@ export default {
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I giovani adulti in formazione con reddito basso hanno spesso diritto a un aiuto per i premi della cassa malati — per sé stessi.' },
         franchise: { titel: 'Scegliere la franchigia', text: 'Sotto i 26 anni il premio è più basso; con poche visite mediche una franchigia alta fa risparmiare di più — da rivedere ogni autunno.' },
         ahv: { titel: 'Contributi AVS & lacune', text: 'Dall’anno successivo ai 20 anni i contributi AVS sono dovuti anche senza lavoro — gli studenti senza attività pagano il contributo minimo. Gli anni mancanti riducono la rendita futura.' },
+        waisenrente: { titel: 'Rendita per orfani in formazione', text: 'Se un genitore è deceduto, la rendita per orfani continua durante la formazione — fino a 25 anni. È facile dimenticare che non si ferma a 18 anni.' },
       },
     },
     asylsuchend: {
@@ -125,6 +126,17 @@ export default {
         existenzminimum: { titel: 'Proteggere il minimo vitale', text: 'In un pignoramento del salario un minimo vitale resta intoccabile per legge — un budget chiaro aiuta a vederlo e a difenderlo.' },
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre più l’essenziale, l’aiuto sociale può integrare — un diritto, non carità, e indipendente dai debiti stessi.' },
         steuern: { titel: 'Dilazione o condono d’imposta', text: 'In una reale difficoltà, le autorità fiscali possono dilazionare o condonare le imposte — meglio chiedere che lasciar crescere gli arretrati.' },
+      },
+    },
+    halbwaise: {
+      label: 'Un genitore è deceduto (rendita per orfani)',
+      frage: 'Un genitore è deceduto, e tu o tuo figlio avete meno di 25 anni o siete in formazione?',
+      intro: 'Dopo la morte di un genitore, i figli hanno diritti chiari, facili da perdere in un momento difficile — una rendita per orfani e un sostegno complementare se non basta.',
+      berechtigungen: {
+        waisenrente: { titel: 'Rendita per orfani (AVS/AI)', text: 'Un figlio che ha perso un genitore riceve una rendita mensile — fino a 18 anni, o 25 se in formazione. Si richiede alla cassa di compensazione e spesso parte troppo tardi.' },
+        el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita per orfani non copre il costo della vita, le PC possono integrare — anche per bambini e giovani in formazione. Un diritto, non carità.' },
+        stipendien: { titel: 'Borse di studio', text: 'Oltre alla rendita per orfani, borse cantonali possono sostenere una formazione o gli studi — da verificare in parallelo, con termini propri.' },
+        steuern: { titel: 'Sgravio fiscale', text: 'Il genitore superstite può far valere la tariffa per genitori e le deduzioni per figli; anche alcune spese legate al lutto possono ridurre l’imposta.' },
       },
     },
   },
