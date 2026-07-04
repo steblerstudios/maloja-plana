@@ -93,6 +93,19 @@ export default {
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Uschespert ch’i dat in agen entrada po il chantun gidar a pajar las premias da la cassa da malsauns — sco per mintgin cun bass entrada.' },
       },
     },
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    rentnerin: {
+      label: 'Pensiunà / en la vegliadetgna da l’AVS',
+      frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
+      intro: 'En la vegliadetgna restan blers dretgs nunduvrads — surtut las prestaziuns cumplementaras. Bler da quai è in dretg, betg assistenza.',
+      berechtigungen: {
+        el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella — ina da las prestaziuns las pli savens betg dumandadas en Svizra. In dretg, betg carezza.' },
+        ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
+        hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC, ma savens sursvieu.' },
+        steuern: { titel: 'Deducziuns en la vegliadetgna', text: 'Cuosts da malsogna, tgira ed impediment pon vegnir deducids da l’entrada taxabla — igl è utigl da tegnair las quittanzas durant l’onn.' },
+        serafe: { titel: 'Exempziun da la taxa da radio/TV', text: 'Chasadas cun prestaziuns cumplementaras (PC) vegnan exemptadas da la taxa SERAFE sin dumonda — cun rembursament retroactiv.' },
+      },
+    },
   },
   // TODO(rm): provisorischer DE-Fallback für zusatzWechsel — sauberes Romanisch nachziehen.
   zusatzWechsel: {
