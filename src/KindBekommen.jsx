@@ -3,9 +3,10 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 import { inDays, formatDE } from './utils/helpers.js';
 
 // Kind bekommen — geführter Ablauf. Geburt/Vaterschaft anmelden, Kind versichern (KK
-// innert 3 Monaten, rückwirkend), Familienzulagen, Mutterschafts-/Vaterschafts-
-// entschädigung & Betreuung. Am Ende „Verwandte Ereignisse" (Heirat). Kein Rat —
-// Orientierung.
+// innert 3 Monaten, rückwirkend), Familienzulagen (inkl. kantonaler Geburtszulage),
+// Mutterschafts-/Vaterschaftsentschädigung & Betreuung. Schritt 5 prüft neu entstehende
+// Ansprüche (IPV neu, da der Haushalt wächst) und führt zu passenden Lebenszuständen.
+// Am Ende „Verwandte Ereignisse" (Heirat). Kein Rat — Orientierung.
 
 export const KindBekommen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -37,6 +38,11 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
     React.createElement(AblaufStep, { palette, title: t('kind.step4Title') },
       React.createElement('p', { style: s.stepText }, t('kind.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step4Link'), onClick: () => onNavigate('eo') })
+    ),
+    React.createElement(AblaufStep, { palette, title: t('kind.step5Title') },
+      React.createElement('p', { style: s.stepText }, t('kind.step5Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step5LinkIpv'), onClick: () => onNavigate('premium') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kind.step5LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
     onNavigate && React.createElement(AblaufStep, { palette, title: t('kind.relatedTitle') },
       React.createElement(AblaufLink, { palette, label: t('kind.relatedHeirat'), onClick: () => onNavigate('heirat') })
