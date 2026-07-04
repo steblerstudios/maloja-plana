@@ -3,9 +3,10 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 import { inDays, formatDE } from './utils/helpers.js';
 
 // Todesfall im Umfeld — geführter Ablauf, würdevoll und ohne Druck. Die ersten Tage,
-// Bestattung, Renten & Versicherungen, Erbschaft/Nachlass. Die kritische Frist ist die
-// Ausschlagung einer überschuldeten Erbschaft (3 Monate). Kein Rat — Orientierung,
-// keine Rechtsberatung.
+// Bestattung, Renten & Versicherungen (inkl. EL-Ergänzung + leise Brücke zum
+// Lebenszustand „Halbwaise", wenn ein Elternteil verstorben ist), Erbschaft/Nachlass.
+// Die kritische Frist ist die Ausschlagung einer überschuldeten Erbschaft (3 Monate).
+// Kein Rat — Orientierung, keine Rechtsberatung.
 
 export const Todesfall = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -24,7 +25,8 @@ export const Todesfall = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('todesfall.step3Title') },
       React.createElement('p', { style: s.stepText }, t('todesfall.step3Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3Link'), onClick: () => onNavigate('vorsorge') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3Link'), onClick: () => onNavigate('vorsorge') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('todesfall.step3LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
     React.createElement(AblaufStep, { palette, title: t('todesfall.step4Title') },
       React.createElement('p', { style: s.stepText }, t('todesfall.step4Text')),
