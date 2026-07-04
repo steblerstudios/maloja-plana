@@ -443,8 +443,9 @@ export default {
     step2Text: 'If the claim is valid, you can pay or agree on instalments with the creditor — that is often possible. If it is wholly or partly unjustified, file an objection; the creditor must then prove the claim in court. Keep an overview of open claims.',
     step2Link: 'Organise debts',
     step3Title: '3 · Protect your budget & get advice',
-    step3Text: 'Your subsistence minimum is protected and cannot be seized. Debt counselling is free and confidential — it helps find a way before the collection becomes a certificate of loss. The earlier, the more room to manoeuvre.',
+    step3Text: 'Your subsistence minimum is protected and cannot be seized. Debt counselling is free and confidential — it helps find a way before the collection becomes a certificate of loss. The earlier, the more room to manoeuvre. If debt is becoming an ongoing situation, you are not alone — the life situation “in debt or in collection” gathers further support (social assistance, tax relief) calmly in one place.',
     step3Link: 'View budget',
+    step3LinkSituation: 'View the “in debt or in collection” situation',
     footerNote: 'A debt-collection entry is not a criminal record. It disappears from the register after five years; for an unjustified collection you can request its deletion. This is orientation, not legal advice.',
   },
   pensionierung: {

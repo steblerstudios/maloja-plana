@@ -443,8 +443,9 @@ export default {
     step2Text: 'Si la créance est fondée, vous pouvez payer ou convenir d’un paiement échelonné avec le créancier — c’est souvent possible. Si elle est en tout ou en partie injustifiée, faites opposition ; le créancier devra alors prouver la créance en justice. Gardez une vue d’ensemble des créances ouvertes.',
     step2Link: 'Organiser les dettes',
     step3Title: '3 · Protéger le budget & se faire conseiller',
-    step3Text: 'Votre minimum vital est protégé et ne peut être saisi. Le conseil en désendettement est gratuit et confidentiel — il aide à trouver une voie avant que la poursuite ne devienne un acte de défaut de biens. Plus tôt, plus de marge de manœuvre.',
+    step3Text: 'Votre minimum vital est protégé et ne peut être saisi. Le conseil en désendettement est gratuit et confidentiel — il aide à trouver une voie avant que la poursuite ne devienne un acte de défaut de biens. Plus tôt, plus de marge de manœuvre. Si l’endettement devient une situation durable, vous n’êtes pas seul — la situation de vie « endetté ou aux poursuites » rassemble d’autres soutiens (aide sociale, remise d’impôt) calmement en un endroit.',
     step3Link: 'Voir le budget',
+    step3LinkSituation: 'Voir la situation « endetté ou aux poursuites »',
     footerNote: 'Une poursuite n’est pas une inscription au casier judiciaire. Elle disparaît du registre après cinq ans ; en cas de poursuite injustifiée, vous pouvez en demander la radiation. Ceci est une orientation, pas un conseil juridique.',
   },
   pensionierung: {
