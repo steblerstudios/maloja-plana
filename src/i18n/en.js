@@ -110,6 +110,7 @@ export default {
       frage: 'Unemployed, between jobs, or your benefits have run out?',
       intro: 'Being out of work opens support that isn’t automatic — and after unemployment benefits end, further help exists that many don’t know to ask for.',
       berechtigungen: {
+        rav: { titel: 'Register with the RAV in time', text: 'The RAV registration is the most important deadline — ideally on your first day without work, before you claim benefits. Every late day costs allowance. The guided flow shows the steps and saves the deadline to your calendar.' },
         alv: { titel: 'Unemployment benefits (ALV)', text: 'Register with the RAV as early as possible — daily allowances depend on your contribution months, and registering late costs days of cover.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'A lower income often means a new entitlement to help with health-insurance premiums — worth reapplying to the canton, not waiting.' },
         sozialhilfe: { titel: 'Social assistance (also after benefits end)', text: 'When unemployment benefits are exhausted, social assistance can bridge the gap. It is a right, not charity — and separate from the RAV.' },

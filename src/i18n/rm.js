@@ -114,6 +114,7 @@ export default {
       frage: 'Senza lavur, tranter duas plazzas u sortì da la garanzia?',
       intro: 'Senza lavur avran ins sustegns che na vegnan betg automaticamain — e suenter la fin dals dretgs datti auters agids che blers na san betg dumandar.',
       berechtigungen: {
+        rav: { titel: 'S’annunziar a temp tar l’URC', text: 'L’annunzia tar l’URC è la scadenza la pli impurtanta — il meglier il emprim di senza plaz, avant che ti dumondas indemnisaziuns. Mintga di memia tard custa indemnisaziuns. L’access guidà mussa ils pass e memorisescha la scadenza en tes chalender.' },
         alv: { titel: 'Indemnisaziun da dischoccupaziun (AD)', text: 'Annunzia ta uschè baud sco pussaivel tar l’URC — las indemnisaziuns dependan da tes mais da contribuziun, ed ina annunzia tardiva custa dis.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'In pli bass entrada avra savens in nov dretg sin agid per las premias da la cassa da malsauns — dumandar danovamain tar il chantun, betg spetgar.' },
         sozialhilfe: { titel: 'Agid social (era suenter la fin dals dretgs)', text: 'Sche las indemnisaziuns èn exauridas, po l’agid social surpuntar la largia. In dretg, betg carezza — e separà da l’URC.' },
