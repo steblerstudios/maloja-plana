@@ -97,6 +97,7 @@ export default {
       frage: 'Drawing an AHV pension, or close to retirement age?',
       intro: 'Later in life several entitlements go unclaimed — supplementary benefits above all. Much of it is a right, not assistance.',
       berechtigungen: {
+        pensionierung: { titel: 'Moving into retirement', text: 'Close to retirement? Registering for the AHV pension, choosing pension or lump sum from your pension fund, and staggering the third pillar all need early decisions — the guided flow shows the steps and deadlines.' },
         el: { titel: 'Supplementary benefits (EL)', text: 'If the AHV pension doesn’t cover living costs and rent, EL tops it up — one of Switzerland’s most often unclaimed benefits. It is a right, not charity.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Pensioners on a low income — and everyone on supplementary benefits — can have the canton help pay health-insurance premiums.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you regularly need help with everyday acts — independent of income and separate from EL, yet often overlooked.' },

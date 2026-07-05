@@ -97,6 +97,7 @@ export default {
       frage: 'Vous touchez une rente AVS ou en êtes proche ?',
       intro: 'À la retraite, plusieurs droits restent inutilisés — les prestations complémentaires avant tout. Beaucoup relèvent d’un droit, pas de l’assistance.',
       berechtigungen: {
+        pensionierung: { titel: 'Passage à la retraite', text: 'Bientôt à la retraite ? L’annonce à l’AVS, le choix entre rente ou capital de la caisse de pension et le retrait échelonné du 3e pilier se décident tôt — le parcours guidé montre les étapes et les délais.' },
         el: { titel: 'Prestations complémentaires (PC)', text: 'Si la rente AVS ne couvre pas le coût de la vie et le loyer, les PC la complètent — l’une des prestations les plus souvent non demandées en Suisse. Un droit, pas de la charité.' },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Les retraités à faible revenu — et toute personne au bénéfice des prestations complémentaires — peuvent faire aider le canton à payer les primes d’assurance-maladie.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: 'Un montant mensuel si vous avez régulièrement besoin d’aide pour les actes quotidiens — indépendant du revenu et distinct des PC, mais souvent oublié.' },
