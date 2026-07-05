@@ -97,6 +97,7 @@ export default {
       frage: 'Ricevi una rendita AVS o ci sei vicino?',
       intro: 'In età avanzata diversi diritti restano inutilizzati — anzitutto le prestazioni complementari. Molto di questo è un diritto, non assistenza.',
       berechtigungen: {
+        pensionierung: { titel: 'Passaggio al pensionamento', text: 'Sei vicino al pensionamento? L’annuncio all’AVS, la scelta tra rendita o capitale della cassa pensioni e il prelievo scaglionato del 3° pilastro vanno decisi per tempo — il percorso guidato mostra i passi e i termini.' },
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se la rendita AVS non copre il costo della vita e l’affitto, le PC la integrano — una delle prestazioni più spesso non richieste in Svizzera. Un diritto, non carità.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'I pensionati con reddito basso — e tutti coloro che ricevono prestazioni complementari — possono farsi aiutare dal cantone a pagare i premi della cassa malati.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: 'Un importo mensile se hai regolarmente bisogno di aiuto negli atti quotidiani — indipendente dal reddito e distinto dalle PC, ma spesso trascurato.' },
