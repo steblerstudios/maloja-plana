@@ -110,6 +110,7 @@ export default {
       frage: 'Au chômage, entre deux emplois ou en fin de droits ?',
       intro: 'Sans emploi, des aides existent qui ne viennent pas d’elles-mêmes — et après la fin des droits, d’autres soutiens existent que beaucoup ignorent.',
       berechtigungen: {
+        rav: { titel: 'S’inscrire à temps à l’ORP', text: 'L’inscription à l’ORP est le délai le plus important — idéalement le premier jour sans emploi, avant de demander des indemnités. Chaque jour de retard coûte des indemnités. Le parcours guidé montre les étapes et enregistre le délai dans votre calendrier.' },
         alv: { titel: 'Indemnités de chômage (AC)', text: 'Inscrivez-vous à l’ORP le plus tôt possible — les indemnités dépendent de vos mois de cotisation, et une inscription tardive coûte des jours.' },
         ipv: { titel: 'Réduction de primes (RIP)', text: 'Un revenu plus bas ouvre souvent un nouveau droit à l’aide pour les primes d’assurance-maladie — à redemander au canton, sans attendre.' },
         sozialhilfe: { titel: 'Aide sociale (aussi en fin de droits)', text: 'Une fois les indemnités épuisées, l’aide sociale peut combler l’écart. Un droit, pas de la charité — et distinct de l’ORP.' },

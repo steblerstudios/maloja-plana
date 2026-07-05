@@ -110,6 +110,7 @@ export default {
       frage: 'Arbeitslos, zwischen zwei Stellen oder ausgesteuert?',
       intro: 'Ohne Arbeit öffnet sich Unterstützung, die nicht automatisch kommt — und nach der Aussteuerung gibt es weitere Hilfe, nach der viele gar nicht fragen.',
       berechtigungen: {
+        rav: { titel: 'Rechtzeitig beim RAV anmelden', text: 'Die RAV-Anmeldung ist die wichtigste Frist — am besten am ersten Tag ohne Stelle, bevor du Taggeld beziehst. Jeder zu späte Tag kostet Taggeld. Der geführte Ablauf zeigt die Schritte und legt die Frist in deinen Kalender.' },
         alv: { titel: 'Arbeitslosentaggeld (ALV)', text: 'Melde dich so früh wie möglich beim RAV an — die Taggelder hängen von deinen Beitragsmonaten ab, und eine späte Anmeldung kostet Tage.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Ein tieferes Einkommen bedeutet oft einen neuen Anspruch auf Hilfe bei den Krankenkassenprämien — beim Kanton neu beantragen, nicht warten.' },
         sozialhilfe: { titel: 'Sozialhilfe (auch nach der Aussteuerung)', text: 'Sind die Taggelder erschöpft, kann die Sozialhilfe die Lücke überbrücken. Ein Recht, keine Fürsorge — und getrennt vom RAV.' },
