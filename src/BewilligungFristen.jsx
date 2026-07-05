@@ -4,8 +4,10 @@ import { inDays, formatDE } from './utils/helpers.js';
 
 // Aufenthaltsbewilligung verlängern (B/L) — geführter Ablauf, on-mission für Zugewanderte.
 // Rechtzeitig verlängern (kommt nicht automatisch), Unterlagen, Meldepflichten, Ausblick
-// C-Bewilligung. Kein Ablaufdatum im Datenmodell → Orientierungs-Frist (verschiebbar).
-// Kein Rat — Orientierung, keine Rechtsberatung.
+// C-Bewilligung. Schritt 4 entängstigt: Prämienverbilligung (IPV) ist KEINE Sozialhilfe
+// und schadet der Bewilligung nicht + leise Brücke zum Lebenszustand „Frisch zugezogen".
+// Kein Ablaufdatum im Datenmodell → Orientierungs-Frist (verschiebbar). Kein Rat —
+// Orientierung, keine Rechtsberatung.
 
 export const BewilligungFristen = ({ palette, t, onNavigate }) => {
   const s = ablaufStyles(palette);
@@ -36,7 +38,8 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step3Link'), onClick: () => onNavigate('umzug') })
     ),
     React.createElement(AblaufStep, { palette, title: t('bewilligung.step4Title') },
-      React.createElement('p', { style: s.stepText }, t('bewilligung.step4Text'))
+      React.createElement('p', { style: s.stepText }, t('bewilligung.step4Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
     // Verwandte Ereignisse (Matrix-Ebene)
     onNavigate && React.createElement(AblaufStep, { palette, title: t('bewilligung.relatedTitle') },
