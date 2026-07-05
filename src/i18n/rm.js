@@ -100,6 +100,7 @@ export default {
       frage: 'Retschaivas ti ina renta da l’AVS u ta stas ti datiers?',
       intro: 'En la vegliadetgna restan blers dretgs nunduvrads — surtut las prestaziuns cumplementaras. Bler da quai è in dretg, betg assistenza.',
       berechtigungen: {
+        pensionierung: { titel: 'Transiziun en la pensiun', text: 'Stas ti prest da pensiun? L’annunzia a l’AVS, la tscherna tranter renta u chapital da la cassa da pensiun ed il retratg spustà da la 3. columna ston vegnir decidids baud — l’access guidà mussa ils pass e las scadenzas.' },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche la renta da l’AVS na cuvra betg ils cuosts da viver e la pigiun, cumpletteschan las PC quella — ina da las prestaziuns las pli savens betg dumandadas en Svizra. In dretg, betg carezza.' },
         ipv: { titel: 'Reducziun da premias (IPV)', text: 'Pensiunads cun bass entrada — e tuts cun prestaziuns cumplementaras — pon laschar gidar il chantun a pajar las premias da la cassa da malsauns.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per impotenza', text: 'In import mensil sche ti dovras regularmain agid en il mintgadi — independent da l’entrada e separà da las PC, ma savens sursvieu.' },
