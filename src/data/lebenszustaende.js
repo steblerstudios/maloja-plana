@@ -111,6 +111,9 @@ export const LEBENSZUSTAENDE = [
   {
     key: 'erwerbslos',
     berechtigungen: [
+      // Rückweg zum Ablauf mit der zeitkritischen RAV-Anmeldefrist (Frist-in-Kalender);
+      // komplementär zum ALV-Taggeld-Rechner (`alv`). Gegenstück-Muster zu rentnerin→pensionierung.
+      { key: 'rav',         view: 'stelleverloren', quelle: 'SECO / RAV', stand: '2026' },
       { key: 'alv',         view: 'alv',         quelle: 'SECO / ALV',   stand: '2026' },
       { key: 'ipv',         view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
       { key: 'sozialhilfe', view: 'sozialhilfe', quelle: 'SKOS',         stand: '2026' },

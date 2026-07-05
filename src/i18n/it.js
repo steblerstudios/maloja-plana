@@ -110,6 +110,7 @@ export default {
       frage: 'Disoccupato, tra due impieghi o a fine diritto?',
       intro: 'Senza lavoro esistono aiuti che non arrivano da soli — e dopo la fine del diritto ci sono ulteriori sostegni che molti non sanno di poter chiedere.',
       berechtigungen: {
+        rav: { titel: 'Iscriviti per tempo all’URC', text: 'L’iscrizione all’URC è il termine più importante — idealmente il primo giorno senza lavoro, prima di chiedere le indennità. Ogni giorno di ritardo costa indennità. Il percorso guidato mostra i passi e salva il termine nel tuo calendario.' },
         alv: { titel: 'Indennità di disoccupazione (AD)', text: 'Iscriviti all’URC il prima possibile — le indennità dipendono dai mesi di contribuzione, e un’iscrizione tardiva costa giorni.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Un reddito più basso apre spesso un nuovo diritto all’aiuto per i premi della cassa malati — da richiedere di nuovo al cantone, senza attendere.' },
         sozialhilfe: { titel: 'Aiuto sociale (anche a fine diritto)', text: 'Esaurite le indennità, l’aiuto sociale può colmare il divario. Un diritto, non carità — e distinto dall’URC.' },
