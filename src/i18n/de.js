@@ -97,6 +97,7 @@ export default {
       frage: 'Beziehst du eine AHV-Rente oder stehst kurz davor?',
       intro: 'Im Alter bleibt manches ungenutzt — allen voran die Ergänzungsleistungen. Vieles davon ist ein Recht, keine Fürsorge.',
       berechtigungen: {
+        pensionierung: { titel: 'Übergang in die Pensionierung', text: 'Stehst du kurz davor? AHV-Anmeldung, die Wahl zwischen Rente oder Kapital aus der Pensionskasse und der gestaffelte Bezug der 3. Säule wollen früh entschieden sein — der geführte Ablauf zeigt die Schritte und Fristen.' },
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn die AHV-Rente die Lebenskosten und Miete nicht deckt, ergänzt die EL sie — eine der am häufigsten nicht bezogenen Leistungen der Schweiz. Ein Recht, keine Fürsorge.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Rentnerinnen und Rentner mit tiefem Einkommen — und alle mit Ergänzungsleistungen — können sich die Krankenkassenprämien vom Kanton mitfinanzieren lassen.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: 'Ein monatlicher Betrag, wenn man im Alltag regelmässig auf Hilfe angewiesen ist — unabhängig vom Einkommen und getrennt von der EL, doch oft übersehen.' },

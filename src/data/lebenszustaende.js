@@ -97,6 +97,9 @@ export const LEBENSZUSTAENDE = [
   {
     key: 'rentnerin',
     berechtigungen: [
+      // Rückweg zum Übergangs-Ablauf (für „kurz davor": AHV anmelden, PK Rente/Kapital,
+      // 3. Säule gestaffelt) — Gegenstück zu pensionierung→situationen.
+      { key: 'pensionierung',           view: 'pensionierung',    quelle: 'BSV / Ausgleichskasse', stand: '2026' },
       { key: 'el',                      view: 'finanzuebersicht', quelle: 'BSV',          stand: '2026' },
       { key: 'ipv',                     view: 'premium',          quelle: 'BAG / Kanton', stand: '2026' },
       { key: 'hilflosenentschaedigung', view: 'iv',               quelle: 'BSV',          stand: '2026' },
