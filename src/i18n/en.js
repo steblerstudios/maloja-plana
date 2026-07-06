@@ -746,7 +746,9 @@ export default {
     bewilligung: 'Renewing your permit',
     iv: 'Illness & IV',
     todesfall: 'A death in your circle',
+    arztkoffer: 'Health',
     sub: {
+      arztkoffer: 'Your health tools in one doctor’s case',
       kkerst: 'Get insured when new to Switzerland',
       pensionierung: 'AHV, pension fund, third pillar',
       betreibung: 'Payment order — react calmly',
@@ -844,6 +846,28 @@ export default {
     action: 'Open emergency card',
   },
 
+  arztkoffer: {
+    title: 'Your health case',
+    subtitle: 'Your health matters in one place — insurance, benefits, emergencies and more to come.',
+    back: 'Back to overview',
+    inVorbereitung: 'In preparation',
+    inVorbereitungHint: 'Coming to the case',
+    weitereWege: 'Other paths:',
+    faecher: {
+      kvg: { title: 'Benefits & deductible', desc: 'What basic insurance covers and how your deductible works.' },
+      kkbeleg: { title: 'Receipts folder', desc: 'Collect medical bills, keep deductible & co-payment in view.' },
+      notfall: { title: 'Emergency', desc: 'Emergency card and the key details for a crisis.' },
+      thermometer: { title: 'Thermometer', desc: 'Track symptoms and fever over the days.' },
+      blister: { title: 'Pill organizer', desc: 'Medications and intake at a glance.' },
+      karteikarten: { title: 'Index cards', desc: 'Doctors, diagnoses and contacts in one place.' },
+      impfausweis: { title: 'Vaccination record', desc: 'Vaccinations on paper and digital together.' },
+    },
+    wege: {
+      wechsel: 'Switch health insurer',
+      zusatz: 'Switch supplementary insurance',
+      unfall: 'Accident & illness',
+    },
+  },
   notfallEinstieg: {
     title: 'What do you need in an emergency?',
     subtitle: 'Three scenarios — and which information you should have ready.',
@@ -940,6 +964,7 @@ export default {
     detailProgress: 'Detailed progress per chapter',
     toolsSubtitle: 'Calculators and utilities — usable independently of your chapter data.',
     toolGroups: {
+      gesundheit: 'Health',
       lebensereignisse: 'Life events',
       money: 'Money & taxes',
       insurance: 'Insurance & health',

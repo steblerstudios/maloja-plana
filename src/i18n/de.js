@@ -751,7 +751,9 @@ export default {
     bewilligung: 'Bewilligung verlängern',
     iv: 'Krankheit & IV',
     todesfall: 'Todesfall im Umfeld',
+    arztkoffer: 'Gesundheit',
     sub: {
+      arztkoffer: 'Ihre Gesundheits-Werkzeuge im Arztkoffer',
       kkerst: 'Neu in der Schweiz versichern',
       pensionierung: 'AHV, Pensionskasse, 3. Säule',
       betreibung: 'Zahlungsbefehl — ruhig reagieren',
@@ -849,6 +851,28 @@ export default {
     action: 'Notfallkarte öffnen',
   },
 
+  arztkoffer: {
+    title: 'Arztkoffer',
+    subtitle: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.',
+    back: 'Zurück zur Übersicht',
+    inVorbereitung: 'In Vorbereitung',
+    inVorbereitungHint: 'Bald im Koffer',
+    weitereWege: 'Weitere Wege:',
+    faecher: {
+      kvg: { title: 'Leistungen & Franchise', desc: 'Was die Grundversicherung zahlt und wie Ihre Franchise wirkt.' },
+      kkbeleg: { title: 'Beleg-Ordner', desc: 'Arztrechnungen sammeln, Franchise & Selbstbehalt im Blick behalten.' },
+      notfall: { title: 'Notfall', desc: 'Notfallkarte und die wichtigsten Angaben für den Ernstfall.' },
+      thermometer: { title: 'Fieberthermometer', desc: 'Symptome und Fieber über die Tage festhalten.' },
+      blister: { title: 'Wochenblister', desc: 'Medikamente und Einnahme im Überblick.' },
+      karteikarten: { title: 'Karteikarten', desc: 'Ärztinnen, Diagnosen und Kontakte an einem Ort.' },
+      impfausweis: { title: 'Impfausweis', desc: 'Impfungen auf Papier und digital beisammen.' },
+    },
+    wege: {
+      wechsel: 'Krankenkasse wechseln',
+      zusatz: 'Zusatzversicherung wechseln',
+      unfall: 'Unfall & Krankheit',
+    },
+  },
   notfallEinstieg: {
     title: { sie: 'Was brauchen Sie im Notfall?', du: 'Was brauchst Du im Notfall?' },
     subtitle: { sie: 'Drei Szenarien — und welche Angaben Sie dafür parat haben sollten.', du: 'Drei Szenarien — und welche Angaben Du dafür parat haben solltest.' },
@@ -945,6 +969,7 @@ export default {
     detailProgress: 'Detaillierter Fortschritt pro Kapitel',
     toolsSubtitle: { sie: 'Rechner und Hilfsmittel — unabhängig von Ihren Kapiteldaten nutzbar.', du: 'Rechner und Hilfsmittel — unabhängig von Deinen Kapiteldaten nutzbar.' },
     toolGroups: {
+      gesundheit: 'Gesundheit',
       lebensereignisse: 'Lebensereignisse',
       money: 'Geld & Steuern',
       insurance: 'Versicherung & Gesundheit',
