@@ -1712,6 +1712,7 @@ export default {
     behoerden: {
       taxSituation: 'Situation fiscale',
       taxCanton: 'Canton fiscal',
+      taxId: 'Numéro fiscal',
       taxDeadline: 'Déclaration fiscale due',
       pendingReturns: 'Déclarations en suspens',
       legalSituation: 'Situation juridique',

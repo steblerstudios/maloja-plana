@@ -1712,6 +1712,7 @@ export default {
     behoerden: {
       taxSituation: 'Steuersituation',
       taxCanton: 'Steuerkanton',
+      taxId: 'Steuernummer',
       taxDeadline: 'Steuererklärung fällig',
       pendingReturns: 'Offene Steuererklärungen',
       legalSituation: 'Rechtliche Situation',

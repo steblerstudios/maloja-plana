@@ -1713,6 +1713,7 @@ export default {
     behoerden: {
       taxSituation: 'Tax situation',
       taxCanton: 'Tax canton',
+      taxId: 'Tax number',
       taxDeadline: 'Tax return due',
       pendingReturns: 'Pending tax returns',
       legalSituation: 'Legal situation',
