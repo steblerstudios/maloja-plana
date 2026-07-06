@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import './print.css';
+import { version as APP_VERSION } from '../package.json';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
@@ -968,7 +969,7 @@ const AppInner = () => {
         boxSizing: 'border-box',
       }
     },
-      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v0.1.11-beta'),
+      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
       React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
       React.createElement('a', {
         href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
