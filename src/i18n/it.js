@@ -356,6 +356,7 @@ export default {
     step3Link: 'Vedi il trasloco',
     step4Title: '4 · Prospettiva: il permesso C',
     step4Text: 'Dopo cinque-dieci anni di soggiorno ininterrotto puoi, a seconda della nazionalità, richiedere il permesso di domicilio (C) — è illimitato e più sicuro. Contano i criteri di integrazione come lingua, lavoro e nessuna dipendenza dall’aiuto sociale. Buono a sapersi: la riduzione dei premi (RIP) è un sostegno ordinario, non aiuto sociale — richiederla non conta contro il tuo permesso. Non lasciare per timore denaro che ti spetta.',
+    step4LinkIpv: 'Verificare la riduzione dei premi (RIP)',
     step4LinkSituation: 'Vedi la situazione «appena arrivato»',
     relatedTitle: 'Eventi correlati',
     relatedKkErst: 'Cassa malati per la prima volta',

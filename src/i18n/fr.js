@@ -356,6 +356,7 @@ export default {
     step3Link: 'Voir le déménagement',
     step4Title: '4 · Perspective : l’autorisation C',
     step4Text: 'Après cinq à dix ans de séjour ininterrompu, vous pouvez, selon la nationalité, demander l’autorisation d’établissement (C) — elle est illimitée et plus sûre. Les critères d’intégration comme la langue, le travail et l’absence de dépendance à l’aide sociale comptent ici. Bon à savoir : la réduction de primes (RIP) est un soutien ordinaire, pas de l’aide sociale — la demander ne compte pas contre votre autorisation. Ne laissez pas d’argent qui vous revient par crainte.',
+    step4LinkIpv: 'Vérifier la réduction de primes (RIP)',
     step4LinkSituation: 'Voir la situation « nouvellement arrivé »',
     relatedTitle: 'Événements liés',
     relatedKkErst: 'Assurance maladie pour la première fois',
