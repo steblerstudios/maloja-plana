@@ -1963,6 +1963,8 @@ export default {
     yourCanton: { sie: 'Voss chantun', du: 'Tes chantun' },
     privacyNote: { sie: 'Vossas indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.', du: 'Tias indicaziuns restan sin quest apparat. Nagin conto. Nagin cloud.' },
     skipForNow: 'Sursiglir per il mument',
+    needsTitle: 'Tge pertutga tai en quest mument?',
+    needsSubtitle: 'Tscherna tge che correspunda — Maloja ta mussa immediatamain tge che ta stat a disposiziun. Ti pos midar quai da mintga mument.',
     readyTitle: 'Pront, {name}!',
     readyTitleGeneric: 'Tut è pront!',
     readyMessage: { sie: 'Voss organisatur svizzer persunala è installà.', du: 'Tes organisatur svizzer persunala è installà.' },
