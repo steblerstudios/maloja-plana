@@ -19,7 +19,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext }) => {
   const vorlesen = useVorlesenContext();
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
@@ -1887,6 +1887,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         tr('chapterView.trustDocuments')
       )
     ),
+
+    // Nächstes Thema — Jana: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
+    nextChapter && onNext ? React.createElement('button', {
+      type: 'button',
+      onClick: onNext,
+      style: {
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
+        width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
+        marginTop: space.xl + 'px', padding: space.md + 'px ' + space.lg + 'px',
+        background: palette.surface, border: '1px solid ' + palette.border,
+        borderRadius: radius.md, color: palette.text,
+        transition: 'background 160ms ease, border-color 160ms ease',
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
+      onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
+    },
+      React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
+        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
+      ),
+      React.createElement('span', { style: { color: palette.sand, fontSize: text.lg, flexShrink: 0 } }, '→'),
+    ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present
     (() => {
