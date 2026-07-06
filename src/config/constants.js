@@ -154,8 +154,9 @@ export function getChapters(t) {
         { k: 'creditCard', label: fl(t, 'finanzen', 'creditCard'), type: 'select', options: opts(t, 'finanzen', 'creditCard'), section: t('sections.finanzen.credit'), sectionIntro: si(t, 'finanzen', 'credit') },
         { k: 'loans', label: fl(t, 'finanzen', 'loans'), type: 'currency' },
         { k: 'pension3a', label: fl(t, 'finanzen', 'pension3a'), type: 'currency', section: t('sections.finanzen.provision'), sectionIntro: si(t, 'finanzen', 'provision'), secondary: true, orientation: or(t, 'saeule3a') },
-        { k: 'pension3aBalance', label: fl(t, 'finanzen', 'pension3aBalance'), type: 'currency', secondary: true },
-        { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true },
+        { k: 'pension3aBalance', label: fl(t, 'finanzen', 'pension3aBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3aBalance'), secondary: true },
+        { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true, orientation: or(t, 'saeule3b') },
+        { k: 'pension3bBalance', label: fl(t, 'finanzen', 'pension3bBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3bBalance'), secondary: true },
         { k: 'investmentFunds', label: fl(t, 'finanzen', 'investmentFunds'), type: 'select', options: opts(t, 'finanzen', 'investmentFunds'), secondary: true },
       ],
       docs: [
@@ -301,7 +302,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
-  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'investmentFunds'],
+  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],
