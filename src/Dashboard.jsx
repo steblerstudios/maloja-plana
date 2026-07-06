@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import FruchtMitIcon from './FruchtMitIcon.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -617,7 +618,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, t('dashboard.welcome')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
-      }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')),
+      }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
       null
     ),

@@ -851,6 +851,12 @@ export default {
     action: 'Ouvrir la carte d\'urgence',
   },
 
+  glossar: {
+    ipv: 'IPV/RIP — réduction individuelle des primes : une aide cantonale sur votre prime d’assurance-maladie si le revenu est assez bas.',
+    skos: 'CSIAS — Conférence suisse des institutions d’action sociale : fixe les normes de l’aide sociale.',
+    el: 'PC — prestations complémentaires : complètent l’AVS ou l’AI quand la rente ne suffit pas.',
+    mietbeitraege: 'Aides au loyer — contributions cantonales au loyer pour les ménages à faible revenu.',
+  },
   settingsDrawer: {
     accountTitle: 'Compte et données',
     accountNote: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Vos données vous appartiennent.',
