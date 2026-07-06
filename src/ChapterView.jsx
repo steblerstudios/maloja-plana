@@ -30,6 +30,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
+  // Themen-Reiter: die benannten Sektionen der primären Felder (Person/Kontakt/…),
+  // damit man im Kapitel springen kann statt hochzuscrollen (Jana #1).
+  const [activeSection, setActiveSection] = useState(null);
+  const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
+
   const hasSecondaryFields = chapter.fields.some(f => f.secondary);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => data[f.k]);
   const storageKey = 'or5_disclosure_' + chapter.key;
@@ -45,6 +50,19 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
+
+  // Scroll-Spy: hebt den Reiter der Sektion hervor, die gerade oben im Blick ist.
+  useEffect(() => {
+    setActiveSection(null);
+    if (primarySections.length < 2) return;
+    const root = document.getElementById('mp-main');
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries.filter((e) => e.isIntersecting);
+      if (visible.length) setActiveSection(visible[0].target.getAttribute('data-section-k'));
+    }, { root: root || null, rootMargin: '0px 0px -72% 0px', threshold: 0 });
+    document.querySelectorAll('[data-section-k]').forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [chapter.key, expandedSection]);
 
   useEffect(() => {
     let timer;
@@ -1322,6 +1340,37 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
+      // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
+      primarySections.length >= 2 && React.createElement('div', {
+        role: 'tablist',
+        'aria-label': tr('chapterView.sectionNav'),
+        style: {
+          position: 'sticky', top: 0, zIndex: 5,
+          display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px',
+          padding: space.sm + 'px 0',
+          marginBottom: space.md + 'px',
+          background: palette.surface,
+          borderBottom: '1px solid ' + palette.border + '55',
+        },
+      },
+        primarySections.map((s) => {
+          const on = activeSection === s.k;
+          return React.createElement('button', {
+            key: s.k,
+            onClick: () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
+            'aria-current': on ? 'true' : undefined,
+            style: {
+              padding: '5px 12px', borderRadius: (radius.pill || radius.md),
+              border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
+              background: on ? palette.sage + '18' : 'transparent',
+              color: on ? (palette.sageDeep || palette.text) : palette.mid,
+              fontSize: text.xs, fontWeight: on ? weight.medium : weight.normal,
+              fontFamily: 'inherit', cursor: 'pointer', whiteSpace: 'nowrap',
+              transition: 'background 160ms ease, border-color 160ms ease',
+            },
+          }, s.name);
+        })
+      ),
       filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
@@ -1345,10 +1394,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             elements.push(
               React.createElement('div', {
                 key: 'section-' + field.k,
+                id: 'mp-section-' + field.k,
+                'data-section-k': field.k,
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
+                  scrollMarginTop: '52px',
                   marginTop: isFirst ? 0 : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
