@@ -6,11 +6,26 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { addTodo } from './utils/merkliste.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
 export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const vorlesen = useVorlesenContext();
   const [showCalculation, setShowCalculation] = useState(true);
+  // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
+  // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
+  const [permitAdded, setPermitAdded] = useState(false);
+  const permitTodoButton = () => React.createElement('button', {
+    onClick: () => { addTodo({ text: t('premium.permitTodoText'), link: 'tresor' }); setPermitAdded(true); },
+    disabled: permitAdded,
+    'aria-pressed': permitAdded,
+    style: {
+      marginTop: '8px', cursor: permitAdded ? 'default' : 'pointer', fontFamily: 'inherit',
+      background: 'none', border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
+      borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
+      color: permitAdded ? palette.sage : palette.mid,
+    },
+  }, permitAdded ? '✓ ' + t('premium.permitTodoAdded') : t('premium.permitTodoAdd'));
 
   const canton = data.basis?.canton || '';
   const ipvResult = calculateIPV(data);
@@ -53,7 +68,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
       // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
-        React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText'))
+        React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
+        permitTodoButton()
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
         'ⓘ ' + t('premium.enterCanton')
@@ -69,7 +85,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
     // (Quellen: SVA Zürich „Wer hat Anspruch", Kanton Basel-Stadt Prämienverbilligung).
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
       React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
-      React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText'))
+      React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
+      permitTodoButton()
     ),
 
     // Canton info
