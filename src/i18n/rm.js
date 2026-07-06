@@ -18,6 +18,7 @@ export default {
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Tractament dals dents che resguarda la situaziun finanziala (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Cun la KulturLegi fin 50% sconti sin curs.' },
         zhAktionen: { titel: 'Bigliets gratuits & acziuns (Turitg)', text: 'Acziuns concretas en il chantun Turitg cun la KulturLegi — p.ex. buns per cudeschs e gieus, computers per la participaziun digitala.' },
+        vhszh: { titel: 'Scola populara Turitg', text: 'Cun la KulturLegi 50% sconti sin curs-referats e 20% sin auters curs.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass da vacanzas da stad per uffants (6–16); mez pretsch cun la KulturLegi (CHF 18.50 empè da 37).' },
       },
     },
