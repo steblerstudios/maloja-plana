@@ -939,6 +939,7 @@ export default {
     },
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',
+    anspruchMoeglich: 'Diritto possibile',
     tipsTitle: 'Consigli per iniziare:',
     tip1: { sie: 'Inizi con il capitolo "Dati personali"', du: 'Inizia con il capitolo "Dati personali"' },
     tip2: { sie: 'Carichi i Suoi documenti importanti', du: 'Carica i tuoi documenti importanti' },
