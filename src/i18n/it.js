@@ -851,6 +851,12 @@ export default {
     action: 'Apri la scheda di emergenza',
   },
 
+  glossar: {
+    ipv: 'IPV/RIP — riduzione individuale dei premi: un contributo cantonale sul premio della cassa malati se il reddito è basso.',
+    skos: 'COSAS — Conferenza svizzera dell’azione sociale: definisce le norme dell’aiuto sociale.',
+    el: 'PC — prestazioni complementari: integrano AVS o AI quando la rendita non basta.',
+    mietbeitraege: 'Contributi d’affitto — contributi cantonali all’affitto per famiglie a basso reddito.',
+  },
   settingsDrawer: {
     accountTitle: 'Account e dati',
     accountNote: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I tuoi dati sono tuoi.',

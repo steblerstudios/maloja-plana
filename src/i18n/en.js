@@ -851,6 +851,12 @@ export default {
     action: 'Open emergency card',
   },
 
+  glossar: {
+    ipv: 'IPV — individual premium reduction: a cantonal subsidy toward your health-insurance premium when your income is low enough.',
+    skos: 'SKOS — Swiss Conference for Social Assistance: sets the guidelines for how much social assistance you are entitled to.',
+    el: 'EL — supplementary benefits: a top-up to AHV or IV pensions when they do not cover living costs.',
+    mietbeitraege: 'Rent subsidies — cantonal contributions toward housing rent for low-income households.',
+  },
   settingsDrawer: {
     accountTitle: 'Account & data',
     accountNote: 'Everything stays local on this device — no account, no login needed. Your data is yours.',

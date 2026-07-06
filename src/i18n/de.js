@@ -851,6 +851,12 @@ export default {
     action: 'Notfallkarte öffnen',
   },
 
+  glossar: {
+    ipv: 'IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an Ihre Krankenkassenprämie, wenn das Einkommen tief genug ist.',
+    skos: 'SKOS — Schweizerische Konferenz für Sozialhilfe: legt die Richtlinien fest, wie viel Sozialhilfe zusteht.',
+    el: 'EL — Ergänzungsleistungen: Zuschuss zu AHV oder IV, wenn die Rente den Lebensbedarf nicht deckt.',
+    mietbeitraege: 'Mietbeiträge — kantonale Zuschüsse an die Wohnungsmiete für Haushalte mit tiefem Einkommen.',
+  },
   settingsDrawer: {
     accountTitle: 'Konto & Daten',
     accountNote: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.',
