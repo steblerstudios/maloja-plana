@@ -5,6 +5,35 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.12-beta] — 2026-07-06
+
+### Neu
+- **Lebenszustände-Ebene vollständig (alle 11 Zustände live)**: neu „Pensioniert / im AHV-Alter", „Ohne Arbeit / zwischen Stellen", „Verschuldet oder in Betreibung", „(Halb-)Waise" — proaktive Situationen, die versteckte Berechtigungen aufdecken (`#/situationen`)
+- **Ablauf-Anreicherung mit Nordstern-Brücken**: alle 8 dünnen Abläufe (Trennung, Kind, Todesfall, Heirat, Betreibung, Pensionierung, Selbständigkeit, Bewilligung) binden jetzt an einen Lebenszustand an — Ereignis ↔ Zustand durchgängig vernetzt
+- **Ereignis→Zustand-Rückwege**: „Ohne Arbeit" → RAV-Anmeldefrist, „Pensioniert" → Pensionierungs-Ablauf
+- **Regionale Vergünstigungen bei tiefem Einkommen** (Braindump #26): KulturLegi (Caritas) für **alle Kantone** web-verifiziert (deutschsprachig `kulturlegi.ch/<region>`, französischsprachig CarteCulture) + kuratierte Zusatz-Angebote für Basel (Familienpass, Volkszahnklinik, Volkshochschule); Block auf 8 einkommens-nahen Lebenszuständen, kanton-bewusst (has/none/check)
+- **IPV**: Orientierung „Anspruch & Aufenthaltsbewilligung" (auch Ausweis L kann berechtigen), Brücke aus dem Bewilligungs-Ablauf zur IPV-Box, „Unterlagen für den Antrag merken" (Merkliste)
+- **Anspruchs-Matrix** im Dashboard: leiser positiver Hinweis „Anspruch möglich" (Sozialhilfe/IPV), streng gegated, nur positiv
+- **Notruf-Vorlesekarte** mit opt-in Standort (Geolocation nur on demand, nie gespeichert)
+- **Mehrfach-Einträge** für Budget-Posten (z. B. Internet & Telefon einzeln auflisten)
+- **Kalender-Vorlage** „Medikamente nachbestellen / Rezept erneuern"
+- **Ruhige Berg-Ladeanimation** (CalmLoader) als sanft atmende Granit-Silhouette beim Nachladen
+
+### Geändert
+- **Kohärenz-Audit abgeschlossen**: Steuernummer, Krankentaggeld und Einkommensart werden jetzt in den Spiegelkarten angezeigt; Einkommensart (netto/brutto) steuert die Prefills von ALV (brutto) und Sozialhilfe (netto) korrekt
+- **Bundle deutlich schlanker**: Kern-/Sekundär-Views ausgelagert → Haupt-Chunk −32 % (73,9 → 50,0 kB gzip); Navigation zu nachgeladenen Views robust (startTransition)
+- **App-Version** wird jetzt aus einer einzigen Quelle (`package.json`) gelesen — kein Drift mehr zwischen Footer und Paket
+- Auto-Backup sichert jetzt auch Merkliste und Notfall-Kontakte
+
+### Behoben
+- IPV-Schnellcheck-Hinweis wurde ohne gesetzten Kanton doppelt angezeigt
+- FR/IT-Formulierungen bei Todesfall/Hilflosenentschädigung natürlicher
+
+### Quellen
+- KulturLegi/CarteCulture (Caritas) — regionale Verzeichnisse je Kanton (2026 web-verifiziert) · SVA Zürich / Kanton Basel-Stadt (IPV-Anspruch) · SKOS (Existenzminimum)
+
+---
+
 ## [0.1.11-beta] — 2026-06-30
 
 ### Neu
