@@ -17,6 +17,7 @@ export default {
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Zahnbehandlung, die die finanzielle Situation berücksichtigt (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Mit der KulturLegi bis 50% Rabatt auf Kurse.' },
         zhAktionen: { titel: 'Freikarten & Aktionen Zürich', text: 'Konkrete Aktionen im Kanton Zürich mit der KulturLegi — z. B. Bücher- und Spiele-Gutscheine, Computer für die digitale Teilhabe.' },
+        ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Sommer-Ferienpass für Kinder (6–16); mit der KulturLegi zum halben Preis (CHF 18.50 statt 37).' },
       },
     },
     moreInfo: 'Mehr erfahren',
