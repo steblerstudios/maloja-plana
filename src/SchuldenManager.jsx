@@ -4,8 +4,9 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
+import { AblaufLink } from './AblaufSchale.jsx';
 
-export const SchuldenManager = ({ palette, t, data, onSave }) => {
+export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const [view, setView] = useState('overview');
   const [schulden, setSchulden] = useState(data.schulden || []);
@@ -181,6 +182,9 @@ export const SchuldenManager = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
           React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sage, textDecoration: 'none' } }, '0800 708 708'),
           React.createElement('a', { href: 'https://schulden.ch', target: '_blank', rel: 'noopener', style: { color: palette.sage, textDecoration: 'none' } }, 'schulden.ch')
+        ),
+        onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
+          React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') })
         )
       ),
 
