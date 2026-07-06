@@ -609,6 +609,13 @@ export default {
       provision: 'Trois documents vous protègent, vous et vos proches : les directives anticipées règlent les décisions médicales (CC art. 370). Le mandat pour cause d\'inaptitude désigne qui agit en votre nom (CC art. 360). Les deux doivent être manuscrits ou notariés. Une fois fait — classé pour de bon.',
     },
   },
+  itemized: {
+    add: 'Ajouter un poste',
+    sum: 'Total',
+    namePlaceholder: 'Désignation',
+    amountLabel: 'Montant en francs',
+    remove: 'Supprimer le poste',
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Tout ce qui compte en un seul endroit.',

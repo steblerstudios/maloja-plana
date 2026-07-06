@@ -635,6 +635,13 @@ export default {
     },
   },
 
+  itemized: {
+    add: 'Agiuntar posiziun',
+    sum: 'Summa',
+    namePlaceholder: 'Denominaziun',
+    amountLabel: 'Import en francs',
+    remove: 'Allontanar posiziun',
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: "Tut l'impurtant en in lieu.",

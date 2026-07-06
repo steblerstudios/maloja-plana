@@ -609,6 +609,13 @@ export default {
       provision: { sie: 'Tre documenti proteggono Lei e i Suoi cari: le direttive anticipate regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per Lei in caso di incapacità (CC art. 360). Entrambi devono essere manoscritti o autenticati dal notaio. Una volta fatto — archiviato per sempre.', du: 'Tre documenti proteggono te e i tuoi cari: le direttive anticipate regolano le decisioni mediche (CC art. 370). Il mandato precauzionale designa chi agisce per te in caso di incapacità (CC art. 360). Entrambi devono essere manoscritti o autenticati dal notaio. Una volta fatto — archiviato per sempre.' },
     },
   },
+  itemized: {
+    add: 'Aggiungi voce',
+    sum: 'Totale',
+    namePlaceholder: 'Descrizione',
+    amountLabel: 'Importo in franchi',
+    remove: 'Rimuovi voce',
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Tutto l\'importante in un unico posto.',
