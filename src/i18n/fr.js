@@ -1428,6 +1428,7 @@ export default {
     uploadSuccess: 'Document ajouté',
     hint: 'Indication',
     trustDocuments: { sie: 'Vos documents restent sur cet appareil.', du: 'Tes documents restent sur cet appareil.' },
+    nextTopic: 'Thème suivant',
     showMore: 'Afficher plus de sections',
     showLess: 'Afficher moins',
     hasHiddenData: 'Certaines sections masquées contiennent déjà des données.',

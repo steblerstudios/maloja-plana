@@ -1019,6 +1019,8 @@ const AppInner = () => {
           onNavigate: handleNavigate,
           demoMode,
           simpleView,
+          nextChapter: chapters[activeChapter + 1] || null,
+          onNext: () => handleNavigate('chapter', activeChapter + 1),
         })
       ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },

@@ -1429,6 +1429,7 @@ export default {
     uploadSuccess: 'Document added',
     hint: 'Hint',
     trustDocuments: 'Your documents stay on this device.',
+    nextTopic: 'Next topic',
     showMore: 'Show more sections',
     showLess: 'Show less',
     hasHiddenData: 'Some hidden sections already contain data.',

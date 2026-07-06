@@ -2148,6 +2148,7 @@ export default {
     uploadSuccess: 'Document agiunschì',
     hint: 'Indicaziun',
     trustDocuments: { sie: 'Voss documents restan sin quest apparat.', du: 'Tes documents restan sin quest apparat.' },
+    nextTopic: 'Proxim tema',
     showMore: 'Mussar ulteriurs secturs',
     showLess: 'Mussar pli pauc',
     hasHiddenData: 'Tscherts secturs zuppads cuntegnan gia datas.',
