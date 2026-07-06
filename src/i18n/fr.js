@@ -1435,6 +1435,7 @@ export default {
     hint: 'Indication',
     trustDocuments: { sie: 'Vos documents restent sur cet appareil.', du: 'Tes documents restent sur cet appareil.' },
     nextTopic: 'Thème suivant',
+    sectionNav: 'Thèmes du chapitre',
     showMore: 'Afficher plus de sections',
     showLess: 'Afficher moins',
     hasHiddenData: 'Certaines sections masquées contiennent déjà des données.',

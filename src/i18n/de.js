@@ -1435,6 +1435,7 @@ export default {
     hint: 'Hinweis',
     trustDocuments: { sie: 'Ihre Dokumente bleiben auf diesem Gerät.', du: 'Deine Dokumente bleiben auf diesem Gerät.' },
     nextTopic: 'Nächstes Thema',
+    sectionNav: 'Themen im Kapitel',
     showMore: 'Weitere Bereiche anzeigen',
     showLess: 'Weniger anzeigen',
     hasHiddenData: 'Einige ausgeblendete Bereiche enthalten bereits Daten.',

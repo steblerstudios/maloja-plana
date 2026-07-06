@@ -1436,6 +1436,7 @@ export default {
     emptyState: { sie: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per Lei.', du: 'Ancora vuoto — pochi dati e Maloja inizia a lavorare per te.' },
     emptyStateHint: { sie: 'Può completare in qualsiasi momento. Niente deve essere fatto tutto insieme.', du: 'Puoi completare in qualsiasi momento. Niente deve essere fatto tutto insieme.' },
     nextTopic: 'Prossimo tema',
+    sectionNav: 'Temi del capitolo',
     showMore: 'Mostra altre sezioni',
     showLess: 'Mostra meno',
     hasHiddenData: 'Alcune sezioni nascoste contengono già dei dati.',
