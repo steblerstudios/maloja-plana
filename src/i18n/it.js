@@ -2634,6 +2634,7 @@ export default {
       dentist: 'Le cure dentarie di norma non rientrano nell’assicurazione di base — i costi sono per lo più a carico proprio (salvo determinate malattie). Un’assicurazione complementare può coprirne una parte.',
       gyn: 'Assicurazione di base: lo screening ginecologico del cancro (Pap) è di norma rimborsato ogni 3 anni (dopo due controlli annuali senza anomalie). Più spesso è possibile — gli appuntamenti aggiuntivi sono allora a carico proprio. Ciò che è sensato dal punto di vista medico va chiarito con il medico.',
       vaccinations: 'Le vaccinazioni raccomandate dall’UFSP sono di norma coperte (dopo franchigia/aliquota). Le vaccinazioni di viaggio di norma no.',
+      medication: 'I medicamenti prescritti presenti nell’elenco delle specialità sono coperti — dopo franchigia e aliquota percentuale. Rinnova la ricetta per tempo per evitare interruzioni.',
     },
     coverageThisYear: {
       label: 'Coperto dall’assicurazione di base? (opzionale)',
@@ -2657,6 +2658,7 @@ export default {
       ravAppointment: 'Appuntamento URC',
       integrationCourse: 'Corso di integrazione',
       vaccinations: 'Promemoria vaccinazioni',
+      medicationRefill: 'Riordinare i medicamenti / rinnovare la ricetta',
       kkChange: 'Scadenza cambio cassa malati (30 nov.)',
     },
     disclaimer: 'Questi promemoria sono solo a scopo informativo. Contatta l\'autorità competente o un professionista sanitario per informazioni ufficiali.',
