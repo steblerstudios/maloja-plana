@@ -2199,6 +2199,11 @@ export default {
     action: "Avrir la carta d'urgenza",
   },
 
+  settingsDrawer: {
+    accountTitle: 'Conto & datas',
+    accountNote: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.',
+    backup: 'Backup & export',
+  },
   arztkoffer: {
     title: 'Vossa valisch da sanadad',
     subtitle: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.',

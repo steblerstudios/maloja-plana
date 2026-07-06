@@ -851,6 +851,11 @@ export default {
     action: 'Notfallkarte öffnen',
   },
 
+  settingsDrawer: {
+    accountTitle: 'Konto & Daten',
+    accountNote: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.',
+    backup: 'Backup & Export',
+  },
   arztkoffer: {
     title: 'Arztkoffer',
     subtitle: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.',

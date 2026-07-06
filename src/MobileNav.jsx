@@ -1,14 +1,67 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import { text, weight, space, shadow, ease, duration } from './config/tokens.js';
+import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
-export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour }) => {
+export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav' }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
+
+  const renderIconEarly = (iconKey, size) => {
+    const IconFn = Icons[iconKey];
+    if (!IconFn) return null;
+    return React.createElement('div', { style: { width: size || '16px', height: size || '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, IconFn());
+  };
+
+  // Einstellungen & Konto — eigene schlanke Schublade von rechts (oben-rechts-Eingang),
+  // damit der Boden-Anker „Menü" reine Navigation bleibt (keine Doppelung).
+  if (mode === 'settings') {
+    return React.createElement('div', {
+      style: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998, animation: 'fadeIn 0.2s' },
+      onClick: onClose,
+      onKeyDown: (e) => { if (e.key === 'Escape') onClose(); },
+    },
+      React.createElement('nav', {
+        role: 'navigation', 'aria-label': settingsLabel || t('nav.settings'),
+        style: {
+          position: 'fixed', right: 0, top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
+          background: palette.surface, borderLeft: '1px solid ' + palette.border, boxShadow: shadow.lg,
+          zIndex: 999, overflowY: 'auto', animation: 'slideIn 0.25s', display: 'flex', flexDirection: 'column',
+        },
+        onClick: (e) => e.stopPropagation(),
+      },
+        React.createElement('div', { style: { padding: '20px 20px 16px 20px', borderBottom: '1px solid ' + palette.border, display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+          React.createElement('div', { style: { fontSize: text.body + 1, fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
+          React.createElement('button', { onClick: onClose, 'aria-label': t('common.close') || 'Schliessen', style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 6px' } }, '×')
+        ),
+        (settingsControls && settingsControls.length) ? React.createElement('div', { style: { padding: '16px 20px', borderBottom: '1px solid ' + palette.border, display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } }, settingsControls) : null,
+        onStartTour ? React.createElement('button', {
+          type: 'button', onClick: () => { onClose(); onStartTour(); },
+          style: { display: 'flex', alignItems: 'center', gap: space.sm, width: '100%', textAlign: 'left', padding: '14px 20px', background: 'transparent', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit' },
+        },
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIconEarly('info', '16px')),
+          t('tour.reopen')
+        ) : null,
+        // Konto & Daten — ehrlich: lokal, kein Login; „Konto" = Datenhoheit (Backup/Export).
+        React.createElement('div', { style: { padding: '16px 20px', borderBottom: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, marginBottom: space.xs, letterSpacing: '0.3px' } }, t('settingsDrawer.accountTitle')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } }, t('settingsDrawer.accountNote')),
+          onNavigate ? React.createElement('button', {
+            onClick: () => { onClose(); onNavigate('export'); },
+            style: { display: 'inline-flex', alignItems: 'center', gap: space.sm, background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', padding: '8px 12px', fontSize: text.sm, color: palette.text, fontFamily: 'inherit' },
+          },
+            React.createElement('span', { style: { color: palette.sage, display: 'inline-flex' } }, renderIconEarly('download', '15px')),
+            t('settingsDrawer.backup')
+          ) : null
+        ),
+        React.createElement('div', { style: { flex: 1 } }),
+        React.createElement('div', { style: { padding: '16px 20px', borderTop: '1px solid ' + palette.border, fontSize: text.xs, color: palette.soft } }, t('nav.privacyNote'))
+      )
+    );
+  }
 
   // Icon mapping for chapters
   const chapterIcons = {

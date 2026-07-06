@@ -851,6 +851,11 @@ export default {
     action: 'Apri la scheda di emergenza',
   },
 
+  settingsDrawer: {
+    accountTitle: 'Account e dati',
+    accountNote: 'Tutto resta locale su questo dispositivo — nessun account, nessun login. I tuoi dati sono tuoi.',
+    backup: 'Backup ed esporta',
+  },
   arztkoffer: {
     title: 'La tua valigetta della salute',
     subtitle: 'I tuoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.',
