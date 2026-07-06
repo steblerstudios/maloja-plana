@@ -220,6 +220,17 @@ const bottomIcon = (name, color, size) => {
   if (name === 'file') return React.createElement('svg', common, P('M7 3 H14 L18 7 V21 H7 Z M14 3 V7 H18'));
   if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
   if (name === 'calendarPlus') return React.createElement('svg', common, P('M4 6 H20 V20 H4 Z M4 10 H20 M8 3 V7 M16 3 V7 M12 13 V17 M10 15 H14'));
+  // Kalender mit heutiger Tageszahl (wie iOS): das Datum steht im Blatt statt einer generischen Uhr.
+  if (name === 'calendarToday') {
+    const day = String(new Date().getDate());
+    return React.createElement('svg', common,
+      P('M4 6 H20 V20 H4 Z'), P('M4 10 H20'), P('M8 3 V7'), P('M16 3 V7'),
+      React.createElement('text', {
+        x: 12, y: 18, textAnchor: 'middle', fill: color, stroke: 'none',
+        fontFamily: 'inherit', fontWeight: 700, fontSize: day.length > 1 ? 7 : 8,
+      }, day)
+    );
+  }
   if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
@@ -275,7 +286,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
       },
     },
       slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'home', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
-      slot({ key: 'calendar', label: t('nav.calendar'), icon: 'clock', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
+      slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
       React.createElement('div', { style: { flex: 1, display: 'flex', justifyContent: 'center' } },
         React.createElement('button', {
           onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
@@ -1005,6 +1016,7 @@ const AppInner = () => {
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
           onLeaveDemo: () => setDemoMode(false),
           isTablet,
+          isMobile,
           isDarkMode,
         })
       ),
