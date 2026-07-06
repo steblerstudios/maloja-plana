@@ -3000,6 +3000,7 @@ export default {
     behoerden: {
       taxSituation: 'Situaziun da taglia',
       taxCanton: 'Chantun da taglia',
+      taxId: 'Numer da taglia',
       taxDeadline: 'Decleraziun da taglia scada',
       pendingReturns: 'Decleraziuns da taglia avantatgas',
       legalSituation: 'Situaziun giuridica',
