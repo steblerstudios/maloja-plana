@@ -308,7 +308,7 @@ export default {
     step2Title: '2 · Organizzare il funerale',
     step2Text: 'L’impresa di pompe funebri vi accompagna nell’organizzazione. Informatevi sui desideri della persona defunta (testamento, documenti di previdenza) e fatevi dettagliare i costi in modo trasparente. Il comune si occupa della tomba.',
     step3Title: '3 · Annunciare a rendite & assicurazioni',
-    step3Text: 'Annunciate il decesso alla cassa di compensazione AVS e alla cassa pensioni — i superstiti hanno spesso diritto a una rendita per vedove, vedovi o orfani. Se una tale rendita non copre le spese di vita, le prestazioni complementari (PC) possono integrarla. Informate anche la cassa malati, l’assicurazione sulla vita e la banca. Molto di questo ha qualche settimana di tempo.',
+    step3Text: 'Annunciate il decesso alla cassa di compensazione AVS e alla cassa pensioni — i superstiti hanno spesso diritto a una rendita per vedove, vedovi o orfani. Se una tale rendita non copre le spese di vita, le prestazioni complementari (PC) possono integrarla. Informate anche la cassa malati, l’assicurazione sulla vita e la banca. Per molte di queste cose avete qualche settimana di tempo.',
     step3Link: 'Vedi la previdenza',
     step3LinkSituation: 'Se un genitore è deceduto: la situazione «semiorfano»',
     step4Title: '4 · Eredità & successione',
