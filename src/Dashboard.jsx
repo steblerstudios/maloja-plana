@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
+import FruchtMitIcon from './FruchtMitIcon.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -382,7 +383,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }) => {
+const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche, onSelectChapter }) => {
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
@@ -409,6 +410,22 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, margin: '0 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.treeCaption')),
+    // Bereichs-Früchte am Baum — jede Frucht trägt das Bereichs-Icon als Negativ
+    // in Ast-Farbe; sie reift mit dem Ausfüllstand (Deckkraft). Klick → Kapitel.
+    (bereiche && bereiche.length) ? React.createElement('div', {
+      style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', justifyContent: 'center', padding: '4px 0 10px 0' },
+    },
+      bereiche.map((b) => React.createElement('button', {
+        key: b.key,
+        onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
+        'aria-label': b.title + ' — ' + b.pct + '%',
+        title: b.title,
+        style: { background: 'none', border: 'none', padding: '4px', cursor: onSelectChapter ? 'pointer' : 'default', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '3px', fontFamily: 'inherit' },
+      },
+        React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, cutColor: palette.surface, size: 40, ripeness: b.pct / 100 }),
+        React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '58px', lineHeight: 1.15, textAlign: 'center' } }, b.short || b.title)
+      ))
+    ) : null,
     (() => {
       const n = active.length;
       const rowH = 32;
@@ -551,6 +568,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   };
 
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
+
+  // Bereichs-Früchte für den Lebensbaum: Frucht + Bereichs-Icon (Negativ) + Ast-Farbe.
+  const bereichsFruechte = chapters.map((ch, idx) => {
+    const b = getBereichForChapter(ch.key);
+    if (!b) return null;
+    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title };
+  }).filter(Boolean);
 
   // Trail follows exact front range ridge points — like a real hiking path
   const trailSegments = [
@@ -841,7 +865,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
 
     // ─── Verbindungs-Baum — wächst mit den Angaben (immer sichtbar) ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter }),
 
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
