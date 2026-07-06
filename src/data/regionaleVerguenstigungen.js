@@ -61,6 +61,17 @@ const REGIONS = {
       { key: 'zhAktionen', url: 'https://www.kulturlegi.ch/zuerich/angebote/freikarten-und-aktionen' },
     ],
   },
+  // Aargau & Solothurn teilen den A-Welle FerienPass (mit KulturLegi halber Preis).
+  AG: {
+    offers: [
+      { key: 'ferienpassAWelle', url: 'https://www.ferienpass-aargau.ch/' },
+    ],
+  },
+  SO: {
+    offers: [
+      { key: 'ferienpassAWelle', url: 'https://www.ferienpass-aargau.ch/' },
+    ],
+  },
   BS: {
     offers: [
       { key: 'familienpass',    url: 'https://www.familienpass.ch/' },

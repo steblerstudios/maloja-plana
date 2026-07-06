@@ -17,6 +17,7 @@ export default {
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Dental treatment that takes your financial situation into account (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Up to 50% off courses with the KulturLegi.' },
         zhAktionen: { titel: 'Free tickets & actions (Zürich)', text: 'Concrete give-away actions in Canton Zürich with the KulturLegi — e.g. book and games vouchers, computers for digital participation.' },
+        ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Summer holiday pass for children (6–16); half price with the KulturLegi (CHF 18.50 instead of 37).' },
       },
     },
     moreInfo: 'Learn more',
