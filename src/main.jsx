@@ -23,6 +23,8 @@ const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
 import OverdueBanner from './OverdueBanner.jsx';
 import { isOnboardingDone } from './Onboarding.jsx';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
+import { isTourDone } from './Tour.jsx';
+const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
@@ -306,6 +308,19 @@ const AppInner = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
+  // Kleine Tour nach dem Onboarding — zeigt sich, bis sie erledigt ODER übersprungen
+  // ist; „später" (×) verschiebt sie auf den nächsten Start. Jederzeit übers Menü wieder.
+  const [tourOpen, setTourOpen] = useState(false);
+  const TOUR_STEPS = [
+    { key: 'welcome' },
+    { key: 'berge', target: 'berge' },
+    { key: 'anspruch', target: 'anspruch' },
+    { key: 'privacy' },
+  ];
+  // Nach abgeschlossenem Onboarding einmalig anbieten, solange nicht erledigt.
+  useEffect(() => {
+    if (onboardingDone && !isTourDone()) setTourOpen(true);
+  }, [onboardingDone]);
   const [demoMode, setDemoMode] = useState(false);
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
@@ -637,7 +652,16 @@ const AppInner = () => {
       // Auf dem Handy wandern die Kopfzeilen-Bedienelemente hierher.
       settingsControls: isMobile ? settingsControls : null,
       settingsLabel: t('nav.settings'),
+      onStartTour: () => { setView('dashboard'); setTourOpen(true); },
     }),
+    // Kleine Tour (Overlay) — nur auf dem Dashboard, wo ihre Ziele liegen.
+    (tourOpen && view === 'dashboard') && React.createElement(React.Suspense, { fallback: null, key: 'tour' },
+      React.createElement(Tour, {
+        palette, t, steps: TOUR_STEPS,
+        onFinish: () => setTourOpen(false),
+        onLater: () => setTourOpen(false),
+      })
+    ),
     React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),

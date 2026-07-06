@@ -616,6 +616,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
     React.createElement('div', {
+      'data-tour': 'berge',
       style: { margin: '0 -8px 28px -8px', lineHeight: 0, position: 'relative' }
     },
       React.createElement('svg', {
@@ -1122,7 +1123,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
-    React.createElement('div', { style: { marginBottom: space.xl + 'px' } },
+    React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
       React.createElement('h2', {
         style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
       }, t('dashboard.anspruchTitle')),
