@@ -85,6 +85,26 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallEinstieg.subtitle'))
     ),
 
+    // Ernstfall-Einstieg: die Vorlesekarte ist der eine Knopf für den Moment selbst.
+    React.createElement('button', {
+      onClick: () => onNavigate('notfallkarte'),
+      style: {
+        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
+        marginBottom: space.xl + 'px',
+        padding: space.lg + 'px ' + space.md + 'px',
+        background: (palette.sageDeep || palette.sage) + '14',
+        border: '1px solid ' + (palette.sageDeep || palette.sage) + '55',
+        borderRadius: radius.md, fontFamily: 'inherit',
+      },
+    },
+      React.createElement('div', {
+        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
+      }, '☎ ' + t('notfallEinstieg.vorlesekarteTitle')),
+      React.createElement('div', {
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+      }, t('notfallEinstieg.vorlesekarteSub') + ' →')
+    ),
+
     SCENARIOS.map(scenario => {
       const filled = scenario.fields.filter(f => hasValue(f.chapter, f.k)).length;
       const total = scenario.fields.length;
