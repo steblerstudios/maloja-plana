@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
+import FruchtSilhouette from './FruchtSilhouette.jsx';
+import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 
 const getDaysUntilExpiry = (expiryDate) => {
@@ -50,9 +52,19 @@ export const DocumentTresor = ({
   onDownload,
   onDelete,
   onUpdateExpiry,
-  initialTab
+  initialTab,
+  isDarkMode
 }) => {
   const [activeTab, setActiveTab] = useState(initialTab || 'all');
+  // Ast-Farbe + Frucht pro Register — dieselbe Sprache wie der Lebensbaum.
+  const bereichAccent = (chKey) => {
+    const b = getBereichForChapter(chKey);
+    return b ? (isDarkMode ? b.dark : b.light) : null;
+  };
+  const bereichFruit = (chKey) => {
+    const b = getBereichForChapter(chKey);
+    return b ? b.fruit : null;
+  };
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('expiry');
   const [showArchive, setShowArchive] = useState(false);
@@ -106,9 +118,12 @@ export const DocumentTresor = ({
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
   };
 
-  const tabStyle = (isActive) => ({
+  const tabStyle = (isActive, accent) => ({
+    display: 'inline-flex', alignItems: 'center', gap: '5px',
     padding: '6px 12px', background: isActive ? palette.surface : 'transparent',
     border: isActive ? '1px solid ' + palette.border : '1px solid transparent',
+    // Aktiver Reiter trägt oben den farbigen Trennblatt-Streifen seines Astes.
+    borderTop: isActive && accent ? '2px solid ' + accent : (isActive ? '1px solid ' + palette.border : '1px solid transparent'),
     borderBottom: isActive ? '1px solid ' + palette.surface : '1px solid ' + palette.border,
     borderRadius: '6px 6px 0 0', cursor: 'pointer', fontSize: text.xs,
     fontWeight: isActive ? weight.semi : weight.normal, color: isActive ? palette.text : palette.mid,
@@ -267,10 +282,21 @@ export const DocumentTresor = ({
       React.createElement('button', {
         onClick: () => setActiveTab('all'), style: tabStyle(activeTab === 'all'),
       }, t('tresor.allChapters') + ' (' + displayDocs.length + ')'),
-      chaptersWithDocs.map(c => React.createElement('button', {
-        key: c.key, onClick: () => setActiveTab(c.key),
-        style: tabStyle(activeTab === c.key),
-      }, c.icon + ' ' + (chapterCounts[c.key] || 0))),
+      chaptersWithDocs.map(c => {
+        const accent = bereichAccent(c.key);
+        const fruit = bereichFruit(c.key);
+        return React.createElement('button', {
+          key: c.key, onClick: () => setActiveTab(c.key),
+          'aria-label': c.title + ' (' + (chapterCounts[c.key] || 0) + ')',
+          style: tabStyle(activeTab === c.key, accent),
+        },
+          fruit
+            ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
+                React.createElement(FruchtSilhouette, { name: fruit, size: 14 }))
+            : React.createElement('span', null, c.icon),
+          React.createElement('span', null, chapterCounts[c.key] || 0),
+        );
+      }),
     ),
 
     // Search + Sort
@@ -313,18 +339,23 @@ export const DocumentTresor = ({
             Object.keys(groupedByChapter).map(chKey => {
               const chapter = chapterList.find(c => c.key === chKey);
               const docs = groupedByChapter[chKey];
+              const accent = bereichAccent(chKey);
+              const fruit = bereichFruit(chKey);
               return React.createElement('div', { key: chKey },
-                // Register divider
+                // Register-Trennblatt — Frucht + Ast-Farbe wie am Lebensbaum
                 React.createElement('div', {
                   style: {
-                    fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
+                    fontSize: text.xs, fontWeight: weight.semi, color: accent || palette.mid,
                     textTransform: 'uppercase', letterSpacing: '0.5px',
                     paddingBottom: '6px', marginBottom: space.sm,
-                    borderBottom: '1px solid ' + palette.border,
+                    borderBottom: '1px solid ' + (accent ? accent + '44' : palette.border),
                     display: 'flex', alignItems: 'center', gap: '6px',
                   },
                 },
-                  React.createElement('span', null, chapter?.icon || '□'),
+                  fruit
+                    ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
+                        React.createElement(FruchtSilhouette, { name: fruit, size: 15 }))
+                    : React.createElement('span', null, chapter?.icon || '□'),
                   chapter?.title || chKey,
                   React.createElement('span', {
                     style: { fontWeight: weight.normal, color: palette.soft }
