@@ -386,7 +386,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche, onSelectChapter }) => {
+const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile }) => {
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
@@ -421,15 +421,19 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     // Frucht trägt weiterhin das Bereichs-Icon als Negativ. Klick → Kapitel.
     (bereiche && bereiche.length) ? (() => {
       const n = bereiche.length;
-      const VB_W = 340, VB_H = 258;
+      const VB_W = 360, VB_H = 268;
       // Kurzer Stamm, damit der Baum gewachsen statt schirmartig wirkt.
-      const forkX = 170, forkY = 176, groundY = 244;
+      const forkX = 180, forkY = 182, groundY = 252;
       // Runder, höherer Kronenbogen (mehr Höhen-Abstand zwischen benachbarten Früchten).
-      const cx = 170, rx = 112, cy = 118, ry = 86;
+      const cx = 180, rx = 150, cy = 120, ry = 92;
+      // Früchte gleichmässig horizontal verteilen (statt gleicher Winkel). Bei gleichem
+      // Winkel drängeln sich benachbarte Früchte an den flachen Flanken der Krone und die
+      // Labels kollidieren; gleicher x-Abstand hält sie ruhig auseinander. Die Höhe folgt
+      // dem Kronenbogen — Mitte hoch, Ränder sanft tiefer, wie an einem gewachsenen Baum.
       const anchor = (i) => {
         const tt = n === 1 ? 0.5 : i / (n - 1);
-        const ang = Math.PI * (1 - tt);
-        return { x: cx + rx * Math.cos(ang), y: cy - ry * Math.sin(ang) };
+        const dx = (2 * tt - 1) * 0.99;
+        return { x: cx + rx * dx, y: cy - ry * Math.sqrt(Math.max(0, 1 - dx * dx)) };
       };
       const avg = Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / n);
       // 4 Wuchsstufen des ganzen Baums → Laubmasse.
@@ -458,8 +462,10 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
           // Äste — je ein Ast zum Frucht-Anker
           ...bereiche.map((b, i) => {
             const a = anchor(i);
-            const mx = forkX + (a.x - forkX) * 0.42;
-            const my = (forkY + a.y) / 2 - 6;
+            // Ast schwingt erst nach oben aus dem Stamm, dann zur Frucht — gewachsen,
+            // nicht speichenartig (der Kontrollpunkt liegt näher am Stamm und höher).
+            const mx = forkX + (a.x - forkX) * 0.30;
+            const my = forkY - (forkY - a.y) * 0.58;
             return React.createElement('path', {
               key: 'branch-' + b.key,
               d: 'M ' + forkX + ' ' + forkY + ' Q ' + mx + ' ' + my + ' ' + a.x.toFixed(1) + ' ' + a.y.toFixed(1),
@@ -478,17 +484,19 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
             title: b.title,
             style: {
               position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
-              transform: 'translate(-50%, -50%)',
+              // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
+              // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (Sophie).
+              transform: 'translate(-50%, -4%)',
               background: 'none', border: 'none', padding: 0,
               cursor: onSelectChapter ? 'pointer' : 'default',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
             },
           },
             // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
-            React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '52px' } },
-              React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: 50 })
+            React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
+              React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: isMobile ? 42 : 50 })
             ),
-            React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '64px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title)
+            React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
           );
         })
       );
@@ -548,7 +556,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, simpleView, isDarkMode }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, isMobile, simpleView, isDarkMode }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -1287,7 +1295,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Lebensbaum als Spiegel — nach unten gewandert (#3): was aus den
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter }),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },

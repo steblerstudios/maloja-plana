@@ -51,18 +51,45 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
 
-  // Scroll-Spy: hebt den Reiter der Sektion hervor, die gerade oben im Blick ist.
+  // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
+  // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
+  // zwischen den Scrollpositionen durch → Highlight blinkt nur kurz auf). Stattdessen:
+  // aktiv ist der zuletzt überschrittene Kopf oberhalb einer Linie knapp unter dem
+  // klebenden Reiter — so bleibt die aktuelle Sektion durchgehend markiert.
   useEffect(() => {
     setActiveSection(null);
     if (primarySections.length < 2) return;
     const root = document.getElementById('mp-main');
-    const obs = new IntersectionObserver((entries) => {
-      const visible = entries.filter((e) => e.isIntersecting);
-      if (visible.length) setActiveSection(visible[0].target.getAttribute('data-section-k'));
-    }, { root: root || null, rootMargin: '0px 0px -72% 0px', threshold: 0 });
-    document.querySelectorAll('[data-section-k]').forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+    if (!root) return;
+    const compute = () => {
+      const anchors = document.querySelectorAll('[data-section-k]');
+      if (!anchors.length) return;
+      const line = root.getBoundingClientRect().top + 120;
+      let current = anchors[0].getAttribute('data-section-k');
+      for (const el of anchors) {
+        if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
+        else break;
+      }
+      setActiveSection(current);
+    };
+    compute();
+    root.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('resize', compute);
+    return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
   }, [chapter.key, expandedSection]);
+
+  // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
+  // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
+  useEffect(() => {
+    if (!activeSection) return;
+    const tl = document.querySelector('[data-section-tablist]');
+    const btn = tl && tl.querySelector('[data-section-tab="' + activeSection + '"]');
+    if (!tl || !btn) return;
+    const b = btn.getBoundingClientRect(), t = tl.getBoundingClientRect();
+    if (b.left < t.left + 4 || b.right > t.right - 4) {
+      tl.scrollBy({ left: (b.left + b.width / 2) - (t.left + t.width / 2), behavior: 'smooth' });
+    }
+  }, [activeSection]);
 
   useEffect(() => {
     let timer;
@@ -1343,10 +1370,14 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
       primarySections.length >= 2 && React.createElement('div', {
         role: 'tablist',
+        'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
         style: {
           position: 'sticky', top: 0, zIndex: 5,
-          display: 'flex', flexWrap: 'wrap', gap: space.xs + 'px',
+          // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
+          // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
+          display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
+          overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
           padding: space.sm + 'px 0',
           marginBottom: space.md + 'px',
           background: palette.surface,
@@ -1357,9 +1388,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           const on = activeSection === s.k;
           return React.createElement('button', {
             key: s.k,
+            'data-section-tab': s.k,
             onClick: () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
             'aria-current': on ? 'true' : undefined,
             style: {
+              flexShrink: 0,
               padding: '5px 12px', borderRadius: (radius.pill || radius.md),
               border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
               background: on ? palette.sage + '18' : 'transparent',
