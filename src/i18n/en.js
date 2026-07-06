@@ -2540,6 +2540,8 @@ export default {
     yourCanton: 'Your canton',
     privacyNote: 'Your data stays on this device. No account. No cloud.',
     skipForNow: 'Skip for now',
+    needsTitle: 'What applies to you right now?',
+    needsSubtitle: 'Pick what fits — Maloja will show you straight away what you\'re entitled to. You can change this anytime.',
     readyTitle: 'Ready, {name}!',
     readyTitleGeneric: 'Everything is ready!',
     readyMessage: 'Your personal Swiss life organizer is set up.',
