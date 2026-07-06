@@ -11,6 +11,7 @@ import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
+import { ItemizedAmount } from './ItemizedAmount.jsx';
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
@@ -377,6 +378,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       color: palette.rose,
       marginTop: space.xs
     };
+
+    // Mehrfach-Einträge — mehrere benannte Posten, die sich zur Summe addieren.
+    // Das Budget-Feld (field.k) bleibt eine Zahl (= Summe); die Posten liegen in <field.k>Items.
+    if (field.itemized) {
+      const itemsKey = field.k + 'Items';
+      const stored = Array.isArray(data[itemsKey]) ? data[itemsKey] : [];
+      // Alt-Einzelbetrag verlustfrei als erster Posten übernehmen (ohne Bezeichnung).
+      const seed = stored.length ? stored : (data[field.k] ? [{ label: '', amount: data[field.k] }] : []);
+      const fieldId = chapter.key + '-' + field.k;
+      return React.createElement('div', { key: field.k, style: baseStyle },
+        renderLabel(fieldId, field.label, field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, 'ⓘ ' + field.hint),
+        React.createElement(ItemizedAmount, {
+          palette, t: tr, items: seed,
+          onChange: (list) => {
+            onUpdate(itemsKey, list);
+            onUpdate(field.k, list.reduce((a, r) => a + (Number(r.amount) || 0), 0));
+          },
+        }),
+        renderOrientation(field)
+      );
+    }
 
     // Doctors — structured input instead of plain text fields
     if (field.k === 'doctor' && chapter.key === 'notfall') {
