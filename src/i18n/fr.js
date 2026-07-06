@@ -308,7 +308,7 @@ export default {
     step2Title: '2 · Organiser les obsèques',
     step2Text: 'L’entreprise de pompes funèbres vous accompagne dans l’organisation. Renseignez-vous sur les souhaits de la personne décédée (testament, documents de prévoyance) et faites détailler clairement les coûts. La commune s’occupe de la tombe.',
     step3Title: '3 · Annoncer aux rentes & assurances',
-    step3Text: 'Annoncez le décès à la caisse de compensation AVS et à la caisse de pension — les survivants ont souvent droit à une rente de veuve, de veuf ou d’orphelin. Si une telle rente ne couvre pas les frais de subsistance, les prestations complémentaires (PC) peuvent la compléter. Informez aussi la caisse maladie, l’assurance-vie et la banque. Beaucoup de cela dispose de quelques semaines.',
+    step3Text: 'Annoncez le décès à la caisse de compensation AVS et à la caisse de pension — les survivants ont souvent droit à une rente de veuve, de veuf ou d’orphelin. Si une telle rente ne couvre pas les frais de subsistance, les prestations complémentaires (PC) peuvent la compléter. Informez aussi la caisse maladie, l’assurance-vie et la banque. Beaucoup de ces démarches peuvent attendre quelques semaines.',
     step3Link: 'Voir la prévoyance',
     step3LinkSituation: 'Si un parent est décédé : la situation « semi-orphelin »',
     step4Title: '4 · Héritage & succession',
