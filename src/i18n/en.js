@@ -609,6 +609,13 @@ export default {
       provision: 'Three documents protect you and your family: The advance directive covers medical decisions (CC Art. 370). The power of attorney appoints someone to act on your behalf if incapacitated (CC Art. 360). Both must be handwritten or notarized. Once done — filed for good.',
     },
   },
+  itemized: {
+    add: 'Add item',
+    sum: 'Total',
+    namePlaceholder: 'Label',
+    amountLabel: 'Amount in francs',
+    remove: 'Remove item',
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Everything important in one place.',
