@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
 import './print.css';
@@ -16,16 +16,18 @@ import { createBackup } from './utils/autoBackup.js';
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
-import SettingsView from './SettingsView.jsx';
+const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
-import ChapterView from './ChapterView.jsx';
+const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
 import OverdueBanner from './OverdueBanner.jsx';
-import { Onboarding, isOnboardingDone } from './Onboarding.jsx';
+import { isOnboardingDone } from './Onboarding.jsx';
+const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 import { syncDocumentReminders } from './utils/docReminders.js';
-import LegalView from './LegalView.jsx';
+const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import { Icon } from './IconSystem.jsx';
+import CalmLoader from './components/CalmLoader.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
@@ -343,12 +345,16 @@ const AppInner = () => {
   // ─── Hash routing: listen for browser back/forward ────────
   useEffect(() => {
     const cleanup = onHashChange((parsed) => {
-      if (parsed.view === 'chapter' && parsed.chapterIndex !== null) {
-        // Clamp to valid chapter range
-        const maxIdx = chapters.length > 0 ? chapters.length - 1 : 0;
-        setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
-      }
-      setView(parsed.view);
+      // startTransition: das Ziel kann ein noch nicht geladener Lazy-Chunk sein — so darf
+      // React den Suspense-Fallback (CalmLoader) zeigen statt „suspended on sync input" zu werfen.
+      startTransition(() => {
+        if (parsed.view === 'chapter' && parsed.chapterIndex !== null) {
+          // Clamp to valid chapter range
+          const maxIdx = chapters.length > 0 ? chapters.length - 1 : 0;
+          setActiveChapter(Math.min(parsed.chapterIndex, maxIdx));
+        }
+        setView(parsed.view);
+      });
     });
     return cleanup;
   }, [chapters.length]);
@@ -538,7 +544,8 @@ const AppInner = () => {
     if (viewName === 'kvg') {
       setKvgInitialTab(extra || 'katalog');
     }
-    setView(viewName);
+    // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
+    startTransition(() => setView(viewName));
     requestAnimationFrame(() => {
       const main = document.getElementById('mp-main');
       if (main) { main.scrollTop = 0; main.focus({ preventScroll: true }); }
@@ -547,11 +554,13 @@ const AppInner = () => {
 
   // ─── Onboarding gate ─────────────────────────────────────
   if (!onboardingDone) {
-    return React.createElement(Onboarding, {
-      palette, t, setLanguage, supportedLanguages,
-      onComplete: () => setOnboardingDone(true),
-      onUpdateData: updateData,
-    });
+    return React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
+      React.createElement(Onboarding, {
+        palette, t, setLanguage, supportedLanguages,
+        onComplete: () => setOnboardingDone(true),
+        onUpdateData: updateData,
+      })
+    );
   }
 
   // Sekundäre Kopfzeilen-Bedienelemente — auf dem Desktop in der Kopfzeile,
@@ -805,7 +814,7 @@ const AppInner = () => {
         ),
         React.createElement(Dashboard, {
           palette, t, chapters, data: activeData,
-          onSelectChapter: (idx) => { setActiveChapter(idx); setView('chapter'); },
+          onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),
           onNavigate: setView,
           simpleView,
@@ -815,19 +824,21 @@ const AppInner = () => {
           isTablet,
         })
       ),
-      view === 'chapter' && React.createElement(ChapterView, {
-        palette, t,
-        chapter: chapters[activeChapter],
-        data: activeData[chapters[activeChapter].key] || {},
-        allData: activeData,
-        onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
-        onAddDocument: handleAddDocument,
-        onNavigate: handleNavigate,
-        demoMode,
-        simpleView,
-      }),
+      view === 'chapter' && React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
+        React.createElement(ChapterView, {
+          palette, t,
+          chapter: chapters[activeChapter],
+          data: activeData[chapters[activeChapter].key] || {},
+          allData: activeData,
+          onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
+          onAddDocument: handleAddDocument,
+          onNavigate: handleNavigate,
+          demoMode,
+          simpleView,
+        })
+      ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
-      React.createElement(React.Suspense, { fallback: React.createElement('div', { style: { padding: space.xl + 'px', textAlign: 'center', color: palette.soft, fontSize: text.sm }, role: 'status', 'aria-live': 'polite' }, t('common.loading')) },
+      React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
         view === 'tresor' && React.createElement(DocumentTresor, {
           palette, t,
           documents: documents,
@@ -931,8 +942,8 @@ const AppInner = () => {
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
-          onEditBasis: () => { setActiveChapter(0); setView('chapter'); },
-          onExport: () => setView('export'),
+          onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
+          onExport: () => startTransition(() => setView('export')),
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
