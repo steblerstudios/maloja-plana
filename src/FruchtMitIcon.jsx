@@ -1,49 +1,65 @@
 import React from 'react';
-import FruchtSilhouette from './FruchtSilhouette.jsx';
-import { Icon } from './IconSystem.jsx';
+import { FRUITS } from './FruchtSilhouette.jsx';
+import Icons from './IconSystem.jsx';
 
-// ─── Frucht mit eingestanztem Bereichs-Icon ─────────────────────────────────
+// ─── Frucht mit ausgestanztem Bereichs-Icon (echtes Negativ) ────────────────
 //
-// Die Frucht (in Ast-Farbe) trägt das Bereichs-Icon (Chalet etc.) als Negativ —
-// das Icon erscheint in der Hintergrundfarbe „ausgestanzt". So bekommen die
-// Früchte ihr Zuhause am Lebensbaum (Sophie 2026-07-06):
+// Die Frucht (in Ast-Farbe) trägt das Bereichs-Icon als ECHTE Aussparung:
+// das Icon wird per SVG-Maske aus dem Fruchtkörper gestanzt, der Hintergrund
+// scheint durch. Kein weisser Klecks obendrauf mehr (Sophie 2026-07-06).
 // „die Früchte nur im Baum … und darin das Negativ des jeweiligen Icons".
 //
-// fruit      = Frucht-Schlüssel (apfel, birne, …)
-// iconName   = Icon-Schlüssel (basis, wohnen, … → IconSystem)
-// color      = Ast-Farbe (Fruchtkörper)
-// cutColor   = Hintergrundfarbe, in der das Icon „ausgestanzt" erscheint
-// size       = Kantenlänge in px; ripeness 0..1 = Reifegrad (Deckkraft)
-// Cluster-Früchte haben keinen Vollkörper → das Icon-Negativ braucht eine ruhige
-// solide Scheibe in Ast-Farbe als Untergrund, sonst „schwimmt" es zwischen den Beeren.
+// Cluster-Früchte (keine Vollkörper) bekommen eine solide Scheibe als Körper,
+// damit das Negativ nicht zwischen den Beeren verschwindet.
 const CLUSTER_FRUITS = new Set(['vogelbeere', 'kirsche', 'traube']);
 
-export default function FruchtMitIcon({ fruit, iconName, color, cutColor = '#F4F1EC', size = 40, ripeness = 1, title }) {
-  const iconSize = Math.round(size * 0.46);
-  const needsBacking = CLUSTER_FRUITS.has(fruit);
-  const discSize = Math.round(iconSize * 1.5);
-  return React.createElement('span', {
-    role: title ? 'img' : undefined,
-    'aria-label': title || undefined,
-    style: {
-      position: 'relative', display: 'inline-flex', width: size, height: size,
-      alignItems: 'center', justifyContent: 'center', color, opacity: 0.45 + ripeness * 0.55,
-    },
+// Realistische, aber legbare Grössenverhältnisse (Vollkörper grösser als Beeren).
+const SIZE_FACTOR = {
+  apfel: 1.0, birne: 1.0, aprikose: 0.94, zwetschge: 0.9, baumnuss: 0.9,
+  hagebutte: 0.86, haselnuss: 0.88, heidelbeere: 0.82, kirsche: 0.86,
+  traube: 0.92, vogelbeere: 0.84,
+};
+
+let _uid = 0;
+
+export default function FruchtMitIcon({ fruit, iconName, color, cutColor, size = 44, ripeness = 1, title }) {
+  const maskId = React.useMemo(() => 'frucht-cut-' + (_uid++), []);
+  const draw = FRUITS[fruit];
+  const iconFactory = Icons[iconName];
+  if (!draw) return null;
+
+  const factor = SIZE_FACTOR[fruit] || 1;
+  const px = Math.round(size * factor);
+  const isCluster = CLUSTER_FRUITS.has(fruit);
+
+  // Alles im 24er-Koordinatenraum. Fruchtkörper-Mitte liegt etwas unter der Box-Mitte
+  // (Stiele oben), darauf zentrieren wir das Icon.
+  const bodyCx = 12, bodyCy = 13.2;
+  const iconU = 11;                 // Icon-Kantenlänge in Einheiten
+  const dx = bodyCx - iconU / 2;
+  const dy = bodyCy - iconU / 2;
+
+  return React.createElement('svg', {
+    viewBox: '0 0 24 24', width: px, height: px,
+    role: title ? 'img' : undefined, 'aria-label': title || undefined,
+    'aria-hidden': title ? undefined : 'true', focusable: 'false',
+    style: { display: 'block', color, opacity: 0.5 + ripeness * 0.5 },
   },
-    React.createElement(FruchtSilhouette, { name: fruit, size }),
-    // Solide Scheibe (nur Cluster-Früchte), damit das Negativ einen Körper hat.
-    needsBacking ? React.createElement('span', {
-      style: {
-        position: 'absolute', top: '52%', left: '50%', transform: 'translate(-50%,-50%)',
-        width: discSize, height: discSize, borderRadius: '50%', background: 'currentColor',
-      },
-    }) : null,
-    // Icon als Negativ — in der Hintergrundfarbe auf den Fruchtkörper gestanzt.
-    iconName ? React.createElement('span', {
-      style: {
-        position: 'absolute', top: '52%', left: '50%', transform: 'translate(-50%,-50%)',
-        width: iconSize, height: iconSize, color: cutColor, display: 'inline-flex',
-      },
-    }, React.createElement(Icon, { name: iconName, size: iconSize })) : null,
+    React.createElement('defs', null,
+      React.createElement('mask', { id: maskId, maskUnits: 'userSpaceOnUse' },
+        // weiss = Frucht sichtbar, schwarz = ausgestanzt (Icon-Form)
+        React.createElement('rect', { x: 0, y: 0, width: 24, height: 24, fill: 'white' }),
+        // Icon in Schwarz = ausgestanzte Form. Rohe Icon-SVG (nicht der HTML-Wrapper),
+        // positioniert + skaliert über die verschachtelte SVG.
+        iconFactory ? React.createElement('g', { style: { color: 'black' } },
+          React.cloneElement(iconFactory(), { x: dx, y: dy, width: iconU, height: iconU })
+        ) : null
+      )
+    ),
+    React.createElement('g', { mask: 'url(#' + maskId + ')' },
+      // Cluster-Früchte: solider Körper hinter dem Cluster, sonst greift die Aussparung ins Leere.
+      isCluster ? React.createElement('circle', { cx: bodyCx, cy: bodyCy, r: 7, fill: 'currentColor' }) : null,
+      React.createElement('g', { style: { color } }, draw())
+    )
   );
 }

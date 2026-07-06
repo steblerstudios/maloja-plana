@@ -783,7 +783,8 @@ const AppInner = () => {
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
       settingsControls: null,
       settingsLabel: t('nav.settings'),
-      onStartTour: () => { setView('dashboard'); setTourOpen(true); },
+      // Rundgang nur EINMAL: am Handy in den Einstellungen, am Desktop hier im Menü.
+      onStartTour: isMobile ? null : () => { setView('dashboard'); setTourOpen(true); },
     }),
     // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
     React.createElement(MobileNav, {
@@ -829,9 +830,10 @@ const AppInner = () => {
               onClick: () => setSettingsOpen(true),
               style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
             },
-              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
                 React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
-                React.createElement('path', { d: 'M12 2.5 V5 M12 19 V21.5 M4.2 4.2 L6 6 M18 18 L19.8 19.8 M2.5 12 H5 M19 12 H21.5 M4.2 19.8 L6 18 M18 6 L19.8 4.2' })
+                // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
+                React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
               )
             )
           : React.createElement(React.Fragment, { key: 'desktop-controls' },
