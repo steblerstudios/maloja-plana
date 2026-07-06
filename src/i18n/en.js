@@ -851,6 +851,11 @@ export default {
     action: 'Open emergency card',
   },
 
+  settingsDrawer: {
+    accountTitle: 'Account & data',
+    accountNote: 'Everything stays local on this device — no account, no login needed. Your data is yours.',
+    backup: 'Backup & export',
+  },
   arztkoffer: {
     title: 'Your health case',
     subtitle: 'Your health matters in one place — insurance, benefits, emergencies and more to come.',

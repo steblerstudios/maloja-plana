@@ -851,6 +851,11 @@ export default {
     action: 'Ouvrir la carte d\'urgence',
   },
 
+  settingsDrawer: {
+    accountTitle: 'Compte et données',
+    accountNote: 'Tout reste local sur cet appareil — aucun compte, aucune connexion nécessaire. Vos données vous appartiennent.',
+    backup: 'Sauvegarde et export',
+  },
   arztkoffer: {
     title: 'Votre trousse santé',
     subtitle: 'Vos sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.',
