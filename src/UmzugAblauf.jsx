@@ -4,10 +4,14 @@ import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, abl
 import { inDays, formatDE } from './utils/helpers.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
+import { addTodo } from './utils/merkliste.js';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
 // Adresse überall nachführen, alte Wohnung fristgerecht kündigen.
+
+// Die Stellen, die die neue Adresse brauchen — stabile Schlüssel für Label + Merkliste.
+const CHECKLIST = ['Post', 'Kk', 'Employer', 'Ahv', 'Tax', 'Insurance', 'Bank', 'Subs'];
 
 // Orientierungs-Frist: In der Schweiz meldet man sich innert 14 Tagen nach dem Umzug
 // bei der neuen Gemeinde an. Wir kennen das Umzugsdatum nicht → ruhige Erinnerung
@@ -46,16 +50,18 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
     }, (isChosen ? '✓ ' : '') + label);
   };
 
-  const checklistItems = [
-    t('umzug.step3Post'),
-    t('umzug.step3Kk'),
-    t('umzug.step3Employer'),
-    t('umzug.step3Ahv'),
-    t('umzug.step3Tax'),
-    t('umzug.step3Insurance'),
-    t('umzug.step3Bank'),
-    t('umzug.step3Subs'),
-  ];
+  // Adress-Checkliste: jede Stelle lässt sich als offener Punkt in die Merkliste legen
+  // (idempotent, kein Doppel). Der Link führt jeweils zum Adressänderungs-Brief.
+  const [added, setAdded] = useState({});
+  const addOne = (k) => {
+    addTodo({ text: t('umzug.step3TodoPrefix') + ' ' + t('umzug.step3' + k), link: 'briefe' });
+    setAdded(a => ({ ...a, [k]: true }));
+  };
+  const addAll = () => {
+    const next = {};
+    CHECKLIST.forEach(k => { addTodo({ text: t('umzug.step3TodoPrefix') + ' ' + t('umzug.step3' + k), link: 'briefe' }); next[k] = true; });
+    setAdded(next);
+  };
 
   return React.createElement(AblaufContainer, {
     palette, icon: 'home',
@@ -112,9 +118,33 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
     // Schritt 3 — Adresse überall nachführen (ruhige Checkliste)
     React.createElement(AblaufStep, { palette, title: t('umzug.step3Title') },
       React.createElement('p', { style: s.stepText }, t('umzug.step3Text')),
-      React.createElement('ul', { style: { ...s.stepText, margin: '8px 0 0 0', paddingLeft: '20px' } },
-        checklistItems.map((item, i) => React.createElement('li', { key: i, style: { marginBottom: '4px' } }, item))
+      // Jede Stelle als Zeile mit „merken"-Knopf → landet als offener Punkt in der Merkliste.
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '6px', margin: space.sm + 'px 0' } },
+        CHECKLIST.map((k) => {
+          const isAdded = !!added[k];
+          return React.createElement('div', {
+            key: k,
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm + 'px', fontSize: text.sm, color: palette.text },
+          },
+            React.createElement('span', null, t('umzug.step3' + k)),
+            React.createElement('button', {
+              onClick: () => addOne(k),
+              disabled: isAdded,
+              'aria-pressed': isAdded,
+              style: {
+                flexShrink: 0, cursor: isAdded ? 'default' : 'pointer', fontFamily: 'inherit',
+                background: 'none', border: '1px solid ' + (isAdded ? palette.sage : palette.border),
+                borderRadius: radius.sm, padding: '2px 10px', fontSize: text.xs,
+                color: isAdded ? palette.sage : palette.mid,
+              },
+            }, isAdded ? '✓ ' + t('umzug.step3Added') : t('umzug.step3Add'))
+          );
+        })
       ),
+      React.createElement('button', {
+        onClick: addAll,
+        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', fontSize: text.sm, color: palette.sand, fontWeight: weight.semi },
+      }, '+ ' + t('umzug.step3AddAll')),
       // Für jede Stelle der Liste den gleichen Adressänderungs-Brief (ein Dokument, wiederverwendbar).
       onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkAddressChange'), onClick: () => onNavigate('briefe') })
     ),
