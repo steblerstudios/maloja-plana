@@ -856,6 +856,13 @@ export default {
     skos: 'SKOS — Schweizerische Konferenz für Sozialhilfe: legt die Richtlinien fest, wie viel Sozialhilfe zusteht.',
     el: 'EL — Ergänzungsleistungen: Zuschuss zu AHV oder IV, wenn die Rente den Lebensbedarf nicht deckt.',
     mietbeitraege: 'Mietbeiträge — kantonale Zuschüsse an die Wohnungsmiete für Haushalte mit tiefem Einkommen.',
+    ahv: 'AHV — Alters- und Hinterlassenenversicherung: die staatliche Grundrente im Alter oder beim Tod eines Elternteils.',
+    iv: 'IV — Invalidenversicherung: sichert das Einkommen, wenn Krankheit oder Behinderung das Arbeiten dauerhaft einschränkt.',
+    kvg: 'KVG — Krankenversicherungsgesetz: regelt die obligatorische Grundversicherung, die alle in der Schweiz haben müssen.',
+    bvg: 'BVG — berufliche Vorsorge (Pensionskasse): die zweite Säule, die zusammen mit der AHV die Rente im Alter bildet.',
+    uvg: 'UVG — Unfallversicherung: deckt die Kosten bei Berufs- und Freizeitunfällen.',
+    franchise: 'Franchise — der Anteil der Gesundheitskosten pro Jahr, der selbst getragen wird, bevor die Krankenkasse zahlt.',
+    selbstbehalt: 'Selbstbehalt — der Eigenanteil (meist 10 %) an den Kosten über der Franchise, bis zu einem jährlichen Höchstbetrag.',
   },
   settingsDrawer: {
     accountTitle: 'Konto & Daten',
