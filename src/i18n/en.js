@@ -46,6 +46,7 @@ export default {
         alimente: { titel: 'Advance on alimony & collection help', text: 'If maintenance payments don’t arrive, the commune can advance them and help collect — so the child doesn’t go without.' },
         ipv: { titel: 'Premium reduction (IPV)', text: 'Single-parent households often qualify for help with health-insurance premiums — for the parent and the children.' },
         familienzulagen: { titel: 'Family allowances', text: 'Child and education allowances per child — claimable retroactively if missed. They follow the working parent.' },
+        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income — often unknown. Ask your municipality about childcare vouchers or subsidised places.' },
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'Social assistance recognises the higher needs of a single-parent household and can top up a tight income.' },
         steuern: { titel: 'Parent tariff & child deduction', text: 'Single parents are taxed at the lower parent tariff and can claim deductions for children and childcare.' },
       },
