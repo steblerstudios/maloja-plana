@@ -16,6 +16,7 @@ export default {
         familienpass: { titel: 'Familienpass Region Basel', text: 'Plus de 150 offres et réductions pour les familles ; FamilienpassPlus pour les petits budgets (30.–/an).' },
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Soins dentaires tenant compte de la situation financière (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Jusqu’à 50% de réduction sur les cours avec la CarteCulture.' },
+        zhAktionen: { titel: 'Billets gratuits & actions (Zurich)', text: 'Actions concrètes dans le canton de Zurich avec la CarteCulture — p. ex. bons pour livres et jeux, ordinateurs pour la participation numérique.' },
       },
     },
     moreInfo: 'En savoir plus',

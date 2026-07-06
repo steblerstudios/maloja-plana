@@ -16,6 +16,7 @@ export default {
         familienpass: { titel: 'Familienpass Region Basel', text: 'Über 150 Angebote und Vergünstigungen für Familien; FamilienpassPlus für kleine Budgets (30.–/Jahr).' },
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Zahnbehandlung, die die finanzielle Situation berücksichtigt (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Mit der KulturLegi bis 50% Rabatt auf Kurse.' },
+        zhAktionen: { titel: 'Freikarten & Aktionen Zürich', text: 'Konkrete Aktionen im Kanton Zürich mit der KulturLegi — z. B. Bücher- und Spiele-Gutscheine, Computer für die digitale Teilhabe.' },
       },
     },
     moreInfo: 'Mehr erfahren',
