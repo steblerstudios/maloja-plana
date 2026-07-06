@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
-import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 
@@ -60,10 +59,6 @@ export const DocumentTresor = ({
   const bereichAccent = (chKey) => {
     const b = getBereichForChapter(chKey);
     return b ? (isDarkMode ? b.dark : b.light) : null;
-  };
-  const bereichFruit = (chKey) => {
-    const b = getBereichForChapter(chKey);
-    return b ? b.fruit : null;
   };
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('expiry');
@@ -284,16 +279,14 @@ export const DocumentTresor = ({
       }, t('tresor.allChapters') + ' (' + displayDocs.length + ')'),
       chaptersWithDocs.map(c => {
         const accent = bereichAccent(c.key);
-        const fruit = bereichFruit(c.key);
         return React.createElement('button', {
           key: c.key, onClick: () => setActiveTab(c.key),
           'aria-label': c.title + ' (' + (chapterCounts[c.key] || 0) + ')',
           style: tabStyle(activeTab === c.key, accent),
         },
-          fruit
-            ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
-                React.createElement(FruchtSilhouette, { name: fruit, size: 14 }))
-            : React.createElement('span', null, c.icon),
+          // Bereichs-Icon (Chalet etc.) in der Ast-Farbe — Frucht nur am Baum.
+          React.createElement('span', { style: { color: accent || palette.mid, display: 'inline-flex' } },
+            React.createElement(Icon, { name: c.key, size: 14 })),
           React.createElement('span', null, chapterCounts[c.key] || 0),
         );
       }),
@@ -340,9 +333,8 @@ export const DocumentTresor = ({
               const chapter = chapterList.find(c => c.key === chKey);
               const docs = groupedByChapter[chKey];
               const accent = bereichAccent(chKey);
-              const fruit = bereichFruit(chKey);
               return React.createElement('div', { key: chKey },
-                // Register-Trennblatt — Frucht + Ast-Farbe wie am Lebensbaum
+                // Register-Trennblatt — Bereichs-Icon + Ast-Farbe (Frucht nur am Baum)
                 React.createElement('div', {
                   style: {
                     fontSize: text.xs, fontWeight: weight.semi, color: accent || palette.mid,
@@ -352,9 +344,9 @@ export const DocumentTresor = ({
                     display: 'flex', alignItems: 'center', gap: '6px',
                   },
                 },
-                  fruit
+                  accent
                     ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
-                        React.createElement(FruchtSilhouette, { name: fruit, size: 15 }))
+                        React.createElement(Icon, { name: chKey, size: 15 }))
                     : React.createElement('span', null, chapter?.icon || '□'),
                   chapter?.title || chKey,
                   React.createElement('span', {
