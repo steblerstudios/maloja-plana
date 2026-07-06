@@ -1713,6 +1713,7 @@ export default {
     behoerden: {
       taxSituation: 'Situazione fiscale',
       taxCanton: 'Cantone fiscale',
+      taxId: 'Numero fiscale',
       taxDeadline: 'Dichiarazione fiscale in scadenza',
       pendingReturns: 'Dichiarazioni in sospeso',
       legalSituation: 'Situazione giuridica',
