@@ -386,6 +386,7 @@ const AppInner = () => {
   });
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
@@ -721,6 +722,51 @@ const AppInner = () => {
     ),
   ].filter(Boolean);
 
+  // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
+  // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
+  const footerEl = React.createElement('footer', {
+    role: 'contentinfo',
+    style: {
+      fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px', opacity: 0.7,
+      display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center',
+      padding: '16px 20px', width: '100%', maxWidth: contentMax,
+      marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box',
+    }
+  },
+    React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('a', {
+      href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
+      style: { color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, t('beta.feedbackMail')),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('button', {
+      onClick: () => handleNavigate('legal'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, t('legal.footerLink')),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('button', {
+      onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, demoMode ? t('demo.leave') : t('demo.footerLink')),
+    !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('button', {
+        onClick: enterSandbox,
+        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      }, t('sandbox.footerLink'))
+    ),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('a', {
+      href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
+      target: '_blank', rel: 'noopener noreferrer', title: t('greenHostingFooter'),
+      style: { color: palette.sage, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
+    },
+      React.createElement(Icon, { name: 'leaf', size: 13 }),
+      React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
+    )
+  );
+
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
   React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
@@ -734,10 +780,21 @@ const AppInner = () => {
       activeView: view,
       chapters,
       completion: calculateCompletion(),
-      // Auf dem Handy wandern die Kopfzeilen-Bedienelemente hierher.
-      settingsControls: isMobile ? settingsControls : null,
+      // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
+      settingsControls: null,
       settingsLabel: t('nav.settings'),
       onStartTour: () => { setView('dashboard'); setTourOpen(true); },
+    }),
+    // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
+    React.createElement(MobileNav, {
+      palette, t,
+      mode: 'settings',
+      isOpen: settingsOpen,
+      onClose: () => setSettingsOpen(false),
+      onNavigate: handleNavigate,
+      settingsControls,
+      settingsLabel: t('nav.settings'),
+      onStartTour: () => { setSettingsOpen(false); setView('dashboard'); setTourOpen(true); },
     }),
     // Kleine Tour (Overlay) — nur auf dem Dashboard, wo ihre Ziele liegen.
     (tourOpen && view === 'dashboard') && React.createElement(React.Suspense, { fallback: null, key: 'tour' },
@@ -763,21 +820,35 @@ const AppInner = () => {
         'aloja Plana'
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Desktop: Bedienelemente in der Kopfzeile. Handy: ins ☰-Menü eingeklappt (s. MobileNav).
-        ...(isMobile ? [] : settingsControls),
-        React.createElement('button', {
-          key: 'menu',
-          'aria-label': t('nav.menu'),
-          onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-        },
-          // Hamburger icon as SVG
-          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-          )
-        )
+        // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
+        // Desktop: Bedienelemente inline + Hamburger (kein Boden-Anker).
+        isMobile
+          ? React.createElement('button', {
+              key: 'settings',
+              'aria-label': t('nav.settings'),
+              onClick: () => setSettingsOpen(true),
+              style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+            },
+              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+                React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
+                React.createElement('path', { d: 'M12 2.5 V5 M12 19 V21.5 M4.2 4.2 L6 6 M18 18 L19.8 19.8 M2.5 12 H5 M19 12 H21.5 M4.2 19.8 L6 18 M18 6 L19.8 4.2' })
+              )
+            )
+          : React.createElement(React.Fragment, { key: 'desktop-controls' },
+              ...settingsControls,
+              React.createElement('button', {
+                key: 'menu',
+                'aria-label': t('nav.menu'),
+                onClick: () => setMobileNavOpen(!mobileNavOpen),
+                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+              },
+                React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+                  React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
+                  React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
+                  React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
+                )
+              )
+            )
       )
     ),
     !demoMode && React.createElement('div', {
@@ -1059,84 +1130,13 @@ const AppInner = () => {
           onExport: () => startTransition(() => setView('export')),
         }),
       )),
-      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
+      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
+      isMobile && footerEl
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError }),
-    React.createElement('footer', {
-      role: 'contentinfo',
-      style: {
-        fontSize: text.xs,
-        color: palette.mid,
-        letterSpacing: '0.3px',
-        opacity: 0.7,
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: space.sm,
-        alignItems: 'center',
-        padding: '16px 20px',
-        width: '100%',
-        maxWidth: contentMax,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxSizing: 'border-box',
-      }
-    },
-      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('a', {
-        href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
-        style: {
-          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, t('beta.feedbackMail')),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('button', {
-        onClick: () => handleNavigate('legal'),
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, padding: 0,
-          fontFamily: 'inherit', letterSpacing: '0.3px',
-          textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, t('legal.footerLink')),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('button', {
-        onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, padding: 0,
-          fontFamily: 'inherit', letterSpacing: '0.3px',
-          textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, demoMode ? t('demo.leave') : t('demo.footerLink')),
-      !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
-        React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-        React.createElement('button', {
-          onClick: enterSandbox,
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: palette.mid, fontSize: text.xs, padding: 0,
-            fontFamily: 'inherit', letterSpacing: '0.3px',
-            textDecoration: 'underline', textUnderlineOffset: '2px',
-          }
-        }, t('sandbox.footerLink'))
-      ),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('a', {
-        href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
-        target: '_blank', rel: 'noopener noreferrer',
-        title: t('greenHostingFooter'),
-        style: {
-          color: palette.sage, fontSize: text.xs, fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'none',
-          display: 'inline-flex', alignItems: 'center', gap: '4px',
-        }
-      },
-        React.createElement(Icon, { name: 'leaf', size: 13 }),
-        React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
-      )
-    ),
+    // Web: Fusszeile pinned unter dem Inhalt.
+    !isMobile && footerEl,
     isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true) })
   ));
 };
