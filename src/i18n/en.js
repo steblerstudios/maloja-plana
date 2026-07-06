@@ -2708,6 +2708,7 @@ export default {
       dentist: 'Dental treatment is generally not part of basic insurance — costs are usually self-paid (except for certain conditions). Supplementary insurance may cover part of it.',
       gyn: 'Basic insurance: gynaecological cancer screening (Pap) usually every 3 years (after two normal annual check-ups). More often is possible — the extra visits are then self-paid. What is medically sensible is for your doctor to advise.',
       vaccinations: 'Vaccinations recommended by the FOPH are usually covered (after deductible/co-payment). Travel vaccinations usually are not.',
+      medication: 'Prescribed medication on the specialities list is covered — after deductible and co-payment. Renew the prescription in good time so there is no gap.',
     },
     coverageThisYear: {
       label: 'Covered by basic insurance? (optional)',
@@ -2731,6 +2732,7 @@ export default {
       ravAppointment: 'RAV appointment',
       integrationCourse: 'Integration course',
       vaccinations: 'Vaccination reminder',
+      medicationRefill: 'Refill medication / renew prescription',
       kkChange: 'Health insurance switch deadline (30 Nov)',
     },
     disclaimer: 'These reminders are informational only. Please contact the relevant authority or healthcare professional for official guidance.',

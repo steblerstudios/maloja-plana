@@ -3405,6 +3405,7 @@ export default {
       dentist: 'Tractaments dentals n’èn per regla betg part da l’assicuranza da basa — ils custs ston per ordinari vegnir purtads sez (cun excepziun da tschertas malsognas). In’assicuranza cumplementara po surpigliar ina part.',
       gyn: 'Assicuranza da basa: la prevenziun ginecologica dal chancer (Pap) vegn per regla pajada mintga 3 onns (suenter dus controls annuals senza disturbis). Pli savens è pussaivel — ils termins supplementars ston lura vegnir pajads sez. Tge ch’è raschunaivel dal puntg da vista medicinal sa decida cun il medi.',
       vaccinations: 'Vaccinaziuns recumandadas da l’UFSP èn per regla cuvridas (suenter franchisa/part da quota). Vaccinaziuns da viadi per regla betg.',
+      medication: 'Medicaments prescrits da la glista da spezialitads èn cuvrids — suenter la franchisa e la part da quota. Renovar la recepta a temp per evitar ina lacuna.',
     },
     coverageThisYear: {
       label: 'Cuvrì da l’assicuranza da basa? (opziunal)',
@@ -3428,6 +3429,7 @@ export default {
       ravAppointment: 'Termin RAV',
       integrationCourse: "Curs d'integraziun",
       vaccinations: 'Commemoraziun da vaccinaziun',
+      medicationRefill: 'Reordinar medicaments / renovar la recepta',
       kkChange: 'Termin per midar la cassa da malsauns (30 nov.)',
     },
     disclaimer: "Questas commemoraziuns servan mo a l'infurmaziun. Contactescha per plaschair l'autoritad cumpetenta u la persuna spezialisada per infurmaziuns uffizialas.",
