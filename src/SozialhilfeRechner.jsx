@@ -14,7 +14,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   // Vorbefüllen aus bereits erfassten Angaben (überschreibbar) — nicht zweimal eingeben.
   const [miete, setMiete] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
   const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
-  const [einkommen, setEinkommen] = useState(data?.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
+  // Sozialhilfe basiert auf dem NETTO-Einkommen: ist das Einkommen als Brutto hinterlegt,
+  // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
+  const nettoBruttoMismatch = data?.finanzen?.incomeType === 'brutto';
+  const [einkommen, setEinkommen] = useState((data?.finanzen?.monthlyIncome && !nettoBruttoMismatch) ? String(data.finanzen.monthlyIncome) : '');
   const [andereEinkuenfte, setAndereEinkuenfte] = useState('');
   const [vermoegen, setVermoegen] = useState('');
   const [erwerbstaetig, setErwerbstaetig] = useState(false);
@@ -61,9 +64,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
 
-  const field = (labelKey, value, setter, placeholder) =>
+  const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },
       React.createElement('div', { style: s.label }, t(labelKey)),
+      hint && React.createElement('div', { style: s.hint }, hint),
       React.createElement('input', {
         style: s.input, type: 'number', inputMode: 'decimal', value, placeholder,
         'aria-label': t(labelKey),
@@ -122,7 +126,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         field('sh.kvg', kvg, setKvg, '380'),
       ),
       React.createElement('div', { style: s.inputRow },
-        field('sh.einkommen', einkommen, setEinkommen, '0'),
+        field('sh.einkommen', einkommen, setEinkommen, '0', nettoBruttoMismatch ? t('sh.nettoBruttoHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0'),
         field('sh.vermoegen', vermoegen, setVermoegen, '0'),
       ),

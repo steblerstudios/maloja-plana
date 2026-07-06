@@ -17,7 +17,10 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
   const householdChildren = (data.basis?.household?.children || []).length;
 
   // Monatslohn aus den Finanzen vorbefüllen (überschreibbar) — nicht zweimal eingeben.
-  const [bruttolohn, setBruttolohn] = useState(data.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
+  // ALV-Taggeld basiert auf dem BRUTTO-Lohn: ist das Einkommen als Netto hinterlegt,
+  // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
+  const bruttoNettoMismatch = data.finanzen?.incomeType === 'netto';
+  const [bruttolohn, setBruttolohn] = useState((data.finanzen?.monthlyIncome && !bruttoNettoMismatch) ? String(data.finanzen.monthlyIncome) : '');
   const [hatKinder, setHatKinder] = useState(householdChildren > 0);
   const [beitragsmonate, setBeitragsmonate] = useState('');
   const [ivGrad40, setIvGrad40] = useState(false);
@@ -106,7 +109,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     // ── Eingaben ──
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.row },
-        numField(t('alv.bruttolohn'), bruttolohn, setBruttolohn, { placeholder: '6000', sublabel: t('alv.bruttolohnHint'), width: '180px' }),
+        numField(t('alv.bruttolohn'), bruttolohn, setBruttolohn, { placeholder: '6000', sublabel: bruttoNettoMismatch ? t('alv.bruttoNettoHint') : t('alv.bruttolohnHint'), width: '180px' }),
         numField(t('alv.beitragsmonate'), beitragsmonate, setBeitragsmonate, { placeholder: '12', sublabel: t('alv.beitragsmonateHint'), width: '120px', min: 0, max: 24 })
       ),
       React.createElement('div', { style: s.row },
