@@ -870,6 +870,7 @@ const AppInner = () => {
         view === 'schulden' && React.createElement(SchuldenManager, {
           palette, t,
           data: activeData,
+          onNavigate: handleNavigate,
           onSave: (schuldenData) => writeData(prev => ({ ...prev, ...schuldenData }))
         }),
         view === 'tax' && React.createElement(TaxCalculator, {

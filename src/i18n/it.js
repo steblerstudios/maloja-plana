@@ -2090,6 +2090,7 @@ export default {
     tier3Reason: 'Nell\'ordine scelto.',
     helpTitle: 'Non deve affrontarlo da solo/a',
     helpBody: 'Un servizio riconosciuto di consulenza sui debiti aiuta gratuitamente e in modo confidenziale — Consulenza debiti Svizzera e Caritas hanno uno sportello in ogni cantone.',
+    situationLink: 'Vedi la situazione «indebitato o in esecuzione»',
   },
 
   lohnCheck: {

@@ -1701,6 +1701,7 @@ export default {
     tier3Reason: 'En la successiun tschernida.',
     helpTitle: 'Vus na stuais betg far quai sulet/a',
     helpBody: 'In post renconuschì da cussegliaziun da debits gida gratuitamain e confidenzialmain — la Cussegliaziun da debits Svizra e la Caritas han in post en mintga chantun.',
+    situationLink: 'Guardar la situaziun «indebità u en scussiun»',
   },
 
   organ: {

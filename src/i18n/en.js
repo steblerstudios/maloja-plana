@@ -2096,6 +2096,7 @@ export default {
     tier3Reason: 'In the chosen order.',
     helpTitle: 'You don\'t have to face this alone',
     helpBody: 'A recognised debt counselling service helps free of charge and confidentially — Debt Counselling Switzerland and Caritas have an office in every canton.',
+    situationLink: 'View the “in debt or in collection” situation',
   },
 
   cv: {

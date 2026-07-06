@@ -2095,6 +2095,7 @@ export default {
     tier3Reason: 'Nach der gewählten Reihenfolge.',
     helpTitle: { sie: 'Sie müssen da nicht allein durch', du: 'Du musst da nicht allein durch' },
     helpBody: 'Eine anerkannte Schuldenberatung hilft kostenlos und vertraulich weiter — die Schuldenberatung Schweiz und die Caritas haben in jedem Kanton eine Fachstelle.',
+    situationLink: 'Situation „Verschuldet oder in Betreibung" ansehen',
   },
 
   cv: {
