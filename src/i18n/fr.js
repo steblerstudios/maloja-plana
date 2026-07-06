@@ -939,6 +939,7 @@ export default {
     },
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans que vous le sachiez. Un aperçu tranquille — sans engagement ni jugement.',
+    anspruchMoeglich: 'Droit possible',
     tipsTitle: 'Conseils pour commencer :',
     tip1: 'Commencez par le chapitre « Données personnelles »',
     tip2: 'Importez vos documents importants',
