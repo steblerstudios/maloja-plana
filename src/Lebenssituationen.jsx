@@ -5,6 +5,7 @@ import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.j
 import { getFamilienEL } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // ─── Lebenssituationen (Subpage) ──────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -130,7 +131,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       },
         React.createElement('p', {
           style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.relaxed }
-        }, t('lebenszustaende.' + z.key + '.intro')),
+        }, React.createElement(GlossarText, { t, palette }, t('lebenszustaende.' + z.key + '.intro'))),
         z.berechtigungen
           .filter((b) => !b.nurMitKindern || hatKinder)
           // Familien-EL: nur zeigen, wenn der Wohnkanton sie tatsächlich anbietet

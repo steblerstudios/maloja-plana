@@ -2204,6 +2204,13 @@ export default {
     skos: 'SKOS — Conferenza svizra per l’agid social: fixescha las directivas per l’agid social.',
     el: 'PC — prestaziuns cumplementaras: cumpleteschan l’AVS u l’AI sche la renta na basta betg.',
     mietbeitraege: 'Contribuziuns da fittanza — contribuziuns chantunalas a la fittanza per chasadas cun bassa entrada.',
+    ahv: 'AVS — assicuranza per vegls e survivents: la renta da basa statala en la vegliadetgna u tar la mort d’in genitur.',
+    iv: 'AI — assicuranza d’invaliditad: protegia l’entrada sche malsauna u impediment limiteschan durablamain il lavur.',
+    kvg: 'LAMal — lescha davart l’assicuranza da malsauns: regla l’assicuranza da basa obligatorica per tuts en Svizra.',
+    bvg: 'LPP — prevenziun professiunala (cassa da pensiun): il segund pilaster che furma, cun l’AVS, la renta.',
+    uvg: 'LAA — assicuranza cunter accidents: cuvra ils custs d’accidents professiunals e betg professiunals.',
+    franchise: 'Franchisa — la part dals custs da sanadad pajada sez mintga onn avant che la cassa da malsauns paja.',
+    selbstbehalt: 'Quota da participaziun — la atgna part (per ordinari 10 %) dals custs sur la franchisa, fin in maximum annual.',
   },
   settingsDrawer: {
     accountTitle: 'Conto & datas',
