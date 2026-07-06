@@ -139,7 +139,9 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
               ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(result.annual) })
               : t('dashboard.quickCheckNoResult')
           ),
-          React.createElement('div', {
+          // Ergänzender Hinweis nur, wenn ein Kanton gesetzt ist — sonst steht
+          // derselbe Hinweis schon in der Hauptzeile (keine Doppelung).
+          canton && React.createElement('div', {
             style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.xs }
           }, t('dashboard.quickCheckHint'))
         )
