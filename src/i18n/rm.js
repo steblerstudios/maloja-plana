@@ -369,6 +369,7 @@ export default {
     step3Link: 'Guardar il move da chasa',
     step4Title: '4 · Vista enavant: l’autorisaziun C',
     step4Text: 'Suenter tschintg fin diesch onns da dimora ininterrutta pos ti, tenor naziunalitad, dumandar l’autorisaziun da domicil (C) — ella è illimitada e pli segira. Impurtants èn ils criteris d’integraziun sco lingua, lavur e nagina dependenza da l’agid social. Bun da savair: la reducziun da premias (RIP) è in sustegn normal, betg agid social — dumandar ella na quinta betg cunter tia permissiun. Na lascha betg ir daners che ta stattan a disposiziun per tema.',
+    step4LinkIpv: 'Verifitgar la reducziun da premias (RIP)',
     step4LinkSituation: 'Guardar la situaziun «nov arrivà»',
     relatedTitle: 'Eveniments parents',
     relatedKkErst: 'Cassa da malsauns per l’emprima giada',
