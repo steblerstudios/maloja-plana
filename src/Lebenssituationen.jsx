@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
+import { getFamilienEL } from './data/familienEL.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 
 // ─── Lebenssituationen (Subpage) ──────────────────────────
@@ -129,8 +130,16 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         React.createElement('p', {
           style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.relaxed }
         }, t('lebenszustaende.' + z.key + '.intro')),
-        z.berechtigungen.filter((b) => !b.nurMitKindern || hatKinder).map((b) => {
-          const isExternal = !!b.url;
+        z.berechtigungen
+          .filter((b) => !b.nurMitKindern || hatKinder)
+          // Familien-EL: nur zeigen, wenn der Wohnkanton sie tatsächlich anbietet
+          // (kein falsches Versprechen; Eintrag verschwindet in anderen Kantonen).
+          .filter((b) => !b.familienEL || getFamilienEL(userCanton).has)
+          .map((b) => {
+          // Familien-EL trägt keine statische URL — sie kommt kanton-abhängig dazu.
+          const felUrl = b.familienEL ? getFamilienEL(userCanton).url : null;
+          const cardUrl = b.url || felUrl;
+          const isExternal = !!cardUrl;
           const baseKey = 'lebenszustaende.' + z.key + '.berechtigungen.' + b.key;
           const cardStyle = {
             display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
@@ -159,7 +168,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
             }, t('lebenszustaende.quelleLabel') + ': ' + b.quelle + ' · ' + t('lebenszustaende.standLabel') + ' ' + b.stand)
           ];
           return isExternal
-            ? React.createElement('a', { key: b.key, href: b.url, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
+            ? React.createElement('a', { key: b.key, href: cardUrl, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
             : React.createElement('button', { key: b.key, type: 'button', onClick: () => onNavigate(b.view), style: cardStyle, ...hover }, inner);
         }),
         // Kanton-bewusste regionale Vergünstigungen (nur bei markierten Zuständen).

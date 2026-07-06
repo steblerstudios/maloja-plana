@@ -34,6 +34,9 @@ export const LEBENSZUSTAENDE = [
       // Nur mit Kindern relevant (nurMitKindern) → gegated in Lebenssituationen.jsx,
       // sonst Lärm für kinderlose Haushalte. Kita-Verbilligung, kommunal/kantonal.
       { key: 'betreuungsgutscheine', view: 'direktlinks', nurMitKindern: true, quelle: 'Gemeinde / Kanton', stand: '2026' },
+      // Familien-EL — nur in wenigen Kantonen (familienEL.js). Kanton- + kinder-gegated
+      // in Lebenssituationen.jsx; URL kommt kanton-abhängig dazu (kein statischer Link).
+      { key: 'familienEL', familienEL: true, nurMitKindern: true, quelle: 'Kanton', stand: '2026' },
       // Externe Vergünstigungen (national, der Schlüssel zu regionalen Angeboten) — Braindump #26.
       { key: 'kulturlegi',  url: 'https://www.kulturlegi.ch/',        quelle: 'Caritas',                   stand: '2026' },
       { key: 'rekaFerien',  url: 'https://www.reka-ferienhilfe.ch/',  quelle: 'Reka-Stiftung Ferienhilfe', stand: '2026' },
@@ -50,6 +53,7 @@ export const LEBENSZUSTAENDE = [
       // Fake-Präzision (variiert je Gemeinde) → würdevolle Orientierung „frag bei der
       // Gemeinde", verankert im offiziellen Direkt-Links-Hub (kein geratener Fremdlink).
       { key: 'betreuungsgutscheine', view: 'direktlinks', quelle: 'Gemeinde / Kanton', stand: '2026' },
+      { key: 'familienEL', familienEL: true, nurMitKindern: true, quelle: 'Kanton', stand: '2026' },
       { key: 'sozialhilfe',     view: 'sozialhilfe', quelle: 'SKOS',         stand: '2026' },
       { key: 'steuern',         view: 'tax',         quelle: 'ESTV',         stand: '2026' },
     ],
