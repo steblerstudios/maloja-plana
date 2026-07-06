@@ -49,6 +49,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'beeintraechtigung',
+    zeigeRegionaleAngebote: true, // häufig EL-beziehend / tiefes Einkommen → KulturLegi-berechtigt
     berechtigungen: [
       { key: 'iv',                    view: 'iv',              quelle: 'BSV / IV-Stelle', stand: '2026' },
       { key: 'hilflosenentschaedigung', view: 'iv',            quelle: 'BSV',             stand: '2026' },
@@ -82,6 +83,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'inAusbildung',
+    zeigeRegionaleAngebote: true, // Studierende/Lernende oft tiefes Einkommen → KulturLegi-berechtigt
     berechtigungen: [
       { key: 'stipendien',  view: 'stipendien', quelle: 'EDK / Kanton',            stand: '2026' },
       { key: 'ipv',         view: 'premium',    quelle: 'BAG / Kanton',            stand: '2026' },
@@ -102,6 +104,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'rentnerin',
+    zeigeRegionaleAngebote: true, // Rentner:innen mit EL = tiefes Einkommen → KulturLegi-berechtigt
     berechtigungen: [
       // Rückweg zum Übergangs-Ablauf (für „kurz davor": AHV anmelden, PK Rente/Kapital,
       // 3. Säule gestaffelt) — Gegenstück zu pensionierung→situationen.
