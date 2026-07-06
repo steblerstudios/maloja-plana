@@ -5,6 +5,28 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.13-beta] — 2026-07-06
+
+### Neu
+- **Lebensbaum trägt Früchte**: pro Lebensbereich eine Schweizer-Frucht-Silhouette am passenden Ast, mit eigener Ast-Farbe — barrierefrei über Silhouette, Helligkeit und Wort unterscheidbar (nicht nur Farbe)
+- **Bereichs-Früchte mit echtem Icon-Negativ**: das Bereichs-Symbol steht als ausgespartes Negativ auf einer soliden Frucht-Scheibe (SVG-Maske statt aufgesetztem Icon); Cluster-Früchte bündeln mehrere Bereiche
+- **Arztkoffer** — ein ruhiges Zuhause für alles Gesundheitliche (Pilot-Metapher, 7 Fächer)
+- **Bundesordner-Register** im Dokument-Tresor: Reiter je Bereich mit Ast-Frucht und Ast-Farbe
+- **Glossar-Tooltip für Abkürzungen** (Jana-Verständlichkeit): Fachbegriffe/Abkürzungen mit Aufklapp-Pfeil erklärt, ohne den Lesefluss zu brechen
+
+### Geändert
+- **Boden-Anker fix am unteren Rand** mit Safe-Area-Berücksichtigung (iPhone-Notch/Home-Indikator); Früchte erscheinen nur noch im Baum, nicht im Anker
+- **Mobile-Kopf aufgeräumt**: Einstellungen/Konto oben rechts, Footer wird zur mitscrollenden Inhalts-Fusszeile
+- **Echtes Zahnrad-Symbol** für Einstellungen; „Rundgang"-Eintrag entdoppelt
+
+### Behoben
+- Boden-Anker-Labels in EN/FR/IT/RM ergänzt (waren nur auf Deutsch)
+
+### Quellen
+- Fortführung Design-Schritte 2 (Navigations-Rückgrat) und 3 (Pilot-Metapher Dokumente)
+
+---
+
 ## [0.1.12-beta] — 2026-07-06
 
 ### Neu
