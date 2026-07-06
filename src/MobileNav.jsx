@@ -5,7 +5,7 @@ import { text, weight, space, shadow, ease, duration } from './config/tokens.js'
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
-export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel }) => {
+export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
@@ -100,6 +100,22 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         React.createElement('div', {
           style: { display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' }
         }, settingsControls)
+      ) : null,
+
+      // Rundgang erneut starten — ruhiger Einstieg, jederzeit wieder aufrufbar
+      onStartTour ? React.createElement('button', {
+        key: 'restart-tour',
+        type: 'button',
+        onClick: () => { onClose(); onStartTour(); },
+        style: {
+          display: 'flex', alignItems: 'center', gap: space.sm, width: '100%',
+          textAlign: 'left', padding: '12px 20px', background: 'transparent',
+          border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer',
+          color: palette.mid, fontSize: text.sm, fontFamily: "inherit",
+        }
+      },
+        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage } }, '🧭'),
+        t('tour.reopen')
       ) : null,
 
       // Search

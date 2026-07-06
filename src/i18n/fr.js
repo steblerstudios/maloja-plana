@@ -2704,6 +2704,16 @@ export default {
     },
   },
 
+  tour: {
+    a11yLabel: 'Visite guidée de Maloja',
+    reopen: 'Relancer la visite',
+    next: 'Suivant', back: 'Retour', skip: 'Passer', later: 'Plus tard', done: 'Terminé',
+    welcome: { title: 'Bienvenue sur Maloja', text: { sie: 'Votre lieu calme pour tout ce qui est suisse — papiers, budget, assurances, délais. Une courte visite, que vous pouvez passer à tout moment.', du: 'Ton lieu calme pour tout ce qui est suisse — papiers, budget, assurances, délais. Une courte visite, que tu peux passer à tout moment.' } },
+    berge: { title: 'La progression', text: { sie: 'Les montagnes montrent calmement où en est votre classeur de vie — sans pression, sans course aux pourcentages.', du: 'Les montagnes montrent calmement où en est ton classeur de vie — sans pression, sans course aux pourcentages.' } },
+    anspruch: { title: 'Vos droits possibles', text: { sie: 'Ici, Maloja révèle ce à quoi vous pourriez avoir droit — selon ce que vous avez choisi au début.', du: 'Ici, Maloja révèle ce à quoi tu pourrais avoir droit — selon ce que tu as choisi au début.' } },
+    privacy: { title: 'Tout reste sur l\'appareil', text: { sie: 'Vos données restent sur cet appareil. Pas de compte, pas de cloud, pas de suivi. C\'est parti.', du: 'Tes données restent sur cet appareil. Pas de compte, pas de cloud, pas de suivi. C\'est parti.' } },
+  },
+
   onboarding: {
     chooseLanguage: 'Choisissez votre langue',
     welcomeTitle: 'Quelques détails rapides',
