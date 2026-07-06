@@ -3,6 +3,7 @@ import { text, weight, leading, space, radius, ease, duration } from './config/t
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
 import { getFamilienEL } from './data/familienEL.js';
+import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 
 // ─── Lebenssituationen (Subpage) ──────────────────────────
@@ -135,10 +136,13 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
           // Familien-EL: nur zeigen, wenn der Wohnkanton sie tatsächlich anbietet
           // (kein falsches Versprechen; Eintrag verschwindet in anderen Kantonen).
           .filter((b) => !b.familienEL || getFamilienEL(userCanton).has)
+          // Mutterschaftsbeihilfe: gleiches kanton-bewusste Muster.
+          .filter((b) => !b.mutterschaftsbeihilfe || getMutterschaftsbeihilfe(userCanton).has)
           .map((b) => {
-          // Familien-EL trägt keine statische URL — sie kommt kanton-abhängig dazu.
+          // Familien-EL / Mutterschaftsbeihilfe tragen keine statische URL — sie kommt kanton-abhängig dazu.
           const felUrl = b.familienEL ? getFamilienEL(userCanton).url : null;
-          const cardUrl = b.url || felUrl;
+          const msbUrl = b.mutterschaftsbeihilfe ? getMutterschaftsbeihilfe(userCanton).url : null;
+          const cardUrl = b.url || felUrl || msbUrl;
           const isExternal = !!cardUrl;
           const baseKey = 'lebenszustaende.' + z.key + '.berechtigungen.' + b.key;
           const cardStyle = {
