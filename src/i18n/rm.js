@@ -17,6 +17,7 @@ export default {
         familienpass: { titel: 'Familienpass Region Basel', text: 'Passa 150 purschidas e reducziuns per famiglias; FamilienpassPlus per pitschens budgets (30.–/onn).' },
         volkszahnklinik: { titel: 'Volkszahnklinik', text: 'Tractament dals dents che resguarda la situaziun finanziala (Soziales Basel / UZB).' },
         vhsbb: { titel: 'Volkshochschule beider Basel', text: 'Cun la KulturLegi fin 50% sconti sin curs.' },
+        zhAktionen: { titel: 'Bigliets gratuits & acziuns (Turitg)', text: 'Acziuns concretas en il chantun Turitg cun la KulturLegi — p.ex. buns per cudeschs e gieus, computers per la participaziun digitala.' },
       },
     },
     moreInfo: 'Vinavant',

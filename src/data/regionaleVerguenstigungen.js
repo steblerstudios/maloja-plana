@@ -54,7 +54,13 @@ const KULTURLEGI_REGIONS = {
 // Kuratierte Zusatz-Angebote je Kanton (über die KulturLegi hinaus). offers[].key →
 // i18n unter lebenszustaende.regio.offers.<key>. Nur wo solide web-verifiziert.
 // Basel-Stadt & Basel-Landschaft: Familienpass Region Basel, Volkshochschule beider Basel.
+// Zürich: die „Freikarten & Aktionen"-Sammelseite (konkrete Gutschein-Aktionen).
 const REGIONS = {
+  ZH: {
+    offers: [
+      { key: 'zhAktionen', url: 'https://www.kulturlegi.ch/zuerich/angebote/freikarten-und-aktionen' },
+    ],
+  },
   BS: {
     offers: [
       { key: 'familienpass',    url: 'https://www.familienpass.ch/' },
