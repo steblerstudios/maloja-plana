@@ -856,6 +856,13 @@ export default {
     skos: 'COSAS — Conferenza svizzera dell’azione sociale: definisce le norme dell’aiuto sociale.',
     el: 'PC — prestazioni complementari: integrano AVS o AI quando la rendita non basta.',
     mietbeitraege: 'Contributi d’affitto — contributi cantonali all’affitto per famiglie a basso reddito.',
+    ahv: 'AVS — assicurazione vecchiaia e superstiti: la rendita di base statale in età avanzata o alla morte di un genitore.',
+    iv: 'AI — assicurazione invalidità: protegge il reddito quando malattia o disabilità limitano durevolmente il lavoro.',
+    kvg: 'LAMal — legge sull’assicurazione malattie: regola l’assicurazione di base obbligatoria per tutti in Svizzera.',
+    bvg: 'LPP — previdenza professionale (cassa pensioni): il secondo pilastro che, con l’AVS, forma la rendita.',
+    uvg: 'LAINF — assicurazione infortuni: copre i costi degli infortuni professionali e non professionali.',
+    franchise: 'Franchigia — la parte dei costi sanitari pagata da sé ogni anno prima che paghi la cassa malati.',
+    selbstbehalt: 'Aliquota percentuale — la propria quota (di solito 10 %) sui costi oltre la franchigia, fino a un tetto annuo.',
   },
   settingsDrawer: {
     accountTitle: 'Account e dati',

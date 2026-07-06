@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Wiederverwendbare Ablauf-Schale: die ruhigen, gemeinsamen Bausteine eines geführten
 // Ablaufs (Titel, Schritte, Crosslinks, Frist-in-Kalender, Fuss-Hinweise). Erster Nutzer
@@ -28,7 +29,8 @@ export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
   return React.createElement('div', { style: s.wrap },
     React.createElement('h2', { style: s.h2 },
       React.createElement(Icon, { name: icon || 'insurance', size: 20 }), title),
-    intro ? React.createElement('p', { style: s.intro }, intro) : null,
+    intro ? React.createElement('p', { style: s.intro },
+      React.createElement(GlossarText, { palette }, intro)) : null,
     children
   );
 };

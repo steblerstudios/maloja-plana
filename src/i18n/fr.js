@@ -856,6 +856,13 @@ export default {
     skos: 'CSIAS — Conférence suisse des institutions d’action sociale : fixe les normes de l’aide sociale.',
     el: 'PC — prestations complémentaires : complètent l’AVS ou l’AI quand la rente ne suffit pas.',
     mietbeitraege: 'Aides au loyer — contributions cantonales au loyer pour les ménages à faible revenu.',
+    ahv: 'AVS — assurance-vieillesse et survivants : la rente de base de l’État à la retraite ou au décès d’un parent.',
+    iv: 'AI — assurance-invalidité : protège le revenu quand une maladie ou un handicap limite durablement le travail.',
+    kvg: 'LAMal — loi sur l’assurance-maladie : régit l’assurance de base obligatoire pour tous en Suisse.',
+    bvg: 'LPP — prévoyance professionnelle (caisse de pension) : le deuxième pilier qui, avec l’AVS, forme la rente.',
+    uvg: 'LAA — assurance-accidents : couvre les frais des accidents professionnels et non professionnels.',
+    franchise: 'Franchise — la part des frais de santé payée soi-même chaque année avant que la caisse ne paie.',
+    selbstbehalt: 'Quote-part — votre part (souvent 10 %) des frais au-dessus de la franchise, jusqu’à un plafond annuel.',
   },
   settingsDrawer: {
     accountTitle: 'Compte et données',
