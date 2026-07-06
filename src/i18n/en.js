@@ -1436,6 +1436,7 @@ export default {
     hint: 'Hint',
     trustDocuments: 'Your documents stay on this device.',
     nextTopic: 'Next topic',
+    sectionNav: 'Topics in this chapter',
     showMore: 'Show more sections',
     showLess: 'Show less',
     hasHiddenData: 'Some hidden sections already contain data.',
