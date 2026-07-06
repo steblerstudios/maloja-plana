@@ -2632,6 +2632,7 @@ export default {
       dentist: 'Zahnbehandlungen sind in der Regel nicht in der Grundversicherung — die Kosten meist selbst zu tragen (ausser bei bestimmten Erkrankungen). Eine Zusatzversicherung kann einen Teil übernehmen.',
       gyn: 'Grundversicherung: gynäkologische Krebsvorsorge (Pap) i.d.R. alle 3 Jahre (nach zwei unauffälligen jährlichen Kontrollen). Häufiger ist möglich — die zusätzlichen Termine sind dann selbst zu zahlen. Was medizinisch sinnvoll ist, klärt die Ärztin/der Arzt.',
       vaccinations: 'Vom BAG empfohlene Impfungen sind meist gedeckt (nach Franchise/Selbstbehalt). Reiseimpfungen in der Regel nicht.',
+      medication: 'Ärztlich verschriebene Medikamente von der Spezialitätenliste sind gedeckt — nach Franchise und Selbstbehalt. Rezept rechtzeitig erneuern, damit keine Lücke entsteht.',
     },
     coverageThisYear: {
       label: 'Von der Grundversicherung gedeckt? (optional)',
@@ -2655,6 +2656,7 @@ export default {
       ravAppointment: 'RAV-Termin',
       integrationCourse: 'Integrationskurs',
       vaccinations: 'Impf-Erinnerung',
+      medicationRefill: 'Medikamente nachbestellen / Rezept erneuern',
       kkChange: 'Krankenkasse wechseln Frist (30. Nov.)',
     },
     disclaimer: { sie: 'Diese Erinnerungen dienen nur zur Information. Bitte kontaktieren Sie die zuständige Behörde oder Fachperson für offizielle Auskünfte.', du: 'Diese Erinnerungen dienen nur zur Information. Bitte kontaktiere die zuständige Behörde oder Fachperson für offizielle Auskünfte.' },
