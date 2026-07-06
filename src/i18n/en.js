@@ -34,6 +34,7 @@ export default {
         sozialhilfe: { titel: 'Supplementary social assistance', text: 'If income doesn’t cover the basics, social assistance can top it up. It is a right, not charity.' },
         stipendien: { titel: 'Education grants', text: 'Grants exist for training and studies on a low income — repayable or not.' },
         franchise: { titel: 'Check your deductible', text: 'With few doctor visits, a higher deductible lowers the monthly premium — worth reviewing each autumn.' },
+        betreuungsgutscheine: { titel: 'Childcare subsidies (daycare)', text: 'Many municipalities and cantons reduce the cost of external childcare based on income — often unknown. Ask your municipality about childcare vouchers or subsidised places.' },
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: 'The card for tight budgets: at least 30% off thousands of offers in culture, sport, education (e.g. courses) and health (e.g. dental care). Offers vary by region — your cantonal KulturLegi shows what applies where you live.' },
         rekaFerien: { titel: 'Reka holidays for CHF 200', text: 'With the KulturLegi, the Reka Foundation lets families and single people affected by poverty take a week’s holiday for around 200 francs — accommodation and public-transport travel included.' },
       },
