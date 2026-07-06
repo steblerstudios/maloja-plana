@@ -49,6 +49,7 @@ const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
+const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
@@ -923,6 +924,7 @@ const AppInner = () => {
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
