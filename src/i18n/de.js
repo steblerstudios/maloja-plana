@@ -2695,6 +2695,8 @@ export default {
     yourCanton: { sie: 'Ihr Kanton', du: 'Dein Kanton' },
     privacyNote: { sie: 'Ihre Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.', du: 'Deine Angaben bleiben auf diesem Gerät. Kein Konto. Keine Cloud.' },
     skipForNow: 'Vorerst überspringen',
+    needsTitle: { sie: 'Was trifft gerade auf Sie zu?', du: 'Was trifft gerade auf dich zu?' },
+    needsSubtitle: { sie: 'Wählen Sie, was passt — so zeigt Ihnen Maloja gleich, was Ihnen zusteht. Sie können das jederzeit ändern.', du: 'Wähl aus, was passt — so zeigt dir Maloja gleich, was dir zusteht. Du kannst das jederzeit ändern.' },
     readyTitle: 'Bereit, {name}!',
     readyTitleGeneric: 'Alles ist bereit!',
     readyMessage: { sie: 'Ihr persönlicher Schweizer Lebensordner ist eingerichtet.', du: 'Dein persönlicher Schweizer Lebensordner ist eingerichtet.' },
