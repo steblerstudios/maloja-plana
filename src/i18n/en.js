@@ -939,6 +939,7 @@ export default {
     },
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
+    anspruchMoeglich: 'May be eligible',
     tipsTitle: 'Tips for getting started:',
     tip1: 'Start with the chapter "Personal basics"',
     tip2: 'Upload your important documents',
