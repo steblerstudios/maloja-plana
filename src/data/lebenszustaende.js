@@ -43,6 +43,10 @@ export const LEBENSZUSTAENDE = [
       { key: 'alimente',        view: 'trennung',    quelle: 'Kanton / BSV', stand: '2026' },
       { key: 'ipv',             view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
       { key: 'familienzulagen', view: 'kind',        quelle: 'BSV',          stand: '2026' },
+      // Kita-/Tagesbetreuungs-Verbilligung — kommunal/kantonal, oft unbekannt. Keine
+      // Fake-Präzision (variiert je Gemeinde) → würdevolle Orientierung „frag bei der
+      // Gemeinde", verankert im offiziellen Direkt-Links-Hub (kein geratener Fremdlink).
+      { key: 'betreuungsgutscheine', view: 'direktlinks', quelle: 'Gemeinde / Kanton', stand: '2026' },
       { key: 'sozialhilfe',     view: 'sozialhilfe', quelle: 'SKOS',         stand: '2026' },
       { key: 'steuern',         view: 'tax',         quelle: 'ESTV',         stand: '2026' },
     ],
