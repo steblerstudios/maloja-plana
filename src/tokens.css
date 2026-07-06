@@ -187,6 +187,19 @@ h1, h2, h3 {
   font-family: 'Hanken Grotesk', 'Lexend', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* ─── Ruhiger Zeilenumbruch ──────────────────────────────────
+   Überschriften: `balance` verteilt die Zeichen gleichmässig, damit
+   keine einzelnen Wörter als Zackenrand hängen (nur kurze Blöcke).
+   Fliesstext: `pretty` verhindert Hurenkinder (einzelnes Wort in der
+   letzten Zeile) und ruhigt das Schriftbild ohne Zeilenlimit.
+   Beide degradieren still — ältere Browser ignorieren sie einfach. */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
 /* ─── Lesbarkeits-Modus — Atkinson Hyperlegible ──────────────
    Optionaler Umschalter (max. Buchstaben-Eindeutigkeit) für
    Legasthenie / Lesen in einer Fremdsprache. Überschreibt
