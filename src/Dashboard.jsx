@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -352,14 +351,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
           onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
         },
           (() => {
-            const bereich = getBereichForChapter(ch.key);
-            // Die Frucht reift mit dem Ausfüllstand (Deckkraft), Farbe = Ast-Farbe.
-            const ripeness = 0.5 + (pct / 100) * 0.5;
-            if (bereich) {
-              return React.createElement('span', {
-                style: { width: '22px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: accent, opacity: ripeness },
-              }, React.createElement(FruchtSilhouette, { name: bereich.fruit, size: 18 }));
-            }
+            // Icon (Chalet etc.) in der Ast-Farbe des Bereichs — Frucht nur am Baum.
             const IconFn = Icons[ch.key];
             return React.createElement('span', {
               style: { width: '22px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: pct === 100 ? palette.sage : accent }
