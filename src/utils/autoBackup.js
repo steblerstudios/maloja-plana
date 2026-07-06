@@ -119,6 +119,8 @@ export async function createBackup() {
   try {
     const data = localStorage.getItem('or5_data');
     const reminders = localStorage.getItem('or5_reminders');
+    const contacts = localStorage.getItem('or5_contacts');
+    const merkliste = localStorage.getItem('or5_merkliste');
 
     // Don't backup empty data
     if (!data || data === '{}') {
@@ -133,7 +135,9 @@ export async function createBackup() {
       data,       // raw JSON string — avoids double-serialization
       docs,       // raw JSON string
       reminders,  // raw JSON string
-      sizeBytes: (data?.length || 0) + (docs?.length || 0) + (reminders?.length || 0),
+      contacts,   // raw JSON string (Notfall-Kontakte)
+      merkliste,  // raw JSON string (Merkliste / To-Dos)
+      sizeBytes: (data?.length || 0) + (docs?.length || 0) + (reminders?.length || 0) + (contacts?.length || 0) + (merkliste?.length || 0),
     };
 
     const db = await openBackupDB();
@@ -290,6 +294,8 @@ export async function createManualBackup() {
   try {
     const data = localStorage.getItem('or5_data');
     const reminders = localStorage.getItem('or5_reminders');
+    const contacts = localStorage.getItem('or5_contacts');
+    const merkliste = localStorage.getItem('or5_merkliste');
 
     if (!data || data === '{}') {
       return { success: false, id: null, error: 'empty_data' };
@@ -303,7 +309,9 @@ export async function createManualBackup() {
       data,
       docs,
       reminders,
-      sizeBytes: (data?.length || 0) + (docs?.length || 0) + (reminders?.length || 0),
+      contacts,
+      merkliste,
+      sizeBytes: (data?.length || 0) + (docs?.length || 0) + (reminders?.length || 0) + (contacts?.length || 0) + (merkliste?.length || 0),
       manual: true,
     };
 
@@ -373,6 +381,10 @@ export async function restoreBackup(backupId) {
       }
     }
     if (snapshot.reminders) localStorage.setItem('or5_reminders', snapshot.reminders);
+    // Rückwärtskompatibel: ältere Snapshots ohne diese Felder lassen die
+    // aktuellen Werte unangetastet (kein Überschreiben mit leer).
+    if (snapshot.contacts) localStorage.setItem('or5_contacts', snapshot.contacts);
+    if (snapshot.merkliste) localStorage.setItem('or5_merkliste', snapshot.merkliste);
 
     console.info('[backup] Restored:', backupId);
     return { success: true, error: null };
