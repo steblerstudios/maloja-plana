@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { text, weight, radius, shadow } from './config/tokens.js';
+import { useT } from './i18n/index.js';
 
 // ─── Glossar-Begriff — antippbare Erklärung für Abkürzungen/Fachwörter ───────
 //
@@ -13,6 +14,13 @@ export const GLOSSAR = {
   SKOS: 'glossar.skos',
   EL: 'glossar.el',
   Mietbeiträge: 'glossar.mietbeitraege',
+  AHV: 'glossar.ahv',
+  IV: 'glossar.iv',
+  KVG: 'glossar.kvg',
+  BVG: 'glossar.bvg',
+  UVG: 'glossar.uvg',
+  Franchise: 'glossar.franchise',
+  Selbstbehalt: 'glossar.selbstbehalt',
 };
 
 export function GlossarBegriff({ term, t, palette }) {
@@ -22,13 +30,26 @@ export function GlossarBegriff({ term, t, palette }) {
   return React.createElement('span', { style: { position: 'relative', display: 'inline-block' } },
     React.createElement('button', {
       type: 'button',
-      onClick: () => setOpen((o) => !o),
+      // stopPropagation: eine Erklärung soll nie eine umgebende Aktion auslösen.
+      onClick: (e) => { e.stopPropagation(); setOpen((o) => !o); },
       'aria-expanded': open,
+      title: t(defKey),
       style: {
-        background: 'none', border: 'none', padding: 0, cursor: 'help', font: 'inherit', color: 'inherit',
-        borderBottom: '1px dotted ' + palette.mid, lineHeight: 'inherit',
+        background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit', color: 'inherit',
+        borderBottom: open ? '1px solid var(--mp-accent)' : '1px dotted ' + palette.mid,
+        lineHeight: 'inherit', whiteSpace: 'nowrap',
       },
-    }, term),
+    },
+      term,
+      // Kleiner, ruhiger Marker: signalisiert „hier steckt eine Erklärung".
+      React.createElement('sup', {
+        'aria-hidden': 'true',
+        style: {
+          fontSize: '0.7em', marginLeft: '2px', fontWeight: weight.semi,
+          color: open ? 'var(--mp-accent)' : palette.mid,
+        },
+      }, 'ⓘ'),
+    ),
     open ? React.createElement(React.Fragment, null,
       // Klick daneben schliesst.
       React.createElement('span', {
@@ -53,6 +74,10 @@ export function GlossarBegriff({ term, t, palette }) {
 
 // Zerlegt einen Satz und macht bekannte Begriffe antippbar. Reihenfolge egal.
 export function GlossarText({ children, t, palette }) {
+  // t kann als Prop kommen oder aus dem i18n-Kontext — so genügt an vielen
+  // Stellen ein einzelnes { palette } ohne t durchzureichen.
+  const { t: ctxT } = useT();
+  const tt = t || ctxT;
   if (typeof children !== 'string') return children;
   const terms = Object.keys(GLOSSAR).sort((a, b) => b.length - a.length);
   const re = new RegExp('\\b(' + terms.map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b');
@@ -60,7 +85,7 @@ export function GlossarText({ children, t, palette }) {
   return React.createElement(React.Fragment, null,
     ...parts.map((part, i) =>
       GLOSSAR[part]
-        ? React.createElement(GlossarBegriff, { key: i, term: part, t, palette })
+        ? React.createElement(GlossarBegriff, { key: i, term: part, t: tt, palette })
         : part
     )
   );

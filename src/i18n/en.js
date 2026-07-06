@@ -856,6 +856,13 @@ export default {
     skos: 'SKOS — Swiss Conference for Social Assistance: sets the guidelines for how much social assistance you are entitled to.',
     el: 'EL — supplementary benefits: a top-up to AHV or IV pensions when they do not cover living costs.',
     mietbeitraege: 'Rent subsidies — cantonal contributions toward housing rent for low-income households.',
+    ahv: 'AHV — old-age and survivors’ insurance: the state basic pension in old age or when a parent dies.',
+    iv: 'IV — disability insurance: protects income when illness or disability permanently limits the ability to work.',
+    kvg: 'KVG — Health Insurance Act: governs the compulsory basic insurance everyone in Switzerland must have.',
+    bvg: 'BVG — occupational pension (pension fund): the second pillar that, together with AHV, forms the retirement pension.',
+    uvg: 'UVG — accident insurance: covers the costs of occupational and non-occupational accidents.',
+    franchise: 'Deductible (Franchise) — the share of health costs paid yourself each year before the health insurer pays.',
+    selbstbehalt: 'Retention (Selbstbehalt) — your share (usually 10%) of costs above the deductible, up to an annual maximum.',
   },
   settingsDrawer: {
     accountTitle: 'Account & data',
