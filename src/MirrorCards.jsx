@@ -630,6 +630,7 @@ function buildFinanzenSections(data, allData, t) {
   // Section: Einkommen
   const incomeRows = [];
   if (data.monthlyIncome) incomeRows.push({ label: t('mirror.finanzen.income'), value: formatCHF(data.monthlyIncome) + '/Mt.' });
+  if (data.incomeType) incomeRows.push({ label: fieldLabel(t, 'finanzen', 'incomeType'), value: selectLabel(t, 'finanzen', 'incomeType', data.incomeType) });
   if (data.employer) incomeRows.push({ label: t('mirror.finanzen.employer'), value: data.employer });
   if (data.employmentType) incomeRows.push({ label: t('mirror.finanzen.employment'), value: employmentLabel(data.employmentType, t) });
 
