@@ -269,7 +269,9 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
       style: {
         display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border + '88',
         background: palette.surface + 'F2', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-        position: 'relative', zIndex: 41,
+        // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
+        position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
+        paddingBottom: 'env(safe-area-inset-bottom)',
       },
     },
       slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'home', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
@@ -720,7 +722,7 @@ const AppInner = () => {
   ].filter(Boolean);
 
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     React.createElement(MobileNav, {
