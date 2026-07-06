@@ -19,6 +19,8 @@ export default {
         sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'Si le revenu ne couvre pas l’essentiel, l’aide sociale peut compléter. C’est un droit, pas une charité.' },
         stipendien: { titel: 'Bourses d’études', text: 'Des bourses existent pour la formation et les études à faible revenu — remboursables ou non.' },
         franchise: { titel: 'Vérifier la franchise', text: 'Avec peu de visites médicales, une franchise plus élevée réduit la prime mensuelle — à revoir chaque automne.' },
+        kulturlegi: { titel: 'CarteCulture (Caritas)', text: 'La carte pour les petits budgets : au moins 30% de réduction sur des milliers d’offres en culture, sport, formation (p. ex. cours) et santé (p. ex. soins dentaires). L’offre varie selon la région — votre CarteCulture cantonale montre ce qui s’applique chez vous.' },
+        rekaFerien: { titel: 'Vacances Reka pour 200.–', text: 'Avec la CarteCulture, la Fondation Reka permet aux familles et personnes seules touchées par la pauvreté une semaine de vacances pour environ 200 francs — logement et trajet en transports publics compris.' },
       },
     },
     alleinerziehend: {
