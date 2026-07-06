@@ -50,6 +50,11 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
     return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
+      // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
+      React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
+        React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText'))
+      ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
         'ⓘ ' + t('premium.enterCanton')
       )
@@ -59,6 +64,13 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('premium.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
+
+    // Anspruch & Aufenthaltsbewilligung — ruhige Orientierung für Neuzuzüger:innen, kein Verdikt
+    // (Quellen: SVA Zürich „Wer hat Anspruch", Kanton Basel-Stadt Prämienverbilligung).
+    React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
+      React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText'))
+    ),
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
