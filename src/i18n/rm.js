@@ -20,6 +20,8 @@ export default {
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'Sch’il retgav na cuvra betg il necessari, po l’agid social cumplettar. Quai è in dretg, betg ina almosna.' },
         stipendien: { titel: 'Stipendis', text: 'Per la furmaziun ed ils studis cun in bass retgav existan stipendis — restituibels u betg.' },
         franchise: { titel: 'Controllar la franchisa', text: 'Cun paucas visitas dal medi reducescha ina franchisa pli auta la premia mensila — da repetir mintga atun.' },
+        kulturlegi: { titel: 'KulturLegi (Caritas)', text: 'La legitimaziun per pitschens budgets: almain 30% sconti sin millis purschidas en cultura, sport, furmaziun (p.ex. curs) e sanadad (p.ex. tractament dals dents). La purschida variescha tenor regiun — tia KulturLegi chantunala mussa tge che vala tar tai.' },
+        rekaFerien: { titel: 'Vacanzas Reka per 200.–', text: 'Cun la KulturLegi pussibilitescha la Fundaziun Reka a famiglias e persunas sulettas pertutgadas da la povradad ina emna da vacanzas per circa 200 francs — abitaziun e viadi cun il traffic public inclus.' },
       },
     },
     alleinerziehend: {
