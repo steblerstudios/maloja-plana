@@ -93,6 +93,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'asylsuchend',
+    zeigeRegionaleAngebote: true, // Asylunterstützung = am Existenzminimum → KulturLegi-berechtigt
     berechtigungen: [
       { key: 'asyl',   view: 'asyl',    quelle: 'SEM',          stand: '2026' },
       { key: 'kkErst', view: 'kkerst',  quelle: 'BAG / KVG',    stand: '2026' },
@@ -115,6 +116,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'erwerbslos',
+    zeigeRegionaleAngebote: true, // ohne Arbeit / nach Aussteuerung oft am Existenzminimum → KulturLegi-berechtigt
     berechtigungen: [
       // Rückweg zum Ablauf mit der zeitkritischen RAV-Anmeldefrist (Frist-in-Kalender);
       // komplementär zum ALV-Taggeld-Rechner (`alv`). Gegenstück-Muster zu rentnerin→pensionierung.
@@ -128,6 +130,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'verschuldet',
+    zeigeRegionaleAngebote: true, // Existenzminimum-Lage → KulturLegi-berechtigt (würdevolle Entlastung)
     berechtigungen: [
       { key: 'schuldenberatung', view: 'schulden',    quelle: 'Schuldenberatung CH / Caritas', stand: '2026' },
       { key: 'betreibung',       view: 'betreibung',  quelle: 'SchKG',                         stand: '2026' },
