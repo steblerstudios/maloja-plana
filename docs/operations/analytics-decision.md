@@ -20,6 +20,9 @@ Dazu Architektur-Sperren:
 
 ## Weg 1 — Server-Log-Statistik (JETZT, kein Code)
 
+> 📋 Schritt-für-Schritt-Runbook zum Abarbeiten: [`analytics-weg1-anleitung.md`](analytics-weg1-anleitung.md)
+> (Infomaniak-Klicks, Datenschutz-Check nach revDSG, Pitch-Zahlen-Vorlage, Quartals-Rhythmus).
+
 **Wichtig:** `trust.hosting1` deklariert die Server-Logs bereits („technische Daten
 — IP-Adresse, Browsertyp — in Server-Logs verarbeitet und automatisch gelöscht").
 Deren **aggregierte** Auswertung bricht daher **kein** Versprechen: keine Cookies,
