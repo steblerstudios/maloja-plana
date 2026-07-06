@@ -14,8 +14,14 @@ import { Icon } from './IconSystem.jsx';
 // color      = Ast-Farbe (Fruchtkörper)
 // cutColor   = Hintergrundfarbe, in der das Icon „ausgestanzt" erscheint
 // size       = Kantenlänge in px; ripeness 0..1 = Reifegrad (Deckkraft)
+// Cluster-Früchte haben keinen Vollkörper → das Icon-Negativ braucht eine ruhige
+// solide Scheibe in Ast-Farbe als Untergrund, sonst „schwimmt" es zwischen den Beeren.
+const CLUSTER_FRUITS = new Set(['vogelbeere', 'kirsche', 'traube']);
+
 export default function FruchtMitIcon({ fruit, iconName, color, cutColor = '#F4F1EC', size = 40, ripeness = 1, title }) {
   const iconSize = Math.round(size * 0.46);
+  const needsBacking = CLUSTER_FRUITS.has(fruit);
+  const discSize = Math.round(iconSize * 1.5);
   return React.createElement('span', {
     role: title ? 'img' : undefined,
     'aria-label': title || undefined,
@@ -25,6 +31,13 @@ export default function FruchtMitIcon({ fruit, iconName, color, cutColor = '#F4F
     },
   },
     React.createElement(FruchtSilhouette, { name: fruit, size }),
+    // Solide Scheibe (nur Cluster-Früchte), damit das Negativ einen Körper hat.
+    needsBacking ? React.createElement('span', {
+      style: {
+        position: 'absolute', top: '52%', left: '50%', transform: 'translate(-50%,-50%)',
+        width: discSize, height: discSize, borderRadius: '50%', background: 'currentColor',
+      },
+    }) : null,
     // Icon als Negativ — in der Hintergrundfarbe auf den Fruchtkörper gestanzt.
     iconName ? React.createElement('span', {
       style: {
