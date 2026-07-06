@@ -954,7 +954,8 @@ const AppInner = () => {
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
           onUpdateExpiry: handleUpdateDocExpiry,
-          initialTab: tresorInitialTab
+          initialTab: tresorInitialTab,
+          isDarkMode
         }),
         view === 'kk' && React.createElement(KKScanner, {
           palette, t, data: activeData,
