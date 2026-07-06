@@ -24,6 +24,7 @@
 export const LEBENSZUSTAENDE = [
   {
     key: 'tiefesEinkommen',
+    zeigeRegionaleAngebote: true, // kanton-bewusste Vergünstigungen (regionaleVerguenstigungen.js)
     berechtigungen: [
       { key: 'ipv',         view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
       { key: 'mietzins',    view: 'mietzins',    quelle: 'Kanton',       stand: '2026' },
