@@ -38,6 +38,7 @@ export const LEBENSZUSTAENDE = [
   },
   {
     key: 'alleinerziehend',
+    zeigeRegionaleAngebote: true, // familiennahe Vergünstigungen (Familienpass u.a.), kanton-bewusst
     berechtigungen: [
       { key: 'alimente',        view: 'trennung',    quelle: 'Kanton / BSV', stand: '2026' },
       { key: 'ipv',             view: 'premium',     quelle: 'BAG / Kanton', stand: '2026' },
