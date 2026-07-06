@@ -205,6 +205,88 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
   );
 };
 
+// Leiser Boden-Anker — nur auf dem Handy (isMobile). Additiv: die Kopfzeile mit
+// Hamburger bleibt, nichts wird entfernt. Ungerade 5 Slots (2 + Mitte + 2), damit der
+// zentrale Erfassen-Knopf wirklich mittig sitzt; er fächert ruhig in Schnell-Aktionen auf.
+const bottomIcon = (name, color, size) => {
+  const s = size || 20;
+  const common = { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' };
+  const P = (d) => React.createElement('path', { d });
+  if (name === 'home') return React.createElement('svg', common, P('M4 11 L12 4 L20 11 M6 10 V20 H18 V10'));
+  if (name === 'clock') return React.createElement('svg', common, React.createElement('circle', { cx: 12, cy: 12, r: 8 }), P('M12 8 V12 L15 14'));
+  if (name === 'gift') return React.createElement('svg', common, P('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8'));
+  if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
+  if (name === 'file') return React.createElement('svg', common, P('M7 3 H14 L18 7 V21 H7 Z M14 3 V7 H18'));
+  if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
+  if (name === 'calendarPlus') return React.createElement('svg', common, P('M4 6 H20 V20 H4 Z M4 10 H20 M8 3 V7 M16 3 V7 M12 13 V17 M10 15 H14'));
+  if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
+  return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
+};
+const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
+  const [fanOpen, setFanOpen] = useState(false);
+  const slot = (it) => React.createElement('button', {
+    key: it.key, onClick: it.onClick, 'aria-label': it.label,
+    'aria-current': it.active ? 'page' : undefined,
+    style: {
+      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+      padding: '9px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+      color: it.active ? palette.text : palette.mid,
+    },
+  },
+    bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
+    React.createElement('span', { style: { fontSize: '10px', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
+  );
+  const fan = [
+    { key: 'tresor', label: t('nav.capDokument'), icon: 'file', left: 'calc(50% - 104px)', bottom: '84px' },
+    { key: 'kk', label: t('nav.capBeleg'), icon: 'receipt', left: 'calc(50% - 40px)', bottom: '126px' },
+    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarPlus', left: 'calc(50% + 40px)', bottom: '126px' },
+    { key: 'merkliste', label: t('nav.merkliste'), icon: 'pencil', left: 'calc(50% + 104px)', bottom: '84px' },
+  ];
+  return React.createElement(React.Fragment, null,
+    React.createElement('div', {
+      onClick: () => setFanOpen(false), 'aria-hidden': 'true',
+      style: { position: 'fixed', inset: 0, background: 'rgba(30,34,32,0.10)', opacity: fanOpen ? 1 : 0, pointerEvents: fanOpen ? 'auto' : 'none', transition: `opacity ${duration.normal}ms ${ease}`, zIndex: 40 },
+    }),
+    fan.map((a, i) => React.createElement('button', {
+      key: a.key, onClick: () => { setFanOpen(false); onNavigate(a.key); }, 'aria-label': a.label, tabIndex: fanOpen ? 0 : -1,
+      style: {
+        position: 'fixed', left: a.left, bottom: a.bottom,
+        transform: fanOpen ? 'translateX(-50%)' : 'translateX(-50%) translateY(12px)',
+        opacity: fanOpen ? 1 : 0, pointerEvents: fanOpen ? 'auto' : 'none',
+        transition: `opacity ${duration.normal}ms ${ease}, transform ${duration.normal}ms ${ease}`,
+        transitionDelay: fanOpen ? (i * 0.03) + 's' : '0s',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px',
+        background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', zIndex: 42,
+      },
+    },
+      React.createElement('span', { style: { width: '48px', height: '48px', borderRadius: '50%', background: palette.surface, border: '0.5px solid ' + palette.sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: palette.sage, boxShadow: shadow.sm } }, bottomIcon(a.icon, palette.sage)),
+      React.createElement('span', { style: { fontSize: '10px', color: palette.mid } }, a.label)
+    )),
+    React.createElement('nav', {
+      'aria-label': t('nav.menu'),
+      style: {
+        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border + '88',
+        background: palette.surface + 'F2', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        position: 'relative', zIndex: 41,
+      },
+    },
+      slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'home', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
+      slot({ key: 'calendar', label: t('nav.calendar'), icon: 'clock', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
+      React.createElement('div', { style: { flex: 1, display: 'flex', justifyContent: 'center' } },
+        React.createElement('button', {
+          onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
+          style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sage, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+        },
+          React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
+        )
+      ),
+      slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') }),
+      slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu })
+    )
+  );
+};
+
 const useViewport = () => {
   const [w, setW] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 400);
   useEffect(() => {
@@ -1048,7 +1130,8 @@ const AppInner = () => {
         React.createElement(Icon, { name: 'leaf', size: 13 }),
         React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
       )
-    )
+    ),
+    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true) })
   ));
 };
 
