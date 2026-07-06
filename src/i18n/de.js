@@ -34,6 +34,7 @@ export default {
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Wenn das Einkommen das Nötigste nicht deckt, kann die Sozialhilfe aufstocken. Das ist ein Recht, kein Almosen.' },
         stipendien: { titel: 'Stipendien & Ausbildungsbeiträge', text: 'Für Ausbildung und Studium bei tiefem Einkommen gibt es Stipendien — rückzahlbar oder nicht.' },
         franchise: { titel: 'Franchise prüfen', text: 'Bei wenigen Arztbesuchen senkt eine höhere Franchise die monatliche Prämie — lohnt sich jeden Herbst zu prüfen.' },
+        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' },
         kulturlegi: { titel: 'KulturLegi (Caritas)', text: 'Der Ausweis für kleine Budgets: mindestens 30% Rabatt auf tausende Angebote in Kultur, Sport, Bildung (z.B. Kurse) und Gesundheit (z.B. Zahnbehandlung). Das Angebot ist je Region verschieden — deine kantonale KulturLegi zeigt, was bei dir gilt.' },
         rekaFerien: { titel: 'Reka-Ferien für 200.–', text: 'Mit der KulturLegi ermöglicht die Reka-Stiftung armutsbetroffenen Familien und Alleinstehenden eine Ferienwoche für rund 200 Franken — Unterkunft und Anreise mit dem ÖV inklusive.' },
       },
