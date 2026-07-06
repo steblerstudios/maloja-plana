@@ -911,7 +911,7 @@ const AppInner = () => {
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
-        view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, onNavigate: handleNavigate }),
+        view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
         view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate }),
