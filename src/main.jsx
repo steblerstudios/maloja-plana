@@ -929,6 +929,7 @@ const AppInner = () => {
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
           onLeaveDemo: () => setDemoMode(false),
           isTablet,
+          isDarkMode,
         })
       ),
       view === 'chapter' && React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
