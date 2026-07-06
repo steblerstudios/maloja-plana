@@ -458,6 +458,7 @@ function buildVersicherungenSections(data, t) {
   if (data.lifeInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'lifeInsurance'), value: '✓' });
   if (data.legalInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'legalInsurance'), value: '✓' });
   if (data.childInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'childInsurance'), value: '✓' });
+  if (data.ktg && data.ktg !== 'none') addRows.push({ label: fieldLabel(t, 'versicherungen', 'ktg'), value: selectLabel(t, 'versicherungen', 'ktg', data.ktg) });
 
   if (addRows.length > 0) {
     sections.push({ title: t('mirror.versicherungen.additional'), rows: addRows });
