@@ -2717,6 +2717,8 @@ export default {
     yourCanton: 'Votre canton',
     privacyNote: { sie: 'Vos données restent sur cet appareil. Pas de compte. Pas de cloud.', du: 'Tes données restent sur cet appareil. Pas de compte. Pas de cloud.' },
     skipForNow: 'Passer pour l\'instant',
+    needsTitle: { sie: 'Qu\'est-ce qui vous concerne en ce moment ?', du: 'Qu\'est-ce qui te concerne en ce moment ?' },
+    needsSubtitle: { sie: 'Choisissez ce qui vous correspond — Maloja vous montre aussitôt ce à quoi vous avez droit. Vous pouvez le modifier à tout moment.', du: 'Choisis ce qui te correspond — Maloja te montre aussitôt ce à quoi tu as droit. Tu peux le modifier à tout moment.' },
     readyTitle: 'Prêt, {name} !',
     readyTitleGeneric: 'Tout est prêt !',
     readyMessage: 'Votre organiseur de vie suisse est configuré.',
