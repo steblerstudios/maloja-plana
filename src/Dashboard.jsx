@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import FruchtMitIcon from './FruchtMitIcon.jsx';
+import FruchtStufe from './FruchtStufe.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
@@ -470,7 +471,6 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
         // Früchte als klickbare Buttons über dem SVG, exakt am Ast-Ende.
         ...bereiche.map((b, i) => {
           const a = anchor(i);
-          const fsize = Math.round(42 + (b.pct / 100) * 12);
           return React.createElement('button', {
             key: b.key,
             onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
@@ -484,7 +484,10 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
             },
           },
-            React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, size: fsize, ripeness: 0.55 + (b.pct / 100) * 0.45 }),
+            // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
+            React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '52px' } },
+              React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: 50 })
+            ),
             React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '64px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title)
           );
         })
@@ -634,10 +637,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
 
   // Bereichs-Früchte für den Lebensbaum: Frucht + Bereichs-Icon (Negativ) + Ast-Farbe.
+  // status → Reife-Stufe (Knospe/Blüte/junge Frucht/reife Frucht) — jeder Zustand
+  // positiv lesbar, kein Defizit. Nutzt dieselbe 4-Stufen-Logik wie das Kapitel.
+  const STATUS_STAGE = { leer: 1, begonnen: 2, grundordnung: 3, vertieft: 4 };
   const bereichsFruechte = chapters.map((ch, idx) => {
     const b = getBereichForChapter(ch.key);
     if (!b) return null;
-    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title };
+    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title, stage: STATUS_STAGE[getChapterStatus(ch)] || 1 };
   }).filter(Boolean);
 
   // Trail follows exact front range ridge points — like a real hiking path
