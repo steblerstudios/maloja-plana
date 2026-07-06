@@ -214,6 +214,9 @@ const bottomIcon = (name, color, size) => {
   const common = { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' };
   const P = (d) => React.createElement('path', { d });
   if (name === 'home') return React.createElement('svg', common, P('M4 11 L12 4 L20 11 M6 10 V20 H18 V10'));
+  // Übersicht = Schweizer Sackmesser («alle Werkzeuge an einem Ort»); generisch, kein Kreuz.
+  // Linien-Variante passend zum Nav-Stil: Griff (Pille) + zwei ausgeklappte Werkzeuge.
+  if (name === 'sackmesser') return React.createElement('svg', common, P('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5'));
   if (name === 'clock') return React.createElement('svg', common, React.createElement('circle', { cx: 12, cy: 12, r: 8 }), P('M12 8 V12 L15 14'));
   if (name === 'gift') return React.createElement('svg', common, P('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8'));
   if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
@@ -285,7 +288,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
         paddingBottom: 'env(safe-area-inset-bottom)',
       },
     },
-      slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'home', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
+      slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
       slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
       React.createElement('div', { style: { flex: 1, display: 'flex', justifyContent: 'center' } },
         React.createElement('button', {
