@@ -46,6 +46,7 @@ export default {
         alimente: { titel: 'Alimentenbevorschussung & Inkassohilfe', text: 'Kommen die Unterhaltszahlungen nicht, kann die Gemeinde sie bevorschussen und beim Inkasso helfen — damit das Kind nicht leer ausgeht.' },
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Einelternhaushalte haben oft Anspruch auf Hilfe bei den Krankenkassen-Prämien — für den Elternteil und die Kinder.' },
         familienzulagen: { titel: 'Familienzulagen', text: 'Kinder- und Ausbildungszulagen pro Kind — rückwirkend nachforderbar, wenn verpasst. Sie folgen dem arbeitenden Elternteil.' },
+        betreuungsgutscheine: { titel: 'Betreuungsgutscheine (Kita & Tagesbetreuung)', text: 'Viele Gemeinden und Kantone verbilligen die familienergänzende Betreuung einkommensabhängig — oft unbekannt. Frag bei deiner Wohngemeinde nach Betreuungsgutscheinen oder subventionierten Plätzen.' },
         sozialhilfe: { titel: 'Ergänzende Sozialhilfe', text: 'Die Sozialhilfe anerkennt den höheren Bedarf eines Einelternhaushalts und kann ein knappes Einkommen aufstocken.' },
         steuern: { titel: 'Elterntarif & Kinderabzug', text: 'Alleinerziehende werden zum tieferen Elterntarif besteuert und können Abzüge für Kinder und Betreuung geltend machen.' },
       },

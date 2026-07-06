@@ -46,6 +46,7 @@ export default {
         alimente: { titel: 'Anticipo degli alimenti & aiuto all’incasso', text: 'Se i contributi di mantenimento non arrivano, il Comune può anticiparli e aiutare a incassarli — così il figlio non resta senza.' },
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Le economie domestiche monoparentali hanno spesso diritto a un aiuto per i premi della cassa malati — per il genitore e i figli.' },
         familienzulagen: { titel: 'Assegni familiari', text: 'Assegni per i figli e di formazione per ogni figlio — recuperabili retroattivamente se dimenticati. Seguono il genitore che lavora.' },
+        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chiedete al vostro Comune di buoni per la custodia o posti sovvenzionati.' },
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'L’aiuto sociale riconosce il fabbisogno maggiore di un’economia domestica monoparentale e può integrare un reddito basso.' },
         steuern: { titel: 'Tariffa per genitori & deduzione per figli', text: 'I genitori soli sono tassati con la tariffa per genitori più bassa e possono dedurre le spese per i figli e la custodia.' },
       },
