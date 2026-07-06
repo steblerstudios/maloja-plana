@@ -5,6 +5,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
+import { loadReminders } from './utils/reminders.js';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -685,6 +686,68 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       null
     ),
 
+    // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
+    // Führt oben sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
+    // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
+    React.createElement('div', {
+      style: {
+        marginTop: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
+        background: palette.sage + '0C', border: '1px solid ' + palette.sage + '22',
+        borderRadius: radius.md,
+      },
+    },
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginBottom: space.sm + 'px' },
+      }, t('dashboard.nextUpTitle')),
+      (() => {
+        const nextField = mvo.fields.find((f) => !f.done);
+        if (nextField) {
+          return React.createElement('button', {
+            onClick: () => onSelectChapter(nextField.chapterIdx),
+            'aria-label': nextField.label + ' — ' + nextField.chapterTitle,
+            style: {
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
+              width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
+              padding: space.md + 'px', background: palette.surface,
+              border: '1px solid ' + palette.border, borderRadius: radius.sm, color: palette.text,
+              transition: 'background 160ms ease, border-color 160ms ease',
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
+          },
+            React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
+              React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextField.label),
+              React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterIcon + ' ' + nextField.chapterTitle),
+            ),
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.lg, flexShrink: 0 } }, '→'),
+          );
+        }
+        return React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.sage, margin: 0, fontWeight: weight.medium },
+        }, t('dashboard.nextUpAllDone'));
+      })(),
+      (() => {
+        const reminders = loadReminders();
+        const today = new Date().toISOString().split('T')[0];
+        const upcoming = reminders
+          .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
+          .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
+        const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        const chip = (label, value) => React.createElement('span', {
+          style: { display: 'inline-flex', gap: '5px', alignItems: 'baseline' },
+        },
+          React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, label),
+          React.createElement('span', { style: { fontSize: text.xs, color: palette.text, fontWeight: weight.medium } }, value),
+        );
+        return React.createElement('div', {
+          style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px', marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55' },
+        },
+          chip(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
+          chip(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
+        );
+      })()
+    ),
+
     // ─── Maloja Pass — interactive topographic map ─────────
     React.createElement('div', {
       style: { margin: '20px -8px 0 -8px' }
@@ -926,9 +989,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     ),
 
 
-
-    // ─── Verbindungs-Baum — wächst mit den Angaben (immer sichtbar) ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter }),
 
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
@@ -1218,6 +1278,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         )
       )
     ),
+
+    // ─── Lebensbaum als Spiegel — nach unten gewandert (#3): was aus den
+    // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter }),
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
