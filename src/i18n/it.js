@@ -34,6 +34,7 @@ export default {
         sozialhilfe: { titel: 'Aiuto sociale complementare', text: 'Se il reddito non copre il necessario, l’aiuto sociale può integrarlo. È un diritto, non un’elemosina.' },
         stipendien: { titel: 'Borse di studio', text: 'Per la formazione e gli studi con un reddito basso esistono borse di studio — rimborsabili o meno.' },
         franchise: { titel: 'Verificare la franchigia', text: 'Con poche visite mediche, una franchigia più alta riduce il premio mensile — da rivedere ogni autunno.' },
+        betreuungsgutscheine: { titel: 'Buoni per la custodia (asilo nido)', text: 'Molti Comuni e Cantoni riducono il costo della custodia complementare in base al reddito — spesso poco noto. Chiedete al vostro Comune di buoni per la custodia o posti sovvenzionati.' },
         kulturlegi: { titel: 'CartaCultura (Caritas)', text: 'La tessera per piccoli budget: almeno il 30% di sconto su migliaia di offerte in cultura, sport, formazione (p. es. corsi) e salute (p. es. cure dentarie). L’offerta varia a seconda della regione — la tua CartaCultura cantonale mostra cosa vale da te.' },
         rekaFerien: { titel: 'Vacanze Reka per 200.–', text: 'Con la CartaCultura, la Fondazione Reka permette a famiglie e persone sole colpite dalla povertà una settimana di vacanza per circa 200 franchi — alloggio e viaggio con i trasporti pubblici inclusi.' },
       },

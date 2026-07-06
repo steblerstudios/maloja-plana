@@ -23,6 +23,14 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     }
     return (data?.basis?.canton || '').trim() || null;
   })();
+
+  // „Hat Kinder?" — für Berechtigungen, die nur mit Kindern relevant sind (z. B.
+  // Betreuungsgutscheine). Aus dem Haushalt-Modell (children[]), Fallback Legacy-dependents.
+  const hatKinder = (() => {
+    const hh = data?.basis?.household;
+    if (hh && Array.isArray(hh.children)) return hh.children.length > 0;
+    return Number(data?.basis?.dependents || 0) > 0;
+  })();
   const [active, setActive] = useState(() => {
     try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); } catch { return []; }
   });
@@ -121,7 +129,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
         React.createElement('p', {
           style: { fontSize: text.xs, color: palette.mid, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.relaxed }
         }, t('lebenszustaende.' + z.key + '.intro')),
-        z.berechtigungen.map((b) => {
+        z.berechtigungen.filter((b) => !b.nurMitKindern || hatKinder).map((b) => {
           const isExternal = !!b.url;
           const baseKey = 'lebenszustaende.' + z.key + '.berechtigungen.' + b.key;
           const cardStyle = {
