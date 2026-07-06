@@ -413,20 +413,80 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     }, t('datenWirken.treeCaption')),
     // Bereichs-Früchte am Baum — jede Frucht trägt das Bereichs-Icon als Negativ
     // in Ast-Farbe; sie reift mit dem Ausfüllstand (Deckkraft). Klick → Kapitel.
-    (bereiche && bereiche.length) ? React.createElement('div', {
-      style: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', justifyContent: 'center', padding: '4px 0 10px 0' },
-    },
-      bereiche.map((b) => React.createElement('button', {
-        key: b.key,
-        onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
-        'aria-label': b.title + ' — ' + b.pct + '%',
-        title: b.title,
-        style: { background: 'none', border: 'none', padding: '4px', cursor: onSelectChapter ? 'pointer' : 'default', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '3px', fontFamily: 'inherit' },
+    // ── Lebensbaum v2 — die Bereichs-Früchte hängen an echten Ästen ──────────
+    // Jede Frucht reift einzeln mit ihrem Ausfüllstand (Grösse + Deckkraft);
+    // die Krone (Laubmasse) wächst mit dem Gesamtfortschritt (4 Wuchsstufen).
+    // Frucht trägt weiterhin das Bereichs-Icon als Negativ. Klick → Kapitel.
+    (bereiche && bereiche.length) ? (() => {
+      const n = bereiche.length;
+      const VB_W = 320, VB_H = 276;
+      const forkX = 160, forkY = 152, groundY = 258;
+      // Kronenbogen: Früchte entlang eines Halbkreis-Bogens (Mitte oben, aussen tiefer).
+      const cx = 160, rx = 118, cy = 108, ry = 62;
+      const anchor = (i) => {
+        const tt = n === 1 ? 0.5 : i / (n - 1);
+        const ang = Math.PI * (1 - tt);
+        return { x: cx + rx * Math.cos(ang), y: cy - ry * Math.sin(ang) };
+      };
+      const avg = Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / n);
+      // 4 Wuchsstufen des ganzen Baums → Laubmasse.
+      const stage = avg >= 70 ? 4 : avg >= 40 ? 3 : avg >= 15 ? 2 : 1;
+      const foliageOp = [0, 0.05, 0.08, 0.11, 0.15][stage];
+      return React.createElement('div', {
+        style: { position: 'relative', width: '100%', maxWidth: '360px', margin: '0 auto', padding: '2px 0 4px' },
       },
-        React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, size: 50, ripeness: b.pct / 100 }),
-        React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '58px', lineHeight: 1.15, textAlign: 'center' } }, b.short || b.title)
-      ))
-    ) : null,
+        React.createElement('svg', {
+          viewBox: '0 0 ' + VB_W + ' ' + VB_H, width: '100%',
+          role: 'img', 'aria-label': t('datenWirken.title'),
+          style: { display: 'block' },
+        },
+          // Boden — ruhiger Schatten
+          React.createElement('ellipse', { cx: forkX, cy: groundY + 2, rx: 66, ry: 6, fill: palette.sage, opacity: 0.10 }),
+          // Laubkrone — wächst mit der Wuchsstufe
+          foliageOp > 0 ? React.createElement('ellipse', { cx: cx, cy: cy - 6, rx: rx * 0.96 + 14, ry: ry + 20, fill: palette.sage, opacity: foliageOp }) : null,
+          stage >= 3 ? React.createElement('ellipse', { cx: cx - 46, cy: cy + 8, rx: 54, ry: 40, fill: palette.sage, opacity: foliageOp * 0.7 }) : null,
+          stage >= 3 ? React.createElement('ellipse', { cx: cx + 46, cy: cy + 8, rx: 54, ry: 40, fill: palette.sage, opacity: foliageOp * 0.7 }) : null,
+          // Stamm — deine Angaben tragen den Baum
+          React.createElement('path', {
+            d: 'M ' + (forkX - 4) + ' ' + groundY + ' C ' + (forkX - 6) + ' ' + (groundY - 44) + ' ' + (forkX + 6) + ' ' + (forkY + 34) + ' ' + forkX + ' ' + forkY,
+            fill: 'none', stroke: palette.sage, strokeWidth: 7, strokeLinecap: 'round', opacity: 0.5,
+          }),
+          // Äste — je ein Ast zum Frucht-Anker
+          ...bereiche.map((b, i) => {
+            const a = anchor(i);
+            const mx = forkX + (a.x - forkX) * 0.42;
+            const my = (forkY + a.y) / 2 - 6;
+            return React.createElement('path', {
+              key: 'branch-' + b.key,
+              d: 'M ' + forkX + ' ' + forkY + ' Q ' + mx + ' ' + my + ' ' + a.x.toFixed(1) + ' ' + a.y.toFixed(1),
+              fill: 'none', stroke: palette.sage, strokeWidth: 2.2, strokeLinecap: 'round',
+              opacity: 0.32 + (b.pct / 100) * 0.28,
+            });
+          })
+        ),
+        // Früchte als klickbare Buttons über dem SVG, exakt am Ast-Ende.
+        ...bereiche.map((b, i) => {
+          const a = anchor(i);
+          const fsize = Math.round(42 + (b.pct / 100) * 12);
+          return React.createElement('button', {
+            key: b.key,
+            onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
+            'aria-label': b.title + ' — ' + b.pct + '%',
+            title: b.title,
+            style: {
+              position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
+              transform: 'translate(-50%, -50%)',
+              background: 'none', border: 'none', padding: 0,
+              cursor: onSelectChapter ? 'pointer' : 'default',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
+            },
+          },
+            React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, size: fsize, ripeness: 0.55 + (b.pct / 100) * 0.45 }),
+            React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '64px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title)
+          );
+        })
+      );
+    })() : null,
     (() => {
       const n = active.length;
       const rowH = 32;
