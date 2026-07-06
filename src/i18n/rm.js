@@ -772,7 +772,9 @@ export default {
     bewilligung: 'Renovar l’autorisaziun',
     iv: 'Malsogna & AI',
     todesfall: 'In mortori en il conturn',
+    arztkoffer: 'Sanadad',
     sub: {
+      arztkoffer: 'Voss utensils da sanadad en ina valisch da medi',
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
       betreibung: 'Reagir cun calma',
@@ -944,6 +946,7 @@ export default {
     detailProgress: 'Progress detaglià per chapitel',
     toolsSubtitle: { sie: 'Calculaturs ed agids — independents da Vossas datas da chapitels.', du: 'Calculaturs ed agids — independents da Tes datas da chapitels.' },
     toolGroups: {
+      gesundheit: 'Sanadad',
       lebensereignisse: 'Eveniments da vita',
       money: 'Daners & taglias',
       insurance: 'Assicuranza & sanadad',
@@ -2191,6 +2194,28 @@ export default {
     action: "Avrir la carta d'urgenza",
   },
 
+  arztkoffer: {
+    title: 'Vossa valisch da sanadad',
+    subtitle: 'Voss temas da sanadad en in lieu — assicuranza, prestaziuns, urgenza e dapli che vegn anc.',
+    back: 'Enavos a la survista',
+    inVorbereitung: 'En preparaziun',
+    inVorbereitungHint: 'Prest en la valisch',
+    weitereWege: 'Auters vias:',
+    faecher: {
+      kvg: { title: 'Prestaziuns & franchisa', desc: 'Tge che l’assicuranza da basa paja e co che vossa franchisa funcziuna.' },
+      kkbeleg: { title: 'Register da quittanzas', desc: 'Rimnar quintas da medi, tegnair egl’egl franchisa & participaziun.' },
+      notfall: { title: 'Urgenza', desc: 'Carta d’urgenza e las infurmaziuns pli impurtantas per il cas serius.' },
+      thermometer: { title: 'Termometer', desc: 'Registrar simptoms e fevra durant ils dis.' },
+      blister: { title: 'Blister da mesemna', desc: 'Medicaments ed ingla d’in sguard.' },
+      karteikarten: { title: 'Cartotecas', desc: 'Medis, diagnosas e contacts en in lieu.' },
+      impfausweis: { title: 'Attest da vaccinaziun', desc: 'Vaccinaziuns sin palpiri e digital ensemen.' },
+    },
+    wege: {
+      wechsel: 'Midar cassa da malsauns',
+      zusatz: 'Midar assicuranza cumplementara',
+      unfall: 'Accident & malsogna',
+    },
+  },
   notfallEinstieg: {
     title: { sie: "Tge dovrais Vus en cas d'urgenza?", du: "Tge dovras Ti en cas d'urgenza?" },
     subtitle: { sie: 'Trais scenaris — e tge indicaziuns che Vus duessas avair prontas.', du: 'Trais scenaris — e tge indicaziuns che Ti duessas avair prontas.' },

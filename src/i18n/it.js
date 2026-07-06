@@ -746,7 +746,9 @@ export default {
     bewilligung: 'Rinnovare il permesso',
     iv: 'Malattia & AI',
     todesfall: 'Un lutto nella cerchia',
+    arztkoffer: 'Salute',
     sub: {
+      arztkoffer: 'I tuoi strumenti per la salute in una valigetta',
       kkerst: 'Assicurarsi arrivando in Svizzera',
       pensionierung: 'AVS, cassa pensioni, 3° pilastro',
       betreibung: 'Reagire con calma',
@@ -844,6 +846,28 @@ export default {
     action: 'Apri la scheda di emergenza',
   },
 
+  arztkoffer: {
+    title: 'La tua valigetta della salute',
+    subtitle: 'I tuoi temi di salute in un unico posto — assicurazione, prestazioni, emergenze e altro in arrivo.',
+    back: 'Torna alla panoramica',
+    inVorbereitung: 'In preparazione',
+    inVorbereitungHint: 'Presto nella valigetta',
+    weitereWege: 'Altri percorsi:',
+    faecher: {
+      kvg: { title: 'Prestazioni & franchigia', desc: 'Cosa copre l’assicurazione di base e come funziona la franchigia.' },
+      kkbeleg: { title: 'Raccoglitore ricevute', desc: 'Raccogli le fatture, tieni d’occhio franchigia e partecipazione.' },
+      notfall: { title: 'Emergenza', desc: 'Scheda d’emergenza e i dati essenziali per il caso serio.' },
+      thermometer: { title: 'Termometro', desc: 'Annotare sintomi e febbre nei giorni.' },
+      blister: { title: 'Portapillole', desc: 'Farmaci e assunzione a colpo d’occhio.' },
+      karteikarten: { title: 'Schede', desc: 'Medici, diagnosi e contatti in un unico posto.' },
+      impfausweis: { title: 'Libretto vaccinazioni', desc: 'Vaccinazioni cartacee e digitali insieme.' },
+    },
+    wege: {
+      wechsel: 'Cambiare cassa malati',
+      zusatz: 'Cambiare assicurazione complementare',
+      unfall: 'Infortunio & malattia',
+    },
+  },
   notfallEinstieg: {
     title: { sie: 'Di cosa ha bisogno in caso di emergenza?', du: 'Di cosa hai bisogno in caso di emergenza?' },
     subtitle: { sie: 'Tre scenari — e quali informazioni dovrebbe avere pronte.', du: 'Tre scenari — e quali informazioni dovresti avere pronte.' },
@@ -940,6 +964,7 @@ export default {
     detailProgress: 'Avanzamento dettagliato per capitolo',
     toolsSubtitle: 'Calcolatori e strumenti — utilizzabili indipendentemente dai dati dei capitoli.',
     toolGroups: {
+      gesundheit: 'Salute',
       lebensereignisse: 'Eventi della vita',
       money: 'Denaro & imposte',
       insurance: 'Assicurazione & salute',
