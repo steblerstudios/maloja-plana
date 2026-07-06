@@ -746,7 +746,9 @@ export default {
     bewilligung: 'Renouveler l’autorisation',
     iv: 'Maladie & AI',
     todesfall: 'Un décès dans l’entourage',
+    arztkoffer: 'Santé',
     sub: {
+      arztkoffer: 'Vos outils santé dans une trousse médicale',
       kkerst: 'S’assurer en arrivant en Suisse',
       pensionierung: 'AVS, caisse de pension, 3e pilier',
       betreibung: 'Réagir calmement',
@@ -844,6 +846,28 @@ export default {
     action: 'Ouvrir la carte d\'urgence',
   },
 
+  arztkoffer: {
+    title: 'Votre trousse santé',
+    subtitle: 'Vos sujets de santé au même endroit — assurance, prestations, urgences et plus à venir.',
+    back: 'Retour à l’aperçu',
+    inVorbereitung: 'En préparation',
+    inVorbereitungHint: 'Bientôt dans la trousse',
+    weitereWege: 'Autres chemins :',
+    faecher: {
+      kvg: { title: 'Prestations & franchise', desc: 'Ce que l’assurance de base couvre et comment fonctionne votre franchise.' },
+      kkbeleg: { title: 'Classeur de justificatifs', desc: 'Rassembler les factures, garder franchise et quote-part en vue.' },
+      notfall: { title: 'Urgence', desc: 'Carte d’urgence et les informations clés en cas de besoin.' },
+      thermometer: { title: 'Thermomètre', desc: 'Suivre symptômes et fièvre au fil des jours.' },
+      blister: { title: 'Pilulier', desc: 'Médicaments et prise en un coup d’œil.' },
+      karteikarten: { title: 'Fiches', desc: 'Médecins, diagnostics et contacts au même endroit.' },
+      impfausweis: { title: 'Carnet de vaccination', desc: 'Vaccinations papier et numérique réunies.' },
+    },
+    wege: {
+      wechsel: 'Changer d’assurance maladie',
+      zusatz: 'Changer d’assurance complémentaire',
+      unfall: 'Accident & maladie',
+    },
+  },
   notfallEinstieg: {
     title: { sie: 'De quoi avez-vous besoin en cas d\'urgence?', du: 'De quoi as-tu besoin en cas d\'urgence?' },
     subtitle: { sie: 'Trois scénarios — et les informations que vous devriez avoir sous la main.', du: 'Trois scénarios — et les informations que tu devrais avoir sous la main.' },
@@ -940,6 +964,7 @@ export default {
     detailProgress: 'Progression détaillée par chapitre',
     toolsSubtitle: 'Calculateurs et outils — utilisables indépendamment de vos chapitres.',
     toolGroups: {
+      gesundheit: 'Santé',
       lebensereignisse: 'Événements de vie',
       money: 'Argent & impôts',
       insurance: 'Assurance & santé',
