@@ -2654,6 +2654,7 @@ export default {
       dentist: 'Les soins dentaires ne font en général pas partie de l’assurance de base — les coûts sont le plus souvent à votre charge (sauf certaines maladies). Une assurance complémentaire peut en couvrir une partie.',
       gyn: 'Assurance de base : le dépistage gynécologique du cancer (Pap) est en règle générale pris en charge tous les 3 ans (après deux contrôles annuels sans particularité). Plus souvent est possible — les rendez-vous supplémentaires sont alors à votre charge. Ce qui est médicalement utile est à discuter avec le médecin.',
       vaccinations: 'Les vaccinations recommandées par l’OFSP sont en général prises en charge (après franchise/quote-part). Les vaccins de voyage en général non.',
+      medication: 'Les médicaments prescrits figurant sur la liste des spécialités sont pris en charge — après la franchise et la quote-part. Renouvelez l’ordonnance à temps pour éviter toute rupture.',
     },
     coverageThisYear: {
       label: 'Pris en charge par l’assurance de base ? (optionnel)',
@@ -2677,6 +2678,7 @@ export default {
       ravAppointment: 'Rendez-vous ORP',
       integrationCourse: 'Cours d\'intégration',
       vaccinations: 'Rappel de vaccination',
+      medicationRefill: 'Renouveler les médicaments / l’ordonnance',
       kkChange: 'Délai changement de caisse maladie (30 nov.)',
     },
     disclaimer: 'Ces rappels sont donnés à titre informatif uniquement. Veuillez contacter l\'autorité compétente ou un professionnel de santé pour des informations officielles.',
