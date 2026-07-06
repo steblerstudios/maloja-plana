@@ -20,12 +20,23 @@
   (`/zuerich/angebote/freikarten-und-aktionen`, ✅ in App). Aargau/Bern/Zentralschweiz
   liefern denselben Pfad **404** → kein einheitliches Muster, nicht ausrollbar.
 
+## Zwischenfazit (2026-07-06)
+Geprüft: BS/BL (Sonderfall, viele Extras), ZH (Aktionsseite), AG/SO (FerienPass),
+BE + SG (**keine** kantonsweite Rabattkarte — nur KulturLegi + IPV +
+Kinderbetreuungs-Zuschüsse; Stadt-Angebote wie Berns „Angebotskompass" sind
+kommunal, **nicht** unter Kanton listen = kein Over-Reach). **Muster:** Basel ist die
+Ausnahme; die meisten Kantone haben als „regionale Vergünstigung" nur die KulturLegi
+(für alle 26 bereits verlinkt). Distinkte Extras sind selten → gezielt statt
+flächendeckend suchen; Kinderbetreuungs-Zuschüsse/Familienzulagen sind eine **andere
+Kategorie** (gehören ggf. in einen eigenen Berechtigungs-Punkt, nicht in diese
+Rabatt-Liste).
+
 ## Matrix
 
 | Kanton | Regional-KL | Familienpass | Günstige Zahnmedizin | Bildung/VHS | Aktions-/Gutscheinseite |
 |--------|:-----------:|:------------:|:--------------------:|:-----------:|:-----------------------:|
 | ZH | ✅ | 🔎 | 🔎 | 🔎 | ✅ Freikarten & Aktionen |
-| BE | ✅ | 🔎 | 🔎 | 🔎 | 🔎 (kein stabiler Pfad gefunden) |
+| BE | ✅ | — (nur Stadt Bern „Angebotskompass", nicht kantonsweit) | 🔎 | 🔎 | 🔎 (kein stabiler Pfad) |
 | LU | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | UR | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | SZ | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
@@ -40,7 +51,7 @@
 | SH | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | AR | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | AI | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
-| SG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
+| SG | ✅ | — (keine kantonsweite Karte; nur KulturLegi + Kinderbetreuungs-Zuschüsse) | 🔎 | 🔎 | 🔎 |
 | GR | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | AG | ✅ | ✅ FerienPass A-Welle (mit KL halber Preis) | 🔎 | 🔎 | 🔎 (Pfad 404) |
 | TG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
