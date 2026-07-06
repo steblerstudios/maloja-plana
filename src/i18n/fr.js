@@ -2095,6 +2095,7 @@ export default {
     tier3Reason: 'Dans l\'ordre choisi.',
     helpTitle: 'Vous n\'êtes pas seul·e face à cela',
     helpBody: 'Un service reconnu de conseil en désendettement aide gratuitement et en toute confidentialité — Conseil en désendettement Suisse et Caritas ont un bureau dans chaque canton.',
+    situationLink: 'Voir la situation « endetté ou aux poursuites »',
   },
 
   cv: {
