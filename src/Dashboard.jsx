@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
-import { getCantonName, calculateIPV } from './config/cantonalData.js';
+import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -1130,12 +1130,33 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
       }, t('dashboard.anspruchIntro')),
       React.createElement(QuickCheck, { palette, t, onNavigate, data }),
-      React.createElement('div', {
+      (() => {
+        // Anspruchs-Matrix — nur ein *positiver, ermutigender* Hinweis „Anspruch
+        // möglich", und ausschliesslich dort, wo echte Logik dahintersteht
+        // (IPV, Sozialhilfe). Nie ein „Nein"/Verdikt (Würde, kein Scham-Signal),
+        // keine erfundenen Status. Streng gegated auf selbst eingetragene Angaben.
+        const incomeEntered = data?.finanzen?.monthlyIncome !== undefined
+          && data?.finanzen?.monthlyIncome !== null
+          && String(data.finanzen.monthlyIncome).trim() !== '';
+        const canton = data?.basis?.canton;
+        let ipvHint = false, sozialhilfeHint = false;
+        try {
+          if (incomeEntered && canton) {
+            ipvHint = !!calculateIPV(data)?.eligible;
+          }
+          if (incomeEntered) {
+            const sh = calculateSozialhilfe(data);
+            // Nur wenn Bedarf gedeckt UND kein Vermögen über dem Freibetrag,
+            // damit der Hinweis ehrlich bleibt (Vermögen ginge sonst vor).
+            sozialhilfeHint = !!sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0;
+          }
+        } catch { /* Orientierung, nie blockierend */ }
+        return React.createElement('div', {
         style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: space.xs + 2 + 'px', marginTop: space.sm + 'px' }
       },
         [
-          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health' },
-          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance' },
+          { label: t('nav.sozialhilfe'), sub: t('nav.sub.sozialhilfe'), view: 'sozialhilfe', icon: 'health', hint: sozialhilfeHint },
+          { label: t('nav.praemien'), sub: t('nav.sub.praemien'), view: 'praemien', icon: 'insurance', hint: ipvHint },
           { label: t('nav.stipendien'), sub: t('nav.sub.stipendien'), view: 'stipendien', icon: 'ausbildung' },
           { label: t('nav.alv'), sub: t('nav.sub.alv'), view: 'alv', icon: 'family' },
           { label: t('nav.eo'), sub: t('nav.sub.eo'), view: 'eo', icon: 'family' },
@@ -1157,11 +1178,18 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             React.createElement('div', { style: { width: '20px', height: '20px', flexShrink: 0, color: palette.sage } }, IconFn ? React.createElement('div', { style: { width: '20px', height: '20px' } }, IconFn()) : null),
             React.createElement('div', { style: { minWidth: 0 } },
               React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium } }, item.label),
-              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub)
+              React.createElement('div', { style: { fontSize: text.xs - 1, color: palette.mid, marginTop: '1px' } }, item.sub),
+              // Positiver Anspruchs-Hinweis als leise Zeile in der Textspalte —
+              // kein rechtsbündiges Pill (kollidiert in schmalen Karten mit
+              // umbrechenden Labels), ruhig statt plakativ.
+              item.hint && React.createElement('div', {
+                style: { fontSize: text.xs - 1, fontWeight: weight.semi, color: palette.sageDeep || palette.sage, marginTop: '3px' }
+              }, '· ' + t('dashboard.anspruchMoeglich'))
             )
           );
         })
-      ),
+      );
+      })(),
       React.createElement('button', {
         onClick: () => onNavigate('situationen'),
         style: {
