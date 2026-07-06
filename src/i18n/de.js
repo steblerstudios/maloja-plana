@@ -609,6 +609,13 @@ export default {
       provision: { sie: 'Diese drei Dokumente schützen Sie und Ihre Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Sie handelt bei Urteilsunfähigkeit (ZGB Art. 360). Beides muss handschriftlich sein oder notariell beurkundet. Einmal erledigt — dauerhaft abgelegt.', du: 'Diese drei Dokumente schützen Dich und Deine Angehörigen: Die Patientenverfügung regelt medizinische Entscheide (ZGB Art. 370). Der Vorsorgeauftrag bestimmt, wer für Dich handelt bei Urteilsunfähigkeit (ZGB Art. 360). Beides muss handschriftlich sein oder notariell beurkundet. Einmal erledigt — dauerhaft abgelegt.' },
     },
   },
+  itemized: {
+    add: 'Posten hinzufügen',
+    sum: 'Summe',
+    namePlaceholder: 'Bezeichnung',
+    amountLabel: 'Betrag in Franken',
+    remove: 'Posten entfernen',
+  },
   common: {
     appName: 'Maloja Plana',
     appTagline: 'Alles Wichtige an einem Ort.',
