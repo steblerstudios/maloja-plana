@@ -422,7 +422,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
         title: b.title,
         style: { background: 'none', border: 'none', padding: '4px', cursor: onSelectChapter ? 'pointer' : 'default', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '3px', fontFamily: 'inherit' },
       },
-        React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, cutColor: palette.surface, size: 40, ripeness: b.pct / 100 }),
+        React.createElement(FruchtMitIcon, { fruit: b.fruit, iconName: b.iconName, color: b.color, size: 50, ripeness: b.pct / 100 }),
         React.createElement('span', { style: { fontSize: '9px', color: palette.mid, maxWidth: '58px', lineHeight: 1.15, textAlign: 'center' } }, b.short || b.title)
       ))
     ) : null,
