@@ -466,10 +466,20 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
             // nicht speichenartig (der Kontrollpunkt liegt näher am Stamm und höher).
             const mx = forkX + (a.x - forkX) * 0.30;
             const my = forkY - (forkY - a.y) * 0.58;
+            // Verjüngter Ast: als gefüllte Form (dick am Stamm, dünn zur Frucht) statt
+            // gleichdicker Linie — so wirkt er gewachsen, nicht gezeichnet. Die Breite wird
+            // senkrecht zur Wuchsrichtung abgetragen und läuft zur Fruchtspitze aus.
+            const dxB = a.x - forkX, dyB = a.y - forkY;
+            const lenB = Math.hypot(dxB, dyB) || 1;
+            const nx = -dyB / lenB, ny = dxB / lenB;
+            const oL = (w, x, y) => (x + nx * w).toFixed(1) + ' ' + (y + ny * w).toFixed(1);
+            const oR = (w, x, y) => (x - nx * w).toFixed(1) + ' ' + (y - ny * w).toFixed(1);
+            const wB = 2.1, wM = 1.2, wT = 0.45;
             return React.createElement('path', {
               key: 'branch-' + b.key,
-              d: 'M ' + forkX + ' ' + forkY + ' Q ' + mx + ' ' + my + ' ' + a.x.toFixed(1) + ' ' + a.y.toFixed(1),
-              fill: 'none', stroke: palette.sage, strokeWidth: 2.2, strokeLinecap: 'round',
+              d: 'M ' + oL(wB, forkX, forkY) + ' Q ' + oL(wM, mx, my) + ' ' + oL(wT, a.x, a.y) +
+                 ' L ' + oR(wT, a.x, a.y) + ' Q ' + oR(wM, mx, my) + ' ' + oR(wB, forkX, forkY) + ' Z',
+              fill: palette.sage, stroke: 'none',
               opacity: 0.32 + (b.pct / 100) * 0.28,
             });
           })
