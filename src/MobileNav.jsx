@@ -114,7 +114,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           color: palette.mid, fontSize: text.sm, fontFamily: "inherit",
         }
       },
-        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage } }, '🧭'),
+        React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0, width: '16px', height: '16px', display: 'inline-flex' } }, renderIcon('info', '16px')),
         t('tour.reopen')
       ) : null,
 
