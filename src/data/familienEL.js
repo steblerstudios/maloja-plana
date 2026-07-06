@@ -6,15 +6,18 @@
 // sind gelistet ('has'); alle anderen zeigen den Eintrag GAR NICHT (kein falsches
 // Versprechen). Kein Rechner — die Einkommensgrenzen/Regeln variieren je Kanton.
 //
-// Alle URLs 2026-07 einzeln web-verifiziert (offizielle Kantonsportale):
-//   SO — so.ch (Familienergänzungsleistungen, Amt für Gesellschaft und Soziales)
+// Alle URLs 2026-07 einzeln web-verifiziert (offizielle Kantonsportale). Dies sind die
+// vier kanonischen Familien-EL-Kantone (TI Pionier 1997, VD, SO, GE):
+//   TI — ti.ch (Assegno familiare integrativo AFI + Assegno di prima infanzia API)
 //   VD — vd.ch (Prestations complémentaires cantonales pour familles, PC Familles)
-// Bekannte Kandidaten zum Ergänzen, sobald offizielle URL verifiziert: TI (Assegni
-// familiari integrativi/di prima infanzia — Pionier), evtl. GE. NICHT ungeprüft raten.
+//   SO — so.ch (Familienergänzungsleistungen, Amt für Gesellschaft und Soziales)
+//   GE — ge.ch (Prestations complémentaires familiales, PCFam)
 
 const FAMILIEN_EL = {
-  SO: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/kinder-jugendliche-und-familien/familienergaenzungsleistungen/',
+  TI: 'https://www4.ti.ch/dss/ias/prestazioni-e-contributi/scheda/p/s/dettaglio/assegno-familiare-integrativo-afi-e-assegno-di-prima-infanzia-api',
   VD: 'https://www.vd.ch/aides-financieres-et-soutien-social/aides-financieres-et-comment-les-demander/pc-familles',
+  SO: 'https://so.ch/verwaltung/departement-des-innern/amt-fuer-gesellschaft-und-soziales/kinder-jugendliche-und-familien/familienergaenzungsleistungen/',
+  GE: 'https://www.ge.ch/demander-prestations-complementaires-familiales',
 };
 
 // Liefert { has, url } für einen Kanton. Kanton ohne Familien-EL → has:false (Eintrag
