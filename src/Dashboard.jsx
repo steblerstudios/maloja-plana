@@ -1276,6 +1276,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
             { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
           ] },
+          { label: t('dashboard.toolGroups.gesundheit'), items: [
+            { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
+          ] },
           { label: t('dashboard.toolGroups.support'), items: [
             { label: t('lebenszustaende.pageTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
             { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
