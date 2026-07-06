@@ -34,7 +34,7 @@
 | GL | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | ZG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | FR | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
-| SO | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
+| SO | ✅ | ✅ FerienPass A-Welle (mit KL halber Preis) | 🔎 | 🔎 | 🔎 |
 | BS | ✅ | ✅ Familienpass Region Basel | ✅ Volkszahnklinik | ✅ VHS beider Basel | 🔎 |
 | BL | ✅ | ✅ Familienpass Region Basel | 🔎 | ✅ VHS beider Basel | 🔎 |
 | SH | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
@@ -42,7 +42,7 @@
 | AI | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | SG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | GR | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
-| AG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 (Pfad 404) |
+| AG | ✅ | ✅ FerienPass A-Welle (mit KL halber Preis) | 🔎 | 🔎 | 🔎 (Pfad 404) |
 | TG | ✅ | 🔎 | 🔎 | 🔎 | 🔎 |
 | TI | check (national) | 🔎 | 🔎 | 🔎 | 🔎 |
 | VD | ✅ CarteCulture | 🔎 | 🔎 | 🔎 | 🔎 |
