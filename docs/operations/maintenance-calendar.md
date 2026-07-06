@@ -32,8 +32,9 @@
 | Kantonal Links stichprobenartig prüfen | 5 zufällige Links aus `src/data/direktLinks.js` öffnen | 10 Min |
 | GitHub Actions Status prüfen | CI/Deploy Workflows grün? | 5 Min |
 | Bundle-Grösse prüfen | `npm run build` — kein Chunk > 300KB gzip | 5 Min |
+| Analytics-Zahlen ablesen | Server-Log-Statistik (Infomaniak) → Pitch-Zeile ausfüllen, siehe [analytics-weg1-anleitung.md](analytics-weg1-anleitung.md) | 5 Min |
 
-**Geschätzter Gesamtaufwand pro Quartal:** 45 Minuten
+**Geschätzter Gesamtaufwand pro Quartal:** 50 Minuten
 
 ---
 
