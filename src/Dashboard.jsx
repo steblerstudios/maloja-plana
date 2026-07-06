@@ -419,10 +419,11 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     // Frucht trägt weiterhin das Bereichs-Icon als Negativ. Klick → Kapitel.
     (bereiche && bereiche.length) ? (() => {
       const n = bereiche.length;
-      const VB_W = 320, VB_H = 276;
-      const forkX = 160, forkY = 152, groundY = 258;
-      // Kronenbogen: Früchte entlang eines Halbkreis-Bogens (Mitte oben, aussen tiefer).
-      const cx = 160, rx = 118, cy = 108, ry = 62;
+      const VB_W = 340, VB_H = 258;
+      // Kurzer Stamm, damit der Baum gewachsen statt schirmartig wirkt.
+      const forkX = 170, forkY = 176, groundY = 244;
+      // Runder, höherer Kronenbogen (mehr Höhen-Abstand zwischen benachbarten Früchten).
+      const cx = 170, rx = 112, cy = 118, ry = 86;
       const anchor = (i) => {
         const tt = n === 1 ? 0.5 : i / (n - 1);
         const ang = Math.PI * (1 - tt);
@@ -431,9 +432,9 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
       const avg = Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / n);
       // 4 Wuchsstufen des ganzen Baums → Laubmasse.
       const stage = avg >= 70 ? 4 : avg >= 40 ? 3 : avg >= 15 ? 2 : 1;
-      const foliageOp = [0, 0.05, 0.08, 0.11, 0.15][stage];
+      const foliageOp = [0, 0.06, 0.10, 0.13, 0.17][stage];
       return React.createElement('div', {
-        style: { position: 'relative', width: '100%', maxWidth: '360px', margin: '0 auto', padding: '2px 0 4px' },
+        style: { position: 'relative', width: '100%', maxWidth: '420px', margin: '0 auto', padding: '2px 0 4px' },
       },
         React.createElement('svg', {
           viewBox: '0 0 ' + VB_W + ' ' + VB_H, width: '100%',
@@ -441,15 +442,16 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
           style: { display: 'block' },
         },
           // Boden — ruhiger Schatten
-          React.createElement('ellipse', { cx: forkX, cy: groundY + 2, rx: 66, ry: 6, fill: palette.sage, opacity: 0.10 }),
-          // Laubkrone — wächst mit der Wuchsstufe
-          foliageOp > 0 ? React.createElement('ellipse', { cx: cx, cy: cy - 6, rx: rx * 0.96 + 14, ry: ry + 20, fill: palette.sage, opacity: foliageOp }) : null,
-          stage >= 3 ? React.createElement('ellipse', { cx: cx - 46, cy: cy + 8, rx: 54, ry: 40, fill: palette.sage, opacity: foliageOp * 0.7 }) : null,
-          stage >= 3 ? React.createElement('ellipse', { cx: cx + 46, cy: cy + 8, rx: 54, ry: 40, fill: palette.sage, opacity: foliageOp * 0.7 }) : null,
-          // Stamm — deine Angaben tragen den Baum
+          React.createElement('ellipse', { cx: forkX, cy: groundY + 3, rx: 62, ry: 6, fill: palette.sage, opacity: 0.10 }),
+          // Laubkrone — dichter, runder Körper, wächst mit der Wuchsstufe (4 Stufen).
+          foliageOp > 0 ? React.createElement('ellipse', { cx: cx, cy: cy - 12, rx: rx * 0.94 + 22, ry: ry + 4, fill: palette.sage, opacity: foliageOp }) : null,
+          stage >= 2 ? React.createElement('ellipse', { cx: cx - 56, cy: cy, rx: 64, ry: 54, fill: palette.sage, opacity: foliageOp * 0.78 }) : null,
+          stage >= 2 ? React.createElement('ellipse', { cx: cx + 56, cy: cy, rx: 64, ry: 54, fill: palette.sage, opacity: foliageOp * 0.78 }) : null,
+          stage >= 4 ? React.createElement('ellipse', { cx: cx, cy: cy + 26, rx: 80, ry: 46, fill: palette.sage, opacity: foliageOp * 0.6 }) : null,
+          // Stamm — kurz und tragend; leichte Wurzel-Verbreiterung am Boden.
           React.createElement('path', {
-            d: 'M ' + (forkX - 4) + ' ' + groundY + ' C ' + (forkX - 6) + ' ' + (groundY - 44) + ' ' + (forkX + 6) + ' ' + (forkY + 34) + ' ' + forkX + ' ' + forkY,
-            fill: 'none', stroke: palette.sage, strokeWidth: 7, strokeLinecap: 'round', opacity: 0.5,
+            d: 'M ' + (forkX - 5) + ' ' + groundY + ' C ' + (forkX - 7) + ' ' + (groundY - 30) + ' ' + (forkX + 7) + ' ' + (forkY + 26) + ' ' + forkX + ' ' + forkY,
+            fill: 'none', stroke: palette.sage, strokeWidth: 8, strokeLinecap: 'round', opacity: 0.5,
           }),
           // Äste — je ein Ast zum Frucht-Anker
           ...bereiche.map((b, i) => {
