@@ -46,6 +46,7 @@ export default {
         alimente: { titel: 'Avance sur pensions & aide au recouvrement', text: 'Si les contributions d’entretien n’arrivent pas, la commune peut les avancer et aider à les recouvrer — pour que l’enfant ne manque de rien.' },
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Les familles monoparentales ont souvent droit à une aide pour les primes d’assurance-maladie — pour le parent et les enfants.' },
         familienzulagen: { titel: 'Allocations familiales', text: 'Allocations pour enfant et de formation par enfant — récupérables rétroactivement si oubliées. Elles suivent le parent qui travaille.' },
+        betreuungsgutscheine: { titel: 'Bons de garde (crèche & accueil)', text: 'De nombreuses communes et cantons réduisent le coût de l’accueil extrafamilial selon le revenu — souvent méconnu. Renseignez-vous auprès de votre commune sur les bons de garde ou les places subventionnées.' },
         sozialhilfe: { titel: 'Aide sociale complémentaire', text: 'L’aide sociale reconnaît les besoins accrus d’un ménage monoparental et peut compléter un faible revenu.' },
         steuern: { titel: 'Barème parental & déduction pour enfants', text: 'Les parents seuls sont imposés au barème parental plus bas et peuvent déduire les frais pour enfants et garde.' },
       },

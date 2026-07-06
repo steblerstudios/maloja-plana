@@ -47,6 +47,7 @@ export default {
         alimente: { titel: 'Avanzament dals alimors & agid d’incasso', text: 'Sche las contribuziuns d’mantegniment n’arrivan betg, po la vischnanca las avanzar ed gidar a las incassar — uschia che l’uffant na resta betg senza.' },
         ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Chasadas cun in sulet genitur han savens dretg sin in agid per las premias da la cassa da malsauns — per il genitur ed ils uffants.' },
         familienzulagen: { titel: 'Supplements da famiglia', text: 'Supplements per uffants e da furmaziun per mintga uffant — recuperabels retroactivamain sche emblidads. Els suondan il genitur che lavura.' },
+        betreuungsgutscheine: { titel: 'Buns da chüra (structura da di)', text: 'Blers vischnancas e chantuns reduceschan ils custs da la chüra extrafamigliara tenor l’entrada — savens nunenconuschent. Dumonda tar tia vischnanca per buns da chüra u plazzas subvenziunadas.' },
         sozialhilfe: { titel: 'Agid social cumplementar', text: 'L’agid social renconuscha il basegn pli grond d’ina chasada cun in sulet genitur e po cumplettar in bass retgav.' },
         steuern: { titel: 'Tarifa per geniturs & deducziun per uffants', text: 'Geniturs suls vegnan taxads cun la tarifa pli bassa per geniturs e pon deducir las custas per uffants e la chüra.' },
       },
