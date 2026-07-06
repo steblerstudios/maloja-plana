@@ -2199,6 +2199,12 @@ export default {
     action: "Avrir la carta d'urgenza",
   },
 
+  glossar: {
+    ipv: 'IPV — reducziun individuala da premias: in agid chantunal a tia premia da la cassa da malsauns sche l’entrada è bassa avunda.',
+    skos: 'SKOS — Conferenza svizra per l’agid social: fixescha las directivas per l’agid social.',
+    el: 'PC — prestaziuns cumplementaras: cumpleteschan l’AVS u l’AI sche la renta na basta betg.',
+    mietbeitraege: 'Contribuziuns da fittanza — contribuziuns chantunalas a la fittanza per chasadas cun bassa entrada.',
+  },
   settingsDrawer: {
     accountTitle: 'Conto & datas',
     accountNote: 'Tut resta local sin quest apparat — nagin conto, nagin login necessari. Tias datas ta appartegnan.',

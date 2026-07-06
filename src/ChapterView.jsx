@@ -1699,15 +1699,27 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onClick: toggleSecondary,
           'aria-expanded': showSecondary,
           style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: text.sm, color: palette.mid, letterSpacing: '0.3px',
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px',
+            fontSize: text.sm, color: palette.text, letterSpacing: '0.3px',
             padding: '8px 16px',
             fontFamily: fontFamily,
           }
         },
-          showSecondary
-            ? 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.less')
-            : 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
+          React.createElement('span', null,
+            showSecondary
+              ? tr('chapterView.disclosure.' + chapter.key + '.less')
+              : tr('chapterView.disclosure.' + chapter.key + '.more')
+          ),
+          // Aufklapp-Pfeil — dreht beim Öffnen (macht klar: es kommen mehr Felder, keine Info).
+          React.createElement('span', {
+            'aria-hidden': 'true',
+            style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: showSecondary ? 'rotate(180deg)' : 'none', color: palette.mid },
+          },
+            React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+              React.createElement('polyline', { points: '6 9 12 15 18 9' })
+            )
+          )
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sage, marginTop: space.xs }
