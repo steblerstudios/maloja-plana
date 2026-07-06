@@ -1943,6 +1943,16 @@ export default {
     restored: 'Restituì',
   },
 
+  tour: {
+    a11yLabel: 'Rundgang tras Maloja',
+    reopen: 'Reaviar il rundgang',
+    next: 'Vinavant', back: 'Enavos', skip: 'Sursiglir', later: 'Pli tard', done: 'Finì',
+    welcome: { title: 'Bainvegni tar Maloja', text: 'Tes lieu tranquil per tut il Svizzer — palpiris, budget, assicuranzas, termins. In curt rundgang, adina da sursiglir.' },
+    berge: { title: 'Il progress', text: 'Las muntognas mussan a moda tranquilla quant lunsch che tes urden da vita è endrizzà — senza pressiun.' },
+    anspruch: { title: 'Pussaivels dretgs', text: 'Qua mussa Maloja sin tge che ti pudessas avair dretg — tenor quai che ti has tschernì al cumenzament.' },
+    privacy: { title: 'Tut resta sin l\'apparat', text: 'Tias datas restan sin quest apparat. Nagin conto, nagina cloud, nagin tracking. Lain cumenzar.' },
+  },
+
   onboarding: {
     welcome: 'Bainvegni tar Maloja Plana',
     subtitle: { sie: 'Voss organisatur svizzer persunala — 100% privat e sin Voss apparat.', du: 'Tes organisatur svizzer persunala — 100% privat e sin Tes apparat.' },
