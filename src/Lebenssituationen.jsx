@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
+import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
+import { lookupPLZ } from './data/plzGemeinde.js';
 
 // ─── Lebenssituationen (Subpage) ──────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -8,8 +10,19 @@ import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 // lokal gespeichert (or5_-Prefix). Reine Daten aus data/lebenszustaende.js.
 // Vom Dashboard auf eine eigene Subpage gezogen (ruhigerer „Ort"):
 // erreichbar über Link in „Was steht mir zu?", Werkzeug und Menü.
-const Lebenssituationen = ({ palette, t, onNavigate }) => {
+const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   const storageKey = 'or5_lebenszustaende';
+
+  // Wohnkanton für kanton-bewusste Angebote — aus der PLZ abgeleitet (wie in UmzugAblauf),
+  // Fallback auf ein explizit erfasstes basis.canton. Kein Auto-Erkennen von Anspruch, nur Ort.
+  const userCanton = (() => {
+    const plz = (data?.wohnen?.postalCode || '').trim();
+    if (plz.length >= 4) {
+      const gem = lookupPLZ(plz);
+      if (gem && gem.length) return gem[0].kanton;
+    }
+    return (data?.basis?.canton || '').trim() || null;
+  })();
   const [active, setActive] = useState(() => {
     try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); } catch { return []; }
   });
@@ -19,6 +32,50 @@ const Lebenssituationen = ({ palette, t, onNavigate }) => {
       try { localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* localStorage nicht verfügbar */ }
       return next;
     });
+  };
+
+  // Externe ↗-Karte (gleicher Stil wie die Berechtigungs-Karten), für regionale Angebote.
+  const extCard = (key, url, titel, textStr) =>
+    React.createElement('a', {
+      key, href: url, target: '_blank', rel: 'noopener noreferrer',
+      style: {
+        display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
+        padding: '10px 12px', marginBottom: space.xs + 'px',
+        background: palette.surface, color: palette.text, textDecoration: 'none',
+        border: '1px solid ' + palette.border + '44', borderRadius: radius.sm,
+        cursor: 'pointer', fontFamily: 'inherit',
+        transition: `border-color ${duration.normal}ms ${ease}`,
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
+      onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '44'; },
+    },
+      React.createElement('div', { key: 't', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel + ' ↗'),
+      React.createElement('div', { key: 'x', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed } }, textStr)
+    );
+
+  // Kanton-bewusster Regional-Block: zeigt konkrete Angebote ('has'), einen ruhigen
+  // Verweis auf die regionale KulturLegi ('check') oder würdevoll die Lücke ('none').
+  const renderRegionalAngebote = () => {
+    const regio = getRegionaleVerguenstigungen(userCanton);
+    const kids = [
+      React.createElement('div', {
+        key: 'h',
+        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.text, margin: space.sm + 'px 0 ' + space.xs + 'px 0' }
+      }, t('lebenszustaende.regio.title')),
+    ];
+    if (regio.state === 'has') {
+      kids.push(extCard('kulturlegiRegion', regio.kulturlegiUrl, t('lebenszustaende.regio.kulturlegiRegion'), t('lebenszustaende.regio.kulturlegiRegionText')));
+      regio.offers.forEach(o =>
+        kids.push(extCard(o.key, o.url, t('lebenszustaende.regio.offers.' + o.key + '.titel'), t('lebenszustaende.regio.offers.' + o.key + '.text'))));
+    } else if (regio.state === 'none') {
+      kids.push(React.createElement('div', {
+        key: 'none',
+        style: { fontSize: text.xs, color: palette.soft, fontStyle: 'italic', lineHeight: leading.relaxed, padding: '4px 2px' }
+      }, t('lebenszustaende.regio.noneNote')));
+    } else {
+      kids.push(extCard('kulturlegiRegion', regio.kulturlegiUrl, t('lebenszustaende.regio.checkTitle'), t('lebenszustaende.regio.checkText')));
+    }
+    return React.createElement('div', { key: 'regio' }, kids);
   };
 
   return React.createElement('div', { style: { maxWidth: '640px' } },
@@ -96,7 +153,9 @@ const Lebenssituationen = ({ palette, t, onNavigate }) => {
           return isExternal
             ? React.createElement('a', { key: b.key, href: b.url, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
             : React.createElement('button', { key: b.key, type: 'button', onClick: () => onNavigate(b.view), style: cardStyle, ...hover }, inner);
-        })
+        }),
+        // Kanton-bewusste regionale Vergünstigungen (nur bei markierten Zuständen).
+        z.zeigeRegionaleAngebote && renderRegionalAngebote()
       )
     )
   );
