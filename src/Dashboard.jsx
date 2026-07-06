@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
+import FruchtSilhouette from './FruchtSilhouette.jsx';
+import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 
@@ -350,6 +352,14 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
           onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
         },
           (() => {
+            const bereich = getBereichForChapter(ch.key);
+            // Die Frucht reift mit dem Ausfüllstand (Deckkraft), Farbe = Ast-Farbe.
+            const ripeness = 0.5 + (pct / 100) * 0.5;
+            if (bereich) {
+              return React.createElement('span', {
+                style: { width: '22px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: accent, opacity: ripeness },
+              }, React.createElement(FruchtSilhouette, { name: bereich.fruit, size: 18 }));
+            }
             const IconFn = Icons[ch.key];
             return React.createElement('span', {
               style: { width: '22px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: pct === 100 ? palette.sage : accent }
@@ -462,7 +472,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, simpleView }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, simpleView, isDarkMode }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -505,11 +515,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     return 'begonnen';
   };
 
-  const chapterAccentColor = {
+  // Ast-Farbe pro Kapitel — eigene Frucht-Farbe je Lebensbereich, theme-aware.
+  // (Früher 5 generische Palette-Töne mit Dopplungen; jetzt 7 distinkte Äste.)
+  const fallbackAccent = {
     basis: palette.sage, wohnen: palette.sage, finanzen: palette.gold,
     versicherungen: palette.sky, ausbildung: palette.sage,
     behoerden: palette.sand, notfall: palette.rose,
   };
+  const chapterAccentColor = Object.fromEntries(
+    chapters.map((ch) => {
+      const b = getBereichForChapter(ch.key);
+      return [ch.key, b ? (isDarkMode ? b.dark : b.light) : (fallbackAccent[ch.key] || palette.sage)];
+    })
+  );
 
   const getStatusColor = (pct, chKey) => {
     if (pct === 0) return chapterAccentColor[chKey] || palette.soft;
