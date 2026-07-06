@@ -39,6 +39,7 @@ export const BewilligungFristen = ({ palette, t, onNavigate }) => {
     ),
     React.createElement(AblaufStep, { palette, title: t('bewilligung.step4Title') },
       React.createElement('p', { style: s.stepText }, t('bewilligung.step4Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step4LinkIpv'), onClick: () => onNavigate('premium') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('bewilligung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
     // Verwandte Ereignisse (Matrix-Ebene)

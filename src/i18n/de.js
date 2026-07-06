@@ -356,6 +356,7 @@ export default {
     step3Link: 'Umzug-Ablauf ansehen',
     step4Title: '4 · Weiterdenken: C-Bewilligung',
     step4Text: 'Nach fünf bis zehn Jahren ununterbrochenem Aufenthalt kannst du je nach Nationalität die Niederlassungsbewilligung (C) beantragen — sie ist unbefristet und sicherer. Wichtig sind dabei die Integrationskriterien wie Sprache, Arbeit und keine Sozialhilfeabhängigkeit. Gut zu wissen: Die Prämienverbilligung (IPV) ist eine normale Unterstützung, keine Sozialhilfe — sie zählt nicht gegen deine Bewilligung. Lass aus Sorge kein Geld liegen, das dir zusteht.',
+    step4LinkIpv: 'Prämienverbilligung (IPV) prüfen',
     step4LinkSituation: 'Situation „Frisch zugezogen" ansehen',
     relatedTitle: 'Verwandte Ereignisse',
     relatedKkErst: 'Krankenkasse zum ersten Mal',
