@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
 import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
@@ -136,7 +137,7 @@ const LanguageSwitcher = ({ palette }) => {
       'aria-hidden': 'true',
       style: { position: 'absolute', insetInlineStart: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
     },
-      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
         React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
         React.createElement('path', { d: 'M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18' })
       )
@@ -196,8 +197,9 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       transition: `all ${duration.normal}ms ${ease}`,
     },
   },
-    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'currentColor' },
-      React.createElement('path', { d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0012 8.5v1.06a3.5 3.5 0 010 4.88V15.5a4.5 4.5 0 004.5-3.5z' })
+    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+      React.createElement('path', { d: 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z' }),
+      React.createElement('path', { d: 'M16 9 a5 5 0 0 1 0 6' })
     ),
     React.createElement('span', {
       style: { display: 'none' },
@@ -742,8 +744,8 @@ const AppInner = () => {
       onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
       style: { padding: '6px 9px', background: simpleView ? palette.sand + '30' : 'transparent', color: simpleView ? palette.sand : palette.mid, border: '1px solid ' + (simpleView ? palette.sand + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
     },
-      // Icon: 2×2-Kachelraster = „grosse Symbole"
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+      // Icon: 2×2-Kachelraster = „grosse Symbole" (Outline, konsistent mit dem Icon-Set)
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
         React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
         React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
         React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
@@ -907,10 +909,7 @@ const AppInner = () => {
         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
       }
     },
-      React.createElement('svg', { width: '12', height: '12', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round', 'aria-hidden': 'true' },
-        React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-        React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-      ),
+      React.createElement(TrustLockIcon, { size: 12, color: palette.sage }),
       React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
       isOffline && React.createElement('span', {
         role: 'status',

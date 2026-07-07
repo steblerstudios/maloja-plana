@@ -1,6 +1,7 @@
 import React, { useState, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
@@ -98,14 +99,7 @@ export const BetaGate = ({ children }) => {
           background: palette.sage + '0A', borderRadius: radius.sm,
         }
       },
-        React.createElement('svg', {
-          width: '14', height: '14', viewBox: '0 0 16 16', fill: 'none',
-          stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round',
-          'aria-hidden': 'true',
-        },
-          React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-          React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-        ),
+        React.createElement(TrustLockIcon, { size: 14, color: palette.sage }),
         React.createElement('span', {
           style: { fontSize: text.xs, color: palette.sage, lineHeight: leading.normal }
         }, t('trust.localBadge'))
@@ -154,7 +148,7 @@ export const BetaGate = ({ children }) => {
           fontSize: text.sm, fontWeight: weight.medium,
         }
       },
-        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
           React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
           React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
           React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
