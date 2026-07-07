@@ -1,0 +1,28 @@
+{
+  "name": "maloja-plana-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-Knowledge Backend für Maloja Plana (Phase 1: Konto + verschlüsseltes Backup)",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy"
+  },
+  "dependencies": {
+    "@fastify/cookie": "11.0.2",
+    "@fastify/cors": "11.2.0",
+    "@fastify/helmet": "13.0.2",
+    "@fastify/rate-limit": "11.1.0",
+    "@prisma/client": "6.19.3",
+    "@simplewebauthn/server": "13.3.2",
+    "fastify": "5.10.0"
+  },
+  "devDependencies": {
+    "prisma": "6.19.3"
+  }
+}
