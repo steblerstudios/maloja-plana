@@ -31,7 +31,7 @@ export const IvVerfahren = ({ palette, t, onNavigate }) => {
         reminder: { title: t('iv.reminderTitle'), dueDate: deadline, category: 'admin', recurrence: 'once' },
       })
     ),
-    React.createElement(AblaufStep, { palette, title: t('iv.step3Title') },
+    React.createElement(AblaufStep, { palette, title: t('iv.step3Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('iv.step3Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('iv.step3Link'), onClick: () => onNavigate('sozialhilfe') })
     ),
