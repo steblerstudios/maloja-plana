@@ -5,6 +5,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
+import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -35,6 +36,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [saeule3bInput, setSaeule3bInput] = useState(data.finanzen?.pension3bBalance ? String(Math.round(Number(data.finanzen.pension3bBalance))) : '');
   const [saeule3aAnnualInput, setSaeule3aAnnualInput] = useState(data.finanzen?.pension3a ? String(Math.round(Number(data.finanzen.pension3a))) : '');
   const [activeTab, setActiveTab] = useState('ahv');
+  // Kapitalbezugssteuer (Zukunft-Tab): Kanton aus den Basis-Daten vorbelegt, Anzahl
+  // gestaffelter Bezugsjahre für den Progressions-Vergleich.
+  const [kbKanton, setKbKanton] = useState(data.basis?.canton || '');
+  const [kbTranchen, setKbTranchen] = useState('3');
 
   // IK-Auszug (Beitragshistorie nachstellen): wird — anders als die übrigen Rechner-
   // Felder — in data.vorsorge.ikAuszug persistiert (die nachgestellte Historie ist
@@ -142,6 +147,21 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       einkommenPartner: Number(einkommenPartner) || 0,
     });
   }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear]);
+
+  // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
+  // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
+  // Kanton als Orientierung, plus Staffelungs-Vergleich (Progression).
+  const kapitalbezug = useMemo(() => {
+    const kapital = Math.round(projektion?.endsumme?.total || 0);
+    if (kapital <= 0) return null;
+    const kuerzel = kbKanton || null;
+    return {
+      kapital,
+      einzel: berechneKapitalbezug({ betrag: kapital, kuerzel, verheiratet }),
+      bandbreite: kuerzel ? null : kapitalsteuerBandbreite(kapital),
+      staffel: vergleicheStaffelung({ betrag: kapital, tranchen: Number(kbTranchen) || 3, kuerzel, verheiratet }),
+    };
+  }, [projektion, kbKanton, kbTranchen, verheiratet]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -637,7 +657,67 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
-      })()
+      })(),
+
+      // Steuer beim Kapitalbezug (2. Säule/3a als Kapital statt Rente) — einklappbar,
+      // rechnet auf dem voraussichtlichen Kapital. Bund exakt, Kanton Orientierung.
+      kapitalbezug && React.createElement('details', { style: s.intlDetails },
+        React.createElement('summary', { style: s.intlSummary }, t('vr.kbTitle')),
+        React.createElement('p', { style: s.intlIntro }, t('vr.kbIntro')),
+
+        // Kanton-Auswahl (aus Basis-Daten vorbelegt)
+        React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flexWrap: 'wrap', margin: space.sm + 'px 0 ' + space.xs + 'px' } },
+          React.createElement('label', { style: { ...s.label, marginBottom: 0 }, htmlFor: 'kbKanton' }, t('vr.kbCanton')),
+          React.createElement('select', { id: 'kbKanton', value: kbKanton, onChange: e => setKbKanton(e.target.value), style: { ...s.input, width: 'auto', cursor: 'pointer' } },
+            React.createElement('option', { value: '' }, t('vr.kbCantonNone')),
+            ...alleKapitalKantone().map(k => React.createElement('option', { key: k.kuerzel, value: k.kuerzel }, k.kuerzel + ' – ' + k.hauptort)))
+        ),
+        React.createElement('div', { style: s.sublabel }, t('vr.kbBasisHint')),
+
+        // Ergebnis auf dem voraussichtlichen Kapital
+        (() => {
+          const { kapital, einzel, bandbreite } = kapitalbezug;
+          if (einzel.hatKanton) {
+            return React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px' } },
+              React.createElement('div', { style: s.label }, t('vr.kbOnCapital', { betrag: fmt(kapital) })),
+              React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginTop: space.xs + 'px' } },
+                'CHF ' + fmt(einzel.total) + ' (' + t('vr.kbEffective', { pct: einzel.effektiverSatz }) + ')'),
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+                t('vr.kbFederal') + ' CHF ' + fmt(einzel.bund) + ' · ' + t('vr.kbCantonal') + ' CHF ' + fmt(einzel.kantonGemeinde) + ' (' + einzel.hauptort + ')'),
+              React.createElement('div', { style: { marginTop: space.xs + 'px', fontWeight: weight.semi, color: palette.sage } },
+                t('vr.kbNet') + ': CHF ' + fmt(einzel.netto))
+            );
+          }
+          return React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px' } },
+            React.createElement('div', { style: s.label }, t('vr.kbOnCapital', { betrag: fmt(kapital) })),
+            React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginTop: space.xs + 'px' } },
+              'CHF ' + fmt(bandbreite.minTotal) + ' – ' + fmt(bandbreite.maxTotal)),
+            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+              t('vr.kbRange', { minK: bandbreite.minHauptort, maxK: bandbreite.maxHauptort })),
+            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' } },
+              t('vr.kbFederal') + ' CHF ' + fmt(einzel.bund) + ' (' + t('vr.kbExact') + ')'),
+            React.createElement('div', { style: { fontSize: text.xs, color: palette.gold, marginTop: space.xs + 'px', lineHeight: 1.5 } }, t('vr.kbPickCanton'))
+          );
+        })(),
+
+        // Staffelung: Progression sichtbar machen
+        kapitalbezug.staffel && React.createElement('div', { style: { ...s.section, marginTop: space.sm + 'px', background: palette.sage + '11', border: '1px solid ' + palette.sage + '33' } },
+          React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', flexWrap: 'wrap' } },
+            React.createElement('span', { style: { ...s.label, marginBottom: 0 } }, t('vr.kbStaffelTitle')),
+            React.createElement('select', { value: kbTranchen, onChange: e => setKbTranchen(e.target.value), 'aria-label': t('vr.kbStaffelTitle'), style: { ...s.input, width: 'auto', padding: '4px 8px', fontSize: text.sm, cursor: 'pointer' } },
+              ...['2', '3', '4', '5'].map(n => React.createElement('option', { key: n, value: n }, t('vr.kbStaffelYears', { n }))))
+          ),
+          kapitalbezug.staffel.ersparnis > 0
+            ? React.createElement('div', { style: { marginTop: space.xs + 'px' } }, t('vr.kbStaffelResult', { total: fmt(kapitalbezug.staffel.gestaffeltTotal), einmal: fmt(kapitalbezug.staffel.einmalTotal), ersparnis: fmt(kapitalbezug.staffel.ersparnis) }))
+            : React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('vr.kbStaffelNone')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: 1.5 } }, t('vr.kbStaffelHint'))
+        ),
+
+        // Disclaimer + amtlicher Rechner
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbDisclaimer')),
+        React.createElement('a', { href: 'https://swisstaxcalculator.estv.admin.ch/', target: '_blank', rel: 'noopener noreferrer', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink') + ' →'),
+        React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource')))
+      )
     ),
 
     // Vergleich Tab
