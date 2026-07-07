@@ -1148,7 +1148,7 @@ const AppInner = () => {
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),
         view === 'iv' && React.createElement(IvVerfahren, { palette, t, onNavigate: handleNavigate }),
-        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
