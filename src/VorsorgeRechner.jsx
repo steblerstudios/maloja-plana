@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -29,6 +29,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
   const [bvgGuthaben, setBvgGuthaben] = useState('');
+  const [rendite, setRendite] = useState('1.5');
+  const [saeule3bInput, setSaeule3bInput] = useState(data.finanzen?.pension3bBalance ? String(Math.round(Number(data.finanzen.pension3bBalance))) : '');
   const [activeTab, setActiveTab] = useState('ahv');
 
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
@@ -64,6 +66,23 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       austrittsalter: parsedBezugAlter,
     });
   }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter]);
+
+  const projektion = useMemo(() => {
+    if (!alter) return null;
+    const bvgSerie = (bvgResult && bvgResult.jahresDetail || []).map(d => d.guthaben);
+    return projiziereVorsorge({
+      alter,
+      austrittsalter: parsedBezugAlter,
+      bvgHeute: Number(bvgGuthaben) || 0,
+      bvgSerie,
+      s3aBalance: saeule3aBalance,
+      s3aAnnual: saeule3aAnnual,
+      s3aRendite: Number(rendite) || 0,
+      s3bBalance: Number(saeule3bInput) || 0,
+      s3bAnnual: 0,
+      s3bRendite: Number(rendite) || 0,
+    });
+  }, [alter, parsedBezugAlter, bvgGuthaben, bvgResult, saeule3aBalance, saeule3aAnnual, saeule3bInput, rendite]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -122,6 +141,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
       React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
       React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
+      React.createElement('button', { style: s.tab(activeTab === 'zukunft'), onClick: () => setActiveTab('zukunft') }, t('vr.tabZukunft')),
       React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
     ),
 
@@ -220,6 +240,59 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
         t('vr.bvgNichtVersichert') + ' (< CHF ' + fmt(BVG_PARAMS.eintrittsschwelle) + ')'
       ),
       !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt'))
+    ),
+
+    // Zukunft Tab — Projektion 2./3. Säule bis zum Rücktritt
+    activeTab === 'zukunft' && React.createElement(React.Fragment, null,
+      React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
+      React.createElement('div', { style: s.section },
+        React.createElement('div', { style: s.row },
+          field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
+          field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' })
+        )
+      ),
+      !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt')),
+      projektion && projektion.timeline.length > 1 && (() => {
+        const pts = projektion.timeline;
+        const N = pts.length;
+        const maxT = Math.max(1, ...pts.map(p => p.total));
+        const W = 340, H = 170, padL = 6, padR = 6, padT = 12, padB = 20;
+        const xAt = (i) => padL + (N <= 1 ? 0 : (i / (N - 1))) * (W - padL - padR);
+        const yAt = (v) => (H - padB) - (v / maxT) * (H - padT - padB);
+        const band = (lower, upper) => {
+          let d = 'M ' + xAt(0).toFixed(1) + ' ' + yAt(upper[0]).toFixed(1);
+          for (let i = 1; i < N; i++) d += ' L ' + xAt(i).toFixed(1) + ' ' + yAt(upper[i]).toFixed(1);
+          for (let i = N - 1; i >= 0; i--) d += ' L ' + xAt(i).toFixed(1) + ' ' + yAt(lower[i]).toFixed(1);
+          return d + ' Z';
+        };
+        const zero = pts.map(() => 0);
+        const bvgTop = pts.map(p => p.bvg);
+        const s3aTop = pts.map(p => p.bvg + p.s3a);
+        const totTop = pts.map(p => p.total);
+        const colBvg = palette.sky, col3a = palette.gold, col3b = palette.sage;
+        const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
+          React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
+        const end = projektion.endsumme;
+        return React.createElement('div', null,
+          React.createElement('div', { style: s.highlight },
+            React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
+            React.createElement('div', { style: s.big }, 'CHF ' + fmt(end.total)),
+            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+              'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
+          ),
+          React.createElement('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%', role: 'img', 'aria-label': t('vr.zukunftEnde') + ': CHF ' + fmt(end.total), style: { display: 'block', marginBottom: space.sm + 'px' } },
+            React.createElement('line', { x1: padL, y1: H - padB, x2: W - padR, y2: H - padB, stroke: palette.border, strokeWidth: 1 }),
+            React.createElement('path', { d: band(zero, bvgTop), fill: colBvg, opacity: 0.55 }),
+            React.createElement('path', { d: band(bvgTop, s3aTop), fill: col3a, opacity: 0.6 }),
+            React.createElement('path', { d: band(s3aTop, totTop), fill: col3b, opacity: 0.5 }),
+            React.createElement('text', { x: padL, y: H - 6, fill: palette.mid, fontSize: 9, fontFamily: 'inherit' }, t('vr.zukunftHeute') + ' (' + pts[0].alter + ')'),
+            React.createElement('text', { x: W - padR, y: H - 6, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'end' }, String(end.alter))
+          ),
+          React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px' } },
+            legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
+        );
+      })()
     ),
 
     // Vergleich Tab

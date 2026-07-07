@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   berechneAltersrente, vergleicheVorbezugAufschub,
-  bvgKoordinationsabzug, berechneBVGGuthaben,
+  bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
   AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION,
 } from '../ahvRechner.js';
 
@@ -207,6 +207,60 @@ describe('ahvRechner', () => {
       expect(BVG_PARAMS.eintrittsschwelle).toBe(22680);
       expect(BVG_PARAMS.koordinationsabzug).toBe(26460);
       expect(BVG_PARAMS.gutschriften.length).toBe(4);
+    });
+  });
+
+  describe('projiziereVorsorge', () => {
+    it('Zeitachse hat n+1 Punkte (heute + je ein Jahr bis Rücktritt)', () => {
+      const r = projiziereVorsorge({ alter: 40, austrittsalter: 65 });
+      expect(r.timeline.length).toBe(26);
+      expect(r.timeline[0].alter).toBe(40);
+      expect(r.timeline[25].alter).toBe(65);
+    });
+
+    it('Startpunkt (t=0) spiegelt die heutigen Guthaben', () => {
+      const r = projiziereVorsorge({ alter: 50, austrittsalter: 65, bvgHeute: 50000, s3aBalance: 20000, s3bBalance: 5000 });
+      expect(r.timeline[0]).toMatchObject({ bvg: 50000, s3a: 20000, s3b: 5000, total: 75000 });
+      expect(r.startsumme.total).toBe(75000);
+    });
+
+    it('Rendite 0 % → linearer Aufbau (Bestand + n·Beitrag)', () => {
+      const r = projiziereVorsorge({ alter: 60, austrittsalter: 65, s3aBalance: 20000, s3aAnnual: 1000, s3aRendite: 0 });
+      // 5 Jahre × 1000 auf 20000
+      expect(r.endsumme.s3a).toBe(25000);
+    });
+
+    it('Beitrag 0 → reiner Zinseszins', () => {
+      const r = projiziereVorsorge({ alter: 62, austrittsalter: 65, s3aBalance: 10000, s3aAnnual: 0, s3aRendite: 2 });
+      // 10000 · 1.02^3 = 10612.08 → jährlich gerundet 10612
+      expect(r.endsumme.s3a).toBe(10612);
+    });
+
+    it('Zins auf Anfangsbestand, Beitrag danach (Konvention wie BVG)', () => {
+      const r = projiziereVorsorge({ alter: 64, austrittsalter: 65, s3aBalance: 10000, s3aAnnual: 5000, s3aRendite: 1 });
+      // Jahr 1: 10000 + 100 (Zins) + 5000 = 15100
+      expect(r.timeline[1].s3a).toBe(15100);
+    });
+
+    it('BVG-Reihe wird jahresweise durchgereicht', () => {
+      const r = projiziereVorsorge({ alter: 62, austrittsalter: 65, bvgHeute: 40000, bvgSerie: [50000, 60000, 70000] });
+      expect(r.timeline[0].bvg).toBe(40000);
+      expect(r.timeline[1].bvg).toBe(50000);
+      expect(r.timeline[3].bvg).toBe(70000);
+      expect(r.endsumme.bvg).toBe(70000);
+    });
+
+    it('startjahr steuert die Jahreszahlen', () => {
+      const r = projiziereVorsorge({ alter: 40, austrittsalter: 42, startjahr: 2026 });
+      expect(r.timeline[0].jahr).toBe(2026);
+      expect(r.endsumme.jahr).toBe(2028);
+    });
+
+    it('total ist immer die Summe der drei Säulen', () => {
+      const r = projiziereVorsorge({ alter: 45, austrittsalter: 65, bvgHeute: 30000, bvgSerie: [], s3aBalance: 10000, s3aAnnual: 3000, s3bBalance: 2000, s3bAnnual: 500 });
+      for (const p of r.timeline) {
+        expect(p.total).toBe(p.bvg + p.s3a + p.s3b);
+      }
     });
   });
 });
