@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 const getDaysUntilExpiry = (expiryDate) => {
   const today = new Date();
@@ -313,19 +314,12 @@ export const DocumentTresor = ({
 
     // Document list
     sortedDocs.length === 0
-      ? React.createElement('div', {
-          style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' }
-        },
-          React.createElement('div', { style: { marginBottom: '12px' } },
-            React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
-          ),
-          React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
-            t('tresor.noDocuments'),
-          ),
-          React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: '1.6' } },
-            t('tresor.noDocumentsHint'),
-          ),
-        )
+      ? React.createElement(EmptyState, {
+          palette,
+          icon: React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
+          title: t('tresor.noDocuments'),
+          description: t('tresor.noDocumentsHint'),
+        })
       : activeTab === 'all'
         // Grouped view — documents under chapter dividers
         ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, maxHeight: '600px', overflowY: 'auto' } },
