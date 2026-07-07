@@ -176,7 +176,16 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
       (benefits.length > 0 || canton) && React.createElement('div', {
         style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm }
       }, t('dashboard.quickCheckHint'))
-    )
+    ),
+    // Zum vollständigen Leistungs-Schnellcheck (eigene Ansicht, mehr Angaben + Tacho)
+    React.createElement('button', {
+      onClick: () => onNavigate('schnellcheck'),
+      style: {
+        background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+        fontSize: text.xs, color: palette.sand, fontFamily: 'inherit',
+        fontWeight: weight.medium, marginTop: space.md,
+      }
+    }, t('dashboard.quickCheckAllLeistungen'))
   );
 };
 
