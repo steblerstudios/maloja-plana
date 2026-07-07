@@ -188,7 +188,7 @@ export const DocumentTresor = ({
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
-          style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '↙'),
         React.createElement('button', {
           'aria-label': t('common.edit'),

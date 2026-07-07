@@ -429,7 +429,7 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
               href: CONTRIBUTION_URL, target: '_blank', rel: 'noopener',
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: '#fff', borderRadius: radius.sm,
+                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))

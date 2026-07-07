@@ -113,7 +113,7 @@ export const NotificationSettings = ({ palette, t }) => {
       !isGranted && isSupported && !isDenied && React.createElement('button', {
         onClick: handleRequestPermission,
         style: {
-          padding: '10px 16px', background: palette.sand, color: '#000',
+          padding: '10px 16px', background: palette.sand, color: palette.onSand,
           border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontWeight: weight.semi, fontSize: text.sm, fontFamily: fontFamily,
         }

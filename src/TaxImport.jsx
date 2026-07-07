@@ -41,7 +41,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
 
   const card = { background: palette.surface, padding: '20px', borderRadius: radius.md, border: '1px solid ' + palette.border };
   const h2 = { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm };
-  const buttonStyle = { padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm };
+  const buttonStyle = { padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm };
 
   const fieldRow = (f, mode) => React.createElement('div', {
     key: mode + f.target,
