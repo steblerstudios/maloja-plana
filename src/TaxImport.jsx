@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
 // Spiegelt das Muster von BudgetImport: Datei wählen -> Vorschau -> bestätigen.
@@ -41,7 +42,6 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
 
   const card = { background: palette.surface, padding: '20px', borderRadius: radius.md, border: '1px solid ' + palette.border };
   const h2 = { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm };
-  const buttonStyle = { padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm };
 
   const fieldRow = (f, mode) => React.createElement('div', {
     key: mode + f.target,
@@ -100,7 +100,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
                   preview.kept.map(f => fieldRow(f, 'keep'))
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
-                  preview.applied.length > 0 && React.createElement('button', { onClick: handleConfirm, style: { ...buttonStyle, flex: 1 } }, '✓ ' + t('common.save')),
+                  preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, '✓ ' + t('common.save')),
                   React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
                 )
               )
