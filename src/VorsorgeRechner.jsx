@@ -560,7 +560,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               } })
           ),
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
-            legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+            legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
