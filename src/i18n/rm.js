@@ -3410,6 +3410,7 @@ export default {
   search: {
     title: 'Tschertgar',
     placeholder: 'Tschertgar utensils e chapitels…',
+    emptyTitle: 'Nagins resultats',
     empty: 'Nagut chattà per «{query}». Emprova in auter term.',
     toolsTitle: 'Utensils',
     chaptersTitle: 'Chapitels',
@@ -3422,6 +3423,7 @@ export default {
     linkLabel: 'Colliar cun',
     linkNone: 'Nagin link',
     add: 'Agiuntar',
+    emptyTitle: 'Anc navot memorisà',
     empty: 'Tia glista da memoria è vida. Agiuntescha ina emprima notizia survart.',
     openTitle: 'Da far',
     doneTitle: 'Fatg',

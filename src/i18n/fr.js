@@ -2646,6 +2646,7 @@ export default {
   search: {
     title: 'Recherche',
     placeholder: 'Rechercher outils et chapitres…',
+    emptyTitle: 'Aucun résultat',
     empty: 'Rien trouvé pour « {query} ». Essayez un autre terme.',
     toolsTitle: 'Outils',
     chaptersTitle: 'Chapitres',
@@ -2658,6 +2659,7 @@ export default {
     linkLabel: 'Relier à',
     linkNone: 'Aucun lien',
     add: 'Ajouter',
+    emptyTitle: 'Rien de noté pour l’instant',
     empty: 'Votre aide-mémoire est vide. Ajoutez une première note ci-dessus.',
     openTitle: 'À faire',
     doneTitle: 'Fait',
