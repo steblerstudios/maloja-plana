@@ -61,6 +61,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
   const parsedBezugAlter = Number(bezugAlter) || 65;
+  // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
+  // sonst ~86. Vorbelegt aus dem hinterlegten Geschlecht, jederzeit anpassbar.
+  // Bestimmt, über wie viele Jahre AHV/BVG-Rente und 3a/3b-Kapital gerechnet werden.
+  const LE_DEFAULT = { female: 88, male: 85, diverse: 86 };
+  const [lebenserwartung, setLebenserwartung] = useState(() => String(LE_DEFAULT[data.basis?.gender] || 86));
+  const parsedLE = Math.max(70, Math.min(105, Number(lebenserwartung) || 86));
 
   // Aus dem nachgestellten IK-Auszug abgeleitete Kennzahlen (nur wenn aktiv + Einträge).
   const ikResult = useMemo(
@@ -440,7 +446,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: s.row },
           field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
           field(t('vr.s3aAnnual'), saeule3aAnnualInput, setSaeule3aAnnualInput, { placeholder: '0', sublabel: t('vr.s3aAnnualHint') }),
-          field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' })
+          field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' }),
+          field(t('vr.lebenserwartung'), lebenserwartung, setLebenserwartung, { width: '90px', min: 66, max: 105, sublabel: t('vr.lebenserwartungHint') })
         )
       ),
       !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt')),
@@ -460,8 +467,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // AHV als kapitalisierte Fundament-Fläche (Barwert der lebenslangen Rente:
         // Monatsrente × Monate bis Alter 85). Wächst von heutiger Anwartschaft zur
         // projizierten bei Rücktritt, dann flach — die 1. Säule als sichtbares Fundament.
-        const AHV_LE = 85;
-        const ahvHorizonM = Math.max(12, (AHV_LE - ret) * 12);
+        const ahvHorizonM = Math.max(12, (parsedLE - ret) * 12);
         const ahvCapRet = (projektionAhv ? projektionAhv.monatsrente : 0) * ahvHorizonM;
         const ahvCapNow = (ahvResult ? ahvResult.monatsrente : 0) * ahvHorizonM;
         const ahvAt = (a) => a <= START ? ahvCapNow : (a >= ret ? ahvCapRet : ahvCapNow + (ahvCapRet - ahvCapNow) * (a - START) / Math.max(1, ret - START));
@@ -499,8 +505,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Monatliche Rente ab Rücktritt — macht alle vier Säulen VERGLEICHBAR:
         // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
         // eine Monatsrente umgelegt (Kapital gleichmässig verteilt bis Alter 85).
-        const AHV_LEBENSERWARTUNG = 85;
-        const drawdownMonate = Math.max(12, (AHV_LEBENSERWARTUNG - ret) * 12);
+        const drawdownMonate = Math.max(12, (parsedLE - ret) * 12);
         const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
         const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
         const s3aMonat = end.s3a > 0 ? end.s3a / drawdownMonate : 0;
@@ -535,7 +540,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
                 legendDot(colAhv, 'AHV', ahvMonat), legendDot(palette.sky, 'BVG', bvgMonat), legendDot(col3a, '3a', s3aMonat), legendDot(col3b, '3b', s3bMonat)),
               React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs } }, t('vr.zukunftRenteAufteilung')),
-              kapitalRente ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteKapitalHinweis')) : null,
+              kapitalRente ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteKapitalHinweis', { le: parsedLE })) : null,
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
             );
           })(),
@@ -592,7 +597,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           // Legende = alle vier Flächen: AHV (kapitalisiertes Fundament) + BVG/3a/3b.
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
             legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche', { le: parsedLE })),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
