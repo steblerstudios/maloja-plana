@@ -1,27 +1,15 @@
 import React from 'react';
 import { text, weight, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
+import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
 // Kopfzeile) und führt zu „Daten bearbeiten / sichern". Die Bedienelemente
 // werden als fertige React-Elemente (settingsControls) hereingereicht und
-// hier nur beschriftet — eine einzige Quelle der Wahrheit.
-
-const CONTROL_LABELS = {
-  voice: 'vorlesen.toggle',
-  readable: 'common.readable',
-  anrede: 'common.settingsAnrede',
-  lang: 'common.selectLanguage',
-  theme: 'common.settingsTheme',
-  simpleview: 'common.simpleView',
-  grayscale: 'common.grayscale',
-  colorblind: 'common.colorBlind',
-};
-
-// Barrierefreiheits-Schalter zusammen, Anzeige/Sprache getrennt — ein ruhiges,
-// beschriftetes Bündel statt einer flachen Icon-Reihe.
-const A11Y_KEYS = ['voice', 'readable', 'simpleview', 'grayscale', 'colorblind'];
+// hier nur beschriftet — eine einzige Quelle der Wahrheit. Gruppierung
+// (Anzeige & Sprache / Barrierefreiheit) via settingsGroups.js, geteilt mit
+// der Einstellungs-Schublade.
 
 export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) => {
   const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
@@ -34,8 +22,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) =>
     cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit',
   };
 
-  const a11yList = list.filter(c => A11Y_KEYS.includes(c.key));
-  const displayList = list.filter(c => !A11Y_KEYS.includes(c.key));
+  const groups = groupSettingsControls(list);
 
   // Eine beschriftete Zeile pro Bedienelement (barrierefreier als die reine Icon-Reihe).
   const renderRow = (ctrl, i, rows) => {
@@ -62,17 +49,11 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) =>
     React.createElement('h2', { style: { fontSize: text.xl, fontWeight: weight.semi, margin: '0 0 6px 0', color: palette.text } }, t('common.settingsTitle')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: 1.5 } }, t('common.settingsIntro')),
 
-    // ── Anzeige & Sprache ──
-    displayList.length ? React.createElement('section', { style: { ...card, marginBottom: space.md + 'px' } },
-      sectionHeading('common.settingsDisplay'),
-      ...displayList.map((ctrl, i) => renderRow(ctrl, i, displayList))
-    ) : null,
-
-    // ── Barrierefreiheit ──
-    a11yList.length ? React.createElement('section', { style: { ...card, marginBottom: space.md + 'px' } },
-      sectionHeading('common.settingsAccessibility'),
-      ...a11yList.map((ctrl, i) => renderRow(ctrl, i, a11yList))
-    ) : null,
+    // ── Anzeige & Sprache / Barrierefreiheit (geteilte Gruppierung) ──
+    ...groups.map(g => React.createElement('section', { key: g.key, style: { ...card, marginBottom: space.md + 'px' } },
+      sectionHeading(g.labelKey),
+      ...g.controls.map((ctrl, i) => renderRow(ctrl, i, g.controls))
+    )),
 
     // ── Daten & Sicherung ──
     React.createElement('section', { style: card },

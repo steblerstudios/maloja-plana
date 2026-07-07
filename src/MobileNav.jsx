@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -37,7 +38,20 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
           React.createElement('div', { style: { fontSize: text.body + 1, fontWeight: weight.semi, letterSpacing: '0.3px' } }, settingsLabel || t('nav.settings')),
           React.createElement('button', { onClick: onClose, 'aria-label': t('common.close') || 'Schliessen', style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: '18px', lineHeight: 1, padding: '2px 6px' } }, '×')
         ),
-        (settingsControls && settingsControls.length) ? React.createElement('div', { style: { padding: '16px 20px', borderBottom: '1px solid ' + palette.border, display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center' } }, settingsControls) : null,
+        // Beschriftete, gruppierte Zeilen (Anzeige & Sprache / Barrierefreiheit) statt
+        // flacher Icon-Reihe — dieselbe Hierarchie wie die ganze Einstellungs-Seite.
+        ...groupSettingsControls(settingsControls).map(g => React.createElement('div', {
+          key: g.key, style: { padding: '14px 20px', borderBottom: '1px solid ' + palette.border },
+        },
+          React.createElement('div', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.soft, marginBottom: space.xs, letterSpacing: '0.5px', textTransform: 'uppercase' } }, t(g.labelKey)),
+          ...g.controls.map((ctrl, i) => React.createElement('div', {
+            key: ctrl.key || i,
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md, padding: space.xs + 'px 0' },
+          },
+            React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, CONTROL_LABELS[ctrl.key] ? t(CONTROL_LABELS[ctrl.key]) : ctrl.key),
+            ctrl
+          ))
+        )),
         onStartTour ? React.createElement('button', {
           type: 'button', onClick: () => { onClose(); onStartTour(); },
           style: { display: 'flex', alignItems: 'center', gap: space.sm, width: '100%', textAlign: 'left', padding: '14px 20px', background: 'transparent', border: 'none', borderBottom: '1px solid ' + palette.border, cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: 'inherit' },
