@@ -26,6 +26,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [einkommen, setEinkommen] = useState(data.finanzen?.monthlyIncome ? String(Math.round(Number(data.finanzen.monthlyIncome) * 12)) : '');
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
+  const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState('65');
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
@@ -60,17 +61,19 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     const eink = ikResult ? ikResult.durchschnittlichesJahreseinkommen : parsedEinkommen;
     const bj = ikResult ? ikResult.beitragsjahre : parsedBeitragsjahre;
     const erz = ikResult ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0);
+    const betr = ikResult ? ikResult.betreuungsjahre : (Number(betreuungsjahre) || 0);
     if (eink <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
       durchschnittlichesJahreseinkommen: eink,
       beitragsjahre: bj,
       erziehungsjahre: erz,
+      betreuungsjahre: betr,
       bezugAlter: parsedBezugAlter,
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -115,11 +118,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       durchschnittlichesJahreseinkommen: parsedEinkommen,
       beitragsjahre: bj,
       erziehungsjahre: Number(erziehungsjahre) || 0,
+      betreuungsjahre: Number(betreuungsjahre) || 0,
       bezugAlter: parsedBezugAlter,
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, verheiratet, einkommenPartner, birthYear]);
+  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -172,7 +176,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
 
   // === IK-Auszug: Helfer + Render ===
   const ikTypLabel = (typ) => t('vr.ikTyp' + typ.charAt(0).toUpperCase() + typ.slice(1));
-  const IK_TYP_WAHL = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG, IK_TYP.LUECKE, IK_TYP.JUGEND];
+  const IK_TYP_WAHL = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG, IK_TYP.BETREUUNG, IK_TYP.LUECKE, IK_TYP.JUGEND];
 
   // Aufeinanderfolgende Jahre gleichen Typs zu Lebensphasen-Blöcken bündeln.
   const groupPhases = (entries) => {
@@ -310,6 +314,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       ),
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
+        field(t('vr.betreuungsjahre'), betreuungsjahre, setBetreuungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.betreuungsjahreHint') }),
         React.createElement('div', null,
           React.createElement('div', { style: { ...s.label, display: 'flex', alignItems: 'center', gap: '6px' } },
             t('vr.verheiratet'),
