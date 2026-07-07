@@ -1488,6 +1488,7 @@ export default {
     lohn: 'Verifica salario minimo attiva',
     notfall: "Scheda d'emergenza pronta",
     budget: 'Panoramica budget attiva',
+    short: { tax: 'Imposte', ipv: 'IPV', sozial: 'Assistenza', lohn: 'Salario', notfall: 'Emergenza', budget: 'Budget' },
   },
 
   legal: {
