@@ -122,6 +122,13 @@ describe('IK-Auszug → berechneAltersrente (Integration)', () => {
     expect(rente.monatsrente).toBe(AHV_PARAMS.maxRente); // hohes Einkommen → Maximalrente
   });
 
+  it('Betreuungsjahre zählen als Beitragsjahr und werden separat ausgewiesen', () => {
+    const entries = [...jahre(30, IK_TYP.ERWERB, 60000), ...jahre(5, IK_TYP.BETREUUNG, 0, 2021)];
+    const r = berechneIKAuszug(entries);
+    expect(r.betreuungsjahre).toBe(5);
+    expect(r.beitragsjahre).toBe(35); // Erwerb + Betreuung zählen zur AHV
+  });
+
   it('Lücken ohne Jugendjahre-Deckung senken die Rente', () => {
     const mitLuecken = berechneIKAuszug([...jahre(33, IK_TYP.ERWERB, 90000), ...jahre(11, IK_TYP.LUECKE, 0, 2020)]);
     const voll = berechneIKAuszug(jahre(44, IK_TYP.ERWERB, 90000));
@@ -129,5 +136,30 @@ describe('IK-Auszug → berechneAltersrente (Integration)', () => {
     const r2 = berechneAltersrente({ geburtsjahr: 1961, durchschnittlichesJahreseinkommen: voll.durchschnittlichesJahreseinkommen, beitragsjahre: voll.beitragsjahre, bezugAlter: 65 });
     expect(mitLuecken.beitragsjahre).toBe(33);
     expect(r1.monatsrente).toBeLessThan(r2.monatsrente);
+  });
+});
+
+describe('Betreuungsgutschriften (Pflege naher Angehöriger)', () => {
+  const basis = { geburtsjahr: 1965, durchschnittlichesJahreseinkommen: 30000, beitragsjahre: 44, bezugAlter: 65 };
+
+  it('Betreuungsjahre heben die Rente wie Erziehungsjahre', () => {
+    const ohne = berechneAltersrente(basis);
+    const mitBetreuung = berechneAltersrente({ ...basis, betreuungsjahre: 5 });
+    expect(mitBetreuung.monatsrente).toBeGreaterThan(ohne.monatsrente);
+    expect(mitBetreuung.betreuungsjahre).toBe(5);
+    expect(mitBetreuung.gutschriftJahre).toBe(5);
+  });
+
+  it('Erziehungs- und Betreuungsjahre addieren sich in der Aufwertung', () => {
+    const nurErziehung = berechneAltersrente({ ...basis, erziehungsjahre: 5 });
+    const beide = berechneAltersrente({ ...basis, erziehungsjahre: 5, betreuungsjahre: 5 });
+    expect(beide.gutschriftJahre).toBe(10);
+    expect(beide.erziehungsgutschrift).toBeGreaterThan(nurErziehung.erziehungsgutschrift);
+  });
+
+  it('gleicher Jahresbetrag wie Erziehungsgutschrift (identische Rente)', () => {
+    const a = berechneAltersrente({ ...basis, erziehungsjahre: 4 });
+    const b = berechneAltersrente({ ...basis, betreuungsjahre: 4 });
+    expect(b.monatsrente).toBe(a.monatsrente);
   });
 });
