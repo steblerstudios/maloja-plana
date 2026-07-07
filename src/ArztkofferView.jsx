@@ -2,6 +2,7 @@ import React from 'react';
 import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereich } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { PageTitle } from './components/Heading.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -96,8 +97,9 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
       React.createElement('div', {
         style: { display: 'inline-flex', color: accent, marginBottom: space.sm + 'px' },
       }, React.createElement(FruchtSilhouette, { name: 'hagebutte', size: 40, title: t('arztkoffer.title') })),
-      React.createElement('h2', {
-        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', letterSpacing: '-0.3px' },
+      React.createElement(PageTitle, {
+        palette,
+        style: { margin: '0 0 8px 0', letterSpacing: '-0.3px' },
       }, t('arztkoffer.title')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto' },

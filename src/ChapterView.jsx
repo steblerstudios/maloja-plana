@@ -5,6 +5,7 @@ import {
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { PageTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -971,7 +972,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
         React.createElement(Icon, { name: chapter.key, size: 48 })
       ),
-      React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
+      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px' } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
