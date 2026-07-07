@@ -237,6 +237,32 @@ const bottomIcon = (name, color, size) => {
   if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
   return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
 };
+
+// Sackmesser mit Zustand: die Werkzeuge fahren nur aus dem Griff, wenn man auf der
+// Übersicht ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
+// zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (Sophie: „offen nur bei
+// der Übersicht, sonst schliesst es sich").
+const SackmesserIcon = ({ open, color, size = 20 }) => {
+  const s = size;
+  const toolStyle = {
+    transformBox: 'view-box', transformOrigin: '15px 12px',
+    transform: open ? 'scale(1)' : 'scale(0.02)',
+    opacity: open ? 1 : 0,
+    transition: `transform ${duration.normal}ms ${ease}, opacity ${duration.normal}ms ${ease}`,
+  };
+  return React.createElement('svg', {
+    width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color,
+    strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true',
+  },
+    // Griff — immer da (geschlossenes Sackmesser)
+    React.createElement('path', { d: 'M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z' }),
+    // Werkzeuge — fahren aus/ein
+    React.createElement('g', { style: toolStyle },
+      React.createElement('path', { d: 'M15 10 L21 4' }),
+      React.createElement('path', { d: 'M15 14 L20 18.5' })
+    )
+  );
+};
 const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
   const [fanOpen, setFanOpen] = useState(false);
   const slot = (it) => React.createElement('button', {
@@ -248,7 +274,9 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
       color: it.active ? palette.text : palette.mid,
     },
   },
-    bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
+    it.icon === 'sackmesser'
+      ? React.createElement(SackmesserIcon, { open: it.active, color: it.active ? palette.sage : palette.mid })
+      : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
     React.createElement('span', { style: { fontSize: '10px', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
     React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
   );
@@ -794,6 +822,10 @@ const AppInner = () => {
       activeView: view,
       chapters,
       completion: calculateCompletion(),
+      // Am Handy trägt der Boden-Anker die Übersicht → im Drawer weglassen (keine
+      // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
+      // bis wir ein eigenes Web-Äquivalent haben (Sophie).
+      hasBottomAnchor: isMobile,
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
       settingsControls: null,
       settingsLabel: t('nav.settings'),
