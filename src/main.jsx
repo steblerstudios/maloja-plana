@@ -32,6 +32,7 @@ import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import { Icon } from './IconSystem.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
@@ -1066,9 +1067,10 @@ const AppInner = () => {
         },
           React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
           React.createElement('div', { style: { display: 'flex', gap: space.xs } },
-            React.createElement('button', {
+            React.createElement(PrimaryButton, {
+              palette,
               onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
+              style: { padding: space.xs + 'px ' + space.sm + 'px' },
             }, t('pwa.install')),
             React.createElement('button', {
               onClick: () => setInstallPrompt(null),
