@@ -901,7 +901,27 @@ const AppInner = () => {
               )
             )
           : React.createElement(React.Fragment, { key: 'desktop-controls' },
-              ...settingsControls,
+              // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
+              // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
+              // hinter EIN Symbol → Einstellungs-Schublade (gruppiert & beschriftet).
+              ...settingsControls.filter(c => c.key === 'lang' || c.key === 'theme'),
+              React.createElement('button', {
+                key: 'a11y',
+                'aria-label': t('common.settingsAccessibility'),
+                title: t('common.settingsAccessibility'),
+                onClick: () => setSettingsOpen(true),
+                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+              },
+                // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
+                React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+                  React.createElement('circle', { cx: '12', cy: '12', r: '10', opacity: '0.35' }),
+                  React.createElement('circle', { cx: '12', cy: '6.6', r: '1.35', fill: 'currentColor', stroke: 'none' }),
+                  React.createElement('path', { d: 'M6.5 9.2 H17.5' }),
+                  React.createElement('path', { d: 'M12 9.2 V13.2' }),
+                  React.createElement('path', { d: 'M12 13.2 L9.4 18' }),
+                  React.createElement('path', { d: 'M12 13.2 L14.6 18' })
+                )
+              ),
               React.createElement('button', {
                 key: 'menu',
                 'aria-label': t('nav.menu'),
