@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, radius , leading , space, fontFamily, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 
 // ─── Onboarding ────────────────────────────────────────────
 // First-run experience for new users.
@@ -143,7 +144,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             fontSize: text.sm, fontWeight: weight.medium,
           }
         },
-          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+          React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
             React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
             React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
             React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
@@ -167,10 +168,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         ),
 
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
-          React.createElement('svg', { width: '13', height: '13', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round', style: { flexShrink: 0 } },
-            React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-            React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-          ),
+          React.createElement(TrustLockIcon, { size: 13, color: palette.sage, style: { flexShrink: 0 } }),
           React.createElement('span', { style: { fontSize: text.sm, color: palette.sage, lineHeight: 1.4 } },
             t('onboarding.privacyNote')
           )
