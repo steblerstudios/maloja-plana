@@ -3417,6 +3417,7 @@ export default {
     erziehungsjahreHint: 'Years with children under 16',
     betreuungsjahre: 'Caregiving years',
     betreuungsjahreHint: 'Years caring for close relatives (register annually)',
+    gutschriftHinweis: 'Only one credit counts per calendar year (child-rearing or caregiving).',
     verheiratet: 'Married',
     einkommenPartner: 'Partner income (CHF)',
     ahvRente: 'Estimated AHV old-age pension',

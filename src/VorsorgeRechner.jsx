@@ -368,6 +368,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
           t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
         ),
+        ahvResult.erziehungsjahre > 0 && ahvResult.betreuungsjahre > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: 1.5 } },
+          t('vr.gutschriftHinweis')
+        ),
         ahvResult.plafoniert && React.createElement('div', { style: { color: palette.gold } },
           t('vr.plafoniert') + ': CHF ' + fmt(ahvResult.totalEhepaar) + ' / ' + t('vr.monat') + ' (' + t('vr.ehepaar') + ')'
         ),

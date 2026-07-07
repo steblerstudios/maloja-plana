@@ -3407,6 +3407,7 @@ export default {
     erziehungsjahreHint: 'Anni con figli sotto i 16 anni',
     betreuungsjahre: 'Anni di assistenza',
     betreuungsjahreHint: 'Anni di cura di parenti stretti (annunciare ogni anno)',
+    gutschriftHinweis: 'Per anno civile conta un solo accredito (educazione o assistenza).',
     verheiratet: 'Sposato/a',
     einkommenPartner: 'Reddito del partner (CHF)',
     ahvRente: 'Rendita AVS stimata',
