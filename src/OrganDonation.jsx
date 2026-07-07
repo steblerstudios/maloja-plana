@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
@@ -94,7 +95,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
       }),
 
-      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
+      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, 'ⓘ ' + t('organ.generateQr'))
     ),
 
