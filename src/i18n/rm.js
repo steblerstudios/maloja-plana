@@ -927,6 +927,7 @@ export default {
     lohn: 'Controlla dal salari minimal activa',
     notfall: "Carta d'urgenza pronta",
     budget: 'Survista dal budget activa',
+    short: { tax: 'Taglia', ipv: 'IPV', sozial: 'Agid social', lohn: 'Salari', notfall: 'Urgenza', budget: 'Budget' },
   },
 
   dashboard: {
