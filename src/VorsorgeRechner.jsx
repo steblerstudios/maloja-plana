@@ -457,20 +457,33 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const val = (a) => (a <= ret ? (tl[a - START] || tl[tl.length - 1]) : end);
         const ages = [];
         for (let a = START; a <= AXIS_END; a++) ages.push(a);
+        // AHV als kapitalisierte Fundament-Fläche (Barwert der lebenslangen Rente:
+        // Monatsrente × Monate bis Alter 85). Wächst von heutiger Anwartschaft zur
+        // projizierten bei Rücktritt, dann flach — die 1. Säule als sichtbares Fundament.
+        const AHV_LE = 85;
+        const ahvHorizonM = Math.max(12, (AHV_LE - ret) * 12);
+        const ahvCapRet = (projektionAhv ? projektionAhv.monatsrente : 0) * ahvHorizonM;
+        const ahvCapNow = (ahvResult ? ahvResult.monatsrente : 0) * ahvHorizonM;
+        const ahvAt = (a) => a <= START ? ahvCapNow : (a >= ret ? ahvCapRet : ahvCapNow + (ahvCapRet - ahvCapNow) * (a - START) / Math.max(1, ret - START));
         // Stabile y-Skala (rundet auf, damit sie beim Ziehen nicht zappelt).
-        const rawMax = end.total * 1.1;
+        const rawMax = (end.total + ahvCapRet) * 1.1;
         const step = rawMax > 400000 ? 100000 : 50000;
         const maxY = Math.max(step, Math.ceil(rawMax / step) * step);
         const VBW = 680, VBH = 340, x0 = 54, x1 = 628, y0 = 26, yB = 280;
         const xA = (a) => x0 + (a - START) / (AXIS_END - START) * (x1 - x0);
         const yV = (v) => yB - v / maxY * (yB - y0);
+        // Flächen als kumulierte Höhen pro Alter (AHV zuunterst als Fundament).
         const band = (lo, hi) => {
-          let d = 'M ' + xA(START).toFixed(1) + ' ' + yV(hi(val(START))).toFixed(1);
-          for (let k = 1; k < ages.length; k++) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(hi(val(ages[k]))).toFixed(1);
-          for (let k = ages.length - 1; k >= 0; k--) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(lo(val(ages[k]))).toFixed(1);
+          let d = 'M ' + xA(START).toFixed(1) + ' ' + yV(hi(START)).toFixed(1);
+          for (let k = 1; k < ages.length; k++) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(hi(ages[k])).toFixed(1);
+          for (let k = ages.length - 1; k >= 0; k--) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(lo(ages[k])).toFixed(1);
           return d + ' Z';
         };
-        const z = () => 0, b = (p) => p.bvg, ba = (p) => p.bvg + p.s3a, tot = (p) => p.bvg + p.s3a + p.s3b;
+        const zero = () => 0;
+        const lAhv = (a) => ahvAt(a);
+        const lBvg = (a) => ahvAt(a) + val(a).bvg;
+        const l3a = (a) => ahvAt(a) + val(a).bvg + val(a).s3a;
+        const l3b = (a) => ahvAt(a) + val(a).bvg + val(a).s3a + val(a).s3b;
         const colBvg = palette.sky, col3a = palette.gold, col3b = palette.sage;
         const xret = xA(ret);
         const ageFromEvent = (e) => {
@@ -530,10 +543,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // Lebensphasen-Hintergrund
             React.createElement('rect', { x: x0, y: y0, width: Math.max(0, xret - x0), height: yB - y0, fill: palette.sage, opacity: 0.05 }),
             React.createElement('rect', { x: xret, y: y0, width: Math.max(0, x1 - xret), height: yB - y0, fill: palette.sky, opacity: 0.05 }),
-            // Kapital-Flächen (BVG/3a/3b), flach ab Rücktritt
-            React.createElement('path', { d: band(z, b), fill: colBvg, opacity: 0.55 }),
-            React.createElement('path', { d: band(b, ba), fill: col3a, opacity: 0.6 }),
-            React.createElement('path', { d: band(ba, tot), fill: col3b, opacity: 0.5 }),
+            // Flächen: AHV-Fundament (kapitalisiert) zuunterst, dann Kapital BVG/3a/3b
+            React.createElement('path', { d: band(zero, lAhv), fill: colAhv, opacity: 0.5 }),
+            React.createElement('path', { d: band(lAhv, lBvg), fill: colBvg, opacity: 0.55 }),
+            React.createElement('path', { d: band(lBvg, l3a), fill: col3a, opacity: 0.6 }),
+            React.createElement('path', { d: band(l3a, l3b), fill: col3b, opacity: 0.5 }),
             // Pensionsphase dimmen (Kapital wird gehalten, wächst nicht weiter)
             React.createElement('rect', { x: xret, y: y0, width: Math.max(0, x1 - xret), height: yB - y0, fill: palette.surface, opacity: 0.4 }),
             // y-Gitter + Ticks (CHF)
@@ -575,10 +589,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                 else if (e.key === 'End') { e.preventDefault(); setRet(retMax); }
               } })
           ),
-          // Legende = die Kapital-FLÄCHEN im Graph (BVG/3a/3b). AHV ist Rente, kein
-          // Kapital → erscheint oben im Monatsrenten-Balken, nicht als Fläche hier.
+          // Legende = alle vier Flächen: AHV (kapitalisiertes Fundament) + BVG/3a/3b.
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
-            legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+            legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );

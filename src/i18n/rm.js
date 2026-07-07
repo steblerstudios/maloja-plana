@@ -3608,6 +3608,7 @@ export default {
     zukunftRenteAufteilung: 'Tut ils quatter pitgas sco entrada mensila — AVS e LPP sco rentas, 3a e 3b (chapital) convertids en in import mensil.',
     zukunftRenteKapitalHinweis: 'Las pitgas 3a e 3b èn chapital — qua mussadas sco import mensil simplifitgà (repartì fin 85 onns). Ti sez decidas il pajament effectiv.',
     zukunftRenteHinweis: 'La 2. pitga cunta u sco chapital (survart) u sco renta mensila (qua) — betg omadus.',
+    zukunftAhvFlaeche: 'La surfatscha AVS è la valur actuala stimada da tia renta AVS (chapitalisada fin 85 onns) — uschia daventa la 1. pitga visibla sco fundament e cumparabla cun las autras pitgas.',
     phaseErwerb: 'Vita da lavur',
     phasePension: 'Pensiun',
     achseAlter: 'Vegliadetgna',
