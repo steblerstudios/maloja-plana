@@ -1153,6 +1153,8 @@ export default {
         securitiesValue: 'Securities / portfolio (tax value) CHF',
         otherAssets: 'Other assets CHF',
         creditCard: { label: 'Credit cards?', options: { no: 'No', one: 'Yes (1)', multiple: 'Yes (2+)' } },
+        creditCardLimit: 'Total credit card limit (CHF)',
+        creditCardBalance: 'Outstanding card balance (CHF)',
         loans: 'Personal loans (CHF)',
         monthlyTax: 'Monthly taxes (CHF)',
         groceries: 'Groceries & household (CHF)',
@@ -1172,6 +1174,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Your income — net is what arrives in your account.',
+        creditCardLimit: 'The sum of all your card limits.',
+        creditCardBalance: 'Amount currently owed on your cards — counts as debt, often at high interest.',
         sideIncome: 'Additional income alongside your main job (side job, fees). Counted as income.',
         taxableIncome: 'Taxable income from your tax return (per year, after deductions). For orientation only — can feed the tax calculator.',
         monthlyTax: 'Estimated or from your tax bill.',
