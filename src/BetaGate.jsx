@@ -3,6 +3,7 @@ import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
@@ -124,13 +125,9 @@ export const BetaGate = ({ children }) => {
         role: 'alert',
         style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
       }, t('beta.codeWrong')),
-      React.createElement('button', {
-        type: 'submit',
-        style: {
-          marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body,
-          background: palette.sand, color: palette.onSand, border: 'none',
-          borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
-        }
+      React.createElement(PrimaryButton, {
+        palette, type: 'submit',
+        style: { marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body },
       }, t('beta.enter')),
       // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
       React.createElement('button', {

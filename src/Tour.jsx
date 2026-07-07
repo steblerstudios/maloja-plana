@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, useCallback } from 'react';
 import { text, weight, radius, leading, space, fontFamily, ease, duration } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // ─── Tour ──────────────────────────────────────────────────
 // Kleine, ruhige Tour nach dem Onboarding. Zwei Stationstypen:
@@ -84,11 +85,6 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
     cardPos = { position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10002 };
   }
 
-  const btnPrimary = {
-    padding: '11px 18px', background: palette.sand, color: palette.onSand,
-    border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-    fontWeight: weight.semi, fontSize: text.sm, fontFamily,
-  };
   const btnGhost = {
     padding: '11px 14px', background: 'transparent', color: palette.mid,
     border: 'none', borderRadius: radius.sm, cursor: 'pointer',
@@ -150,7 +146,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
         React.createElement('button', { type: 'button', onClick: finish, style: btnGhost }, t('tour.skip')),
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs + 'px' } },
           i > 0 && React.createElement('button', { type: 'button', onClick: back, style: btnGhost }, t('tour.back')),
-          React.createElement('button', { type: 'button', onClick: next, style: btnPrimary },
+          React.createElement(PrimaryButton, { palette, onClick: next, style: { padding: '11px 18px' } },
             isLast ? t('tour.done') : t('tour.next') + ' →')
         )
       )
