@@ -18,6 +18,27 @@ export const LIGHT_PALETTE = {
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 
+// ── Farbenblind-Modus (opt-in) ──────────────────────────────────────────
+// Das Rot-Grün-Problempaar der App ist sage (grün, positiv) vs. rose (rot,
+// Warnung) — für die häufigste Farbenblindheit (Deuteran/Protan) ununter-
+// scheidbar. Ist der Modus aktiv, tauschen wir dieses Paar gegen die sichere
+// Blau/Orange-Achse (nach Okabe-Ito) und alle sage-Tönungen mit. Die Marken-
+// Palette bleibt sonst unberührt (nur wenn eingeschaltet). Das Flag palette.colorBlind
+// erlaubt Komponenten, Form-/Symbol-Marker zu ergänzen — Farbe nie allein.
+const CB_LIGHT = {
+  sage: '#1565A3', rose: '#C25A16', sageDeep: '#2D5C86',
+  sageMist: '#E7EEF5', sageDew: '#D4E2F0',
+};
+const CB_DARK = {
+  sage: '#6BA6DE', rose: '#E38B4E', sageDeep: '#7FA8D0',
+  sageMist: '#1E2833', sageDew: '#223140',
+};
+export function applyColorBlind(palette, active) {
+  if (!active) return palette;
+  const isDark = palette.bg === DARK_PALETTE.bg;
+  return { ...palette, ...(isDark ? CB_DARK : CB_LIGHT), colorBlind: true };
+}
+
 import { getCantonName, CANTON_CODES } from './cantonalData.js';
 const cantonOptions = (t) => CANTON_CODES.map(c => ({ value: c, label: getCantonName(c, t) }));
 

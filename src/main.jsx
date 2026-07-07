@@ -4,7 +4,7 @@ import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
-import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
+import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters, CHAPTER_KEYS } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
@@ -356,7 +356,10 @@ const AppInner = () => {
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
-  const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
+  // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
+  const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
+  const palette = applyColorBlind(isDarkMode ? DARK_PALETTE : LIGHT_PALETTE, colorBlind);
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
   const isTablet = vw >= 768;
@@ -763,6 +766,18 @@ const AppInner = () => {
       React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 24 24', 'aria-hidden': 'true' },
         React.createElement('circle', { cx: '12', cy: '12', r: '9', fill: 'none', stroke: 'currentColor', strokeWidth: '2' }),
         React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
+      )
+    ),
+    React.createElement('button', {
+      key: 'colorblind',
+      'aria-label': t('common.colorBlind'), 'aria-pressed': colorBlind, title: t('common.colorBlind'),
+      onClick: () => setColorBlind(c => !c),
+      style: { padding: '6px 9px', background: colorBlind ? palette.sky + '22' : 'transparent', color: colorBlind ? palette.sky : palette.mid, border: '1px solid ' + (colorBlind ? palette.sky + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: ein gefüllter Kreis + ein Umriss-Quadrat = unterscheidbar an Farbe UND Form
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', 'aria-hidden': 'true' },
+        React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
+        React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
       )
     ),
   ].filter(Boolean);
