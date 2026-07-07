@@ -7,6 +7,7 @@ import {
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // ─── Notification Settings ─────────────────────────────────
 // Respectful, opt-in notification management.
@@ -110,13 +111,8 @@ export const NotificationSettings = ({ palette, t }) => {
         )
       ),
 
-      !isGranted && isSupported && !isDenied && React.createElement('button', {
-        onClick: handleRequestPermission,
-        style: {
-          padding: '10px 16px', background: palette.sand, color: palette.onSand,
-          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-          fontWeight: weight.semi, fontSize: text.sm, fontFamily: fontFamily,
-        }
+      !isGranted && isSupported && !isDenied && React.createElement(PrimaryButton, {
+        palette, onClick: handleRequestPermission,
       }, t('notifications.enable')),
 
       isDenied && React.createElement('p', {
