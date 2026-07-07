@@ -115,7 +115,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
-    tabRow: { display: 'flex', gap: space.xs, marginBottom: space.md + 'px' },
+    tabRow: { display: 'flex', flexWrap: 'wrap', gap: space.xs, marginBottom: space.md + 'px' },
     tab: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
@@ -262,6 +262,21 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     // Zukunft Tab — Projektion 2./3. Säule bis zum Rücktritt
     activeTab === 'zukunft' && React.createElement(React.Fragment, null,
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
+      React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
+        React.createElement('label', { htmlFor: 'vr-alter-regler', style: { ...s.label, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' } },
+          React.createElement('span', null, t('vr.bezugAlter')),
+          React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sage } }, String(parsedBezugAlter))
+        ),
+        React.createElement('input', {
+          id: 'vr-alter-regler', type: 'range', min: 63, max: 70, step: 1,
+          value: parsedBezugAlter,
+          onChange: e => setBezugAlter(e.target.value),
+          'aria-label': t('vr.bezugAlter'),
+          style: { width: '100%', accentColor: palette.sage, cursor: 'pointer', marginTop: space.xs + 'px' },
+        }),
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+          React.createElement('span', null, '63'), React.createElement('span', null, '70'))
+      ),
       React.createElement('div', { style: s.section },
         React.createElement('div', { style: s.row },
           field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
