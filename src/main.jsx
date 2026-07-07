@@ -76,6 +76,7 @@ const Trennung = React.lazy(() => import('./Trennung.jsx'));
 const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
 const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
 const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
+const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
@@ -1148,6 +1149,7 @@ const AppInner = () => {
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),
         view === 'iv' && React.createElement(IvVerfahren, { palette, t, onNavigate: handleNavigate }),
+        view === 'pflege' && React.createElement(PflegeAblauf, { palette, t, onNavigate: handleNavigate }),
         view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
