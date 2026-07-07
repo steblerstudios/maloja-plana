@@ -196,7 +196,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('button', {
           onClick: handleApplyOnline,
           disabled: !ipvResult.eligible,
-          style: { padding: '10px', background: ipvResult.eligible ? palette.sand : palette.mid, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
+          style: { padding: '10px', background: ipvResult.eligible ? palette.sand : palette.mid, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '↗ ' + t('premium.applyOnline')),
         React.createElement('button', {
           onClick: handleDownloadDocument,

@@ -88,7 +88,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   };
 
   const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
+    padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
@@ -100,11 +100,11 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
           onClick: () => setScanMode('upload'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '10px', background: scanMode === 'upload' ? palette.sand : palette.up, color: scanMode === 'upload' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.photoScan')),
         React.createElement('button', {
           onClick: () => setScanMode('manual'),
-          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? '#fff' : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+          style: { flex: 1, padding: '10px', background: scanMode === 'manual' ? palette.sand : palette.up, color: scanMode === 'manual' ? palette.onSand : palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, t('kkScanner.manualEntry'))
       ),
 
