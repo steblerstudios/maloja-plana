@@ -192,7 +192,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', {
         onClick: () => onNavigate('chapter', 2),
         style: {
-          padding: '8px 16px', background: palette.sand, color: '#fff',
+          padding: '8px 16px', background: palette.sand, color: palette.onSand,
           border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
         }

@@ -128,7 +128,7 @@ export const BetaGate = ({ children }) => {
         type: 'submit',
         style: {
           marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body,
-          background: palette.sand, color: '#000', border: 'none',
+          background: palette.sand, color: palette.onSand, border: 'none',
           borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
         }
       }, t('beta.enter')),

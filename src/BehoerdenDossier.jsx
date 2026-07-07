@@ -141,7 +141,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         onClick: handlePrint,
         style: {
           flex: 1, padding: '12px',
-          background: palette.sand, color: '#fff', border: 'none',
+          background: palette.sand, color: palette.onSand, border: 'none',
           borderRadius: radius.sm, cursor: 'pointer',
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
           letterSpacing: '0.2px',
