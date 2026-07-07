@@ -43,7 +43,8 @@ function senderBlock(data) {
   const name = getFullName(data.basis) || '';
   const street = data.wohnen?.address || '';
   const city = [(data.wohnen?.postalCode || ''), (data.wohnen?.city || '')].filter(Boolean).join(' ');
-  return [name, street, city].filter(Boolean).join('<br>');
+  // esc() each field: this block is interpolated raw (${f.sender}) into the letter HTML.
+  return [name, street, city].filter(Boolean).map(esc).join('<br>');
 }
 
 function recipientPlaceholder(t) {
