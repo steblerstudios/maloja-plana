@@ -1116,7 +1116,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         background: palette.surface,
         borderRadius: radius.lg - 4,
         border: '1px solid ' + palette.border + '88',
-        boxShadow: shadow.sm,
       }
     },
       React.createElement('div', {
@@ -1155,15 +1154,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
             onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
           },
+            // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
+            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Sophie).
             React.createElement('div', {
               style: {
                 width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: palette.sand + (item.primary ? '18' : '0C'),
+                background: item.primary ? palette.sand + '18' : palette.up,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, color: palette.sand,
+                flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
               }
             }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
