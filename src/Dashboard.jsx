@@ -97,7 +97,8 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
     if (ipv && ipv.eligible) benefits.push({
-      key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'),
+      key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
+      monthly: ipv.amount,
       detail: t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }),
     });
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
@@ -107,11 +108,26 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
     if (annual > 0 && rentContext) {
       const sh = calculateSozialhilfe(probe);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
-        key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'),
+        key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'), color: palette.sage,
+        monthly: sh.deficit,
         detail: t('dashboard.anspruchMoeglich'),
       });
     }
   } catch { /* Orientierung, nie blockierend */ }
+
+  // Schlanke Total-Leiste (Flat-Viz, konsistent mit der Vollansicht #/schnellcheck):
+  // summiert nur die monetären Leistungen zu einer geschätzten Monats-Entlastung.
+  const monetary = benefits.filter(b => b.monthly > 0);
+  const totalMonthly = monetary.reduce((sum, b) => sum + b.monthly, 0);
+  const miniBar = monetary.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
+    React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
+      '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat')),
+    React.createElement('div', { style: { display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden', background: palette.up } },
+      monetary.map(b => React.createElement('div', {
+        key: b.key,
+        style: { width: (totalMonthly > 0 ? b.monthly / totalMonthly * 100 : 0).toFixed(1) + '%', background: b.color },
+      })))
+  );
 
   const row = (b) => React.createElement('button', {
     key: b.key,
@@ -166,6 +182,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
       benefits.length > 0
         ? React.createElement('div', null,
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('dashboard.quickCheckWithIncome')),
+            miniBar || null,
             React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px' } }, benefits.map(row))
           )
         : React.createElement('div', {
