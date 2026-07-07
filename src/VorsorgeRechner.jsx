@@ -115,8 +115,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
-    tabRow: { display: 'flex', flexWrap: 'wrap', gap: space.xs, marginBottom: space.md + 'px' },
-    tab: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
+    // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
+    // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
+    tabRow: { position: 'sticky', top: '-24px', zIndex: 5, display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0', marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
+    tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
@@ -262,21 +265,6 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     // Zukunft Tab — Projektion 2./3. Säule bis zum Rücktritt
     activeTab === 'zukunft' && React.createElement(React.Fragment, null,
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
-      React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
-        React.createElement('label', { htmlFor: 'vr-alter-regler', style: { ...s.label, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' } },
-          React.createElement('span', null, t('vr.bezugAlter')),
-          React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sage } }, String(parsedBezugAlter))
-        ),
-        React.createElement('input', {
-          id: 'vr-alter-regler', type: 'range', min: 63, max: 70, step: 1,
-          value: parsedBezugAlter,
-          onChange: e => setBezugAlter(e.target.value),
-          'aria-label': t('vr.bezugAlter'),
-          style: { width: '100%', accentColor: palette.sage, cursor: 'pointer', marginTop: space.xs + 'px' },
-        }),
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
-          React.createElement('span', null, '63'), React.createElement('span', null, '70'))
-      ),
       React.createElement('div', { style: s.section },
         React.createElement('div', { style: s.row },
           field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
@@ -285,26 +273,44 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       ),
       !alter && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.geburtsdatumFehlt')),
       projektion && projektion.timeline.length > 1 && (() => {
-        const pts = projektion.timeline;
-        const N = pts.length;
-        const maxT = Math.max(1, ...pts.map(p => p.total));
-        const W = 340, H = 170, padL = 6, padR = 6, padT = 12, padB = 20;
-        const xAt = (i) => padL + (N <= 1 ? 0 : (i / (N - 1))) * (W - padL - padR);
-        const yAt = (v) => (H - padB) - (v / maxT) * (H - padT - padB);
-        const band = (lower, upper) => {
-          let d = 'M ' + xAt(0).toFixed(1) + ' ' + yAt(upper[0]).toFixed(1);
-          for (let i = 1; i < N; i++) d += ' L ' + xAt(i).toFixed(1) + ' ' + yAt(upper[i]).toFixed(1);
-          for (let i = N - 1; i >= 0; i--) d += ' L ' + xAt(i).toFixed(1) + ' ' + yAt(lower[i]).toFixed(1);
+        const tl = projektion.timeline;           // alter..Rücktritt (aus der Engine)
+        const end = projektion.endsumme;
+        const START = Math.floor(alter);
+        const AXIS_END = 100;                      // keine Alters-Diskriminierung: Zeitachse bis 100
+        const ret = Math.max(START, Math.round(parsedBezugAlter));
+        const retMin = Math.max(58, START);
+        const retMax = Math.max(retMin, 70);
+        const setRet = (a) => setBezugAlter(String(Math.max(retMin, Math.min(retMax, Math.round(a)))));
+        // Kapital pro Alter: bis Rücktritt aus der Engine, danach flach (Pension, kein Drawdown).
+        const val = (a) => (a <= ret ? (tl[a - START] || tl[tl.length - 1]) : end);
+        const ages = [];
+        for (let a = START; a <= AXIS_END; a++) ages.push(a);
+        // Stabile y-Skala (rundet auf, damit sie beim Ziehen nicht zappelt).
+        const rawMax = end.total * 1.1;
+        const step = rawMax > 400000 ? 100000 : 50000;
+        const maxY = Math.max(step, Math.ceil(rawMax / step) * step);
+        const VBW = 680, VBH = 340, x0 = 54, x1 = 628, y0 = 26, yB = 280;
+        const xA = (a) => x0 + (a - START) / (AXIS_END - START) * (x1 - x0);
+        const yV = (v) => yB - v / maxY * (yB - y0);
+        const band = (lo, hi) => {
+          let d = 'M ' + xA(START).toFixed(1) + ' ' + yV(hi(val(START))).toFixed(1);
+          for (let k = 1; k < ages.length; k++) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(hi(val(ages[k]))).toFixed(1);
+          for (let k = ages.length - 1; k >= 0; k--) d += ' L ' + xA(ages[k]).toFixed(1) + ' ' + yV(lo(val(ages[k]))).toFixed(1);
           return d + ' Z';
         };
-        const zero = pts.map(() => 0);
-        const bvgTop = pts.map(p => p.bvg);
-        const s3aTop = pts.map(p => p.bvg + p.s3a);
-        const totTop = pts.map(p => p.total);
+        const z = () => 0, b = (p) => p.bvg, ba = (p) => p.bvg + p.s3a, tot = (p) => p.bvg + p.s3a + p.s3b;
         const colBvg = palette.sky, col3a = palette.gold, col3b = palette.sage;
+        const xret = xA(ret);
+        const ageFromEvent = (e) => {
+          const svg = e.currentTarget.ownerSVGElement || e.currentTarget;
+          const r = svg.getBoundingClientRect();
+          const vbX = (e.clientX - r.left) / r.width * VBW;
+          return START + (vbX - x0) / (x1 - x0) * (AXIS_END - START);
+        };
+        const xticks = []; for (let a = Math.ceil(START / 10) * 10; a <= AXIS_END; a += 10) xticks.push(a);
+        const yticks = [0, 0.5, 1].map((f) => maxY * f);
         const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
           React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
-        const end = projektion.endsumme;
         return React.createElement('div', null,
           React.createElement('div', { style: s.highlight },
             React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
@@ -326,16 +332,53 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
             );
           })(),
-          React.createElement('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%', role: 'img', 'aria-label': t('vr.zukunftEnde') + ': CHF ' + fmt(end.total), style: { display: 'block', marginBottom: space.sm + 'px' } },
-            React.createElement('line', { x1: padL, y1: H - padB, x2: W - padR, y2: H - padB, stroke: palette.border, strokeWidth: 1 }),
-            React.createElement('path', { d: band(zero, bvgTop), fill: colBvg, opacity: 0.55 }),
-            React.createElement('path', { d: band(bvgTop, s3aTop), fill: col3a, opacity: 0.6 }),
-            React.createElement('path', { d: band(s3aTop, totTop), fill: col3b, opacity: 0.5 }),
-            React.createElement('text', { x: padL, y: H - 6, fill: palette.mid, fontSize: 9, fontFamily: 'inherit' }, t('vr.zukunftHeute') + ' (' + pts[0].alter + ')'),
-            React.createElement('text', { x: W - padR, y: H - 6, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'end' }, String(end.alter))
+          React.createElement('svg', { viewBox: '0 0 ' + VBW + ' ' + VBH, width: '100%', role: 'group', 'aria-label': t('vr.tabZukunft'), style: { display: 'block', marginBottom: space.sm + 'px', touchAction: 'none' } },
+            // Lebensphasen-Hintergrund
+            React.createElement('rect', { x: x0, y: y0, width: Math.max(0, xret - x0), height: yB - y0, fill: palette.sage, opacity: 0.05 }),
+            React.createElement('rect', { x: xret, y: y0, width: Math.max(0, x1 - xret), height: yB - y0, fill: palette.sky, opacity: 0.05 }),
+            // Kapital-Flächen (BVG/3a/3b), flach ab Rücktritt
+            React.createElement('path', { d: band(z, b), fill: colBvg, opacity: 0.55 }),
+            React.createElement('path', { d: band(b, ba), fill: col3a, opacity: 0.6 }),
+            React.createElement('path', { d: band(ba, tot), fill: col3b, opacity: 0.5 }),
+            // Pensionsphase dimmen (Kapital wird gehalten, wächst nicht weiter)
+            React.createElement('rect', { x: xret, y: y0, width: Math.max(0, x1 - xret), height: yB - y0, fill: palette.surface, opacity: 0.4 }),
+            // y-Gitter + Ticks (CHF)
+            ...yticks.map((v, i) => React.createElement('g', { key: 'y' + i },
+              React.createElement('line', { x1: x0, y1: yV(v), x2: x1, y2: yV(v), stroke: palette.border, strokeWidth: 0.5, opacity: 0.6 }),
+              React.createElement('text', { x: x0 - 6, y: yV(v) + 3, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'end' }, v >= 1000 ? Math.round(v / 1000) + 'k' : Math.round(v)))),
+            // Achsen
+            React.createElement('line', { x1: x0, y1: yB, x2: x1, y2: yB, stroke: palette.mid, strokeWidth: 1 }),
+            React.createElement('line', { x1: x0, y1: y0, x2: x0, y2: yB, stroke: palette.mid, strokeWidth: 1 }),
+            // x-Ticks (Alter)
+            ...xticks.map((a, i) => React.createElement('g', { key: 'x' + i },
+              React.createElement('line', { x1: xA(a), y1: yB, x2: xA(a), y2: yB + 4, stroke: palette.mid, strokeWidth: 1 }),
+              React.createElement('text', { x: xA(a), y: yB + 16, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'middle' }, String(a)))),
+            // Achsentitel (Bedeutung!)
+            React.createElement('text', { x: x0 - 44, y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit' }, 'CHF'),
+            React.createElement('text', { x: x1, y: yB + 30, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit', textAnchor: 'end' }, t('vr.achseAlter') + ' →'),
+            // Lebensphasen-Beschriftung
+            React.createElement('text', { x: (x0 + xret) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phaseErwerb')),
+            React.createElement('text', { x: (xret + x1) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phasePension')),
+            // Rücktritts-Linie + Marke
+            React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
+            React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+            // Interaktions-Overlay: Klick + Ziehen
+            React.createElement('rect', { x: x0, y: y0 - 10, width: x1 - x0, height: yB - y0 + 10, fill: 'transparent', style: { cursor: 'ew-resize' },
+              onPointerDown: (e) => { if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); setRet(ageFromEvent(e)); },
+              onPointerMove: (e) => { if (e.buttons & 1) setRet(ageFromEvent(e)); } }),
+            // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei)
+            React.createElement('circle', { cx: xret, cy: y0 - 4, r: 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,
+              tabIndex: 0, role: 'slider', 'aria-label': t('vr.bezugAlter'), 'aria-valuemin': retMin, 'aria-valuemax': retMax, 'aria-valuenow': ret, 'aria-valuetext': t('vr.bezugAlter') + ' ' + ret, style: { cursor: 'ew-resize', outline: 'none' },
+              onKeyDown: (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setRet(ret - 1); }
+                else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setRet(ret + 1); }
+                else if (e.key === 'Home') { e.preventDefault(); setRet(retMin); }
+                else if (e.key === 'End') { e.preventDefault(); setRet(retMax); }
+              } })
           ),
-          React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px' } },
+          React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
             legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
       })()
