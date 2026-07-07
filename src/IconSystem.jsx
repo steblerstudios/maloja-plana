@@ -565,6 +565,22 @@ const _sozialhilfe = () => React.createElement('svg', { viewBox: '0 0 24 24', fi
   React.createElement('path', { d: 'M 12 22.5 Q 9.5 20.5 9.5 19 Q 9.5 17.8 10.5 17.5 Q 12 17.2 12 18.5 Q 12 17.2 13.5 17.5 Q 14.5 17.8 14.5 19 Q 14.5 20.5 12 22.5 Z', opacity: '0.7' }),
 );
 
+// Ergänzungsleistungen (EL): Metapher „Aufstockung bis zum anerkannten Bedarf".
+// Solide Basis-Säule (eigene Mittel) + Umriss-Segment mit Aufwärtspfeil (die
+// Ergänzung) reicht bis zur Bedarfslinie oben. Bewusst KEINE Almosen-Bildsprache
+// (kein Bettel/keine offene Hand) — würdevolle Aufstockung, nicht Bittstellung.
+const _ergaenzungsleistungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+  // Bedarfslinie (anerkannter Bedarf) — das Ziel, bis zu dem aufgestockt wird
+  React.createElement('line', { x1: '3', y1: '5', x2: '21', y2: '5', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' }),
+  // Eigene Mittel: solide Basis-Säule
+  React.createElement('rect', { x: '8.5', y: '13', width: '7', height: '8', rx: '1' }),
+  // Ergänzung: Umriss-Segment, das die Lücke bis zur Bedarfslinie füllt
+  React.createElement('rect', { x: '8.5', y: '6.5', width: '7', height: '6', rx: '1', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4' }),
+  // Aufstock-Pfeil nach oben, innerhalb des Ergänzungs-Segments
+  React.createElement('line', { x1: '12', y1: '11.5', x2: '12', y2: '8', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round' }),
+  React.createElement('polyline', { points: '10,9.8 12,7.6 14,9.8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round', strokeLinejoin: 'round' }),
+);
+
 const _lebenslauf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Document
   React.createElement('rect', { x: '4', y: '1', width: '16', height: '22', rx: '2', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
@@ -922,6 +938,7 @@ const _iconFactories = {
   praemienverbilligung: _praemienverbilligung,
   mietzinsverbilligung: _mietzinsverbilligung,
   sozialhilfe: _sozialhilfe,
+  ergaenzungsleistungen: _ergaenzungsleistungen,
   lebenslauf: _lebenslauf,
   vorsorge: _vorsorge,
 
