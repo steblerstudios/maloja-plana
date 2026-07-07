@@ -6,6 +6,7 @@ export const DARK_PALETTE = {
   bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
   border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
@@ -13,6 +14,7 @@ export const LIGHT_PALETTE = {
   bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
   border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#727680',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 

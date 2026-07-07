@@ -41,7 +41,7 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
     React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
-        style: { flex: 1, padding: '10px', background: palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+        style: { flex: 1, padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, preview ? '✕ ' + t('common.close') : '◉ ' + t('cv.preview')),
       React.createElement('button', {
         onClick: handleDownload,

@@ -247,7 +247,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: handleExportJSON, disabled: exporting,
-              style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+              style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ JSON'),
             React.createElement('button', {
               onClick: handleExportCSV, disabled: exporting,

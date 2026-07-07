@@ -143,7 +143,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
       React.createElement('button', {
         onClick: handlePrint,
         style: {
-          padding: '10px 16px', background: palette.sand, color: '#fff',
+          padding: '10px 16px', background: palette.sand, color: palette.onSand,
           border: 'none', borderRadius: radius.sm, cursor: 'pointer',
           fontSize: textTokens.sm, fontWeight: weight.medium,
         }

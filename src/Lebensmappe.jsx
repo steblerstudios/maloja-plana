@@ -112,7 +112,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       onClick: handlePrint,
       style: {
         width: '100%', padding: '12px', marginBottom: '20px',
-        background: palette.sand, color: '#fff', border: 'none',
+        background: palette.sand, color: palette.onSand, border: 'none',
         borderRadius: radius.sm, cursor: 'pointer',
         fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
         letterSpacing: '0.2px',

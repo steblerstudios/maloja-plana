@@ -1032,7 +1032,7 @@ const AppInner = () => {
           React.createElement('div', { style: { display: 'flex', gap: space.xs } },
             React.createElement('button', {
               onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: palette.sand, color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
             }, t('pwa.install')),
             React.createElement('button', {
               onClick: () => setInstallPrompt(null),
