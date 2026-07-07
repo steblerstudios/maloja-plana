@@ -34,6 +34,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   // damit man im Kapitel springen kann statt hochzuscrollen (Jana #1).
   const [activeSection, setActiveSection] = useState(null);
   const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
+  // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
+  // einen Reiter, damit sie auffindbar sind statt im aufklappbaren Teil zu verschwinden
+  // (Sophie, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
+  const secondarySections = chapter.fields.filter((f) => f.secondary && f.section).map((f) => ({ name: f.section, k: f.k, secondary: true }));
+  const sectionTabs = [...primarySections, ...secondarySections];
 
   const hasSecondaryFields = chapter.fields.some(f => f.secondary);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => data[f.k]);
@@ -58,7 +63,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   // klebenden Reiter — so bleibt die aktuelle Sektion durchgehend markiert.
   useEffect(() => {
     setActiveSection(null);
-    if (primarySections.length < 2) return;
+    if (sectionTabs.length < 2) return;
     const root = document.getElementById('mp-main');
     if (!root) return;
     const compute = () => {
@@ -76,7 +81,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     root.addEventListener('scroll', compute, { passive: true });
     window.addEventListener('resize', compute);
     return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
-  }, [chapter.key, expandedSection]);
+  }, [chapter.key, expandedSection, showSecondary]);
 
   // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
   // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
@@ -1368,7 +1373,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
       // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
-      primarySections.length >= 2 && React.createElement('div', {
+      sectionTabs.length >= 2 && React.createElement('div', {
         role: 'tablist',
         'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
@@ -1384,12 +1389,17 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           borderBottom: '1px solid ' + palette.border + '55',
         },
       },
-        primarySections.map((s) => {
+        sectionTabs.map((s) => {
           const on = activeSection === s.k;
+          const jump = () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
           return React.createElement('button', {
             key: s.k,
             'data-section-tab': s.k,
-            onClick: () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
+            // Sekundär-Reiter: erst „mehr Felder" aufklappen, dann hinspringen
+            // (das Ziel existiert erst nach dem Aufklappen im DOM).
+            onClick: s.secondary
+              ? () => { if (!showSecondary) { setShowSecondary(true); try { localStorage.setItem(storageKey, 'true'); } catch {} requestAnimationFrame(() => requestAnimationFrame(jump)); } else { jump(); } }
+              : jump,
             'aria-current': on ? 'true' : undefined,
             style: {
               flexShrink: 0,
@@ -1822,9 +1832,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             elements.push(
               React.createElement('div', {
                 key: 'section-' + field.k,
+                id: 'mp-section-' + field.k,
+                'data-section-k': field.k,
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
+                  // scroll-margin, damit der klebende Reiter das Ziel nicht verdeckt
+                  scrollMarginTop: '64px',
                   gridColumn: '1 / -1',
                   marginTop: isFirst ? '8px' : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
