@@ -66,15 +66,20 @@ export function berechneAltersrente({
   durchschnittlichesJahreseinkommen,
   beitragsjahre,
   erziehungsjahre = 0,
+  betreuungsjahre = 0,
   bezugAlter,
   verheiratet = false,
   einkommenPartner = 0,
 }) {
   const alter = bezugAlter || REFERENZALTER;
 
-  // Einkommen mit Erziehungsgutschriften aufwerten
-  const gutschriftProJahr = erziehungsjahre > 0
-    ? (ERZIEHUNGSGUTSCHRIFT_JAHR * erziehungsjahre) / beitragsjahre
+  // Einkommen mit Erziehungs- UND Betreuungsgutschriften aufwerten.
+  // Beide gleichen Jahresbetrag (3× Minimalrente, Art. 29sexies/29septies AHVG);
+  // pro Kalenderjahr kann nur eine angerechnet werden — hier als getrennte,
+  // additive Jahre modelliert (Nutzer erfasst verschiedene Jahre).
+  const gutschriftJahre = (erziehungsjahre || 0) + (betreuungsjahre || 0);
+  const gutschriftProJahr = gutschriftJahre > 0
+    ? (ERZIEHUNGSGUTSCHRIFT_JAHR * gutschriftJahre) / beitragsjahre
     : 0;
   const aufgewertetesEinkommen = durchschnittlichesJahreseinkommen + gutschriftProJahr;
 
@@ -128,7 +133,10 @@ export function berechneAltersrente({
     fehlendeBeitragsjahre: Math.max(0, VOLLE_BEITRAGSJAHRE - beitragsjahre),
     bezugAlter: alter,
     vorbezugAufschub: Math.round(vorbezugAufschub * 10000) / 100, // in Prozent
-    erziehungsgutschrift: Math.round(gutschriftProJahr),
+    erziehungsgutschrift: Math.round(gutschriftProJahr), // kombinierte Aufwertung Erziehung + Betreuung (CHF/Jahr)
+    gutschriftJahre,
+    erziehungsjahre: erziehungsjahre || 0,
+    betreuungsjahre: betreuungsjahre || 0,
     plafoniert,
     rentePartner: verheiratet ? rentePartner : null,
     totalEhepaar: verheiratet ? Math.round((rente + rentePartner) * 100) / 100 : null,
@@ -288,11 +296,12 @@ export const IK_TYP = {
   JUGEND: 'jugendjahre',   // Alter 17–20: Beiträge füllen spätere Beitragslücken
   ALV: 'alv',              // Arbeitslosigkeit: AHV läuft weiter, ABER kein BVG-Alterssparen
   ERZIEHUNG: 'erziehung',  // Jahre mit Erziehungsgutschriften
+  BETREUUNG: 'betreuung',  // Pflege naher Angehöriger: Betreuungsgutschrift (Art. 29septies AHVG)
   LUECKE: 'luecke',        // fehlendes Beitragsjahr (senkt die Rente)
 };
 
 // Typen, die als AHV-Beitragsjahr zählen (alles ausser der Lücke)
-const IK_BEITRAGSTYPEN = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG];
+const IK_BEITRAGSTYPEN = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG, IK_TYP.BETREUUNG];
 
 const AHV_JUGEND_VON = 17;          // Jugendjahre-Fenster: Beiträge 17–20 füllen Lücken
 const AHV_BEITRAGSPFLICHT_AB = 21;  // ordentliche Beitragspflicht ab dem Jahr nach dem 20. Geburtstag
@@ -332,6 +341,7 @@ export function berechneIKAuszug(entries = []) {
     erwerbsjahre: regular.filter(e => e.typ === IK_TYP.ERWERB).length,
     alvJahre: regular.filter(e => e.typ === IK_TYP.ALV).length,
     erziehungsjahre: regular.filter(e => e.typ === IK_TYP.ERZIEHUNG).length,
+    betreuungsjahre: regular.filter(e => e.typ === IK_TYP.BETREUUNG).length,
     luecken,
     jugendjahreTotal: jugend.length,
     jugendjahreGenutzt: jugendGenutzt,
