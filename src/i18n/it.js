@@ -1153,6 +1153,8 @@ export default {
         securitiesValue: 'Titoli / deposito (valore fiscale) CHF',
         otherAssets: 'Altri beni CHF',
         creditCard: { label: 'Carte di credito?', options: { no: 'No', one: 'Sì (1)', multiple: 'Sì (2+)' } },
+        creditCardLimit: 'Limite totale delle carte di credito (CHF)',
+        creditCardBalance: 'Saldo aperto della carta (CHF)',
         loans: 'Prestiti personali (CHF)',
         monthlyTax: 'Imposte mensili (CHF)',
         groceries: 'Alimentari & casa (CHF)',
@@ -1172,6 +1174,8 @@ export default {
       },
       hints: {
         monthlyIncome: { sie: 'Il Suo salario netto — quello che arriva sul Suo conto.', du: 'Il tuo salario netto — quello che arriva sul tuo conto.' },
+        creditCardLimit: 'La somma di tutti i limiti delle carte.',
+        creditCardBalance: 'Importo attualmente dovuto sulle carte — conta come debito, spesso a tassi elevati.',
         sideIncome: 'Reddito aggiuntivo oltre all’attività principale (lavoretto, onorari). Conta come reddito.',
         taxableIncome: 'Reddito imponibile dalla dichiarazione dei redditi (all’anno, dopo le deduzioni). Solo a titolo orientativo — può alimentare il calcolatore delle imposte.',
         monthlyTax: 'Stima o secondo la dichiarazione fiscale.',
