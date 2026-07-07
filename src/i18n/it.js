@@ -2711,6 +2711,7 @@ export default {
     completed: 'Completato',
     addReminder: 'Aggiungi promemoria',
     editReminder: 'Modifica promemoria',
+    noRemindersTitle: 'Ancora nulla in programma',
     noReminders: { sie: 'Nessun promemoria. Aggiunga il Suo primo promemoria per restare organizzato.', du: 'Nessun promemoria. Aggiungi il tuo primo promemoria per restare organizzato.' },
     today: 'Oggi',
     thisWeek: 'Questa settimana',

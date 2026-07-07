@@ -3,6 +3,7 @@ import { Icon } from './IconSystem.jsx';
 import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -402,10 +403,12 @@ export const CalendarReminders = ({ palette, t, data }) => {
     // Upcoming view
     view === 'upcoming' && React.createElement('div', null,
       upcoming.length === 0
-        ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' } },
-            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'cowbell', size: 28 })),
-            React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('calendar.noReminders'))
-          )
+        ? React.createElement(EmptyState, {
+            palette,
+            icon: React.createElement(Icon, { name: 'cowbell', size: 28, color: palette.mid }),
+            title: t('calendar.noRemindersTitle'),
+            description: t('calendar.noReminders'),
+          })
         : React.createElement('div', null,
             // Overdue section
             overdue.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },

@@ -2709,6 +2709,7 @@ export default {
     completed: 'Erledigt',
     addReminder: 'Erinnerung hinzufügen',
     editReminder: 'Erinnerung bearbeiten',
+    noRemindersTitle: 'Noch nichts geplant',
     noReminders: { sie: 'Noch keine Erinnerungen. Fügen Sie Ihre erste Erinnerung hinzu, um organisiert zu bleiben.', du: 'Noch keine Erinnerungen. Füge deine erste Erinnerung hinzu, um organisiert zu bleiben.' },
     today: 'Heute',
     thisWeek: 'Diese Woche',
