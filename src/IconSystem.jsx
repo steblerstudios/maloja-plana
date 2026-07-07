@@ -651,9 +651,11 @@ const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
   React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' })
 );
 
-const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round' },
+// Sauberes Outline-Zahnrad (statt gefüllter Sternexplosion) — Kontur passt zum
+// Nav-Stil, und ein Zahnrad liest sich klar als Einstellungen (Sophie, Icon-Audit).
+const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
-  React.createElement('path', { d: 'M 12 1 L 13 5 L 17 3 L 15 7 L 19 8 L 16 11 L 19 14 L 15 13 L 17 17 L 13 15 L 12 19 L 11 15 L 7 17 L 9 13 L 5 14 L 8 11 L 5 8 L 9 7 L 7 3 L 11 5 Z', fill: 'currentColor' })
+  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
 );
 
 const _csv = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
