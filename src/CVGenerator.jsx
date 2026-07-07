@@ -5,6 +5,9 @@ import { text, weight, radius , space } from './config/tokens.js';
 
 export const CVGenerator = ({ palette, t, data, onUpdate }) => {
   const [preview, setPreview] = useState(false);
+  // Abschnitts-Überschriften optisch in Versalien, aber im Markup normale
+  // Schreibweise (Screenreader liest Wörter statt Buchstaben) — text-transform.
+  const headStyle = { textTransform: 'uppercase', letterSpacing: '0.5px' };
 
   const cv = generateCVTemplate(data, t);
   const cvHtml = generateCVHTML(cv, t);
@@ -59,22 +62,22 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
         React.createElement('div', { style: { color: palette.mid, marginBottom: '12px' } }, cv.header.phone + ' | ' + cv.header.email),
         React.createElement('div', { style: { color: palette.mid, marginBottom: space.md } }, cv.header.address + ', ' + cv.header.city),
         React.createElement('hr', { style: { border: 'none', borderTop: '1px solid ' + palette.border, marginBottom: '12px' } }),
-        React.createElement('strong', null, t('cv.personalData')),
+        React.createElement('strong', { style: headStyle }, t('cv.personalData')),
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', null, cv.personal.dateOfBirth),
           React.createElement('div', null, cv.personal.nationality),
           React.createElement('div', null, cv.personal.maritalStatus)
         ),
-        React.createElement('strong', null, t('cv.experience')),
+        React.createElement('strong', { style: headStyle }, t('cv.experience')),
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', null, cv.experience.current.title + ' — ' + cv.experience.current.company),
           React.createElement('div', { style: { color: palette.mid } }, cv.experience.current.startDate)
         ),
-        React.createElement('strong', null, t('cv.education')),
+        React.createElement('strong', { style: headStyle }, t('cv.education')),
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', null, cv.education.highest + ' — ' + cv.education.school)
         ),
-        React.createElement('strong', null, t('cv.languages')),
+        React.createElement('strong', { style: headStyle }, t('cv.languages')),
         React.createElement('div', null, cv.languages.list)
       )
     )
