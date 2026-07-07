@@ -19,7 +19,7 @@ function currentAge(dateStr) {
   return now.getFullYear() - birth.getFullYear() - (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate()) ? 1 : 0);
 }
 
-export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
+export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const birthYear = parseYear(data.basis?.dateOfBirth);
   const alter = currentAge(data.basis?.dateOfBirth);
 
@@ -36,13 +36,25 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [saeule3aAnnualInput, setSaeule3aAnnualInput] = useState(data.finanzen?.pension3a ? String(Math.round(Number(data.finanzen.pension3a))) : '');
   const [activeTab, setActiveTab] = useState('ahv');
 
-  // IK-Auszug (Beitragshistorie nachstellen): lokaler State wie die übrigen Rechner-
-  // Felder (der Rechner persistiert nichts). Opt-in: erst wenn „verwenden" aktiv ist,
+  // IK-Auszug (Beitragshistorie nachstellen): wird — anders als die übrigen Rechner-
+  // Felder — in data.vorsorge.ikAuszug persistiert (die nachgestellte Historie ist
+  // Aufwand, den man nicht verlieren will). Opt-in: erst wenn „verwenden" aktiv ist,
   // ersetzt die echte Historie die Annahme in der AHV-Berechnung.
-  const [ikEntries, setIkEntries] = useState([]);
-  const [ikActive, setIkActive] = useState(false);
-  const [ikJugend, setIkJugend] = useState(false);
+  const [ikEntries, setIkEntries] = useState(() => (Array.isArray(data.vorsorge?.ikAuszug) ? data.vorsorge.ikAuszug : []));
+  const [ikActive, setIkActive] = useState(() => !!data.vorsorge?.ikActive);
+  const [ikJugend, setIkJugend] = useState(() => (Array.isArray(data.vorsorge?.ikAuszug) ? data.vorsorge.ikAuszug.some(e => e.typ === IK_TYP.JUGEND) : false));
   const [ikExpanded, setIkExpanded] = useState(null); // von-Jahr der aufgeklappten Phase
+
+  // IK-Auszug + Opt-in persistieren (Standard-Datenpfad; respektiert Sandbox/demoMode).
+  // Erster Render überspringt das Schreiben, damit ein leerer Rechner keinen
+  // vorsorge-Block anlegt.
+  const ikDidMount = React.useRef(false);
+  React.useEffect(() => {
+    if (!onUpdateData) return;
+    if (!ikDidMount.current) { ikDidMount.current = true; return; }
+    onUpdateData('vorsorge', 'ikAuszug', ikEntries);
+    onUpdateData('vorsorge', 'ikActive', ikActive);
+  }, [ikEntries, ikActive]);
 
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
