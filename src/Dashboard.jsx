@@ -5,6 +5,7 @@ import FruchtStufe from './FruchtStufe.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 
@@ -695,8 +696,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
-      React.createElement('h2', {
-        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
+      React.createElement(PageTitle, {
+        palette,
+        style: { margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
@@ -1313,8 +1315,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
-      React.createElement('h2', {
-        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
+      React.createElement(PanelTitle, {
+        palette,
+        style: { margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
       }, t('dashboard.anspruchTitle')),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
@@ -1391,8 +1394,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
-      React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs }
+      React.createElement(Eyebrow, {
+        palette,
+        style: { marginBottom: space.xs }
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
@@ -1541,8 +1545,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement('div', {
       style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
-      React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
+      React.createElement(Eyebrow, {
+        palette,
+        style: { color: palette.soft, fontWeight: weight.medium, marginBottom: space.sm + 4 }
       }, t('dashboard.tipsTitle')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
         [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
