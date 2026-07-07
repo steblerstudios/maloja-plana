@@ -3416,6 +3416,7 @@ export default {
     erziehungsjahreHint: 'Années avec enfants de moins de 16 ans',
     betreuungsjahre: 'Années de prise en charge',
     betreuungsjahreHint: 'Années à soigner des proches (à annoncer chaque année)',
+    gutschriftHinweis: 'Une seule bonification par année civile (éducation ou assistance).',
     verheiratet: 'Marié(e)',
     einkommenPartner: 'Revenu du conjoint (CHF)',
     ahvRente: 'Rente AVS estimée',

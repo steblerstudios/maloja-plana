@@ -3404,6 +3404,7 @@ export default {
     erziehungsjahreHint: 'Jahre mit Kindern unter 16',
     betreuungsjahre: 'Betreuungsjahre',
     betreuungsjahreHint: 'Jahre mit Pflege naher Angehöriger (jährlich anmelden)',
+    gutschriftHinweis: 'Pro Kalenderjahr zählt nur eine Gutschrift (Erziehung oder Betreuung).',
     verheiratet: 'Verheiratet',
     einkommenPartner: 'Einkommen Partner (CHF)',
     ahvRente: 'Geschätzte AHV-Altersrente',
