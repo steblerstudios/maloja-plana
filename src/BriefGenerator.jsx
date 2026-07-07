@@ -75,6 +75,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
           borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+          // Buttons erben color NICHT (UA-Reset auf schwarz) → im Dark Mode war der
+          // Vorlagen-Titel unlesbar schwarz. Explizit auf palette.text setzen.
+          color: palette.text,
           display: 'flex', alignItems: 'flex-start', gap: '12px',
           transition: `border-color ${duration.normal}ms ${ease}`,
         }
