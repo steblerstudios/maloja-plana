@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 
 // ISO-Datum → TT.MM.JJJJ für die Anzeige in der Beleg-Auswahl.
@@ -140,14 +141,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
-      React.createElement('button', {
-        onClick: handlePrint,
-        style: {
-          padding: '10px 16px', background: palette.sand, color: palette.onSand,
-          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: textTokens.sm, fontWeight: weight.medium,
-        }
-      }, t('briefe.printLetter'))
+      React.createElement(PrimaryButton, { palette, onClick: handlePrint }, t('briefe.printLetter'))
     ),
 
     // Data status
