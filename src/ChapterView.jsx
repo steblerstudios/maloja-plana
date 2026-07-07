@@ -9,6 +9,7 @@ import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
@@ -1341,7 +1342,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       }, 'ⓘ ' + tr('orientation.contextFamilienzulagen')),
 
     // Tabs
-    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
+    // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
+    // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
+    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         style: {
@@ -1378,7 +1381,10 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
         style: {
-          position: 'sticky', top: 0, zIndex: 5,
+          // top: -24px gleicht das padding-top:24px des Scroll-Containers (#mp-main) aus,
+          // damit der Reiter beim Kleben bündig unter dem „100% lokal"-Streifen sitzt.
+          // Sonst bleibt ein 24px-Spalt, durch den der scrollende Text durchscheint.
+          position: 'sticky', top: '-24px', zIndex: 5,
           // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
           // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
           display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
@@ -1422,10 +1428,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
         ),
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sage, opacity: 0.8 } },
-          React.createElement('svg', { width: '11', height: '11', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-            React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-            React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-          ),
+          React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
       ),
