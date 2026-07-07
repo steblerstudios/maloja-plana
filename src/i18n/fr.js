@@ -1152,6 +1152,8 @@ export default {
         securitiesValue: 'Titres / portefeuille (valeur fiscale) CHF',
         otherAssets: 'Autres actifs CHF',
         creditCard: { label: 'Cartes de crédit ?', options: { no: 'Non', one: 'Oui (1)', multiple: 'Oui (2+)' } },
+        creditCardLimit: 'Limite totale des cartes de crédit (CHF)',
+        creditCardBalance: 'Solde de carte ouvert (CHF)',
         loans: 'Prêts personnels (CHF)',
         monthlyTax: 'Impôts mensuels (CHF)',
         groceries: 'Alimentation & ménage (CHF)',
@@ -1171,6 +1173,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Votre revenu — le net est ce qui arrive sur votre compte.',
+        creditCardLimit: 'La somme de toutes les limites de vos cartes.',
+        creditCardBalance: 'Montant actuellement dû sur vos cartes — compte comme dette, souvent à taux élevé.',
         sideIncome: 'Revenu supplémentaire en plus de l’activité principale (petit boulot, honoraires). Compté comme revenu.',
         taxableIncome: 'Revenu imposable de la déclaration d’impôt (par an, après déductions). À titre indicatif — peut alimenter le calculateur d’impôt.',
         monthlyTax: 'Estimation ou selon votre avis d\'imposition.',

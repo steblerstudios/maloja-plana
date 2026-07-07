@@ -1117,6 +1117,8 @@ export default {
         securitiesValue: 'Investiziuns / deposit (valur fiscala) CHF',
         otherAssets: 'Autra facultad CHF',
         creditCard: { label: 'Carta da credit existenta?', options: { no: 'Na', one: 'Gea (1)', multiple: 'Gea (2+)' } },
+        creditCardLimit: 'Limit total da las cartas da credit (CHF)',
+        creditCardBalance: 'Saldo avert da la carta (CHF)',
         loans: 'Imprest persunal CHF',
         monthlyTax: 'Taglia mensiala CHF',
         groceries: 'Vivondas & ménaschi CHF',
@@ -1139,6 +1141,8 @@ export default {
       },
       hints: {
         monthlyIncome: 'Salari mensil net (quai che arriva sin il conto)',
+        creditCardLimit: 'La summa da tut ils limits da tias cartas.',
+        creditCardBalance: 'Import actualmain debit sin tias cartas — quinta sco debit, savens cun auts tschains.',
         sideIncome: 'Entrada supplementara ultra l’activitad principala. Vegn quintada sco entrada.',
         taxableIncome: 'Entrada taxabla da la decleraziun da taglia (per onn, suenter deducziuns). Mo per orientaziun — po alimentar il quintader da taglia.',
         familienzulagen: "Incl. supplements d'uffants e supplements da furmaziun",
