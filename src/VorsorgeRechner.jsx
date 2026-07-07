@@ -476,6 +476,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const yticks = [0, 0.5, 1].map((f) => maxY * f);
         const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
           React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
+        // Monatliche Rente ab Rücktritt — AHV ist Rente (kein Kapital), darum eigener Darstellungsweg statt Kapital-Fläche.
+        const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
+        const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
+        const colAhv = palette.soft;                // AHV = ruhiger Granit-Ton (1. Säule / Fundament)
         return React.createElement('div', null,
           React.createElement('div', { style: s.highlight },
             React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
@@ -484,15 +488,24 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
           ),
           (() => {
-            const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
-            const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
             if (!ahvMonat && !bvgMonat) return null;
+            const totMonat = ahvMonat + bvgMonat;
+            const pctOf = (v) => totMonat > 0 ? (v / totMonat * 100) : 0;
+            const seg = (col, v, label) => v > 0 ? React.createElement('div', {
+              key: label, style: { width: pctOf(v).toFixed(1) + '%', background: col, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
+              pctOf(v) >= 16 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, label) : null) : null;
+            const legendDot = (col, label, amount) => React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
+              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '2px', background: col, display: 'inline-block' } }),
+              label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat'));
             return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
               React.createElement('div', { style: s.label }, t('vr.zukunftRente')),
-              React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text } },
-                'CHF ' + fmt(ahvMonat + bvgMonat) + ' / ' + t('vr.monat')),
-              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-                'AHV ' + fmt(ahvMonat) + ' · BVG ' + fmt(bvgMonat)),
+              React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.sm + 'px' } },
+                'CHF ' + fmt(totMonat) + ' / ' + t('vr.monat')),
+              // Flat-Design-Balken: monatliche Rente, aufgeteilt AHV (Granit) + BVG (Himmel)
+              React.createElement('div', { style: { display: 'flex', height: '30px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
+                seg(colAhv, ahvMonat, 'AHV'), seg(palette.sky, bvgMonat, 'BVG')),
+              React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
+                legendDot(colAhv, 'AHV', ahvMonat), bvgMonat > 0 ? legendDot(palette.sky, 'BVG', bvgMonat) : null),
               React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs } }, t('vr.zukunftRenteAufteilung')),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
             );
@@ -524,6 +537,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // Lebensphasen-Beschriftung
             React.createElement('text', { x: (x0 + xret) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phaseErwerb')),
             React.createElement('text', { x: (xret + x1) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phasePension')),
+            // Renten-Readout IN der Pensionsphase — macht die AHV im Graph sichtbar (Rente ≠ Kapital, darum Beschriftung statt Fläche)
+            (ahvMonat + bvgMonat) > 0 && (x1 - xret) > 130 && React.createElement('g', { key: 'pensRente' },
+              React.createElement('rect', { x: Math.min(x1 - 152, (xret + x1) / 2 - 74), y: y0 + 16, width: 148, height: 34, rx: 6, fill: palette.surface, stroke: palette.border, strokeWidth: 1 }),
+              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 29, fill: palette.mid, fontSize: 8.5, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.zukunftRente')),
+              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 43, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, 'AHV ' + fmt(ahvMonat) + (bvgMonat > 0 ? ' + BVG ' + fmt(bvgMonat) : ''))),
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
             React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
