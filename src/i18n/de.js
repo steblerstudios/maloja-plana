@@ -1152,6 +1152,8 @@ export default {
         securitiesValue: 'Wertschriften / Depot (Steuerwert) CHF',
         otherAssets: 'Übriges Vermögen CHF',
         creditCard: { label: 'Kreditkarten vorhanden?', options: { no: 'Nein', one: 'Ja (1)', multiple: 'Ja (2+)' } },
+        creditCardLimit: 'Kreditkarten-Limit total CHF',
+        creditCardBalance: 'Offener Kartensaldo CHF',
         loans: 'Persönliche Darlehen CHF',
         monthlyTax: 'Steuern monatlich CHF',
         groceries: 'Lebensmittel & Haushalt CHF',
@@ -1171,6 +1173,8 @@ export default {
       },
       hints: {
         monthlyIncome: { sie: 'Ihr Einkommen — Netto ist was auf Ihrem Konto ankommt.', du: 'Dein Einkommen — Netto ist was auf deinem Konto ankommt.' },
+        creditCardLimit: 'Summe aller Kartenlimiten zusammen.',
+        creditCardBalance: 'Aktuell offener Betrag auf den Karten — zählt als Schuld, oft mit hohen Zinsen.',
         sideIncome: 'Zusätzliches Einkommen neben dem Hauptjob (Nebenjob, Honorare). Wird zum Einkommen gezählt.',
         taxableIncome: 'Steuerbares Einkommen aus der Steuererklärung (pro Jahr, nach Abzügen). Nur zur Orientierung — kann den Steuer-Rechner füttern.',
         monthlyTax: 'Geschätzt oder laut Steuerrechnung.',
