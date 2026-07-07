@@ -154,7 +154,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
     // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
     // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
-    tabRow: { position: 'sticky', top: '-24px', zIndex: 5, display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0', marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
+    // Sticky Wrapper hält die Leiste oben; das Scrollen passiert im inneren tabRow,
+    // die rechte Verlauf-Kante (tabFade) signalisiert auf Mobil „hier geht's weiter →".
+    tabWrap: { position: 'sticky', top: '-24px', zIndex: 5, marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
+    tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
+    tabFade: { position: 'absolute', top: 0, right: 0, bottom: 0, width: '28px', pointerEvents: 'none', background: 'linear-gradient(to right, ' + palette.surface + '00, ' + palette.surface + ')' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
@@ -308,13 +312,16 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       t('vr.title')
     ),
 
-    // Tab row
-    React.createElement('div', { style: s.tabRow },
-      React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
-      React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
-      React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
-      React.createElement('button', { style: s.tab(activeTab === 'zukunft'), onClick: () => setActiveTab('zukunft') }, t('vr.tabZukunft')),
-      React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
+    // Tab row (sticky Wrapper + scrollender Inhalt + rechte Verlauf-Kante)
+    React.createElement('div', { style: s.tabWrap },
+      React.createElement('div', { style: s.tabRow },
+        React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
+        React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
+        React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
+        React.createElement('button', { style: s.tab(activeTab === 'zukunft'), onClick: () => setActiveTab('zukunft') }, t('vr.tabZukunft')),
+        React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
+      ),
+      React.createElement('div', { style: s.tabFade })
     ),
 
     // Input fields
