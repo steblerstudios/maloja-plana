@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 // Persönliche Merkliste: „Erkenntnis → Handlung". Eine Notiz erfassen und
 // optional direkt mit dem passenden Rechner/Kapitel verknüpfen (Deeplink).
@@ -99,7 +100,12 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
       React.createElement('button', { style: s.addBtn, onClick: add }, t('merkliste.add'))
     ),
 
-    open.length === 0 && done.length === 0 && React.createElement('div', { style: s.empty }, t('merkliste.empty')),
+    open.length === 0 && done.length === 0 && React.createElement(EmptyState, {
+      palette,
+      icon: React.createElement(Icon, { name: 'edit', size: 26, color: palette.mid }),
+      title: t('merkliste.emptyTitle'),
+      description: t('merkliste.empty'),
+    }),
 
     open.length > 0 && React.createElement('div', null,
       React.createElement('div', { style: s.sectionTitle }, t('merkliste.openTitle')),

@@ -3882,6 +3882,7 @@ export default {
   search: {
     title: 'Suche',
     placeholder: 'Werkzeuge und Kapitel durchsuchen…',
+    emptyTitle: 'Keine Treffer',
     empty: { sie: 'Nichts gefunden für „{query}“. Versuchen Sie einen anderen Begriff.', du: 'Nichts gefunden für „{query}“. Versuch einen anderen Begriff.' },
     toolsTitle: 'Werkzeuge',
     chaptersTitle: 'Kapitel',
@@ -3894,6 +3895,7 @@ export default {
     linkLabel: 'Verknüpfen mit',
     linkNone: 'Keine Verknüpfung',
     add: 'Hinzufügen',
+    emptyTitle: 'Noch nichts gemerkt',
     empty: { sie: 'Ihre Merkliste ist leer. Fügen Sie oben eine erste Notiz hinzu.', du: 'Deine Merkliste ist leer. Füge oben eine erste Notiz hinzu.' },
     openTitle: 'Zu erledigen',
     doneTitle: 'Erledigt',
