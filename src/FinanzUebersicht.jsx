@@ -6,7 +6,7 @@ import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, 
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space, duration, ease } from './config/tokens.js';
-import { openPrintWindow } from './utils/helpers.js';
+import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 import { KKLastCard } from './KKLastCard.jsx';
 
@@ -96,7 +96,7 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
     + '.footer{margin-top:32px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:12px}'
     + '@media print{body{margin:20px}}'
     + '</style></head><body>'
-    + '<h1>' + t('finanzUebersicht.title') + (name ? ' — ' + name : '') + '</h1>'
+    + '<h1>' + t('finanzUebersicht.title') + (name ? ' — ' + escapeHtml(name) : '') + '</h1>'
     + '<div class="sub">' + t('finanzUebersicht.subtitle') + ' · ' + date + '</div>'
     + '<table>' + rows.join('') + '</table>'
     + '<div class="footer">ⓘ ' + t('finanzUebersicht.disclaimer') + '<br>Maloja Plana · malojaplana.ch</div>'
@@ -397,7 +397,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         onClick: () => onNavigate('sync'),
         style: {
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left',
         }
       }, '◇ ' + t('finanzUebersicht.toBudget')),
@@ -405,7 +405,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         onClick: () => onNavigate('behoerdendossier'),
         style: {
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left',
         }
       }, '◇ ' + t('finanzUebersicht.toDossier')),
@@ -413,7 +413,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         onClick: handlePrint,
         style: {
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
-          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
+          borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left', gridColumn: '1 / -1',
         }
       }, '◇ ' + t('finanzUebersicht.printAction'))
