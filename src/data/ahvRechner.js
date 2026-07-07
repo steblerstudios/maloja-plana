@@ -222,6 +222,57 @@ export function berechneBVGGuthaben({
   };
 }
 
+/**
+ * Zukunfts-Projektion der 2./3. Säule bis zum Rücktritt.
+ *
+ * Reine Funktion (testbar). Konvention wie berechneBVGGuthaben: der Zins wird
+ * auf den Anfangsbestand des Jahres gerechnet, der Jahresbeitrag danach addiert
+ * (Beitrag verzinst sich erst im Folgejahr). Ergebnis ist eine Zeitachse mit
+ * einem Startpunkt „heute" (t=0) und je einem Punkt pro Jahr bis zum Rücktritt.
+ *
+ * Die BVG-Reihe wird von aussen übergeben (bvgSerie = jahresDetail-Guthaben),
+ * damit die bestehende Koordinationsabzug-/Gutschriften-Logik nicht dupliziert
+ * wird; 3a und 3b werden hier mit flachem Jahresbeitrag verzinst.
+ */
+export function projiziereVorsorge({
+  alter,
+  austrittsalter = 65,
+  startjahr,
+  bvgHeute = 0,
+  bvgSerie = [],          // bvgSerie[i] = Guthaben am Ende von Jahr (i+1), aus jahresDetail
+  s3aBalance = 0, s3aAnnual = 0, s3aRendite = 1.5,
+  s3bBalance = 0, s3bAnnual = 0, s3bRendite = 2.0,
+}) {
+  const round = Math.round;
+  const jahr0 = startjahr || new Date().getFullYear();
+  const n = Math.max(0, Math.round(austrittsalter - alter));
+
+  let g3a = s3aBalance;
+  let g3b = s3bBalance;
+  const timeline = [];
+  const push = (i, bvgVal) => {
+    const bvg = round(bvgVal);
+    const s3a = round(g3a);
+    const s3b = round(g3b);
+    timeline.push({ jahr: jahr0 + i, alter: Math.round(alter) + i, bvg, s3a, s3b, total: bvg + s3a + s3b });
+  };
+
+  push(0, bvgHeute);
+  for (let i = 1; i <= n; i++) {
+    g3a += g3a * s3aRendite / 100 + s3aAnnual;
+    g3b += g3b * s3bRendite / 100 + s3bAnnual;
+    const bvgVal = bvgSerie.length >= i ? bvgSerie[i - 1] : (timeline[timeline.length - 1]?.bvg ?? bvgHeute);
+    push(i, bvgVal);
+  }
+
+  const end = timeline[timeline.length - 1] || { bvg: 0, s3a: 0, s3b: 0, total: 0, alter: Math.round(alter), jahr: jahr0 };
+  return {
+    timeline,
+    startsumme: { bvg: round(bvgHeute), s3a: round(s3aBalance), s3b: round(s3bBalance), total: round(bvgHeute + s3aBalance + s3bBalance) },
+    endsumme: { bvg: end.bvg, s3a: end.s3a, s3b: end.s3b, total: end.total, alter: end.alter, jahr: end.jahr },
+  };
+}
+
 // Konstanten exportieren für Tests und UI
 export const AHV_PARAMS = {
   minRente: AHV_MIN_RENTE,
