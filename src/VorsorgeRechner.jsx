@@ -490,7 +490,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const lBvg = (a) => ahvAt(a) + val(a).bvg;
         const l3a = (a) => ahvAt(a) + val(a).bvg + val(a).s3a;
         const l3b = (a) => ahvAt(a) + val(a).bvg + val(a).s3a + val(a).s3b;
-        const colBvg = palette.sky, col3a = palette.gold, col3b = palette.sage;
+        // Vier klar unterscheidbare Säulen-Farben. Im Farbenblind-Modus greift eine
+        // Okabe-Ito-Palette (Grau/Blau/Orange/Türkis) — sonst kollidierten hier drei
+        // bläulich-graue Töne (AHV soft, BVG sky, 3b sage→blau).
+        const cbChart = palette.colorBlind;
+        const colBvg = cbChart ? '#2E7DB8' : palette.sky;
+        const col3a  = cbChart ? '#E69F00' : palette.gold;
+        const col3b  = cbChart ? '#0F9D8C' : palette.sage;
         const xret = xA(ret);
         const ageFromEvent = (e) => {
           const svg = e.currentTarget.ownerSVGElement || e.currentTarget;
@@ -510,7 +516,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
         const s3aMonat = end.s3a > 0 ? end.s3a / drawdownMonate : 0;
         const s3bMonat = end.s3b > 0 ? end.s3b / drawdownMonate : 0;
-        const colAhv = palette.soft;                // AHV = ruhiger Granit-Ton (1. Säule / Fundament)
+        const colAhv = cbChart ? '#8A8D92' : palette.soft;  // AHV = ruhiger Granit-Ton (Fundament); CB: neutrales Grau, distinkt zu Blau/Orange/Türkis
         return React.createElement('div', null,
           React.createElement('div', { style: s.highlight },
             React.createElement('div', { style: s.label }, t('vr.zukunftEnde') + ' (' + end.alter + ')'),
@@ -536,9 +542,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               // Flat-Design-Balken: monatliche Rente, alle vier Säulen vergleichbar
               // AHV (Granit) + BVG (Himmel) + 3a (Gold) + 3b (Salbei)
               React.createElement('div', { style: { display: 'flex', height: '30px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
-                seg(colAhv, ahvMonat, 'AHV'), seg(palette.sky, bvgMonat, 'BVG'), seg(col3a, s3aMonat, '3a'), seg(col3b, s3bMonat, '3b')),
+                seg(colAhv, ahvMonat, 'AHV'), seg(colBvg, bvgMonat, 'BVG'), seg(col3a, s3aMonat, '3a'), seg(col3b, s3bMonat, '3b')),
               React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
-                legendDot(colAhv, 'AHV', ahvMonat), legendDot(palette.sky, 'BVG', bvgMonat), legendDot(col3a, '3a', s3aMonat), legendDot(col3b, '3b', s3bMonat)),
+                legendDot(colAhv, 'AHV', ahvMonat), legendDot(colBvg, 'BVG', bvgMonat), legendDot(col3a, '3a', s3aMonat), legendDot(col3b, '3b', s3bMonat)),
               React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs } }, t('vr.zukunftRenteAufteilung')),
               kapitalRente ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteKapitalHinweis', { le: parsedLE })) : null,
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
