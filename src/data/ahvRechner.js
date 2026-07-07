@@ -273,6 +273,98 @@ export function projiziereVorsorge({
   };
 }
 
+// === IK-Auszug (Individuelles Konto) — echte Beitragshistorie statt Annahme ===
+//
+// Statt die Beitragsjahre zu schätzen (min(Rücktritt−20, 44) volle Jahre), kann
+// aus einem nachgestellten IK-Auszug die reale Historie abgeleitet werden: echte
+// Beitragsjahre (ohne Lücken, gedeckelt auf 44), massgebendes Ø-Einkommen,
+// Jugendjahre zur Lückenfüllung (#6) und ALV-Jahre (AHV läuft weiter, #7).
+//
+// Ein Eintrag: { jahr:number, alter:number, einkommen:number, typ:string }
+// Bleibt eine SCHÄTZUNG — der echte IK-Auszug der Ausgleichskasse ist massgebend.
+
+export const IK_TYP = {
+  ERWERB: 'erwerb',        // Erwerbstätigkeit (zählt als AHV-Beitragsjahr + BVG)
+  JUGEND: 'jugendjahre',   // Alter 17–20: Beiträge füllen spätere Beitragslücken
+  ALV: 'alv',              // Arbeitslosigkeit: AHV läuft weiter, ABER kein BVG-Alterssparen
+  ERZIEHUNG: 'erziehung',  // Jahre mit Erziehungsgutschriften
+  LUECKE: 'luecke',        // fehlendes Beitragsjahr (senkt die Rente)
+};
+
+// Typen, die als AHV-Beitragsjahr zählen (alles ausser der Lücke)
+const IK_BEITRAGSTYPEN = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG];
+
+const AHV_JUGEND_VON = 17;          // Jugendjahre-Fenster: Beiträge 17–20 füllen Lücken
+const AHV_BEITRAGSPFLICHT_AB = 21;  // ordentliche Beitragspflicht ab dem Jahr nach dem 20. Geburtstag
+
+/**
+ * Werte einen nachgestellten IK-Auszug aus: echte Beitragsjahre + Ø-Einkommen.
+ * Jugendjahre (17–20) füllen spätere Lücken (bis zu deren Anzahl). ALV-Jahre
+ * zählen als AHV-Beitragsjahr. Reine Funktion, testbar.
+ *
+ * @param {Array<{jahr:number, alter?:number, einkommen:number, typ:string}>} entries
+ * @returns {Object} abgeleitete Kennzahlen für berechneAltersrente()
+ */
+export function berechneIKAuszug(entries = []) {
+  const list = Array.isArray(entries) ? entries.filter(e => e && Number(e.jahr)) : [];
+
+  const jugend = list.filter(e => e.typ === IK_TYP.JUGEND);
+  const regular = list.filter(e => e.typ !== IK_TYP.JUGEND);
+
+  const contributory = regular.filter(e => IK_BEITRAGSTYPEN.includes(e.typ));
+  const luecken = regular.filter(e => e.typ === IK_TYP.LUECKE).length;
+
+  // Jugendjahre-Beiträge füllen spätere Beitragslücken (höchstens so viele wie Lücken)
+  const jugendGenutzt = Math.min(jugend.length, luecken);
+
+  // Effektive Beitragsjahre = reguläre Beitragsjahre + genutzte Jugendjahre, gedeckelt auf 44
+  const beitragsjahre = Math.min(VOLLE_BEITRAGSJAHRE, contributory.length + jugendGenutzt);
+
+  // Massgebendes Ø-Einkommen: Summe der angerechneten Einkommen / Beitragsjahre.
+  // Die zur Lückenfüllung genutzten Jugendjahre werden mit ihrem Einkommen einbezogen.
+  const angerechnet = contributory.concat(jugend.slice(0, jugendGenutzt));
+  const summeEinkommen = angerechnet.reduce((s, e) => s + (Number(e.einkommen) || 0), 0);
+  const durchschnitt = beitragsjahre > 0 ? Math.round(summeEinkommen / beitragsjahre) : 0;
+
+  return {
+    beitragsjahre,
+    durchschnittlichesJahreseinkommen: durchschnitt,
+    erwerbsjahre: regular.filter(e => e.typ === IK_TYP.ERWERB).length,
+    alvJahre: regular.filter(e => e.typ === IK_TYP.ALV).length,
+    erziehungsjahre: regular.filter(e => e.typ === IK_TYP.ERZIEHUNG).length,
+    luecken,
+    jugendjahreTotal: jugend.length,
+    jugendjahreGenutzt: jugendGenutzt,
+    jahreErfasst: list.length,
+    vollstaendig: beitragsjahre >= VOLLE_BEITRAGSJAHRE,
+  };
+}
+
+/**
+ * Vorbelegung eines IK-Auszugs: erzeugt Einträge ab Beitragspflicht (21) bis zum
+ * heutigen Alter mit dem aktuellen Einkommen als Annahme. Optional die Jugendjahre
+ * (17–20). So startet die Eingabe nicht leer (Robustheit: Vorausfüllen).
+ *
+ * @returns {Array} IK-Auszug-Einträge
+ */
+export function vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter, aktuellesEinkommen = 0, mitJugendjahren = false, jetztJahr }) {
+  const jahr0 = jetztJahr || new Date().getFullYear();
+  let gj = geburtsjahr;
+  if (!gj && aktuellesAlter != null) gj = jahr0 - Math.round(aktuellesAlter);
+  if (!gj) return [];
+  const alterHeute = aktuellesAlter != null ? Math.round(aktuellesAlter) : (jahr0 - gj);
+  const entries = [];
+  if (mitJugendjahren) {
+    for (let a = AHV_JUGEND_VON; a < AHV_BEITRAGSPFLICHT_AB && a <= alterHeute; a++) {
+      entries.push({ jahr: gj + a, alter: a, einkommen: aktuellesEinkommen, typ: IK_TYP.JUGEND });
+    }
+  }
+  for (let a = AHV_BEITRAGSPFLICHT_AB; a <= alterHeute; a++) {
+    entries.push({ jahr: gj + a, alter: a, einkommen: aktuellesEinkommen, typ: IK_TYP.ERWERB });
+  }
+  return entries;
+}
+
 // Konstanten exportieren für Tests und UI
 export const AHV_PARAMS = {
   minRente: AHV_MIN_RENTE,
