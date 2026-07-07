@@ -3,6 +3,7 @@ import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // ─── Lebensmappe View ─────────────────────────────────────
 // Calm preview of the personal life overview dossier.
@@ -108,15 +109,9 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
     ),
 
     // ─── Print button ───────────────────────────────────
-    hasSections && React.createElement('button', {
-      onClick: handlePrint,
-      style: {
-        width: '100%', padding: '12px', marginBottom: '20px',
-        background: palette.sand, color: palette.onSand, border: 'none',
-        borderRadius: radius.sm, cursor: 'pointer',
-        fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        letterSpacing: '0.2px',
-      }
+    hasSections && React.createElement(PrimaryButton, {
+      palette, onClick: handlePrint,
+      style: { width: '100%', padding: '12px', marginBottom: '20px' },
     }, t('lebensmappe.printAction')),
 
     // ─── Preview note ───────────────────────────────────
