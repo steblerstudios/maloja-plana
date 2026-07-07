@@ -16,15 +16,27 @@ const STATUS_COLORS = (palette) => ({
 
 // Ruhiges Status-Signal: feiner Punkt + Wort statt lauter Pille (Faden 3-II/2,
 // Layout-Schritt 2/3). Das Wort steht zurückhaltend in Sekundärfarbe.
+// Im Farbenblind-Modus (palette.colorBlind) trägt der Punkt zusätzlich eine
+// unterscheidbare FORM (voll / Ring-mit-Kern / hohl) — Bedeutung nie nur über Farbe.
 const StatusBadge = ({ status, label, palette }) => {
   const colors = STATUS_COLORS(palette);
   const dot = colors[status] || palette.mid;
+  const marker = palette.colorBlind
+    ? React.createElement('svg', { width: '9', height: '9', viewBox: '0 0 10 10', 'aria-hidden': 'true', style: { flexShrink: 0 } },
+        status === 'covered'
+          ? React.createElement('circle', { cx: '5', cy: '5', r: '4', fill: dot })
+          : status === 'limited'
+            ? React.createElement(React.Fragment, null,
+                React.createElement('circle', { cx: '5', cy: '5', r: '4', fill: 'none', stroke: dot, strokeWidth: '1.4' }),
+                React.createElement('circle', { cx: '5', cy: '5', r: '1.6', fill: dot }))
+            : React.createElement('circle', { cx: '5', cy: '5', r: '3.6', fill: 'none', stroke: dot, strokeWidth: '1.4' }))
+    : React.createElement('span', {
+        style: { width: '7px', height: '7px', borderRadius: '50%', background: dot, flexShrink: 0 }
+      });
   return React.createElement('div', {
     style: { display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }
   },
-    React.createElement('span', {
-      style: { width: '7px', height: '7px', borderRadius: '50%', background: dot, flexShrink: 0 }
-    }),
+    marker,
     React.createElement('span', {
       style: { fontSize: text.xs, color: palette.mid }
     }, label)
