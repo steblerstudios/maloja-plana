@@ -1487,6 +1487,7 @@ export default {
     lohn: 'Vérification salaire minimum active',
     notfall: "Carte d'urgence prête",
     budget: 'Aperçu budget actif',
+    short: { tax: 'Impôts', ipv: 'IPV', sozial: 'Aide sociale', lohn: 'Salaire', notfall: 'Urgence', budget: 'Budget' },
   },
 
   legal: {
