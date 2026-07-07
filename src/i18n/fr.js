@@ -3396,6 +3396,8 @@ export default {
     rendite: 'Rendement annuel supposé (%)',
     renditeHint: 'Prudent 1–2 %. Une hypothèse, pas une garantie.',
     s3bGuthaben: 'Pilier 3b aujourd’hui (CHF)',
+    s3aAnnual: 'Cotisation annuelle pilier 3a (CHF)',
+    s3aAnnualHint: 'Depuis «Finances», ajustable ici.',
     zukunftEnde: 'Capital à la retraite',
     zukunftHeute: 'Aujourd’hui',
     zukunftHinweis: 'Orientation approximative avec un rendement constant — les rendements réels varient. Ne remplace pas un conseil en prévoyance.',
