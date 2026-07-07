@@ -3580,6 +3580,7 @@ export default {
     erziehungsjahreHint: 'Onns cun uffants sut 16',
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
+    gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
     verheiratet: 'Maridà/ada',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',
