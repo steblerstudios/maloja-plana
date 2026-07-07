@@ -8,7 +8,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
-import { openPrintWindow } from './utils/helpers.js';
+import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -901,31 +901,31 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const sections = [];
     if (name || dob) {
       const rows = [];
-      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + name + '</div>');
+      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>');
       if (dob) rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>');
       sections.push({ title: tr('notfallSummary.cardPerson'), html: rows.join('') });
     }
     if (data.emergencyContact) {
-      const rows = ['<div>' + data.emergencyContact + '</div>'];
-      if (data.emergencyPhone) rows.push('<div>' + data.emergencyPhone + '</div>');
+      const rows = ['<div>' + escapeHtml(data.emergencyContact) + '</div>'];
+      if (data.emergencyPhone) rows.push('<div>' + escapeHtml(data.emergencyPhone) + '</div>');
       sections.push({ title: tr('notfallSummary.handoverContact'), html: rows.join('') });
     }
     const medRows = [];
-    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + data.bloodType + '</strong></div>');
+    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>');
     if (data.allergies) medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
-    if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => m.name + (m.dose ? ' ' + m.dose + ' ' + m.unit : '')).join(', ') + '</div>');
+    if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
     else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
-    if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => d.name + (d.code ? ' (' + d.code + ')' : '')).join(', ') + '</div>');
+    if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => escapeHtml(d.name) + (d.code ? ' (' + escapeHtml(d.code) + ')' : '')).join(', ') + '</div>');
     else if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
     const docList = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
     if (docList.length) {
-      const rows = docList.map(d => '<div>' + d.name + (d.phone ? ' · ' + d.phone : '') + '</div>');
+      const rows = docList.map(d => '<div>' + escapeHtml(d.name) + (d.phone ? ' · ' + escapeHtml(d.phone) : '') + '</div>');
       sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     } else if (data.doctor) {
-      const rows = ['<div>' + data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : '') + '</div>'];
+      const rows = ['<div>' + escapeHtml(data.doctor) + (data.doctorPhone ? ' · ' + escapeHtml(data.doctorPhone) : '') + '</div>'];
       sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     }
     const provRows = [];
