@@ -19,6 +19,16 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
     fontSize: text.xs, color: palette.sage, textDecoration: 'underline',
     textUnderlineOffset: '2px', wordBreak: 'break-all',
   };
+  // Der Behörden-/Quellenname ist der Link (semantisches Wort statt nackter URL,
+  // vgl. Quellen-Link-Stil); die echte Gov-URL steht klein/gedimmt darunter als
+  // Transparenz-Beleg, dass es eine offizielle Quelle ist.
+  const nameLinkStyle = {
+    fontWeight: weight.semi, fontSize: text.sm, color: palette.sage,
+    textDecoration: 'underline', textUnderlineOffset: '2px',
+  };
+  const urlHintStyle = {
+    fontSize: text.xs, color: palette.mid, wordBreak: 'break-all', marginTop: '2px',
+  };
 
   return React.createElement('div', {
     style: {
@@ -33,9 +43,9 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
 
     links.map((link, i) =>
       React.createElement('div', { key: link.id, style: { marginBottom: i < links.length - 1 ? space.sm + 'px' : 0 } },
-        React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm } }, l(link.name)),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '4px' } }, l(link.beschreibung)),
-        React.createElement('a', { href: link.url, target: '_blank', rel: 'noopener', style: linkStyle }, '↗ ' + link.url),
+        React.createElement('a', { href: link.url, target: '_blank', rel: 'noopener', style: nameLinkStyle }, l(link.name) + ' ↗'),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, l(link.beschreibung)),
+        React.createElement('div', { style: urlHintStyle }, link.url),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } }, t('dl.antragsstelle') + ': ' + l(link.antragsstelle))
       )
     ),
