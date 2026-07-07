@@ -3497,6 +3497,7 @@ export default {
     exportIcs: 'Exportar il chalender (.ics)',
     exportIcsHint: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.',
     editReminder: 'Modifitgar la commemoraziun',
+    noRemindersTitle: 'Anc nagut planisà',
     noReminders: { sie: 'Anc naginas commemoraziuns. Agiuntai Vossa emprima commemoraziun per restar organisà.', du: 'Anc naginas commemoraziuns. Agiunta Tia emprima commemoraziun per restar organisà.' },
     today: 'Oz',
     thisWeek: "Quest'emna",
