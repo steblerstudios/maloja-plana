@@ -36,10 +36,13 @@ export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
 };
 
 // Ein ruhiger Schritt: Titel + freier Inhalt.
-export const AblaufStep = ({ palette, title, children }) => {
+export const AblaufStep = ({ palette, title, icon, children }) => {
   const s = styles(palette);
   return React.createElement(React.Fragment, null,
-    React.createElement('h3', { style: s.stepTitle }, title),
+    icon
+      ? React.createElement('h3', { style: { ...s.stepTitle, display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+          React.createElement(Icon, { name: icon, size: 18 }), title)
+      : React.createElement('h3', { style: s.stepTitle }, title),
     children
   );
 };

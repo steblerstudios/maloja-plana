@@ -59,7 +59,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
 
     // Schritt 4 — Ergänzungsleistungen prüfen (Anspruch, kein Almosen) + Brücke zum
     // andauernden Lebenszustand „Pensioniert / im AHV-Alter" (bündelt IPV, HE, SERAFE …)
-    React.createElement(AblaufStep, { palette, title: t('pensionierung.step4Title') },
+    React.createElement(AblaufStep, { palette, title: t('pensionierung.step4Title'), icon: 'ergaenzungsleistungen' },
       React.createElement('p', { style: s.stepText }, t('pensionierung.step4Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4Link'), onClick: () => onNavigate('sozialhilfe') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
