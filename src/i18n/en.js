@@ -2799,6 +2799,7 @@ export default {
     exportIcs: 'Export calendar (.ics)',
     exportIcsHint: 'Add your reminders to your phone or computer calendar.',
     editReminder: 'Edit reminder',
+    noRemindersTitle: 'Nothing planned yet',
     noReminders: 'No reminders yet. Add your first reminder to stay organized.',
     today: 'Today',
     thisWeek: 'This week',
