@@ -3397,6 +3397,8 @@ export default {
     rendite: 'Assumed annual return (%)',
     renditeHint: 'Conservative 1–2%. An assumption only, not a guarantee.',
     s3bGuthaben: 'Pillar 3b today (CHF)',
+    s3aAnnual: 'Pillar 3a annual contribution (CHF)',
+    s3aAnnualHint: 'From «Finances», adjustable here.',
     zukunftEnde: 'Savings at retirement',
     zukunftHeute: 'Today',
     zukunftHinweis: 'Rough orientation with a constant return — real returns fluctuate. Not a substitute for pension advice.',

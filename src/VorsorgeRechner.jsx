@@ -4,6 +4,7 @@ import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -31,10 +32,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [bvgGuthaben, setBvgGuthaben] = useState('');
   const [rendite, setRendite] = useState('1.5');
   const [saeule3bInput, setSaeule3bInput] = useState(data.finanzen?.pension3bBalance ? String(Math.round(Number(data.finanzen.pension3bBalance))) : '');
+  const [saeule3aAnnualInput, setSaeule3aAnnualInput] = useState(data.finanzen?.pension3a ? String(Math.round(Number(data.finanzen.pension3a))) : '');
   const [activeTab, setActiveTab] = useState('ahv');
 
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
-  const saeule3aAnnual = Number(data.finanzen?.pension3a) || 0;
+  const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
   const parsedBezugAlter = Number(bezugAlter) || 65;
@@ -175,7 +177,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: s.row },
         field(t('vr.erziehungsjahre'), erziehungsjahre, setErziehungsjahre, { placeholder: '0', width: '80px', sublabel: t('vr.erziehungsjahreHint') }),
         React.createElement('div', null,
-          React.createElement('div', { style: s.label }, t('vr.verheiratet')),
+          React.createElement('div', { style: { ...s.label, display: 'flex', alignItems: 'center', gap: '6px' } },
+            t('vr.verheiratet'),
+            verheiratet && React.createElement(TwoRingsIcon, { size: 15, color: palette.sage })
+          ),
           React.createElement('div', { style: { display: 'flex', gap: '6px' } },
             [{ v: false, l: t('common.no') }, { v: true, l: t('common.yes') }].map((o, i) =>
               React.createElement('button', {
@@ -268,6 +273,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: s.section },
         React.createElement('div', { style: s.row },
           field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
+          field(t('vr.s3aAnnual'), saeule3aAnnualInput, setSaeule3aAnnualInput, { placeholder: '0', sublabel: t('vr.s3aAnnualHint') }),
           field(t('vr.s3bGuthaben'), saeule3bInput, setSaeule3bInput, { placeholder: '0' })
         )
       ),
