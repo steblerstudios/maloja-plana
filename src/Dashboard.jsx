@@ -708,35 +708,43 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
     // Führt oben sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
     // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
+    // Weniger Farbe, klare Hierarchie (Sophie-Prinzipien): neutraler Grund statt
+    // Marken-Tönung; die nächste Aktion ist der Hero (kleiner Bereichs-Punkt als
+    // A11y-Identität, nicht laute Fläche); die Aktion ist randlos, Fläche kommt erst
+    // im Hover zurück; der Glance wird EINE ruhige tertiäre Zeile mit Dot-Separator.
     React.createElement('div', {
       style: {
         marginTop: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
-        background: palette.sage + '0C', border: '1px solid ' + palette.sage + '22',
+        background: palette.surface, border: '1px solid ' + palette.border,
         borderRadius: radius.md,
       },
     },
       React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginBottom: space.sm + 'px' },
+        style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
         const nextField = mvo.fields.find((f) => !f.done);
         if (nextField) {
+          const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
           return React.createElement('button', {
             onClick: () => onSelectChapter(nextField.chapterIdx),
             'aria-label': nextField.label + ' — ' + nextField.chapterTitle,
             style: {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
               width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
-              padding: space.md + 'px', background: palette.surface,
-              border: '1px solid ' + palette.border, borderRadius: radius.sm, color: palette.text,
-              transition: 'background 160ms ease, border-color 160ms ease',
+              padding: space.sm + 'px ' + space.xs + 'px', background: 'transparent',
+              border: 'none', borderRadius: radius.sm, color: palette.text,
+              transition: 'background 160ms ease',
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sage + '55'; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
           },
-            React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
-              React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextField.label),
-              React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterIcon + ' ' + nextField.chapterTitle),
+            React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
+              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
+              React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
+                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, nextField.label),
+                React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
+              ),
             ),
             React.createElement('span', { style: { color: palette.sage, fontSize: text.lg, flexShrink: 0 } }, '→'),
           );
@@ -752,17 +760,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
           .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
         const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
-        const chip = (label, value) => React.createElement('span', {
-          style: { display: 'inline-flex', gap: '5px', alignItems: 'baseline' },
-        },
-          React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, label),
-          React.createElement('span', { style: { fontSize: text.xs, color: palette.text, fontWeight: weight.medium } }, value),
+        const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
+        const part = (label, value) => React.createElement('span', null,
+          React.createElement('span', { style: { color: palette.soft } }, label + ' '),
+          React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, value),
         );
         return React.createElement('div', {
-          style: { display: 'flex', flexWrap: 'wrap', gap: space.md + 'px', marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55' },
+          style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', fontSize: text.xs, color: palette.soft },
         },
-          chip(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
-          chip(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
+          part(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
+          dot,
+          part(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
         );
       })()
     ),
