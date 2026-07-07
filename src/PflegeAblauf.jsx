@@ -1,5 +1,6 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { PflegeEntloehnung } from './PflegeEntloehnung.jsx';
 
 // Pflegende Angehörige — geführter Ablauf, der die oft übersehenen Ansprüche bündelt:
 // Betreuungsgutschrift (AHV, hebt die eigene Rente), Betreuungsentschädigung (EO,
@@ -20,7 +21,12 @@ export const PflegeAblauf = ({ palette, t, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pflege.step1Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step1Link'), onClick: () => onNavigate('vorsorge') })
     ),
-    // Schritt 2 — Betreuungsentschädigung (EO): bezahlter Urlaub für die Pflege
+    // Schritt 2 — Entlöhnung: pflegende Angehörige können angestellt und bezahlt werden (Orientierungs-Rechner)
+    React.createElement(AblaufStep, { palette, title: t('pflege.stepLohnTitle'), icon: 'money' },
+      React.createElement('p', { style: s.stepText }, t('pflege.stepLohnText')),
+      React.createElement(PflegeEntloehnung, { palette, t })
+    ),
+    // Schritt 3 — Betreuungsentschädigung (EO): bezahlter Urlaub für die Pflege
     React.createElement(AblaufStep, { palette, title: t('pflege.step2Title') },
       React.createElement('p', { style: s.stepText }, t('pflege.step2Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pflege.step2Link'), onClick: () => onNavigate('eo') })
