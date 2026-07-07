@@ -3435,6 +3435,7 @@ export default {
     zukunftRenteAufteilung: 'Tutti e quattro i pilastri come reddito mensile — AVS e LPP come rendite, 3a e 3b (capitale) convertiti in un importo mensile.',
     zukunftRenteKapitalHinweis: 'I pilastri 3a e 3b sono capitale — qui mostrati come importo mensile semplificato (distribuito fino a 85 anni). Il versamento effettivo lo decidi tu.',
     zukunftRenteHinweis: 'Il 2° pilastro conta come capitale (sopra) oppure come rendita mensile (qui) — non entrambi.',
+    zukunftAhvFlaeche: 'La superficie AVS è il valore attuale stimato della tua rendita AVS (capitalizzata fino a 85 anni) — così il 1° pilastro diventa visibile come fondamento e comparabile agli altri pilastri.',
     phaseErwerb: 'Vita lavorativa',
     phasePension: 'Pensionamento',
     achseAlter: 'Età',
