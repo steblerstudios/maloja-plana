@@ -1445,6 +1445,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.bewilligung'), sub: t('nav.sub.bewilligung'), view: 'bewilligung', icon: 'behoerden' },
             { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
             { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
+            { label: t('nav.pflege'), sub: t('nav.sub.pflege'), view: 'pflege', icon: 'heart' },
             { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
           ] },
           { label: t('dashboard.toolGroups.gesundheit'), items: [
