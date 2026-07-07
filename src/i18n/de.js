@@ -3432,6 +3432,7 @@ export default {
     zukunftRenteAufteilung: 'Alle vier Säulen als monatliches Einkommen — AHV und BVG als Rente, 3a und 3b als Kapital auf eine Monatsrente umgelegt.',
     zukunftRenteKapitalHinweis: '3a und 3b sind Kapital — hier vereinfacht als Monatsrente gezeigt (gleichmässig verteilt bis Alter 85). Die tatsächliche Auszahlung bestimmst du selbst.',
     zukunftRenteHinweis: 'Die 2. Säule zählt entweder als Kapital (oben) oder als monatliche Rente (hier) — nicht beides.',
+    zukunftAhvFlaeche: 'Die AHV-Fläche ist der geschätzte Barwert deiner AHV-Rente (kapitalisiert bis Alter 85) — so wird die 1. Säule als Fundament sichtbar und mit den anderen Säulen vergleichbar.',
     phaseErwerb: 'Erwerbsleben',
     phasePension: 'Pension',
     achseAlter: 'Alter',

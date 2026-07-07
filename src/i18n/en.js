@@ -3445,6 +3445,7 @@ export default {
     zukunftRenteAufteilung: 'All four pillars as monthly income — OASI and BVG as pensions, pillars 3a and 3b (capital) converted into a monthly figure.',
     zukunftRenteKapitalHinweis: 'Pillars 3a and 3b are capital — shown here as a simplified monthly figure (spread evenly to age 85). You decide the actual payout yourself.',
     zukunftRenteHinweis: 'The 2nd pillar counts either as capital (above) or as a monthly pension (here) — not both.',
+    zukunftAhvFlaeche: 'The OASI area is the estimated present value of your OASI pension (capitalised to age 85) — this makes the 1st pillar visible as your foundation and comparable to the other pillars.',
     phaseErwerb: 'Working life',
     phasePension: 'Retirement',
     achseAlter: 'Age',

@@ -3444,6 +3444,7 @@ export default {
     zukunftRenteAufteilung: 'Les quatre piliers en revenu mensuel — AVS et LPP comme rentes, 3a et 3b (capital) convertis en montant mensuel.',
     zukunftRenteKapitalHinweis: 'Les piliers 3a et 3b sont du capital — présentés ici en montant mensuel simplifié (réparti jusqu’à 85 ans). Vous décidez du versement réel.',
     zukunftRenteHinweis: 'Le 2e pilier compte soit comme capital (ci-dessus), soit comme rente mensuelle (ici) — pas les deux.',
+    zukunftAhvFlaeche: 'La surface AVS est la valeur actuelle estimée de votre rente AVS (capitalisée jusqu’à 85 ans) — le 1er pilier devient ainsi visible comme fondement et comparable aux autres piliers.',
     phaseErwerb: 'Vie active',
     phasePension: 'Retraite',
     achseAlter: 'Âge',
