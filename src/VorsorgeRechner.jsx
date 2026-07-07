@@ -84,6 +84,23 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
     });
   }, [alter, parsedBezugAlter, bvgGuthaben, bvgResult, saeule3aBalance, saeule3aAnnual, saeule3bInput, rendite]);
 
+  // AHV fürs Zukunftsbild: auf durchgehende Beiträge bis zum Rücktritt projiziert
+  // (min(Rücktritt−20, 44) volle Beitragsjahre), sonst würde die AHV mit den
+  // heutigen Beitragsjahren stark unterschätzt. Eingetragene Beitragsjahre gehen vor.
+  const projektionAhv = useMemo(() => {
+    if (parsedEinkommen <= 0) return null;
+    const bj = Number(beitragsjahre) || Math.min(Math.max(0, parsedBezugAlter - 20), AHV_PARAMS.volleBeitragsjahre);
+    return berechneAltersrente({
+      geburtsjahr: birthYear || 1970,
+      durchschnittlichesJahreseinkommen: parsedEinkommen,
+      beitragsjahre: bj,
+      erziehungsjahre: Number(erziehungsjahre) || 0,
+      bezugAlter: parsedBezugAlter,
+      verheiratet,
+      einkommenPartner: Number(einkommenPartner) || 0,
+    });
+  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, verheiratet, einkommenPartner, birthYear]);
+
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
@@ -280,6 +297,20 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
             React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
               'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
           ),
+          (() => {
+            const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
+            const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
+            if (!ahvMonat && !bvgMonat) return null;
+            return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
+              React.createElement('div', { style: s.label }, t('vr.zukunftRente')),
+              React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text } },
+                'CHF ' + fmt(ahvMonat + bvgMonat) + ' / ' + t('vr.monat')),
+              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
+                'AHV ' + fmt(ahvMonat) + ' · BVG ' + fmt(bvgMonat)),
+              React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs } }, t('vr.zukunftRenteAufteilung')),
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
+            );
+          })(),
           React.createElement('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%', role: 'img', 'aria-label': t('vr.zukunftEnde') + ': CHF ' + fmt(end.total), style: { display: 'block', marginBottom: space.sm + 'px' } },
             React.createElement('line', { x1: padL, y1: H - padB, x2: W - padR, y2: H - padB, stroke: palette.border, strokeWidth: 1 }),
             React.createElement('path', { d: band(zero, bvgTop), fill: colBvg, opacity: 0.55 }),
