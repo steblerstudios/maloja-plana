@@ -600,6 +600,36 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                 else if (e.key === 'End') { e.preventDefault(); setRet(retMax); }
               } })
           ),
+          // Rücktritts-Szenario: übersetzt das gezogene Alter in Klartext und bleibt
+          // dabei ehrlich zu den frühesten Bezugsaltern (AHV 63, BVG 58, 3a 60). Reine
+          // Erklärung — die AHV-Monatsrente oben ist bereits auf frühestens 63 gedeckelt.
+          (() => {
+            const refAge = 65, ahvMin = 63;
+            const delta = ret - refAge;
+            const nAbs = Math.abs(delta);
+            const dauer = nAbs + ' ' + t(nAbs === 1 ? 'vr.szenarioJahr' : 'vr.szenarioJahre');
+            const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
+            const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
+            const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
+            const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' } }, txt);
+            const rows = [];
+            if (delta < 0) {
+              rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer }), 'a'));
+              rows.push(line(t('vr.zukunftSzenarioAhvFrueh', { alter: ahvBezug, pct }), 'b'));
+              if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret }), 'c'));
+              rows.push(line(t('vr.zukunftSzenarioSaeulen'), 'd'));
+            } else if (delta > 0) {
+              rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer }), 'a'));
+              rows.push(line(t('vr.zukunftSzenarioAhvAufschub', { alter: ahvBezug, pct }), 'b'));
+              rows.push(line(t('vr.zukunftSzenarioWeiter'), 'c'));
+            } else {
+              rows.push(line(t('vr.zukunftSzenarioReferenz'), 'a'));
+            }
+            return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
+              React.createElement('div', { style: s.label }, t('vr.zukunftSzenarioTitle')),
+              ...rows
+            );
+          })(),
           // Legende = alle vier Flächen: AHV (kapitalisiertes Fundament) + BVG/3a/3b.
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
             legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
