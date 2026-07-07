@@ -55,7 +55,9 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   };
 
   const statusButtonStyle = {
-    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
+    // color explizit: Buttons erben color nicht (UA-Reset auf schwarz) → sonst war
+    // der inaktive „Nicht registriert"-Status im Dark Mode schwarz auf palette.up.
+    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
