@@ -48,7 +48,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, max, onChange }) => {
       list.map((dep, idx) =>
         React.createElement('div', {
           key: idx,
-          style: { display: 'grid', gridTemplateColumns: '1fr 120px auto', gap: space.xs, alignItems: 'center' }
+          style: { display: 'grid', gridTemplateColumns: '1fr 140px auto', gap: space.xs, alignItems: 'center' }
         },
           React.createElement('input', {
             type: 'date', value: dep.date || '',
@@ -56,13 +56,17 @@ export const Saeule3aTracker = ({ palette, t, deposits, max, onChange }) => {
             'aria-label': t('saeule3a.date'),
             style: { ...inputStyle, cursor: 'pointer' },
           }),
-          React.createElement('input', {
-            type: 'number', inputMode: 'decimal', value: dep.amount || '',
-            onChange: (e) => updateDeposit(idx, { amount: e.target.value }),
-            placeholder: t('saeule3a.amount'),
-            'aria-label': t('saeule3a.amount'),
-            style: inputStyle,
-          }),
+          // Betrag mit klarer CHF-Einheit (sonst unklar „250 was?" — Sophie).
+          React.createElement('div', { style: { display: 'flex', alignItems: 'stretch', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.up, overflow: 'hidden' } },
+            React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, alignSelf: 'center', padding: '0 ' + space.xs + 'px 0 ' + space.sm + 'px', whiteSpace: 'nowrap' } }, 'CHF'),
+            React.createElement('input', {
+              type: 'number', inputMode: 'decimal', value: dep.amount || '',
+              onChange: (e) => updateDeposit(idx, { amount: e.target.value }),
+              placeholder: t('saeule3a.amount'),
+              'aria-label': t('saeule3a.amount') + ' (CHF)',
+              style: { ...inputStyle, border: 'none', borderRadius: 0, background: 'transparent', flex: 1, minWidth: 0 },
+            })
+          ),
           React.createElement('button', {
             onClick: () => removeDeposit(idx),
             'aria-label': t('common.delete') || 'Entfernen',
