@@ -5,7 +5,7 @@ import { text, weight, space, radius, shadow, ease, duration } from './config/to
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
-export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav' }) => {
+export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
@@ -267,9 +267,13 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         }
 
         // Normal mode — grouped navigation
+        // „Übersicht" nur zeigen, wenn KEIN Boden-Anker existiert. Am Handy trägt der
+        // Anker (Bottom-Nav, Sackmesser) die Übersicht dauerhaft → hier weglassen, um
+        // die Dopplung zu vermeiden. In der Web-Ansicht fehlt der Anker → Übersicht
+        // bleibt im Menü, bis wir ein Web-Äquivalent haben (Sophie). Die Suche oben
+        // findet die Übersicht in beiden Fällen.
         return [
-          // Dashboard
-          navItem('dashboard', t('nav.dashboard'), 'dashboard',
+          !hasBottomAnchor && navItem('dashboard', t('nav.dashboard'), 'dashboard',
             () => { onNavigate('dashboard'); onClose(); },
             activeView === 'dashboard'
           ),
