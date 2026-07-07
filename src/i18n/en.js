@@ -2712,6 +2712,7 @@ export default {
   search: {
     title: 'Search',
     placeholder: 'Search tools and chapters…',
+    emptyTitle: 'No matches',
     empty: 'Nothing found for “{query}”. Try a different term.',
     toolsTitle: 'Tools',
     chaptersTitle: 'Chapters',
@@ -2724,6 +2725,7 @@ export default {
     linkLabel: 'Link to',
     linkNone: 'No link',
     add: 'Add',
+    emptyTitle: 'Nothing saved yet',
     empty: 'Your checklist is empty. Add a first note above.',
     openTitle: 'To do',
     doneTitle: 'Done',

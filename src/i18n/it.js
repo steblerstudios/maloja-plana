@@ -3884,6 +3884,7 @@ export default {
   search: {
     title: 'Cerca',
     placeholder: 'Cerca strumenti e capitoli…',
+    emptyTitle: 'Nessun risultato',
     empty: { sie: 'Nessun risultato per «{query}». Provi un altro termine.', du: 'Nessun risultato per «{query}». Prova un altro termine.' },
     toolsTitle: 'Strumenti',
     chaptersTitle: 'Capitoli',
@@ -3896,6 +3897,7 @@ export default {
     linkLabel: 'Collega a',
     linkNone: 'Nessun collegamento',
     add: 'Aggiungi',
+    emptyTitle: 'Ancora nulla annotato',
     empty: { sie: 'Il Suo promemoria è vuoto. Aggiunga una prima nota qui sopra.', du: 'Il tuo promemoria è vuoto. Aggiungi una prima nota qui sopra.' },
     openTitle: 'Da fare',
     doneTitle: 'Fatto',
