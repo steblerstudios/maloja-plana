@@ -3560,6 +3560,8 @@ export default {
     rendite: 'Rendita annuala supponida (%)',
     renditeHint: 'Prudent 1–2 %. Mo ina supposiziun, betg ina garanzia.',
     s3bGuthaben: 'Pitga 3b oz (CHF)',
+    s3aAnnual: 'Contribuziun annuala pitga 3a (CHF)',
+    s3aAnnualHint: 'Da «Finanzas», adattabel qua.',
     zukunftEnde: 'Facultad tar la pensiun',
     zukunftHeute: 'Oz',
     zukunftHinweis: 'Orientaziun grofla cun ina rendita constanta — las renditas realas varieschan. Na remplazza betg ina cussegliaziun da prevenziun.',

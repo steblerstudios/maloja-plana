@@ -3387,6 +3387,8 @@ export default {
     rendite: 'Rendimento annuo presunto (%)',
     renditeHint: 'Prudente 1–2 %. Solo un’ipotesi, non una garanzia.',
     s3bGuthaben: 'Pilastro 3b oggi (CHF)',
+    s3aAnnual: 'Contributo annuo pilastro 3a (CHF)',
+    s3aAnnualHint: 'Da «Finanze», modificabile qui.',
     zukunftEnde: 'Capitale al pensionamento',
     zukunftHeute: 'Oggi',
     zukunftHinweis: 'Orientamento approssimativo con rendimento costante — i rendimenti reali variano. Non sostituisce una consulenza previdenziale.',
