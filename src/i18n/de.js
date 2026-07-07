@@ -1487,6 +1487,7 @@ export default {
     lohn: 'Mindestlohn-Check aktiv',
     notfall: 'Notfallkarte bereit',
     budget: 'Budget-Übersicht aktiv',
+    short: { tax: 'Steuer', ipv: 'IPV', sozial: 'Sozialhilfe', lohn: 'Lohn', notfall: 'Notfall', budget: 'Budget' },
   },
 
   legal: {

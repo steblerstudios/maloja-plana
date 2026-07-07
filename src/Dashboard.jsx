@@ -392,15 +392,29 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
     lohn: 'finanzuebersicht', notfall: 'notfalleinstieg', budget: 'sync',
   };
+  // Ein Baum statt zwei (Braindump #21): jedes Werkzeug hängt als kleinere Frucht
+  // am selben Bereichs-Ast wie sein Lebensbereich — die Geld-Werkzeuge an der
+  // Finanzen-Aprikose, die Prämienverbilligung an der Versicherungen-Heidelbeere,
+  // die Notfall-Berechnung an der Notfall-Vogelbeere. `area` = Kapitel-Schlüssel,
+  // damit die Frucht dieselbe Ast-Farbe erbt.
+  // Zuordnung über die Äste ausbalanciert (max. 2 Werkzeug-Früchte je Ast), damit
+  // der Baum ruhig bleibt: Geld-Werkzeuge an Finanzen, der Lohn-/Mindestlohn-Check
+  // am Ausbildung-&-Arbeit-Ast, die Sozialhilfe-Orientierung am Behörden-Ast.
   const connections = [
-    { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'sozial', label: t('datenWirken.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
-    { key: 'lohn', label: t('datenWirken.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
-    { key: 'notfall', label: t('datenWirken.notfall'), active: !!(data.notfall?.emergencyContact) },
-    { key: 'budget', label: t('datenWirken.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
+    { key: 'tax', area: 'finanzen', label: t('datenWirken.tax'), short: t('datenWirken.short.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
+    { key: 'budget', area: 'finanzen', label: t('datenWirken.budget'), short: t('datenWirken.short.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
+    { key: 'lohn', area: 'ausbildung', label: t('datenWirken.lohn'), short: t('datenWirken.short.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
+    { key: 'ipv', area: 'versicherungen', label: t('datenWirken.ipv'), short: t('datenWirken.short.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
+    { key: 'sozial', area: 'behoerden', label: t('datenWirken.sozial'), short: t('datenWirken.short.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
+    { key: 'notfall', area: 'notfall', label: t('datenWirken.notfall'), short: t('datenWirken.short.notfall'), active: !!(data.notfall?.emergencyContact) },
   ];
   const active = connections.filter(c => c.active);
+  // Aktive Werkzeuge nach Bereichs-Ast gruppieren (Schlüssel = Kapitel-Schlüssel
+  // der Bereichs-Frucht, damit die Zuordnung Ast ↔ Werkzeug-Frucht stimmt).
+  const toolsByArea = active.reduce((acc, c) => {
+    (acc[c.area] = acc[c.area] || []).push(c);
+    return acc;
+  }, {});
   return React.createElement('div', {
     style: {
       margin: space.md + 'px 0',
@@ -487,82 +501,63 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
         // Früchte als klickbare Buttons über dem SVG, exakt am Ast-Ende.
         ...bereiche.map((b, i) => {
           const a = anchor(i);
-          return React.createElement('button', {
-            key: b.key,
-            onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
-            'aria-label': b.title + ' — ' + b.pct + '%',
-            title: b.title,
-            style: {
-              position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
-              // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
-              // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (Sophie).
-              transform: 'translate(-50%, -4%)',
-              background: 'none', border: 'none', padding: 0,
-              cursor: onSelectChapter ? 'pointer' : 'default',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
+          const areaTools = toolsByArea[b.key] || [];
+          return React.createElement('div', { key: b.key, style: { display: 'contents' } },
+            React.createElement('button', {
+              onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
+              'aria-label': b.title + ' — ' + b.pct + '%',
+              title: b.title,
+              style: {
+                position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
+                // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
+                // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (Sophie).
+                transform: 'translate(-50%, -4%)',
+                background: 'none', border: 'none', padding: 0,
+                cursor: onSelectChapter ? 'pointer' : 'default',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
+              },
             },
-          },
-            // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
-            React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
-              React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: isMobile ? 42 : 50 })
+              // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
+              React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
+                React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: isMobile ? 42 : 50 })
+              ),
+              React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
             ),
-            React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
+            // Werkzeug-Früchte am selben Ast: kleinere Beeren, die unter der
+            // Bereichs-Frucht baumeln. Jede reift nicht (binär aktiv), trägt die
+            // Ast-Farbe und führt per Klick zum Werkzeug. Ein Baum statt zwei (#21).
+            areaTools.length ? React.createElement('div', {
+              style: {
+                position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
+                transform: 'translate(-50%, ' + (isMobile ? 60 : 72) + 'px)',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+              },
+            },
+              ...areaTools.map((tool) => {
+                const target = navMap[tool.key];
+                const go = (target && onNavigate) ? () => onNavigate(target) : undefined;
+                return React.createElement('button', {
+                  key: tool.key,
+                  onClick: go,
+                  'aria-label': tool.label,
+                  title: tool.label,
+                  style: {
+                    display: 'inline-flex', alignItems: 'center', gap: '4px',
+                    background: b.color + '14', border: '1px solid ' + b.color + '33',
+                    borderRadius: '999px', padding: '1px 7px 1px 3px',
+                    cursor: go ? 'pointer' : 'default', fontFamily: 'inherit',
+                    whiteSpace: 'nowrap',
+                  },
+                },
+                  React.createElement('span', { style: { width: '7px', height: '7px', borderRadius: '50%', background: b.color, opacity: 0.85, flex: '0 0 auto' } }),
+                  React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
+                );
+              })
+            ) : null
           );
         })
       );
-    })() : null,
-    (() => {
-      const n = active.length;
-      const rowH = 32;
-      const h = Math.max(n * rowH + 20, 90);
-      const trunkX = 70;
-      const baseY = h - 4;
-      const trunkTopY = Math.max(10, h - Math.max(n, 1) * rowH - 6);
-      const attachY = (i) => n === 1 ? (baseY + trunkTopY) / 2 : trunkTopY + (baseY - trunkTopY) * (i / (n - 1));
-      return React.createElement('svg', {
-        viewBox: '0 0 340 ' + h,
-        width: '100%',
-        role: 'img',
-        'aria-label': t('datenWirken.title'),
-        style: { display: 'block', maxWidth: n === 0 ? '170px' : '380px', marginTop: '2px' },
-      },
-        // Stamm — deine Angaben
-        React.createElement('line', {
-          x1: trunkX, y1: baseY, x2: trunkX, y2: trunkTopY,
-          stroke: palette.sage, strokeWidth: 3, strokeLinecap: 'round', opacity: 0.55,
-        }),
-        // Krone — immer da (Setzling), wächst mit der Zahl der Verbindungen
-        React.createElement('circle', { key: 'cr1', cx: trunkX - 5, cy: trunkTopY - 2, r: 3, fill: palette.sage, opacity: 0.5 }),
-        React.createElement('circle', { key: 'cr2', cx: trunkX + 5, cy: trunkTopY - 1, r: 3, fill: palette.sage, opacity: 0.5 }),
-        React.createElement('circle', { key: 'cr3', cx: trunkX, cy: trunkTopY - 6, r: 3.5, fill: palette.sage, opacity: 0.6 }),
-        // Äste + Blatt-Labels
-        ...active.map((c, i) => {
-          const top = 10 + i * rowH;
-          const leafY = top + 13;
-          const ay = attachY(i);
-          const cx = (trunkX + 150) / 2;
-          const target = navMap[c.key];
-          const go = (target && onNavigate) ? () => onNavigate(target) : null;
-          return React.createElement('g', {
-            key: 'b-' + c.key,
-            onClick: go || undefined,
-            onKeyDown: go ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } } : undefined,
-            role: go ? 'button' : undefined,
-            tabIndex: go ? 0 : undefined,
-            'aria-label': go ? c.label : undefined,
-            style: go ? { cursor: 'pointer' } : undefined,
-          },
-            React.createElement('path', {
-              d: 'M ' + trunkX + ' ' + ay + ' Q ' + cx + ' ' + ((ay + leafY) / 2 - 6) + ' 146 ' + leafY,
-              fill: 'none', stroke: palette.sage, strokeWidth: 1.2, opacity: 0.5, strokeLinecap: 'round',
-            }),
-            React.createElement('circle', { cx: 144, cy: leafY, r: 2.5, fill: palette.sage, opacity: 0.7 }),
-            React.createElement('rect', { x: 150, y: top, width: 182, height: 26, rx: 6, fill: palette.sage + '10', stroke: palette.sage + '33', strokeWidth: 1 }),
-            React.createElement('text', { x: 160, y: top + 17, fontSize: 11, fill: palette.sageDeep || palette.sage, fontFamily: 'inherit' }, c.label)
-          );
-        })
-      );
-    })()
+    })() : null
   );
 };
 
