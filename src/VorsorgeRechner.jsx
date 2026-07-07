@@ -483,9 +483,15 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const yticks = [0, 0.5, 1].map((f) => maxY * f);
         const legendItem = (col, label) => React.createElement('span', { style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
           React.createElement('span', { style: { width: '10px', height: '10px', borderRadius: '2px', background: col, display: 'inline-block' } }), label);
-        // Monatliche Rente ab Rücktritt — AHV ist Rente (kein Kapital), darum eigener Darstellungsweg statt Kapital-Fläche.
+        // Monatliche Rente ab Rücktritt — macht alle vier Säulen VERGLEICHBAR:
+        // AHV/BVG sind lebenslange Renten; 3a/3b sind Kapital, hier transparent auf
+        // eine Monatsrente umgelegt (Kapital gleichmässig verteilt bis Alter 85).
+        const AHV_LEBENSERWARTUNG = 85;
+        const drawdownMonate = Math.max(12, (AHV_LEBENSERWARTUNG - ret) * 12);
         const ahvMonat = projektionAhv ? projektionAhv.monatsrente : 0;
         const bvgMonat = (bvgResult && bvgResult.versichert) ? bvgResult.monatsrente : 0;
+        const s3aMonat = end.s3a > 0 ? end.s3a / drawdownMonate : 0;
+        const s3bMonat = end.s3b > 0 ? end.s3b / drawdownMonate : 0;
         const colAhv = palette.soft;                // AHV = ruhiger Granit-Ton (1. Säule / Fundament)
         return React.createElement('div', null,
           React.createElement('div', { style: s.highlight },
@@ -495,25 +501,28 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               'BVG ' + fmt(end.bvg) + ' · 3a ' + fmt(end.s3a) + ' · 3b ' + fmt(end.s3b))
           ),
           (() => {
-            if (!ahvMonat && !bvgMonat) return null;
-            const totMonat = ahvMonat + bvgMonat;
+            if (!ahvMonat && !bvgMonat && !s3aMonat && !s3bMonat) return null;
+            const totMonat = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
             const pctOf = (v) => totMonat > 0 ? (v / totMonat * 100) : 0;
             const seg = (col, v, label) => v > 0 ? React.createElement('div', {
               key: label, style: { width: pctOf(v).toFixed(1) + '%', background: col, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
               pctOf(v) >= 16 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, label) : null) : null;
-            const legendDot = (col, label, amount) => React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
+            const legendDot = (col, label, amount) => amount > 0 ? React.createElement('span', { key: label, style: { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: text.xs, color: palette.mid } },
               React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '2px', background: col, display: 'inline-block' } }),
-              label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat'));
+              label + ' CHF ' + fmt(amount) + ' / ' + t('vr.monat')) : null;
+            const kapitalRente = s3aMonat > 0 || s3bMonat > 0;
             return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
               React.createElement('div', { style: s.label }, t('vr.zukunftRente')),
               React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.sm + 'px' } },
                 'CHF ' + fmt(totMonat) + ' / ' + t('vr.monat')),
-              // Flat-Design-Balken: monatliche Rente, aufgeteilt AHV (Granit) + BVG (Himmel)
+              // Flat-Design-Balken: monatliche Rente, alle vier Säulen vergleichbar
+              // AHV (Granit) + BVG (Himmel) + 3a (Gold) + 3b (Salbei)
               React.createElement('div', { style: { display: 'flex', height: '30px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
-                seg(colAhv, ahvMonat, 'AHV'), seg(palette.sky, bvgMonat, 'BVG')),
+                seg(colAhv, ahvMonat, 'AHV'), seg(palette.sky, bvgMonat, 'BVG'), seg(col3a, s3aMonat, '3a'), seg(col3b, s3bMonat, '3b')),
               React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
-                legendDot(colAhv, 'AHV', ahvMonat), bvgMonat > 0 ? legendDot(palette.sky, 'BVG', bvgMonat) : null),
+                legendDot(colAhv, 'AHV', ahvMonat), legendDot(palette.sky, 'BVG', bvgMonat), legendDot(col3a, '3a', s3aMonat), legendDot(col3b, '3b', s3bMonat)),
               React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs } }, t('vr.zukunftRenteAufteilung')),
+              kapitalRente ? React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteKapitalHinweis')) : null,
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs, lineHeight: 1.5 } }, t('vr.zukunftRenteHinweis'))
             );
           })(),
@@ -566,8 +575,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                 else if (e.key === 'End') { e.preventDefault(); setRet(retMax); }
               } })
           ),
+          // Legende = die Kapital-FLÄCHEN im Graph (BVG/3a/3b). AHV ist Rente, kein
+          // Kapital → erscheint oben im Monatsrenten-Balken, nicht als Fläche hier.
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
-            legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
+            legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
