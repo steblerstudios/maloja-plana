@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -35,24 +35,42 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
   const [saeule3aAnnualInput, setSaeule3aAnnualInput] = useState(data.finanzen?.pension3a ? String(Math.round(Number(data.finanzen.pension3a))) : '');
   const [activeTab, setActiveTab] = useState('ahv');
 
+  // IK-Auszug (Beitragshistorie nachstellen): lokaler State wie die übrigen Rechner-
+  // Felder (der Rechner persistiert nichts). Opt-in: erst wenn „verwenden" aktiv ist,
+  // ersetzt die echte Historie die Annahme in der AHV-Berechnung.
+  const [ikEntries, setIkEntries] = useState([]);
+  const [ikActive, setIkActive] = useState(false);
+  const [ikJugend, setIkJugend] = useState(false);
+  const [ikExpanded, setIkExpanded] = useState(null); // von-Jahr der aufgeklappten Phase
+
   const saeule3aBalance = Number(data.finanzen?.pension3aBalance) || 0;
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
   const parsedBezugAlter = Number(bezugAlter) || 65;
 
+  // Aus dem nachgestellten IK-Auszug abgeleitete Kennzahlen (nur wenn aktiv + Einträge).
+  const ikResult = useMemo(
+    () => (ikActive && ikEntries.length ? berechneIKAuszug(ikEntries) : null),
+    [ikActive, ikEntries]
+  );
+
   const ahvResult = useMemo(() => {
-    if (parsedEinkommen <= 0) return null;
+    // Bei aktivem IK-Auszug ersetzt die echte Historie die Annahme (Einkommen/Beitragsjahre/Erziehung).
+    const eink = ikResult ? ikResult.durchschnittlichesJahreseinkommen : parsedEinkommen;
+    const bj = ikResult ? ikResult.beitragsjahre : parsedBeitragsjahre;
+    const erz = ikResult ? ikResult.erziehungsjahre : (Number(erziehungsjahre) || 0);
+    if (eink <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
-      durchschnittlichesJahreseinkommen: parsedEinkommen,
-      beitragsjahre: parsedBeitragsjahre,
-      erziehungsjahre: Number(erziehungsjahre) || 0,
+      durchschnittlichesJahreseinkommen: eink,
+      beitragsjahre: bj,
+      erziehungsjahre: erz,
       bezugAlter: parsedBezugAlter,
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -152,6 +170,122 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
 
+  // === IK-Auszug: Helfer + Render ===
+  const ikTypLabel = (typ) => t('vr.ikTyp' + typ.charAt(0).toUpperCase() + typ.slice(1));
+  const IK_TYP_WAHL = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG, IK_TYP.LUECKE, IK_TYP.JUGEND];
+
+  // Aufeinanderfolgende Jahre gleichen Typs zu Lebensphasen-Blöcken bündeln.
+  const groupPhases = (entries) => {
+    const sorted = [...entries].sort((a, b) => a.jahr - b.jahr);
+    const phases = [];
+    for (const e of sorted) {
+      const last = phases[phases.length - 1];
+      if (last && last.typ === e.typ && e.jahr === last.bis + 1) { last.bis = e.jahr; last.jahre.push(e); }
+      else phases.push({ typ: e.typ, von: e.jahr, bis: e.jahr, jahre: [e] });
+    }
+    return phases;
+  };
+
+  const updateYear = (jahr, patch) => setIkEntries(prev => prev.map(e => e.jahr === jahr ? { ...e, ...patch } : e));
+
+  const prefillIK = () => setIkEntries(vorbelegeIKAuszug({
+    geburtsjahr: birthYear, aktuellesAlter: alter, aktuellesEinkommen: parsedEinkommen, mitJugendjahren: ikJugend,
+  }));
+
+  const toggleJugend = () => {
+    const next = !ikJugend;
+    setIkJugend(next);
+    if (!birthYear) return;
+    const hasJugend = ikEntries.some(e => e.typ === IK_TYP.JUGEND);
+    if (next && !hasJugend) {
+      const j = [];
+      for (let a = 17; a < 21; a++) j.push({ jahr: birthYear + a, alter: a, einkommen: parsedEinkommen, typ: IK_TYP.JUGEND });
+      setIkEntries([...j, ...ikEntries]);
+    } else if (!next && hasJugend) {
+      setIkEntries(ikEntries.filter(e => e.typ !== IK_TYP.JUGEND));
+    }
+  };
+
+  const resetIK = () => { setIkEntries([]); setIkActive(false); setIkExpanded(null); };
+
+  const renderIKAuszug = () => {
+    const phases = groupPhases(ikEntries);
+    const r = ikEntries.length ? berechneIKAuszug(ikEntries) : null;
+    return React.createElement('details', { style: s.intlDetails, open: ikEntries.length > 0 },
+      React.createElement('summary', { style: s.intlSummary }, t('vr.ikTitle')),
+      React.createElement('p', { style: s.intlIntro }, t('vr.ikIntro')),
+
+      // Empty-State mit Vorausfüllen
+      ikEntries.length === 0 && React.createElement('div', null,
+        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginBottom: space.sm + 'px' } }, t('vr.ikEmpty')),
+        React.createElement('button', { style: s.tab(false), onClick: prefillIK, disabled: !birthYear }, t('vr.ikPrefill')),
+        !birthYear && React.createElement('div', { style: { ...s.sublabel, color: palette.gold, marginTop: space.xs + 'px' } }, t('vr.geburtsdatumFehlt'))
+      ),
+
+      // Gefüllt: Jugend-Schalter + Phasen-Blöcke + Live-Auswertung
+      ikEntries.length > 0 && React.createElement(React.Fragment, null,
+        React.createElement('label', { style: { ...s.checkbox, marginBottom: space.sm + 'px' } },
+          React.createElement('input', { type: 'checkbox', checked: ikJugend, onChange: toggleJugend }),
+          React.createElement('span', null, t('vr.ikJugend'))
+        ),
+
+        ...phases.map(ph => {
+          const isOpen = ikExpanded === ph.von;
+          const count = ph.jahre.length;
+          const avg = Math.round(ph.jahre.reduce((sum, e) => sum + (Number(e.einkommen) || 0), 0) / count);
+          const meta = ph.von + (ph.bis > ph.von ? '–' + ph.bis : '') + ' · ' + count + ' ' + t('vr.jahre') + (ph.typ !== IK_TYP.LUECKE ? ' · Ø ' + fmt(avg) : '');
+          return React.createElement('div', { key: ph.typ + ph.von, style: { border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', marginBottom: space.xs + 'px', overflow: 'hidden' } },
+            React.createElement('button', {
+              onClick: () => setIkExpanded(isOpen ? null : ph.von),
+              style: { width: '100%', textAlign: 'left', display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', alignItems: 'center', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text }
+            },
+              React.createElement('span', null, (isOpen ? '▾ ' : '▸ ') + ikTypLabel(ph.typ)),
+              React.createElement('span', { style: { color: palette.mid, fontSize: text.xs, textAlign: 'right' } }, meta)
+            ),
+            isOpen && React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
+              ...ph.jahre.map(e => React.createElement('div', { key: e.jahr, style: { display: 'flex', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.xs + 'px', flexWrap: 'wrap' } },
+                React.createElement('span', { style: { width: '78px', fontSize: text.xs, color: palette.mid } }, e.jahr + (e.alter ? ' (' + e.alter + ')' : '')),
+                React.createElement('input', {
+                  type: 'number', inputMode: 'decimal', value: e.einkommen, 'aria-label': t('vr.ikIncome') + ' ' + e.jahr,
+                  onChange: ev => updateYear(e.jahr, { einkommen: Number(ev.target.value) || 0 }),
+                  disabled: e.typ === IK_TYP.LUECKE,
+                  style: { ...s.input, width: '104px', padding: '4px 8px', fontSize: text.sm, opacity: e.typ === IK_TYP.LUECKE ? 0.5 : 1 }
+                }),
+                React.createElement('select', {
+                  value: e.typ, 'aria-label': t('vr.ikYear') + ' ' + e.jahr,
+                  onChange: ev => updateYear(e.jahr, { typ: ev.target.value }),
+                  style: { ...s.input, width: 'auto', padding: '4px 8px', fontSize: text.sm }
+                }, ...IK_TYP_WAHL.map(ty => React.createElement('option', { key: ty, value: ty }, ikTypLabel(ty))))
+              ))
+            )
+          );
+        }),
+        React.createElement('div', { style: { ...s.sublabel, marginTop: space.xs + 'px' } }, t('vr.ikEditHint')),
+
+        // Live-Auswertung (Success-Feedback)
+        r && React.createElement('div', { 'aria-live': 'polite', style: { ...s.section, marginTop: space.sm + 'px', background: palette.sage + '11', border: '1px solid ' + palette.sage + '33' } },
+          React.createElement('div', { style: s.label }, t('vr.ikSummary')),
+          React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + r.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre),
+          React.createElement('div', null, t('vr.ikDurchschnitt') + ': CHF ' + fmt(r.durchschnittlichesJahreseinkommen)),
+          r.jugendjahreGenutzt > 0 && React.createElement('div', { style: { color: palette.sage } }, t('vr.ikJugendGenutzt') + ': ' + r.jugendjahreGenutzt),
+          r.luecken > 0 && React.createElement('div', { style: { color: palette.gold } }, t('vr.ikLuecken') + ': ' + r.luecken),
+          r.alvJahre > 0 && React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px', lineHeight: 1.5 } }, t('vr.ikAlvHinweis', { n: r.alvJahre }))
+        ),
+
+        // Opt-in: Historie für die Berechnung verwenden
+        React.createElement('label', { style: { ...s.checkbox, marginTop: space.sm + 'px', fontWeight: weight.semi } },
+          React.createElement('input', { type: 'checkbox', checked: ikActive, onChange: () => setIkActive(!ikActive) }),
+          React.createElement('span', null, t('vr.ikUse'))
+        ),
+        React.createElement('button', {
+          onClick: resetIK,
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', display: 'block', fontSize: text.xs, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
+        }, t('vr.ikReset')),
+        React.createElement('div', { style: { ...s.sublabel, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.ikDisclaimer'))
+      )
+    );
+  };
+
   return React.createElement('div', { style: s.card },
     React.createElement('h2', { style: s.title },
       React.createElement(Icon, { name: 'vorsorge', size: 20 }),
@@ -205,7 +339,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
         )
       ),
       React.createElement('div', { style: s.section },
-        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')'),
+        React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')',
+          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sage, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
+        ),
         ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.gold } },
           t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
         ),
@@ -223,6 +359,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate }) => {
         )
       )
     ),
+
+    // IK-Auszug nachstellen (echte Beitragshistorie statt Annahme) — immer im AHV-Tab
+    activeTab === 'ahv' && renderIKAuszug(),
 
     // AHV mit Auslandbezug (Orientierung) — immer im AHV-Tab, einklappbar
     activeTab === 'ahv' && React.createElement('details', { style: s.intlDetails },
