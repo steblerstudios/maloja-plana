@@ -3384,6 +3384,8 @@ export default {
     rendite: 'Angenommene Rendite pro Jahr (%)',
     renditeHint: 'Konservativ 1–2 %. Nur eine Annahme, keine Garantie.',
     s3bGuthaben: 'Säule 3b heute (CHF)',
+    s3aAnnual: 'Säule 3a Jahresbeitrag (CHF)',
+    s3aAnnualHint: 'Aus «Finanzen», hier anpassbar.',
     zukunftEnde: 'Vermögen bei Pensionierung',
     zukunftHeute: 'Heute',
     zukunftHinweis: 'Grobe Orientierung mit gleichbleibender Rendite — echte Erträge schwanken. Ersetzt keine Vorsorgeberatung.',
