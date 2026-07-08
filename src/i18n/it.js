@@ -3673,6 +3673,8 @@ export default {
     shelfIntro: 'Ogni categoria è un libro — un clic sul dorso lo apre.',
     herzTitle: 'Consigli col cuore',
     herzNote: 'Scelti a mano — non enti ufficiali, ma punti di riferimento che aiutano molte persone.',
+    beratungTitle: 'Consulenza & aiuto',
+    beratungNote: 'Punti di riferimento senza scopo di lucro per consulenza e sostegno — gratuiti o a bassa soglia.',
     antragsstelle: 'Ufficio competente',
     mirrorTitle: 'Ufficio ufficiale & domanda',
     source: 'Link ufficiali da [[ch.ch|ch.ch]], [[UFSP|bag.admin.ch]], [[UFAS|bsv.admin.ch]] e altre autorità federali.',

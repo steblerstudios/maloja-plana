@@ -3692,6 +3692,8 @@ export default {
     shelfIntro: 'Chaque catégorie est un livre — un clic sur le dos l’ouvre.',
     herzTitle: 'Recommandations de cœur',
     herzNote: 'Sélectionnées à la main — pas des services officiels, mais des lieux qui aident beaucoup de gens.',
+    beratungTitle: 'Conseil & aide',
+    beratungNote: 'Points de contact à but non lucratif pour conseil et soutien — gratuits ou à bas seuil.',
     antragsstelle: 'Point de contact',
     mirrorTitle: 'Service officiel & demande',
     source: 'Liens officiels de [[ch.ch|ch.ch]], [[OFSP|bag.admin.ch]], [[OFAS|bsv.admin.ch]] et autres autorités fédérales.',

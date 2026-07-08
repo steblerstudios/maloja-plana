@@ -3669,6 +3669,8 @@ export default {
     shelfIntro: 'Jede Kategorie ist ein Buch — ein Klick auf den Buchrücken schlägt es auf.',
     herzTitle: 'Herzensempfehlungen',
     herzNote: 'Von Hand ausgewählt — keine amtlichen Stellen, sondern Anlaufstellen, die vielen Menschen weiterhelfen.',
+    beratungTitle: 'Beratung & Hilfe',
+    beratungNote: 'Gemeinnützige Anlaufstellen für Beratung und Unterstützung — kostenlos oder niederschwellig.',
     antragsstelle: 'Antragsstelle',
     mirrorTitle: 'Offizielle Stelle & Antrag',
     source: 'Offizielle Links von [[ch.ch|ch.ch]], [[BAG|bag.admin.ch]], [[BSV|bsv.admin.ch]] und weiteren Bundesbehörden.',

@@ -3693,6 +3693,8 @@ export default {
     shelfIntro: 'Each category is a book — a click on the spine opens it.',
     herzTitle: 'Heartfelt recommendations',
     herzNote: 'Hand-picked — not official bodies, but places that help many people along.',
+    beratungTitle: 'Advice & help',
+    beratungNote: 'Non-profit points of contact for advice and support — free or low-threshold.',
     antragsstelle: 'Filing office',
     mirrorTitle: 'Official office & application',
     source: 'Official links from [[ch.ch|ch.ch]], [[FOPH|bag.admin.ch]], [[FSIO|bsv.admin.ch]], and other federal authorities.',
