@@ -3463,7 +3463,7 @@ export default {
     stage2: 'pousse',
     stage3: 'porte des fruits',
     stage4: 'pleinement mûr',
-    b: { gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance' },
+    b: { wohnen: 'Logement', finanzen: 'Finances', person: 'Personne', versicherungen: 'Assurance', gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance', bildung: 'Formation', notfall: 'Urgence', behoerden: 'Autorités' },
   },
   instrumente: {
     title: 'Vos instruments',

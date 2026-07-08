@@ -6,6 +6,23 @@ import { LEBENSBEREICHE } from './lebensbereiche.js';
 // eigenes Kapitel (Gesundheit/Arbeit/Familie/Vorsorge) stehen als Setzlinge da
 // — Vorschau auf Kommendes, kein Defizit.
 
+// Natürliche Pflanzenform je (schon entschiedener) Frucht — die Frucht selbst
+// bleibt aus lebensbereiche.js, hier kommt nur die Wuchsform dazu:
+//   rund  = runder Obstbaum (Apfel/Aprikose)
+//   hoch  = hoher, schlanker Baum (Birne/Zwetschge/Vogelbeere)
+//   breit = breit ausladend (Kirsche)
+//   gross = grosse breite Krone (Baumnuss)
+//   busch = niedriger Strauch, kaum Stamm (Heidelbeere/Hagebutte/Haselnuss)
+//   rebe  = Rebe am Spalier (Traube)
+export const FRUIT_FORM = {
+  apfel: 'rund', aprikose: 'rund',
+  birne: 'hoch', zwetschge: 'hoch', vogelbeere: 'hoch',
+  kirsche: 'breit', baumnuss: 'gross',
+  heidelbeere: 'busch', hagebutte: 'busch', haselnuss: 'busch',
+  traube: 'rebe',
+};
+export function fruitForm(fruit) { return FRUIT_FORM[fruit] || 'rund'; }
+
 // Ausfüllstand → Wuchsstufe (gleiche Schwellen wie die Krone des Einzelbaums).
 export function gardenStage(pct) {
   return pct >= 70 ? 4 : pct >= 40 ? 3 : pct >= 15 ? 2 : 1;
