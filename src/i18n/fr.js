@@ -2741,6 +2741,8 @@ export default {
     completed: 'Terminé',
     addReminder: 'Ajouter un rappel',
     exportIcs: 'Exporter le calendrier (.ics)',
+    locale: 'fr-CH',
+    calAria: 'Aperçu du calendrier',
     exportIcsHint: 'Ajoutez vos rappels au calendrier de votre téléphone ou ordinateur.',
     editReminder: 'Modifier un rappel',
     noRemindersTitle: 'Rien de prévu pour l’instant',

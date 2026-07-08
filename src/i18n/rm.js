@@ -3508,6 +3508,8 @@ export default {
     completed: 'Fatg',
     addReminder: 'Agiuntar ina commemoraziun',
     exportIcs: 'Exportar il chalender (.ics)',
+    locale: 'rm-CH',
+    calAria: 'Survista dal chalender',
     exportIcsHint: 'Surpiglia tias commemoraziuns en il chalender da tes telefon u computer.',
     editReminder: 'Modifitgar la commemoraziun',
     noRemindersTitle: 'Anc nagut planisà',
