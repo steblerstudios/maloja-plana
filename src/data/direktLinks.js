@@ -139,11 +139,11 @@ export const KATEGORIEN = {
   recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'dokumentTresor' },
 };
 
-// Herzensempfehlungen: von Hand ausgewählte, gemeinnützige Anlaufstellen —
-// KEINE amtlichen Stellen (darum ohne antragsstelle), sondern Orte, die vielen
-// Menschen weiterhelfen. Bewusst klein gehalten und kuratierbar. Stabile,
-// breit vertraute Non-Profits; bei Änderung URLs prüfen.
-export const HERZENSEMPFEHLUNGEN = [
+// Beratung & Hilfe: gemeinnützige Beratungs-Anlaufstellen (kostenlos/niederschwellig)
+// — weder amtlicher Antrag noch persönliche Herzensempfehlung, darum eigenes Buch
+// im Regal. Ohne antragsstelle. Stabile, breit vertraute Non-Profits; URLs bei
+// Änderung prüfen. Kuratierbar.
+export const BERATUNG_HILFE = [
   {
     id: 'budgetberatung',
     name: { de: 'Budgetberatung Schweiz', en: 'Budget counselling Switzerland', fr: 'Conseils budgétaires Suisse' },
@@ -169,6 +169,43 @@ export const HERZENSEMPFEHLUNGEN = [
     url: 'https://www.147.ch/',
   },
 ];
+
+// Herzensempfehlungen (persönlich, von Sophie kuratiert): Name + Ziel-Link sind
+// sprachunabhängig (Eigennamen), nur die Beschreibung kommt aus i18n
+// (legal.resources.heartfeltN — geteilt mit LegalView). url: null = bewusst kein
+// Link (App-Store-App ohne Website, oder defektes HTTPS-Zertifikat). affiliate:
+// true → Provision, transparent als "Affiliate" gekennzeichnet. group → Themengruppe
+// (Render gruppiert). GETEILTE QUELLE: sowohl Bücherregal (DirektLinks) als auch
+// LegalView importieren diese Liste — nur EINE Wahrheit, kein Duplikat.
+export const HEARTFELT = [
+  { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org', group: 'digital' },
+  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' },
+  { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de', group: 'digital' },
+  { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch', group: 'kunst' },
+  { key: 'heartfelt5', name: 'Baukunst Nick', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt6', name: 'Living Dream Design', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss', group: 'gemeinschaft' },
+  { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch', group: 'tiere' },
+  { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch', group: 'gemeinschaft' },
+  { key: 'heartfelt10', name: 'Xdo', url: null, group: 'digital' }, // App Store (Rau Media), keine Website
+  { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch', group: 'tiere' },
+  { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch', group: 'tiere' },
+  { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch', group: 'gesundheit' },
+  { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch', group: 'konsum' },
+  { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch', group: 'konsum' },
+  { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso', group: 'konsum' },
+  { key: 'heartfelt17', name: 'Foodshiner', url: null, group: 'digital' }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
+  { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/', group: 'digital' },
+  { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
+  { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41', group: 'kunst' }, // keine eigene Website – Gemeinde-Verzeichnis
+  { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/', group: 'gesundheit' },
+  { key: 'heartfelt23', name: 'Winterhilfe Schweiz', url: 'https://www.winterhilfe.ch', group: 'soziales' },
+  { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
+];
+
+// Reihenfolge der Gruppen in der Anzeige.
+export const HEARTFELT_GROUPS = ['digital', 'soziales', 'konsum', 'tiere', 'gesundheit', 'kunst', 'gemeinschaft'];
 
 export const CANTONAL_LINKS = {
   ZH: {

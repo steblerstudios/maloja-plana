@@ -2058,6 +2058,8 @@ export default {
     shelfIntro: 'Mintga categoria è in cudesch — in click sin il dies al avra.',
     herzTitle: 'Recumandaziuns dal cor',
     herzNote: 'Tschernì a maun — betg servetschs uffizials, mabain plazzas che gidan a bleras persunas.',
+    beratungTitle: 'Cussegl & agid',
+    beratungNote: 'Plazzas da contact senza intent da lucrar per cussegl e sustegn — gratuit u da bassa sava.',
     antragsstelle: 'Post da dumonda',
     mirrorTitle: 'Post uffizial & dumonda',
     source: 'Links uffizials da [[ch.ch|ch.ch]], [[BAG|bag.admin.ch]], [[BSV|bsv.admin.ch]] ed autras autoritads federalas.',
