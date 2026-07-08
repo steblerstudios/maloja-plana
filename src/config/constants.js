@@ -6,6 +6,7 @@ export const DARK_PALETTE = {
   bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
   border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
@@ -13,8 +14,30 @@ export const LIGHT_PALETTE = {
   bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
   border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#727680',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
+  onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
+
+// ── Farbenblind-Modus (opt-in) ──────────────────────────────────────────
+// Das Rot-Grün-Problempaar der App ist sage (grün, positiv) vs. rose (rot,
+// Warnung) — für die häufigste Farbenblindheit (Deuteran/Protan) ununter-
+// scheidbar. Ist der Modus aktiv, tauschen wir dieses Paar gegen die sichere
+// Blau/Orange-Achse (nach Okabe-Ito) und alle sage-Tönungen mit. Die Marken-
+// Palette bleibt sonst unberührt (nur wenn eingeschaltet). Das Flag palette.colorBlind
+// erlaubt Komponenten, Form-/Symbol-Marker zu ergänzen — Farbe nie allein.
+const CB_LIGHT = {
+  sage: '#1565A3', rose: '#C25A16', sageDeep: '#2D5C86',
+  sageMist: '#E7EEF5', sageDew: '#D4E2F0',
+};
+const CB_DARK = {
+  sage: '#6BA6DE', rose: '#E38B4E', sageDeep: '#7FA8D0',
+  sageMist: '#1E2833', sageDew: '#223140',
+};
+export function applyColorBlind(palette, active) {
+  if (!active) return palette;
+  const isDark = palette.bg === DARK_PALETTE.bg;
+  return { ...palette, ...(isDark ? CB_DARK : CB_LIGHT), colorBlind: true };
+}
 
 import { getCantonName, CANTON_CODES } from './cantonalData.js';
 const cantonOptions = (t) => CANTON_CODES.map(c => ({ value: c, label: getCantonName(c, t) }));
@@ -152,10 +175,13 @@ export function getChapters(t) {
         { k: 'securitiesValue', label: fl(t, 'finanzen', 'securitiesValue'), type: 'currency', hint: hn(t, 'finanzen', 'securitiesValue'), section: t('sections.finanzen.assets'), sectionIntro: si(t, 'finanzen', 'assets') },
         { k: 'otherAssets', label: fl(t, 'finanzen', 'otherAssets'), type: 'currency', hint: hn(t, 'finanzen', 'otherAssets') },
         { k: 'creditCard', label: fl(t, 'finanzen', 'creditCard'), type: 'select', options: opts(t, 'finanzen', 'creditCard'), section: t('sections.finanzen.credit'), sectionIntro: si(t, 'finanzen', 'credit') },
+        { k: 'creditCardLimit', label: fl(t, 'finanzen', 'creditCardLimit'), type: 'currency', hint: hn(t, 'finanzen', 'creditCardLimit') },
+        { k: 'creditCardBalance', label: fl(t, 'finanzen', 'creditCardBalance'), type: 'currency', hint: hn(t, 'finanzen', 'creditCardBalance') },
         { k: 'loans', label: fl(t, 'finanzen', 'loans'), type: 'currency' },
         { k: 'pension3a', label: fl(t, 'finanzen', 'pension3a'), type: 'currency', section: t('sections.finanzen.provision'), sectionIntro: si(t, 'finanzen', 'provision'), secondary: true, orientation: or(t, 'saeule3a') },
-        { k: 'pension3aBalance', label: fl(t, 'finanzen', 'pension3aBalance'), type: 'currency', secondary: true },
-        { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true },
+        { k: 'pension3aBalance', label: fl(t, 'finanzen', 'pension3aBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3aBalance'), secondary: true },
+        { k: 'pension3b', label: fl(t, 'finanzen', 'pension3b'), type: 'select', options: opts(t, 'finanzen', 'pension3b'), secondary: true, orientation: or(t, 'saeule3b') },
+        { k: 'pension3bBalance', label: fl(t, 'finanzen', 'pension3bBalance'), type: 'currency', hint: hn(t, 'finanzen', 'pension3bBalance'), secondary: true },
         { k: 'investmentFunds', label: fl(t, 'finanzen', 'investmentFunds'), type: 'select', options: opts(t, 'finanzen', 'investmentFunds'), secondary: true },
       ],
       docs: [
@@ -301,7 +327,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
-  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'investmentFunds'],
+  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],

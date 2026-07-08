@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
@@ -125,12 +126,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
-        }
-      }, React.createElement(Icon, { name: 'legal', size: 18 }), t('behoerdenDossier.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'legal', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('behoerdenDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('behoerdenDossier.subtitle'))
@@ -141,7 +137,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         onClick: handlePrint,
         style: {
           flex: 1, padding: '12px',
-          background: palette.sand, color: '#fff', border: 'none',
+          background: palette.sand, color: palette.onSand, border: 'none',
           borderRadius: radius.sm, cursor: 'pointer',
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
           letterSpacing: '0.2px',

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Eyebrow, PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -58,6 +60,11 @@ export const CalendarReminders = ({ palette, t, data }) => {
   const [reminders, setReminders] = useState(loadReminders);
   const [view, setView] = useState('upcoming'); // upcoming, completed, add
   const [showTemplates, setShowTemplates] = useState(false);
+  // Visueller Kalender: Jahresband (12 Monate) + Monatsraster des gewählten Monats.
+  const now = new Date();
+  const [calYear, setCalYear] = useState(now.getFullYear());
+  const [calMonth, setCalMonth] = useState(now.getMonth());
+  const [selDate, setSelDate] = useState(null); // ISO des angetippten Tages
 
   // New reminder form
   const [newTitle, setNewTitle] = useState('');
@@ -238,7 +245,81 @@ export const CalendarReminders = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'cowbell', size: 20 }), t('calendar.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
+
+    // Visueller Kalender: Jahresband (12 Monate, Monatspunkte) + Monatsraster
+    // (Tagespunkte). Ruhige Übersicht über der Manager-Liste; Tag antippen öffnet
+    // ein Tagespanel mit Brücke zum Hinzufügen-Formular. Monatsnamen/Wochentage
+    // aus Intl (Swiss-Locale), damit keine 12×5-Namenspflege nötig ist.
+    (() => {
+      const LOCALE = t('calendar.locale') || 'de-CH';
+      const byDate = {};
+      reminders.forEach(r => { if (!r.done) (byDate[r.dueDate] = byDate[r.dueDate] || []).push(r); });
+      const monthCount = Array(12).fill(0), monthOverdue = Array(12).fill(false);
+      Object.keys(byDate).forEach(d => { const dt = new Date(d); if (dt.getFullYear() === calYear) { monthCount[dt.getMonth()] += byDate[d].length; if (d < today) monthOverdue[dt.getMonth()] = true; } });
+
+      const first = new Date(calYear, calMonth, 1);
+      const startWd = (first.getDay() + 6) % 7; // Montag = 0 (CH)
+      const dim = new Date(calYear, calMonth + 1, 0).getDate();
+      const cells = [];
+      for (let i = 0; i < startWd; i++) cells.push(null);
+      for (let d = 1; d <= dim; d++) cells.push(d);
+      const isoOf = (d) => calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+      const wdNames = []; for (let i = 0; i < 7; i++) wdNames.push(new Date(2024, 0, 1 + i).toLocaleDateString(LOCALE, { weekday: 'short' }));
+      const monName = (m) => new Date(2024, m, 1).toLocaleDateString(LOCALE, { month: 'short' });
+
+      const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, width: '30px', height: '30px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
+      const monthBtn = (m) => ({ position: 'relative', padding: space.xs + 'px 0 ' + (space.sm) + 'px', border: '1px solid ' + (m === calMonth ? palette.sand : 'transparent'), background: m === calMonth ? palette.sand + '22' : 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, textAlign: 'center' });
+      const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
+      const dot = (col) => React.createElement('span', { 'aria-hidden': 'true', style: { position: 'absolute', bottom: '3px', left: '50%', transform: 'translateX(-50%)', width: '5px', height: '5px', borderRadius: '50%', background: col } });
+
+      const selReminders = selDate ? reminders.filter(r => r.dueDate === selDate).sort((a, b) => Number(a.done) - Number(b.done)) : [];
+
+      return React.createElement('div', { role: 'group', 'aria-label': t('calendar.calAria'), style: { background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md } },
+        // Jahr-Kopf: ‹ Jahr › + Heute
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: space.sm + 'px' } },
+          React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
+            React.createElement('button', { type: 'button', 'aria-label': String(calYear - 1), style: navBtn, onClick: () => setCalYear(calYear - 1) }, '‹'),
+            React.createElement('span', { style: { fontSize: text.md, fontWeight: weight.semi, color: palette.text, minWidth: '52px', textAlign: 'center' } }, calYear),
+            React.createElement('button', { type: 'button', 'aria-label': String(calYear + 1), style: navBtn, onClick: () => setCalYear(calYear + 1) }, '›')
+          ),
+          React.createElement('button', { type: 'button', style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', fontSize: text.xs, color: palette.mid, cursor: 'pointer', fontFamily: 'inherit' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
+        ),
+        // Jahresband: 12 Monate mit Punkt bei Terminen
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '2px', marginBottom: space.md + 'px' } },
+          ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
+            key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monName(m) + (monthCount[m] ? ' · ' + monthCount[m] : ''),
+            style: monthBtn(m), onClick: () => { setCalMonth(m); setSelDate(null); },
+          }, monName(m), monthCount[m] > 0 ? dot(monthOverdue[m] ? palette.rose : palette.sage) : null))
+        ),
+        // Wochentagskopf (Mo-first)
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', marginBottom: space.xs + 'px' } },
+          ...wdNames.map((w, i) => React.createElement('div', { key: i, style: { textAlign: 'center', fontSize: text.xs, color: palette.mid } }, w))
+        ),
+        // Monatsraster
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' } },
+          ...cells.map((d, i) => {
+            if (d === null) return React.createElement('div', { key: 'b' + i });
+            const iso = isoOf(d), isToday = iso === today, cnt = byDate[iso] ? byDate[iso].length : 0;
+            return React.createElement('button', {
+              key: iso, type: 'button', 'aria-label': new Date(iso).toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long' }) + (cnt ? ' · ' + cnt : ''),
+              'aria-pressed': iso === selDate, style: dayCell(iso, isToday), onClick: () => setSelDate(iso === selDate ? null : iso),
+            }, d, cnt > 0 ? dot(getDueColor(iso)) : null);
+          })
+        ),
+        // Tagespanel: Einträge des angetippten Tages + Brücke zum Hinzufügen
+        selDate && React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' } }, new Date(selDate).toLocaleDateString(LOCALE, { weekday: 'long', day: 'numeric', month: 'long' })),
+          selReminders.length > 0
+            ? selReminders.map(r => React.createElement('div', { key: r.id, style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.xs + 'px' } },
+                React.createElement('span', { 'aria-hidden': 'true', style: { width: '6px', height: '6px', borderRadius: '50%', background: r.done ? palette.sage : getDueColor(r.dueDate), flexShrink: 0 } }),
+                React.createElement('span', { style: { fontSize: text.sm, color: r.done ? palette.mid : palette.text, textDecoration: r.done ? 'line-through' : 'none' } }, r.title)
+              ))
+            : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm + 'px' } }, t('calendar.noRemindersTitle')),
+          React.createElement('button', { type: 'button', style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', fontSize: text.xs, color: palette.text, cursor: 'pointer', fontFamily: 'inherit', marginTop: space.xs + 'px' }, onClick: () => { setNewDate(selDate); setView('add'); } }, '+ ' + t('calendar.addReminder'))
+        )
+      );
+    })(),
 
     // Kalender-Export (.ics) — Termine ins eigene Kalender-App übernehmen
     upcoming.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
@@ -276,12 +357,12 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
     // Add view
     view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.sand } },
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('calendar.addReminder')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('calendar.addReminder')),
 
       React.createElement('input', {
         type: 'text', value: newTitle,
         onChange: (e) => setNewTitle(e.target.value),
-        placeholder: t('calendar.addReminder') + '...',
+        placeholder: t('calendar.addReminder') + '...', 'aria-label': t('calendar.addReminder'),
         style: inputStyle
       }),
 
@@ -402,32 +483,34 @@ export const CalendarReminders = ({ palette, t, data }) => {
     // Upcoming view
     view === 'upcoming' && React.createElement('div', null,
       upcoming.length === 0
-        ? React.createElement('div', { style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' } },
-            React.createElement('div', { style: { marginBottom: '12px' } }, React.createElement(Icon, { name: 'cowbell', size: 28 })),
-            React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } }, t('calendar.noReminders'))
-          )
+        ? React.createElement(EmptyState, {
+            palette,
+            icon: React.createElement(Icon, { name: 'cowbell', size: 28, color: palette.mid }),
+            title: t('calendar.noRemindersTitle'),
+            description: t('calendar.noReminders'),
+          })
         : React.createElement('div', null,
             // Overdue section
             overdue.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.rose, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.rose, marginBottom: space.sm } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
               overdue.map(r => renderReminderCard(r))
             ),
 
             // Due today
             dueToday.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.today') + ' (' + dueToday.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.gold, marginBottom: space.sm } }, t('calendar.today') + ' (' + dueToday.length + ')'),
               dueToday.map(r => renderReminderCard(r))
             ),
 
             // This week
             dueSoon.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sky, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.sky, marginBottom: space.sm } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
               dueSoon.map(r => renderReminderCard(r))
             ),
 
             // Later
             upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.later')),
+              React.createElement(Eyebrow, { palette, style: { color: palette.mid, marginBottom: space.sm } }, t('calendar.later')),
               upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).map(r => renderReminderCard(r))
             )
           )

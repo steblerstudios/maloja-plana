@@ -1,7 +1,9 @@
 import React, { useState, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { text, weight, radius , leading , space } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
@@ -98,14 +100,7 @@ export const BetaGate = ({ children }) => {
           background: palette.sage + '0A', borderRadius: radius.sm,
         }
       },
-        React.createElement('svg', {
-          width: '14', height: '14', viewBox: '0 0 16 16', fill: 'none',
-          stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round',
-          'aria-hidden': 'true',
-        },
-          React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-          React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-        ),
+        React.createElement(TrustLockIcon, { size: 14, color: palette.sage }),
         React.createElement('span', {
           style: { fontSize: text.xs, color: palette.sage, lineHeight: leading.normal }
         }, t('trust.localBadge'))
@@ -114,7 +109,7 @@ export const BetaGate = ({ children }) => {
         type: 'text',
         value: input,
         onChange: (e) => { setInput(e.target.value); setError(false); },
-        placeholder: t('beta.codePlaceholder'),
+        placeholder: t('beta.codePlaceholder'), 'aria-label': t('beta.codePlaceholder'),
         autoFocus: true,
         'aria-invalid': error ? 'true' : undefined,
         'aria-describedby': error ? 'beta-error' : undefined,
@@ -130,13 +125,9 @@ export const BetaGate = ({ children }) => {
         role: 'alert',
         style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
       }, t('beta.codeWrong')),
-      React.createElement('button', {
-        type: 'submit',
-        style: {
-          marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body,
-          background: palette.sand, color: '#000', border: 'none',
-          borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontFamily: 'inherit',
-        }
+      React.createElement(PrimaryButton, {
+        palette, type: 'submit',
+        style: { marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body },
       }, t('beta.enter')),
       // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
       React.createElement('button', {
@@ -154,7 +145,7 @@ export const BetaGate = ({ children }) => {
           fontSize: text.sm, fontWeight: weight.medium,
         }
       },
-        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+        React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
           React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
           React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
           React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),

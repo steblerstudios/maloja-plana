@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 // In-App-Suche: findet Werkzeuge & Kapitel und springt direkt hin.
 // Matcht gegen die bereits übersetzten nav-Labels (kein Extra-i18n pro Eintrag)
@@ -72,10 +74,7 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
   const nothing = q && toolResults.length === 0 && chapterResults.length === 0;
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'search', size: 20 }),
-      t('search.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'search', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('search.title')),
     React.createElement('input', {
       style: s.input, type: 'search', value: query, autoFocus: true,
       onChange: e => setQuery(e.target.value),
@@ -83,7 +82,12 @@ export const SearchView = ({ palette, t, chapters = [], onNavigate }) => {
       'aria-label': t('search.placeholder'),
     }),
 
-    nothing && React.createElement('div', { style: s.empty }, t('search.empty', { query })),
+    nothing && React.createElement(EmptyState, {
+      palette,
+      icon: React.createElement(Icon, { name: 'search', size: 26, color: palette.mid }),
+      title: t('search.emptyTitle'),
+      description: t('search.empty', { query }),
+    }),
 
     toolResults.length > 0 && React.createElement('div', null,
       React.createElement('div', { style: s.sectionTitle }, t('search.toolsTitle')),

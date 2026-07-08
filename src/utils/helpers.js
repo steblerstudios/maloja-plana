@@ -40,6 +40,21 @@ export function formatDE(iso) {
 // ============================================================================
 // PRINT HELPERS
 // ============================================================================
+
+// Escape HTML entities before user-entered text is written into a print/export
+// document via document.write. Print windows are privilege-less about:blank pages
+// showing the user's own data, so the risk is low — but a name or medication that
+// contains <, > or & would otherwise break the printed layout. Escape at the point
+// of interpolation. Mirrors the local esc() in briefGenerator.js/dossierGenerator.js.
+export function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 export function openPrintWindow(html) {
   const win = window.open('', '_blank');
   if (win) {

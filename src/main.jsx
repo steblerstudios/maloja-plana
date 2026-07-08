@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo, startTransition } from 'react';
 import ReactDOM from 'react-dom/client';
 import './tokens.css';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
-import { DARK_PALETTE, LIGHT_PALETTE, getChapters, CHAPTER_KEYS } from './config/constants.js';
+import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters, CHAPTER_KEYS } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
@@ -23,12 +24,15 @@ const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
 import OverdueBanner from './OverdueBanner.jsx';
 import { isOnboardingDone } from './Onboarding.jsx';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
+import { isTourDone } from './Tour.jsx';
+const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import { Icon } from './IconSystem.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
@@ -52,6 +56,7 @@ const SozialhilfeView = React.lazy(() => import('./SozialhilfeView.jsx'));
 const CalendarReminders = React.lazy(() => import('./CalendarReminders.jsx'));
 const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx'));
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
+const ArztkofferView = React.lazy(() => import('./ArztkofferView.jsx'));
 const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
@@ -72,7 +77,9 @@ const Trennung = React.lazy(() => import('./Trennung.jsx'));
 const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
 const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
 const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
+const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
 const VorsorgeRechner = React.lazy(() => import('./VorsorgeRechner.jsx'));
+const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ default: m.Schnellcheck })));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
 const AsylView = React.lazy(() => import('./AsylView.jsx'));
@@ -133,7 +140,7 @@ const LanguageSwitcher = ({ palette }) => {
       'aria-hidden': 'true',
       style: { position: 'absolute', insetInlineStart: '9px', pointerEvents: 'none', color: palette.mid, display: 'inline-flex' }
     },
-      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+      React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
         React.createElement('circle', { cx: '12', cy: '12', r: '9' }),
         React.createElement('path', { d: 'M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18' })
       )
@@ -193,13 +200,140 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
       transition: `all ${duration.normal}ms ${ease}`,
     },
   },
-    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'currentColor' },
-      React.createElement('path', { d: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0012 8.5v1.06a3.5 3.5 0 010 4.88V15.5a4.5 4.5 0 004.5-3.5z' })
+    React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+      React.createElement('path', { d: 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z' }),
+      React.createElement('path', { d: 'M16 9 a5 5 0 0 1 0 6' })
     ),
     React.createElement('span', {
       style: { display: 'none' },
       className: 'mp-vorlesen-label',
     }, t('vorlesen.label'))
+  );
+};
+
+// Leiser Boden-Anker — nur auf dem Handy (isMobile). Additiv: die Kopfzeile mit
+// Hamburger bleibt, nichts wird entfernt. Ungerade 5 Slots (2 + Mitte + 2), damit der
+// zentrale Erfassen-Knopf wirklich mittig sitzt; er fächert ruhig in Schnell-Aktionen auf.
+const bottomIcon = (name, color, size) => {
+  const s = size || 20;
+  const common = { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' };
+  const P = (d) => React.createElement('path', { d });
+  if (name === 'home') return React.createElement('svg', common, P('M4 11 L12 4 L20 11 M6 10 V20 H18 V10'));
+  // Übersicht = Schweizer Sackmesser («alle Werkzeuge an einem Ort»); generisch, kein Kreuz.
+  // Linien-Variante passend zum Nav-Stil: Griff (Pille) + zwei ausgeklappte Werkzeuge.
+  if (name === 'sackmesser') return React.createElement('svg', common, P('M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z M15 10 L21 4 M15 14 L20 18.5'));
+  if (name === 'clock') return React.createElement('svg', common, React.createElement('circle', { cx: 12, cy: 12, r: 8 }), P('M12 8 V12 L15 14'));
+  if (name === 'gift') return React.createElement('svg', common, P('M3 8 H21 V12 H3 Z M5 12 V20 H19 V12 M12 8 V20 M12 8 C 12 5 9.5 4 8.5 5.5 C 7.6 7 10 8 12 8 C 14 8 16.4 7 15.5 5.5 C 14.5 4 12 5 12 8'));
+  if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
+  if (name === 'file') return React.createElement('svg', common, P('M7 3 H14 L18 7 V21 H7 Z M14 3 V7 H18'));
+  if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
+  if (name === 'calendarPlus') return React.createElement('svg', common, P('M4 6 H20 V20 H4 Z M4 10 H20 M8 3 V7 M16 3 V7 M12 13 V17 M10 15 H14'));
+  // Kalender mit heutiger Tageszahl (wie iOS): das Datum steht im Blatt statt einer generischen Uhr.
+  if (name === 'calendarToday') {
+    const day = String(new Date().getDate());
+    return React.createElement('svg', common,
+      P('M4 6 H20 V20 H4 Z'), P('M4 10 H20'), P('M8 3 V7'), P('M16 3 V7'),
+      React.createElement('text', {
+        x: 12, y: 18, textAnchor: 'middle', fill: color, stroke: 'none',
+        fontFamily: 'inherit', fontWeight: 700, fontSize: day.length > 1 ? 7 : 8,
+      }, day)
+    );
+  }
+  if (name === 'pencil') return React.createElement('svg', common, P('M4 20 L4 16 L15 5 L19 9 L8 20 Z M13 7 L17 11'));
+  return React.createElement('svg', common, P('M4 7 H20 M4 12 H20 M4 17 H20'));
+};
+
+// Sackmesser mit Zustand: die Werkzeuge fahren nur aus dem Griff, wenn man auf der
+// Übersicht ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
+// zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (Sophie: „offen nur bei
+// der Übersicht, sonst schliesst es sich").
+const SackmesserIcon = ({ open, color, size = 20 }) => {
+  const s = size;
+  const toolStyle = {
+    transformBox: 'view-box', transformOrigin: '15px 12px',
+    transform: open ? 'scale(1)' : 'scale(0.02)',
+    opacity: open ? 1 : 0,
+    transition: `transform ${duration.normal}ms ${ease}, opacity ${duration.normal}ms ${ease}`,
+  };
+  return React.createElement('svg', {
+    width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: color,
+    strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true',
+  },
+    // Griff — immer da (geschlossenes Sackmesser)
+    React.createElement('path', { d: 'M8 9 H15 A3 3 0 0 1 15 15 H8 A3 3 0 0 1 8 9 Z' }),
+    // Werkzeuge — fahren aus/ein
+    React.createElement('g', { style: toolStyle },
+      React.createElement('path', { d: 'M15 10 L21 4' }),
+      React.createElement('path', { d: 'M15 14 L20 18.5' })
+    )
+  );
+};
+const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
+  const [fanOpen, setFanOpen] = useState(false);
+  const slot = (it) => React.createElement('button', {
+    key: it.key, onClick: it.onClick, 'aria-label': it.label,
+    'aria-current': it.active ? 'page' : undefined,
+    style: {
+      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+      padding: '9px 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+      color: it.active ? palette.text : palette.mid,
+    },
+  },
+    it.icon === 'sackmesser'
+      ? React.createElement(SackmesserIcon, { open: it.active, color: it.active ? palette.sage : palette.mid })
+      : bottomIcon(it.icon, it.active ? palette.sage : palette.mid),
+    React.createElement('span', { style: { fontSize: '10px', fontWeight: it.active ? weight.medium : weight.normal } }, it.label),
+    React.createElement('span', { style: { width: '4px', height: '4px', borderRadius: '50%', background: it.active ? palette.sage : 'transparent' } })
+  );
+  const fan = [
+    { key: 'tresor', label: t('nav.capDokument'), icon: 'file', left: 'calc(50% - 104px)', bottom: '84px' },
+    { key: 'kk', label: t('nav.capBeleg'), icon: 'receipt', left: 'calc(50% - 40px)', bottom: '126px' },
+    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarPlus', left: 'calc(50% + 40px)', bottom: '126px' },
+    { key: 'merkliste', label: t('nav.merkliste'), icon: 'pencil', left: 'calc(50% + 104px)', bottom: '84px' },
+  ];
+  return React.createElement(React.Fragment, null,
+    React.createElement('div', {
+      onClick: () => setFanOpen(false), 'aria-hidden': 'true',
+      style: { position: 'fixed', inset: 0, background: 'rgba(30,34,32,0.10)', opacity: fanOpen ? 1 : 0, pointerEvents: fanOpen ? 'auto' : 'none', transition: `opacity ${duration.normal}ms ${ease}`, zIndex: 40 },
+    }),
+    fan.map((a, i) => React.createElement('button', {
+      key: a.key, onClick: () => { setFanOpen(false); onNavigate(a.key); }, 'aria-label': a.label, tabIndex: fanOpen ? 0 : -1,
+      style: {
+        position: 'fixed', left: a.left, bottom: a.bottom,
+        transform: fanOpen ? 'translateX(-50%)' : 'translateX(-50%) translateY(12px)',
+        opacity: fanOpen ? 1 : 0, pointerEvents: fanOpen ? 'auto' : 'none',
+        transition: `opacity ${duration.normal}ms ${ease}, transform ${duration.normal}ms ${ease}`,
+        transitionDelay: fanOpen ? (i * 0.03) + 's' : '0s',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px',
+        background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', zIndex: 42,
+      },
+    },
+      React.createElement('span', { style: { width: '48px', height: '48px', borderRadius: '50%', background: palette.surface, border: '0.5px solid ' + palette.sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: palette.sage, boxShadow: shadow.sm } }, bottomIcon(a.icon, palette.sage)),
+      React.createElement('span', { style: { fontSize: '10px', color: palette.mid } }, a.label)
+    )),
+    React.createElement('nav', {
+      'aria-label': t('nav.menu'),
+      style: {
+        display: 'flex', alignItems: 'flex-end', flexShrink: 0, borderTop: '1px solid ' + palette.border + '88',
+        background: palette.surface + 'F2', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        // Immer sichtbar am unteren Rand; Safe-Area hält den iOS-Home-Indikator frei.
+        position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      },
+    },
+      slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
+      slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
+      React.createElement('div', { style: { flex: 1, display: 'flex', justifyContent: 'center' } },
+        React.createElement('button', {
+          onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
+          style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sage, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+        },
+          React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
+        )
+      ),
+      slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') }),
+      slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu })
+    )
   );
 };
 
@@ -224,7 +358,10 @@ const AppInner = () => {
   // Schwarzweiss-/Ruhe-Modus: entsättigt die ganze App (weniger Reiz, dumbphone-nah)
   const [grayscale, setGrayscale] = useState(() => { try { return localStorage.getItem('or5_grayscale') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_grayscale', grayscale ? '1' : '0'); } catch {} }, [grayscale]);
-  const palette = isDarkMode ? DARK_PALETTE : LIGHT_PALETTE;
+  // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
+  const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
+  const palette = applyColorBlind(isDarkMode ? DARK_PALETTE : LIGHT_PALETTE, colorBlind);
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
   const isTablet = vw >= 768;
@@ -299,6 +436,7 @@ const AppInner = () => {
   });
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [legalSection, setLegalSection] = useState('privacy');
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
@@ -306,6 +444,19 @@ const AppInner = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
+  // Kleine Tour nach dem Onboarding — zeigt sich, bis sie erledigt ODER übersprungen
+  // ist; „später" (×) verschiebt sie auf den nächsten Start. Jederzeit übers Menü wieder.
+  const [tourOpen, setTourOpen] = useState(false);
+  const TOUR_STEPS = [
+    { key: 'welcome' },
+    { key: 'berge', target: 'berge' },
+    { key: 'anspruch', target: 'anspruch' },
+    { key: 'privacy' },
+  ];
+  // Nach abgeschlossenem Onboarding einmalig anbieten, solange nicht erledigt.
+  useEffect(() => {
+    if (onboardingDone && !isTourDone()) setTourOpen(true);
+  }, [onboardingDone]);
   const [demoMode, setDemoMode] = useState(false);
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
@@ -325,7 +476,7 @@ const AppInner = () => {
   // ohne die eigenen Zahlen — nichts wird persistiert.
   const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setDemoMode(false); };
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
-  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht'];
+  const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht', 'schnellcheck'];
 
   // Build translated chapters — recalculates when language changes
   const chapters = useMemo(() => getChapters(t), [t]);
@@ -599,8 +750,8 @@ const AppInner = () => {
       onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
       style: { padding: '6px 9px', background: simpleView ? palette.sand + '30' : 'transparent', color: simpleView ? palette.sand : palette.mid, border: '1px solid ' + (simpleView ? palette.sand + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
     },
-      // Icon: 2×2-Kachelraster = „grosse Symbole"
-      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'currentColor', 'aria-hidden': 'true' },
+      // Icon: 2×2-Kachelraster = „grosse Symbole" (Outline, konsistent mit dem Icon-Set)
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
         React.createElement('rect', { x: '3', y: '3', width: '8', height: '8', rx: '2' }),
         React.createElement('rect', { x: '13', y: '3', width: '8', height: '8', rx: '2' }),
         React.createElement('rect', { x: '3', y: '13', width: '8', height: '8', rx: '2' }),
@@ -619,10 +770,67 @@ const AppInner = () => {
         React.createElement('path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' })
       )
     ),
+    React.createElement('button', {
+      key: 'colorblind',
+      'aria-label': t('common.colorBlind'), 'aria-pressed': colorBlind, title: t('common.colorBlind'),
+      onClick: () => setColorBlind(c => !c),
+      style: { padding: '6px 9px', background: colorBlind ? palette.sky + '22' : 'transparent', color: colorBlind ? palette.sky : palette.mid, border: '1px solid ' + (colorBlind ? palette.sky + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: ein gefüllter Kreis + ein Umriss-Quadrat = unterscheidbar an Farbe UND Form
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', 'aria-hidden': 'true' },
+        React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
+        React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
+      )
+    ),
   ].filter(Boolean);
 
+  // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
+  // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
+  const footerEl = React.createElement('footer', {
+    role: 'contentinfo',
+    style: {
+      fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px', opacity: 0.7,
+      display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center',
+      padding: '16px 20px', width: '100%', maxWidth: contentMax,
+      marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box',
+    }
+  },
+    React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('a', {
+      href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
+      style: { color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, t('beta.feedbackMail')),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('button', {
+      onClick: () => handleNavigate('legal'),
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, t('legal.footerLink')),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('button', {
+      onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
+      style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+    }, demoMode ? t('demo.leave') : t('demo.footerLink')),
+    !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
+      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+      React.createElement('button', {
+        onClick: enterSandbox,
+        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
+      }, t('sandbox.footerLink'))
+    ),
+    React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
+    React.createElement('a', {
+      href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
+      target: '_blank', rel: 'noopener noreferrer', title: t('greenHostingFooter'),
+      style: { color: palette.sage, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
+    },
+      React.createElement(Icon, { name: 'leaf', size: 13 }),
+      React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
+    )
+  );
+
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     React.createElement(MobileNav, {
@@ -634,10 +842,35 @@ const AppInner = () => {
       activeView: view,
       chapters,
       completion: calculateCompletion(),
-      // Auf dem Handy wandern die Kopfzeilen-Bedienelemente hierher.
-      settingsControls: isMobile ? settingsControls : null,
+      // Am Handy trägt der Boden-Anker die Übersicht → im Drawer weglassen (keine
+      // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
+      // bis wir ein eigenes Web-Äquivalent haben (Sophie).
+      hasBottomAnchor: isMobile,
+      // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
+      settingsControls: null,
       settingsLabel: t('nav.settings'),
+      // Rundgang nur EINMAL: am Handy in den Einstellungen, am Desktop hier im Menü.
+      onStartTour: isMobile ? null : () => { setView('dashboard'); setTourOpen(true); },
     }),
+    // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
+    React.createElement(MobileNav, {
+      palette, t,
+      mode: 'settings',
+      isOpen: settingsOpen,
+      onClose: () => setSettingsOpen(false),
+      onNavigate: handleNavigate,
+      settingsControls,
+      settingsLabel: t('nav.settings'),
+      onStartTour: () => { setSettingsOpen(false); setView('dashboard'); setTourOpen(true); },
+    }),
+    // Kleine Tour (Overlay) — nur auf dem Dashboard, wo ihre Ziele liegen.
+    (tourOpen && view === 'dashboard') && React.createElement(React.Suspense, { fallback: null, key: 'tour' },
+      React.createElement(Tour, {
+        palette, t, steps: TOUR_STEPS,
+        onFinish: () => setTourOpen(false),
+        onLater: () => setTourOpen(false),
+      })
+    ),
     React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
       React.createElement('h1', {
         onClick: () => setView('dashboard'),
@@ -654,21 +887,56 @@ const AppInner = () => {
         'aloja Plana'
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
-        // Desktop: Bedienelemente in der Kopfzeile. Handy: ins ☰-Menü eingeklappt (s. MobileNav).
-        ...(isMobile ? [] : settingsControls),
-        React.createElement('button', {
-          key: 'menu',
-          'aria-label': t('nav.menu'),
-          onClick: () => setMobileNavOpen(!mobileNavOpen),
-          style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-        },
-          // Hamburger icon as SVG
-          React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-            React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
-            React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
-            React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
-          )
-        )
+        // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
+        // Desktop: Bedienelemente inline + Hamburger (kein Boden-Anker).
+        isMobile
+          ? React.createElement('button', {
+              key: 'settings',
+              'aria-label': t('nav.settings'),
+              onClick: () => setSettingsOpen(true),
+              style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+            },
+              React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+                React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
+                // Echtes Zahnrad (Feather-Cog) — nicht mit Sonnenstrahlen zu verwechseln.
+                React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
+              )
+            )
+          : React.createElement(React.Fragment, { key: 'desktop-controls' },
+              // Ruhige, hierarchische Kopfzeile: nur Sprache + Erscheinungsbild bleiben
+              // griffbereit inline. Alle Barrierefreiheits-Schalter (und Anrede) wandern
+              // hinter EIN Symbol → Einstellungs-Schublade (gruppiert & beschriftet).
+              ...settingsControls.filter(c => c.key === 'lang' || c.key === 'theme'),
+              React.createElement('button', {
+                key: 'a11y',
+                'aria-label': t('common.settingsAccessibility'),
+                title: t('common.settingsAccessibility'),
+                onClick: () => setSettingsOpen(true),
+                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+              },
+                // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
+                React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+                  React.createElement('circle', { cx: '12', cy: '12', r: '10', opacity: '0.35' }),
+                  React.createElement('circle', { cx: '12', cy: '6.6', r: '1.35', fill: 'currentColor', stroke: 'none' }),
+                  React.createElement('path', { d: 'M6.5 9.2 H17.5' }),
+                  React.createElement('path', { d: 'M12 9.2 V13.2' }),
+                  React.createElement('path', { d: 'M12 13.2 L9.4 18' }),
+                  React.createElement('path', { d: 'M12 13.2 L14.6 18' })
+                )
+              ),
+              React.createElement('button', {
+                key: 'menu',
+                'aria-label': t('nav.menu'),
+                onClick: () => setMobileNavOpen(!mobileNavOpen),
+                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+              },
+                React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
+                  React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
+                  React.createElement('line', { x1: '2', y1: '8', x2: '14', y2: '8' }),
+                  React.createElement('line', { x1: '2', y1: '12', x2: '14', y2: '12' })
+                )
+              )
+            )
       )
     ),
     !demoMode && React.createElement('div', {
@@ -679,10 +947,7 @@ const AppInner = () => {
         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
       }
     },
-      React.createElement('svg', { width: '12', height: '12', viewBox: '0 0 16 16', fill: 'none', stroke: palette.sage, strokeWidth: '1.5', strokeLinecap: 'round', 'aria-hidden': 'true' },
-        React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-        React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-      ),
+      React.createElement(TrustLockIcon, { size: 12, color: palette.sage }),
       React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
       isOffline && React.createElement('span', {
         role: 'status',
@@ -802,9 +1067,10 @@ const AppInner = () => {
         },
           React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
           React.createElement('div', { style: { display: 'flex', gap: space.xs } },
-            React.createElement('button', {
+            React.createElement(PrimaryButton, {
+              palette,
               onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: palette.sand, color: '#000', border: 'none', borderRadius: radius.sm + 'px', cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
+              style: { padding: space.xs + 'px ' + space.sm + 'px' },
             }, t('pwa.install')),
             React.createElement('button', {
               onClick: () => setInstallPrompt(null),
@@ -823,6 +1089,8 @@ const AppInner = () => {
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
           onLeaveDemo: () => setDemoMode(false),
           isTablet,
+          isMobile,
+          isDarkMode,
         })
       ),
       view === 'chapter' && React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
@@ -836,6 +1104,8 @@ const AppInner = () => {
           onNavigate: handleNavigate,
           demoMode,
           simpleView,
+          nextChapter: chapters[activeChapter + 1] || null,
+          onNext: () => handleNavigate('chapter', activeChapter + 1),
         })
       ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
@@ -847,7 +1117,8 @@ const AppInner = () => {
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
           onUpdateExpiry: handleUpdateDocExpiry,
-          initialTab: tresorInitialTab
+          initialTab: tresorInitialTab,
+          isDarkMode
         }),
         view === 'kk' && React.createElement(KKScanner, {
           palette, t, data: activeData,
@@ -916,7 +1187,8 @@ const AppInner = () => {
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),
         view === 'iv' && React.createElement(IvVerfahren, { palette, t, onNavigate: handleNavigate }),
-        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'pflege' && React.createElement(PflegeAblauf, { palette, t, onNavigate: handleNavigate }),
+        view === 'vorsorge' && React.createElement(VorsorgeRechner, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'alv' && React.createElement(AlvRechner, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'asyl' && React.createElement(AsylView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'flyer' && React.createElement(FlyerView, { palette, t, lang }),
@@ -924,6 +1196,7 @@ const AppInner = () => {
         view === 'search' && React.createElement(SearchView, { palette, t, chapters, onNavigate: handleNavigate }),
         view === 'eo' && React.createElement(EOrechner, { palette, t, data: activeData }),
         view === 'stipendien' && React.createElement(StipendienView, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'schnellcheck' && React.createElement(Schnellcheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
@@ -937,6 +1210,7 @@ const AppInner = () => {
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
+        view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
@@ -947,84 +1221,14 @@ const AppInner = () => {
           onExport: () => startTransition(() => setView('export')),
         }),
       )),
-      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData })
+      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
+      isMobile && footerEl
     ),
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError }),
-    React.createElement('footer', {
-      role: 'contentinfo',
-      style: {
-        fontSize: text.xs,
-        color: palette.mid,
-        letterSpacing: '0.3px',
-        opacity: 0.7,
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: space.sm,
-        alignItems: 'center',
-        padding: '16px 20px',
-        width: '100%',
-        maxWidth: contentMax,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxSizing: 'border-box',
-      }
-    },
-      React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('a', {
-        href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
-        style: {
-          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, t('beta.feedbackMail')),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('button', {
-        onClick: () => handleNavigate('legal'),
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, padding: 0,
-          fontFamily: 'inherit', letterSpacing: '0.3px',
-          textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, t('legal.footerLink')),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('button', {
-        onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.xs, padding: 0,
-          fontFamily: 'inherit', letterSpacing: '0.3px',
-          textDecoration: 'underline', textUnderlineOffset: '2px',
-        }
-      }, demoMode ? t('demo.leave') : t('demo.footerLink')),
-      !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
-        React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-        React.createElement('button', {
-          onClick: enterSandbox,
-          style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: palette.mid, fontSize: text.xs, padding: 0,
-            fontFamily: 'inherit', letterSpacing: '0.3px',
-            textDecoration: 'underline', textUnderlineOffset: '2px',
-          }
-        }, t('sandbox.footerLink'))
-      ),
-      React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-      React.createElement('a', {
-        href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
-        target: '_blank', rel: 'noopener noreferrer',
-        title: t('greenHostingFooter'),
-        style: {
-          color: palette.sage, fontSize: text.xs, fontFamily: 'inherit',
-          letterSpacing: '0.3px', textDecoration: 'none',
-          display: 'inline-flex', alignItems: 'center', gap: '4px',
-        }
-      },
-        React.createElement(Icon, { name: 'leaf', size: 13 }),
-        React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
-      )
-    )
+    // Web: Fusszeile pinned unter dem Inhalt.
+    !isMobile && footerEl,
+    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true) })
   ));
 };
 

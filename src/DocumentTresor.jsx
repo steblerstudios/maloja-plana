@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
+import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
+import { EmptyState } from './components/EmptyState.jsx';
 
 const getDaysUntilExpiry = (expiryDate) => {
   const today = new Date();
@@ -50,9 +53,15 @@ export const DocumentTresor = ({
   onDownload,
   onDelete,
   onUpdateExpiry,
-  initialTab
+  initialTab,
+  isDarkMode
 }) => {
   const [activeTab, setActiveTab] = useState(initialTab || 'all');
+  // Ast-Farbe + Frucht pro Register — dieselbe Sprache wie der Lebensbaum.
+  const bereichAccent = (chKey) => {
+    const b = getBereichForChapter(chKey);
+    return b ? (isDarkMode ? b.dark : b.light) : null;
+  };
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('expiry');
   const [showArchive, setShowArchive] = useState(false);
@@ -106,9 +115,12 @@ export const DocumentTresor = ({
     color: palette.text, boxSizing: 'border-box', fontSize: text.sm,
   };
 
-  const tabStyle = (isActive) => ({
+  const tabStyle = (isActive, accent) => ({
+    display: 'inline-flex', alignItems: 'center', gap: '5px',
     padding: '6px 12px', background: isActive ? palette.surface : 'transparent',
     border: isActive ? '1px solid ' + palette.border : '1px solid transparent',
+    // Aktiver Reiter trägt oben den farbigen Trennblatt-Streifen seines Astes.
+    borderTop: isActive && accent ? '2px solid ' + accent : (isActive ? '1px solid ' + palette.border : '1px solid transparent'),
     borderBottom: isActive ? '1px solid ' + palette.surface : '1px solid ' + palette.border,
     borderRadius: '6px 6px 0 0', cursor: 'pointer', fontSize: text.xs,
     fontWeight: isActive ? weight.semi : weight.normal, color: isActive ? palette.text : palette.mid,
@@ -178,7 +190,7 @@ export const DocumentTresor = ({
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
-          style: { padding: '10px 12px', background: palette.sand, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '↙'),
         React.createElement('button', {
           'aria-label': t('common.edit'),
@@ -197,9 +209,7 @@ export const DocumentTresor = ({
     style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     // Title with folder icon
-    React.createElement('h2', {
-      style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm }
-    }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('tresor.title')),
 
     // Ordner status — warm language
     React.createElement('div', {
@@ -267,10 +277,19 @@ export const DocumentTresor = ({
       React.createElement('button', {
         onClick: () => setActiveTab('all'), style: tabStyle(activeTab === 'all'),
       }, t('tresor.allChapters') + ' (' + displayDocs.length + ')'),
-      chaptersWithDocs.map(c => React.createElement('button', {
-        key: c.key, onClick: () => setActiveTab(c.key),
-        style: tabStyle(activeTab === c.key),
-      }, c.icon + ' ' + (chapterCounts[c.key] || 0))),
+      chaptersWithDocs.map(c => {
+        const accent = bereichAccent(c.key);
+        return React.createElement('button', {
+          key: c.key, onClick: () => setActiveTab(c.key),
+          'aria-label': c.title + ' (' + (chapterCounts[c.key] || 0) + ')',
+          style: tabStyle(activeTab === c.key, accent),
+        },
+          // Bereichs-Icon (Chalet etc.) in der Ast-Farbe — Frucht nur am Baum.
+          React.createElement('span', { style: { color: accent || palette.mid, display: 'inline-flex' } },
+            React.createElement(Icon, { name: c.key, size: 14 })),
+          React.createElement('span', null, chapterCounts[c.key] || 0),
+        );
+      }),
     ),
 
     // Search + Sort
@@ -279,7 +298,7 @@ export const DocumentTresor = ({
     },
       React.createElement('input', {
         placeholder: t('common.search'), value: searchTerm,
-        onChange: (e) => setSearchTerm(e.target.value),
+        onChange: (e) => setSearchTerm(e.target.value), 'aria-label': t('common.search'),
         style: { ...inputStyle, flex: 1 },
       }),
       React.createElement('select', {
@@ -294,37 +313,34 @@ export const DocumentTresor = ({
 
     // Document list
     sortedDocs.length === 0
-      ? React.createElement('div', {
-          style: { padding: '40px 20px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, textAlign: 'center' }
-        },
-          React.createElement('div', { style: { marginBottom: '12px' } },
-            React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
-          ),
-          React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
-            t('tresor.noDocuments'),
-          ),
-          React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: 0, lineHeight: '1.6' } },
-            t('tresor.noDocumentsHint'),
-          ),
-        )
+      ? React.createElement(EmptyState, {
+          palette,
+          icon: React.createElement(OrdnerIcon, { palette, fillLevel: 0 }),
+          title: t('tresor.noDocuments'),
+          description: t('tresor.noDocumentsHint'),
+        })
       : activeTab === 'all'
         // Grouped view — documents under chapter dividers
         ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, maxHeight: '600px', overflowY: 'auto' } },
             Object.keys(groupedByChapter).map(chKey => {
               const chapter = chapterList.find(c => c.key === chKey);
               const docs = groupedByChapter[chKey];
+              const accent = bereichAccent(chKey);
               return React.createElement('div', { key: chKey },
-                // Register divider
+                // Register-Trennblatt — Bereichs-Icon + Ast-Farbe (Frucht nur am Baum)
                 React.createElement('div', {
                   style: {
-                    fontSize: text.xs, fontWeight: weight.semi, color: palette.mid,
+                    fontSize: text.xs, fontWeight: weight.semi, color: accent || palette.mid,
                     textTransform: 'uppercase', letterSpacing: '0.5px',
                     paddingBottom: '6px', marginBottom: space.sm,
-                    borderBottom: '1px solid ' + palette.border,
+                    borderBottom: '1px solid ' + (accent ? accent + '44' : palette.border),
                     display: 'flex', alignItems: 'center', gap: '6px',
                   },
                 },
-                  React.createElement('span', null, chapter?.icon || '□'),
+                  accent
+                    ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
+                        React.createElement(Icon, { name: chKey, size: 15 }))
+                    : React.createElement('span', null, chapter?.icon || '□'),
                   chapter?.title || chKey,
                   React.createElement('span', {
                     style: { fontWeight: weight.normal, color: palette.soft }
