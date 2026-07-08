@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -662,6 +662,19 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
       })(),
+
+      // 3a-Zinsschwelle: ruhiger Strategie-Hinweis, sobald das voraussichtliche
+      // 3a-Kapital die Vorzugszins-Schwelle übersteigt. Kein Knick in der Kurve
+      // (die Engine modelliert 3a als einen Klumpen mit einer angenommenen Rendite
+      // — ein Einzelkonto-Knick wäre für Mehr-Konten-Fälle falsch); stattdessen die
+      // Strategie sichtbar machen und zum gestaffelten Bezug unten überleiten.
+      projektion && projektion.endsumme.s3a > SAEULE3A_ZINSSCHWELLE && React.createElement('div', {
+        style: { ...s.section, marginTop: space.sm + 'px', background: palette.sage + '11', border: '1px solid ' + palette.sage + '33' },
+      },
+        React.createElement('div', { style: s.label }, t('vr.zukunft3aSchwelleTitle')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px' } },
+          t('vr.zukunft3aSchwelle', { schwelle: fmt(SAEULE3A_ZINSSCHWELLE) }))
+      ),
 
       // Steuer beim Kapitalbezug (2. Säule/3a als Kapital statt Rente) — einklappbar,
       // rechnet auf dem voraussichtlichen Kapital. Bund exakt, Kanton Orientierung.
