@@ -2713,6 +2713,8 @@ export default {
   calendar: {
     title: 'Kalender und Erinnerungen',
     exportIcs: 'Kalender exportieren (.ics)',
+    locale: 'de-CH',
+    calAria: 'Kalender-Übersicht',
     exportIcsHint: { sie: 'Fügen Sie Ihre Erinnerungen zu Ihrem Handy- oder Computerkalender hinzu.', du: 'Füge deine Erinnerungen zu deinem Handy- oder Computerkalender hinzu.' },
     upcoming: 'Bevorstehend',
     overdue: 'Überfällig',
