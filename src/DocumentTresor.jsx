@@ -298,7 +298,7 @@ export const DocumentTresor = ({
     },
       React.createElement('input', {
         placeholder: t('common.search'), value: searchTerm,
-        onChange: (e) => setSearchTerm(e.target.value),
+        onChange: (e) => setSearchTerm(e.target.value), 'aria-label': t('common.search'),
         style: { ...inputStyle, flex: 1 },
       }),
       React.createElement('select', {

@@ -175,7 +175,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           maxLength: 4,
           value: plzInput,
           onChange: (e) => { setPlzInput(e.target.value.replace(/\D/g, '').slice(0, 4)); setSelectedBfs(null); },
-          placeholder: '1000',
+          placeholder: '1000', 'aria-label': t('po.plzLabel'),
           style: s.input
         }),
         activeGemeinde && React.createElement('span', { style: { color: palette.mid } },

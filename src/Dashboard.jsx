@@ -168,6 +168,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
         type: 'number',
         inputMode: 'numeric',
         placeholder: t('dashboard.quickCheckPlaceholder'),
+        'aria-label': t('dashboard.quickCheckIncome'),
         value: income,
         onChange: (e) => setIncome(e.target.value),
         style: {
@@ -325,7 +326,7 @@ const BetaFeedback = ({ palette, t }) => {
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q3')),
       React.createElement('textarea', {
-        value: q3, onChange: (e) => setQ3(e.target.value),
+        value: q3, onChange: (e) => setQ3(e.target.value), 'aria-label': t('beta.feedback.q3'),
         placeholder: t('beta.feedback.q3placeholder'),
         rows: 3,
         style: {
