@@ -11,6 +11,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- Barrierefreiheit: Status-Banner (Probier-Modus, Demo, DB-Hinweis, Frühe-Version-Hinweis) umschliessen ihre Buttons nicht mehr in der Vorlese-Region — Screenreader lesen nur noch den Status, nicht die Bedienelemente.
+
 ## [0.1.15-beta] — 2026-07-08
 
 ### Neu
