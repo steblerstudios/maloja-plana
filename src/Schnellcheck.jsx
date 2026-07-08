@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
@@ -121,7 +122,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
   }, label + ' →');
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.h2 }, React.createElement(Icon, { name: 'insurance', size: 20 }), t('schnellcheck.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('schnellcheck.title')),
     React.createElement('p', { style: s.intro }, t('schnellcheck.intro')),
 
     // Angaben — auto vorbelegt, frei anpassbar
