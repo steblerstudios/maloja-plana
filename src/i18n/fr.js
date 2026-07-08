@@ -1672,6 +1672,9 @@ export default {
       contact2: 'Contact : info@malojaplana.ch · GitHub : https://github.com/steblerstudios/maloja-plana',
     },
     resources: {
+      movedTitle: 'Tout dans la bibliothèque',
+      movedText: 'Ces ressources — canaux sécurisés, services de conseil et de médiation, pétitions et recommandations de cœur — sont désormais réunies dans la bibliothèque.',
+      movedCta: '→ Vers la bibliothèque',
       secureTitle: 'Communication sécurisée',
       secure1: 'Pour les échanges sécurisés avec les autorités et professionnels, nous recommandons :',
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messagerie suisse, chiffrement de bout en bout, utilisable sans numéro.' },
@@ -3694,6 +3697,8 @@ export default {
     herzNote: 'Sélectionnées à la main — pas des services officiels, mais des lieux qui aident beaucoup de gens.',
     beratungTitle: 'Conseil & aide',
     beratungNote: 'Points de contact à but non lucratif pour conseil et soutien — gratuits ou à bas seuil.',
+    sicherTitle: 'Canaux sécurisés',
+    mitredenTitle: 'Participer',
     antragsstelle: 'Point de contact',
     mirrorTitle: 'Service officiel & demande',
     source: 'Liens officiels de [[ch.ch|ch.ch]], [[OFSP|bag.admin.ch]], [[OFAS|bsv.admin.ch]] et autres autorités fédérales.',

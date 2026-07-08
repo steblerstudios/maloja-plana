@@ -1535,6 +1535,9 @@ export default {
       contact2: 'Contact: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
     },
     resources: {
+      movedTitle: 'Tut en la biblioteca',
+      movedText: 'Questas resursas — chanals segirs, plazzas da cussegl e d’ombudsman, petiziuns e las recumandaziuns dal cor — chattas ti ussa radunadas en la biblioteca.',
+      movedCta: '→ Tar la biblioteca',
       secureTitle: 'Communicaziun segira',
       secure1: "Per il barat segir cun autoritads e posts spezialisadas recumandain nus:",
       threema: { name: 'Threema', url: 'https://threema.ch', desc: 'Messenger svizzer, criptà end-to-end, utilisabel senza numer da telefon.' },
@@ -2060,6 +2063,8 @@ export default {
     herzNote: 'Tschernì a maun — betg servetschs uffizials, mabain plazzas che gidan a bleras persunas.',
     beratungTitle: 'Cussegl & agid',
     beratungNote: 'Plazzas da contact senza intent da lucrar per cussegl e sustegn — gratuit u da bassa sava.',
+    sicherTitle: 'Chanals segirs',
+    mitredenTitle: 'Dir la sia',
     antragsstelle: 'Post da dumonda',
     mirrorTitle: 'Post uffizial & dumonda',
     source: 'Links uffizials da [[ch.ch|ch.ch]], [[BAG|bag.admin.ch]], [[BSV|bsv.admin.ch]] ed autras autoritads federalas.',

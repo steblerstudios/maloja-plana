@@ -2,7 +2,6 @@ import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { getCantonName } from './config/cantonalData.js';
-import { HEARTFELT, HEARTFELT_GROUPS } from './data/direktLinks.js';
 
 // Alle 26 Kantonsportale folgen dem Muster www.<code>.ch (verifiziert) — kein
 // hardcodierter URL-Katalog nötig, der veralten könnte.
@@ -409,50 +408,21 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       ]})
     ),
 
+    // Der Ressourcen-Inhalt (sichere Kanäle, Beratungs-/Ombudsstellen, Petitionen,
+    // Herzensempfehlungen) lebt jetzt gebündelt in der Bibliothek (Bücherregal).
+    // Dieser Reiter ist ein ruhiger Verweis dorthin — keine Doppelpflege.
     activeSection === 'resources' && React.createElement('div', null,
-      Section({ title: t('legal.resources.secureTitle'), palette, children: [
-        P({ children: t('legal.resources.secure1') }),
-        ResLink(t('legal.resources.threema')),
-        ResLink(t('legal.resources.secureSafe')),
-        ResLink(t('legal.resources.incamail')),
+      Section({ title: t('legal.resources.movedTitle'), palette, children: [
+        P({ children: t('legal.resources.movedText') }),
+        React.createElement('button', {
+          onClick: () => onNavigate('direktlinks'),
+          style: {
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
+            fontSize: text.sm, color: palette.sage, cursor: 'pointer', fontFamily: 'inherit',
+          },
+        }, t('legal.resources.movedCta')),
       ]}),
-      Section({ title: t('legal.resources.petitionTitle'), palette, children: [
-        P({ children: t('legal.resources.petition1') }),
-        ResLink(t('legal.resources.petition2')),
-        renderLocalGov(),
-      ]}),
-      Section({ title: t('legal.resources.helpTitle'), palette, children: [
-        ResLink(t('legal.resources.help1')),
-        ResLink(t('legal.resources.help2')),
-        ResLink(t('legal.resources.help3')),
-        ResLink(t('legal.resources.help4')),
-      ]}),
-      Section({ title: t('legal.resources.ombudsTitle'), palette, children:
-        ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].map(k => ResLink(t('legal.resources.' + k)))
-      }),
-      Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
-        P({ children: t(HEARTFELT.some(i => i.affiliate) ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro') }),
-        ...HEARTFELT_GROUPS.flatMap(g => {
-          const items = HEARTFELT
-            .filter(i => i.group === g)
-            .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
-            .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
-            .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
-          if (!items.length) return [];
-          return [
-            React.createElement('p', { key: 'hg-' + g, style: { margin: '14px 0 6px 0', fontWeight: weight.semi, fontSize: text.sm, color: palette.mid } },
-              t('legal.resources.heartfeltGroups.' + g)),
-            ...items.map(({ item, desc }) => React.createElement('p', { key: item.key, style: { margin: '0 0 8px 0' } },
-              '→ ',
-              item.url
-                ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
-                : item.name,
-              item.affiliate ? React.createElement('span', { style: { color: palette.soft, fontSize: text.xs } }, ' · ' + t('legal.resources.affiliateMarker')) : null,
-              ' — ' + desc
-            ))
-          ];
-        }),
-      ]})
     ),
 
     activeSection === 'faq' && React.createElement('div', null,

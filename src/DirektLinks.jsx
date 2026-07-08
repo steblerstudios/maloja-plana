@@ -21,7 +21,21 @@ const BUCH_TON = {
   recht: 'soft',
 };
 const BERATUNG_TON = 'sage';
+const SICHER_TON = 'sky';
+const MITREDEN_TON = 'sand';
 const HERZ_TON = 'gold';
+
+// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (wie LegalView —
+// Sophies Entscheid: trifft meist, gelegentlich daneben, bewusst akzeptiert).
+const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
+const communeUrl = (city) => {
+  const slug = String(city).toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+    .replace(/[àâá]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíî]/g, 'i')
+    .replace(/[òóô]/g, 'o').replace(/[ùúû]/g, 'u').replace(/ç/g, 'c').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slug ? 'https://www.' + slug + '.ch' : null;
+};
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
@@ -97,6 +111,32 @@ export const DirektLinks = ({ palette, t, data }) => {
     ' — ' + desc
   );
 
+  // Ressourcen-Zeile „→ Name — Beschreibung · Website" für die aus i18n kommenden
+  // Einträge ({ name, url, desc, web? }) und die normalisierten Beratung-&-Hilfe-
+  // Objekte. url kann tel: sein. Ohne url nur der Name (bewusst kein Link).
+  const resRow = (key, e) => e && React.createElement('p', { key, style: s.hfRow },
+    '→ ',
+    e.url ? React.createElement('a', { href: e.url, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, e.name) : e.name,
+    ' — ' + e.desc,
+    e.web ? React.createElement(React.Fragment, null, ' · ', React.createElement('a', { href: e.web, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, 'Website')) : null
+  );
+
+  // Gemeinde-/Kanton-Zeile fürs „Mitreden"-Buch (wie LegalView, kantonsabhängig).
+  const renderLocalGov = () => {
+    const canton = (data && data.basis && data.basis.canton) || '';
+    const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
+    const cantonName = canton ? getCantonName(canton, t) : '';
+    if (!city && !cantonName) return React.createElement('p', { style: s.hfRow }, '→ ' + t('legal.resources.petition3'));
+    const parts = ['→ '];
+    if (city) { const cUrl = communeUrl(city); parts.push(cUrl ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, city) : city); }
+    if (cantonName) {
+      if (city) parts.push(' · ');
+      parts.push(React.createElement('a', { key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
+    }
+    parts.push(' — ' + t('legal.resources.localGovDesc'));
+    return React.createElement('p', { style: s.hfRow }, ...parts);
+  };
+
   // Inhalt des aufgeschlagenen Buchs.
   const renderBuch = () => {
     if (!offen) return null;
@@ -124,16 +164,46 @@ export const DirektLinks = ({ palette, t, data }) => {
         })
       );
     }
-    // Beratung & Hilfe: gemeinnützige Beratungsstellen (eigenes Buch, damit Sophies
-    // ursprüngliche 4 erhalten bleiben, ohne die Herzensempfehlungen zu verwässern).
+    // Beratung & Hilfe: Beratungsstellen (help + Sophies 3) + Ombudsstellen (ombuds).
     if (offen === 'beratung') {
+      const beratung = BERATUNG_HILFE.map(x => ({ name: l(x.name), url: x.url, desc: l(x.beschreibung) }));
+      const help = ['help1', 'help2', 'help3', 'help4'].map(k => t('legal.resources.' + k));
+      const ombuds = ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].map(k => t('legal.resources.' + k));
       return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.beratungTitle'), style: s.book(BERATUNG_TON) },
         React.createElement('div', { style: s.bookHead },
-          React.createElement(Icon, { name: 'hilfe', size: 20 }),
+          React.createElement(Icon, { name: 'contacts', size: 20 }),
           React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.beratungTitle'))
         ),
         React.createElement('p', { style: s.herzNote }, t('dl.beratungNote')),
-        BERATUNG_HILFE.map(link => linkCard(link, false))
+        React.createElement('p', { style: s.hfGroup }, t('legal.resources.helpTitle')),
+        ...help.map((e, i) => resRow('help' + i, e)),
+        ...beratung.map((e, i) => resRow('ber' + i, e)),
+        React.createElement('p', { style: s.hfGroup }, t('legal.resources.ombudsTitle')),
+        ...ombuds.map((e, i) => resRow('omb' + i, e))
+      );
+    }
+    // Sichere Kanäle: verschlüsselte/rechtsgültige Kommunikationswege.
+    if (offen === 'sicher') {
+      const items = ['threema', 'secureSafe', 'incamail'].map(k => t('legal.resources.' + k));
+      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.sicherTitle'), style: s.book(SICHER_TON) },
+        React.createElement('div', { style: s.bookHead },
+          React.createElement(Icon, { name: 'lock', size: 20 }),
+          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.sicherTitle'))
+        ),
+        React.createElement('p', { style: s.herzNote }, t('legal.resources.secure1')),
+        ...items.map((e, i) => resRow('sec' + i, e))
+      );
+    }
+    // Mitreden: Petitionen + Gemeinde/Kanton (Bürgerrechte, Art. 33 BV).
+    if (offen === 'mitreden') {
+      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.mitredenTitle'), style: s.book(MITREDEN_TON) },
+        React.createElement('div', { style: s.bookHead },
+          React.createElement(Icon, { name: 'edit', size: 20 }),
+          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.mitredenTitle'))
+        ),
+        React.createElement('p', { style: s.herzNote }, t('legal.resources.petition1')),
+        resRow('pet2', t('legal.resources.petition2')),
+        renderLocalGov()
       );
     }
     const kat = KATEGORIEN[offen];
@@ -155,7 +225,9 @@ export const DirektLinks = ({ palette, t, data }) => {
     React.createElement('div', { style: s.shelfWrap },
       React.createElement('div', { style: s.shelf, role: 'group', 'aria-label': t('dl.title') },
         ...kategorien.map(k => spine(k.id, BUCH_TON[k.id] || 'soft', k.icon, l(k))),
-        spine('beratung', BERATUNG_TON, 'hilfe', t('dl.beratungTitle')),
+        spine('beratung', BERATUNG_TON, 'contacts', t('dl.beratungTitle')),
+        spine('sicher', SICHER_TON, 'lock', t('dl.sicherTitle')),
+        spine('mitreden', MITREDEN_TON, 'edit', t('dl.mitredenTitle')),
         spine('herz', HERZ_TON, 'heart', t('dl.herzTitle'))
       )
     ),
