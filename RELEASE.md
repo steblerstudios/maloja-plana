@@ -30,8 +30,30 @@ die immer gleiche Reihenfolge, damit du nie etwas vergessen musst.
    git tag -a v0.1.x -m "Release: kurze Beschreibung"
    git push origin v0.1.x
    ```
-   Ein Tag ist ein Lesezeichen: „diese Version war live". Halte auch die
-   Versionsnummer im App-Footer (`v0.1.x-beta`) passend.
+   Ein Tag ist ein Lesezeichen: „diese Version war live". Die Versionsnummer im
+   App-Footer kommt automatisch aus `package.json` (`version`) — dort einmal
+   hochzählen genügt (siehe Versions-Logik unten).
+
+## Versions-Logik (welche Zahl wann?)
+
+Format: **`MAJOR . MINOR . PATCH`** + Etikett — also `0 . 1 . 14 -beta`.
+
+| Stelle | heute | wann hochzählen |
+|---|---|---|
+| **MAJOR** | 0 | erst bei **1.0** = „offiziell fertig/stabil, raus aus Beta" |
+| **MINOR** | 1 | bei einem **grossen neuen Bereich**/Meilenstein → `0.2.0` |
+| **PATCH** | 14 | bei **jeder normalen Release-Runde** (Fixes/kleinere Features) |
+| **-beta** | -beta | Etikett „noch nicht final" — fällt weg bei 1.0 |
+
+**Einfache Regel:**
+- normale Runde → letzte Zahl +1 · `0.1.13 → 0.1.14`
+- grosser neuer Bereich → mittlere +1, letzte auf 0 · `0.1.x → 0.2.0`
+- „jetzt offiziell fertig" → `1.0.0` (und `-beta` weg)
+
+**So machst du den Bump:** die Zeile `"version"` in `package.json` ändern — der
+Footer zeigt sie dann automatisch. Am saubersten passiert das **im selben `dev`-Ast
+wie deine Features**, dann reist die neue Nummer mit demselben PR nach `main`
+(kein separater Versions-PR nötig). Nach dem Merge den Tag setzen (Schritt 6).
 
 ## Rollback (zurück zur letzten Version)
 
