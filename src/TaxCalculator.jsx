@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
@@ -97,13 +98,14 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       React.createElement('div', null,
         React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('tax.inputs')),
 
-        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.taxCanton')),
-        React.createElement('div', { style: { position: 'relative', marginBottom: space.md } },
-          React.createElement('select', { value: canton, onChange: (e) => setCanton(e.target.value), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
-            React.createElement('option', { value: '' }, t('common.select')),
-            ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
-          ),
-          React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+        React.createElement(LabeledField, { palette, label: t('tax.taxCanton'), style: { marginBottom: space.md } },
+          (id) => React.createElement('div', { style: { position: 'relative' } },
+            React.createElement('select', { id, value: canton, onChange: (e) => setCanton(e.target.value), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
+              React.createElement('option', { value: '' }, t('common.select')),
+              ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
+            ),
+            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+          )
         ),
 
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md } },
@@ -117,12 +119,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('label', { htmlFor: 'tax-married', style: { fontSize: text.sm, color: palette.text, cursor: 'pointer' } }, t('tax.married'))
         ),
 
-        React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.children')),
-        React.createElement('div', { style: { position: 'relative', marginBottom: space.md } },
-          React.createElement('select', { value: kinder, onChange: (e) => setKinder(Number(e.target.value)), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
-            [0, 1, 2, 3, 4, 5, 6].map(n => React.createElement('option', { key: n, value: n }, n))
-          ),
-          React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+        React.createElement(LabeledField, { palette, label: t('tax.children'), style: { marginBottom: space.md } },
+          (id) => React.createElement('div', { style: { position: 'relative' } },
+            React.createElement('select', { id, value: kinder, onChange: (e) => setKinder(Number(e.target.value)), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
+              [0, 1, 2, 3, 4, 5, 6].map(n => React.createElement('option', { key: n, value: n }, n))
+            ),
+            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+          )
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
@@ -143,15 +146,16 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         ),
 
         !useImportedTaxable && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
-          React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, ded.label),
-          React.createElement('input', {
-            type: 'number',
-            inputMode: 'decimal',
-            value: taxData[ded.key] || '',
-            onChange: (e) => handleInputChange(ded.key, e.target.value),
-            placeholder: '0',
-            style: inputStyle
-          }),
+          React.createElement(LabeledField, { palette, label: ded.label, style: { marginBottom: 0 } },
+            React.createElement('input', {
+              type: 'number',
+              inputMode: 'decimal',
+              value: taxData[ded.key] || '',
+              onChange: (e) => handleInputChange(ded.key, e.target.value),
+              placeholder: '0',
+              style: inputStyle
+            })
+          ),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, 'Max: CHF ' + ded.max)
         ))
       ),
