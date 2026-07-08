@@ -14,7 +14,12 @@ die immer gleiche Reihenfolge, damit du nie etwas vergessen musst.
 ## Der Ablauf (6 Schritte)
 
 1. **Bauen auf `dev`.** Ganz normal arbeiten. Bei jedem Push prüft die CI automatisch.
+   Während du baust: die Änderung als **eine Zeile in `CHANGELOG.md` unter `## [Unreleased]`**
+   notieren — dann kommt der Changelog immer mit und nie doppelt.
 2. **PR `dev → main` erstellen** (Knopf im Panel oder `gh pr create --base main --head dev`).
+   *Vorher, im selben Schwung:* Version in `package.json` erhöhen (Feature → mittlere Stelle,
+   kleiner Fix → letzte Stelle) und aus `## [Unreleased]` die Versionsnummer + Datum machen.
+   So gehen Arbeit, Version und CHANGELOG in **einem** PR — nie zweimal.
 3. **Grünes CI-Häkchen abwarten** auf der PR-Seite. Rot = etwas ist kaputt, erst fixen.
 4. **„Merge" klicken.** Jetzt ist `main` der neue saubere Stand.
 5. **Von `main` deployen:**
