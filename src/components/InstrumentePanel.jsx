@@ -67,7 +67,10 @@ const miniShield = (palette, fraction) => {
 export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   const h = React.createElement;
   const v = data?.versicherungen || {};
-  const shield = schildState(v);
+  const shield = schildState(v, {
+    employed: data?.finanzen?.employmentType === 'employed',
+    annualIncome: (Number(data?.finanzen?.monthlyIncome) || 0) * 12,
+  });
   const tank = reserveTankState({ savings: Number(data?.finanzen?.savingsAccount) || 0, monthlyExpenses: monthlyExpenses(data) });
 
   // Kompass-Peilung: Leistungszahl wie im Schnellcheck (gleiche Gates, gleiche Engine).
@@ -106,8 +109,8 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     },
     {
       key: 'schild', name: t('instrumente.schild'),
-      sub: shield.touched ? t('instrumente.schildCount', { covered: shield.covered, total: shield.total }) : setup,
-      glyph: miniShield(palette, shield.touched ? shield.fraction : 0),
+      sub: shield.touched ? t('instrumente.schildCount', { covered: shield.overall.covered, total: shield.overall.total }) : setup,
+      glyph: miniShield(palette, shield.touched ? shield.overall.fraction : 0),
       onClick: () => onNavigate('chapter', 3),
     },
   ];
