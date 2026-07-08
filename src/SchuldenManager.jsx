@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
@@ -189,7 +190,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         )
       ),
 
-      prioritized.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '32px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
+      prioritized.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
         React.createElement('div', { style: { marginBottom: space.md } },
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('schulden.planMethod')),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
@@ -246,7 +247,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
       ),
 
-      schulden.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
+      schulden.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'money', size: 26, color: palette.mid }), title: t('schulden.emptyDebts') }) : React.createElement('div', null,
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
@@ -277,7 +278,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
 
-      betreibung.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
+      betreibung.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'legal', size: 26, color: palette.mid }), title: t('schulden.emptyBetreibung') }) : React.createElement('div', null,
         betreibung.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default', background: entry.status === 'erledigt' ? palette.up : palette.gold + '0A' } },
           React.createElement('input', { type: 'text', value: entry.creditor, onChange: (e) => handleUpdateBetreibung(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, marginBottom: space.xs } }),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
@@ -299,7 +300,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
 
-      verlustscheine.length === 0 ? React.createElement('div', { style: { textAlign: 'center', padding: '40px 20px', color: palette.mid } }, t('common.none')) : React.createElement('div', null,
+      verlustscheine.length === 0 ? React.createElement(EmptyState, { palette, icon: React.createElement(Icon, { name: 'document', size: 26, color: palette.mid }), title: t('schulden.emptyVerlustschein') }) : React.createElement('div', null,
         verlustscheine.map(entry => React.createElement('div', { key: entry.id, style: { ...cardStyle, cursor: 'default' } },
           React.createElement('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap', marginBottom: space.xs } },
             React.createElement('input', { type: 'text', value: entry.creditor || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'creditor', e.target.value), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: { ...inputStyle, flex: '1 1 200px', marginBottom: 0 } }),
