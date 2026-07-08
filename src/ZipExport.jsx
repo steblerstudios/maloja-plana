@@ -284,11 +284,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('div', { style: { margin: '16px 0 8px', fontSize: text.sm, fontWeight: weight.semi } }, t('backup.exportEncrypted')),
         React.createElement('input', {
           type: 'password', value: passphrase, placeholder: t('backup.passphrase'),
-          onChange: (e) => setPassphrase(e.target.value), style: inputStyle
+          onChange: (e) => setPassphrase(e.target.value), 'aria-label': t('backup.passphrase'), style: inputStyle
         }),
         React.createElement('input', {
           type: 'password', value: passphraseConfirm, placeholder: t('backup.passphraseConfirm'),
-          onChange: (e) => setPassphraseConfirm(e.target.value), style: inputStyle
+          onChange: (e) => setPassphraseConfirm(e.target.value), 'aria-label': t('backup.passphraseConfirm'), style: inputStyle
         }),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('backup.passphraseHint')),
         React.createElement('button', {
@@ -318,7 +318,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, t('backup.passphrase')),
           React.createElement('input', {
             type: 'password', value: importPassphrase, placeholder: t('backup.passphrase'),
-            onChange: (e) => setImportPassphrase(e.target.value), style: inputStyle,
+            onChange: (e) => setImportPassphrase(e.target.value), 'aria-label': t('backup.passphrase'), style: inputStyle,
             autoFocus: true
           }),
           React.createElement('div', { style: { display: 'flex', gap: space.sm } },

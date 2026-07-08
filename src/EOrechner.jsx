@@ -57,7 +57,7 @@ export const EOrechner = ({ palette, t, data }) => {
         inputMode: 'decimal',
         value: einkommen,
         onChange: e => setEinkommen(e.target.value),
-        placeholder: '80000',
+        placeholder: '80000', 'aria-label': t('eo.einkommen'),
       })
     ),
 

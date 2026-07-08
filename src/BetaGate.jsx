@@ -109,7 +109,7 @@ export const BetaGate = ({ children }) => {
         type: 'text',
         value: input,
         onChange: (e) => { setInput(e.target.value); setError(false); },
-        placeholder: t('beta.codePlaceholder'),
+        placeholder: t('beta.codePlaceholder'), 'aria-label': t('beta.codePlaceholder'),
         autoFocus: true,
         'aria-invalid': error ? 'true' : undefined,
         'aria-describedby': error ? 'beta-error' : undefined,
