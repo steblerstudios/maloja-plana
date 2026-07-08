@@ -27,10 +27,20 @@ npm run prisma:generate
 npm start
 ```
 
-## Stand (Increment 2 — Gerüst)
+## Stand
 
-Fertig: Security-Fundament (Header/CORS/Rate-Limit/Cookies), Deny-by-default-Auth,
-Eigentümer-Helfer, Config-Fail-fast, Prisma-Schema, WebAuthn-Registrierung Schritt 1.
+**Backend von Phase 1 funktional komplett (Increment 2 + 3a + 3b):**
+- Security-Fundament (Header/CORS/Rate-Limit/Cookies), Deny-by-default-Auth, Config-Fail-fast.
+- Prisma-Schema (nur Chiffrat), keine Recovery/Klartext-Key-Tabelle.
+- **WebAuthn-Zeremonien:** Registrierung (begin/finish) + Login (begin/finish) mit
+  `requireUserVerification: true`, PRF aktiviert, strikter RP-ID/Origin-Prüfung,
+  Signatur-Zähler-Abgleich; Session wird bei Erfolg ausgestellt.
+- **Daten-Endpoints:** Backup `GET/POST` + `DELETE /account`, feste Eigentums-Bindung
+  (Query immer auf die Session-userId — keine vom Client steuerbare ID), per-Route-
+  Rate-Limit, Input-Validierung, Audit-Log.
+- **20 Tests** (`src/__tests__/`): Zeremonie-Verdrahtung (UV-Pflicht/RP-ID/Origin/Challenge
+  geprüft, DB-Effekte, Session), Deny-by-default, Session-Lebenszyklus, Eigentums-Scoping.
 
-Offen (Increment 3): WebAuthn finish + Login, Backup GET/POST + `DELETE /account` mit
-DB-Logik, per-Route-Rate-Limits, Audit-Logging. Danach: Security-Review-Gate.
+**Offen:** Frontend-Anbindung (WebAuthn-Client `navigator.credentials` + PRF-Eval + Vault
++ Backup/Restore-UI + Recovery-Code-Anzeige) und danach das **Security-Review-Gate** mit
+echter End-to-End-Prüfung: MariaDB + echter Passkey im Browser. Erst dann live.
