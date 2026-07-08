@@ -393,5 +393,11 @@ export const BVG_PARAMS = {
   gutschriften: BVG_GUTSCHRIFTEN,
 };
 
+// Orientierungswert (kein gesetzlicher Wert): viele Bank-3a-Konten zahlen den
+// höheren Vorzugszins nur bis zu einer Schwelle in dieser Grössenordnung —
+// darüber sinkt der Zins. Dient allein dem Strategie-Hinweis im Zukunft-Reiter
+// (mehrere Konten moderat füllen → Vorzugszins halten + gestaffelter Bezug).
+export const SAEULE3A_ZINSSCHWELLE = 20000;
+
 export const AHV_DATA_VERSION = '2026';
 export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV, BSV Rententabellen 2026';

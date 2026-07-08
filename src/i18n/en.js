@@ -3492,6 +3492,8 @@ export default {
     phasePension: 'Retirement',
     achseAlter: 'Age',
     zukunftGraphHinweis: 'Move your retirement age: drag the marker on the graph or use ←/→ — pension and capital update instantly.',
+    zukunft3aSchwelleTitle: 'Spread 3a across several accounts',
+    zukunft3aSchwelle: 'Above roughly CHF {schwelle}, many bank pillar-3a accounts pay less interest. Filling several accounts moderately tends to keep the preferential rate — and later opens the staggered, tax-saving withdrawal (see below).',
     zukunftSzenarioTitle: 'What your retirement age means',
     zukunftSzenarioFrueh: 'Early retirement: {dauer} before the reference age of 65.',
     zukunftSzenarioReferenz: 'Ordinary retirement at 65 — full AHV, no reduction or supplement.',

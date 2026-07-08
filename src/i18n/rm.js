@@ -3655,6 +3655,8 @@ export default {
     phasePension: 'Pensiun',
     achseAlter: 'Vegliadetgna',
     zukunftGraphHinweis: 'Spusta la vegliadetgna da pensiun: tira la marca sin il grafic u cun ←/→ — la renta e il chapital s’adattan immediatamain.',
+    zukunft3aSchwelleTitle: 'Repartir il 3a sin plirs contos',
+    zukunft3aSchwelle: 'Sur circa CHF {schwelle} paja blers contos 3a da banca damain tschains. Emplenir plirs contos cun moderaziun gida a mantegnair il tschains preferenzial — e avra pli tard il retratg stafflà che spargna taglias (guarda sutvart).',
     zukunftSzenarioTitle: 'Tge che tia vegliadetgna da pensiun munta',
     zukunftSzenarioFrueh: 'Pensiun anticipada: {dauer} avant la vegliadetgna da referenza da 65 onns.',
     zukunftSzenarioReferenz: 'Pensiun ordinara cun 65 — AVS cumpletta, senza reducziun u supplement.',
