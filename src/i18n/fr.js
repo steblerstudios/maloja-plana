@@ -3567,6 +3567,7 @@ export default {
     // Extrait CI (reconstituer l'historique de cotisation)
     ikTitle: "Reconstituer l'historique de cotisation (extrait CI)",
     ikIntro: "Au lieu d'une hypothèse, vous pouvez reconstituer votre véritable historique de cotisation — année par année. Cela donne une estimation plus précise.",
+    ikEmptyTitle: "Aucune année reconstituée pour l'instant",
     ikEmpty: "Commencez par un pré-remplissage dès 21 ans avec votre revenu actuel — puis ajustez certaines années (lacunes, chômage, éducation).",
     ikPrefill: 'Pré-remplir depuis mes données',
     ikJugend: 'Compter les années de jeunesse (17–20) — elles comblent les lacunes ultérieures',

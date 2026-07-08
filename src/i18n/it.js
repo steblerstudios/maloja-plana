@@ -3556,6 +3556,7 @@ export default {
     // Estratto CI (ricostruire la storia contributiva)
     ikTitle: 'Ricostruire la storia contributiva (estratto CI)',
     ikIntro: "Invece di un'ipotesi, puoi ricostruire la tua vera storia contributiva — anno per anno. Ne risulta una stima più precisa.",
+    ikEmptyTitle: 'Nessun anno ancora ricostruito',
     ikEmpty: 'Inizia con una precompilazione dai 21 anni con il tuo reddito attuale — poi adatta i singoli anni (lacune, disoccupazione, educazione).',
     ikPrefill: 'Precompila dai miei dati',
     ikJugend: 'Contare gli anni giovanili (17–20) — colmano le lacune successive',
