@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
@@ -97,12 +98,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
-        }
-      }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'emergency', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -79,10 +80,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
   );
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'check', size: 20 }),
-      t('merkliste.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'check', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('merkliste.title')),
     React.createElement('p', { style: s.intro }, t('merkliste.intro')),
 
     React.createElement('div', { style: s.addRow },

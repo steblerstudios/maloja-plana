@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -86,12 +87,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
-        }
-      }, React.createElement(Icon, { name: 'documents', size: 18 }), t('lebensmappe.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('lebensmappe.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('lebensmappe.subtitle')),
