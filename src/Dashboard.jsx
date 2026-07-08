@@ -8,6 +8,7 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
+import { InstrumentePanel } from './components/InstrumentePanel.jsx';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -1433,6 +1434,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
       }, t('lebenszustaende.dashboardLink'))
     ),
+
+    // ─── Deine Instrumente — Dashboard-Spiegel der vier Selbstchecks ──
+    React.createElement(InstrumentePanel, { palette, t, data, onNavigate }),
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },

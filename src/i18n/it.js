@@ -3432,6 +3432,21 @@ export default {
     },
   },
 
+  instrumente: {
+    title: 'I tuoi strumenti',
+    intro: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.',
+    tacho: 'Tachimetro della franchigia',
+    tachoSub: 'alta o bassa — cosa conviene?',
+    kompass: 'Bussola delle prestazioni',
+    kompassFound: '{n} vie possibili',
+    kompassFoundOne: 'una via possibile',
+    kompassNone: 'altre vie',
+    tank: 'Indicatore di riserva',
+    tankMonths: '{months} mesi di riserva',
+    schild: 'Scudo di protezione',
+    schildCount: '{covered}/{total} coperte',
+    setup: 'tocca per configurare',
+  },
   schutzschild: {
     intro: 'Le tre protezioni di cui quasi tutti hanno bisogno.',
     kk: 'Assicurazione malattia',
