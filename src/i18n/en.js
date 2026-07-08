@@ -3464,7 +3464,7 @@ export default {
     stage2: 'growing',
     stage3: 'bearing fruit',
     stage4: 'fully ripe',
-    b: { gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension' },
+    b: { wohnen: 'Home', finanzen: 'Finances', person: 'Person', versicherungen: 'Insurance', gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension', bildung: 'Education', notfall: 'Emergency', behoerden: 'Authorities' },
   },
   instrumente: {
     title: 'Your instruments',

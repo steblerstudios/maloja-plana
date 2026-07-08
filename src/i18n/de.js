@@ -3439,7 +3439,7 @@ export default {
     stage2: 'wächst',
     stage3: 'trägt Früchte',
     stage4: 'voll gereift',
-    b: { gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge' },
+    b: { wohnen: 'Wohnen', finanzen: 'Finanzen', person: 'Person', versicherungen: 'Versicherung', gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge', bildung: 'Bildung', notfall: 'Notfall', behoerden: 'Behörden' },
   },
   instrumente: {
     title: 'Deine Instrumente',

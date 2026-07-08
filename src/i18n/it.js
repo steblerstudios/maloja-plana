@@ -3442,7 +3442,7 @@ export default {
     stage2: 'cresce',
     stage3: 'dà frutti',
     stage4: 'pienamente maturo',
-    b: { gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza' },
+    b: { wohnen: 'Abitare', finanzen: 'Finanze', person: 'Persona', versicherungen: 'Assicurazione', gesundheit: 'Salute', arbeit: 'Lavoro', familie: 'Famiglia', vorsorge: 'Previdenza', bildung: 'Formazione', notfall: 'Emergenza', behoerden: 'Autorità' },
   },
   instrumente: {
     title: 'I tuoi strumenti',
