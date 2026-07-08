@@ -53,3 +53,8 @@ ios/App/output/
 ordnung-ruhe/
 ordnung-ruhe-neu/
 maloja-icons/
+
+# Roh-Quelldaten (BAG-Tabellen) — nur Zutaten für scripts/, NICHT ins Repo.
+# Die genutzten .js (praemienDetail/praemienRegionen/plzGemeinde) sind generiert.
+# Tabellen liegen im lokalen Archiv; bei Bedarf von priminfo.admin.ch neu holen.
+src/data/raw/
