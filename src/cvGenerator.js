@@ -1,5 +1,6 @@
 // CV/Resume Generator for Switzerland — i18n-aware
 import { getFullName } from './config/constants.js';
+import { escapeHtml } from './utils/helpers.js';
 
 export const generateCVTemplate = (data, t) => {
   return {
@@ -74,7 +75,7 @@ export const generateCVHTML = (cvData, t) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${cvTitle} - ${cvData.header.name}</title>
+  <title>${cvTitle} - ${escapeHtml(cvData.header.name)}</title>
   <style>
     body { font-family: 'Arial', sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; background: #fff; color: #333; line-height: 1.6; }
     .header { margin-bottom: 30px; }
@@ -91,23 +92,23 @@ export const generateCVHTML = (cvData, t) => {
 </head>
 <body>
   <div class="header">
-    <h1>${cvData.header.name}</h1>
+    <h1>${escapeHtml(cvData.header.name)}</h1>
     <div class="contact">
-      <div class="contact-item">○ ${cvData.header.phone}</div>
-      <div class="contact-item">○ ${cvData.header.email}</div>
+      <div class="contact-item">○ ${escapeHtml(cvData.header.phone)}</div>
+      <div class="contact-item">○ ${escapeHtml(cvData.header.email)}</div>
     </div>
     <div class="contact" style="margin-top: 4px;">
-      <div class="contact-item">○ ${cvData.header.address}</div>
-      <div class="contact-item">${cvData.header.city}</div>
+      <div class="contact-item">○ ${escapeHtml(cvData.header.address)}</div>
+      <div class="contact-item">${escapeHtml(cvData.header.city)}</div>
     </div>
   </div>
 
   <div class="section">
     <h2>${labelPersonal}</h2>
     <div class="entry-text">
-      <strong>${labelDob}:</strong> ${cvData.personal.dateOfBirth}<br>
-      <strong>${labelNationality}:</strong> ${cvData.personal.nationality}<br>
-      <strong>${labelMaritalStatus}:</strong> ${cvData.personal.maritalStatus}
+      <strong>${labelDob}:</strong> ${escapeHtml(cvData.personal.dateOfBirth)}<br>
+      <strong>${labelNationality}:</strong> ${escapeHtml(cvData.personal.nationality)}<br>
+      <strong>${labelMaritalStatus}:</strong> ${escapeHtml(cvData.personal.maritalStatus)}
     </div>
   </div>
 
@@ -115,15 +116,15 @@ export const generateCVHTML = (cvData, t) => {
     <h2>${labelExperience}</h2>
     ${cvData.experience.current.title ? `
     <div class="entry">
-      <div class="entry-title">${cvData.experience.current.title}</div>
-      <div class="entry-subtitle">${cvData.experience.current.company} | ${labelSince} ${cvData.experience.current.startDate}</div>
-      <div class="entry-text">${cvData.experience.current.description}</div>
+      <div class="entry-title">${escapeHtml(cvData.experience.current.title)}</div>
+      <div class="entry-subtitle">${escapeHtml(cvData.experience.current.company)} | ${labelSince} ${escapeHtml(cvData.experience.current.startDate)}</div>
+      <div class="entry-text">${escapeHtml(cvData.experience.current.description)}</div>
     </div>
     ` : ''}
     ${(cvData.experience.previous || []).map(job => `
     <div class="entry">
-      <div class="entry-title">${job.title || ''}</div>
-      <div class="entry-subtitle">${job.company || ''}${job.period ? ' | ' + job.period : ''}${job.pensum ? ' · ' + job.pensum : ''}</div>
+      <div class="entry-title">${escapeHtml(job.title || '')}</div>
+      <div class="entry-subtitle">${escapeHtml(job.company || '')}${job.period ? ' | ' + escapeHtml(job.period) : ''}${job.pensum ? ' · ' + escapeHtml(job.pensum) : ''}</div>
     </div>`).join('')}
     ${(!cvData.experience.current.title && (cvData.experience.previous || []).length === 0) ? '<p>' + labelNoJob + '</p>' : ''}
   </div>
@@ -131,16 +132,16 @@ export const generateCVHTML = (cvData, t) => {
   <div class="section">
     <h2>${labelEducation}</h2>
     <div class="entry-text">
-      <strong>${labelHighest}:</strong> ${cvData.education.highest}<br>
-      <strong>${labelSchool}:</strong> ${cvData.education.school}
-      ${cvData.education.efz ? `<br><strong>${labelEfz}:</strong> ${cvData.education.efz}` : ''}
-      ${cvData.education.certifications ? `<br><strong>${labelCerts}:</strong><br>${cvData.education.certifications}` : ''}
+      <strong>${labelHighest}:</strong> ${escapeHtml(cvData.education.highest)}<br>
+      <strong>${labelSchool}:</strong> ${escapeHtml(cvData.education.school)}
+      ${cvData.education.efz ? `<br><strong>${labelEfz}:</strong> ${escapeHtml(cvData.education.efz)}` : ''}
+      ${cvData.education.certifications ? `<br><strong>${labelCerts}:</strong><br>${escapeHtml(cvData.education.certifications)}` : ''}
     </div>
   </div>
 
   <div class="section">
     <h2>${labelLanguages}</h2>
-    <div class="entry-text">${cvData.languages.list}</div>
+    <div class="entry-text">${escapeHtml(cvData.languages.list)}</div>
   </div>
 
   <div class="section">
