@@ -3637,7 +3637,7 @@ export default {
     stage2: 'crescha',
     stage3: 'porta fritgs',
     stage4: 'cumplainamain madir',
-    b: { gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun' },
+    b: { wohnen: 'Abitar', finanzen: 'Finanzas', person: 'Persuna', versicherungen: 'Assicuranza', gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun', bildung: 'Furmaziun', notfall: 'Urgenza', behoerden: 'Autoritads' },
   },
   instrumente: {
     title: 'Tes instruments',

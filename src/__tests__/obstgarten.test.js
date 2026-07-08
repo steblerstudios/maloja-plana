@@ -1,5 +1,19 @@
 import { describe, it, expect } from 'vitest';
-import { gardenStage, gardenTrees } from '../data/obstgarten.js';
+import { gardenStage, gardenTrees, fruitForm } from '../data/obstgarten.js';
+
+describe('fruitForm: natürliche Wuchsform je (fest entschiedener) Frucht', () => {
+  it('ordnet jede der 11 Schweizer Früchte einer Form zu', () => {
+    expect(fruitForm('apfel')).toBe('rund');
+    expect(fruitForm('birne')).toBe('hoch');
+    expect(fruitForm('kirsche')).toBe('breit');
+    expect(fruitForm('baumnuss')).toBe('gross');
+    expect(fruitForm('heidelbeere')).toBe('busch');
+    expect(fruitForm('traube')).toBe('rebe');
+  });
+  it('fällt für Unbekanntes ruhig auf einen runden Baum zurück', () => {
+    expect(fruitForm('xyz')).toBe('rund');
+  });
+});
 
 describe('gardenStage: Ausfüllstand → Wuchsstufe', () => {
   it('bildet vier Stufen an denselben Schwellen wie der Einzelbaum ab', () => {
