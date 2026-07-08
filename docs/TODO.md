@@ -309,6 +309,21 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
    NICHT (t() liefert truthy Key). KK-Karten-Konflikttabelle zeigt rohen Key. Fix: in alle 5 ergänzen.
 
 ## 🟠 Hoch
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first) — 11 von 13 erledigt, 2 sind Design-Entscheide:**
+> - SKOS-Freibetrag: *ein* geteilter Helper `vermoegensfreibetragSKOS` (6000/12000 +3000/Kind, Cap 15000) ✓
+> - 13. AHV-Rente: `jahresrente = rente × 13` (`ahvRechner.js:128`) ✓
+> - Bundessteuer-Label: `federalOnly: 'nur Bundessteuer'` vorhanden ✓
+> - IPV-Kinderalter: `<18`-Filter + junge Erwachsene separat (`cantonalData.js:294/334`) ✓
+> - @capacitor: cli in devDeps + Zero-Dep-Test `zeroDeps.test.js` bewacht src/ ✓
+> - radius.md: JS=10 (`tokens.js:53`) = CSS=10 (`tokens.css:67`) ✓
+> - Router-Allow-Liste: `settings/taxImport/legal` in VALID_VIEWS (`hashRouter.js:25`) ✓
+> - validation.invalid*: „… bitte prüfen" statt „Ungültig" ✓
+> - Export-Domain: kein `maloja-plana.ch` (Bindestrich) mehr ✓
+> - Autosave: try/catch + `saveError`-State (`main.jsx:562-583`) ✓
+> - **GEFIXT diese Session (`role=status`-Live-Regionen ohne Buttons):** Sandbox-/Demo-/DB-Banner (`main.jsx`) + AlphaBanner (`Dashboard.jsx`) — role auf den Text verschoben, browserverif (0 Buttons in Live-Regionen). ✓
+> - ⏳ **OFFEN, Design-Entscheid (Sophie, „nichts wegnehmen"):** Finanz-Alarm-Flächen detunen (Schulden-KPI-Grid / Armutsbalken / OverdueBanner) + Schulden-Formular Progressive Disclosure. Kein Bug — bewusste Gestaltung.
+
 - **SKOS-Vermögensfreibetrag veraltet UND doppelt/widersprüchlich.** `cantonalData.js:293`
   (8000/4000 +2000, Cap 10000) vs `sozialhilfeRechner.js:101` (4000 +2000, kein Cap) → Paar bekommt
   8000 vs 6000. Aktuelle SKOS-Empfehlung: **6000 ledig / 12000 Paar / +3000 pro Kind.** Fix: 1 Helper,

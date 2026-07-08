@@ -955,7 +955,6 @@ const AppInner = () => {
       }, '· offline')
     ),
     dbBlocked && React.createElement('div', {
-      role: 'status',
       style: {
         padding: '10px 16px',
         background: palette.sand + '18',
@@ -964,7 +963,7 @@ const AppInner = () => {
         flexWrap: 'wrap',
       }
     },
-      React.createElement('div', { style: { flex: 1, minWidth: 0, fontSize: text.xs, color: palette.mid } }, t('trust.dbBlocked')),
+      React.createElement('div', { role: 'status', style: { flex: 1, minWidth: 0, fontSize: text.xs, color: palette.mid } }, t('trust.dbBlocked')),
       React.createElement('button', {
         onClick: () => setDbBlocked(false),
         style: {
@@ -975,7 +974,6 @@ const AppInner = () => {
       }, t('common.close'))
     ),
     demoMode && React.createElement('div', {
-      role: 'status',
       style: {
         padding: '10px 16px',
         background: palette.sand + '18',
@@ -984,7 +982,7 @@ const AppInner = () => {
         flexWrap: 'wrap',
       }
     },
-      React.createElement('div', { style: { flex: 1, minWidth: 0 } },
+      React.createElement('div', { role: 'status', style: { flex: 1, minWidth: 0 } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('demo.bannerTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('demo.bannerText'))
       ),
@@ -998,7 +996,6 @@ const AppInner = () => {
       }, t('demo.leave'))
     ),
     sandboxActive && React.createElement('div', {
-      role: 'status',
       style: {
         padding: '10px 16px',
         background: palette.sage + '18',
@@ -1008,8 +1005,10 @@ const AppInner = () => {
       }
     },
       React.createElement('div', { style: { flex: 1, minWidth: 0 } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('sandbox.bannerTitle')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText')),
+        React.createElement('div', { role: 'status' },
+          React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('sandbox.bannerTitle')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('sandbox.bannerText'))
+        ),
         React.createElement('button', {
           onClick: blankSandbox,
           style: {
