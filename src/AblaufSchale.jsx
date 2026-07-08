@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
@@ -27,8 +28,7 @@ const styles = (palette) => ({
 export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.wrap },
-    React.createElement('h2', { style: s.h2 },
-      React.createElement(Icon, { name: icon || 'insurance', size: 20 }), title),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: icon || 'insurance', size: 22 }), style: { marginBottom: space.sm + 'px' } }, title),
     intro ? React.createElement('p', { style: s.intro },
       React.createElement(GlossarText, { palette }, intro)) : null,
     children
@@ -40,9 +40,8 @@ export const AblaufStep = ({ palette, title, icon, children }) => {
   const s = styles(palette);
   return React.createElement(React.Fragment, null,
     icon
-      ? React.createElement('h3', { style: { ...s.stepTitle, display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-          React.createElement(Icon, { name: icon, size: 18 }), title)
-      : React.createElement('h3', { style: s.stepTitle }, title),
+      ? React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 20 }), style: { margin: space.lg + 'px 0 ' + space.xs + 'px 0' } }, title)
+      : React.createElement(PanelTitle, { palette, style: { margin: space.lg + 'px 0 ' + space.xs + 'px 0' } }, title),
     children
   );
 };

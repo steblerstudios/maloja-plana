@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
@@ -131,7 +132,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   ];
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginTop: 0, marginBottom: space.sm } }, t('schulden.title')),
+    React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, t('schulden.title')),
     React.createElement('p', { style: { fontSize: text.body, color: palette.text, lineHeight: '1.6', marginTop: 0, marginBottom: space.md, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } }, t('schulden.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('schulden.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // Tab Navigation (role=tablist; aktiver Tab via Border+Tint, nicht nur Farbe)
@@ -216,7 +217,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Debts View
     view === 'debts' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.addDebt')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.addDebt')),
 
       React.createElement('div', { style: { background: palette.surface, padding: space.md, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
         React.createElement('input', { type: 'text', value: newDebt.creditor, onChange: (e) => setNewDebt(p => ({ ...p, creditor: e.target.value })), placeholder: t('schulden.creditor'), 'aria-label': t('schulden.creditor'), style: inputStyle }),
@@ -272,7 +273,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Betreibung View
     view === 'betreibung' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.debtCollection')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.debtCollection')),
 
       React.createElement('button', { onClick: handleAddBetreibung, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.addDebt')),
 
@@ -294,7 +295,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
 
     // Verlustscheine View
     view === 'verlustscheine' && React.createElement('div', { role: 'tabpanel' },
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('schulden.lossReceipts')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('schulden.lossReceipts')),
 
       React.createElement('button', { onClick: handleAddVerlustschein, style: { ...buttonStyle, marginBottom: space.md } }, '+ ' + t('schulden.lossReceipts')),
 

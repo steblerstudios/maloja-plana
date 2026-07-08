@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -64,9 +65,9 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'health', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.status')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: '20px' } },
         React.createElement('button', {
           onClick: () => setStatus('registered'),
@@ -82,7 +83,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         }, '✕ ' + t('organ.declined'))
       ),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.organsAndTissue')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.organsAndTissue')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: space.sm, marginBottom: space.md } },
         organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: radius.sm, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
@@ -103,7 +104,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
     // Right: Info & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'info', size: 22 }), style: { marginBottom: space.md } }, t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
         React.createElement('strong', null, '✓ ' + t('organ.status') + ': '),
