@@ -5,7 +5,7 @@ import {
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
-import { PageTitle } from './components/Heading.jsx';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
@@ -1884,7 +1884,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Documents Tab
     expandedSection === 'documents' && chapter.docs && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
 
       // Upload Form
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
