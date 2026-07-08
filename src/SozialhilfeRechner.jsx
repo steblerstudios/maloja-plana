@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { berechneSozialhilfe, SKOS_PARAMS } from './data/sozialhilfeRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -85,10 +86,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     );
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'budget', size: 20 }),
-      t('sh.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('sh.title')),
 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.inputRow },

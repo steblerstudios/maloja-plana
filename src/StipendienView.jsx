@@ -6,6 +6,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from './data/stipendienData.js';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -28,8 +29,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     maxWidth: '720px', background: palette.surface, padding: space.lg + 'px',
     borderRadius: radius.md, border: '1px solid ' + palette.border,
   };
-  const h2 = { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' };
-  const sectionTitle = { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, margin: space.lg + 'px 0 ' + space.xs + 'px 0' };
+  const panelMargin = { margin: space.lg + 'px 0 ' + space.xs + 'px 0' }; // Abstände der Abschnittstitel; Grösse/Gewicht kommt aus PanelTitle
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
   const linkStyle = { color: palette.sage, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
   const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
@@ -67,9 +67,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   });
 
   return React.createElement('div', { style: card },
-    React.createElement('h2', { style: h2 },
-      React.createElement(Icon, { name: 'ausbildung', size: 20 }), t('stip.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'ausbildung', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('stip.title')),
     React.createElement('p', { style: { ...intro, marginBottom: space.md + 'px' } }, t('stip.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('stip.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     // ── Kurz-Check Berechtigung ──
@@ -96,16 +94,16 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Wer kann beantragen?
-    React.createElement('h3', { style: sectionTitle }, t('stip.eligibilityTitle')),
+    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.eligibilityTitle')),
     STIPENDIEN_ELIGIBILITY.whoKeys.map(k => li(t('stip.who.' + k), 'who-' + k)),
     React.createElement('div', { style: { ...intro, fontStyle: 'italic', marginTop: space.xs + 'px' } }, 'ⓘ ' + t('stip.notEligible')),
 
     // Was wird unterstützt?
-    React.createElement('h3', { style: sectionTitle }, t('stip.scopeTitle')),
+    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.scopeTitle')),
     STIPENDIEN_ELIGIBILITY.scopeKeys.map(k => li(t('stip.scope.' + k), 'scope-' + k)),
 
     // Wo beantragen? (+ Kanton-Crosslink)
-    React.createElement('h3', { style: sectionTitle }, t('stip.whereTitle')),
+    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.whereTitle')),
     React.createElement('p', { style: intro }, t('stip.where')),
     React.createElement('div', {
       style: { marginTop: space.sm + 'px', padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border }
@@ -119,11 +117,11 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Stipendium oder Darlehen?
-    React.createElement('h3', { style: sectionTitle }, t('stip.formTitle')),
+    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.formTitle')),
     React.createElement('p', { style: intro }, t('stip.formNote')),
 
     // Privates Verzeichnis (Rückfall)
-    React.createElement('h3', { style: { ...sectionTitle, marginTop: space.xl + 'px' } }, t('stip.privateTitle')),
+    React.createElement(PanelTitle, { palette, style: { ...panelMargin, marginTop: space.xl + 'px' } }, t('stip.privateTitle')),
     React.createElement('p', { style: { ...intro, marginBottom: space.sm + 'px' } }, t('stip.privateIntro')),
     STIPENDIEN_PRIVATE.map(p =>
       React.createElement('div', { key: p.id, style: { ...item, justifyContent: 'space-between' } },
@@ -133,7 +131,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // Checkliste bei Ablehnung
-    React.createElement('h3', { style: sectionTitle }, t('stip.checklistTitle')),
+    React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.checklistTitle')),
     ['checklist1', 'checklist2', 'checklist3', 'checklist4'].map(k => li(t('stip.' + k), k)),
 
     // Crosslink: weiter zu den offiziellen Behörden-Links (Prop war bisher ungenutzt)

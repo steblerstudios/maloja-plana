@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -169,12 +170,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm,
-        }
-      }, React.createElement(Icon, { name: 'budget', size: 18 }), t('finanzUebersicht.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('finanzUebersicht.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('finanzUebersicht.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('finanzUebersicht.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') }))

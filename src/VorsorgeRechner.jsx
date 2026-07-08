@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -333,10 +334,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'vorsorge', size: 20 }),
-      t('vr.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'vorsorge', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('vr.title')),
 
     // Tab row (sticky Wrapper + scrollender Inhalt + rechte Verlauf-Kante)
     React.createElement('div', { style: s.tabWrap },
