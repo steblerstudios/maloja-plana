@@ -277,6 +277,15 @@ Design/Calm-UX · A11y/Dichte · i18n/Sprache · Governance/Nutzbarkeit.** Kerns
 Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpunkt v0.1.3-beta (`43593d7`).
 
 ## 🔴 Kritisch (Datenverlust / Korrektheit / Vertrauen)
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first) — alle 6 erledigt:**
+> 1. Dokument-Blobs → IndexedDB: gelöst (`main.jsx:647` „Metadaten → kein localStorage-Quota-Risiko mehr", idb-Pfad aktiv).
+> 2. QuickCheck-IPV: nutzt jetzt `calculateIPV` (`Dashboard.jsx:98`), `KVG_BRACKETS_2024` nicht mehr referenziert.
+> 3. SchuldenManager-A11y: behoben (`3fc0fb5` + a11y-Audit 2026-07-08).
+> 4. Vorlesen-Lücke: `SozialhilfeView.jsx:34/48` liest Intro vor (mit `vorlesen.label`); Vorlesen auch in Schulden/Finanz/Asyl/Stipendien/Prämien vorhanden. VorlesenButton nimmt übersetzbaren `label`-Prop. (Rest-Politur: eingebetteter `SozialhilfeRechner`-Zweitrechner ohne eigenen Knopf — nicht kritisch.)
+> 5. `kvg.generikaNote`: in allen 5 Sprachen vorhanden.
+> 6. `kkScanner.ahv`: in allen 5 Sprachen vorhanden.
+
 1. **Dokument-Blobs als base64 in localStorage** (`ChapterView.jsx:1802` → Autosave `main.jsx:355`).
    1 PDF ≈ sprengt 5-MB-Budget; `setItem` ohne try/catch → QuotaExceeded wirft, Datei NIE gespeichert,
    aber Upload-Toast meldete Erfolg → stiller Datenverlust. Fix: Blobs in IndexedDB (der `idb`-Helper in
