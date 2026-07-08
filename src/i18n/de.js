@@ -3429,6 +3429,18 @@ export default {
     },
   },
 
+  obstgarten: {
+    title: 'Mein Obstgarten',
+    intro: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr du erfasst — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.',
+    link: 'Mein Obstgarten',
+    legend: 'Wuchsstufe statt Prozent: Setzling → wächst → trägt Früchte → voll gereift. Die vier jüngsten Bäumchen kommen später.',
+    future: 'kommt später',
+    stage1: 'Setzling',
+    stage2: 'wächst',
+    stage3: 'trägt Früchte',
+    stage4: 'voll gereift',
+    b: { gesundheit: 'Gesundheit', arbeit: 'Arbeit', familie: 'Familie', vorsorge: 'Vorsorge' },
+  },
   instrumente: {
     title: 'Deine Instrumente',
     intro: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.',
