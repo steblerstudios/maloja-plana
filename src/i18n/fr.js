@@ -3453,6 +3453,18 @@ export default {
     },
   },
 
+  obstgarten: {
+    title: 'Mon verger',
+    intro: 'Chaque domaine de vie est un petit arbre. Il mûrit à mesure que vous complétez — du semis à l\'arbre plein. Touchez pour ouvrir le domaine.',
+    link: 'Mon verger',
+    legend: 'Stade de croissance plutôt que pourcentage : semis → pousse → porte des fruits → pleinement mûr. Les quatre plus jeunes arbres viennent plus tard.',
+    future: 'à venir',
+    stage1: 'semis',
+    stage2: 'pousse',
+    stage3: 'porte des fruits',
+    stage4: 'pleinement mûr',
+    b: { gesundheit: 'Santé', arbeit: 'Travail', familie: 'Famille', vorsorge: 'Prévoyance' },
+  },
   instrumente: {
     title: 'Vos instruments',
     intro: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.',
