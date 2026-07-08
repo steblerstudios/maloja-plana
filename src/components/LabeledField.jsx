@@ -16,17 +16,26 @@ import { text, weight, space } from '../config/tokens.js';
 // STATUS: Vorschlag. Noch NICHT migriert — Migration heisst, bestehende
 // Label+Input-Paare hiermit zu umschliessen (mit Sophies Segen, gestaffelt).
 //
-// Beispiel:
-//   React.createElement(LabeledField, { palette, label: t('tax.taxCanton') },
-//     React.createElement('select', { value: canton, onChange, style: inputStyle }, …options))
+// Zwei Nutzungsformen:
+//   1) Direktes Feld (id wird automatisch injiziert):
+//      React.createElement(LabeledField, { palette, label: t('tax.grossIncome') },
+//        React.createElement('input', { value, onChange, style: inputStyle }))
+//   2) Verschachteltes Feld (z.B. Select im Chevron-Wrapper) — Render-Prop, id
+//      selbst aufs echte Feld setzen:
+//      React.createElement(LabeledField, { palette, label: t('tax.taxCanton') },
+//        (id) => React.createElement('div', { style: { position: 'relative' } },
+//          React.createElement('select', { id, value, onChange, style: inputStyle }, …),
+//          chevron))
 
 export const LabeledField = ({ palette, label, hint, htmlFor, children, style, labelStyle, ...rest }) => {
   const autoId = React.useId();
   const id = htmlFor || (React.isValidElement(children) && children.props.id) || autoId;
 
-  const field = React.isValidElement(children)
-    ? React.cloneElement(children, { id: children.props.id || id })
-    : children;
+  const field = typeof children === 'function'
+    ? children(id)
+    : React.isValidElement(children)
+      ? React.cloneElement(children, { id: children.props.id || id })
+      : children;
 
   return React.createElement('div', { style: { marginBottom: space.sm + 'px', ...style }, ...rest },
     React.createElement('label', {
