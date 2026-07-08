@@ -3627,6 +3627,16 @@ export default {
     detailhandel: 'Commerzi al detail',
   },
 
+  schutzschild: {
+    intro: 'Las trais protecziuns che quasi tuts dovran.',
+    kk: 'Assicuranza da malsauns',
+    haftpflicht: 'Responsabladad civila',
+    hausrat: 'Economia da chasa',
+    covered: 'cuvert',
+    open: 'avert',
+    allCovered: 'Las trais protecziuns da basa existan.',
+    gapsHint: '{covered} da {total} cuverts — avert: {list}.',
+  },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',
     intro: 'In set d’infurmaziuns — a tge pudessas ti avair dretg? Blers dretgs existan senza che la glieud al sappia. Tias datas dal profil èn preemplenidas; ti pos las adattar liberamain qua per empruvar.',

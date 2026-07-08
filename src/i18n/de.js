@@ -3429,6 +3429,16 @@ export default {
     },
   },
 
+  schutzschild: {
+    intro: 'Die drei Absicherungen, die fast alle brauchen.',
+    kk: 'Krankenversicherung',
+    haftpflicht: 'Privathaftpflicht',
+    hausrat: 'Hausrat',
+    covered: 'gedeckt',
+    open: 'offen',
+    allCovered: 'Die drei Kern-Absicherungen stehen.',
+    gapsHint: '{covered} von {total} gedeckt — offen: {list}.',
+  },
   schnellcheck: {
     title: 'Leistungs-Schnellcheck',
     intro: 'Ein Satz Angaben — was könnte dir zustehen? Vieles steht Menschen zu, ohne dass sie davon wissen. Deine Angaben aus dem Profil sind vorbelegt; du kannst sie hier frei anpassen, um durchzuspielen.',

@@ -3432,6 +3432,16 @@ export default {
     },
   },
 
+  schutzschild: {
+    intro: 'Le tre protezioni di cui quasi tutti hanno bisogno.',
+    kk: 'Assicurazione malattia',
+    haftpflicht: 'Responsabilità civile',
+    hausrat: 'Economia domestica',
+    covered: 'coperto',
+    open: 'aperto',
+    allCovered: 'Le tre protezioni di base ci sono.',
+    gapsHint: '{covered} su {total} coperte — aperto: {list}.',
+  },
   schnellcheck: {
     title: 'Verifica rapida delle prestazioni',
     intro: 'Un insieme di dati — a cosa potresti avere diritto? Molte prestazioni esistono senza che si sappia. I dati del tuo profilo sono precompilati; qui puoi modificarli liberamente per fare delle prove.',
