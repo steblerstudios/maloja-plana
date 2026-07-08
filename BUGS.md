@@ -19,19 +19,22 @@ Ein Bug ist erst **weg**, wenn ein Test ihn festhält. So kommt derselbe Fehler 
 3. **Fixen**, bis der Test grün ist.
 4. **Zeile hier streichen** (nach unten zu „Zuletzt behoben" verschieben).
 
-Kleine Fixes, die man unmöglich testen kann (reiner Text, eine Farbe): einfach fixen und Zeile streichen. Der Test-Schritt ist für *Verhalten*.
+Und die wichtigste Vorregel: **erst nachstellen, dann eintragen.** Kein Bug wandert hierher, ohne dass jemand ihn gesehen hat. Was sich beim Nachstellen als *schon erledigt* oder als *fehlendes Feature* entpuppt, gehört nicht in diese Liste.
 
 ---
 
 ## Offen
 
-Format: `Schwere · wo · was ist kaputt`
-Schwere: 🔴 stört echt · 🟠 spürbar · 🟡 Kosmetik/Politur
+*Gerade keine offenen, nachgestellten Bugs.* Das ist ein guter Zustand — er heisst, die App ist nicht sichtbar kaputt. Die offene Arbeit ist Feature-Ausbau und Politur, und die lebt im Backlog.
 
-- 🟠 **Zukunftsrechner** · Zinsknick bei ~20 000 CHF — die Projektion springt an der Schwelle unschön, statt weich zu verlaufen.
-- 🟡 **Zukunftsrechner** · 3a-Rollover — der Übergang ins Folgejahr rechnet noch nicht sauber weiter.
-- 🟡 **VorsorgeRechner** · Der IK-Auszug hat im Zukunft-Reiter keinen ruhigen Leerzustand (EmptyState fehlt).
-- 🟠 **App-weit (Barrierefreiheit)** · sage/rosé als einziges Unterscheidungsmerkmal ist eine Rot-Grün-Falle — braucht zusätzlich Form oder eine zweite Farbe (Blau/Orange).
+## Geprüft — kein offener Bug (2026-07-08)
+
+Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich: keiner ist ein Bug. Festgehalten, damit sie nicht als Phantome wiederkommen.
+
+- **IK-Leerzustand (Zukunft-Reiter)** → *kein Bug.* Der IK-Leerzustand ist gebaut und funktioniert (AHV-Reiter, `EmptyState`). Der IK-Auszug wird nur im AHV-Reiter gezeigt. „IK auch im Zukunft-Reiter" ist ein **Feature-Wunsch** (nie zurück-navigieren müssen) → Backlog.
+- **Zinsknick bei 20 000** → *kein Bug.* Die Projektion rechnet glatt (Zinseszins pro Jahr, keine Schwelle im Code). Die 20 000-Grenze ist nur ein Strategie-Hinweis. Reale Bank-Schwellen abzubilden wäre ein **Modell-Ausbau** → Backlog.
+- **3a-Rollover** → *kein Bug.* Der Jahr-für-Jahr-Übergang stimmt. Ein echter Rollover/Drawdown in der Rentenphase ist eine **Ausbaustufe** → Backlog.
+- **Rot-Grün-Falle (sage/rosé)** → *kein einzelner Bug, echtes Anliegen.* Farbenblind-Modus + Form-Marker sind schon da (opt-in, Okabe-Ito). Ob weitere Stellen Form-Marker brauchen, klärt ein **fokussierter A11y-Durchgang** — kein einzelner reproduzierbarer Fehler.
 
 ## Zuletzt behoben
 
