@@ -12,8 +12,9 @@
 ## So misst du den Stand
 
 ```
-node scripts/i18n-gap-scan.mjs            # Übersicht je Sprache + Bereiche
-node scripts/i18n-gap-scan.mjs --list rm  # volle Liste der offenen rm-Schlüssel
+node scripts/i18n-gap-scan.mjs            # ehrliche Übersicht (Fehlalarme abgezogen)
+node scripts/i18n-gap-scan.mjs --list rm  # echte offene rm-Schlüssel
+node scripts/i18n-gap-scan.mjs --raw      # rohe Zahlen (mit Fehlalarmen)
 ```
 
 Der Scan findet Schlüssel, deren rm-Wert **exakt dem Deutschen gleicht** — das
@@ -21,16 +22,25 @@ starke Signal für „noch nicht übersetzt". (Fehlende Schlüssel fängt separa
 i18n-Vollständigkeitstest.) Nach jeder übersetzten Runde neu laufen lassen — die
 Zahl soll sinken.
 
-## Ehrliches Bild (Stand 2026-07-08)
+## Ehrliches Bild (Stand 2026-07-08, nach Fehlalarm-Filter)
 
-| Sprache | Verdächtige Schlüssel | Einschätzung |
+Der Scan zieht seit 2026-07-08 die Fehlalarme selbst ab (`isLikelyLegit`):
+Cognates, Eigennamen, Codes, Format-Strings. Die **rohen** Zahlen (`--raw`) lagen
+bei fr 57 / it 38 / rm 263 — **ehrlich** sind:
+
+| Sprache | Echte Verdächtige | Einschätzung |
 |---|---|---|
-| **fr** | 57 | Praktisch sauber. Fast alles Cognates (Adresse, Total, Budget, Franchise, Testament, Tarif, Niveau — im Französischen dasselbe Wort), Eigennamen (Maloja Plana, Basler Angebote) und Platzhalter. |
-| **it** | 38 | Praktisch sauber. Gleiche Lage — Cognates, Marken, Kürzel. |
-| **rm** | 263 | **Der echte offene Brocken.** Ganze Ablauf-Flows stehen noch auf Deutsch. |
+| **fr** | 9 | Faktisch fertig. 7 davon legitim (Testament, Cookies, „Franchise (CHF)" — im FR dasselbe Wort). Echt offen nur 2 Wortwahl-Entscheide: `Impressum`, `Affiliate`. |
+| **it** | 2 | Fertig bis auf genau dieselben 2 Wortwahl-Fragen (`Impressum`, `Affiliate`). |
+| **rm** | 217 | **Der echte offene Brocken.** Ganze Ablauf-Flows stehen noch auf Deutsch. |
 
-Kurz: **fr und it brauchen kaum etwas.** Die Gegenlese-Arbeit ist fast vollständig
-Rätoromanisch.
+Kurz: **fr und it brauchen nichts ausser einem Wortwahl-Entscheid.** Die
+Gegenlese-Arbeit ist praktisch vollständig Rätoromanisch.
+
+**Entscheid 2026-07-08:** RM bewusst **geparkt** — kein rm-Gegenleser verfügbar.
+Nicht maschinell füllen (Haftung: falsche Fristen/Abläufe schaden mehr als die
+sichtbare DE-Rückfallanzeige). Wieder aufnehmen, sobald jemand gegenlesen kann —
+dann Flow für Flow, Liste via `--list rm`.
 
 ## Wo die rm-Lücke sitzt (die Ablauf-Flows)
 

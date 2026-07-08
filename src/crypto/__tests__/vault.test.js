@@ -86,6 +86,15 @@ describe('vault — Sicherheits-Eigenschaften', () => {
     expect(await openBackupWithPrf(a, prfOut)).toBe(SAMPLE);
     expect(await openBackupWithPrf(b, prfOut)).toBe(SAMPLE);
   });
+
+  it('weist ein Backup mit fremder Version oder fremdem Algorithmus klar zurück', async () => {
+    const prfOut = prf();
+    const base = await sealBackup(SAMPLE, prfOut, generateRecovery().bytes);
+    // v/alg sind mit-authentifiziert (AAD) UND werden explizit geprüft → klarer Fehler,
+    // kein stilles Fehl-Entschlüsseln.
+    await expect(openBackupWithPrf({ ...base, v: 2 }, prfOut)).rejects.toThrow(/Format/);
+    await expect(openBackupWithPrf({ ...base, alg: 'XChaCha20' }, prfOut)).rejects.toThrow(/Format/);
+  });
 });
 
 describe('vault — Recovery-Kodierung', () => {

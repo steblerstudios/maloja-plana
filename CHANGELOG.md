@@ -5,6 +5,20 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [Unreleased]
+
+*Hier sammelst du Zeilen während der Arbeit. Beim Release wird aus „Unreleased"
+die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
+kommt der Changelog immer mit, nie doppelt.*
+
+## [0.1.16-beta] — 2026-07-08
+
+### Sicherheit
+- Backup-Verschlüsselung gehärtet: Version + Algorithmus werden jetzt in den GCM-Auth-Tag gebunden (AAD) und beim Öffnen explizit geprüft — ein manipuliertes oder formatfremdes Backup scheitert klar, statt still etwas Falsches zu tun. Der Schlüssel auf dem Öffnen-Pfad ist nicht mehr extrahierbar (schützt die Zero-Knowledge-Garantie auch bei kompromittiertem Client-Code).
+
+### Behoben
+- Barrierefreiheit: Status-Banner (Probier-Modus, Demo, DB-Hinweis, Frühe-Version-Hinweis) umschliessen ihre Buttons nicht mehr in der Vorlese-Region — Screenreader lesen nur noch den Status, nicht die Bedienelemente.
+
 ## [0.1.15-beta] — 2026-07-08
 
 ### Neu

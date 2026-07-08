@@ -277,6 +277,15 @@ Design/Calm-UX · A11y/Dichte · i18n/Sprache · Governance/Nutzbarkeit.** Kerns
 Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpunkt v0.1.3-beta (`43593d7`).
 
 ## 🔴 Kritisch (Datenverlust / Korrektheit / Vertrauen)
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first) — alle 6 erledigt:**
+> 1. Dokument-Blobs → IndexedDB: gelöst (`main.jsx:647` „Metadaten → kein localStorage-Quota-Risiko mehr", idb-Pfad aktiv).
+> 2. QuickCheck-IPV: nutzt jetzt `calculateIPV` (`Dashboard.jsx:98`), `KVG_BRACKETS_2024` nicht mehr referenziert.
+> 3. SchuldenManager-A11y: behoben (`3fc0fb5` + a11y-Audit 2026-07-08).
+> 4. Vorlesen-Lücke: `SozialhilfeView.jsx:34/48` liest Intro vor (mit `vorlesen.label`); Vorlesen auch in Schulden/Finanz/Asyl/Stipendien/Prämien vorhanden. VorlesenButton nimmt übersetzbaren `label`-Prop. (Rest-Politur: eingebetteter `SozialhilfeRechner`-Zweitrechner ohne eigenen Knopf — nicht kritisch.)
+> 5. `kvg.generikaNote`: in allen 5 Sprachen vorhanden.
+> 6. `kkScanner.ahv`: in allen 5 Sprachen vorhanden.
+
 1. **Dokument-Blobs als base64 in localStorage** (`ChapterView.jsx:1802` → Autosave `main.jsx:355`).
    1 PDF ≈ sprengt 5-MB-Budget; `setItem` ohne try/catch → QuotaExceeded wirft, Datei NIE gespeichert,
    aber Upload-Toast meldete Erfolg → stiller Datenverlust. Fix: Blobs in IndexedDB (der `idb`-Helper in
@@ -300,6 +309,21 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
    NICHT (t() liefert truthy Key). KK-Karten-Konflikttabelle zeigt rohen Key. Fix: in alle 5 ergänzen.
 
 ## 🟠 Hoch
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first) — 11 von 13 erledigt, 2 sind Design-Entscheide:**
+> - SKOS-Freibetrag: *ein* geteilter Helper `vermoegensfreibetragSKOS` (6000/12000 +3000/Kind, Cap 15000) ✓
+> - 13. AHV-Rente: `jahresrente = rente × 13` (`ahvRechner.js:128`) ✓
+> - Bundessteuer-Label: `federalOnly: 'nur Bundessteuer'` vorhanden ✓
+> - IPV-Kinderalter: `<18`-Filter + junge Erwachsene separat (`cantonalData.js:294/334`) ✓
+> - @capacitor: cli in devDeps + Zero-Dep-Test `zeroDeps.test.js` bewacht src/ ✓
+> - radius.md: JS=10 (`tokens.js:53`) = CSS=10 (`tokens.css:67`) ✓
+> - Router-Allow-Liste: `settings/taxImport/legal` in VALID_VIEWS (`hashRouter.js:25`) ✓
+> - validation.invalid*: „… bitte prüfen" statt „Ungültig" ✓
+> - Export-Domain: kein `maloja-plana.ch` (Bindestrich) mehr ✓
+> - Autosave: try/catch + `saveError`-State (`main.jsx:562-583`) ✓
+> - **GEFIXT diese Session (`role=status`-Live-Regionen ohne Buttons):** Sandbox-/Demo-/DB-Banner (`main.jsx`) + AlphaBanner (`Dashboard.jsx`) — role auf den Text verschoben, browserverif (0 Buttons in Live-Regionen). ✓
+> - ⏳ **OFFEN, Design-Entscheid (Sophie, „nichts wegnehmen"):** Finanz-Alarm-Flächen detunen (Schulden-KPI-Grid / Armutsbalken / OverdueBanner) + Schulden-Formular Progressive Disclosure. Kein Bug — bewusste Gestaltung.
+
 - **SKOS-Vermögensfreibetrag veraltet UND doppelt/widersprüchlich.** `cantonalData.js:293`
   (8000/4000 +2000, Cap 10000) vs `sozialhilfeRechner.js:101` (4000 +2000, kein Cap) → Paar bekommt
   8000 vs 6000. Aktuelle SKOS-Empfehlung: **6000 ledig / 12000 Paar / +3000 pro Kind.** Fix: 1 Helper,
@@ -333,6 +357,16 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
   aus der Live-Region nehmen.
 
 ## 🟡 Mittel
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first):**
+> - Backup zieht IndexedDB-Docs mit: `backupCrypto.js` (getDocBlob/saveDocBlob) + `autoBackup.js` (hydrateDocs/idb) ✓
+> - EventBus Ring-Buffer + try/catch pro Listener: `event-bus.ts:14-20` ✓
+> - Registry-Drift: dedizierte `SEARCH_VIEWS`-Registry (27 Einträge) in `SearchView.jsx` ✓ (harte 3-Registry-Vereinheitlichung nicht erzwungen — kein sichtbarer Fehler mehr)
+> - AsylView/StipendienView-Titel: nutzen jetzt `PanelTitle` (echte Überschriften) ✓
+> - **GEFIXT diese Session:** „recheck Jan 2027"-Wartungsnotiz an `AHV_DATA_VERSION` (`ahvRechner.js`) ✓
+> - ⏳ **Offen, klein:** Backup-Passphrase erlaubt weiter 4 Zeichen ohne ruhigen Längen-Hinweis (`backupCrypto.js:93`) — UI-Nicety.
+> - ⏳ **Offen, Design (Sophie):** Unicode-Glyphen (□◰●◇↧✕) in Onboarding/Schulden statt `IconSystem` — Materialitäts-Konsistenz, kein Bug.
+
 - Backup/Export liest Dokumente nur aus localStorage (`autoBackup.js`, `backupCrypto.js:42`) → bei
   IndexedDB-Migration (s. 🔴 #1) Backups mitziehen, sonst stoppen Datei-Backups still.
 - EventBus wächst unbegrenzt (`event-bus.ts:9`), kein Error-Isolation der Listener → langsames Leck +
