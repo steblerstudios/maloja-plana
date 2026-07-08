@@ -209,7 +209,6 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
 
 const AlphaBanner = ({ palette, t, onDismiss }) =>
   React.createElement('div', {
-    role: 'status',
     'data-alpha-banner': true,
     style: {
       padding: '12px 16px', marginBottom: '20px', borderRadius: radius.sm,
@@ -220,7 +219,7 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '10px' }
     },
-      React.createElement('div', { style: { flex: 1 } },
+      React.createElement('div', { role: 'status', style: { flex: 1 } },
         React.createElement('div', {
           style: { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed }
         },
