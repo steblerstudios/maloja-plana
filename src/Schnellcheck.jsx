@@ -178,6 +178,20 @@ export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
       )
     ),
 
+    // Lage-abhängige Leistungen: hängen nicht am Einkommen, sondern an einer
+    // Lebenslage → nur Wegweiser, keine Berechnung (Ehrlichkeit/Haftung). Genau
+    // die Trennung, die der Schnellcheck sonst nur implizit macht, sichtbar gemacht.
+    React.createElement('div', { style: { marginTop: space.md + 'px', paddingTop: space.md + 'px', borderTop: '1px solid ' + palette.border } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.xs + 'px' } }, t('schnellcheck.lageTitle')),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('schnellcheck.lageIntro')),
+      React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px', alignItems: 'flex-start' } },
+        wegeItem('iv', t('schnellcheck.lageIv')),
+        wegeItem('alv', t('schnellcheck.lageAlv')),
+        wegeItem('eo', t('schnellcheck.lageEo')),
+        wegeItem('kind', t('schnellcheck.lageFamilienzulagen'))
+      )
+    ),
+
     React.createElement('p', { style: s.disclaimer }, t('schnellcheck.disclaimer'))
   );
 };
