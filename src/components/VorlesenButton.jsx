@@ -1,6 +1,8 @@
 import React from 'react';
 
-const speakerPath = 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0012 8.5v1.06a3.5 3.5 0 010 4.88V15.5a4.5 4.5 0 004.5-3.5z';
+// Outline-Lautsprecher (Kegel + eine Schallwelle) — konsistent mit dem funktionalen Icon-Set.
+const speakerCone = 'M4 9 h3 l5 -4 v14 l-5 -4 h-3 Z';
+const speakerWave = 'M16 9 a5 5 0 0 1 0 6';
 
 export const VorlesenButton = ({ text, speak, size = 14, color, style = {}, label }) => {
   if (!text) return null;
@@ -23,9 +25,10 @@ export const VorlesenButton = ({ text, speak, size = 14, color, style = {}, labe
   },
     React.createElement('svg', {
       width: size, height: size, viewBox: '0 0 24 24',
-      fill: color || 'currentColor',
+      fill: 'none', stroke: color || 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round',
     },
-      React.createElement('path', { d: speakerPath })
+      React.createElement('path', { d: speakerCone }),
+      React.createElement('path', { d: speakerWave })
     )
   );
 };

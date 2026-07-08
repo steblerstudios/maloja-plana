@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 
 // ISO-Datum → TT.MM.JJJJ für die Anzeige in der Beleg-Auswahl.
@@ -52,12 +54,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     }, '← ' + t('briefe.backToUnterlagen')),
 
     // Title
-    React.createElement('h2', {
-      style: {
-        fontSize: textTokens.lg, fontWeight: weight.semi, marginBottom: space.sm,
-        display: 'flex', alignItems: 'center', gap: space.sm,
-      }
-    }, React.createElement(Icon, { name: 'document', size: 20 }), t('briefe.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('briefe.title')),
 
     React.createElement('p', {
       style: { fontSize: textTokens.sm, color: palette.mid, marginBottom: '20px', lineHeight: '1.6' }
@@ -74,6 +71,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
           borderRadius: radius.sm, cursor: 'pointer', textAlign: 'left',
+          // Buttons erben color NICHT (UA-Reset auf schwarz) → im Dark Mode war der
+          // Vorlagen-Titel unlesbar schwarz. Explizit auf palette.text setzen.
+          color: palette.text,
           display: 'flex', alignItems: 'flex-start', gap: '12px',
           transition: `border-color ${duration.normal}ms ${ease}`,
         }
@@ -140,14 +140,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
-      React.createElement('button', {
-        onClick: handlePrint,
-        style: {
-          padding: '10px 16px', background: palette.sand, color: '#fff',
-          border: 'none', borderRadius: radius.sm, cursor: 'pointer',
-          fontSize: textTokens.sm, fontWeight: weight.medium,
-        }
-      }, t('briefe.printLetter'))
+      React.createElement(PrimaryButton, { palette, onClick: handlePrint }, t('briefe.printLetter'))
     ),
 
     // Data status

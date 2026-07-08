@@ -5,10 +5,12 @@ import {
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
-import { openPrintWindow } from './utils/helpers.js';
+import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
+import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
@@ -19,7 +21,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext }) => {
   const vorlesen = useVorlesenContext();
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
@@ -29,6 +31,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const [uploadSuccess, setUploadSuccess] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+
+  // Themen-Reiter: die benannten Sektionen der primären Felder (Person/Kontakt/…),
+  // damit man im Kapitel springen kann statt hochzuscrollen (Jana #1).
+  const [activeSection, setActiveSection] = useState(null);
+  const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
+  // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
+  // einen Reiter, damit sie auffindbar sind statt im aufklappbaren Teil zu verschwinden
+  // (Sophie, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
+  const secondarySections = chapter.fields.filter((f) => f.secondary && f.section).map((f) => ({ name: f.section, k: f.k, secondary: true }));
+  const sectionTabs = [...primarySections, ...secondarySections];
 
   const hasSecondaryFields = chapter.fields.some(f => f.secondary);
   const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => data[f.k]);
@@ -45,6 +57,46 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
   // t() with fallback if not provided (backward compat)
   const tr = t || ((k) => k);
+
+  // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
+  // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
+  // zwischen den Scrollpositionen durch → Highlight blinkt nur kurz auf). Stattdessen:
+  // aktiv ist der zuletzt überschrittene Kopf oberhalb einer Linie knapp unter dem
+  // klebenden Reiter — so bleibt die aktuelle Sektion durchgehend markiert.
+  useEffect(() => {
+    setActiveSection(null);
+    if (sectionTabs.length < 2) return;
+    const root = document.getElementById('mp-main');
+    if (!root) return;
+    const compute = () => {
+      const anchors = document.querySelectorAll('[data-section-k]');
+      if (!anchors.length) return;
+      const line = root.getBoundingClientRect().top + 120;
+      let current = anchors[0].getAttribute('data-section-k');
+      for (const el of anchors) {
+        if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
+        else break;
+      }
+      setActiveSection(current);
+    };
+    compute();
+    root.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('resize', compute);
+    return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
+  }, [chapter.key, expandedSection, showSecondary]);
+
+  // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
+  // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
+  useEffect(() => {
+    if (!activeSection) return;
+    const tl = document.querySelector('[data-section-tablist]');
+    const btn = tl && tl.querySelector('[data-section-tab="' + activeSection + '"]');
+    if (!tl || !btn) return;
+    const b = btn.getBoundingClientRect(), t = tl.getBoundingClientRect();
+    if (b.left < t.left + 4 || b.right > t.right - 4) {
+      tl.scrollBy({ left: (b.left + b.width / 2) - (t.left + t.width / 2), behavior: 'smooth' });
+    }
+  }, [activeSection]);
 
   useEffect(() => {
     let timer;
@@ -849,31 +901,31 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     const sections = [];
     if (name || dob) {
       const rows = [];
-      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + name + '</div>');
+      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>');
       if (dob) rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>');
       sections.push({ title: tr('notfallSummary.cardPerson'), html: rows.join('') });
     }
     if (data.emergencyContact) {
-      const rows = ['<div>' + data.emergencyContact + '</div>'];
-      if (data.emergencyPhone) rows.push('<div>' + data.emergencyPhone + '</div>');
+      const rows = ['<div>' + escapeHtml(data.emergencyContact) + '</div>'];
+      if (data.emergencyPhone) rows.push('<div>' + escapeHtml(data.emergencyPhone) + '</div>');
       sections.push({ title: tr('notfallSummary.handoverContact'), html: rows.join('') });
     }
     const medRows = [];
-    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + data.bloodType + '</strong></div>');
+    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>');
     if (data.allergies) medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
-    if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => m.name + (m.dose ? ' ' + m.dose + ' ' + m.unit : '')).join(', ') + '</div>');
+    if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
     else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
-    if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => d.name + (d.code ? ' (' + d.code + ')' : '')).join(', ') + '</div>');
+    if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => escapeHtml(d.name) + (d.code ? ' (' + escapeHtml(d.code) + ')' : '')).join(', ') + '</div>');
     else if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
     if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
     const docList = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
     if (docList.length) {
-      const rows = docList.map(d => '<div>' + d.name + (d.phone ? ' · ' + d.phone : '') + '</div>');
+      const rows = docList.map(d => '<div>' + escapeHtml(d.name) + (d.phone ? ' · ' + escapeHtml(d.phone) : '') + '</div>');
       sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     } else if (data.doctor) {
-      const rows = ['<div>' + data.doctor + (data.doctorPhone ? ' · ' + data.doctorPhone : '') + '</div>'];
+      const rows = ['<div>' + escapeHtml(data.doctor) + (data.doctorPhone ? ' · ' + escapeHtml(data.doctorPhone) : '') + '</div>'];
       sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
     }
     const provRows = [];
@@ -920,7 +972,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { marginBottom: space.md + 'px', color: accent.icon } },
         React.createElement(Icon, { name: chapter.key, size: 48 })
       ),
-      React.createElement('h2', { style: { fontSize: text['2xl'], fontWeight: weight.semi, marginBottom: space.xs + 'px', color: palette.text } }, chapter.title),
+      React.createElement(PageTitle, { palette, style: { marginBottom: space.xs + 'px' } }, chapter.title),
       React.createElement('p', { style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' } }, chapter.description),
       hasIntro && React.createElement('p', { style: { fontSize: text.sm, color: accent.icon, marginTop: space.md + 'px', lineHeight: leading.relaxed, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto', fontStyle: 'italic' } }, introText)
     ),
@@ -1291,7 +1343,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       }, 'ⓘ ' + tr('orientation.contextFamilienzulagen')),
 
     // Tabs
-    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.lg + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
+    // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
+    // von „Angaben" gelesen werden, nicht losgelöst tief darunter schweben.
+    React.createElement('div', { style: { display: 'flex', gap: space.sm + 'px', marginBottom: space.sm + 'px', borderBottom: '1px solid ' + palette.border, paddingBottom: space.md + 'px' } },
       React.createElement('button', {
         onClick: () => setExpandedSection('fields'),
         style: {
@@ -1322,6 +1376,51 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
+      // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
+      sectionTabs.length >= 2 && React.createElement('div', {
+        role: 'tablist',
+        'data-section-tablist': '1',
+        'aria-label': tr('chapterView.sectionNav'),
+        style: {
+          // top: -24px gleicht das padding-top:24px des Scroll-Containers (#mp-main) aus,
+          // damit der Reiter beim Kleben bündig unter dem „100% lokal"-Streifen sitzt.
+          // Sonst bleibt ein 24px-Spalt, durch den der scrollende Text durchscheint.
+          position: 'sticky', top: '-24px', zIndex: 5,
+          // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
+          // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
+          display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
+          overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
+          padding: space.sm + 'px 0',
+          marginBottom: space.md + 'px',
+          background: palette.surface,
+          borderBottom: '1px solid ' + palette.border + '55',
+        },
+      },
+        sectionTabs.map((s) => {
+          const on = activeSection === s.k;
+          const jump = () => { const el = document.getElementById('mp-section-' + s.k); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+          return React.createElement('button', {
+            key: s.k,
+            'data-section-tab': s.k,
+            // Sekundär-Reiter: erst „mehr Felder" aufklappen, dann hinspringen
+            // (das Ziel existiert erst nach dem Aufklappen im DOM).
+            onClick: s.secondary
+              ? () => { if (!showSecondary) { setShowSecondary(true); try { localStorage.setItem(storageKey, 'true'); } catch {} requestAnimationFrame(() => requestAnimationFrame(jump)); } else { jump(); } }
+              : jump,
+            'aria-current': on ? 'true' : undefined,
+            style: {
+              flexShrink: 0,
+              padding: '5px 12px', borderRadius: (radius.pill || radius.md),
+              border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
+              background: on ? palette.sage + '18' : 'transparent',
+              color: on ? (palette.sageDeep || palette.text) : palette.mid,
+              fontSize: text.xs, fontWeight: on ? weight.medium : weight.normal,
+              fontFamily: 'inherit', cursor: 'pointer', whiteSpace: 'nowrap',
+              transition: 'background 160ms ease, border-color 160ms ease',
+            },
+          }, s.name);
+        })
+      ),
       filledCount === 0 && React.createElement('div', { style: { padding: space.lg + 'px', background: palette.sageMist || palette.up, borderRadius: radius.md, border: '1px solid ' + palette.sage + '22', textAlign: 'center', marginBottom: space.lg + 'px' } },
         React.createElement('p', { style: { fontSize: text.body, color: palette.text, margin: '0 0 6px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyState'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyState'); })()
@@ -1330,10 +1429,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
         ),
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sage, opacity: 0.8 } },
-          React.createElement('svg', { width: '11', height: '11', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
-            React.createElement('rect', { x: '4', y: '7', width: '8', height: '7', rx: '1' }),
-            React.createElement('path', { d: 'M 6 7 V 5 a 2 2 0 0 1 4 0 V 7' })
-          ),
+          React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
       ),
@@ -1345,10 +1441,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             elements.push(
               React.createElement('div', {
                 key: 'section-' + field.k,
+                id: 'mp-section-' + field.k,
+                'data-section-k': field.k,
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
+                  scrollMarginTop: '52px',
                   marginTop: isFirst ? 0 : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
@@ -1699,15 +1798,27 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onClick: toggleSecondary,
           'aria-expanded': showSecondary,
           style: {
-            background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: text.sm, color: palette.mid, letterSpacing: '0.3px',
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px',
+            fontSize: text.sm, color: palette.text, letterSpacing: '0.3px',
             padding: '8px 16px',
             fontFamily: fontFamily,
           }
         },
-          showSecondary
-            ? 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.less')
-            : 'ⓘ ' + tr('chapterView.disclosure.' + chapter.key + '.more')
+          React.createElement('span', null,
+            showSecondary
+              ? tr('chapterView.disclosure.' + chapter.key + '.less')
+              : tr('chapterView.disclosure.' + chapter.key + '.more')
+          ),
+          // Aufklapp-Pfeil — dreht beim Öffnen (macht klar: es kommen mehr Felder, keine Info).
+          React.createElement('span', {
+            'aria-hidden': 'true',
+            style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: showSecondary ? 'rotate(180deg)' : 'none', color: palette.mid },
+          },
+            React.createElement('svg', { width: '14', height: '14', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+              React.createElement('polyline', { points: '6 9 12 15 18 9' })
+            )
+          )
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sage, marginTop: space.xs }
@@ -1725,9 +1836,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             elements.push(
               React.createElement('div', {
                 key: 'section-' + field.k,
+                id: 'mp-section-' + field.k,
+                'data-section-k': field.k,
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
+                  // scroll-margin, damit der klebende Reiter das Ziel nicht verdeckt
+                  scrollMarginTop: '64px',
                   gridColumn: '1 / -1',
                   marginTop: isFirst ? '8px' : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
@@ -1769,7 +1884,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     // Documents Tab
     expandedSection === 'documents' && chapter.docs && React.createElement('div', null,
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
 
       // Upload Form
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
@@ -1875,6 +1990,28 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         tr('chapterView.trustDocuments')
       )
     ),
+
+    // Nächstes Thema — Jana: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
+    nextChapter && onNext ? React.createElement('button', {
+      type: 'button',
+      onClick: onNext,
+      style: {
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
+        width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
+        marginTop: space.xl + 'px', padding: space.md + 'px ' + space.lg + 'px',
+        background: palette.surface, border: '1px solid ' + palette.border,
+        borderRadius: radius.md, color: palette.text,
+        transition: 'background 160ms ease, border-color 160ms ease',
+      },
+      onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
+      onMouseLeave: (e) => { e.currentTarget.style.background = palette.surface; e.currentTarget.style.borderColor = palette.border; },
+    },
+      React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 } },
+        React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
+        React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
+      ),
+      React.createElement('span', { style: { color: palette.sand, fontSize: text.lg, flexShrink: 0 } }, '→'),
+    ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present
     (() => {

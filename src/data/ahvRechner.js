@@ -66,15 +66,20 @@ export function berechneAltersrente({
   durchschnittlichesJahreseinkommen,
   beitragsjahre,
   erziehungsjahre = 0,
+  betreuungsjahre = 0,
   bezugAlter,
   verheiratet = false,
   einkommenPartner = 0,
 }) {
   const alter = bezugAlter || REFERENZALTER;
 
-  // Einkommen mit Erziehungsgutschriften aufwerten
-  const gutschriftProJahr = erziehungsjahre > 0
-    ? (ERZIEHUNGSGUTSCHRIFT_JAHR * erziehungsjahre) / beitragsjahre
+  // Einkommen mit Erziehungs- UND Betreuungsgutschriften aufwerten.
+  // Beide gleichen Jahresbetrag (3× Minimalrente, Art. 29sexies/29septies AHVG);
+  // pro Kalenderjahr kann nur eine angerechnet werden — hier als getrennte,
+  // additive Jahre modelliert (Nutzer erfasst verschiedene Jahre).
+  const gutschriftJahre = (erziehungsjahre || 0) + (betreuungsjahre || 0);
+  const gutschriftProJahr = gutschriftJahre > 0
+    ? (ERZIEHUNGSGUTSCHRIFT_JAHR * gutschriftJahre) / beitragsjahre
     : 0;
   const aufgewertetesEinkommen = durchschnittlichesJahreseinkommen + gutschriftProJahr;
 
@@ -128,7 +133,10 @@ export function berechneAltersrente({
     fehlendeBeitragsjahre: Math.max(0, VOLLE_BEITRAGSJAHRE - beitragsjahre),
     bezugAlter: alter,
     vorbezugAufschub: Math.round(vorbezugAufschub * 10000) / 100, // in Prozent
-    erziehungsgutschrift: Math.round(gutschriftProJahr),
+    erziehungsgutschrift: Math.round(gutschriftProJahr), // kombinierte Aufwertung Erziehung + Betreuung (CHF/Jahr)
+    gutschriftJahre,
+    erziehungsjahre: erziehungsjahre || 0,
+    betreuungsjahre: betreuungsjahre || 0,
     plafoniert,
     rentePartner: verheiratet ? rentePartner : null,
     totalEhepaar: verheiratet ? Math.round((rente + rentePartner) * 100) / 100 : null,
@@ -222,6 +230,151 @@ export function berechneBVGGuthaben({
   };
 }
 
+/**
+ * Zukunfts-Projektion der 2./3. Säule bis zum Rücktritt.
+ *
+ * Reine Funktion (testbar). Konvention wie berechneBVGGuthaben: der Zins wird
+ * auf den Anfangsbestand des Jahres gerechnet, der Jahresbeitrag danach addiert
+ * (Beitrag verzinst sich erst im Folgejahr). Ergebnis ist eine Zeitachse mit
+ * einem Startpunkt „heute" (t=0) und je einem Punkt pro Jahr bis zum Rücktritt.
+ *
+ * Die BVG-Reihe wird von aussen übergeben (bvgSerie = jahresDetail-Guthaben),
+ * damit die bestehende Koordinationsabzug-/Gutschriften-Logik nicht dupliziert
+ * wird; 3a und 3b werden hier mit flachem Jahresbeitrag verzinst.
+ */
+export function projiziereVorsorge({
+  alter,
+  austrittsalter = 65,
+  startjahr,
+  bvgHeute = 0,
+  bvgSerie = [],          // bvgSerie[i] = Guthaben am Ende von Jahr (i+1), aus jahresDetail
+  s3aBalance = 0, s3aAnnual = 0, s3aRendite = 1.5,
+  s3bBalance = 0, s3bAnnual = 0, s3bRendite = 2.0,
+}) {
+  const round = Math.round;
+  const jahr0 = startjahr || new Date().getFullYear();
+  const n = Math.max(0, Math.round(austrittsalter - alter));
+
+  let g3a = s3aBalance;
+  let g3b = s3bBalance;
+  const timeline = [];
+  const push = (i, bvgVal) => {
+    const bvg = round(bvgVal);
+    const s3a = round(g3a);
+    const s3b = round(g3b);
+    timeline.push({ jahr: jahr0 + i, alter: Math.round(alter) + i, bvg, s3a, s3b, total: bvg + s3a + s3b });
+  };
+
+  push(0, bvgHeute);
+  for (let i = 1; i <= n; i++) {
+    g3a += g3a * s3aRendite / 100 + s3aAnnual;
+    g3b += g3b * s3bRendite / 100 + s3bAnnual;
+    const bvgVal = bvgSerie.length >= i ? bvgSerie[i - 1] : (timeline[timeline.length - 1]?.bvg ?? bvgHeute);
+    push(i, bvgVal);
+  }
+
+  const end = timeline[timeline.length - 1] || { bvg: 0, s3a: 0, s3b: 0, total: 0, alter: Math.round(alter), jahr: jahr0 };
+  return {
+    timeline,
+    startsumme: { bvg: round(bvgHeute), s3a: round(s3aBalance), s3b: round(s3bBalance), total: round(bvgHeute + s3aBalance + s3bBalance) },
+    endsumme: { bvg: end.bvg, s3a: end.s3a, s3b: end.s3b, total: end.total, alter: end.alter, jahr: end.jahr },
+  };
+}
+
+// === IK-Auszug (Individuelles Konto) — echte Beitragshistorie statt Annahme ===
+//
+// Statt die Beitragsjahre zu schätzen (min(Rücktritt−20, 44) volle Jahre), kann
+// aus einem nachgestellten IK-Auszug die reale Historie abgeleitet werden: echte
+// Beitragsjahre (ohne Lücken, gedeckelt auf 44), massgebendes Ø-Einkommen,
+// Jugendjahre zur Lückenfüllung (#6) und ALV-Jahre (AHV läuft weiter, #7).
+//
+// Ein Eintrag: { jahr:number, alter:number, einkommen:number, typ:string }
+// Bleibt eine SCHÄTZUNG — der echte IK-Auszug der Ausgleichskasse ist massgebend.
+
+export const IK_TYP = {
+  ERWERB: 'erwerb',        // Erwerbstätigkeit (zählt als AHV-Beitragsjahr + BVG)
+  JUGEND: 'jugendjahre',   // Alter 17–20: Beiträge füllen spätere Beitragslücken
+  ALV: 'alv',              // Arbeitslosigkeit: AHV läuft weiter, ABER kein BVG-Alterssparen
+  ERZIEHUNG: 'erziehung',  // Jahre mit Erziehungsgutschriften
+  BETREUUNG: 'betreuung',  // Pflege naher Angehöriger: Betreuungsgutschrift (Art. 29septies AHVG)
+  LUECKE: 'luecke',        // fehlendes Beitragsjahr (senkt die Rente)
+};
+
+// Typen, die als AHV-Beitragsjahr zählen (alles ausser der Lücke)
+const IK_BEITRAGSTYPEN = [IK_TYP.ERWERB, IK_TYP.ALV, IK_TYP.ERZIEHUNG, IK_TYP.BETREUUNG];
+
+const AHV_JUGEND_VON = 17;          // Jugendjahre-Fenster: Beiträge 17–20 füllen Lücken
+const AHV_BEITRAGSPFLICHT_AB = 21;  // ordentliche Beitragspflicht ab dem Jahr nach dem 20. Geburtstag
+
+/**
+ * Werte einen nachgestellten IK-Auszug aus: echte Beitragsjahre + Ø-Einkommen.
+ * Jugendjahre (17–20) füllen spätere Lücken (bis zu deren Anzahl). ALV-Jahre
+ * zählen als AHV-Beitragsjahr. Reine Funktion, testbar.
+ *
+ * @param {Array<{jahr:number, alter?:number, einkommen:number, typ:string}>} entries
+ * @returns {Object} abgeleitete Kennzahlen für berechneAltersrente()
+ */
+export function berechneIKAuszug(entries = []) {
+  const list = Array.isArray(entries) ? entries.filter(e => e && Number(e.jahr)) : [];
+
+  const jugend = list.filter(e => e.typ === IK_TYP.JUGEND);
+  const regular = list.filter(e => e.typ !== IK_TYP.JUGEND);
+
+  const contributory = regular.filter(e => IK_BEITRAGSTYPEN.includes(e.typ));
+  const luecken = regular.filter(e => e.typ === IK_TYP.LUECKE).length;
+
+  // Jugendjahre-Beiträge füllen spätere Beitragslücken (höchstens so viele wie Lücken)
+  const jugendGenutzt = Math.min(jugend.length, luecken);
+
+  // Effektive Beitragsjahre = reguläre Beitragsjahre + genutzte Jugendjahre, gedeckelt auf 44
+  const beitragsjahre = Math.min(VOLLE_BEITRAGSJAHRE, contributory.length + jugendGenutzt);
+
+  // Massgebendes Ø-Einkommen: Summe der angerechneten Einkommen / Beitragsjahre.
+  // Die zur Lückenfüllung genutzten Jugendjahre werden mit ihrem Einkommen einbezogen.
+  const angerechnet = contributory.concat(jugend.slice(0, jugendGenutzt));
+  const summeEinkommen = angerechnet.reduce((s, e) => s + (Number(e.einkommen) || 0), 0);
+  const durchschnitt = beitragsjahre > 0 ? Math.round(summeEinkommen / beitragsjahre) : 0;
+
+  return {
+    beitragsjahre,
+    durchschnittlichesJahreseinkommen: durchschnitt,
+    erwerbsjahre: regular.filter(e => e.typ === IK_TYP.ERWERB).length,
+    alvJahre: regular.filter(e => e.typ === IK_TYP.ALV).length,
+    erziehungsjahre: regular.filter(e => e.typ === IK_TYP.ERZIEHUNG).length,
+    betreuungsjahre: regular.filter(e => e.typ === IK_TYP.BETREUUNG).length,
+    luecken,
+    jugendjahreTotal: jugend.length,
+    jugendjahreGenutzt: jugendGenutzt,
+    jahreErfasst: list.length,
+    vollstaendig: beitragsjahre >= VOLLE_BEITRAGSJAHRE,
+  };
+}
+
+/**
+ * Vorbelegung eines IK-Auszugs: erzeugt Einträge ab Beitragspflicht (21) bis zum
+ * heutigen Alter mit dem aktuellen Einkommen als Annahme. Optional die Jugendjahre
+ * (17–20). So startet die Eingabe nicht leer (Robustheit: Vorausfüllen).
+ *
+ * @returns {Array} IK-Auszug-Einträge
+ */
+export function vorbelegeIKAuszug({ geburtsjahr, aktuellesAlter, aktuellesEinkommen = 0, mitJugendjahren = false, jetztJahr }) {
+  const jahr0 = jetztJahr || new Date().getFullYear();
+  let gj = geburtsjahr;
+  if (!gj && aktuellesAlter != null) gj = jahr0 - Math.round(aktuellesAlter);
+  if (!gj) return [];
+  const alterHeute = aktuellesAlter != null ? Math.round(aktuellesAlter) : (jahr0 - gj);
+  const entries = [];
+  if (mitJugendjahren) {
+    for (let a = AHV_JUGEND_VON; a < AHV_BEITRAGSPFLICHT_AB && a <= alterHeute; a++) {
+      entries.push({ jahr: gj + a, alter: a, einkommen: aktuellesEinkommen, typ: IK_TYP.JUGEND });
+    }
+  }
+  for (let a = AHV_BEITRAGSPFLICHT_AB; a <= alterHeute; a++) {
+    entries.push({ jahr: gj + a, alter: a, einkommen: aktuellesEinkommen, typ: IK_TYP.ERWERB });
+  }
+  return entries;
+}
+
 // Konstanten exportieren für Tests und UI
 export const AHV_PARAMS = {
   minRente: AHV_MIN_RENTE,
@@ -239,6 +392,12 @@ export const BVG_PARAMS = {
   koordinationsabzug: KOORDINATIONSABZUG,
   gutschriften: BVG_GUTSCHRIFTEN,
 };
+
+// Orientierungswert (kein gesetzlicher Wert): viele Bank-3a-Konten zahlen den
+// höheren Vorzugszins nur bis zu einer Schwelle in dieser Grössenordnung —
+// darüber sinkt der Zins. Dient allein dem Strategie-Hinweis im Zukunft-Reiter
+// (mehrere Konten moderat füllen → Vorzugszins halten + gestaffelter Bezug).
+export const SAEULE3A_ZINSSCHWELLE = 20000;
 
 export const AHV_DATA_VERSION = '2026';
 export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV, BSV Rententabellen 2026';
