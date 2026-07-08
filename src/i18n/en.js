@@ -3454,6 +3454,21 @@ export default {
     },
   },
 
+  instrumente: {
+    title: 'Your instruments',
+    intro: 'Four calm self-checks at a glance — tap one.',
+    tacho: 'Deductible gauge',
+    tachoSub: 'high or low — which pays off?',
+    kompass: 'Benefits compass',
+    kompassFound: '{n} possible ways',
+    kompassFoundOne: 'one possible way',
+    kompassNone: 'other ways',
+    tank: 'Reserve gauge',
+    tankMonths: '{months} months of buffer',
+    schild: 'Protection shield',
+    schildCount: '{covered}/{total} covered',
+    setup: 'tap to set up',
+  },
   schutzschild: {
     intro: 'The three protections almost everyone needs.',
     kk: 'Health insurance',
