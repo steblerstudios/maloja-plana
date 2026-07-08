@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 
@@ -77,9 +78,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('div', {
         style: { marginBottom: space.md + 'px', color: palette.sageDeep || palette.sage }
       }, React.createElement(Icon, { name: 'notfall', size: 40 })),
-      React.createElement('h2', {
-        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', letterSpacing: '-0.3px' }
-      }, t('notfallEinstieg.title')),
+      React.createElement(PageTitle, { palette, style: { margin: '0 0 8px 0' } }, t('notfallEinstieg.title')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed, maxWidth: '440px', marginLeft: 'auto', marginRight: 'auto' }
       }, t('notfallEinstieg.subtitle'))
@@ -127,9 +126,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         React.createElement('div', {
           style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.sm }
         },
-          React.createElement('h2', {
-            style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0 }
-          }, t('notfallEinstieg.' + scenario.key + '.title')),
+          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('notfallEinstieg.' + scenario.key + '.title')),
           React.createElement('span', {
             style: { fontSize: text.sm, color: allDone ? palette.sage : palette.mid, fontWeight: weight.medium }
           }, filled + '/' + total)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
@@ -95,7 +96,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Scanner
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'barcode', size: 20 }), t('kkScanner.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'barcode', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.title')),
 
       React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
         React.createElement('button', {
@@ -182,7 +183,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
 
     // Right: Preview & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'document', size: 20 }), t('kkScanner.dataPreview')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md } }, t('kkScanner.dataPreview')),
 
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: space.md } },
         [

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Eyebrow, PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
@@ -239,7 +240,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'cowbell', size: 20 }), t('calendar.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
 
     // Kalender-Export (.ics) — Termine ins eigene Kalender-App übernehmen
     upcoming.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
@@ -277,7 +278,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
     // Add view
     view === 'add' && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.sand } },
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('calendar.addReminder')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('calendar.addReminder')),
 
       React.createElement('input', {
         type: 'text', value: newTitle,
@@ -412,25 +413,25 @@ export const CalendarReminders = ({ palette, t, data }) => {
         : React.createElement('div', null,
             // Overdue section
             overdue.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.rose, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.rose, marginBottom: space.sm } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
               overdue.map(r => renderReminderCard(r))
             ),
 
             // Due today
             dueToday.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.today') + ' (' + dueToday.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.gold, marginBottom: space.sm } }, t('calendar.today') + ' (' + dueToday.length + ')'),
               dueToday.map(r => renderReminderCard(r))
             ),
 
             // This week
             dueSoon.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sky, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.sky, marginBottom: space.sm } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
               dueSoon.map(r => renderReminderCard(r))
             ),
 
             // Later
             upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: space.sm, textTransform: 'uppercase' } }, t('calendar.later')),
+              React.createElement(Eyebrow, { palette, style: { color: palette.mid, marginBottom: space.sm } }, t('calendar.later')),
               upcoming.filter(r => r.dueDate > today && daysBetween(today, r.dueDate) > 7).map(r => renderReminderCard(r))
             )
           )
