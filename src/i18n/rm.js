@@ -3627,6 +3627,21 @@ export default {
     detailhandel: 'Commerzi al detail',
   },
 
+  instrumente: {
+    title: 'Tes instruments',
+    intro: 'Quatter controllas tranquillas cun in sguard — tutga ina.',
+    tacho: 'Tachimeter da franchisa',
+    tachoSub: 'auta u bassa — tge vala la paina?',
+    kompass: 'Boussola da prestaziuns',
+    kompassFound: '{n} vias pussaivlas',
+    kompassFoundOne: 'ina via pussaivla',
+    kompassNone: 'autras vias',
+    tank: 'Indicatur da reserva',
+    tankMonths: '{months} mais reserva',
+    schild: 'Scud da protecziun',
+    schildCount: '{covered}/{total} cuverts',
+    setup: 'tutgar per configurar',
+  },
   schutzschild: {
     intro: 'Las trais protecziuns che quasi tuts dovran.',
     kk: 'Assicuranza da malsauns',

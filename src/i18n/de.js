@@ -3429,6 +3429,21 @@ export default {
     },
   },
 
+  instrumente: {
+    title: 'Deine Instrumente',
+    intro: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.',
+    tacho: 'Franchise-Tacho',
+    tachoSub: 'lohnt sich hoch oder tief?',
+    kompass: 'Leistungs-Kompass',
+    kompassFound: '{n} mögliche Wege',
+    kompassFoundOne: 'ein möglicher Weg',
+    kompassNone: 'weitere Wege',
+    tank: 'Reserve-Tankanzeige',
+    tankMonths: '{months} Monate Puffer',
+    schild: 'Schutzschild',
+    schildCount: '{covered}/{total} gedeckt',
+    setup: 'antippen zum Einrichten',
+  },
   schutzschild: {
     intro: 'Die drei Absicherungen, die fast alle brauchen.',
     kk: 'Krankenversicherung',
