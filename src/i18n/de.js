@@ -3553,6 +3553,7 @@ export default {
     // IK-Auszug (Beitragshistorie nachstellen)
     ikTitle: 'Beitragshistorie nachstellen (IK-Auszug)',
     ikIntro: { sie: 'Statt einer Annahme können Sie Ihre echte Beitragsgeschichte nachstellen — Jahr für Jahr. Das ergibt eine genauere Schätzung.', du: 'Statt einer Annahme kannst Du Deine echte Beitragsgeschichte nachstellen — Jahr für Jahr. Das ergibt eine genauere Schätzung.' },
+    ikEmptyTitle: 'Noch keine Jahre nachgestellt',
     ikEmpty: { sie: 'Beginnen Sie mit einer Vorbelegung ab Alter 21 mit Ihrem heutigen Einkommen — danach passen Sie einzelne Jahre an (Lücken, Arbeitslosigkeit, Erziehung).', du: 'Beginne mit einer Vorbelegung ab Alter 21 mit Deinem heutigen Einkommen — danach passt Du einzelne Jahre an (Lücken, Arbeitslosigkeit, Erziehung).' },
     ikPrefill: 'Aus meinen Daten vorausfüllen',
     ikJugend: 'Jugendjahre (17–20) mitzählen — füllen spätere Lücken',

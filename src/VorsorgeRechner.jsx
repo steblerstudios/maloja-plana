@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -262,12 +263,17 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       React.createElement('summary', { style: s.intlSummary }, t('vr.ikTitle')),
       React.createElement('p', { style: s.intlIntro }, t('vr.ikIntro')),
 
-      // Empty-State mit Vorausfüllen
-      ikEntries.length === 0 && React.createElement('div', null,
-        React.createElement('p', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginBottom: space.sm + 'px' } }, t('vr.ikEmpty')),
-        React.createElement('button', { style: s.tab(false), onClick: prefillIK, disabled: !birthYear }, t('vr.ikPrefill')),
-        !birthYear && React.createElement('div', { style: { ...s.sublabel, color: palette.gold, marginTop: space.xs + 'px' } }, t('vr.geburtsdatumFehlt'))
-      ),
+      // Empty-State (dritter Konsistenz-Baustein): ruhiger Titel + Anleitung + eine Handlung
+      ikEntries.length === 0 && React.createElement(EmptyState, {
+        palette,
+        title: t('vr.ikEmptyTitle'),
+        description: t('vr.ikEmpty'),
+        style: { marginTop: space.sm + 'px' },
+        action: React.createElement(React.Fragment, null,
+          React.createElement('button', { style: s.tab(false), onClick: prefillIK, disabled: !birthYear }, t('vr.ikPrefill')),
+          !birthYear && React.createElement('div', { style: { ...s.sublabel, color: palette.gold, marginTop: space.xs + 'px' } }, t('vr.geburtsdatumFehlt'))
+        ),
+      }),
 
       // Gefüllt: Jugend-Schalter + Phasen-Blöcke + Live-Auswertung
       ikEntries.length > 0 && React.createElement(React.Fragment, null,
