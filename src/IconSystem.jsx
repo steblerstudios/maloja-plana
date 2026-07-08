@@ -911,6 +911,37 @@ const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
 );
 
+// Globus — Digital & Privatsphäre (Kreis + Äquator + Meridian).
+const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
+  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
+  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
+);
+
+// Tag — Konsum & Medien (Preisschild mit Loch).
+const _tag = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 4 12 L 12 4 H 20 V 12 L 12 20 Z' }),
+  React.createElement('circle', { cx: '16', cy: '8', r: '1.4' }),
+);
+
+// Pfote — Tiere & Assistenz (Ballen + vier Zehen).
+const _paw = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '6.8', cy: '11', r: '1.7' }),
+  React.createElement('circle', { cx: '10.2', cy: '7.3', r: '1.7' }),
+  React.createElement('circle', { cx: '13.8', cy: '7.3', r: '1.7' }),
+  React.createElement('circle', { cx: '17.2', cy: '11', r: '1.7' }),
+  React.createElement('path', { d: 'M 8.5 16 C 8.5 13.3 15.5 13.3 15.5 16 C 15.5 19 13.3 20.8 12 20.8 C 10.7 20.8 8.5 19 8.5 16 Z' }),
+);
+
+// Palette — Kunst & Handwerk (Malpalette mit Farbtupfern).
+const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
+  React.createElement('path', { d: 'M 12 3.5 C 17.8 3.5 21 7 21 11 C 21 13 19.5 13.8 18.2 13.8 C 17.2 13.8 16.5 14.5 16.5 15.5 C 16.5 16.8 17.4 17.2 17.4 18.4 C 17.4 19.7 15.6 20.5 12 20.5 C 6.8 20.5 3 16.6 3 12 C 3 7 7 3.5 12 3.5 Z', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' }),
+  React.createElement('circle', { cx: '7.8', cy: '10.6', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '11', cy: '7.8', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '14.6', cy: '8.6', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '7.6', cy: '14.6', r: '1', fill: 'currentColor' }),
+);
+
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
@@ -987,6 +1018,10 @@ const _iconFactories = {
   lock: _lock,
   cowbell: _cowbell,
   leaf: _leaf,
+  globe: _globe,
+  tag: _tag,
+  paw: _paw,
+  palette: _palette,
 };
 
 // iOS Safari collapses an <svg> that has a viewBox but no explicit width/height
