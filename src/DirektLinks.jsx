@@ -37,6 +37,7 @@ export const DirektLinks = ({ palette, t, data }) => {
       flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '11px', paddingBottom: space.sm + 'px',
       background: palette.up, border: '1px solid ' + (active ? palette[ton] : palette.border), borderBottom: 'none',
       borderTopLeftRadius: '3px', borderTopRightRadius: '3px', cursor: 'pointer', fontFamily: 'inherit',
+      color: palette.text, // Dark-Mode: Icon erbt fill:currentColor — Button erbt color nicht zuverlässig
       transform: active ? 'translateY(-5px)' : 'none', transition: 'transform 140ms ' + ease.out,
       boxShadow: active ? '0 2px 10px ' + palette[ton] + '2E' : 'none',
     }),
