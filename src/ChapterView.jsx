@@ -1311,7 +1311,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
     // solange nichts erfasst ist.
     chapter.key === 'versicherungen' &&
-      React.createElement(Schutzschild, { palette, t, versicherungen: data }),
+      React.createElement(Schutzschild, {
+        palette, t, versicherungen: data,
+        employed: allData?.finanzen?.employmentType === 'employed',
+        annualIncome: (Number(allData?.finanzen?.monthlyIncome) || 0) * 12,
+      }),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // IPV: shown in finanzen when income + canton exist
