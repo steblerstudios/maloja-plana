@@ -1356,6 +1356,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
     React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
 
+    // Zugang zum Lebens-Obstgarten (eigene Ansicht neben dem Einzelbaum)
+    React.createElement('button', {
+      onClick: () => onNavigate('obstgarten'),
+      style: {
+        display: 'block', margin: '0 0 ' + space.xl + 'px', background: 'none', border: 'none',
+        cursor: 'pointer', padding: '2px 0', fontSize: text.sm, color: palette.sand,
+        fontFamily: 'inherit', fontWeight: weight.medium,
+      },
+    }, t('obstgarten.link') + ' →'),
+
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
       React.createElement(PanelTitle, {

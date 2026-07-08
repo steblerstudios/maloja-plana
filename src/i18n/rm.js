@@ -3627,6 +3627,18 @@ export default {
     detailhandel: 'Commerzi al detail',
   },
 
+  obstgarten: {
+    title: 'Mes iert da fritgs',
+    intro: 'Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l\'arbre plain. Tutga per avrir il sectur.',
+    link: 'Mes iert da fritgs',
+    legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils quatter arbulets ils pli giuvens vegnan pli tard.',
+    future: 'vegn pli tard',
+    stage1: 'plantina',
+    stage2: 'crescha',
+    stage3: 'porta fritgs',
+    stage4: 'cumplainamain madir',
+    b: { gesundheit: 'Sanadad', arbeit: 'Lavur', familie: 'Famiglia', vorsorge: 'Prevenziun' },
+  },
   instrumente: {
     title: 'Tes instruments',
     intro: 'Quatter controllas tranquillas cun in sguard — tutga ina.',
