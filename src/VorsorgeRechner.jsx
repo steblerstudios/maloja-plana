@@ -606,7 +606,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             (ahvMonat + bvgMonat) > 0 && (x1 - xret) > 130 && React.createElement('g', { key: 'pensRente' },
               React.createElement('rect', { x: Math.min(x1 - 152, (xret + x1) / 2 - 74), y: y0 + 16, width: 148, height: 34, rx: 6, fill: palette.surface, stroke: palette.border, strokeWidth: 1 }),
               React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 29, fill: palette.mid, fontSize: 8.5, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.zukunftRente')),
-              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 43, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, 'AHV ' + fmt(ahvMonat) + (bvgMonat > 0 ? ' + BVG ' + fmt(bvgMonat) : ''))),
+              React.createElement('text', { x: Math.min(x1 - 78, (xret + x1) / 2), y: y0 + 43, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' },
+                // Nur die tatsächlich vorhandenen Säulen benennen (wie die Legende) —
+                // sonst stünde „AHV 0", wenn kein Einkommen erfasst ist, aber BVG versichert.
+                [ahvMonat > 0 ? 'AHV ' + fmt(ahvMonat) : null, bvgMonat > 0 ? 'BVG ' + fmt(bvgMonat) : null].filter(Boolean).join(' + '))),
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
             React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
