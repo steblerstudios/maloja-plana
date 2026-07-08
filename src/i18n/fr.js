@@ -3453,6 +3453,16 @@ export default {
     },
   },
 
+  schutzschild: {
+    intro: 'Les trois protections dont presque tout le monde a besoin.',
+    kk: 'Assurance-maladie',
+    haftpflicht: 'Responsabilité civile',
+    hausrat: 'Ménage (inventaire)',
+    covered: 'couvert',
+    open: 'à faire',
+    allCovered: 'Les trois protections de base sont en place.',
+    gapsHint: '{covered} sur {total} couvertes — à faire : {list}.',
+  },
   schnellcheck: {
     title: 'Vérification rapide des prestations',
     intro: 'Un jeu d’informations — à quoi pourriez-vous avoir droit ? Beaucoup de prestations existent sans qu’on le sache. Vos données du profil sont préremplies ; adaptez-les librement ici pour explorer.',

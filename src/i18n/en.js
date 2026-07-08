@@ -3454,6 +3454,16 @@ export default {
     },
   },
 
+  schutzschild: {
+    intro: 'The three protections almost everyone needs.',
+    kk: 'Health insurance',
+    haftpflicht: 'Personal liability',
+    hausrat: 'Household contents',
+    covered: 'covered',
+    open: 'open',
+    allCovered: 'The three core protections are in place.',
+    gapsHint: '{covered} of {total} covered — open: {list}.',
+  },
   schnellcheck: {
     title: 'Benefits quick check',
     intro: 'One set of details — what might you be entitled to? Many things are available without people knowing. Your profile details are pre-filled; adjust them here freely to explore.',
