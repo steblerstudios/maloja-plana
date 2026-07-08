@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { getCantonName } from './config/cantonalData.js';
 
@@ -21,9 +22,9 @@ const Section = ({ title, children, palette }) =>
   React.createElement('div', {
     style: { marginBottom: '28px' }
   },
-    React.createElement('h3', {
+    React.createElement(PanelTitle, {
+      palette,
       style: {
-        fontSize: text.body, fontWeight: weight.semi, color: palette.text,
         marginBottom: space.sm, letterSpacing: '0.2px',
         paddingBottom: space.sm, borderBottom: '1px solid ' + palette.border,
       }
@@ -199,9 +200,10 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
     }, '← ' + t('common.back')),
 
     // Title
-    React.createElement('h2', {
+    React.createElement(PageTitle, {
+      palette,
       style: {
-        fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md,
+        marginBottom: space.md,
         letterSpacing: '0.2px',
       }
     }, t('legal.title')),

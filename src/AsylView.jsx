@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -47,15 +48,12 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'behoerden', size: 20 }),
-      t('asyl.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'behoerden', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('asyl.title')),
     React.createElement('p', { style: s.intro }, t('asyl.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('asyl.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
     React.createElement('div', { style: s.disclaimer }, t('asyl.disclaimer')),
 
     // ── Status-/Ausweistypen ──
-    React.createElement('h3', { style: s.sectionTitle }, t('asyl.statusTitle')),
+    React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.statusTitle')),
     React.createElement('div', null,
       ASYL_STATUS.map((st, i) =>
         React.createElement('div', { key: st.key, style: { ...s.statusRow, ...(i === ASYL_STATUS.length - 1 ? { borderBottom: 'none' } : {}) } },
@@ -86,7 +84,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Verfahren in Kürze ──
-    React.createElement('h3', { style: s.sectionTitle }, t('asyl.processTitle')),
+    React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.processTitle')),
     React.createElement('div', null,
       ASYL_PROCESS.map((p, i) =>
         React.createElement('div', { key: p, style: s.procItem },
@@ -97,7 +95,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Deine Rechte ──
-    React.createElement('h3', { style: s.sectionTitle }, t('asyl.rightsTitle')),
+    React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.rightsTitle')),
     React.createElement('div', null,
       ASYL_RIGHTS.map((r) =>
         React.createElement('div', { key: r, style: s.rightItem },
@@ -120,7 +118,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     ),
 
     // ── Wo Hilfe holen ──
-    React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.orgsTitle')),
+    React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.orgsTitle')),
     React.createElement('div', null,
       ASYL_ORGS.map((org, i) =>
         React.createElement('a', {
@@ -140,7 +138,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
     // ── Beratung in Ihrem Kanton ──
     cantonOffice && React.createElement('div', { key: 'canton-office' },
-      React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } },
+      React.createElement(PanelTitle, { palette, style: { marginTop: space.lg + 'px', marginBottom: space.md + 'px' } },
         t('asyl.cantonOfficeTitle', { canton: t('cantons.' + canton) || canton })),
       React.createElement('div', { style: s.cantonBox },
         React.createElement('a', {
@@ -160,7 +158,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
 
     // ── Nächste Schritte: ruhige Crosslinks zu Dokumenten & Notfall ──
     onNavigate && React.createElement('div', { key: 'next-steps' },
-      React.createElement('h3', { style: { ...s.sectionTitle, marginTop: space.lg + 'px' } }, t('asyl.nextStepsTitle')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.nextStepsTitle')),
       React.createElement('button', {
         style: { ...s.crosslink, marginTop: space.xs + 'px' },
         onClick: () => onNavigate('kkerst'),
