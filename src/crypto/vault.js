@@ -27,6 +27,7 @@ const IV_BYTES = 12;      // 96-bit IV, Standard für AES-GCM
 const SALT_BYTES = 16;
 const RECOVERY_BYTES = 20; // 160-bit Recovery-Geheimnis — kryptografisch stark
 const VERSION = 1;
+const ALG = 'AES-256-GCM+HKDF-SHA256';
 
 // HKDF-„info"-Labels zur Domänentrennung: derselbe Rohschlüssel ergibt so für PRF und
 // Recovery garantiert unterschiedliche KEKs.
@@ -37,6 +38,11 @@ const INFO_RECOVERY = 'maloja-vault-recovery-v1';
 
 const enc = new TextEncoder();
 const dec = new TextDecoder();
+
+// Zusatzdaten (AAD) für jedes GCM-Chiffrat: bindet Version + Algorithmus in den Auth-Tag.
+// Wird das Format manipuliert oder ein Chiffrat aus einer anderen Version untergeschoben,
+// schlägt die Entschlüsselung fehl — statt still etwas Falsches zu tun.
+const AAD = enc.encode('maloja-vault|v' + VERSION + '|' + ALG);
 
 function randomBytes(n) {
   return globalThis.crypto.getRandomValues(new Uint8Array(n));
@@ -84,13 +90,13 @@ async function generateDek() {
 
 async function encrypt(key, plaintextBytes) {
   const iv = randomBytes(IV_BYTES);
-  const ct = new Uint8Array(await subtle.encrypt({ name: AES, iv }, key, plaintextBytes));
+  const ct = new Uint8Array(await subtle.encrypt({ name: AES, iv, additionalData: AAD }, key, plaintextBytes));
   return { iv, ct };
 }
 
 async function decrypt(key, iv, ct) {
   // Wirft bei falschem Schlüssel oder manipuliertem Chiffrat (GCM-Auth-Tag schlägt fehl).
-  return new Uint8Array(await subtle.decrypt({ name: AES, iv }, key, ct));
+  return new Uint8Array(await subtle.decrypt({ name: AES, iv, additionalData: AAD }, key, ct));
 }
 
 // Leitet einen AES-GCM-KEK via HKDF-SHA-256 aus einem hochentropischen Rohschlüssel ab
@@ -114,7 +120,10 @@ async function wrapDek(kek, dek) {
 
 async function unwrapDek(kek, wrapped) {
   const raw = await decrypt(kek, wrapped.iv, wrapped.ct);
-  return subtle.importKey('raw', raw, { name: AES, length: KEY_BITS }, true, ['encrypt', 'decrypt']);
+  // Nicht extrahierbar + nur 'decrypt': der DEK auf dem Öffnen-Pfad wird ausschliesslich
+  // zum Entschlüsseln gebraucht. So kann selbst kompromittierter Client-Code (XSS) den
+  // rohen Schlüssel nicht per exportKey() herausziehen — schützt die Zero-Knowledge-Garantie.
+  return subtle.importKey('raw', raw, { name: AES, length: KEY_BITS }, false, ['decrypt']);
 }
 
 // ─── Öffentliche High-Level-API ──────────────────────────────────────────────────
@@ -146,7 +155,7 @@ async function sealBackup(plaintext, prfOutput, recoveryBytes) {
 
   return {
     v: VERSION,
-    alg: 'AES-256-GCM+HKDF-SHA256',
+    alg: ALG,
     iv: bytesToBase64(iv),
     ct: bytesToBase64(ct),
     prfSalt: bytesToBase64(prfSalt),
@@ -157,6 +166,11 @@ async function sealBackup(plaintext, prfOutput, recoveryBytes) {
 }
 
 async function openWithKek(sealed, kek, wrapped) {
+  // Format explizit prüfen: ein Blob anderer Version/Algorithmus soll klar scheitern,
+  // nicht still falsch entschlüsselt werden (die AAD-Bindung erzwingt es zusätzlich).
+  if (sealed.v !== VERSION || sealed.alg !== ALG) {
+    throw new Error('Nicht unterstütztes Backup-Format (v=' + sealed.v + ', alg=' + sealed.alg + ')');
+  }
   const dek = await unwrapDek(kek, {
     iv: base64ToBytes(wrapped.iv),
     ct: base64ToBytes(wrapped.ct),
