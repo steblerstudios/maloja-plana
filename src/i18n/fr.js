@@ -1534,7 +1534,7 @@ export default {
 
   legal: {
     title: 'Mentions légales',
-    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Impressum', license: 'Licence', ethics: 'Éthique', resources: 'Ressources', faq: 'FAQ', support: 'Contribution' },
+    tabs: { privacy: 'Confidentialité', terms: 'Conditions', imprint: 'Mentions légales', license: 'Licence', ethics: 'Éthique', resources: 'Ressources', faq: 'FAQ', support: 'Contribution' },
     support: {
       whatTitle: 'Ce que coûte Maloja',
       intro1: 'Maloja Plana reste utilisable par tous — entièrement gratuit si nécessaire. Si l’argent manque, vous devez pouvoir tout utiliser sans limite.',
@@ -1696,7 +1696,7 @@ export default {
       ombuds4: { name: 'Protection des consommateurs', url: 'https://www.konsumentenschutz.ch', desc: 'Conseil indépendant pour les droits des consommateurs.' },
       heartfeltIntro: 'Des services et projets que nous apprécions personnellement — recommandés gratuitement, sans contrepartie.',
       heartfeltIntroAffiliate: 'Services et projets que nous apprécions personnellement. La plupart sont recommandés sans rémunération ; les liens marqués « Affiliate » rapportent à Maloja une petite commission — sans coût pour vous.',
-      affiliateMarker: 'Affiliate',
+      affiliateMarker: 'Affilié',
       heartfeltGroups: { digital: 'Numérique & vie privée', soziales: 'Soutien social', konsum: 'Consommation & médias', tiere: 'Animaux & assistance', gesundheit: 'Corps & santé', kunst: 'Art & artisanat', gemeinschaft: 'Communauté & transitions de vie' },
       heartfelt1: 'Moteur de recherche qui investit ses recettes dans le reboisement.',
       heartfelt2: 'Hébergement suisse à énergie verte, avec ses propres centres de données économes en ressources.',
