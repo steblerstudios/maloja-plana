@@ -3568,6 +3568,7 @@ export default {
     // IK statement (reconstruct contribution history)
     ikTitle: 'Reconstruct contribution history (IK statement)',
     ikIntro: 'Instead of an assumption, you can reconstruct your real contribution history — year by year. This gives a more accurate estimate.',
+    ikEmptyTitle: 'No years reconstructed yet',
     ikEmpty: 'Start with a pre-fill from age 21 using your current income — then adjust individual years (gaps, unemployment, child care).',
     ikPrefill: 'Pre-fill from my data',
     ikJugend: 'Count youth years (17–20) — they fill later gaps',

@@ -3731,6 +3731,7 @@ export default {
     // Extract IC (reconstruir la istorgia da contribuziun) — RM best-effort, gegenlese offen
     ikTitle: 'Reconstruir la istorgia da contribuziun (extract IC)',
     ikIntro: 'Empè dad ina supposiziun pos ti reconstruir tia vaira istorgia da contribuziun — onn per onn. Quai dat ina stima pli precisa.',
+    ikEmptyTitle: 'Anc nagins onns reconstruids',
     ikEmpty: 'Cumenza cun ina precumplenida a partir da 21 onns cun tes retgav actual — lura adatta singuls onns (largias, dischoccupaziun, educaziun).',
     ikPrefill: 'Precumpler da mias datas',
     ikJugend: 'Contar ils onns da giuventetgna (17–20) — els emplenischan largias posteriuras',
