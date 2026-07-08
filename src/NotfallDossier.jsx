@@ -1,9 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
 
@@ -96,12 +98,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         border: '1px solid ' + palette.border, marginBottom: '20px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm, letterSpacing: '0.2px',
-        }
-      }, React.createElement(Icon, { name: 'emergency', size: 18 }), t('notfallDossier.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'emergency', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('notfallDossier.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: '14px' }
       }, t('notfallDossier.subtitle')),
@@ -123,15 +120,9 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }
     }, 'ⓘ ' + t('notfallDossier.privacyNote')),
 
-    hasSections && React.createElement('button', {
-      onClick: handlePrint,
-      style: {
-        width: '100%', padding: '12px', marginBottom: '20px',
-        background: palette.sand, color: '#fff', border: 'none',
-        borderRadius: radius.sm, cursor: 'pointer',
-        fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
-        letterSpacing: '0.2px',
-      }
+    hasSections && React.createElement(PrimaryButton, {
+      palette, onClick: handlePrint,
+      style: { width: '100%', padding: '12px', marginBottom: '20px' },
     }, t('notfallDossier.printAction')),
 
     hasSections && React.createElement('div', {

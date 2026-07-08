@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
 import { Icon } from './IconSystem.jsx';
 import { calculateSozialhilfe } from './config/cantonalData.js';
@@ -253,12 +254,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   },
 
     // Title
-    React.createElement('h2', {
-      style: {
-        fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md,
-        display: 'flex', alignItems: 'center', gap: space.sm
-      }
-    }, React.createElement(Icon, { name: 'budget', size: 18 }), t('budgetSync.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'budget', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('budgetSync.title')),
 
     // === Income section ===
     budget.incomeDetail.net > 0 && React.createElement('div', { style: itemLineStyle },

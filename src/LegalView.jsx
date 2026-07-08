@@ -1,29 +1,14 @@
 import React from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
-import { getCantonName } from './config/cantonalData.js';
-
-// Alle 26 Kantonsportale folgen dem Muster www.<code>.ch (verifiziert) — kein
-// hardcodierter URL-Katalog nötig, der veralten könnte.
-const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
-
-// Best-effort-Gemeinde-URL (Sophies Entscheid): die meisten CH-Gemeinden nutzen
-// www.<gemeinde>.ch. Trifft oft, kann gelegentlich danebenliegen — bewusst akzeptiert.
-const communeUrl = (city) => {
-  const slug = String(city).toLowerCase()
-    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
-    .replace(/[àâá]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíî]/g, 'i')
-    .replace(/[òóô]/g, 'o').replace(/[ùúû]/g, 'u').replace(/ç/g, 'c').replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  return slug ? 'https://www.' + slug + '.ch' : null;
-};
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
     style: { marginBottom: '28px' }
   },
-    React.createElement('h3', {
+    React.createElement(PanelTitle, {
+      palette,
       style: {
-        fontSize: text.body, fontWeight: weight.semi, color: palette.text,
         marginBottom: space.sm, letterSpacing: '0.2px',
         paddingBottom: space.sm, borderBottom: '1px solid ' + palette.border,
       }
@@ -34,43 +19,6 @@ const Section = ({ title, children, palette }) =>
   );
 
 const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '2px' };
-
-// Herzensempfehlungen: Name + Ziel-Link sind sprachunabhängig (Eigennamen),
-// nur die Beschreibung kommt aus i18n (heartfeltN). url: null = bewusst kein Link
-// (App-Store-App ohne Website, oder Website mit defektem HTTPS-Zertifikat).
-// affiliate: true → Link bringt eine Provision; wird transparent als "Affiliate"
-// gekennzeichnet und blendet den Intro-Hinweis um. Erst setzen, wenn eine echte
-// Affiliate-Partnerschaft besteht (sonst bliebe der "unbezahlt"-Text unwahr).
-// group: ordnet jede Empfehlung einer Themengruppe zu (Render gruppiert + Überschriften).
-const HEARTFELT = [
-  { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org', group: 'digital' },
-  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' },
-  { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de', group: 'digital' },
-  { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch', group: 'kunst' },
-  { key: 'heartfelt5', name: 'Baukunst Nick', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
-  { key: 'heartfelt6', name: 'Living Dream Design', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
-  { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss', group: 'gemeinschaft' },
-  { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch', group: 'tiere' },
-  { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch', group: 'gemeinschaft' },
-  { key: 'heartfelt10', name: 'Xdo', url: null, group: 'digital' }, // App Store (Rau Media), keine Website
-  { key: 'heartfelt11', name: 'Schule für Blindenführhunde Allschwil', url: 'https://www.blindenhundeschule.ch', group: 'tiere' },
-  { key: 'heartfelt12', name: 'Blindenhundeschule Liestal', url: 'https://www.blindenhund.ch', group: 'tiere' },
-  { key: 'heartfelt13', name: 'Abstraktum Odemis', url: 'https://www.abstraktum-odemis.ch', group: 'gesundheit' },
-  { key: 'heartfelt14', name: 'K-Tipp', url: 'https://www.ktipp.ch', group: 'konsum' },
-  { key: 'heartfelt15', name: 'Saldo', url: 'https://www.saldo.ch', group: 'konsum' },
-  { key: 'heartfelt16', name: 'SRF Kassensturz', url: 'https://www.srf.ch/sendungen/kassensturz-espresso', group: 'konsum' },
-  { key: 'heartfelt17', name: 'Foodshiner', url: null, group: 'digital' }, // foodshiner.app – HTTPS-Zertifikat abgelaufen, App Store, vorerst kein Link
-  { key: 'heartfelt18', name: 'Typewise', url: 'https://www.typewise.app/', group: 'digital' },
-  { key: 'heartfelt19', name: 'moody.marinoko', url: 'https://www.instagram.com/moody.marinoko', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
-  { key: 'heartfelt20', name: 'nottietatts', url: 'https://www.instagram.com/nottietatts', group: 'kunst' }, // Tattoo-Artist, z.Zt. nur Instagram
-  { key: 'heartfelt21', name: 'Malergeschäft Hammel', url: 'https://www.nunningen.swiss/leben/gewerbe.html/50/company/41', group: 'kunst' }, // keine eigene Website – Gemeinde-Verzeichnis
-  { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/', group: 'gesundheit' },
-  { key: 'heartfelt23', name: 'Winterhilfe Schweiz', url: 'https://www.winterhilfe.ch', group: 'soziales' },
-  { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
-];
-
-// Reihenfolge der Gruppen in der Anzeige.
-const HEARTFELT_GROUPS = ['digital', 'soziales', 'konsum', 'tiere', 'gesundheit', 'kunst', 'gemeinschaft'];
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
 // die URL eintragen (z. B. Twint-Link, Stripe-Payment-Link, Ko-fi, Bank-QR-Seite).
@@ -123,56 +71,8 @@ const autoLink = (text, palette) => {
 const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
-// Strukturierter Ressourcen-Link: klickbarer Name statt doppelter Auflistung
-// (Name + nackte Domain). entry = { name, url, desc, web? }; ohne url nur der Name
-// (z. B. defektes HTTPS-Zertifikat). Optionales web = zusätzlicher Website-Link
-// (z. B. Beratungsstelle, deren Name auf eine tel:-Nummer zeigt). Fällt auf
-// Plain-String zurück.
-const ResLink = (entry) =>
-  entry && typeof entry === 'object'
-    ? React.createElement('p', { key: entry.name, style: { margin: '0 0 8px 0' } },
-        '→ ',
-        entry.url
-          ? React.createElement('a', { href: entry.url, target: '_blank', rel: 'noopener', style: linkStyle }, entry.name)
-          : entry.name,
-        ' — ' + entry.desc,
-        entry.web
-          ? React.createElement(React.Fragment, { key: 'web' },
-              ' · ',
-              React.createElement('a', { href: entry.web, target: '_blank', rel: 'noopener', style: linkStyle }, 'Website'))
-          : null)
-    : React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + entry);
-
 export const LegalView = ({ palette, t, onNavigate, section, data }) => {
   const activeSection = section || 'privacy';
-
-  // Wohngemeinde/-kanton aus den eigenen Daten. Kanton → offizielles Portal
-  // (verlässlich, www.<code>.ch). Gemeinde → www.<gemeinde>.ch (best effort,
-  // Sophies Entscheid). Direkt-Navigation zur Gemeinde-Seite, keine Such-/
-  // Drittanbieter-URL. Fällt auf generischen Text zurück, wenn nichts erfasst.
-  const renderLocalGov = () => {
-    const canton = (data && data.basis && data.basis.canton) || '';
-    const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
-    const cantonName = canton ? getCantonName(canton, t) : '';
-    if (!city && !cantonName) {
-      return React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + t('legal.resources.petition3'));
-    }
-    const parts = ['→ '];
-    if (city) {
-      const cUrl = communeUrl(city);
-      parts.push(cUrl
-        ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener', style: linkStyle }, city)
-        : city);
-    }
-    if (cantonName) {
-      if (city) parts.push(' · ');
-      parts.push(React.createElement('a', {
-        key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener', style: linkStyle,
-      }, t('legal.resources.cantonPortal', { canton: cantonName })));
-    }
-    parts.push(' — ' + t('legal.resources.localGovDesc'));
-    return React.createElement('p', { style: { margin: '0 0 8px 0' } }, parts);
-  };
 
   const tabs = [
     { key: 'privacy', label: t('legal.tabs.privacy') },
@@ -199,9 +99,10 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
     }, '← ' + t('common.back')),
 
     // Title
-    React.createElement('h2', {
+    React.createElement(PageTitle, {
+      palette,
       style: {
-        fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md,
+        marginBottom: space.md,
         letterSpacing: '0.2px',
       }
     }, t('legal.title')),
@@ -429,7 +330,7 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
               href: CONTRIBUTION_URL, target: '_blank', rel: 'noopener',
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
-                background: palette.sand, color: '#fff', borderRadius: radius.sm,
+                background: palette.sand, color: palette.onSand, borderRadius: radius.sm,
                 textDecoration: 'none', fontWeight: weight.semi, fontSize: text.sm,
               }
             }, t('legal.support.contributeCta'))
@@ -440,50 +341,21 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
       ]})
     ),
 
+    // Der Ressourcen-Inhalt (sichere Kanäle, Beratungs-/Ombudsstellen, Petitionen,
+    // Herzensempfehlungen) lebt jetzt gebündelt in der Bibliothek (Bücherregal).
+    // Dieser Reiter ist ein ruhiger Verweis dorthin — keine Doppelpflege.
     activeSection === 'resources' && React.createElement('div', null,
-      Section({ title: t('legal.resources.secureTitle'), palette, children: [
-        P({ children: t('legal.resources.secure1') }),
-        ResLink(t('legal.resources.threema')),
-        ResLink(t('legal.resources.secureSafe')),
-        ResLink(t('legal.resources.incamail')),
+      Section({ title: t('legal.resources.movedTitle'), palette, children: [
+        P({ children: t('legal.resources.movedText') }),
+        React.createElement('button', {
+          onClick: () => onNavigate('direktlinks'),
+          style: {
+            background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
+            fontSize: text.sm, color: palette.sage, cursor: 'pointer', fontFamily: 'inherit',
+          },
+        }, t('legal.resources.movedCta')),
       ]}),
-      Section({ title: t('legal.resources.petitionTitle'), palette, children: [
-        P({ children: t('legal.resources.petition1') }),
-        ResLink(t('legal.resources.petition2')),
-        renderLocalGov(),
-      ]}),
-      Section({ title: t('legal.resources.helpTitle'), palette, children: [
-        ResLink(t('legal.resources.help1')),
-        ResLink(t('legal.resources.help2')),
-        ResLink(t('legal.resources.help3')),
-        ResLink(t('legal.resources.help4')),
-      ]}),
-      Section({ title: t('legal.resources.ombudsTitle'), palette, children:
-        ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].map(k => ResLink(t('legal.resources.' + k)))
-      }),
-      Section({ title: t('legal.resources.heartfeltTitle'), palette, children: [
-        P({ children: t(HEARTFELT.some(i => i.affiliate) ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro') }),
-        ...HEARTFELT_GROUPS.flatMap(g => {
-          const items = HEARTFELT
-            .filter(i => i.group === g)
-            .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
-            .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
-            .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
-          if (!items.length) return [];
-          return [
-            React.createElement('p', { key: 'hg-' + g, style: { margin: '14px 0 6px 0', fontWeight: weight.semi, fontSize: text.sm, color: palette.mid } },
-              t('legal.resources.heartfeltGroups.' + g)),
-            ...items.map(({ item, desc }) => React.createElement('p', { key: item.key, style: { margin: '0 0 8px 0' } },
-              '→ ',
-              item.url
-                ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener', style: linkStyle }, item.name)
-                : item.name,
-              item.affiliate ? React.createElement('span', { style: { color: palette.soft, fontSize: text.xs } }, ' · ' + t('legal.resources.affiliateMarker')) : null,
-              ' — ' + desc
-            ))
-          ];
-        }),
-      ]})
     ),
 
     activeSection === 'faq' && React.createElement('div', null,

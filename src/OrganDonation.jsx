@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
+import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
@@ -50,20 +52,22 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   };
 
   const buttonStyle = {
-    padding: '10px 16px', background: palette.sand, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
+    padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
   const statusButtonStyle = {
-    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
+    // color explizit: Buttons erben color nicht (UA-Reset auf schwarz) → sonst war
+    // der inaktive „Nicht registriert"-Status im Dark Mode schwarz auf palette.up.
+    padding: '10px 16px', border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text
   };
 
   return React.createElement('div', { style: { maxWidth: '720px' } },
    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' } },
     // Left: Settings
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'health', size: 20 }), t('organ.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'health', size: 22 }), style: { marginBottom: space.md } }, t('organ.title')),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.status')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.status')),
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: '20px' } },
         React.createElement('button', {
           onClick: () => setStatus('registered'),
@@ -79,7 +83,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         }, '✕ ' + t('organ.declined'))
       ),
 
-      React.createElement('h3', { style: { fontSize: text.body, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.organsAndTissue')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.organsAndTissue')),
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: space.sm, marginBottom: space.md } },
         organOptions.map(org => React.createElement('label', { key: org.key, style: { display: 'flex', alignItems: 'center', gap: space.sm, padding: '10px', background: organs[org.key] ? palette.sage + '33' : palette.up, borderRadius: radius.sm, cursor: 'pointer', border: '1px solid ' + (organs[org.key] ? palette.sage : palette.border), fontSize: text.sm } },
           React.createElement('input', { type: 'checkbox', checked: organs[org.key], onChange: () => handleOrganToggle(org.key), style: { cursor: 'pointer' } }),
@@ -94,13 +98,13 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
       }),
 
-      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
+      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, 'ⓘ ' + t('organ.generateQr'))
     ),
 
     // Right: Info & QR
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } }, React.createElement(Icon, { name: 'info', size: 20 }), t('organ.info')),
+      React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'info', size: 22 }), style: { marginBottom: space.md } }, t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
         React.createElement('strong', null, '✓ ' + t('organ.status') + ': '),

@@ -51,11 +51,11 @@ export const generateCVTemplate = (data, t) => {
 
 
 export const generateCVHTML = (cvData, t) => {
-  const labelPersonal = t ? t('cv.personalData') : 'PERSONAL DATA';
-  const labelExperience = t ? t('cv.experience') : 'WORK EXPERIENCE';
-  const labelEducation = t ? t('cv.education') : 'EDUCATION AND QUALIFICATIONS';
-  const labelLanguages = t ? t('cv.languages') : 'LANGUAGES';
-  const labelReferences = t ? t('cv.references') : 'REFERENCES';
+  const labelPersonal = t ? t('cv.personalData') : 'Personal data';
+  const labelExperience = t ? t('cv.experience') : 'Work experience';
+  const labelEducation = t ? t('cv.education') : 'Education and qualifications';
+  const labelLanguages = t ? t('cv.languages') : 'Languages';
+  const labelReferences = t ? t('cv.references') : 'References';
   const labelNoJob = t ? t('cv.noCurrentJob') : 'No current employment';
   const labelDob = t ? t('cv.labelDob') : 'Date of birth';
   const labelNationality = t ? t('cv.labelNationality') : 'Nationality';
@@ -81,7 +81,7 @@ export const generateCVHTML = (cvData, t) => {
     h1 { margin: 0; font-size: 24px; font-weight: bold; }
     .contact { margin-top: 8px; font-size: 13px; color: #666; }
     .contact-item { display: inline-block; margin-right: 20px; }
-    h2 { margin-top: 25px; margin-bottom: 12px; font-size: 14px; font-weight: bold; border-bottom: 2px solid #2f6b3f; padding-bottom: 4px; }
+    h2 { margin-top: 25px; margin-bottom: 12px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #2f6b3f; padding-bottom: 4px; }
     .section { margin-bottom: 20px; }
     .entry { margin-bottom: 15px; }
     .entry-title { font-weight: bold; margin-bottom: 4px; }
