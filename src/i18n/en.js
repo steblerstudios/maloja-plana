@@ -3454,6 +3454,18 @@ export default {
     },
   },
 
+  obstgarten: {
+    title: 'My orchard',
+    intro: 'Each area of life is its own little tree. It ripens the more you fill in — from seedling to full tree. Tap to open the area.',
+    link: 'My orchard',
+    legend: 'Growth stage instead of percent: seedling → growing → bearing fruit → fully ripe. The four youngest trees come later.',
+    future: 'coming later',
+    stage1: 'seedling',
+    stage2: 'growing',
+    stage3: 'bearing fruit',
+    stage4: 'fully ripe',
+    b: { gesundheit: 'Health', arbeit: 'Work', familie: 'Family', vorsorge: 'Pension' },
+  },
   instrumente: {
     title: 'Your instruments',
     intro: 'Four calm self-checks at a glance — tap one.',
