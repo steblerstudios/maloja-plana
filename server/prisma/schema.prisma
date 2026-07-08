@@ -40,9 +40,10 @@ model EncryptedBackup {
   id        String   @id @default(uuid())
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  // Ausgabe von vault.sealBackup(): iv, ct, salts, wrappedPrf, wrappedRecovery.
-  // Ausschliesslich Chiffrat — für den Server bedeutungslos.
-  blob      Json
+  // Ausgabe von vault.sealBackup() als JSON-String: iv, ct, salts, wrappedPrf,
+  // wrappedRecovery. Ausschliesslich Chiffrat — für den Server bedeutungslos. Als
+  // String @db.LongText, weil der Blob gross werden kann und wir ihn nie abfragen.
+  blob      String   @db.LongText
   version   Int
   updatedAt DateTime @updatedAt
 }
