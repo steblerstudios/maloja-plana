@@ -3453,6 +3453,21 @@ export default {
     },
   },
 
+  instrumente: {
+    title: 'Vos instruments',
+    intro: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.',
+    tacho: 'Tachymètre de franchise',
+    tachoSub: 'élevée ou basse — quoi de mieux ?',
+    kompass: 'Boussole des prestations',
+    kompassFound: '{n} pistes possibles',
+    kompassFoundOne: 'une piste possible',
+    kompassNone: 'autres pistes',
+    tank: 'Jauge de réserve',
+    tankMonths: '{months} mois de réserve',
+    schild: 'Bouclier de protection',
+    schildCount: '{covered}/{total} couvertes',
+    setup: 'toucher pour configurer',
+  },
   schutzschild: {
     intro: 'Les trois protections dont presque tout le monde a besoin.',
     kk: 'Assurance-maladie',
