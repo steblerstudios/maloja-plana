@@ -27,8 +27,11 @@ const SONDER = {
   sicher: { ton: 'sky', icon: 'lock', titleKey: 'dl.sicherTitle' },
   mitreden: { ton: 'sand', icon: 'edit', titleKey: 'dl.mitredenTitle' },
 };
-// Herzensempfehlungs-Bücher (je Themengruppe): eigene Farbe, gemeinsames Herz-Icon.
+// Herzensempfehlungs-Bücher (je Themengruppe): eigene Farbe + thematisches Icon.
+// Neue Icons globe/tag/paw/palette (IconSystem); gesundheit/soziales/gemeinschaft
+// nutzen bestehende, bedeutungsgleiche Icons.
 const HERZ_TON = { digital: 'sky', soziales: 'sage', konsum: 'gold', tiere: 'sand', gesundheit: 'rose', kunst: 'soft', gemeinschaft: 'sage' };
+const HERZ_ICON = { digital: 'globe', soziales: 'sozialhilfe', konsum: 'tag', tiere: 'paw', gesundheit: 'health', kunst: 'palette', gemeinschaft: 'family' };
 
 // Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Sophies Entscheid:
 // trifft meist, gelegentlich daneben, bewusst akzeptiert).
@@ -60,7 +63,7 @@ export const DirektLinks = ({ palette, t, data }) => {
   const bookInfo = (id) => {
     if (id.indexOf('hf:') === 0) {
       const g = id.slice(3);
-      return { ton: HERZ_TON[g] || 'gold', icon: 'heart', name: t('legal.resources.heartfeltGroups.' + g) };
+      return { ton: HERZ_TON[g] || 'gold', icon: HERZ_ICON[g] || 'heart', name: t('legal.resources.heartfeltGroups.' + g) };
     }
     if (SONDER[id]) return { ton: SONDER[id].ton, icon: SONDER[id].icon, name: t(SONDER[id].titleKey) };
     return { ton: BUCH_TON[id] || 'soft', icon: KATEGORIEN[id].icon, name: l(KATEGORIEN[id]) };
