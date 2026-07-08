@@ -1,22 +1,6 @@
 import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
-import { getCantonName } from './config/cantonalData.js';
-
-// Alle 26 Kantonsportale folgen dem Muster www.<code>.ch (verifiziert) — kein
-// hardcodierter URL-Katalog nötig, der veralten könnte.
-const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
-
-// Best-effort-Gemeinde-URL (Sophies Entscheid): die meisten CH-Gemeinden nutzen
-// www.<gemeinde>.ch. Trifft oft, kann gelegentlich danebenliegen — bewusst akzeptiert.
-const communeUrl = (city) => {
-  const slug = String(city).toLowerCase()
-    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
-    .replace(/[àâá]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíî]/g, 'i')
-    .replace(/[òóô]/g, 'o').replace(/[ùúû]/g, 'u').replace(/ç/g, 'c').replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  return slug ? 'https://www.' + slug + '.ch' : null;
-};
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
@@ -35,9 +19,6 @@ const Section = ({ title, children, palette }) =>
   );
 
 const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderlineOffset: '2px' };
-
-// HEARTFELT + HEARTFELT_GROUPS liegen jetzt in data/direktLinks.js (geteilte
-// Quelle mit dem Bücherregal — nur EINE Wahrheit). Hier importiert.
 
 // Freiwilliger Beitrag (Sliding-Scale). Sobald ein Zahlungsweg existiert, hier
 // die URL eintragen (z. B. Twint-Link, Stripe-Payment-Link, Ko-fi, Bank-QR-Seite).
@@ -90,56 +71,8 @@ const autoLink = (text, palette) => {
 const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
-// Strukturierter Ressourcen-Link: klickbarer Name statt doppelter Auflistung
-// (Name + nackte Domain). entry = { name, url, desc, web? }; ohne url nur der Name
-// (z. B. defektes HTTPS-Zertifikat). Optionales web = zusätzlicher Website-Link
-// (z. B. Beratungsstelle, deren Name auf eine tel:-Nummer zeigt). Fällt auf
-// Plain-String zurück.
-const ResLink = (entry) =>
-  entry && typeof entry === 'object'
-    ? React.createElement('p', { key: entry.name, style: { margin: '0 0 8px 0' } },
-        '→ ',
-        entry.url
-          ? React.createElement('a', { href: entry.url, target: '_blank', rel: 'noopener', style: linkStyle }, entry.name)
-          : entry.name,
-        ' — ' + entry.desc,
-        entry.web
-          ? React.createElement(React.Fragment, { key: 'web' },
-              ' · ',
-              React.createElement('a', { href: entry.web, target: '_blank', rel: 'noopener', style: linkStyle }, 'Website'))
-          : null)
-    : React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + entry);
-
 export const LegalView = ({ palette, t, onNavigate, section, data }) => {
   const activeSection = section || 'privacy';
-
-  // Wohngemeinde/-kanton aus den eigenen Daten. Kanton → offizielles Portal
-  // (verlässlich, www.<code>.ch). Gemeinde → www.<gemeinde>.ch (best effort,
-  // Sophies Entscheid). Direkt-Navigation zur Gemeinde-Seite, keine Such-/
-  // Drittanbieter-URL. Fällt auf generischen Text zurück, wenn nichts erfasst.
-  const renderLocalGov = () => {
-    const canton = (data && data.basis && data.basis.canton) || '';
-    const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
-    const cantonName = canton ? getCantonName(canton, t) : '';
-    if (!city && !cantonName) {
-      return React.createElement('p', { style: { margin: '0 0 8px 0' } }, '→ ' + t('legal.resources.petition3'));
-    }
-    const parts = ['→ '];
-    if (city) {
-      const cUrl = communeUrl(city);
-      parts.push(cUrl
-        ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener', style: linkStyle }, city)
-        : city);
-    }
-    if (cantonName) {
-      if (city) parts.push(' · ');
-      parts.push(React.createElement('a', {
-        key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener', style: linkStyle,
-      }, t('legal.resources.cantonPortal', { canton: cantonName })));
-    }
-    parts.push(' — ' + t('legal.resources.localGovDesc'));
-    return React.createElement('p', { style: { margin: '0 0 8px 0' } }, parts);
-  };
 
   const tabs = [
     { key: 'privacy', label: t('legal.tabs.privacy') },
