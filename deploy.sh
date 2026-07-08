@@ -71,12 +71,19 @@ if [ "${SKIP_BACKUP:-0}" != "1" ]; then
   BACKUP_DIR="./.deploy-backups/${STAMP}"
   mkdir -p "$BACKUP_DIR"
   echo "→ Rollback-Backup der aktuellen Live-Version nach ${BACKUP_DIR}…"
-  lftp -c "set sftp:auto-confirm yes; set net:timeout 20; open -u \"${SFTP_USER}\",\"${SFTP_PASSWORD}\" sftp://${SFTP_HOST}; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"" \
+  # Passwort via Umgebungsvariable (LFTP_PASSWORD + --env-password), NICHT im
+  # Befehlstext — so können Sonderzeichen (Komma, ", \, $ …) nichts zerbrechen.
+  # net:max-retries begrenzt: bei Verbindungsproblemen gibt das Backup auf,
+  # statt endlos „Verbinde…" zu schleifen (der Upload unten ist das Wichtige).
+  LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
+    -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye" \
     || echo "  ⚠️ Backup fehlgeschlagen — Deploy läuft trotzdem weiter."
 fi
 
 echo "→ Upload via SFTP nach ${SFTP_HOST}…"
-lftp -c "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set mirror:parallel-transfer-count 4; open -u \"${SFTP_USER}\",\"${SFTP_PASSWORD}\" sftp://${SFTP_HOST}; mirror -R --verbose ./dist/ \"${REMOTE_DIR}\""
+# Passwort via Umgebungsvariable (siehe Backup-Schritt) — sonderzeichensicher.
+LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
+  -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; mirror -R --verbose ./dist/ \"${REMOTE_DIR}\"; bye"
 
 echo
 echo "✓ Deploy fertig — https://malojaplana.ch"

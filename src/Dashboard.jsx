@@ -8,6 +8,9 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
+// Lazy: hält die Instrumente (Tacho/Kompass/Tank/Schutzschild + Daten) aus dem
+// eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
+const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -1355,6 +1358,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
     React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
 
+    // Zugang zum Lebens-Obstgarten (eigene Ansicht neben dem Einzelbaum)
+    React.createElement('button', {
+      onClick: () => onNavigate('obstgarten'),
+      style: {
+        display: 'block', margin: '0 0 ' + space.xl + 'px', background: 'none', border: 'none',
+        cursor: 'pointer', padding: '2px 0', fontSize: text.sm, color: palette.sand,
+        fontFamily: 'inherit', fontWeight: weight.medium,
+      },
+    }, t('obstgarten.link') + ' →'),
+
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
       React.createElement(PanelTitle, {
@@ -1433,6 +1446,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         },
       }, t('lebenszustaende.dashboardLink'))
     ),
+
+    // ─── Deine Instrumente — Dashboard-Spiegel der vier Selbstchecks ──
+    // Eigene Suspense-Grenze, da das Dashboard selbst ohne Suspense gerendert wird.
+    React.createElement(React.Suspense, { fallback: null },
+      React.createElement(InstrumentePanel, { palette, t, data, onNavigate })),
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },

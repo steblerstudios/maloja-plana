@@ -10,6 +10,8 @@ import { text, weight, radius, leading, space, duration, ease } from './config/t
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 import { KKLastCard } from './KKLastCard.jsx';
+import { ReserveTank } from './components/ReserveTank.jsx';
+import { monthlyExpenses } from './data/haushaltskosten.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -122,10 +124,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
 
   const hasData = income > 0;
 
-  const rent = Number(data.wohnen?.rentAmount || 0);
-  const utilities = Number(data.wohnen?.utilities || 0);
-  const kkPremium = Number(data.versicherungen?.kkPremium || 0);
-
   // Slice B: bezahlte KK-Belege dieses Jahres als Gesundheitskosten spiegeln
   // (Crosslink KVG-Tracker → Finanzen, kein zweites Eingeben). Offene separat.
   const currentYear = new Date().getFullYear();
@@ -136,14 +134,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const gesundheitskosten = belegeThisYear.filter(b => b.status !== 'offen').reduce((s, b) => s + belegTotal(b), 0);
   const gesundheitskostenOffen = belegeThisYear.filter(b => b.status === 'offen').reduce((s, b) => s + belegTotal(b), 0);
   const hasGesundheitskosten = (gesundheitskosten + gesundheitskostenOffen) > 0;
-  const groceries = Number(data.finanzen?.groceries || 0);
-  const communication = Number(data.finanzen?.communication || 0);
-  const mobility = Number(data.finanzen?.mobility || 0);
-  const childcare = Number(data.finanzen?.childcare || 0);
-  const otherIns = Number(data.finanzen?.otherInsurance || 0);
-  const monthlyTax = Number(data.finanzen?.monthlyTax || 0);
-  const debtPay = Number(data.finanzen?.debtPayments || 0);
-  const alimentePaid = Number(data.finanzen?.alimentePaid || 0);
 
   // Vermögen (Wertschriften + übriges Vermögen + Ersparnisse) — Steuerwert, ohne gebundenes 3a
   const securitiesValue = Number(data.finanzen?.securitiesValue || 0);
@@ -152,7 +142,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
   const totalAssets = securitiesValue + otherAssets + savingsAccount;
   const hasAssets = totalAssets > 0;
 
-  const totalExpenses = rent + utilities + kkPremium + groceries + communication + mobility + childcare + otherIns + monthlyTax + debtPay + alimentePaid;
+  const totalExpenses = monthlyExpenses(data);
   const totalIncome = income + Number(data.finanzen?.familienzulagen || 0) + Number(data.finanzen?.alimenteReceived || 0);
   const freeAmount = totalIncome - totalExpenses;
   const hasExpenses = totalExpenses > 0;
@@ -381,6 +371,12 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         }, formatCHF(freeAmount))
       )
     ),
+
+    // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? (Instrument über
+    // savingsAccount ÷ totalExpenses). Nur wenn überhaupt etwas erfasst ist.
+    hasData && (savingsAccount > 0 || totalExpenses > 0) && React.createElement(ReserveTank, {
+      palette, t, savings: savingsAccount, monthlyExpenses: totalExpenses,
+    }),
 
     hasData && React.createElement('div', {
       style: { borderTop: '1px solid ' + palette.border, margin: '16px 0' }
