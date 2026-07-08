@@ -357,6 +357,16 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
   aus der Live-Region nehmen.
 
 ## 🟡 Mittel
+
+> ✅ **NACHGEPRÜFT 2026-07-08 (reproduce-first):**
+> - Backup zieht IndexedDB-Docs mit: `backupCrypto.js` (getDocBlob/saveDocBlob) + `autoBackup.js` (hydrateDocs/idb) ✓
+> - EventBus Ring-Buffer + try/catch pro Listener: `event-bus.ts:14-20` ✓
+> - Registry-Drift: dedizierte `SEARCH_VIEWS`-Registry (27 Einträge) in `SearchView.jsx` ✓ (harte 3-Registry-Vereinheitlichung nicht erzwungen — kein sichtbarer Fehler mehr)
+> - AsylView/StipendienView-Titel: nutzen jetzt `PanelTitle` (echte Überschriften) ✓
+> - **GEFIXT diese Session:** „recheck Jan 2027"-Wartungsnotiz an `AHV_DATA_VERSION` (`ahvRechner.js`) ✓
+> - ⏳ **Offen, klein:** Backup-Passphrase erlaubt weiter 4 Zeichen ohne ruhigen Längen-Hinweis (`backupCrypto.js:93`) — UI-Nicety.
+> - ⏳ **Offen, Design (Sophie):** Unicode-Glyphen (□◰●◇↧✕) in Onboarding/Schulden statt `IconSystem` — Materialitäts-Konsistenz, kein Bug.
+
 - Backup/Export liest Dokumente nur aus localStorage (`autoBackup.js`, `backupCrypto.js:42`) → bei
   IndexedDB-Migration (s. 🔴 #1) Backups mitziehen, sonst stoppen Datei-Backups still.
 - EventBus wächst unbegrenzt (`event-bus.ts:9`), kein Error-Isolation der Listener → langsames Leck +
