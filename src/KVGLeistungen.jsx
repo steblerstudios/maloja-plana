@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
@@ -886,12 +887,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
         border: '1px solid ' + palette.border, marginBottom: '16px',
       }
     },
-      React.createElement('h2', {
-        style: {
-          fontSize: text.lg, fontWeight: weight.semi, marginBottom: '6px',
-          display: 'flex', alignItems: 'center', gap: space.sm,
-        }
-      }, React.createElement(Icon, { name: 'health', size: 18 }), t('kvg.title')),
+      React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'health', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('kvg.title')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal }
       }, t('kvg.subtitle'))

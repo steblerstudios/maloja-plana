@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
@@ -53,12 +54,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     }, '← ' + t('briefe.backToUnterlagen')),
 
     // Title
-    React.createElement('h2', {
-      style: {
-        fontSize: textTokens.lg, fontWeight: weight.semi, marginBottom: space.sm,
-        display: 'flex', alignItems: 'center', gap: space.sm,
-      }
-    }, React.createElement(Icon, { name: 'document', size: 20 }), t('briefe.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('briefe.title')),
 
     React.createElement('p', {
       style: { fontSize: textTokens.sm, color: palette.mid, marginBottom: '20px', lineHeight: '1.6' }

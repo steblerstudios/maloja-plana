@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { DIREKTLINKS, KATEGORIEN, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
@@ -30,10 +31,7 @@ export const DirektLinks = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'dokumentTresor', size: 20 }),
-      t('dl.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('dl.title')),
 
     React.createElement('div', { style: s.chips },
       React.createElement('span', {

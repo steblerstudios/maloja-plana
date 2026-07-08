@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
@@ -156,10 +157,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'insurance', size: 20 }),
-      t('po.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('po.title')),
 
     // Faden 3 / 3-I: KK-Last als % des Einkommens gegen WHO-10%-Richtwert
     React.createElement(KKLastCard, { palette, t, data, onNavigate }),
