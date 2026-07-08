@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -61,10 +62,7 @@ export const FlyerView = ({ palette, t, lang }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'dokumentTresor', size: 20 }),
-      t('flyer.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('flyer.title')),
     React.createElement('p', { style: s.intro }, t('flyer.intro'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('flyer.intro'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
 
     React.createElement('div', { style: s.preview },

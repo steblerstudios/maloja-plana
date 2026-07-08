@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
@@ -208,9 +209,7 @@ export const DocumentTresor = ({
     style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border, boxShadow: shadow.sm }
   },
     // Title with folder icon
-    React.createElement('h2', {
-      style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm }
-    }, React.createElement(Icon, { name: 'documents', size: 20 }), t('tresor.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'documents', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('tresor.title')),
 
     // Ordner status — warm language
     React.createElement('div', {

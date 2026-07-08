@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { vergleicheEOLeistungen, EO_PARAMS } from './data/eoRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -45,10 +46,7 @@ export const EOrechner = ({ palette, t, data }) => {
   };
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'family', size: 20 }),
-      t('eo.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'family', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('eo.title')),
 
     React.createElement('div', { style: s.section },
       React.createElement('div', { style: s.label }, t('eo.einkommen')),

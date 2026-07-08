@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { berechneTaggeld, ALV_PARAMS } from './data/alvRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -100,10 +101,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     );
 
   return React.createElement('div', { style: s.card },
-    React.createElement('h2', { style: s.title },
-      React.createElement(Icon, { name: 'family', size: 20 }),
-      t('alv.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'family', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('alv.title')),
     React.createElement('p', { style: s.intro }, t('alv.intro')),
 
     // ── Eingaben ──
