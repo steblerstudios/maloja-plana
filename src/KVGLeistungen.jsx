@@ -404,6 +404,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       React.createElement('div', { style: { position: 'relative', marginBottom: '12px' } },
         React.createElement('select', {
           value: franchise,
+          'aria-label': t('kvg.franchiseLabel'),
           onChange: (e) => setFranchise(Number(e.target.value)),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.sm,
@@ -813,6 +814,7 @@ const RechnungTab = ({ palette, t, data }) => {
       React.createElement('div', { style: { position: 'relative' } },
         React.createElement('select', {
           value: selCanton,
+          'aria-label': t('finanzUebersicht.canton'),
           onChange: (e) => setSelCanton(e.target.value),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.sm,
