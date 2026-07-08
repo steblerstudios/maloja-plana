@@ -162,12 +162,8 @@ export const BERATUNG_HILFE = [
     beschreibung: { de: 'Beratung und Unterstützung im Alter — Finanzen, Wohnen, Alltag', en: 'Advice and support in old age — finances, housing, everyday life', fr: 'Conseils et soutien pour les personnes âgées — finances, logement, quotidien' },
     url: 'https://www.prosenectute.ch/',
   },
-  {
-    id: 'pro-juventute-147',
-    name: { de: 'Pro Juventute — Beratung 147', en: 'Pro Juventute — 147 helpline', fr: 'Pro Juventute — conseils 147' },
-    beschreibung: { de: 'Rund um die Uhr erreichbar für Kinder, Jugendliche und Eltern', en: 'Available around the clock for children, young people and parents', fr: 'Joignable 24h/24 pour enfants, jeunes et parents' },
-    url: 'https://www.147.ch/',
-  },
+  // Pro Juventute 147 bewusst NICHT hier: liegt bereits als help2 (tel:147) in den
+  // Beratungsstellen (legal.resources.help2) — eine Wahrheit, kein Duplikat.
 ];
 
 // Herzensempfehlungen (persönlich, von Sophie kuratiert): Name + Ziel-Link sind
