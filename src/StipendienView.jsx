@@ -8,6 +8,12 @@ import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 
+// Ergebnis-Marker des Berechtigungs-Checks: eigenes Zeichen je Ton, damit sich
+// „Ja / Nein / Vielleicht" auch OHNE Farbe (Schwarzweiss-Modus) unterscheiden —
+// nicht nur über sage/rose/gold. ○ = „trifft hier nicht zu" (würdevoll, kein
+// Alarm, wie der hohle Ring der KVG-Statuslogik), bewusst nicht ✕.
+export const stipResultMarker = (tone) => tone === 'yes' ? '✓' : tone === 'no' ? '○' : 'ⓘ';
+
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
   const canton = data?.basis?.canton || '';
@@ -90,7 +96,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
           border: '1px solid ' + (resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold) + '66',
           color: palette.text,
         }
-      }, (resultTone === 'yes' ? '✓ ' : 'ⓘ ') + t(resultKey))
+      }, stipResultMarker(resultTone) + ' ' + t(resultKey))
     ),
 
     // Wer kann beantragen?

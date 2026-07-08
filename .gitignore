@@ -36,6 +36,10 @@ maloja-plana-*.zip
 # Rollback-Backups der Live-Version (von deploy.sh angelegt, nie ins Repo)
 .deploy-backups/
 
+# Persönliche Daten-Backups — enthalten PII (Name/AHV/Kontakt). NIE ins Repo.
+Backups/
+*maloja-plana-backup-*.json
+
 # Versehentliche Build-Kopien (Finder-Duplikate)
 dist */
 
