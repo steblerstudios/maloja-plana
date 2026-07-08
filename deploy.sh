@@ -78,6 +78,20 @@ if [ "${SKIP_BACKUP:-0}" != "1" ]; then
   LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
     -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye" \
     || echo "  ⚠️ Backup fehlgeschlagen — Deploy läuft trotzdem weiter."
+
+  # Selbst-Aufräumen: .deploy-backups/ soll nicht endlos wachsen (jede volle
+  # Sicherung ist ~100 MB). Wir behalten nur die neuesten KEEP_BACKUPS Stück.
+  # Zahl hier anpassen, wenn du mehr/weniger Rückfallpunkte willst.
+  KEEP_BACKUPS=3
+  if [ -d ./.deploy-backups ]; then
+    # 1) leere Fehlstart-Ordner (fehlgeschlagene Backups) entfernen
+    find ./.deploy-backups -mindepth 1 -maxdepth 1 -type d -empty -exec rm -rf {} + 2>/dev/null || true
+    # 2) nur die neuesten KEEP_BACKUPS behalten, ältere weg
+    ls -1dt ./.deploy-backups/*/ 2>/dev/null | tail -n +$((KEEP_BACKUPS + 1)) | while read -r old; do
+      echo "  ⌫ alte Rollback-Sicherung entfernen: ${old}"
+      rm -rf "$old"
+    done
+  fi
 fi
 
 echo "→ Upload via SFTP nach ${SFTP_HOST}…"
