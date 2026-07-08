@@ -139,6 +139,37 @@ export const KATEGORIEN = {
   recht: { de: 'Recht', en: 'Law', fr: 'Droit', icon: 'dokumentTresor' },
 };
 
+// Herzensempfehlungen: von Hand ausgewählte, gemeinnützige Anlaufstellen —
+// KEINE amtlichen Stellen (darum ohne antragsstelle), sondern Orte, die vielen
+// Menschen weiterhelfen. Bewusst klein gehalten und kuratierbar. Stabile,
+// breit vertraute Non-Profits; bei Änderung URLs prüfen.
+export const HERZENSEMPFEHLUNGEN = [
+  {
+    id: 'budgetberatung',
+    name: { de: 'Budgetberatung Schweiz', en: 'Budget counselling Switzerland', fr: 'Conseils budgétaires Suisse' },
+    beschreibung: { de: 'Kostenlose Richtwerte und persönliche Beratung rund ums Haushaltsbudget', en: 'Free reference values and personal advice on household budgeting', fr: 'Valeurs indicatives gratuites et conseils personnels sur le budget du ménage' },
+    url: 'https://www.budgetberatung.ch/',
+  },
+  {
+    id: 'caritas-schulden',
+    name: { de: 'Caritas — Schuldenberatung', en: 'Caritas — debt counselling', fr: 'Caritas — désendettement' },
+    beschreibung: { de: 'Vertrauliche Hilfe bei Schulden und Betreibungen, schweizweit', en: 'Confidential help with debt and debt collection, nationwide', fr: 'Aide confidentielle en cas de dettes et de poursuites, dans toute la Suisse' },
+    url: 'https://www.caritas.ch/de/was-wir-tun/im-inland/schuldenberatung/',
+  },
+  {
+    id: 'pro-senectute',
+    name: { de: 'Pro Senectute', en: 'Pro Senectute', fr: 'Pro Senectute' },
+    beschreibung: { de: 'Beratung und Unterstützung im Alter — Finanzen, Wohnen, Alltag', en: 'Advice and support in old age — finances, housing, everyday life', fr: 'Conseils et soutien pour les personnes âgées — finances, logement, quotidien' },
+    url: 'https://www.prosenectute.ch/',
+  },
+  {
+    id: 'pro-juventute-147',
+    name: { de: 'Pro Juventute — Beratung 147', en: 'Pro Juventute — 147 helpline', fr: 'Pro Juventute — conseils 147' },
+    beschreibung: { de: 'Rund um die Uhr erreichbar für Kinder, Jugendliche und Eltern', en: 'Available around the clock for children, young people and parents', fr: 'Joignable 24h/24 pour enfants, jeunes et parents' },
+    url: 'https://www.147.ch/',
+  },
+];
+
 export const CANTONAL_LINKS = {
   ZH: {
     steuererklaerung: 'https://www.zh.ch/de/steuern-finanzen/steuern.html',
