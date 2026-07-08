@@ -51,6 +51,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [ikActive, setIkActive] = useState(() => !!data.vorsorge?.ikActive);
   const [ikJugend, setIkJugend] = useState(() => (Array.isArray(data.vorsorge?.ikAuszug) ? data.vorsorge.ikAuszug.some(e => e.typ === IK_TYP.JUGEND) : false));
   const [ikExpanded, setIkExpanded] = useState(null); // von-Jahr der aufgeklappten Phase
+  const [zukunftIkOpen, setZukunftIkOpen] = useState(false); // IK-Editor im Zukunft-Reiter (gleiche Wahrheit, kein Doppel-Eintrag)
 
   // IK-Auszug + Opt-in persistieren (Standard-Datenpfad; respektiert Sandbox/demoMode).
   // Erster Render überspringt das Schreiben, damit ein leerer Rechner keinen
@@ -466,6 +467,32 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Zukunft Tab — Projektion 2./3. Säule bis zum Rücktritt
     activeTab === 'zukunft' && React.createElement(React.Fragment, null,
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' } }, t('vr.zukunftIntro')),
+
+      // AHV-Grundlage: die IK-Historie auch hier (Prinzip „nie zurück-navigieren müssen").
+      // Ehrliche Kontext-Zeile + glanceable Kennzahl, aufklappbar der ECHTE Editor
+      // (renderIKAuszug, gleicher State = eine Wahrheit, kein Doppel-Eintrag) + Sprung.
+      React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: s.label }, t('vr.zukunftIkTitle')),
+        (ikActive && ikResult)
+          ? React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.xs + 'px', flexWrap: 'wrap' } },
+              React.createElement('span', { style: { color: palette.sage } }, '●'),
+              React.createElement('span', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
+                t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }))
+            )
+          : React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftIkInaktiv')),
+        React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
+          React.createElement('button', {
+            onClick: () => setZukunftIkOpen(o => !o),
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sage, textDecoration: 'underline', fontFamily: 'inherit' }
+          }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
+          React.createElement('button', {
+            onClick: () => setActiveTab('ahv'),
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.mid, textDecoration: 'underline', fontFamily: 'inherit' }
+          }, t('vr.zukunftIkJump'))
+        ),
+        zukunftIkOpen && React.createElement('div', { style: { marginTop: space.sm + 'px' } }, renderIKAuszug())
+      ),
+
       React.createElement('div', { style: s.section },
         React.createElement('div', { style: s.row },
           field(t('vr.rendite'), rendite, setRendite, { width: '90px', min: 0, max: 10, sublabel: t('vr.renditeHint') }),
