@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Eyebrow, PageTitle } from './components/Heading.jsx';
 import {
   getNotificationPermission,
   requestNotificationPermission,
@@ -84,9 +85,7 @@ export const NotificationSettings = ({ palette, t }) => {
   return React.createElement('div', {
     style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border }
   },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md, display: 'flex', alignItems: 'center', gap: space.sm } },
-      React.createElement(Icon, { name: 'cowbell', size: 20 }), t('notifications.title')
-    ),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('notifications.title')),
 
     // Permission status
     React.createElement('div', {
@@ -122,9 +121,7 @@ export const NotificationSettings = ({ palette, t }) => {
 
     // Notification types
     React.createElement('div', { style: { marginBottom: space.md } },
-      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs, textTransform: 'uppercase' } },
-        t('notifications.categories')
-      ),
+      React.createElement(Eyebrow, { palette, style: { color: palette.mid, marginBottom: space.xs } }, t('notifications.categories')),
 
       renderToggle('overdueReminders',
         t('notifications.overdueReminders'),

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Eyebrow, PageTitle } from './components/Heading.jsx';
 import { text, weight, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
@@ -41,12 +42,10 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) =>
     );
   };
 
-  const sectionHeading = (labelKey) => React.createElement('h3', {
-    style: { fontSize: text.sm, fontWeight: weight.semi, margin: '0 0 ' + space.xs + 'px 0', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px' }
-  }, t(labelKey));
+  const sectionHeading = (labelKey) => React.createElement(Eyebrow, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t(labelKey));
 
   return React.createElement('div', { style: { maxWidth: '640px', margin: '0 auto' } },
-    React.createElement('h2', { style: { fontSize: text.xl, fontWeight: weight.semi, margin: '0 0 6px 0', color: palette.text } }, t('common.settingsTitle')),
+    React.createElement(PageTitle, { palette, style: { margin: '0 0 6px 0' } }, t('common.settingsTitle')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: 1.5 } }, t('common.settingsIntro')),
 
     // ── Anzeige & Sprache / Barrierefreiheit (geteilte Gruppierung) ──
@@ -57,7 +56,7 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) =>
 
     // ── Daten & Sicherung ──
     React.createElement('section', { style: card },
-      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, margin: '0 0 ' + space.xs + 'px 0', color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px' } }, t('common.settingsData')),
+      React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('common.settingsData')),
       React.createElement('button', { onClick: onEditBasis, style: actionBtn },
         React.createElement(Icon, { name: 'edit', size: 16, color: palette.mid }),
         React.createElement('span', null, t('common.editPersonalData'))

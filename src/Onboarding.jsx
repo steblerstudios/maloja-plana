@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { text, weight, radius , leading , space, fontFamily, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -163,7 +164,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
-          React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
+          React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
         ),
 
@@ -233,7 +234,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, maxWidth: '520px' } },
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
-          React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs } }, t('onboarding.needsTitle')),
+          React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.needsTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, t('onboarding.needsSubtitle'))
         ),
 
@@ -283,11 +284,9 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         margin: '0 auto 20px auto', fontSize: '32px',
       } }, '✓'),
 
-      React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, marginBottom: space.sm } },
-        firstName.trim()
+      React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })
-          : t('onboarding.readyTitleGeneric')
-      ),
+          : t('onboarding.readyTitleGeneric')),
 
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, marginBottom: space.sm } },
         t('onboarding.readyMessage')
