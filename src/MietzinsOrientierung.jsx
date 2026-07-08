@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit } from './data/mietzinsbeitraege.js';
@@ -55,8 +56,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate }) => {
   const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-    React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-      React.createElement(Icon, { name: 'home', size: 20 }), t('mietzinsView.title')),
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'home', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('mietzinsView.title')),
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md + 'px', lineHeight: leading.relaxed } }, t('mietzinsView.intro')),
 
     !canton ? React.createElement('div', { style: card() },
