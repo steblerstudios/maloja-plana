@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
+import { LeistungsKompass } from './components/LeistungsKompass.jsx';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
@@ -56,6 +57,10 @@ export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
 
   const monetary = benefits.filter(b => !b.qualitative && b.monthly > 0);
   const totalMonthly = monetary.reduce((s, b) => s + b.monthly, 0);
+  // Stärkster Weg für die Kompass-Peilung: höchster Betrag zuerst, sonst der erste
+  // (qualitative wie EL zählen als Weg, aber ohne Betrag hinter den monetären).
+  const topBenefit = [...benefits].sort((a, b) => (b.monthly || 0) - (a.monthly || 0))[0];
+  const topLabel = topBenefit ? topBenefit.label : null;
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border, boxShadow: shadow.sm },
@@ -143,6 +148,11 @@ export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
         }, t('schnellcheck.adjustProfile'))
       )
     ),
+
+    // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
+    React.createElement(LeistungsKompass, {
+      palette, t, benefitCount: benefits.length, topLabel, hasIncome: numIncome > 0,
+    }),
 
     // Ergebnis
     numIncome > 0
