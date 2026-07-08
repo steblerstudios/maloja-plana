@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { DIREKTLINKS, KATEGORIEN, BERATUNG_HILFE, HEARTFELT, HEARTFELT_GROUPS, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
+import { KATEGORIEN, BERATUNG_HILFE, HEARTFELT, HEARTFELT_GROUPS, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 
-// Jede Kategorie ist ein Buch, das im Regal steht (Buchrücken = Kategorie).
-// Ein Klick klappt das Buch auf. Zwei Sonderbücher rechts: „Beratung & Hilfe"
-// (gemeinnützige Anlaufstellen) und die persönlichen „Herzensempfehlungen" (24,
-// gruppiert, geteilte Quelle mit LegalView). Ruhige Skeuomorphie: dünnes
-// Regalbrett, flache Rücken, kleiner Farbstreifen.
+// Bücherregal mit mehreren Etagen: jede Kategorie (und jedes Sonderthema) ist ein
+// Buch, dessen Rücken auf einem Regalbrett steht. Ein Klick klappt das Buch unter
+// seiner eigenen Etage auf. Logisch sortiert (amtlich / Rat & Schutz / persönlich),
+// damit neue Bücher leicht Platz finden. ALLE Buch-Inhalte nutzen dieselbe ruhige
+// Eintragszeile (entryRow) — einheitliches Aussehen, Link stets aufs Wort.
 const BUCH_TON = {
   gesundheit: 'rose',
   vorsorge: 'sage',
@@ -20,13 +20,16 @@ const BUCH_TON = {
   finanzen: 'sky',
   recht: 'soft',
 };
-const BERATUNG_TON = 'sage';
-const SICHER_TON = 'sky';
-const MITREDEN_TON = 'sand';
-const HERZ_TON = 'gold';
+// Sonderbücher (nicht aus KATEGORIEN): Ton, Icon, Titel-Key.
+const SONDER = {
+  beratung: { ton: 'sage', icon: 'contacts', titleKey: 'dl.beratungTitle' },
+  sicher: { ton: 'sky', icon: 'lock', titleKey: 'dl.sicherTitle' },
+  mitreden: { ton: 'sand', icon: 'edit', titleKey: 'dl.mitredenTitle' },
+  herz: { ton: 'gold', icon: 'heart', titleKey: 'dl.herzTitle' },
+};
 
-// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (wie LegalView —
-// Sophies Entscheid: trifft meist, gelegentlich daneben, bewusst akzeptiert).
+// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Sophies Entscheid:
+// trifft meist, gelegentlich daneben, bewusst akzeptiert).
 const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
 const communeUrl = (city) => {
   const slug = String(city).toLowerCase()
@@ -39,14 +42,28 @@ const communeUrl = (city) => {
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
-  const [offen, setOffen] = useState(null); // Kategorie-id oder 'herz' oder null
+  const [offen, setOffen] = useState(null); // Buch-id oder null
   const lang = t('dl.lang');
   const l = (obj) => obj[lang] || obj.de;
 
+  // Etagen des Regals — logisch sortiert.
+  const regale = [
+    { key: 'amtlich', label: t('dl.shelfAmtlich'), ids: kategorien.map(k => k.id) },
+    { key: 'rat', label: t('dl.shelfRat'), ids: ['beratung', 'sicher', 'mitreden'] },
+    { key: 'persoenlich', label: t('dl.shelfPersoenlich'), ids: ['herz'] },
+  ];
+
+  // Ton, Icon, Titel je Buch (Kategorie oder Sonderbuch).
+  const bookInfo = (id) => SONDER[id]
+    ? { ton: SONDER[id].ton, icon: SONDER[id].icon, name: t(SONDER[id].titleKey) }
+    : { ton: BUCH_TON[id] || 'soft', icon: KATEGORIEN[id].icon, name: l(KATEGORIEN[id]) };
+
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
-    intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' },
-    shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', marginBottom: space.md + 'px', WebkitOverflowScrolling: 'touch' },
+    intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.lg + 'px' },
+    etage: { marginBottom: space.lg + 'px' },
+    shelfLabel: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, letterSpacing: '0.3px', margin: '0 0 ' + space.xs + 'px 2px' },
+    shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', WebkitOverflowScrolling: 'touch' },
     shelf: { display: 'inline-flex', gap: space.sm + 'px', alignItems: 'flex-end', minWidth: '100%', padding: '0 2px', borderBottom: '3px solid ' + palette.top },
     spine: (ton, active) => ({
       position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px',
@@ -59,161 +76,133 @@ export const DirektLinks = ({ palette, t, data }) => {
     }),
     cap: (ton) => ({ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: palette[ton], borderTopLeftRadius: '3px', borderTopRightRadius: '3px' }),
     spineName: { writingMode: 'vertical-rl', textOrientation: 'mixed', fontSize: text.xs, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.2px', whiteSpace: 'nowrap' },
-    book: (ton) => ({ background: palette.up, border: '1px solid ' + palette.border, borderLeft: '4px solid ' + palette[ton], borderRadius: '0 ' + radius.sm + 'px ' + radius.sm + 'px 0', padding: space.md + 'px', marginBottom: space.md + 'px' }),
+    book: (ton) => ({ background: palette.up, border: '1px solid ' + palette.border, borderLeft: '4px solid ' + palette[ton], borderRadius: '0 ' + radius.sm + 'px ' + radius.sm + 'px 0', padding: space.md + 'px', marginTop: space.sm + 'px' }),
     bookHead: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' },
-    herzNote: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px', fontStyle: 'italic' },
-    hfGroup: { fontWeight: weight.semi, fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
-    hfRow: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5, margin: '0 0 ' + space.sm + 'px' },
-    hfLink: { color: palette.sage, textDecoration: 'none' },
-    hfAff: { color: palette.soft, fontSize: text.xs },
-    linkCard: { padding: space.md + 'px', background: palette.surface, borderRadius: radius.sm + 'px', marginBottom: space.sm + 'px', border: '1px solid ' + palette.border },
-    linkName: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: '2px', color: palette.text },
-    linkDesc: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 },
-    linkUrl: { fontSize: text.xs, color: palette.sage, textDecoration: 'none', wordBreak: 'break-all' },
-    linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' },
+    bookIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px', fontStyle: 'italic' },
+    groupHeading: { fontWeight: weight.semi, fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
+    entryRow: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.sm + 'px' },
+    entryLink: { color: palette.sage, textDecoration: 'none' },
+    meta: { color: palette.soft },
+    aff: { color: palette.soft, fontSize: text.xs },
     empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
-    canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', border: '1px solid ' + palette.sage + '33' },
+    canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
     cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
   };
 
-  // Ein einzelner Link als Karte (amtlich mit Antragsstelle, Herz ohne).
-  const linkCard = (link, mitStelle) => React.createElement('div', { key: link.id, style: s.linkCard },
-    React.createElement('div', { style: s.linkName }, l(link.name)),
-    React.createElement('div', { style: s.linkDesc }, l(link.beschreibung)),
-    React.createElement('a', { href: link.url, target: '_blank', rel: 'noopener noreferrer', style: s.linkUrl }, link.url),
-    mitStelle && link.antragsstelle && React.createElement('div', { style: s.linkStelle }, t('dl.antragsstelle') + ': ' + l(link.antragsstelle))
-  );
+  const eLink = (label, url, key) => React.createElement('a', { key, href: url, target: '_blank', rel: 'noopener noreferrer', style: s.entryLink }, label);
 
-  // Ein Buchrücken im Regal.
-  const spine = (id, ton, iconName, name) => {
-    const active = offen === id;
-    return React.createElement('button', {
-      key: id, type: 'button', 'aria-pressed': active, 'aria-expanded': active, 'aria-controls': 'buch-panel',
-      'aria-label': name, title: name, style: s.spine(ton, active),
-      onClick: () => setOffen(active ? null : id),
-    },
-      React.createElement('span', { style: s.cap(ton), 'aria-hidden': 'true' }),
-      React.createElement(Icon, { name: iconName, size: 17 }),
-      React.createElement('span', { style: s.spineName }, name)
-    );
+  // Einheitliche Eintragszeile für ALLE Bücher: „→ Name[ · Affiliate] — Beschreibung
+  // [ · Meta]". Link stets aufs Wort (Name), nie nackte URL. Ohne url nur der Name.
+  // e = { key, name, url?, desc?, affiliate?, extras?: [{ label, url? }] }
+  const entryRow = (e) => {
+    const kids = ['→ ', e.url ? eLink(e.name, e.url, 'n') : e.name];
+    if (e.affiliate) kids.push(React.createElement('span', { key: 'aff', style: s.aff }, ' · ' + t('legal.resources.affiliateMarker')));
+    if (e.desc) kids.push(' — ' + e.desc);
+    (e.extras || []).forEach((x, i) => {
+      kids.push(' · ');
+      kids.push(x.url ? eLink(x.label, x.url, 'x' + i) : React.createElement('span', { key: 'x' + i, style: s.meta }, x.label));
+    });
+    return React.createElement('p', { key: e.key, style: s.entryRow }, ...kids);
   };
 
-  // Eine Herzensempfehlungs-Zeile: „→ Name · Affiliate — Beschreibung". Beschreibung
-  // aus i18n (legal.resources.<key>, geteilt mit LegalView); ohne url nur der Name
-  // (bewusst kein Link). Übersetzt eine fehlende Beschreibung nicht → Eintrag entfällt.
-  const hfRow = (item, desc) => React.createElement('p', { key: item.key, style: s.hfRow },
-    '→ ',
-    item.url
-      ? React.createElement('a', { href: item.url, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, item.name)
-      : item.name,
-    item.affiliate ? React.createElement('span', { style: s.hfAff }, ' · ' + t('legal.resources.affiliateMarker')) : null,
-    ' — ' + desc
-  );
+  const groupHeading = (label, key) => React.createElement('p', { key, style: s.groupHeading }, label);
 
-  // Ressourcen-Zeile „→ Name — Beschreibung · Website" für die aus i18n kommenden
-  // Einträge ({ name, url, desc, web? }) und die normalisierten Beratung-&-Hilfe-
-  // Objekte. url kann tel: sein. Ohne url nur der Name (bewusst kein Link).
-  const resRow = (key, e) => e && React.createElement('p', { key, style: s.hfRow },
-    '→ ',
-    e.url ? React.createElement('a', { href: e.url, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, e.name) : e.name,
-    ' — ' + e.desc,
-    e.web ? React.createElement(React.Fragment, null, ' · ', React.createElement('a', { href: e.web, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, 'Website')) : null
-  );
+  // Kategorie-Link → normalisierter Eintrag (Antragsstelle als Meta statt eigener Zeile).
+  const katEntries = (id) => getLinksByKategorie(id).map(link => ({
+    key: link.id, name: l(link.name), url: link.url, desc: l(link.beschreibung),
+    extras: link.antragsstelle ? [{ label: t('dl.antragsstelle') + ': ' + l(link.antragsstelle) }] : [],
+  }));
+  // i18n-Ressourcen-Objekt ({ name, url, desc, web? }) → normalisierter Eintrag.
+  const resEntry = (key, e) => ({ key, name: e.name, url: e.url, desc: e.desc, extras: e.web ? [{ label: 'Website', url: e.web }] : [] });
 
-  // Gemeinde-/Kanton-Zeile fürs „Mitreden"-Buch (wie LegalView, kantonsabhängig).
+  // Gemeinde-/Kanton-Zeile fürs „Mitreden"-Buch (kantonsabhängig) — gleiche Zeilenoptik.
   const renderLocalGov = () => {
     const canton = (data && data.basis && data.basis.canton) || '';
     const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
     const cantonName = canton ? getCantonName(canton, t) : '';
-    if (!city && !cantonName) return React.createElement('p', { style: s.hfRow }, '→ ' + t('legal.resources.petition3'));
+    if (!city && !cantonName) return React.createElement('p', { key: 'lg', style: s.entryRow }, '→ ' + t('legal.resources.petition3'));
     const parts = ['→ '];
-    if (city) { const cUrl = communeUrl(city); parts.push(cUrl ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, city) : city); }
+    if (city) { const cUrl = communeUrl(city); parts.push(cUrl ? eLink(city, cUrl, 'gm') : city); }
     if (cantonName) {
       if (city) parts.push(' · ');
-      parts.push(React.createElement('a', { key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener noreferrer', style: s.hfLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
+      parts.push(eLink(t('legal.resources.cantonPortal', { canton: cantonName }), cantonPortalUrl(canton), 'kt'));
     }
     parts.push(' — ' + t('legal.resources.localGovDesc'));
-    return React.createElement('p', { style: s.hfRow }, ...parts);
+    return React.createElement('p', { key: 'lg', style: s.entryRow }, ...parts);
+  };
+
+  // Buch-Hülle: farbige Kante + Kopf (Icon + Titel) + optionaler Intro + Inhalt.
+  const bookWrap = (id, intro, children) => {
+    const info = bookInfo(id);
+    return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': info.name, style: s.book(info.ton) },
+      React.createElement('div', { style: s.bookHead },
+        React.createElement(Icon, { name: info.icon, size: 20 }),
+        React.createElement(PanelTitle, { palette, style: { margin: 0 } }, info.name)
+      ),
+      intro ? React.createElement('p', { style: s.bookIntro }, intro) : null,
+      ...children
+    );
   };
 
   // Inhalt des aufgeschlagenen Buchs.
   const renderBuch = () => {
     if (!offen) return null;
-    // Herzensempfehlungen: die echten 24, nach Themengruppen (geteilte Quelle + i18n
-    // mit LegalView). Affiliate transparent, „kein Link" ehrlich.
+    // Herzensempfehlungen: echte 24 nach Themengruppen (geteilte Quelle + i18n mit LegalView).
     if (offen === 'herz') {
       const hasAff = HEARTFELT.some(i => i.affiliate);
-      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.herzTitle'), style: s.book(HERZ_TON) },
-        React.createElement('div', { style: s.bookHead },
-          React.createElement(Icon, { name: 'heart', size: 20 }),
-          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.herzTitle'))
-        ),
-        React.createElement('p', { style: s.herzNote }, t(hasAff ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro')),
-        ...HEARTFELT_GROUPS.flatMap(g => {
-          const items = HEARTFELT
-            .filter(i => i.group === g)
-            .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
-            .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
-            .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
-          if (!items.length) return [];
-          return [
-            React.createElement('p', { key: 'hg-' + g, style: s.hfGroup }, t('legal.resources.heartfeltGroups.' + g)),
-            ...items.map(({ item, desc }) => hfRow(item, desc)),
-          ];
-        })
-      );
+      const kids = [];
+      HEARTFELT_GROUPS.forEach(g => {
+        const items = HEARTFELT
+          .filter(i => i.group === g)
+          .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
+          .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
+          .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
+        if (!items.length) return;
+        kids.push(groupHeading(t('legal.resources.heartfeltGroups.' + g), 'hg-' + g));
+        items.forEach(({ item, desc }) => kids.push(entryRow({ key: item.key, name: item.name, url: item.url, desc, affiliate: item.affiliate })));
+      });
+      return bookWrap('herz', t(hasAff ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro'), kids);
     }
     // Beratung & Hilfe: Beratungsstellen (help + Sophies 3) + Ombudsstellen (ombuds).
     if (offen === 'beratung') {
-      const beratung = BERATUNG_HILFE.map(x => ({ name: l(x.name), url: x.url, desc: l(x.beschreibung) }));
-      const help = ['help1', 'help2', 'help3', 'help4'].map(k => t('legal.resources.' + k));
-      const ombuds = ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].map(k => t('legal.resources.' + k));
-      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.beratungTitle'), style: s.book(BERATUNG_TON) },
-        React.createElement('div', { style: s.bookHead },
-          React.createElement(Icon, { name: 'contacts', size: 20 }),
-          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.beratungTitle'))
-        ),
-        React.createElement('p', { style: s.herzNote }, t('dl.beratungNote')),
-        React.createElement('p', { style: s.hfGroup }, t('legal.resources.helpTitle')),
-        ...help.map((e, i) => resRow('help' + i, e)),
-        ...beratung.map((e, i) => resRow('ber' + i, e)),
-        React.createElement('p', { style: s.hfGroup }, t('legal.resources.ombudsTitle')),
-        ...ombuds.map((e, i) => resRow('omb' + i, e))
-      );
+      const kids = [];
+      kids.push(groupHeading(t('legal.resources.helpTitle'), 'gh-help'));
+      ['help1', 'help2', 'help3', 'help4'].forEach((k, i) => kids.push(entryRow(resEntry('help' + i, t('legal.resources.' + k)))));
+      BERATUNG_HILFE.forEach((x, i) => kids.push(entryRow({ key: 'ber' + i, name: l(x.name), url: x.url, desc: l(x.beschreibung) })));
+      kids.push(groupHeading(t('legal.resources.ombudsTitle'), 'gh-omb'));
+      ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].forEach((k, i) => kids.push(entryRow(resEntry('omb' + i, t('legal.resources.' + k)))));
+      return bookWrap('beratung', t('dl.beratungNote'), kids);
     }
     // Sichere Kanäle: verschlüsselte/rechtsgültige Kommunikationswege.
     if (offen === 'sicher') {
-      const items = ['threema', 'secureSafe', 'incamail'].map(k => t('legal.resources.' + k));
-      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.sicherTitle'), style: s.book(SICHER_TON) },
-        React.createElement('div', { style: s.bookHead },
-          React.createElement(Icon, { name: 'lock', size: 20 }),
-          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.sicherTitle'))
-        ),
-        React.createElement('p', { style: s.herzNote }, t('legal.resources.secure1')),
-        ...items.map((e, i) => resRow('sec' + i, e))
-      );
+      const kids = ['threema', 'secureSafe', 'incamail'].map((k, i) => entryRow(resEntry('sec' + i, t('legal.resources.' + k))));
+      return bookWrap('sicher', t('legal.resources.secure1'), kids);
     }
     // Mitreden: Petitionen + Gemeinde/Kanton (Bürgerrechte, Art. 33 BV).
     if (offen === 'mitreden') {
-      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.mitredenTitle'), style: s.book(MITREDEN_TON) },
-        React.createElement('div', { style: s.bookHead },
-          React.createElement(Icon, { name: 'edit', size: 20 }),
-          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.mitredenTitle'))
-        ),
-        React.createElement('p', { style: s.herzNote }, t('legal.resources.petition1')),
-        resRow('pet2', t('legal.resources.petition2')),
-        renderLocalGov()
-      );
+      return bookWrap('mitreden', t('legal.resources.petition1'), [
+        entryRow(resEntry('pet2', t('legal.resources.petition2'))),
+        renderLocalGov(),
+      ]);
     }
-    const kat = KATEGORIEN[offen];
-    const links = getLinksByKategorie(offen);
-    return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': l(kat), style: s.book(BUCH_TON[offen] || 'soft') },
-      React.createElement('div', { style: s.bookHead },
-        React.createElement(Icon, { name: kat.icon, size: 20 }),
-        React.createElement(PanelTitle, { palette, style: { margin: 0 } }, l(kat))
-      ),
-      links.length ? links.map(link => linkCard(link, true)) : React.createElement('div', { style: s.empty }, t('dl.alle'))
+    // Kategorie-Buch.
+    const entries = katEntries(offen);
+    return bookWrap(offen, null, entries.length ? entries.map(entryRow) : [React.createElement('div', { key: 'empty', style: s.empty }, t('dl.alle'))]);
+  };
+
+  // Ein Buchrücken im Regal.
+  const spine = (id) => {
+    const info = bookInfo(id);
+    const active = offen === id;
+    return React.createElement('button', {
+      key: id, type: 'button', 'aria-pressed': active, 'aria-expanded': active, 'aria-controls': 'buch-panel',
+      'aria-label': info.name, title: info.name, style: s.spine(info.ton, active),
+      onClick: () => setOffen(active ? null : id),
+    },
+      React.createElement('span', { style: s.cap(info.ton), 'aria-hidden': 'true' }),
+      React.createElement(Icon, { name: info.icon, size: 17 }),
+      React.createElement('span', { style: s.spineName }, info.name)
     );
   };
 
@@ -221,19 +210,16 @@ export const DirektLinks = ({ palette, t, data }) => {
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('dl.title')),
     React.createElement('p', { style: s.intro }, t('dl.shelfIntro')),
 
-    // Das Regal: Kategorie-Bücher, dann Beratung & Hilfe, dann Herzensempfehlungen.
-    React.createElement('div', { style: s.shelfWrap },
-      React.createElement('div', { style: s.shelf, role: 'group', 'aria-label': t('dl.title') },
-        ...kategorien.map(k => spine(k.id, BUCH_TON[k.id] || 'soft', k.icon, l(k))),
-        spine('beratung', BERATUNG_TON, 'contacts', t('dl.beratungTitle')),
-        spine('sicher', SICHER_TON, 'lock', t('dl.sicherTitle')),
-        spine('mitreden', MITREDEN_TON, 'edit', t('dl.mitredenTitle')),
-        spine('herz', HERZ_TON, 'heart', t('dl.herzTitle'))
-      )
-    ),
-
-    // Aufgeschlagenes Buch (nur wenn ein Rücken gewählt ist).
-    renderBuch(),
+    // Das Regal mit mehreren Etagen. Das aufgeschlagene Buch erscheint unter seiner Etage.
+    ...regale.map(regal => React.createElement('div', { key: regal.key, style: s.etage },
+      React.createElement('div', { style: s.shelfLabel }, regal.label),
+      React.createElement('div', { style: s.shelfWrap },
+        React.createElement('div', { style: s.shelf, role: 'group', 'aria-label': regal.label },
+          ...regal.ids.map(id => spine(id))
+        )
+      ),
+      regal.ids.includes(offen) ? renderBuch() : null
+    )),
 
     // Kantonale Anlaufstellen bleiben erhalten (unverändert), unter dem Regal.
     data && data.basis?.canton && getCantonalLinks(data.basis.canton) && React.createElement('div', { style: s.canton },
