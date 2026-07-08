@@ -2807,6 +2807,8 @@ export default {
     completed: 'Completed',
     addReminder: 'Add reminder',
     exportIcs: 'Export calendar (.ics)',
+    locale: 'en-GB',
+    calAria: 'Calendar overview',
     exportIcsHint: 'Add your reminders to your phone or computer calendar.',
     editReminder: 'Edit reminder',
     noRemindersTitle: 'Nothing planned yet',
