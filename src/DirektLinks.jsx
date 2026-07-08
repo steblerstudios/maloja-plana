@@ -8,9 +8,10 @@ import { renderSource } from './utils/renderSource.js';
 
 // Bücherregal mit mehreren Etagen: jede Kategorie (und jedes Sonderthema) ist ein
 // Buch, dessen Rücken auf einem Regalbrett steht. Ein Klick klappt das Buch unter
-// seiner eigenen Etage auf. Logisch sortiert (amtlich / Rat & Schutz / persönlich),
-// damit neue Bücher leicht Platz finden. ALLE Buch-Inhalte nutzen dieselbe
-// Eintrags-Karte (entryCard) — einheitliches Aussehen, Link stets aufs Wort (Name).
+// seiner eigenen Etage auf. Logisch sortiert (amtlich / Rat & Schutz /
+// Herzensempfehlungen). Die Herzensempfehlungen sind eine eigene Etage, in der jede
+// Themengruppe ein kleines Buch ist (alle mit Herz-Icon = „persönlich empfohlen",
+// unterschieden durch Farbe + Name). ALLE Buch-Inhalte nutzen dieselbe Karte.
 const BUCH_TON = {
   gesundheit: 'rose',
   vorsorge: 'sage',
@@ -25,8 +26,9 @@ const SONDER = {
   beratung: { ton: 'sage', icon: 'contacts', titleKey: 'dl.beratungTitle' },
   sicher: { ton: 'sky', icon: 'lock', titleKey: 'dl.sicherTitle' },
   mitreden: { ton: 'sand', icon: 'edit', titleKey: 'dl.mitredenTitle' },
-  herz: { ton: 'gold', icon: 'heart', titleKey: 'dl.herzTitle' },
 };
+// Herzensempfehlungs-Bücher (je Themengruppe): eigene Farbe, gemeinsames Herz-Icon.
+const HERZ_TON = { digital: 'sky', soziales: 'sage', konsum: 'gold', tiere: 'sand', gesundheit: 'rose', kunst: 'soft', gemeinschaft: 'sage' };
 
 // Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Sophies Entscheid:
 // trifft meist, gelegentlich daneben, bewusst akzeptiert).
@@ -42,27 +44,34 @@ const communeUrl = (city) => {
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
-  const [offen, setOffen] = useState(null); // Buch-id oder null
+  const [offen, setOffen] = useState(null); // Buch-id ('hf:<gruppe>' für Herzensempf.) oder null
   const lang = t('dl.lang');
   const l = (obj) => obj[lang] || obj.de;
+  const hasAff = HEARTFELT.some(i => i.affiliate);
 
-  // Etagen des Regals — logisch sortiert.
+  // Etagen des Regals — logisch sortiert. Herzensempfehlungen: je Gruppe ein Buch.
   const regale = [
     { key: 'amtlich', label: t('dl.shelfAmtlich'), ids: kategorien.map(k => k.id) },
     { key: 'rat', label: t('dl.shelfRat'), ids: ['beratung', 'sicher', 'mitreden'] },
-    { key: 'persoenlich', label: t('dl.shelfPersoenlich'), ids: ['herz'] },
+    { key: 'herz', label: t('dl.herzTitle'), desc: t(hasAff ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro'), ids: HEARTFELT_GROUPS.map(g => 'hf:' + g) },
   ];
 
-  // Ton, Icon, Titel je Buch (Kategorie oder Sonderbuch).
-  const bookInfo = (id) => SONDER[id]
-    ? { ton: SONDER[id].ton, icon: SONDER[id].icon, name: t(SONDER[id].titleKey) }
-    : { ton: BUCH_TON[id] || 'soft', icon: KATEGORIEN[id].icon, name: l(KATEGORIEN[id]) };
+  // Ton, Icon, Titel je Buch (Kategorie / Sonderbuch / Herzensempfehlungs-Gruppe).
+  const bookInfo = (id) => {
+    if (id.indexOf('hf:') === 0) {
+      const g = id.slice(3);
+      return { ton: HERZ_TON[g] || 'gold', icon: 'heart', name: t('legal.resources.heartfeltGroups.' + g) };
+    }
+    if (SONDER[id]) return { ton: SONDER[id].ton, icon: SONDER[id].icon, name: t(SONDER[id].titleKey) };
+    return { ton: BUCH_TON[id] || 'soft', icon: KATEGORIEN[id].icon, name: l(KATEGORIEN[id]) };
+  };
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
     intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.lg + 'px' },
     etage: { marginBottom: space.lg + 'px' },
     shelfLabel: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, letterSpacing: '0.3px', margin: '0 0 ' + space.xs + 'px 2px' },
+    shelfDesc: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', lineHeight: 1.5, margin: '0 0 ' + space.sm + 'px 2px', maxWidth: '440px' },
     shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', WebkitOverflowScrolling: 'touch' },
     shelf: { display: 'inline-flex', gap: space.sm + 'px', alignItems: 'flex-end', minWidth: '100%', padding: '0 2px', borderBottom: '3px solid ' + palette.top },
     spine: (ton, active) => ({
@@ -110,8 +119,6 @@ export const DirektLinks = ({ palette, t, data }) => {
     ))
   );
 
-  const groupHeading = (label, key) => React.createElement('p', { key, style: s.groupHeading }, label);
-
   // Kategorie-Link → normalisierter Eintrag (Antragsstelle als Meta).
   const katEntries = (id) => getLinksByKategorie(id).map(link => ({
     key: link.id, name: l(link.name), url: link.url, desc: l(link.beschreibung),
@@ -119,6 +126,13 @@ export const DirektLinks = ({ palette, t, data }) => {
   }));
   // i18n-Ressourcen-Objekt ({ name, url, desc, web? }) → normalisierter Eintrag.
   const resEntry = (key, e) => ({ key, name: e.name, url: e.url, desc: e.desc, extras: e.web ? [{ label: 'Website', url: e.web }] : [] });
+  // Herzensempfehlungen einer Gruppe → normalisierte Einträge (Beschreibung aus i18n).
+  const herzEntries = (g) => HEARTFELT
+    .filter(i => i.group === g)
+    .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
+    .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
+    .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }))
+    .map(({ item, desc }) => ({ key: item.key, name: item.name, url: item.url, desc, affiliate: item.affiliate }));
 
   // Gemeinde-/Kanton-Karte fürs „Mitreden"-Buch (kantonsabhängig) — gleiche Karten-Optik.
   const renderLocalGov = () => {
@@ -152,24 +166,14 @@ export const DirektLinks = ({ palette, t, data }) => {
     );
   };
 
+  const groupHeading = (label, key) => React.createElement('p', { key, style: s.groupHeading }, label);
+
   // Inhalt des aufgeschlagenen Buchs.
   const renderBuch = () => {
     if (!offen) return null;
-    // Herzensempfehlungen: echte 24 nach Themengruppen (geteilte Quelle + i18n mit LegalView).
-    if (offen === 'herz') {
-      const hasAff = HEARTFELT.some(i => i.affiliate);
-      const kids = [];
-      HEARTFELT_GROUPS.forEach(g => {
-        const items = HEARTFELT
-          .filter(i => i.group === g)
-          .map(item => ({ item, desc: t('legal.resources.' + item.key) }))
-          .filter(({ desc }) => desc && desc.indexOf('legal.resources.') !== 0)
-          .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
-        if (!items.length) return;
-        kids.push(groupHeading(t('legal.resources.heartfeltGroups.' + g), 'hg-' + g));
-        items.forEach(({ item, desc }) => kids.push(entryCard({ key: item.key, name: item.name, url: item.url, desc, affiliate: item.affiliate })));
-      });
-      return bookWrap('herz', t(hasAff ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro'), kids);
+    // Herzensempfehlungs-Gruppe (eigenes Buch): Karten dieser Gruppe.
+    if (offen.indexOf('hf:') === 0) {
+      return bookWrap(offen, null, herzEntries(offen.slice(3)).map(entryCard));
     }
     // Beratung & Hilfe: Beratungsstellen (help + Sophies 3) + Ombudsstellen (ombuds).
     if (offen === 'beratung') {
@@ -220,6 +224,7 @@ export const DirektLinks = ({ palette, t, data }) => {
     // Das Regal mit mehreren Etagen. Das aufgeschlagene Buch erscheint unter seiner Etage.
     ...regale.map(regal => React.createElement('div', { key: regal.key, style: s.etage },
       React.createElement('div', { style: s.shelfLabel }, regal.label),
+      regal.desc ? React.createElement('div', { style: s.shelfDesc }, regal.desc) : null,
       React.createElement('div', { style: s.shelfWrap },
         React.createElement('div', { style: s.shelf, role: 'group', 'aria-label': regal.label },
           ...regal.ids.map(id => spine(id))
