@@ -11,6 +11,18 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.17-beta] — 2026-07-09
+
+### Neu
+- **Deine Instrumente** — Dashboard-Spiegel der vier Selbstchecks: Franchise-Tacho (Prämien), Leistungs-Kompass (Schnellcheck), Reserve-Tankanzeige (Finanzen) und Versicherungs-Schutzschild. Jede Kachel führt in den passenden Bereich.
+- **Lebens-Obstgarten** — neue, naturgetreue Gartenansicht als eigener Blick auf den Lebensordner.
+- **Schnellcheck** — ruhiger Wegweiser zu lageabhängigen Leistungen.
+- **Versicherungs-Schutzschild** — zwei Schilde: Pflicht (gesetzlich) und Empfohlen.
+
+### Geändert
+- Instrumente-Panel wird auf dem Dashboard lazy geladen — das Haupt-Bundle bleibt unter dem 65-KB-Budget.
+- `deploy.sh`: SFTP-Passwort sonderzeichensicher (`--env-password`), und der Backup-Schritt hängt bei Verbindungsproblemen nicht mehr endlos.
+
 ## [0.1.16-beta] — 2026-07-08
 
 ### Sicherheit
