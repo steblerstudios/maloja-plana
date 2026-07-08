@@ -5,6 +5,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [Unreleased]
+
+*Hier sammelst du Zeilen während der Arbeit. Beim Release wird aus „Unreleased"
+die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
+kommt der Changelog immer mit, nie doppelt.*
+
 ## [0.1.15-beta] — 2026-07-08
 
 ### Neu
