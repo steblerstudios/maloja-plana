@@ -11,6 +11,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.18-beta] — 2026-07-09
+
+### Wartung
+- `deploy.sh` räumt alte Rollback-Sicherungen automatisch auf (behält nur die neuesten drei).
+- Repo aufgeräumt: leere `prompts/`-Stubs und veralteter `BUTTONS_AUDIT` entfernt, `src/data/raw/` (nur lokale Roh-Tabellen) wird ignoriert.
+
 ## [0.1.17-beta] — 2026-07-09
 
 ### Neu
