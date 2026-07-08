@@ -2715,6 +2715,8 @@ export default {
   calendar: {
     title: 'Calendario e promemoria',
     exportIcs: 'Esporta calendario (.ics)',
+    locale: 'it-CH',
+    calAria: 'Panoramica del calendario',
     exportIcsHint: { sie: 'Aggiunga i Suoi promemoria al calendario del telefono o del computer.', du: 'Aggiungi i tuoi promemoria al calendario del telefono o del computer.' },
     upcoming: 'In arrivo',
     overdue: 'In ritardo',
