@@ -33,6 +33,9 @@ docs/research/
 maloja-plana-deploy*/
 maloja-plana-*.zip
 
+# Rollback-Backups der Live-Version (von deploy.sh angelegt, nie ins Repo)
+.deploy-backups/
+
 # Versehentliche Build-Kopien (Finder-Duplikate)
 dist */
 
