@@ -3480,6 +3480,8 @@ export default {
     phasePension: 'Pensionamento',
     achseAlter: 'Età',
     zukunftGraphHinweis: 'Sposta l’età di pensionamento: trascina il segno sul grafico o usa ←/→ — rendita e capitale si aggiornano subito.',
+    zukunft3aSchwelleTitle: 'Distribuire il 3a su più conti',
+    zukunft3aSchwelle: 'Oltre circa CHF {schwelle}, molti conti 3a bancari pagano meno interessi. Riempire più conti in modo moderato aiuta a mantenere il tasso preferenziale — e apre più avanti il prelievo scaglionato, con risparmio fiscale (vedi sotto).',
     zukunftSzenarioTitle: 'Cosa significa la tua età di pensionamento',
     zukunftSzenarioFrueh: 'Pensionamento anticipato: {dauer} prima dell’età di riferimento di 65 anni.',
     zukunftSzenarioReferenz: 'Pensionamento ordinario a 65 anni — AVS completa, senza riduzione né supplemento.',
