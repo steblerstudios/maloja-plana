@@ -7,6 +7,7 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
+import { Schutzschild } from './components/Schutzschild.jsx';
 import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -1305,6 +1306,16 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         )
       );
     })(),
+
+    // Versicherungs-Schutzschild: Deckungsgrad der drei Kern-Absicherungen
+    // (Instrument #4). data = versicherungen-Kapitel; blendet sich selbst aus,
+    // solange nichts erfasst ist.
+    chapter.key === 'versicherungen' &&
+      React.createElement(Schutzschild, {
+        palette, t, versicherungen: data,
+        employed: allData?.finanzen?.employmentType === 'employed',
+        annualIncome: (Number(allData?.finanzen?.monthlyIncome) || 0) * 12,
+      }),
 
     // ─── Contextual orientation hints (Helvetia layer) ──────
     // IPV: shown in finanzen when income + canton exist

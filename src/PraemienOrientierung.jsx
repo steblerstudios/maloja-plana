@@ -10,6 +10,7 @@ import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
 import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
+import { FranchiseTacho } from './components/FranchiseTacho.jsx';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -104,6 +105,17 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     }
     return { lowFra: low.franchise, highFra: high.franchise, annualSaving, reserve, sbMax, breakEven };
   }, [referenceData, ageClass]);
+
+  // Laufende, KVG-anrechenbare Gesundheitskosten dieses Jahres (aus den KK-Belegen) —
+  // Zeigerwert des Franchise-Tachos. Gleiche Quelle/Definition wie der Franchise-Tab.
+  const healthCostsYTD = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const belege = Array.isArray(data.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
+    const belegYear = (b) => b.datum ? Number(String(b.datum).slice(0, 4)) : currentYear;
+    return belege
+      .filter(b => belegYear(b) === currentYear)
+      .reduce((s, b) => s + (Number(b.betrag) || 0), 0);
+  }, [data.versicherungen?.kkBelege]);
 
   // ── Reserve-Check: kann der Maximalfall überhaupt getragen werden? ──
   // Die hohe Franchise spart Prämie, kostet im schlechten Jahr aber bis zu `reserve`
@@ -334,7 +346,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     franchiseOpt && React.createElement('div', {
       style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, marginBottom: space.md + 'px' },
     },
-      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, marginBottom: space.xs + 'px' } }, t('po.franchiseOptTitle')),
+      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.body, marginBottom: space.sm + 'px' } }, t('po.franchiseOptTitle')),
+      // Franchise-Tacho: visuelle Kopfzeile des Optimierers (Instrument über derselben Logik)
+      React.createElement(FranchiseTacho, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
         t('po.franchiseOptSaving', { high: franchiseOpt.highFra.toLocaleString(), low: franchiseOpt.lowFra.toLocaleString(), saving: franchiseOpt.annualSaving.toLocaleString() })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
