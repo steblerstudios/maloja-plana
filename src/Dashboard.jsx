@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
+import FruchtMitIcon from './FruchtMitIcon.jsx';
+import FruchtStufe from './FruchtStufe.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
+import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
+import { loadReminders } from './utils/reminders.js';
 
 function fmtCHF(v) {
   const n = Number(v);
@@ -79,14 +85,69 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
   const canton = data?.basis?.canton;
-  // Gleiche kantonale Berechnung wie der vollständige IPV-Rechner (calculateIPV),
-  // damit Dashboard-Schnellcheck und Tool nie widersprüchliche Zahlen zeigen.
-  // Ohne Kanton: ehrlich qualitativ statt erfundener nationaler Pauschale.
-  const result = annual > 0 && canton
-    ? calculateIPV({ ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } })
-    : null;
-  const hasResult = result && result.eligible;
   const fmt = (v) => v.toLocaleString('de-CH');
+
+  // Ein Einkommen → mehrere Leistungen (Basel-Stadt-Leistungsrechner als Vorbild).
+  // Nur POSITIVE, logisch gedeckte Hinweise, nie ein „Nein"-Verdikt (Würde). Die
+  // Berechnung ist dieselbe wie in den vollständigen Tools (calculateIPV/
+  // calculateSozialhilfe), damit Schnellcheck und Rechner nie widersprechen.
+  const probe = { ...data, finanzen: { ...(data?.finanzen || {}), monthlyIncome: income } };
+  const benefits = [];
+  try {
+    // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
+    const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
+    if (ipv && ipv.eligible) benefits.push({
+      key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
+      monthly: ipv.amount,
+      detail: t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }),
+    });
+    // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
+    // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
+    // sonst wäre ein „Anspruch möglich" unehrlich.
+    const rentContext = Number(data?.wohnen?.rentAmount || 0) > 0;
+    if (annual > 0 && rentContext) {
+      const sh = calculateSozialhilfe(probe);
+      if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
+        key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'), color: palette.sage,
+        monthly: sh.deficit,
+        detail: t('dashboard.anspruchMoeglich'),
+      });
+    }
+  } catch { /* Orientierung, nie blockierend */ }
+
+  // Schlanke Total-Leiste (Flat-Viz, konsistent mit der Vollansicht #/schnellcheck):
+  // summiert nur die monetären Leistungen zu einer geschätzten Monats-Entlastung.
+  const monetary = benefits.filter(b => b.monthly > 0);
+  const totalMonthly = monetary.reduce((sum, b) => sum + b.monthly, 0);
+  const miniBar = monetary.length > 0 && React.createElement('div', { style: { marginBottom: space.sm } },
+    React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
+      '≈ CHF ' + fmt(totalMonthly) + ' / ' + t('schnellcheck.monat')),
+    React.createElement('div', { style: { display: 'flex', height: '8px', borderRadius: '4px', overflow: 'hidden', background: palette.up } },
+      monetary.map(b => React.createElement('div', {
+        key: b.key,
+        style: { width: (totalMonthly > 0 ? b.monthly / totalMonthly * 100 : 0).toFixed(1) + '%', background: b.color },
+      })))
+  );
+
+  const row = (b) => React.createElement('button', {
+    key: b.key,
+    onClick: () => onNavigate(b.view),
+    style: {
+      display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
+      padding: '10px 14px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+      background: palette.sage + '10', color: palette.text,
+      border: '1px solid ' + palette.sage + '30', borderRadius: radius.sm,
+      transition: `background ${duration.normal}ms ${ease}`,
+    },
+    onMouseEnter: (e) => { e.currentTarget.style.background = palette.sage + '1e'; },
+    onMouseLeave: (e) => { e.currentTarget.style.background = palette.sage + '10'; },
+  },
+    React.createElement('div', { style: { minWidth: 0, flex: 1 } },
+      React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, b.label),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.detail)
+    ),
+    React.createElement('span', { style: { color: palette.sage, flexShrink: 0, fontSize: text.body }, 'aria-hidden': true }, '→')
+  );
 
   return React.createElement('div', {
     style: {
@@ -99,62 +160,50 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', {
       style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm }
     }, t('dashboard.quickCheckTitle')),
-    React.createElement('div', {
-      style: { display: 'flex', gap: space.md, alignItems: 'flex-end', flexWrap: 'wrap' }
-    },
-      React.createElement('label', { style: { flex: '1 1 180px', minWidth: '150px', display: 'block' } },
-        React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
-        }, t('dashboard.quickCheckIncome')),
-        React.createElement('input', {
-          type: 'number',
-          inputMode: 'numeric',
-          placeholder: t('dashboard.quickCheckPlaceholder'),
-          value: income,
-          onChange: (e) => setIncome(e.target.value),
-          style: {
-            width: '100%', padding: '10px 12px', fontSize: text.body,
-            border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            background: palette.surface, color: palette.text,
-            fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
-          }
-        })
-      ),
-      annual > 0 && React.createElement('div', {
-        style: { flex: '2 1 240px', minWidth: '200px' }
-      },
-        React.createElement('div', {
-          style: {
-            padding: '10px 14px',
-            background: hasResult ? palette.sage + '10' : palette.up,
-            borderRadius: radius.sm,
-            border: '1px solid ' + (hasResult ? palette.sage + '30' : palette.border + '44'),
-          }
-        },
-          React.createElement('div', {
-            style: { fontSize: text.sm, color: hasResult ? palette.sageDeep || palette.sage : palette.mid, fontWeight: hasResult ? weight.medium : weight.normal }
-          }, !canton
-            ? t('dashboard.quickCheckHint')
-            : hasResult
-              ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(result.annual) })
-              : t('dashboard.quickCheckNoResult')
-          ),
-          // Ergänzender Hinweis nur, wenn ein Kanton gesetzt ist — sonst steht
-          // derselbe Hinweis schon in der Hauptzeile (keine Doppelung).
-          canton && React.createElement('div', {
-            style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.xs }
-          }, t('dashboard.quickCheckHint'))
-        )
-      )
+    React.createElement('label', { style: { display: 'block', maxWidth: '260px' } },
+      React.createElement('span', {
+        style: { fontSize: text.xs, color: palette.mid, display: 'block', marginBottom: space.xs }
+      }, t('dashboard.quickCheckIncome')),
+      React.createElement('input', {
+        type: 'number',
+        inputMode: 'numeric',
+        placeholder: t('dashboard.quickCheckPlaceholder'),
+        'aria-label': t('dashboard.quickCheckIncome'),
+        value: income,
+        onChange: (e) => setIncome(e.target.value),
+        style: {
+          width: '100%', padding: '10px 12px', fontSize: text.body,
+          border: '1px solid ' + palette.border, borderRadius: radius.sm,
+          background: palette.surface, color: palette.text,
+          fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box',
+        }
+      })
     ),
+    annual > 0 && React.createElement('div', { style: { marginTop: space.md } },
+      benefits.length > 0
+        ? React.createElement('div', null,
+            React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('dashboard.quickCheckWithIncome')),
+            miniBar || null,
+            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs + 'px' } }, benefits.map(row))
+          )
+        : React.createElement('div', {
+            style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+          }, !canton ? t('dashboard.quickCheckHint') : t('dashboard.quickCheckNoResult')),
+      // Kanton-Caveat nur, wenn nicht schon der No-Result-Zweig denselben Hinweis
+      // zeigt (kein Kanton → Hinweis steht bereits oben; keine Doppelung).
+      (benefits.length > 0 || canton) && React.createElement('div', {
+        style: { fontSize: text.xs - 1, color: palette.mid, marginTop: space.sm }
+      }, t('dashboard.quickCheckHint'))
+    ),
+    // Zum vollständigen Leistungs-Schnellcheck (eigene Ansicht, mehr Angaben + Tacho)
     React.createElement('button', {
-      onClick: () => onNavigate('premium'),
+      onClick: () => onNavigate('schnellcheck'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer', padding: 0,
         fontSize: text.xs, color: palette.sand, fontFamily: 'inherit',
-        fontWeight: weight.medium, marginTop: space.sm,
+        fontWeight: weight.medium, marginTop: space.md,
       }
-    }, t('dashboard.quickCheckMore'))
+    }, t('dashboard.quickCheckAllLeistungen'))
   );
 };
 
@@ -277,7 +326,7 @@ const BetaFeedback = ({ palette, t }) => {
     React.createElement('div', { style: { marginBottom: space.lg + 'px' } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text, marginBottom: space.sm + 'px' } }, t('beta.feedback.q3')),
       React.createElement('textarea', {
-        value: q3, onChange: (e) => setQ3(e.target.value),
+        value: q3, onChange: (e) => setQ3(e.target.value), 'aria-label': t('beta.feedback.q3'),
         placeholder: t('beta.feedback.q3placeholder'),
         rows: 3,
         style: {
@@ -350,6 +399,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
           onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
         },
           (() => {
+            // Icon (Chalet etc.) in der Ast-Farbe des Bereichs — Frucht nur am Baum.
             const IconFn = Icons[ch.key];
             return React.createElement('span', {
               style: { width: '22px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: pct === 100 ? palette.sage : accent }
@@ -380,21 +430,35 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }) => {
+const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile }) => {
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
     lohn: 'finanzuebersicht', notfall: 'notfalleinstieg', budget: 'sync',
   };
+  // Ein Baum statt zwei (Braindump #21): jedes Werkzeug hängt als kleinere Frucht
+  // am selben Bereichs-Ast wie sein Lebensbereich — die Geld-Werkzeuge an der
+  // Finanzen-Aprikose, die Prämienverbilligung an der Versicherungen-Heidelbeere,
+  // die Notfall-Berechnung an der Notfall-Vogelbeere. `area` = Kapitel-Schlüssel,
+  // damit die Frucht dieselbe Ast-Farbe erbt.
+  // Zuordnung über die Äste ausbalanciert (max. 2 Werkzeug-Früchte je Ast), damit
+  // der Baum ruhig bleibt: Geld-Werkzeuge an Finanzen, der Lohn-/Mindestlohn-Check
+  // am Ausbildung-&-Arbeit-Ast, die Sozialhilfe-Orientierung am Behörden-Ast.
   const connections = [
-    { key: 'tax', label: t('datenWirken.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'ipv', label: t('datenWirken.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
-    { key: 'sozial', label: t('datenWirken.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
-    { key: 'lohn', label: t('datenWirken.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
-    { key: 'notfall', label: t('datenWirken.notfall'), active: !!(data.notfall?.emergencyContact) },
-    { key: 'budget', label: t('datenWirken.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
+    { key: 'tax', area: 'finanzen', label: t('datenWirken.tax'), short: t('datenWirken.short.tax'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
+    { key: 'budget', area: 'finanzen', label: t('datenWirken.budget'), short: t('datenWirken.short.budget'), active: !!(data.finanzen?.monthlyIncome && data.wohnen?.rentAmount) },
+    { key: 'lohn', area: 'ausbildung', label: t('datenWirken.lohn'), short: t('datenWirken.short.lohn'), active: !!(data.basis?.canton && data.ausbildung?.jobTitle) },
+    { key: 'ipv', area: 'versicherungen', label: t('datenWirken.ipv'), short: t('datenWirken.short.ipv'), active: !!(data.basis?.canton && data.finanzen?.monthlyIncome) },
+    { key: 'sozial', area: 'behoerden', label: t('datenWirken.sozial'), short: t('datenWirken.short.sozial'), active: !!(data.finanzen?.monthlyIncome && data.basis?.canton) },
+    { key: 'notfall', area: 'notfall', label: t('datenWirken.notfall'), short: t('datenWirken.short.notfall'), active: !!(data.notfall?.emergencyContact) },
   ];
   const active = connections.filter(c => c.active);
+  // Aktive Werkzeuge nach Bereichs-Ast gruppieren (Schlüssel = Kapitel-Schlüssel
+  // der Bereichs-Frucht, damit die Zuordnung Ast ↔ Werkzeug-Frucht stimmt).
+  const toolsByArea = active.reduce((acc, c) => {
+    (acc[c.area] = acc[c.area] || []).push(c);
+    return acc;
+  }, {});
   return React.createElement('div', {
     style: {
       margin: space.md + 'px 0',
@@ -407,62 +471,141 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, margin: '0 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.treeCaption')),
-    (() => {
-      const n = active.length;
-      const rowH = 32;
-      const h = Math.max(n * rowH + 20, 90);
-      const trunkX = 70;
-      const baseY = h - 4;
-      const trunkTopY = Math.max(10, h - Math.max(n, 1) * rowH - 6);
-      const attachY = (i) => n === 1 ? (baseY + trunkTopY) / 2 : trunkTopY + (baseY - trunkTopY) * (i / (n - 1));
-      return React.createElement('svg', {
-        viewBox: '0 0 340 ' + h,
-        width: '100%',
-        role: 'img',
-        'aria-label': t('datenWirken.title'),
-        style: { display: 'block', maxWidth: n === 0 ? '170px' : '380px', marginTop: '2px' },
+    // Bereichs-Früchte am Baum — jede Frucht trägt das Bereichs-Icon als Negativ
+    // in Ast-Farbe; sie reift mit dem Ausfüllstand (Deckkraft). Klick → Kapitel.
+    // ── Lebensbaum v2 — die Bereichs-Früchte hängen an echten Ästen ──────────
+    // Jede Frucht reift einzeln mit ihrem Ausfüllstand (Grösse + Deckkraft);
+    // die Krone (Laubmasse) wächst mit dem Gesamtfortschritt (4 Wuchsstufen).
+    // Frucht trägt weiterhin das Bereichs-Icon als Negativ. Klick → Kapitel.
+    (bereiche && bereiche.length) ? (() => {
+      const n = bereiche.length;
+      const VB_W = 360, VB_H = 268;
+      // Kurzer Stamm, damit der Baum gewachsen statt schirmartig wirkt.
+      const forkX = 180, forkY = 182, groundY = 252;
+      // Runder, höherer Kronenbogen (mehr Höhen-Abstand zwischen benachbarten Früchten).
+      const cx = 180, rx = 150, cy = 120, ry = 92;
+      // Früchte gleichmässig horizontal verteilen (statt gleicher Winkel). Bei gleichem
+      // Winkel drängeln sich benachbarte Früchte an den flachen Flanken der Krone und die
+      // Labels kollidieren; gleicher x-Abstand hält sie ruhig auseinander. Die Höhe folgt
+      // dem Kronenbogen — Mitte hoch, Ränder sanft tiefer, wie an einem gewachsenen Baum.
+      const anchor = (i) => {
+        const tt = n === 1 ? 0.5 : i / (n - 1);
+        const dx = (2 * tt - 1) * 0.99;
+        return { x: cx + rx * dx, y: cy - ry * Math.sqrt(Math.max(0, 1 - dx * dx)) };
+      };
+      const avg = Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / n);
+      // 4 Wuchsstufen des ganzen Baums → Laubmasse.
+      const stage = avg >= 70 ? 4 : avg >= 40 ? 3 : avg >= 15 ? 2 : 1;
+      const foliageOp = [0, 0.06, 0.10, 0.13, 0.17][stage];
+      return React.createElement('div', {
+        style: { position: 'relative', width: '100%', maxWidth: '420px', margin: '0 auto', padding: '2px 0 4px' },
       },
-        // Stamm — deine Angaben
-        React.createElement('line', {
-          x1: trunkX, y1: baseY, x2: trunkX, y2: trunkTopY,
-          stroke: palette.sage, strokeWidth: 3, strokeLinecap: 'round', opacity: 0.55,
-        }),
-        // Krone — immer da (Setzling), wächst mit der Zahl der Verbindungen
-        React.createElement('circle', { key: 'cr1', cx: trunkX - 5, cy: trunkTopY - 2, r: 3, fill: palette.sage, opacity: 0.5 }),
-        React.createElement('circle', { key: 'cr2', cx: trunkX + 5, cy: trunkTopY - 1, r: 3, fill: palette.sage, opacity: 0.5 }),
-        React.createElement('circle', { key: 'cr3', cx: trunkX, cy: trunkTopY - 6, r: 3.5, fill: palette.sage, opacity: 0.6 }),
-        // Äste + Blatt-Labels
-        ...active.map((c, i) => {
-          const top = 10 + i * rowH;
-          const leafY = top + 13;
-          const ay = attachY(i);
-          const cx = (trunkX + 150) / 2;
-          const target = navMap[c.key];
-          const go = (target && onNavigate) ? () => onNavigate(target) : null;
-          return React.createElement('g', {
-            key: 'b-' + c.key,
-            onClick: go || undefined,
-            onKeyDown: go ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } } : undefined,
-            role: go ? 'button' : undefined,
-            tabIndex: go ? 0 : undefined,
-            'aria-label': go ? c.label : undefined,
-            style: go ? { cursor: 'pointer' } : undefined,
-          },
-            React.createElement('path', {
-              d: 'M ' + trunkX + ' ' + ay + ' Q ' + cx + ' ' + ((ay + leafY) / 2 - 6) + ' 146 ' + leafY,
-              fill: 'none', stroke: palette.sage, strokeWidth: 1.2, opacity: 0.5, strokeLinecap: 'round',
-            }),
-            React.createElement('circle', { cx: 144, cy: leafY, r: 2.5, fill: palette.sage, opacity: 0.7 }),
-            React.createElement('rect', { x: 150, y: top, width: 182, height: 26, rx: 6, fill: palette.sage + '10', stroke: palette.sage + '33', strokeWidth: 1 }),
-            React.createElement('text', { x: 160, y: top + 17, fontSize: 11, fill: palette.sageDeep || palette.sage, fontFamily: 'inherit' }, c.label)
+        React.createElement('svg', {
+          viewBox: '0 0 ' + VB_W + ' ' + VB_H, width: '100%',
+          role: 'img', 'aria-label': t('datenWirken.title'),
+          style: { display: 'block' },
+        },
+          // Boden — ruhiger Schatten
+          React.createElement('ellipse', { cx: forkX, cy: groundY + 3, rx: 62, ry: 6, fill: palette.sage, opacity: 0.10 }),
+          // Laubkrone — dichter, runder Körper, wächst mit der Wuchsstufe (4 Stufen).
+          foliageOp > 0 ? React.createElement('ellipse', { cx: cx, cy: cy - 12, rx: rx * 0.94 + 22, ry: ry + 4, fill: palette.sage, opacity: foliageOp }) : null,
+          stage >= 2 ? React.createElement('ellipse', { cx: cx - 56, cy: cy, rx: 64, ry: 54, fill: palette.sage, opacity: foliageOp * 0.78 }) : null,
+          stage >= 2 ? React.createElement('ellipse', { cx: cx + 56, cy: cy, rx: 64, ry: 54, fill: palette.sage, opacity: foliageOp * 0.78 }) : null,
+          stage >= 4 ? React.createElement('ellipse', { cx: cx, cy: cy + 26, rx: 80, ry: 46, fill: palette.sage, opacity: foliageOp * 0.6 }) : null,
+          // Stamm — kurz und tragend; leichte Wurzel-Verbreiterung am Boden.
+          React.createElement('path', {
+            d: 'M ' + (forkX - 5) + ' ' + groundY + ' C ' + (forkX - 7) + ' ' + (groundY - 30) + ' ' + (forkX + 7) + ' ' + (forkY + 26) + ' ' + forkX + ' ' + forkY,
+            fill: 'none', stroke: palette.sage, strokeWidth: 8, strokeLinecap: 'round', opacity: 0.5,
+          }),
+          // Äste — je ein Ast zum Frucht-Anker
+          ...bereiche.map((b, i) => {
+            const a = anchor(i);
+            // Ast schwingt erst nach oben aus dem Stamm, dann zur Frucht — gewachsen,
+            // nicht speichenartig (der Kontrollpunkt liegt näher am Stamm und höher).
+            const mx = forkX + (a.x - forkX) * 0.30;
+            const my = forkY - (forkY - a.y) * 0.58;
+            // Verjüngter Ast: als gefüllte Form (dick am Stamm, dünn zur Frucht) statt
+            // gleichdicker Linie — so wirkt er gewachsen, nicht gezeichnet. Die Breite wird
+            // senkrecht zur Wuchsrichtung abgetragen und läuft zur Fruchtspitze aus.
+            const dxB = a.x - forkX, dyB = a.y - forkY;
+            const lenB = Math.hypot(dxB, dyB) || 1;
+            const nx = -dyB / lenB, ny = dxB / lenB;
+            const oL = (w, x, y) => (x + nx * w).toFixed(1) + ' ' + (y + ny * w).toFixed(1);
+            const oR = (w, x, y) => (x - nx * w).toFixed(1) + ' ' + (y - ny * w).toFixed(1);
+            const wB = 2.1, wM = 1.2, wT = 0.45;
+            return React.createElement('path', {
+              key: 'branch-' + b.key,
+              d: 'M ' + oL(wB, forkX, forkY) + ' Q ' + oL(wM, mx, my) + ' ' + oL(wT, a.x, a.y) +
+                 ' L ' + oR(wT, a.x, a.y) + ' Q ' + oR(wM, mx, my) + ' ' + oR(wB, forkX, forkY) + ' Z',
+              fill: palette.sage, stroke: 'none',
+              opacity: 0.32 + (b.pct / 100) * 0.28,
+            });
+          })
+        ),
+        // Früchte als klickbare Buttons über dem SVG, exakt am Ast-Ende.
+        ...bereiche.map((b, i) => {
+          const a = anchor(i);
+          const areaTools = toolsByArea[b.key] || [];
+          return React.createElement('div', { key: b.key, style: { display: 'contents' } },
+            React.createElement('button', {
+              onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
+              'aria-label': b.title + ' — ' + b.pct + '%',
+              title: b.title,
+              style: {
+                position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
+                // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
+                // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (Sophie).
+                transform: 'translate(-50%, -4%)',
+                background: 'none', border: 'none', padding: 0,
+                cursor: onSelectChapter ? 'pointer' : 'default',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', fontFamily: 'inherit',
+              },
+            },
+              // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
+              React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
+                React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: isMobile ? 42 : 50 })
+              ),
+              React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
+            ),
+            // Werkzeug-Früchte am selben Ast: kleinere Beeren, die unter der
+            // Bereichs-Frucht baumeln. Jede reift nicht (binär aktiv), trägt die
+            // Ast-Farbe und führt per Klick zum Werkzeug. Ein Baum statt zwei (#21).
+            areaTools.length ? React.createElement('div', {
+              style: {
+                position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
+                transform: 'translate(-50%, ' + (isMobile ? 60 : 72) + 'px)',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
+              },
+            },
+              ...areaTools.map((tool) => {
+                const target = navMap[tool.key];
+                const go = (target && onNavigate) ? () => onNavigate(target) : undefined;
+                return React.createElement('button', {
+                  key: tool.key,
+                  onClick: go,
+                  'aria-label': tool.label,
+                  title: tool.label,
+                  style: {
+                    display: 'inline-flex', alignItems: 'center', gap: '4px',
+                    background: b.color + '14', border: '1px solid ' + b.color + '33',
+                    borderRadius: '999px', padding: '1px 7px 1px 3px',
+                    cursor: go ? 'pointer' : 'default', fontFamily: 'inherit',
+                    whiteSpace: 'nowrap',
+                  },
+                },
+                  React.createElement('span', { style: { width: '7px', height: '7px', borderRadius: '50%', background: b.color, opacity: 0.85, flex: '0 0 auto' } }),
+                  React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
+                );
+              })
+            ) : null
           );
         })
       );
-    })()
+    })() : null
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, simpleView }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, isMobile, simpleView, isDarkMode }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -505,11 +648,19 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     return 'begonnen';
   };
 
-  const chapterAccentColor = {
+  // Ast-Farbe pro Kapitel — eigene Frucht-Farbe je Lebensbereich, theme-aware.
+  // (Früher 5 generische Palette-Töne mit Dopplungen; jetzt 7 distinkte Äste.)
+  const fallbackAccent = {
     basis: palette.sage, wohnen: palette.sage, finanzen: palette.gold,
     versicherungen: palette.sky, ausbildung: palette.sage,
     behoerden: palette.sand, notfall: palette.rose,
   };
+  const chapterAccentColor = Object.fromEntries(
+    chapters.map((ch) => {
+      const b = getBereichForChapter(ch.key);
+      return [ch.key, b ? (isDarkMode ? b.dark : b.light) : (fallbackAccent[ch.key] || palette.sage)];
+    })
+  );
 
   const getStatusColor = (pct, chKey) => {
     if (pct === 0) return chapterAccentColor[chKey] || palette.soft;
@@ -541,6 +692,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   };
 
   const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
+
+  // Bereichs-Früchte für den Lebensbaum: Frucht + Bereichs-Icon (Negativ) + Ast-Farbe.
+  // status → Reife-Stufe (Knospe/Blüte/junge Frucht/reife Frucht) — jeder Zustand
+  // positiv lesbar, kein Defizit. Nutzt dieselbe 4-Stufen-Logik wie das Kapitel.
+  const STATUS_STAGE = { leer: 1, begonnen: 2, grundordnung: 3, vertieft: 4 };
+  const bereichsFruechte = chapters.map((ch, idx) => {
+    const b = getBereichForChapter(ch.key);
+    if (!b) return null;
+    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title, stage: STATUS_STAGE[getChapterStatus(ch)] || 1 };
+  }).filter(Boolean);
 
   // Trail follows exact front range ridge points — like a real hiking path
   const trailSegments = [
@@ -578,14 +739,85 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
-      React.createElement('h2', {
-        style: { fontSize: text['2xl'], fontWeight: weight.bold, margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
+      React.createElement(PageTitle, {
+        palette,
+        style: { margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
       React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
-      }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit')),
+      }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
       null
+    ),
+
+    // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
+    // Führt oben sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
+    // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
+    // Weniger Farbe, klare Hierarchie (Sophie-Prinzipien): neutraler Grund statt
+    // Marken-Tönung; die nächste Aktion ist der Hero (kleiner Bereichs-Punkt als
+    // A11y-Identität, nicht laute Fläche); die Aktion ist randlos, Fläche kommt erst
+    // im Hover zurück; der Glance wird EINE ruhige tertiäre Zeile mit Dot-Separator.
+    React.createElement('div', {
+      style: {
+        marginTop: space.lg + 'px', padding: space.md + 'px ' + space.lg + 'px',
+        background: palette.surface, border: '1px solid ' + palette.border,
+        borderRadius: radius.md,
+      },
+    },
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' },
+      }, t('dashboard.nextUpTitle')),
+      (() => {
+        const nextField = mvo.fields.find((f) => !f.done);
+        if (nextField) {
+          const dotColor = chapterAccentColor[chapters[nextField.chapterIdx].key] || palette.sage;
+          return React.createElement('button', {
+            onClick: () => onSelectChapter(nextField.chapterIdx),
+            'aria-label': nextField.label + ' — ' + nextField.chapterTitle,
+            style: {
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.md + 'px',
+              width: '100%', textAlign: 'left', fontFamily: 'inherit', cursor: 'pointer',
+              padding: space.sm + 'px ' + space.xs + 'px', background: 'transparent',
+              border: 'none', borderRadius: radius.sm, color: palette.text,
+              transition: 'background 160ms ease',
+            },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = 'transparent'; },
+          },
+            React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', minWidth: 0 } },
+              React.createElement('span', { style: { width: '9px', height: '9px', borderRadius: '50%', background: dotColor, flexShrink: 0 } }),
+              React.createElement('span', { style: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0 } },
+                React.createElement('span', { style: { fontSize: text.lg, fontWeight: weight.medium, lineHeight: 1.25 } }, nextField.label),
+                React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
+              ),
+            ),
+            React.createElement('span', { style: { color: palette.sage, fontSize: text.lg, flexShrink: 0 } }, '→'),
+          );
+        }
+        return React.createElement('p', {
+          style: { fontSize: text.sm, color: palette.sage, margin: 0, fontWeight: weight.medium },
+        }, t('dashboard.nextUpAllDone'));
+      })(),
+      (() => {
+        const reminders = loadReminders();
+        const today = new Date().toISOString().split('T')[0];
+        const upcoming = reminders
+          .filter((r) => !r.done && r.dueDate && r.dueDate >= today)
+          .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
+        const fmt = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }); } catch { return iso; } };
+        const dot = React.createElement('span', { style: { color: palette.border, margin: '0 ' + space.xs + 'px' }, 'aria-hidden': 'true' }, '·');
+        const part = (label, value) => React.createElement('span', null,
+          React.createElement('span', { style: { color: palette.soft } }, label + ' '),
+          React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, value),
+        );
+        return React.createElement('div', {
+          style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '55', fontSize: text.xs, color: palette.soft },
+        },
+          part(t('dashboard.glanceDeadline'), upcoming ? (upcoming.title + ' · ' + fmt(upcoming.dueDate)) : t('dashboard.glanceNoDeadline')),
+          dot,
+          part(t('dashboard.glanceSaved'), lastBackup || t('dashboard.glanceNeverSaved')),
+        );
+      })()
     ),
 
     // ─── Maloja Pass — interactive topographic map ─────────
@@ -616,6 +848,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
     React.createElement('div', {
+      'data-tour': 'berge',
       style: { margin: '0 -8px 28px -8px', lineHeight: 0, position: 'relative' }
     },
       React.createElement('svg', {
@@ -829,9 +1062,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
 
 
-    // ─── Verbindungs-Baum — wächst mit den Angaben (immer sichtbar) ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate }),
-
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
       React.createElement('summary', {
@@ -931,7 +1161,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         background: palette.surface,
         borderRadius: radius.lg - 4,
         border: '1px solid ' + palette.border + '88',
-        boxShadow: shadow.sm,
       }
     },
       React.createElement('div', {
@@ -970,15 +1199,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               color: palette.text,
               transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = palette.sand + '66'; },
+            onMouseEnter: (e) => { e.currentTarget.style.background = palette.up; e.currentTarget.style.borderColor = item.primary ? palette.sand + '66' : palette.border + '99'; },
             onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
           },
+            // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
+            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Sophie).
             React.createElement('div', {
               style: {
                 width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,
-                background: palette.sand + (item.primary ? '18' : '0C'),
+                background: item.primary ? palette.sand + '18' : palette.up,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, color: palette.sand,
+                flexShrink: 0, color: item.primary ? palette.sand : palette.mid,
               }
             }, IconFn ? React.createElement('div', { style: { width: item.primary ? '24px' : '18px', height: item.primary ? '24px' : '18px' } }, IconFn()) : null),
             React.createElement('div', { style: { flex: 1, minWidth: 0 } },
@@ -1121,10 +1352,15 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
+    // ─── Lebensbaum als Spiegel — nach unten gewandert (#3): was aus den
+    // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
+
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
-    React.createElement('div', { style: { marginBottom: space.xl + 'px' } },
-      React.createElement('h2', {
-        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
+    React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
+      React.createElement(PanelTitle, {
+        palette,
+        style: { margin: '0 0 ' + space.xs + 'px 0', letterSpacing: '-0.2px' }
       }, t('dashboard.anspruchTitle')),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
@@ -1201,8 +1437,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
-      React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.xs }
+      React.createElement(Eyebrow, {
+        palette,
+        style: { marginBottom: space.xs }
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.normal }
@@ -1255,7 +1492,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             { label: t('nav.bewilligung'), sub: t('nav.sub.bewilligung'), view: 'bewilligung', icon: 'behoerden' },
             { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
             { label: t('nav.iv'), sub: t('nav.sub.iv'), view: 'iv', icon: 'health' },
+            { label: t('nav.pflege'), sub: t('nav.sub.pflege'), view: 'pflege', icon: 'heart' },
             { label: t('nav.todesfall'), sub: t('nav.sub.todesfall'), view: 'todesfall', icon: 'document' },
+          ] },
+          { label: t('dashboard.toolGroups.gesundheit'), items: [
+            { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },
           { label: t('dashboard.toolGroups.support'), items: [
             { label: t('lebenszustaende.pageTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
@@ -1347,8 +1588,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     React.createElement('div', {
       style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
-      React.createElement('h2', {
-        style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: space.sm + 4 }
+      React.createElement(Eyebrow, {
+        palette,
+        style: { color: palette.soft, fontWeight: weight.medium, marginBottom: space.sm + 4 }
       }, t('dashboard.tipsTitle')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
         [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>

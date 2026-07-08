@@ -565,6 +565,22 @@ const _sozialhilfe = () => React.createElement('svg', { viewBox: '0 0 24 24', fi
   React.createElement('path', { d: 'M 12 22.5 Q 9.5 20.5 9.5 19 Q 9.5 17.8 10.5 17.5 Q 12 17.2 12 18.5 Q 12 17.2 13.5 17.5 Q 14.5 17.8 14.5 19 Q 14.5 20.5 12 22.5 Z', opacity: '0.7' }),
 );
 
+// Ergänzungsleistungen (EL): Metapher „Aufstockung bis zum anerkannten Bedarf".
+// Solide Basis-Säule (eigene Mittel) + Umriss-Segment mit Aufwärtspfeil (die
+// Ergänzung) reicht bis zur Bedarfslinie oben. Bewusst KEINE Almosen-Bildsprache
+// (kein Bettel/keine offene Hand) — würdevolle Aufstockung, nicht Bittstellung.
+const _ergaenzungsleistungen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
+  // Bedarfslinie (anerkannter Bedarf) — das Ziel, bis zu dem aufgestockt wird
+  React.createElement('line', { x1: '3', y1: '5', x2: '21', y2: '5', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' }),
+  // Eigene Mittel: solide Basis-Säule
+  React.createElement('rect', { x: '8.5', y: '13', width: '7', height: '8', rx: '1' }),
+  // Ergänzung: Umriss-Segment, das die Lücke bis zur Bedarfslinie füllt
+  React.createElement('rect', { x: '8.5', y: '6.5', width: '7', height: '6', rx: '1', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4' }),
+  // Aufstock-Pfeil nach oben, innerhalb des Ergänzungs-Segments
+  React.createElement('line', { x1: '12', y1: '11.5', x2: '12', y2: '8', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round' }),
+  React.createElement('polyline', { points: '10,9.8 12,7.6 14,9.8', fill: 'none', stroke: 'currentColor', strokeWidth: '1.4', strokeLinecap: 'round', strokeLinejoin: 'round' }),
+);
+
 const _lebenslauf = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   // Document
   React.createElement('rect', { x: '4', y: '1', width: '16', height: '22', rx: '2', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5' }),
@@ -651,9 +667,11 @@ const _dashboard = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
   React.createElement('circle', { cx: '16.5', cy: '12', r: '1.2', fill: 'white', opacity: '0.5' })
 );
 
-const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round' },
+// Sauberes Outline-Zahnrad (statt gefüllter Sternexplosion) — Kontur passt zum
+// Nav-Stil, und ein Zahnrad liest sich klar als Einstellungen (Sophie, Icon-Audit).
+const _settings = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('circle', { cx: '12', cy: '12', r: '3' }),
-  React.createElement('path', { d: 'M 12 1 L 13 5 L 17 3 L 15 7 L 19 8 L 16 11 L 19 14 L 15 13 L 17 17 L 13 15 L 12 19 L 11 15 L 7 17 L 9 13 L 5 14 L 8 11 L 5 8 L 9 7 L 7 3 L 11 5 Z', fill: 'currentColor' })
+  React.createElement('path', { d: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' })
 );
 
 const _csv = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
@@ -893,6 +911,37 @@ const _heart = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M 12 20 C 12 20 4 14.5 4 8.8 C 4 6.1 6.1 4 8.6 4 C 10.2 4 11.4 4.9 12 6 C 12.6 4.9 13.8 4 15.4 4 C 17.9 4 20 6.1 20 8.8 C 20 14.5 12 20 12 20 Z', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' }),
 );
 
+// Globus — Digital & Privatsphäre (Kreis + Äquator + Meridian).
+const _globe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '12', cy: '12', r: '8.5' }),
+  React.createElement('path', { d: 'M 3.5 12 H 20.5', strokeWidth: '1.4' }),
+  React.createElement('path', { d: 'M 12 3.5 C 15.2 6.2 15.2 17.8 12 20.5 C 8.8 17.8 8.8 6.2 12 3.5 Z', strokeWidth: '1.4' }),
+);
+
+// Tag — Konsum & Medien (Preisschild mit Loch).
+const _tag = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 4 12 L 12 4 H 20 V 12 L 12 20 Z' }),
+  React.createElement('circle', { cx: '16', cy: '8', r: '1.4' }),
+);
+
+// Pfote — Tiere & Assistenz (Ballen + vier Zehen).
+const _paw = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' },
+  React.createElement('circle', { cx: '6.8', cy: '11', r: '1.7' }),
+  React.createElement('circle', { cx: '10.2', cy: '7.3', r: '1.7' }),
+  React.createElement('circle', { cx: '13.8', cy: '7.3', r: '1.7' }),
+  React.createElement('circle', { cx: '17.2', cy: '11', r: '1.7' }),
+  React.createElement('path', { d: 'M 8.5 16 C 8.5 13.3 15.5 13.3 15.5 16 C 15.5 19 13.3 20.8 12 20.8 C 10.7 20.8 8.5 19 8.5 16 Z' }),
+);
+
+// Palette — Kunst & Handwerk (Malpalette mit Farbtupfern).
+const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none' },
+  React.createElement('path', { d: 'M 12 3.5 C 17.8 3.5 21 7 21 11 C 21 13 19.5 13.8 18.2 13.8 C 17.2 13.8 16.5 14.5 16.5 15.5 C 16.5 16.8 17.4 17.2 17.4 18.4 C 17.4 19.7 15.6 20.5 12 20.5 C 6.8 20.5 3 16.6 3 12 C 3 7 7 3.5 12 3.5 Z', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round' }),
+  React.createElement('circle', { cx: '7.8', cy: '10.6', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '11', cy: '7.8', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '14.6', cy: '8.6', r: '1', fill: 'currentColor' }),
+  React.createElement('circle', { cx: '7.6', cy: '14.6', r: '1', fill: 'currentColor' }),
+);
+
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
@@ -920,6 +969,7 @@ const _iconFactories = {
   praemienverbilligung: _praemienverbilligung,
   mietzinsverbilligung: _mietzinsverbilligung,
   sozialhilfe: _sozialhilfe,
+  ergaenzungsleistungen: _ergaenzungsleistungen,
   lebenslauf: _lebenslauf,
   vorsorge: _vorsorge,
 
@@ -968,6 +1018,10 @@ const _iconFactories = {
   lock: _lock,
   cowbell: _cowbell,
   leaf: _leaf,
+  globe: _globe,
+  tag: _tag,
+  paw: _paw,
+  palette: _palette,
 };
 
 // iOS Safari collapses an <svg> that has a viewBox but no explicit width/height

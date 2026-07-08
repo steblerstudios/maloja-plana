@@ -56,7 +56,7 @@ export class ErrorBoundary extends React.Component {
         }
       },
         React.createElement('svg', { width: '36', height: '36', viewBox: '0 0 24 24', fill: 'none', style: { marginBottom: space.md }, 'aria-hidden': 'true' },
-          React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: sand, strokeWidth: '2.2', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+          React.createElement('polyline', { points: '3,19 8,9 11,14 15,7 20,19', fill: 'none', stroke: sand, strokeWidth: '1.5', strokeLinejoin: 'round', strokeLinecap: 'round' }),
           React.createElement('circle', { cx: '15', cy: '7', r: '1.7', fill: '#C4A870' })
         ),
         React.createElement('h2', { style: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.sm } },
