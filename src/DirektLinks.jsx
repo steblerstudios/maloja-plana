@@ -9,8 +9,8 @@ import { renderSource } from './utils/renderSource.js';
 // Bücherregal mit mehreren Etagen: jede Kategorie (und jedes Sonderthema) ist ein
 // Buch, dessen Rücken auf einem Regalbrett steht. Ein Klick klappt das Buch unter
 // seiner eigenen Etage auf. Logisch sortiert (amtlich / Rat & Schutz / persönlich),
-// damit neue Bücher leicht Platz finden. ALLE Buch-Inhalte nutzen dieselbe ruhige
-// Eintragszeile (entryRow) — einheitliches Aussehen, Link stets aufs Wort.
+// damit neue Bücher leicht Platz finden. ALLE Buch-Inhalte nutzen dieselbe
+// Eintrags-Karte (entryCard) — einheitliches Aussehen, Link stets aufs Wort (Name).
 const BUCH_TON = {
   gesundheit: 'rose',
   vorsorge: 'sage',
@@ -80,35 +80,39 @@ export const DirektLinks = ({ palette, t, data }) => {
     bookHead: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' },
     bookIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px', fontStyle: 'italic' },
     groupHeading: { fontWeight: weight.semi, fontSize: text.sm, color: palette.mid, margin: space.md + 'px 0 ' + space.xs + 'px' },
-    entryRow: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.sm + 'px' },
-    entryLink: { color: palette.sage, textDecoration: 'none' },
-    meta: { color: palette.soft },
-    aff: { color: palette.soft, fontSize: text.xs },
+    // Einheitliche Eintrags-Karte für ALLE Bücher.
+    entryCard: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', margin: '0 0 ' + space.sm + 'px' },
+    entryName: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
+    entryNameLink: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sage, textDecoration: 'none' },
+    entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' },
+    entryMeta: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' },
+    entryMetaLink: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' },
+    aff: { color: palette.soft, fontSize: text.xs, fontWeight: weight.normal },
     empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
     canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
     cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
   };
 
-  const eLink = (label, url, key) => React.createElement('a', { key, href: url, target: '_blank', rel: 'noopener noreferrer', style: s.entryLink }, label);
-
-  // Einheitliche Eintragszeile für ALLE Bücher: „→ Name[ · Affiliate] — Beschreibung
-  // [ · Meta]". Link stets aufs Wort (Name), nie nackte URL. Ohne url nur der Name.
+  // Einheitliche Eintrags-Karte: Name (Link aufs Wort, sonst Text) + optional
+  // Affiliate-Marker, Beschreibung, und Meta-Zeilen (Antragsstelle / Website).
   // e = { key, name, url?, desc?, affiliate?, extras?: [{ label, url? }] }
-  const entryRow = (e) => {
-    const kids = ['→ ', e.url ? eLink(e.name, e.url, 'n') : e.name];
-    if (e.affiliate) kids.push(React.createElement('span', { key: 'aff', style: s.aff }, ' · ' + t('legal.resources.affiliateMarker')));
-    if (e.desc) kids.push(' — ' + e.desc);
-    (e.extras || []).forEach((x, i) => {
-      kids.push(' · ');
-      kids.push(x.url ? eLink(x.label, x.url, 'x' + i) : React.createElement('span', { key: 'x' + i, style: s.meta }, x.label));
-    });
-    return React.createElement('p', { key: e.key, style: s.entryRow }, ...kids);
-  };
+  const entryCard = (e) => React.createElement('div', { key: e.key, style: s.entryCard },
+    React.createElement('div', null,
+      e.url
+        ? React.createElement('a', { href: e.url, target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, e.name)
+        : React.createElement('span', { style: s.entryName }, e.name),
+      e.affiliate ? React.createElement('span', { style: s.aff }, ' · ' + t('legal.resources.affiliateMarker')) : null
+    ),
+    e.desc ? React.createElement('div', { style: s.entryDesc }, e.desc) : null,
+    ...(e.extras || []).map((x, i) => React.createElement('div', { key: 'x' + i, style: s.entryMeta },
+      x.url ? React.createElement('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', style: s.entryMetaLink }, x.label) : x.label
+    ))
+  );
 
   const groupHeading = (label, key) => React.createElement('p', { key, style: s.groupHeading }, label);
 
-  // Kategorie-Link → normalisierter Eintrag (Antragsstelle als Meta statt eigener Zeile).
+  // Kategorie-Link → normalisierter Eintrag (Antragsstelle als Meta).
   const katEntries = (id) => getLinksByKategorie(id).map(link => ({
     key: link.id, name: l(link.name), url: link.url, desc: l(link.beschreibung),
     extras: link.antragsstelle ? [{ label: t('dl.antragsstelle') + ': ' + l(link.antragsstelle) }] : [],
@@ -116,20 +120,23 @@ export const DirektLinks = ({ palette, t, data }) => {
   // i18n-Ressourcen-Objekt ({ name, url, desc, web? }) → normalisierter Eintrag.
   const resEntry = (key, e) => ({ key, name: e.name, url: e.url, desc: e.desc, extras: e.web ? [{ label: 'Website', url: e.web }] : [] });
 
-  // Gemeinde-/Kanton-Zeile fürs „Mitreden"-Buch (kantonsabhängig) — gleiche Zeilenoptik.
+  // Gemeinde-/Kanton-Karte fürs „Mitreden"-Buch (kantonsabhängig) — gleiche Karten-Optik.
   const renderLocalGov = () => {
     const canton = (data && data.basis && data.basis.canton) || '';
     const city = ((data && data.wohnen && data.wohnen.city) || '').trim();
     const cantonName = canton ? getCantonName(canton, t) : '';
-    if (!city && !cantonName) return React.createElement('p', { key: 'lg', style: s.entryRow }, '→ ' + t('legal.resources.petition3'));
-    const parts = ['→ '];
-    if (city) { const cUrl = communeUrl(city); parts.push(cUrl ? eLink(city, cUrl, 'gm') : city); }
+    if (!city && !cantonName) return React.createElement('div', { key: 'lg', style: s.entryCard },
+      React.createElement('div', { style: s.entryName }, t('legal.resources.petition3')));
+    const links = [];
+    if (city) { const cUrl = communeUrl(city); links.push(cUrl ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, city) : React.createElement('span', { key: 'gm', style: s.entryName }, city)); }
     if (cantonName) {
-      if (city) parts.push(' · ');
-      parts.push(eLink(t('legal.resources.cantonPortal', { canton: cantonName }), cantonPortalUrl(canton), 'kt'));
+      if (city) links.push(' · ');
+      links.push(React.createElement('a', { key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
     }
-    parts.push(' — ' + t('legal.resources.localGovDesc'));
-    return React.createElement('p', { key: 'lg', style: s.entryRow }, ...parts);
+    return React.createElement('div', { key: 'lg', style: s.entryCard },
+      React.createElement('div', null, ...links),
+      React.createElement('div', { style: s.entryDesc }, t('legal.resources.localGovDesc'))
+    );
   };
 
   // Buch-Hülle: farbige Kante + Kopf (Icon + Titel) + optionaler Intro + Inhalt.
@@ -160,7 +167,7 @@ export const DirektLinks = ({ palette, t, data }) => {
           .sort((a, b) => a.item.name.localeCompare(b.item.name, undefined, { sensitivity: 'base' }));
         if (!items.length) return;
         kids.push(groupHeading(t('legal.resources.heartfeltGroups.' + g), 'hg-' + g));
-        items.forEach(({ item, desc }) => kids.push(entryRow({ key: item.key, name: item.name, url: item.url, desc, affiliate: item.affiliate })));
+        items.forEach(({ item, desc }) => kids.push(entryCard({ key: item.key, name: item.name, url: item.url, desc, affiliate: item.affiliate })));
       });
       return bookWrap('herz', t(hasAff ? 'legal.resources.heartfeltIntroAffiliate' : 'legal.resources.heartfeltIntro'), kids);
     }
@@ -168,27 +175,27 @@ export const DirektLinks = ({ palette, t, data }) => {
     if (offen === 'beratung') {
       const kids = [];
       kids.push(groupHeading(t('legal.resources.helpTitle'), 'gh-help'));
-      ['help1', 'help2', 'help3', 'help4'].forEach((k, i) => kids.push(entryRow(resEntry('help' + i, t('legal.resources.' + k)))));
-      BERATUNG_HILFE.forEach((x, i) => kids.push(entryRow({ key: 'ber' + i, name: l(x.name), url: x.url, desc: l(x.beschreibung) })));
+      ['help1', 'help2', 'help3', 'help4'].forEach((k, i) => kids.push(entryCard(resEntry('help' + i, t('legal.resources.' + k)))));
+      BERATUNG_HILFE.forEach((x, i) => kids.push(entryCard({ key: 'ber' + i, name: l(x.name), url: x.url, desc: l(x.beschreibung) })));
       kids.push(groupHeading(t('legal.resources.ombudsTitle'), 'gh-omb'));
-      ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].forEach((k, i) => kids.push(entryRow(resEntry('omb' + i, t('legal.resources.' + k)))));
+      ['ombuds1', 'ombuds2', 'ombuds3', 'ombuds4'].forEach((k, i) => kids.push(entryCard(resEntry('omb' + i, t('legal.resources.' + k)))));
       return bookWrap('beratung', t('dl.beratungNote'), kids);
     }
     // Sichere Kanäle: verschlüsselte/rechtsgültige Kommunikationswege.
     if (offen === 'sicher') {
-      const kids = ['threema', 'secureSafe', 'incamail'].map((k, i) => entryRow(resEntry('sec' + i, t('legal.resources.' + k))));
+      const kids = ['threema', 'secureSafe', 'incamail'].map((k, i) => entryCard(resEntry('sec' + i, t('legal.resources.' + k))));
       return bookWrap('sicher', t('legal.resources.secure1'), kids);
     }
     // Mitreden: Petitionen + Gemeinde/Kanton (Bürgerrechte, Art. 33 BV).
     if (offen === 'mitreden') {
       return bookWrap('mitreden', t('legal.resources.petition1'), [
-        entryRow(resEntry('pet2', t('legal.resources.petition2'))),
+        entryCard(resEntry('pet2', t('legal.resources.petition2'))),
         renderLocalGov(),
       ]);
     }
     // Kategorie-Buch.
     const entries = katEntries(offen);
-    return bookWrap(offen, null, entries.length ? entries.map(entryRow) : [React.createElement('div', { key: 'empty', style: s.empty }, t('dl.alle'))]);
+    return bookWrap(offen, null, entries.length ? entries.map(entryCard) : [React.createElement('div', { key: 'empty', style: s.empty }, t('dl.alle'))]);
   };
 
   // Ein Buchrücken im Regal.
