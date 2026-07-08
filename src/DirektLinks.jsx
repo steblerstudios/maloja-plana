@@ -1,85 +1,130 @@
 import React, { useState } from 'react';
-import { PageTitle } from './components/Heading.jsx';
-import { DIREKTLINKS, KATEGORIEN, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
+import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { DIREKTLINKS, KATEGORIEN, HERZENSEMPFEHLUNGEN, getAllKategorien, getLinksByKategorie, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+
+// Jede Kategorie ist ein Buch, das im Regal steht (Buchrücken = Kategorie).
+// Ein Klick klappt das Buch auf. Die Herzensempfehlungen sind ein eigenes,
+// warm getöntes Buch — keine amtliche Stelle, sondern von Hand ausgewählt.
+// Ruhige Skeuomorphie: dünnes Regalbrett, flache Rücken, kleiner Farbstreifen.
+const BUCH_TON = {
+  gesundheit: 'rose',
+  vorsorge: 'sage',
+  soziales: 'sky',
+  arbeit: 'gold',
+  familie: 'sand',
+  finanzen: 'sky',
+  recht: 'soft',
+};
+const HERZ_TON = 'gold';
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
-  const [aktiv, setAktiv] = useState(null);
-  const links = aktiv ? getLinksByKategorie(aktiv) : DIREKTLINKS;
+  const [offen, setOffen] = useState(null); // Kategorie-id oder 'herz' oder null
   const lang = t('dl.lang');
   const l = (obj) => obj[lang] || obj.de;
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
-    title: { fontSize: text.lg, fontWeight: weight.semi, marginBottom: space.md + 'px', display: 'flex', alignItems: 'center', gap: space.sm + 'px' },
-    chips: { display: 'flex', gap: space.xs + 'px', flexWrap: 'wrap', marginBottom: space.md + 'px' },
-    chip: (active) => ({
-      padding: '4px 12px', borderRadius: radius.lg, fontSize: text.xs, cursor: 'pointer', border: '1px solid ' + (active ? palette.sage : palette.border),
-      background: active ? palette.sage + '22' : palette.up, color: active ? palette.sage : palette.text, fontWeight: active ? weight.semi : weight.normal,
+    intro: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px' },
+    shelfWrap: { overflowX: 'auto', paddingBottom: space.xs + 'px', marginBottom: space.md + 'px', WebkitOverflowScrolling: 'touch' },
+    shelf: { display: 'inline-flex', gap: space.sm + 'px', alignItems: 'flex-end', minWidth: '100%', padding: '0 2px', borderBottom: '3px solid ' + palette.top },
+    spine: (ton, active) => ({
+      position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px',
+      flex: '0 0 auto', width: '48px', minHeight: '76px', paddingTop: '11px', paddingBottom: space.sm + 'px',
+      background: palette.up, border: '1px solid ' + (active ? palette[ton] : palette.border), borderBottom: 'none',
+      borderTopLeftRadius: '3px', borderTopRightRadius: '3px', cursor: 'pointer', fontFamily: 'inherit',
+      transform: active ? 'translateY(-5px)' : 'none', transition: 'transform 140ms ' + ease.out,
+      boxShadow: active ? '0 2px 10px ' + palette[ton] + '2E' : 'none',
     }),
-    linkCard: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.sm + 'px', border: '1px solid ' + palette.border },
-    linkName: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: '2px' },
-    linkDesc: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px' },
+    cap: (ton) => ({ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: palette[ton], borderTopLeftRadius: '3px', borderTopRightRadius: '3px' }),
+    spineName: { writingMode: 'vertical-rl', textOrientation: 'mixed', fontSize: text.xs, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.2px', whiteSpace: 'nowrap' },
+    book: (ton) => ({ background: palette.up, border: '1px solid ' + palette.border, borderLeft: '4px solid ' + palette[ton], borderRadius: '0 ' + radius.sm + 'px ' + radius.sm + 'px 0', padding: space.md + 'px', marginBottom: space.md + 'px' }),
+    bookHead: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', marginBottom: space.sm + 'px' },
+    herzNote: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '0 0 ' + space.md + 'px', fontStyle: 'italic' },
+    linkCard: { padding: space.md + 'px', background: palette.surface, borderRadius: radius.sm + 'px', marginBottom: space.sm + 'px', border: '1px solid ' + palette.border },
+    linkName: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: '2px', color: palette.text },
+    linkDesc: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 },
     linkUrl: { fontSize: text.xs, color: palette.sage, textDecoration: 'none', wordBreak: 'break-all' },
-    linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: space.xs },
-    katLabel: { fontSize: text.xs, color: palette.mid, display: 'inline-block', padding: '1px 6px', borderRadius: '4px', background: palette.surface, marginBottom: space.xs },
+    linkStelle: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' },
+    empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
+    canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', border: '1px solid ' + palette.sage + '33' },
+    cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
   };
 
-  return React.createElement('div', { style: s.card },
-    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('dl.title')),
+  // Ein einzelner Link als Karte (amtlich mit Antragsstelle, Herz ohne).
+  const linkCard = (link, mitStelle) => React.createElement('div', { key: link.id, style: s.linkCard },
+    React.createElement('div', { style: s.linkName }, l(link.name)),
+    React.createElement('div', { style: s.linkDesc }, l(link.beschreibung)),
+    React.createElement('a', { href: link.url, target: '_blank', rel: 'noopener noreferrer', style: s.linkUrl }, link.url),
+    mitStelle && link.antragsstelle && React.createElement('div', { style: s.linkStelle }, t('dl.antragsstelle') + ': ' + l(link.antragsstelle))
+  );
 
-    React.createElement('div', { style: s.chips },
-      React.createElement('span', {
-        style: s.chip(!aktiv),
-        onClick: () => setAktiv(null),
-      }, t('dl.alle')),
-      kategorien.map(k =>
-        React.createElement('span', {
-          key: k.id,
-          style: s.chip(aktiv === k.id),
-          onClick: () => setAktiv(aktiv === k.id ? null : k.id),
-        }, l(k))
+  // Ein Buchrücken im Regal.
+  const spine = (id, ton, iconName, name) => {
+    const active = offen === id;
+    return React.createElement('button', {
+      key: id, type: 'button', 'aria-pressed': active, 'aria-expanded': active, 'aria-controls': 'buch-panel',
+      'aria-label': name, title: name, style: s.spine(ton, active),
+      onClick: () => setOffen(active ? null : id),
+    },
+      React.createElement('span', { style: s.cap(ton), 'aria-hidden': 'true' }),
+      React.createElement(Icon, { name: iconName, size: 17 }),
+      React.createElement('span', { style: s.spineName }, name)
+    );
+  };
+
+  // Inhalt des aufgeschlagenen Buchs.
+  const renderBuch = () => {
+    if (!offen) return null;
+    if (offen === 'herz') {
+      return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': t('dl.herzTitle'), style: s.book(HERZ_TON) },
+        React.createElement('div', { style: s.bookHead },
+          React.createElement(Icon, { name: 'heart', size: 20 }),
+          React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('dl.herzTitle'))
+        ),
+        React.createElement('p', { style: s.herzNote }, t('dl.herzNote')),
+        HERZENSEMPFEHLUNGEN.map(link => linkCard(link, false))
+      );
+    }
+    const kat = KATEGORIEN[offen];
+    const links = getLinksByKategorie(offen);
+    return React.createElement('div', { id: 'buch-panel', role: 'region', 'aria-label': l(kat), style: s.book(BUCH_TON[offen] || 'soft') },
+      React.createElement('div', { style: s.bookHead },
+        React.createElement(Icon, { name: kat.icon, size: 20 }),
+        React.createElement(PanelTitle, { palette, style: { margin: 0 } }, l(kat))
+      ),
+      links.length ? links.map(link => linkCard(link, true)) : React.createElement('div', { style: s.empty }, t('dl.alle'))
+    );
+  };
+
+  return React.createElement('div', { style: s.card },
+    React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'dokumentTresor', size: 22 }), style: { marginBottom: space.sm + 'px' } }, t('dl.title')),
+    React.createElement('p', { style: s.intro }, t('dl.shelfIntro')),
+
+    // Das Regal: Buchrücken je Kategorie + Herzensempfehlungen ganz rechts.
+    React.createElement('div', { style: s.shelfWrap },
+      React.createElement('div', { style: s.shelf, role: 'group', 'aria-label': t('dl.title') },
+        ...kategorien.map(k => spine(k.id, BUCH_TON[k.id] || 'soft', k.icon, l(k))),
+        spine('herz', HERZ_TON, 'heart', t('dl.herzTitle'))
       )
     ),
 
-    data && data.basis?.canton && getCantonalLinks(data.basis.canton) && React.createElement('div', {
-      style: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', border: '1px solid ' + palette.sage + '33' }
-    },
-      React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage } },
-        t('dl.cantonalTitle', { canton: getCantonName(data.basis.canton, t) })
-      ),
+    // Aufgeschlagenes Buch (nur wenn ein Rücken gewählt ist).
+    renderBuch(),
+
+    // Kantonale Anlaufstellen bleiben erhalten (unverändert), unter dem Regal.
+    data && data.basis?.canton && getCantonalLinks(data.basis.canton) && React.createElement('div', { style: s.canton },
+      React.createElement('div', { style: s.cantonTitle }, t('dl.cantonalTitle', { canton: getCantonName(data.basis.canton, t) })),
       Object.entries(getCantonalLinks(data.basis.canton)).map(([key, url]) =>
         React.createElement('div', { key, style: { marginBottom: space.xs + 'px' } },
-          React.createElement('a', {
-            href: url,
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            style: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' },
-          },
+          React.createElement('a', { href: url, target: '_blank', rel: 'noopener noreferrer', style: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' } },
             t('dl.cantonal.' + key) + ' →'
           )
-        )
-      )
-    ),
-
-    links.map(link =>
-      React.createElement('div', { key: link.id, style: s.linkCard },
-        !aktiv && React.createElement('span', { style: s.katLabel }, l(KATEGORIEN[link.kategorie])),
-        React.createElement('div', { style: s.linkName }, l(link.name)),
-        React.createElement('div', { style: s.linkDesc }, l(link.beschreibung)),
-        React.createElement('a', {
-          href: link.url,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-          style: s.linkUrl,
-        }, link.url),
-        React.createElement('div', { style: s.linkStelle },
-          t('dl.antragsstelle') + ': ' + l(link.antragsstelle)
         )
       )
     ),
