@@ -5,6 +5,19 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ---
 
+## [0.1.15-beta] — 2026-07-08
+
+### Neu
+- **IK-Historie auch im Zukunft-Reiter** des Vorsorge-Rechners: eine ruhige AHV-Grundlage-Karte zeigt die erfasste Beitragshistorie direkt dort, wo die Projektion sie nutzt — mit aufklappbarem Editor (dieselbe Erfassung, keine Doppel-Eingabe) und Sprung in den AHV-Reiter. Prinzip: nie zurück-navigieren müssen.
+
+### Behoben
+- **CV-Export gegen XSS abgesichert** (Feld-Inhalte werden beim Export escaped); zusätzlich Referrer-Policy gesetzt.
+
+### Intern
+- `BUGS.md` als eine ruhige Bug-Liste eingeführt (Regel: ein Bug ist erst weg, wenn ein Test ihn festhält).
+- `scripts/i18n-gap-scan.mjs` misst offene Übersetzungen; `RUMANTSCH_GAP_NOTE.md` auf realen Stand gebracht.
+- Verwaiste `legal.resources`-Titelschlüssel entfernt.
+
 ## [0.1.13-beta] — 2026-07-06
 
 ### Neu
