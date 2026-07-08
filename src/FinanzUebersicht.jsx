@@ -10,6 +10,7 @@ import { text, weight, radius, leading, space, duration, ease } from './config/t
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 import { KKLastCard } from './KKLastCard.jsx';
+import { ReserveTank } from './components/ReserveTank.jsx';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -381,6 +382,12 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         }, formatCHF(freeAmount))
       )
     ),
+
+    // Reserve-Tankanzeige: wie viele Monate trägt der Notgroschen? (Instrument über
+    // savingsAccount ÷ totalExpenses). Nur wenn überhaupt etwas erfasst ist.
+    hasData && (savingsAccount > 0 || totalExpenses > 0) && React.createElement(ReserveTank, {
+      palette, t, savings: savingsAccount, monthlyExpenses: totalExpenses,
+    }),
 
     hasData && React.createElement('div', {
       style: { borderTop: '1px solid ' + palette.border, margin: '16px 0' }
