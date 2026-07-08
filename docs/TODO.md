@@ -369,3 +369,13 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
   - **3-II/3** — geografische Mammografie-Realität: LU/NW/OW/UR ohne organisiertes Programm (nur opportunistisch nach Überweisung). Reine Orientierung, belegt.
   - **3-II/4** — Sophies Idee: per *evidenz-graduierten* Studien prüfen, ob z.B. ein jährlicher Frauenarzt-Besuch belegbar sinnvoll ist (Evidenzqualität mitzeigen, nicht behaupten).
 - **Führerschein-Thema** (BD19) — Führerausweis ganzheitlich: Erneuerung/Fristen, ärztliche Kontrolluntersuchung ab 75 (alle 2 J.), Ausweis im Dokumenten-Tresor, evtl. Kalender-Vorlage. Orientierung über Pflichten/Fristen. Erst Umfang klären (Swiss-precision: Fakten prüfen).
+
+## A11y-Formular-Audit 2026-07-08 (a11y-pruefer)
+
+*Alle Formular-Inputs auf programmatische Beschriftung geprüft. 63 echte Kandidaten (nach Bereinigung der Mehrzeilen-Props-Fehlalarme), zwei Muster.*
+
+- ✅ **SchuldenManager** (`3fc0fb5`) — 8 Listen-Inputs aria-label + fehlende i18n-Keys (debtor/court/registerDate/date, 5 Spr.) nachgezogen (behob auch Platzhalter-Bug „schulden.debtor").
+- ✅ **Pattern A — 13 Felder in 9 Formularen** (`a148817`) — placeholder-only/unbeschriftete Inputs bekamen aria-label (Backup-Passphrasen, Beta-Code, Kalender-Titel, Doku-Suche, Franchise/Kanton-Select, EO-Einkommen, PLZ, mobile Suche, Dashboard-QuickCheck/Feedback).
+- 🟠 **Pattern B — ~36 Felder: sichtbares Label ohne htmlFor/id-Kopplung.** Sehende ok, Screenreader ohne Feldnamen. Baustein **`src/components/LabeledField.jsx`** gebaut (useId-Kopplung, Vorschlag, noch NICHT migriert). Nächster Schritt: Label+Input-Paare gestaffelt umschliessen — mit Sophies Segen, idealerweise nach dem Formular-Umbau der Parallel-Session. Betroffen u.a. TaxCalculator, KVGLeistungen, CalendarReminders, JobManager/DoctorManager/MedicationManager (die haben schon aria-label, aber Kopplung wäre sauberer), VorsorgeRechner/ChapterView (Parallel-Session).
+- 🟡 **Rest Pattern A (finicky Key):** DocumentTresor Inline-Datum + Sortier-Select, Calendar-Notizen-Textarea — brauchen einen passenden i18n-Key (klein).
+- 🟡 **rm-Notfall-Icon:** `notfall.icon` ist `⚠` in de/fr/it/en, fehlt in rm (Icon-Feld, kein Copy — nur Parität, wenn gewünscht).
