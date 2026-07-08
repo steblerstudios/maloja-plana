@@ -3477,6 +3477,8 @@ export default {
     phasePension: 'Pension',
     achseAlter: 'Alter',
     zukunftGraphHinweis: 'Rücktrittsalter verschieben: Marke am Graphen ziehen oder mit ←/→ — Rente und Kapital passen sich sofort an.',
+    zukunft3aSchwelleTitle: '3a auf mehrere Konten verteilen',
+    zukunft3aSchwelle: 'Über rund CHF {schwelle} zahlen viele Bank-3a-Konten weniger Zins. Mehrere Konten moderat zu füllen hält eher den Vorzugszins — und öffnet später den gestaffelten, steuersparenden Bezug (siehe unten).',
     zukunftSzenarioTitle: 'Was dein Rücktrittsalter bedeutet',
     zukunftSzenarioFrueh: 'Frühpension: {dauer} vor dem Referenzalter 65.',
     zukunftSzenarioReferenz: 'Ordentlicher Rücktritt mit 65 — volle AHV, kein Ab- oder Zuschlag.',

@@ -3491,6 +3491,8 @@ export default {
     phasePension: 'Retraite',
     achseAlter: 'Âge',
     zukunftGraphHinweis: 'Déplacez l’âge de la retraite : glissez le repère sur le graphique ou utilisez ←/→ — la rente et le capital s’ajustent aussitôt.',
+    zukunft3aSchwelleTitle: 'Répartir le 3a sur plusieurs comptes',
+    zukunft3aSchwelle: 'Au-delà d’environ CHF {schwelle}, de nombreux comptes 3a bancaires versent moins d’intérêts. Remplir plusieurs comptes avec modération aide à conserver le taux préférentiel — et ouvre plus tard le retrait échelonné, avantageux fiscalement (voir ci-dessous).',
     zukunftSzenarioTitle: 'Ce que signifie votre âge de départ',
     zukunftSzenarioFrueh: 'Retraite anticipée : {dauer} avant l’âge de référence de 65 ans.',
     zukunftSzenarioReferenz: 'Départ ordinaire à 65 ans — AVS complète, sans réduction ni supplément.',
