@@ -197,7 +197,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
             type: 'text',
             value: searchQuery,
             onChange: (e) => setSearchQuery(e.target.value),
-            placeholder: t('common.search') || 'Suchen…',
+            placeholder: t('common.search') || 'Suchen…', 'aria-label': t('common.search'),
             autoFocus: true,
             style: {
               flex: 1, border: 'none', background: 'transparent', outline: 'none',

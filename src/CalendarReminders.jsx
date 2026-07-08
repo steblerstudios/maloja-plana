@@ -282,7 +282,7 @@ export const CalendarReminders = ({ palette, t, data }) => {
       React.createElement('input', {
         type: 'text', value: newTitle,
         onChange: (e) => setNewTitle(e.target.value),
-        placeholder: t('calendar.addReminder') + '...',
+        placeholder: t('calendar.addReminder') + '...', 'aria-label': t('calendar.addReminder'),
         style: inputStyle
       }),
 
