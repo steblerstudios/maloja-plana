@@ -11,6 +11,17 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.21-beta] — 2026-07-09
+
+### Neu
+- **Anspruch-Check** — ein geführter Weg von den Zahlen zur Lebenslage: die Anspruchs-Landkarte zeigt alle Berechtigungen im Überblick, ein geführter Check schlägt die Brücke, und der Ergebnis-Schritt „Dein Überblick" fasst zusammen. Die Zahlen aus dem Schnellcheck fliessen dabei in den Überblick ein.
+- **KK-Beanstandungsbrief** — geführte Auswahl des Grundes.
+- **Beistandschaft-Wegweiser** (Erwachsenenschutz) im Notfall-Bereich, samt Glossar-Begriff.
+
+### Behoben
+- Barrierefreiheit: stimmige Überschriften-Hierarchie in den neuen Anspruch-Ansichten.
+- Doppelter Platzhalter im Brief entfernt.
+
 ## [0.1.20-beta] — 2026-07-09
 
 ### Geändert
