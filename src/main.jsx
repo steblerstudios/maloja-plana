@@ -1083,7 +1083,10 @@ const AppInner = () => {
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
           completion: calculateCompletion(),
-          onNavigate: setView,
+          // handleNavigate statt setView: sonst verschluckt der reine State-Setter das
+          // zweite Argument (Kapitel-Index) — die Schutzschild-Kachel landete so auf
+          // Kapitel 0 statt Versicherungen. handleNavigate ist Obermenge von setView.
+          onNavigate: handleNavigate,
           simpleView,
           demoMode,
           onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
