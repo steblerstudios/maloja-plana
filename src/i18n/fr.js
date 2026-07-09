@@ -2327,6 +2327,10 @@ export default {
       empty: { sie: 'Aucune facture enregistrée pour le moment. Vous pouvez les ajouter dans le suivi des frais de santé — ou compléter la lettre à la main.', du: 'Aucune facture enregistrée pour le moment. Tu peux les ajouter dans le suivi des frais de santé — ou compléter la lettre à la main.' },
       undated: 'sans date',
     },
+    kkReasonPicker: {
+      title: 'Qu’est-ce qui ne va pas ?',
+      intro: { sie: 'Sélectionnez ce qui s’applique — cela devient une contestation claire dans la lettre.', du: 'Sélectionne ce qui s’applique — cela devient une contestation claire dans la lettre.' },
+    },
     addressChange: {
       title: 'Communiquer un changement d’adresse',
       description: 'Communiquer votre nouvelle adresse à un organisme (poste, caisse maladie, employeur, banque …).',
@@ -2377,6 +2381,15 @@ export default {
       body2intro: 'Concrètement, la/les position(s) de décompte suivante(s) sont concernées :',
       position: 'Facture du {date} de CHF {amount}',
       body2detail: '[à compléter : ce qui n’a pas été pris en compte ou l’a été à tort — et la différence qui en résulte]',
+      reasonsIntro: 'Concrètement, je conteste les points suivants :',
+      reasons: {
+        nichtErhalten: 'Une prestation facturée ne m’a pas été fournie.',
+        doppelt: 'Une position a été facturée deux fois.',
+        falscherBetrag: 'Le montant ou le tarif facturé ne semble pas correct.',
+        franchiseSelbstbehalt: 'La franchise ou la quote-part a été mal décomptée.',
+        nichtGedeckt: 'Une prestation non couverte m’a été facturée.',
+        falschePerson: 'Ce décompte ne me concerne pas.',
+      },
       positionScaffold: '[à compléter — date, montant et ce qui n’a pas ou mal été compté]',
       body2request: 'Je vous prie de vérifier et de corriger le décompte.',
       body3: 'Veuillez m’informer par écrit du résultat de votre vérification. Je reste à disposition pour toute question.',

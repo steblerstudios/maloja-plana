@@ -23,6 +23,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
   const [printed, setPrinted] = useState(false);
   // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
   const [belegIds, setBelegIds] = useState([]);
+  // Geführter „was stimmt nicht"-Schritt: gewählte Beanstandungsgründe.
+  const [reasons, setReasons] = useState([]);
+  const REKLAMATION_GRUENDE = ['nichtErhalten', 'doppelt', 'falscherBetrag', 'franchiseSelbstbehalt', 'nichtGedeckt', 'falschePerson'];
 
   const templates = getLetterTemplates(t);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
@@ -32,13 +35,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
 
   const handlePrint = () => {
     if (!selected) return;
-    const html = generateLetter(selected, data, t, { belege: reklamationBelege });
+    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
   };
 
-  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege }) : '';
+  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
@@ -66,7 +69,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
@@ -91,6 +94,38 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           }, tmpl.legalRef)
         )
       ))
+    ),
+
+    // Grund-Auswahl — geführter „was stimmt nicht"-Schritt: die gewählten Gründe
+    // werden im Brief als klare Beanstandung ausformuliert (statt Platzhalter).
+    selected === 'kkReklamation' && React.createElement('div', {
+      style: {
+        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        borderRadius: radius.sm, marginBottom: space.md,
+      }
+    },
+      React.createElement('div', {
+        style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs }
+      }, t('briefe.kkReasonPicker.title')),
+      React.createElement('div', {
+        style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm }
+      }, t('briefe.kkReasonPicker.intro')),
+      React.createElement('div', {
+        style: { display: 'flex', flexDirection: 'column', gap: '8px' }
+      },
+        REKLAMATION_GRUENDE.map(g => React.createElement('label', {
+          key: g,
+          style: { display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text }
+        },
+          React.createElement('input', {
+            type: 'checkbox',
+            checked: reasons.includes(g),
+            onChange: () => setReasons(rs => rs.includes(g) ? rs.filter(x => x !== g) : [...rs, g]),
+            style: { marginTop: '3px', flexShrink: 0 },
+          }),
+          React.createElement('span', null, t('briefe.kkReklamation.reasons.' + g))
+        ))
+      )
     ),
 
     // Beleg-Auswahl — nur für den Reklamationsbrief: du wählst die strittigen

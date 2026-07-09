@@ -2720,6 +2720,10 @@ export default {
       empty: { sie: 'Anc nagins quints registrads. Vus pudais als agiuntar en il tracker dals custs da sanadad — u cumplettar la brev a maun.', du: 'Anc nagins quints registrads. Ti pos als agiuntar en il tracker dals custs da sanadad — u cumplettar la brev a maun.' },
       undated: 'senza data',
     },
+    kkReasonPicker: {
+      title: 'Tge na va betg?',
+      intro: { sie: 'Tscherni tge che vala — quai daventa ina contestaziun clera en la brev.', du: 'Tscherna tge che vala — quai daventa ina contestaziun clera en la brev.' },
+    },
     addressChange: {
       title: 'Communitgar la midada d’adressa',
       description: 'Communitgar la nova adressa ad in post (posta, cassa da malsauns, patrun, banca …).',
@@ -2770,6 +2774,15 @@ export default {
       body2intro: 'Concret pertutga quai la/las suandanta/s posiziun/s dal quint:',
       position: 'Quint dals {date} da CHF {amount}',
       body2detail: '[supplir p.pl.: tge ch’è betg vegnì quintà u quintà fauss — e la differenza che resulta]',
+      reasonsIntro: 'Concretamain contest jau il suandant:',
+      reasons: {
+        nichtErhalten: 'Ina prestaziun quintada n’hai jau betg survegnì.',
+        doppelt: 'Ina posiziun è vegnida quintada dubel.',
+        falscherBetrag: 'L’import u la tariffa quintads na paran betg corrects.',
+        franchiseSelbstbehalt: 'La franchisa u la quota da participaziun è vegnida quintada fauss.',
+        nichtGedeckt: 'Ina prestaziun betg cuverta è vegnida chargiada a mai.',
+        falschePerson: 'Quest quint na pertutga betg mai.',
+      },
       positionScaffold: '[supplir p.pl. — data, import e tge ch’è betg vegnì u fauss quintà]',
       body2request: 'Jau Vus prej da verifitgar e corriger il quint.',
       body3: 'Infurmai mai p.pl. en scrit davart il resultat da Vossa verifica. Jau stun a disposiziun per dumondas.',
