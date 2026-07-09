@@ -68,7 +68,7 @@ export default {
         ipv: { titel: 'Réduction des primes (RIP)', text: 'Les bénéficiaires de PC sont exonérés des primes ; avec un faible revenu, on a souvent droit à une aide malgré tout.' },
         steuern: { titel: 'Déductions fiscales liées au handicap', text: 'Les frais de maladie et de handicap — soins, moyens auxiliaires, déplacements — sont déductibles du revenu imposable.' },
         serafe: { titel: 'Exonération de la redevance radio/TV', text: 'Les bénéficiaires de prestations complémentaires (PC) sont exonérés de la redevance SERAFE sur demande — récupérable rétroactivement.' },
-        sbbBegleitabo: { titel: 'Abonnement pour accompagnateur CFF', text: 'Une carte gratuite permet à un·e accompagnant·e de voyager gratuitement dans les transports publics — aussi en cas de handicap visuel, moteur ou mental. Demande avec attestation médicale.' },
+        sbbBegleitabo: { titel: 'Abonnement pour accompagnateur CFF', text: 'Un abonnement pour accompagnateur gratuit sur le SwissPass permet à une personne accompagnante (ou à un chien d\'assistance) de voyager gratuitement dans les transports publics — en cas d\'atteinte durable, qu\'elle soit physique, psychique ou cognitive. Demande avec attestation médicale. L\'ancienne carte verte en papier n\'est plus valable.' },
       },
     },
     pflegendeAngehoerige: {
