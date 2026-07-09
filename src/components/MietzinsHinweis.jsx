@@ -9,7 +9,7 @@ export const MietzinsHinweis = ({ palette, t, canton }) => {
   if (!canton) return null;
   const info = getMietzinsbeitraege(canton);
 
-  const linkStyle = { color: palette.sky, textDecoration: 'none', fontWeight: weight.medium };
+  const linkStyle = { color: palette.skyDeep, textDecoration: 'none', fontWeight: weight.medium };
   const link = (label) => info.url && React.createElement('a',
     { href: info.url, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, label + ' →');
 

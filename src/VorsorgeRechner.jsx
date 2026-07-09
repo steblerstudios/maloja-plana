@@ -193,7 +193,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
     tabFade: { position: 'absolute', top: 0, right: 0, bottom: 0, width: '28px', pointerEvents: 'none', background: 'linear-gradient(to right, ' + palette.surface + '00, ' + palette.surface + ')' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
     intlSummary: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, cursor: 'pointer' },
@@ -201,7 +201,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     intlSit: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
     intlSitTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text },
     intlSitText: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '2px 0 4px' },
-    intlLink: { fontSize: text.xs, color: palette.sky, textDecoration: 'none' },
+    intlLink: { fontSize: text.xs, color: palette.skyDeep, textDecoration: 'none' },
     intlContact: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontWeight: weight.medium },
   };
 
@@ -859,7 +859,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         );
         return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
           React.createElement('div', { style: s.label }, t('vr.saeule3a')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sky } }, 'CHF ' + fmt(projected3a)),
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.skyDeep } }, 'CHF ' + fmt(projected3a)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
           ),
@@ -913,7 +913,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               href: link.url,
               target: '_blank',
               rel: 'noopener noreferrer',
-              style: { fontSize: text.sm, color: palette.sky, textDecoration: 'none' }
+              style: { fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none' }
             }, t('vr.fzLink' + link.key) + ' →')
           )
         )
