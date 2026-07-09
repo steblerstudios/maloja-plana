@@ -22,7 +22,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Wohnen = kleines Haus** (Zimmer = Themen) · **Miet-Angaben optisch wie ein Mietvertrag** · **Mobilität = Fahrzeugmappe** · **Familie = Fotoalbum** · **Behörden = Bundesordner** · **Arbeit = Bewerbungsmappe** · **Ideen = Notizbuch**.
 - 🌱 **KVG-Katalog = Karteikartenbox** · **Bibliothek = Bücherregal** (✅ Direktlinks als Regal gebaut; Ausbau möglich).
 - 🌱 **Lebenslauf-Generator skeuomorph darstellen** (CV-Inhalt existiert, Optik nicht).
-- 🔨 **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — weitere Platzierungen offen (Todesfall/IV/Glossar).
+- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten. Session #38: Todesfall hatte EL nur als Nebensatz im breiten „Renten & Versicherungen melden"-Schritt → auf Sophies Wunsch **eigener Schritt „4 · Hinterbliebenenrente & EL prüfen" mit Icon** herausgelöst (wie Pensionierung#4/IV#3/Pflege#3), Erbschaft rückt auf #5. Glossar bleibt Text-only-Tooltip (kein Icon-Ort). Damit alle sinnvollen Ablauf-Plätze abgedeckt.
 - 🌱 **Heirat = Icon mit zwei Ringen** · **Rückforderungsbeleg-Look** (b83c35f) gefällt optisch nicht → Redesign vor weiterer Status-UI.
 - ⏸ **Konto = schlichtes Banking** · **Analysen = modern/Apple-Glas** — bewusst KEINE Metapher.
 
@@ -32,14 +32,14 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - ❓ **Zwei Bäume verschmelzen** — heute Lebensbaum (Frucht=Bereich) + zweiter „Spiegel"-Baum (Werkzeuge). Idee: Werkzeuge wachsen am SELBEN Ast ihres Bereichs.
 - 🌱 **Naturgetreuer Wuchs** — Fibonacci/Phyllotaxis, Boids/Murmuration-Mathematik, L-System, Äste verjüngt statt Striche; Knospen *an* Ästen.
 - 🌱 **Jahreszeiten** (Knospe→Blüte→Frucht→Ruhe); **Früchte HÄNGEN** von Ästen statt zu sitzen; Schweizer Obst statt Feige.
-- 🌱 **Schnellcheck als Ast wachsen** — bei bestehendem Anspruch wächst der zugehörige Ast/Frucht.
+- ✅ **Schnellcheck als Ast wachsen** — bei gedecktem Anspruch (IPV/Sozialhilfe/EL, ehrliche Engine) bekommt die Bereichs-Frucht am Dashboard-Baum einen ruhigen Ring (A), ihr Klick führt zum benannten Anspruch (B), und die Erinnerungsliste zeigt „Möglicherweise für dich" (C). Single-Source `data/anspruchSignale.js` (Session #38).
 - ⏸ **Achievements ohne Gamification-Optik** — Schweizer Steine (Granit/Schiefer/Bergkristall), Gipfel; Badges heikel (Druck/Fairness). **Wilhelm-Tell-Apfel** geparkt (Empfehlung: beim Apfel bleiben, Bedrohungsbild meiden).
 
 ## 3 · Schnellchecks & versteckte Berechtigungen
 
 - 🔨 **Schnellchecks als Instrumente** — heute IPV/Sozialhilfe/EL nüchtern; Vision: Tacho/Schutzschild/Tankanzeige/Kompass/Pulsmesser. ← *aktuell in Design-Phase*.
 - ✅ **Alle Berechtigungen als Schnellcheck** — Anspruchs-Landkarte (`#/ansprueche`, 16 Einträge nach Auslöser Einkommen/Lebenslage/Ereignis) + geführter Anspruch-Check (`#/anspruchcheck`, 3 Schritte: Zahlen → Lagen → vereintes Ergebnis), max. crosslinked (Session #37).
-- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka + **kanton-aware Regionalangebote** gebaut (BS/BL Familienpass/Volkszahnklinik/VHS via `regionaleVerguenstigungen.js`, PLZ→Kanton); offen: GGG breiter, weitere Kantone kuratieren.
+- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka + **kanton-aware Regionalangebote** gebaut (BS/BL Familienpass/Volkszahnklinik/VHS via `regionaleVerguenstigungen.js`, PLZ→Kanton); **GGG Wegweiser Basel** ergänzt + **Pro Senectute** (Senioren-Anker im Vorsorge-Rechner), URLs web-verifiziert (Session #38); offen: weitere Kantone kuratieren (je Quelle einzeln verifizieren, Haftung).
 - 🌱 **Kanton-aware Berechtigungs-Landkarte mit Lücken-Kommunikation** — pro Kanton „was möglich ist UND was fehlt"; Lücken = Petitions-Material.
 - 🌱 **Versteckte behördliche Befreiungen systematisch** — SERAFE↔EL, ÖV/Kultur-Vergünstigungen, Gerichts-/Verfahrenskosten, kant. Gebührenbefreiungen aufdecken.
 - 🌱 **AHV-Beitragsjahre transparent** — Jugendjahre, was Studierende tun (Mindestbeitrag → Lücken vermeiden). Teils via IK-Auszug.
@@ -56,7 +56,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 
-- 🌱 **AHV-Rechner-Ausbau** — Rest-Lebenserwartung F/M/divers (✅), Frühpension (✅), Weiterarbeiten (✅); offen: Alters-Kosten, Senioren-Vergünstigungen, Umwandlungssatz-Option, Link-Bibliothek.
+- ✅ **AHV-Rechner-Ausbau** — Rest-Lebenserwartung F/M/divers, Frühpension, Weiterarbeiten, **Umwandlungssatz-Option** (PK-eigener Satz), **Alters-Kosten-Orientierung** (Pensionierung-Schritt 5 „Wenn später Pflege nötig wird": wer zahlt was + EL/Hilflosenentschädigung/Hilfsmittel + Pro Senectute), **Senioren-Anker** Pro Senectute im Vorsorge-Rechner (Session #38). Link-Bibliothek via „Offizielle Stelle & Antrag". Umwandlungssatz-Kür (falls gewünscht): weitere Kantone/Feinschliff.
 - 🌱 **Zukunftsrechner-Reste** — AHV als Granit-Kapitalsäule (Säulen-Session, Alters-Gating), Drag-Handle mit Live-Tooltip + Snap 63/64/65/70, ~20k-Zinsknick als echtes Modell, 3a-Rollover/Drawdown.
 - 🌱 **Kreditkarten-Ausbau** (Limit/Saldo/Schuld pro Karte — heute nur Ja/Nein) · **Säule 3b Ausbau**.
 - 🌱 **Petitionsgenerator** (Menschen befähigen, selbst zu petitionieren; „max 10 % fürs KK") · **Mietvertrag-/Untermietvertrag-Generator**.

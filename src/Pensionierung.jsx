@@ -65,6 +65,17 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step4LinkSituation'), onClick: () => onNavigate('situationen') })
     ),
 
+    // Schritt 5 — Kosten im Alter (Orientierung, kein Rechner): wer zahlt was bei
+    // Pflege zu Hause/Heim + Auffangnetze (EL, Hilflosenentschädigung, Hilfsmittel);
+    // Pro Senectute als kostenlose Beratung. Bewusst OHNE EL-Icon (das bleibt dem
+    // EL-Schwerpunkt-Schritt 4 vorbehalten).
+    React.createElement(AblaufStep, { palette, title: t('pensionierung.step5Title') },
+      React.createElement('p', { style: s.stepText }, t('pensionierung.step5Text')),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5Link'), onClick: () => onNavigate('vorsorge') }),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5LinkSituation'), onClick: () => onNavigate('situationen') }),
+      React.createElement('a', { href: 'https://www.prosenectute.ch/', target: '_blank', rel: 'noopener', style: { ...s.link, textDecoration: 'none' } }, '→ ' + t('pensionierung.step5LinkProSenectute') + ' ↗')
+    ),
+
     React.createElement(AblaufFooter, { palette, notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })
   );
 };

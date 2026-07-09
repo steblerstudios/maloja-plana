@@ -55,11 +55,22 @@ const KULTURLEGI_REGIONS = {
 // i18n unter lebenszustaende.regio.offers.<key>. Nur wo solide web-verifiziert.
 // Basel-Stadt & Basel-Landschaft: Familienpass Region Basel, Volkshochschule beider Basel.
 // Zürich: die „Freikarten & Aktionen"-Sammelseite (konkrete Gutschein-Aktionen).
+
+// Caritas-Markt: nationales Programm mit 22 lokalen Läden (vergünstigte Lebensmittel/
+// Alltagsartikel) — Zugang über die gratis Caritas-Markt-Kundenkarte, beantragt via
+// KulturLegi. Web-verifiziert 2026-07 (caritas-markt.ch): Läden u. a. in Zürich/
+// Winterthur (ZH), Basel (BS), Bern/Biel/Thun (BE), Emmenbrücke (LU), St. Gallen/Wil
+// (SG), Chur (GR), Baar (ZG), Freiburg/Bulle (FR), Genf (GE), Neuenburg/La-Chaux-de-
+// Fonds (NE), Lausanne/Renens/Vevey/Yverdon (VD). Ein geteiltes Angebot je Kanton mit
+// eigenem Standort. Gleiche nationale Übersichts-URL (führt zur Standortliste).
+const CARITAS_MARKT = { key: 'caritasMarkt', url: 'https://www.caritas-markt.ch/de' };
+
 const REGIONS = {
   ZH: {
     offers: [
       { key: 'zhAktionen', url: 'https://www.kulturlegi.ch/zuerich/angebote/freikarten-und-aktionen' },
       { key: 'vhszh',      url: 'https://vhszh.ch/faq/' },
+      CARITAS_MARKT,
     ],
   },
   // Aargau & Solothurn teilen den A-Welle FerienPass (mit KulturLegi halber Preis).
@@ -78,6 +89,8 @@ const REGIONS = {
       { key: 'familienpass',    url: 'https://www.familienpass.ch/' },
       { key: 'volkszahnklinik', url: 'https://www.sozialesbasel.ch/angebote/volkszahnklinik' },
       { key: 'vhsbb',           url: 'https://www.vhsbb.ch/kursprogramm/ermaessigung-275732' },
+      { key: 'gggWegweiser',    url: 'https://ggg-wegweiser.ch/' },
+      CARITAS_MARKT,
     ],
   },
   BL: {
@@ -86,6 +99,16 @@ const REGIONS = {
       { key: 'vhsbb',        url: 'https://www.vhsbb.ch/kursprogramm/ermaessigung-275732' },
     ],
   },
+  // Kantone mit eigenem Caritas-Markt-Standort (sonst bisher ohne kuratiertes Angebot).
+  BE: { offers: [CARITAS_MARKT] },
+  LU: { offers: [CARITAS_MARKT] },
+  SG: { offers: [CARITAS_MARKT] },
+  GR: { offers: [CARITAS_MARKT] },
+  ZG: { offers: [CARITAS_MARKT] },
+  FR: { offers: [CARITAS_MARKT] },
+  GE: { offers: [CARITAS_MARKT] },
+  NE: { offers: [CARITAS_MARKT] },
+  VD: { offers: [CARITAS_MARKT] },
 };
 
 // Liefert Verfügbarkeit + Angebote für einen Kanton. Kanton mit verifizierter Regionalseite
