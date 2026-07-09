@@ -686,6 +686,7 @@ export default {
     simpleView: 'Simple view',
     grayscale: 'Grayscale',
     colorBlind: 'Colour-blind mode',
+    reduceMotion: 'Reduced motion',
     readable: 'Better readability',
     download: 'Download',
     upload: 'Upload',

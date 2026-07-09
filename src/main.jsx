@@ -365,6 +365,14 @@ const AppInner = () => {
   // Farbenblind-Modus: tauscht das Rot-Grün-Paar sage/rose gegen Blau/Orange (opt-in)
   const [colorBlind, setColorBlind] = useState(() => { try { return localStorage.getItem('or5_colorblind') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_colorblind', colorBlind ? '1' : '0'); } catch {} }, [colorBlind]);
+
+  // Reduzierte Bewegung: In-App-Schalter, der das <html data-reduce-motion> setzt.
+  // Der globale CSS-Block in tokens.css stellt dann alle Animationen/Übergänge still.
+  const [reduceMotion, setReduceMotion] = useState(() => { try { return localStorage.getItem('or5_reducemotion') === '1'; } catch { return false; } });
+  useEffect(() => {
+    try { localStorage.setItem('or5_reducemotion', reduceMotion ? '1' : '0'); } catch {}
+    try { document.documentElement.setAttribute('data-reduce-motion', reduceMotion ? '1' : '0'); } catch {}
+  }, [reduceMotion]);
   const palette = applyColorBlind(isDarkMode ? DARK_PALETTE : LIGHT_PALETTE, colorBlind);
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -807,6 +815,19 @@ const AppInner = () => {
       React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', 'aria-hidden': 'true' },
         React.createElement('circle', { cx: '8.5', cy: '9', r: '5', fill: 'currentColor', stroke: 'none' }),
         React.createElement('rect', { x: '10.5', y: '11', width: '9', height: '9', rx: '1.5' })
+      )
+    ),
+    React.createElement('button', {
+      key: 'reducemotion',
+      'aria-label': t('common.reduceMotion'), 'aria-pressed': reduceMotion, title: t('common.reduceMotion'),
+      onClick: () => setReduceMotion(m => !m),
+      style: { padding: '6px 9px', background: reduceMotion ? palette.sage + '22' : 'transparent', color: reduceMotion ? palette.sage : palette.mid, border: '1px solid ' + (reduceMotion ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: Punkt mit radierenden Bewegungsbögen = „Bewegung" (aktiv = ruhiggestellt)
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', 'aria-hidden': 'true' },
+        React.createElement('circle', { cx: '7', cy: '12', r: '2.2', fill: 'currentColor', stroke: 'none' }),
+        React.createElement('path', { d: 'M12 8.5a5 5 0 0 1 0 7' }),
+        React.createElement('path', { d: 'M15 6a9 9 0 0 1 0 12' })
       )
     ),
   ].filter(Boolean);

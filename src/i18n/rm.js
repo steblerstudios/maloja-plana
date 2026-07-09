@@ -712,6 +712,7 @@ export default {
     simpleView: 'Vista simpla',
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',
+    reduceMotion: 'Reducir la moviment',
     readable: 'Meglra legibilitad',
     download: 'Telechargiar',
     upload: 'Chargiar si',
