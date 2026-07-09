@@ -888,6 +888,7 @@ export default {
 
   anspruch: {
     pageTitle: 'Your entitlements at a glance',
+    gefuehrtLink: 'Prefer step by step? Guided check',
     intro: 'A lot is available without people knowing. Here are all possible entitlements at a glance — no commitment, no judgment. Tap one to learn more.',
     gruppen: {
       einkommen: { label: 'By income', desc: 'Depends on how much comes in each month.' },
@@ -913,6 +914,15 @@ export default {
       waisenrente: { label: 'Orphan’s pension', sub: 'On the death of a parent' },
     },
     footNote: 'This overview judges nothing and promises nothing — it only shows what might apply to you. Whether you are actually entitled is determined by the relevant office.',
+  },
+
+  anspruchCheck: {
+    stepWord: 'Step',
+    stepIncome: 'By income',
+    stepSituation: 'By life situation',
+    weiter: 'Continue to entitlements by life situation',
+    zurueck: 'Back',
+    fertig: 'Done — to the overview',
   },
 
   beistand: {
