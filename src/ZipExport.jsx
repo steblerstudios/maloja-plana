@@ -298,7 +298,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           style: btnStyle(passphrase && passphrase.length >= 4 && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
         }, '◉ ' + t('backup.exportEncrypted')),
 
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.sky, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo'))
       )
     ),
 

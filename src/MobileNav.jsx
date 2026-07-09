@@ -6,10 +6,17 @@ import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
 
-export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false }) => {
+export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false, leftHand = false }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   if (!isOpen) return null;
+
+  // Seite, von der die Schublade einfährt — folgt der gewählten Hand (Standard rechts,
+  // Linkshänder-Modus links). Rand + Slide-Richtung passen sich mit an.
+  const side = leftHand ? 'left' : 'right';
+  const panelSide = side === 'left'
+    ? { left: 0, borderRight: '1px solid ' + palette.border, animation: 'slideIn 0.25s' }
+    : { right: 0, borderLeft: '1px solid ' + palette.border, animation: 'slideInRight 0.25s' };
 
   const renderIconEarly = (iconKey, size) => {
     const IconFn = Icons[iconKey];
@@ -28,9 +35,10 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       React.createElement('nav', {
         role: 'navigation', 'aria-label': settingsLabel || t('nav.settings'),
         style: {
-          position: 'fixed', right: 0, top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
-          background: palette.surface, borderLeft: '1px solid ' + palette.border, boxShadow: shadow.lg,
-          zIndex: 999, overflowY: 'auto', animation: 'slideIn 0.25s', display: 'flex', flexDirection: 'column',
+          position: 'fixed', top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
+          background: palette.surface, boxShadow: shadow.lg,
+          zIndex: 999, overflowY: 'auto', display: 'flex', flexDirection: 'column',
+          ...panelSide,
         },
         onClick: (e) => e.stopPropagation(),
       },
@@ -135,11 +143,12 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       role: 'navigation',
       'aria-label': t('nav.menu'),
       style: {
-        position: 'fixed', left: 0, top: 0, bottom: 0, width: '280px',
-        background: palette.surface, borderRight: '1px solid ' + palette.border,
+        position: 'fixed', top: 0, bottom: 0, width: '280px',
+        background: palette.surface,
         boxShadow: shadow.lg,
-        zIndex: 999, overflowY: 'auto', animation: 'slideIn 0.25s',
+        zIndex: 999, overflowY: 'auto',
         display: 'flex', flexDirection: 'column',
+        ...panelSide,
       },
       onClick: (e) => e.stopPropagation(),
     },
