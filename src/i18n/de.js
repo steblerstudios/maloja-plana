@@ -3542,7 +3542,7 @@ export default {
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',
     obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief' },
     objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied' },
-    w: { umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall' },
+    w: { umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietzins prüfen', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
   },
   instrumente: {
     title: 'Deine Instrumente',

@@ -193,14 +193,18 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     h('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
     h('path', { d: 'M9 8a3 3 0 0 1 6 0' }), h('path', { d: 'M9 14h6' }));
 
+  // Ruhige Breite: die App deckelt jede Ansicht app-weit auf ~780px (Lese-Spalte in
+  // #mp-main). Innerhalb davon ist das Raster mehrspaltig — 2 Spalten auf Laptop/breit,
+  // 1 auf dem Handy. Echte 3 Spalten bräuchten Gepäck als eigenen, breiteren „Raum"
+  // (House-of-Life-Vision) — bewusst später. Text bleibt zusätzlich auf 680px lesbar.
   return h('div', { style: { maxWidth: '860px' } },
     h(PageTitle, { palette, icon: backpackIcon, style: { marginBottom: space.sm + 'px' } }, t('gepaeck.title')),
-    h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
+    h('p', { style: { fontSize: text.body, color: palette.mid, lineHeight: leading.relaxed, maxWidth: '680px', margin: '0 0 ' + space.md + 'px 0' } }, t('gepaeck.intro')),
     h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: space.lg + 'px' } }, bag, toggle),
     h('div', {
-      style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
+      style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: space.md + 'px', alignItems: 'start' },
     }, GEGENSTAENDE.map((g, i) => card(g, i))),
-    h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
+    h('p', { style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed, maxWidth: '680px', marginTop: space.lg + 'px' } }, t('gepaeck.legend')),
   );
 };
 
