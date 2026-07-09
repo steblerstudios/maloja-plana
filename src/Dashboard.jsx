@@ -555,13 +555,21 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
           const areaTools = toolsByArea[b.key] || [];
           // Anspruch-Signal (Variante A): trägt dieser Ast einen gedeckten Anspruch,
           // bekommt die Frucht einen ruhigen Doppel-Ring — „hier ist etwas reif für dich".
-          const hasAnspruch = (signale[b.key] || []).length > 0;
+          const sigList = signale[b.key] || [];
+          const hasAnspruch = sigList.length > 0;
           const fs = isMobile ? 42 : 50;
+          // Der Anspruch beim Namen (Variante B): Ring-Klick führt zum benannten
+          // Anspruch — bei genau einem Signal direkt in sein Zuhause, sonst in die
+          // Anspruchs-Landkarte. Ohne Anspruch bleibt die Frucht bei ihrem Kapitel.
+          const anspruchLabel = hasAnspruch ? t('anspruch.items.' + sigList[0].key + '.label') : null;
+          const anspruchGo = hasAnspruch
+            ? () => (sigList.length === 1 && sigList[0].view ? onNavigate(sigList[0].view) : onNavigate('ansprueche'))
+            : null;
           return React.createElement('div', { key: b.key, style: { display: 'contents' } },
             React.createElement('button', {
-              onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
-              'aria-label': b.title + ' — ' + b.pct + '%' + (hasAnspruch ? ' · ' + t('datenWirken.anspruchAria') : ''),
-              title: b.title,
+              onClick: hasAnspruch ? anspruchGo : (onSelectChapter ? () => onSelectChapter(b.idx) : undefined),
+              'aria-label': b.title + ' — ' + b.pct + '%' + (hasAnspruch ? ' · ' + t('datenWirken.anspruchAria') + (anspruchLabel ? ': ' + anspruchLabel : '') : ''),
+              title: hasAnspruch && anspruchLabel ? anspruchLabel : b.title,
               style: {
                 position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
                 // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
