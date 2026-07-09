@@ -3454,6 +3454,10 @@ export default {
     },
   },
 
+  seo: {
+    title: 'Maloja Plana — your Swiss life organizer: taxes, social assistance, insurance',
+    description: 'Maloja Plana — your Swiss life organizer. Tax calculator, social assistance, premium reduction, emergency card — 100% private, offline, free.',
+  },
   obstgarten: {
     title: 'My orchard',
     intro: 'Each area of life is its own little tree. It ripens the more you fill in — from seedling to full tree. Tap to open the area.',

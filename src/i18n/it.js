@@ -3432,6 +3432,10 @@ export default {
     },
   },
 
+  seo: {
+    title: 'Maloja Plana — il tuo raccoglitore di vita svizzero: imposte, aiuto sociale, assicurazioni',
+    description: 'Maloja Plana — il tuo raccoglitore di vita svizzero. Calcolatore d\'imposte, aiuto sociale, riduzione dei premi, scheda d\'emergenza — 100% privato, offline, gratuito.',
+  },
   obstgarten: {
     title: 'Il mio frutteto',
     intro: 'Ogni ambito della vita è un alberello. Matura man mano che compili — dalla piantina all\'albero pieno. Tocca per aprire l\'ambito.',
