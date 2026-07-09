@@ -68,7 +68,7 @@ export default {
         ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, ist von den Prämien befreit; bei tiefem Einkommen besteht sonst oft trotzdem Anspruch auf Hilfe.' },
         steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
         serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Wer Ergänzungsleistungen (EL) bezieht, ist auf Antrag von der SERAFE-Abgabe befreit — rückwirkend nachforderbar.' },
-        sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Mit einer kostenlosen Karte reist eine Begleitperson gratis im öV mit — auch bei Seh-, Geh- oder geistiger Behinderung. Antrag mit ärztlicher Bestätigung.' },
+        sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Ein kostenloses Begleitabo auf dem SwissPass lässt eine Begleitperson (oder einen Assistenzhund) gratis im öV mitreisen — bei einer bleibenden Beeinträchtigung, ob körperlich, psychisch oder kognitiv. Antrag mit ärztlicher Bestätigung. Die alte grüne Papierkarte gilt nicht mehr.' },
       },
     },
     pflegendeAngehoerige: {
