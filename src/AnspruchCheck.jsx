@@ -13,6 +13,10 @@ import { text, weight, leading, space, radius, duration, ease } from './config/t
 // Weiter/Zurück-Führung hinzu. Keim des späteren Wizards (#4.4.3).
 export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   const [step, setStep] = useState(1);
+  // Die in Schritt 1 (Schnellcheck) frei angepassten Zahlen — anfangs das Profil,
+  // dann laufend von Schnellcheck gemeldet. Schritt 3 rechnet damit, nicht mit dem
+  // rohen Profil, damit „in Schritt 1 eintragen → erscheint hier" auch hält.
+  const [probe, setProbe] = useState(data);
 
   // Bei Schrittwechsel sanft nach oben — der neue Schritt beginnt am Anfang.
   useEffect(() => {
@@ -26,26 +30,27 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
     { n: 3, label: t('anspruchCheck.stepOverview') },
   ];
 
-  // Schritt 3 — vereintes Ergebnis: einkommensbasierte Leistungen (aus dem Profil,
-  // dieselbe Engine wie der Schnellcheck, mit denselben Ehrlichkeits-Gates) +
-  // die in Schritt 2 gewählten Lebenslagen. Nur POSITIV, jede Zeile verlinkt ins
-  // bestehende Zuhause. Keine erfundenen Beträge, kein Verdikt.
+  // Schritt 3 — vereintes Ergebnis: einkommensbasierte Leistungen (aus den in
+  // Schritt 1 angepassten Zahlen `probe`, dieselbe Engine wie der Schnellcheck,
+  // mit denselben Ehrlichkeits-Gates) + die in Schritt 2 gewählten Lebenslagen.
+  // Nur POSITIV, jede Zeile verlinkt ins bestehende Zuhause. Keine erfundenen
+  // Beträge, kein Verdikt. Kanton bleibt profilgebunden (kein Feld in Schritt 1).
   const renderResult = () => {
     const incomeBenefits = [];
     try {
-      const canton = data?.basis?.canton || '';
-      const income = Number(data?.finanzen?.monthlyIncome) || 0;
-      const rent = Number(data?.wohnen?.rentAmount) || 0;
-      if (income > 0 && canton && calculateIPV(data)?.eligible) {
+      const canton = probe?.basis?.canton || '';
+      const income = Number(probe?.finanzen?.monthlyIncome) || 0;
+      const rent = Number(probe?.wohnen?.rentAmount) || 0;
+      if (income > 0 && canton && calculateIPV(probe)?.eligible) {
         incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium' });
       }
       if (rent > 0) {
-        const sh = calculateSozialhilfe(data);
+        const sh = calculateSozialhilfe(probe);
         if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) {
           incomeBenefits.push({ key: 'soz', label: t('anspruch.items.sozialhilfe.label'), view: 'sozialhilfe' });
         }
       }
-      if (checkELEligibility(data)?.eligible) {
+      if (checkELEligibility(probe)?.eligible) {
         incomeBenefits.push({ key: 'el', label: t('anspruch.items.el.label'), view: 'finanzuebersicht' });
       }
     } catch { /* Orientierung, nie blockierend */ }
@@ -156,7 +161,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   return React.createElement('div', { style: { maxWidth: '640px' } },
     indicator,
 
-    step === 1 && React.createElement(Schnellcheck, { palette, t, data, onNavigate }),
+    step === 1 && React.createElement(Schnellcheck, { palette, t, data, onNavigate, onProbeChange: setProbe }),
     step === 2 && React.createElement(Lebenssituationen, { palette, t, data, onNavigate }),
     step === 3 && renderResult(),
 
