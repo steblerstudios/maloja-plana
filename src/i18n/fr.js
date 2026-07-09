@@ -535,6 +535,11 @@ export default {
     step4Text: 'Si l’AVS et la caisse de pension ne suffisent pas à vivre, vous avez peut-être droit aux prestations complémentaires (PC). Ce n’est pas une aumône mais un droit légal — vérifiez-le sans hésiter. À l’âge AVS, d’autres droits s’ajoutent souvent : réduction de primes (RIP), exonération SERAFE en cas de PC, allocation pour impotent — la situation de vie « retraité » les rassemble en un endroit calme.',
     step4Link: 'Vérifier le droit',
     step4LinkSituation: 'Voir la situation « retraité »',
+    step5Title: '5 · Si des soins deviennent nécessaires plus tard',
+    step5Text: 'Certains coûts n’apparaissent qu’à un âge avancé : soins à domicile (Spitex) ou en EMS. L’assurance-maladie couvre les soins proprement dits — l’accompagnement et l’hébergement (en EMS, pension et repas) sont à votre charge. Si votre rente et votre fortune ne suffisent pas, les prestations complémentaires interviennent. Si vous avez régulièrement besoin d’aide au quotidien, il existe l’allocation pour impotent de l’AVS, indépendamment du revenu. Pour les moyens auxiliaires comme les appareils auditifs, l’AVS participe. Pro Senectute vous conseille gratuitement.',
+    step5Link: 'Voir prestations complémentaires & conseil',
+    step5LinkSituation: 'Retraité / à l’âge AVS : ce à quoi vous avez droit',
+    step5LinkProSenectute: 'Pro Senectute — conseil gratuit pour les personnes âgées',
     footerEarly: 'Une retraite anticipée réduit l’AVS et souvent la rente de la caisse de pension à vie. Calculez tôt ce qui est supportable — et demandez un calcul officiel à votre caisse de compensation.',
   },
   kkErst: {

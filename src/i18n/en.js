@@ -535,6 +535,11 @@ export default {
     step4Text: 'If AHV and the pension fund are not enough to live on, you may be entitled to supplementary benefits (EL). This is not charity but a legal entitlement — check it without hesitation. As a pensioner more may apply: premium reduction (IPV), a SERAFE exemption when receiving EL, a helplessness allowance — the “retired” life situation gathers them in one calm place.',
     step4Link: 'Check eligibility',
     step4LinkSituation: 'View the “retired” situation',
+    step5Title: '5 · If care becomes necessary later',
+    step5Text: 'Some costs only arise in old age: care at home (Spitex) or in a home. The health insurer covers the actual nursing care — you pay for support and living costs (board and lodging in a home) yourself. If your pension and assets aren’t enough, supplementary benefits step in. If you regularly need help in daily life, there is the AHV helplessness allowance, regardless of income. For aids such as hearing aids the AHV contributes. Pro Senectute advises you free of charge.',
+    step5Link: 'View supplementary benefits & advice',
+    step5LinkSituation: 'Retired / at AHV age: what you’re entitled to',
+    step5LinkProSenectute: 'Pro Senectute — free advice in old age',
     footerEarly: 'Early retirement reduces the AHV and often the pension-fund pension for life. Work out early what is affordable — and get an official projection from your compensation office.',
   },
   kkErst: {

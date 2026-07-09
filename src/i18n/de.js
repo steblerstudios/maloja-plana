@@ -535,6 +535,11 @@ export default {
     step4Text: 'Reichen AHV und Pensionskasse nicht für den Lebensbedarf, hast du allenfalls Anspruch auf Ergänzungsleistungen (EL). Das ist kein Almosen, sondern ein gesetzlicher Anspruch — prüfe ihn ohne Scheu. Im AHV-Alter kommt oft mehr dazu: Prämienverbilligung (IPV), SERAFE-Befreiung bei EL-Bezug, Hilflosenentschädigung — der Lebenszustand „Pensioniert" sammelt sie an einem ruhigen Ort.',
     step4Link: 'Anspruch prüfen',
     step4LinkSituation: 'Situation „Pensioniert / im AHV-Alter" ansehen',
+    step5Title: '5 · Wenn später Pflege nötig wird',
+    step5Text: 'Manche Kosten kommen erst im Alter: Pflege zu Hause (Spitex) oder im Heim. Die Krankenkasse übernimmt die eigentliche Pflege — Betreuung und Wohnen (im Heim Unterkunft und Essen) trägst du selbst. Reichen Rente und Vermögen nicht, springen die Ergänzungsleistungen ein. Brauchst du im Alltag regelmässig Hilfe, gibt es die Hilflosenentschädigung der AHV, unabhängig vom Einkommen. Bei Hilfsmitteln wie Hörgeräten beteiligt sich die AHV. Pro Senectute berät dich kostenlos.',
+    step5Link: 'Ergänzungsleistungen & Beratung ansehen',
+    step5LinkSituation: 'Pensioniert / im AHV-Alter: was dir zusteht',
+    step5LinkProSenectute: 'Pro Senectute — kostenlose Beratung im Alter',
     footerEarly: 'Eine Frühpensionierung kürzt die AHV- und oft auch die Pensionskassen-Rente lebenslang. Rechne früh durch, was tragbar ist — und hole eine offizielle Vorausberechnung bei deiner Ausgleichskasse.',
   },
   kkErst: {

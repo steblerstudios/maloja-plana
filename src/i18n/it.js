@@ -535,6 +535,11 @@ export default {
     step4Text: 'Se l’AVS e la cassa pensioni non bastano per vivere, potresti avere diritto alle prestazioni complementari (PC). Non è un’elemosina ma un diritto legale — verificalo senza esitazione. In età AVS spesso si aggiunge altro: riduzione dei premi (RIP), esenzione SERAFE con le PC, assegno per grandi invalidi — lo stato di vita «pensionato» li raccoglie in un luogo tranquillo.',
     step4Link: 'Verifica il diritto',
     step4LinkSituation: 'Vedi la situazione «pensionato»',
+    step5Title: '5 · Se in seguito servono cure',
+    step5Text: 'Alcuni costi arrivano solo nella terza età: cure a domicilio (Spitex) o in casa di cura. La cassa malati copre le cure vere e proprie — assistenza e alloggio (in casa di cura vitto e alloggio) sono a tuo carico. Se la rendita e il patrimonio non bastano, intervengono le prestazioni complementari. Se hai regolarmente bisogno di aiuto nella vita quotidiana, esiste l’assegno per grandi invalidi dell’AVS, indipendentemente dal reddito. Per i mezzi ausiliari come gli apparecchi acustici l’AVS partecipa. Pro Senectute ti consiglia gratuitamente.',
+    step5Link: 'Vedi prestazioni complementari & consulenza',
+    step5LinkSituation: 'In pensione / in età AVS: a cosa hai diritto',
+    step5LinkProSenectute: 'Pro Senectute — consulenza gratuita nella terza età',
     footerEarly: 'Un pensionamento anticipato riduce l’AVS e spesso la rendita della cassa pensioni a vita. Calcola per tempo ciò che è sostenibile — e richiedi un calcolo ufficiale alla tua cassa di compensazione.',
   },
   kkErst: {
