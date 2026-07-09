@@ -1413,6 +1413,43 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, '→'),
     ),
 
+    // Zugang zum Gepäck — Lebensereignisse als Ausrüstung, neben Baum und Obstgarten.
+    React.createElement('button', {
+      onClick: () => onNavigate('gepaeck'),
+      'aria-label': t('gepaeck.link'),
+      style: {
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
+        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
+        padding: space.sm + 'px ' + space.md + 'px',
+        background: palette.gold + '10', border: '1px solid ' + palette.gold + '2e',
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+        transition: `background ${duration.normal}ms ${ease}`,
+      },
+    },
+      React.createElement('span', {
+        style: {
+          width: '34px', height: '34px', borderRadius: '50%',
+          background: palette.gold + '22', color: palette.sandDeep,
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        },
+      }, React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
+        React.createElement('path', { d: 'M6 8a6 6 0 0 1 12 0v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1z' }),
+        React.createElement('path', { d: 'M9 8a3 3 0 0 1 6 0' }),
+        React.createElement('path', { d: 'M9 14h6' }))),
+      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
+        }, t('gepaeck.link')),
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
+        }, t('gepaeck.ctaSub')),
+      ),
+      React.createElement('span', {
+        'aria-hidden': 'true',
+        style: { fontSize: text.body, color: palette.sandDeep, fontWeight: weight.medium, flexShrink: 0 },
+      }, '→'),
+    ),
+
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },
       React.createElement(PanelTitle, {
