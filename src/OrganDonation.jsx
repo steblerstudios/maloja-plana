@@ -3,6 +3,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
@@ -91,12 +92,12 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         ))
       ),
 
-      React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('organ.otherOrgans')),
-      React.createElement('input', {
-        type: 'text', value: organs.other,
-        onChange: (e) => setOrgans(prev => ({ ...prev, other: e.target.value })),
-        style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
-      }),
+      React.createElement(LabeledField, { palette, label: t('organ.otherOrgans'), style: { marginBottom: 0 } },
+        React.createElement('input', {
+          type: 'text', value: organs.other,
+          onChange: (e) => setOrgans(prev => ({ ...prev, other: e.target.value })),
+          style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
+        })),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, 'ⓘ ' + t('organ.generateQr'))
