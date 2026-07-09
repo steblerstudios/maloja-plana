@@ -20,6 +20,7 @@ export default {
         vhszh: { titel: 'Université populaire de Zurich', text: 'Avec la CarteCulture, 50% de réduction sur les cours-conférences et 20% sur les autres cours.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Passeport de vacances d’été pour enfants (6–16 ans) ; moitié prix avec la CarteCulture (CHF 18.50 au lieu de 37).' },
         gggWegweiser: { titel: 'GGG Wegweiser Bâle', text: 'Orientation et conseils gratuits sur les questions sociales — aussi une aide pour remplir des formulaires et un conseil pour les personnes âgées.' },
+        caritasMarkt: { titel: 'Caritas-Markt', text: 'Denrées alimentaires et articles du quotidien à prix réduit pour les budgets serrés — accès avec la carte client Caritas-Markt (via la CarteCulture).' },
       },
     },
     moreInfo: 'En savoir plus',
