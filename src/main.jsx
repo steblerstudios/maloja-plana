@@ -272,7 +272,7 @@ const SackmesserIcon = ({ open, color, size = 20 }) => {
     )
   );
 };
-const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
+const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
   const [fanOpen, setFanOpen] = useState(false);
   const slot = (it) => React.createElement('button', {
     key: it.key, onClick: it.onClick, 'aria-label': it.label,
@@ -325,18 +325,25 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu }) => {
         paddingBottom: 'env(safe-area-inset-bottom)',
       },
     },
-      slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') }),
-      slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') }),
-      React.createElement('div', { style: { flex: 1, display: 'flex', justifyContent: 'center' } },
-        React.createElement('button', {
-          onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
-          style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sage, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
-        },
-          React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
-        )
-      ),
-      slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') }),
-      slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu })
+      // Linkshänder-Modus spiegelt die Slot-Reihenfolge; die zentrale „+"-Insel bleibt
+      // in der Mitte (bei 5 Slots vertauschen nur die zwei Paare aussen).
+      ...(() => {
+        const left1 = slot({ key: 'dashboard', label: t('nav.dashboard'), icon: 'sackmesser', active: view === 'dashboard', onClick: () => onNavigate('dashboard') });
+        const left2 = slot({ key: 'calendar', label: t('nav.calendar'), icon: 'calendarToday', active: view === 'calendar', onClick: () => onNavigate('calendar') });
+        const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
+          React.createElement('button', {
+            onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
+            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sage, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+          },
+            React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
+          )
+        );
+        const right1 = slot({ key: 'situationen', label: t('nav.anspruch'), icon: 'gift', active: view === 'situationen', onClick: () => onNavigate('situationen') });
+        const right2 = slot({ key: 'menu', label: t('nav.menu'), icon: 'menu', active: false, onClick: onMenu });
+        return leftHand
+          ? [right2, right1, center, left2, left1]
+          : [left1, left2, center, right1, right2];
+      })()
     )
   );
 };
@@ -373,6 +380,11 @@ const AppInner = () => {
     try { localStorage.setItem('or5_reducemotion', reduceMotion ? '1' : '0'); } catch {}
     try { document.documentElement.setAttribute('data-reduce-motion', reduceMotion ? '1' : '0'); } catch {}
   }, [reduceMotion]);
+
+  // Linkshänder-Modus (nur Handy): Schubladen fahren von links ein und der Boden-
+  // Anker spiegelt sich, damit die Einhand-Bedienung dem linken Daumen entgegenkommt.
+  const [leftHand, setLeftHand] = useState(() => { try { return localStorage.getItem('or5_lefthand') === '1'; } catch { return false; } });
+  useEffect(() => { try { localStorage.setItem('or5_lefthand', leftHand ? '1' : '0'); } catch {} }, [leftHand]);
   const palette = applyColorBlind(isDarkMode ? DARK_PALETTE : LIGHT_PALETTE, colorBlind);
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -830,6 +842,21 @@ const AppInner = () => {
         React.createElement('path', { d: 'M15 6a9 9 0 0 1 0 12' })
       )
     ),
+    // Linkshänder-Modus — nur am Handy sinnvoll (spiegelt Schubladen + Boden-Anker).
+    isMobile && React.createElement('button', {
+      key: 'lefthand',
+      'aria-label': t('common.leftHand'), 'aria-pressed': leftHand, title: t('common.leftHand'),
+      onClick: () => setLeftHand(v => !v),
+      style: { padding: '6px 9px', background: leftHand ? palette.sage + '22' : 'transparent', color: leftHand ? palette.sage : palette.mid, border: '1px solid ' + (leftHand ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+    },
+      // Icon: linke Hand (Daumen links) = Einhand-Bedienung links
+      React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
+        React.createElement('path', { d: 'M15 11V5.5a1.5 1.5 0 0 0-3 0V11' }),
+        React.createElement('path', { d: 'M12 10.5V4a1.5 1.5 0 0 0-3 0v7' }),
+        React.createElement('path', { d: 'M9 11V6.5a1.5 1.5 0 0 0-3 0V14' }),
+        React.createElement('path', { d: 'M6 12.5l-1.6-1.6a1.4 1.4 0 0 0-2 2L6 18a5 5 0 0 0 4.5 3H13a5 5 0 0 0 5-5v-4a1.5 1.5 0 0 0-3 0' })
+      )
+    ),
   ].filter(Boolean);
 
   // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
@@ -894,6 +921,7 @@ const AppInner = () => {
       // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
       // bis wir ein eigenes Web-Äquivalent haben (Sophie).
       hasBottomAnchor: isMobile,
+      leftHand,
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.
       settingsControls: null,
       settingsLabel: t('nav.settings'),
@@ -907,6 +935,7 @@ const AppInner = () => {
       isOpen: settingsOpen,
       onClose: () => setSettingsOpen(false),
       onNavigate: handleNavigate,
+      leftHand,
       settingsControls,
       settingsLabel: t('nav.settings'),
       onStartTour: () => { setSettingsOpen(false); setView('dashboard'); setTourOpen(true); },
@@ -1282,7 +1311,7 @@ const AppInner = () => {
     React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError }),
     // Web: Fusszeile pinned unter dem Inhalt.
     !isMobile && footerEl,
-    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true) })
+    isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true), leftHand })
   ));
 };
 

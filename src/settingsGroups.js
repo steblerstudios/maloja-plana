@@ -12,10 +12,11 @@ export const CONTROL_LABELS = {
   grayscale: 'common.grayscale',
   colorblind: 'common.colorBlind',
   reducemotion: 'common.reduceMotion',
+  lefthand: 'common.leftHand',
 };
 
 // Barrierefreiheits-Schalter zusammen; alles Übrige = Anzeige & Sprache.
-export const A11Y_KEYS = ['voice', 'readable', 'simpleview', 'grayscale', 'colorblind', 'reducemotion'];
+export const A11Y_KEYS = ['voice', 'readable', 'simpleview', 'grayscale', 'colorblind', 'reducemotion', 'lefthand'];
 
 // Teilt eine Liste von Bedienelementen (React-Elemente mit .key) in beschriftete
 // Gruppen. Leere Gruppen fallen weg. Reihenfolge: erst Anzeige, dann Barrierefreiheit.
