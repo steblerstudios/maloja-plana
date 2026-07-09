@@ -68,7 +68,7 @@ export default {
         ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Chi riceve PC è esentato dai premi; con un reddito basso si ha comunque spesso diritto a un aiuto.' },
         steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
         serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Chi riceve prestazioni complementari (PC) è esentato dal canone SERAFE su richiesta — recuperabile retroattivamente.' },
-        sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Una carta gratuita permette a un accompagnatore di viaggiare gratis sui trasporti pubblici — anche in caso di disabilità visiva, motoria o mentale. Domanda con conferma medica.' },
+        sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Un abbonamento per accompagnatori gratuito sul SwissPass permette a una persona accompagnatrice (o a un cane d\'assistenza) di viaggiare gratis sui trasporti pubblici — in caso di menomazione duratura, fisica, psichica o cognitiva. Domanda con conferma medica. La vecchia carta verde di carta non è più valida.' },
       },
     },
     pflegendeAngehoerige: {
