@@ -56,7 +56,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 ## 5 · Rechner & Abläufe (Feature-Ausbau)
 
-- 🌱 **AHV-Rechner-Ausbau** — Rest-Lebenserwartung F/M/divers (✅), Frühpension (✅), Weiterarbeiten (✅); offen: Alters-Kosten, Senioren-Vergünstigungen, Umwandlungssatz-Option, Link-Bibliothek.
+- 🌱 **AHV-Rechner-Ausbau** — Rest-Lebenserwartung F/M/divers (✅), Frühpension (✅), Weiterarbeiten (✅), **Umwandlungssatz-Option** (✅ PK-eigener Satz, Session #38); Link-Bibliothek teils da (Block „Offizielle Stelle & Antrag"). Offen: Alters-Kosten + Senioren-Vergünstigungen → bei den Vergünstigungen kuratieren (Haftung/Quellen).
 - 🌱 **Zukunftsrechner-Reste** — AHV als Granit-Kapitalsäule (Säulen-Session, Alters-Gating), Drag-Handle mit Live-Tooltip + Snap 63/64/65/70, ~20k-Zinsknick als echtes Modell, 3a-Rollover/Drawdown.
 - 🌱 **Kreditkarten-Ausbau** (Limit/Saldo/Schuld pro Karte — heute nur Ja/Nein) · **Säule 3b Ausbau**.
 - 🌱 **Petitionsgenerator** (Menschen befähigen, selbst zu petitionieren; „max 10 % fürs KK") · **Mietvertrag-/Untermietvertrag-Generator**.
