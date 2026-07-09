@@ -3631,6 +3631,7 @@ export default {
     title: 'Mes iert da fritgs',
     intro: 'Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l\'arbre plain. Tutga per avrir il sectur.',
     link: 'Mes iert da fritgs',
+    ctaSub: 'Mintga sectur da vita sco in agen arbulet — sper l\'arbre survart.',
     legend: 'Stgalim da crestga enstagl da procent: plantina → crescha → porta fritgs → cumplainamain madir. Ils quatter arbulets ils pli giuvens vegnan pli tard.',
     future: 'vegn pli tard',
     stage1: 'plantina',
