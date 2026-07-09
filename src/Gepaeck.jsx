@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { GEGENSTAENDE } from './data/gepaeck.js';
+import { GEGENSTAENDE, gegenstandReadiness } from './data/gepaeck.js';
 import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 
 // Mein Gepäck — die Rucksack-Ansicht der Lebensereignisse. Ein Rucksack packt sich
@@ -8,7 +8,7 @@ import { text, weight, space, radius, leading, ease } from './config/tokens.js';
 // Einen Gegenstand aufklappen, hineinschauen: die Wege darin. Ein Weg führt in seinen
 // bestehenden geführten Ablauf. Ruhig, barrierefrei, separat von Baum und Obstgarten.
 
-export const Gepaeck = ({ palette, t, onNavigate, isDarkMode }) => {
+export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
   const h = React.createElement;
   const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [packed, setPacked] = useState(!reduce);   // gepackt → packt sich beim Öffnen einmal aus
@@ -132,9 +132,19 @@ export const Gepaeck = ({ palette, t, onNavigate, isDarkMode }) => {
   );
 
   // ── Ein Gegenstand (Karte, aufklappbar) ─────────────────────────────────────
+  // Reife-Pünktchen: ein Punkt je geprüftem Feld, gefüllt = erfasst (echte Daten).
+  const dots = (r) => h('span', {
+    role: 'img', 'aria-label': t('gepaeck.packed', { done: r.done, total: r.total }),
+    style: { display: 'inline-flex', gap: '3px', marginTop: '5px' },
+  }, Array.from({ length: r.total }, (_, k) => h('span', {
+    key: k, 'aria-hidden': 'true',
+    style: { width: '6px', height: '6px', borderRadius: '50%', background: k < r.done ? palette.gold : palette.border },
+  })));
+
   const card = (g, i) => {
     const open = openKey === g.key;
     const count = g.wege.length;
+    const r = gegenstandReadiness(g.key, data);
     return h('div', {
       key: g.key,
       style: {
@@ -155,6 +165,7 @@ export const Gepaeck = ({ palette, t, onNavigate, isDarkMode }) => {
           h('span', { style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, t('gepaeck.obj.' + g.key)),
           h('span', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginTop: '1px' } },
             t('gepaeck.objSub.' + g.key) + ' · ' + (count === 1 ? t('gepaeck.wegeOne') : t('gepaeck.wege', { n: count }))),
+          dots(r),
         ),
         h('span', {
           'aria-hidden': 'true',

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { GEGENSTAENDE, alleWege, wegeCount } from '../data/gepaeck.js';
+import { GEGENSTAENDE, alleWege, wegeCount, gegenstandReadiness } from '../data/gepaeck.js';
+import { DEMO_DATA } from '../config/demoData.js';
 import { VALID_VIEWS } from '../utils/hashRouter.js';
 
 // Das Gepäck verlinkt jeden Weg in einen bestehenden geführten Ablauf. Diese Tests
@@ -23,6 +24,27 @@ describe('Gepäck-Registry', () => {
     for (const w of alleWege()) {
       expect(Array.isArray(w.g) && w.g.length > 0, `Weg "${w.key}" ohne Glyph`).toBe(true);
     }
+  });
+
+  it('Reife-Pünktchen: leere Daten = nichts gepackt', () => {
+    for (const g of GEGENSTAENDE) {
+      const r = gegenstandReadiness(g.key, {});
+      expect(r.total).toBeGreaterThan(0);
+      expect(r.done).toBe(0);
+    }
+  });
+
+  it('Reife-Pünktchen: Demo-Daten füllen ehrlich (done>0, nie über total)', () => {
+    for (const g of GEGENSTAENDE) {
+      const r = gegenstandReadiness(g.key, DEMO_DATA);
+      expect(r.done).toBeGreaterThan(0);
+      expect(r.done).toBeLessThanOrEqual(r.total);
+    }
+    // Ja/Nein-Feld: willMade:'no' zählt NICHT als gepackt.
+    const abschiedNo = gegenstandReadiness('abschied', { behoerden: { willMade: 'no' }, notfall: {} });
+    expect(abschiedNo.done).toBe(0);
+    const abschiedYes = gegenstandReadiness('abschied', { behoerden: { willMade: 'yes' }, notfall: {} });
+    expect(abschiedYes.done).toBe(1);
   });
 
   it('wegeCount zählt echt', () => {

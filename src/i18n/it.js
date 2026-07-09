@@ -3538,6 +3538,7 @@ export default {
     pack: 'Rifare il bagaglio',
     wege: '{n} percorsi',
     wegeOne: '1 percorso',
+    packed: '{done} di {total} inseriti',
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
     obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata' },
     objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo' },
