@@ -245,9 +245,14 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 - Sie/formal als Erstkontakt-Default (Landing/NGO), Du im App-Innern → Kanal entscheidet.
 
 **🟡 SEO (strukturell):**
-- **`hreflang` fehlt komplett** → pro-Sprache-Routen `/de//fr//it//en//rm/` + reziproke hreflang +
-  `x-default`; pro Sprache eigener `<title>`/`<description>`; `<html lang>` korrekt. Braucht
-  vorgerenderte Sprach-Landing-Seiten (kein Backend → statisch).
+- ✅ **hreflang + Head-Meta — WEITGEHEND ERLEDIGT (2026-07-08 Grundlage, 2026-07-09 Lücken).**
+  hreflang (5 Spr. via `?lang=`), og-Locale-Alternates, canonical, robots.txt, sitemap.xml,
+  JSON-LD existierten seit 08.07. Drei Lücken am 09.07. geschlossen (`4e62b2a`): (1) `<title>`/
+  `<meta description>`/og je Sprache dynamisch (i18n `seo.*` + lang-Effekt in main.jsx; vorher nur
+  `<html lang>`), (2) canonical selbstreferenziell `?lang=<lang>` statt statisch `/` (löste den
+  canonical↔hreflang-Widerspruch), (3) sitemap.xml mit allen 5 Sprach-URLs + `xhtml:link`-
+  Alternates inkl. x-default. ⏭ Offene Eskalation (später): vorgerenderte statische Sprach-Landing-
+  Seiten für JS-lose Crawler (Google rendert JS, daher nicht dringend).
 - CH-Keywords: Prämienverbilligung berechnen, Sozialhilfe Anspruch, Steuererklärung [Kanton],
   Aufenthaltsbewilligung verlängern, Ergänzungsleistungen … + EN für Expats. `sitemap.xml`, FAQ-Schema.
 
