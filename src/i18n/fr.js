@@ -2805,6 +2805,8 @@ export default {
   },
   calendar: {
     title: 'Calendrier et rappels',
+    anspruchTitle: { sie: 'Peut-être pour vous', du: 'Peut-être pour toi' },
+    anspruchIntro: { sie: 'D’après vos données — sans obligation, juste une piste à explorer.', du: 'D’après tes données — sans obligation, juste une piste à explorer.' },
     upcoming: 'A venir',
     overdue: 'En retard',
     completed: 'Terminé',

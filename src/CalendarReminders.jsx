@@ -5,6 +5,7 @@ import { downloadICS } from './utils/icsExport.js';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { EmptyState } from './components/EmptyState.jsx';
+import { anspruchSignaleListe } from './data/anspruchSignale.js';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -56,7 +57,7 @@ const CATEGORY_ICON_KEYS = {
 };
 
 // ─── Component ──────────────────────────────────────────────
-export const CalendarReminders = ({ palette, t, data }) => {
+export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
   const [reminders, setReminders] = useState(loadReminders);
   const [view, setView] = useState('upcoming'); // upcoming, completed, add
   const [showTemplates, setShowTemplates] = useState(false);
@@ -246,6 +247,33 @@ export const CalendarReminders = ({ palette, t, data }) => {
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'cowbell', size: 22 }), style: { marginBottom: space.md } }, t('calendar.title')),
+
+    // Möglicherweise für dich (Anspruch-Signale, Variante C, #4.4): ruhiger Hinweis
+    // auf gedeckte Ansprüche — dieselbe ehrliche Logik wie der Ring am Baum. Kein
+    // Muss, nur ein „schau mal hier"; jede Zeile verlinkt in ihr Zuhause.
+    (() => {
+      const list = onNavigate ? anspruchSignaleListe(data) : [];
+      if (!list.length) return null;
+      return React.createElement('div', {
+        style: { background: palette.sage + '10', border: '1px solid ' + palette.sage + '2e', borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.md },
+      },
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '2px' } }, t('calendar.anspruchTitle')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.relaxed } }, t('calendar.anspruchIntro')),
+        ...list.map((sig) => React.createElement('button', {
+          key: sig.key, type: 'button', onClick: () => onNavigate(sig.view),
+          style: {
+            display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', boxSizing: 'border-box',
+            padding: '9px 11px', marginBottom: space.xs + 'px',
+            background: palette.surface, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm,
+            cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
+          },
+        },
+          React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: '50%', background: palette.sage, flexShrink: 0 } }),
+          React.createElement('span', { style: { flex: 1, minWidth: 0 } }, t('anspruch.items.' + sig.key + '.label')),
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0 } }, '→')
+        ))
+      );
+    })(),
 
     // Visueller Kalender: Jahresband (12 Monate, Monatspunkte) + Monatsraster
     // (Tagespunkte). Ruhige Übersicht über der Manager-Liste; Tag antippen öffnet
