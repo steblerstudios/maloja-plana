@@ -713,6 +713,7 @@ export default {
     grayscale: 'Stgala da grisch',
     colorBlind: 'Modus daltonic',
     reduceMotion: 'Reducir la moviment',
+    leftHand: 'Modus per sanesters',
     readable: 'Meglra legibilitad',
     download: 'Telechargiar',
     upload: 'Chargiar si',

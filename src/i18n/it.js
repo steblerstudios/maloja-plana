@@ -687,6 +687,7 @@ export default {
     grayscale: 'Scala di grigi',
     colorBlind: 'Modalità daltonici',
     reduceMotion: 'Animazioni ridotte',
+    leftHand: 'Modalità mancini',
     readable: 'Migliore leggibilità',
     download: 'Scarica',
     upload: 'Carica',
