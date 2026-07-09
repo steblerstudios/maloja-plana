@@ -32,7 +32,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - ❓ **Zwei Bäume verschmelzen** — heute Lebensbaum (Frucht=Bereich) + zweiter „Spiegel"-Baum (Werkzeuge). Idee: Werkzeuge wachsen am SELBEN Ast ihres Bereichs.
 - 🌱 **Naturgetreuer Wuchs** — Fibonacci/Phyllotaxis, Boids/Murmuration-Mathematik, L-System, Äste verjüngt statt Striche; Knospen *an* Ästen.
 - 🌱 **Jahreszeiten** (Knospe→Blüte→Frucht→Ruhe); **Früchte HÄNGEN** von Ästen statt zu sitzen; Schweizer Obst statt Feige.
-- 🌱 **Schnellcheck als Ast wachsen** — bei bestehendem Anspruch wächst der zugehörige Ast/Frucht.
+- ✅ **Schnellcheck als Ast wachsen** — bei gedecktem Anspruch (IPV/Sozialhilfe/EL, ehrliche Engine) bekommt die Bereichs-Frucht am Dashboard-Baum einen ruhigen Ring (A), ihr Klick führt zum benannten Anspruch (B), und die Erinnerungsliste zeigt „Möglicherweise für dich" (C). Single-Source `data/anspruchSignale.js` (Session #38).
 - ⏸ **Achievements ohne Gamification-Optik** — Schweizer Steine (Granit/Schiefer/Bergkristall), Gipfel; Badges heikel (Druck/Fairness). **Wilhelm-Tell-Apfel** geparkt (Empfehlung: beim Apfel bleiben, Bedrohungsbild meiden).
 
 ## 3 · Schnellchecks & versteckte Berechtigungen
