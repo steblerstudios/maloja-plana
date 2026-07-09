@@ -2279,6 +2279,7 @@ export default {
 
   anspruch: {
     pageTitle: 'Survista da las prestaziuns',
+    gefuehrtLink: 'Gugent pass per pass? Controlla guidada',
     intro: 'Blers dretgs existan senza ch’ins al sa. Qua tut las prestaziuns pussaivlas cun in’egliada — senza obligaziun, senza giudicar. Tucca ina per savair dapli.',
     gruppen: {
       einkommen: { label: 'Tenor l’entrada', desc: 'Dependa da quant che vegn mensilmain.' },
@@ -2304,6 +2305,15 @@ export default {
       waisenrente: { label: 'Renta d’orfen', sub: 'Tar la mort d’in genitur' },
     },
     footNote: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.',
+  },
+
+  anspruchCheck: {
+    stepWord: 'Pass',
+    stepIncome: 'Tenor l’entrada',
+    stepSituation: 'Tenor la situaziun',
+    weiter: 'Vinavant als dretgs tenor la situaziun',
+    zurueck: 'Enavos',
+    fertig: 'Finì — a la survista',
   },
 
   beistand: {

@@ -51,8 +51,20 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
   return React.createElement('div', { style: { maxWidth: '640px' } },
     React.createElement(PageTitle, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('anspruch.pageTitle')),
     React.createElement('p', {
-      style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.lg + 'px 0', lineHeight: leading.relaxed }
+      style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed }
     }, t('anspruch.intro')),
+
+    // Wer lieber geführt Schritt für Schritt durchgeht (Zahlen → Lebenslage),
+    // findet hier die Brücke — die Liste unten bleibt für den freien Überblick.
+    React.createElement('button', {
+      type: 'button',
+      onClick: () => onNavigate('anspruchcheck'),
+      style: {
+        display: 'block', marginBottom: space.lg + 'px', background: 'none', border: 'none',
+        padding: 0, cursor: 'pointer', fontFamily: 'inherit',
+        fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
+      },
+    }, '→ ' + t('anspruch.gefuehrtLink')),
 
     ANSPRUCH_GRUPPEN.map((gruppe) =>
       React.createElement('div', { key: gruppe.key, style: { marginBottom: space.xl + 'px' } },

@@ -888,6 +888,7 @@ export default {
 
   anspruch: {
     pageTitle: 'Panoramica delle prestazioni',
+    gefuehrtLink: 'Preferisci passo passo? Verifica guidata',
     intro: 'Molto spetta senza che lo si sappia. Ecco tutte le prestazioni possibili a colpo d’occhio — senza impegno, senza giudizio. Tocca una voce per saperne di più.',
     gruppen: {
       einkommen: { label: 'In base al reddito', desc: 'Dipende da quanto entra ogni mese.' },
@@ -913,6 +914,15 @@ export default {
       waisenrente: { label: 'Rendita per orfani', sub: 'Alla morte di un genitore' },
     },
     footNote: 'Questa panoramica non giudica e non promette nulla — mostra solo ciò che potrebbe riguardarti. Il diritto effettivo lo stabilisce l’organo competente.',
+  },
+
+  anspruchCheck: {
+    stepWord: 'Passo',
+    stepIncome: 'In base al reddito',
+    stepSituation: 'In base alla situazione',
+    weiter: 'Avanti verso i diritti in base alla situazione',
+    zurueck: 'Indietro',
+    fertig: 'Fatto — alla panoramica',
   },
 
   beistand: {
