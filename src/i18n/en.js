@@ -20,6 +20,7 @@ export default {
         vhszh: { titel: 'Volkshochschule Zürich (adult education)', text: 'With the KulturLegi, 50% off lecture courses and 20% off other courses.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Summer holiday pass for children (6–16); half price with the KulturLegi (CHF 18.50 instead of 37).' },
         gggWegweiser: { titel: 'GGG Wegweiser Basel', text: 'Free orientation and advice on social matters — including help filling in forms and counselling in old age.' },
+        caritasMarkt: { titel: 'Caritas-Markt', text: 'Reduced-price groceries and everyday items for people on a tight budget — access with the Caritas-Markt customer card (via the KulturLegi).' },
       },
     },
     moreInfo: 'Learn more',
