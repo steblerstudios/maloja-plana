@@ -3,6 +3,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
 import { text, weight, radius, space } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 
 export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
@@ -47,13 +48,13 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
     React.createElement('div', { style: { background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'csv', size: 22 }), style: { marginBottom: space.md } }, t('budgetImport.title')),
 
-      React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontWeight: weight.medium } }, t('budgetImport.fileFormat')),
-      React.createElement('select', { value: importType, onChange: (e) => setImportType(e.target.value), style: { ...inputStyle, marginBottom: space.md } },
-        React.createElement('option', { value: 'csv' }, t('budgetImport.csv')),
-        React.createElement('option', { value: 'excel' }, t('budgetImport.excel')),
-        React.createElement('option', { value: 'ebill' }, t('budgetImport.ebill')),
-        React.createElement('option', { value: 'text' }, t('budgetImport.tsv'))
-      ),
+      React.createElement(LabeledField, { palette, label: t('budgetImport.fileFormat'), style: { marginBottom: 0 } },
+        React.createElement('select', { value: importType, onChange: (e) => setImportType(e.target.value), style: { ...inputStyle, marginBottom: space.md } },
+          React.createElement('option', { value: 'csv' }, t('budgetImport.csv')),
+          React.createElement('option', { value: 'excel' }, t('budgetImport.excel')),
+          React.createElement('option', { value: 'ebill' }, t('budgetImport.ebill')),
+          React.createElement('option', { value: 'text' }, t('budgetImport.tsv'))
+        )),
 
       React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
         React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, style: { display: 'none' } }),
