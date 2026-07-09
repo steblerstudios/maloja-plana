@@ -2329,6 +2329,10 @@ export default {
       empty: { sie: 'Nessuna fattura ancora registrata. Può aggiungerle nel tracker dei costi sanitari — oppure completare la lettera a mano.', du: 'Nessuna fattura ancora registrata. Puoi aggiungerle nel tracker dei costi sanitari — oppure completare la lettera a mano.' },
       undated: 'senza data',
     },
+    kkReasonPicker: {
+      title: 'Cosa non va?',
+      intro: { sie: 'Selezioni ciò che si applica — diventa una contestazione chiara nella lettera.', du: 'Seleziona ciò che si applica — diventa una contestazione chiara nella lettera.' },
+    },
     addressChange: {
       title: 'Comunicare il cambio di indirizzo',
       description: 'Comunicare il nuovo indirizzo a un ente (posta, cassa malati, datore di lavoro, banca …).',
@@ -2379,6 +2383,15 @@ export default {
       body2intro: 'Nello specifico, riguarda la/le seguente/i posizione/i del conteggio:',
       position: 'Fattura del {date} di CHF {amount}',
       body2detail: '[da completare: cosa non è stato conteggiato o lo è stato in modo errato — e la differenza che ne deriva]',
+      reasonsIntro: 'Nello specifico contesto quanto segue:',
+      reasons: {
+        nichtErhalten: 'Una prestazione fatturata non mi è stata fornita.',
+        doppelt: 'Una voce è stata fatturata due volte.',
+        falscherBetrag: 'L’importo o la tariffa fatturati non sembrano corretti.',
+        franchiseSelbstbehalt: 'La franchigia o l’aliquota percentuale sono state conteggiate in modo errato.',
+        nichtGedeckt: 'Mi è stata addebitata una prestazione non coperta.',
+        falschePerson: 'Questo conteggio non mi riguarda.',
+      },
       positionScaffold: '[da completare — data, importo e cosa non è stato o è stato conteggiato in modo errato]',
       body2request: 'Vi prego di verificare e correggere il conteggio.',
       body3: 'Vi prego di comunicarmi per iscritto l’esito della vostra verifica. Resto a disposizione per qualsiasi domanda.',

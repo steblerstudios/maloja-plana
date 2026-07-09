@@ -2328,6 +2328,10 @@ export default {
       empty: 'No bills recorded yet. You can add them in the health-costs tracker — or fill in the letter by hand.',
       undated: 'no date',
     },
+    kkReasonPicker: {
+      title: 'What is wrong?',
+      intro: 'Select what applies — it becomes a clear complaint in the letter.',
+    },
     addressChange: {
       title: 'Notify a change of address',
       description: 'Tell an office your new address (post, health insurer, employer, bank …).',
@@ -2378,6 +2382,15 @@ export default {
       body2intro: 'Specifically, the following billing item(s) are concerned:',
       position: 'Invoice dated {date} for CHF {amount}',
       body2detail: '[please complete: what was not credited or credited incorrectly — and the resulting difference]',
+      reasonsIntro: 'Specifically, I am disputing the following:',
+      reasons: {
+        nichtErhalten: 'A billed service was not provided to me.',
+        doppelt: 'An item was billed twice.',
+        falscherBetrag: 'The billed amount or tariff does not appear correct.',
+        franchiseSelbstbehalt: 'The deductible or retention was applied incorrectly.',
+        nichtGedeckt: 'I was charged for a service that is not covered.',
+        falschePerson: 'This statement does not concern me.',
+      },
       positionScaffold: '[please complete — date, amount and what was not or incorrectly credited]',
       body2request: 'I kindly ask you to review and correct the statement.',
       body3: 'Please inform me of the outcome of your review in writing. I am happy to answer any questions.',
