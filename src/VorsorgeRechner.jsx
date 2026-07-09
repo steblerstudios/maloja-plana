@@ -4,7 +4,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
@@ -31,6 +31,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState('65');
+  const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
   const [bvgGuthaben, setBvgGuthaben] = useState('');
@@ -515,7 +516,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const ret = Math.max(START, Math.round(parsedBezugAlter));
         const retMin = Math.max(58, START);
         const retMax = Math.max(retMin, 70);
-        const setRet = (a) => setBezugAlter(String(Math.max(retMin, Math.min(retMax, Math.round(a)))));
+        // Bedeutungs-Alter mit leichtem Magneten: 63 (früheste AHV), 64, 65 (Referenz),
+        // 70 (spätester Aufschub). Beim Ziehen „rasten" sie sanft ein (Fangradius 0.6 J),
+        // ohne die freien Zwischenalter zu blockieren. Ganzzahl bleibt der Normalfall.
+        const SNAP_AGES = [63, 64, 65, 70].filter((a) => a >= retMin && a <= retMax);
+        const snap = (a) => { const near = SNAP_AGES.find((s) => Math.abs(a - s) <= 0.6); return near != null ? near : Math.round(a); };
+        const setRet = (a) => setBezugAlter(String(Math.max(retMin, Math.min(retMax, snap(a)))));
         // Kapital pro Alter: bis Rücktritt aus der Engine, danach flach (Pension, kein Drawdown).
         const val = (a) => (a <= ret ? (tl[a - START] || tl[tl.length - 1]) : end);
         const ages = [];
@@ -645,13 +651,32 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
             React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+            // Snap-Marken an den Bedeutungs-Altern (63/64/65/70): kleine Kerben an der
+            // Achse, damit die einrastenden Alter sichtbar sind. Das aktive Alter in Gold.
+            ...SNAP_AGES.map((a) => React.createElement('g', { key: 'snap' + a },
+              React.createElement('line', { x1: xA(a), y1: yB, x2: xA(a), y2: yB - 6, stroke: a === ret ? col3a : palette.mid, strokeWidth: a === ret ? 2 : 1, opacity: a === ret ? 1 : 0.55 }))),
             // Interaktions-Overlay: Klick + Ziehen
             React.createElement('rect', { x: x0, y: y0 - 10, width: x1 - x0, height: yB - y0 + 10, fill: 'transparent', style: { cursor: 'ew-resize' },
-              onPointerDown: (e) => { if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); setRet(ageFromEvent(e)); },
-              onPointerMove: (e) => { if (e.buttons & 1) setRet(ageFromEvent(e)); } }),
-            // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei)
-            React.createElement('circle', { cx: xret, cy: y0 - 4, r: 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,
-              tabIndex: 0, role: 'slider', 'aria-label': t('vr.bezugAlter'), 'aria-valuemin': retMin, 'aria-valuemax': retMax, 'aria-valuenow': ret, 'aria-valuetext': t('vr.bezugAlter') + ' ' + ret, style: { cursor: 'ew-resize', outline: 'none' },
+              onPointerDown: (e) => { setRuecktrittDragging(true); setRet(ageFromEvent(e)); try { e.currentTarget.setPointerCapture && e.currentTarget.setPointerCapture(e.pointerId); } catch { /* Pointer-Capture optional */ } },
+              onPointerMove: (e) => { if (e.buttons & 1) setRet(ageFromEvent(e)); },
+              onPointerUp: () => setRuecktrittDragging(false),
+              onPointerCancel: () => setRuecktrittDragging(false),
+              onLostPointerCapture: () => setRuecktrittDragging(false) }),
+            // Live-Tooltip beim Ziehen: Alter + resultierende Monatsrente sofort sichtbar
+            // (Sophies Wunsch — „was bringt das" ohne loszulassen). Ruhig, folgt dem Handle.
+            ruecktrittDragging && (() => {
+              const totMonatChart = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
+              const hasRente = totMonatChart > 0;
+              const tw = hasRente ? 122 : 66, th = hasRente ? 40 : 24;
+              const tx = Math.min(x1 - tw / 2, Math.max(x0 + tw / 2, xret));
+              return React.createElement('g', { key: 'dragTip', style: { pointerEvents: 'none' } },
+                React.createElement('rect', { x: tx - tw / 2, y: y0 + 4, width: tw, height: th, rx: 6, fill: palette.text, opacity: 0.94 }),
+                React.createElement('text', { x: tx, y: y0 + (hasRente ? 18 : 20), fill: palette.surface, fontSize: 12, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+                hasRente ? React.createElement('text', { x: tx, y: y0 + 33, fill: palette.surface, fontSize: 11, fontFamily: 'inherit', textAnchor: 'middle', opacity: 0.9 }, 'CHF ' + fmt(totMonatChart) + ' / ' + t('vr.monat')) : null);
+            })(),
+            // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei) — beim Ziehen grösser
+            React.createElement('circle', { cx: xret, cy: y0 - 4, r: ruecktrittDragging ? 10 : 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,
+              tabIndex: 0, role: 'slider', 'aria-label': t('vr.bezugAlter'), 'aria-valuemin': retMin, 'aria-valuemax': retMax, 'aria-valuenow': ret, 'aria-valuetext': t('vr.bezugAlter') + ' ' + ret, style: { cursor: 'ew-resize', outline: 'none', transition: 'r 120ms ' + ease },
               onKeyDown: (e) => {
                 if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setRet(ret - 1); }
                 else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setRet(ret + 1); }
