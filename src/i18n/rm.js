@@ -2319,7 +2319,7 @@ export default {
     resultIntro: 'Resumà da tias indicaziuns — tge che pudess pertutgar tai.',
     resultIncomeHeader: 'Tenor l’entrada (da tes profil)',
     resultSituationHeader: 'Tenor tias situaziuns',
-    resultEmptyIncome: 'Endatescha entrada e chantun en pass 1 — lura cumpara qua tge che ta stat.',
+    resultEmptyIncome: 'Endatescha tia entrada en pass 1 (il chantun defineschas en tes profil) — lura cumpara qua tge che ta stat.',
     resultEmptySituation: 'Tscherna tias situaziuns en pass 2 — lura cumparan ellas qua.',
     resultToLandkarte: 'Vesair tuttas prestaziuns pussaivlas',
   },

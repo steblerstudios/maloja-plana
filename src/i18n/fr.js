@@ -928,7 +928,7 @@ export default {
     resultIntro: 'Résumé à partir de vos indications — ce qui pourrait vous concerner.',
     resultIncomeHeader: 'Selon le revenu (d’après votre profil)',
     resultSituationHeader: 'Selon vos situations',
-    resultEmptyIncome: 'Indiquez le revenu et le canton à l’étape 1 — ce qui vous revient apparaîtra ici.',
+    resultEmptyIncome: 'Indiquez votre revenu à l’étape 1 (le canton se règle dans votre profil) — ce qui vous revient apparaîtra ici.',
     resultEmptySituation: 'Choisissez vos situations à l’étape 2 — elles apparaîtront ici.',
     resultToLandkarte: 'Voir toutes les prestations possibles',
   },
