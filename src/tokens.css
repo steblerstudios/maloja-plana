@@ -172,7 +172,10 @@ textarea:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html { scroll-behavior: auto; }
+  /* !important, sonst überschreibt die spätere `html { scroll-behavior: smooth }`-
+     Regel (gleiche Spezifität, spätere Quelle) dies wieder — dann bliebe Smooth-
+     Scroll trotz OS-Einstellung „reduzierte Bewegung" aktiv. */
+  html { scroll-behavior: auto !important; }
 }
 
 /* In-App-Schalter „Reduzierte Bewegung" — spiegelt den OS-Block, damit Menschen
