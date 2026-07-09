@@ -1358,15 +1358,41 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
     React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
 
-    // Zugang zum Lebens-Obstgarten (eigene Ansicht neben dem Einzelbaum)
+    // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
+    // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via
+    // sandDeep statt sand (sand ist im Hellmodus zu hell für Text/Symbol, 2.34:1).
     React.createElement('button', {
       onClick: () => onNavigate('obstgarten'),
+      'aria-label': t('obstgarten.link'),
       style: {
-        display: 'block', margin: '0 0 ' + space.xl + 'px', background: 'none', border: 'none',
-        cursor: 'pointer', padding: '2px 0', fontSize: text.sm, color: palette.sand,
-        fontFamily: 'inherit', fontWeight: weight.medium,
+        display: 'flex', alignItems: 'center', gap: space.sm + 'px',
+        width: '100%', textAlign: 'left', margin: '0 0 ' + space.xl + 'px',
+        padding: space.sm + 'px ' + space.md + 'px',
+        background: palette.sage + '08', border: '1px solid ' + palette.sage + '20',
+        borderRadius: radius.md, cursor: 'pointer', fontFamily: 'inherit',
+        transition: `background ${duration.normal}ms ${ease}`,
       },
-    }, t('obstgarten.link') + ' →'),
+    },
+      React.createElement('span', {
+        style: {
+          width: '34px', height: '34px', borderRadius: '50%',
+          background: palette.sage + '18', color: palette.sageDeep,
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        },
+      }, React.createElement('div', { style: { width: '18px', height: '18px' } }, Icons.leaf())),
+      React.createElement('span', { style: { flex: 1, minWidth: 0 } },
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.body, fontWeight: weight.semi, color: palette.text },
+        }, t('obstgarten.link')),
+        React.createElement('span', {
+          style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
+        }, t('obstgarten.ctaSub')),
+      ),
+      React.createElement('span', {
+        'aria-hidden': 'true',
+        style: { fontSize: text.body, color: palette.sandDeep, fontWeight: weight.medium, flexShrink: 0 },
+      }, '→'),
+    ),
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
     React.createElement('div', { 'data-tour': 'anspruch', style: { marginBottom: space.xl + 'px' } },

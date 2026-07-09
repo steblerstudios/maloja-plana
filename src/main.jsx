@@ -549,7 +549,30 @@ const AppInner = () => {
       window.removeEventListener('maloja:db-blocked', blocked);
     };
   }, []);
-  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    // Sprach-spezifische Head-SEO synchron zur aktiven Sprache halten — die
+    // statische index.html trägt nur Deutsch. So sehen Google (rendert JS) und
+    // geteilte Links die richtige Sprache. Wichtig: canonical zeigt jetzt auf die
+    // hreflang-Selbst-URL (?lang=…), damit sich canonical und hreflang nicht mehr
+    // widersprechen (vorher canonical statisch „/" → verwarf die Sprachvarianten).
+    const canonUrl = 'https://malojaplana.ch/?lang=' + lang;
+    const ogLocale = { de: 'de_CH', fr: 'fr_CH', it: 'it_CH', rm: 'rm_CH', en: 'en' }[lang] || 'de_CH';
+    const title = t('seo.title');
+    const desc = t('seo.description');
+    const setMeta = (sel, attr, val) => {
+      if (!val) return;
+      const el = document.head.querySelector(sel);
+      if (el) el.setAttribute(attr, val);
+    };
+    if (title) document.title = title;
+    setMeta('meta[name="description"]', 'content', desc);
+    setMeta('link[rel="canonical"]', 'href', canonUrl);
+    setMeta('meta[property="og:title"]', 'content', title);
+    setMeta('meta[property="og:description"]', 'content', desc);
+    setMeta('meta[property="og:url"]', 'content', canonUrl);
+    setMeta('meta[property="og:locale"]', 'content', ogLocale);
+  }, [lang, t]);
   useEffect(() => {
     const handler = (e) => { e.preventDefault(); setInstallPrompt(e); };
     window.addEventListener('beforeinstallprompt', handler);
