@@ -3453,6 +3453,10 @@ export default {
     },
   },
 
+  seo: {
+    title: 'Maloja Plana — votre classeur de vie suisse : impôts, aide sociale, assurances',
+    description: 'Maloja Plana — votre classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, hors ligne, gratuit.',
+  },
   obstgarten: {
     title: 'Mon verger',
     intro: 'Chaque domaine de vie est un petit arbre. Il mûrit à mesure que vous complétez — du semis à l\'arbre plein. Touchez pour ouvrir le domaine.',
