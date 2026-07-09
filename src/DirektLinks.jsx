@@ -103,7 +103,7 @@ export const DirektLinks = ({ palette, t, data }) => {
     empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
     canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
     cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage },
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
   };
 
   // Einheitliche Eintrags-Karte: Name (Link aufs Wort, sonst Text) + optional

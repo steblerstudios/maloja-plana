@@ -14,6 +14,7 @@ export const GEGENSTAENDE = [
       { key: 'umzug', view: 'umzug', g: ['M3 12l9-8 9 8', 'M5 10v10h14V10', 'M10 20v-6h4v6'] },
       { key: 'neuch', view: 'situationen', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M3 12h18', 'M12 3c3 3 3 15 0 18', 'M12 3c-3 3-3 15 0 18'] },
       { key: 'bewilligung', view: 'bewilligung', g: ['M3 5h18v14H3z', 'M8 11a2 2 0 1 0 0-.01', 'M13 9h5', 'M13 13h5'] },
+      { key: 'mietzins', view: 'mietzins', g: ['M4 10l8-6 8 6', 'M6 9v10h12V9', 'M12 12.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4'] },
     ],
   },
   {
@@ -22,6 +23,7 @@ export const GEGENSTAENDE = [
       { key: 'job', view: 'neuerjob', g: ['M3 7h18v13H3z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M3 12h18'] },
       { key: 'stelleweg', view: 'stelleverloren', g: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18', 'M12 7v5l3 2'] },
       { key: 'selbst', view: 'selbstaendigkeit', g: ['M13 3L4 14h6l-1 7 9-11h-6z'] },
+      { key: 'stipendien', view: 'stipendien', g: ['M3 8l9-4 9 4-9 4z', 'M7 11v4c0 1.2 2.2 2 5 2s5-.8 5-2v-4', 'M21 8v4.5'] },
     ],
   },
   {
@@ -37,6 +39,8 @@ export const GEGENSTAENDE = [
     wege: [
       { key: 'unfall', view: 'unfallkrankheit', g: ['M12 5v14', 'M5 12h14'] },
       { key: 'kkwechsel', view: 'kvgwechsel', g: ['M4 12a8 8 0 0 1 13-6l3 3', 'M20 12a8 8 0 0 1-13 6l-3-3', 'M20 3v6h-6', 'M4 21v-6h6'] },
+      { key: 'kkerst', view: 'kkerst', g: ['M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z', 'M12 8.5v5', 'M9.5 11h5'] },
+      { key: 'iv', view: 'iv', g: ['M12 4.5a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8', 'M12 8v5h4.5', 'M8 11l4 1.2', 'M10 13a3.8 3.8 0 1 0 5.4 3.4'] },
     ],
   },
   {
@@ -50,6 +54,7 @@ export const GEGENSTAENDE = [
     key: 'abschied', ill: 'letter',
     wege: [
       { key: 'todesfall', view: 'todesfall', g: ['M3 6h18v12H3z', 'M3 7l9 6 9-6'] },
+      { key: 'organ', view: 'organ', g: ['M12 20c4-2.6 7-6 7-9.5A3.7 3.7 0 0 0 12 8a3.7 3.7 0 0 0-7 2.5C5 14 8 17.4 12 20z', 'M12 11v4', 'M10 13h4'] },
     ],
   },
 ];

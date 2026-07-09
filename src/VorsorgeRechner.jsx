@@ -4,7 +4,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, bvgKoordinationsabzug, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
-import { text, weight, space, radius } from './config/tokens.js';
+import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
@@ -31,6 +31,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState('65');
+  const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
   const [bvgGuthaben, setBvgGuthaben] = useState('');
@@ -192,7 +193,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
     tabFade: { position: 'absolute', top: 0, right: 0, bottom: 0, width: '28px', pointerEvents: 'none', background: 'linear-gradient(to right, ' + palette.surface + '00, ' + palette.surface + ')' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
     intlSummary: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, cursor: 'pointer' },
@@ -200,7 +201,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     intlSit: { paddingTop: space.sm + 'px', marginTop: space.sm + 'px', borderTop: '1px solid ' + palette.border + '66' },
     intlSitTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text },
     intlSitText: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, margin: '2px 0 4px' },
-    intlLink: { fontSize: text.xs, color: palette.sky, textDecoration: 'none' },
+    intlLink: { fontSize: text.xs, color: palette.skyDeep, textDecoration: 'none' },
     intlContact: { fontSize: text.xs, color: palette.mid, marginTop: space.md + 'px', fontWeight: weight.medium },
   };
 
@@ -515,7 +516,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const ret = Math.max(START, Math.round(parsedBezugAlter));
         const retMin = Math.max(58, START);
         const retMax = Math.max(retMin, 70);
-        const setRet = (a) => setBezugAlter(String(Math.max(retMin, Math.min(retMax, Math.round(a)))));
+        // Bedeutungs-Alter mit leichtem Magneten: 63 (früheste AHV), 64, 65 (Referenz),
+        // 70 (spätester Aufschub). Beim Ziehen „rasten" sie sanft ein (Fangradius 0.6 J),
+        // ohne die freien Zwischenalter zu blockieren. Ganzzahl bleibt der Normalfall.
+        const SNAP_AGES = [63, 64, 65, 70].filter((a) => a >= retMin && a <= retMax);
+        const snap = (a) => { const near = SNAP_AGES.find((s) => Math.abs(a - s) <= 0.6); return near != null ? near : Math.round(a); };
+        const setRet = (a) => setBezugAlter(String(Math.max(retMin, Math.min(retMax, snap(a)))));
         // Kapital pro Alter: bis Rücktritt aus der Engine, danach flach (Pension, kein Drawdown).
         const val = (a) => (a <= ret ? (tl[a - START] || tl[tl.length - 1]) : end);
         const ages = [];
@@ -645,13 +651,32 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             // Rücktritts-Linie + Marke
             React.createElement('line', { x1: xret, y1: y0 - 4, x2: xret, y2: yB, stroke: palette.text, strokeWidth: 1.5 }),
             React.createElement('text', { x: Math.min(x1 - 40, Math.max(x0 + 40, xret)), y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+            // Snap-Marken an den Bedeutungs-Altern (63/64/65/70): kleine Kerben an der
+            // Achse, damit die einrastenden Alter sichtbar sind. Das aktive Alter in Gold.
+            ...SNAP_AGES.map((a) => React.createElement('g', { key: 'snap' + a },
+              React.createElement('line', { x1: xA(a), y1: yB, x2: xA(a), y2: yB - 6, stroke: a === ret ? col3a : palette.mid, strokeWidth: a === ret ? 2 : 1, opacity: a === ret ? 1 : 0.55 }))),
             // Interaktions-Overlay: Klick + Ziehen
             React.createElement('rect', { x: x0, y: y0 - 10, width: x1 - x0, height: yB - y0 + 10, fill: 'transparent', style: { cursor: 'ew-resize' },
-              onPointerDown: (e) => { if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); setRet(ageFromEvent(e)); },
-              onPointerMove: (e) => { if (e.buttons & 1) setRet(ageFromEvent(e)); } }),
-            // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei)
-            React.createElement('circle', { cx: xret, cy: y0 - 4, r: 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,
-              tabIndex: 0, role: 'slider', 'aria-label': t('vr.bezugAlter'), 'aria-valuemin': retMin, 'aria-valuemax': retMax, 'aria-valuenow': ret, 'aria-valuetext': t('vr.bezugAlter') + ' ' + ret, style: { cursor: 'ew-resize', outline: 'none' },
+              onPointerDown: (e) => { setRuecktrittDragging(true); setRet(ageFromEvent(e)); try { e.currentTarget.setPointerCapture && e.currentTarget.setPointerCapture(e.pointerId); } catch { /* Pointer-Capture optional */ } },
+              onPointerMove: (e) => { if (e.buttons & 1) setRet(ageFromEvent(e)); },
+              onPointerUp: () => setRuecktrittDragging(false),
+              onPointerCancel: () => setRuecktrittDragging(false),
+              onLostPointerCapture: () => setRuecktrittDragging(false) }),
+            // Live-Tooltip beim Ziehen: Alter + resultierende Monatsrente sofort sichtbar
+            // (Sophies Wunsch — „was bringt das" ohne loszulassen). Ruhig, folgt dem Handle.
+            ruecktrittDragging && (() => {
+              const totMonatChart = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
+              const hasRente = totMonatChart > 0;
+              const tw = hasRente ? 122 : 66, th = hasRente ? 40 : 24;
+              const tx = Math.min(x1 - tw / 2, Math.max(x0 + tw / 2, xret));
+              return React.createElement('g', { key: 'dragTip', style: { pointerEvents: 'none' } },
+                React.createElement('rect', { x: tx - tw / 2, y: y0 + 4, width: tw, height: th, rx: 6, fill: palette.text, opacity: 0.94 }),
+                React.createElement('text', { x: tx, y: y0 + (hasRente ? 18 : 20), fill: palette.surface, fontSize: 12, fontWeight: weight.bold, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.bezugAlter') + ' ' + ret),
+                hasRente ? React.createElement('text', { x: tx, y: y0 + 33, fill: palette.surface, fontSize: 11, fontFamily: 'inherit', textAnchor: 'middle', opacity: 0.9 }, 'CHF ' + fmt(totMonatChart) + ' / ' + t('vr.monat')) : null);
+            })(),
+            // Ziehbarer Handle mit Tastatur + Fokus (barrierefrei) — beim Ziehen grösser
+            React.createElement('circle', { cx: xret, cy: y0 - 4, r: ruecktrittDragging ? 10 : 8, fill: palette.text, stroke: palette.surface, strokeWidth: 2,
+              tabIndex: 0, role: 'slider', 'aria-label': t('vr.bezugAlter'), 'aria-valuemin': retMin, 'aria-valuemax': retMax, 'aria-valuenow': ret, 'aria-valuetext': t('vr.bezugAlter') + ' ' + ret, style: { cursor: 'ew-resize', outline: 'none', transition: 'r 120ms ' + ease },
               onKeyDown: (e) => {
                 if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setRet(ret - 1); }
                 else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setRet(ret + 1); }
@@ -697,6 +722,41 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
       })(),
+
+      // Was im Alter auf dich zukommt (Rest von Braindump-32 #1): ehrliche Posten-
+      // Übersicht OHNE erfundene Beträge — die Höhe hängt stark von Situation/Kanton ab.
+      // Pflege ist oft der grösste Posten → Cross-Link in den geführten Ablauf.
+      alter && React.createElement('div', { style: { ...s.section, marginTop: space.sm + 'px' } },
+        React.createElement('div', { style: s.label }, t('vr.altersKostenTitle')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px', marginBottom: space.sm + 'px' } }, t('vr.altersKostenIntro')),
+        ...['K1', 'K2', 'K3', 'K4', 'K5'].map((k) => React.createElement('div', {
+          key: k, style: { display: 'flex', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: 1.5, marginBottom: space.xs + 'px' },
+        },
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sand, flexShrink: 0, fontWeight: weight.bold } }, '·'),
+          React.createElement('span', null, t('vr.altersKosten' + k))
+        )),
+        onNavigate && React.createElement('button', {
+          onClick: () => onNavigate('pflege'),
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+        }, '→ ' + t('gepaeck.w.pflege'))
+      ),
+
+      // Vergünstigungen im Alter (Braindump-32 #1): bei tiefer Rente steht oft mehr zu,
+      // als bekannt ist. Surfaced im Pensionsplanungs-Kontext. Nur echte, kuratierte
+      // Quellen (OfficialLinkBox = auditierte Registry) + Cross-Link zum Schnellcheck;
+      // keine erfundenen Zahlen. EL/Pro Senectute/AHV stehen schon im Fuss-Linkkasten.
+      alter && React.createElement('div', {
+        style: { ...s.section, marginTop: space.sm + 'px', background: palette.gold + '0E', border: '1px solid ' + palette.gold + '33' },
+      },
+        React.createElement('div', { style: s.label }, t('vr.altersHilfenTitle')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px' } }, t('vr.altersHilfenIntro')),
+        React.createElement(OfficialLinkBox, { palette, t, data, ids: ['praemienverbilligung'] }),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
+        onNavigate && React.createElement('button', {
+          onClick: () => onNavigate('schnellcheck'),
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+        }, '→ ' + t('vr.altersHilfenCheck'))
+      ),
 
       // 3a-Zinsschwelle: ruhiger Strategie-Hinweis, sobald das voraussichtliche
       // 3a-Kapital die Vorzugszins-Schwelle übersteigt. Kein Knick in der Kurve
@@ -817,7 +877,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         );
         return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
           React.createElement('div', { style: s.label }, t('vr.saeule3a')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sky } }, 'CHF ' + fmt(projected3a)),
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.skyDeep } }, 'CHF ' + fmt(projected3a)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('vr.saeule3aKapital', { alter: parsedBezugAlter }) + ' — ' + t('vr.saeule3aDetail', { balance: fmt(saeule3aBalance), years: yearsLeft, annual: fmt(saeule3aAnnual) })
           ),
@@ -871,7 +931,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               href: link.url,
               target: '_blank',
               rel: 'noopener noreferrer',
-              style: { fontSize: text.sm, color: palette.sky, textDecoration: 'none' }
+              style: { fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none' }
             }, t('vr.fzLink' + link.key) + ' →')
           )
         )
