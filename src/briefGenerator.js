@@ -309,6 +309,9 @@ function generateKkReklamation(data, t, options = {}) {
   // Vom Nutzer gewählte Belege (aus kkBelege). Datum/Betrag werden eingesetzt,
   // die strittige Differenz bleibt bewusst Selbst-Eintrag (haben wir nicht im Modell).
   const belege = Array.isArray(options.belege) ? options.belege : [];
+  // Gewählte Beanstandungsgründe (aus dem geführten „was stimmt nicht"-Schritt).
+  // Konkretisieren den Brief; ohne Auswahl bleibt der neutrale Ergänzungs-Platzhalter.
+  const reasons = Array.isArray(options.reasons) ? options.reasons : [];
   let positionsHtml;
   if (belege.length) {
     const lines = belege.map(b => {
@@ -316,9 +319,19 @@ function generateKkReklamation(data, t, options = {}) {
       const a = formatAmount(b.betrag) || t('briefe.fillIn');
       return `<p>– ${esc(t('briefe.kkReklamation.position', { date: d, amount: a }))}</p>`;
     }).join('');
-    positionsHtml = `<p>${esc(t('briefe.kkReklamation.body2intro'))}</p>${lines}<p>${esc(t('briefe.kkReklamation.body2detail'))}</p>`;
+    positionsHtml = `<p>${esc(t('briefe.kkReklamation.body2intro'))}</p>${lines}`;
   } else {
     positionsHtml = `<p>${esc(t('briefe.kkReklamation.body2intro'))}</p><p>${esc(t('briefe.kkReklamation.positionScaffold'))}</p>`;
+  }
+
+  // Grund (WARUM die Position nicht stimmt): entweder die gewählten Gründe als
+  // klare Liste, oder — ohne Auswahl — der bisherige Ergänzungs-Platzhalter.
+  let reasonHtml;
+  if (reasons.length) {
+    const items = reasons.map(r => `<p>– ${esc(t('briefe.kkReklamation.reasons.' + r))}</p>`).join('');
+    reasonHtml = `<p>${esc(t('briefe.kkReklamation.reasonsIntro'))}</p>${items}`;
+  } else {
+    reasonHtml = `<p>${esc(t('briefe.kkReklamation.body2detail'))}</p>`;
   }
 
   return wrapLetter(`
@@ -330,6 +343,7 @@ function generateKkReklamation(data, t, options = {}) {
       <p>${esc(t('briefe.kkReklamation.salutation'))}</p>
       <p>${esc(t('briefe.kkReklamation.body1', { insurer: insurerLine }))}</p>
       ${positionsHtml}
+      ${reasonHtml}
       <p>${esc(t('briefe.kkReklamation.body2request'))}</p>
       <p>${esc(t('briefe.kkReklamation.body3'))}</p>
       <p>${esc(t('briefe.kkReklamation.closing'))}</p>

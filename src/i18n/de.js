@@ -2330,6 +2330,10 @@ export default {
       empty: { sie: 'Noch keine Belege erfasst. Sie können sie im Gesundheitskosten-Tracker hinzufügen — oder den Brief von Hand ausfüllen.', du: 'Noch keine Belege erfasst. Du kannst sie im Gesundheitskosten-Tracker hinzufügen — oder den Brief von Hand ausfüllen.' },
       undated: 'ohne Datum',
     },
+    kkReasonPicker: {
+      title: 'Was stimmt nicht?',
+      intro: { sie: 'Wählen Sie, was zutrifft — es fliesst als klare Beanstandung in den Brief.', du: 'Wähle, was zutrifft — es fliesst als klare Beanstandung in den Brief.' },
+    },
     addressChange: {
       title: 'Adressänderung mitteilen',
       description: 'Einer Stelle die neue Adresse mitteilen (Post, Krankenkasse, Arbeitgeber, Bank …).',
@@ -2380,6 +2384,15 @@ export default {
       body2intro: 'Konkret betrifft es folgende Abrechnungsposition(en):',
       position: 'Rechnung vom {date} über CHF {amount}',
       body2detail: '[bitte ergänzen: was wurde nicht oder falsch angerechnet — und welche Differenz ergibt sich daraus]',
+      reasonsIntro: 'Konkret beanstande ich Folgendes:',
+      reasons: {
+        nichtErhalten: 'Eine verrechnete Leistung habe ich nicht erhalten.',
+        doppelt: 'Eine Position wurde doppelt verrechnet.',
+        falscherBetrag: 'Der verrechnete Betrag oder Tarif scheint nicht korrekt.',
+        franchiseSelbstbehalt: 'Franchise oder Selbstbehalt wurden falsch angerechnet.',
+        nichtGedeckt: 'Mir wurde eine nicht gedeckte Leistung belastet.',
+        falschePerson: 'Die Abrechnung betrifft nicht mich.',
+      },
       positionScaffold: '[bitte ergänzen — Datum, Betrag und was nicht oder falsch angerechnet wurde]',
       body2request: 'Ich bitte Sie, die Abrechnung zu überprüfen und zu korrigieren.',
       body3: 'Bitte teilen Sie mir das Ergebnis Ihrer Prüfung schriftlich mit. Für Rückfragen stehe ich gerne zur Verfügung.',
