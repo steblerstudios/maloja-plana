@@ -120,7 +120,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   return h('div', { style: { marginBottom: space.xl + 'px' } },
     h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: space.sm + 'px' } },
+    // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
+    // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
       tiles.map(tile => h('button', {
         key: tile.key,
         onClick: tile.onClick,
