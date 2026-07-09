@@ -886,6 +886,35 @@ export default {
     action: 'Open emergency card',
   },
 
+  anspruch: {
+    pageTitle: 'Your entitlements at a glance',
+    intro: 'A lot is available without people knowing. Here are all possible entitlements at a glance — no commitment, no judgment. Tap one to learn more.',
+    gruppen: {
+      einkommen: { label: 'By income', desc: 'Depends on how much comes in each month.' },
+      lebenslage: { label: 'By life situation', desc: 'Depends on your personal situation.' },
+      ereignis: { label: 'By event', desc: 'Triggered by a life event.' },
+    },
+    items: {
+      ipv: { label: 'Premium reduction (IPV)', sub: 'Cantonal subsidy toward the health-insurance premium' },
+      sozialhilfe: { label: 'Social assistance', sub: 'When income is not enough to live on' },
+      el: { label: 'Supplementary benefits (EL)', sub: 'Top-up to the AHV or IV pension' },
+      mietbeitraege: { label: 'Rent subsidies', sub: 'Cantonal help toward housing costs' },
+      stipendien: { label: 'Scholarships', sub: 'For education and studies' },
+      franchise: { label: 'Check the deductible', sub: 'Does the deductible fit your medical costs?' },
+      iv: { label: 'IV benefits', sub: 'For long-term illness or disability' },
+      betreuungsgutschriften: { label: 'Care credits', sub: 'For caring for relatives (AHV)' },
+      verguenstigungen: { label: 'Regional discounts', sub: 'KulturLegi, Reka etc. — depending on where you live' },
+      serafe: { label: 'SERAFE exemption', sub: 'No radio/TV fee when receiving EL' },
+      sbbBegleitabo: { label: 'SBB companion pass', sub: 'Free companion on public transport' },
+      beistandschaft: { label: 'Power of attorney & deputyship', sub: 'Who decides when you no longer can' },
+      alv: { label: 'Unemployment benefits (ALV)', sub: 'After losing your job' },
+      eo: { label: 'Loss-of-earnings compensation (EO)', sub: 'Service, maternity or caregiving' },
+      familienzulagen: { label: 'Family allowances', sub: 'Child and education allowances' },
+      waisenrente: { label: 'Orphan’s pension', sub: 'On the death of a parent' },
+    },
+    footNote: 'This overview judges nothing and promises nothing — it only shows what might apply to you. Whether you are actually entitled is determined by the relevant office.',
+  },
+
   beistand: {
     wegweiserTitle: 'If one day you can no longer decide for yourself',
     wegweiserBody: 'With a lasting power of attorney, you decide yourself who will act for you if you ever lose capacity. Without one, the child and adult protection authority (KESB) reviews the situation and, if needed, orders a deputyship (Beistandschaft).',
@@ -1040,6 +1069,7 @@ export default {
     anspruchTitle: 'What am I entitled to?',
     anspruchIntro: 'More is available than most people realise. A calm overview — no obligation, no judgement.',
     anspruchMoeglich: 'May be eligible',
+    anspruchAlleLink: '→ All entitlements at a glance',
     nextUpTitle: 'What’s next?',
     nextUpAllDone: 'Your foundation is in place — lovely.',
     glanceDeadline: 'Next deadline',
