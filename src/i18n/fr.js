@@ -886,6 +886,12 @@ export default {
     action: 'Ouvrir la carte d\'urgence',
   },
 
+  beistand: {
+    wegweiserTitle: 'Si un jour vous ne pouvez plus décider vous-même',
+    wegweiserBody: 'Avec un mandat pour cause d’inaptitude, vous désignez vous-même qui agira pour vous en cas d’incapacité de discernement. Sans mandat, l’autorité de protection de l’adulte (APEA) examine la situation et ordonne, si nécessaire, une curatelle.',
+    wegweiserLink: 'La protection de l’adulte en bref (KOKES, en allemand)',
+  },
+
   glossar: {
     ipv: 'IPV/RIP — réduction individuelle des primes : une aide cantonale sur votre prime d’assurance-maladie si le revenu est assez bas.',
     skos: 'CSIAS — Conférence suisse des institutions d’action sociale : fixe les normes de l’aide sociale.',
@@ -898,6 +904,7 @@ export default {
     uvg: 'LAA — assurance-accidents : couvre les frais des accidents professionnels et non professionnels.',
     franchise: 'Franchise — la part des frais de santé payée soi-même chaque année avant que la caisse ne paie.',
     selbstbehalt: 'Quote-part — votre part (souvent 10 %) des frais au-dessus de la franchise, jusqu’à un plafond annuel.',
+    beistandschaft: 'Curatelle (Beistandschaft) — une mesure de soutien ordonnée par l’autorité de protection de l’enfant et de l’adulte (APEA) lorsqu’une personne ne peut plus régler seule certaines affaires. Aussi légère que possible, graduée. Base : CC art. 390 ss.',
   },
   settingsDrawer: {
     accountTitle: 'Compte et données',
