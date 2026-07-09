@@ -21,6 +21,7 @@ export const GLOSSAR = {
   UVG: 'glossar.uvg',
   Franchise: 'glossar.franchise',
   Selbstbehalt: 'glossar.selbstbehalt',
+  Beistandschaft: 'glossar.beistandschaft',
 };
 
 export function GlossarBegriff({ term, t, palette }) {

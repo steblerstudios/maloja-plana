@@ -1465,10 +1465,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       );
       })(),
       React.createElement('button', {
+        onClick: () => onNavigate('ansprueche'),
+        style: {
+          display: 'block', marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
+          padding: 0, fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+        },
+      }, t('dashboard.anspruchAlleLink')),
+      React.createElement('button', {
         onClick: () => onNavigate('situationen'),
         style: {
-          marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
-          padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium,
+          display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
+          padding: 0, fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
         },
       }, t('lebenszustaende.dashboardLink'))
     ),
