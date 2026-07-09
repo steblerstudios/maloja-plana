@@ -98,6 +98,11 @@
   to   { transform: translateX(0); }
 }
 
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -167,8 +172,22 @@ textarea:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html { scroll-behavior: auto; }
+  /* !important, sonst überschreibt die spätere `html { scroll-behavior: smooth }`-
+     Regel (gleiche Spezifität, spätere Quelle) dies wieder — dann bliebe Smooth-
+     Scroll trotz OS-Einstellung „reduzierte Bewegung" aktiv. */
+  html { scroll-behavior: auto !important; }
 }
+
+/* In-App-Schalter „Reduzierte Bewegung" — spiegelt den OS-Block, damit Menschen
+   die Bewegung auch ohne System-Einstellung ruhigstellen können (Barrierefreiheit). */
+:root[data-reduce-motion="1"] *,
+:root[data-reduce-motion="1"] *::before,
+:root[data-reduce-motion="1"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+:root[data-reduce-motion="1"] { scroll-behavior: auto !important; }
 
 /* ─── Smooth scrolling ──────────────────────────────────── */
 html {
