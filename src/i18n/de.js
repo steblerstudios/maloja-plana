@@ -687,6 +687,7 @@ export default {
     grayscale: 'Schwarzweiss',
     colorBlind: 'Farbenblind-Modus',
     reduceMotion: 'Reduzierte Bewegung',
+    leftHand: 'Linkshänder-Modus',
     readable: 'Bessere Lesbarkeit',
     download: 'Herunterladen',
     upload: 'Hochladen',

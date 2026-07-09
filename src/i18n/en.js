@@ -687,6 +687,7 @@ export default {
     grayscale: 'Grayscale',
     colorBlind: 'Colour-blind mode',
     reduceMotion: 'Reduced motion',
+    leftHand: 'Left-handed mode',
     readable: 'Better readability',
     download: 'Download',
     upload: 'Upload',
