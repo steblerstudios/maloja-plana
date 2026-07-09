@@ -2276,6 +2276,15 @@ export default {
     action: "Avrir la carta d'urgenza",
   },
 
+  beistand: {
+    wegweiserTitle: { sie: 'Sche Vus na pudais ina giada betg pli decider sezs', du: 'Sche ti na pos ina giada betg pli decider sez' },
+    wegweiserBody: {
+      sie: 'Cun in mandat da prevenziun determinais Vus sez tgi che agescha per Vus, sche Vus daventais ina giada incapabels da giuditgar. Senza mandat examinescha en cas serius la KESB la situaziun ed ordinescha — sche necessari — ina Beistandschaft.',
+      du: 'Cun in mandat da prevenziun determineschas ti sez tgi che agescha per Tai, sche ti daventas ina giada incapabel da giuditgar. Senza mandat examinescha en cas serius la KESB la situaziun ed ordinescha — sche necessari — ina Beistandschaft.',
+    },
+    wegweiserLink: 'Protecziun da creschids simpel declerada (KOKES)',
+  },
+
   glossar: {
     ipv: 'IPV — reducziun individuala da premias: in agid chantunal a tia premia da la cassa da malsauns sche l’entrada è bassa avunda.',
     skos: 'SKOS — Conferenza svizra per l’agid social: fixescha las directivas per l’agid social.',
@@ -2288,6 +2297,7 @@ export default {
     uvg: 'LAA — assicuranza cunter accidents: cuvra ils custs d’accidents professiunals e betg professiunals.',
     franchise: 'Franchisa — la part dals custs da sanadad pajada sez mintga onn avant che la cassa da malsauns paja.',
     selbstbehalt: 'Quota da participaziun — la atgna part (per ordinari 10 %) dals custs sur la franchisa, fin in maximum annual.',
+    beistandschaft: 'Beistandschaft (assistenza) — ina mesira da sustegn ordinada da la KESB (autoritad da protecziun d’uffants e da creschids) sche insatgi na po betg pli reglar sez tschertas fatschentas. Uschè pauc sco necessari, graduà. Basa: ZGB art. 390 ss.',
   },
   settingsDrawer: {
     accountTitle: 'Conto & datas',

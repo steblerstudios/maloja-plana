@@ -886,6 +886,15 @@ export default {
     action: 'Notfallkarte öffnen',
   },
 
+  beistand: {
+    wegweiserTitle: { sie: 'Wenn Sie einmal nicht mehr selbst entscheiden können', du: 'Wenn Du einmal nicht mehr selbst entscheiden kannst' },
+    wegweiserBody: {
+      sie: 'Mit einem Vorsorgeauftrag bestimmen Sie selbst, wer für Sie handelt, falls Sie einmal urteilsunfähig werden. Ohne Vorsorgeauftrag prüft im Ernstfall die KESB die Lage und ordnet — wenn nötig — eine Beistandschaft an.',
+      du: 'Mit einem Vorsorgeauftrag bestimmst Du selbst, wer für Dich handelt, falls Du einmal urteilsunfähig wirst. Ohne Vorsorgeauftrag prüft im Ernstfall die KESB die Lage und ordnet — wenn nötig — eine Beistandschaft an.',
+    },
+    wegweiserLink: 'Erwachsenenschutz einfach erklärt (KOKES)',
+  },
+
   glossar: {
     ipv: 'IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an Ihre Krankenkassenprämie, wenn das Einkommen tief genug ist.',
     skos: 'SKOS — Schweizerische Konferenz für Sozialhilfe: legt die Richtlinien fest, wie viel Sozialhilfe zusteht.',
@@ -898,6 +907,7 @@ export default {
     uvg: 'UVG — Unfallversicherung: deckt die Kosten bei Berufs- und Freizeitunfällen.',
     franchise: 'Franchise — der Anteil der Gesundheitskosten pro Jahr, der selbst getragen wird, bevor die Krankenkasse zahlt.',
     selbstbehalt: 'Selbstbehalt — der Eigenanteil (meist 10 %) an den Kosten über der Franchise, bis zu einem jährlichen Höchstbetrag.',
+    beistandschaft: 'Beistandschaft — eine von der Kindes- und Erwachsenenschutzbehörde (KESB) angeordnete Unterstützung, wenn jemand bestimmte Angelegenheiten nicht mehr selbst regeln kann. So wenig wie nötig, abgestuft. Grundlage: ZGB Art. 390 ff.',
   },
   settingsDrawer: {
     accountTitle: 'Konto & Daten',
