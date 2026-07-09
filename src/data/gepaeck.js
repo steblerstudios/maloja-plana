@@ -62,3 +62,32 @@ export const wegeCount = (gegenstandKey) => {
   const g = GEGENSTAENDE.find((x) => x.key === gegenstandKey);
   return g ? g.wege.length : 0;
 };
+
+// ── Reife-Pünktchen: EHRLICH aus den erfassten Daten ────────────────────────
+// Kein erfundener Fortschritt: die Pünktchen zählen, wie viele echte Felder aus
+// dem passenden Lebensbereich schon ausgefüllt sind. Leer = noch nichts gepackt.
+// Ja/Nein-Felder zählen nur bei 'yes'; leere Strings, '0', 'no', 'none' gelten als
+// ungepackt. Absichtlich pro GEGENSTAND (dort liegen echte Daten), nicht pro Weg.
+const filled = (v) => {
+  if (v == null) return false;
+  if (Array.isArray(v)) return v.length > 0;
+  const s = String(v).trim().toLowerCase();
+  return s !== '' && s !== 'no' && s !== 'none' && s !== '0';
+};
+
+const CHECKS = {
+  wohnen: (d) => [d?.wohnen?.address, d?.wohnen?.city || d?.wohnen?.postalCode, d?.wohnen?.rentAmount, d?.basis?.canton],
+  arbeit: (d) => [d?.finanzen?.employer, d?.finanzen?.monthlyIncome, d?.finanzen?.employmentType, d?.ausbildung?.jobTitle],
+  familie: (d) => [d?.basis?.maritalStatus, d?.basis?.household?.children, d?.finanzen?.familienzulagen, d?.finanzen?.alimenteReceived || d?.finanzen?.alimentePaid],
+  gesundheit: (d) => [d?.versicherungen?.kkInsurer, d?.versicherungen?.franchise, d?.versicherungen?.kkPremium, d?.notfall?.doctor],
+  alter: (d) => [d?.versicherungen?.bvgInsurer, d?.finanzen?.pension3a, d?.versicherungen?.bvgBalance, d?.vorsorge?.ikAuszug],
+  abschied: (d) => [d?.behoerden?.willMade, d?.notfall?.patientenverfuegung, d?.notfall?.vorsorgeauftrag, d?.notfall?.organDonor],
+};
+
+// { done, total } — done = erfüllte echte Felder, total = geprüfte Felder.
+export const gegenstandReadiness = (gegenstandKey, data) => {
+  const fn = CHECKS[gegenstandKey];
+  if (!fn) return { done: 0, total: 0 };
+  const vals = fn(data || {});
+  return { done: vals.filter(filled).length, total: vals.length };
+};

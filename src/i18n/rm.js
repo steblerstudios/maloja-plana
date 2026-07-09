@@ -3736,6 +3736,7 @@ export default {
     pack: 'Remballer',
     wege: '{n} chemins',
     wegeOne: '1 chemin',
+    packed: '{done} sur {total} renseignés',
     legend: 'Chaque domaine un objet réel — trousseau de clés, sacoche de médecin, trousse à outils. Un chemin mène à son parcours guidé. À côté de l’arbre et du verger.',
     obj: { wohnen: 'Trousseau de clés', arbeit: 'Trousse à outils', familie: 'Boîte à souvenirs', gesundheit: 'Sacoche de médecin', alter: 'Gourde', abschied: 'Lettre scellée' },
     objSub: { wohnen: 'Arriver & habiter', arbeit: 'Travail & revenu', familie: 'Famille & relation', gesundheit: 'Santé & assurance', alter: 'Âge & prévoyance', abschied: 'Adieu' },
