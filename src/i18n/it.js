@@ -886,6 +886,35 @@ export default {
     action: 'Apri la scheda di emergenza',
   },
 
+  anspruch: {
+    pageTitle: 'Panoramica delle prestazioni',
+    intro: 'Molto spetta senza che lo si sappia. Ecco tutte le prestazioni possibili a colpo d’occhio — senza impegno, senza giudizio. Tocca una voce per saperne di più.',
+    gruppen: {
+      einkommen: { label: 'In base al reddito', desc: 'Dipende da quanto entra ogni mese.' },
+      lebenslage: { label: 'In base alla situazione', desc: 'Dipende dalla tua situazione personale.' },
+      ereignis: { label: 'In base a un evento', desc: 'Attivata da un evento della vita.' },
+    },
+    items: {
+      ipv: { label: 'Riduzione dei premi (RIP)', sub: 'Contributo cantonale al premio della cassa malati' },
+      sozialhilfe: { label: 'Aiuto sociale', sub: 'Quando il reddito non basta per vivere' },
+      el: { label: 'Prestazioni complementari (PC)', sub: 'Integrazione alla rendita AVS o AI' },
+      mietbeitraege: { label: 'Contributi all’affitto', sub: 'Aiuto cantonale alle spese abitative' },
+      stipendien: { label: 'Borse di studio', sub: 'Per formazione e studi' },
+      franchise: { label: 'Verificare la franchigia', sub: 'La franchigia è adatta alle spese mediche?' },
+      iv: { label: 'Prestazioni AI', sub: 'In caso di malattia duratura o disabilità' },
+      betreuungsgutschriften: { label: 'Accrediti per compiti assistenziali', sub: 'Per chi assiste i propri cari (AVS)' },
+      verguenstigungen: { label: 'Agevolazioni regionali', sub: 'CartaCultura, Reka ecc. — secondo il domicilio' },
+      serafe: { label: 'Esenzione SERAFE', sub: 'Nessun canone radio/TV con le PC' },
+      sbbBegleitabo: { label: 'Abbonamento accompagnatore FFS', sub: 'Accompagnatore gratuito nei trasporti pubblici' },
+      beistandschaft: { label: 'Mandato precauzionale e curatela', sub: 'Chi decide se non puoi più farlo tu' },
+      alv: { label: 'Indennità di disoccupazione (AD)', sub: 'Dopo la perdita dell’impiego' },
+      eo: { label: 'Indennità di perdita di guadagno (IPG)', sub: 'Servizio, maternità o assistenza' },
+      familienzulagen: { label: 'Assegni familiari', sub: 'Assegni per figli e di formazione' },
+      waisenrente: { label: 'Rendita per orfani', sub: 'Alla morte di un genitore' },
+    },
+    footNote: 'Questa panoramica non giudica e non promette nulla — mostra solo ciò che potrebbe riguardarti. Il diritto effettivo lo stabilisce l’organo competente.',
+  },
+
   beistand: {
     wegweiserTitle: 'Se un giorno non poteste più decidere da soli',
     wegweiserBody: 'Con un mandato precauzionale decidete voi stessi chi agirà per voi in caso di incapacità di discernimento. Senza mandato, l’autorità di protezione degli adulti esamina la situazione e dispone, se necessario, una curatela.',
@@ -1040,6 +1069,7 @@ export default {
     anspruchTitle: 'A cosa ho diritto?',
     anspruchIntro: 'Spesso si ha diritto a più di quanto si pensi. Una panoramica tranquilla — senza impegno né giudizio.',
     anspruchMoeglich: 'Diritto possibile',
+    anspruchAlleLink: '→ Tutte le prestazioni in panoramica',
     nextUpTitle: 'Qual è il prossimo passo?',
     nextUpAllDone: 'La tua base c’è — bene così.',
     glanceDeadline: 'Prossima scadenza',

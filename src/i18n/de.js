@@ -886,6 +886,35 @@ export default {
     action: 'Notfallkarte öffnen',
   },
 
+  anspruch: {
+    pageTitle: 'Ansprüche im Überblick',
+    intro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier alle möglichen Ansprüche auf einen Blick — unverbindlich, ohne Bewertung. Tippe einen an, um mehr zu erfahren.',
+    gruppen: {
+      einkommen: { label: 'Nach Einkommen', desc: 'Hängt davon ab, wie viel monatlich hereinkommt.' },
+      lebenslage: { label: 'Nach Lebenslage', desc: 'Hängt an deiner persönlichen Situation.' },
+      ereignis: { label: 'Nach Ereignis', desc: 'Wird durch ein Ereignis im Leben ausgelöst.' },
+    },
+    items: {
+      ipv: { label: 'Prämienverbilligung (IPV)', sub: 'Kantonaler Zuschuss an die Krankenkassenprämie' },
+      sozialhilfe: { label: 'Sozialhilfe', sub: 'Wenn das Einkommen zum Leben nicht reicht' },
+      el: { label: 'Ergänzungsleistungen (EL)', sub: 'Zusatz zur AHV- oder IV-Rente' },
+      mietbeitraege: { label: 'Mietbeiträge', sub: 'Kantonaler Zuschuss an die Wohnkosten' },
+      stipendien: { label: 'Stipendien', sub: 'Für Ausbildung, Studium und Weiterbildung' },
+      franchise: { label: 'Franchise prüfen', sub: 'Passt die Franchise zu den Arztkosten?' },
+      iv: { label: 'IV-Leistungen', sub: 'Bei längerer Krankheit oder Behinderung' },
+      betreuungsgutschriften: { label: 'Betreuungsgutschriften', sub: 'Für die Pflege von Angehörigen (AHV)' },
+      verguenstigungen: { label: 'Regionale Vergünstigungen', sub: 'KulturLegi, Reka u. a. — je nach Wohnort' },
+      serafe: { label: 'SERAFE-Befreiung', sub: 'Keine Radio-/TV-Abgabe bei EL-Bezug' },
+      sbbBegleitabo: { label: 'SBB-Begleitabo', sub: 'Begleitperson gratis im öffentlichen Verkehr' },
+      beistandschaft: { label: 'Vorsorgeauftrag & Beistandschaft', sub: 'Wer entscheidet, wenn du es nicht mehr kannst' },
+      alv: { label: 'Arbeitslosenentschädigung (ALV)', sub: 'Nach dem Verlust der Anstellung' },
+      eo: { label: 'Erwerbsersatz (EO)', sub: 'Bei Dienst, Mutterschaft oder Betreuung' },
+      familienzulagen: { label: 'Familienzulagen', sub: 'Kinder- und Ausbildungszulagen' },
+      waisenrente: { label: 'Waisenrente', sub: 'Beim Tod eines Elternteils' },
+    },
+    footNote: 'Diese Übersicht bewertet nichts und verspricht nichts — sie zeigt nur, was dich betreffen könnte. Ob wirklich ein Anspruch besteht, klärt die jeweilige Stelle.',
+  },
+
   beistand: {
     wegweiserTitle: { sie: 'Wenn Sie einmal nicht mehr selbst entscheiden können', du: 'Wenn Du einmal nicht mehr selbst entscheiden kannst' },
     wegweiserBody: {
@@ -1043,6 +1072,7 @@ export default {
     anspruchTitle: 'Was steht mir zu?',
     anspruchIntro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier ein ruhiger Überblick — unverbindlich, ohne Bewertung.',
     anspruchMoeglich: 'Anspruch möglich',
+    anspruchAlleLink: '→ Alle Ansprüche im Überblick',
     nextUpTitle: 'Was ist jetzt dran?',
     nextUpAllDone: 'Die Grundordnung steht — schön.',
     glanceDeadline: 'Nächste Frist',

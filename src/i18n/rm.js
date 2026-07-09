@@ -998,6 +998,7 @@ export default {
     anspruchTitle: 'A tge hai jau dretg?',
     anspruchIntro: 'Savens han ins dretg a dapli. Ina survista calma — senza obligaziun u giudizi.',
     anspruchMoeglich: 'Dretg pussaivel',
+    anspruchAlleLink: '→ Tuttas prestaziuns en survista',
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
     glanceDeadline: 'Proxim termin',
@@ -2274,6 +2275,35 @@ export default {
     title: "Preparar la carta d'urgenza",
     text: { sie: 'Ina persuna da contact e Vossa gruppa da sang bastan sco cumenzament.', du: 'Ina persuna da contact e Tia gruppa da sang bastan sco cumenzament.' },
     action: "Avrir la carta d'urgenza",
+  },
+
+  anspruch: {
+    pageTitle: 'Survista da las prestaziuns',
+    intro: 'Blers dretgs existan senza ch’ins al sa. Qua tut las prestaziuns pussaivlas cun in’egliada — senza obligaziun, senza giudicar. Tucca ina per savair dapli.',
+    gruppen: {
+      einkommen: { label: 'Tenor l’entrada', desc: 'Dependa da quant che vegn mensilmain.' },
+      lebenslage: { label: 'Tenor la situaziun', desc: 'Dependa da tia situaziun persunala.' },
+      ereignis: { label: 'Tenor in eveniment', desc: 'Vegn chaschunà d’in eveniment da la vita.' },
+    },
+    items: {
+      ipv: { label: 'Reducziun da premias (IPV)', sub: 'Contribuziun chantunala a la premia da la cassa da malsauns' },
+      sozialhilfe: { label: 'Agid social', sub: 'Sche l’entrada na basta betg per viver' },
+      el: { label: 'Prestaziuns cumplementaras (PC)', sub: 'Cumplement a la renta AVS u AI' },
+      mietbeitraege: { label: 'Contribuziuns da fittanza', sub: 'Agid chantunal als custs d’abitar' },
+      stipendien: { label: 'Stipendis', sub: 'Per furmaziun e studi' },
+      franchise: { label: 'Controllar la franchisa', sub: 'La franchisa correspunda als custs dal medi?' },
+      iv: { label: 'Prestaziuns AI', sub: 'En cas da malsauna duronta u impediment' },
+      betreuungsgutschriften: { label: 'Bunifikaziuns d’assistenza', sub: 'Per la tgira da confamigliars (AVS)' },
+      verguenstigungen: { label: 'Facilitaziuns regiunalas', sub: 'KulturLegi, Reka e.u. — tenor il domicil' },
+      serafe: { label: 'Deliberaziun SERAFE', sub: 'Nagina taxa radio/TV cun PC' },
+      sbbBegleitabo: { label: 'Abunament d’accumpagnament VFF', sub: 'Persuna d’accumpagnament gratuita en il traffic public' },
+      beistandschaft: { label: 'Mandat da prevenziun & Beistandschaft', sub: 'Tgi che decida sche ti na pos betg pli' },
+      alv: { label: 'Indemnisaziun da dischoccupaziun (ALV)', sub: 'Suenter la perdita da la plazza' },
+      eo: { label: 'Cumpensaziun da la perdita da gudogn (EO)', sub: 'Servetsch, maternitad u tgira' },
+      familienzulagen: { label: 'Supplements da famiglia', sub: 'Supplements per uffants e furmaziun' },
+      waisenrente: { label: 'Renta d’orfen', sub: 'Tar la mort d’in genitur' },
+    },
+    footNote: 'Questa survista na giudichescha nagut e na empermetta nagut — ella mussa mo tge che pudess pertutgar tai. Sch’i exista propi in dretg, quai decida la posiziun cumpetenta.',
   },
 
   beistand: {
