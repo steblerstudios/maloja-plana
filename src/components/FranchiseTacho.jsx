@@ -41,7 +41,6 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
       palette, value: st.needle, min: 0, max: st.scaleMax, zones, markers,
       needleColor: palette.text,
       endLabels: { left: fmt(0), right: fmt(st.scaleMax) },
-      ariaLabel: readout,
     }),
     h('div', {
       style: { display: 'flex', justifyContent: 'center', gap: space.md + 'px', flexWrap: 'wrap', margin: space.xs + 'px 0 ' + space.sm + 'px' },
