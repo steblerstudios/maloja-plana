@@ -72,7 +72,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       style: { fontSize: text.xs, color: palette.soft, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px 0' }
     }, txt);
 
-    const sectionHeader = (txt) => React.createElement('div', {
+    const sectionHeader = (txt) => React.createElement('h3', {
       style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', margin: space.md + 'px 0 ' + space.sm + 'px 0' }
     }, txt);
 

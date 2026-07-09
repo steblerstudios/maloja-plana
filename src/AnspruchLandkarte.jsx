@@ -68,8 +68,8 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
 
     ANSPRUCH_GRUPPEN.map((gruppe) =>
       React.createElement('div', { key: gruppe.key, style: { marginBottom: space.xl + 'px' } },
-        React.createElement('div', {
-          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', marginBottom: '2px' }
+        React.createElement('h3', {
+          style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, letterSpacing: '0.3px', margin: '0 0 2px 0' }
         }, t('anspruch.gruppen.' + gruppe.key + '.label')),
         React.createElement('p', {
           style: { fontSize: text.xs, color: palette.soft, margin: '0 0 ' + space.sm + 'px 0', lineHeight: leading.relaxed }
