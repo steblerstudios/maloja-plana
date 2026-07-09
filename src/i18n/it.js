@@ -3436,6 +3436,7 @@ export default {
     title: 'Il mio frutteto',
     intro: 'Ogni ambito della vita è un alberello. Matura man mano che compili — dalla piantina all\'albero pieno. Tocca per aprire l\'ambito.',
     link: 'Il mio frutteto',
+    ctaSub: 'Ogni ambito della vita come un alberello — accanto all\'albero qui sopra.',
     legend: 'Stadio di crescita invece della percentuale: piantina → cresce → dà frutti → pienamente maturo. I quattro alberi più giovani arrivano più tardi.',
     future: 'in arrivo',
     stage1: 'piantina',

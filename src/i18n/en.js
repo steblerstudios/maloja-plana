@@ -3458,6 +3458,7 @@ export default {
     title: 'My orchard',
     intro: 'Each area of life is its own little tree. It ripens the more you fill in — from seedling to full tree. Tap to open the area.',
     link: 'My orchard',
+    ctaSub: 'Every area of life as its own little tree — alongside the tree above.',
     legend: 'Growth stage instead of percent: seedling → growing → bearing fruit → fully ripe. The four youngest trees come later.',
     future: 'coming later',
     stage1: 'seedling',
