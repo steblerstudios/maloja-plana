@@ -38,13 +38,13 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 ## 3 · Schnellchecks & versteckte Berechtigungen
 
 - 🔨 **Schnellchecks als Instrumente** — heute IPV/Sozialhilfe/EL nüchtern; Vision: Tacho/Schutzschild/Tankanzeige/Kompass/Pulsmesser. ← *aktuell in Design-Phase*.
-- 🌱 **Alle Berechtigungen als Schnellcheck** (nicht nur die drei), Flat/Tacho-Viz, max. crosslinked.
-- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka gebaut; offen: Volkszahnklinik/Familienpass/GGG/Volkshochschule breiter, kanton-aware.
+- ✅ **Alle Berechtigungen als Schnellcheck** — Anspruchs-Landkarte (`#/ansprueche`, 16 Einträge nach Auslöser Einkommen/Lebenslage/Ereignis) + geführter Anspruch-Check (`#/anspruchcheck`, 3 Schritte: Zahlen → Lagen → vereintes Ergebnis), max. crosslinked (Session #37).
+- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka + **kanton-aware Regionalangebote** gebaut (BS/BL Familienpass/Volkszahnklinik/VHS via `regionaleVerguenstigungen.js`, PLZ→Kanton); offen: GGG breiter, weitere Kantone kuratieren.
 - 🌱 **Kanton-aware Berechtigungs-Landkarte mit Lücken-Kommunikation** — pro Kanton „was möglich ist UND was fehlt"; Lücken = Petitions-Material.
 - 🌱 **Versteckte behördliche Befreiungen systematisch** — SERAFE↔EL, ÖV/Kultur-Vergünstigungen, Gerichts-/Verfahrenskosten, kant. Gebührenbefreiungen aufdecken.
 - 🌱 **AHV-Beitragsjahre transparent** — Jugendjahre, was Studierende tun (Mindestbeitrag → Lücken vermeiden). Teils via IK-Auszug.
-- 🌱 **SBB-Begleitkarte** (körperlich bis Autismus — wo abklären/beantragen) · **Behinderungs-/Beeinträchtigungs-Bereich** (fehlt als eigener Bereich).
-- 🌱 **IV / Beistand / Waisen — Themencluster** (was bekommt man, was separat beantragen; KESB-Betreute; Waisenrente+EL).
+- 🔨 **SBB-Begleitabo** (SwissPass, auf jede bleibende Beeinträchtigung inkl. Autismus verbreitert — Session #36) · 🌱 **Behinderungs-/Beeinträchtigungs-Bereich** (fehlt als eigener Bereich).
+- ✅ **IV / Beistand / Waisen — Themencluster** — IV (IvVerfahren) + Waisenrente (Todesfall/`halbwaise`) gebaut; **Beistandschaft/Erwachsenenschutz** als Glossar-Begriff + Vorsorgeauftrag-Wegweiser (KOKES) ergänzt (Session #37).
 
 ## 4 · Atmosphäre, Motion & Schweizer DNA (subtil, nie kitschig)
 
