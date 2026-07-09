@@ -22,11 +22,11 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
     st.mode === 'orientation' ? t('po.tachoOrientation')
     : st.mode === 'below' ? t('po.tachoReadoutBelow', { costs: num(st.costs), be: num(st.breakEven), high: num(st.high) })
     : t('po.tachoReadoutAbove', { costs: num(st.costs), be: num(st.breakEven), low: num(st.low) });
-  const readoutColor = st.mode === 'below' ? palette.sage : st.mode === 'above' ? palette.sand : palette.mid;
+  const readoutColor = st.mode === 'below' ? palette.sage : st.mode === 'above' ? palette.sandDeep : palette.mid;
 
   const zones = [
     { from: 0, to: st.breakEven, color: palette.sage, opacity: 0.85 },
-    { from: st.breakEven, to: st.scaleMax, color: palette.sand, opacity: 0.85 },
+    { from: st.breakEven, to: st.scaleMax, color: palette.sandDeep, opacity: 0.85 },
   ];
   const markers = [{ value: st.breakEven, label: t('po.tachoBreakeven'), color: palette.mid }];
 
@@ -47,12 +47,12 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
       style: { display: 'flex', justifyContent: 'center', gap: space.md + 'px', flexWrap: 'wrap', margin: space.xs + 'px 0 ' + space.sm + 'px' },
     },
       swatch(palette.sage, t('po.tachoLegendHigh')),
-      swatch(palette.sand, t('po.tachoLegendLow'))
+      swatch(palette.sandDeep, t('po.tachoLegendLow'))
     ),
     h('div', { style: { fontSize: text.sm, color: readoutColor, lineHeight: leading.normal, textAlign: 'center' } }, readout),
     st.mode === 'orientation' && onNavigate && h('button', {
       onClick: () => onNavigate('kvg', null, 'franchise'),
-      style: { display: 'block', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+      style: { display: 'block', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
     }, '→ ' + t('po.tachoTrackLink'))
   );
 };
