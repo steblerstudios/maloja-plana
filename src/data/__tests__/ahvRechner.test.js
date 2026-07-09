@@ -198,6 +198,23 @@ describe('ahvRechner', () => {
       const mit = berechneBVGGuthaben({ alter: 40, jahresbruttolohn: 80000, aktuellesGuthaben: 100000 });
       expect(mit.guthaben).toBeGreaterThan(ohne.guthaben + 100000); // wegen Zinseszins
     });
+
+    it('nutzt den PK-eigenen Umwandlungssatz, wenn plausibel angegeben', () => {
+      const base = { alter: 40, jahresbruttolohn: 80000, aktuellesGuthaben: 200000 };
+      const min = berechneBVGGuthaben(base);
+      const eigen = berechneBVGGuthaben({ ...base, umwandlungssatz: 5.2 });
+      expect(eigen.umwandlungssatz).toBe(5.2);
+      expect(eigen.jahresrente).toBe(Math.round(eigen.guthaben * 5.2 / 100));
+      // Tieferer Satz → tiefere Rente bei gleichem Guthaben.
+      expect(eigen.monatsrente).toBeLessThan(min.monatsrente);
+    });
+
+    it('fällt bei unplausiblem Umwandlungssatz ruhig auf den Mindestsatz zurück', () => {
+      const base = { alter: 40, jahresbruttolohn: 80000, aktuellesGuthaben: 200000 };
+      expect(berechneBVGGuthaben({ ...base, umwandlungssatz: 0 }).umwandlungssatz).toBe(6.8);
+      expect(berechneBVGGuthaben({ ...base, umwandlungssatz: 42 }).umwandlungssatz).toBe(6.8);
+      expect(berechneBVGGuthaben({ ...base, umwandlungssatz: NaN }).umwandlungssatz).toBe(6.8);
+    });
   });
 
   describe('BVG_PARAMS', () => {
