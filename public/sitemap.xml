@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://malojaplana.ch/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <loc>https://malojaplana.ch/?lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/?lang=fr</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/?lang=it</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/?lang=rm</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

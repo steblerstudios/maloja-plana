@@ -11,6 +11,16 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.20-beta] — 2026-07-09
+
+### Geändert
+- Der Einstieg in den Lebens-Obstgarten ist auf dem Dashboard jetzt eine sichtbare Einladung statt eines leisen Links.
+- Auffindbarkeit: Kopf-Metadaten je Sprache dynamisch, `canonical`/`hreflang` stimmig, Sitemap aktualisiert.
+- Hinweis zum SBB-Begleitabo präzisiert (Text und Link).
+
+### Behoben
+- Barrierefreiheit: die letzten ungelabelten Formularfelder sind jetzt korrekt mit ihrem Label gekoppelt.
+
 ## [0.1.19-beta] — 2026-07-09
 
 ### Geändert
