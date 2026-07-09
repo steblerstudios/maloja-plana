@@ -37,7 +37,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
 
   const row = (p) => h('div', {
     key: p.key,
-    style: { display: 'flex', alignItems: 'center', gap: '8px', fontSize: text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
+    style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
   },
     h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', textAlign: 'center' } }, p.covered ? '✓' : '○'),
     h('span', null, t('schutzschild.' + p.key)),
@@ -50,7 +50,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
       ? t('schutzschild.allCovered')
       : t('schutzschild.someOpen', { list: group.gaps.map(k => t('schutzschild.' + k)).join(', ') }));
     return h('div', { style: { flex: '1 1 220px', minWidth: '200px' } },
-      h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: '2px' } }, t('schutzschild.' + titleKey)),
+      h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, textAlign: 'center', marginBottom: space['2xs'] + 'px' } }, t('schutzschild.' + titleKey)),
       note && h('div', { style: { fontSize: text.xs, color: palette.mid, textAlign: 'center', marginBottom: space.sm + 'px', lineHeight: leading.normal } }, note),
       shieldSvg(palette, group, clipId, label),
       h('div', { style: { maxWidth: '260px', margin: space.sm + 'px auto 0' } }, group.items.map(row))
