@@ -35,7 +35,6 @@ export const ReserveTank = ({ palette, t, savings, monthlyExpenses }) => {
       palette, value: st.needle, min: 0, max: st.fullMonths, zones, markers,
       needleColor: palette.text,
       endLabels: { left: t('finanzUebersicht.tankEmpty'), right: t('finanzUebersicht.tankFull') },
-      ariaLabel: readout,
     }),
     h('div', { style: { fontSize: text.sm, color: readoutColor, lineHeight: leading.normal, textAlign: 'center', marginTop: space.sm + 'px' } }, readout)
   );

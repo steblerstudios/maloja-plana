@@ -37,10 +37,12 @@ export const LeistungsKompass = ({ palette, t, benefitCount = 0, topLabel, hasIn
     });
   };
 
+  // Grafik dekorativ (aria-hidden) — die Peilung steht als sichtbarer Text
+  // direkt darunter und ist die a11y-Quelle (kein Doppel-Vorlesen).
   const rose = h('svg', {
     viewBox: '0 0 200 210', width: '100%',
     style: { maxWidth: '220px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
-    role: 'img', 'aria-label': caption,
+    'aria-hidden': true,
   },
     h('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: palette.border, strokeWidth: 2 }),
     [0, 45, 90, 135, 180, 225, 270, 315].map(d => tick(d, d % 90 === 0 ? 12 : 7)),
