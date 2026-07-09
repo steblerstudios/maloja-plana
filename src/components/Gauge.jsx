@@ -14,7 +14,9 @@ import { weight } from '../config/tokens.js';
 //   markers: [{value,label?,color?}]   — Marken mit optionaler Beschriftung
 //   endLabels: {left,right}            — kleine Beschriftung unter den Enden
 //   needleColor            — Farbe des Zeigers (Default palette.text)
-//   ariaLabel              — Screenreader-Satz (role="img")
+// Die Grafik selbst ist aria-hidden (dekorativ) — die Ablesung steht als
+// sichtbarer Text direkt darunter beim Consumer und ist die a11y-Quelle
+// (sonst läse der Screenreader dieselbe Aussage zweimal).
 const CX = 110, CY = 106, R = 86, W = 220, H = 122;
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
@@ -34,7 +36,7 @@ function arcPath(f1, f2, rr) {
   return 'M ' + x1.toFixed(2) + ' ' + y1.toFixed(2) + ' A ' + rr + ' ' + rr + ' 0 0 1 ' + x2.toFixed(2) + ' ' + y2.toFixed(2);
 }
 
-export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers = [], endLabels, needleColor, ariaLabel }) => {
+export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers = [], endLabels, needleColor }) => {
   const h = React.createElement;
   const frac = (v) => gaugeFrac(v, min, max);
   const nColor = needleColor || palette.text;
@@ -73,7 +75,7 @@ export const Gauge = ({ palette, value, min = 0, max = 100, zones = [], markers 
   return h('svg', {
     viewBox: '0 0 ' + W + ' ' + H, width: '100%',
     style: { maxWidth: '280px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
-    role: 'img', 'aria-label': ariaLabel || '',
+    'aria-hidden': true,
   }, els);
 };
 

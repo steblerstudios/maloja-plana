@@ -22,10 +22,10 @@ export const ReserveTank = ({ palette, t, savings, monthlyExpenses }) => {
   const readoutColor =
     st.mode === 'noexpenses' ? palette.mid
     : (st.level === 'strong' || st.level === 'ok') ? palette.sage
-    : palette.sand;
+    : palette.sandDeep;
 
   const zones = [
-    { from: 0, to: st.recommendMonths, color: palette.sand, opacity: 0.85 },
+    { from: 0, to: st.recommendMonths, color: palette.sandDeep, opacity: 0.85 },
     { from: st.recommendMonths, to: st.fullMonths, color: palette.sage, opacity: 0.85 },
   ];
   const markers = [{ value: st.recommendMonths, label: t('finanzUebersicht.tankMark'), color: palette.mid }];
@@ -35,7 +35,6 @@ export const ReserveTank = ({ palette, t, savings, monthlyExpenses }) => {
       palette, value: st.needle, min: 0, max: st.fullMonths, zones, markers,
       needleColor: palette.text,
       endLabels: { left: t('finanzUebersicht.tankEmpty'), right: t('finanzUebersicht.tankFull') },
-      ariaLabel: readout,
     }),
     h('div', { style: { fontSize: text.sm, color: readoutColor, lineHeight: leading.normal, textAlign: 'center', marginTop: space.sm + 'px' } }, readout)
   );

@@ -7,6 +7,9 @@ export const DARK_PALETTE = {
   border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
+  // Legible-Varianten von sand/sky für Vordergrund (Text + bedeutungstragende Graphik):
+  // im Dunkeln bestehen sand/sky bereits (5.87 / 4.30 auf surface), daher unverändert.
+  sandDeep: '#C4A06A', skyDeep: '#6E90B0',
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
@@ -15,6 +18,9 @@ export const LIGHT_PALETTE = {
   border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#727680',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
+  // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
+  // sky (3.20:1) sind auf surface zu hell für Text — sandDeep 4.64:1 / skyDeep 5.42:1.
+  sandDeep: '#8A6D3B', skyDeep: '#4A6A88',
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 
