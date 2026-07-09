@@ -39,6 +39,14 @@ export const DIREKTLINKS = [
     antragsstelle: { de: 'Kantonale AHV-Zweigstelle', en: 'Cantonal OASI branch', fr: 'Agence cantonale AVS' },
   },
   {
+    id: 'prosenectute',
+    kategorie: 'vorsorge',
+    name: { de: 'Pro Senectute', en: 'Pro Senectute', fr: 'Pro Senectute' },
+    beschreibung: { de: 'Kostenlose Sozialberatung und finanzielle Unterstützung im AHV-Alter', en: 'Free social counselling and financial support in retirement age', fr: 'Conseil social gratuit et soutien financier à l’âge AVS' },
+    url: 'https://www.prosenectute.ch/',
+    antragsstelle: { de: 'Pro Senectute (kantonale Beratungsstelle)', en: 'Pro Senectute (cantonal advice centre)', fr: 'Pro Senectute (antenne cantonale)' },
+  },
+  {
     id: 'arbeitslosigkeit',
     kategorie: 'arbeit',
     name: { de: 'Arbeitslosengeld', en: 'Unemployment benefits', fr: 'Indemnités de chômage' },

@@ -880,7 +880,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
     activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
 
-    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen'] }),
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
 
     React.createElement('div', { style: s.source },
       renderSource(t('vr.source'))

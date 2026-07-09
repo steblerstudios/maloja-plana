@@ -19,6 +19,7 @@ export default {
         zhAktionen: { titel: 'Biglietti gratuiti & azioni (Zurigo)', text: 'Azioni concrete nel Cantone di Zurigo con la CartaCultura — p. es. buoni per libri e giochi, computer per la partecipazione digitale.' },
         vhszh: { titel: 'Università popolare di Zurigo', text: 'Con la CartaCultura, 50% di sconto sui corsi-conferenza e 20% sugli altri corsi.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass vacanze estive per bambini (6–16); metà prezzo con la CartaCultura (CHF 18.50 invece di 37).' },
+        gggWegweiser: { titel: 'GGG Wegweiser Basilea', text: 'Orientamento e consulenza gratuiti su questioni sociali — anche aiuto nella compilazione di moduli e consulenza per la terza età.' },
       },
     },
     moreInfo: 'Saperne di più',
