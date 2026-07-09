@@ -11,6 +11,21 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.24-beta] — 2026-07-10
+
+### Neu
+- **Mein Gepäck — mehr Wege**: In die Ausrüstungsgegenstände sind fünf weitere Lebenswege eingezogen (Mietzins prüfen, Ausbildung & Stipendien, Krankenkasse zum ersten Mal, Invalidität, Organspende).
+- **Vorsorge, Zukunft-Reiter — Rücktrittsalter live**: Beim Ziehen der Marke erscheinen sofort das Alter und die daraus folgende Monatsrente; die wichtigen Alter (63/64/65/70) rasten sanft ein.
+- **Zwei ruhige Übersichten im Alter**: „Was im Alter auf dich zukommt" (die typischen Kostenposten) und „Was dich im Alter entlastet" (oft übersehene Vergünstigungen, mit Weg zum Leistungs-Schnellcheck) — beide ehrlich ohne erfundene Beträge.
+
+### Barrierefreiheit
+- **Reduzierte Bewegung**: neuer Schalter im Barrierefreiheit-Menü, der alle Animationen ruhigstellt — auch ohne System-Einstellung.
+- **Linkshänder-Modus** (Handy): Menü- und Einstellungs-Schubladen sowie der Boden-Anker spiegeln sich für die Einhand-Bedienung mit der linken Hand.
+- **Besserer Kontrast**: Link- und Fehlertexte im Hellmodus lesen sich jetzt klar (WCAG AA); Formularfehler werden Screenreadern angesagt.
+
+### Behoben
+- Die Einstellung „reduzierte Bewegung" stellt den weichen Seitenlauf (Smooth-Scroll) jetzt wirklich ab.
+
 ## [0.1.23-beta] — 2026-07-09
 
 ### Neu
