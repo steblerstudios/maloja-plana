@@ -27,7 +27,7 @@ export const EOrechner = ({ palette, t, data }) => {
     td: { padding: space.sm, borderBottom: '1px solid ' + palette.border },
     big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sage },
     tag: { display: 'inline-block', padding: '2px 8px', borderRadius: '4px', fontSize: text.xs, background: palette.sage + '22', color: palette.sage, marginLeft: space.xs + 'px' },
-    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.sky },
+    source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
   };
 
   const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
