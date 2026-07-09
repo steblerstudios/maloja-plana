@@ -1581,6 +1581,7 @@ export default {
   datenWirken: {
     title: { sie: 'Ihre Daten wirken bereits:', du: 'Deine Daten wirken bereits:' },
     treeCaption: { sie: 'Was aus Ihren Angaben wächst', du: 'Was aus Deinen Angaben wächst' },
+    anspruchAria: 'möglicher Anspruch',
     tax: 'Steuerrechner personalisiert',
     ipv: 'IPV-Prüfung aktiv',
     sozial: 'Sozialhilfe-Orientierung aktiv',
