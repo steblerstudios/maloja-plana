@@ -886,6 +886,35 @@ export default {
     action: 'Ouvrir la carte d\'urgence',
   },
 
+  anspruch: {
+    pageTitle: 'Aperçu des prestations',
+    intro: 'Beaucoup de choses vous reviennent sans qu’on le sache. Voici toutes les prestations possibles en un coup d’œil — sans engagement, sans jugement. Touchez-en une pour en savoir plus.',
+    gruppen: {
+      einkommen: { label: 'Selon le revenu', desc: 'Dépend de ce qui rentre chaque mois.' },
+      lebenslage: { label: 'Selon la situation', desc: 'Dépend de votre situation personnelle.' },
+      ereignis: { label: 'Selon un événement', desc: 'Déclenché par un événement de la vie.' },
+    },
+    items: {
+      ipv: { label: 'Réduction de primes (RIP)', sub: 'Contribution cantonale à la prime d’assurance-maladie' },
+      sozialhilfe: { label: 'Aide sociale', sub: 'Quand le revenu ne suffit pas à vivre' },
+      el: { label: 'Prestations complémentaires (PC)', sub: 'Complément à la rente AVS ou AI' },
+      mietbeitraege: { label: 'Contributions au loyer', sub: 'Aide cantonale aux frais de logement' },
+      stipendien: { label: 'Bourses d’études', sub: 'Pour la formation et les études' },
+      franchise: { label: 'Vérifier la franchise', sub: 'La franchise correspond-elle aux frais médicaux ?' },
+      iv: { label: 'Prestations AI', sub: 'En cas de maladie durable ou de handicap' },
+      betreuungsgutschriften: { label: 'Bonifications pour tâches d’assistance', sub: 'Pour les proches aidants (AVS)' },
+      verguenstigungen: { label: 'Réductions régionales', sub: 'CarteCulture, Reka, etc. — selon le domicile' },
+      serafe: { label: 'Exemption SERAFE', sub: 'Pas de redevance radio/TV avec des PC' },
+      sbbBegleitabo: { label: 'AG accompagnant CFF', sub: 'Accompagnant·e gratuit·e dans les transports publics' },
+      beistandschaft: { label: 'Mandat pour cause d’inaptitude & curatelle', sub: 'Qui décide si vous ne le pouvez plus' },
+      alv: { label: 'Indemnités de chômage (AC)', sub: 'Après la perte de l’emploi' },
+      eo: { label: 'Allocations pour perte de gain (APG)', sub: 'Service, maternité ou proche aidant' },
+      familienzulagen: { label: 'Allocations familiales', sub: 'Allocations pour enfant et de formation' },
+      waisenrente: { label: 'Rente d’orphelin', sub: 'Au décès d’un parent' },
+    },
+    footNote: 'Cet aperçu ne juge rien et ne promet rien — il montre seulement ce qui pourrait vous concerner. C’est l’organe compétent qui établit le droit réel.',
+  },
+
   beistand: {
     wegweiserTitle: 'Si un jour vous ne pouvez plus décider vous-même',
     wegweiserBody: 'Avec un mandat pour cause d’inaptitude, vous désignez vous-même qui agira pour vous en cas d’incapacité de discernement. Sans mandat, l’autorité de protection de l’adulte (APEA) examine la situation et ordonne, si nécessaire, une curatelle.',
@@ -1040,6 +1069,7 @@ export default {
     anspruchTitle: 'À quoi ai-je droit ?',
     anspruchIntro: 'Bien des prestations existent sans que vous le sachiez. Un aperçu tranquille — sans engagement ni jugement.',
     anspruchMoeglich: 'Droit possible',
+    anspruchAlleLink: '→ Toutes les prestations en aperçu',
     nextUpTitle: 'Quelle est la prochaine étape ?',
     nextUpAllDone: 'Votre base est en place — parfait.',
     glanceDeadline: 'Prochain délai',
