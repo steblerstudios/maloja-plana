@@ -548,6 +548,11 @@ export default {
     step4Text: 'Sche l’AVS e la cassa da pensiun na bastan betg per viver, has ti eventualmain dretg a prestaziuns cumplementaras (PC). Quai n’è betg ina elemosina, mabain in dretg legal — verifitgescha el senza temma. En vegliadetgna da l’AVS s’agiunta savens dapli: reducziun da premias (RIP), exempziun SERAFE cun las PC, indemnisaziun d’impotenza — il stadi da vita «pensiunà» als rimna en in lieu calm.',
     step4Link: 'Verifitgar il dretg',
     step4LinkSituation: 'Guardar la situaziun «pensiunà»',
+    step5Title: '5 · Sche pli tard è basegn da cura',
+    step5Text: 'Intgins custs vegnan pir en la vegliadetgna: cura a chasa (Spitex) u en in dom da cura. La cassa da malsauns surpiglia la cura sezza — assistenza ed abitar (en il dom l’abitaziun ed il mangiar) pajas ti sez. Sche la renta ed il patrimoni na bastan betg, intervegnan las prestaziuns cumplementaras. Sche ti has regularmain basegn d’agid en il mintgadi, dat i l’indemnisaziun per impotents da l’AVS, independentamain da l’entrada. Tar meds auxiliars sco apparats d’udida sa participescha l’AVS. Pro Senectute ta cussegliescha gratuitamain.',
+    step5Link: 'Guardar prestaziuns cumplementaras & cussegliaziun',
+    step5LinkSituation: 'Pensiunà / en la vegliadetgna AVS: a tge ti has dretg',
+    step5LinkProSenectute: 'Pro Senectute — cussegliaziun gratuita en la vegliadetgna',
     footerEarly: 'In pensiunament anticipà reducescha l’AVS e savens la renta da la cassa da pensiun per la vita. Quenta baud tge ch’è purtabel — e dumonda in quen uffizial tar tia cassa da cumpensaziun.',
   },
   kkErst: {
