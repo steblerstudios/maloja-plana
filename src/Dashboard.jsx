@@ -4,6 +4,7 @@ import FruchtMitIcon from './FruchtMitIcon.jsx';
 import FruchtStufe from './FruchtStufe.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
+import { anspruchSignale } from './data/anspruchSignale.js';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
@@ -438,6 +439,10 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
     lohn: 'finanzuebersicht', notfall: 'notfalleinstieg', budget: 'sync',
   };
+  // Anspruch-Signale (#4.4 „Schnellcheck wächst als Ast", Variante A): welche
+  // Bereichs-Frucht einen gedeckten Anspruch trägt → ruhiger Ring um die Frucht.
+  // Nur ehrlich berechenbare Ansprüche (IPV/Sozialhilfe/EL), Ast-genau zugeordnet.
+  const signale = anspruchSignale(data);
   // Ein Baum statt zwei (Braindump #21): jedes Werkzeug hängt als kleinere Frucht
   // am selben Bereichs-Ast wie sein Lebensbereich — die Geld-Werkzeuge an der
   // Finanzen-Aprikose, die Prämienverbilligung an der Versicherungen-Heidelbeere,
@@ -548,10 +553,14 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
         ...bereiche.map((b, i) => {
           const a = anchor(i);
           const areaTools = toolsByArea[b.key] || [];
+          // Anspruch-Signal (Variante A): trägt dieser Ast einen gedeckten Anspruch,
+          // bekommt die Frucht einen ruhigen Doppel-Ring — „hier ist etwas reif für dich".
+          const hasAnspruch = (signale[b.key] || []).length > 0;
+          const fs = isMobile ? 42 : 50;
           return React.createElement('div', { key: b.key, style: { display: 'contents' } },
             React.createElement('button', {
               onClick: onSelectChapter ? () => onSelectChapter(b.idx) : undefined,
-              'aria-label': b.title + ' — ' + b.pct + '%',
+              'aria-label': b.title + ' — ' + b.pct + '%' + (hasAnspruch ? ' · ' + t('datenWirken.anspruchAria') : ''),
               title: b.title,
               style: {
                 position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
@@ -564,8 +573,10 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
               },
             },
               // Reife-Stufe statt reiner Deckkraft: Knospe → Blüte → junge → reife Frucht.
-              React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
-                React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: isMobile ? 42 : 50 })
+              React.createElement('span', { style: { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: (isMobile ? 44 : 52) + 'px' } },
+                hasAnspruch ? React.createElement('span', { key: 'ring-o', 'aria-hidden': true, style: { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: (fs + 24) + 'px', height: (fs + 24) + 'px', borderRadius: '50%', border: '1.5px solid ' + b.color, opacity: 0.22, pointerEvents: 'none' } }) : null,
+                hasAnspruch ? React.createElement('span', { key: 'ring-i', 'aria-hidden': true, style: { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: (fs + 14) + 'px', height: (fs + 14) + 'px', borderRadius: '50%', border: '2px solid ' + b.color, opacity: 0.5, pointerEvents: 'none' } }) : null,
+                React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: fs })
               ),
               React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
             ),
