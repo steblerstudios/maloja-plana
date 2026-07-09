@@ -19,6 +19,7 @@ export default {
         zhAktionen: { titel: 'Free tickets & actions (Zürich)', text: 'Concrete give-away actions in Canton Zürich with the KulturLegi — e.g. book and games vouchers, computers for digital participation.' },
         vhszh: { titel: 'Volkshochschule Zürich (adult education)', text: 'With the KulturLegi, 50% off lecture courses and 20% off other courses.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Summer holiday pass for children (6–16); half price with the KulturLegi (CHF 18.50 instead of 37).' },
+        gggWegweiser: { titel: 'GGG Wegweiser Basel', text: 'Free orientation and advice on social matters — including help filling in forms and counselling in old age.' },
       },
     },
     moreInfo: 'Learn more',

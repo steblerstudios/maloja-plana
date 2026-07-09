@@ -78,6 +78,7 @@ const REGIONS = {
       { key: 'familienpass',    url: 'https://www.familienpass.ch/' },
       { key: 'volkszahnklinik', url: 'https://www.sozialesbasel.ch/angebote/volkszahnklinik' },
       { key: 'vhsbb',           url: 'https://www.vhsbb.ch/kursprogramm/ermaessigung-275732' },
+      { key: 'gggWegweiser',    url: 'https://ggg-wegweiser.ch/' },
     ],
   },
   BL: {
