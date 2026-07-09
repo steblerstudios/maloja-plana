@@ -4,6 +4,7 @@ import { reserveTankState } from '../data/reserveTank.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
+import { shieldPath } from './shieldShape.js';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
@@ -49,10 +50,11 @@ const miniCompass = (palette, bearing, state) => {
   );
 };
 
-const SHIELD = 'M18 3 L31 8.5 L31 20 Q31 30 18 38 Q5 30 5 20 L5 8.5 Z';
+const MINI_TOP = 3, MINI_BOTTOM = 38;
+const SHIELD = shieldPath(18, MINI_TOP, 26, MINI_BOTTOM - MINI_TOP);
 const miniShield = (palette, fraction) => {
   const h = React.createElement;
-  const top = 3, bottom = 38;
+  const top = MINI_TOP, bottom = MINI_BOTTOM;
   const fh = fraction * (bottom - top);
   return h('svg', { viewBox: '0 0 36 42', width: 36, height: 42, 'aria-hidden': true },
     h('defs', null, h('clipPath', { id: 'mini-shield-clip' }, h('path', { d: SHIELD }))),

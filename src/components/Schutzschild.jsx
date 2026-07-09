@@ -1,13 +1,14 @@
 import React from 'react';
 import { schildState } from '../data/schutzschild.js';
+import { shieldPath } from './shieldShape.js';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
 
 // Versicherungs-Schutzschild: zwei Wappen nebeneinander — „Pflicht" (gesetzlich)
 // und „Empfohlen" (freiwillig). Jedes füllt sich nach seinem Deckungsgrad, mit
 // ✓/○-Liste (a11y: Zeichen + Wort, nicht nur Farbe). Ruhig: eine offene
 // Absicherung ist ein Hinweis, kein Alarm — kein ✕, kein Rot.
-const SHIELD = 'M80 12 L134 34 L134 78 Q134 118 80 148 Q26 118 26 78 L26 34 Z';
 const TOP = 12, BOTTOM = 148;
+const SHIELD = shieldPath(80, TOP, 108, BOTTOM - TOP);
 
 const shieldSvg = (palette, group, clipId, label) => {
   const h = React.createElement;
