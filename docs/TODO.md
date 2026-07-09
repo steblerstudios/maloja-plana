@@ -410,6 +410,13 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
 
 - ✅ **SchuldenManager** (`3fc0fb5`) — 8 Listen-Inputs aria-label + fehlende i18n-Keys (debtor/court/registerDate/date, 5 Spr.) nachgezogen (behob auch Platzhalter-Bug „schulden.debtor").
 - ✅ **Pattern A — 13 Felder in 9 Formularen** (`a148817`) — placeholder-only/unbeschriftete Inputs bekamen aria-label (Backup-Passphrasen, Beta-Code, Kalender-Titel, Doku-Suche, Franchise/Kanton-Select, EO-Einkommen, PLZ, mobile Suche, Dashboard-QuickCheck/Feedback).
-- 🟠 **Pattern B — ~36 Felder: sichtbares Label ohne htmlFor/id-Kopplung.** Sehende ok, Screenreader ohne Feldnamen. Baustein **`src/components/LabeledField.jsx`** gebaut (useId-Kopplung, Vorschlag, noch NICHT migriert). Nächster Schritt: Label+Input-Paare gestaffelt umschliessen — mit Sophies Segen, idealerweise nach dem Formular-Umbau der Parallel-Session. Betroffen u.a. TaxCalculator, KVGLeistungen, CalendarReminders, JobManager/DoctorManager/MedicationManager (die haben schon aria-label, aber Kopplung wäre sauberer), VorsorgeRechner/ChapterView (Parallel-Session).
+- ✅ **Pattern B — ABGESCHLOSSEN (2026-07-09).** Baustein `LabeledField.jsx` (useId-Kopplung)
+  von TaxCalculator schon genutzt. Beim Durchzählen zeigte sich: der „~36-Felder-Sweep" ist
+  bewusst NICHT nötig — überall sonst sitzt bereits ein aria-label (Pattern A erledigt), dort wäre
+  echte Kopplung reine Kosmetik mit Regressionsrisiko (deckt sich mit dem „gezielt statt Sweep"-
+  Grundsatz). Übrig waren nur **3 Views mit echten Lücken** (weder aria-label noch Kopplung):
+  **KKScanner (6 Felder), OrganDonation (1), BudgetImport (1)** → auf `LabeledField` migriert
+  (Wrapper `marginBottom:0`, Optik 1:1). Browserverifiziert (alle 6 KKScanner-Labels via for/id),
+  592 Tests grün. Commit `5fe8851` (dev).
 - 🟡 **Rest Pattern A (finicky Key):** DocumentTresor Inline-Datum + Sortier-Select, Calendar-Notizen-Textarea — brauchen einen passenden i18n-Key (klein).
 - 🟡 **rm-Notfall-Icon:** `notfall.icon` ist `⚠` in de/fr/it/en, fehlt in rm (Icon-Feld, kein Copy — nur Parität, wenn gewünscht).
