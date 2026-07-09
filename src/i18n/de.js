@@ -2784,6 +2784,8 @@ export default {
   },
   calendar: {
     title: 'Kalender und Erinnerungen',
+    anspruchTitle: { sie: 'Möglicherweise für Sie da', du: 'Möglicherweise für Dich da' },
+    anspruchIntro: { sie: 'Aus Ihren Angaben — kein Muss, nur ein Hinweis, wo sich ein Blick lohnt.', du: 'Aus Deinen Angaben — kein Muss, nur ein Hinweis, wo sich ein Blick lohnt.' },
     exportIcs: 'Kalender exportieren (.ics)',
     locale: 'de-CH',
     calAria: 'Kalender-Übersicht',

@@ -2783,6 +2783,8 @@ export default {
   },
   calendar: {
     title: 'Calendario e promemoria',
+    anspruchTitle: { sie: 'Forse per Lei', du: 'Forse per te' },
+    anspruchIntro: { sie: 'Dai Suoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.', du: 'Dai tuoi dati — nessun obbligo, solo un suggerimento su dove vale la pena guardare.' },
     exportIcs: 'Esporta calendario (.ics)',
     locale: 'it-CH',
     calAria: 'Panoramica del calendario',

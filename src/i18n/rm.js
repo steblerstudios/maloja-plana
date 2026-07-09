@@ -3595,6 +3595,8 @@ export default {
   },
   calendar: {
     title: 'Chalender e commemoraziuns',
+    anspruchTitle: { sie: 'Eventualmain per Vus', du: 'Eventualmain per Tai' },
+    anspruchIntro: { sie: 'Da Vossas datas — nagin oblig, mo in indizi nua ch’i vala la paina da dar in’egliada.', du: 'Da Tes datas — nagin oblig, mo in indizi nua ch’i vala la paina da dar in’egliada.' },
     upcoming: 'Proxim',
     overdue: 'Scadì',
     completed: 'Fatg',

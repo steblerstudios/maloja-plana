@@ -2871,6 +2871,8 @@ export default {
   },
   calendar: {
     title: 'Calendar and reminders',
+    anspruchTitle: 'Possibly for you',
+    anspruchIntro: 'From your entries — no obligation, just a hint where it may be worth a look.',
     upcoming: 'Upcoming',
     overdue: 'Overdue',
     completed: 'Completed',
