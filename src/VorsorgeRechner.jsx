@@ -34,6 +34,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
   const [bvgGuthaben, setBvgGuthaben] = useState('');
+  // Umwandlungssatz der eigenen Pensionskasse (leer = BVG-Mindestsatz 6,8 %).
+  const [bvgUmwandlung, setBvgUmwandlung] = useState('');
   const [rendite, setRendite] = useState('1.5');
   const [saeule3bInput, setSaeule3bInput] = useState(data.finanzen?.pension3bBalance ? String(Math.round(Number(data.finanzen.pension3bBalance))) : '');
   const [saeule3aAnnualInput, setSaeule3aAnnualInput] = useState(data.finanzen?.pension3a ? String(Math.round(Number(data.finanzen.pension3a))) : '');
@@ -113,8 +115,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       jahresbruttolohn: parsedEinkommen,
       aktuellesGuthaben: Number(bvgGuthaben) || 0,
       austrittsalter: parsedBezugAlter,
+      umwandlungssatz: Number(bvgUmwandlung) || undefined,
     });
-  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter]);
+  }, [parsedEinkommen, alter, bvgGuthaben, parsedBezugAlter, bvgUmwandlung]);
 
   const projektion = useMemo(() => {
     if (!alter) return null;
@@ -441,8 +444,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
     // BVG Tab
     activeTab === 'bvg' && React.createElement(React.Fragment, null,
-      React.createElement('div', { style: s.section },
-        field(t('vr.bvgGuthaben'), bvgGuthaben, setBvgGuthaben, { placeholder: '0', sublabel: t('vr.bvgGuthabenHint') })
+      React.createElement('div', { style: { ...s.section, display: 'flex', gap: space.md, flexWrap: 'wrap' } },
+        field(t('vr.bvgGuthaben'), bvgGuthaben, setBvgGuthaben, { placeholder: '0', sublabel: t('vr.bvgGuthabenHint') }),
+        field(t('vr.umwandlungssatzEigen'), bvgUmwandlung, setBvgUmwandlung, { placeholder: '6.8', sublabel: t('vr.umwandlungssatzHint'), width: '110px', min: 1, max: 10 })
       ),
       bvgResult && bvgResult.versichert && React.createElement(React.Fragment, null,
         React.createElement('div', { style: s.highlight },
@@ -454,7 +458,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
         React.createElement('div', { style: s.section },
           React.createElement('div', null, t('vr.koordinierterLohn') + ': CHF ' + fmt(bvgResult.koordinierterLohn)),
-          React.createElement('div', null, t('vr.umwandlungssatz') + ': ' + bvgResult.umwandlungssatz + '%'),
+          React.createElement('div', null, t('vr.umwandlungssatz') + ': ' + bvgResult.umwandlungssatz + '% ' +
+            ((Number(bvgUmwandlung) >= 1 && Number(bvgUmwandlung) <= 10) ? t('vr.umwandlungssatzEigenMarker') : t('vr.umwandlungssatzMindest'))),
           React.createElement('div', null, t('vr.mindestzins') + ': ' + bvgResult.zinssatz + '%')
         )
       ),
@@ -875,7 +880,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
     activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
 
-    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen'] }),
+    React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
 
     React.createElement('div', { style: s.source },
       renderSource(t('vr.source'))

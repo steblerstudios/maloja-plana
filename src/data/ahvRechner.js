@@ -193,6 +193,10 @@ export function berechneBVGGuthaben({
   aktuellesGuthaben = 0,
   austrittsalter = 65,
   zinssatz = 1.25, // BVG-Mindestzins 2026
+  // BVG-Mindestumwandlungssatz 2026. Die eigene Pensionskasse rechnet oft mit
+  // einem abweichenden (im überobligatorischen Teil meist tieferen) Satz — darum
+  // überschreibbar. Unter 1 oder über 10 wäre unplausibel → auf 6.8 zurückfallen.
+  umwandlungssatz = 6.8,
 }) {
   const koord = bvgKoordinationsabzug(jahresbruttolohn);
   if (!koord.versichert) return { versichert: false, guthaben: 0 };
@@ -215,8 +219,9 @@ export function berechneBVGGuthaben({
     });
   }
 
-  const umwandlungssatz = 6.8; // BVG-Mindestumwandlungssatz 2026
-  const jahresrente = Math.round(guthaben * umwandlungssatz / 100);
+  // Plausibilitäts-Gate: unplausible Eingaben fallen ruhig auf den Mindestsatz zurück.
+  const uws = (Number(umwandlungssatz) >= 1 && Number(umwandlungssatz) <= 10) ? Number(umwandlungssatz) : 6.8;
+  const jahresrente = Math.round(guthaben * uws / 100);
 
   return {
     versichert: true,
@@ -224,7 +229,7 @@ export function berechneBVGGuthaben({
     guthaben: Math.round(guthaben),
     jahresrente,
     monatsrente: Math.round(jahresrente / 12),
-    umwandlungssatz,
+    umwandlungssatz: uws,
     zinssatz,
     jahresDetail,
   };
