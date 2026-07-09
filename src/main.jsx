@@ -83,6 +83,7 @@ const Schnellcheck = React.lazy(() => import('./Schnellcheck.jsx').then(m => ({ 
 const AnspruchLandkarte = React.lazy(() => import('./AnspruchLandkarte.jsx').then(m => ({ default: m.AnspruchLandkarte })));
 const AnspruchCheck = React.lazy(() => import('./AnspruchCheck.jsx').then(m => ({ default: m.AnspruchCheck })));
 const Obstgarten = React.lazy(() => import('./Obstgarten.jsx').then(m => ({ default: m.Obstgarten })));
+const Gepaeck = React.lazy(() => import('./Gepaeck.jsx').then(m => ({ default: m.Gepaeck })));
 const StipendienView = React.lazy(() => import('./StipendienView.jsx'));
 const AlvRechner = React.lazy(() => import('./AlvRechner.jsx'));
 const AsylView = React.lazy(() => import('./AsylView.jsx'));
@@ -1228,6 +1229,7 @@ const AppInner = () => {
         view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
