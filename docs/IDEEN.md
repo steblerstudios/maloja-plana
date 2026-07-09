@@ -39,7 +39,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 - 🔨 **Schnellchecks als Instrumente** — heute IPV/Sozialhilfe/EL nüchtern; Vision: Tacho/Schutzschild/Tankanzeige/Kompass/Pulsmesser. ← *aktuell in Design-Phase*.
 - ✅ **Alle Berechtigungen als Schnellcheck** — Anspruchs-Landkarte (`#/ansprueche`, 16 Einträge nach Auslöser Einkommen/Lebenslage/Ereignis) + geführter Anspruch-Check (`#/anspruchcheck`, 3 Schritte: Zahlen → Lagen → vereintes Ergebnis), max. crosslinked (Session #37).
-- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka + **kanton-aware Regionalangebote** gebaut (BS/BL Familienpass/Volkszahnklinik/VHS via `regionaleVerguenstigungen.js`, PLZ→Kanton); offen: GGG breiter, weitere Kantone kuratieren.
+- 🔨 **Versteckte Vergünstigungen** — KulturLegi/Reka + **kanton-aware Regionalangebote** gebaut (BS/BL Familienpass/Volkszahnklinik/VHS via `regionaleVerguenstigungen.js`, PLZ→Kanton); **GGG Wegweiser Basel** ergänzt + **Pro Senectute** (Senioren-Anker im Vorsorge-Rechner), URLs web-verifiziert (Session #38); offen: weitere Kantone kuratieren (je Quelle einzeln verifizieren, Haftung).
 - 🌱 **Kanton-aware Berechtigungs-Landkarte mit Lücken-Kommunikation** — pro Kanton „was möglich ist UND was fehlt"; Lücken = Petitions-Material.
 - 🌱 **Versteckte behördliche Befreiungen systematisch** — SERAFE↔EL, ÖV/Kultur-Vergünstigungen, Gerichts-/Verfahrenskosten, kant. Gebührenbefreiungen aufdecken.
 - 🌱 **AHV-Beitragsjahre transparent** — Jugendjahre, was Studierende tun (Mindestbeitrag → Lücken vermeiden). Teils via IK-Auszug.
