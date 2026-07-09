@@ -24,7 +24,7 @@ export const LeistungsKompass = ({ palette, t, benefitCount = 0, topLabel, hasIn
         ? t('schnellcheck.kompassFoundOne', { top: topLabel || '' })
         : t('schnellcheck.kompassFound', { n: benefitCount, top: topLabel || '' }))
     : t('schnellcheck.kompassNone');
-  const captionColor = state === 'found' ? palette.sage : state === 'none' ? palette.sky : palette.mid;
+  const captionColor = state === 'found' ? palette.sage : state === 'none' ? palette.skyDeep : palette.mid;
 
   const tick = (deg, len) => {
     const a = (deg - 90) * Math.PI / 180;
@@ -37,16 +37,18 @@ export const LeistungsKompass = ({ palette, t, benefitCount = 0, topLabel, hasIn
     });
   };
 
+  // Grafik dekorativ (aria-hidden) — die Peilung steht als sichtbarer Text
+  // direkt darunter und ist die a11y-Quelle (kein Doppel-Vorlesen).
   const rose = h('svg', {
     viewBox: '0 0 200 210', width: '100%',
     style: { maxWidth: '220px', height: 'auto', display: 'block', margin: '0 auto', overflow: 'visible' },
-    role: 'img', 'aria-label': caption,
+    'aria-hidden': true,
   },
     h('circle', { cx: CX, cy: CY, r: R, fill: 'none', stroke: palette.border, strokeWidth: 2 }),
     [0, 45, 90, 135, 180, 225, 270, 315].map(d => tick(d, d % 90 === 0 ? 12 : 7)),
     // Peilungs-Beschriftung: Norden = Leistungen, Süden = weitere Wege
     h('text', { x: CX, y: CY - R - 8, textAnchor: 'middle', style: { fontSize: '12px', fill: state === 'found' ? palette.sage : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassLeistungen')),
-    h('text', { x: CX, y: CY + R + 18, textAnchor: 'middle', style: { fontSize: '12px', fill: state === 'none' ? palette.sky : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassWege')),
+    h('text', { x: CX, y: CY + R + 18, textAnchor: 'middle', style: { fontSize: '12px', fill: state === 'none' ? palette.skyDeep : palette.mid, fontWeight: weight.medium } }, t('schnellcheck.kompassWege')),
     // Nadel: farbige Spitze (Peilung) + gedämpftes Gegenende, um bearing gedreht
     h('g', { transform: 'rotate(' + bearing + ' ' + CX + ' ' + CY + ')' },
       h('polygon', { points: CX + ',' + (CY - R + 16) + ' ' + (CX + 7) + ',' + CY + ' ' + (CX - 7) + ',' + CY, fill: northColor, opacity: northOpacity }),

@@ -4,6 +4,7 @@ import { reserveTankState } from '../data/reserveTank.js';
 import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
+import { shieldPath } from './shieldShape.js';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
@@ -49,10 +50,11 @@ const miniCompass = (palette, bearing, state) => {
   );
 };
 
-const SHIELD = 'M18 3 L31 8.5 L31 20 Q31 30 18 38 Q5 30 5 20 L5 8.5 Z';
+const MINI_TOP = 3, MINI_BOTTOM = 38;
+const SHIELD = shieldPath(18, MINI_TOP, 26, MINI_BOTTOM - MINI_TOP);
 const miniShield = (palette, fraction) => {
   const h = React.createElement;
-  const top = 3, bottom = 38;
+  const top = MINI_TOP, bottom = MINI_BOTTOM;
   const fh = fraction * (bottom - top);
   return h('svg', { viewBox: '0 0 36 42', width: 36, height: 42, 'aria-hidden': true },
     h('defs', null, h('clipPath', { id: 'mini-shield-clip' }, h('path', { d: SHIELD }))),
@@ -90,7 +92,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: t('instrumente.tachoSub'),
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sand }),
+      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sandDeep }),
       onClick: () => onNavigate('praemien'),
     },
     {
@@ -104,7 +106,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     {
       key: 'tank', name: t('instrumente.tank'),
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sand, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
+      glyph: miniGauge(palette, { split: 0.5, left: palette.sandDeep, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
       onClick: () => onNavigate('finanzuebersicht'),
     },
     {
@@ -118,7 +120,9 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   return h('div', { style: { marginBottom: space.xl + 'px' } },
     h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: space.sm + 'px' } },
+    // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
+    // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: space.sm + 'px' } },
       tiles.map(tile => h('button', {
         key: tile.key,
         onClick: tile.onClick,

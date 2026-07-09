@@ -11,6 +11,16 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.19-beta] — 2026-07-09
+
+### Geändert
+- **Deine Instrumente** — die vier Selbstchecks stehen jetzt im ruhigen 2×2-Raster statt 3+1.
+- Einheitliches Anrede-Register in den Instrumenten; „Puffer" heisst durchgehend „Reserve".
+
+### Behoben
+- Die Schutzschild-Kachel öffnet nun das Versicherungs-Kapitel statt der Basis.
+- Barrierefreiheit: Tacho- und Kompass-Grafik gelten als dekorativ und werden nicht mehr doppelt vorgelesen; sand- und himmelfarbene Schrift ist im Hellmodus WCAG-AA-kontraststark.
+
 ## [0.1.18-beta] — 2026-07-09
 
 ### Wartung
