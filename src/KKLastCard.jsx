@@ -61,7 +61,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       over ? t('kkLast.overNote') : t('kkLast.underNote')
     ),
     // IPV-Fairness: Entlastung (falls Anrecht) + Restlücke bis 10%
-    showFairness && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.sm, color: palette.sky, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
+    showFairness && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.sm, color: palette.skyDeep, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.ipvRelief', { ipv: ipvAmount, share: netShareRounded })
     ),
     showFairness && ipvAmount === 0 && ipv && !ipv.eligible && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },

@@ -532,7 +532,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
 
             // This week
             dueSoon.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement(Eyebrow, { palette, style: { color: palette.sky, marginBottom: space.sm } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.skyDeep, marginBottom: space.sm } }, t('calendar.thisWeek') + ' (' + dueSoon.length + ')'),
               dueSoon.map(r => renderReminderCard(r))
             ),
 

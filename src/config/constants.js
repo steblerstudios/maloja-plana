@@ -10,6 +10,10 @@ export const DARK_PALETTE = {
   // Legible-Varianten von sand/sky für Vordergrund (Text + bedeutungstragende Graphik):
   // im Dunkeln bestehen sand/sky bereits (5.87 / 4.30 auf surface), daher unverändert.
   sandDeep: '#C4A06A', skyDeep: '#6E90B0',
+  // roseDeep: lesbare Warnfarbe für Fliesstext/Fehler — rose (#B87070) liegt im
+  // Dunkeln nur bei 3.82:1 auf surface. #D98A8A hebt auf 5.44:1 (AA), rose bleibt
+  // für Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
+  roseDeep: '#D98A8A',
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
@@ -21,6 +25,10 @@ export const LIGHT_PALETTE = {
   // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
   // sky (3.20:1) sind auf surface zu hell für Text — sandDeep 4.64:1 / skyDeep 5.42:1.
   sandDeep: '#8A6D3B', skyDeep: '#4A6A88',
+  // roseDeep: lesbare Warnfarbe für Fliesstext/Fehler — rose (#B87070) liegt hell
+  // nur bei 3.59:1 auf surface. #9A4A4A hebt auf 5.82:1 (AA), rose bleibt für
+  // Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
+  roseDeep: '#9A4A4A',
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 
@@ -32,11 +40,11 @@ export const LIGHT_PALETTE = {
 // Palette bleibt sonst unberührt (nur wenn eingeschaltet). Das Flag palette.colorBlind
 // erlaubt Komponenten, Form-/Symbol-Marker zu ergänzen — Farbe nie allein.
 const CB_LIGHT = {
-  sage: '#1565A3', rose: '#C25A16', sageDeep: '#2D5C86',
+  sage: '#1565A3', rose: '#C25A16', roseDeep: '#A84A12', sageDeep: '#2D5C86',
   sageMist: '#E7EEF5', sageDew: '#D4E2F0',
 };
 const CB_DARK = {
-  sage: '#6BA6DE', rose: '#E38B4E', sageDeep: '#7FA8D0',
+  sage: '#6BA6DE', rose: '#E38B4E', roseDeep: '#E38B4E', sageDeep: '#7FA8D0',
   sageMist: '#1E2833', sageDew: '#223140',
 };
 export function applyColorBlind(palette, active) {

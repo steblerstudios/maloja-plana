@@ -79,7 +79,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       React.createElement('span', { style: { color: accent } }, '● ' + t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),
     hasUser && React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.sky, marginTop: '2px', fontWeight: weight.medium },
+      style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
     }, t(k + 'yourVal', { amount: userValue.toFixed(0) })),
 
     // Prozentuale Abweichung (Region vs. Schweiz)

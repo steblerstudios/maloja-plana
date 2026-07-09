@@ -385,7 +385,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (field.link) {
       parts.push(React.createElement('a', {
         key: 'lk', href: field.link.url, target: '_blank', rel: 'noopener noreferrer',
-        style: { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.xs + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+        style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
       }, '→ ' + field.link.label));
     }
     return parts.length > 0 ? parts : null;
@@ -414,7 +414,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     }, React.createElement(GlossarText, { t: tr, palette }, tr('beistand.wegweiserBody'))),
     React.createElement('a', {
       href: 'https://kesb-kurz-erklaert.ch/erwachsene/', target: '_blank', rel: 'noopener noreferrer',
-      style: { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+      style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
     }, '→ ' + tr('beistand.wegweiserLink'))
   );
 
@@ -456,9 +456,18 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     const errorStyle = {
       fontSize: text.xs,
-      color: palette.rose,
+      color: palette.roseDeep || palette.rose,
       marginTop: space.xs
     };
+
+    // Fehler programmatisch an das Feld koppeln: role="alert" spricht ihn beim
+    // Erscheinen aus, die id verbindet ihn via aria-describedby mit dem Eingabefeld.
+    const renderError = (fieldId) => error && React.createElement('div',
+      { id: fieldId + '-err', role: 'alert', style: errorStyle }, error);
+    // aria-Props fürs Eingabefeld — nur wenn ein Fehler ansteht.
+    const errAria = (fieldId) => error
+      ? { 'aria-invalid': 'true', 'aria-describedby': fieldId + '-err' }
+      : null;
 
     // Mehrfach-Einträge — mehrere benannte Posten, die sich zur Summe addieren.
     // Das Budget-Feld (field.k) bleibt eine Zahl (= Summe); die Posten liegen in <field.k>Items.
@@ -524,7 +533,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         }),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field),
-        error && React.createElement('div', { style: errorStyle }, error)
+        renderError(fieldId)
       );
     }
 
@@ -540,11 +549,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onBlur: (e) => handleFieldBlur(field.k, e.target.value),
           placeholder: field.placeholder || '',
           autoComplete: field.autoComplete || 'off',
+          ...errAria(fieldId),
           style: inputStyle
         }),
         field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
         renderOrientation(field),
-        error && React.createElement('div', { style: errorStyle }, error)
+        renderError(fieldId)
       );
     }
 
@@ -592,10 +602,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             },
             placeholder: field.placeholder || '79 123 45 67',
             autoComplete: field.autoComplete || 'off',
+            ...errAria(fieldId),
             style: { ...inputStyle, flex: 1 }
           })
         ),
-        error && React.createElement('div', { style: errorStyle }, error)
+        renderError(fieldId)
       );
     }
 
@@ -612,9 +623,10 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           onBlur: (e) => { handleEmailBlur(field.k, e.target.value); handleFieldBlur(field.k, e.target.value); },
           placeholder: 'name@example.com',
           autoComplete: field.autoComplete || 'off',
+          ...errAria(fieldId),
           style: inputStyle
         }),
-        error && React.createElement('div', { style: errorStyle }, error)
+        renderError(fieldId)
       );
     }
 
@@ -1577,7 +1589,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             crosslinkBtn('vorsorge', 'vorsorge', 'nav.crosslink.vorsorgeHint');
           }
           if (field.k === 'educationLevel' && chapter.key === 'ausbildung') {
-            const eduLink = { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' };
+            const eduLink = { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' };
             const pathItem = (titleKey, bodyKey) => React.createElement('div', { key: titleKey, style: { marginBottom: space.sm + 'px' } },
               React.createElement('div', { style: { fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, tr('edu.' + titleKey)),
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, tr('edu.' + bodyKey))
@@ -1722,7 +1734,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   React.createElement('a', {
                     href: 'https://www.gerichte-zh.ch/themen/partnerschaft/hilfen/unterhaltsberechnung.html',
                     target: '_blank', rel: 'noopener noreferrer',
-                    style: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sky, textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+                    style: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
                   }, '→ ' + tr('alimentInfo.linkLabel'))
                 )
               )
