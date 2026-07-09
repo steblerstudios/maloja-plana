@@ -15,6 +15,7 @@ import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
@@ -389,6 +390,33 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     }
     return parts.length > 0 ? parts : null;
   };
+
+  // Vorsorgeauftrag → ruhiger Wegweiser zum Erwachsenenschutz: Wer entscheidet, wenn man
+  // es selbst nicht mehr kann? Mit Vorsorgeauftrag die Person der eigenen Wahl, ohne ordnet
+  // die KESB eine Beistandschaft an. Orientierend, nicht rechnend. GlossarText fasst den
+  // Begriff „Beistandschaft" für die ⓘ-Erklärung.
+  const renderBeistandWegweiser = () => React.createElement('div', {
+    key: 'beistand-wegweiser',
+    style: {
+      gridColumn: '1 / -1',
+      background: palette.sageMist || palette.up,
+      borderRadius: radius.sm,
+      borderLeft: '3px solid ' + palette.sage + '40',
+      padding: space.sm + 'px ' + space.md + 'px',
+      marginBottom: space.sm + 'px',
+    }
+  },
+    React.createElement('div', {
+      style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, marginBottom: space.xs + 'px' }
+    }, 'ⓘ ' + tr('beistand.wegweiserTitle')),
+    React.createElement('div', {
+      style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+    }, React.createElement(GlossarText, { t: tr, palette }, tr('beistand.wegweiserBody'))),
+    React.createElement('a', {
+      href: 'https://kesb-kurz-erklaert.ch/erwachsene/', target: '_blank', rel: 'noopener noreferrer',
+      style: { display: 'inline-block', fontSize: text.xs, color: palette.sky, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
+    }, '→ ' + tr('beistand.wegweiserLink'))
+  );
 
   const renderField = (field) => {
     if (field.type === 'household') return renderHouseholdFields();
@@ -1888,6 +1916,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             }
           }
           elements.push(renderField(field));
+          if (field.k === 'vorsorgeauftrag' && chapter.key === 'notfall') {
+            elements.push(renderBeistandWegweiser());
+          }
           return elements;
         })
       )

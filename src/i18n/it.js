@@ -886,6 +886,12 @@ export default {
     action: 'Apri la scheda di emergenza',
   },
 
+  beistand: {
+    wegweiserTitle: 'Se un giorno non poteste più decidere da soli',
+    wegweiserBody: 'Con un mandato precauzionale decidete voi stessi chi agirà per voi in caso di incapacità di discernimento. Senza mandato, l’autorità di protezione degli adulti esamina la situazione e dispone, se necessario, una curatela.',
+    wegweiserLink: 'La protezione degli adulti in breve (KOKES, in tedesco)',
+  },
+
   glossar: {
     ipv: 'IPV/RIP — riduzione individuale dei premi: un contributo cantonale sul premio della cassa malati se il reddito è basso.',
     skos: 'COSAS — Conferenza svizzera dell’azione sociale: definisce le norme dell’aiuto sociale.',
@@ -898,6 +904,7 @@ export default {
     uvg: 'LAINF — assicurazione infortuni: copre i costi degli infortuni professionali e non professionali.',
     franchise: 'Franchigia — la parte dei costi sanitari pagata da sé ogni anno prima che paghi la cassa malati.',
     selbstbehalt: 'Aliquota percentuale — la propria quota (di solito 10 %) sui costi oltre la franchigia, fino a un tetto annuo.',
+    beistandschaft: 'Curatela (Beistandschaft) — una misura di sostegno disposta dall’autorità di protezione dei minori e degli adulti quando una persona non è più in grado di gestire da sola determinate questioni. Il meno possibile, graduata. Base: CC art. 390 segg.',
   },
   settingsDrawer: {
     accountTitle: 'Account e dati',

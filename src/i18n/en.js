@@ -886,6 +886,12 @@ export default {
     action: 'Open emergency card',
   },
 
+  beistand: {
+    wegweiserTitle: 'If one day you can no longer decide for yourself',
+    wegweiserBody: 'With a lasting power of attorney, you decide yourself who will act for you if you ever lose capacity. Without one, the child and adult protection authority (KESB) reviews the situation and, if needed, orders a deputyship (Beistandschaft).',
+    wegweiserLink: 'Adult protection explained (KOKES, in German)',
+  },
+
   glossar: {
     ipv: 'IPV — individual premium reduction: a cantonal subsidy toward your health-insurance premium when your income is low enough.',
     skos: 'SKOS — Swiss Conference for Social Assistance: sets the guidelines for how much social assistance you are entitled to.',
@@ -898,6 +904,7 @@ export default {
     uvg: 'UVG — accident insurance: covers the costs of occupational and non-occupational accidents.',
     franchise: 'Deductible (Franchise) — the share of health costs paid yourself each year before the health insurer pays.',
     selbstbehalt: 'Retention (Selbstbehalt) — your share (usually 10%) of costs above the deductible, up to an annual maximum.',
+    beistandschaft: 'Deputyship (Beistandschaft) — a support measure ordered by the child and adult protection authority (KESB) when a person can no longer handle certain matters on their own. As little as necessary, graduated. Basis: Civil Code Art. 390 ff.',
   },
   settingsDrawer: {
     accountTitle: 'Account & data',
