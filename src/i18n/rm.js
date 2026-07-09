@@ -2311,9 +2311,17 @@ export default {
     stepWord: 'Pass',
     stepIncome: 'Tenor l’entrada',
     stepSituation: 'Tenor la situaziun',
-    weiter: 'Vinavant als dretgs tenor la situaziun',
+    stepOverview: 'Tia survista',
+    weiter: 'Vinavant a las situaziuns',
+    weiterOverview: 'Vinavant a la survista',
     zurueck: 'Enavos',
     fertig: 'Finì — a la survista',
+    resultIntro: 'Resumà da tias indicaziuns — tge che pudess pertutgar tai.',
+    resultIncomeHeader: 'Tenor l’entrada (da tes profil)',
+    resultSituationHeader: 'Tenor tias situaziuns',
+    resultEmptyIncome: 'Endatescha entrada e chantun en pass 1 — lura cumpara qua tge che ta stat.',
+    resultEmptySituation: 'Tscherna tias situaziuns en pass 2 — lura cumparan ellas qua.',
+    resultToLandkarte: 'Vesair tuttas prestaziuns pussaivlas',
   },
 
   beistand: {

@@ -920,9 +920,17 @@ export default {
     stepWord: 'Step',
     stepIncome: 'By income',
     stepSituation: 'By life situation',
-    weiter: 'Continue to entitlements by life situation',
+    stepOverview: 'Your overview',
+    weiter: 'Continue to life situations',
+    weiterOverview: 'Continue to overview',
     zurueck: 'Back',
     fertig: 'Done — to the overview',
+    resultIntro: 'Summarised from your details — what might apply to you.',
+    resultIncomeHeader: 'By income (from your profile)',
+    resultSituationHeader: 'By your life situations',
+    resultEmptyIncome: 'Enter income and canton in step 1 — what you may be entitled to appears here.',
+    resultEmptySituation: 'Choose your life situations in step 2 — they appear here.',
+    resultToLandkarte: 'See all possible entitlements',
   },
 
   beistand: {
