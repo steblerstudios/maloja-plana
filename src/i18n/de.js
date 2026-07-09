@@ -3538,6 +3538,7 @@ export default {
     pack: 'Wieder einpacken',
     wege: '{n} Wege',
     wegeOne: '1 Weg',
+    packed: '{done} von {total} erfasst',
     legend: 'Jeder Bereich ein echter Gegenstand — Schlüsselbund, Arztkoffer, Werkzeugrolle. Ein Weg führt in seinen geführten Ablauf. Neben Baum und Obstgarten.',
     obj: { wohnen: 'Schlüsselbund', arbeit: 'Werkzeugrolle', familie: 'Erinnerungskiste', gesundheit: 'Arztkoffer', alter: 'Feldflasche', abschied: 'Versiegelter Brief' },
     objSub: { wohnen: 'Ankommen & Wohnen', arbeit: 'Arbeit & Einkommen', familie: 'Familie & Beziehung', gesundheit: 'Gesundheit & Kasse', alter: 'Alter & Vorsorge', abschied: 'Abschied' },

@@ -3560,6 +3560,7 @@ export default {
     pack: 'Pack up again',
     wege: '{n} paths',
     wegeOne: '1 path',
+    packed: '{done} of {total} on file',
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',
     obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter' },
     objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell' },

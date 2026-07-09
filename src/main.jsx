@@ -1229,7 +1229,7 @@ const AppInner = () => {
         view === 'ansprueche' && React.createElement(AnspruchLandkarte, { palette, t, onNavigate: handleNavigate }),
         view === 'anspruchcheck' && React.createElement(AnspruchCheck, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'obstgarten' && React.createElement(Obstgarten, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
-        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, onNavigate: handleNavigate, isDarkMode }),
+        view === 'gepaeck' && React.createElement(Gepaeck, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
