@@ -928,7 +928,7 @@ export default {
     resultIntro: 'Riassunto dalle tue indicazioni — ciò che potrebbe riguardarti.',
     resultIncomeHeader: 'In base al reddito (dal tuo profilo)',
     resultSituationHeader: 'In base alle tue situazioni',
-    resultEmptyIncome: 'Inserisci reddito e cantone al passo 1 — ciò che ti spetta apparirà qui.',
+    resultEmptyIncome: 'Inserisci il tuo reddito al passo 1 (il cantone si imposta nel profilo) — ciò che ti spetta apparirà qui.',
     resultEmptySituation: 'Scegli le tue situazioni al passo 2 — appariranno qui.',
     resultToLandkarte: 'Vedi tutte le prestazioni possibili',
   },

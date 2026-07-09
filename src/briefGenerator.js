@@ -325,12 +325,14 @@ function generateKkReklamation(data, t, options = {}) {
   }
 
   // Grund (WARUM die Position nicht stimmt): entweder die gewählten Gründe als
-  // klare Liste, oder — ohne Auswahl — der bisherige Ergänzungs-Platzhalter.
-  let reasonHtml;
+  // klare Liste — oder, nur wenn Belege ohne Grund-Auswahl vorliegen, der bisherige
+  // Ergänzungs-Platzhalter. Ohne Belege deckt bereits der positionScaffold das
+  // „was stimmt nicht" ab; body2detail wäre dann ein doppelter Platzhalter.
+  let reasonHtml = '';
   if (reasons.length) {
     const items = reasons.map(r => `<p>– ${esc(t('briefe.kkReklamation.reasons.' + r))}</p>`).join('');
     reasonHtml = `<p>${esc(t('briefe.kkReklamation.reasonsIntro'))}</p>${items}`;
-  } else {
+  } else if (belege.length) {
     reasonHtml = `<p>${esc(t('briefe.kkReklamation.body2detail'))}</p>`;
   }
 
