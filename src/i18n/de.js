@@ -3363,7 +3363,7 @@ export default {
     tachoBreakeven: 'Break-even',
     tachoLegendHigh: 'hohe Franchise günstiger',
     tachoLegendLow: 'tiefe Franchise günstiger',
-    tachoReadoutBelow: 'Bisher CHF {costs} in diesem Jahr. Unter dem Break-even (CHF {be}) fährt man mit der hohen Franchise (CHF {high}) günstiger.',
+    tachoReadoutBelow: { sie: 'Bisher CHF {costs} in diesem Jahr. Unter dem Break-even (CHF {be}) fahren Sie mit der hohen Franchise (CHF {high}) günstiger.', du: 'Bisher CHF {costs} in diesem Jahr. Unter dem Break-even (CHF {be}) fährst du mit der hohen Franchise (CHF {high}) günstiger.' },
     tachoReadoutAbove: 'Bisher CHF {costs} in diesem Jahr — über dem Break-even (CHF {be}). Dieses Jahr wäre die tiefe Franchise (CHF {low}) günstiger gewesen.',
     tachoOrientation: { sie: 'Sobald Sie Gesundheitskosten erfassen, zeigt der Zeiger, wo Sie im Jahr stehen.', du: 'Sobald du Gesundheitskosten erfasst, zeigt der Zeiger, wo du im Jahr stehst.' },
     tachoTrackLink: 'Gesundheitskosten erfassen',
@@ -3431,7 +3431,7 @@ export default {
 
   obstgarten: {
     title: 'Mein Obstgarten',
-    intro: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr du erfasst — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.',
+    intro: { sie: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr Sie erfassen — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.', du: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr du erfasst — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.' },
     link: 'Mein Obstgarten',
     legend: 'Wuchsstufe statt Prozent: Setzling → wächst → trägt Früchte → voll gereift. Die vier jüngsten Bäumchen kommen später.',
     future: 'kommt später',
@@ -3443,7 +3443,7 @@ export default {
   },
   instrumente: {
     title: 'Deine Instrumente',
-    intro: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.',
+    intro: { sie: 'Vier ruhige Selbstchecks auf einen Blick — tippen Sie eines an.', du: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.' },
     tacho: 'Franchise-Tacho',
     tachoSub: 'lohnt sich hoch oder tief?',
     kompass: 'Leistungs-Kompass',
@@ -3451,7 +3451,7 @@ export default {
     kompassFoundOne: 'ein möglicher Weg',
     kompassNone: 'weitere Wege',
     tank: 'Reserve-Tankanzeige',
-    tankMonths: '{months} Monate Puffer',
+    tankMonths: '{months} Monate Reserve',
     schild: 'Schutzschild',
     schildCount: '{covered}/{total} gedeckt',
     setup: 'antippen zum Einrichten',
