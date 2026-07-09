@@ -11,6 +11,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.23-beta] — 2026-07-09
+
+### Neu
+- **Mein Gepäck** — neue Ansicht neben Baum und Obstgarten: ein Rucksack packt sich aus in echte Ausrüstungsgegenstände je Lebensbereich (Schlüsselbund, Werkzeugrolle, Erinnerungskiste, Arztkoffer, Feldflasche, versiegelter Brief). Einen Gegenstand aufklappen, hineinschauen — die Lebensereignisse darin führen in ihren bestehenden geführten Ablauf. Reife-Pünktchen zeigen ehrlich, wie viel aus dem passenden Bereich schon erfasst ist (kein erfundener Fortschritt).
+
+### Sicherheit
+- Externer Pro-Senectute-Link im Pensionierungs-Ablauf mit `rel="noopener noreferrer"` gehärtet.
+
 ## [0.1.22-beta] — 2026-07-09
 
 ### Neu
