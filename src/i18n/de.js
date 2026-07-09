@@ -3433,6 +3433,7 @@ export default {
     title: 'Mein Obstgarten',
     intro: { sie: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr Sie erfassen — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.', du: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr du erfasst — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.' },
     link: 'Mein Obstgarten',
+    ctaSub: 'Jeder Lebensbereich als eigenes Bäumchen — neben dem Baum oben.',
     legend: 'Wuchsstufe statt Prozent: Setzling → wächst → trägt Früchte → voll gereift. Die vier jüngsten Bäumchen kommen später.',
     future: 'kommt später',
     stage1: 'Setzling',
