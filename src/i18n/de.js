@@ -3429,6 +3429,10 @@ export default {
     },
   },
 
+  seo: {
+    title: 'Maloja Plana — Dein Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
+    description: 'Maloja Plana — Dein Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline, kostenlos.',
+  },
   obstgarten: {
     title: 'Mein Obstgarten',
     intro: { sie: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr Sie erfassen — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.', du: 'Jeder Lebensbereich ist ein eigenes Bäumchen. Es reift, je mehr du erfasst — vom Setzling bis zum vollen Baum. Antippen führt in den Bereich.' },

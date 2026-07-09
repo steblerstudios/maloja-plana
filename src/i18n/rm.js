@@ -3627,6 +3627,10 @@ export default {
     detailhandel: 'Commerzi al detail',
   },
 
+  seo: {
+    title: 'Maloja Plana — tes ordinatur da vita svizzer: taglias, agid social, assicuranzas',
+    description: 'Maloja Plana — tes ordinatur da vita svizzer. Quintader da taglias, agid social, reducziun da premias, carta d\'urgenza — 100% privat, offline, gratuit.',
+  },
   obstgarten: {
     title: 'Mes iert da fritgs',
     intro: 'Mintga sectur da vita è in agen arbulet. El madirescha uschè dapli che ti endateschas — da la plantina fin a l\'arbre plain. Tutga per avrir il sectur.',
