@@ -723,6 +723,23 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         );
       })(),
 
+      // Vergünstigungen im Alter (Braindump-32 #1): bei tiefer Rente steht oft mehr zu,
+      // als bekannt ist. Surfaced im Pensionsplanungs-Kontext. Nur echte, kuratierte
+      // Quellen (OfficialLinkBox = auditierte Registry) + Cross-Link zum Schnellcheck;
+      // keine erfundenen Zahlen. EL/Pro Senectute/AHV stehen schon im Fuss-Linkkasten.
+      alter && React.createElement('div', {
+        style: { ...s.section, marginTop: space.sm + 'px', background: palette.gold + '0E', border: '1px solid ' + palette.gold + '33' },
+      },
+        React.createElement('div', { style: s.label }, t('vr.altersHilfenTitle')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px' } }, t('vr.altersHilfenIntro')),
+        React.createElement(OfficialLinkBox, { palette, t, data, ids: ['praemienverbilligung'] }),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
+        onNavigate && React.createElement('button', {
+          onClick: () => onNavigate('schnellcheck'),
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+        }, '→ ' + t('vr.altersHilfenCheck'))
+      ),
+
       // 3a-Zinsschwelle: ruhiger Strategie-Hinweis, sobald das voraussichtliche
       // 3a-Kapital die Vorzugszins-Schwelle übersteigt. Kein Knick in der Kurve
       // (die Engine modelliert 3a als einen Klumpen mit einer angenommenen Rendite
