@@ -90,7 +90,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   const tiles = [
     {
       key: 'tacho', name: t('instrumente.tacho'), sub: t('instrumente.tachoSub'),
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sand }),
+      glyph: miniGauge(palette, { split: 0.5, left: palette.sage, right: palette.sandDeep }),
       onClick: () => onNavigate('praemien'),
     },
     {
@@ -104,7 +104,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     {
       key: 'tank', name: t('instrumente.tank'),
       sub: tank.mode === 'months' ? t('instrumente.tankMonths', { months: tank.months }) : setup,
-      glyph: miniGauge(palette, { split: 0.5, left: palette.sand, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
+      glyph: miniGauge(palette, { split: 0.5, left: palette.sandDeep, right: palette.sage, needle: tank.mode === 'months' ? tank.needle / tank.fullMonths : null }),
       onClick: () => onNavigate('finanzuebersicht'),
     },
     {
