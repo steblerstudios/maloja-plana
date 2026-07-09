@@ -888,6 +888,7 @@ export default {
 
   anspruch: {
     pageTitle: 'Ansprüche im Überblick',
+    gefuehrtLink: 'Lieber Schritt für Schritt? Geführter Anspruch-Check',
     intro: 'Vieles steht einem zu, ohne dass man davon weiss. Hier alle möglichen Ansprüche auf einen Blick — unverbindlich, ohne Bewertung. Tippe einen an, um mehr zu erfahren.',
     gruppen: {
       einkommen: { label: 'Nach Einkommen', desc: 'Hängt davon ab, wie viel monatlich hereinkommt.' },
@@ -913,6 +914,15 @@ export default {
       waisenrente: { label: 'Waisenrente', sub: 'Beim Tod eines Elternteils' },
     },
     footNote: 'Diese Übersicht bewertet nichts und verspricht nichts — sie zeigt nur, was dich betreffen könnte. Ob wirklich ein Anspruch besteht, klärt die jeweilige Stelle.',
+  },
+
+  anspruchCheck: {
+    stepWord: 'Schritt',
+    stepIncome: 'Nach Einkommen',
+    stepSituation: 'Nach Lebenslage',
+    weiter: 'Weiter zu den Ansprüchen nach Lebenslage',
+    zurueck: 'Zurück',
+    fertig: 'Fertig — zur Übersicht',
   },
 
   beistand: {

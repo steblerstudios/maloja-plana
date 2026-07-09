@@ -888,6 +888,7 @@ export default {
 
   anspruch: {
     pageTitle: 'Aperçu des prestations',
+    gefuehrtLink: 'Plutôt pas à pas ? Vérification guidée',
     intro: 'Beaucoup de choses vous reviennent sans qu’on le sache. Voici toutes les prestations possibles en un coup d’œil — sans engagement, sans jugement. Touchez-en une pour en savoir plus.',
     gruppen: {
       einkommen: { label: 'Selon le revenu', desc: 'Dépend de ce qui rentre chaque mois.' },
@@ -913,6 +914,15 @@ export default {
       waisenrente: { label: 'Rente d’orphelin', sub: 'Au décès d’un parent' },
     },
     footNote: 'Cet aperçu ne juge rien et ne promet rien — il montre seulement ce qui pourrait vous concerner. C’est l’organe compétent qui établit le droit réel.',
+  },
+
+  anspruchCheck: {
+    stepWord: 'Étape',
+    stepIncome: 'Selon le revenu',
+    stepSituation: 'Selon la situation',
+    weiter: 'Continuer vers les droits selon la situation',
+    zurueck: 'Retour',
+    fertig: 'Terminé — vers l’aperçu',
   },
 
   beistand: {
