@@ -22,7 +22,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Wohnen = kleines Haus** (Zimmer = Themen) · **Miet-Angaben optisch wie ein Mietvertrag** · **Mobilität = Fahrzeugmappe** · **Familie = Fotoalbum** · **Behörden = Bundesordner** · **Arbeit = Bewerbungsmappe** · **Ideen = Notizbuch**.
 - 🌱 **KVG-Katalog = Karteikartenbox** · **Bibliothek = Bücherregal** (✅ Direktlinks als Regal gebaut; Ausbau möglich).
 - 🌱 **Lebenslauf-Generator skeuomorph darstellen** (CV-Inhalt existiert, Optik nicht).
-- 🔨 **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — weitere Platzierungen offen (Todesfall/IV/Glossar).
+- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten (Pensionierung#4, IV#3, Pflege#3). Prüfung Session #38: Todesfall#3 ist ein breiter „Renten & Versicherungen"-Schritt (EL nur Nebensatz) → bewusst OHNE Icon (sonst Fehl-Etikett); Glossar ist Text-only-Tooltip → kein Icon-Ort. Keine weitere ehrliche Platzierung offen.
 - 🌱 **Heirat = Icon mit zwei Ringen** · **Rückforderungsbeleg-Look** (b83c35f) gefällt optisch nicht → Redesign vor weiterer Status-UI.
 - ⏸ **Konto = schlichtes Banking** · **Analysen = modern/Apple-Glas** — bewusst KEINE Metapher.
 
