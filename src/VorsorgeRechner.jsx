@@ -723,6 +723,24 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         );
       })(),
 
+      // Was im Alter auf dich zukommt (Rest von Braindump-32 #1): ehrliche Posten-
+      // Übersicht OHNE erfundene Beträge — die Höhe hängt stark von Situation/Kanton ab.
+      // Pflege ist oft der grösste Posten → Cross-Link in den geführten Ablauf.
+      alter && React.createElement('div', { style: { ...s.section, marginTop: space.sm + 'px' } },
+        React.createElement('div', { style: s.label }, t('vr.altersKostenTitle')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: space.xs + 'px', marginBottom: space.sm + 'px' } }, t('vr.altersKostenIntro')),
+        ...['K1', 'K2', 'K3', 'K4', 'K5'].map((k) => React.createElement('div', {
+          key: k, style: { display: 'flex', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: 1.5, marginBottom: space.xs + 'px' },
+        },
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sand, flexShrink: 0, fontWeight: weight.bold } }, '·'),
+          React.createElement('span', null, t('vr.altersKosten' + k))
+        )),
+        onNavigate && React.createElement('button', {
+          onClick: () => onNavigate('pflege'),
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+        }, '→ ' + t('gepaeck.w.pflege'))
+      ),
+
       // Vergünstigungen im Alter (Braindump-32 #1): bei tiefer Rente steht oft mehr zu,
       // als bekannt ist. Surfaced im Pensionsplanungs-Kontext. Nur echte, kuratierte
       // Quellen (OfficialLinkBox = auditierte Registry) + Cross-Link zum Schnellcheck;
