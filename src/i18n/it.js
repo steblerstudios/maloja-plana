@@ -3542,7 +3542,7 @@ export default {
     legend: 'Ogni ambito un oggetto reale — mazzo di chiavi, borsa del medico, rotolo di attrezzi. Un percorso porta al suo iter guidato. Accanto all’albero e al frutteto.',
     obj: { wohnen: 'Mazzo di chiavi', arbeit: 'Rotolo di attrezzi', familie: 'Scatola dei ricordi', gesundheit: 'Borsa del medico', alter: 'Borraccia', abschied: 'Lettera sigillata' },
     objSub: { wohnen: 'Arrivare & abitare', arbeit: 'Lavoro & reddito', familie: 'Famiglia & relazione', gesundheit: 'Salute & assicurazione', alter: 'Età & previdenza', abschied: 'Congedo' },
-    w: { umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso' },
+    w: { umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare l’affitto', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
   },
   instrumente: {
     title: 'I tuoi strumenti',
