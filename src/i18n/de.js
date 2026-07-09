@@ -920,9 +920,17 @@ export default {
     stepWord: 'Schritt',
     stepIncome: 'Nach Einkommen',
     stepSituation: 'Nach Lebenslage',
-    weiter: 'Weiter zu den Ansprüchen nach Lebenslage',
+    stepOverview: 'Dein Überblick',
+    weiter: 'Weiter zu den Lebenslagen',
+    weiterOverview: 'Weiter zum Überblick',
     zurueck: 'Zurück',
     fertig: 'Fertig — zur Übersicht',
+    resultIntro: 'Zusammengefasst aus deinen Angaben — was dich betreffen könnte.',
+    resultIncomeHeader: 'Nach Einkommen (aus deinem Profil)',
+    resultSituationHeader: 'Nach deinen Lebenslagen',
+    resultEmptyIncome: 'Trag in Schritt 1 Einkommen und Kanton ein — dann erscheint hier, was zusteht.',
+    resultEmptySituation: 'Wähle in Schritt 2 deine Lebenslagen — dann erscheinen sie hier.',
+    resultToLandkarte: 'Alle möglichen Ansprüche ansehen',
   },
 
   beistand: {

@@ -920,9 +920,17 @@ export default {
     stepWord: 'Passo',
     stepIncome: 'In base al reddito',
     stepSituation: 'In base alla situazione',
-    weiter: 'Avanti verso i diritti in base alla situazione',
+    stepOverview: 'La tua panoramica',
+    weiter: 'Avanti verso le situazioni',
+    weiterOverview: 'Avanti verso la panoramica',
     zurueck: 'Indietro',
     fertig: 'Fatto — alla panoramica',
+    resultIntro: 'Riassunto dalle tue indicazioni — ciò che potrebbe riguardarti.',
+    resultIncomeHeader: 'In base al reddito (dal tuo profilo)',
+    resultSituationHeader: 'In base alle tue situazioni',
+    resultEmptyIncome: 'Inserisci reddito e cantone al passo 1 — ciò che ti spetta apparirà qui.',
+    resultEmptySituation: 'Scegli le tue situazioni al passo 2 — appariranno qui.',
+    resultToLandkarte: 'Vedi tutte le prestazioni possibili',
   },
 
   beistand: {
