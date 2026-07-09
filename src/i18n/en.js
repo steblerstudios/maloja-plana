@@ -3564,7 +3564,7 @@ export default {
     legend: 'Every area a real object — keyring, doctor’s bag, tool roll. A path leads into its guided flow. Alongside the tree and the orchard.',
     obj: { wohnen: 'Keyring', arbeit: 'Tool roll', familie: 'Keepsake box', gesundheit: 'Doctor’s bag', alter: 'Field flask', abschied: 'Sealed letter' },
     objSub: { wohnen: 'Arriving & living', arbeit: 'Work & income', familie: 'Family & relationship', gesundheit: 'Health & insurance', alter: 'Age & pension', abschied: 'Farewell' },
-    w: { umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one' },
+    w: { umzug: 'Moving', neuch: 'New to Switzerland', bewilligung: 'Residence & permit', mietzins: 'Check your rent', job: 'First job', stelleweg: 'Job loss', selbst: 'Becoming self-employed', stipendien: 'Education & grants', heirat: 'Marriage', geburt: 'Birth', trennung: 'Separation', unfall: 'Illness or accident', kkwechsel: 'Changing health insurer', kkerst: 'Health insurance for the first time', iv: 'Disability (IV)', pension: 'Retirement', pflege: 'When care is needed', todesfall: 'Death of a loved one', organ: 'Organ donation' },
   },
   instrumente: {
     title: 'Your instruments',
