@@ -19,6 +19,7 @@ export default {
         zhAktionen: { titel: 'Billets gratuits & actions (Zurich)', text: 'Actions concrètes dans le canton de Zurich avec la CarteCulture — p. ex. bons pour livres et jeux, ordinateurs pour la participation numérique.' },
         vhszh: { titel: 'Université populaire de Zurich', text: 'Avec la CarteCulture, 50% de réduction sur les cours-conférences et 20% sur les autres cours.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Passeport de vacances d’été pour enfants (6–16 ans) ; moitié prix avec la CarteCulture (CHF 18.50 au lieu de 37).' },
+        gggWegweiser: { titel: 'GGG Wegweiser Bâle', text: 'Orientation et conseils gratuits sur les questions sociales — aussi une aide pour remplir des formulaires et un conseil pour les personnes âgées.' },
       },
     },
     moreInfo: 'En savoir plus',

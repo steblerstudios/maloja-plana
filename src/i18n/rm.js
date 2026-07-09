@@ -20,6 +20,7 @@ export default {
         zhAktionen: { titel: 'Bigliets gratuits & acziuns (Turitg)', text: 'Acziuns concretas en il chantun Turitg cun la KulturLegi — p.ex. buns per cudeschs e gieus, computers per la participaziun digitala.' },
         vhszh: { titel: 'Scola populara Turitg', text: 'Cun la KulturLegi 50% sconti sin curs-referats e 20% sin auters curs.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass da vacanzas da stad per uffants (6–16); mez pretsch cun la KulturLegi (CHF 18.50 empè da 37).' },
+        gggWegweiser: { titel: 'GGG Wegweiser Basilea', text: 'Orientaziun e cussegliaziun gratuita en dumondas socialas — er agid cumplenir formulars e cussegliaziun en la vegliadetgna.' },
       },
     },
     moreInfo: 'Vinavant',
