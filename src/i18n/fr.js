@@ -686,6 +686,7 @@ export default {
     simpleView: 'Vue simplifiée',
     grayscale: 'Niveaux de gris',
     colorBlind: 'Mode daltonien',
+    reduceMotion: 'Animations réduites',
     readable: 'Meilleure lisibilité',
     download: 'Télécharger',
     upload: 'Importer',
