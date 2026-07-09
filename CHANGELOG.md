@@ -11,6 +11,15 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.22-beta] — 2026-07-09
+
+### Neu
+- **Ansprüche am Lebensbaum** — trägt ein Bereich einen gedeckten Anspruch (Prämienverbilligung, Sozialhilfe, Ergänzungsleistungen), bekommt seine Frucht einen ruhigen Ring; ein Klick führt zum benannten Anspruch. Die Erinnerungsliste zeigt sie zusätzlich unter „Möglicherweise für dich".
+- **Umwandlungssatz der eigenen Pensionskasse** im Vorsorge-Rechner — statt immer des Mindestsatzes lässt sich der tatsächliche Satz eintragen, für eine realistischere BVG-Rente.
+- **Hinterbliebenenrente & Ergänzungsleistungen** als eigener, klar hervorgehobener Schritt im Todesfall-Ablauf.
+- **Kosten im Alter** — neuer Orientierungs-Schritt in der Pensionierung: wer zahlt was bei Pflege (Spitex/Heim), samt Ergänzungsleistungen, Hilflosenentschädigung und Pro Senectute.
+- **Mehr regionale Vergünstigungen** — Caritas-Markt in elf Kantonen, GGG Wegweiser Basel und Pro Senectute als Beratungs-Anker.
+
 ## [0.1.21-beta] — 2026-07-09
 
 ### Neu
