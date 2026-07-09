@@ -1244,7 +1244,7 @@ const AppInner = () => {
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
-        view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData }),
+        view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
