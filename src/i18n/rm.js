@@ -21,6 +21,7 @@ export default {
         vhszh: { titel: 'Scola populara Turitg', text: 'Cun la KulturLegi 50% sconti sin curs-referats e 20% sin auters curs.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Pass da vacanzas da stad per uffants (6–16); mez pretsch cun la KulturLegi (CHF 18.50 empè da 37).' },
         gggWegweiser: { titel: 'GGG Wegweiser Basilea', text: 'Orientaziun e cussegliaziun gratuita en dumondas socialas — er agid cumplenir formulars e cussegliaziun en la vegliadetgna.' },
+        caritasMarkt: { titel: 'Caritas-Markt', text: 'Victualias ed artitgels dal mintgadi a pretsch reducì per persunas cun in budget stgars — access cun la carta da client Caritas-Markt (via la KulturLegi).' },
       },
     },
     moreInfo: 'Vinavant',

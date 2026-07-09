@@ -20,6 +20,7 @@ export default {
         vhszh: { titel: 'Volkshochschule Zürich', text: 'Mit der KulturLegi 50% Rabatt auf Vortragskurse und 20% auf weitere Kurse.' },
         ferienpassAWelle: { titel: 'FerienPass A-Welle (AG/SO)', text: 'Sommer-Ferienpass für Kinder (6–16); mit der KulturLegi zum halben Preis (CHF 18.50 statt 37).' },
         gggWegweiser: { titel: 'GGG Wegweiser Basel', text: 'Kostenlose Orientierung und Beratung in sozialen Fragen — auch Hilfe beim Ausfüllen von Formularen und Beratung im Alter.' },
+        caritasMarkt: { titel: 'Caritas-Markt', text: 'Vergünstigte Lebensmittel und Alltagsartikel für Menschen mit knappem Budget — Zugang mit der Caritas-Markt-Kundenkarte (über die KulturLegi).' },
       },
     },
     moreInfo: 'Mehr erfahren',
