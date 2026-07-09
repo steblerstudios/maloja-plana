@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
@@ -11,7 +11,7 @@ import { text, weight, leading, space, radius, shadow } from './config/tokens.js
 // ein „Nein"-Verdikt (Würde). Dieselbe Engine wie die Voll-Tools (calculateIPV/
 // calculateSozialhilfe/checkELEligibility), damit Schnellcheck und Rechner nie
 // widersprüchliche Zahlen zeigen.
-export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
+export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) => {
   const canton = data?.basis?.canton || '';
   const hh = getHouseholdInfo(data);
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome ? String(data.finanzen.monthlyIncome) : '');
@@ -28,6 +28,12 @@ export const Schnellcheck = ({ palette, t, data, onNavigate }) => {
     wohnen: { ...(data?.wohnen || {}), rentAmount: numRent },
     versicherungen: { ...(data?.versicherungen || {}), kkPremium: Number(kk) || 0 },
   };
+
+  // Wird der Schnellcheck als Schritt 1 einer Brücke gerendert (AnspruchCheck),
+  // fliessen die hier frei angepassten Zahlen an den Ergebnis-Schritt weiter —
+  // sonst blieben sie in diesem lokalen Zustand gefangen. Ohne Callback (Solo-
+  // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
+  useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [income, rent, kk, data]);
 
   // Gedeckte Leistungen sammeln — jede mit eigenem Ehrlichkeits-Gate.
   const benefits = [];
