@@ -40,7 +40,7 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
 
   return React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
     React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, title),
-    React.createElement('svg', { width: '200', height: '200', viewBox: '0 0 200 200', style: { margin: '0 auto', display: 'block' } }, segments),
+    React.createElement('svg', { width: '200', height: '200', viewBox: '0 0 200 200', 'aria-hidden': 'true', style: { margin: '0 auto', display: 'block' } }, segments),
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm, marginTop: '12px', fontSize: text.xs } },
       labels.map((label, idx) => data[idx] > 0 ? React.createElement('div', { key: idx, style: { display: 'flex', gap: '6px', alignItems: 'center' } },
         React.createElement('div', { style: { width: '10px', height: '10px', background: colors[idx], borderRadius: '2px', flexShrink: 0 } }),
