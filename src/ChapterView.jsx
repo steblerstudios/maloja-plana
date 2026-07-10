@@ -2064,7 +2064,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
         React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
       ),
-      React.createElement('span', { style: { color: palette.sand, fontSize: text.lg, flexShrink: 0 } }, '→'),
+      React.createElement('span', { style: { color: palette.sandDeep, fontSize: text.lg, flexShrink: 0 } }, '→'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present

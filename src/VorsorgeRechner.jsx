@@ -732,12 +732,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ...['K1', 'K2', 'K3', 'K4', 'K5'].map((k) => React.createElement('div', {
           key: k, style: { display: 'flex', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: 1.5, marginBottom: space.xs + 'px' },
         },
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sand, flexShrink: 0, fontWeight: weight.bold } }, '·'),
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sandDeep, flexShrink: 0, fontWeight: weight.bold } }, '·'),
           React.createElement('span', null, t('vr.altersKosten' + k))
         )),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('pflege'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, '→ ' + t('gepaeck.w.pflege'))
       ),
 
@@ -754,7 +754,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('schnellcheck'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, '→ ' + t('vr.altersHilfenCheck'))
       ),
 
@@ -948,7 +948,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
     }, '→ ' + t('nav.finanzUebersicht'))
   );
 };
