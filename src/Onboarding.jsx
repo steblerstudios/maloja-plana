@@ -70,7 +70,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
-    color: '#000', border: 'none', borderRadius: radius.sm,
+    color: palette.onSand, border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: fontFamily, marginTop: space.md,
   };
