@@ -13,14 +13,13 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-07-10 · Basis-Live-Verifikation: `0.1.23-beta` = `e45ec3c`
+**Stand:** 2026-07-10 · **Live-verifiziert: `main` = `0ebb865` → Bundle `index-1fb26e10.js`** (curl auf malojaplana.ch == frischer main-Build; Vite-Content-Hash identisch = byte-genau)
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
-| Release `0.1.24-beta` (Gepäck-Kür, a11y-Review, Linkshänder-Modus u.a.) | `deployed` | `v0.1.24-beta` | **Live-Check offen** — Footer + Hash noch nicht gegengeprüft |
-| a11y-Pass: Tresor-Labels, goldDeep-Token, Onboarding-Zurück | `built` | `fec8d34`/`711822c`/`465bf2c` (Branch `a11y/pass3-tresor-labels`) | 3 Commits noch nicht auf `main` |
-| a11y: roseDeep-Importfix, Torten-SVG aria-hidden | `built` | `2e8f6b8` (`main`) | auf `main`, aber undeployt |
-| Kapitalbezugssteuer (Bund Art.38 DBG ÷5 + Kanton) | `built` | `231c8a1` (dev) | 535 Tests grün, browserverif; noch nicht deployt |
+| a11y-Pass 3 (PR #19): Tresor-Labels, goldDeep-Token, Onboarding Zurück/Skip/Fortschritt, Arztkoffer-Kontrast, Rechner-Reiter-Scroll, roseDeep-Fix, Torten-SVG aria-hidden | `verified-live` | `0ebb865` (Merge PR #19) | Live-Hash `index-1fb26e10.js` == main-Build (2026-07-10) |
+| Release `0.1.24-beta` (Gepäck-Kür, a11y-Review, Linkshänder-Modus u.a.) | `verified-live` | `v0.1.24-beta` | in `main`/live enthalten, Hash bestätigt |
+| Kapitalbezugssteuer (Bund Art.38 DBG ÷5 + Kanton) | `built` | `231c8a1` (dev) | 535 Tests grün, browserverif; **nicht in `main`**, noch nicht deployt |
 
 ## Wie pflegen
 
