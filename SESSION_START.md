@@ -13,8 +13,8 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (PR #19 gemergt) |
-| `main` steht auf | `0ebb865` — Merge PR #19 (a11y-Pass 3) |
+| Aktueller Branch | `main` (PR #20 gemergt + Leitplanken) |
+| `main` steht auf | `79f78d2` — docs: Leitplanken (Wahrheits-Disziplin, Klarheits-Check) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 
@@ -23,9 +23,12 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live-verifiziert (aktuell):** `main` = `0ebb865` → Bundle `index-1fb26e10.js`.
-  curl auf malojaplana.ch zeigt denselben Content-Hash wie der frische main-Build =
-  byte-genau live. a11y-Pass 3 ist live. (Geprüft 2026-07-10.)
+- **Live-verifiziert:** App-Bundle `index-1fb26e10.js` (a11y-Pass 3) ist byte-genau
+  live — curl auf malojaplana.ch = frischer main-Build (geprüft 2026-07-10).
+  `main` steht seither auf `79f78d2`; die Commits nach `0ebb865` (PR #20 Stage-Umgebung
+  = `deploy.sh`, Leitplanken = docs) ändern **keinen App-Code** → das live ausgelieferte
+  Bundle ist unverändert. Der Bundle-Hash von `79f78d2` selbst wurde noch nicht neu
+  gegen live geprüft (kein App-Deploy nötig).
   - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
     (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
     prüfen, dass `deploy.sh` wirklich frisch baut.
