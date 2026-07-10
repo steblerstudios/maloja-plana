@@ -208,7 +208,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         )
       ),
 
-      plzInput.length === 4 && gemeinden.length === 0 && React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.rose, fontSize: text.xs } },
+      plzInput.length === 4 && gemeinden.length === 0 && React.createElement('div', { style: { marginTop: space.sm + 'px', color: palette.roseDeep, fontSize: text.xs } },
         t('po.plzNotFound')
       )
     ),
