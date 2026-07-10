@@ -370,7 +370,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         }),
         // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
         onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
-          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
+          style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
           onClick: () => onNavigate('finanzuebersicht'),
         }, '→ ' + t('po.reserveCheckLink'))
       ),
@@ -485,7 +485,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     // Crosslink: vom Vergleich in den geführten Wechsel-Ablauf
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('kvgwechsel'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
     }, '→ ' + t('kvgWechsel.title'))
   );
 };

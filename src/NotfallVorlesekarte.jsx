@@ -60,7 +60,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     ...ablaufStyles(palette),
     telList: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
     tel: {
-      fontSize: text.body, fontWeight: weight.semi, color: palette.sand,
+      fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep,
       textDecoration: 'none', fontFamily: 'inherit',
       padding: space.xs + 'px ' + space.sm + 'px', borderRadius: radius.sm,
       border: '1px solid ' + palette.border, background: palette.up,
@@ -83,7 +83,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
     locResult: { marginTop: space.sm + 'px', padding: '10px 14px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border },
     locCoords: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, letterSpacing: '0.3px' },
     locAcc: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
-    locMap: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sand, textDecoration: 'none', fontFamily: 'inherit' },
+    locMap: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, textDecoration: 'none', fontFamily: 'inherit' },
     locNote: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px' },
   };
 

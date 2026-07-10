@@ -121,7 +121,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('strong', { style: { color: palette.text } }, t('organ.swissOrganDonation')),
           React.createElement('div', { style: { marginTop: '6px' } },
-            React.createElement('a', { href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', target: '_blank', rel: 'noopener noreferrer', style: { color: palette.sand, textDecoration: 'none', fontWeight: weight.semi } }, '↗ swisstransplant.org')
+            React.createElement('a', { href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', target: '_blank', rel: 'noopener noreferrer', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, '↗ swisstransplant.org')
           )
         )
       )
