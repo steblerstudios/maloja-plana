@@ -7,8 +7,24 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
-const BETA_CODE = 'maloja2026';
+// Der Beta-Code liegt nur als SHA-256-Hash vor — der Klartext steht so weder im
+// Quellcode noch im gebauten Bundle (Public-Repo). Ehrlich: das bleibt ein WEICHES
+// Gate (client-seitig, per localStorage or5_beta_access umgehbar) — ein echtes
+// Zugangs-Gate braucht den Server (Login-/Backend-Grundsatzentscheid).
+const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
+
+async function matchesBetaCode(value) {
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return false;
+  try {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(normalized));
+    const hex = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+    return hex === BETA_CODE_HASH;
+  } catch {
+    return false; // kein Web-Crypto (unsicherer Kontext) → Gate bleibt zu
+  }
+}
 
 export const BetaGate = ({ children }) => {
   const { t } = useT();
@@ -50,9 +66,9 @@ export const BetaGate = ({ children }) => {
     );
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input.trim().toLowerCase() === BETA_CODE) {
+    if (await matchesBetaCode(input)) {
       localStorage.setItem(STORAGE_KEY, 'true');
       setGranted(true);
     } else {
