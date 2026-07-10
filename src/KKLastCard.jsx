@@ -70,7 +70,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
     showFairness && netShare > WHO_THRESHOLD && gapMonthly > 0 && React.createElement('div', { style: { fontSize: text.sm, color: accent, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.gapToTen', { gap: gapMonthly })
     ),
-    showFairness && ipvAmount > 0 && netShare <= WHO_THRESHOLD && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, lineHeight: leading.normal, marginBottom: space.xs } },
+    showFairness && ipvAmount > 0 && netShare <= WHO_THRESHOLD && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs } },
       t('kkLast.underWithIpv')
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('kkLast.whoNote')),

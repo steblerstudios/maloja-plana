@@ -143,7 +143,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       ),
       React.createElement('button', {
         onClick: addAll,
-        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', fontSize: text.sm, color: palette.sand, fontWeight: weight.semi },
+        style: { cursor: 'pointer', fontFamily: 'inherit', background: 'none', border: 'none', padding: '2px 0', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi },
       }, '+ ' + t('umzug.step3AddAll')),
       // Für jede Stelle der Liste den gleichen Adressänderungs-Brief (ein Dokument, wiederverwendbar).
       onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.linkAddressChange'), onClick: () => onNavigate('briefe') })

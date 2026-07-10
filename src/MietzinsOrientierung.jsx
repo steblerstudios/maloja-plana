@@ -53,7 +53,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate }) => {
   const toneColor = (tone) => tone === 'good' ? palette.sage : (tone === 'soft' ? palette.soft : palette.text);
 
   const card = (extra) => ({ padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md + 'px', fontSize: text.sm, ...extra });
-  const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
+  const linkBtn = { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' };
 
   return React.createElement('div', { style: { maxWidth: '720px', background: palette.surface, padding: '20px', borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'home', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('mietzinsView.title')),

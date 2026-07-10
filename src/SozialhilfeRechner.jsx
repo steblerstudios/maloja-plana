@@ -186,8 +186,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('td', { style: s.tdRight }, '− ' + fmt(result.totalEinkommen))
           ),
           result.efb > 0 && React.createElement('tr', null,
-            React.createElement('td', { style: { ...s.td, color: palette.sage } }, t('sh.efbLabel')),
-            React.createElement('td', { style: { ...s.tdRight, color: palette.sage } }, '+ ' + fmt(result.efb))
+            React.createElement('td', { style: { ...s.td, color: palette.sageDeep } }, t('sh.efbLabel')),
+            React.createElement('td', { style: { ...s.tdRight, color: palette.sageDeep } }, '+ ' + fmt(result.efb))
           ),
           result.totalEinkommen > 0 && React.createElement('tr', null,
             React.createElement('td', { style: s.td }, t('sh.anrechenbar')),
