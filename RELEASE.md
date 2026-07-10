@@ -5,18 +5,19 @@ die immer gleiche Reihenfolge, damit du nie etwas vergessen musst.
 
 ## Die Landkarte (das mentale Bild)
 
-- **`dev`** = deine Werkbank. Hier wird gebaut und ausprobiert.
-- **`main`** = die Reinversion. Sauber, geprüft, das was live geht.
+- **`feat/…`-Zweig** = deine Werkbank. Ein eigener Arbeitszweig pro Vorhaben, ab `main`.
+- **`main`** = die Reinversion. Sauber, geprüft, das was live geht — der einzige feste Stamm.
 - **PR** = der Zettel „bitte Werkbank in die Reinversion falten".
 - **CI** = der Roboter, der bei jeder Änderung automatisch Tests + Build prüft.
 - **Deploy** = die Reinversion ins Schaufenster stellen (Website live).
 
 ## Der Ablauf (6 Schritte)
 
-1. **Bauen auf `dev`.** Ganz normal arbeiten. Bei jedem Push prüft die CI automatisch.
+1. **Bauen auf einem eigenen Zweig ab `main`** (`git checkout -b feat/kurzer-name main`).
+   Ganz normal arbeiten. Bei jedem Push prüft die CI automatisch.
    Während du baust: die Änderung als **eine Zeile in `CHANGELOG.md` unter `## [Unreleased]`**
    notieren — dann kommt der Changelog immer mit und nie doppelt.
-2. **PR `dev → main` erstellen** (Knopf im Panel oder `gh pr create --base main --head dev`).
+2. **PR `feat/… → main` erstellen** (Knopf im Panel oder `gh pr create --base main`).
    *Vorher, im selben Schwung:* Version in `package.json` erhöhen (Feature → mittlere Stelle,
    kleiner Fix → letzte Stelle) und aus `## [Unreleased]` die Versionsnummer + Datum machen.
    So gehen Arbeit, Version und CHANGELOG in **einem** PR — nie zweimal.
@@ -56,8 +57,8 @@ Format: **`MAJOR . MINOR . PATCH`** + Etikett — also `0 . 1 . 14 -beta`.
 - „jetzt offiziell fertig" → `1.0.0` (und `-beta` weg)
 
 **So machst du den Bump:** die Zeile `"version"` in `package.json` ändern — der
-Footer zeigt sie dann automatisch. Am saubersten passiert das **im selben `dev`-Ast
-wie deine Features**, dann reist die neue Nummer mit demselben PR nach `main`
+Footer zeigt sie dann automatisch. Am saubersten passiert das **im selben Feature-Zweig
+wie deine Änderungen**, dann reist die neue Nummer mit demselben PR nach `main`
 (kein separater Versions-PR nötig). Nach dem Merge den Tag setzen (Schritt 6).
 
 ## Vorschau-Umgebung (Stage)
@@ -66,7 +67,7 @@ Bevor ein Stand auf die echte Domain geht, kannst du ihn auf einer identischen
 **Vorschau** live gegenprüfen — dieselbe App, andere Adresse: `stage.malojaplana.ch`.
 
 ```bash
-bash deploy.sh --stage      # aktuellen Branch (z.B. dev) auf die Vorschau spielen
+bash deploy.sh --stage      # aktuellen Branch (z.B. feat/…) auf die Vorschau spielen
 ```
 
 Unterschiede zum normalen Deploy: läuft aus **jedem** Branch (keine main-Sperre),
@@ -108,7 +109,7 @@ git checkout main               # danach zurück auf main
 ## Gut zu wissen
 
 - **Offene PRs sind ungefährlich.** Sie „verfaulen" nicht und aktualisieren sich
-  selbst, wenn neue Commits auf `dev` landen. Du kannst sie liegen lassen.
+  selbst, wenn neue Commits auf dem Feature-Zweig landen. Du kannst sie liegen lassen.
 - **Geheimnisse** (DB-Passwort, Session-Secret, FTP-Passwort) stehen **nie** im
   Code — nur lokal in `.env`/`server/.env` (gitignored), in Jelastic-Env-Variablen
   und in GitHub-Secrets. Der öffentliche Code enthält keine.
