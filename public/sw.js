@@ -7,7 +7,12 @@
 // - Background sync for reminders
 // - Offline document access
 
-const CACHE_NAME = 'maloja-plana-v9';
+// CACHE_NAME trägt den Bundle-Hash: beim Build ersetzt das Vite-Plugin
+// (vite.config.js) '__BUILD_HASH__' durch den Hash des Entry-Bundles. So ändern
+// sich die sw.js-Bytes bei JEDEM Deploy → der Browser erkennt das Update immer →
+// activate räumt den alten Cache zuverlässig. Im Dev-Modus bleibt der Platzhalter
+// stehen (harmlos, wird nie deployt).
+const CACHE_NAME = 'maloja-plana-__BUILD_HASH__';
 const OFFLINE_URL = '/';
 
 // ─── Install: cache the app shell ──────────────────────────
