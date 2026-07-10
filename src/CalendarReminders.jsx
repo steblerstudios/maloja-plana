@@ -520,7 +520,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
         : React.createElement('div', null,
             // Overdue section
             overdue.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
-              React.createElement(Eyebrow, { palette, style: { color: palette.rose, marginBottom: space.sm } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
+              React.createElement(Eyebrow, { palette, style: { color: palette.roseDeep, marginBottom: space.sm } }, t('calendar.overdue') + ' (' + overdue.length + ')'),
               overdue.map(r => renderReminderCard(r))
             ),
 
