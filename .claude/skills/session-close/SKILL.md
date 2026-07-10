@@ -36,6 +36,11 @@ Arbeite die folgenden Schritte der Reihe nach ab.
   (Bundle-Hash gegen frischen main-Build geprüft). Sonst built/deployed ehrlich stehen
   lassen.
 - Konvertiere relative Daten in absolute (heutiges Datum aus dem Kontext).
+- **Merge-Falle:** Endet die Sitzung genau an einem Merge (ein PR ging eben rein), ist
+  `main` schon weitergerückt — `SESSION_START` muss den **Nach-Merge-Stand** zeigen
+  (neuer `main`-Hash, PR gemergt, Feature-Branch weg), nicht den Vor-Merge-Stand. Die
+  Korrektur strikt nach GitHub Flow landen (eigener kleiner Branch → PR), nicht direkt
+  auf `main` — sonst untergräbt der Abschluss die Regel, die er dokumentiert.
 
 ## 3. Memory + Index nachziehen
 
@@ -60,13 +65,15 @@ Wenn ein unfertiger Arbeitsfaden offen ist, den ein neuer Chat aufnehmen müsste
 an, `/handoff` zu laufen (den kopierbaren Übergabe-Block). Nicht aufdrängen — anbieten.
 Nicht selbst nachbauen; das ist `/handoff`s Aufgabe.
 
-## 6. Titel vorschlagen + fragen (Archivieren NIE automatisch)
+## 6. Titel vorschlagen — archivieren tust DU
 
 - Einen prägnanten Titel-Vorschlag für die Sitzung zeigen.
-- Dann **fragen**: „Sitzung so benennen und archivieren? [j/N] — oder du machst es
-  selbst in der App."
-- **Ohne ausdrückliches „ja" wird nichts archiviert.** Sophie behält die Kontrolle über
-  den einzigen unumkehrbar wirkenden Schritt und darf immer von Hand archivieren.
+- **Ehrlich (Wahrheits-Disziplin):** Der Assistent hat **kein Werkzeug**, um eine
+  Claude-Unterhaltung zu benennen oder zu archivieren — das ist immer Sophies Tipp in
+  der App. Also nicht mit „[j/N]" so tun, als könnte er es. Richtige Formulierung:
+  „Titel-Vorschlag: … — **du** benennst + archivierst in der App."
+- Archivieren ist der einzige unumkehrbar wirkende Schritt und bleibt bewusst bei
+  Sophie: nie automatisch, nie vortäuschen, dass der Assistent es tut.
 
 ---
 
