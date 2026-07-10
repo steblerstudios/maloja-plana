@@ -18,9 +18,11 @@
 #
 # ─── STAGE-Umgebung ──────────────────────────────────────────────────────────
 # `--stage` spiegelt denselben Build nach stage.malojaplana.ch statt auf die
-# echte Domain. Zweck: einen dev-Stand live gegenprüfen, BEVOR er über
-# PR dev→main auf die Produktion geht. Unterschiede zur Produktion:
-#   • deployt aus JEDEM Branch (typisch 'dev') — keine main-/origin-Sperre
+# echte Domain. Zweck (GitHub Flow): einen Feature-Branch-Stand live
+# gegenprüfen, BEVOR er über PR feat→main auf die Produktion geht. Die Stage
+# ist wegwerfbar und übernimmt die Integrations-Rolle — es gibt keinen 'dev'.
+# Unterschiede zur Produktion:
+#   • deployt aus JEDEM Branch (typisch 'feat/…') — keine main-/origin-Sperre
 #   • kein Rollback-Backup (Stage ist wegwerfbar)
 #   • eigenes Remote-Ziel + eigene Abschluss-URL
 # Einmalige Voraussetzung (Infomaniak-Panel, Sophie): Subdomain
@@ -58,16 +60,18 @@ fi
 BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
 
 # ─── Release-Sicherheit: nur von 'main' deployen (= geprüfter, gemergter Stand) ──
-# Grundsatz: Was live ist = 'main' = die "Reinversion". Auf 'dev' wird gebaut,
-# über einen PR dev→main gemergt (CI grün), dann von 'main' deployt.
+# Grundsatz (GitHub Flow): Was live ist = 'main' = die "Reinversion". Auf einem
+# Feature-Branch (feat/…) wird gebaut, über einen PR feat→main gemergt (CI grün),
+# dann von 'main' deployt. Kein 'dev', kein Sync-back.
 # Bewusster Ausweg (z.B. Notfall-Hotfix): ALLOW_ANY_BRANCH=1.
-# Im Stage-Modus entfällt die Sperre bewusst — dort testet man ja gerade 'dev'.
+# Im Stage-Modus entfällt die Sperre bewusst — dort testet man ja gerade den
+# Feature-Branch.
 if [ "$STAGE" != "1" ]; then
   if [ "${ALLOW_ANY_BRANCH:-0}" != "1" ] && [ "$BRANCH" != "main" ]; then
     echo "✗ Du bist auf Branch '$BRANCH', nicht auf 'main'."
     echo
     echo "  So gibst du sauber eine Version raus:"
-    echo "    1) PR dev→main mergen (grünes CI-Häkchen abwarten)"
+    echo "    1) PR feat→main mergen (grünes CI-Häkchen abwarten)"
     echo "    2) git checkout main && git pull"
     echo "    3) bash deploy.sh"
     echo
@@ -144,7 +148,7 @@ echo
 echo "✓ Deploy fertig — ${TARGET_URL}  (${ENV_NAME})"
 echo "  Stand jetzt: Branch ${BRANCH}, Commit ${COMMIT}"
 if [ "$STAGE" = "1" ]; then
-  echo "  Das ist die Vorschau. Passt alles? → PR dev→main mergen, dann  bash deploy.sh  (Produktion)."
+  echo "  Das ist die Vorschau. Passt alles? → PR feat→main mergen, dann  bash deploy.sh  (Produktion)."
 else
   echo "  Tipp: stabilen Stand markieren →  git tag -a v0.1.x -m 'Release …' && git push origin v0.1.x"
   echo "  Zurückrollen? Siehe RELEASE.md → 'Rollback'."
