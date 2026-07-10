@@ -95,14 +95,14 @@ export const DirektLinks = ({ palette, t, data }) => {
     // Einheitliche Eintrags-Karte für ALLE Bücher.
     entryCard: { padding: space.md + 'px', background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', margin: '0 0 ' + space.sm + 'px' },
     entryName: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
-    entryNameLink: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sage, textDecoration: 'none' },
+    entryNameLink: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'none' },
     entryDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' },
     entryMeta: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' },
-    entryMetaLink: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' },
+    entryMetaLink: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' },
     aff: { color: palette.soft, fontSize: text.xs, fontWeight: weight.normal },
     empty: { fontSize: text.sm, color: palette.mid, textAlign: 'center', padding: space.lg + 'px' },
     canton: { padding: space.md + 'px', background: palette.sage + '11', borderRadius: radius.sm + 'px', margin: space.sm + 'px 0 ' + space.md + 'px', border: '1px solid ' + palette.sage + '33' },
-    cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sage },
+    cantonTitle: { fontWeight: weight.semi, fontSize: text.sm, marginBottom: space.sm + 'px', color: palette.sageDeep },
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
   };
 
@@ -241,7 +241,7 @@ export const DirektLinks = ({ palette, t, data }) => {
       React.createElement('div', { style: s.cantonTitle }, t('dl.cantonalTitle', { canton: getCantonName(data.basis.canton, t) })),
       Object.entries(getCantonalLinks(data.basis.canton)).map(([key, url]) =>
         React.createElement('div', { key, style: { marginBottom: space.xs + 'px' } },
-          React.createElement('a', { href: url, target: '_blank', rel: 'noopener noreferrer', style: { fontSize: text.xs, color: palette.sage, textDecoration: 'none' } },
+          React.createElement('a', { href: url, target: '_blank', rel: 'noopener noreferrer', style: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' } },
             t('dl.cantonal.' + key) + ' →'
           )
         )

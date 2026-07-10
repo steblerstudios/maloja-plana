@@ -117,7 +117,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         ipv.eligible
           ? React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs, fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
+              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs, fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
             )
           : React.createElement('div', null,

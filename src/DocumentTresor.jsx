@@ -243,7 +243,7 @@ export const DocumentTresor = ({
           borderColor: !showArchive ? palette.sand : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sage } }, stats.active),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sageDeep } }, stats.active),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active')),
       ),
       React.createElement('div', {

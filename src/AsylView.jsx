@@ -22,7 +22,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     statusLabel: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text },
     statusDesc: { fontSize: text.sm, color: palette.mid, lineHeight: 1.55, marginTop: '2px' },
     procItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '5px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
-    procNum: { flexShrink: 0, color: palette.sage, fontWeight: weight.semi, minWidth: '18px' },
+    procNum: { flexShrink: 0, color: palette.sageDeep, fontWeight: weight.semi, minWidth: '18px' },
     orgRow: { display: 'block', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66', textDecoration: 'none' },
     orgName: { fontSize: text.sm, fontWeight: weight.semi, color: palette.skyDeep, display: 'flex', alignItems: 'center', gap: space.xs + 'px', flexWrap: 'wrap' },
     orgDesc: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '2px' },
