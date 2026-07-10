@@ -7,16 +7,19 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Sophie). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-10
+**Stand:** 2026-07-11
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (PR #21 gemergt) |
-| `main` steht auf | `8e0d15e` — Merge PR #21 (GitHub-Flow-Feinschliff + Skill-Tracking) |
+| Aktueller Branch | `main` (PR #22 gemergt) |
+| `main` steht auf | `8b6727b` — Merge PR #22 (session-start-sync); **App-Code seit `0ebb865` unverändert** |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
+| **Runde 2026-07-11** | **10 Commits auf 8 Feature-Branches, reviewed (inkl. `ultrareview`), NICHT gemergt/deployt** |
+
+**Offene Runde (Branches über `main`, alle gepusht):** `feat/pwa-cache-hash` (2 — PWA-Cache an Bundle-Hash + Home-Screen-Name/Icon), `feat/betacode-hash` (Beta-Code als SHA-256, raus aus Public-Repo), `feat/wartungsseite` (2 — ruhige Wartungsseite statt Apache-404), `feat/a11y-rose-text` (rose→roseDeep AA), `feat/a11y-labels` (Haushalt role=group), `feat/fuehrerausweis` (Führerschein-Ablauf, ch.ch/ASTRA, 5 Spr.), `feat/a11y-soft-contrast` (soft→#64676E AA auf Karten), `chore/deploy-gate` (Doku Prod-Review-Ring + gitignore). **Reviews grün** (code/security/a11y/design + ultra). ⚠️ `feat/fuehrerausweis` rm = Best-Effort → Gegenlese. Wegwerf-Branch `integration/round-2026-07-11` (Parallel-Session-Testmerge, `b7b1daa`) nach den echten PRs löschen.
 
 ## Verifikations-Status (das Wichtigste)
 
@@ -40,12 +43,16 @@
 
 ## Nächste Schritte
 
-1. **Stage steht ✅** — `stage.malojaplana.ch` liefert die App (HTTP 200, Sophie
-   geprüft 2026-07-10); `STAGE_REMOTE_DIR` in `deploy.sh` bestätigt korrekt. Der
-   GitHub-Flow-Ring (Werkbank → `deploy.sh --stage` → PR → Prod) ist damit voll
-   einsatzbereit.
-2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
-   Label-Kopplung Haushalt+Upload).
+1. **Runde 2026-07-11 mergen + deployen** — die 8 Feature-Branches (10 Commits) sind
+   reviewed + ready. Weg: PR je Branch → `main`, dann `bash deploy.sh` (Prod). ⚠️ Neu:
+   der **Deploy-Gate-Hook** blockt `bash deploy.sh` ohne frische `.maloja/predeploy-ok`-
+   Marke → vorher `/maloja-predeploy` in der interaktiven CLI (schreibt die Marke). Der
+   Hook wird erst nach `/hooks`-Reload/Neustart aktiv. `feat/pwa-cache-hash` liegt schon
+   auf Stage (Handy-Test „Zum Startbildschirm hinzufügen" offen).
+2. **Nach Prod-Deploy:** live gegen die neuen Bundle-Hashes verifizieren (die Runde ändert
+   App-Code: Führerausweis-Chunk, BetaGate, a11y-Tokens) → `FEATURES.md` = verified-live.
+3. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). #3 soft-auf-Karten ✅ gelöst
+   (`feat/a11y-soft-contrast`). rm-Gegenlese (Führerausweis + fr/it/rm generell).
 
 ## Nicht anfassen (Leitplanken)
 
