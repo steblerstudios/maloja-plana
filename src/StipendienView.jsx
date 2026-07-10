@@ -37,7 +37,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
   };
   const panelMargin = { margin: space.lg + 'px 0 ' + space.xs + 'px 0' }; // Abstände der Abschnittstitel; Grösse/Gewicht kommt aus PanelTitle
   const intro = { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed };
-  const linkStyle = { color: palette.sage, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
+  const linkStyle = { color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontSize: text.sm, wordBreak: 'break-all' };
   const item = { fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed, display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', marginBottom: '6px' };
   const bullet = { color: palette.sage, flexShrink: 0 };
 
@@ -143,7 +143,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     // Crosslink: weiter zu den offiziellen Behörden-Links (Prop war bisher ungenutzt)
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('direktlinks'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sage, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.lg + 'px' }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.lg + 'px' }
     }, '→ ' + t('nav.direktlinks')),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },

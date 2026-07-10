@@ -112,7 +112,7 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
         }, t('kvg.' + item.key + 'Note')),
         item.intervalKey && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sand, marginTop: '4px', fontWeight: weight.medium }
+          style: { fontSize: text.xs, color: palette.sandDeep, marginTop: '4px', fontWeight: weight.medium }
         }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
         // Faden 3-II: einklappbarer Detail-Block — entweder die WHO/EU-Empfehlung
         // (Screenings) oder „Was genau gedeckt ist" (z. B. Schwangerschaft, Impfungen).
@@ -124,7 +124,7 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             onClick: () => setOpen(!open),
             'aria-expanded': open,
             style: {
-              background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+              background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
               fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
               textAlign: 'left',
             }
@@ -151,7 +151,7 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             React.createElement('div', { style: { marginTop: '5px' } },
               React.createElement('span', {
                 style: {
-                  fontSize: text.xs, color: palette.sage,
+                  fontSize: text.xs, color: palette.sageDeep,
                   border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '1px 6px',
                 }
               }, t('kvg.evidenceBased'))
@@ -245,7 +245,7 @@ const KatalogTab = ({ palette, t, filterCat }) => {
         onClick: () => setEvidenceOpen(!evidenceOpen),
         'aria-expanded': evidenceOpen,
         style: {
-          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
           textAlign: 'left',
         }
@@ -371,7 +371,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
     : result.selbstbehaltAusgeschoepft
       ? { text: t('kvg.selbstbehaltDone'), color: palette.sage || '#5a7a5a', icon: '✓' }
     : result.franchiseOffen > 0
-      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sand, icon: 'ⓘ' }
+      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'ⓘ' }
       : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.gold || '#c47a20', icon: 'ⓘ' };
 
   const barStyle = (value, max, color) => ({
@@ -430,7 +430,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         style: {
           display: 'block', width: '100%', textAlign: 'start', background: 'none',
           border: 'none', padding: '2px 0 4px 0', cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, color: palette.sand, fontWeight: weight.medium,
+          fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.medium,
         }
       }, t('kvg.franchiseOptimizerLink') + ' →'),
 
@@ -504,7 +504,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       React.createElement('button', {
         onClick: () => setTpOpen(!tpOpen),
         style: {
-          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
@@ -549,7 +549,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
         style: {
-          background: 'none', border: 'none', color: palette.sand, cursor: 'pointer',
+          background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
@@ -767,7 +767,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.sage || '#5a7a5a' }
+          style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
         }, 'CHF ' + Math.round(result.kasseZahlt))
       )
     )
@@ -855,7 +855,7 @@ const RechnungTab = ({ palette, t, data }) => {
         style: { display: 'flex', justifyContent: 'space-between', fontSize: text.body }
       },
         React.createElement('span', { style: { color: palette.mid, fontWeight: weight.medium } }, t('kvg.berechneterBetrag')),
-        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sand } }, 'CHF ' + result.betrag.toFixed(2))
+        React.createElement('span', { style: { fontWeight: weight.semi, color: palette.sandDeep } }, 'CHF ' + result.betrag.toFixed(2))
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }

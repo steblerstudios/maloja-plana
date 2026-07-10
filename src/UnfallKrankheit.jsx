@@ -25,7 +25,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
     cardTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' },
     cardText: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
     telList: { display: 'flex', flexDirection: 'column', gap: '6px', marginTop: space.sm + 'px' },
-    tel: { fontSize: text.sm, color: palette.sand, fontWeight: weight.semi, textDecoration: 'none', fontFamily: 'inherit' },
+    tel: { fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.semi, textDecoration: 'none', fontFamily: 'inherit' },
   };
 
   return React.createElement(AblaufContainer, {

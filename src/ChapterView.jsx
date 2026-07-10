@@ -380,7 +380,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const renderOrientation = (field) => {
     const parts = [];
     if (field.orientation) {
-      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + field.orientation));
+      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + field.orientation));
     }
     if (field.link) {
       parts.push(React.createElement('a', {
@@ -802,7 +802,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
         field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && allData.finanzen.employmentType === 'employed' &&
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + tr('uvgHint.fieldSuggest')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + tr('uvgHint.fieldSuggest')),
         renderOrientation(field)
       );
     }
@@ -1051,7 +1051,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           React.createElement('span', {
             key: i,
             style: {
-              fontSize: text.xs, color: palette.sage,
+              fontSize: text.xs, color: palette.sageDeep,
               padding: '2px 8px',
               background: palette.sage + '0D',
               borderRadius: radius.sm,
@@ -1479,7 +1479,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
         ),
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sage, opacity: 0.8 } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep, opacity: 0.8 } },
           React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
@@ -1632,7 +1632,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 elements.push(
                   React.createElement('div', {
                     key: 'hours-minwage-warn',
-                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.rose, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   },
                     tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2) })
                   )
@@ -1766,7 +1766,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         borderRadius: radius.sm,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
-                        color: palette.rose,
+                        color: palette.roseDeep,
                         lineHeight: leading.relaxed,
                         marginBottom: space.sm + 'px',
                       }
@@ -1872,7 +1872,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           )
         ),
         !showSecondary && secondaryHasData && React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sage, marginTop: space.xs }
+          style: { fontSize: text.xs, color: palette.sageDeep, marginTop: space.xs }
         }, tr('chapterView.disclosure.' + chapter.key + '.hint'))
       ),
 
@@ -1975,9 +1975,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           })
         ),
 
-        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.rose, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
+        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
-        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sage, fontSize: text.sm, marginBottom: space.sm + 4 } }, '✓ ' + uploadSuccess),
+        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, '✓ ' + uploadSuccess),
 
         React.createElement('button', {
           onClick: () => {
@@ -2064,7 +2064,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
         React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
       ),
-      React.createElement('span', { style: { color: palette.sand, fontSize: text.lg, flexShrink: 0 } }, '→'),
+      React.createElement('span', { style: { color: palette.sandDeep, fontSize: text.lg, flexShrink: 0 } }, '→'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present

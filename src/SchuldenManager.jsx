@@ -182,8 +182,8 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('schulden.helpTitle')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
         React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
-          React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sage, textDecoration: 'none' } }, '0800 708 708'),
-          React.createElement('a', { href: 'https://schulden.ch', target: '_blank', rel: 'noopener', style: { color: palette.sage, textDecoration: 'none' } }, 'schulden.ch')
+          React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sageDeep, textDecoration: 'none' } }, '0800 708 708'),
+          React.createElement('a', { href: 'https://schulden.ch', target: '_blank', rel: 'noopener', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
         ),
         onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
           React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') })
@@ -243,7 +243,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
           )
         ),
-        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
+        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
         React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
       ),
 

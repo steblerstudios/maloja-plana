@@ -57,7 +57,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     resLine: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '7px 0', borderBottom: '1px solid ' + palette.border + '66' },
     resKey: { fontSize: text.sm, color: palette.mid },
     resVal: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, textAlign: 'right' },
-    resBig: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sage },
+    resBig: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
     hint: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 },
     disclaimer: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px', lineHeight: 1.5, fontStyle: 'italic' },
     empty: { fontSize: text.sm, color: palette.mid, padding: space.md + 'px', textAlign: 'center' },

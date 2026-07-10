@@ -352,7 +352,7 @@ export const LegalView = ({ palette, t, onNavigate, section, data }) => {
           style: {
             background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
             padding: space.xs + 'px ' + space.md + 'px', marginTop: space.sm,
-            fontSize: text.sm, color: palette.sage, cursor: 'pointer', fontFamily: 'inherit',
+            fontSize: text.sm, color: palette.sageDeep, cursor: 'pointer', fontFamily: 'inherit',
           },
         }, t('legal.resources.movedCta')),
       ]}),

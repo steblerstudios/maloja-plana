@@ -102,7 +102,7 @@ export const BetaGate = ({ children }) => {
       },
         React.createElement(TrustLockIcon, { size: 14, color: palette.sage }),
         React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.sage, lineHeight: leading.normal }
+          style: { fontSize: text.xs, color: palette.sageDeep, lineHeight: leading.normal }
         }, t('trust.localBadge'))
       ),
       React.createElement('input', {
@@ -123,7 +123,7 @@ export const BetaGate = ({ children }) => {
       error && React.createElement('p', {
         id: 'beta-error',
         role: 'alert',
-        style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
+        style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm }
       }, t('beta.codeWrong')),
       React.createElement(PrimaryButton, {
         palette, type: 'submit',

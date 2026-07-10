@@ -14,7 +14,7 @@ const getDaysUntilExpiry = (expiryDate) => {
 
 const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
-  if (days < 0) return { status: 'expired', color: palette.rose, label: t('tresor.expired') };
+  if (days < 0) return { status: 'expired', color: palette.roseDeep, label: t('tresor.expired') };
   if (days < 90) return { status: 'warning', color: palette.gold, label: days + 'd' };
   return { status: 'ok', color: palette.sage, label: '✓' };
 };
@@ -243,7 +243,7 @@ export const DocumentTresor = ({
           borderColor: !showArchive ? palette.sand : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sage } }, stats.active),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sageDeep } }, stats.active),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.active')),
       ),
       React.createElement('div', {
@@ -262,7 +262,7 @@ export const DocumentTresor = ({
           borderColor: showArchive ? palette.rose : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.roseDeep } }, stats.archived),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive')),
       ),
     ),

@@ -26,7 +26,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
     big: { fontSize: text.lg, fontWeight: weight.bold, color: palette.text, fontVariantNumeric: 'tabular-nums' },
     sub: { fontSize: text.xs, color: palette.mid, marginTop: '2px' },
     note: { fontSize: text.xs, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' },
-    extLink: { display: 'inline-block', fontSize: text.sm, color: palette.sand, fontWeight: weight.medium, marginTop: space.sm + 'px', textDecoration: 'none' },
+    extLink: { display: 'inline-block', fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.medium, marginTop: space.sm + 'px', textDecoration: 'none' },
   };
 
   return React.createElement('div', { style: s.wrap },

@@ -170,7 +170,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
           React.createElement(TrustLockIcon, { size: 13, color: palette.sage, style: { flexShrink: 0 } }),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.sage, lineHeight: 1.4 } },
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: 1.4 } },
             t('onboarding.privacyNote')
           )
         ),

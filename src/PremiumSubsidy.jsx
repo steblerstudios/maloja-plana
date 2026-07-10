@@ -98,7 +98,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
         React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
-      !canton && React.createElement('div', { style: { color: palette.rose } }, t('premium.enterCanton'))
+      !canton && React.createElement('div', { style: { color: palette.roseDeep } }, t('premium.enterCanton'))
     ),
 
     // Residence type warning
@@ -127,7 +127,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } }, 'CHF ' + t('common.perMonth'))
       )
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('ipv.youngAdultsNote'))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
@@ -217,13 +217,13 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
     }, '→ ' + t('nav.finanzUebersicht')),
 
     // Crosslink: IPV wird kantonal beantragt → zu den offiziellen Behörden-Links
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('direktlinks'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
     }, '→ ' + t('nav.direktlinks'))
   );
 };

@@ -150,7 +150,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, b.label),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.detail)
     ),
-    React.createElement('span', { style: { color: palette.sage, flexShrink: 0, fontSize: text.body }, 'aria-hidden': true }, '→')
+    React.createElement('span', { style: { color: palette.sageDeep, flexShrink: 0, fontSize: text.body }, 'aria-hidden': true }, '→')
   );
 
   return React.createElement('div', {
@@ -204,7 +204,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
       onClick: () => onNavigate('schnellcheck'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-        fontSize: text.xs, color: palette.sand, fontFamily: 'inherit',
+        fontSize: text.xs, color: palette.sandDeep, fontFamily: 'inherit',
         fontWeight: weight.medium, marginTop: space.md,
       }
     }, t('dashboard.quickCheckAllLeistungen'))
@@ -812,11 +812,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
               ),
             ),
-            React.createElement('span', { style: { color: palette.sage, fontSize: text.lg, flexShrink: 0 } }, '→'),
+            React.createElement('span', { style: { color: palette.sageDeep, fontSize: text.lg, flexShrink: 0 } }, '→'),
           );
         }
         return React.createElement('p', {
-          style: { fontSize: text.sm, color: palette.sage, margin: 0, fontWeight: weight.medium },
+          style: { fontSize: text.sm, color: palette.sageDeep, margin: 0, fontWeight: weight.medium },
         }, t('dashboard.nextUpAllDone'));
       })(),
       (() => {
@@ -864,7 +864,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           })()
         ),
         React.createElement('div', {
-          style: { fontSize: text.xs, color: palette.sage, fontWeight: weight.medium }
+          style: { fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.medium }
         }, Math.round(completion) + '%')
       )
     ),
@@ -1191,7 +1191,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
         }, t('dashboard.highlightTitle')),
         React.createElement('div', {
-          style: { fontSize: text.xs - 1, color: palette.sage, opacity: 0.8 }
+          style: { fontSize: text.xs - 1, color: palette.sageDeep, opacity: 0.8 }
         }, t('dashboard.highlightPrivacy'))
       ),
       (() => {
@@ -1701,7 +1701,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
         [t('dashboard.tip1'), t('dashboard.tip2'), t('dashboard.tip3'), t('dashboard.tip4')].map((tip, i) =>
           React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, display: 'flex', gap: space.sm + 2, alignItems: 'start' } },
-            React.createElement('span', { style: { color: palette.sage, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
+            React.createElement('span', { style: { color: palette.sageDeep, fontSize: text.xs, marginTop: '2px', flexShrink: 0 } }, '—'),
             tip
           )
         )
