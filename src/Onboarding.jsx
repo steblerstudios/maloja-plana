@@ -88,6 +88,19 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     fontFamily: fontFamily,
   };
 
+  // Dezenter „Zurück"-Schritt (nur in den Eingabe-Schritten 1/2) — ein Schritt
+  // zurück, damit sich frühere Angaben korrigieren lassen.
+  const backButton = React.createElement('button', {
+    key: 'back',
+    onClick: () => setStep(s => s - 1),
+    'aria-label': t('common.back'),
+    style: {
+      display: 'inline-flex', alignItems: 'center', background: 'none', border: 'none',
+      cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: fontFamily,
+      padding: '4px 6px 4px 0', marginBottom: space.sm,
+    },
+  }, '← ' + t('common.back'));
+
   // ─── Step 0: Language ────────────────────────────────────
   if (step === 0) {
     return React.createElement('div', {
@@ -163,6 +176,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
+        backButton,
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
@@ -184,7 +198,6 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               placeholder: t('onboarding.firstNamePlaceholder'),
               'aria-label': t('onboarding.firstName'),
               style: inputStyle,
-              autoFocus: true,
             })
           ),
           React.createElement('div', null,
@@ -217,7 +230,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         }, t('common.next') + ' →'),
 
         React.createElement('button', {
-          onClick: () => setStep(2),
+          onClick: finish,
           style: { ...btnSecondary, marginTop: space.sm },
         }, t('onboarding.skipForNow'))
       )
@@ -233,6 +246,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, maxWidth: '520px' } },
+        backButton,
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.needsTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, t('onboarding.needsSubtitle'))
@@ -267,7 +281,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         }, t('common.next') + ' →'),
 
         React.createElement('button', {
-          onClick: () => setStep(3),
+          onClick: finish,
           style: { ...btnSecondary, marginTop: space.sm },
         }, t('onboarding.skipForNow'))
       )
