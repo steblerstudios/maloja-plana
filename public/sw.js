@@ -7,7 +7,16 @@
 // - Background sync for reminders
 // - Offline document access
 
-const CACHE_NAME = 'maloja-plana-v9';
+// CACHE_NAME trägt den Bundle-Hash: beim Build ersetzt das Vite-Plugin
+// (vite.config.js) '__BUILD_HASH__' durch den Hash des Entry-Bundles. Ändert sich
+// der Entry-Bundle-Hash (der Normalfall, sobald sich der App-Code ändert), ändern
+// sich auch die sw.js-Bytes → der Browser erkennt das SW-Update → activate räumt
+// den alten Cache. ACHTUNG: Deploys, die NUR public/-Dateien oder einen einzelnen
+// Lazy-Chunk anfassen, lassen den Entry-Hash u. U. unverändert → dann wird kein
+// SW-Update erkannt. Online unkritisch, weil die App-Shell ('/') network-first
+// geladen wird; relevant nur für Offline-Nutzung/Cache-Aufräumen. Im Dev-Modus
+// bleibt der Platzhalter stehen (harmlos, wird nie deployt).
+const CACHE_NAME = 'maloja-plana-__BUILD_HASH__';
 const OFFLINE_URL = '/';
 
 // ─── Install: cache the app shell ──────────────────────────
