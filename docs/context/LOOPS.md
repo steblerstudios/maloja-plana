@@ -36,7 +36,10 @@ Manuell aufrufbar über den Agent-/Task-Mechanismus, oder gebündelt via `/maloj
 | `/maloja-check` | Schnelles lokales Gate: Tests, Build, Size, i18n, CSP. Read-only Bericht. | 0 (informativ) |
 | `/maloja-review` | Voller Review: ruft die Prüf-Agenten parallel, sammelt priorisiert. | 1–2 (assistiv/advisory) |
 | `/maloja-predeploy` | Deploy-Gate: strenge Verifikation + de-Chunk-Check + Erinnerung an ultrareview. Deployt NICHT. | 2 (advisory) |
+| `/maloja-blick` | Sichtprüfung des **Gerenderten**: Screenshots (oder selbst aufgenommen via Dev-Server) als Journey lesen — Hierarchie, Raum, Ruhe, Sprache, WCAG 2.2 (Fokus nicht verdeckt, Zielgrössen, Reflow). Priorisierung P0–P3, a11y nie tiefer als P1. Ergänzt die Code-Prüfer um den Blick der Nutzerinnen. | 1–2 (advisory) |
 | `/maloja-ablauf` | Lebenssituation durchs 7-Spalten-Raster (docs/ABLAEUFE.md): Bausteine, Lücken, Crosslinks, nächste Aktion. | 1 (assistiv) |
+| `/maloja-council` | Entscheidungs-Council für grosse Weichen: fünf Berater, die streiten müssen, plus Vorsitz-Verdikt. Entscheidet nichts, baut nichts. | 1 (assistiv) |
+| `/maloja-release` | Ruhiger Release-Ablauf: verifiziert, committet, pusht, erstellt den PR nach `main`. Deployt NICHT. | 3 (nur auf Wort) |
 | `/braindump` | Rohen Ideen-Dump strukturieren/triagieren → datierter Block an docs/TODO.md. | 0–1 |
 
 Deploy selbst bleibt manuell: `bash deploy.sh` (SFTP → Infomaniak), von Sophies Mac, bei ~10+ Commits über LIVE.
