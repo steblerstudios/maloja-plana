@@ -249,8 +249,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 }, tr('chapters.basis.fields.household.removeChild'))
               ),
               React.createElement('div', { style: { marginBottom: space.sm } },
-                React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
-                React.createElement('input', { type: 'text', value: adult.name || '', onChange: (e) => updateAdult({ name: e.target.value }), placeholder: '–', style: { ...hhSelect, cursor: 'text' } })
+                React.createElement('label', { htmlFor: 'hh-adult-' + idx + '-name', style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
+                React.createElement('input', { id: 'hh-adult-' + idx + '-name', type: 'text', value: adult.name || '', onChange: (e) => updateAdult({ name: e.target.value }), placeholder: '–', style: { ...hhSelect, cursor: 'text' } })
               ),
               hhPills(
                 tr('chapters.basis.fields.household.adultRelationship'),
@@ -276,8 +276,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
       // Partner income — only when 2+ adults
       adultCount >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
-        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
+        React.createElement('label', { htmlFor: 'hh-partner-income', style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
         React.createElement('input', {
+          id: 'hh-partner-income',
           type: 'number', inputMode: 'decimal',
           value: household.partnerIncome || '',
           onChange: (e) => updateHousehold({ partnerIncome: e.target.value }),
@@ -327,16 +328,17 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               ),
               React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm } },
                 React.createElement('div', null,
-                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
-                  React.createElement('input', { type: 'text', value: child.name || '', onChange: (e) => updateChild({ name: e.target.value }), placeholder: '–', style: childInput })
+                  React.createElement('label', { htmlFor: 'hh-child-' + idx + '-name', style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childName')),
+                  React.createElement('input', { id: 'hh-child-' + idx + '-name', type: 'text', value: child.name || '', onChange: (e) => updateChild({ name: e.target.value }), placeholder: '–', style: childInput })
                 ),
                 React.createElement('div', null,
-                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childBirthDate')),
-                  React.createElement('input', { type: 'date', value: child.birthDate || '', onChange: (e) => updateChild({ birthDate: e.target.value }), style: childInput })
+                  React.createElement('label', { htmlFor: 'hh-child-' + idx + '-bd', style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childBirthDate')),
+                  React.createElement('input', { id: 'hh-child-' + idx + '-bd', type: 'date', value: child.birthDate || '', onChange: (e) => updateChild({ birthDate: e.target.value }), style: childInput })
                 ),
                 React.createElement('div', null,
-                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childAge')),
+                  React.createElement('label', { htmlFor: 'hh-child-' + idx + '-age', style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childAge')),
                   React.createElement('input', {
+                    id: 'hh-child-' + idx + '-age',
                     type: 'number', inputMode: 'numeric', min: 0, max: 25,
                     value: (() => {
                       if (child.birthDate) {
@@ -355,8 +357,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   })
                 ),
                 React.createElement('div', null,
-                  React.createElement('label', { style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childInsurer')),
-                  React.createElement('input', { type: 'text', value: child.insurer || '', onChange: (e) => updateChild({ insurer: e.target.value }), placeholder: '–', style: childInput })
+                  React.createElement('label', { htmlFor: 'hh-child-' + idx + '-insurer', style: { ...hhLabel, fontSize: text.xs } }, tr('chapters.basis.fields.household.childInsurer')),
+                  React.createElement('input', { id: 'hh-child-' + idx + '-insurer', type: 'text', value: child.insurer || '', onChange: (e) => updateChild({ insurer: e.target.value }), placeholder: '–', style: childInput })
                 )
               )
             );
@@ -1944,8 +1946,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' } },
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
+            React.createElement('label', { htmlFor: 'doc-upload-type', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.docType') + ' *'),
             React.createElement('select', {
+              id: 'doc-upload-type',
               value: uploadType,
               onChange: (e) => setUploadType(e.target.value),
               style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
@@ -1955,8 +1958,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             )
           ),
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.expiryDate') + ' *'),
+            React.createElement('label', { htmlFor: 'doc-upload-expiry', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, display: 'block', marginBottom: space.sm - 2 } }, tr('chapterView.expiryDate') + ' *'),
             React.createElement('input', {
+              id: 'doc-upload-expiry',
               type: 'date',
               value: uploadExpiry,
               onChange: (e) => setUploadExpiry(e.target.value),

@@ -14,9 +14,11 @@ const getDaysUntilExpiry = (expiryDate) => {
 
 const getExpiryStatus = (expiryDate, palette, t) => {
   const days = getDaysUntilExpiry(expiryDate);
-  if (days < 0) return { status: 'expired', color: palette.rose, label: t('tresor.expired') };
-  if (days < 90) return { status: 'warning', color: palette.gold, label: days + 'd' };
-  return { status: 'ok', color: palette.sage, label: '✓' };
+  // Status-Farben als lesbarer Text auf der Karte (13px) — Deep-Varianten, damit der
+  // Kontrast auf hellen Karten AA erfüllt (gold 2.19:1 / rose 3.59:1 / sage 4.11:1 auf up).
+  if (days < 0) return { status: 'expired', color: palette.roseDeep, label: t('tresor.expired') };
+  if (days < 90) return { status: 'warning', color: palette.goldDeep, label: days + 'd' };
+  return { status: 'ok', color: palette.sageDeep, label: '✓' };
 };
 
 const OrdnerIcon = ({ palette, fillLevel }) => {
