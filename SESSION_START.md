@@ -20,6 +20,9 @@
 
 ## Verifikations-Status (das Wichtigste)
 
+> Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
+
+
 - **Live-verifiziert zuletzt:** `0.1.23-beta` = `e45ec3c` (Footer + Hash bestätigt).
 - **Deployt, aber NICHT live-verifiziert:** `v0.1.24-beta`. Sophie hat deployt, aber
   Footer-Version/Bundle-Hash wurden nie live gegengeprüft. → **Nächste Sitzung zuerst
