@@ -12,8 +12,10 @@ dist/
 *~
 .DS_Store
 
-# Claude Code
-.claude/
+# Claude Code — nur die Skills tracken; Maschinen-Pfade + Permission-Regeln
+# (settings.json, launch.json) und Agenten/Commands bleiben lokal.
+.claude/*
+!.claude/skills/
 
 # Environment
 .env
