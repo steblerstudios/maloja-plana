@@ -13,7 +13,7 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-07-10 · **Live-verifiziert: `main` = `0ebb865` → Bundle `index-1fb26e10.js`** (curl auf malojaplana.ch == frischer main-Build; Vite-Content-Hash identisch = byte-genau)
+**Stand:** 2026-07-10 · **Live-verifiziert: App-Bundle `index-1fb26e10.js`** (curl auf malojaplana.ch == frischer main-Build; Vite-Content-Hash identisch = byte-genau). `main` steht auf `79f78d2`; die Commits nach `0ebb865` (Stage-Deploy-Skript, Leitplanken, PR #21-Config/Docs) ändern **keinen App-Code** → dasselbe Bundle bleibt live.
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
