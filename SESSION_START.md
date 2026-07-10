@@ -40,10 +40,10 @@
 
 ## Nächste Schritte
 
-1. **Stage scharfschalten:** `STAGE_REMOTE_DIR` steht schon korrekt in `deploy.sh`
-   (`…/sites/stage.malojaplana.ch/`, aus dem Panel bestätigt 2026-07-10). Offen nur noch:
-   `bash deploy.sh --stage` einmal laufen lassen und `https://stage.malojaplana.ch`
-   gegenprüfen.
+1. **Stage steht ✅** — `stage.malojaplana.ch` liefert die App (HTTP 200, Sophie
+   geprüft 2026-07-10); `STAGE_REMOTE_DIR` in `deploy.sh` bestätigt korrekt. Der
+   GitHub-Flow-Ring (Werkbank → `deploy.sh --stage` → PR → Prod) ist damit voll
+   einsatzbereit.
 2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
    Label-Kopplung Haushalt+Upload).
 
