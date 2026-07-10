@@ -22,7 +22,7 @@ export const DARK_PALETTE = {
 
 export const LIGHT_PALETTE = {
   bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
-  border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#727680',
+  border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#64676E',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
