@@ -365,7 +365,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         // Security warning
         React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, border: '1px solid ' + palette.rose, fontSize: text.sm, color: palette.mid } },
-          React.createElement('strong', { style: { color: palette.rose } }, '◉ ' + t('zipExport.security') + ':'),
+          React.createElement('strong', { style: { color: palette.roseDeep } }, '◉ ' + t('zipExport.security') + ':'),
           React.createElement('div', { style: { marginTop: '6px' } }, t('zipExport.securityNote'))
         )
       )
