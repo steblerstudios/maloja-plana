@@ -29,8 +29,8 @@
   - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
     (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
     prüfen, dass `deploy.sh` wirklich frisch baut.
-- **Gebaut, aber NICHT in `main`/live:** Kapitalbezugssteuer `231c8a1` (auf dev, 535 Tests
-  grün) — separater Deploy nötig.
+- **Nichts Ausstehendes:** `origin/dev` ist vollständig in `main` aufgegangen (0 Commits
+  voraus). Auch die Kapitalbezugssteuer (`e4fe262`) ist in `main` und live.
 
 ## Nächste Schritte
 
@@ -38,7 +38,6 @@
    erster Verifikations-Kreis 2026-07-10 geschlossen.
 2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
    Label-Kopplung Haushalt+Upload).
-3. Kapitalbezugssteuer `231c8a1` von dev nach `main` bringen + deployen.
 
 ## Nicht anfassen (Leitplanken)
 
