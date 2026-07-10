@@ -16,14 +16,14 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
   const cantonalUrl = cantonalLinks && cantonalKey ? cantonalLinks[cantonalKey] : null;
 
   const linkStyle = {
-    fontSize: text.xs, color: palette.sage, textDecoration: 'underline',
+    fontSize: text.xs, color: palette.sageDeep, textDecoration: 'underline',
     textUnderlineOffset: '2px', wordBreak: 'break-all',
   };
   // Der Behörden-/Quellenname ist der Link (semantisches Wort statt nackter URL,
   // vgl. Quellen-Link-Stil); die echte Gov-URL steht klein/gedimmt darunter als
   // Transparenz-Beleg, dass es eine offizielle Quelle ist.
   const nameLinkStyle = {
-    fontWeight: weight.semi, fontSize: text.sm, color: palette.sage,
+    fontWeight: weight.semi, fontSize: text.sm, color: palette.sageDeep,
     textDecoration: 'underline', textUnderlineOffset: '2px',
   };
   const urlHintStyle = {

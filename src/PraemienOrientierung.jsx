@@ -163,7 +163,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
-    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
+    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
     targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? palette.sage : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
@@ -251,7 +251,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       const shownRef = (!withUnfall && ohne) ? ohne : referenceData.specificPremium;
       const saving = ohne ? (referenceData.specificPremium - ohne) : 0;
       return React.createElement('div', { style: s.highlight },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs + 'px' } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs + 'px' } },
           t('po.comparison')
         ),
         React.createElement('div', { style: { fontSize: text.sm } },
@@ -272,7 +272,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         React.createElement('div', { style: { fontSize: text.sm } },
           t('po.refPremium', { amount: shownRef.toFixed(2), franchise: userFranchise })
         ),
-        canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginTop: '2px' } },
+        canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' } },
           t('po.unfallSaving', { diff: saving.toFixed(2) })
         ),
         Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? palette.rose : palette.sage } },
@@ -353,7 +353,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         t('po.franchiseOptSaving', { high: franchiseOpt.highFra.toLocaleString(), low: franchiseOpt.lowFra.toLocaleString(), saving: franchiseOpt.annualSaving.toLocaleString() })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
         t('po.franchiseOptReserve', { reserve: franchiseOpt.reserve.toLocaleString(), sb: franchiseOpt.sbMax })),
-      franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
+      franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
         t('po.franchiseOptBreakeven', { breakeven: franchiseOpt.breakEven.toLocaleString() })),
       // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
       reserveCheck && React.createElement('div', {
@@ -471,7 +471,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           })
         )
       ),
-      targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sage, marginTop: space.sm + 'px', fontWeight: weight.medium } },
+      targetInsurer && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.sm + 'px', fontWeight: weight.medium } },
         t('po.targetChosenHint', { insurer: targetInsurer }) + (ageClass !== 'kind' && data.versicherungen?.targetUvg ? ' (' + (data.versicherungen.targetUvg === 'ohne' ? t('po.ohneUnfall') : t('po.mitUnfall')) + ')' : ''))
     ),
 
