@@ -86,6 +86,25 @@ Diese Fragen erfordern Muttersprachler-Feedback und werden hier nur dokumentiert
 
 ---
 
+## Klarheits-Check (still, vor jeder neuen Copy)
+
+Der erste Entwurf ist meist die durchschnittliche Verwaltungs- oder SaaS-Formulierung.
+Genau die will Maloja nicht. Bevor eine neue Copy stehen bleibt, prüfen:
+
+1. **Ist das die naheliegende Floskel?** Würde jede Behörden-Website oder jedes
+   SaaS-Tool ungefähr dasselbe schreiben ("Verwalten Sie Ihre Dokumente",
+   "Jetzt loslegen", "Optimieren Sie …")? Wenn ja: verwerfen, neu ansetzen.
+2. **Konkret statt abstrakt?** Nennt der Satz die echte Schweizer Situation
+   (Franchise, Kündigungsfrist 30.11., IK-Auszug) statt Allgemeinplätze?
+3. **Menschlich, nicht werblich?** Keine Hype-Wörter, keine Ausrufezeichen-Dringlichkeit,
+   gender-neutral.
+4. **Ruhe oder Druck?** Fühlt sich die Person danach orientiert — oder gedrängt/geprüft?
+
+Nur stehen lassen, was diese vier Fragen übersteht. Ziel: nicht auffälliger, sondern
+weniger generisch, klarer, menschlicher.
+
+---
+
 ## Regeln
 
 1. **Maloja bewertet nicht.** Keine "vollständig", "100%", "perfekt", "gut gemacht".
@@ -93,3 +112,4 @@ Diese Fragen erfordern Muttersprachler-Feedback und werden hier nur dokumentiert
 3. **Produkttexte dürfen warm sein.** "Dein Lebensordner nimmt Form an" ist erlaubt.
 4. **Markentexte dürfen poetisch sein.** Aber sparsam einsetzen.
 5. **Code-interne Begriffe** (mirror, tresor als Key) bleiben stabil — nur die sichtbaren Labels ändern sich.
+6. **Klarheits-Check vor neuer Copy.** Nie die erste, durchschnittliche Floskel stehen lassen (siehe oben).
