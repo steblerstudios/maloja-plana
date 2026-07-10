@@ -65,7 +65,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
 
       importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.gold, fontWeight: weight.semi } }, 'ⓘ ' + t('budgetImport.importing')),
 
-      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.rose, fontWeight: weight.semi, marginTop: space.sm } }, '✕ ' + importError),
+      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, '✕ ' + importError),
 
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm } },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, '□ ' + t('budgetImport.formatExample') + ':'),
