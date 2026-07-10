@@ -12,8 +12,10 @@
 Der Ist-Stand ist zu ~2/3 vorhanden, aber die „Wahrheit" liegt an mehreren Orten und
 widerspricht sich teils:
 
-- `PROJECT_STATUS.md` (root) — **veraltet** (16.05., zeigt 447 KB / alte Commits)
-- `docs/context/PROJECT_HANDOFF.md` — **veraltet** (17.05., „Implementation steht bevor")
+- `PROJECT_STATUS.md` (root) — war **veraltet** (16.05.); 2026-07-10 nach
+  `docs/archive/claude-handoffs/` archiviert, Leitplanken nach `SESSION_START.md` gerettet
+- `PROJECT_HANDOFF.md` (war `docs/context/`) — war **veraltet** (17.05., verworfene
+  Runtime-Vision); 2026-07-10 ebenfalls archiviert
 - Memory `project_maloja_plana.md` — lebendig, aber hinkt hinterher (kannte Branch
   `a11y/pass3-tresor-labels` + 4 Commits nicht)
 - `ROADMAP_NEXT.md` / `RELEASE_CRITERIA.md` / `BUGS.md` — Roadmap, aber kein
@@ -33,8 +35,8 @@ widerspricht sich teils:
 - **Schritt 0 — dieser Plan.** ✓
 - **Schritt 1 — `SESSION_START.md`** (root): 1 Bildschirm. Aktueller Tag/Branch, was
   live-verifiziert ist, was „gebaut aber undeployt", 3–5 nächste Schritte. Löst
-  `PROJECT_STATUS.md` als Wahrheit ab. `PROJECT_STATUS.md` wird oben mit Zeiger auf
-  `SESSION_START.md` markiert (nicht gelöscht ohne Sophies OK).
+  `PROJECT_STATUS.md` als Wahrheit ab. `PROJECT_STATUS.md` wurde 2026-07-10 nach
+  `docs/archive/claude-handoffs/` archiviert.
 - **Schritt 2 — `FEATURES.md`** (oder `.json`): eine Zeile je End-to-End-Feature mit
   Status `built` / `deployed` / `verified-live`. `verified-live` wird erst gesetzt, wenn
   Footer-Version **und** Bundle-Hash gegengeprüft sind — löst das offene 0.1.24-Problem
