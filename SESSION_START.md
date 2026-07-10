@@ -13,8 +13,8 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `chore/github-flow-feinschliff` — **PR #21 offen, NICHT gemergt** |
-| `main` steht auf | `79f78d2` — docs: Leitplanken (Wahrheits-Disziplin, Klarheits-Check) |
+| Aktueller Branch | `main` (PR #21 gemergt) |
+| `main` steht auf | `8e0d15e` — Merge PR #21 (GitHub-Flow-Feinschliff + Skill-Tracking) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 
@@ -25,27 +25,26 @@
 
 - **Live-verifiziert:** App-Bundle `index-1fb26e10.js` (a11y-Pass 3) ist byte-genau
   live — curl auf malojaplana.ch = frischer main-Build (geprüft 2026-07-10).
-  `main` steht seither auf `79f78d2`; die Commits nach `0ebb865` (PR #20 Stage-Umgebung
-  = `deploy.sh`, Leitplanken = docs) ändern **keinen App-Code** → das live ausgelieferte
-  Bundle ist unverändert. Der Bundle-Hash von `79f78d2` selbst wurde noch nicht neu
-  gegen live geprüft (kein App-Deploy nötig).
+  `main` steht seither auf `8e0d15e`; die Commits nach `0ebb865` (PR #20 Stage-Umgebung
+  = `deploy.sh`, Leitplanken = docs, PR #21 = ci/deploy/docs/vite + `.claude/skills`)
+  ändern **keinen App-Code** → das live ausgelieferte Bundle ist unverändert. Der
+  Bundle-Hash von `8e0d15e` selbst wurde noch nicht neu gegen live geprüft (kein
+  App-Deploy nötig).
   - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
     (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
     prüfen, dass `deploy.sh` wirklich frisch baut.
-- **Ausstehend:** **PR #21** (`chore/github-flow-feinschliff`) wartet auf Review/Merge.
-  Inhalt = GitHub-Flow-Feinschliff (ci/deploy/docs/vite) + `.claude/skills`-Tracking.
-  Nur Config/Docs/Skills → **kein App-Code**, App-Bundle unverändert. Kein `dev` mehr
-  (GitHub Flow; `dev` gelöscht). Kapitalbezugssteuer (`e4fe262`) ist in `main` und live.
+- **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
+  Ablauf `feat/…` → `deploy.sh --stage` → PR→main → `deploy.sh`; Qualitäts-Ring je
+  Schicht (`DEV_WORKFLOW.md`). `/session-close` schliesst Sitzungen ab. Kapitalbezugs-
+  steuer (`e4fe262`) ist in `main` und live.
 
 ## Nächste Schritte
 
-1. **PR #21 durchsehen + mergen** (Sophie). Nach Merge: **kein Prod-Deploy nötig** —
-   nur Config/Docs/Skills, App-Bundle `index-1fb26e10.js` unverändert. Danach
-   Feature-Branch `chore/github-flow-feinschliff` löschen.
-2. **Stage scharfschalten** (separat): `STAGE_REMOTE_DIR` aus dem Infomaniak-Panel in
-   `deploy.sh` eintragen, sobald `stage.malojaplana.ch` fertig installiert ist, dann
-   `bash deploy.sh --stage` einmal testen.
-3. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
+1. **Stage steht ✅** — `stage.malojaplana.ch` liefert die App (HTTP 200, Sophie
+   geprüft 2026-07-10); `STAGE_REMOTE_DIR` in `deploy.sh` bestätigt korrekt. Der
+   GitHub-Flow-Ring (Werkbank → `deploy.sh --stage` → PR → Prod) ist damit voll
+   einsatzbereit.
+2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
    Label-Kopplung Haushalt+Upload).
 
 ## Nicht anfassen (Leitplanken)
