@@ -123,7 +123,7 @@ export const BetaGate = ({ children }) => {
       error && React.createElement('p', {
         id: 'beta-error',
         role: 'alert',
-        style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm }
+        style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm }
       }, t('beta.codeWrong')),
       React.createElement(PrimaryButton, {
         palette, type: 'submit',

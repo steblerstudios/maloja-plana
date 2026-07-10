@@ -1634,7 +1634,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 elements.push(
                   React.createElement('div', {
                     key: 'hours-minwage-warn',
-                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.rose, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                    style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   },
                     tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2) })
                   )
@@ -1768,7 +1768,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         borderRadius: radius.sm,
                         padding: space.sm + 'px ' + space.md + 'px',
                         fontSize: text.sm,
-                        color: palette.rose,
+                        color: palette.roseDeep,
                         lineHeight: leading.relaxed,
                         marginBottom: space.sm + 'px',
                       }
@@ -1979,7 +1979,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           })
         ),
 
-        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.rose, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
+        uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
         uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, '✓ ' + uploadSuccess),
 
