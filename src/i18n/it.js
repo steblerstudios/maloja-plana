@@ -2902,6 +2902,7 @@ export default {
     yourCanton: { sie: 'Il Suo cantone', du: 'Il tuo cantone' },
     privacyNote: { sie: 'I Suoi dati restano su questo dispositivo. Nessun account. Nessun cloud.', du: 'I tuoi dati restano su questo dispositivo. Nessun account. Nessun cloud.' },
     skipForNow: 'Salta per ora',
+    stepOf: 'Passo {current} di {total}',
     needsTitle: { sie: 'Cosa la riguarda in questo momento?', du: 'Cosa ti riguarda in questo momento?' },
     needsSubtitle: { sie: 'Scelga ciò che le corrisponde — Maloja le mostra subito a cosa ha diritto. Può modificarlo in qualsiasi momento.', du: 'Scegli ciò che ti corrisponde — Maloja ti mostra subito a cosa hai diritto. Puoi modificarlo in qualsiasi momento.' },
     readyTitle: 'Pronto, {name}!',

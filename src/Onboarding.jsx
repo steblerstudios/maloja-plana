@@ -88,12 +88,63 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     fontFamily: fontFamily,
   };
 
+  // Dezenter „Zurück"-Schritt (nur in den Eingabe-Schritten 1/2) — ein Schritt
+  // zurück, damit sich frühere Angaben korrigieren lassen.
+  const backButton = React.createElement('button', {
+    key: 'back',
+    onClick: () => setStep(s => s - 1),
+    'aria-label': t('common.back'),
+    style: {
+      display: 'inline-flex', alignItems: 'center', background: 'none', border: 'none',
+      cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: fontFamily,
+      padding: '4px 6px 4px 0', marginBottom: space.sm,
+    },
+  }, '← ' + t('common.back'));
+
+  // Fortschritt (Mischung: Punkte-Marker A + füllende Spur C + Textzeile B) — ruhig,
+  // gibt Orientierung ohne Behörden-Ton. Screenreader liest die Textzeile.
+  const TOTAL_STEPS = 4;
+  const stepIndicator = (current) => React.createElement('div', {
+    role: 'group', 'aria-label': t('onboarding.stepOf', { current: current + 1, total: TOTAL_STEPS }),
+    style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', marginBottom: space.md },
+  },
+    React.createElement('div', { 'aria-hidden': 'true', style: { display: 'flex', alignItems: 'center' } },
+      Array.from({ length: TOTAL_STEPS }).map((_, i) => {
+        const isCurrent = i === current;
+        const dot = React.createElement('span', {
+          key: 'd' + i,
+          style: {
+            width: isCurrent ? '9px' : '7px', height: isCurrent ? '9px' : '7px',
+            borderRadius: '50%', flexShrink: 0,
+            background: i <= current ? palette.sageDeep : palette.border,
+            transition: `background ${duration.normal}ms ${ease}, width ${duration.normal}ms ${ease}, height ${duration.normal}ms ${ease}`,
+          },
+        });
+        if (i === 0) return dot;
+        return React.createElement(React.Fragment, { key: 'f' + i },
+          React.createElement('span', {
+            style: {
+              width: '20px', height: '2px', margin: '0 3px',
+              background: i <= current ? palette.sageDeep : palette.border,
+              transition: `background ${duration.normal}ms ${ease}`,
+            },
+          }),
+          dot
+        );
+      })
+    ),
+    React.createElement('div', { 'aria-hidden': 'true', style: { fontSize: text.xs, color: palette.mid } },
+      t('onboarding.stepOf', { current: current + 1, total: TOTAL_STEPS })
+    )
+  );
+
   // ─── Step 0: Language ────────────────────────────────────
   if (step === 0) {
     return React.createElement('div', {
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
+        stepIndicator(0),
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement('h1', {
             'aria-label': 'Maloja Plana',
@@ -163,6 +214,8 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: cardStyle },
+        stepIndicator(1),
+        backButton,
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.welcomeTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: 1.5 } }, t('onboarding.welcomeSubtitle'))
@@ -184,7 +237,6 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               placeholder: t('onboarding.firstNamePlaceholder'),
               'aria-label': t('onboarding.firstName'),
               style: inputStyle,
-              autoFocus: true,
             })
           ),
           React.createElement('div', null,
@@ -217,7 +269,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         }, t('common.next') + ' →'),
 
         React.createElement('button', {
-          onClick: () => setStep(2),
+          onClick: finish,
           style: { ...btnSecondary, marginTop: space.sm },
         }, t('onboarding.skipForNow'))
       )
@@ -233,6 +285,8 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
     },
       React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, maxWidth: '520px' } },
+        stepIndicator(2),
+        backButton,
         React.createElement('div', { style: { textAlign: 'center', marginBottom: space.lg } },
           React.createElement(PageTitle, { palette, style: { marginBottom: space.xs } }, t('onboarding.needsTitle')),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } }, t('onboarding.needsSubtitle'))
@@ -267,7 +321,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         }, t('common.next') + ' →'),
 
         React.createElement('button', {
-          onClick: () => setStep(3),
+          onClick: finish,
           style: { ...btnSecondary, marginTop: space.sm },
         }, t('onboarding.skipForNow'))
       )
@@ -279,6 +333,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     style: { width: '100vw', height: '100vh', background: palette.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', boxSizing: 'border-box' }
   },
     React.createElement('div', { role: 'main', 'aria-label': 'Maloja Plana', style: { ...cardStyle, textAlign: 'center' } },
+      stepIndicator(3),
       React.createElement('div', { style: {
         width: '80px', height: '80px', borderRadius: '50%',
         background: 'linear-gradient(135deg, ' + palette.sand + ', ' + palette.sage + ')',
