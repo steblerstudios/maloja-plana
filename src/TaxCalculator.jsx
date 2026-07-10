@@ -129,7 +129,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         ),
 
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sand, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t('tax.netIncomeNote')),
 
@@ -250,13 +250,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
     }, '→ ' + t('nav.finanzUebersicht')),
 
     // Crosslink: Frist nicht zu schaffen? → Fristverlängerungs-Brief (Vorlage existiert)
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('briefe'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
     }, '→ ' + t('briefe.taxExtension.title'))
   );
 };

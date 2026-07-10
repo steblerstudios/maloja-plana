@@ -57,7 +57,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
     },
       React.createElement('button', {
         type: 'button', onClick: add,
-        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.sand, fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, padding: '2px 0' },
+        style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.semi, fontSize: text.sm, padding: '2px 0' },
       }, '+ ' + t('itemized.add')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid },

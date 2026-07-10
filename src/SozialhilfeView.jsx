@@ -117,7 +117,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
         ipv.eligible
           ? React.createElement('div', null,
-              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sage, marginBottom: space.xs, fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
+              React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs, fontSize: text.sm } }, '✓ ' + t('premium.eligible') + ': ' + formatCHF(ipv.amount) + t('common.perMonth')),
               React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipv.noteKey, ipv.noteParams))
             )
           : React.createElement('div', null,
@@ -196,13 +196,13 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
     }, '→ ' + t('nav.finanzUebersicht')),
 
     // Mietzinsbeiträge können ein Anspruch VOR/neben der Sozialhilfe sein — ruhig dorthin verweisen.
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('mietzins'),
-      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' }
+      style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' }
     }, '→ ' + t('nav.mietzins'))
   );
 };

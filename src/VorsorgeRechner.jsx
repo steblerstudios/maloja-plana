@@ -179,11 +179,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     row: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sage },
+    big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
-    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
+    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
     // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
     // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
@@ -344,17 +344,45 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     );
   };
 
+  // Reiter als Daten — für ARIA-Tabs-Muster (tablist/tab/tabpanel) + Pfeiltasten-Navigation.
+  const TABS = [
+    { key: 'ahv', label: t('vr.tabAhv') },
+    { key: 'bvg', label: t('vr.tabBvg') },
+    { key: 'vergleich', label: t('vr.tabVergleich') },
+    { key: 'zukunft', label: t('vr.tabZukunft') },
+    { key: 'fz', label: t('vr.tabFreizuegigkeit') },
+  ];
+  // Pfeiltasten/Home/End bewegen die Auswahl UND den Fokus (WAI-ARIA „roving tabindex").
+  const onTabKey = (e, idx) => {
+    const targets = { ArrowRight: idx + 1, ArrowLeft: idx - 1, Home: 0, End: TABS.length - 1 };
+    if (!(e.key in targets)) return;
+    e.preventDefault();
+    const next = (targets[e.key] + TABS.length) % TABS.length;
+    setActiveTab(TABS[next].key);
+    const el = document.getElementById('vrtab-' + TABS[next].key);
+    if (el) el.focus();
+  };
+
   return React.createElement('div', { style: s.card },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'vorsorge', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('vr.title')),
 
     // Tab row (sticky Wrapper + scrollender Inhalt + rechte Verlauf-Kante)
     React.createElement('div', { style: s.tabWrap },
-      React.createElement('div', { style: s.tabRow },
-        React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
-        React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
-        React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
-        React.createElement('button', { style: s.tab(activeTab === 'zukunft'), onClick: () => setActiveTab('zukunft') }, t('vr.tabZukunft')),
-        React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
+      React.createElement('div', { style: s.tabRow, role: 'tablist', 'aria-label': t('vr.title') },
+        TABS.map((tab, i) => {
+          const active = activeTab === tab.key;
+          return React.createElement('button', {
+            key: tab.key,
+            id: 'vrtab-' + tab.key,
+            role: 'tab',
+            'aria-selected': active,
+            'aria-controls': 'vr-tabpanel',
+            tabIndex: active ? 0 : -1,
+            onClick: () => setActiveTab(tab.key),
+            onKeyDown: (e) => onTabKey(e, i),
+            style: s.tab(active),
+          }, tab.label);
+        })
       ),
       React.createElement('div', { style: s.tabFade })
     ),
@@ -388,6 +416,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       )
     ),
 
+    // Reiter-Inhalt als ein tabpanel (relabelt sich nach aktivem Reiter) — die
+    // geteilten Elemente darunter (Amtslinks/Quelle/Nav) bleiben bewusst aussen.
+    React.createElement('div', { role: 'tabpanel', id: 'vr-tabpanel', 'aria-labelledby': 'vrtab-' + activeTab, tabIndex: 0 },
+
     // AHV Tab
     activeTab === 'ahv' && ahvResult && React.createElement(React.Fragment, null,
       React.createElement('div', { 'aria-live': 'polite', style: s.highlight },
@@ -399,7 +431,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       ),
       React.createElement('div', { style: s.section },
         React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')',
-          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sage, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
+          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
         ),
         ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.gold } },
           t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
@@ -489,7 +521,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
           React.createElement('button', {
             onClick: () => setZukunftIkOpen(o => !o),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sage, textDecoration: 'underline', fontFamily: 'inherit' }
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', fontFamily: 'inherit' }
           }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
           React.createElement('button', {
             onClick: () => setActiveTab('ahv'),
@@ -718,7 +750,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
             legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche', { le: parsedLE })),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
       })(),
@@ -732,12 +764,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ...['K1', 'K2', 'K3', 'K4', 'K5'].map((k) => React.createElement('div', {
           key: k, style: { display: 'flex', gap: space.sm + 'px', fontSize: text.sm, color: palette.text, lineHeight: 1.5, marginBottom: space.xs + 'px' },
         },
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sand, flexShrink: 0, fontWeight: weight.bold } }, '·'),
+          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sandDeep, flexShrink: 0, fontWeight: weight.bold } }, '·'),
           React.createElement('span', null, t('vr.altersKosten' + k))
         )),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('pflege'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, '→ ' + t('gepaeck.w.pflege'))
       ),
 
@@ -754,7 +786,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.55, marginTop: space.sm + 'px' } }, t('vr.altersHilfenRegional')),
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('schnellcheck'),
-          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium },
+          style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
         }, '→ ' + t('vr.altersHilfenCheck'))
       ),
 
@@ -796,7 +828,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                 'CHF ' + fmt(einzel.total) + ' (' + t('vr.kbEffective', { pct: einzel.effektiverSatz }) + ')'),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
                 t('vr.kbFederal') + ' CHF ' + fmt(einzel.bund) + ' · ' + t('vr.kbCantonal') + ' CHF ' + fmt(einzel.kantonGemeinde) + ' (' + einzel.hauptort + ')'),
-              React.createElement('div', { style: { marginTop: space.xs + 'px', fontWeight: weight.semi, color: palette.sage } },
+              React.createElement('div', { style: { marginTop: space.xs + 'px', fontWeight: weight.semi, color: palette.sageDeep } },
                 t('vr.kbNet') + ': CHF ' + fmt(einzel.netto))
             );
           }
@@ -936,7 +968,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           )
         )
       )
-    ),
+    )),
 
     activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
 
@@ -948,7 +980,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
-      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sand, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
+      style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
     }, '→ ' + t('nav.finanzUebersicht'))
   );
 };

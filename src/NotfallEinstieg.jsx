@@ -199,7 +199,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         ),
 
         allDone && React.createElement('div', {
-          style: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.sage, fontStyle: 'italic' }
+          style: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.sageDeep, fontStyle: 'italic' }
         }, t('notfallEinstieg.allDone'))
       );
     }),

@@ -147,7 +147,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       ),
 
       scanResult && !conflicts && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px', fontSize: text.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sage } }, '✓ ' + t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px', color: palette.sageDeep } }, '✓ ' + t('kkScanner.scanSuccess') + ' (' + scanResult.type.toUpperCase() + ')')
       ),
 
       conflicts && React.createElement('div', { style: { padding: space.md, background: palette.gold + '15', border: '1px solid ' + palette.gold, borderRadius: radius.sm, marginBottom: '12px' } },
@@ -158,13 +158,13 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
             React.createElement('div', { key: field, style: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: space.xs, padding: space.xs, background: palette.surface, borderRadius: radius.sm, fontSize: text.xs } },
               React.createElement('div', { style: { fontWeight: weight.medium } }, t('kkScanner.' + field) || field),
               React.createElement('div', { style: { color: palette.mid } }, kkData[field] || '—'),
-              React.createElement('div', { style: { color: palette.sage, fontWeight: weight.medium } }, conflicts.scanned[field] || '—')
+              React.createElement('div', { style: { color: palette.sageDeep, fontWeight: weight.medium } }, conflicts.scanned[field] || '—')
             )
           )
         ),
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.xs, fontSize: text.xs } },
           React.createElement('div', { style: { textAlign: 'center', color: palette.mid, fontWeight: weight.medium } }, t('kkScanner.conflictCurrent')),
-          React.createElement('div', { style: { textAlign: 'center', color: palette.sage, fontWeight: weight.medium } }, t('kkScanner.conflictScanned'))
+          React.createElement('div', { style: { textAlign: 'center', color: palette.sageDeep, fontWeight: weight.medium } }, t('kkScanner.conflictScanned'))
         ),
         React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.md } },
           React.createElement('button', {
