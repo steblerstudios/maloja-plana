@@ -60,3 +60,6 @@ maloja-icons/
 # Die genutzten .js (praemienDetail/praemienRegionen/plzGemeinde) sind generiert.
 # Tabellen liegen im lokalen Archiv; bei Bedarf von priminfo.admin.ch neu holen.
 src/data/raw/
+
+# Lokale Deploy-Gate-Freigabe-Marke (von /maloja-predeploy geschrieben, nicht committen)
+.maloja/
