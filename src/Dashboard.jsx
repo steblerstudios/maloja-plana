@@ -204,7 +204,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
       onClick: () => onNavigate('schnellcheck'),
       style: {
         background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-        fontSize: text.xs, color: palette.sand, fontFamily: 'inherit',
+        fontSize: text.xs, color: palette.sandDeep, fontFamily: 'inherit',
         fontWeight: weight.medium, marginTop: space.md,
       }
     }, t('dashboard.quickCheckAllLeistungen'))

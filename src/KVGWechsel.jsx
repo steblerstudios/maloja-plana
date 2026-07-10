@@ -31,7 +31,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     ...ablaufStyles(palette),
     pathWrap: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', marginTop: space.sm + 'px' },
     reassure: { fontSize: text.sm, color: palette.sage, fontWeight: weight.medium, marginTop: space.xs + 'px' },
-    chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sand, marginTop: '6px' },
+    chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep, marginTop: '6px' },
     inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
     input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
   };
