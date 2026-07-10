@@ -607,15 +607,24 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
                   'aria-label': tool.label,
                   title: tool.label,
                   style: {
-                    display: 'inline-flex', alignItems: 'center', gap: '4px',
-                    background: b.color + '14', border: '1px solid ' + b.color + '33',
-                    borderRadius: '999px', padding: '1px 7px 1px 3px',
+                    // Transparente, vergrösserte Tap-Fläche (~30px) — die sichtbare Pille
+                    // bleibt klein (innerer span), damit der Baum ruhig bleibt.
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    background: 'none', border: 'none', padding: '7px 6px',
                     cursor: go ? 'pointer' : 'default', fontFamily: 'inherit',
-                    whiteSpace: 'nowrap',
                   },
                 },
-                  React.createElement('span', { style: { width: '7px', height: '7px', borderRadius: '50%', background: b.color, opacity: 0.85, flex: '0 0 auto' } }),
-                  React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
+                  React.createElement('span', {
+                    style: {
+                      display: 'inline-flex', alignItems: 'center', gap: '4px',
+                      background: b.color + '14', border: '1px solid ' + b.color + '33',
+                      borderRadius: '999px', padding: '1px 7px 1px 3px',
+                      whiteSpace: 'nowrap',
+                    },
+                  },
+                    React.createElement('span', { style: { width: '7px', height: '7px', borderRadius: '50%', background: b.color, opacity: 0.85, flex: '0 0 auto' } }),
+                    React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
+                  )
                 );
               })
             ) : null

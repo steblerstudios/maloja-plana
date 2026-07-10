@@ -247,8 +247,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               onClick: () => toggleSituation(z.key),
               'aria-pressed': on,
               style: {
-                padding: '8px 14px', borderRadius: radius.pill || radius.md,
-                border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
+                padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                borderRadius: radius.pill || radius.md,
+                border: '1px solid ' + (on ? palette.sage + '88' : palette.border),
                 background: on ? palette.sage + '18' : 'transparent',
                 color: on ? (palette.sageDeep || palette.text) : palette.mid,
                 fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
