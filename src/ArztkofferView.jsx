@@ -139,7 +139,8 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
           onClick: () => onNavigate(w.view),
           style: {
             background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
-            cursor: 'pointer', padding: '6px 12px', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
+            cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
+            display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
           },
         }, '→ ' + t('arztkoffer.wege.' + w.key))),
       ),
