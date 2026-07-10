@@ -222,8 +222,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     return React.createElement('div', { key: 'household-fields', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '0 16px' } },
 
       // Adults — als Liste wie Kinder (erste Person = ich selbst, fix)
-      React.createElement('div', { key: 'adults-section', style: { gridColumn: '1 / -1', marginBottom: space.md } },
-        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.adults')),
+      React.createElement('div', { key: 'adults-section', role: 'group', 'aria-labelledby': 'hh-adults-heading', style: { gridColumn: '1 / -1', marginBottom: space.md } },
+        React.createElement('div', { id: 'hh-adults-heading', style: hhLabel }, tr('chapters.basis.fields.household.adults')),
 
         // Ich selbst — feste, nicht entfernbare erste Person
         React.createElement('div', {
@@ -302,8 +302,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       ),
 
       // Children section — full width
-      React.createElement('div', { style: { gridColumn: '1 / -1', marginBottom: space.md } },
-        React.createElement('label', { style: hhLabel }, tr('chapters.basis.fields.household.children')),
+      React.createElement('div', { role: 'group', 'aria-labelledby': 'hh-children-heading', style: { gridColumn: '1 / -1', marginBottom: space.md } },
+        React.createElement('div', { id: 'hh-children-heading', style: hhLabel }, tr('chapters.basis.fields.household.children')),
 
         children.length > 0 && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.md, marginBottom: '12px' } },
           children.map((child, idx) => {
