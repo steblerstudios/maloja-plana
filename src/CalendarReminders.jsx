@@ -204,7 +204,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
       }
     },
       isJustDone && React.createElement('div', {
-        style: { textAlign: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.sage, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
+        style: { textAlign: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
       }, '✓ ' + (t('calendar.nicelyDone') || 'Erledigt')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
         React.createElement('div', { style: { flex: 1 } },

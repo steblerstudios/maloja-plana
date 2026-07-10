@@ -897,7 +897,7 @@ const AppInner = () => {
     React.createElement('a', {
       href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
       target: '_blank', rel: 'noopener noreferrer', title: t('greenHostingFooter'),
-      style: { color: palette.sage, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
+      style: { color: palette.sageDeep, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
     },
       React.createElement(Icon, { name: 'leaf', size: 13 }),
       React.createElement('span', { style: { textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('greenHostingFooter'))
@@ -1025,7 +1025,7 @@ const AppInner = () => {
       }
     },
       React.createElement(TrustLockIcon, { size: 12, color: palette.sage }),
-      React.createElement('span', { style: { fontSize: text.xs, color: palette.sage, letterSpacing: '0.2px' } }, t('trust.localBadge')),
+      React.createElement('span', { style: { fontSize: text.xs, color: palette.sageDeep, letterSpacing: '0.2px' } }, t('trust.localBadge')),
       isOffline && React.createElement('span', {
         role: 'status',
         style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
@@ -1090,7 +1090,7 @@ const AppInner = () => {
           onClick: blankSandbox,
           style: {
             background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0 0 0',
-            fontSize: text.xs, fontWeight: weight.medium, color: palette.sage, fontFamily: 'inherit',
+            fontSize: text.xs, fontWeight: weight.medium, color: palette.sageDeep, fontFamily: 'inherit',
             textDecoration: 'underline', textUnderlineOffset: '2px',
           },
         }, '△ ' + t('sandbox.startBlank'))

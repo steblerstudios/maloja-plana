@@ -149,7 +149,7 @@ export const NotificationSettings = ({ palette, t }) => {
     ),
 
     saved && React.createElement('div', {
-      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sage, textAlign: 'center' }
+      style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sageDeep, textAlign: 'center' }
     }, '✓ ' + t('common.saved'))
   );
 };

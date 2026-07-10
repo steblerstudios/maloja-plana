@@ -151,7 +151,7 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
             React.createElement('div', { style: { marginTop: '5px' } },
               React.createElement('span', {
                 style: {
-                  fontSize: text.xs, color: palette.sage,
+                  fontSize: text.xs, color: palette.sageDeep,
                   border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '1px 6px',
                 }
               }, t('kvg.evidenceBased'))
@@ -767,7 +767,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.kasseZahlt')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.sage || '#5a7a5a' }
+          style: { fontWeight: weight.semi, color: palette.sageDeep || '#5a7a5a' }
         }, 'CHF ' + Math.round(result.kasseZahlt))
       )
     )

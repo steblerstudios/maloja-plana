@@ -179,11 +179,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     row: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
-    big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sage },
+    big: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
     th: { textAlign: 'left', padding: '6px 8px', borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
-    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sage },
+    tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
     // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
     // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
@@ -399,7 +399,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       ),
       React.createElement('div', { style: s.section },
         React.createElement('div', null, t('vr.skalenfaktor') + ': ' + (ahvResult.skalenfaktor * 100).toFixed(1) + '% (' + ahvResult.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre + ' ' + t('vr.jahre') + ')',
-          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sage, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
+          ikResult && React.createElement('span', { style: { marginLeft: space.xs + 'px', fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.semi } }, '· ' + t('vr.ikFromIk'))
         ),
         ahvResult.fehlendeBeitragsjahre > 0 && React.createElement('div', { style: { color: palette.gold } },
           t('vr.fehlendeBeitragsjahre') + ': ' + ahvResult.fehlendeBeitragsjahre
@@ -489,7 +489,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginTop: space.sm + 'px' } },
           React.createElement('button', {
             onClick: () => setZukunftIkOpen(o => !o),
-            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sage, textDecoration: 'underline', fontFamily: 'inherit' }
+            style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', fontFamily: 'inherit' }
           }, zukunftIkOpen ? t('vr.zukunftIkHide') : t('vr.zukunftIkEdit')),
           React.createElement('button', {
             onClick: () => setActiveTab('ahv'),
@@ -718,7 +718,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.xs + 'px' } },
             legendItem(colAhv, 'AHV'), legendItem(colBvg, 'BVG'), legendItem(col3a, '3a'), legendItem(col3b, '3b')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs + 'px', lineHeight: 1.5 } }, t('vr.zukunftAhvFlaeche', { le: parsedLE })),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.sage, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginBottom: space.xs + 'px' } }, t('vr.zukunftGraphHinweis')),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, t('vr.zukunftHinweis'))
         );
       })(),
@@ -796,7 +796,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
                 'CHF ' + fmt(einzel.total) + ' (' + t('vr.kbEffective', { pct: einzel.effektiverSatz }) + ')'),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
                 t('vr.kbFederal') + ' CHF ' + fmt(einzel.bund) + ' · ' + t('vr.kbCantonal') + ' CHF ' + fmt(einzel.kantonGemeinde) + ' (' + einzel.hauptort + ')'),
-              React.createElement('div', { style: { marginTop: space.xs + 'px', fontWeight: weight.semi, color: palette.sage } },
+              React.createElement('div', { style: { marginTop: space.xs + 'px', fontWeight: weight.semi, color: palette.sageDeep } },
                 t('vr.kbNet') + ': CHF ' + fmt(einzel.netto))
             );
           }

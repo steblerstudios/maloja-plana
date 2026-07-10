@@ -102,7 +102,7 @@ export const BetaGate = ({ children }) => {
       },
         React.createElement(TrustLockIcon, { size: 14, color: palette.sage }),
         React.createElement('span', {
-          style: { fontSize: text.xs, color: palette.sage, lineHeight: leading.normal }
+          style: { fontSize: text.xs, color: palette.sageDeep, lineHeight: leading.normal }
         }, t('trust.localBadge'))
       ),
       React.createElement('input', {
