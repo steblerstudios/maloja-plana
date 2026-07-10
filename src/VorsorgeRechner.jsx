@@ -378,7 +378,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             'aria-selected': active,
             'aria-controls': 'vr-tabpanel',
             tabIndex: active ? 0 : -1,
-            onClick: () => setActiveTab(tab.key),
+            onClick: (e) => { setActiveTab(tab.key); e.currentTarget.scrollIntoView({ inline: 'nearest', block: 'nearest' }); },
             onKeyDown: (e) => onTabKey(e, i),
             style: s.tab(active),
           }, tab.label);
