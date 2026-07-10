@@ -8,8 +8,8 @@ Nichts hier ist gefährlich. Wenn etwas klemmt: siehe „Wenn's klemmt" unten.
 Du schreibst ein Rezeptbuch.
 
 - **dein Computer** = dein Schreibtisch (hier wird gebaut)
-- **`dev`** = die **Werkbank** (Arbeitskopie zum Ausprobieren)
-- **`main`** = die **Reinversion** (sauber, geprüft, das was live geht)
+- **`feat/…`-Zweig** = die **Werkbank** (ein eigener Arbeitszweig pro Vorhaben, danach wegwerfbar)
+- **`main`** = die **Reinversion** (sauber, geprüft, das was live geht — der einzige feste Stamm)
 - **GitHub** = der **Safe in der Cloud** (Sicherung + Ort für PRs)
 - **malojaplana.ch** = das **Schaufenster** (die Live-Website)
 
@@ -20,7 +20,7 @@ Du schreibst ein Rezeptbuch.
 | **commit** | Foto einer fertigen Seite machen | Speicherpunkt mit Notiz — bleibt auf deinem Computer |
 | **push** | Album in den Cloud-Safe laden | Sicherung auf GitHub |
 | **PR** | Zettel „bitte Werkbank in Reinversion falten" | Übersicht + Roboter-Check, noch nichts zusammengeführt |
-| **merge** | den Zettel bestätigen | jetzt hat `main` alles von `dev` |
+| **merge** | den Zettel bestätigen | jetzt hat `main` alles vom Arbeitszweig |
 | **deploy** | ins Schaufenster stellen | die Website wird live |
 
 **Merke:** Das sind getrennte Schritte. Commit ≠ push ≠ deploy.
@@ -29,10 +29,16 @@ Du schreibst ein Rezeptbuch.
 
 Die Kurzform (ausführlich in `RELEASE.md`):
 
-1. Auf **`dev`** bauen. (Der Roboter „CI" prüft bei jedem Push automatisch.)
-2. **PR `dev → main`** erstellen (Knopf im Panel).
-3. **Grünes Häkchen** abwarten.
-4. **„Merge"** klicken (Variante *„Create a merge commit"*). **„Delete branch" NIE anklicken** — `dev` bleibt.
+1. Einen **eigenen Zweig ab `main`** nehmen und darauf bauen:
+   ```bash
+   git checkout -b feat/kurzer-name main
+   ```
+   (Der Roboter „CI" prüft bei jedem Push automatisch.)
+2. Optional **Vorschau**: `bash deploy.sh --stage` → auf `stage.malojaplana.ch` anschauen.
+3. **PR `feat/… → main`** erstellen (Knopf im Panel).
+4. **Grünes Häkchen** abwarten, dann **„Merge"** klicken (Variante *„Create a merge
+   commit"*). **„Delete branch" darf hier geklickt werden** — der Arbeitszweig ist
+   danach erledigt. (Früher gab es einen festen `dev`-Zweig; den gibt es nicht mehr.)
 5. Von **`main`** deployen:
    ```bash
    git checkout main && git pull && bash deploy.sh

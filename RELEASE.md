@@ -74,8 +74,8 @@ macht **kein** Rollback-Backup (die Vorschau ist wegwerfbar) und lädt nach
 `stage.malojaplana.ch` statt auf die echte Domain. Die Produktion bleibt völlig
 unberührt. Zugriffsschutz macht das App-eigene BetaGate.
 
-**Typischer Ablauf:** `dev` fertig → `bash deploy.sh --stage` → auf
-`stage.malojaplana.ch` prüfen → passt → PR dev→main mergen → `bash deploy.sh`.
+**Typischer Ablauf:** Feature-Branch fertig → `bash deploy.sh --stage` → auf
+`stage.malojaplana.ch` prüfen → passt → PR Feature-Branch→`main` mergen → `bash deploy.sh`.
 
 **Einmalige Einrichtung (im Infomaniak-Panel, nur Sophie):**
 1. Subdomain `stage.malojaplana.ch` anlegen (Panel → Domains → Subdomain).
