@@ -13,8 +13,8 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `a11y/pass3-tresor-labels` (Feature-Branch, WIP) |
-| `main` steht auf | `2e8f6b8` — a11y: roseDeep-Importfehler + Torten-SVG aria-hidden |
+| Aktueller Branch | `main` (PR #19 gemergt) |
+| `main` steht auf | `0ebb865` — Merge PR #19 (a11y-Pass 3) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 
@@ -23,23 +23,22 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live-verifiziert zuletzt:** `0.1.23-beta` = `e45ec3c` (Footer + Hash bestätigt).
-- **Deployt, aber NICHT live-verifiziert:** `v0.1.24-beta`. Sophie hat deployt, aber
-  Footer-Version/Bundle-Hash wurden nie live gegengeprüft. → **Nächste Sitzung zuerst
-  live prüfen** (Footer soll `v0.1.24-beta` zeigen).
-- **Gebaut, aber undeployt:** `main` ist seit dem Tag um a11y-Commits weitergewandert;
-  Feature-Branch `a11y/pass3-tresor-labels` hat 3 weitere Commits (`fec8d34`, `711822c`,
-  `465bf2c`) noch nicht auf `main`.
-- **Uncommittet im Working Tree:** `src/VorsorgeRechner.jsx` (M) — vermutlich
-  Parallel-Sitzung; NICHT anfassen, nur eigene Dateien stagen (kein `git add -A`).
+- **Live-verifiziert (aktuell):** `main` = `0ebb865` → Bundle `index-1fb26e10.js`.
+  curl auf malojaplana.ch zeigt denselben Content-Hash wie der frische main-Build =
+  byte-genau live. a11y-Pass 3 ist live. (Geprüft 2026-07-10.)
+  - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
+    (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
+    prüfen, dass `deploy.sh` wirklich frisch baut.
+- **Gebaut, aber NICHT in `main`/live:** Kapitalbezugssteuer `231c8a1` (auf dev, 535 Tests
+  grün) — separater Deploy nötig.
 
 ## Nächste Schritte
 
-1. `v0.1.24-beta` live gegenprüfen (Footer + Bundle-Hash), Ergebnis hier eintragen.
-2. Harness-Plan weiter: Schritt 2 `FEATURES.md`-Ledger, Schritt 3 Session-Ende-Ritual
-   (siehe `docs/context/HARNESS_PLAN.md`).
-3. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
+1. Harness-Plan (`docs/context/HARNESS_PLAN.md`) ist umgesetzt — Schritte 1–3 fertig,
+   erster Verifikations-Kreis 2026-07-10 geschlossen.
+2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
    Label-Kopplung Haushalt+Upload).
+3. Kapitalbezugssteuer `231c8a1` von dev nach `main` bringen + deployen.
 
 ## Merker (Fallen)
 
