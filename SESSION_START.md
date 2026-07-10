@@ -40,9 +40,25 @@
    Label-Kopplung Haushalt+Upload).
 3. Kapitalbezugssteuer `231c8a1` von dev nach `main` bringen + deployen.
 
+## Nicht anfassen (Leitplanken)
+
+> Gerettet aus dem archivierten `PROJECT_STATUS.md`/`PROJECT_HANDOFF.md`. Identität
+> (Zero-Deps, Offline/Calm/Deterministic/Privacy) steht in `CLAUDE.md` — hier nur die
+> konkreten Do-Not-Touch-Punkte.
+
+- **localStorage-Keys `or5_*`** — keine Migrationen ohne ausdrückliche Freigabe (User-Daten).
+- **Dependencies** — nur React + React-DOM als Runtime-Deps; kein Bloat.
+- **Build-Budget** — Phase 1 < 200 KB gzip, Phase 2 < 250 KB gzip.
+- **Build-Tool Vite** und **Inline-Styles/tokens.css** nicht wechseln (kein CSS-in-JS).
+- **SKOS Grundbedarf** — pauschal nach Haushaltsgrösse ist *bewusste* Vereinfachung (KI-001), kein Refactoring.
+- **PremiumSubsidy/IPV-Berechnung** — nicht anfassen.
+- **Gross/Netto-Toggle** und **Multi-Person-Haushaltsmodell** — bewusst zurückgestellt.
+- **KI-007:** kein Web-Crypto-Fallback — offen, niedrige Priorität.
+
 ## Merker (Fallen)
 
 - Neue `<button>`/Titel IMMER `color` setzen (Dark-Mode-Falle).
 - Bei i18n-Edits zügig committen.
-- Parallel-Sitzung im selben Working Tree: nur eigene Dateien stagen.
+- Parallel-Sitzung im selben Working Tree: eigenen Branch ab `main` nehmen (nicht nur
+  eigene Dateien stagen — Datei-Isolation ≠ Branch-Isolation; teuer gelernt bei PR #19).
 - Onboarding-Bypass zum Testen: `or5_onboarding_done` / `or5_lang` / `or5_tour_done` = true.
