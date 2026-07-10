@@ -14,6 +14,9 @@ export const DARK_PALETTE = {
   // Dunkeln nur bei 3.82:1 auf surface. #D98A8A hebt auf 5.44:1 (AA), rose bleibt
   // für Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
   roseDeep: '#D98A8A',
+  // goldDeep: lesbare Gold-Variante für Text — gold (#C4A870) trägt im Dunkeln
+  // bereits 6.28:1 auf surface, daher unverändert. Nur der Hellmodus braucht Tiefe.
+  goldDeep: '#C4A870',
   sageMist: '#222C27', sageDew: '#28332D', sageDeep: '#8FB0A0'
 };
 
@@ -29,6 +32,9 @@ export const LIGHT_PALETTE = {
   // nur bei 3.59:1 auf surface. #9A4A4A hebt auf 5.82:1 (AA), rose bleibt für
   // Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
   roseDeep: '#9A4A4A',
+  // goldDeep: lesbare Gold-Variante für Text — gold (#C4A870) liegt hell nur bei
+  // 2.19:1 auf surface. #7C6428 hebt auf 5.42:1 (AA); gold bleibt für Akzente/Ringe.
+  goldDeep: '#7C6428',
   sageMist: '#ECF1EE', sageDew: '#DBE6E0', sageDeep: '#4A6657'
 };
 
