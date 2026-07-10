@@ -1,3 +1,6 @@
+> **VERALTET (Stand 16.05.).** Aktuelle Wahrheit → [`SESSION_START.md`](SESSION_START.md).
+> Diese Datei bleibt vorerst als Historie stehen (Löschung nach Sophies OK).
+
 # Maloja Plana — Project Status
 
 **"Der Schweizer Lebensordner"**
