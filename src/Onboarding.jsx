@@ -70,7 +70,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
   const btnPrimary = {
     width: '100%', padding: '14px', background: palette.sand,
-    color: '#000', border: 'none', borderRadius: radius.sm,
+    color: palette.onSand, border: 'none', borderRadius: radius.sm,
     cursor: 'pointer', fontWeight: weight.semi, fontSize: text.body,
     fontFamily: fontFamily, marginTop: space.md,
   };
@@ -170,7 +170,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: space.md, padding: '8px 12px', background: palette.sage + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.sage + '18' } },
           React.createElement(TrustLockIcon, { size: 13, color: palette.sage, style: { flexShrink: 0 } }),
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.sage, lineHeight: 1.4 } },
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: 1.4 } },
             t('onboarding.privacyNote')
           )
         ),
@@ -247,8 +247,10 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               onClick: () => toggleSituation(z.key),
               'aria-pressed': on,
               style: {
-                padding: '8px 14px', borderRadius: radius.pill || radius.md,
-                border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
+                padding: '10px 16px', minHeight: '44px', boxSizing: 'border-box',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                borderRadius: radius.pill || radius.md,
+                border: '1px solid ' + (on ? palette.sage + '88' : palette.border),
                 background: on ? palette.sage + '18' : 'transparent',
                 color: on ? (palette.sageDeep || palette.text) : palette.mid,
                 fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
