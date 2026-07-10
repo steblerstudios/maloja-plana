@@ -1,7 +1,7 @@
 # SESSION START — zuerst lesen
 
 > Die **objektive, repo-interne Wahrheit** über den aktuellen Stand. Am Sitzungs-Ende
-> aktualisieren (Schritt 3 des Harness-Plans). Bei Widerspruch zu anderen Docs gilt
+> aktualisieren (via `/session-close`). Bei Widerspruch zu anderen Docs gilt
 > **diese** Datei. Persönliche Session-Historie/Ideen → Claude-Memory, nicht hierher.
 >
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
@@ -13,8 +13,8 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (PR #19 gemergt) |
-| `main` steht auf | `0ebb865` — Merge PR #19 (a11y-Pass 3) |
+| Aktueller Branch | `chore/github-flow-feinschliff` — **PR #21 offen, NICHT gemergt** |
+| `main` steht auf | `79f78d2` — docs: Leitplanken (Wahrheits-Disziplin, Klarheits-Check) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 
@@ -23,20 +23,29 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live-verifiziert (aktuell):** `main` = `0ebb865` → Bundle `index-1fb26e10.js`.
-  curl auf malojaplana.ch zeigt denselben Content-Hash wie der frische main-Build =
-  byte-genau live. a11y-Pass 3 ist live. (Geprüft 2026-07-10.)
+- **Live-verifiziert:** App-Bundle `index-1fb26e10.js` (a11y-Pass 3) ist byte-genau
+  live — curl auf malojaplana.ch = frischer main-Build (geprüft 2026-07-10).
+  `main` steht seither auf `79f78d2`; die Commits nach `0ebb865` (PR #20 Stage-Umgebung
+  = `deploy.sh`, Leitplanken = docs) ändern **keinen App-Code** → das live ausgelieferte
+  Bundle ist unverändert. Der Bundle-Hash von `79f78d2` selbst wurde noch nicht neu
+  gegen live geprüft (kein App-Deploy nötig).
   - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
     (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
     prüfen, dass `deploy.sh` wirklich frisch baut.
-- **Nichts Ausstehendes:** `origin/dev` ist vollständig in `main` aufgegangen (0 Commits
-  voraus). Auch die Kapitalbezugssteuer (`e4fe262`) ist in `main` und live.
+- **Ausstehend:** **PR #21** (`chore/github-flow-feinschliff`) wartet auf Review/Merge.
+  Inhalt = GitHub-Flow-Feinschliff (ci/deploy/docs/vite) + `.claude/skills`-Tracking.
+  Nur Config/Docs/Skills → **kein App-Code**, App-Bundle unverändert. Kein `dev` mehr
+  (GitHub Flow; `dev` gelöscht). Kapitalbezugssteuer (`e4fe262`) ist in `main` und live.
 
 ## Nächste Schritte
 
-1. Harness-Plan (`docs/context/HARNESS_PLAN.md`) ist umgesetzt — Schritte 1–3 fertig,
-   erster Verifikations-Kreis 2026-07-10 geschlossen.
-2. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
+1. **PR #21 durchsehen + mergen** (Sophie). Nach Merge: **kein Prod-Deploy nötig** —
+   nur Config/Docs/Skills, App-Bundle `index-1fb26e10.js` unverändert. Danach
+   Feature-Branch `chore/github-flow-feinschliff` löschen.
+2. **Stage scharfschalten** (separat): `STAGE_REMOTE_DIR` aus dem Infomaniak-Panel in
+   `deploy.sh` eintragen, sobald `stage.malojaplana.ch` fertig installiert ist, dann
+   `bash deploy.sh --stage` einmal testen.
+3. Offene a11y-Folge-Batches (rose-Text-Reste, soft-auf-Karten, Fokusfarbe,
    Label-Kopplung Haushalt+Upload).
 
 ## Nicht anfassen (Leitplanken)
