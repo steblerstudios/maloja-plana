@@ -55,7 +55,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
           ? t('sozialhilfe.householdAdultsChildren', { adults: sozialhilfe.adults, children: sozialhilfe.childrenCount })
           : t('sozialhilfe.householdAdults', { count: sozialhilfe.adults })
       ),
-      !canton && React.createElement('div', { style: { color: palette.rose, marginTop: space.xs } }, t('sozialhilfe.enterCanton'))
+      !canton && React.createElement('div', { style: { color: palette.roseDeep, marginTop: space.xs } }, t('sozialhilfe.enterCanton'))
     ),
 
     // Residence type

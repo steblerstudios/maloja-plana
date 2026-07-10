@@ -203,7 +203,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         prioritized.map((d, idx) => {
           const tierLabel = d.tier === 1 ? t('schulden.tier1') : d.tier === 2 ? t('schulden.tier2') : t('schulden.tier3');
           const tierReason = d.tier === 1 ? t('schulden.tier1Reason') : d.tier === 2 ? t('schulden.tier2Reason') : t('schulden.tier3Reason');
-          const tierColor = d.tier === 1 ? palette.rose : d.tier === 2 ? palette.gold : palette.mid;
+          const tierColor = d.tier === 1 ? palette.roseDeep : d.tier === 2 ? palette.gold : palette.mid;
           return React.createElement('div', { key: d.id || idx, style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.sm, border: '1px solid ' + palette.border } },
             React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, marginBottom: '4px' } },
               React.createElement('span', { style: { fontWeight: weight.semi } }, (idx + 1) + '. ' + (d.creditor || '—')),
@@ -243,7 +243,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
           )
         ),
-        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.rose, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
+        formError && React.createElement('div', { role: 'alert', style: { fontSize: text.sm, color: palette.roseDeep, marginTop: space.sm, marginBottom: space.sm } }, t('schulden.needInfo')),
         React.createElement('button', { onClick: handleAddDebt, style: { ...buttonStyle, marginTop: space.sm } }, '+ ' + t('schulden.addDebt'))
       ),
 
@@ -251,7 +251,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
-            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.rose : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
