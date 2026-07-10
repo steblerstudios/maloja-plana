@@ -75,6 +75,21 @@ shift-left + defense in depth.
 | **Stage** (stage.malojaplana.ch) | mittel | Review am **laufenden Build**: `a11y` / `design:accessibility-review` auf echter Render, `polygrafin` / `copy` auf sichtbarem Text, manueller Blick. **Fixes zurück auf den Branch.** |
 | **Main / Prod** (vor & nach Merge) | voll | **Vor Merge:** `/maloja-predeploy` (volle Agenten-Batterie + `/code-review` + `/simplify`) + billed `ultrareview`. **Nach Deploy:** Live-Verifikation (Bundle-Hash) → `FEATURES.md` = verified-live. |
 
+### Prod-Reviews immer über den GANZEN Code (Sophie-Entscheid 2026-07-11)
+
+Am Prod-Gate laufen drei Reviews **nicht diff-scoped, sondern über die ganze App**
+— jedes Mal vor dem Deploy: **Security** (`sicherheits-pruefer` über `src/`+`index.html`+`public/`),
+**Accessibility** (`a11y-pruefer` + `design:accessibility-review`, WCAG AA), **Design**
+(`design:design-critique`). Die übrige Bug-/Aufräum-Jagd (`/code-review`, `/simplify`,
+Rest-Agenten) bleibt diff-scoped. `/maloja-predeploy` orchestriert beides.
+
+**Erzwungen, nicht nur erinnert:** Läuft die Batterie sauber (0 🔴), schreibt
+`/maloja-predeploy` eine Freigabe-Marke `.maloja/predeploy-ok` (HEAD-Hash). Ein
+PreToolUse-Hook in `.claude/settings.json` **blockt `bash deploy.sh` (Prod)**,
+solange keine frische Marke da ist → „erst `/maloja-predeploy`". `deploy.sh --stage`
+bleibt frei (schnelle Testschleife). Der Hook wird erst nach `/hooks`-Reload bzw.
+Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
+
 ---
 
 ## Boot / Deploy — Kurzreferenz
