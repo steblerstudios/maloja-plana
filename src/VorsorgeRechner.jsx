@@ -344,17 +344,45 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     );
   };
 
+  // Reiter als Daten — für ARIA-Tabs-Muster (tablist/tab/tabpanel) + Pfeiltasten-Navigation.
+  const TABS = [
+    { key: 'ahv', label: t('vr.tabAhv') },
+    { key: 'bvg', label: t('vr.tabBvg') },
+    { key: 'vergleich', label: t('vr.tabVergleich') },
+    { key: 'zukunft', label: t('vr.tabZukunft') },
+    { key: 'fz', label: t('vr.tabFreizuegigkeit') },
+  ];
+  // Pfeiltasten/Home/End bewegen die Auswahl UND den Fokus (WAI-ARIA „roving tabindex").
+  const onTabKey = (e, idx) => {
+    const targets = { ArrowRight: idx + 1, ArrowLeft: idx - 1, Home: 0, End: TABS.length - 1 };
+    if (!(e.key in targets)) return;
+    e.preventDefault();
+    const next = (targets[e.key] + TABS.length) % TABS.length;
+    setActiveTab(TABS[next].key);
+    const el = document.getElementById('vrtab-' + TABS[next].key);
+    if (el) el.focus();
+  };
+
   return React.createElement('div', { style: s.card },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'vorsorge', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('vr.title')),
 
     // Tab row (sticky Wrapper + scrollender Inhalt + rechte Verlauf-Kante)
     React.createElement('div', { style: s.tabWrap },
-      React.createElement('div', { style: s.tabRow },
-        React.createElement('button', { style: s.tab(activeTab === 'ahv'), onClick: () => setActiveTab('ahv') }, t('vr.tabAhv')),
-        React.createElement('button', { style: s.tab(activeTab === 'bvg'), onClick: () => setActiveTab('bvg') }, t('vr.tabBvg')),
-        React.createElement('button', { style: s.tab(activeTab === 'vergleich'), onClick: () => setActiveTab('vergleich') }, t('vr.tabVergleich')),
-        React.createElement('button', { style: s.tab(activeTab === 'zukunft'), onClick: () => setActiveTab('zukunft') }, t('vr.tabZukunft')),
-        React.createElement('button', { style: s.tab(activeTab === 'fz'), onClick: () => setActiveTab('fz') }, t('vr.tabFreizuegigkeit'))
+      React.createElement('div', { style: s.tabRow, role: 'tablist', 'aria-label': t('vr.title') },
+        TABS.map((tab, i) => {
+          const active = activeTab === tab.key;
+          return React.createElement('button', {
+            key: tab.key,
+            id: 'vrtab-' + tab.key,
+            role: 'tab',
+            'aria-selected': active,
+            'aria-controls': 'vr-tabpanel',
+            tabIndex: active ? 0 : -1,
+            onClick: () => setActiveTab(tab.key),
+            onKeyDown: (e) => onTabKey(e, i),
+            style: s.tab(active),
+          }, tab.label);
+        })
       ),
       React.createElement('div', { style: s.tabFade })
     ),
@@ -387,6 +415,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         verheiratet && field(t('vr.einkommenPartner'), einkommenPartner, setEinkommenPartner, { placeholder: '60000' })
       )
     ),
+
+    // Reiter-Inhalt als ein tabpanel (relabelt sich nach aktivem Reiter) — die
+    // geteilten Elemente darunter (Amtslinks/Quelle/Nav) bleiben bewusst aussen.
+    React.createElement('div', { role: 'tabpanel', id: 'vr-tabpanel', 'aria-labelledby': 'vrtab-' + activeTab, tabIndex: 0 },
 
     // AHV Tab
     activeTab === 'ahv' && ahvResult && React.createElement(React.Fragment, null,
@@ -936,7 +968,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           )
         )
       )
-    ),
+    )),
 
     activeTab !== 'fz' && !parsedEinkommen && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('vr.einkommenEingeben')),
 
