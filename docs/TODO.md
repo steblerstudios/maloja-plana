@@ -404,7 +404,7 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
 - **Faden 4 — Haushalts-Budget-Benchmarks** (BD18) — Bund/BFS-Haushaltsbudget-Erhebung als Richtwerte pro Ausgabenkategorie. WICHTIG: belegbar, KEINE erfundenen Einzelpreise („eine WC-Rolle kostet X"). Braucht Daten-Erkundung zuerst.
 - **Faden 3-II** — Sophie: „alle 4, aber alles zu seiner Zeit". Faktenprüfung 2026-06-29: das politische „KVG deckt weniger als WHO"-Framing ist für die Screenings NICHT belegbar (WHO empfiehlt beim Zervix-Screening sogar seltener → Pap-Mythos). Stattdessen 4 belegbare Richtungen, schritt-für-schritt:
   - ✅ **3-II/1 (gebaut, `7cdfbed`)** — internationale Empfehlung als ruhige Orientierung neben KVG-Deckung im Leistungskatalog (Gyn/Mammo/Darm), mit Quelle. Botschaft beruhigend, kein Alarm. Datenanker `VORSORGE_EMPFEHLUNG_KEYS`.
-  - **3-II/2** — persönlicher Intervall-Abgleich mit Faden-2-Daten („dein letzter Besuch liegt länger zurück als empfohlen", optional Termin-Reminder). Braucht strukturierte recMonths + Schwellen-Entscheid gemeinsam mit Sophie (Screening-Intervall ≠ Besuchsfrequenz; „jährlich besser?" ist umstritten → nur mit Beleg).
+  - ✅ **3-II/2 (GEBAUT — reproduce-first bestätigt 2026-07-11)** — persönlicher Intervall-Abgleich im KVG-Leistungskatalog (`KVGLeistungen.jsx`): opt-in „Letzte Untersuchung"-Feld → „Nächste empfohlene ~MM.JJJJ" aus `VORSORGE_INTERVAL_MONATE` (gynaeko 36 / mammografie 24 / darmkrebs 120 Mt., WHO/EU-belegt) → bei Überfälligkeit ruhiger Hinweis + 1-Klick-Kalendereintrag. Schwellen-Entscheid elegant gelöst: Abgleich nur für Screenings mit belegbarem Monats-Intervall. Browser-live-verifiziert.
   - **3-II/3** — geografische Mammografie-Realität: LU/NW/OW/UR ohne organisiertes Programm (nur opportunistisch nach Überweisung). Reine Orientierung, belegt.
   - **3-II/4** — Sophies Idee: per *evidenz-graduierten* Studien prüfen, ob z.B. ein jährlicher Frauenarzt-Besuch belegbar sinnvoll ist (Evidenzqualität mitzeigen, nicht behaupten).
 - **Führerschein-Thema** (BD19) — Führerausweis ganzheitlich: Erneuerung/Fristen, ärztliche Kontrolluntersuchung ab 75 (alle 2 J.), Ausweis im Dokumenten-Tresor, evtl. Kalender-Vorlage. Orientierung über Pflichten/Fristen. Erst Umfang klären (Swiss-precision: Fakten prüfen).
@@ -425,3 +425,14 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
   592 Tests grün. Commit `5fe8851` (dev).
 - 🟡 **Rest Pattern A (finicky Key):** DocumentTresor Inline-Datum + Sortier-Select, Calendar-Notizen-Textarea — brauchen einen passenden i18n-Key (klein).
 - 🟡 **rm-Notfall-Icon:** `notfall.icon` ist `⚠` in de/fr/it/en, fehlt in rm (Icon-Feld, kein Copy — nur Parität, wenn gewünscht).
+
+## Runde 2026-07-11 (Feature-Branches, noch nicht gemergt — 10-Commit-Gate)
+
+reproduce-first ergab: mehrere „offene" Fäden waren längst gebaut.
+- ✅ **a11y #2-Rest** — rohes `rose` als Text → `roseDeep` (WCAG AA), 11 Stellen (`feat/a11y-rose-text`). Bewusst roh: Daten-Viz-Balken, grosse fette Akzent-Zahlen, PremiumSubsidy (Leitplanke, im Flow nachziehen).
+- ✅ **a11y #6** — Haushalt-Gruppen (Erwachsene/Kinder) von verwaistem `<label>` → `role="group"`+`aria-labelledby` (`feat/a11y-labels`). Doc-Upload/übrige Felder waren schon gekoppelt.
+- ✅ **Faden 3-II/2** — schon gebaut (s. o.).
+- ✅ **Faden 4 „Trust-/Korrektheits-Fixes"** — alle vier schon erledigt: Router-Allow-Liste (settings/taxImport/legal in `hashRouter.js`), Export-Domain (kein Bindestrich), „Ungültig"→„… bitte prüfen", Backup-Passphrasen-Hinweis (empfiehlt bereits 12+ Zeichen).
+- ✅ **Führerausweis-Ablauf** (BD19-Faden 1) GEBAUT (`feat/fuehrerausweis`), Fakten ch.ch/ASTRA, 5 Spr. (rm Best-Effort → Gegenlese).
+- ✅ **PWA-Härtung** (Cache an Bundle-Hash, Home-Screen-Name/Icon), **Wartungsseite** (statt Apache-404), **Beta-Code als SHA-256-Hash** (raus aus Public-Repo).
+- ⏳ OFFEN a11y: #3 `soft`-auf-Karten (braucht Token-Entscheid mid vs. soft-abdunkeln, 87 Stellen), #4 Fokusring-Farbe (Kür).
