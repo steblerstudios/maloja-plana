@@ -60,6 +60,32 @@ Footer zeigt sie dann automatisch. Am saubersten passiert das **im selben `dev`-
 wie deine Features**, dann reist die neue Nummer mit demselben PR nach `main`
 (kein separater Versions-PR nötig). Nach dem Merge den Tag setzen (Schritt 6).
 
+## Vorschau-Umgebung (Stage)
+
+Bevor ein Stand auf die echte Domain geht, kannst du ihn auf einer identischen
+**Vorschau** live gegenprüfen — dieselbe App, andere Adresse: `stage.malojaplana.ch`.
+
+```bash
+bash deploy.sh --stage      # aktuellen Branch (z.B. dev) auf die Vorschau spielen
+```
+
+Unterschiede zum normalen Deploy: läuft aus **jedem** Branch (keine main-Sperre),
+macht **kein** Rollback-Backup (die Vorschau ist wegwerfbar) und lädt nach
+`stage.malojaplana.ch` statt auf die echte Domain. Die Produktion bleibt völlig
+unberührt. Zugriffsschutz macht das App-eigene BetaGate.
+
+**Typischer Ablauf:** `dev` fertig → `bash deploy.sh --stage` → auf
+`stage.malojaplana.ch` prüfen → passt → PR dev→main mergen → `bash deploy.sh`.
+
+**Einmalige Einrichtung (im Infomaniak-Panel, nur Sophie):**
+1. Subdomain `stage.malojaplana.ch` anlegen (Panel → Domains → Subdomain).
+2. Deren Docroot-Pfad ablesen (sieht aus wie
+   `/home/clients/…/sites/stage.malojaplana.ch/`).
+3. Stimmt der Pfad **nicht** mit dem Default in `deploy.sh` (`STAGE_REMOTE_DIR`)
+   überein, beim Aufruf mitgeben:
+   `STAGE_REMOTE_DIR='/home/clients/…/sites/stage.malojaplana.ch/' bash deploy.sh --stage`
+   (oder den Default in `deploy.sh` einmal anpassen).
+
 ## Rollback (zurück zur letzten Version)
 
 Zwei Netze — du kannst immer zurück:
