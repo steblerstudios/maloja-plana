@@ -75,6 +75,7 @@ const Heirat = React.lazy(() => import('./Heirat.jsx'));
 const KindBekommen = React.lazy(() => import('./KindBekommen.jsx'));
 const Trennung = React.lazy(() => import('./Trennung.jsx'));
 const BewilligungFristen = React.lazy(() => import('./BewilligungFristen.jsx'));
+const Fuehrerausweis = React.lazy(() => import('./Fuehrerausweis.jsx'));
 const Todesfall = React.lazy(() => import('./Todesfall.jsx'));
 const IvVerfahren = React.lazy(() => import('./IvVerfahren.jsx'));
 const PflegeAblauf = React.lazy(() => import('./PflegeAblauf.jsx'));
@@ -1273,6 +1274,7 @@ const AppInner = () => {
         view === 'kind' && React.createElement(KindBekommen, { palette, t, onNavigate: handleNavigate }),
         view === 'trennung' && React.createElement(Trennung, { palette, t, onNavigate: handleNavigate }),
         view === 'bewilligung' && React.createElement(BewilligungFristen, { palette, t, onNavigate: handleNavigate }),
+        view === 'fuehrerausweis' && React.createElement(Fuehrerausweis, { palette, t, onNavigate: handleNavigate }),
         view === 'todesfall' && React.createElement(Todesfall, { palette, t, onNavigate: handleNavigate }),
         view === 'iv' && React.createElement(IvVerfahren, { palette, t, onNavigate: handleNavigate }),
         view === 'pflege' && React.createElement(PflegeAblauf, { palette, t, onNavigate: handleNavigate }),
