@@ -54,7 +54,9 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         borderLeft: '3px solid ' + (isReady ? accent : palette.border),
         borderRadius: radius.md,
         cursor: isReady ? 'pointer' : 'default',
-        opacity: isReady ? 1 : 0.72,
+        // Kein card-weites opacity mehr — das dimmte Titel/Text unter WCAG-AA.
+        // De-emphasis der „in Vorbereitung"-Karte läuft über grauen Rand, up-Hintergrund,
+        // das gedämpfte Icon (opacity 0.6) und das Badge — Text bleibt voll lesbar.
         transition: `background ${duration.fast}ms ${ease}`,
       },
       onMouseEnter: isReady ? (e) => { e.currentTarget.style.background = palette.up; } : undefined,
