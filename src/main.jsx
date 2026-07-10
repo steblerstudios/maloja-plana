@@ -274,6 +274,13 @@ const SackmesserIcon = ({ open, color, size = 20 }) => {
 };
 const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
   const [fanOpen, setFanOpen] = useState(false);
+  // Escape schliesst den Erfassen-Fächer (wie der Backdrop-Klick) — Tastatur-Parität.
+  useEffect(() => {
+    if (!fanOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setFanOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [fanOpen]);
   const slot = (it) => React.createElement('button', {
     key: it.key, onClick: it.onClick, 'aria-label': it.label,
     'aria-current': it.active ? 'page' : undefined,
@@ -970,6 +977,7 @@ const AppInner = () => {
           ? React.createElement('button', {
               key: 'settings',
               'aria-label': t('nav.settings'),
+              'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
               onClick: () => setSettingsOpen(true),
               style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
             },
@@ -988,6 +996,7 @@ const AppInner = () => {
                 key: 'a11y',
                 'aria-label': t('common.settingsAccessibility'),
                 title: t('common.settingsAccessibility'),
+                'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
                 onClick: () => setSettingsOpen(true),
                 style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
               },
