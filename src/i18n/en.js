@@ -3450,6 +3450,7 @@ export default {
     legalLink: 'Privacy & legal notice',
     bannerLabel: 'Closed Beta',
     feedbackMail: 'Feedback by email',
+    feedbackContext: 'These details help with troubleshooting (optional, can be deleted):',
     feedbackForm: 'Feedback form',
     feedback: {
       title: 'Your beta feedback',

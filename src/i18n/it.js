@@ -3427,6 +3427,7 @@ export default {
     enter: 'Apri',
     bannerLabel: 'Beta chiusa',
     feedbackMail: 'Feedback via e-mail',
+    feedbackContext: 'Questi dati facilitano la diagnosi (facoltativi, eliminabili):',
     feedbackForm: 'Modulo di feedback',
     feedback: {
       title: { sie: 'Il Suo feedback sulla beta', du: 'Il tuo feedback sulla beta' },
