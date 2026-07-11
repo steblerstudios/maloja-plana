@@ -6,7 +6,7 @@ und die Domain ist neu.
 
 Das **On-Page-SEO ist erledigt** (Titel, Description, hreflang, OG/Twitter,
 robots.txt, sitemap.xml, JSON-LD-Entity-Graph mit alternateName/sameAs — Commit
-`3fdcb12`). Was bleibt, kann **nur Sophie** tun (braucht Domain-Eigentum):
+`3fdcb12`). Was bleibt, kann **nur die Inhaberin** tun (braucht Domain-Eigentum):
 
 ## 1. Google Search Console (wichtigster Schritt)
 1. https://search.google.com/search-console → mit Google-Konto anmelden.

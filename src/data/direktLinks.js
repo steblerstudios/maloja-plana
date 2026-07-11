@@ -174,7 +174,7 @@ export const BERATUNG_HILFE = [
   // Beratungsstellen (legal.resources.help2) — eine Wahrheit, kein Duplikat.
 ];
 
-// Herzensempfehlungen (persönlich, von Sophie kuratiert): Name + Ziel-Link sind
+// Herzensempfehlungen (persönlich, von der Inhaberin kuratiert): Name + Ziel-Link sind
 // sprachunabhängig (Eigennamen), nur die Beschreibung kommt aus i18n
 // (legal.resources.heartfeltN — geteilt mit LegalView). url: null = bewusst kein
 // Link (App-Store-App ohne Website, oder defektes HTTPS-Zertifikat). affiliate:

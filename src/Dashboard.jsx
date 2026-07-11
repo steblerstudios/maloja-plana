@@ -573,7 +573,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
               style: {
                 position: 'absolute', left: (a.x / VB_W * 100) + '%', top: (a.y / VB_H * 100) + '%',
                 // Frucht HÄNGT vom Ast: die Astspitze (Anker) sitzt am Stiel/Oberrand,
-                // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (Sophie).
+                // der Fruchtkörper baumelt darunter — nicht mittig auf dem Ast (die Inhaberin).
                 transform: 'translate(-50%, -4%)',
                 background: 'none', border: 'none', padding: 0,
                 cursor: onSelectChapter ? 'pointer' : 'default',
@@ -783,7 +783,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
     // Führt oben sanft zum EINEN nächsten Schritt (erster offener Grundordnungs-
     // Punkt) und zeigt einen TWINT-artigen Glance (nächste Frist · zuletzt gesichert).
-    // Weniger Farbe, klare Hierarchie (Sophie-Prinzipien): neutraler Grund statt
+    // Weniger Farbe, klare Hierarchie (Prinzipien der Inhaberin): neutraler Grund statt
     // Marken-Tönung; die nächste Aktion ist der Hero (kleiner Bereichs-Punkt als
     // A11y-Identität, nicht laute Fläche); die Aktion ist randlos, Fläche kommt erst
     // im Hover zurück; der Glance wird EINE ruhige tertiäre Zeile mit Dot-Separator.
@@ -1233,7 +1233,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             onMouseLeave: (e) => { e.currentTarget.style.background = item.primary ? palette.sand + '08' : 'transparent'; e.currentTarget.style.borderColor = item.primary ? palette.sand + '30' : palette.border + '44'; },
           },
             // Akzentfarbe (Sand) nur auf der EINEN Primär-Aktion; Sekundär-Werkzeuge
-            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (Sophie).
+            // neutral, damit Farbe Hierarchie schafft statt sich zu verteilen (die Inhaberin).
             React.createElement('div', {
               style: {
                 width: item.primary ? '40px' : '32px', height: item.primary ? '40px' : '32px', borderRadius: item.primary ? radius.md : radius.sm,

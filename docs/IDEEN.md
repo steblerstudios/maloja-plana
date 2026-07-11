@@ -22,7 +22,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Wohnen = kleines Haus** (Zimmer = Themen) · **Miet-Angaben optisch wie ein Mietvertrag** · **Mobilität = Fahrzeugmappe** · **Familie = Fotoalbum** · **Behörden = Bundesordner** · **Arbeit = Bewerbungsmappe** · **Ideen = Notizbuch**.
 - 🌱 **KVG-Katalog = Karteikartenbox** · **Bibliothek = Bücherregal** (✅ Direktlinks als Regal gebaut; Ausbau möglich).
 - 🌱 **Lebenslauf-Generator skeuomorph darstellen** (CV-Inhalt existiert, Optik nicht).
-- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten. Session #38: Todesfall hatte EL nur als Nebensatz im breiten „Renten & Versicherungen melden"-Schritt → auf Sophies Wunsch **eigener Schritt „4 · Hinterbliebenenrente & EL prüfen" mit Icon** herausgelöst (wie Pensionierung#4/IV#3/Pflege#3), Erbschaft rückt auf #5. Glossar bleibt Text-only-Tooltip (kein Icon-Ort). Damit alle sinnvollen Ablauf-Plätze abgedeckt.
+- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten. Session #38: Todesfall hatte EL nur als Nebensatz im breiten „Renten & Versicherungen melden"-Schritt → auf Wunsch der Inhaberin **eigener Schritt „4 · Hinterbliebenenrente & EL prüfen" mit Icon** herausgelöst (wie Pensionierung#4/IV#3/Pflege#3), Erbschaft rückt auf #5. Glossar bleibt Text-only-Tooltip (kein Icon-Ort). Damit alle sinnvollen Ablauf-Plätze abgedeckt.
 - 🌱 **Heirat = Icon mit zwei Ringen** · **Rückforderungsbeleg-Look** (b83c35f) gefällt optisch nicht → Redesign vor weiterer Status-UI.
 - ⏸ **Konto = schlichtes Banking** · **Analysen = modern/Apple-Glas** — bewusst KEINE Metapher.
 
