@@ -59,7 +59,7 @@ Household-Datenstruktur → Kinder-Felder → SKOS-Tabelle korrigieren → Kinde
 
 | Voraussetzung | Status |
 |---------------|--------|
-| Brutto/Netto-Entscheidung | Sophie-Aktion ausstehend |
+| Brutto/Netto-Entscheidung | Aktion der Inhaberin ausstehend |
 | Household Model (für Phase 2) | noch nicht implementiert |
 
 **Budget Hardening Phasen:**

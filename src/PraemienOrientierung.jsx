@@ -125,7 +125,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     if (!franchiseOpt) return null;
     const savings = parseFloat(data.finanzen?.savingsAccount) || 0;
     const need = franchiseOpt.reserve;   // Maximalfall einmal
-    const ideal = need * 2;              // Sophies „im Idealfall doppelt"
+    const ideal = need * 2;              // Vorgabe der Inhaberin: „im Idealfall doppelt"
     let level;
     if (savings <= 0) level = 'none';        // nichts erfasst → sanft hinweisen
     else if (savings >= ideal) level = 'strong';

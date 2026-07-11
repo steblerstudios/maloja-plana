@@ -73,4 +73,4 @@
 
 ## Feedback geben
 
-Nutze das Feedback-Formular in der App (unten im Dashboard) oder schreib direkt an Sophie.
+Nutze das Feedback-Formular in der App (unten im Dashboard) oder schreib direkt an die Inhaberin.

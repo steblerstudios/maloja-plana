@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ─── Lokaler Deploy zu Infomaniak (malojaplana.ch) via SFTP ──────────────────
 #
-# Von einem Rechner mit erlaubter IP ausführen (z.B. Sophies Mac). Infomaniak
+# Von einem Rechner mit erlaubter IP ausführen (z.B. dem Mac der Inhaberin). Infomaniak
 # blockt FTP/SSH von GitHub-CI-Rechenzentren per IP-Filter → der Auto-Deploy
 # in GitHub Actions funktioniert nicht, ein lokaler Upload schon.
 #
@@ -25,7 +25,7 @@
 #   • deployt aus JEDEM Branch (typisch 'feat/…') — keine main-/origin-Sperre
 #   • kein Rollback-Backup (Stage ist wegwerfbar)
 #   • eigenes Remote-Ziel + eigene Abschluss-URL
-# Einmalige Voraussetzung (Infomaniak-Panel, Sophie): Subdomain
+# Einmalige Voraussetzung (Infomaniak-Panel, die Inhaberin): Subdomain
 # stage.malojaplana.ch anlegen. Deren Docroot-Pfad unten als STAGE_REMOTE_DIR
 # setzen (aus dem Panel ablesen). Zugriffsschutz übernimmt das In-App-BetaGate.
 # ─────────────────────────────────────────────────────────────────────────────

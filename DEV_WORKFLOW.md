@@ -75,7 +75,7 @@ shift-left + defense in depth.
 | **Stage** (stage.malojaplana.ch) | mittel | Review am **laufenden Build**: `a11y` / `design:accessibility-review` auf echter Render, `polygrafin` / `copy` auf sichtbarem Text, manueller Blick. **Fixes zurück auf den Branch.** |
 | **Main / Prod** (vor & nach Merge) | voll | **Vor Merge:** `/maloja-predeploy` (volle Agenten-Batterie + `/code-review` + `/simplify`) + billed `ultrareview`. **Nach Deploy:** Live-Verifikation (Bundle-Hash) → `FEATURES.md` = verified-live. |
 
-### Prod-Reviews immer über den GANZEN Code (Sophie-Entscheid 2026-07-11)
+### Prod-Reviews immer über den GANZEN Code (Entscheid der Inhaberin 2026-07-11)
 
 Am Prod-Gate laufen drei Reviews **nicht diff-scoped, sondern über die ganze App**
 — jedes Mal vor dem Deploy: **Security** (`sicherheits-pruefer` über `src/`+`index.html`+`public/`),
@@ -126,7 +126,7 @@ zum Überspringen.
 
 - **Lokal starten:** `npm run dev` (Port 5174, `strictPort` — kein stiller Port-Wechsel).
 - **Stage:** `bash deploy.sh --stage` (aus jedem Branch, wegwerfbar).
-- **Produktion:** `bash deploy.sh` von `main` (nur Sophie; Rollback-Backup automatisch).
+- **Produktion:** `bash deploy.sh` von `main` (nur die Inhaberin; Rollback-Backup automatisch).
 - **Session-Ende:** `/session-close` (Stand + Memory nachziehen, ehrliche Bilanz).
 
 Ausführlicher Deploy-/Rollback-Ablauf: siehe `RELEASE.md`.

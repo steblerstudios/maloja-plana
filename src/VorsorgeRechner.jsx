@@ -695,7 +695,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               onPointerCancel: () => setRuecktrittDragging(false),
               onLostPointerCapture: () => setRuecktrittDragging(false) }),
             // Live-Tooltip beim Ziehen: Alter + resultierende Monatsrente sofort sichtbar
-            // (Sophies Wunsch — „was bringt das" ohne loszulassen). Ruhig, folgt dem Handle.
+            // (Wunsch der Inhaberin — „was bringt das" ohne loszulassen). Ruhig, folgt dem Handle.
             ruecktrittDragging && (() => {
               const totMonatChart = ahvMonat + bvgMonat + s3aMonat + s3bMonat;
               const hasRente = totMonatChart > 0;

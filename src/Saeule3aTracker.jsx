@@ -56,7 +56,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, max, onChange }) => {
             'aria-label': t('saeule3a.date'),
             style: { ...inputStyle, cursor: 'pointer' },
           }),
-          // Betrag mit klarer CHF-Einheit (sonst unklar „250 was?" — Sophie).
+          // Betrag mit klarer CHF-Einheit (sonst unklar „250 was?" — die Inhaberin).
           React.createElement('div', { style: { display: 'flex', alignItems: 'stretch', border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.up, overflow: 'hidden' } },
             React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, alignSelf: 'center', padding: '0 ' + space.xs + 'px 0 ' + space.sm + 'px', whiteSpace: 'nowrap' } }, 'CHF'),
             React.createElement('input', {
