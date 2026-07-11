@@ -1,7 +1,7 @@
 export default {
   lebenszustaende: {
     sectionTitle: 'Una di queste situazioni la riguarda?',
-    sectionIntro: 'Alcuni aiuti non dipendono da un singolo evento, ma da una situazione che dura nel tempo. Scelga ciò che corrisponde — nulla viene salvato come etichetta, mostra solo ciò che potrebbe esserci.',
+    sectionIntro: 'Alcuni aiuti non dipendono da un singolo evento, ma da una situazione che dura nel tempo. Scelga ciò che corrisponde. Resta sul suo dispositivo e serve solo a mostrarle ciò che fa al caso suo — nessun profilo, nessun giudizio.',
     selectHint: 'Tocchi una situazione per vedere cosa potrebbe spettarle.',
     quelleLabel: 'Fonte',
     standLabel: 'Stato',
