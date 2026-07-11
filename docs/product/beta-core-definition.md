@@ -321,7 +321,7 @@ Systeme, die zuerst stabil sein muessen, bevor andere Bereiche wachsen koennen.
 
 | Feld | Wert |
 |------|------|
-| **Warum kritisch** | Mutter-Feedback nicht dokumentiert. Family-Expert nicht zugeordnet. Ohne Recovery gehen Einsichten verloren. |
+| **Warum kritisch** | Testperson G-Feedback nicht dokumentiert. Family-Expert nicht zugeordnet. Ohne Recovery gehen Einsichten verloren. |
 | **Abhaengige Bereiche** | Priorisierung, Produktentscheidungen |
 | **Beta-Relevanz** | Prozess-Hygiene |
 | **Prioritaet** | 2 (nur Stebler Studios kann das) |
@@ -463,7 +463,7 @@ Das ist die Fokussierung.
 
 ```
 SOFORT (Stebler Studios, manuell):
-  → Mutter-Feedback rekonstruieren (feedback-log.md)
+  → Testperson G-Feedback rekonstruieren (feedback-log.md)
   → Family Expert Feedback zuordnen
   → BVG-Bug-Status klaeren
   → Brutto/Netto-Entscheidung treffen

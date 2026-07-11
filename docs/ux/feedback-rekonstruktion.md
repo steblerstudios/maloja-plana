@@ -2,7 +2,7 @@
 
 > Stand: 2026-06-21
 > Zweck: Alle gesammelten Nutzerfeedbacks, Muster und Prioritäten an einem Ort.
-> Quellen: 6 echte Tester, Kolleg:innen, eigene Beobachtungen, Perplexity-Recherche.
+> Quellen: 7 echte Testpersonen, Kolleg:innen, eigene Beobachtungen, Perplexity-Recherche.
 
 ---
 
@@ -19,7 +19,7 @@ Das zieht sich durch fast jede Kategorie.
 
 ### Muster 1: Nutzen kommt zu spät (5 Quellen)
 
-Genannt von: Jana, André, Gianni, Kolleg:innen, Perplexity
+Genannt von: Testperson A, Testperson D, Testperson E, Kolleg:innen, Perplexity
 
 Immer dieselbe Aussage:
 - "Warum soll ich das ausfüllen?"
@@ -31,7 +31,7 @@ Immer dieselbe Aussage:
 
 ### Muster 2: Vertrauen & Datenhoheit (4 Quellen)
 
-Genannt von: Annora, Kolleg:innen, Perplexity, eigene Beobachtungen
+Genannt von: Testperson C, Kolleg:innen, Perplexity, eigene Beobachtungen
 
 Immer dieselbe Frage:
 - "Was passiert mit meinen Daten?"
@@ -42,7 +42,7 @@ Aber die Botschaft kommt noch nicht früh genug an. Kein Feature-Problem — **K
 
 ### Muster 3: Verbindungen statt Formulare (4 Quellen)
 
-Genannt von: Silvan, Kolleg:innen, Mutter (indirekt), eigene Beobachtungen
+Genannt von: Testperson B, Kolleg:innen, Testperson G (indirekt), eigene Beobachtungen
 
 Immer dieselbe Richtung:
 - "Daten nicht doppelt erfassen"
@@ -55,7 +55,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 
 ## Kategorie A — Echtes Nutzerfeedback
 
-### Jana
+### Testperson A
 
 | Aspekt | Detail |
 |--------|--------|
@@ -64,7 +64,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Potenzial | Beispiel-Modus. Früher sichtbare Ergebnisse. |
 | Muster | 1 (Nutzen), 3 (Verbindungen) |
 
-### Lynette (Mutter)
+### Testperson G
 
 | Aspekt | Detail |
 |--------|--------|
@@ -73,7 +73,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Bereits umgesetzt | IPV-Rechner, Budget-Import, Sozialhilfe/SKOS, Mietbeiträge Basel |
 | Muster | 3 (Verbindungen/Orientierung) |
 
-### Silvan
+### Testperson B
 
 | Aspekt | Detail |
 |--------|--------|
@@ -82,7 +82,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Potenzial | Auto-Prefill, Querverbindungen, weniger Doppelungen |
 | Muster | 3 (Verbindungen) |
 
-### Annora
+### Testperson C
 
 | Aspekt | Detail |
 |--------|--------|
@@ -91,7 +91,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Potenzial | Local First stärker erklären, Export hervorheben, Datenhoheit sichtbarer |
 | Muster | 2 (Vertrauen) |
 
-### André
+### Testperson D
 
 | Aspekt | Detail |
 |--------|--------|
@@ -99,7 +99,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 | Potenzial | Beispiel-Modus, Notfallkarte, sofort sichtbare Ergebnisse |
 | Muster | 1 (Nutzen) |
 
-### Gianni
+### Testperson E
 
 | Aspekt | Detail |
 |--------|--------|
@@ -190,7 +190,7 @@ Später, optional. Nur für: Testament, Vorsorgeauftrag, Patientenverfügung, Pa
 
 ---
 
-## Greg-Feedback (UX/Design)
+## Testperson F-Feedback (UX/Design)
 
 | Feedback | Bewertung | Aktion |
 |----------|-----------|--------|
@@ -199,7 +199,7 @@ Später, optional. Nur für: Testament, Vorsorgeauftrag, Patientenverfügung, Pa
 | "Auswahl-Menü komisch" | UX-Thema wenn mehrere es nennen | Beobachten |
 | Kreisicon → "i"-Icon | Wenn mehrere denken Kreis sei klickbar | Kandidat |
 | Sandbox-Modus | Echtes neues Feature | Nicht jetzt |
-| Mindestlohnrechner bei Werkzeugen? | Auch von Jana und Silvan gefragt — 3 Quellen → **Muster** | Auffindbarkeit verbessern |
+| Mindestlohnrechner bei Werkzeugen? | Auch von Testperson A und Testperson B gefragt — 3 Quellen → **Muster** | Auffindbarkeit verbessern |
 
 ---
 
@@ -223,14 +223,14 @@ Aber: Die AHV-Links sollten auch bei der AHV-Berechnung erscheinen, die KK-Links
 
 → Passt zu Muster 3 (Verbindungen). Teilweise bereits umgesetzt (Querlinks KK→IPV, Finanzen→Steuer).
 
-### Comparis-Vergleich bei Versicherungen (Annora)
+### Comparis-Vergleich bei Versicherungen (Testperson C)
 
-Annora fragte ob eine Vergleichsfunktion wie Comparis möglich wäre.
+Testperson C fragte ob eine Vergleichsfunktion wie Comparis möglich wäre.
 **Bewusste Entscheidung: Nein.** Keine Comparis-Logik, keine Produktempfehlungen, keine Beratung. Nur Orientierung und Kontext. Dokumentiert in Excluded Features.
 
-### Herzensempfehlungen (Annora / Stebler Studios)
+### Herzensempfehlungen (Testperson C / Stebler Studios)
 
-Persönliche Linksammlung für Orte, Menschen und Projekte die einem am Herzen liegen. Nicht offiziell, sondern privat. Beispiele: Tierheim Basel, Schmuck von Freundin Jana (Artful Jana), lokale Vereine etc.
+Persönliche Linksammlung für Orte, Menschen und Projekte die einem am Herzen liegen. Nicht offiziell, sondern privat. Beispiele: Tierheim Basel, Schmuck aus einem lokalen Label, lokale Vereine etc.
 
 Passt nicht zu den drei Kernmustern, eher Nice-to-have. Könnte aber zur Lebensordner-Vision passen ("mein ganzes Leben an einem Ort").
 
@@ -244,13 +244,13 @@ Aktuell nur einfache Erfassung. Könnte detaillierter werden (Beträge, Empfäng
 
 ### Mindestlohn-Auffindbarkeit — 3 Quellen → MUSTER
 
-Jana, Greg, Silvan fragten unabhängig: "Warum ist der Mindestlohnrechner bei den Werkzeugen?"
+Testperson A, Testperson F, Testperson B fragten unabhängig: "Warum ist der Mindestlohnrechner bei den Werkzeugen?"
 
 Das ist kein Feature-Wunsch sondern ein **Auffindbarkeits-Problem**. Der Mindestlohn-Check existiert als Hintergrund-Warnung im Finanzen-Kapitel, aber Nutzer suchen ihn als sichtbares Werkzeug.
 
 ### RM — jetzt 4 Quellen
 
-Lynette, Annora, Jana, Silvan. Immer noch kein Beta-Blocker, aber das stärkste Sprach-Signal.
+Testperson G, Testperson C, Testperson A, Testperson B. Immer noch kein Beta-Blocker, aber das stärkste Sprach-Signal.
 
 ---
 
@@ -287,7 +287,7 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 ### C — UX-Verbesserungen
 
-7. **Mindestlohn-Auffindbarkeit** — 3 Quellen (Jana, Greg, Silvan) → echtes Muster. Sichtbarer machen oder kontextuell besser platzieren.
+7. **Mindestlohn-Auffindbarkeit** — 3 Quellen (Testperson A, Testperson F, Testperson B) → echtes Muster. Sichtbarer machen oder kontextuell besser platzieren.
 8. Fortschrittskarte → fehlende Felder navigierbar
 9. Offizielle Links kontextuell platzieren (AHV bei AHV, KK bei KK)
 10. Dropdown-UX prüfen
@@ -295,7 +295,7 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 ### D — Sprache
 
-12. Rätoromanisch (RM) — 4 Signale (Lynette, Annora, Jana, Silvan), dokumentierter Kandidat. Siehe [language-strategy.md](../product/language-strategy.md)
+12. Rätoromanisch (RM) — 4 Signale (Testperson G, Testperson C, Testperson A, Testperson B), dokumentierter Kandidat. Siehe [language-strategy.md](../product/language-strategy.md)
 13. Weitere Integrationssprachen
 
 ### E — Fachliche Vertiefung (später)
@@ -306,8 +306,8 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 ### Beobachten
 
-- Design-Farben (Greg einzige Quelle)
-- Herzensempfehlungen (Annora — klären was gemeint ist)
+- Design-Farben (Testperson F einzige Quelle)
+- Herzensempfehlungen (Testperson C — klären was gemeint ist)
 
 ### Bewusst nicht
 
@@ -330,12 +330,12 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 
 | Person | Perspektive | Hauptmuster |
 |--------|-------------|-------------|
-| Jana | Verständlichkeit, Nutzen, Mindestlohn-Auffindbarkeit | 1 (Nutzen) |
-| Lynette (Mutter) | Ordnung, Sozialleistungen, Vorsorge, RM | 3 (Verbindungen) |
-| Silvan | Logik, Datenwiederverwendung, Mindestlohn, RM | 3 (Verbindungen) |
-| Annora | Vertrauen, Erstnutzerin, RM, Comparis-Frage, Herzensempfehlungen | 2 (Vertrauen) |
-| André | Nutzen-Kommunikation | 1 (Nutzen) |
-| Gianni | Nutzen-Kommunikation | 1 (Nutzen) |
-| Greg | UX, Design, Navigation | UX-Details |
+| Testperson A | Verständlichkeit, Nutzen, Mindestlohn-Auffindbarkeit | 1 (Nutzen) |
+| Testperson G | Ordnung, Sozialleistungen, Vorsorge, RM | 3 (Verbindungen) |
+| Testperson B | Logik, Datenwiederverwendung, Mindestlohn, RM | 3 (Verbindungen) |
+| Testperson C | Vertrauen, Erstnutzerin, RM, Comparis-Frage, Herzensempfehlungen | 2 (Vertrauen) |
+| Testperson D | Nutzen-Kommunikation | 1 (Nutzen) |
+| Testperson E | Nutzen-Kommunikation | 1 (Nutzen) |
+| Testperson F | UX, Design, Navigation | UX-Details |
 | Kolleg:innen | Versicherungen, Budget, Formular, Vertrauen | 1 + 2 + 3 |
 | Stebler Studios | Tägliche Nutzung, Fachlogik | 3 (Verbindungen) |

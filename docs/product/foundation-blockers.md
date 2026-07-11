@@ -41,15 +41,15 @@ Brutto/Netto ───────────┤                     ├── 
 
 | Entscheidung | Warum blockierend | Abhaengige Bereiche |
 |-------------|-------------------|---------------------|
-| Mutter-Feedback rekonstruieren | Wertvolles Nutzerfeedback ist verloren. Ohne Rekonstruktion fehlt eine der wichtigsten Feedback-Quellen. | Produktpriorisierung |
-| Family Expert zuordnen | F-008 bis F-013 — wer ist das? Mutter oder jemand anderes? | Feedback-Kanonisierung |
+| Testperson G-Feedback rekonstruieren | Wertvolles Nutzerfeedback ist verloren. Ohne Rekonstruktion fehlt eine der wichtigsten Feedback-Quellen. | Produktpriorisierung |
+| Family Expert zuordnen | F-008 bis F-013 — wer ist das? Testperson G oder jemand anderes? | Feedback-Kanonisierung |
 | BVG-Bug-Status klaeren | feedback-log sagt "behoben", backlog-registry sagt "offen". Widerspruch. | Bug-Tracking |
 | Brutto/Netto-Entscheidung | Alle Budget-Berechnungen haengen davon ab. | Budget Hardening |
 
 **Status:**
 - Brutto/Netto: **Entschieden** — Netto als Default, Brutto als Option (2026-06-20)
-- Mutter-Feedback: **Erledigt** — Vollständige Rekonstruktion 2026-06-21, siehe docs/ux/feedback-rekonstruktion.md
-- Family Expert: **Geklärt** — Lynette (Mutter) ist die Hauptquelle
+- Testperson G-Feedback: **Erledigt** — Vollständige Rekonstruktion 2026-06-21, siehe docs/ux/feedback-rekonstruktion.md
+- Family Expert: **Geklärt** — Testperson G ist die Hauptquelle
 - BVG-Bug-Status: **Geklärt** — kein offener Bug, Vorsorge-Rechner funktioniert korrekt
 
 ---

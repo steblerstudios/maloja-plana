@@ -33,8 +33,8 @@
 |---|-------|--------|
 | 1 | Schweizer Orientierungssätze (Franchise, KVG, AHV, BVG) | done — Helvetia Orientation Layer, Commit `ea2a9ac` |
 | 2 | Spiegelungsebenen pro Kapitel | done — Basis, Wohnen, Finanzen. Commits `e9fc6f8`, `ea75fd0`, `2f7d884` |
-| 3 | Mutter-Feedback vollständig rekonstruieren | done — Rekonstruiert 2026-06-21. Siehe docs/ux/feedback-rekonstruktion.md |
-| 4 | Testpersonen wirklich durchführen | done — 6 Tester (Jana, Annora, Silvan, André, Gianni, Greg) + Lynette + Kolleg:innen. 3 Muster identifiziert. Siehe docs/ux/feedback-rekonstruktion.md |
+| 3 | Testperson G-Feedback vollständig rekonstruieren | done — Rekonstruiert 2026-06-21. Siehe docs/ux/feedback-rekonstruktion.md |
+| 4 | Testpersonen wirklich durchführen | done — 7 Testpersonen (Testperson A–G) + Kolleg:innen. 3 Muster identifiziert. Siehe docs/ux/feedback-rekonstruktion.md |
 | 5 | Finanzen-Gesamtbild (kapitelübergreifend) | done — BudgetSync (6 Gruppen, 14 Felder, IPV), Kinderbetreuung, SKOS-Orientierung nach Haushaltsgrösse. |
 | 6 | Budget-UX verbessern (Geduld/Finesse) | done — Wärmere Leerstellen, ermutigende Sprache, positives Feedback, Kinderbetreuung. 3 Sprachen. |
 | 7 | Empty States wärmer gestalten (FB-019) | done — Kapitelstatus, Tresor, Notfall-Dossier wärmer, 4 Sprachen |
@@ -66,6 +66,6 @@
 | Push-Notifications (Web Push) | Braucht Service Worker Permissions, zu intrusiv |
 | Multi-Personen-Haushalte als Profile | Architektur-Umbau — nach Beta |
 | FINMA/ISO-Zertifizierung | Unrealistisch und unnötig für Beta |
-| Rätoromanisch (RM) | ~60'000 Sprecher, alle bilingual. Dokumentierter Kandidat (2+ Signale: Annora, Jana), aber kein Beta-Blocker. Siehe [language-strategy.md](language-strategy.md) |
+| Rätoromanisch (RM) | ~60'000 Sprecher, alle bilingual. Dokumentierter Kandidat (2+ Signale: Testperson C, Testperson A), aber kein Beta-Blocker. Siehe [language-strategy.md](language-strategy.md) |
 | BFS Branchenvergleich | Geplant, aber kein Beta-Blocker — nach Beta |
 | PWA / Service Worker | Nice-to-have, nicht kritisch — nach Beta |

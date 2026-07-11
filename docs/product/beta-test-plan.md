@@ -17,9 +17,9 @@
 
 ## Status
 
-Kein formaler Test wurde bisher durchgeführt. Informelles Feedback existiert von Lynette (Mutter) und Greg, dokumentiert in der Feedback-Rekonstruktion.
+Kein formaler Test wurde bisher durchgeführt. Informelles Feedback existiert von Testperson G und Testperson F, dokumentiert in der Feedback-Rekonstruktion.
 
-Informelles Feedback wurde gesammelt von 6 Testern (Jana, Annora, Silvan, André, Gianni, Greg), Lynette (Mutter) und Kolleg:innen. Drei Kernmuster identifiziert. Vollständige Auswertung in der Feedback-Rekonstruktion.
+Informelles Feedback wurde gesammelt von 7 Testpersonen (Testperson A–G) und Kolleg:innen. Drei Kernmuster identifiziert. Vollständige Auswertung in der Feedback-Rekonstruktion.
 
 ---
 
@@ -27,13 +27,13 @@ Informelles Feedback wurde gesammelt von 6 Testern (Jana, Annora, Silvan, André
 
 | Person | Perspektive | Haupterkenntnis | Muster |
 |--------|-------------|-----------------|--------|
-| Jana | Verständlichkeit, Nutzen | "Wirkt wie ein Formular, Nutzen zu spät" | 1 |
-| Annora | Vertrauen, Erstnutzerin | "Was passiert mit meinen Daten?" | 2 |
-| Silvan | Logik, Datenwiederverwendung | "Daten nicht doppelt eingeben" | 3 |
-| André | Nutzen-Kommunikation | "Was bringt mir Maloja konkret?" | 1 |
-| Gianni | Nutzen-Kommunikation | "Nutzen kommt zu spät" | 1 |
-| Greg | UX, Design | Dark Mode, Beige, Dropdowns, Mindestlohn | UX |
-| Lynette | Ordnung, Sozialleistungen | Vorsorge, RM, Orientierung | 3 |
+| Testperson A | Verständlichkeit, Nutzen | "Wirkt wie ein Formular, Nutzen zu spät" | 1 |
+| Testperson C | Vertrauen, Erstnutzerin | "Was passiert mit meinen Daten?" | 2 |
+| Testperson B | Logik, Datenwiederverwendung | "Daten nicht doppelt eingeben" | 3 |
+| Testperson D | Nutzen-Kommunikation | "Was bringt mir Maloja konkret?" | 1 |
+| Testperson E | Nutzen-Kommunikation | "Nutzen kommt zu spät" | 1 |
+| Testperson F | UX, Design | Dark Mode, Beige, Dropdowns, Mindestlohn | UX |
+| Testperson G | Ordnung, Sozialleistungen | Vorsorge, RM, Orientierung | 3 |
 
 ---
 
@@ -90,9 +90,9 @@ Drei Kernmuster über alle Tester hinweg:
 
 | # | Muster | Quellen | Stärke |
 |---|--------|---------|--------|
-| 1 | Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐⭐⭐ |
-| 2 | Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐⭐ |
-| 3 | Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, Stebler Studios | ⭐⭐⭐⭐ |
+| 1 | Nutzen kommt zu spät | Testperson A, Testperson D, Testperson E, Kolleg:innen, Perplexity | ⭐⭐⭐⭐⭐ |
+| 2 | Vertrauen & Datenhoheit | Testperson C, Kolleg:innen, Perplexity | ⭐⭐⭐⭐ |
+| 3 | Verbindungen statt Formulare | Testperson B, Kolleg:innen, Testperson G, Stebler Studios | ⭐⭐⭐⭐ |
 
 ---
 

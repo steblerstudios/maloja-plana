@@ -8,7 +8,7 @@
 
 ## 1. Budget / Finanzen Recovery
 
-**Warum wichtig:** Budget ist das Herzstück der Finanz-Orientierung. Aktuell nur 1 Einnahme + 5 Ausgaben — unbrauchbar für echte Haushalte. Feedback von Mutter und Basel-Stadt User bestätigt: zu dünn, zu technisch, nicht supportiv.
+**Warum wichtig:** Budget ist das Herzstück der Finanz-Orientierung. Aktuell nur 1 Einnahme + 5 Ausgaben — unbrauchbar für echte Haushalte. Feedback von Testperson G und Basel-Stadt User bestätigt: zu dünn, zu technisch, nicht supportiv.
 
 **Blocker:** Brutto/Netto-Entscheidung (MP-DAT-006). Teilweise Household Model (für Alimente, Kinderzulagen, SKOS-Templates).
 
@@ -50,15 +50,15 @@
 
 ## 4. Feedback Log
 
-**Warum wichtig:** Mutter-Feedback ist nicht dokumentiert. Family-Expert-Feedback ist nicht namentlich zugeordnet. Ohne kanonisches Feedback-System gehen weitere Rückmeldungen verloren.
+**Warum wichtig:** Testperson G-Feedback ist nicht dokumentiert. Family-Expert-Feedback ist nicht namentlich zugeordnet. Ohne kanonisches Feedback-System gehen weitere Rückmeldungen verloren.
 
-**Blocker:** Stebler Studios muss Mutter-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
+**Blocker:** Stebler Studios muss Testperson G-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
 
 **Beta-relevant:** Ja — Prozess-Hygiene.
 
 **Nächster Task:** Stebler Studios füllt Rekonstruktions-Template in `feedback-log.md` aus.
 
-**Details:** `docs/product/feedback-log.md` → Sektion „Mutter"
+**Details:** `docs/product/feedback-log.md` → Sektion „Testperson G"
 
 **STATUS: ERSTELLT (A-033). Aktion von Stebler Studios ausstehend.**
 
@@ -126,7 +126,7 @@
 
 ```
 SOFORT (manuell, Stebler Studios):
-  → Mutter-Feedback rekonstruieren (feedback-log.md)
+  → Testperson G-Feedback rekonstruieren (feedback-log.md)
   → Family Expert Feedback zuordnen (wer ist das?)
   → BVG-Bug-Status klären
 

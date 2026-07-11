@@ -82,7 +82,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 - ⭐ **Gender-neutral** wo möglich · **keine Emojis, nüchterner Ton** · **No AI Slop** (klingt wie ein Mensch).
 - 🌱 **Robustheits-Checkliste app-weit** — Success/Empty/Error/Loading + Graceful Degradation auf JEDES Feature.
-- 🌱 **Jana-Verständlichkeit** — „ohne Anleitung verstehen was zu tun ist"; Glossar für Abkürzungen (✅ teils).
+- 🌱 **Testperson A-Verständlichkeit** — „ohne Anleitung verstehen was zu tun ist"; Glossar für Abkürzungen (✅ teils).
 - 🌱 **Kohlberg-Moralstufen** als Denkrahmen für würdevolle, nicht-bevormundende Ansprache.
 - 🌱 **FR/IT/RM-Gegenlese** — RM ~263 Keys offen (Native-Task, `scripts/i18n-gap-scan.mjs`); tiefere FR/IT-CH-Grammatik-QA.
 

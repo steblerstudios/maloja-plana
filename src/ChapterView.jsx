@@ -35,7 +35,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const [touched, setTouched] = useState({});
 
   // Themen-Reiter: die benannten Sektionen der primären Felder (Person/Kontakt/…),
-  // damit man im Kapitel springen kann statt hochzuscrollen (Jana #1).
+  // damit man im Kapitel springen kann statt hochzuscrollen (Testperson A #1).
   const [activeSection, setActiveSection] = useState(null);
   const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
   // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
@@ -2049,7 +2049,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       )
     ),
 
-    // Nächstes Thema — Jana: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
+    // Nächstes Thema — Testperson A: am Kapitelende ruhig weitergehen, ohne hochzuscrollen.
     nextChapter && onNext ? React.createElement('button', {
       type: 'button',
       onClick: onNext,
