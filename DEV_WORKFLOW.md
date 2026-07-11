@@ -92,6 +92,36 @@ Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
 
 ---
 
+## Bug gemeldet — was jetzt?
+
+Bugs kommen über die **Feedback-Mail** in der Fusszeile („Feedback per E-Mail").
+Sie öffnet einen Entwurf mit einem löschbaren Kontext-Block (**App-Version,
+Ansicht, Sprache**) — das genügt meist, um die Stelle zu finden. Nichts wird
+automatisch gesammelt; die Person schickt die Mail selbst ab.
+
+**Reproduce-first.** Bevor irgendetwas geändert wird: den Bug **nachstellen**
+(gleiche Ansicht, Sprache, Schritte). Lässt er sich nicht reproduzieren →
+Rückfrage statt Rätselraten. Erst der reproduzierte Bug wandert als Zeile in
+`docs/TODO.md` mit **Schweregrad**:
+
+| Schwere | Beispiel | Weg |
+|---|---|---|
+| **kritisch** | Datenverlust, falsche Rechts-/Zahlen-/Fristangabe, App startet nicht | **Hotfix** — gleicher Ring, aber sofort, vor anderer Arbeit |
+| **normal** | Ansicht kaputt, Berechnung daneben, Text falsch | regulär: `fix/…` → Stage → PR → Prod |
+| **klein** | Tippfehler, Kosmetik | regulär, gebündelt |
+
+**Ablauf** (wie jede Änderung, nur mit Fix-Branch): `fix/kurzer-name` ab `main`
+→ den Bug **zuerst in einem Test festhalten** (schlägt er rot an? = reproduziert)
+→ Fix (Test wird grün) → `deploy.sh --stage` → am Stage gegenprüfen → PR→main
+→ `/maloja-predeploy` → `bash deploy.sh` → live verifizieren, dass er weg ist.
+
+Bei **kritisch** zusätzlich: notieren, welche Version den Bug brachte — damit klar
+ist, ob live schon jemand betroffen war. Der Deploy-Gate (`/maloja-predeploy`)
+gilt auch für Hotfixes; falsche Fach-/Rechtsangaben sind Haftung, kein Tempo-Grund
+zum Überspringen.
+
+---
+
 ## Boot / Deploy — Kurzreferenz
 
 - **Lokal starten:** `npm run dev` (Port 5174, `strictPort` — kein stiller Port-Wechsel).
