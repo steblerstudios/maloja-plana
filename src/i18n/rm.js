@@ -2,7 +2,7 @@ export default {
   // TODO(rm): Romanisch von Muttersprachler:in prüfen lassen (Rumantsch Grischun, provisorisch).
   lebenszustaende: {
     sectionTitle: 'Pertutga ina da questas situaziuns a Vus?',
-    sectionIntro: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda — nagut vegn memorisà sco etichetta, quai mussa mo quai che pudess exister.',
+    sectionIntro: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda. Quai resta sin Voss apparat ed agida mo a mussar a Vus quai che va bain per Vus — nagin profil, nagina valitaziun.',
     selectHint: 'Tutgar ina situaziun per vesair quai che pudess pertutgar.',
     quelleLabel: 'Funtauna',
     standLabel: 'Stadi',

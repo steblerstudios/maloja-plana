@@ -1,7 +1,7 @@
 export default {
   lebenszustaende: {
     sectionTitle: 'Trifft eine dieser Situationen zu?',
-    sectionIntro: 'Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wähle, was passt — es wird nichts als Etikett gespeichert, es zeigt nur, was möglich wäre.',
+    sectionIntro: 'Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wähle, was passt. Das bleibt auf deinem Gerät und hilft nur, dir Passendes zu zeigen — kein Profil, keine Bewertung.',
     selectHint: 'Eine Situation antippen, um zu sehen, was infrage kommt.',
     quelleLabel: 'Quelle',
     standLabel: 'Stand',

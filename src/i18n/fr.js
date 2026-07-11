@@ -1,7 +1,7 @@
 export default {
   lebenszustaende: {
     sectionTitle: 'Une de ces situations vous concerne-t-elle ?',
-    sectionIntro: 'Certaines aides ne dépendent pas d’un événement précis, mais d’une situation qui dure. Choisissez ce qui correspond — rien n’est enregistré comme étiquette, cela montre seulement ce qui pourrait exister.',
+    sectionIntro: 'Certaines aides ne dépendent pas d’un événement précis, mais d’une situation qui dure. Choisissez ce qui correspond. Cela reste sur votre appareil et sert seulement à vous montrer ce qui vous convient — aucun profil, aucun jugement.',
     selectHint: 'Touchez une situation pour voir ce qui pourrait s’appliquer.',
     quelleLabel: 'Source',
     standLabel: 'État',
