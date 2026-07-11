@@ -57,5 +57,5 @@ Schweizer Recht, Gerichtsstand Basel-Stadt. Orientierung — keine Rechts- oder 
 
 ---
 
-**Kontakt:** Sophie Stebler · Stebler Studios · malojaplana.ch
+**Kontakt:** Stebler Studios · malojaplana.ch
 *(Kontakt-E-Mail hier eintragen, sobald info@malojaplana.ch aktiv ist.)*

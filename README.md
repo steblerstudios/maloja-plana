@@ -92,5 +92,5 @@ visuelle Identität sind nicht durch die AGPL abgedeckt.
 
 ## Von
 
-**Stebler Studios** — Sophie Stebler, Basel. Kontakt über das Impressum auf
+**Stebler Studios** — Basel. Kontakt über das Impressum auf
 [malojaplana.ch](https://malojaplana.ch).

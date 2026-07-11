@@ -1,6 +1,6 @@
 # Maloja Plana — Brand Identity
 
-**Stand:** Juni 2026 · **Firma:** Stebler Studios (Sophie Stebler, Basel)
+**Stand:** Juni 2026 · **Firma:** Stebler Studios (Basel)
 
 Lebendes Dokument. Hier werden alle Marken-**Entscheidungen** (inkl. Herleitung + Verworfenes)
 festgehalten. Für die kompakte, gebündelte Anwendungs-Referenz siehe

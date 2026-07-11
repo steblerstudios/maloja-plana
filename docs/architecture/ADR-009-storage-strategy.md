@@ -4,7 +4,7 @@
 |------|-------|
 | **Status** | Accepted |
 | **Date** | 2026-05-17 |
-| **Deciders** | Sophie Stebler |
+| **Deciders** | Stebler Studios |
 | **Relates to** | ADR-001 (Offline-First), ADR-002 (No Accounts), GAP-01, GAP-02 |
 
 ---

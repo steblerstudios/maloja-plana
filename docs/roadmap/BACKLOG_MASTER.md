@@ -6,7 +6,7 @@
 |------|-------|
 | **Version** | 2.0.0 |
 | **Date** | 2026-05-17 |
-| **Author** | Sophie Stebler / Stebler Studios |
+| **Author** | Stebler Studios |
 | **Source** | Executive Dashboard, Phase 1 Master, Phase 2 Blueprint, Stakeholder Feedback, PRD, Chat-Inputs |
 | **Categories** | Core / Enhancement / Compliance / Security / UX / Feedback |
 

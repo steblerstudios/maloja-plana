@@ -1,6 +1,6 @@
 # Maloja Plana — Brand Guidelines
 
-**Stand:** Juni 2026 · **Firma:** Stebler Studios (Sophie Stebler, Basel)
+**Stand:** Juni 2026 · **Firma:** Stebler Studios (Basel)
 
 Das **eine** kanonische Marken-Referenz-Dokument. Es bündelt Farbe, Typografie, Logo,
 Bildsprache, Stimme und Design-Tokens an einem Ort. Die Detail-Dokumente bleiben als

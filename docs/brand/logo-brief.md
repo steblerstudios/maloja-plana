@@ -1,7 +1,7 @@
 # Maloja Plana — Logo Design Brief
 
 **Produkt:** Maloja Plana — privacy-first Swiss life-organizer App
-**Firma:** Stebler Studios (Einzelfirma, Sophie Stebler, Basel)
+**Firma:** Stebler Studios (Einzelfirma, Basel)
 **Datum:** Juni 2026
 
 ---
