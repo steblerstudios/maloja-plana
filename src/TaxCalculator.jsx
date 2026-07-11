@@ -80,7 +80,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const buttonStyle = {
     padding: '10px 16px',
     background: palette.sand,
-    color: '#fff',
+    color: palette.onSand,
     border: 'none',
     borderRadius: radius.sm,
     cursor: 'pointer',

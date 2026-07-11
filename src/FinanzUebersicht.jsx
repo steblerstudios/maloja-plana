@@ -211,7 +211,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
 
     hasData && income > 0 && (() => {
       const thresholds = [
-        { max: 2279, key: 'belowPoverty', color: palette.gold || '#c47a20' },
+        { max: 2279, key: 'belowPoverty', color: palette.goldDeep || '#c47a20' },
         { max: 4000, key: 'nearPoverty', color: palette.sand },
         { max: 6788, key: 'belowMedian', color: palette.mid },
         { max: 10000, key: 'aboveMedian', color: palette.sage },
