@@ -1665,6 +1665,7 @@ export default {
     enter: 'Avrir',
     legalLink: 'Protecziun da datas & infurmaziuns giuridicas',
     feedbackMail: 'Feedback via e-mail',
+    feedbackContext: 'Questas infurmaziuns gidan a diagnostitgar il problem (facultativ, stridabel):',
     feedbackForm: 'Formular da feedback',
     feedback: {
       title: { sie: 'Voss feedback tar la beta', du: 'Tes feedback tar la beta' },
