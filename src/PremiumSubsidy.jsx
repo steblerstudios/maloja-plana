@@ -98,12 +98,12 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
         React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
-      !canton && React.createElement('div', { style: { color: palette.rose } }, t('premium.enterCanton'))
+      !canton && React.createElement('div', { style: { color: palette.roseDeep } }, t('premium.enterCanton'))
     ),
 
     // Residence type warning
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs } }, 'ⓘ ' + t('premium.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, 'ⓘ ' + t('premium.weeklyResidence')),
       React.createElement('div', null, t('premium.weeklyIpvNote')),
       React.createElement('div', null, t('premium.weeklyKkNote'))
     ),
@@ -202,7 +202,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('button', {
           onClick: handleDownloadDocument,
           disabled: !ipvResult.eligible,
-          style: { padding: '10px', background: ipvResult.eligible ? palette.sky : palette.mid, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
+          style: { padding: '10px', background: ipvResult.eligible ? palette.sky : palette.mid, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '□ ' + t('premium.document')),
         React.createElement('button', {
           onClick: () => setShowCalculation(false),

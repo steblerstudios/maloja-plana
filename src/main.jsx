@@ -341,7 +341,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
             onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
-            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sage, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
+            style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sageBtn, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
           )
@@ -565,7 +565,12 @@ const AppInner = () => {
     syncDocumentReminders(documents, t);
   }, [documents]);
 
-  useEffect(() => { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); }, [isDarkMode]);
+  useEffect(() => {
+    localStorage.setItem('or5_theme', JSON.stringify(isDarkMode));
+    // data-theme markiert den Modus für tokens.css (Fokusring braucht im Hellmodus
+    // eine dunklere Farbe für WCAG 1.4.11; der Rest der Farben kommt aus den JS-Paletten).
+    try { document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light'); } catch {}
+  }, [isDarkMode]);
   useEffect(() => { try { localStorage.setItem('or5_readable', String(readable)); } catch {} document.documentElement.classList.toggle('mp-readable', readable); }, [readable]);
   useEffect(() => {
     const on = () => setIsOffline(false);
@@ -1129,7 +1134,7 @@ const AppInner = () => {
         React.createElement('button', {
           onClick: applySandbox,
           style: {
-            padding: '6px 14px', background: palette.sage, border: 'none',
+            padding: '6px 14px', background: palette.sageBtn, border: 'none',
             borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi,
             color: '#fff', fontFamily: 'inherit',
           }

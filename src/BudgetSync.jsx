@@ -432,7 +432,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
         onClick: () => setShowAnnual(!showAnnual),
         style: {
           flex: 1, padding: '9px', background: showAnnual ? palette.sand : palette.up,
-          color: showAnnual ? '#fff' : palette.mid, border: '1px solid ' + palette.border,
+          color: showAnnual ? palette.onSand : palette.mid, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }

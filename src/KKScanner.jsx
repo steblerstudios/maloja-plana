@@ -118,7 +118,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('kkScanner.qrBarcode'))
         ),
-        scanning && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.gold, fontWeight: weight.semi } }, 'ⓘ ' + t('kkScanner.scanning'))
+        scanning && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, 'ⓘ ' + t('kkScanner.scanning'))
       ),
 
       scanMode === 'manual' && React.createElement('div', null,
@@ -151,7 +151,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       ),
 
       conflicts && React.createElement('div', { style: { padding: space.md, background: palette.gold + '15', border: '1px solid ' + palette.gold, borderRadius: radius.sm, marginBottom: '12px' } },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.sm, fontSize: text.sm } }, 'ⓘ ' + t('kkScanner.conflictTitle')),
+        React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.sm, fontSize: text.sm } }, 'ⓘ ' + t('kkScanner.conflictTitle')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('kkScanner.conflictHint')),
         React.createElement('div', { style: { display: 'grid', gap: space.xs, marginBottom: space.md } },
           conflicts.fields.map(field =>

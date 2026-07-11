@@ -372,7 +372,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       ? { text: t('kvg.selbstbehaltDone'), color: palette.sage || '#5a7a5a', icon: '✓' }
     : result.franchiseOffen > 0
       ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'ⓘ' }
-      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.gold || '#c47a20', icon: 'ⓘ' };
+      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'ⓘ' };
 
   const barStyle = (value, max, color) => ({
     height: '8px',
@@ -759,7 +759,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       },
         React.createElement('span', { style: { color: palette.mid } }, t('kvg.eigenanteil')),
         React.createElement('span', {
-          style: { fontWeight: weight.semi, color: palette.gold || '#c47a20' }
+          style: { fontWeight: weight.semi, color: palette.goldDeep || '#c47a20' }
         }, 'CHF ' + Math.round(result.eigenanteil))
       ),
       React.createElement('div', {
