@@ -5,7 +5,7 @@
 // Kapitel-Karten, in den Mappen-Reitern (Bundesordner) und den Fächern
 // (Arztkoffer). Design-Phase Schritt 2 — [[project_navigation_spine]].
 //
-// Barrierefreiheit (verschärft, die Inhaberin 2026-07-06): DREI redundante Kanäle —
+// Barrierefreiheit (verschärft, Stebler Studios 2026-07-06): DREI redundante Kanäle —
 //   1. Frucht-SILHOUETTE (Form überlebt Graustufen) → FruchtSilhouette.jsx
 //   2. HELLIGKEIT der Töne gespreizt (hell → mittel → dunkel), nicht nur Farbton
 //   3. Wort (Name des Bereichs)

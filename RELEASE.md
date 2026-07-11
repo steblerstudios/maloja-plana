@@ -78,7 +78,7 @@ unberührt. Zugriffsschutz macht das App-eigene BetaGate.
 **Typischer Ablauf:** Feature-Branch fertig → `bash deploy.sh --stage` → auf
 `stage.malojaplana.ch` prüfen → passt → PR Feature-Branch→`main` mergen → `bash deploy.sh`.
 
-**Einmalige Einrichtung (im Infomaniak-Panel, nur die Inhaberin):**
+**Einmalige Einrichtung (im Infomaniak-Panel, nur Stebler Studios):**
 1. Subdomain `stage.malojaplana.ch` anlegen (Panel → Domains → Subdomain).
 2. Deren Docroot-Pfad ablesen (sieht aus wie
    `/home/clients/…/sites/stage.malojaplana.ch/`).
@@ -95,8 +95,9 @@ Zwei Netze — du kannst immer zurück:
 aktuelle Live-Version nach `./.deploy-backups/<zeitstempel>/`. Zum Zurückrollen
 den letzten guten Ordner wieder hochspielen:
 ```bash
-lftp -c "open -u \"$SFTP_USER\",\"$SFTP_PASSWORD\" sftp://[entfernt].ftp.infomaniak.com; \
-  mirror -R ./.deploy-backups/<zeitstempel>/ /home/clients/.../malojaplana.ch/"
+lftp -c "open -u \"$SFTP_USER\",\"$SFTP_PASSWORD\" sftp://\"$SFTP_HOST\"; \
+  mirror -R ./.deploy-backups/<zeitstempel>/ \"$REMOTE_DIR\""
+# $SFTP_HOST / $REMOTE_DIR aus .deploy.local (siehe deploy.sh)
 ```
 
 **B) Über Git (die Zeitmaschine).** Jede Version neu bauen und deployen:

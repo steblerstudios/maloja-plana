@@ -9,7 +9,7 @@ Datum: 2026-06-21
 
 ## Tester-Ergebnisse
 
-### Jana
+### Testperson A
 
 ```
 Verstanden in 30 Sek.? Teilweise
@@ -21,7 +21,7 @@ Konkreter nächster Fix: Beispiel-Modus / früher sichtbare Ergebnisse
 Muster: 1 (Nutzen kommt zu spät)
 ```
 
-### Annora
+### Testperson C
 
 ```
 Verstanden in 30 Sek.? —
@@ -34,7 +34,7 @@ Muster: 2 (Vertrauen & Datenhoheit)
 Zusätzlich: Fragte nach Rätoromanisch
 ```
 
-### Silvan
+### Testperson B
 
 ```
 Verstanden in 30 Sek.? —
@@ -46,7 +46,7 @@ Konkreter nächster Fix: Auto-Prefill, Querverbindungen
 Muster: 3 (Verbindungen statt Formulare)
 ```
 
-### André
+### Testperson D
 
 ```
 Verstanden in 30 Sek.? —
@@ -58,7 +58,7 @@ Konkreter nächster Fix: Beispiel-Modus, Notfallkarte, sofort sichtbare Resultat
 Muster: 1 (Nutzen kommt zu spät)
 ```
 
-### Gianni
+### Testperson E
 
 ```
 Verstanden in 30 Sek.? —
@@ -70,7 +70,7 @@ Konkreter nächster Fix: Demo-Person, Nutzen vor Dateneingabe
 Muster: 1 (Nutzen kommt zu spät)
 ```
 
-### Greg
+### Testperson F
 
 ```
 Verstanden in 30 Sek.? —
@@ -90,9 +90,9 @@ Muster: UX-Details (Einzelmeinungen, beobachten)
 
 | Muster | Quellen | Stärke |
 |--------|---------|--------|
-| 1: Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐ Stärkstes Signal |
-| 2: Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐ |
-| 3: Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, die Inhaberin | ⭐⭐⭐ |
+| 1: Nutzen kommt zu spät | Testperson A, Testperson D, Testperson E, Kolleg:innen, Perplexity | ⭐⭐⭐ Stärkstes Signal |
+| 2: Vertrauen & Datenhoheit | Testperson C, Kolleg:innen, Perplexity | ⭐⭐⭐ |
+| 3: Verbindungen statt Formulare | Testperson B, Kolleg:innen, Testperson G, Stebler Studios | ⭐⭐⭐ |
 
 ### Top 3 Nächste Schritte (abgeleitet aus Mustern)
 

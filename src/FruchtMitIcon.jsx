@@ -6,7 +6,7 @@ import Icons from './IconSystem.jsx';
 //
 // Die Frucht (in Ast-Farbe) trägt das Bereichs-Icon als ECHTE Aussparung:
 // das Icon wird per SVG-Maske aus dem Fruchtkörper gestanzt, der Hintergrund
-// scheint durch. Kein weisser Klecks obendrauf mehr (die Inhaberin 2026-07-06).
+// scheint durch. Kein weisser Klecks obendrauf mehr (Stebler Studios 2026-07-06).
 // „die Früchte nur im Baum … und darin das Negativ des jeweiligen Icons".
 //
 // Cluster-Früchte (keine Vollkörper) bekommen eine solide Scheibe als Körper,

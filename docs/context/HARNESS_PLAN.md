@@ -1,6 +1,6 @@
 # Harness-Plan — Sitzungs-Kontinuität für Maloja
 
-> Ziel: Eine frische Claude-Sitzung (oder die Inhaberin nach Wochen) kennt in <1 Minute den
+> Ziel: Eine frische Claude-Sitzung (oder Stebler Studios nach Wochen) kennt in <1 Minute den
 > **wahren** Stand — was gebaut, was deployt, was **live-verifiziert** ist — ohne die
 > Memory zu durchforsten oder veraltete Docs zu glauben.
 >
@@ -30,7 +30,7 @@ widerspricht sich teils:
 | 3 „passing" erst nach Test | Disziplin da, nicht sichtbar | Spalte `verified-live` im Ledger |
 | 4 init.sh | `.claude/launch.json` ✓ | nichts — erledigt |
 
-## Reihenfolge (die Inhaberin: „4 und dann 1–3 durcharbeiten")
+## Reihenfolge (Stebler Studios: „4 und dann 1–3 durcharbeiten")
 
 - **Schritt 0 — dieser Plan.** ✓
 - **Schritt 1 — `SESSION_START.md`** (root): 1 Bildschirm. Aktueller Tag/Branch, was
@@ -50,5 +50,5 @@ widerspricht sich teils:
 ## Nicht-Ziele
 
 - Kein „Initializer-Agent" — Overkill für Solo-Local-First; Boot läuft via launch.json.
-- Kein Ersatz der Memory — die bleibt der Inhaberin persönliche Denk-/Session-Historie.
+- Kein Ersatz der Memory — die bleibt von Stebler Studios persönliche Denk-/Session-Historie.
   SESSION_START ist die *repo-interne, objektive* Wahrheit (Tag/Branch/Hash).

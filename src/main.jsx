@@ -250,7 +250,7 @@ const bottomIcon = (name, color, size) => {
 
 // Sackmesser mit Zustand: die Werkzeuge fahren nur aus dem Griff, wenn man auf der
 // Übersicht ist (open) — sonst klappen sie ruhig ein. Der Griff bleibt immer, die
-// zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (die Inhaberin: „offen nur bei
+// zwei Werkzeuge skalieren um den Drehpunkt (15|12) aus/ein (Stebler Studios: „offen nur bei
 // der Übersicht, sonst schliesst es sich").
 const SackmesserIcon = ({ open, color, size = 20 }) => {
   const s = size;
@@ -944,7 +944,7 @@ const AppInner = () => {
       completion: calculateCompletion(),
       // Am Handy trägt der Boden-Anker die Übersicht → im Drawer weglassen (keine
       // Dopplung). In der Web-Ansicht gibt es keinen Anker → Übersicht bleibt hier,
-      // bis wir ein eigenes Web-Äquivalent haben (die Inhaberin).
+      // bis wir ein eigenes Web-Äquivalent haben (Stebler Studios).
       hasBottomAnchor: isMobile,
       leftHand,
       // Nav-Schublade = reine Navigation; Einstellungen leben in der eigenen Schublade.

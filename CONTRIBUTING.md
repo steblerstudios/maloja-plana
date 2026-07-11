@@ -40,4 +40,4 @@ Mit Deinem Beitrag stimmst Du zu, dass er unter AGPL-3.0 veröffentlicht wird.
 
 ## Kontakt
 
-Sophie Stebler — steblerstudios@gmail.com
+Sophie Stebler — info@malojaplana.ch

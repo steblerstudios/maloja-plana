@@ -14,10 +14,10 @@ Beta-Code: maloja2026
 
 | Person | Perspektive | Sprache | Worauf achten |
 |--------|-------------|---------|---------------|
-| Jana | Verständlichkeit, Vertrauen, visuelle Wirkung | DE | Fühlt sich die App vertrauenswürdig an? |
-| Annora | Erstnutzer, Sprachsensibilität | DE/EN | "Wo klicke ich?", "Was soll ich hier machen?" |
-| Silvan | Logik, technische Konsistenz | DE | Rechner plausibel? Fehlende Verknüpfungen? |
-| Greg | UX, Design, Navigation | DE | Visuelles Urteil, Interaktionsprobleme |
+| Testperson A | Verständlichkeit, Vertrauen, visuelle Wirkung | DE | Fühlt sich die App vertrauenswürdig an? |
+| Testperson C | Erstnutzer, Sprachsensibilität | DE/EN | "Wo klicke ich?", "Was soll ich hier machen?" |
+| Testperson B | Logik, technische Konsistenz | DE | Rechner plausibel? Fehlende Verknüpfungen? |
+| Testperson F | UX, Design, Navigation | DE | Visuelles Urteil, Interaktionsprobleme |
 
 ---
 

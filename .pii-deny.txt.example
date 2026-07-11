@@ -1,0 +1,11 @@
+# Projektspezifische PII-Tokens für scripts/pii-scan.sh.
+# Kopieren nach `.pii-deny.txt` (gitignored) und die echten, zu sperrenden
+# Begriffe eintragen — je EIN grep-E/PCRE-Muster pro Zeile. # = Kommentar.
+# Diese echten Tokens gehören NICHT ins öffentliche Repo, deshalb nur lokal.
+#
+# Beispiele (Platzhalter — durch echte Werte ersetzen):
+# Vorname-der-Inhaberin
+# Mac-Benutzername
+# Tester-Vorname-1
+# Hoster-SFTP-Kennung
+# Klient-Hash-32-hex

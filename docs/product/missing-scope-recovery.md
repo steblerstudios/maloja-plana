@@ -29,7 +29,7 @@ Maloja Plana hat eine solide technische Basis (17 Views, 53 Source-Dateien, 4 Re
 ### Kritischste Lücken
 
 1. **Budget/Finanzen** — Nur Basis-Sync implementiert (Income vs. 5 Ausgabeposten). Kein echtes Budget-Tracking, keine Fixkosten-Kategorien, keine Alimente, keine Stipendien, keine Sparziele, keine Notfallreserve.
-2. **Feedback von Mutter** — Nur 1 vage Referenz ("mother feedback" zu Budget). Inhalte NICHT strukturiert erfasst.
+2. **Feedback von Testperson G** — Nur 1 vage Referenz ("mother feedback" zu Budget). Inhalte NICHT strukturiert erfasst.
 3. **Export als Lebensbereich** — Nur ZIP-Export + PDF-Export implementiert. Keine "Lebensmappe", kein "Dossier", kein Behördenexport-Flow.
 4. **Household Model** — Nicht implementiert. Blockiert SKOS-Korrektur, Alimente, Familienzulagen, korrekte Budget-Templates.
 5. **Generatoren** — Nur CV-Generator implementiert. 17 weitere Generatoren sind nur Idee.
@@ -39,7 +39,7 @@ Maloja Plana hat eine solide technische Basis (17 Views, 53 Source-Dateien, 4 Re
 
 ## 1. Feedback Recovery
 
-### 1.1 Silvan (Alpha-Tester)
+### 1.1 Testperson B (Alpha-Tester)
 
 | # | Thema | Problem | Status | Produktbereich | Priorität | Beta-relevant |
 |---|-------|---------|--------|----------------|-----------|---------------|
@@ -47,20 +47,20 @@ Maloja Plana hat eine solide technische Basis (17 Views, 53 Source-Dateien, 4 Re
 | S-2 | Flaggen-Inkonsistenz Onboarding | DE/FR/IT mit Schweizer Kreuz, EN mit UK-Flagge | **Behoben** (commit 1374af9) | UX / i18n | Niedrig | Ja |
 | S-3 | Dashboard Attention Balance | Viele Elemente konkurrieren um gleiche Aufmerksamkeit | **Nur dokumentiert** (live-product-feedback.md) | UX / Dashboard | Mittel | Ja |
 
-### 1.2 Jana (Alpha-Testerin)
+### 1.2 Testperson A (Alpha-Testerin)
 
 | # | Thema | Problem | Status | Produktbereich | Priorität | Beta-relevant |
 |---|-------|---------|--------|----------------|-----------|---------------|
 | J-1 | Kantonsnamen ausschreiben | Dropdown zeigt "BS" statt "Basel-Stadt" | **Behoben** (commit 1374af9) | UX / Klarheit | Niedrig | Ja |
 
-### 1.3 Mutter
+### 1.3 Testperson G
 
 | # | Thema | Problem | Status | Produktbereich | Priorität | Beta-relevant |
 |---|-------|---------|--------|----------------|-----------|---------------|
 | M-1 | Budget UX | Budget braucht mehr Geduld und Finesse, soll supportiv sein | **Nur vage referenziert** (pre-store-critical-issues.md:160) | Budget / Finanzen | Hoch | Ja |
 | M-2 | Weiteres Feedback | **NICHT GEFUNDEN — muss manuell rekonstruiert werden** | Unbekannt | Unbekannt | Unbekannt | Unbekannt |
 
-**ACHTUNG:** Die "Family feedback (domain expert)"-Einträge F-008 bis F-013 könnten von Mutter stammen (BVG-Kontinuität, UVG/KTG, Selbständigkeit, Retirement, AHV-Admin). Das ist aber nicht explizit zugeordnet. die Inhaberin muss klären, ob das Mutter-Feedback ist oder von einer anderen Person.
+**ACHTUNG:** Die "Family feedback (domain expert)"-Einträge F-008 bis F-013 könnten von Testperson G stammen (BVG-Kontinuität, UVG/KTG, Selbständigkeit, Retirement, AHV-Admin). Das ist aber nicht explizit zugeordnet. Stebler Studios muss klären, ob das Testperson G-Feedback ist oder von einer anderen Person.
 
 ### 1.4 Family Feedback (Domain Expert) — nicht namentlich zugeordnet
 
@@ -94,9 +94,9 @@ Maloja Plana hat eine solide technische Basis (17 Views, 53 Source-Dateien, 4 Re
 
 | Quelle | Einträge | Behoben | Dokumentiert | Offen/Unklar |
 |--------|----------|---------|--------------|--------------|
-| Silvan | 3 | 2 | 1 | 0 |
-| Jana | 1 | 1 | 0 | 0 |
-| Mutter | 1+ | 0 | 1 (vage) | **Unbekannt — Recovery nötig** |
+| Testperson B | 3 | 2 | 1 | 0 |
+| Testperson A | 1 | 1 | 0 | 0 |
+| Testperson G | 1+ | 0 | 1 (vage) | **Unbekannt — Recovery nötig** |
 | Family Expert | 5 | 0 | 5 | 0 |
 | Basel-Stadt User | 7 | 2 | 0 | 5 |
 | Internes Review | 1 | 0 | 0 | 1 |
@@ -386,7 +386,7 @@ Geplante Schnittstellen (alle nur Idee):
 | Export: Notfalldossier | D | Nicht sauber erfasst |
 | Generatoren: Template Engine | C | MP-GEN-016 — geplant, nicht implementiert |
 | Generatoren: 17 weitere | C | Alle nur Idee |
-| Mutter-Feedback | D | **Nicht auffindbar — muss rekonstruiert werden** |
+| Testperson G-Feedback | D | **Nicht auffindbar — muss rekonstruiert werden** |
 | Feedback: Empty States kalt | B | live-product-feedback.md — nicht adressiert |
 | Feedback: Dashboard Attention | B | live-product-feedback.md — nicht adressiert |
 | Emotionale Temperatur | B | emotional-temperature-map.md — nicht im Code |
@@ -432,7 +432,7 @@ Geplante Schnittstellen (alle nur Idee):
 | 11 | Mietbeiträge-Hinweis | Häufiger Bedarf |
 | 12 | Alimente im Budget | Reale Lebenssituation |
 | 13 | "Calm Budget" umsetzen | Kein Judgment, keine Scham |
-| 14 | Mutter-Feedback rekonstruieren | Wertvolles Nutzerfeedback geht verloren |
+| 14 | Testperson G-Feedback rekonstruieren | Wertvolles Nutzerfeedback geht verloren |
 | 15 | PWA / Service Worker | Offline-Zuverlässigkeit |
 
 ### KANN warten (Post-Beta)
@@ -442,8 +442,8 @@ Geplante Schnittstellen (alle nur Idee):
 
 ## 10. Empfohlene nächste Workpackages
 
-### WP-1: Mutter-Feedback Recovery (Sofort, manuell)
-Die Inhaberin muss das Feedback von Mutter manuell rekonstruieren und in feedback-log.md eintragen. Ohne das fehlt eine der wichtigsten Feedback-Quellen.
+### WP-1: Testperson G-Feedback Recovery (Sofort, manuell)
+Stebler Studios muss das Feedback von Testperson G manuell rekonstruieren und in feedback-log.md eintragen. Ohne das fehlt eine der wichtigsten Feedback-Quellen.
 
 ### WP-2: Budget Hardening (A-033)
 - Brutto/Netto-Unterscheidung
@@ -489,7 +489,7 @@ Die Inhaberin muss das Feedback von Mutter manuell rekonstruieren und in feedbac
 
 ### Empfohlene Reihenfolge
 ```
-WP-1 (Mutter-Feedback)     → Sofort (die Inhaberin, manuell)
+WP-1 (Testperson G-Feedback)     → Sofort (Stebler Studios, manuell)
 WP-5 (Hardcoded German)    → Klein, sicher, hoher Impact
 WP-2 (Budget Hardening)    → Grösste Nutzerlücke
 WP-3 (Household Basis)     → Entblockt SKOS + Budget
@@ -506,10 +506,10 @@ WP-8 (Swiss Orientation)   → Schweizer Mehrwert
 | # | Thema | Widerspruch |
 |---|-------|-------------|
 | 1 | BVG-Bug | feedback-log.md sagt "Fixed (commit 4cb226f)", backlog-registry.yaml zeigt MP-BUG-005 noch als "idea" mit dependency auf MP-DAT-006. Unklar ob der Fix vollständig ist. |
-| 2 | Family Feedback Quelle | F-008 bis F-013 als "Family feedback (domain expert)" — ist das Mutter oder jemand anders? |
+| 2 | Family Feedback Quelle | F-008 bis F-013 als "Family feedback (domain expert)" — ist das Testperson G oder jemand anders? |
 | 3 | Phase 1 Governance Runtime | BACKLOG_MASTER.md beschreibt Phase 1 als 6-8 Wochen mit 26 Tickets. product-memory-registry.md sagt "System Consolidation" ist aktuelle Phase. Stimmen die überein? |
 | 4 | Backlog-Duplikate | BACKLOG_MASTER.md hat eigene IDs (BUD-001, DOC-001), product-inventory.md hat andere IDs (MP-BUD-001, MP-DOC-001). Zwei Systeme, nicht synchron. |
-| 5 | Export-Richtung | product-memory-registry.md listet "PDF, JSON, YAML, CSV, DOCX, ZIP, LaTeX" als Formate. die Inhaberin sagt "kein Sackmesser". Widerspruch zwischen Format-Breite und Calm-Export. |
+| 5 | Export-Richtung | product-memory-registry.md listet "PDF, JSON, YAML, CSV, DOCX, ZIP, LaTeX" als Formate. Stebler Studios sagt "kein Sackmesser". Widerspruch zwischen Format-Breite und Calm-Export. |
 
 ---
 

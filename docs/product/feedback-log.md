@@ -27,10 +27,10 @@
 
 ---
 
-## Silvan (Alpha-Tester)
+## Testperson B (Alpha-Tester)
 
 ### FB-001: Datum-Reset visuell fehlerhaft
-- **Quelle:** Silvan
+- **Quelle:** Testperson B
 - **Datum:** 2026-05 (Alpha-Phase)
 - **Thema:** Datum-Reset
 - **Original:** „Wenn man ein Datum zurücksetzt, bleibt die vorherige Auswahl visuell sichtbar."
@@ -42,7 +42,7 @@
 - **Nächste Aktion:** Erledigt (A-024)
 
 ### FB-002: Flaggen-Inkonsistenz im Onboarding
-- **Quelle:** Silvan
+- **Quelle:** Testperson B
 - **Datum:** 2026-05-16
 - **Thema:** Sprach-Flaggen
 - **Original:** „Im Onboarding haben DE/FR/IT ein Schweizer Kreuz, EN aber eine UK-Flagge. Wirkt inkonsistent."
@@ -54,7 +54,7 @@
 - **Nächste Aktion:** Erledigt (commit 1374af9 — alle Flaggen entfernt, Text-only)
 
 ### FB-003: Dashboard Attention Balance
-- **Quelle:** Silvan
+- **Quelle:** Testperson B
 - **Datum:** 2026-05 (Alpha-Phase)
 - **Thema:** Dashboard visuelle Hierarchie
 - **Original:** „Viele Dashboard-Elemente konkurrieren um gleiche Aufmerksamkeit."
@@ -67,10 +67,10 @@
 
 ---
 
-## Jana (Alpha-Testerin)
+## Testperson A (Alpha-Testerin)
 
 ### FB-004: Kantonsnamen nicht ausgeschrieben
-- **Quelle:** Jana
+- **Quelle:** Testperson A
 - **Datum:** 2026-05-16
 - **Thema:** Kantonsauswahl
 - **Original:** „Die Dropdown-Listen zeigen nur Kürzel wie ‚BS' und ‚ZH' statt ‚Basel-Stadt' und ‚Zürich'. Das ist unklar."
@@ -173,7 +173,7 @@
 
 ## Family Feedback (Domain Expert)
 
-> **ACHTUNG:** Diese 5 Einträge sind als „Family feedback (domain expert)" erfasst. **Es ist unklar, ob dies Mutter oder eine andere Person ist.** die Inhaberin muss das klären und ggf. den Quellennamen korrigieren.
+> **ACHTUNG:** Diese 5 Einträge sind als „Family feedback (domain expert)" erfasst. **Es ist unklar, ob dies Testperson G oder eine andere Person ist.** Stebler Studios muss das klären und ggf. den Quellennamen korrigieren.
 
 ### FB-012: BVG-Kontinuität und Freizügigkeitskonten
 - **Quelle:** Family feedback (domain expert) — **Zuordnung unklar**
@@ -237,19 +237,19 @@
 
 ---
 
-## Mutter — Feedback manuell zu rekonstruieren
+## Testperson G — Feedback manuell zu rekonstruieren
 
 > **STATUS: NICHT VOLLSTÄNDIG DOKUMENTIERT**
 >
-> In der gesamten Dokumentation existiert nur **eine einzige Referenz** auf Mutter-Feedback:
+> In der gesamten Dokumentation existiert nur **eine einzige Referenz** auf Testperson G-Feedback:
 > `docs/research/pre-store-critical-issues.md:160` — „User feedback and mother feedback."
 > im Kontext von Budget UX.
 >
-> **Alle folgenden Einträge sind Platzhalter.** die Inhaberin muss das Feedback manuell rekonstruieren.
+> **Alle folgenden Einträge sind Platzhalter.** Stebler Studios muss das Feedback manuell rekonstruieren.
 > Bitte nichts erfinden. Nur ausfüllen, was tatsächlich gesagt wurde.
 
 ### FB-017: Budget UX — zu wenig Geduld und Finesse
-- **Quelle:** Mutter
+- **Quelle:** Testperson G
 - **Datum:** 2026-05 (ungefähr)
 - **Thema:** Budget
 - **Original:** *Nicht vollständig dokumentiert.* Einzige Referenz: „Budget still needs more patience and finesse." + „User feedback and mother feedback."
@@ -259,15 +259,15 @@
 - **Priorität:** important
 - **Beta-relevant:** ja
 - **Evidence:** docs/research/pre-store-critical-issues.md
-- **Nächste Aktion:** die Inhaberin: Bitte rekonstruieren, was Mutter konkret zum Budget gesagt hat.
+- **Nächste Aktion:** Stebler Studios: Bitte rekonstruieren, was Testperson G konkret zum Budget gesagt hat.
 
-### Mutter-Feedback — Rekonstruktions-Template
+### Testperson G-Feedback — Rekonstruktions-Template
 
-> die Inhaberin, bitte fülle die folgenden Fragen aus, soweit du dich erinnern kannst.
+> Stebler Studios, bitte fülle die folgenden Fragen aus, soweit du dich erinnern kannst.
 > Jede Antwort wird als Feedback-Eintrag (FB-018ff.) aufgenommen.
 
 **Budget / Finanzen:**
-- Was fehlte Mutter beim Budget?
+- Was fehlte Testperson G beim Budget?
 - Welche Ausgabenbereiche hat sie genannt, die fehlen?
 - Was war unverständlich an der Finanz-Darstellung?
 - Was war zu dünn / zu oberflächlich?
@@ -393,11 +393,11 @@
 
 | Quelle | Einträge |
 |--------|----------|
-| Silvan | 3 |
-| Jana | 1 |
+| Testperson B | 3 |
+| Testperson A | 1 |
 | Basel-Stadt User | 7 |
 | Family Expert (Zuordnung unklar) | 5 |
-| Mutter | 1 + Rekonstruktions-Template |
+| Testperson G | 1 + Rekonstruktions-Template |
 | Internes Review | 1 |
 | Allgemein / Unspezifisch | 5 |
 
