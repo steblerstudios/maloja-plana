@@ -82,9 +82,17 @@
   --mp-shadow-lg:  0 4px 16px rgba(0,0,0,0.10);
   --mp-shadow-xl:  0 8px 32px rgba(0,0,0,0.12);
 
-  /* ─── Accent (Gold) — Fokus-Ringe & Auswahl ───────────── */
-  /* Einziger Farb-Token in CSS; restliche Farben kommen aus den JS-Paletten. */
+  /* ─── Accent (Gold) — Auswahl & Skip-Link-Fläche ───────── */
+  /* Farb-Tokens in CSS; restliche Farben kommen aus den JS-Paletten. */
   --mp-accent: #C4A870;
+  --mp-focus:  #C4A870; /* Fokusring — Dark-Mode-Default (Hellmodus dunkler, s.u.) */
+}
+
+/* Hellmodus: der Fokusring braucht dunkleres Gold für ≥3:1 auf hellen Flächen
+   (WCAG 1.4.11 Non-Text Contrast). Nur der Ring wird getauscht — die Skip-Link-
+   Fläche bleibt an --mp-accent. data-theme setzt main.jsx aus isDarkMode. */
+:root[data-theme="light"] {
+  --mp-focus: #7C6428;
 }
 
 /* ─── Global animation keyframes ────────────────────────── */
@@ -128,7 +136,7 @@ button, [role="button"], summary {
 
 /* ─── Focus styles (accessibility) ──────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--mp-accent);
+  outline: 2px solid var(--mp-focus);
   outline-offset: 2px;
 }
 
@@ -140,7 +148,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--mp-accent) !important;
+  outline: 2px solid var(--mp-focus) !important;
   outline-offset: 2px !important;
   z-index: 1;
 }
