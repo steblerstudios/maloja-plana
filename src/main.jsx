@@ -867,6 +867,18 @@ const AppInner = () => {
     ),
   ].filter(Boolean);
 
+  // Feedback-Mail: Betreff + ein klar abgetrennter Kontext-Block (Version/Ansicht/Sprache),
+  // damit sich Meldungen — vor allem Bugs — nachvollziehen lassen. Nichts wird automatisch
+  // gesendet: die Person sieht den Entwurf im Mailprogramm und kann den Block löschen
+  // (local-first, kein Tracking). Nur diese drei unkritischen Werte, keine Nutzerdaten.
+  const feedbackBody = '\n\n\n— — —\n' + t('beta.feedbackContext') + '\n'
+    + 'Version: ' + APP_VERSION + '\n'
+    + 'Ansicht: ' + view + '\n'
+    + 'Sprache: ' + lang;
+  const feedbackHref = 'mailto:info@malojaplana.ch?subject='
+    + encodeURIComponent('Maloja Plana Beta Feedback')
+    + '&body=' + encodeURIComponent(feedbackBody);
+
   // Fusszeile — im Web pinned unten; auf Handy/Tablet als ruhige letzte Zeile im
   // Scroll-Inhalt (kein fixer zweiter Balken über dem Boden-Anker).
   const footerEl = React.createElement('footer', {
@@ -881,7 +893,7 @@ const AppInner = () => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, t('beta.bannerLabel') + ' · v' + APP_VERSION),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('a', {
-      href: 'mailto:info@malojaplana.ch?subject=Maloja%20Plana%20Beta%20Feedback',
+      href: feedbackHref,
       style: { color: palette.mid, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, t('beta.feedbackMail')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
