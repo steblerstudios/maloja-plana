@@ -251,7 +251,7 @@ export const DocumentTresor = ({
       React.createElement('div', {
         style: { padding: '10px', background: palette.up, borderRadius: radius.sm, textAlign: 'center', border: '2px solid ' + palette.border },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.gold } }, stats.expiring),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.goldDeep } }, stats.expiring),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon')),
       ),
       React.createElement('button', {
@@ -264,7 +264,7 @@ export const DocumentTresor = ({
           borderColor: showArchive ? palette.rose : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.roseDeep } }, stats.archived),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive')),
       ),
     ),
