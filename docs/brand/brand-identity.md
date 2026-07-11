@@ -52,7 +52,7 @@ Gewicht (Hanken 600/700 für Titel, Lexend für Text), nicht aus Serif-vs-Sans. 
 - *Inter, Plus Jakarta, Instrument Sans* → zu «moderne Software»/Startup
 - *Playfair Display* → zu theatralisch, «Magazin-Inszenierung»
 - *Cormorant Garamond* → als Lesetext zu dünn/preziös (eure Designphilosophie nennt sie zwar,
-  Sophie empfand sie aber als zerbrechlich)
+  die Inhaberin empfand sie aber als zerbrechlich)
 - *OpenDyslexic / «Dyslexie-Fonts»* → Studien zeigen kaum Wirkung, zerstören die ruhige Ästhetik.
   Echte Hebel stattdessen: Sans-serif fürs Lesen, mehr Buchstaben-/Zeilenabstand, Off-White BG
   (haben wir), unterscheidbare Buchstaben, + Nutzer-Toggle für Grösse/Abstand.

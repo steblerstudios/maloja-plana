@@ -11,7 +11,7 @@ import {
 // ─────────────────────────────────────────────────────────────
 // Persona-Matrix-QA
 //
-// Idee (Sophies Braindump): "Testpersonen — Mann/Frau Durchschnitt, alle
+// Idee (Braindump der Inhaberin): "Testpersonen — Mann/Frau Durchschnitt, alle
 // Kantone, jede Familienkombi, arm bis reich — als Agenten durch Maloja
 // laufen lassen und Fehler suchen: stimmt, was ein-/ausgeblendet und
 // gerechnet wird?"

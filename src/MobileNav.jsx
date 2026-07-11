@@ -293,7 +293,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
         // „Übersicht" nur zeigen, wenn KEIN Boden-Anker existiert. Am Handy trägt der
         // Anker (Bottom-Nav, Sackmesser) die Übersicht dauerhaft → hier weglassen, um
         // die Dopplung zu vermeiden. In der Web-Ansicht fehlt der Anker → Übersicht
-        // bleibt im Menü, bis wir ein Web-Äquivalent haben (Sophie). Die Suche oben
+        // bleibt im Menü, bis wir ein Web-Äquivalent haben (die Inhaberin). Die Suche oben
         // findet die Übersicht in beiden Fällen.
         return [
           !hasBottomAnchor && navItem('dashboard', t('nav.dashboard'), 'dashboard',
