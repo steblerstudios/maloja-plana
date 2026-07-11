@@ -120,7 +120,7 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Bereichs-Früchte mit echtem Icon-Negativ**: das Bereichs-Symbol steht als ausgespartes Negativ auf einer soliden Frucht-Scheibe (SVG-Maske statt aufgesetztem Icon); Cluster-Früchte bündeln mehrere Bereiche
 - **Arztkoffer** — ein ruhiges Zuhause für alles Gesundheitliche (Pilot-Metapher, 7 Fächer)
 - **Bundesordner-Register** im Dokument-Tresor: Reiter je Bereich mit Ast-Frucht und Ast-Farbe
-- **Glossar-Tooltip für Abkürzungen** (Jana-Verständlichkeit): Fachbegriffe/Abkürzungen mit Aufklapp-Pfeil erklärt, ohne den Lesefluss zu brechen
+- **Glossar-Tooltip für Abkürzungen** (Testperson A-Verständlichkeit): Fachbegriffe/Abkürzungen mit Aufklapp-Pfeil erklärt, ohne den Lesefluss zu brechen
 
 ### Geändert
 - **Boden-Anker fix am unteren Rand** mit Safe-Area-Berücksichtigung (iPhone-Notch/Home-Indikator); Früchte erscheinen nur noch im Baum, nicht im Anker

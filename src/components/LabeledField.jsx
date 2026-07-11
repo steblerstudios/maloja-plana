@@ -14,7 +14,7 @@ import { text, weight, space } from '../config/tokens.js';
 // Props anzutasten. Ein bereits gesetztes id/aria-label des Kindes bleibt erhalten.
 //
 // STATUS: Vorschlag. Noch NICHT migriert — Migration heisst, bestehende
-// Label+Input-Paare hiermit zu umschliessen (mit dem Segen der Inhaberin, gestaffelt).
+// Label+Input-Paare hiermit zu umschliessen (mit dem Segen von Stebler Studios, gestaffelt).
 //
 // Zwei Nutzungsformen:
 //   1) Direktes Feld (id wird automatisch injiziert):

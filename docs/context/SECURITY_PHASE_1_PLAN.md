@@ -36,7 +36,7 @@ eingebauten **WebCrypto-API** (AES-256-GCM) — dafür braucht es *keine* Krypto
 ### DIE offene Weiche: Woher kommt das Nutzer-Geheimnis (KEK-Quelle) beim Passkey-Login?
 
 Passkeys authentifizieren, liefern aber nicht automatisch einen stabilen Schlüssel. Zwei
-Wege (Entscheidung von der Inhaberin, siehe unten):
+Wege (Entscheidung von Stebler Studios, siehe unten):
 
 - **A — WebAuthn-PRF-Extension (hmac-secret):** der Passkey leitet deterministisch ein
   Geheimnis ab, daraus entsteht der KEK. **Kein zusätzliches Passwort.** Ruhigste UX.
@@ -115,7 +115,7 @@ Security-Review prüft mindestens: Auth-Flows; Eigentümer-Prüfung auf *jedem* 
 Krypto-Envelope (nie ein Klartext-Schlüssel serverseitig); Session-/Cookie-Flags;
 Rate-Limits; Secrets-Handling; Fehler-Leaks; vollständige Löschung. Erst bei „clean" → live.
 
-## Mikro-Entscheidungen für Phase 1 (die Inhaberin)
+## Mikro-Entscheidungen für Phase 1 (Stebler Studios)
 
 1. **KEK-Quelle — ENTSCHIEDEN:** A (WebAuthn-PRF), kein Fallback in Phase 1. Sicherste
    Variante; Geräte ohne PRF bleiben vorerst local-first.
@@ -135,7 +135,7 @@ Rate-Limits; Secrets-Handling; Fehler-Leaks; vollständige Löschung. Erst bei �
      Einzelperson die riskanteste Variante). Zusätzlich nimmt **Zero-Knowledge** dem
      Hosting die Vertraulichkeit ab (Server-Übernahme = nur Chiffrat).
    - **Empfehlung (korrigiert 2026-07-07): gemanagte Umgebung, NICHT roher VPS.**
-     „Am sichersten" = kleinste Fläche, die die Inhaberin selbst absichern muss → OS-Patching an
+     „Am sichersten" = kleinste Fläche, die Stebler Studios selbst absichern muss → OS-Patching an
      Infomaniak abgeben. **Jelastic Cloud** (isolierte Node-Umgebung, Unterbau von
      Infomaniak gepflegt) als primäre Wahl; managed Node.js-Hosting als einfachere
      Alternative *falls* es persistente API + Env-Secrets + MariaDB-Zugriff kann.
@@ -143,16 +143,16 @@ Rate-Limits; Secrets-Handling; Fehler-Leaks; vollständige Löschung. Erst bei �
      (persistenter Prozess? Env-Secrets? MariaDB?) — via Infomaniak-Docs/Support.
 3. **Framework:** Fastify (empfohlen) — offen zur Bestätigung.
 
-## Provisioning-Checkliste (die Inhaberin, im Infomaniak-Account)
+## Provisioning-Checkliste (Stebler Studios, im Infomaniak-Account)
 
 > Verifiziert 2026-07-07: Jelastic Cloud unterstützt Node.js (Version wählbar), MariaDB
 > nativ, Deploy per Git/Docker, Env-Variablen (PORT wird injiziert), isolierte Container.
-> Claude hat **keinen** Account-Zugriff — diese Schritte macht die Inhaberin selbst; die genauen
+> Claude hat **keinen** Account-Zugriff — diese Schritte macht Stebler Studios selbst; die genauen
 > Secret-*Werte* entstehen erst in der Bau-Session.
 
 1. **Jelastic-Environment anlegen** (Jelastic Cloud abonnieren → neues Environment).
 2. **Node.js-Node wählen**, stabile LTS-Version (Sicherheit + Support).
-3. **Datenbank:** die schon angelegte MariaDB (`et9l2r…`) von der App aus verbinden —
+3. **Datenbank:** die schon angelegte MariaDB (Klient-Datenbank, Name lokal) von der App aus verbinden —
    *oder* im Environment einen MariaDB-Node ergänzen (privates Netz, sauberer). Wahl in
    der Bau-Session; beides von Jelastic unterstützt.
 4. **Env-Secrets setzen** (nie im Code): DB-Zugang, Session-Secret, WebAuthn-RP-ID/Origin.
@@ -161,5 +161,5 @@ Rate-Limits; Secrets-Handling; Fehler-Leaks; vollständige Löschung. Erst bei �
 6. **Subdomain + TLS:** z. B. `api.malojaplana.ch` auf das Environment; HTTPS/HSTS erzwingen.
 7. **Zugriff härten:** nur HTTPS, CORS strikt auf `malojaplana.ch`, Rate-Limits aktiv.
 
-Deploy bleibt (wie beim Frontend) Aktion der Inhaberin — Claude schreibt/prüft Code lokal,
-die Inhaberin deployt.
+Deploy bleibt (wie beim Frontend) Aktion von Stebler Studios — Claude schreibt/prüft Code lokal,
+Stebler Studios deployt.

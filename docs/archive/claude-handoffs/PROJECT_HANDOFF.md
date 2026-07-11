@@ -109,7 +109,7 @@ Kernfunktionen:
 ### Commands
 
 ```bash
-cd /Users/sophiestebler/Projects/ordnung-ruhe-neu
+cd /Users/USER/Projects/ordnung-ruhe-neu
 npm run dev      # Vite dev server
 npm run build    # Production build
 npm run test     # Vitest

@@ -44,4 +44,4 @@ Wir halten den ökologischen Fussabdruck minimal: statische Auslieferung, kein B
 
 Sophie Stebler / Stebler Studios  
 Basel, Schweiz  
-steblerstudios@gmail.com
+info@malojaplana.ch

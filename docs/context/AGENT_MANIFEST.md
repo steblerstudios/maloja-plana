@@ -102,7 +102,7 @@ Maloja Plana hat **keine Runtime-Agenten im Code**. Keine AI im Produkt, keine a
 - Token-Hygiene: hartcodierte px/Farben statt `config/tokens.js`
 - Namens-/Ablage-Konsistenz, Legacy-Reste (vgl. LEGACY_NAMING_AUDIT.txt)
 
-**Prinzip:** Ordnen, nicht wegnehmen — jeder Fund ist ein Vorschlag, die Inhaberin entscheidet. Read-only. Umsetzung: `.claude/agents/ordnungshueter.md`.
+**Prinzip:** Ordnen, nicht wegnehmen — jeder Fund ist ein Vorschlag, Stebler Studios entscheidet. Read-only. Umsetzung: `.claude/agents/ordnungshueter.md`.
 
 ---
 
@@ -144,6 +144,6 @@ Die archivierten Konzepte unter `docs/archive/concepts/agents/` bleiben als Refe
 ## Anti-Patterns
 
 - **Kein Agent darf autonom Daten ändern** — alles braucht menschliche Bestätigung
-- **Kein Agent ersetzt die Inhaberin's Entscheidung** — die Inhaberin entscheidet, Agents schlagen vor
+- **Kein Agent ersetzt Stebler Studios's Entscheidung** — Stebler Studios entscheidet, Agents schlagen vor
 - **Keine Agent-Kaskaden** — ein Agent pro Aufgabe, keine verschachtelten Delegationen
 - **Keine "AI-powered" Features** — Maloja ist deterministisch, nicht probabilistisch

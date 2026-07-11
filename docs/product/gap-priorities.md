@@ -8,7 +8,7 @@
 
 ## 1. Budget / Finanzen Recovery
 
-**Warum wichtig:** Budget ist das Herzstück der Finanz-Orientierung. Aktuell nur 1 Einnahme + 5 Ausgaben — unbrauchbar für echte Haushalte. Feedback von Mutter und Basel-Stadt User bestätigt: zu dünn, zu technisch, nicht supportiv.
+**Warum wichtig:** Budget ist das Herzstück der Finanz-Orientierung. Aktuell nur 1 Einnahme + 5 Ausgaben — unbrauchbar für echte Haushalte. Feedback von Testperson G und Basel-Stadt User bestätigt: zu dünn, zu technisch, nicht supportiv.
 
 **Blocker:** Brutto/Netto-Entscheidung (MP-DAT-006). Teilweise Household Model (für Alimente, Kinderzulagen, SKOS-Templates).
 
@@ -22,7 +22,7 @@
 
 ## 2. Export als Dossier-Flow
 
-**Warum wichtig:** die Inhaberin hat klar gesagt: „Export darf nicht wie ein Sackmesser wirken." Aktuell ist Export verstreut (ZIP hier, PDF dort, JSON-Button irgendwo). Das widerspricht dem Produktversprechen „ruhiger Lebensbereich".
+**Warum wichtig:** Stebler Studios hat klar gesagt: „Export darf nicht wie ein Sackmesser wirken." Aktuell ist Export verstreut (ZIP hier, PDF dort, JSON-Button irgendwo). Das widerspricht dem Produktversprechen „ruhiger Lebensbereich".
 
 **Blocker:** Keine technischen Blocker. Braucht Konzept-Entscheidung (Dossier-Typen, UX-Flow).
 
@@ -50,17 +50,17 @@
 
 ## 4. Feedback Log
 
-**Warum wichtig:** Mutter-Feedback ist nicht dokumentiert. Family-Expert-Feedback ist nicht namentlich zugeordnet. Ohne kanonisches Feedback-System gehen weitere Rückmeldungen verloren.
+**Warum wichtig:** Testperson G-Feedback ist nicht dokumentiert. Family-Expert-Feedback ist nicht namentlich zugeordnet. Ohne kanonisches Feedback-System gehen weitere Rückmeldungen verloren.
 
-**Blocker:** die Inhaberin muss Mutter-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
+**Blocker:** Stebler Studios muss Testperson G-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
 
 **Beta-relevant:** Ja — Prozess-Hygiene.
 
-**Nächster Task:** die Inhaberin füllt Rekonstruktions-Template in `feedback-log.md` aus.
+**Nächster Task:** Stebler Studios füllt Rekonstruktions-Template in `feedback-log.md` aus.
 
-**Details:** `docs/product/feedback-log.md` → Sektion „Mutter"
+**Details:** `docs/product/feedback-log.md` → Sektion „Testperson G"
 
-**STATUS: ERSTELLT (A-033). Aktion der Inhaberin ausstehend.**
+**STATUS: ERSTELLT (A-033). Aktion von Stebler Studios ausstehend.**
 
 ---
 
@@ -125,8 +125,8 @@
 ## Empfohlene Reihenfolge
 
 ```
-SOFORT (manuell, die Inhaberin):
-  → Mutter-Feedback rekonstruieren (feedback-log.md)
+SOFORT (manuell, Stebler Studios):
+  → Testperson G-Feedback rekonstruieren (feedback-log.md)
   → Family Expert Feedback zuordnen (wer ist das?)
   → BVG-Bug-Status klären
 

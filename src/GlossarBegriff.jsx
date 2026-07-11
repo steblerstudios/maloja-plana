@@ -4,7 +4,7 @@ import { useT } from './i18n/index.js';
 
 // ─── Glossar-Begriff — antippbare Erklärung für Abkürzungen/Fachwörter ───────
 //
-// Jana stolperte über „IPV", „SKOS", „Mietbeiträge" — sie wusste nicht, was
+// Testperson A stolperte über „IPV", „SKOS", „Mietbeiträge" — sie wusste nicht, was
 // gemeint ist. Ein Begriff bekommt eine dezente gepunktete Unterstreichung;
 // Antippen öffnet eine ruhige kleine Erklärung. Kein Lärm, nur Orientierung.
 

@@ -4,7 +4,7 @@
 
 Wenn Du eine Sicherheitslücke in Maloja Plana findest, melde sie bitte **vertraulich** per E-Mail:
 
-**steblerstudios@gmail.com**
+**info@malojaplana.ch**
 
 Betreff: `[SECURITY] Maloja Plana — Kurzbeschreibung`
 

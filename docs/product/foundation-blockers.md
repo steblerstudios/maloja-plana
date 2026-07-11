@@ -12,7 +12,7 @@
 ```
 Blocker-Kette:
 
-Entscheidungen der Inhaberin ──┐
+Entscheidungen von Stebler Studios ──┐
                         ├── Household Model ──┬── SKOS-Bug-Fix
                         │                     ├── Budget-Templates
 Brutto/Netto ───────────┤                     ├── Alimente
@@ -35,21 +35,21 @@ Brutto/Netto ───────────┤                     ├── 
 
 ---
 
-## Blocker 1: Entscheidungen der Inhaberin
+## Blocker 1: Entscheidungen von Stebler Studios
 
 **Typ:** Manuell, nicht automatisierbar
 
 | Entscheidung | Warum blockierend | Abhaengige Bereiche |
 |-------------|-------------------|---------------------|
-| Mutter-Feedback rekonstruieren | Wertvolles Nutzerfeedback ist verloren. Ohne Rekonstruktion fehlt eine der wichtigsten Feedback-Quellen. | Produktpriorisierung |
-| Family Expert zuordnen | F-008 bis F-013 — wer ist das? Mutter oder jemand anderes? | Feedback-Kanonisierung |
+| Testperson G-Feedback rekonstruieren | Wertvolles Nutzerfeedback ist verloren. Ohne Rekonstruktion fehlt eine der wichtigsten Feedback-Quellen. | Produktpriorisierung |
+| Family Expert zuordnen | F-008 bis F-013 — wer ist das? Testperson G oder jemand anderes? | Feedback-Kanonisierung |
 | BVG-Bug-Status klaeren | feedback-log sagt "behoben", backlog-registry sagt "offen". Widerspruch. | Bug-Tracking |
 | Brutto/Netto-Entscheidung | Alle Budget-Berechnungen haengen davon ab. | Budget Hardening |
 
 **Status:**
 - Brutto/Netto: **Entschieden** — Netto als Default, Brutto als Option (2026-06-20)
-- Mutter-Feedback: **Erledigt** — Vollständige Rekonstruktion 2026-06-21, siehe docs/ux/feedback-rekonstruktion.md
-- Family Expert: **Geklärt** — Lynette (Mutter) ist die Hauptquelle
+- Testperson G-Feedback: **Erledigt** — Vollständige Rekonstruktion 2026-06-21, siehe docs/ux/feedback-rekonstruktion.md
+- Family Expert: **Geklärt** — Testperson G ist die Hauptquelle
 - BVG-Bug-Status: **Geklärt** — kein offener Bug, Vorsorge-Rechner funktioniert korrekt
 
 ---
@@ -128,7 +128,7 @@ household: {
 
 ## Blocker 4: Brutto/Netto-Entscheidung
 
-**Typ:** Produktentscheidung (die Inhaberin)
+**Typ:** Produktentscheidung (Stebler Studios)
 
 | Feld | Wert |
 |------|------|
@@ -242,14 +242,14 @@ Kann jederzeit parallel gemacht werden. Blockiert keinen Code, aber blockiert sa
 
 ```
 Ebene 0 (sofort, manuell):
-  die Inhaberin: Feedback-Recovery + Brutto/Netto + BVG-Status
+  Stebler Studios: Feedback-Recovery + Brutto/Netto + BVG-Status
 
 Ebene 1 (keine Abhaengigkeiten):
   → Hardcoded German Fix
   → QR-Code CDN Fix
   → Backlog Canonicalization (parallel)
 
-Ebene 2 (nach Entscheidungen der Inhaberin):
+Ebene 2 (nach Entscheidungen von Stebler Studios):
   → Household Model (Minimal)
   → SKOS-Bug-Fix (nach Household)
 
@@ -282,7 +282,7 @@ Ebene 6 (wenn Zeit):
 Der kuerzeste Weg zur Beta:
 
 ```
-Entscheidungen der Inhaberin (Ebene 0)
+Entscheidungen von Stebler Studios (Ebene 0)
         ↓
 Hardcoded German Fix (Ebene 1, ~1 Tag)
         ↓
@@ -299,7 +299,7 @@ Legal (Ebene 5, ~1-2 Tage, parallel moeglich)
 = Beta-Ready
 ```
 
-**Geschaetzter kritischer Pfad: ~12-16 Arbeitstage** (nach Entscheidungen der Inhaberin)
+**Geschaetzter kritischer Pfad: ~12-16 Arbeitstage** (nach Entscheidungen von Stebler Studios)
 
 ---
 
