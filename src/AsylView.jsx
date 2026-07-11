@@ -32,7 +32,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     rightItem: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', padding: '6px 0', fontSize: text.sm, color: palette.mid, lineHeight: 1.55 },
     rightDot: { flexShrink: 0, color: palette.sage, marginTop: '1px' },
     fristen: { background: palette.gold + '1A', border: '1px solid ' + palette.gold + '66', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px', marginTop: space.lg + 'px' },
-    fristenTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs + 'px' },
+    fristenTitle: { fontSize: text.sm, fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' },
     fristenBody: { fontSize: text.sm, color: palette.text, lineHeight: 1.6 },
     cantonBox: { background: palette.sageMist || palette.up, border: '1px solid ' + palette.sage + '66', borderRadius: radius.sm + 'px', padding: space.md + 'px', marginTop: space.sm + 'px' },
     cantonOfficeLink: { display: 'block', textDecoration: 'none', color: palette.skyDeep, fontSize: text.sm, fontWeight: weight.semi },
@@ -112,7 +112,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: s.fristenTitle }, '⚠ ' + t('asyl.fristenTitle')),
       React.createElement('div', { style: s.fristenBody }, t('asyl.fristenBody')),
       onNavigate && React.createElement('button', {
-        style: { ...s.crosslink, marginTop: space.sm + 'px', background: 'transparent', color: palette.gold, fontWeight: weight.medium, padding: space.xs + 'px 0' },
+        style: { ...s.crosslink, marginTop: space.sm + 'px', background: 'transparent', color: palette.goldDeep, fontWeight: weight.medium, padding: space.xs + 'px 0' },
         onClick: () => onNavigate('calendar'),
       }, t('asyl.fristenKalender') + ' →')
     ),

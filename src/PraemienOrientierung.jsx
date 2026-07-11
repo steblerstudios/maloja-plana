@@ -232,14 +232,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     ),
 
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
         'ⓘ ' + t('po.noInsurer')
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.noInsurerHint'))
     ),
 
     regionInfo && insurer && !insurerNr && React.createElement('div', { style: s.warn },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.gold, marginBottom: space.xs + 'px' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
         'ⓘ ' + t('po.insurerNotFound', { name: insurer })
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))
