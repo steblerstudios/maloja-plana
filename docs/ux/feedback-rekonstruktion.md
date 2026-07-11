@@ -146,7 +146,7 @@ Beispiele: KK → IPV, Einkommen → Steuer, Notfall → Vorsorge, Wohnen → Bu
 
 ---
 
-## Kategorie C — Eigene Beobachtungen (Sophie)
+## Kategorie C — Eigene Beobachtungen (die Inhaberin)
 
 ### Zu wenig sichtbar
 
@@ -205,7 +205,7 @@ Später, optional. Nur für: Testament, Vorsorgeauftrag, Patientenverfügung, Pa
 
 ## Zusätzliches Detailfeedback
 
-### Betreibungen / Verlustscheine (Sophie-Beobachtung)
+### Betreibungen / Verlustscheine (Beobachtung der Inhaberin)
 
 Aktuell nur einfache Schulden-Erfassung. Potenzial:
 - Betreibungsnummern erfassen
@@ -216,7 +216,7 @@ Aktuell nur einfache Schulden-Erfassung. Potenzial:
 
 → Passt zu Muster 3 (Verbindungen) und zur Lebensordner-Vision.
 
-### Offizielle Links kontextuell platzieren (Sophie-Beobachtung)
+### Offizielle Links kontextuell platzieren (Beobachtung der Inhaberin)
 
 Aktuell: Alle offiziellen Links in einem separaten Werkzeug (DirektLinks). Das ist gut.
 Aber: Die AHV-Links sollten auch bei der AHV-Berechnung erscheinen, die KK-Links bei der KK usw.
@@ -228,13 +228,13 @@ Aber: Die AHV-Links sollten auch bei der AHV-Berechnung erscheinen, die KK-Links
 Annora fragte ob eine Vergleichsfunktion wie Comparis möglich wäre.
 **Bewusste Entscheidung: Nein.** Keine Comparis-Logik, keine Produktempfehlungen, keine Beratung. Nur Orientierung und Kontext. Dokumentiert in Excluded Features.
 
-### Herzensempfehlungen (Annora / Sophie)
+### Herzensempfehlungen (Annora / die Inhaberin)
 
 Persönliche Linksammlung für Orte, Menschen und Projekte die einem am Herzen liegen. Nicht offiziell, sondern privat. Beispiele: Tierheim Basel, Schmuck von Freundin Jana (Artful Jana), lokale Vereine etc.
 
 Passt nicht zu den drei Kernmustern, eher Nice-to-have. Könnte aber zur Lebensordner-Vision passen ("mein ganzes Leben an einem Ort").
 
-### Spenden verbessern (Sophie-Beobachtung)
+### Spenden verbessern (Beobachtung der Inhaberin)
 
 Aktuell nur einfache Erfassung. Könnte detaillierter werden (Beträge, Empfänger, steuerliche Relevanz).
 
@@ -338,4 +338,4 @@ Einzelperson-Präferenzen: Farben, Sprachen, Feature-Wünsche.
 | Gianni | Nutzen-Kommunikation | 1 (Nutzen) |
 | Greg | UX, Design, Navigation | UX-Details |
 | Kolleg:innen | Versicherungen, Budget, Formular, Vertrauen | 1 + 2 + 3 |
-| Sophie | Tägliche Nutzung, Fachlogik | 3 (Verbindungen) |
+| die Inhaberin | Tägliche Nutzung, Fachlogik | 3 (Verbindungen) |

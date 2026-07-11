@@ -33,7 +33,7 @@ const SONDER = {
 const HERZ_TON = { digital: 'sky', soziales: 'sage', konsum: 'gold', tiere: 'sand', gesundheit: 'rose', kunst: 'soft', gemeinschaft: 'sage' };
 const HERZ_ICON = { digital: 'globe', soziales: 'sozialhilfe', konsum: 'tag', tiere: 'paw', gesundheit: 'health', kunst: 'palette', gemeinschaft: 'family' };
 
-// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Sophies Entscheid:
+// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Entscheid der Inhaberin:
 // trifft meist, gelegentlich daneben, bewusst akzeptiert).
 const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
 const communeUrl = (city) => {
@@ -178,7 +178,7 @@ export const DirektLinks = ({ palette, t, data }) => {
     if (offen.indexOf('hf:') === 0) {
       return bookWrap(offen, null, herzEntries(offen.slice(3)).map(entryCard));
     }
-    // Beratung & Hilfe: Beratungsstellen (help + Sophies 3) + Ombudsstellen (ombuds).
+    // Beratung & Hilfe: Beratungsstellen (help + die 3 der Inhaberin) + Ombudsstellen (ombuds).
     if (offen === 'beratung') {
       const kids = [];
       kids.push(groupHeading(t('legal.resources.helpTitle'), 'gh-help'));

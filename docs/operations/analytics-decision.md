@@ -1,6 +1,6 @@
 # Analytics — Entscheidung & Weg (Decision Record)
 
-**Datum:** 2026-07-05 · **Entscheid Sophie:** „Weg 1 jetzt, Weg 2 später."
+**Datum:** 2026-07-05 · **Entscheid die Inhaberin:** „Weg 1 jetzt, Weg 2 später."
 
 ## Ausgangslage / Spannung
 
