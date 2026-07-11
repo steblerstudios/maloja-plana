@@ -11,7 +11,8 @@ git clean -fd
 
 ## Reset to remote
 git fetch origin
-git reset --hard origin/dev
+git reset --hard origin/main
+# (auf einem Feature-Branch entsprechend: origin/<branch-name>)
 
 ## Check repo state
 git status

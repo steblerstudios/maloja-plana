@@ -1,7 +1,13 @@
 # Current State — Maloja Plana
 
+> ⚠️ **ARCHIVIERT (2026-07-11).** Dieser Schnappschuss ist vom 2026-06-21 und in
+> mehreren Punkten überholt (es gibt keinen `dev`-Branch mehr, kein Vercel —
+> Deploy läuft via `deploy.sh`/SFTP zu Infomaniak, und `rm` ist gebaut).
+> **Die wahre Stand-Quelle ist `SESSION_START.md` im Repo-Root.**
+> Diese Datei bleibt nur als historischer Verweis bestehen.
+
 Last updated: 2026-06-21
-Branch: dev
+Branch: dev (historisch)
 
 ## Architecture
 
