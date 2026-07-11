@@ -3428,6 +3428,7 @@ export default {
     enter: 'Öffnen',
     bannerLabel: 'Geschlossene Beta',
     feedbackMail: 'Feedback per E-Mail',
+    feedbackContext: 'Diese Angaben helfen beim Nachvollziehen (jederzeit löschbar):',
     feedbackForm: 'Feedback-Formular',
     feedback: {
       title: { sie: 'Ihr Feedback zur Beta', du: 'Dein Feedback zur Beta' },
