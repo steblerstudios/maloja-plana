@@ -13,6 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Datenschutz-Gate: keine privaten Mails / Home-Pfade / Hoster-Tokens ins
+      # öffentliche Repo. Generische Muster laufen immer; für projektspezifische
+      # Tokens (Namen etc.) optional ein Repo-Secret PII_DENY setzen (eine Zeile
+      # pro Muster) — die echten Begriffe bleiben so aus dem öffentlichen Repo.
+      - name: PII-Scan
+        env:
+          PII_DENY: ${{ secrets.PII_DENY }}
+        run: |
+          [ -n "$PII_DENY" ] && printf '%s\n' "$PII_DENY" > .pii-deny.txt
+          bash scripts/pii-scan.sh
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
