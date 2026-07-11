@@ -235,7 +235,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
             'aria-label': t('common.delete'),
             onClick: () => deleteReminder(r.id),
             style: {
-              padding: '6px 10px', background: palette.rose,
+              padding: '6px 10px', background: palette.roseBtn,
               color: '#fff', border: 'none', borderRadius: '4px',
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }

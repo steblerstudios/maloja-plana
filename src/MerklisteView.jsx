@@ -62,7 +62,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
     addRow: { display: 'flex', flexWrap: 'wrap', gap: space.sm + 'px', alignItems: 'center', marginBottom: space.lg + 'px' },
     input: { flex: '1 1 200px', minWidth: '160px', padding: space.sm + 'px ' + space.md + 'px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit' },
     select: { padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.up, color: palette.text, fontFamily: 'inherit', cursor: 'pointer' },
-    addBtn: { background: palette.sage, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
+    addBtn: { background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.lg + 'px', fontSize: text.sm, fontWeight: weight.semi, cursor: 'pointer', fontFamily: 'inherit' },
     sectionTitle: { fontSize: text.xs, fontWeight: weight.semi, color: palette.mid, textTransform: 'uppercase', letterSpacing: '0.5px', margin: space.md + 'px 0 ' + space.sm + 'px' },
     row: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: space.sm + 'px 0', borderBottom: '1px solid ' + palette.border + '66' },
     cb: { flexShrink: 0, width: '20px', height: '20px', cursor: 'pointer', accentColor: palette.sage },
