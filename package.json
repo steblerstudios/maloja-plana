@@ -2,7 +2,7 @@
   "name": "maloja-plana",
   "version": "0.1.24-beta",
   "description": "Privacy-first Swiss Life Organizer — 100% lokal, sicher, strukturiert",
-  "author": "Sophie Stebler <steblerstudios@gmail.com>",
+  "author": "Stebler Studios <steblerstudios@gmail.com>",
   "license": "AGPL-3.0",
   "type": "module",
   "scripts": {
