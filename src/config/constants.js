@@ -7,6 +7,9 @@ export const DARK_PALETTE = {
   border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
+  // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
+  // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
+  sageBtn: '#3E5449', roseBtn: '#8A4A4A',
   // Legible-Varianten von sand/sky für Vordergrund (Text + bedeutungstragende Graphik):
   // im Dunkeln bestehen sand/sky bereits (5.87 / 4.30 auf surface), daher unverändert.
   sandDeep: '#C4A06A', skyDeep: '#6E90B0',
@@ -25,6 +28,9 @@ export const LIGHT_PALETTE = {
   border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#64676E',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
+  // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
+  // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
+  sageBtn: '#3E5449', roseBtn: '#8A4A4A',
   // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
   // sky (3.20:1) sind auf surface zu hell für Text — sandDeep 4.64:1 / skyDeep 5.42:1.
   sandDeep: '#8A6D3B', skyDeep: '#4A6A88',
@@ -48,10 +54,13 @@ export const LIGHT_PALETTE = {
 const CB_LIGHT = {
   sage: '#1565A3', rose: '#C25A16', roseDeep: '#A84A12', sageDeep: '#2D5C86',
   sageMist: '#E7EEF5', sageDew: '#D4E2F0',
+  // Button-Flächen auf die Blau/Orange-Achse (weiss 7.62:1 / 5.75:1):
+  sageBtn: '#14568F', roseBtn: '#A84A12',
 };
 const CB_DARK = {
   sage: '#6BA6DE', rose: '#E38B4E', roseDeep: '#E38B4E', sageDeep: '#7FA8D0',
   sageMist: '#1E2833', sageDew: '#223140',
+  sageBtn: '#14568F', roseBtn: '#A84A12',
 };
 export function applyColorBlind(palette, active) {
   if (!active) return palette;
