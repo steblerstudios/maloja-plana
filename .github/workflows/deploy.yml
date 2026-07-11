@@ -5,7 +5,7 @@ name: Deploy to Infomaniak
 #
 # SFTP-Host/User/Zielpfad kommen aus Repository-Variablen/Secrets (nicht im Repo).
 # Hinweis: Auto-Deploy via CI ist deaktiviert (Infomaniak blockt CI-IPs) — Deploy
-# läuft manuell über deploy.sh von Sophies Mac.
+# läuft manuell über deploy.sh vom lokalen Rechner.
 #
 # ⚠️ FUNKTIONIERT NICHT VON GITHUB-HOSTED RUNNERN: Infomaniak filtert SSH/FTP nach
 # IP und blockt GitHub-Actions-Rechenzentren (TCP-Connect zu Port 22 läuft vom

@@ -43,7 +43,7 @@ done
 # Verbindungs-Details (Host/User/Server-Pfade) gehören nicht ins öffentliche Repo.
 # Sie kommen aus Umgebungsvariablen ODER der lokalen, nicht eingecheckten Datei
 # .deploy.local (Vorlage: .deploy.local.example). Die Platzhalter unten sind nur
-# Fallback/Struktur — der echte Deploy läuft über .deploy.local auf Sophies Mac.
+# Fallback/Struktur — der echte Deploy läuft über .deploy.local auf dem lokalen Mac.
 [ -f "$(dirname "$0")/.deploy.local" ] && . "$(dirname "$0")/.deploy.local"
 
 SFTP_HOST="${SFTP_HOST:-DEIN-HOST.ftp.example.com}"

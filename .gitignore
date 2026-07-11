@@ -66,3 +66,6 @@ src/data/raw/
 
 # Lokale Deploy-Konfiguration (Host/User/Server-Pfade) — nie committen
 .deploy.local
+
+# Lokale PII-Deny-Liste für den Scan — nie committen
+.pii-deny.txt
