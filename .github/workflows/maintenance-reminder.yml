@@ -98,11 +98,11 @@ jobs:
       - name: Send email notification
         run: |
           # GitHub Issues notifiziert automatisch alle Repo-Watcher.
-          # Für direkte E-Mail an info@steblerstudios.ch:
+          # Für direkte E-Mail an info@malojaplana.ch:
           # 1. GitHub → Settings → Notifications → Custom routing für dieses Repo
           # 2. Oder: GitHub Actions Notification mit SendGrid/Mailgun (Secret nötig)
           echo "✅ Maintenance issue created. GitHub notification sent to repo watchers."
           echo ""
-          echo "💡 Für E-Mail an info@steblerstudios.ch:"
+          echo "💡 Für E-Mail an info@malojaplana.ch:"
           echo "   → GitHub Settings → Notifications → Custom routing"
           echo "   → Oder: Repo Settings → Watch → All Activity"

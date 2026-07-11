@@ -92,7 +92,7 @@ Muster: UX-Details (Einzelmeinungen, beobachten)
 |--------|---------|--------|
 | 1: Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐ Stärkstes Signal |
 | 2: Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐ |
-| 3: Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, die Inhaberin | ⭐⭐⭐ |
+| 3: Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, Stebler Studios | ⭐⭐⭐ |
 
 ### Top 3 Nächste Schritte (abgeleitet aus Mustern)
 

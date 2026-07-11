@@ -3,7 +3,7 @@
 > Stand: 2026-07-06 · lebendes Dokument
 >
 > **Zweck:** Design-Verbesserungen werden hier gesammelt und in einer eigenen
-> Design-Phase **gebündelt** angegangen — nicht verstreut zwischendurch. der Inhaberin
+> Design-Phase **gebündelt** angegangen — nicht verstreut zwischendurch. von Stebler Studios
 > Prinzip: „Design-Entscheide immer schritt-für-schritt gemeinsam; der Aufbau ist
 > mir persönlich wichtig." Also: hier notieren, später zusammen entscheiden.
 >
@@ -42,12 +42,12 @@ Lebensbereich die reale Metapher — „Swiss Living Skeuomorphism", 5 Regeln.
 
 ## C — Konkrete Optik-Baustellen (aus Feedback/Braindumps)
 
-- **Auflistungs-Optik** gefällt die Inhaberin nicht → Redesign der Listendarstellung
+- **Auflistungs-Optik** gefällt Stebler Studios nicht → Redesign der Listendarstellung
   (Braindump 10). Vor neuen Listen-Features zuerst die Optik klären.
 - **Dashboard-Politur** (Redesign „Ort" — 6 Schichten umgesetzt): Baum-Optik ✅ **Baum v2**
   (echter SVG-Baum, Früchte an Ästen, 4 Wuchsstufen — `9d126c4`/`91e7cdf`); Dashboard-Fluss ✅
   **„Was ist jetzt dran?" oben + Baum als Spiegel unten** (`000e731`). Offen: Verbindungs-Viz
-  in den Baum integrieren (die Inhaberin: vorerst lassen), Schicht-2-Einzelkarte, Anspruchs-Matrix-Darstellung.
+  in den Baum integrieren (Stebler Studios: vorerst lassen), Schicht-2-Einzelkarte, Anspruchs-Matrix-Darstellung.
 - **Info-Buttons** einheitlich ein-/ausklappbar (click-to-reveal, selektiv — nicht
   überall) als durchgängiges Muster.
 

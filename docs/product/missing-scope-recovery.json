@@ -110,7 +110,7 @@
   {
     "id": "GAP-EXP-001",
     "title": "Export: 'Meine Unterlagen' Konzept fehlt",
-    "source": "Feedback der Inhaberin 'kein Sackmesser', A-032 Analysis",
+    "source": "Feedback von Stebler Studios 'kein Sackmesser', A-032 Analysis",
     "domain": "export",
     "status": "missing",
     "priority": "core",
@@ -151,8 +151,8 @@
     "status": "missing",
     "priority": "important",
     "phase": "alpha",
-    "evidence": "Nur 1 vage Referenz. Feedback-Inhalte unbekannt. Muss manuell von der Inhaberin rekonstruiert werden.",
-    "next_action": "die Inhaberin: Mutter-Feedback in feedback-log.md nachtragen",
+    "evidence": "Nur 1 vage Referenz. Feedback-Inhalte unbekannt. Muss manuell von Stebler Studios rekonstruiert werden.",
+    "next_action": "Stebler Studios: Mutter-Feedback in feedback-log.md nachtragen",
     "notes": "WP-1 — Sofort, manuell"
   },
   {
@@ -164,7 +164,7 @@
     "priority": "important",
     "phase": "alpha",
     "evidence": "5 Einträge als 'Family feedback (domain expert)' — nicht namentlich zugeordnet. Könnte Mutter sein.",
-    "next_action": "die Inhaberin: Klären ob F-008 bis F-013 von Mutter oder anderer Person stammen",
+    "next_action": "Stebler Studios: Klären ob F-008 bis F-013 von Mutter oder anderer Person stammen",
     "notes": ""
   },
   {

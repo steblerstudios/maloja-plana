@@ -1,7 +1,7 @@
 # Wartungskalender — Maloja Plana
 
 > Regelmässige Aufgaben, damit die App aktuell, sicher und funktional bleibt.
-> Benachrichtigung: Automatisch via GitHub Actions an info@steblerstudios.ch
+> Benachrichtigung: Automatisch via GitHub Actions an info@malojaplana.ch
 
 ---
 

@@ -12,7 +12,7 @@
 ```
 Blocker-Kette:
 
-Entscheidungen der Inhaberin ──┐
+Entscheidungen von Stebler Studios ──┐
                         ├── Household Model ──┬── SKOS-Bug-Fix
                         │                     ├── Budget-Templates
 Brutto/Netto ───────────┤                     ├── Alimente
@@ -35,7 +35,7 @@ Brutto/Netto ───────────┤                     ├── 
 
 ---
 
-## Blocker 1: Entscheidungen der Inhaberin
+## Blocker 1: Entscheidungen von Stebler Studios
 
 **Typ:** Manuell, nicht automatisierbar
 
@@ -128,7 +128,7 @@ household: {
 
 ## Blocker 4: Brutto/Netto-Entscheidung
 
-**Typ:** Produktentscheidung (die Inhaberin)
+**Typ:** Produktentscheidung (Stebler Studios)
 
 | Feld | Wert |
 |------|------|
@@ -242,14 +242,14 @@ Kann jederzeit parallel gemacht werden. Blockiert keinen Code, aber blockiert sa
 
 ```
 Ebene 0 (sofort, manuell):
-  die Inhaberin: Feedback-Recovery + Brutto/Netto + BVG-Status
+  Stebler Studios: Feedback-Recovery + Brutto/Netto + BVG-Status
 
 Ebene 1 (keine Abhaengigkeiten):
   → Hardcoded German Fix
   → QR-Code CDN Fix
   → Backlog Canonicalization (parallel)
 
-Ebene 2 (nach Entscheidungen der Inhaberin):
+Ebene 2 (nach Entscheidungen von Stebler Studios):
   → Household Model (Minimal)
   → SKOS-Bug-Fix (nach Household)
 
@@ -282,7 +282,7 @@ Ebene 6 (wenn Zeit):
 Der kuerzeste Weg zur Beta:
 
 ```
-Entscheidungen der Inhaberin (Ebene 0)
+Entscheidungen von Stebler Studios (Ebene 0)
         ↓
 Hardcoded German Fix (Ebene 1, ~1 Tag)
         ↓
@@ -299,7 +299,7 @@ Legal (Ebene 5, ~1-2 Tage, parallel moeglich)
 = Beta-Ready
 ```
 
-**Geschaetzter kritischer Pfad: ~12-16 Arbeitstage** (nach Entscheidungen der Inhaberin)
+**Geschaetzter kritischer Pfad: ~12-16 Arbeitstage** (nach Entscheidungen von Stebler Studios)
 
 ---
 

@@ -173,7 +173,7 @@
 
 ## Family Feedback (Domain Expert)
 
-> **ACHTUNG:** Diese 5 Einträge sind als „Family feedback (domain expert)" erfasst. **Es ist unklar, ob dies Mutter oder eine andere Person ist.** die Inhaberin muss das klären und ggf. den Quellennamen korrigieren.
+> **ACHTUNG:** Diese 5 Einträge sind als „Family feedback (domain expert)" erfasst. **Es ist unklar, ob dies Mutter oder eine andere Person ist.** Stebler Studios muss das klären und ggf. den Quellennamen korrigieren.
 
 ### FB-012: BVG-Kontinuität und Freizügigkeitskonten
 - **Quelle:** Family feedback (domain expert) — **Zuordnung unklar**
@@ -245,7 +245,7 @@
 > `docs/research/pre-store-critical-issues.md:160` — „User feedback and mother feedback."
 > im Kontext von Budget UX.
 >
-> **Alle folgenden Einträge sind Platzhalter.** die Inhaberin muss das Feedback manuell rekonstruieren.
+> **Alle folgenden Einträge sind Platzhalter.** Stebler Studios muss das Feedback manuell rekonstruieren.
 > Bitte nichts erfinden. Nur ausfüllen, was tatsächlich gesagt wurde.
 
 ### FB-017: Budget UX — zu wenig Geduld und Finesse
@@ -259,11 +259,11 @@
 - **Priorität:** important
 - **Beta-relevant:** ja
 - **Evidence:** docs/research/pre-store-critical-issues.md
-- **Nächste Aktion:** die Inhaberin: Bitte rekonstruieren, was Mutter konkret zum Budget gesagt hat.
+- **Nächste Aktion:** Stebler Studios: Bitte rekonstruieren, was Mutter konkret zum Budget gesagt hat.
 
 ### Mutter-Feedback — Rekonstruktions-Template
 
-> die Inhaberin, bitte fülle die folgenden Fragen aus, soweit du dich erinnern kannst.
+> Stebler Studios, bitte fülle die folgenden Fragen aus, soweit du dich erinnern kannst.
 > Jede Antwort wird als Feedback-Eintrag (FB-018ff.) aufgenommen.
 
 **Budget / Finanzen:**

@@ -27,7 +27,7 @@ Der Name, das Logo und die visuelle Identität (Farbpalette, Piktogramme, Typogr
 
 Kommerzielle Lizenzen beinhalten das Recht, die Anwendung unter eigenem Namen und eigener Identität zu betreiben. Die „Maloja Plana"-Marke wird dabei nicht mitlizenziert — White-Label-Partner verwenden ihren eigenen Markennamen.
 
-Kontakt: sophie.stebler@gmail.com
+Kontakt: info@malojaplana.ch
 
 ---
 

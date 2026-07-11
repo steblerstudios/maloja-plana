@@ -1,4 +1,4 @@
-ordnung-ruhe@0.1.0-alpha /Users/sophiestebler/Projects/ordnung-ruhe-neu
+ordnung-ruhe@0.1.0-alpha /Users/USER/Projects/ordnung-ruhe-neu
 ├── @vitejs/plugin-react@4.7.0
 ├── react-dom@18.3.1
 ├── react@18.3.1

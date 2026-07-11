@@ -60,7 +60,7 @@ Maloja Plana hat eine solide technische Basis (17 Views, 53 Source-Dateien, 4 Re
 | M-1 | Budget UX | Budget braucht mehr Geduld und Finesse, soll supportiv sein | **Nur vage referenziert** (pre-store-critical-issues.md:160) | Budget / Finanzen | Hoch | Ja |
 | M-2 | Weiteres Feedback | **NICHT GEFUNDEN — muss manuell rekonstruiert werden** | Unbekannt | Unbekannt | Unbekannt | Unbekannt |
 
-**ACHTUNG:** Die "Family feedback (domain expert)"-Einträge F-008 bis F-013 könnten von Mutter stammen (BVG-Kontinuität, UVG/KTG, Selbständigkeit, Retirement, AHV-Admin). Das ist aber nicht explizit zugeordnet. die Inhaberin muss klären, ob das Mutter-Feedback ist oder von einer anderen Person.
+**ACHTUNG:** Die "Family feedback (domain expert)"-Einträge F-008 bis F-013 könnten von Mutter stammen (BVG-Kontinuität, UVG/KTG, Selbständigkeit, Retirement, AHV-Admin). Das ist aber nicht explizit zugeordnet. Stebler Studios muss klären, ob das Mutter-Feedback ist oder von einer anderen Person.
 
 ### 1.4 Family Feedback (Domain Expert) — nicht namentlich zugeordnet
 
@@ -443,7 +443,7 @@ Geplante Schnittstellen (alle nur Idee):
 ## 10. Empfohlene nächste Workpackages
 
 ### WP-1: Mutter-Feedback Recovery (Sofort, manuell)
-Die Inhaberin muss das Feedback von Mutter manuell rekonstruieren und in feedback-log.md eintragen. Ohne das fehlt eine der wichtigsten Feedback-Quellen.
+Stebler Studios muss das Feedback von Mutter manuell rekonstruieren und in feedback-log.md eintragen. Ohne das fehlt eine der wichtigsten Feedback-Quellen.
 
 ### WP-2: Budget Hardening (A-033)
 - Brutto/Netto-Unterscheidung
@@ -489,7 +489,7 @@ Die Inhaberin muss das Feedback von Mutter manuell rekonstruieren und in feedbac
 
 ### Empfohlene Reihenfolge
 ```
-WP-1 (Mutter-Feedback)     → Sofort (die Inhaberin, manuell)
+WP-1 (Mutter-Feedback)     → Sofort (Stebler Studios, manuell)
 WP-5 (Hardcoded German)    → Klein, sicher, hoher Impact
 WP-2 (Budget Hardening)    → Grösste Nutzerlücke
 WP-3 (Household Basis)     → Entblockt SKOS + Budget
@@ -509,7 +509,7 @@ WP-8 (Swiss Orientation)   → Schweizer Mehrwert
 | 2 | Family Feedback Quelle | F-008 bis F-013 als "Family feedback (domain expert)" — ist das Mutter oder jemand anders? |
 | 3 | Phase 1 Governance Runtime | BACKLOG_MASTER.md beschreibt Phase 1 als 6-8 Wochen mit 26 Tickets. product-memory-registry.md sagt "System Consolidation" ist aktuelle Phase. Stimmen die überein? |
 | 4 | Backlog-Duplikate | BACKLOG_MASTER.md hat eigene IDs (BUD-001, DOC-001), product-inventory.md hat andere IDs (MP-BUD-001, MP-DOC-001). Zwei Systeme, nicht synchron. |
-| 5 | Export-Richtung | product-memory-registry.md listet "PDF, JSON, YAML, CSV, DOCX, ZIP, LaTeX" als Formate. die Inhaberin sagt "kein Sackmesser". Widerspruch zwischen Format-Breite und Calm-Export. |
+| 5 | Export-Richtung | product-memory-registry.md listet "PDF, JSON, YAML, CSV, DOCX, ZIP, LaTeX" als Formate. Stebler Studios sagt "kein Sackmesser". Widerspruch zwischen Format-Breite und Calm-Export. |
 
 ---
 

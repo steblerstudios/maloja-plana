@@ -1,6 +1,6 @@
 ---
 name: session-close
-description: Ruhiges Session-Abschluss-Ritual für Maloja — bringt Stand-Doku (SESSION_START.md, FEATURES.md) + Memory auf den echten git-/live-Stand, zieht eine ehrliche Bilanz (gebaut/verifiziert/offen mit Belegen) und fragt am Ende, ob die Sitzung benannt+archiviert werden soll. Nutzen am Sitzungs-Ende oder wenn die Inhaberin „session-close", „abschluss", „sitzung zumachen" sagt. Archiviert NIE automatisch.
+description: Ruhiges Session-Abschluss-Ritual für Maloja — bringt Stand-Doku (SESSION_START.md, FEATURES.md) + Memory auf den echten git-/live-Stand, zieht eine ehrliche Bilanz (gebaut/verifiziert/offen mit Belegen) und fragt am Ende, ob die Sitzung benannt+archiviert werden soll. Nutzen am Sitzungs-Ende oder wenn Stebler Studios „session-close", „abschluss", „sitzung zumachen" sagt. Archiviert NIE automatisch.
 ---
 
 # Session-Close — der ruhige Sitzungs-Abschluss (Maloja Plana)
@@ -52,7 +52,7 @@ Arbeite die folgenden Schritte der Reihe nach ab.
 
 ## 4. Ehrliche Bilanz zeigen
 
-Kurzer, ruhiger Block an die Inhaberin — drei Rubriken, jede mit Beleg:
+Kurzer, ruhiger Block an Stebler Studios — drei Rubriken, jede mit Beleg:
 
 - **Gebaut** — was diese Sitzung entstand (Dateien, Commits/Hashes).
 - **Verifiziert** — was tatsächlich geprüft ist (Tests grün? Build? live per Bundle-Hash?)
@@ -69,11 +69,11 @@ Nicht selbst nachbauen; das ist `/handoff`s Aufgabe.
 
 - Einen prägnanten Titel-Vorschlag für die Sitzung zeigen.
 - **Ehrlich (Wahrheits-Disziplin):** Der Assistent hat **kein Werkzeug**, um eine
-  Claude-Unterhaltung zu benennen oder zu archivieren — das ist immer der Inhaberin Tipp in
+  Claude-Unterhaltung zu benennen oder zu archivieren — das ist immer von Stebler Studios Tipp in
   der App. Also nicht mit „[j/N]" so tun, als könnte er es. Richtige Formulierung:
   „Titel-Vorschlag: … — **du** benennst + archivierst in der App."
 - Archivieren ist der einzige unumkehrbar wirkende Schritt und bleibt bewusst bei
-  die Inhaberin: nie automatisch, nie vortäuschen, dass der Assistent es tut.
+  Stebler Studios: nie automatisch, nie vortäuschen, dass der Assistent es tut.
 
 ---
 

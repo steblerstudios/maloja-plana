@@ -20,7 +20,7 @@
 ./docs/context/LEGACY_NAMING_AUDIT.txt:15:./docs/runtime/audit-event-schema.md:5:This document defines the audit event schema for Maloja Plana / Ordnung & Ruhe.
 ./docs/context/LEGACY_NAMING_AUDIT.txt:16:./docs/runtime/rollback-strategy-model.md:5:This document defines the rollback strategy model for Maloja Plana / Ordnung & Ruhe.
 ./docs/context/LEGACY_NAMING_AUDIT.txt:17:./docs/runtime/runtime-event-model.md:5:This document defines the runtime event model for Maloja Plana / Ordnung & Ruhe.
-./docs/context/LEGACY_NAMING_AUDIT.txt:18:./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/sophiestebler/Projects/ordnung-ruhe-neu
+./docs/context/LEGACY_NAMING_AUDIT.txt:18:./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/USER/Projects/ordnung-ruhe-neu
 ./docs/context/LEGACY_NAMING_AUDIT.txt:19:./README.md:1:# Ordnung & Ruhe
 ./docs/context/LEGACY_NAMING_AUDIT.txt:20:./README.md:12:Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
 ./docs/context/LEGACY_NAMING_AUDIT.txt:21:./README.md:26:ordnung-ruhe/
@@ -54,7 +54,7 @@
 ./docs/runtime/audit-event-schema.md:5:This document defines the audit event schema for Maloja Plana / Ordnung & Ruhe.
 ./docs/runtime/rollback-strategy-model.md:5:This document defines the rollback strategy model for Maloja Plana / Ordnung & Ruhe.
 ./docs/runtime/runtime-event-model.md:5:This document defines the runtime event model for Maloja Plana / Ordnung & Ruhe.
-./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/sophiestebler/Projects/ordnung-ruhe-neu
+./docs/architecture/npm-tree.txt:1:ordnung-ruhe@0.1.0-alpha /Users/USER/Projects/ordnung-ruhe-neu
 ./README.md:1:# Ordnung & Ruhe
 ./README.md:12:Ordnung & Ruhe ist ein digitaler Lebensordner für Schweizerinnen und Schweizer. Du erfasst deine wichtigsten Informationen in 7 Bereichen, und die App speichert alles lokal — ohne Cloud, ohne Server, ohne Datenverkauf.
 ./README.md:26:ordnung-ruhe/

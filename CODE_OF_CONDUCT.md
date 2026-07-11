@@ -21,7 +21,7 @@ Wir verpflichten uns zu einer belästigungsfreien Umgebung für alle Beteiligten
 
 ## Durchsetzung
 
-Verstösse können an sophie.stebler@gmail.com gemeldet werden. Alle Meldungen werden vertraulich behandelt.
+Verstösse können an info@malojaplana.ch gemeldet werden. Alle Meldungen werden vertraulich behandelt.
 
 ## Grundlage
 

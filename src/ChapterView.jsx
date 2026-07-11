@@ -40,7 +40,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const primarySections = chapter.fields.filter((f) => !f.secondary && f.section).map((f) => ({ name: f.section, k: f.k }));
   // Auch benannte Sektionen unter „mehr Felder" (z.B. Vorsorge / 3. Säule) bekommen
   // einen Reiter, damit sie auffindbar sind statt im aufklappbaren Teil zu verschwinden
-  // (die Inhaberin, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
+  // (Stebler Studios, Braindump #21). Ein Klick klappt den Sekundär-Teil auf und springt hin.
   const secondarySections = chapter.fields.filter((f) => f.secondary && f.section).map((f) => ({ name: f.section, k: f.k, secondary: true }));
   const sectionTabs = [...primarySections, ...secondarySections];
 

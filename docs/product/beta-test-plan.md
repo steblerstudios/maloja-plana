@@ -92,7 +92,7 @@ Drei Kernmuster über alle Tester hinweg:
 |---|--------|---------|--------|
 | 1 | Nutzen kommt zu spät | Jana, André, Gianni, Kolleg:innen, Perplexity | ⭐⭐⭐⭐⭐ |
 | 2 | Vertrauen & Datenhoheit | Annora, Kolleg:innen, Perplexity | ⭐⭐⭐⭐ |
-| 3 | Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, die Inhaberin | ⭐⭐⭐⭐ |
+| 3 | Verbindungen statt Formulare | Silvan, Kolleg:innen, Mutter, Stebler Studios | ⭐⭐⭐⭐ |
 
 ---
 
