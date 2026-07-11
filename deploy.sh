@@ -40,12 +40,18 @@ for arg in "$@"; do
   esac
 done
 
-SFTP_HOST="${SFTP_HOST:-et9l2r.ftp.infomaniak.com}"
-SFTP_USER="${SFTP_USER:-et9l2r_admin}"
-REMOTE_DIR="${REMOTE_DIR:-/home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/}"
-# Docroot der Stage-Subdomain — Pfad aus dem Infomaniak-Panel ablesen und hier
-# (oder per Umgebungsvariable STAGE_REMOTE_DIR) setzen, sobald die Subdomain steht.
-STAGE_REMOTE_DIR="${STAGE_REMOTE_DIR:-/home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/stage.malojaplana.ch/}"
+# Verbindungs-Details (Host/User/Server-Pfade) gehören nicht ins öffentliche Repo.
+# Sie kommen aus Umgebungsvariablen ODER der lokalen, nicht eingecheckten Datei
+# .deploy.local (Vorlage: .deploy.local.example). Die Platzhalter unten sind nur
+# Fallback/Struktur — der echte Deploy läuft über .deploy.local auf Sophies Mac.
+[ -f "$(dirname "$0")/.deploy.local" ] && . "$(dirname "$0")/.deploy.local"
+
+SFTP_HOST="${SFTP_HOST:-DEIN-HOST.ftp.example.com}"
+SFTP_USER="${SFTP_USER:-DEIN-USER}"
+REMOTE_DIR="${REMOTE_DIR:-/home/clients/DEIN-KLIENT-HASH/sites/malojaplana.ch/}"
+# Docroot der Stage-Subdomain — Pfad aus dem Infomaniak-Panel ablesen und in
+# .deploy.local (oder per Umgebungsvariable STAGE_REMOTE_DIR) setzen.
+STAGE_REMOTE_DIR="${STAGE_REMOTE_DIR:-/home/clients/DEIN-KLIENT-HASH/sites/stage.malojaplana.ch/}"
 
 if [ "$STAGE" = "1" ]; then
   TARGET_DIR="$STAGE_REMOTE_DIR"

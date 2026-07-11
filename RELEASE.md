@@ -95,8 +95,9 @@ Zwei Netze — du kannst immer zurück:
 aktuelle Live-Version nach `./.deploy-backups/<zeitstempel>/`. Zum Zurückrollen
 den letzten guten Ordner wieder hochspielen:
 ```bash
-lftp -c "open -u \"$SFTP_USER\",\"$SFTP_PASSWORD\" sftp://et9l2r.ftp.infomaniak.com; \
-  mirror -R ./.deploy-backups/<zeitstempel>/ /home/clients/.../malojaplana.ch/"
+lftp -c "open -u \"$SFTP_USER\",\"$SFTP_PASSWORD\" sftp://\"$SFTP_HOST\"; \
+  mirror -R ./.deploy-backups/<zeitstempel>/ \"$REMOTE_DIR\""
+# $SFTP_HOST / $REMOTE_DIR aus .deploy.local (siehe deploy.sh)
 ```
 
 **B) Über Git (die Zeitmaschine).** Jede Version neu bauen und deployen:

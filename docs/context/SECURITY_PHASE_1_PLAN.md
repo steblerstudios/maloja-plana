@@ -152,7 +152,7 @@ Rate-Limits; Secrets-Handling; Fehler-Leaks; vollständige Löschung. Erst bei �
 
 1. **Jelastic-Environment anlegen** (Jelastic Cloud abonnieren → neues Environment).
 2. **Node.js-Node wählen**, stabile LTS-Version (Sicherheit + Support).
-3. **Datenbank:** die schon angelegte MariaDB (`et9l2r…`) von der App aus verbinden —
+3. **Datenbank:** die schon angelegte MariaDB (Klient-Datenbank, Name lokal) von der App aus verbinden —
    *oder* im Environment einen MariaDB-Node ergänzen (privates Netz, sauberer). Wahl in
    der Bau-Session; beides von Jelastic unterstützt.
 4. **Env-Secrets setzen** (nie im Code): DB-Zugang, Session-Secret, WebAuthn-RP-ID/Origin.

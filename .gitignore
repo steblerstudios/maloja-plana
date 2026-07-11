@@ -63,3 +63,6 @@ src/data/raw/
 
 # Lokale Deploy-Gate-Freigabe-Marke (von /maloja-predeploy geschrieben, nicht committen)
 .maloja/
+
+# Lokale Deploy-Konfiguration (Host/User/Server-Pfade) — nie committen
+.deploy.local
