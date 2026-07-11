@@ -129,6 +129,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
             background: on ? palette.sage + '18' : 'transparent',
             color: on ? (palette.sageDeep || palette.text) : palette.mid,
             fontSize: text.sm, fontWeight: on ? weight.medium : weight.normal,
+            textAlign: 'left',
             fontFamily: 'inherit', cursor: 'pointer',
             transition: `background ${duration.normal}ms ${ease}, border-color ${duration.normal}ms ${ease}`,
           },
