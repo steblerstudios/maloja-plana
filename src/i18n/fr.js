@@ -3449,6 +3449,7 @@ export default {
     legalLink: 'Confidentialité & mentions légales',
     bannerLabel: 'Bêta fermée',
     feedbackMail: 'Feedback par e-mail',
+    feedbackContext: 'Ces informations facilitent le diagnostic (facultatif, à supprimer au besoin) :',
     feedbackForm: 'Formulaire de feedback',
     feedback: {
       title: { sie: 'Votre feedback sur la bêta', du: 'Ton feedback sur la bêta' },
