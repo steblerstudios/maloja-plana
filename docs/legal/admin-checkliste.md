@@ -1,6 +1,6 @@
 # Admin & Legal — offene Behördengänge (Stebler Studios / Maloja Plana)
 
-> Stand: 2026-07-06 · Nicht-Code-Aufgaben, die nur Sophie erledigen kann.
+> Stand: 2026-07-06 · Nicht-Code-Aufgaben, die nur die Inhaberin erledigen kann.
 > Erledigt (laut Memory): Impressum, Copyright, Kontakt, Einzelfirma.
 > Verwandt: `docs/legal/trademark-notice.md`, `docs/legal/impressum.md`.
 

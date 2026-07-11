@@ -22,7 +22,7 @@
 
 ## 2. Export als Dossier-Flow
 
-**Warum wichtig:** Sophie hat klar gesagt: „Export darf nicht wie ein Sackmesser wirken." Aktuell ist Export verstreut (ZIP hier, PDF dort, JSON-Button irgendwo). Das widerspricht dem Produktversprechen „ruhiger Lebensbereich".
+**Warum wichtig:** die Inhaberin hat klar gesagt: „Export darf nicht wie ein Sackmesser wirken." Aktuell ist Export verstreut (ZIP hier, PDF dort, JSON-Button irgendwo). Das widerspricht dem Produktversprechen „ruhiger Lebensbereich".
 
 **Blocker:** Keine technischen Blocker. Braucht Konzept-Entscheidung (Dossier-Typen, UX-Flow).
 
@@ -52,15 +52,15 @@
 
 **Warum wichtig:** Mutter-Feedback ist nicht dokumentiert. Family-Expert-Feedback ist nicht namentlich zugeordnet. Ohne kanonisches Feedback-System gehen weitere Rückmeldungen verloren.
 
-**Blocker:** Sophie muss Mutter-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
+**Blocker:** die Inhaberin muss Mutter-Feedback manuell rekonstruieren. Kann nicht automatisiert werden.
 
 **Beta-relevant:** Ja — Prozess-Hygiene.
 
-**Nächster Task:** Sophie füllt Rekonstruktions-Template in `feedback-log.md` aus.
+**Nächster Task:** die Inhaberin füllt Rekonstruktions-Template in `feedback-log.md` aus.
 
 **Details:** `docs/product/feedback-log.md` → Sektion „Mutter"
 
-**STATUS: ERSTELLT (A-033). Sophie-Aktion ausstehend.**
+**STATUS: ERSTELLT (A-033). Aktion der Inhaberin ausstehend.**
 
 ---
 
@@ -125,7 +125,7 @@
 ## Empfohlene Reihenfolge
 
 ```
-SOFORT (manuell, Sophie):
+SOFORT (manuell, die Inhaberin):
   → Mutter-Feedback rekonstruieren (feedback-log.md)
   → Family Expert Feedback zuordnen (wer ist das?)
   → BVG-Bug-Status klären

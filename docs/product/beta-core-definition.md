@@ -81,7 +81,7 @@ Ohne diese Fixes ist die Beta nicht vertrauenswürdig:
 | SKOS: Kinder = Erwachsene | MP-BUG-001 | Falsche Berechnungen zerstören Vertrauen | Household Model (minimal) |
 | Hardcoded German in cantonalData.js | MP-BUG-002 | i18n-Bruch fuer 3 von 4 Sprachen | Keiner |
 | QR-Code CDN-Abhaengigkeit | MP-BUG-003 | Offline-Versprechen gebrochen | Keiner |
-| BVG Doppelabzug (Brutto/Netto) | MP-BUG-005 | Status unklar, muss geklaert werden | Sophie-Entscheidung |
+| BVG Doppelabzug (Brutto/Netto) | MP-BUG-005 | Status unklar, muss geklaert werden | Entscheidung der Inhaberin |
 
 ### 1.3 Budget Hardening (Light)
 
@@ -317,15 +317,15 @@ Systeme, die zuerst stabil sein muessen, bevor andere Bereiche wachsen koennen.
 | **Prioritaet** | 2 |
 | **Naechster Schritt** | backlog-registry.json von 48 auf 260+ Eintraege erweitern |
 
-### 4.5 Feedback Recovery (Sophie, manuell)
+### 4.5 Feedback Recovery (die Inhaberin, manuell)
 
 | Feld | Wert |
 |------|------|
 | **Warum kritisch** | Mutter-Feedback nicht dokumentiert. Family-Expert nicht zugeordnet. Ohne Recovery gehen Einsichten verloren. |
 | **Abhaengige Bereiche** | Priorisierung, Produktentscheidungen |
 | **Beta-Relevanz** | Prozess-Hygiene |
-| **Prioritaet** | 2 (nur Sophie kann das) |
-| **Status** | Template in feedback-log.md erstellt (A-033). Sophie-Aktion ausstehend. |
+| **Prioritaet** | 2 (nur die Inhaberin kann das) |
+| **Status** | Template in feedback-log.md erstellt (A-033). Aktion der Inhaberin ausstehend. |
 
 ---
 
@@ -462,7 +462,7 @@ Das ist die Fokussierung.
 ## 7. Empfohlene Beta-Reihenfolge
 
 ```
-SOFORT (Sophie, manuell):
+SOFORT (die Inhaberin, manuell):
   → Mutter-Feedback rekonstruieren (feedback-log.md)
   → Family Expert Feedback zuordnen
   → BVG-Bug-Status klaeren

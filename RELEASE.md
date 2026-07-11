@@ -77,7 +77,7 @@ unberührt. Zugriffsschutz macht das App-eigene BetaGate.
 **Typischer Ablauf:** `dev` fertig → `bash deploy.sh --stage` → auf
 `stage.malojaplana.ch` prüfen → passt → PR dev→main mergen → `bash deploy.sh`.
 
-**Einmalige Einrichtung (im Infomaniak-Panel, nur Sophie):**
+**Einmalige Einrichtung (im Infomaniak-Panel, nur die Inhaberin):**
 1. Subdomain `stage.malojaplana.ch` anlegen (Panel → Domains → Subdomain).
 2. Deren Docroot-Pfad ablesen (sieht aus wie
    `/home/clients/…/sites/stage.malojaplana.ch/`).

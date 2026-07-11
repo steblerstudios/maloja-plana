@@ -2,7 +2,7 @@ import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
 
-// Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Sophie):
+// Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (die Inhaberin):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
 //   • Punkt    = Regions-Durchschnitt
 //   • Strich   = Schweizer Schnitt (Referenz-Marke, wie der 10%-WHO-Strich)
