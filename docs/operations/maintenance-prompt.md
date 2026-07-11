@@ -145,10 +145,10 @@ Am Ende: Zusammenfassung mit Empfehlungen für nächstes Halbjahr.
 
 ## E-Mail-Benachrichtigung einrichten
 
-Die einfachste Methode, damit info@steblerstudios.ch benachrichtigt wird:
+Die einfachste Methode, damit info@malojaplana.ch benachrichtigt wird:
 
 1. **GitHub → Repository → Settings → Watch** → "All Activity" aktivieren
-2. **GitHub → Settings → Notifications → Custom Routing** → Für dieses Repo: info@steblerstudios.ch eintragen
+2. **GitHub → Settings → Notifications → Custom Routing** → Für dieses Repo: info@malojaplana.ch eintragen
 3. Fertig. Jedes automatisch erstellte Issue landet per E-Mail bei dir.
 
 Alternative (wenn du einen Mailserver hast): SendGrid/Mailgun Secret im Repo hinterlegen und den Workflow erweitern.

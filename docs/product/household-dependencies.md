@@ -59,7 +59,7 @@ Household-Datenstruktur → Kinder-Felder → SKOS-Tabelle korrigieren → Kinde
 
 | Voraussetzung | Status |
 |---------------|--------|
-| Brutto/Netto-Entscheidung | Aktion der Inhaberin ausstehend |
+| Brutto/Netto-Entscheidung | Aktion von Stebler Studios ausstehend |
 | Household Model (für Phase 2) | noch nicht implementiert |
 
 **Budget Hardening Phasen:**

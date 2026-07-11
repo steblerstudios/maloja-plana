@@ -24,7 +24,7 @@
   Beweis der Privatheit. Wer Ansichts-Zahlen will, bräuchte einen Zähler in der
   App — das wäre ein Grundsatzentscheid (siehe „Später"), kein Nebenbei.
 
-## Einmalige Einrichtung (Sophie, im Infomaniak Manager)
+## Einmalige Einrichtung (im Infomaniak Manager)
 
 - [ ] Prüfen, ob die **Web-Statistik** fürs Hosting aktiviert ist
       (Manager → Hosting → malojaplana.ch → Statistiken) und was sie ausweist.

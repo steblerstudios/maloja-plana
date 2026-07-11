@@ -11,7 +11,7 @@ Stebler Studios
 {Vorname Nachname}
 {Strasse Nr.}
 {PLZ Ort}
-{info@steblerstudios.ch} · {Telefon}
+{info@malojaplana.ch} · {Telefon}
 {ggf. UID: CHE-xxx.xxx.xxx}
 
 ──────────────────────────────────────────────

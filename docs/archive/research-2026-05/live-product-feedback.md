@@ -16,7 +16,7 @@ After reset:
 - user feels safe that value is cleared
 
 Source:
-Silvan feedback during walkthrough.
+Testperson B feedback during walkthrough.
 
 ---
 

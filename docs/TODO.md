@@ -16,7 +16,7 @@ Abschiedsagentur-Empfehlung · Bergketten-Karte (Granit-Opacity).
 Service-Worker-Offline-Fix · doctors.label · Fortschrittskarte-Icons · IPV-Crosslinks.
 
 **Noch offen → siehe unten.** Die meisten verbleibenden Punkte sind grösser (Voice-Toggle,
-Atkinson, hreflang) oder brauchen einen Entscheid der Inhaberin (Hero-Copy, Export-Icon).
+Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy, Export-Icon).
 
 ## ✅ Erledigt 2026-06-25 (Fortsetzungs-Session)
 
@@ -70,7 +70,7 @@ Atkinson, hreflang) oder brauchen einen Entscheid der Inhaberin (Hero-Copy, Expo
 
 ## C — Design / Calm-UX (aus Audit)
 
-- ✅ **BUG (Handy): Kopfzeile lief horizontal über — GEFIXT (2026-06-28).** *Gemeldet die Inhaberin
+- ✅ **BUG (Handy): Kopfzeile lief horizontal über — GEFIXT (2026-06-28).** *Gemeldet Stebler Studios
   (iPhone, Screenshots Basis/Wohnen/Steuern/Ausbildung + Dashboard-Kachel „Dokumentenablage"
   abgeschnitten).* Ursache: Header-Controls-Reihe (Vorlesen + Aa + Sie/Du + Sprach-Dropdown +
   Dunkel + ☰) war ~373 px breit, nicht umbrechend → Dokument 460 px > 390 px Viewport (70 px
@@ -87,7 +87,7 @@ Atkinson, hreflang) oder brauchen einen Entscheid der Inhaberin (Hero-Copy, Expo
   + bei `visibilitychange` (PWA aus Hintergrund). Cache `v8→v9`. HTML war schon network-first.
   → Deploys kommen ohne Hard-Refresh an. (Einmalig muss ein Altgerät noch raus aus dem alten SW:
   PWA/Tab ganz schliessen + neu öffnen.)
-- ✅ **Datumsfelder: klares Picker-Symbol — GEFIXT (2026-06-28).** *Gemeldet die Inhaberin: „man kann
+- ✅ **Datumsfelder: klares Picker-Symbol — GEFIXT (2026-06-28).** *Gemeldet Stebler Studios: „man kann
   kein Datum auswählen".* Felder waren seit Anfang `<input type=date>` (nativ pickbar), aber iOS
   rendert ein leeres Datumsfeld als blanke Box ohne sichtbares Symbol → wirkt nicht auswählbar.
   **Fix:** eigenes, immer sichtbares Kalender-Symbol in jedem ChapterView-Datumsfeld (ruft
@@ -110,7 +110,7 @@ Atkinson, hreflang) oder brauchen einen Entscheid der Inhaberin (Hero-Copy, Expo
   bei ~null sichtbarem Nutzen. Bei Bedarf gezielt einzelne echte Fälle, nicht als Sweep.
 - Prinzip: Entschlacken via Disclosure/Dropdown, **nie löschen** (Landkarte = Identität).
 
-## C2 — 🎨 Design-Vision: Skeuomorphismus als Metaphern-Sammlung (die Inhaberin, BD 2026-06-29)
+## C2 — 🎨 Design-Vision: Skeuomorphismus als Metaphern-Sammlung (Stebler Studios, BD 2026-06-29)
 
 > **Status: Inspiration / „bis wir dahin kommen" — NICHT jetzt bauen, eigene Design-Phase, schritt-für-schritt gemeinsam.**
 
@@ -170,14 +170,14 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 
 ## E — Inhalt
 
-- 🟠 **Herzensempfehlung Leihlager** (`heartfelt10`) — braucht Name + URL von der Inhaberin.
+- 🟠 **Herzensempfehlung Leihlager** (`heartfelt10`) — braucht Name + URL von Stebler Studios.
 - ✅ Abschiedsagentur (`heartfelt9`, alle 5 Sprachen)
 - ✅ **Quellen/Links-Check** (erneut 2026-06-27): 121 externe URLs geprüft (27 neue Asyl/Stipendien
   + 94 direktLinks). **0 echte tote Links** — alle 2xx/3xx; einzig 3× `baselland.ch` 403 = bekannter
   WAF-False-Positive (im echten Browser gültig, siehe [[link-check]]). Asyl-Orgs (SEM/Caritas/HEKS/
   SFH/SRK/EPER) + Stipendien (EDK/SBFI/stipendium.ch) alle 200.
 
-## F — Grössere Features (die Inhaberin wählt Reihenfolge)
+## F — Grössere Features (Stebler Studios wählt Reihenfolge)
 
 - ✅ **Stipendien** — Berechtigungs-Check (Inkr. 2). Offen: Antrags-Generator; präziser Betrags-Rechner bewusst nicht gebaut.
 - ✅ **Arbeitslosenkassen-Rechner** (ALV-Taggeld 70/80%, Wartetage, Höchstbetrag; SECO 2025).
@@ -269,7 +269,7 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 
 ---
 
-**Hinweis:** Deploy wartet bewusst (die Inhaberin gibt frei). Detail-Kontext zu jedem Punkt in den
+**Hinweis:** Deploy wartet bewusst (Stebler Studios gibt frei). Detail-Kontext zu jedem Punkt in den
 Memory-Notizen ([[agent-audits]], [[brand-identity]], [[braindump-4]], [[braindump-3]],
 [[stebler-studios-legal]], [[stipendien]], [[asylum-direction]]).
 
@@ -327,7 +327,7 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
 > - Export-Domain: kein `maloja-plana.ch` (Bindestrich) mehr ✓
 > - Autosave: try/catch + `saveError`-State (`main.jsx:562-583`) ✓
 > - **GEFIXT diese Session (`role=status`-Live-Regionen ohne Buttons):** Sandbox-/Demo-/DB-Banner (`main.jsx`) + AlphaBanner (`Dashboard.jsx`) — role auf den Text verschoben, browserverif (0 Buttons in Live-Regionen). ✓
-> - ⏳ **OFFEN, Design-Entscheid (die Inhaberin, „nichts wegnehmen"):** Finanz-Alarm-Flächen detunen (Schulden-KPI-Grid / Armutsbalken / OverdueBanner) + Schulden-Formular Progressive Disclosure. Kein Bug — bewusste Gestaltung.
+> - ⏳ **OFFEN, Design-Entscheid (Stebler Studios, „nichts wegnehmen"):** Finanz-Alarm-Flächen detunen (Schulden-KPI-Grid / Armutsbalken / OverdueBanner) + Schulden-Formular Progressive Disclosure. Kein Bug — bewusste Gestaltung.
 
 - **SKOS-Vermögensfreibetrag veraltet UND doppelt/widersprüchlich.** `cantonalData.js:293`
   (8000/4000 +2000, Cap 10000) vs `sozialhilfeRechner.js:101` (4000 +2000, kein Cap) → Paar bekommt
@@ -370,7 +370,7 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
 > - AsylView/StipendienView-Titel: nutzen jetzt `PanelTitle` (echte Überschriften) ✓
 > - **GEFIXT diese Session:** „recheck Jan 2027"-Wartungsnotiz an `AHV_DATA_VERSION` (`ahvRechner.js`) ✓
 > - ⏳ **Offen, klein:** Backup-Passphrase erlaubt weiter 4 Zeichen ohne ruhigen Längen-Hinweis (`backupCrypto.js:93`) — UI-Nicety.
-> - ⏳ **Offen, Design (die Inhaberin):** Unicode-Glyphen (□◰●◇↧✕) in Onboarding/Schulden statt `IconSystem` — Materialitäts-Konsistenz, kein Bug.
+> - ⏳ **Offen, Design (Stebler Studios):** Unicode-Glyphen (□◰●◇↧✕) in Onboarding/Schulden statt `IconSystem` — Materialitäts-Konsistenz, kein Bug.
 
 - Backup/Export liest Dokumente nur aus localStorage (`autoBackup.js`, `backupCrypto.js:42`) → bei
   IndexedDB-Migration (s. 🔴 #1) Backups mitziehen, sonst stoppen Datei-Backups still.
@@ -398,15 +398,15 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
 
 ## 🟡 Braindump-Fäden (BD18/19) — geplant, später bauen
 
-*Session 2026-06-29: Faden 1 (Briefe) komplett, Faden 2 (Kalender) komplett + vertieft, Faden 3-I (KK-Last %) gebaut & committet auf `dev` (nicht gepusht). die Inhaberin: Folgendes bewusst zurückgestellt — „erst wenn wir soweit sind".*
+*Session 2026-06-29: Faden 1 (Briefe) komplett, Faden 2 (Kalender) komplett + vertieft, Faden 3-I (KK-Last %) gebaut & committet auf `dev` (nicht gepusht). Stebler Studios: Folgendes bewusst zurückgestellt — „erst wenn wir soweit sind".*
 
-- **Petitionsvorlagen-Generator** (BD19, Idee der Inhaberin) — Menschen die Werkzeuge geben, *selbst* zu petitionieren (analog Brief-Generator). Löst den Petitions-Teil von Faden 3 governance-konform: Maloja kampagnisiert nicht, sondern befähigt. Beispiel-Vorlage „max 10% des Einkommens für die KK".
+- **Petitionsvorlagen-Generator** (BD19, Idee von Stebler Studios) — Menschen die Werkzeuge geben, *selbst* zu petitionieren (analog Brief-Generator). Löst den Petitions-Teil von Faden 3 governance-konform: Maloja kampagnisiert nicht, sondern befähigt. Beispiel-Vorlage „max 10% des Einkommens für die KK".
 - **Faden 4 — Haushalts-Budget-Benchmarks** (BD18) — Bund/BFS-Haushaltsbudget-Erhebung als Richtwerte pro Ausgabenkategorie. WICHTIG: belegbar, KEINE erfundenen Einzelpreise („eine WC-Rolle kostet X"). Braucht Daten-Erkundung zuerst.
-- **Faden 3-II** — die Inhaberin: „alle 4, aber alles zu seiner Zeit". Faktenprüfung 2026-06-29: das politische „KVG deckt weniger als WHO"-Framing ist für die Screenings NICHT belegbar (WHO empfiehlt beim Zervix-Screening sogar seltener → Pap-Mythos). Stattdessen 4 belegbare Richtungen, schritt-für-schritt:
+- **Faden 3-II** — Stebler Studios: „alle 4, aber alles zu seiner Zeit". Faktenprüfung 2026-06-29: das politische „KVG deckt weniger als WHO"-Framing ist für die Screenings NICHT belegbar (WHO empfiehlt beim Zervix-Screening sogar seltener → Pap-Mythos). Stattdessen 4 belegbare Richtungen, schritt-für-schritt:
   - ✅ **3-II/1 (gebaut, `7cdfbed`)** — internationale Empfehlung als ruhige Orientierung neben KVG-Deckung im Leistungskatalog (Gyn/Mammo/Darm), mit Quelle. Botschaft beruhigend, kein Alarm. Datenanker `VORSORGE_EMPFEHLUNG_KEYS`.
   - ✅ **3-II/2 (GEBAUT — reproduce-first bestätigt 2026-07-11)** — persönlicher Intervall-Abgleich im KVG-Leistungskatalog (`KVGLeistungen.jsx`): opt-in „Letzte Untersuchung"-Feld → „Nächste empfohlene ~MM.JJJJ" aus `VORSORGE_INTERVAL_MONATE` (gynaeko 36 / mammografie 24 / darmkrebs 120 Mt., WHO/EU-belegt) → bei Überfälligkeit ruhiger Hinweis + 1-Klick-Kalendereintrag. Schwellen-Entscheid elegant gelöst: Abgleich nur für Screenings mit belegbarem Monats-Intervall. Browser-live-verifiziert.
   - **3-II/3** — geografische Mammografie-Realität: LU/NW/OW/UR ohne organisiertes Programm (nur opportunistisch nach Überweisung). Reine Orientierung, belegt.
-  - **3-II/4** — Idee der Inhaberin: per *evidenz-graduierten* Studien prüfen, ob z.B. ein jährlicher Frauenarzt-Besuch belegbar sinnvoll ist (Evidenzqualität mitzeigen, nicht behaupten).
+  - **3-II/4** — Idee von Stebler Studios: per *evidenz-graduierten* Studien prüfen, ob z.B. ein jährlicher Frauenarzt-Besuch belegbar sinnvoll ist (Evidenzqualität mitzeigen, nicht behaupten).
 - **Führerschein-Thema** (BD19) — Führerausweis ganzheitlich: Erneuerung/Fristen, ärztliche Kontrolluntersuchung ab 75 (alle 2 J.), Ausweis im Dokumenten-Tresor, evtl. Kalender-Vorlage. Orientierung über Pflichten/Fristen. Erst Umfang klären (Swiss-precision: Fakten prüfen).
 
 ## A11y-Formular-Audit 2026-07-08 (a11y-pruefer)

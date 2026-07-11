@@ -134,7 +134,7 @@ Alpha-Tester. Hat die App im Walkthrough getestet (2026-05, Alpha-Phase).
 
 ### Was fehlt
 
-- **Dashboard: Stärkere visuelle Hierarchie** — ein primärer Fokusbereich statt gleichgewichtiger Elemente. Das ist der einzige offene Silvan-Punkt und betrifft den ersten Bildschirm.
+- **Dashboard: Stärkere visuelle Hierarchie** — ein primärer Fokusbereich statt gleichgewichtiger Elemente. Das ist der einzige offene Testperson B-Punkt und betrifft den ersten Bildschirm.
 
 ---
 
@@ -152,7 +152,7 @@ Alpha-Testerin. Genau 1 dokumentiertes Feedback (2026-05-16).
 
 ### Wahrscheinlich dokumentiert
 
-Nichts. Jana hat ein einziges Feedback gegeben, das sofort umgesetzt wurde.
+Nichts. Testperson A hat ein einziges Feedback gegeben, das sofort umgesetzt wurde.
 
 ### Indirekt ableitbar
 
@@ -164,7 +164,7 @@ Nichts weiteres.
 
 ### Was fehlt
 
-Nichts von Jana — aber: **nur 1 Feedback von einer Testerin ist extrem dünn.** Hat sie mehr gesagt, das nicht erfasst wurde? Oder hat sie die App nur kurz gesehen?
+Nichts von Testperson A — aber: **nur 1 Feedback von einer Testerin ist extrem dünn.** Hat sie mehr gesagt, das nicht erfasst wurde? Oder hat sie die App nur kurz gesehen?
 
 ---
 
@@ -277,9 +277,9 @@ Gefolgt von **Sophies eigenen Designentscheidungen** ("Ort nicht Dashboard", "ke
 
 | Feedback | Person | Status |
 |----------|--------|--------|
-| Datum-Reset visuell | Silvan | 100% umgesetzt |
-| Flaggen-Inkonsistenz | Silvan | 100% umgesetzt |
-| Kantonsnamen ausschreiben | Jana | 100% umgesetzt |
+| Datum-Reset visuell | Testperson B | 100% umgesetzt |
+| Flaggen-Inkonsistenz | Testperson B | 100% umgesetzt |
+| Kantonsnamen ausschreiben | Testperson A | 100% umgesetzt |
 | BVG-Doppelabzug (Quick-Fix) | Basel-Stadt | 100% umgesetzt (strukturelle Lösung fehlt) |
 | Hardcoded German | Intern | 100% umgesetzt |
 | Alpha-Banner zu alarmistisch | (unklar) | 100% umgesetzt |
@@ -295,7 +295,7 @@ Alles davon waren **kleine, klar umrissene, rein technische Fixes**. Kein einzig
 |----------|--------|-------------|
 | Budget: Geduld und Finesse | Mutter | Brutto/Netto + Household fehlt |
 | Empty States emotional kalt | Unspezifisch | Reine Textarbeit — kein Blocker |
-| Dashboard Attention Balance | Silvan | Braucht UX-Arbeit |
+| Dashboard Attention Balance | Testperson B | Braucht UX-Arbeit |
 | Finanzstruktur überwältigend | Unspezifisch | Braucht Budget-Redesign |
 | Franchise-Erklärung schwach | Unspezifisch | 1 Satz pro Sprache fehlt |
 | KVG-Kontext fehlt | Unspezifisch | 1 Satz pro Sprache fehlt |

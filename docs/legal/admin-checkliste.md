@@ -1,6 +1,6 @@
 # Admin & Legal — offene Behördengänge (Stebler Studios / Maloja Plana)
 
-> Stand: 2026-07-06 · Nicht-Code-Aufgaben, die nur die Inhaberin erledigen kann.
+> Stand: 2026-07-06 · Nicht-Code-Aufgaben, die nur Stebler Studios erledigen kann.
 > Erledigt (laut Memory): Impressum, Copyright, Kontakt, Einzelfirma.
 > Verwandt: `docs/legal/trademark-notice.md`, `docs/legal/impressum.md`.
 
@@ -44,7 +44,7 @@ MWST-Hinweis, QR-Rechnung-Notiz).
 ## 4. E-Mail-Postfach `info@malojaplana.ch`
 
 - Postfach bei Infomaniak (Hosting läuft schon dort) einrichten.
-- Weiterleitung/Routing auf `info@steblerstudios.ch` oder direkt abrufen.
+- Weiterleitung/Routing auf `info@malojaplana.ch` oder direkt abrufen.
 - Danach im Impressum als Primärkontakt bestätigen.
 
 ---

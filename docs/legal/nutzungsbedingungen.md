@@ -69,7 +69,7 @@ Die Haftung für vorsätzlich oder grobfahrlässig verursachte Schäden bleibt v
 
 Der Quellcode ist unter der [GNU Affero General Public License v3.0](../../LICENSE.txt) lizenziert. Die Nutzung unterliegt den Bedingungen dieser Lizenz.
 
-Für kommerzielle Nutzung (White-Label, Enterprise) ist eine separate Lizenz erforderlich. Kontakt: sophie.stebler@gmail.com
+Für kommerzielle Nutzung (White-Label, Enterprise) ist eine separate Lizenz erforderlich. Kontakt: info@malojaplana.ch
 
 ---
 

@@ -138,7 +138,7 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 
 ### F-014: Canton Names Should Be Written Out Fully
 - **Date**: 2026-05-16
-- **Source**: Jana (alpha tester)
+- **Source**: Testperson A (alpha tester)
 - **Category**: UX / Clarity
 - **Feedback**: Canton dropdowns show abbreviations ("BS", "ZH") instead of full names ("Basel-Stadt", "Zürich"). Reduces clarity and trust for users unfamiliar with Swiss canton codes.
 - **Severity**: Nice-to-have
@@ -147,7 +147,7 @@ Structured log of feedback received during the alpha testing phase. Each entry i
 
 ### F-015: Onboarding Language Selector Inconsistent Flags
 - **Date**: 2026-05-16
-- **Source**: Silvan (alpha tester)
+- **Source**: Testperson B (alpha tester)
 - **Category**: UX / Visual Consistency
 - **Feedback**: In the onboarding language selection, DE/FR/IT had a Swiss cross emoji but EN had a UK flag. Felt inconsistent and unprofessional.
 - **Severity**: Nice-to-have

@@ -8,7 +8,7 @@
 
 Sophie Stebler / Stebler Studios
 Basel, Schweiz
-E-Mail: sophie.stebler@gmail.com
+E-Mail: info@malojaplana.ch
 
 ---
 
@@ -46,7 +46,7 @@ Kurzfassung: Maloja Plana ist eine Local-First-Anwendung. Es werden **keine pers
 
 - **Marke**: „Maloja Plana" ist eine Projektbezeichnung von Sophie Stebler
 - **Code**: Lizenziert unter [AGPL-3.0](../../LICENSE.txt)
-- **Kommerzielle Nutzung**: Dual Licensing verfügbar — Kontakt: sophie.stebler@gmail.com
+- **Kommerzielle Nutzung**: Dual Licensing verfügbar — Kontakt: info@malojaplana.ch
 - **Icons**: SVG-Piktogramme sind Eigenentwicklung und Teil des Projekts
 
 ---

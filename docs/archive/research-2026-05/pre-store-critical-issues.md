@@ -87,7 +87,7 @@ Desired direction:
 - no ghost state remains
 
 Source:
-Silvan feedback.
+Testperson B feedback.
 
 ---
 

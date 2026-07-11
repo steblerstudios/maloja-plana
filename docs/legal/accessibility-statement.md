@@ -40,6 +40,6 @@ Maloja Plana strebt Konformität mit **WCAG 2.1 Level AA** an. Die Anwendung bef
 ## Feedback
 
 Probleme mit der Barrierefreiheit können gemeldet werden an:
-sophie.stebler@gmail.com
+info@malojaplana.ch
 
 Wir bemühen uns, gemeldete Barrieren zeitnah zu beheben.

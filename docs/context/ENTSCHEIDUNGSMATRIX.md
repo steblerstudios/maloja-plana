@@ -1,8 +1,8 @@
 # Entscheidungsmatrix & Firmen-Modell — wer darf was
 
-> Die eine Regel über allem: **Berater empfehlen → Sophie entscheidet → Claude
-> führt aus, in engen Grenzen.** Kein Agent, kein Assistent ersetzt Sophies
-> Entscheidung. Dieses Dokument schreibt nur auf, welche *kleinen, umkehrbaren*
+> Die eine Regel über allem: **Berater empfehlen → Stebler Studios entscheidet →
+> Claude führt aus, in engen Grenzen.** Kein Agent, kein Assistent ersetzt den
+> Entscheid von Stebler Studios. Dieses Dokument schreibt nur auf, welche *kleinen, umkehrbaren*
 > Handgriffe die Ausführung ohne Rückfrage tun darf — und wo immer erst dein Ja kommt.
 >
 > Stand: 2026-07-11 · ergänzt `AGENT_MANIFEST.md`, `DEV_WORKFLOW.md`, `LOOPS.md`
@@ -14,8 +14,8 @@
 Maloja ist kein Ordner voller Werkzeuge, sondern eine kleine Firma mit klaren
 Rollen. Es gibt genau **drei Arten von Beteiligten**:
 
-- **Die Chefin (CEO): Sophie.** Trifft jede Entscheidung von Bedeutung. Das ist
-  nicht verhandelbar und steht über allem hier.
+- **Die Chefin (CEO): Stebler Studios (die Inhaberin).** Trifft jede Entscheidung
+  von Bedeutung. Das ist nicht verhandelbar und steht über allem hier.
 - **Die Berater (Agenten):** Fachleute für je ein Ressort. Sie **lesen, prüfen,
   empfehlen — sie ändern nie etwas.** Jeder Fund ist ein Vorschlag, kein Beschluss.
 - **Die Ausführung (Claude):** setzt um, was entschieden ist. Darf kleine,
@@ -30,7 +30,7 @@ herum**, nicht Prozesse in ihr.
 
 | Ressort (Firmen-Sprache) | Wofür | Heute besetzt durch | Stand |
 |---|---|---|---|
-| **CEO** — Vision & Entscheid | Was gebaut wird, was Maloja ist | **Sophie** | fest |
+| **CEO** — Vision & Entscheid | Was gebaut wird, was Maloja ist | **Stebler Studios** | fest |
 | **COO** — Ausführung | Code schreiben, umsetzen, verifizieren | **Claude** (Code-Rolle) + diese Matrix | fest |
 | **CTO / Qualität** | Tests, Build, Bundle, i18n, CSP | `qualitaets-pruefer` | ✓ |
 | **CISO / Sicherheit** | CSP, Secrets, kein Tracking, Angriffsfläche | `sicherheits-pruefer` | ✓ |

@@ -5,7 +5,7 @@
 > **diese** Datei. Persönliche Session-Historie/Ideen → Claude-Memory, nicht hierher.
 >
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
-> von `main` (nur die Inhaberin). Verifizieren live: Footer-Version + Bundle-Hash greppen.
+> von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
 **Stand:** 2026-07-11
 
@@ -34,7 +34,7 @@
   Bundle-Hash von `8e0d15e` selbst wurde noch nicht neu gegen live geprüft (kein
   App-Deploy nötig).
   - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
-    (`index-8dc0e122.js`); die Inhaberin musste neu bauen + `deploy.sh`. Nach jedem Merge
+    (`index-8dc0e122.js`); Stebler Studios musste neu bauen + `deploy.sh`. Nach jedem Merge
     prüfen, dass `deploy.sh` wirklich frisch baut.
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
   Ablauf `feat/…` → `deploy.sh --stage` → PR→main → `deploy.sh`; Qualitäts-Ring je

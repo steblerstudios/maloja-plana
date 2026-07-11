@@ -21,4 +21,4 @@ Wahrheits-Disziplin (Maloja ist Schweizer Rechts-/Finanzhilfe → falsche Fakten
 - Jede Fach-, Zahlen-, Frist- oder Gesetzesaussage braucht eine Quelle (Artikel/Amt), aufs Wort genau. Keine erfundenen Quellen, Beträge, Fristen oder Paragraphen.
 - Bei recht-/finanzrelevanten Aussagen im Zweifel den `rechts-`/`swiss-precision-pruefer` anstossen statt raten.
 
-MCP / Connectors: extrem restriktiv. KEINE MCP-Server / externen Connectors ohne ausdrückliche Freigabe von der Inhaberin — local-first, CSP self-only, keine stille Datenabflüsse. Im Zweifel Nein.
+MCP / Connectors: extrem restriktiv. KEINE MCP-Server / externen Connectors ohne ausdrückliche Freigabe von Stebler Studios — local-first, CSP self-only, keine stille Datenabflüsse. Im Zweifel Nein.

@@ -113,7 +113,7 @@ nicht das Victorinox-Logo.
 
 ---
 
-## Von die Inhaberin bestätigt (2026-06-23)
+## Von Stebler Studios bestätigt (2026-06-23)
 
 - ✓ **Sackmesser → Übersicht**, **Uhr → Frist/Zeit**, **Kuhglocke → Benachrichtigungen**
 - ✓ **Haus & Wohnen = Chalet** (Leitform überall)
@@ -130,7 +130,7 @@ nicht das Victorinox-Logo.
 - Finanzen = Fünfliber · Sparen = **Sparschwein** · Budget = Portemonnaie/Haushaltsbuch ·
   Ausgaben = Kassenbon/Quittung · Bankverbindung = **SNB-Gebäude**
 
-## H — Weitere Metaphern (aus der Inhaberin Board + Vorschlägen)
+## H — Weitere Metaphern (aus von Stebler Studios Board + Vorschlägen)
 
 - Dokumente/Ablage = **Bundesordner** (Ringordner) · Vorsorge = **Setzling/Baum** ·
   Bürgerrecht/Einbürgerung = **Wilhelm Tell** (generisch, kein Armbrust-Label) ·
@@ -150,7 +150,7 @@ Alphorn (Kultur) · Rütli (Gründung/Werte) · Feuerschale (Gemeinschaft) · Ed
   nicht was fehlt (siehe Voice).
 - Schicht ist **abschaltbar**, ruhig, nie laut.
 
-## J — Schutzrecht: Kantonswappen (Antwort auf der Inhaberin Frage)
+## J — Schutzrecht: Kantonswappen (Antwort auf von Stebler Studios Frage)
 
 Vereinfachen hilft NICHT — geschützt ist auch, was mit dem Wappen *verwechselbar* ist.
 Faustregel: «Lese ich ‹Kanton X› heraus → nicht erlaubt.» Nur **völlig abstrahiert / neutrales
@@ -168,7 +168,7 @@ Schild + Name** ist sicher. (Kein Rechtsrat.)
 
 ## Mapping-Hinweis
 
-der Inhaberin Board (von ChatGPT) nutzt alte Palette, «Söhne»-Schrift, «Du». Wir übernehmen die
+von Stebler Studios Board (von ChatGPT) nutzt alte Palette, «Söhne»-Schrift, «Du». Wir übernehmen die
 **Metaphern**, aber in **Granit**-Palette, **Hanken/Lora/Lexend** und **«Sie»**.
 
 ## Letzte Entscheide (2026-06-23)

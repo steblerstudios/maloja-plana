@@ -1,0 +1,7 @@
+# Vorlage für die lokale Deploy-Konfiguration.
+# Kopieren nach `.deploy.local` (die echte Datei ist gitignored) und die Werte
+# aus dem Infomaniak-Panel eintragen. deploy.sh liest `.deploy.local` automatisch.
+export SFTP_HOST="DEIN-HOST.ftp.infomaniak.com"
+export SFTP_USER="DEIN-USER"
+export REMOTE_DIR="/home/clients/DEIN-KLIENT-HASH/sites/malojaplana.ch/"
+export STAGE_REMOTE_DIR="/home/clients/DEIN-KLIENT-HASH/sites/stage.malojaplana.ch/"

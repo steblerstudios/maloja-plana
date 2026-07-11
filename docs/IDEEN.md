@@ -22,7 +22,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Wohnen = kleines Haus** (Zimmer = Themen) · **Miet-Angaben optisch wie ein Mietvertrag** · **Mobilität = Fahrzeugmappe** · **Familie = Fotoalbum** · **Behörden = Bundesordner** · **Arbeit = Bewerbungsmappe** · **Ideen = Notizbuch**.
 - 🌱 **KVG-Katalog = Karteikartenbox** · **Bibliothek = Bücherregal** (✅ Direktlinks als Regal gebaut; Ausbau möglich).
 - 🌱 **Lebenslauf-Generator skeuomorph darstellen** (CV-Inhalt existiert, Optik nicht).
-- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten. Session #38: Todesfall hatte EL nur als Nebensatz im breiten „Renten & Versicherungen melden"-Schritt → auf Wunsch der Inhaberin **eigener Schritt „4 · Hinterbliebenenrente & EL prüfen" mit Icon** herausgelöst (wie Pensionierung#4/IV#3/Pflege#3), Erbschaft rückt auf #5. Glossar bleibt Text-only-Tooltip (kein Icon-Ort). Damit alle sinnvollen Ablauf-Plätze abgedeckt.
+- ✅ **EL-Icon** gebaut (Aufstockung, keine Almosen-Optik) — hängt an den EL-*Schwerpunkt*-Schritten. Session #38: Todesfall hatte EL nur als Nebensatz im breiten „Renten & Versicherungen melden"-Schritt → auf Wunsch von Stebler Studios **eigener Schritt „4 · Hinterbliebenenrente & EL prüfen" mit Icon** herausgelöst (wie Pensionierung#4/IV#3/Pflege#3), Erbschaft rückt auf #5. Glossar bleibt Text-only-Tooltip (kein Icon-Ort). Damit alle sinnvollen Ablauf-Plätze abgedeckt.
 - 🌱 **Heirat = Icon mit zwei Ringen** · **Rückforderungsbeleg-Look** (b83c35f) gefällt optisch nicht → Redesign vor weiterer Status-UI.
 - ⏸ **Konto = schlichtes Banking** · **Analysen = modern/Apple-Glas** — bewusst KEINE Metapher.
 
@@ -82,7 +82,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 
 - ⭐ **Gender-neutral** wo möglich · **keine Emojis, nüchterner Ton** · **No AI Slop** (klingt wie ein Mensch).
 - 🌱 **Robustheits-Checkliste app-weit** — Success/Empty/Error/Loading + Graceful Degradation auf JEDES Feature.
-- 🌱 **Jana-Verständlichkeit** — „ohne Anleitung verstehen was zu tun ist"; Glossar für Abkürzungen (✅ teils).
+- 🌱 **Testperson A-Verständlichkeit** — „ohne Anleitung verstehen was zu tun ist"; Glossar für Abkürzungen (✅ teils).
 - 🌱 **Kohlberg-Moralstufen** als Denkrahmen für würdevolle, nicht-bevormundende Ansprache.
 - 🌱 **FR/IT/RM-Gegenlese** — RM ~263 Keys offen (Native-Task, `scripts/i18n-gap-scan.mjs`); tiefere FR/IT-CH-Grammatik-QA.
 
