@@ -1,7 +1,7 @@
 export default {
   lebenszustaende: {
     sectionTitle: 'Does one of these situations apply?',
-    sectionIntro: 'Some support depends not on a single event but on an ongoing situation. Choose what fits — nothing is stored as a label, it only shows what might be available.',
+    sectionIntro: 'Some support depends not on a single event but on an ongoing situation. Choose what fits. It stays on your device and only helps show what suits you — no profile, no judgement.',
     selectHint: 'Pick a situation to see what could apply.',
     quelleLabel: 'Source',
     standLabel: 'As of',
