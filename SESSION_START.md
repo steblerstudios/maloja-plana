@@ -7,19 +7,23 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-11
+**Stand:** 2026-07-11 (Governance + PII-Session)
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (PR #22 gemergt) |
-| `main` steht auf | `8b6727b` — Merge PR #22 (session-start-sync); **App-Code seit `0ebb865` unverändert** |
+| Aktueller Branch | `main` |
+| `main` steht auf | `b3c940e` — Squash-Merge PR #44 (PII-Bereinigung + PII-Scan-Gate) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| **Runde 2026-07-11** | **10 Commits auf 8 Feature-Branches, reviewed (inkl. `ultrareview`), NICHT gemergt/deployt** |
+| **Runde 2026-07-11** | **Alles gemergt (PRs #37–#44).** Offen nur PR #45 (CI-PII-Scan). |
 
-**Offene Runde (Branches über `main`, alle gepusht):** `feat/pwa-cache-hash` (2 — PWA-Cache an Bundle-Hash + Home-Screen-Name/Icon), `feat/betacode-hash` (Beta-Code als SHA-256, raus aus Public-Repo), `feat/wartungsseite` (2 — ruhige Wartungsseite statt Apache-404), `feat/a11y-rose-text` (rose→roseDeep AA), `feat/a11y-labels` (Haushalt role=group), `feat/fuehrerausweis` (Führerschein-Ablauf, ch.ch/ASTRA, 5 Spr.), `feat/a11y-soft-contrast` (soft→#64676E AA auf Karten), `chore/deploy-gate` (Doku Prod-Review-Ring + gitignore). **Reviews grün** (code/security/a11y/design + ultra). ⚠️ `feat/fuehrerausweis` rm = Best-Effort → Gegenlese. Wegwerf-Branch `integration/round-2026-07-11` (Parallel-Session-Testmerge, `b7b1daa`) nach den echten PRs löschen.
+**Sitzung 2026-07-11 (Governance + Datenschutz):** Grosse Session nach der Feature-Runde. Gebaut/gemergt:
+- **Entscheidungsmatrix + C-Suite-Firmenmodell** (`docs/context/ENTSCHEIDUNGSMATRIX.md`, PR #41): Ampel 🟢/🟡/🔴 für Claude-Autonomie; Berater→Inhaberin→Ausführung. Merge=Doku-selbst/App-Code wartet; Push-Zweig frei.
+- **`/maloja-blick`** (Sicht-Review des Gerenderten, WCAG 2.2), **Statistik-Ritual** (`docs/STATISTIK.md`, PR #38), **CFO-Gerüst** „Wie trägt sich Maloja?" (`docs/operations/tragfaehigkeit-cfo.md`, PR #43), Doku-Drift dev→GitHub-Flow (PR #40), Chip-Fix (PR #37), LOOPS+blick (PR #39).
+- **PII-BEREINIGUNG** (PR #44, squash): Vorname→„Stebler Studios", private Gmail+tote steblerstudios.ch→`info@malojaplana.ch`, Mac-User-Pfad gescrubbt, 7 Tester-Vornamen (inkl. Mutter)→„Testperson A–G", SFTP-Host/User/Pfad→gitignoriertes `.deploy.local`. **PII-Scan** `scripts/pii-scan.sh` als 🔴-Gate in `/maloja-predeploy`; CI-Variante = PR #45.
+- ⚠️ **Merge-Falle gelernt:** PR #42 nahm nur 1 von 4 Commits (PII blieb kurz live) → PR #44 nachgeholt. Regel: **„Squash and merge"** bei mehreren Commits.
 
 ## Verifikations-Status (das Wichtigste)
 
@@ -43,16 +47,22 @@
 
 ## Nächste Schritte
 
-1. **Runde 2026-07-11 mergen + deployen** — die 8 Feature-Branches (10 Commits) sind
-   reviewed + ready. Weg: PR je Branch → `main`, dann `bash deploy.sh` (Prod). ⚠️ Neu:
-   der **Deploy-Gate-Hook** blockt `bash deploy.sh` ohne frische `.maloja/predeploy-ok`-
-   Marke → vorher `/maloja-predeploy` in der interaktiven CLI (schreibt die Marke). Der
-   Hook wird erst nach `/hooks`-Reload/Neustart aktiv. `feat/pwa-cache-hash` liegt schon
-   auf Stage (Handy-Test „Zum Startbildschirm hinzufügen" offen).
-2. **Nach Prod-Deploy:** live gegen die neuen Bundle-Hashes verifizieren (die Runde ändert
-   App-Code: Führerausweis-Chunk, BetaGate, a11y-Tokens) → `FEATURES.md` = verified-live.
-3. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). #3 soft-auf-Karten ✅ gelöst
-   (`feat/a11y-soft-contrast`). rm-Gegenlese (Führerausweis + fr/it/rm generell).
+1. **⭐ ERSTER PUNKT NÄCHSTE SESSION (Sophie-Entscheid „unbedingt"): Git-Historie-Purge.**
+   Der Working Tree ist PII-sauber, aber die **Git-Historie** und **`docs/archive`**
+   enthalten weiter Alt-PII: Vorname, private Gmail, Tester-Namen — und heikle Persona-
+   Beispiele mit echtem Namen+Geburtsjahr+Kanton+Zivilstand („… geboren 1989, wohnhaft
+   Basel-Stadt, ledig, lebt alleine"). Wird zwar nie deployt (nur `dist/`), steht aber
+   öffentlich auf GitHub. **Fokussiert planen** (wie PII-Purge 2026-07-09): erst Working-
+   Tree-Archiv bereinigen, dann Historie umschreiben (`git filter-repo`), Force-Push,
+   alle Klone/offenen PRs beachten. Details: Memory [[feedback_no_owner_name_in_git]].
+2. **PR #45 (CI-PII-Scan) mergen** — dann fängt die CI private Daten bei jedem Push ab.
+   Optional Repo-Secret `PII_DENY` setzen (Namen etc.) für volle Abdeckung.
+3. **Offen bei Sophie:** `settings.json` `allow`-Zeile für Push-Freigabe
+   (`open -e .claude/settings.json`), und ggf. Prod-Deploy von `b3c940e` + live gegen
+   Bundle-Hash verifizieren (die meisten Änderungen sind Doku/Kommentare; App-relevant
+   nur Chip-Fix #37 + Führerausweis aus der Vorrunde).
+4. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). rm-Gegenlese
+   (Führerausweis + fr/it/rm generell). Nächste Ressort-Lücke: CFO-Kostenseite befüllen.
 
 ## Nicht anfassen (Leitplanken)
 
