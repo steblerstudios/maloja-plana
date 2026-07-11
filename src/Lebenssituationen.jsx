@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { getRegionaleVerguenstigungen } from './data/regionaleVerguenstigungen.js';
@@ -37,12 +37,28 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
   const [active, setActive] = useState(() => {
     try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); } catch { return []; }
   });
+  // Auf schmalen Bildschirmen erscheint das aufgedeckte Panel unterhalb aller Chips,
+  // ausserhalb des Sichtfelds. Beim Anwählen ruhig dorthin blicken (nur beim Aktivieren,
+  // nur auf dem Handy, Reduce-Motion respektiert) — sonst wirkt es, als passiere nichts.
+  const panelRefs = useRef({});
+  const [scrollTarget, setScrollTarget] = useState(null);
+  useEffect(() => {
+    if (!scrollTarget) return;
+    const el = panelRefs.current[scrollTarget];
+    setScrollTarget(null);
+    if (!el || window.innerWidth > 700) return;
+    const reduce = localStorage.getItem('or5_reducemotion') === '1'
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }, [scrollTarget]);
   const toggle = (key) => {
+    const turningOn = !active.includes(key);
     setActive((prev) => {
       const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
       try { localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* localStorage nicht verfügbar */ }
       return next;
     });
+    if (turningOn) setScrollTarget(key);
   };
 
   // Externe ↗-Karte (gleicher Stil wie die Berechtigungs-Karten), für regionale Angebote.
@@ -108,7 +124,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
           onClick: () => toggle(z.key),
           'aria-pressed': on,
           style: {
-            padding: '8px 14px', borderRadius: radius.pill || radius.md,
+            padding: '12px 14px', borderRadius: radius.pill || radius.md,
             border: '1px solid ' + (on ? palette.sage + '88' : palette.border + '66'),
             background: on ? palette.sage + '18' : 'transparent',
             color: on ? (palette.sageDeep || palette.text) : palette.mid,
@@ -124,9 +140,11 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     LEBENSZUSTAENDE.filter((z) => active.includes(z.key)).map((z) =>
       React.createElement('div', {
         key: z.key,
+        ref: (el) => { panelRefs.current[z.key] = el; },
         style: {
           marginTop: space.sm, padding: '16px 18px',
           background: palette.up, borderRadius: radius.md,
+          scrollMarginTop: '72px',
         }
       },
         React.createElement('p', {
