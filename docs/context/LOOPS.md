@@ -3,7 +3,7 @@
 > Stand: Juli 2026
 > Ergänzt: AGENT_MANIFEST.md, CLAUDE_WORKFLOW.md, GOVERNANCE_LEVELS.md
 
-Dieses Dokument beschreibt die wiederkehrenden Abläufe („Loops"), mit denen an Maloja gearbeitet und geprüft wird. Alle folgen der Maloja-Governance: **read-only/advisory by default, keine autonome Zustandsänderung, keine Agent-Kaskaden, Sophie entscheidet.** Kein Loop deployt oder committet ohne ausdrückliches Wort.
+Dieses Dokument beschreibt die wiederkehrenden Abläufe („Loops"), mit denen an Maloja gearbeitet und geprüft wird. Alle folgen der Maloja-Governance: **read-only/advisory by default, keine autonome Zustandsänderung, keine Agent-Kaskaden, die Inhaberin entscheidet.** Kein Loop deployt oder committet ohne ausdrückliches Wort.
 
 ---
 
@@ -29,7 +29,7 @@ Manuell aufrufbar über den Agent-/Task-Mechanismus, oder gebündelt via `/maloj
 
 ## 2. Manuelle Loops (Slash-Commands)
 
-`.claude/commands/*.md` — Abläufe, die **Sophie/Claude bewusst startet**. Kein Zeitplan, keine versteckte Automatik.
+`.claude/commands/*.md` — Abläufe, die **die Inhaberin/Claude bewusst startet**. Kein Zeitplan, keine versteckte Automatik.
 
 | Command | Zweck | Governance-Level |
 |---|---|---|
@@ -42,7 +42,7 @@ Manuell aufrufbar über den Agent-/Task-Mechanismus, oder gebündelt via `/maloj
 | `/maloja-release` | Ruhiger Release-Ablauf: verifiziert, committet, pusht, erstellt den PR nach `main`. Deployt NICHT. | 3 (nur auf Wort) |
 | `/braindump` | Rohen Ideen-Dump strukturieren/triagieren → datierter Block an docs/TODO.md. | 0–1 |
 
-Deploy selbst bleibt manuell: `bash deploy.sh` (SFTP → Infomaniak), von Sophies Mac, bei ~10+ Commits über LIVE.
+Deploy selbst bleibt manuell: `bash deploy.sh` (SFTP → Infomaniak), vom Mac der Inhaberin, bei ~10+ Commits über LIVE.
 
 ---
 
@@ -58,13 +58,13 @@ Kein Hintergrundprozess: schliesst die Sitzung, endet der Loop. Passt zur Govern
 
 ## 4. Geplante Loops (Cloud-Cron / `/schedule`) — bewusst zurückhaltend
 
-`/schedule` bzw. Routinen können Loops **ohne offene Sitzung** auf Zeitplan laufen lassen. Das steht in Spannung zu Malojas Werten „no hidden automation" und „Sophie entscheidet". Regeln, falls überhaupt genutzt:
+`/schedule` bzw. Routinen können Loops **ohne offene Sitzung** auf Zeitplan laufen lassen. Das steht in Spannung zu Malojas Werten „no hidden automation" und „die Inhaberin entscheidet". Regeln, falls überhaupt genutzt:
 
 - **Nur read-only Berichte** (Level 0–1): z.B. wöchentlicher `/maloja-check`- oder Link-Check-Report, der Funde meldet.
-- **Nie autonom committen/deployen/Daten ändern** (Level 3+ ist Sophies Hand).
+- **Nie autonom committen/deployen/Daten ändern** (Level 3+ liegt bei der Inhaberin).
 - Jeder geplante Lauf muss sichtbar/abschaltbar sein — keine stille Automatik.
 
-Empfehlung: Als Standard **kein** geplanter Cron. Erst einrichten, wenn ein konkreter read-only Nutzen da ist und Sophie ihn ausdrücklich will.
+Empfehlung: Als Standard **kein** geplanter Cron. Erst einrichten, wenn ein konkreter read-only Nutzen da ist und die Inhaberin ihn ausdrücklich will.
 
 ---
 
@@ -74,4 +74,4 @@ Empfehlung: Als Standard **kein** geplanter Cron. Erst einrichten, wenn ein konk
 2. `/maloja-check` — schnelles Gate.
 3. `/maloja-review` — vor grösseren Deploys oder bei Design/Fachdaten-Änderungen.
 4. `/maloja-predeploy` — wenn ~10+ Commits zusammengekommen sind.
-5. `/code-review ultra` (von Sophie ausgelöst, billed) → `bash deploy.sh` → LIVE verifizieren → Memory aktualisieren.
+5. `/code-review ultra` (von der Inhaberin ausgelöst, billed) → `bash deploy.sh` → LIVE verifizieren → Memory aktualisieren.

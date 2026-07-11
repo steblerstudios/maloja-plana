@@ -27,7 +27,7 @@ Legende: ✅ Feld vorhanden · 🟡 nur teilweise / nur als Dokument · 🔴 Lü
 | Punkt | Maloja | Status |
 |---|---|---|
 | Grundversicherung | `kkInsurer/kkModel/kkPremium/franchise/kkCardNumber` | ✅ |
-| **Zusatzversicherung** | — kein KK-Zusatz-Feld | 🔴 **(deckt sich mit Sophies Zusatz-Wunsch)** |
+| **Zusatzversicherung** | — kein KK-Zusatz-Feld | 🔴 **(deckt sich mit der Inhaberin Zusatz-Wunsch)** |
 | Taggeldversicherung | `versicherungen.ktg` | ✅ |
 
 ## Sachversicherungspolicen

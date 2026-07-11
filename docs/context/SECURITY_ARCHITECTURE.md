@@ -1,6 +1,6 @@
 # Security Architecture — Login, API, Verschlüsselung
 
-> **Status: ENTWURF.** Zur gemeinsamen Prüfung mit Sophie. Beschreibt das *Zielbild*
+> **Status: ENTWURF.** Zur gemeinsamen Prüfung mit der Inhaberin. Beschreibt das *Zielbild*
 > für den Tag, an dem Maloja ein optionales Konto/Backend bekommt. Es wird nichts
 > davon gebaut, bevor die offenen Entscheidungen (Abschnitt 9) getroffen sind.
 > Heute ist die App local-first ohne Backend — dieses Dokument ist der Plan, damit
@@ -174,7 +174,7 @@ Das muss die UX ruhig und ehrlich kommunizieren, ohne Angst zu machen.
 
 ## 9. Entscheidungen (Stand 2026-07-07, Session #28)
 
-**Getroffen (gemeinsam mit Sophie):**
+**Getroffen (gemeinsam mit der Inhaberin):**
 
 1. **Auth-Priorität — ENTSCHIEDEN:** Passkeys/WebAuthn primär, **SwissID als
    gleichwertige Option**, Passwort+2FA nur als Fallback für Geräte ohne Passkey.
