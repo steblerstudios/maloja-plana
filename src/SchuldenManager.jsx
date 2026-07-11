@@ -115,7 +115,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   const buttonStyle = {
     padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
     background: palette.sand,
-    color: '#fff',
+    color: palette.onSand,
     border: 'none',
     borderRadius: radius.sm,
     cursor: 'pointer',
@@ -203,7 +203,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         prioritized.map((d, idx) => {
           const tierLabel = d.tier === 1 ? t('schulden.tier1') : d.tier === 2 ? t('schulden.tier2') : t('schulden.tier3');
           const tierReason = d.tier === 1 ? t('schulden.tier1Reason') : d.tier === 2 ? t('schulden.tier2Reason') : t('schulden.tier3Reason');
-          const tierColor = d.tier === 1 ? palette.roseDeep : d.tier === 2 ? palette.gold : palette.mid;
+          const tierColor = d.tier === 1 ? palette.roseDeep : d.tier === 2 ? palette.goldDeep : palette.mid;
           return React.createElement('div', { key: d.id || idx, style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginBottom: space.sm, border: '1px solid ' + palette.border } },
             React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.sm, marginBottom: '4px' } },
               React.createElement('span', { style: { fontWeight: weight.semi } }, (idx + 1) + '. ' + (d.creditor || '—')),

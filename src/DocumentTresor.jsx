@@ -197,11 +197,11 @@ export const DocumentTresor = ({
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
-          style: { padding: '10px 12px', background: palette.sky, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.sky, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '○'),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
-          style: { padding: '10px 12px', background: palette.rose, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.roseBtn, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '✕'),
       ),
     );
@@ -251,7 +251,7 @@ export const DocumentTresor = ({
       React.createElement('div', {
         style: { padding: '10px', background: palette.up, borderRadius: radius.sm, textAlign: 'center', border: '2px solid ' + palette.border },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.gold } }, stats.expiring),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.goldDeep } }, stats.expiring),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.expiringSoon')),
       ),
       React.createElement('button', {
@@ -264,7 +264,7 @@ export const DocumentTresor = ({
           borderColor: showArchive ? palette.rose : palette.border,
         },
       },
-        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.rose } }, stats.archived),
+        React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.roseDeep } }, stats.archived),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('tresor.archive')),
       ),
     ),

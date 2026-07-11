@@ -322,7 +322,7 @@ export function generateLebensmappe(data, chapters, t, documents) {
       margin: 24px auto 0;
       padding: 10px 24px;
       background: #B8956A;
-      color: #fff;
+      color: #2A2620;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -579,7 +579,7 @@ export function generateNotfallDossier(data, chapters, t) {
       margin: 24px auto 0;
       padding: 10px 24px;
       background: #B8956A;
-      color: #fff;
+      color: #2A2620;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -985,7 +985,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       margin: 24px auto 0;
       padding: 10px 24px;
       background: #B8956A;
-      color: #fff;
+      color: #2A2620;
       border: none;
       border-radius: 6px;
       cursor: pointer;

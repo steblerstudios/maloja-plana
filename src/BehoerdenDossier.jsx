@@ -147,7 +147,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         onClick: handleExportJSON,
         style: {
           flex: 1, padding: '12px',
-          background: palette.sage, color: '#fff', border: 'none',
+          background: palette.sageBtn, color: '#fff', border: 'none',
           borderRadius: radius.sm, cursor: 'pointer',
           fontSize: text.sm, fontWeight: weight.medium, fontFamily: 'inherit',
           letterSpacing: '0.2px',

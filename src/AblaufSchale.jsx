@@ -19,7 +19,7 @@ const styles = (palette) => ({
   link: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm + 'px' },
   primaryBtn: { background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', padding: '10px 16px', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.semi, borderRadius: radius.sm, marginTop: space.sm + 'px' },
   done: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px' },
-  warn: { fontSize: text.sm, color: palette.gold, marginTop: space.xs + 'px' },
+  warn: { fontSize: text.sm, color: palette.goldDeep, marginTop: space.xs + 'px' },
   note: { fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
   footer: { fontSize: text.xs, color: palette.soft, marginTop: space.xl + 'px', lineHeight: leading.normal },
 });
