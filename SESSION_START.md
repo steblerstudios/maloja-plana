@@ -13,46 +13,46 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (PR #22 gemergt) |
-| `main` steht auf | `8b6727b` — Merge PR #22 (session-start-sync); **App-Code seit `0ebb865` unverändert** |
-| Version (package.json) | `0.1.24-beta` |
+| Aktueller Branch | `main` |
+| `main` steht auf | `717a389` — Merge PR #35 (a11y-contrast-sweep); Runde 2026-07-11 komplett |
+| Version (package.json) | `0.1.24-beta` (kein Bump für die Runde — offen, s.u.) |
 | Letzter Tag | `v0.1.24-beta` |
-| **Runde 2026-07-11** | **10 Commits auf 8 Feature-Branches, reviewed (inkl. `ultrareview`), NICHT gemergt/deployt** |
+| **Live** | `index-d1dacdf3.js` — byte-genau = main-Build, verifiziert 2026-07-11 |
 
-**Offene Runde (Branches über `main`, alle gepusht):** `feat/pwa-cache-hash` (2 — PWA-Cache an Bundle-Hash + Home-Screen-Name/Icon), `feat/betacode-hash` (Beta-Code als SHA-256, raus aus Public-Repo), `feat/wartungsseite` (2 — ruhige Wartungsseite statt Apache-404), `feat/a11y-rose-text` (rose→roseDeep AA), `feat/a11y-labels` (Haushalt role=group), `feat/fuehrerausweis` (Führerschein-Ablauf, ch.ch/ASTRA, 5 Spr.), `feat/a11y-soft-contrast` (soft→#64676E AA auf Karten), `chore/deploy-gate` (Doku Prod-Review-Ring + gitignore). **Reviews grün** (code/security/a11y/design + ultra). ⚠️ `feat/fuehrerausweis` rm = Best-Effort → Gegenlese. Wegwerf-Branch `integration/round-2026-07-11` (Parallel-Session-Testmerge, `b7b1daa`) nach den echten PRs löschen.
+**Runde 2026-07-11 GEMERGT + LIVE** (PR #23–#35, alle Feature-Branches gelöscht). Was live ging: PWA-Cache an Bundle-Hash + Home-Screen-Name „Maloja Plana" + iOS-Icon (#23); Beta-Code als SHA-256 (#24); ruhige Wartungsseite (#25); a11y rose→roseDeep (#26), Haushalt role=group (#27), Führerausweis-Ablauf ch.ch/ASTRA 5 Spr. (#28), soft→#64676E (#29); Deploy-Gate-Doku (#30); Session-Close-/Backlog-Doku (#31/#32); **blick-situationen** ehrlicher Speicher-Satz + 44px-Chips + Panel-Scroll (#33); **Feedback-Mail** vorbefüllt (Version/Ansicht/Sprache) + Bugfix-Ablauf-Doku (#34); **a11y-Kontrast-Sweep** goldDeep/roseDeep/onSand/sageBtn/roseBtn + theme-abhängiger Fokusring `--mp-focus` (#35). ⚠️ `feat/fuehrerausweis` rm = Best-Effort → Gegenlese.
 
 ## Verifikations-Status (das Wichtigste)
 
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live-verifiziert:** App-Bundle `index-1fb26e10.js` (a11y-Pass 3) ist byte-genau
-  live — curl auf malojaplana.ch = frischer main-Build (geprüft 2026-07-10).
-  `main` steht seither auf `8e0d15e`; die Commits nach `0ebb865` (PR #20 Stage-Umgebung
-  = `deploy.sh`, Leitplanken = docs, PR #21 = ci/deploy/docs/vite + `.claude/skills`)
-  ändern **keinen App-Code** → das live ausgelieferte Bundle ist unverändert. Der
-  Bundle-Hash von `8e0d15e` selbst wurde noch nicht neu gegen live geprüft (kein
-  App-Deploy nötig).
-  - Falle dabei aufgedeckt: erster Deploy nach dem Merge war noch der alte Build
-    (`index-8dc0e122.js`); Sophie musste neu bauen + `deploy.sh`. Nach jedem Merge
-    prüfen, dass `deploy.sh` wirklich frisch baut.
+- **Live-verifiziert (2026-07-11):** App-Bundle `index-d1dacdf3.js` ist byte-genau
+  live — curl auf malojaplana.ch == frischer main-Build (717a389); Vite-Content-Hash
+  identisch. Auch live bestätigt: SW-Cache heisst jetzt `maloja-plana-d1dacdf3` (kein
+  statisches `v9` mehr → self-invalidierend an den Bundle-Hash gekoppelt), Manifest
+  `short_name` = „Maloja Plana". Die ganze Runde 2026-07-11 ist damit `verified-live`.
+- **PWA-Namen/Icon-Falle (gelöst):** der alte `v9`-Service-Worker hatte eine veraltete
+  `index.html` gecacht und lieferte sie weiter → iOS las beim „Zum Startbildschirm"
+  den langen Titel + kein Icon. Jetzt behoben (bundle-hash-SW + skipWaiting/clients.claim
+  live). ⚠️ Auf schon-installierten Geräten hält iOS Name/Icon fest: **altes Home-Screen-
+  Icon löschen + neu hinzufügen** (ggf. Safari-Website-Daten für malojaplana.ch leeren).
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
   Ablauf `feat/…` → `deploy.sh --stage` → PR→main → `deploy.sh`; Qualitäts-Ring je
-  Schicht (`DEV_WORKFLOW.md`). `/session-close` schliesst Sitzungen ab. Kapitalbezugs-
-  steuer (`e4fe262`) ist in `main` und live.
+  Schicht (`DEV_WORKFLOW.md`). Deploy-Gate-Hook (Marke `.maloja/predeploy-ok`) ist live
+  im Einsatz — dieser Deploy lief korrekt durch ihn. `/session-close` schliesst ab.
 
 ## Nächste Schritte
 
-1. **Runde 2026-07-11 mergen + deployen** — die 8 Feature-Branches (10 Commits) sind
-   reviewed + ready. Weg: PR je Branch → `main`, dann `bash deploy.sh` (Prod). ⚠️ Neu:
-   der **Deploy-Gate-Hook** blockt `bash deploy.sh` ohne frische `.maloja/predeploy-ok`-
-   Marke → vorher `/maloja-predeploy` in der interaktiven CLI (schreibt die Marke). Der
-   Hook wird erst nach `/hooks`-Reload/Neustart aktiv. `feat/pwa-cache-hash` liegt schon
-   auf Stage (Handy-Test „Zum Startbildschirm hinzufügen" offen).
-2. **Nach Prod-Deploy:** live gegen die neuen Bundle-Hashes verifizieren (die Runde ändert
-   App-Code: Führerausweis-Chunk, BetaGate, a11y-Tokens) → `FEATURES.md` = verified-live.
-3. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). #3 soft-auf-Karten ✅ gelöst
-   (`feat/a11y-soft-contrast`). rm-Gegenlese (Führerausweis + fr/it/rm generell).
+1. **PWA-Handy-Test (Sophie, am Gerät):** altes Maloja-Home-Screen-Icon löschen → Seite
+   neu laden → neu „Zum Startbildschirm" → prüfen, dass „Maloja Plana" + M-Icon erscheinen.
+2. **Version-Bump nachholen:** die Runde ging ohne `package.json`-Bump live (steht noch
+   `0.1.24-beta`). Beim nächsten Release-Schritt nachziehen (Schema `0.1.x-beta`) + Tag.
+3. **Offene ⚠️ (nicht-blockierend, aus dem Deploy-Gate):** sage-als-Text → sageDeep;
+   Label-`htmlFor`-Kopplung; 36px-Touch-Ziele → 44; behoerdendossier-Fehlverweis;
+   Begriff „Dokumenten-Tresor" vereinheitlichen; FR/IT-Maskulinum; wartung.html-Feinschliff
+   (FR/IT/EN + lang-Attribute + Tokens/Fonts); optional 180×180 apple-touch-icon ohne
+   eingebackene Rundung. rm-Gegenlese (Führerausweis + fr/it/rm generell).
+4. Danach: TODOs/IDEEN (`docs/TODO.md`, `docs/IDEEN.md`) + Braindump-Queue.
 
 ## Nicht anfassen (Leitplanken)
 
@@ -76,3 +76,7 @@
 - Parallel-Sitzung im selben Working Tree: eigenen Branch ab `main` nehmen (nicht nur
   eigene Dateien stagen — Datei-Isolation ≠ Branch-Isolation; teuer gelernt bei PR #19).
 - Onboarding-Bypass zum Testen: `or5_onboarding_done` / `or5_lang` / `or5_tour_done` = true.
+- PWA-Name/Icon: iOS liest sie beim „Zum Startbildschirm" einmalig aus der (evtl. per
+  Service-Worker gecachten) Seite und aktualisiert sie nie von selbst → nach relevanten
+  Deploys altes Icon löschen + neu hinzufügen. SW-Cache ist seit `#23` an den Bundle-Hash
+  gekoppelt (self-invalidierend) — reine `public/`-only-Deploys ändern den Entry-Hash u.U. nicht.

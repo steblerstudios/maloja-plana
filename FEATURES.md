@@ -13,13 +13,14 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-07-10 · **Live-verifiziert: App-Bundle `index-1fb26e10.js`** (curl auf malojaplana.ch == frischer main-Build; Vite-Content-Hash identisch = byte-genau). `main` steht auf `8e0d15e` (Merge PR #21); die Commits nach `0ebb865` (Stage-Deploy-Skript, Leitplanken, PR #21 = ci/deploy/docs/vite + `.claude/skills`) ändern **keinen App-Code** → dasselbe Bundle bleibt live.
+**Stand:** 2026-07-11 · **Live-verifiziert: App-Bundle `index-d1dacdf3.js`** (curl auf malojaplana.ch == frischer main-Build `717a389`; Vite-Content-Hash identisch = byte-genau; SW-Cache live `maloja-plana-d1dacdf3`, Manifest `short_name` „Maloja Plana"). `main` steht auf `717a389` (Merge PR #35).
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
-| a11y-Pass 3 (PR #19): Tresor-Labels, goldDeep-Token, Onboarding Zurück/Skip/Fortschritt, Arztkoffer-Kontrast, Rechner-Reiter-Scroll, roseDeep-Fix, Torten-SVG aria-hidden | `verified-live` | `0ebb865` (Merge PR #19) | Live-Hash `index-1fb26e10.js` == main-Build (2026-07-10) |
+| Runde 2026-07-11 (PR #23–#35): PWA-Cache-Hash-SW + Home-Screen-Name/Icon, Beta-Code-SHA256, Wartungsseite, Führerausweis-Ablauf, blick-situationen (Speicher-Satz/44px/Panel-Scroll), Feedback-Mail vorbefüllt + Bugfix-Doku, a11y-Kontrast-Sweep (goldDeep/roseDeep/onSand/sageBtn/roseBtn/`--mp-focus`) | `verified-live` | `717a389` | Live-Hash `index-d1dacdf3.js` == main-Build; 611 Tests grün, Size 64.21/65 kB (2026-07-11) |
 | Release `0.1.24-beta` (Gepäck-Kür, a11y-Review, Linkshänder-Modus u.a.) | `verified-live` | `v0.1.24-beta` | in `main`/live enthalten, Hash bestätigt |
-| Kapitalbezugssteuer (Bund Art.38 DBG ÷5 + Kanton) | `verified-live` | `e4fe262` | in `main` (Vorfahr von `0ebb865`) = Teil des Live-Builds `index-1fb26e10.js`; 535 Tests grün, browserverif |
+
+> ⚠️ Runde 2026-07-11 ging **ohne Version-Bump** live (noch `0.1.24-beta`) → beim nächsten Release nachziehen. Offene ⚠️ (nicht-blockierend) siehe `SESSION_START.md` → Nächste Schritte.
 
 ## Wie pflegen
 
