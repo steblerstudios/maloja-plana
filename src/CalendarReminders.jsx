@@ -464,6 +464,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
       React.createElement('textarea', {
         value: newNotes, onChange: (e) => setNewNotes(e.target.value),
         placeholder: t('common.optional') + '...',
+        'aria-label': t('calendar.noteLabel'),
         style: { ...inputStyle, minHeight: '60px', resize: 'vertical' }
       }),
 
