@@ -21,7 +21,7 @@
 | **3 offene PRs (2026-07-12)** | **#47 Mammografie-Geografie · #48 SEO robots-Fix · #49 a11y-Feld-Labels — reviewed lokal (611 Tests grün), NICHT gemergt/deployt** |
 | **Runde 2026-07-11** | **✅ GEMERGT (PRs #37–#44): Führerausweis, Wartungsseite, BetaGate-Hash, Linkshänder, a11y-Sweep, PWA-Cache — alle in `main`** |
 
-**⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: `sophie.stebler@gmail.com` + `sophie@stebler.ch` raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
+**⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
 ## Verifikations-Status (das Wichtigste)
 
@@ -45,15 +45,15 @@
    vorher `/maloja-predeploy`). #47 ändert App-Bundle (Mammografie-Geo) → danach live
    gegen neuen Bundle-Hash verifizieren; #48 (robots.txt) + #49 (a11y-Labels) auch.
    Der heutige `548530a` (nur Meta/Docs) läuft beim Deploy mit.
-2. **GitHub-Support-Ticket** (Sophie, Account-Aktion): nach dem Historie-Purge die
+2. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
    gecachten Commits + `refs/pull/*/head` entfernen lassen (Formular
    support.github.com/contact/private-information). Ein normaler `git clone` ist sauber;
    die PR-Refs tragen die Alt-Gmail noch. Force-push erreicht sie nicht.
-3. **Design-Vision (Diskussion, kein Build) — Reihenfolge Sophie gewählt: erst §3, dann §2:**
+3. **Design-Vision (Diskussion, kein Build) — gewählte Reihenfolge: erst §3, dann §2:**
    §3 Schnellchecks als Instrumente (Prototyp mit *einem* Check), §2 Obstgarten vs. ein
    Baum (Lean: beim einen Baum bleiben). Siehe `docs/IDEEN.md` „Nächste Schritte".
 4. **`docs/archive` Namen-PII** (offen): Persona-Beispiele mit echtem Namen/Geburtsjahr —
-   der Purge ersetzte nur Mail-Strings, nicht Fliesstext. Separater Schritt auf Sophies Wort.
+   der Purge ersetzte nur Mail-Strings, nicht Fliesstext. Separater Schritt auf ausdrückliche Freigabe.
 5. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). rm-Gegenlese (Führerausweis
    + fr/it/rm generell).
 
