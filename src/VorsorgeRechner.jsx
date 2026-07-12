@@ -9,6 +9,7 @@ import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
+import { useIsMobile } from './hooks/useIsMobile.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -24,6 +25,7 @@ function currentAge(dateStr) {
 }
 
 export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) => {
+  const isMobile = useIsMobile();
   const birthYear = parseYear(data.basis?.dateOfBirth);
   const alter = currentAge(data.basis?.dateOfBirth);
 
@@ -194,7 +196,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
-    checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
+    checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) },
     intlDetails: { marginTop: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border + '88', borderRadius: radius.sm + 'px', padding: space.sm + 'px ' + space.md + 'px' },
     intlSummary: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, cursor: 'pointer' },
     intlIntro: { fontSize: text.xs, color: palette.mid, lineHeight: 1.6, margin: space.sm + 'px 0' },
