@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /assets/
+
+# /assets/ (JS/CSS-Bundle) bewusst NICHT gesperrt: die App wird clientseitig
+# gerendert — Googlebot muss das Bundle laden dürfen, sonst sieht es nur die
+# statische Hülle und verwirft die mehrsprachigen Inhalte/hreflang.
 
 Sitemap: https://malojaplana.ch/sitemap.xml
