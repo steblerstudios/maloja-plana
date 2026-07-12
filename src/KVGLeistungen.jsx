@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
@@ -81,7 +81,7 @@ const CatButton = ({ active, label, onClick, palette }) =>
 // ─── Katalog Tab ───────────────────────────────────────────
 // Eine Katalog-Zeile (Faden 3-II/1c): kein Box-pro-Eintrag mehr, sondern ruhiger
 // Lese-Rhythmus — Raum + feine Trennlinie. Status rechts, Inhalt links.
-const KatalogRow = ({ palette, t, item, isLast }) => {
+const KatalogRow = ({ palette, t, item, isLast, canton }) => {
   // Faden 3-II/3 (Layout 3/3): die reiche WHO/EU-Empfehlung startet eingeklappt;
   // nur auf Wunsch öffnen (Info-Button-Prinzip, ruhige Grunddichte).
   const [open, setOpen] = React.useState(false);
@@ -201,6 +201,31 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
                   )
                 );
               })()
+            ),
+            // Faden 3-II/3: geografische Programm-Realität — ruhige Orientierung, nur
+            // Mammografie. Belegte „ohne Programm"-Liste (datengetrieben) + Live-Link,
+            // da sich der Stand ändert. Personalisiert, wenn der Wohnkanton bekannt ist.
+            item.key === 'mammografie' && React.createElement('div', {
+              style: { marginTop: '8px', paddingTop: '8px', borderTop: '1px solid ' + palette.border }
+            },
+              React.createElement('div', {
+                style: { fontWeight: weight.semi, color: palette.text, marginBottom: '3px' }
+              }, t('kvg.mammoGeoTitle')),
+              React.createElement('div', { style: { color: palette.mid } }, t('kvg.mammoGeoNote')),
+              MAMMO_KANTONE_OHNE_PROGRAMM.includes(canton) && React.createElement('div', {
+                style: { marginTop: '4px', color: palette.text, fontWeight: weight.medium }
+              }, t('kvg.mammoGeoYourCantonNo', { canton })),
+              React.createElement('div', { style: { marginTop: '4px', color: palette.mid } },
+                t('kvg.mammoGeoOhne', { stand: MAMMO_GEO_STAND }) + ' ' + MAMMO_KANTONE_OHNE_PROGRAMM.join(', ')),
+              React.createElement('div', { style: { marginTop: '2px', color: palette.mid } }, t('kvg.mammoGeoWandel')),
+              React.createElement('div', { style: { marginTop: '4px', color: palette.soft } }, t('kvg.mammoGeoTardoc')),
+              React.createElement('div', { style: { marginTop: '4px', color: palette.soft } },
+                t('kvg.mammoGeoCheck') + ' ',
+                React.createElement('a', {
+                  href: MAMMO_GEO_URL, target: '_blank', rel: 'noopener noreferrer',
+                  style: { color: palette.sandDeep, textDecoration: 'underline' }
+                }, t('kvg.mammoGeoLinkLabel'))
+              )
             )
           ),
           // „Was genau gedeckt ist" — N belegbare Detail-Zeilen + Quelle
@@ -228,7 +253,7 @@ const KatalogRow = ({ palette, t, item, isLast }) => {
   );
 };
 
-const KatalogTab = ({ palette, t, filterCat }) => {
+const KatalogTab = ({ palette, t, filterCat, canton }) => {
   // Editoriale Gruppierung: in der „Alle"-Ansicht nach Kategorie mit ruhigen
   // Überschriften als Landmarken; bei aktivem Filter eine einzelne Gruppe ohne
   // Überschrift (der Chip zeigt die Kategorie bereits an).
@@ -271,7 +296,7 @@ const KatalogTab = ({ palette, t, filterCat }) => {
         }, t('kvg.cat' + cat.charAt(0).toUpperCase() + cat.slice(1))),
         catItems.map((item, idx) =>
           React.createElement(KatalogRow, {
-            key: item.key, palette, t, item, isLast: idx === catItems.length - 1,
+            key: item.key, palette, t, item, isLast: idx === catItems.length - 1, canton,
           })
         )
       );
@@ -917,7 +942,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
           React.createElement(CatButton, { key: cat, active: filterCat === cat, label: catLabels[cat], onClick: () => setFilterCat(cat), palette })
         )
       ),
-      React.createElement(KatalogTab, { palette, t, filterCat })
+      React.createElement(KatalogTab, { palette, t, filterCat, canton: data.basis?.canton || '' })
     ),
 
     tab === 'franchise' && React.createElement(FranchiseTab, { palette, t, data, onUpdateData, onNavigate }),
