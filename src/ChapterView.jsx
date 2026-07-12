@@ -12,6 +12,7 @@ import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, prue
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
+import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
@@ -1430,23 +1431,26 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Fields Tab
     expandedSection === 'fields' && React.createElement('div', null,
       // Sticky Themen-Reiter — springt zu den Sektionen, hebt die aktuelle hervor.
-      sectionTabs.length >= 2 && React.createElement('div', {
+      sectionTabs.length >= 2 && React.createElement(ScrollFadeStrip, {
+        palette,
         role: 'tablist',
         'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
-        style: {
+        containerStyle: {
           // top: -24px gleicht das padding-top:24px des Scroll-Containers (#mp-main) aus,
           // damit der Reiter beim Kleben bündig unter dem „100% lokal"-Streifen sitzt.
           // Sonst bleibt ein 24px-Spalt, durch den der scrollende Text durchscheint.
           position: 'sticky', top: '-24px', zIndex: 5,
+          marginBottom: space.md + 'px',
+          background: palette.surface,
+          borderBottom: '1px solid ' + palette.border + '55',
+        },
+        style: {
           // Einzeilig + horizontal scrollbar statt Umbruch: spart Sticky-Höhe bei
           // vielen Sektionen; die Leiste bleibt ruhig, statt zwei Reihen zu füllen.
           display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px',
           overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
           padding: space.sm + 'px 0',
-          marginBottom: space.md + 'px',
-          background: palette.surface,
-          borderBottom: '1px solid ' + palette.border + '55',
         },
       },
         sectionTabs.map((s) => {
