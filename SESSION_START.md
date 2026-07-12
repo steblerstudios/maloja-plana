@@ -14,12 +14,12 @@
 | | |
 |---|---|
 | Aktueller Branch | `main` (Historie 2026-07-11 umgeschrieben) |
-| `main` steht auf | `14d4196` — docs(session-start) nach Historie-Purge |
+| `main` steht auf | `18df05b` — Merge PR #53 (Runde 2026-07-12 komplett gemergt) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-d1dacdf3.js` (Stand vor den 3 offenen PRs) |
-| **3 offene PRs (2026-07-12)** | **#47 Mammografie-Geografie · #48 SEO robots-Fix · #49 a11y-Feld-Labels — reviewed lokal (611 Tests grün), NICHT gemergt/deployt** |
-| **Runde 2026-07-11** | **✅ GEMERGT (PRs #37–#44): Führerausweis, Wartungsseite, BetaGate-Hash, Linkshänder, a11y-Sweep, PWA-Cache — alle in `main`** |
+| Live (malojaplana.ch) | Bundle `index-d1dacdf3.js` (Stand VOR der Runde 2026-07-12) |
+| **Runde 2026-07-12** | **✅ GEMERGT (PRs #47–#55): Mammografie-Geo, SEO-robots, a11y-Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, Banner-/44px-Tap-Targets, Mammografie-Fakten-Fix, PII-Scrub — alle in `main`** |
+| **Deploy-Gate** | **✅ GRÜN für `18df05b`: Tests 611, PII-Scan Exit 0, 0 🔴 → Freigabe-Marke gesetzt, `bash deploy.sh` frei. NOCH NICHT deployt (neuer Build `index-ed070bd9.js`).** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -28,9 +28,11 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live:** Bundle `index-d1dacdf3.js` läuft auf malojaplana.ch (Runde 2026-07-11 ist
-  deployt). `main` = `548530a`; der letzte Commit ändert nur Docs + Meta-Tag, kein Bundle
-  → live-Bundle unverändert, Deploy nicht dringend.
+- **Live:** Bundle `index-d1dacdf3.js` läuft auf malojaplana.ch (Stand VOR der Runde
+  2026-07-12). `main` = `18df05b`; die Runde 2026-07-12 ändert App-Code (neuer Build
+  `index-ed070bd9.js`) und ist **gebaut + in `main`, aber NOCH NICHT deployt**. Deploy-Gate
+  grün (Tests 611, PII-Scan Exit 0, 0 🔴), Freigabe-Marke für `18df05b` gesetzt → nächster
+  Schritt `bash deploy.sh`, dann live gegen den neuen Bundle-Hash gegenprüfen.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
@@ -40,15 +42,17 @@
 
 ## Nächste Schritte
 
-1. **3 offene PRs reviewen + mergen + deployen** (#47/#48/#49). Weg: je PR → `main`,
-   dann `bash deploy.sh` (Deploy-Gate-Hook blockt ohne frische `.maloja/predeploy-ok` →
-   vorher `/maloja-predeploy`). #47 ändert App-Bundle (Mammografie-Geo) → danach live
-   gegen neuen Bundle-Hash verifizieren; #48 (robots.txt) + #49 (a11y-Labels) auch.
-   Der heutige `548530a` (nur Meta/Docs) läuft beim Deploy mit.
+1. **Deployen** — Runde 2026-07-12 ist gemergt + Deploy-Gate grün (Freigabe-Marke für
+   `18df05b` gesetzt). `bash deploy.sh` von `main`; danach live gegen `index-ed070bd9.js`
+   gegenprüfen → `FEATURES.md` auf `verified-live`, neuen LIVE-Commit hier + in Memory
+   festhalten. (Deploy-Gate-Hook blockt ohne frische `.maloja/predeploy-ok` → bei weiteren
+   Commits vorher `/maloja-predeploy`.)
 2. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
    gecachten Commits + `refs/pull/*/head` entfernen lassen (Formular
    support.github.com/contact/private-information). Ein normaler `git clone` ist sauber;
-   die PR-Refs tragen die Alt-Gmail noch. Force-push erreicht sie nicht.
+   die PR-Refs tragen die Alt-Gmail noch. Force-push erreicht sie nicht. **Zusätzlich:** die
+   zwei privaten Alt-Mails standen kurz in `SESSION_START.md` (Commit `14d4196`, per PR #54
+   bereinigt) → im selben Ticket den Cache dafür mit entfernen lassen.
 3. **Design-Vision (Diskussion, kein Build) — gewählte Reihenfolge: erst §3, dann §2:**
    §3 Schnellchecks als Instrumente (Prototyp mit *einem* Check), §2 Obstgarten vs. ein
    Baum (Lean: beim einen Baum bleiben). Siehe `docs/IDEEN.md` „Nächste Schritte".
