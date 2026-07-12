@@ -57,7 +57,7 @@ const CATEGORY_ICON_KEYS = {
 };
 
 // ─── Component ──────────────────────────────────────────────
-export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
+export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) => {
   const [reminders, setReminders] = useState(loadReminders);
   const [view, setView] = useState('upcoming'); // upcoming, completed, add
   const [showTemplates, setShowTemplates] = useState(false);
@@ -314,7 +314,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate }) => {
           React.createElement('button', { type: 'button', style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', fontSize: text.xs, color: palette.mid, cursor: 'pointer', fontFamily: 'inherit' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
         // Jahresband: 12 Monate mit Punkt bei Terminen
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '2px', marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(' + (isMobile ? 6 : 12) + ', 1fr)', gap: isMobile ? '4px' : '2px', marginBottom: space.md + 'px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
             key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monName(m) + (monthCount[m] ? ' · ' + monthCount[m] : ''),
             style: monthBtn(m), onClick: () => { setCalMonth(m); setSelDate(null); },
