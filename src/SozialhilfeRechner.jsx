@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { berechneSozialhilfe, SKOS_PARAMS } from './data/sozialhilfeRechner.js';
 import { Icon } from './IconSystem.jsx';
@@ -6,6 +7,7 @@ import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
+  const isMobile = useIsMobile();
   const household = data?.basis?.household;
   const initAdults = household?.adults || 1;
   const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
@@ -53,7 +55,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     select: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer', boxSizing: 'border-box' },
     selectWrap: { position: 'relative', display: 'inline-block', width: '80px' },
     selectChevron: { position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' },
-    checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', fontSize: text.sm, cursor: 'pointer', marginBottom: space.xs + 'px' },
+    checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', fontSize: text.sm, cursor: 'pointer', marginBottom: space.xs + 'px', ...(isMobile ? { minHeight: '44px' } : {}) },
     highlight: { padding: space.md + 'px', borderRadius: radius.sm + 'px', border: '1px solid ', marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
     th: { textAlign: 'left', padding: space.sm, borderBottom: '1px solid ' + palette.border, color: palette.mid, fontWeight: weight.medium },

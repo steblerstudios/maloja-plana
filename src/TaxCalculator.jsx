@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
@@ -9,6 +10,7 @@ import { getHouseholdInfo } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
+  const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
@@ -108,15 +110,14 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           )
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md } },
+        React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
             type: 'checkbox',
             checked: verheiratet,
             onChange: (e) => setVerheiratet(e.target.checked),
-            id: 'tax-married',
             style: { accentColor: palette.sand }
           }),
-          React.createElement('label', { htmlFor: 'tax-married', style: { fontSize: text.sm, color: palette.text, cursor: 'pointer' } }, t('tax.married'))
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.married'))
         ),
 
         React.createElement(LabeledField, { palette, label: t('tax.children'), style: { marginBottom: space.md } },
