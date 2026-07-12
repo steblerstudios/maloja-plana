@@ -297,7 +297,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       const monName = (m) => new Date(2024, m, 1).toLocaleDateString(LOCALE, { month: 'short' });
 
       const navBtn = { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, width: '30px', height: '30px', cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.md, lineHeight: 1 };
-      const monthBtn = (m) => ({ position: 'relative', padding: space.xs + 'px 0 ' + (space.sm) + 'px', border: '1px solid ' + (m === calMonth ? palette.sand : 'transparent'), background: m === calMonth ? palette.sand + '22' : 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, textAlign: 'center' });
+      const monthBtn = (m) => ({ position: 'relative', ...(isMobile ? { minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: space.sm + 'px' } : { padding: space.xs + 'px 0 ' + (space.sm) + 'px' }), border: '1px solid ' + (m === calMonth ? palette.sand : 'transparent'), background: m === calMonth ? palette.sand + '22' : 'none', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, textAlign: 'center' });
       const dayCell = (iso, isToday) => ({ position: 'relative', aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: radius.sm, cursor: 'pointer', color: palette.text, fontFamily: 'inherit', fontSize: text.xs, background: iso === selDate ? palette.sand + '2E' : 'none', border: '1px solid ' + (iso === selDate ? palette.sand : (isToday ? palette.sky : 'transparent')), fontWeight: isToday ? weight.semi : weight.normal });
       const dot = (col) => React.createElement('span', { 'aria-hidden': 'true', style: { position: 'absolute', bottom: '3px', left: '50%', transform: 'translateX(-50%)', width: '5px', height: '5px', borderRadius: '50%', background: col } });
 
@@ -314,7 +314,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           React.createElement('button', { type: 'button', style: { background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm, padding: '5px 12px', fontSize: text.xs, color: palette.mid, cursor: 'pointer', fontFamily: 'inherit' }, onClick: () => { setCalYear(now.getFullYear()); setCalMonth(now.getMonth()); setSelDate(today); } }, t('calendar.today'))
         ),
         // Jahresband: 12 Monate mit Punkt bei Terminen
-        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(' + (isMobile ? 6 : 12) + ', 1fr)', gap: isMobile ? '4px' : '2px', marginBottom: space.md + 'px' } },
+        React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(' + (isMobile ? 6 : 12) + ', 1fr)', gap: isMobile ? '6px 4px' : '2px', marginBottom: space.md + 'px' } },
           ...Array.from({ length: 12 }, (_, m) => React.createElement('button', {
             key: m, type: 'button', 'aria-pressed': m === calMonth, 'aria-label': monName(m) + (monthCount[m] ? ' · ' + monthCount[m] : ''),
             style: monthBtn(m), onClick: () => { setCalMonth(m); setSelDate(null); },
