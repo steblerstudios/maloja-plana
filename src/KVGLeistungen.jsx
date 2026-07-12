@@ -6,6 +6,7 @@ import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSOR
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
+import { getCantonName } from './config/cantonalData.js';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -214,9 +215,9 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
               React.createElement('div', { style: { color: palette.mid } }, t('kvg.mammoGeoNote')),
               MAMMO_KANTONE_OHNE_PROGRAMM.includes(canton) && React.createElement('div', {
                 style: { marginTop: '4px', color: palette.text, fontWeight: weight.medium }
-              }, t('kvg.mammoGeoYourCantonNo', { canton })),
+              }, t('kvg.mammoGeoYourCantonNo', { canton: getCantonName(canton, t) })),
               React.createElement('div', { style: { marginTop: '4px', color: palette.mid } },
-                t('kvg.mammoGeoOhne', { stand: MAMMO_GEO_STAND }) + ' ' + MAMMO_KANTONE_OHNE_PROGRAMM.join(', ')),
+                t('kvg.mammoGeoOhne', { stand: MAMMO_GEO_STAND }) + ' ' + MAMMO_KANTONE_OHNE_PROGRAMM.map(c => getCantonName(c, t)).join(', ')),
               React.createElement('div', { style: { marginTop: '2px', color: palette.mid } }, t('kvg.mammoGeoWandel')),
               React.createElement('div', { style: { marginTop: '4px', color: palette.soft } }, t('kvg.mammoGeoTardoc')),
               React.createElement('div', { style: { marginTop: '4px', color: palette.soft } },
