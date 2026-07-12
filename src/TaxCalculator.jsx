@@ -110,15 +110,14 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           )
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, ...(isMobile ? { minHeight: '44px' } : {}) } },
+        React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
             type: 'checkbox',
             checked: verheiratet,
             onChange: (e) => setVerheiratet(e.target.checked),
-            id: 'tax-married',
             style: { accentColor: palette.sand }
           }),
-          React.createElement('label', { htmlFor: 'tax-married', style: { fontSize: text.sm, color: palette.text, cursor: 'pointer' } }, t('tax.married'))
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.married'))
         ),
 
         React.createElement(LabeledField, { palette, label: t('tax.children'), style: { marginBottom: space.md } },
