@@ -240,8 +240,9 @@ const AlphaBanner = ({ palette, t, onDismiss }) =>
         onClick: onDismiss,
         'aria-label': t('common.close'),
         style: {
-          background: 'none', border: 'none', cursor: 'pointer', padding: space.xs,
+          background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.body, lineHeight: 1, flexShrink: 0,
+          width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center',
         }
       }, '×')
     )
