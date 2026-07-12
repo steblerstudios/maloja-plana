@@ -13,6 +13,7 @@ import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
@@ -26,6 +27,7 @@ const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
 export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext }) => {
   const vorlesen = useVorlesenContext();
+  const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
   const [uploadError, setUploadError] = useState('');
   const [uploadFile, setUploadFile] = useState(null);
@@ -1295,7 +1297,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           ...items.map(item =>
             React.createElement('label', {
               key: item.id,
-              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm }
+              style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', padding: '6px 0', cursor: 'pointer', borderBottom: '1px solid ' + palette.border + '33', fontSize: text.sm, ...(isMobile ? { minHeight: '44px' } : {}) }
             },
               React.createElement('input', {
                 type: 'checkbox',

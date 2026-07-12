@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
@@ -9,6 +10,7 @@ import { getHouseholdInfo } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
+  const isMobile = useIsMobile();
   const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
@@ -108,7 +110,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           )
         ),
 
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
             type: 'checkbox',
             checked: verheiratet,

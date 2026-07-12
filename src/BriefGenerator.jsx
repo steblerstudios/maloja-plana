@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
@@ -18,6 +19,7 @@ const fmtAmount = (n) => {
 };
 
 const BriefGenerator = ({ palette, t, data, onNavigate }) => {
+  const isMobile = useIsMobile();
   const [selected, setSelected] = useState(null);
   const [preview, setPreview] = useState(false);
   const [printed, setPrinted] = useState(false);
@@ -115,7 +117,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
       },
         REKLAMATION_GRUENDE.map(g => React.createElement('label', {
           key: g,
-          style: { display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text }
+          style: { display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px', alignItems: 'center' } : {}) }
         },
           React.createElement('input', {
             type: 'checkbox',
@@ -151,7 +153,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
           },
             kkBelege.map(b => React.createElement('label', {
               key: b.id,
-              style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer' }
+              style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) }
             },
               React.createElement('input', {
                 type: 'checkbox',
