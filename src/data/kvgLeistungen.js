@@ -140,6 +140,19 @@ export const KVG_DETAILS = {
   ausland: 3,
 };
 
+// Kantone OHNE organisiertes Brustkrebs-Früherkennungsprogramm (Faden 3-II/3).
+// „Organisiert" = der Kanton lädt Frauen 50–74 per Brief ein, Kosten übernommen ausser
+// Franchise/Selbstbehalt. Wo es fehlt, organisiert man die Vorsorge selbst (opportunistisch
+// nach ärztlicher Überweisung). Stand Juli 2026: belegt über zwei Quellen — Zürich sowie die
+// Zentralschweiz ausser Luzern (LU startete Juli 2026). Die Restliste der 26 Kantone ist
+// quellenübergreifend leicht unscharf (16 vs. 18 „mit Programm") → hier NUR die konsistent
+// bestätigten „ohne", der Rest via Live-Link im Text. Ändert sich laufend (weitere Kantone
+// in Einführung; Tardoc-2026 setzt die Finanzierung unter Druck).
+// Quellen: Swiss Cancer Screening (swisscancerscreening.ch, Angebote nach Kanton) + SRF News 2026.
+export const MAMMO_KANTONE_OHNE_PROGRAMM = ['ZH', 'ZG', 'SZ', 'UR', 'OW', 'NW'];
+export const MAMMO_GEO_STAND = '07.2026';
+export const MAMMO_GEO_URL = 'https://www.swisscancerscreening.ch/de/angebote-in-ihrem-kanton';
+
 // Empfohlenes Intervall in Monaten für den opt-in persönlichen Abgleich (Faden 3-II/2).
 // = KVG-gedeckter / CH-klinischer Rhythmus (konkret + belegbar). Der „liegt länger
 // zurück"-Hinweis ist nie aggressiver als dieser Wert (dignity-first; der WHO/EU-Kontext
