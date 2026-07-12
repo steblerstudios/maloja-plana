@@ -171,6 +171,7 @@ export const DocumentTresor = ({
               React.createElement('input', {
                 type: 'date', value: editingExpiry,
                 onChange: (e) => setEditingExpiry(e.target.value),
+                'aria-label': t('chapterView.expiryDate'),
                 style: { ...inputStyle, marginBottom: '6px', padding: '6px' },
               }),
               React.createElement('div', { style: { display: 'flex', gap: space.xs } },
@@ -305,6 +306,7 @@ export const DocumentTresor = ({
       }),
       React.createElement('select', {
         value: sortBy, onChange: (e) => setSortBy(e.target.value),
+        'aria-label': t('tresor.sortBy'),
         style: { ...inputStyle, width: 'auto', minWidth: '120px' },
       },
         React.createElement('option', { value: 'expiry' }, t('tresor.sortByExpiry')),
