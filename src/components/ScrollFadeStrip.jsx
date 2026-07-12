@@ -38,10 +38,11 @@ export const ScrollFadeStrip = ({ palette, containerStyle, style, fadeColor, fad
     };
   }, [update]);
 
-  // Nach jedem Render neu messen: fängt Inhaltswechsel (andere/mehr Reiter bei
-  // SPA-Navigation) ab, die scrollWidth ändern, ohne dass ein Event feuert.
-  // Günstig, und der setFade-Vergleich bricht Re-Render-Schleifen ab.
-  useEffect(() => { update(); });
+  // Bei Inhaltswechsel neu messen (andere/mehr Reiter bei SPA-Navigation ändern
+  // scrollWidth, ohne dass ein Event feuert). Die Reiter-Anzahl als günstiges
+  // Signal statt bei JEDEM Render zu messen — sonst erzwungener Layout-Read pro
+  // Tastendruck in scrollenden Host-Views. Scroll/Resize deckt den Rest ab.
+  useEffect(() => { update(); }, [update, React.Children.count(children)]);
 
   const col = fadeColor || (palette && (palette.surface || palette.up)) || '#ffffff';
   const w = (fadeWidth || 24) + 'px';
