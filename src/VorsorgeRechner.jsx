@@ -7,6 +7,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
+import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 
 function parseYear(dateStr) {
@@ -187,11 +188,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
     // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
     // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
-    // Sticky Wrapper hält die Leiste oben; das Scrollen passiert im inneren tabRow,
-    // die rechte Verlauf-Kante (tabFade) signalisiert auf Mobil „hier geht's weiter →".
+    // Sticky Wrapper hält die Leiste oben; das Scrollen passiert im inneren tabRow.
+    // Die dynamische Rand-Verblendung (ScrollFadeStrip) signalisiert „hier geht's weiter".
     tabWrap: { position: 'sticky', top: '-24px', zIndex: 5, marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
     tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
-    tabFade: { position: 'absolute', top: 0, right: 0, bottom: 0, width: '28px', pointerEvents: 'none', background: 'linear-gradient(to right, ' + palette.surface + '00, ' + palette.surface + ')' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
     checkbox: { display: 'flex', alignItems: 'center', gap: space.xs + 'px', cursor: 'pointer' },
@@ -366,25 +366,22 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   return React.createElement('div', { style: s.card },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'vorsorge', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('vr.title')),
 
-    // Tab row (sticky Wrapper + scrollender Inhalt + rechte Verlauf-Kante)
-    React.createElement('div', { style: s.tabWrap },
-      React.createElement('div', { style: s.tabRow, role: 'tablist', 'aria-label': t('vr.title') },
-        TABS.map((tab, i) => {
-          const active = activeTab === tab.key;
-          return React.createElement('button', {
-            key: tab.key,
-            id: 'vrtab-' + tab.key,
-            role: 'tab',
-            'aria-selected': active,
-            'aria-controls': 'vr-tabpanel',
-            tabIndex: active ? 0 : -1,
-            onClick: (e) => { setActiveTab(tab.key); e.currentTarget.scrollIntoView({ inline: 'nearest', block: 'nearest' }); },
-            onKeyDown: (e) => onTabKey(e, i),
-            style: s.tab(active),
-          }, tab.label);
-        })
-      ),
-      React.createElement('div', { style: s.tabFade })
+    // Tab row (sticky Wrapper + scrollender Inhalt + dynamische Rand-Verblendung)
+    React.createElement(ScrollFadeStrip, { palette, containerStyle: s.tabWrap, style: s.tabRow, role: 'tablist', 'aria-label': t('vr.title'), fadeWidth: 28 },
+      TABS.map((tab, i) => {
+        const active = activeTab === tab.key;
+        return React.createElement('button', {
+          key: tab.key,
+          id: 'vrtab-' + tab.key,
+          role: 'tab',
+          'aria-selected': active,
+          'aria-controls': 'vr-tabpanel',
+          tabIndex: active ? 0 : -1,
+          onClick: (e) => { setActiveTab(tab.key); e.currentTarget.scrollIntoView({ inline: 'nearest', block: 'nearest' }); },
+          onKeyDown: (e) => onTabKey(e, i),
+          style: s.tab(active),
+        }, tab.label);
+      })
     ),
 
     // Input fields
