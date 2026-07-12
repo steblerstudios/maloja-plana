@@ -3,6 +3,10 @@ import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
+import { Pegel } from './components/Pegel.jsx';
+import { PraemienBeleg } from './components/PraemienBeleg.jsx';
+import { sozialhilfePegelState } from './data/pegel.js';
+import { praemienBelegState } from './data/praemienBeleg.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
@@ -158,6 +162,19 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
     React.createElement(LeistungsKompass, {
       palette, t, benefitCount: benefits.length, topLabel, hasIncome: numIncome > 0,
+    }),
+
+    // IPV-Instrument: Prämien-Beleg (Papier) — bewusst anderes Material als der
+    // Sozialhilfe-Pegel (Glas), damit sie nebeneinander unterscheidbar sind.
+    // Reine Anzeige über calculateIPV, Berechnung unberührt.
+    (canton && numIncome > 0) && React.createElement(PraemienBeleg, {
+      palette, t, state: praemienBelegState(probe),
+    }),
+
+    // Sozialhilfe-Pegel (Aufstockungs-Modus): dieselbe Metapher, Linie = Existenz-
+    // minimum. Braucht Miet-Kontext, sonst wäre der Bedarf unvollständig.
+    (canton && numIncome > 0 && numRent > 0) && React.createElement(Pegel, {
+      palette, t, state: sozialhilfePegelState(probe),
     }),
 
     // Ergebnis
