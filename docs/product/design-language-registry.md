@@ -3,7 +3,7 @@
 > Zentrales Verzeichnis der visuellen Identität, UX-Philosophie und Designsprache.
 > Dieses Dokument ist Teil der Produktidentität und darf nicht verloren gehen.
 
-Stand: 2026-06-22
+Stand: 2026-07-12 · Palette + Schrift auf den echten Code-Stand korrigiert (Ent-Drift Schritt 1a, Quelle `src/config/constants.js` + `src/tokens.css`). Der tiefere Token↔JSX-Drift (Inline-Styles referenzieren die `--mp-*`-Tokens kaum) bleibt bewusst separat — siehe `docs/design/ui-registry-drift.md` (A-030).
 
 ---
 
@@ -40,55 +40,63 @@ Maloja Plana fühlt sich an wie ein ruhiger, vertrauter Ort — nicht wie ein Sa
 #### Light Mode
 | Token | Hex | Verwendung |
 |-------|-----|------------|
-| `bg` | `#F5F2EE` | Haupthintergrund — warmes Papier |
-| `surface` | `#FFFFFF` | Karten, erhöhte Flächen |
-| `up` | `#F0EDE8` | Leicht erhöhte Bereiche |
-| `top` | `#EAE5DD` | Höchste visuelle Ebene |
-| `border` | `#DDD8D0` | Rahmen, Separatoren |
-| `text` | `#1C1A17` | Haupttext — fast schwarz, warm |
-| `mid` | `#6B6560` | Sekundärtext, Labels |
-| `soft` | `#A89F94` | Deaktivierte Elemente, Hints |
+| `bg` | `#F2F2F0` | Haupthintergrund — warmes Papier |
+| `surface` | `#FAFAF8` | Karten, erhöhte Flächen |
+| `up` | `#ECECEA` | Leicht erhöhte Bereiche |
+| `top` | `#E4E4E2` | Höchste visuelle Ebene |
+| `border` | `#DCDAD6` | Rahmen, Separatoren |
+| `text` | `#24262A` | Haupttext — fast schwarz, leicht kühl |
+| `mid` | `#6A6E74` | Sekundärtext, Labels |
+| `soft` | `#64676E` | Deaktivierte Elemente, Hints |
 
 #### Dark Mode
 | Token | Hex | Verwendung |
 |-------|-----|------------|
-| `bg` | `#0F0E0C` | Haupthintergrund — dunkler Stein |
-| `surface` | `#161513` | Karten, Panels |
-| `up` | `#1E1C19` | Erhöhte Flächen |
-| `top` | `#252320` | Höchste Ebene |
-| `border` | `#2A2824` | Rahmen |
-| `text` | `#EDE8E0` | Haupttext — warmes Crème |
-| `mid` | `#8A8478` | Sekundärtext |
-| `soft` | `#504C46` | Deaktiviert |
+| `bg` | `#22211F` | Haupthintergrund — dunkler Stein |
+| `surface` | `#2B2A26` | Karten, Panels |
+| `up` | `#343330` | Erhöhte Flächen |
+| `top` | `#3D3B35` | Höchste Ebene |
+| `border` | `#423F39` | Rahmen |
+| `text` | `#E6E3DC` | Haupttext — warmes Crème |
+| `mid` | `#9CA0A6` | Sekundärtext |
+| `soft` | `#8E929A` | Deaktiviert |
 
-#### Akzentfarben (Modus-unabhängig)
-| Token | Hex | Semantik | Verwendung |
+#### Akzentfarben
+| Token | Hex (Light) | Semantik | Verwendung |
 |-------|-----|----------|------------|
-| `gold` | `#C9A96E` | Wert, Qualität | Akzente, CTAs, Highlights |
-| `sage` | `#7B9E8C` | Natur, Beruhigung | Erfolg, positive Zustände |
+| `gold` | `#C4A870` | Wert, Qualität | Akzente, CTAs, Highlights |
+| `sage` | `#5A7868` | Natur, Beruhigung | Erfolg, positive Zustände |
 | `rose` | `#B87070` | Wärme, Aufmerksamkeit | Sanfte Warnungen |
 | `sky` | `#6E90B0` | Himmel, Information | Links, Quellenangaben, Info-Hinweise, Versicherungen-Akzent |
-| `sand` | `#B8956A` | Erde, Navigation | Focus-Ringe, Navigation, Interaktion |
+| `sand` | `#C4A06A` | Erde, Navigation | Focus-Ringe, Navigation, Interaktion |
+
+> **Modus-Anpassung (Kontrast/AA):** Im Dark Mode wird `sage` auf `#7E9F8C` angehoben. Für lesbaren Text/Graphik auf hellen Flächen gibt es *Deep*-Varianten: `goldDeep #7C6428`, `sandDeep #8A6D3B`, `skyDeep #4A6A88`, `roseDeep #9A4A4A`, `sageDeep #4A6657` (im Dark Mode entsprechend aufgehellt). Quelle der Wahrheit: `src/config/constants.js`.
 
 ### 2.2 Farbregeln
 - **Keine gesättigten Primärfarben** — kein reines Rot, Blau, Grün
 - **Keine aggressiven Signalfarben** — keine Rot/Grün-Ampeln
 - **Warme, natürliche Töne** — inspiriert von Alpenlandschaft
-- **Focus-Ring:** 2px solid `#B8956A` (Sand), offset 2px
-- **Selektion:** `rgba(184, 149, 106, 0.3)` (Gold, transparent)
+- **Focus-Ring:** 2px solid `#C4A06A` (Sand), offset 2px
+- **Selektion:** `rgba(196, 160, 106, 0.3)` (Sand, transparent)
 
 ---
 
 ## 3. Typografie
 
 ### 3.1 Schriftfamilie
-**DM Sans** — WOFF2, lokal gehostet (kein CDN)
+Drei lokal gehostete WOFF2-Familien (kein CDN, alle OFL). Quelle: `src/tokens.css`.
 
-Warum DM Sans:
-- Geometrisch, aber warm
-- Exzellente Lesbarkeit
-- Frei nutzbar (SIL Open Font License)
-- Unterstützt Latin Extended (wichtig für FR/IT/RM)
+| Familie | Rolle | Gewichte |
+|---------|-------|----------|
+| **Lexend** | Primär — Fliesstext, UI, Eingaben | 400 / 500 / 600 / 700 |
+| **Hanken Grotesk** | Headlines & Wortmarke (Display) | 600 / 700 |
+| **Atkinson Hyperlegible** | Lesbarkeits-Modus (a11y-Toggle, ersetzt alles) | 400 / 700 |
+
+Warum diese Wahl:
+- **Lexend** ist auf Leseflüssigkeit optimiert, ruhig und humanistisch — die tägliche Lesefläche.
+- **Hanken Grotesk** gibt Titeln und der Wortmarke Schweizer-grotesken Charakter, ohne laut zu werden.
+- **Atkinson Hyperlegible** (Braille Institute) für den Lesbarkeits-Modus — maximale Zeichenunterscheidung.
+- Alle frei nutzbar (SIL Open Font License), Latin Extended für FR/IT/RM.
 
 ### 3.2 Gewichte
 | Gewicht | CSS Variable | Verwendung |
@@ -206,7 +214,7 @@ Alle Animationen werden respektiert — kein Bewegung ohne Zustimmung.
 ## 6. Accessibility
 
 ### 6.1 Implementiert
-- **Focus-Visible:** 2px solid #B8956A, offset 2px — auf allen interaktiven Elementen
+- **Focus-Visible:** 2px solid #C4A06A (Sand), offset 2px — auf allen interaktiven Elementen
 - **Skip-to-Content Link:** Tastatur-Navigation, unsichtbar bis fokussiert
 - **ARIA-Labels:** Auf allen Buttons, Links, Formularfeldern
 - **Nav-Landmark:** `<nav>` für Hauptnavigation
@@ -350,10 +358,11 @@ Alle Animationen werden respektiert — kein Bewegung ohne Zustimmung.
 ### 11.2 Palette-Props
 ```javascript
 const LIGHT_PALETTE = {
-  bg: '#F5F2EE', surface: '#FFFFFF', up: '#F0EDE8',
-  text: '#1C1A17', mid: '#6B6560', soft: '#B8B4AC',
-  gold: '#C9A96E', sage: '#7B9E8C', rose: '#B87070',
-  sky: '#6E90B0', sand: '#B8956A'
+  bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
+  border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#64676E',
+  gold: '#C4A870', sage: '#5A7868', rose: '#B87070',
+  sky: '#6E90B0', sand: '#C4A06A'
+  // + Deep-Varianten (goldDeep/sandDeep/skyDeep/roseDeep/sageDeep) für lesbaren Text
 };
 ```
 Jede Komponente erhält `palette` als Prop und baut daraus Inline-Styles.
