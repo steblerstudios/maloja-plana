@@ -3638,7 +3638,8 @@ export default {
     aufstockung: 'Aufstockung',
     gap: 'Das Einkommen liegt unter dem Bedarf — die Aufstockung hebt es aufs Existenzminimum.',
     covered: 'Das Einkommen erreicht das Existenzminimum — keine Aufstockung nötig.',
-    deckt: 'deckt {amount} / Monat',
+    deckt: 'könnte rund {amount} / Monat decken',
+    vermoegen: 'Vermögen über dem Freibetrag — das wird zuerst angerechnet. Den Anspruch prüft der Sozialdienst.',
   },
   schnellcheck: {
     title: 'Leistungs-Schnellcheck',

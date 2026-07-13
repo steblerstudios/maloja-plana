@@ -35,7 +35,9 @@ export const Pegel = ({ palette, t, state }) => {
   // luft: Sandband über der Linie (Einkommen > Grenze). aufstockung: Aufstockung
   // füllt die Lücke von der Linie bis zur Wasser-Oberkante (Einkommen < Bedarf).
   const showSand = !soz && aboveLine;
-  const showSupport = soz && belowLine;
+  // Aufstockung nur im echten 'gap'-Modus füllen — bei 'vermoegen' (Ersparnisse
+  // über dem Freibetrag) keine Aufstockung suggerieren.
+  const showSupport = soz && belowLine && mode === 'gap';
   const showLuft = !soz && belowLine && !empty;
   const sageTopY = soz ? waterTopY : Math.max(waterTopY, LINE_Y);
   const lineLabel = soz ? t('pegel.bedarf') : t('pegel.grenze');
@@ -81,7 +83,7 @@ export const Pegel = ({ palette, t, state }) => {
   const headline = soz ? t('pegel.deckt', { amount: fmtCHF(state.amount) })
     : t('pegel.perMonthPossible', { amount: fmtCHF(state.amount) });
   const statusText = empty ? t('pegel.empty')
-    : soz ? (mode === 'gap' ? t('pegel.gap') : t('pegel.covered'))
+    : soz ? (mode === 'gap' ? t('pegel.gap') : mode === 'vermoegen' ? t('pegel.vermoegen') : t('pegel.covered'))
     : (mode === 'clear' ? t('pegel.clear') : mode === 'edge' ? t('pegel.edge') : t('pegel.over'));
   const statusColor = empty ? palette.mid
     : (soz ? (mode === 'gap' ? palette.sageDeep : palette.mid)
@@ -90,7 +92,10 @@ export const Pegel = ({ palette, t, state }) => {
   const readout = h('div', { style: { flex: 1, minWidth: 0 } },
     h('div', { style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium, marginBottom: '4px' } }, title),
     hasAmount ? h('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep, lineHeight: leading.tight, marginBottom: '4px' } }, headline) : null,
-    h('div', { style: { fontSize: text.sm, color: statusColor, lineHeight: leading.normal } }, statusText)
+    h('div', { style: { fontSize: text.sm, color: statusColor, lineHeight: leading.normal } }, statusText),
+    // In-Card-Disclaimer wie beim Prämien-Beleg — sobald ein CHF-Betrag steht,
+    // ihn sichtbar als Schätzung/Orientierung markieren (nicht nur der Seiten-Fuss).
+    hasAmount ? h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } }, t('beleg.geschaetzt')) : null
   );
 
   return h('div', {

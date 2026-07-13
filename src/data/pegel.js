@@ -64,6 +64,7 @@ export function sozialhilfePegelState(data) {
   const bedarf = Number(sh?.totalBedarf) || 0;
   const income = Number(sh?.income) || 0;
   const deficit = Number(sh?.deficit) || 0;
+  const vermoegenUeber = Number(sh?.vermoegenUeberFreibetrag) || 0;
 
   // Ohne Kanton, Miet-Kontext oder Bedarf ist die Berechnung unvollständig.
   if (!canton || rent <= 0 || bedarf <= 0 || income <= 0) {
@@ -71,10 +72,13 @@ export function sozialhilfePegelState(data) {
   }
 
   const rawFraction = income / bedarf;           // 1.0 = am Existenzminimum (Linie)
-  const mode = deficit > 0 ? 'gap' : 'covered';
+  // Vermögens-Gate spiegelt die Ergebnisliste (Schnellcheck.jsx): liegt Vermögen
+  // über dem SKOS-Freibetrag, wird es zuerst angerechnet — dann KEINE Aufstockung
+  // behaupten (sonst widerspräche der Pegel dem Ergebnisblock auf derselben Seite).
+  const mode = vermoegenUeber > 0 ? 'vermoegen' : (deficit > 0 ? 'gap' : 'covered');
   const fraction = Math.max(0, Math.min(PEGEL_SCALE, rawFraction));
   return {
     show: true, variant: 'aufstockung', mode, fraction,
-    income, bedarf, amount: deficit, canton,
+    income, bedarf, amount: mode === 'gap' ? deficit : 0, canton, vermoegenUeber,
   };
 }

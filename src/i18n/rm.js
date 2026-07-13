@@ -3836,8 +3836,9 @@ export default {
     bedarf: 'Basegns',
     aufstockung: 'Cumplettaziun',
     gap: 'L’entrada è sut il minim d’existenza — la cumplettaziun colma la largia.',
-    covered: 'L’entrada cuzza il minim d’existenza — nagina cumplettaziun necessaria.',
-    deckt: 'cuvra {amount} / mais',
+    covered: 'L’entrada cuvra il minim d’existenza — nagina cumplettaziun necessaria.',
+    deckt: 'pudess cuvrir radund {amount} / mais',
+    vermoegen: 'Facultad sur la franchisa — quai vegn quintà avant. Il dretg controllescha il servetsch social.',
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',

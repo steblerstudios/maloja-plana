@@ -3638,7 +3638,8 @@ export default {
     aufstockung: 'Integrazione',
     gap: 'Il reddito è sotto il minimo vitale — l’integrazione colma il divario.',
     covered: 'Il reddito raggiunge il minimo vitale — nessuna integrazione necessaria.',
-    deckt: 'copre {amount} / mese',
+    deckt: 'potrebbe coprire circa {amount} / mese',
+    vermoegen: 'Sostanza oltre la franchigia — viene conteggiata prima. Il servizio sociale valuta il diritto.',
   },
   schnellcheck: {
     title: 'Verifica rapida delle prestazioni',
