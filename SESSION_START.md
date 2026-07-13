@@ -13,14 +13,14 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `feat/ipv-lebenslinie` — 3 Commits über `main`, **unmerged + unpushed** (Sitzung 2026-07-13) |
-| `main` steht auf | `263d027` — Merge PR #59 (Stand-Sync, nur Doku über `5c64527`); Code = `5c64527`, Live-Bundle unverändert |
+| Aktueller Branch | `main` (Sitzung 2026-07-13, Predeploy-Runde 2 abgeschlossen) |
+| `main` steht auf | `d9ee62b` — Merge PR #60 (IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes); Code über `5c64527`, Live-Bundle unverändert |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Die `feat`-Arbeit unten ist **NICHT** live. |
-| **Runde 2026-07-12/13** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 (Mammografie, SEO-robots, a11y, Kalenderband, ScrollFade, 44px, PII-Scrub) + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift + Stand-Sync** |
-| **Neu auf `feat/ipv-lebenslinie`** | **⏳ gebaut + verifiziert-LOKAL, nicht deployt (2026-07-13):** `91405d8` IPV-Lebenslinie Phase 2 + a11y-Härtung + Subsidiaritäts-Fix · `671da78` Sozialhilfe-Rückerstattung (Copy belegt korrigiert + Rechner) · `f987d06` Tresor-Lock-Konzept (Spec). Tests 632 grün, `eslint src` sauber, Build ok, Browser verifiziert. **Offen: Predeploy-Gate → PR → main → Deploy.** |
-| **Deploy-Gate** | **⚠️ `.maloja/predeploy-ok` steht auf `b2d6fe6` (Pre-Merge PR #58). Vor dem NÄCHSTEN Deploy `bash deploy.sh`/`/maloja-predeploy` frisch laufen. Live (`5c64527`) ist ok.** |
+| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Die IPV-Lebenslinie-Runde (`main`=`d9ee62b`) ist **gemergt, aber NICHT live**. |
+| **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 (Mammografie, SEO-robots, a11y, Kalenderband, ScrollFade, 44px, PII-Scrub) + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift + Stand-Sync** |
+| **Runde 2 (IPV-Lebenslinie, gemergt, NICHT live)** | **✅ GEMERGT via PR #60 (`main`=`d9ee62b`):** `91405d8` IPV-Lebenslinie Phase 2 + a11y-Härtung + Subsidiaritäts-Fix · `671da78` Sozialhilfe-Rückerstattung · `f987d06` Tresor-Lock-Spec · **Predeploy-Fixes** `b090feb` (Stempel an Beleg-Modus / Kompass / Vanish / stabile Erinnerung / `fmtCHF`) + `382042e` (Sie/Du-Split de/fr/it/rm + `ipvSubsumed`-Klarstellung + EN „social assistance"). Predeploy-Runde 2 grün: 5 branch-🔴 gefixt, ZH-Rückerstattungsbeträge live gegen ZH-Handbuch verifiziert. Tests 632, Build ok. **Offen: Predeploy frisch auf main → Deploy.** |
+| **Deploy-Gate** | **⚠️ `.maloja/predeploy-ok` steht auf `382042e` (Pre-Merge PR #60); Merge-HEAD `d9ee62b` unmarkiert → `bash deploy.sh` blockt bis `/maloja-predeploy` frisch auf `main`. Live (`5c64527`) ist ok.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -42,14 +42,15 @@
 
 ## Nächste Schritte
 
-1. **`feat/ipv-lebenslinie` nach `main` bringen** (die Sitzung 2026-07-13): pushen →
-   `/maloja-predeploy` (Gate steht noch auf `b2d6fe6`) → PR → `main` → `deploy.sh` →
-   live per Bundle-Hash verifizieren. Enthält: IPV-Lebenslinie Phase 2 (statefull Beleg,
-   additives `data.anspruch.ipv`), a11y-Härtung der Instrumente, Subsidiaritäts-Fix
-   (IPV+Sozialhilfe nicht mehr doppelt), Sozialhilfe-Rückerstattung (belegt korrigiert +
-   Rechner), Tresor-Lock-Spec. Specs: `docs/design/ipv-lebenslinie.md`, `.../tresor-lock.md`.
+1. **Deployen** — die IPV-Lebenslinie-Runde ist in `main` (`d9ee62b`), Predeploy-Runde 2
+   grün (5 branch-🔴 gefixt + verifiziert). Reihenfolge: ggf. `/code-review ultra` (billed,
+   Sophie) → **`/maloja-predeploy` frisch auf `main`** (Marke steht auf Pre-Merge `382042e`,
+   Merge-HEAD unmarkiert) → `bash deploy.sh` → live per Bundle-Hash gegenprüfen →
+   `FEATURES.md`-Zeile IPV-Lebenslinie auf `verified-live`, neuen LIVE-Commit hier + Memory.
 2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
    `schnellcheck.ipvSubsumed/ipvEnthalten`, `sozialhilfe.repayment*` — Muttersprachler:in.
+   **Neu dazu:** die in Predeploy-Runde 2 ergänzten RM-Vus-Formen (`{sie,du}`-Split) sind
+   Best-Effort und gehören in dieselbe Gegenlese.
 3. **Design-Vision offen (Discussion/Build):** #3-Instrumente EL (qualitativ) · Baum↔Obstgarten
    (Entscheid E) · Haus-Karte vs. Skeuo-Liste Metapher-Abgleich. Backlog: `docs/design/design-backlog.md` E.
 4. **Tresor-Lock bauen** (Konzept steht, `docs/design/tresor-lock.md`): opt-in Passphrase-
