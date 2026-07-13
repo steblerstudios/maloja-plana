@@ -3,31 +3,12 @@
 // No external dependencies. No network calls.
 // Encryption is optional — plaintext export always available.
 import { getDocBlob, saveDocBlob, stripBlob } from './docBlobs.js';
+// Krypto-Primitive (AES-256-GCM + PBKDF2) zentral in cryptoCore.js — geteilt mit
+// dem Tresor-Lock, damit es nur EINE Krypto-Quelle gibt.
+import { ALGO, SALT_BYTES, IV_BYTES, isSecureContext, deriveKey } from './cryptoCore.js';
 
-const ALGO = 'AES-GCM';
-const KEY_LENGTH = 256;
-const PBKDF2_ITERATIONS = 100000;
-const SALT_BYTES = 16;
-const IV_BYTES = 12;
+// Backup-spezifischer Datei-Kopf (kennzeichnet + versioniert das Backup-Format).
 const BACKUP_MAGIC = 'MALOJA_PLANA_BACKUP_V1';
-
-function isSecureContext() {
-  return typeof crypto !== 'undefined' && crypto.subtle !== undefined;
-}
-
-async function deriveKey(passphrase, salt) {
-  const enc = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']
-  );
-  return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-    keyMaterial,
-    { name: ALGO, length: KEY_LENGTH },
-    false,
-    ['encrypt', 'decrypt']
-  );
-}
 
 /**
  * Collect all Maloja Plana data into a single backup object.
