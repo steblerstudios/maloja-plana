@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
-import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
+import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
@@ -28,12 +28,17 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const isMobile = useIsMobile();
   const birthYear = parseYear(data.basis?.dateOfBirth);
   const alter = currentAge(data.basis?.dateOfBirth);
+  // Echtes Referenzalter (AHV 21) für diese Person — für Frauen der Übergangsgeneration
+  // (JG 1961–63) tiefer als 65. Es ist der NEUTRALE Default fürs Bezugsalter: sonst zeigt
+  // der Rechner ihnen einen ungefragten „Aufschub" auf 65, den sie nie gewählt haben.
+  const refAlterMonate = referenzalterMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear });
+  const refAlterJahre = refAlterMonate / 12;
 
   const [einkommen, setEinkommen] = useState(data.finanzen?.monthlyIncome ? String(Math.round(Number(data.finanzen.monthlyIncome) * 12)) : '');
   const [beitragsjahre, setBeitragsjahre] = useState('');
   const [erziehungsjahre, setErziehungsjahre] = useState('');
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
-  const [bezugAlter, setBezugAlter] = useState('65');
+  const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
   const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
@@ -75,7 +80,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const saeule3aAnnual = Number(saeule3aAnnualInput) || 0;
   const parsedEinkommen = Number(einkommen) || 0;
   const parsedBeitragsjahre = Number(beitragsjahre) || (alter && alter > 20 ? Math.min(alter - 20, 44) : 44);
-  const parsedBezugAlter = Number(bezugAlter) || 65;
+  const parsedBezugAlter = Number(bezugAlter) || refAlterJahre;
   // Statistische Lebenserwartung ab 65 (BFS, gerundet): Frauen ~88, Männer ~85,
   // sonst ~86. Vorbelegt aus dem hinterlegten Geschlecht, jederzeit anpassbar.
   // Bestimmt, über wie viele Jahre AHV/BVG-Rente und 3a/3b-Kapital gerechnet werden.
@@ -111,8 +116,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
-    return vergleicheVorbezugAufschub(parsedEinkommen, parsedBeitragsjahre);
-  }, [parsedEinkommen, parsedBeitragsjahre]);
+    return vergleicheVorbezugAufschub(parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear || 1970);
+  }, [parsedEinkommen, parsedBeitragsjahre, data.basis?.gender, birthYear]);
 
   const bvgResult = useMemo(() => {
     if (parsedEinkommen <= 0 || !alter) return null;
@@ -728,10 +733,20 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           // dabei ehrlich zu den frühesten Bezugsaltern (AHV 63, BVG 58, 3a 60). Reine
           // Erklärung — die AHV-Monatsrente oben ist bereits auf frühestens 63 gedeckelt.
           (() => {
-            const refAge = 65, ahvMin = 63;
-            const delta = ret - refAge;
-            const nAbs = Math.abs(delta);
-            const dauer = nAbs + ' ' + t(nAbs === 1 ? 'vr.szenarioJahr' : 'vr.szenarioJahre');
+            // Referenzalter geschlechts-/jahrgangsabhängig (AHV 21) — nicht pauschal 65,
+            // sonst widerspräche der Szenariotext der (bereits korrekten) Prozentzahl aus
+            // projektionAhv. Delta in Monaten, weil das Referenzalter der Übergangs-
+            // generation krumm ist (z. B. 64 J 6 M) und „0,5 Jahre" unschön läse.
+            const ahvMin = 63;
+            // Delta gegen parsedBezugAlter (NICHT das gerundete ret) rechnen — projektionAhv,
+            // die Quelle der Prozentzahl unten, nutzt ebenfalls parsedBezugAlter; sonst
+            // driften Szenario-Text und pct im krummen Referenzalter-Default auseinander.
+            const deltaMonate = Math.round((parsedBezugAlter - refAlterJahre) * 12);
+            const nAbsM = Math.abs(deltaMonate);
+            const delta = deltaMonate;
+            const dauer = nAbsM % 12 === 0
+              ? String(nAbsM / 12) + ' ' + t(nAbsM / 12 === 1 ? 'vr.szenarioJahr' : 'vr.szenarioJahre')
+              : String(nAbsM) + ' ' + t(nAbsM === 1 ? 'vr.szenarioMonat' : 'vr.szenarioMonate');
             const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
             const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
             const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
