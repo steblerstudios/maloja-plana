@@ -9,18 +9,21 @@
 //   nopremium  → Anspruch da, aber KK-Prämie fehlt → Betrag ohne Aufteilung
 //   eligible   → Anspruch + Prämie bekannt → voller Beleg mit Deckungsbalken
 import { calculateIPV } from '../config/cantonalData.js';
+import { readIpvStatus, IPV_STATUS } from './ipvStatus.js';
 
 export function praemienBelegState(data) {
   const canton = data?.basis?.canton || '';
   const income = Number(data?.finanzen?.monthlyIncome || 0);
   const praemie = Number(data?.versicherungen?.kkPremium || 0);
   const ipv = calculateIPV(data);
+  // Read-only Spiegelung des Lebenslinie-Status (gesetzt wird er nur im Voll-Tool).
+  const confirmed = readIpvStatus(data).status === IPV_STATUS.BESTAETIGT;
 
   if (!canton || income <= 0) {
-    return { show: true, mode: 'empty', verbilligung: 0, praemie, selbst: praemie, canton };
+    return { show: true, mode: 'empty', verbilligung: 0, praemie, selbst: praemie, canton, confirmed };
   }
   if (!ipv?.eligible) {
-    return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton };
+    return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton, confirmed };
   }
   const verbilligungRoh = Number(ipv.amount) || 0;
   const hasPraemie = praemie > 0;
@@ -33,6 +36,6 @@ export function praemienBelegState(data) {
   return {
     show: true,
     mode: hasPraemie ? 'eligible' : 'nopremium',
-    verbilligung, praemie, selbst, canton,
+    verbilligung, praemie, selbst, canton, confirmed,
   };
 }

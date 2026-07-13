@@ -58,3 +58,47 @@ Lebensbereich die reale Metapher — „Swiss Living Skeuomorphism", 5 Regeln.
   `mp-breathe`-Ladeanimation).
 - Quellen-Link aufs semantische Wort, kein nackter Domain-Lärm.
 - Accessibility-Modi (Atkinson-Lesbarkeit, reduced-motion) überall mitdenken.
+
+## E — Brain-Dump 2026-07-13 (neue Instrumente & offene Fragen)
+
+> Roh von Stebler Studios notiert, damit nichts verloren geht. **Nicht gebaut** —
+> hier gesammelt, später schritt-für-schritt gemeinsam entscheiden.
+
+**Neue Schnellcheck-Instrumente (wie IPV/Sozialhilfe/EL):**
+- **Lohn-Einordnung / Mindestlohn-Checker.** Analog zu den bestehenden Schnellchecks:
+  Liege ich unter/über dem (kantonalen) Mindestlohn? Dazu die Einordnung zum
+  **Medianlohn** und zum Durchschnittslohn — wenn jemand darüber liegt: *wie viel
+  mehr (prozentual)* verdient er als der durchschnittliche/mediane Schweizer, und
+  *wie viel in der Summe* über/unter Median- bzw. Durchschnittslohn. Auch **Miet-Themen**
+  in diesem Zug mitdenken (Mietzins-Einordnung wie die anderen Checks).
+- **Betreibungsverfahren als „harter" Flow.** Bewusst als klarer Ablauf dargestellt
+  mit drei Rollen/Köpfen: **Gläubiger betreibt → Schuldner**. Entgiften statt
+  einschüchtern (vgl. B: Betreibungs-/Verlustschein). Offene Frage: welche *weiteren*
+  Verfahren verdienen so eine erklärte Flow-Darstellung?
+
+**Trust / Sicherheit:**
+- **Tresor-Lock (Code oder Face ID / Biometrie), „irgendwann".** Ein echter At-Rest-
+  Schutz der lokalen Daten — heute NICHT vorhanden (siehe ⚠️-Befund unten). Verwandt:
+  `maloja-trust-layer`.
+- ⚠️ **Sicherheits-Befund (2026-07-13):** Der `BetaGate` ist ein *weiches*, client-
+  seitiges Zugangs-Gate (SHA-256-Code, per `localStorage.or5_beta_access` umgehbar —
+  im Code selbst so dokumentiert, `BetaGate.jsx:10-13`). Die **„Einfache Ansicht"
+  ist KEIN Bypass** — nur ein Icon-/Vorlese-Modus, sie schaltet den Gate nicht frei.
+  Aber: die eigentlichen Daten (`or5_data`) liegen **unverschlüsselt** im localStorage
+  (nur Export/Backup ist verschlüsselt, `backupCrypto.js`). Es gibt heute **kein
+  Passwort/Lock auf den Daten selbst**. Für ein „Schloss auf meinen Unterlagen"-Gefühl
+  braucht es entweder Client-Verschlüsselung mit Nutzer-Passphrase (At-Rest) oder einen
+  Server (echte Zugangskontrolle). Kein Remote-Angriffsvektor (local-first, CSP self-only).
+
+**Plattform:**
+- **App-Store-/iOS-Anforderungen recherchieren** (PWA vs. native, Store-Guidelines,
+  was sonst noch nötig ist), bevor ein Store-Weg eingeschlagen wird.
+
+**Korrektheit (⚠️ Befund, siehe Task):**
+- ⚠️ **Sozialhilfe ↔ Krankenkassen-Prämie (2026-07-13).** `calculateSozialhilfe`
+  rechnet die **volle** KK-Prämie in den Bedarf (`cantonalData.js:284-286`), ohne IPV
+  abzuziehen; der Schnellcheck **summiert** IPV + Sozialhilfe → die gleiche Prämien-
+  Entlastung wird **doppelt** gezählt (Summe überzeichnet um ~den IPV-Betrag). Real
+  ist Sozialhilfe *subsidiär* — IPV zuerst, Sozialhilfe deckt nur den Rest (Prämie bis
+  zur kantonalen Richtprämie). Fix braucht `swiss-precision`/`rechts-`Prüfer + Quelle
+  (SKOS C.5 / KVG); Berechnung nur mit Freigabe anfassen (Leitplanke).

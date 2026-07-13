@@ -8,11 +8,21 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { addTodo } from './utils/merkliste.js';
+import { addReminder } from './utils/reminders.js';
+import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
 export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const vorlesen = useVorlesenContext();
   const [showCalculation, setShowCalculation] = useState(true);
+  // IPV-Lebenslinie (Phase 2): der Beleg als Gesicht seines Ablaufs. Verfügungs-
+  // Betrag lokal gepuffert (Init aus dem persistierten Status), Erinnerungs-Flag
+  // fürs idempotente Kalender-Angebot. Siehe docs/design/ipv-lebenslinie.md.
+  const [verfBetrag, setVerfBetrag] = useState(() => {
+    const s = readIpvStatus(data);
+    return s.betrag ? String(s.betrag) : '';
+  });
+  const [renewAdded, setRenewAdded] = useState(false);
   // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
   // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
   const [permitAdded, setPermitAdded] = useState(false);
@@ -59,6 +69,99 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   };
 
   const hasIncome = !!(data.finanzen && data.finanzen.monthlyIncome);
+
+  // --- IPV-Lebenslinie (Phase 2) -------------------------------------------
+  // Statefull Beleg — Übergänge schreiben additiv nach data.anspruch.ipv
+  // (fehlt ⇒ 'geschaetzt'). Ehrliche Verzweigung: Automatik-Kantone haben KEINEN
+  // Antrag — darum führt 'geschaetzt' sowohl zu 'beantragt' (Antrags-Weg) als
+  // auch direkt zu 'bestaetigt' (Verfügung kam automatisch). Kein Rot, kein Zwang.
+  const ipvStatus = readIpvStatus(data);
+  const setIpvStatus = (status, extra) => onUpdateData && onUpdateData('anspruch', 'ipv', nextIpvStatus(status, extra));
+  const lineBtn = (label, onClick, opts = {}) => React.createElement('button', {
+    onClick,
+    'aria-pressed': opts.pressed || undefined,
+    style: {
+      cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi,
+      padding: '8px 14px', borderRadius: radius.sm, minHeight: '44px',
+      background: opts.primary ? palette.sand : 'none',
+      color: opts.primary ? palette.onSand : palette.sandDeep,
+      border: opts.primary ? 'none' : '1px solid ' + palette.border,
+    },
+  }, label);
+
+  const renderLebenslinie = () => {
+    if (!onUpdateData || !hasIncome || !ipvResult.eligible) return null;
+    const h = React.createElement;
+    const card = (children, opts = {}) => h('div', {
+      style: {
+        padding: '14px', borderRadius: radius.sm, marginBottom: space.md,
+        background: palette.surface, border: '1px solid ' + palette.border,
+        borderLeft: '3px solid ' + (opts.accent || palette.sand),
+      },
+    }, ...(Array.isArray(children) ? children : [children]));
+    const head = (label, badge) => h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm, marginBottom: space.xs } },
+      h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('ipvStatus.title')),
+      badge
+    );
+    const lead = (s) => h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.55', marginBottom: space.sm } }, s);
+
+    if (ipvStatus.status === IPV_STATUS.BESTAETIGT) {
+      const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: '4px', transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
+      const dueNext = (() => { const d = new Date(); d.setFullYear(d.getFullYear() + 1); return d.toISOString().split('T')[0]; })();
+      return card([
+        head(null, stamp),
+        lead(t('ipvStatus.confirmedLead')),
+        ipvStatus.betrag > 0
+          ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, 'CHF ' + ipvStatus.betrag + ' / ' + t('schnellcheck.monat'))
+          : h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } }, t('ipvStatus.betragPrompt')),
+        h('label', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('ipvStatus.betragLabel')),
+        h('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', marginBottom: space.md, flexWrap: 'wrap' } },
+          h('input', {
+            type: 'number', inputMode: 'numeric', min: '0', value: verfBetrag,
+            onChange: (e) => setVerfBetrag(e.target.value),
+            onBlur: () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag, datum: ipvStatus.datum }),
+            'aria-label': t('ipvStatus.betragLabel'),
+            style: { width: '120px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+          })
+        ),
+        lead(t('ipvStatus.renewLead')),
+        h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
+          lineBtn(renewAdded ? '✓ ' + t('ipvStatus.renewAdded') : t('ipvStatus.renewAdd'), () => {
+            if (renewAdded) return;
+            const ok = addReminder({ title: t('ipvStatus.reminderTitle'), dueDate: dueNext, category: 'insurance', recurrence: 'yearly' });
+            if (ok) setRenewAdded(true);
+          }, { primary: !renewAdded, pressed: renewAdded }),
+          lineBtn(t('ipvStatus.reset'), () => { setVerfBetrag(''); setRenewAdded(false); setIpvStatus(IPV_STATUS.GESCHAETZT); })
+        ),
+      ], { accent: palette.sage });
+    }
+
+    if (ipvStatus.status === IPV_STATUS.BEANTRAGT) {
+      const badge = h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep } }, t('ipvStatus.appliedLabel'));
+      return card([
+        head(null, badge),
+        lead(t('ipvStatus.appliedLead')),
+        h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
+          lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag }), { primary: true }),
+          lineBtn(t('ipvStatus.reset'), () => setIpvStatus(IPV_STATUS.GESCHAETZT))
+        ),
+      ]);
+    }
+
+    // geschaetzt — ehrliche Verzweigung: zwei Wege neutral, beide Übergänge offen.
+    return card([
+      head(),
+      lead(t('ipvStatus.geschaetztLead')),
+      h('ul', { style: { margin: '0 0 ' + space.sm + 'px', paddingLeft: '18px', fontSize: text.sm, color: palette.mid, lineHeight: '1.55' } },
+        h('li', { style: { marginBottom: space.xs } }, t('ipvStatus.wayAuto')),
+        h('li', null, t('ipvStatus.wayApply'))
+      ),
+      h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
+        lineBtn(t('ipvStatus.markApplied'), () => setIpvStatus(IPV_STATUS.BEANTRAGT)),
+        lineBtn(t('ipvStatus.markConfirmed'), () => setIpvStatus(IPV_STATUS.BESTAETIGT, { betrag: verfBetrag }), { primary: true })
+      ),
+    ]);
+  };
 
   // Only block when the canton is genuinely missing. If the canton is set but the
   // income isn't yet, we still show the canton-specific info and prompt for income.
@@ -134,6 +237,9 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
+
+    // IPV-Lebenslinie — der Beleg als Gesicht seines Ablaufs (Phase 2)
+    renderLebenslinie(),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: '12px', fontStyle: 'italic' } }, t('premium.disclaimer')),
 
