@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: { sie: 'Il Suo percorso inizia qui', du: 'Il tuo percorso inizia qui' },
-    status: '{started} di {total} iniziati · {done} completati',
+    status: '{started} di {total} iniziati',
     allDone: 'Tutte le sezioni completate',
   },
 
@@ -2173,7 +2173,6 @@ export default {
     weeklyResidence: 'Residenza settimanale rilevata',
     weeklyIpvNote: 'La richiesta IPV va presentata nel cantone di residenza principale, non nel luogo di lavoro.',
     weeklyKkNote: 'Il premio dell\'assicurazione malattia si basa sul cantone di residenza principale.',
-    disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
   },
 
   sozialhilfe: {
@@ -3616,6 +3615,30 @@ export default {
     open: 'aperto',
     allCovered: 'tutto coperto',
     someOpen: 'aperto: {list}',
+  },
+  beleg: {
+    praemie: 'Premio',
+    verbilligung: 'Riduzione',
+    selbst: 'a carico',
+    kanton: 'Cantone',
+    geschaetzt: 'stima · orientamento',
+    keineVerbilligung: 'Sopra la soglia — nessuna riduzione. Esistono altre vie.',
+    premiumHint: 'Inserire il premio della cassa malati per vedere la ripartizione.',
+  },
+  pegel: {
+    grenze: 'Limite',
+    luft: 'margine',
+    empty: 'Inserire reddito e cantone — l’indicatore mostra il margine disponibile.',
+    clear: 'Il reddito è sotto la soglia — il diritto sussiste, con margine.',
+    edge: 'Appena sotto la soglia — potrebbe bastare.',
+    over: 'Sopra la soglia — esistono altre vie.',
+    perMonthPossible: 'circa {amount} / mese possibile',
+    bedarf: 'Fabbisogno',
+    aufstockung: 'Integrazione',
+    gap: 'Il reddito è sotto il minimo vitale — l’integrazione colma il divario.',
+    covered: 'Il reddito raggiunge il minimo vitale — nessuna integrazione necessaria.',
+    deckt: 'potrebbe coprire circa {amount} / mese',
+    vermoegen: 'Sostanza oltre la franchigia — viene conteggiata prima. Il servizio sociale valuta il diritto.',
   },
   schnellcheck: {
     title: 'Verifica rapida delle prestazioni',

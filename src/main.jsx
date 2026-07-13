@@ -4,7 +4,7 @@ import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
-import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters, CHAPTER_KEYS } from './config/constants.js';
+import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
@@ -549,6 +549,7 @@ const AppInner = () => {
     checkOverdueReminders(t);
     // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
     preloadPLZ();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Nur beim Mount: SW-Registrierung/Preload dürfen bei Sprachwechsel NICHT neu laufen; `t` wird hier einmalig durchgereicht.
   }, []);
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
@@ -563,7 +564,7 @@ const AppInner = () => {
   // Sync document expiry dates → calendar reminders
   useEffect(() => {
     syncDocumentReminders(documents, t);
-  }, [documents]);
+  }, [documents, t]);
 
   useEffect(() => {
     localStorage.setItem('or5_theme', JSON.stringify(isDarkMode));
@@ -997,7 +998,7 @@ const AppInner = () => {
               'aria-label': t('nav.settings'),
               'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
               onClick: () => setSettingsOpen(true),
-              style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+              style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
             },
               React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
                 React.createElement('circle', { cx: '12', cy: '12', r: '3.2' }),
@@ -1016,7 +1017,7 @@ const AppInner = () => {
                 title: t('common.settingsAccessibility'),
                 'aria-haspopup': 'dialog', 'aria-expanded': settingsOpen,
                 onClick: () => setSettingsOpen(true),
-                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
               },
                 // Universelles Barrierefreiheit-Symbol (Figur mit ausgestreckten Armen im Kreis)
                 React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },
@@ -1032,7 +1033,7 @@ const AppInner = () => {
                 key: 'menu',
                 'aria-label': t('nav.menu'),
                 onClick: () => setMobileNavOpen(!mobileNavOpen),
-                style: { padding: '8px 10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+                style: { padding: '8px 10px', minWidth: '44px', minHeight: '44px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.body, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
               },
                 React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 16 16', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' },
                   React.createElement('line', { x1: '2', y1: '4', x2: '14', y2: '4' }),
@@ -1159,7 +1160,8 @@ const AppInner = () => {
           margin: '0 0 ' + space.md + 'px 0', padding: '6px 12px',
           background: palette.sage + '12', border: '1px solid ' + palette.sage + '30',
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
-          color: palette.sage, fontFamily: 'inherit',
+          // sageDeep statt sage: sage (#5A7868) trägt als 13px-Text nur 4.34:1 auf bg → AA-Fail.
+          color: palette.sageDeep, fontFamily: 'inherit',
         },
       }, '△ ' + t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,

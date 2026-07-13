@@ -62,7 +62,11 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
  * @returns {Object} Rentenberechnung
  */
 export function berechneAltersrente({
-  geburtsjahr,
+  // Reserviert: Referenzalter ist derzeit pauschal 65 (REFERENZALTER). Für Frauen
+  // steigt es nach AHV 21 gestaffelt (JG 1961: 64+3M · 1962: 64+6M · 1963: 64+9M ·
+  // ab JG 1964: 65) — NOCH NICHT modelliert; zudem fehlt `geschlecht` als Input.
+  // Scoped Task: docs/roadmap/TASK_ahv21-referenzalter-frauen.md
+  geburtsjahr: _geburtsjahr,
   durchschnittlichesJahreseinkommen,
   beitragsjahre,
   erziehungsjahre = 0,

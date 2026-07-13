@@ -11,8 +11,9 @@ export const DARK_PALETTE = {
   // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
   sageBtn: '#3E5449', roseBtn: '#8A4A4A',
   // Legible-Varianten von sand/sky für Vordergrund (Text + bedeutungstragende Graphik):
-  // im Dunkeln bestehen sand/sky bereits (5.87 / 4.30 auf surface), daher unverändert.
-  sandDeep: '#C4A06A', skyDeep: '#6E90B0',
+  // sand besteht im Dunkeln (5.87 auf surface). sky #6E90B0 lag nur bei 4.30 (surface)
+  // und fiel auf getönten Flächen (sky+'18') unter AA (3.44–3.78) → #8CAAC6 hält ≥4.75.
+  sandDeep: '#C4A06A', skyDeep: '#8CAAC6',
   // roseDeep: lesbare Warnfarbe für Fliesstext/Fehler — rose (#B87070) liegt im
   // Dunkeln nur bei 3.82:1 auf surface. #D98A8A hebt auf 5.44:1 (AA), rose bleibt
   // für Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
@@ -25,15 +26,20 @@ export const DARK_PALETTE = {
 
 export const LIGHT_PALETTE = {
   bg: '#F2F2F0', surface: '#FAFAF8', up: '#ECECEA', top: '#E4E4E2',
-  border: '#DCDAD6', text: '#24262A', mid: '#6A6E74', soft: '#64676E',
+  // mid/soft: Sekundär-/Feintext. Alt-mid (#6A6E74) fiel auf getönten Flächen unter
+  // AA: up 4.33 / sageMist 4.49 / top 4.03. Neue Werte halten ≥4.5:1 auf ALLEN Flächen
+  // (surface/bg/up/sageMist/top) — mid #5E6167 ≥4.88, soft #5A5D63 ≥5.19. Bleibt ruhig-grau.
+  border: '#DCDAD6', text: '#24262A', mid: '#5E6167', soft: '#5A5D63',
   gold: '#C4A870', sage: '#5A7868', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
   // Fläche zu hell für weissen 15px-Text. Weiss auf sageBtn 8.17:1 / roseBtn 6.65:1 (AA).
   sageBtn: '#3E5449', roseBtn: '#8A4A4A',
   // Legible-Varianten von sand/sky für Vordergrund im Hellmodus: sand (2.34:1) und
-  // sky (3.20:1) sind auf surface zu hell für Text — sandDeep 4.64:1 / skyDeep 5.42:1.
-  sandDeep: '#8A6D3B', skyDeep: '#4A6A88',
+  // sky (3.20:1) sind auf surface zu hell für Text. sandDeep alt (#8A6D3B) fiel auf
+  // getönten Flächen unter AA (up 4.10 / top 3.81) → #7A5F30 hält ≥4.70 überall.
+  // skyDeep 5.42:1 auf surface (≥4.45 auf allen Flächen).
+  sandDeep: '#7A5F30', skyDeep: '#4A6A88',
   // roseDeep: lesbare Warnfarbe für Fliesstext/Fehler — rose (#B87070) liegt hell
   // nur bei 3.59:1 auf surface. #9A4A4A hebt auf 5.82:1 (AA), rose bleibt für
   // Ränder/Flächen/Diagramm-Füllungen (≥3:1) erhalten.
@@ -352,8 +358,10 @@ export function getFullName(basisData) {
 // Keep CHAPTER_KEYS for data initialization (language-independent)
 export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'ausbildung', 'behoerden', 'notfall'];
 
-// Field keys per chapter (for data initialization — no translations needed)
-const FIELD_KEYS = {
+// Field keys per chapter (for data initialization — no translations needed).
+// Wie das Geschwister CHAPTER_KEYS exportiert: sprachunabhängige Feldkarte, damit
+// Daten-Init/-Validierung sie ohne getChapters(t) nutzen können.
+export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
   finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],

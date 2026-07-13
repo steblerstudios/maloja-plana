@@ -5,7 +5,6 @@ import {
   openBackupWithPrf,
   openBackupWithRecovery,
   parseRecovery,
-  bytesToGroupedHex,
   RECOVERY_BYTES,
 } from '../vault.js';
 

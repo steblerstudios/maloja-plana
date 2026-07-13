@@ -4,7 +4,7 @@
 > jeder analysierten App und jeder gebauten Funktion. Bei jeder grösseren
 > Design- oder Entwicklungsentscheidung ist dies der erste Referenzpunkt.
 
-Stand: 2026-06-29 · Pflege: bei jeder neuen App-Analyse (siehe [konkurrenzanalyse.md](konkurrenzanalyse.md)) und jedem neuen Ablauf ergänzen.
+Stand: 2026-06-29 · Pflege: bei jeder neuen App-Analyse (siehe [konkurrenzanalyse.md](konkurrenzanalyse.md)) und jedem neuen Ablauf ergänzen. · 2026-07-12: Kapitel 11 (Die Welt von Maloja — Metaphern & Visualisierung) ergänzt.
 
 Dieses Playbook **bündelt und priorisiert**. Die Tiefe steht in den verlinkten
 Dokumenten — hier steht, was übergeordnet gilt und warum.
@@ -197,6 +197,51 @@ Design-Grenzen, die **nie** überschritten werden (vollständig in
   Nutzer wirklich braucht.**
 - **Kein Finanzdruck:** keine aggressiven Sparziele, keine Anlageberatung, keine
   „du solltest X% sparen"-Urteile.
+
+---
+
+## 11 · Die Welt von Maloja — Metaphern & Visualisierung
+
+Maloja ist **eine Sammlung von Metaphern, kein Stil.** Nicht überall dasselbe Bild:
+jeder Ort bekommt die Visualisierung, die zu **seiner Art von Information** passt und
+die das Auge dorthin führt, wo es hin soll — begründet aus UX-Psychologie (mentale
+Modelle, Wiedererkennen statt Erinnern, Calm-Tech-Aufmerksamkeit am Rand, ein
+Highlight pro Screen), nicht aus Geschmack.
+
+**Der eine Filter vor jeder Design-Entscheidung — drei Ebenen:**
+- **Ebene 1 · Reale Welten** — volle Metapher (Arztkoffer, Bundesordner, Lebensbaum).
+  Ein Bereich erzählt eine Geschichte; hier richtig investieren.
+- **Ebene 2 · Interface** — nur leichte Materialität (Registerkarten, Tiefe, Papierstärke).
+- **Ebene 3 · Daten** — gar keine Metapher; Charts/Tabellen/Rechner dürfen modern sein.
+
+**Stil-Varianten haben je einen Platz:** Flat Design = Grundlage überall ·
+Skeuomorphismus = nur Ebene 1 · Glasmorphismus/modern = nur Ebene 3 ·
+Neumorphism/Material Design = **nur Referenz, nicht kopieren.** Eigener Stil:
+„Swiss Living Skeuomorphism" (nicht Materialien imitieren, sondern Werkzeuge;
+orientieren statt dekorieren; glaubwürdig, nicht nostalgisch; Flat bleibt Grundlage).
+
+**Das Dach über allem — „The House of Life / Swiss Life Estate":** die App als
+erkundbares Schweizer Anwesen („Apple trifft Architekturmagazin"), nicht als Software
+(Bibliothek=Dokumente, Rathaus=Behörden, Lebensweg=Ereignisse …). Der gemeinsame
+Rahmen, unter dem die Metaphern zusammenkommen — Vision, bewusst noch nicht gebaut.
+
+**Die Atmosphäre-Schicht (Ambient) bleibt und ist unantastbar:** Berge/Maloja-Pass
+(inkl. Easter-Egg-System und der Prozent-Anzeige), Lebensbaum (wächst mit den Daten,
+Fortschritt ohne Prozent), Obstgarten, Rucksack, Frucht-/Farbsystem. Sie leben am
+Rand und beruhigen, statt zu fordern. (Offen: die Reihenfolge Baum ↔ Obstgarten.)
+
+**Instrumente (Ebene 1½):** Schnellchecks/Ansprüche werden zu Messinstrumenten — die
+Datenfrage bestimmt die Form. Der **Pegel** (Glas) misst Einkommen gegen eine Linie und
+trägt die Sozialhilfe-Aufstockung: die Lücke bis zum Existenzminimum wird sichtbar
+aufgefüllt. Die Prämienverbilligung bekommt stattdessen den **Prämien-Beleg** (Papier),
+der IPV als das zeigt, was sie ist — ein Abzug von der Prämie. Beide bewusst aus anderem
+Material, damit sie nebeneinander unterscheidbar sind. Der Kompass zeigt Richtung, nicht
+Menge — reserviert für Orientierung/Entscheide, nicht als Leit-Metapher.
+
+Tiefer: [product/design-language-registry.md](product/design-language-registry.md) ·
+[design/emotional-temperature-map.md](design/emotional-temperature-map.md) · die
+vollständige Metaphern- & Visualisierungs-Matrix (Ort für Ort, mit Bau-Status) als
+Design-Bibel (Artifact, 2026-07-12).
 
 ---
 

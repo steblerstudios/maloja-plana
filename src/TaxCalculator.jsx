@@ -5,7 +5,7 @@ import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer, getKantonDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
+import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 
@@ -39,6 +39,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
   React.useEffect(() => {
     calculateTax();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Die Deps listen die echten Eingaben von calculateTax; die Funktion selbst wird pro Render neu erstellt und würde als Dep jeden Render feuern.
   }, [taxData, income, canton, verheiratet, kinder, useImportedTaxable]);
 
   const calculateTax = () => {

@@ -37,7 +37,6 @@ export const AblaufContainer = ({ palette, icon, title, intro, children }) => {
 
 // Ein ruhiger Schritt: Titel + freier Inhalt.
 export const AblaufStep = ({ palette, title, icon, children }) => {
-  const s = styles(palette);
   return React.createElement(React.Fragment, null,
     icon
       ? React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: icon, size: 20 }), style: { margin: space.lg + 'px 0 ' + space.xs + 'px 0' } }, title)
@@ -55,7 +54,7 @@ export const AblaufLink = ({ palette, label, onClick }) => {
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
 // onSaved (optional): wird nach erfolgreichem Speichern aufgerufen — z.B. um zusätzlich
 // ein Merkliste-Todo anzulegen (KVG-Faden).
-export const FristButton = ({ palette, t, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
+export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, reminder, onNavigate, onSaved }) => {
   const s = styles(palette);
   const [done, setDone] = useState(false);
   const handle = () => { if (addReminder(reminder)) { if (onSaved) onSaved(); setDone(true); } }; // nur bestätigen, wenn gespeichert

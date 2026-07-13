@@ -162,6 +162,10 @@ export const EO_PARAMS = {
   entschaedigungssatz: ENTSCHAEDIGUNGSSATZ * 100,
   mutterschaftWochen: MUTTERSCHAFT_WOCHEN,
   mutterschaftTage: MUTTERSCHAFT_TAGE,
+  // Anspruchs-Voraussetzungen Mutterschaft (EOG Art. 16b) — als Params verfügbar,
+  // damit die UI die Bedingungen transparent zeigen kann (statt nur im Code-Kommentar).
+  mutterschaftMinMonateAvs: MUTTERSCHAFT_MIN_MONATE_AVS,
+  mutterschaftMinMonateArbeit: MUTTERSCHAFT_MIN_MONATE_ARBEIT,
   vaterschaftWochen: VATERSCHAFT_WOCHEN,
   vaterschaftTage: VATERSCHAFT_TAGE,
   adoptionWochen: ADOPTION_WOCHEN,

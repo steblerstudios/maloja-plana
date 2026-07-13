@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: 'Your journey starts here',
-    status: '{started} of {total} started · {done} completed',
+    status: '{started} of {total} started',
     allDone: 'All sections completed',
   },
 
@@ -3638,6 +3638,30 @@ export default {
     open: 'open',
     allCovered: 'all covered',
     someOpen: 'open: {list}',
+  },
+  beleg: {
+    praemie: 'Premium',
+    verbilligung: 'Reduction',
+    selbst: 'you pay',
+    kanton: 'Canton',
+    geschaetzt: 'estimate · orientation',
+    keineVerbilligung: 'Above the limit — no reduction. There are other ways.',
+    premiumHint: 'Enter your health-insurance premium to see the split.',
+  },
+  pegel: {
+    grenze: 'Limit',
+    luft: 'room',
+    empty: 'Enter income and canton — the gauge then shows how much room is left.',
+    clear: 'Income is below the limit — you qualify, with room to spare.',
+    edge: 'Just below the limit — it could be enough.',
+    over: 'Above the limit — there are other ways.',
+    perMonthPossible: 'about {amount} / month possible',
+    bedarf: 'Need',
+    aufstockung: 'Top-up',
+    gap: 'Income is below the minimum — the top-up lifts it to the subsistence minimum.',
+    covered: 'Income reaches the subsistence minimum — no top-up needed.',
+    deckt: 'could cover about {amount} / month',
+    vermoegen: 'Assets above the exemption — these count first. The social services office assesses eligibility.',
   },
   schnellcheck: {
     title: 'Benefits quick check',

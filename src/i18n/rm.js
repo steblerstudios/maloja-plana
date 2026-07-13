@@ -937,7 +937,7 @@ export default {
     motivation: { sie: 'Vus essas en via. Mintga champ porta urden.', du: 'Ti es en via. Mintga champ porta urden.' },
     completionFull: { sie: 'Vossa urden da vita stat. Quietezza.', du: 'Tia urden da vita stat. Quietezza.' },
     notStarted: { sie: 'Vossa via cumenza qua', du: 'Tia via cumenza qua' },
-    status: '{started} da {total} cumenzà · {done} cumpletà',
+    status: '{started} da {total} cumenzà',
     allDone: 'Tut las secziuns cumpletadas',
   },
 
@@ -1259,7 +1259,6 @@ export default {
       fields: {
         kkInsurer: 'Cassa da malsauns',
         kkPremium: 'Premia mensiala CHF',
-        franchise: 'Franschisa CHF',
         kkModel: { label: 'Model', options: { standard: 'Standard', hmo: 'HMO', telmed: 'Telmed', hausarzt: 'Medi da chasa', basic: 'Basic', comfort: 'Comfort', apotheke: 'Model dad apoteca' } },
         franchise: { label: 'Franschisa CHF', options: { 300: '300', 500: '500', 1000: "1'000", 1500: "1'500", 2500: "2'500", f300: '300', f500: '500', f1000: "1'000", f1500: "1'500", f2500: "2'500" } },
         bvgContribution: 'Contribuziun LPP CHF/mais',
@@ -3814,6 +3813,31 @@ export default {
     open: 'avert',
     allCovered: 'tut cuvert',
     someOpen: 'avert: {list}',
+  },
+  // rm: Muttersprachler-Gegenlese offen (siehe i18n-Backlog)
+  beleg: {
+    praemie: 'Premia',
+    verbilligung: 'Reducziun',
+    selbst: 'atgna part',
+    kanton: 'Chantun',
+    geschaetzt: 'stimaziun · orientaziun',
+    keineVerbilligung: 'Sur la limita — nagina reducziun. I dat autras vias.',
+    premiumHint: 'Endatar la premia da la cassa da malsauns per vesair la partiziun.',
+  },
+  pegel: {
+    grenze: 'Limita',
+    luft: 'spazi',
+    empty: 'Endatar entrada e chantun — lura mussa l’indicatur il spazi disponibel.',
+    clear: 'L’entrada è sut la limita — il dretg exista, cun spazi.',
+    edge: 'Just sut la limita — quai pudess bastar.',
+    over: 'Sur la limita — per quai datti autras vias.',
+    perMonthPossible: 'radund {amount} / mais pussaivel',
+    bedarf: 'Basegns',
+    aufstockung: 'Cumplettaziun',
+    gap: 'L’entrada è sut il minim d’existenza — la cumplettaziun colma la largia.',
+    covered: 'L’entrada cuvra il minim d’existenza — nagina cumplettaziun necessaria.',
+    deckt: 'pudess cuvrir radund {amount} / mais',
+    vermoegen: 'Facultad sur la franchisa — quai vegn quintà avant. Il dretg controllescha il servetsch social.',
   },
   schnellcheck: {
     title: 'Verifica svelta da prestaziuns',

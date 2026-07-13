@@ -42,7 +42,8 @@ export const ScrollFadeStrip = ({ palette, containerStyle, style, fadeColor, fad
   // scrollWidth, ohne dass ein Event feuert). Die Reiter-Anzahl als günstiges
   // Signal statt bei JEDEM Render zu messen — sonst erzwungener Layout-Read pro
   // Tastendruck in scrollenden Host-Views. Scroll/Resize deckt den Rest ab.
-  useEffect(() => { update(); }, [update, React.Children.count(children)]);
+  const childCount = React.Children.count(children);
+  useEffect(() => { update(); }, [update, childCount]);
 
   const col = fadeColor || (palette && (palette.surface || palette.up)) || '#ffffff';
   const w = (fadeWidth || 24) + 'px';

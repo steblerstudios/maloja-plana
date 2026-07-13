@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein, createBetreibungsAuszugTemplate, parseBetreibungsAuszugFile } from './schuldenCalc.js';
+import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, space, radius, shadow } from './config/tokens.js';
+import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { AblaufLink } from './AblaufSchale.jsx';
@@ -325,7 +325,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),
 
     // Save Button
-    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: space.sm, background: palette.sage, color: '#000' } }, '□ ' + t('common.save'))
+    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: space.sm, background: palette.sageBtn, color: '#fff' } }, '□ ' + t('common.save'))
   );
 };
 

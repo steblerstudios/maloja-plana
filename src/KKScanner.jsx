@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import QRCode from './vendor/qrcodejs.js';
-import { initBarcodeScanner, scanBarcodeFromImage, performOCR, extractKKDataFromText, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
+import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
@@ -169,7 +169,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.md } },
           React.createElement('button', {
             onClick: () => { setKKData(prev => ({ ...prev, ...conflicts.scanned })); setConflicts(null); },
-            style: { ...buttonStyle, flex: 1, background: palette.sage }
+            style: { ...buttonStyle, flex: 1, background: palette.sageBtn, color: '#fff' }
           }, t('kkScanner.conflictAccept')),
           React.createElement('button', {
             onClick: () => setConflicts(null),

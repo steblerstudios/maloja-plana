@@ -50,7 +50,7 @@ const PieChart = ({ data, labels, colors, title, palette }) => {
   );
 };
 
-const HorizontalBar = ({ label, value, maxValue, color, palette, t }) => {
+const HorizontalBar = ({ label, value, maxValue, color, palette }) => {
   const pct = maxValue > 0 ? Math.min(100, (value / maxValue) * 100) : 0;
   return React.createElement('div', { style: { marginBottom: space.sm } },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, marginBottom: '3px' } },

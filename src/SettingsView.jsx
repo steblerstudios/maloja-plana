@@ -1,6 +1,6 @@
 import React from 'react';
 import { Eyebrow, PageTitle } from './components/Heading.jsx';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 

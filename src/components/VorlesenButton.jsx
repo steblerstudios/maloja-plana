@@ -15,9 +15,15 @@ export const VorlesenButton = ({ text, speak, size = 14, color, style = {}, labe
       border: 'none',
       cursor: 'pointer',
       padding: '2px',
+      // Tap-Target ≥24px (WCAG 2.5.8): Icon bleibt klein/subtil, aber die Trefferfläche
+      // erreicht die AA-Mindestgrösse — wichtig, da genau die vorlese-bedürftige Gruppe
+      // auf sichere Antippbarkeit angewiesen ist.
+      minWidth: '24px',
+      minHeight: '24px',
       opacity: 0.45,
       display: 'inline-flex',
       alignItems: 'center',
+      justifyContent: 'center',
       verticalAlign: 'middle',
       flexShrink: 0,
       ...style,
