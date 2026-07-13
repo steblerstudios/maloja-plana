@@ -13,14 +13,15 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (Sitzung 2026-07-13, Predeploy-Runde 2 abgeschlossen) |
-| `main` steht auf | `d9ee62b` — Merge PR #60 (IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes); Code über `5c64527`, Live-Bundle unverändert |
+| Aktueller Branch | zwei offene PRs dieser Sitzung (Zeile unten); `main` selbst unberührt |
+| `main` steht auf | `4b6642e` — Merge PR #61 (`chore/stand-sync-r2`, Doku-only); davor `d9ee62b` (PR #60 IPV-Lebenslinie). Code-Live über `5c64527`, Live-Bundle unverändert |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 | Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Die IPV-Lebenslinie-Runde (`main`=`d9ee62b`) ist **gemergt, aber NICHT live**. |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 (Mammografie, SEO-robots, a11y, Kalenderband, ScrollFade, 44px, PII-Scrub) + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift + Stand-Sync** |
 | **Runde 2 (IPV-Lebenslinie, gemergt, NICHT live)** | **✅ GEMERGT via PR #60 (`main`=`d9ee62b`):** `91405d8` IPV-Lebenslinie Phase 2 + a11y-Härtung + Subsidiaritäts-Fix · `671da78` Sozialhilfe-Rückerstattung · `f987d06` Tresor-Lock-Spec · **Predeploy-Fixes** `b090feb` (Stempel an Beleg-Modus / Kompass / Vanish / stabile Erinnerung / `fmtCHF`) + `382042e` (Sie/Du-Split de/fr/it/rm + `ipvSubsumed`-Klarstellung + EN „social assistance"). Predeploy-Runde 2 grün: 5 branch-🔴 gefixt, ZH-Rückerstattungsbeträge live gegen ZH-Handbuch verifiziert. Tests 632, Build ok. **Offen: Predeploy frisch auf main → Deploy.** |
 | **Deploy-Gate** | **⚠️ `.maloja/predeploy-ok` steht auf `382042e` (Pre-Merge PR #60); Merge-HEAD `d9ee62b` unmarkiert → `bash deploy.sh` blockt bis `/maloja-predeploy` frisch auf `main`. Live (`5c64527`) ist ok.** |
+| **Sitzung 2026-07-13 (offene PRs, unmerged)** | **PR #62** Tresor-Lock-Fundament (`feat/tresor-lock-cryptocore`, 3 Commits: `cryptoCore` + `secureStore` + Doku-Reconcile `2adffe9`, ADR-011-Einordnung). **PR #63** Backlog-Abbau (`chore/backlog-cleanup`, 4 Commits `34b1906..e70f720`: toter `appTagline` weg · dark-mode `soft`-a11y → `#989CA4` · **AHV-21 Referenzalter Frauen Phase A** + UI). Beide **638 Tests grün, browser-verifiziert, NICHT gemergt, NICHT live**. |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -42,6 +43,11 @@
 
 ## Nächste Schritte
 
+0. **Zwei offene PRs dieser Sitzung reviewen/mergen:** **PR #63** (Backlog: `appTagline` weg ·
+   dark-mode `soft`-a11y · **AHV-21 Referenzalter Frauen Phase A + UI**) und **PR #62**
+   (Tresor-Lock-Fundament `cryptoCore`+`secureStore`+Reconcile). Beide grün + browser-verifiziert.
+   **AHV-21 Phase B** (Rentenzuschlag/Ausgleichsmassnahmen) bewusst offen — braucht
+   Kreisschreiben-Tabellen + Fach-Gegenlesen (`swiss-precision-pruefer`).
 1. **Deployen** — die IPV-Lebenslinie-Runde ist in `main` (`d9ee62b`), Predeploy-Runde 2
    grün (5 branch-🔴 gefixt + verifiziert). Reihenfolge: ggf. `/code-review ultra` (billed,
    Sophie) → **`/maloja-predeploy` frisch auf `main`** (Marke steht auf Pre-Merge `382042e`,
@@ -53,10 +59,11 @@
    Best-Effort und gehören in dieselbe Gegenlese.
 3. **Design-Vision offen (Discussion/Build):** #3-Instrumente EL (qualitativ) · Baum↔Obstgarten
    (Entscheid E) · Haus-Karte vs. Skeuo-Liste Metapher-Abgleich. Backlog: `docs/design/design-backlog.md` E.
-4. **Tresor-Lock bauen** (Konzept steht, `docs/design/tresor-lock.md`): opt-in Passphrase-
-   Verschlüsselung aller `or5_*`-Stores, Backup beim Setup. Erst mit ausdrücklicher Freigabe;
-   Native-Secure-Safe-Vision (Ordner auf dem Gerät + Keychain/Keystore) → „Logins-Phase"
-   zusammen mit App-Store/iOS-Recherche.
+4. **Tresor-Lock Phase 2b + LockScreen** (Fundament liegt in PR #62: `cryptoCore` + `secureStore`,
+   rein additiv/dormant): Seam in `main.jsx` (Vault aus = byte-identisch), Passphrase-Wand (a11y
+   wie Beta-Gate), Aktivierung mit erzwungenem verschlüsseltem Backup, Browser-Beweis (nur
+   Chiffretext im `localStorage`). Als *eine* live-verifizierte Einheit, volle Sorgfalt (berührt
+   Nutzerdaten). Native-Secure-Safe-Vision → „Logins-Phase" (= `src/crypto/vault.js`, Level 2).
 5. **Rechts-Feinschliff (offen, belegt vorbereitet):** exakte Kantons-Mechanik IPV automatisch
    vs. Antrag (schärft die Verzweigung); Rückerstattungs-Zahlen sind ZH-Werte (kantonal prüfen).
 6. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
@@ -70,8 +77,9 @@
    Baum (Lean: beim einen Baum bleiben). Siehe `docs/IDEEN.md` „Nächste Schritte".
 4. **`docs/archive` Namen-PII** (offen): Persona-Beispiele mit echtem Namen/Geburtsjahr —
    der Purge ersetzte nur Mail-Strings, nicht Fliesstext. Separater Schritt auf ausdrückliche Freigabe.
-5. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). rm-Gegenlese (Führerausweis
-   + fr/it/rm generell).
+5. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe war bereits AA (2026-07-13 nachgerechnet
+   ~6.6:1, kein Handlungsbedarf); #3 dark-mode `soft` in PR #63 behoben. rm-Gegenlese
+   (Führerausweis + fr/it/rm generell) bleibt offen.
 
 ## Nicht anfassen (Leitplanken)
 
