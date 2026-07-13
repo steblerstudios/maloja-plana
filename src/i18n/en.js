@@ -3840,7 +3840,7 @@ export default {
     saeule3aHint: 'Enter your 3a balance and annual contribution under Finances → Provision.',
     totalMitSaeule3a: 'Total 1st + 2nd + 3a pillar',
     einkommenEingeben: 'Enter your annual income to estimate the pension.',
-    source: 'Estimate based on [[OASIA Art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[OPA Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Not legally binding. As of 2026.',
+    source: 'Estimate based on [[OASIA Art. 21 + 34–40 (reference age, AHV 21)|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[OPA Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Not legally binding. As of 2026.',
     tabFreizuegigkeit: 'Vested benefits',
     fzTitle: 'What happens to your pension when you change jobs?',
     fzIntro: 'When you leave your job, your pension capital is not paid out — it moves to a vested benefits account until you start a new position.',
