@@ -44,7 +44,7 @@
 
 1. **Deployen** — die IPV-Lebenslinie-Runde ist in `main` (`d9ee62b`), Predeploy-Runde 2
    grün (5 branch-🔴 gefixt + verifiziert). Reihenfolge: ggf. `/code-review ultra` (billed,
-   Sophie) → **`/maloja-predeploy` frisch auf `main`** (Marke steht auf Pre-Merge `382042e`,
+   Stebler Studios) → **`/maloja-predeploy` frisch auf `main`** (Marke steht auf Pre-Merge `382042e`,
    Merge-HEAD unmarkiert) → `bash deploy.sh` → live per Bundle-Hash gegenprüfen →
    `FEATURES.md`-Zeile IPV-Lebenslinie auf `verified-live`, neuen LIVE-Commit hier + Memory.
 2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
