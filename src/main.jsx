@@ -788,7 +788,7 @@ const AppInner = () => {
     background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
     color: active ? (opts.activeColor || accent) : palette.mid,
     border: '1px solid ' + (active ? accent + '55' : palette.border),
-    borderRadius: '4px', cursor: 'pointer',
+    borderRadius: radius.sm, cursor: 'pointer',
     lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
     display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',
     ...(opts.extra || {}),
@@ -814,7 +814,7 @@ const AppInner = () => {
         'aria-label': 'Anrede: ' + current,
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
