@@ -76,7 +76,15 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   } catch { /* Orientierung, nie blockierend */ }
 
   const monetary = benefits.filter(b => !b.qualitative && b.monthly > 0);
-  const totalMonthly = monetary.reduce((s, b) => s + b.monthly, 0);
+  // IPV ist subsidiär: greift Sozialhilfe, wird die volle Prämie schon über den
+  // Sozialhilfe-Bedarf mitgetragen (calculateSozialhilfe rechnet die ganze Prämie
+  // in den Bedarf). Die IPV ist dann KEIN additiver Geldbetrag, sondern ein Teil,
+  // wie dieser Fehlbetrag gedeckt wird — darum nicht doppelt zählen. Quelle: SKOS-
+  // Faktenblatt „IPV und Sozialhilfe" 2024. calculateIPV/-Sozialhilfe unberührt.
+  const ipvSubsumed = monetary.some(b => b.key === 'soz');
+  const countedMonetary = monetary.filter(b => !(ipvSubsumed && b.key === 'ipv'));
+  const ipvAmount = (monetary.find(b => b.key === 'ipv') || {}).monthly || 0;
+  const totalMonthly = countedMonetary.reduce((s, b) => s + b.monthly, 0);
   // Stärkster Weg für die Kompass-Peilung: höchster Betrag zuerst, sonst der erste
   // (qualitative wie EL zählen als Weg, aber ohne Betrag hinter den monetären).
   const topBenefit = [...benefits].sort((a, b) => (b.monthly || 0) - (a.monthly || 0))[0];
@@ -104,21 +112,45 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     );
 
   // Flat-Balken: die monetären Leistungen als monatliche Entlastung, vergleichbar.
-  const bar = monetary.length > 0 && React.createElement('div', { style: { marginTop: space.md + 'px' } },
+  // Zeigt NUR gezählte Wege (subsidiäre IPV ist bei Sozialhilfe darin enthalten).
+  const bar = countedMonetary.length > 0 && React.createElement('div', { style: { marginTop: space.md + 'px' } },
     React.createElement('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.sm + 'px' } },
       fmt(totalMonthly) + ' / ' + t('schnellcheck.monat')),
+    ipvSubsumed && ipvAmount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px', lineHeight: leading.normal } },
+      t('schnellcheck.ipvSubsumed', { amount: fmt(ipvAmount) })),
     React.createElement('div', { style: { display: 'flex', height: '28px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
-      monetary.map(b => React.createElement('div', {
-        key: b.key,
-        // textColor (Deep-Variante) als Fläche, damit der weisse Text ≥4.5:1 hält —
-        // rohes sky/sage trägt weissen Text nur mit 3.20/4.32:1 (AA-Fail).
-        style: { width: (totalMonthly > 0 ? (b.monthly / totalMonthly * 100) : 0).toFixed(1) + '%', background: b.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 },
-      }, (b.monthly / totalMonthly) >= 0.18 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, b.label) : null))
+      countedMonetary.map((b, i) => {
+        const wide = totalMonthly > 0 && (b.monthly / totalMonthly) >= 0.18;
+        // Nicht nur Farbe: Sozialhilfe trägt die feine Schraffur (wie der Pegel),
+        // jedes Segment ein immer sichtbares Kürzel und einen hellen Trenner —
+        // so bleiben sky↔sage auch bei Farbenblindheit unterscheidbar (nicht rein
+        // farblich). Das volle Label erscheint ab 18 % Breite, sonst das Kürzel.
+        const hatch = b.key === 'soz'
+          ? 'repeating-linear-gradient(45deg, transparent 0, transparent 3px, ' + palette.surface + '55 3px, ' + palette.surface + '55 5px)'
+          : 'none';
+        return React.createElement('div', {
+          key: b.key,
+          // textColor (Deep-Variante) als Fläche, damit der weisse Text ≥4.5:1 hält —
+          // rohes sky/sage trägt weissen Text nur mit 3.20/4.32:1 (AA-Fail).
+          style: {
+            width: (totalMonthly > 0 ? (b.monthly / totalMonthly * 100) : 0).toFixed(1) + '%',
+            backgroundColor: b.textColor, backgroundImage: hatch,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0,
+            boxShadow: i < countedMonetary.length - 1 ? 'inset -1px 0 0 0 ' + palette.surface : 'none',
+          },
+        }, React.createElement('span', {
+          style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', padding: '0 4px' },
+        }, wide ? b.label : t(b.key === 'soz' ? 'barKurz.soz' : 'barKurz.ipv')));
+      })
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' } }, t('schnellcheck.barHint'))
   );
 
-  const benefitRow = (b) => React.createElement('button', {
+  const benefitRow = (b) => {
+    // Subsidiäre IPV bei Sozialhilfe: als Bestandteil ausweisen, nicht als
+    // zusätzlichen Geldbetrag (sonst liest sich die Zeile wie Extra-Geld).
+    const subsumed = ipvSubsumed && b.key === 'ipv';
+    return React.createElement('button', {
     key: b.key,
     onClick: () => onNavigate && onNavigate(b.view),
     style: {
@@ -136,12 +168,15 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.note)
     ),
     React.createElement('div', { style: { flexShrink: 0, textAlign: 'right' } },
-      b.qualitative
-        ? React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: b.textColor } }, t('schnellcheck.pruefen'))
-        : React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.bold, color: b.textColor, whiteSpace: 'nowrap' } }, fmt(b.monthly) + ' / ' + t('schnellcheck.monat'))
+      subsumed
+        ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.mid } }, t('schnellcheck.ipvEnthalten'))
+        : b.qualitative
+          ? React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: b.textColor } }, t('schnellcheck.pruefen'))
+          : React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.bold, color: b.textColor, whiteSpace: 'nowrap' } }, fmt(b.monthly) + ' / ' + t('schnellcheck.monat'))
     ),
     React.createElement('span', { style: { color: b.color, flexShrink: 0 }, 'aria-hidden': true }, '→')
-  );
+    );
+  };
 
   const wegeItem = (view, label) => React.createElement('button', {
     key: view, onClick: () => onNavigate && onNavigate(view),

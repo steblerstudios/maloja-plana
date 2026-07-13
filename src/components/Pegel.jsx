@@ -98,14 +98,16 @@ export const Pegel = ({ palette, t, state }) => {
     hasAmount ? h('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' } }, t('beleg.geschaetzt')) : null
   );
 
+  // Kein role='img' am Container: das SVG ist bereits aria-hidden (dekorativ), und
+  // der Readout ist echter Text. role='img' würde Screenreader nur das knappe
+  // aria-label lesen lassen und Titel/Betrag/Status/„geschätzt" verschlucken —
+  // so wird stattdessen der vollständige Readout natürlich vorgelesen.
   return h('div', {
     style: {
       display: 'flex', alignItems: 'center', gap: space.md + 'px',
       padding: space.md + 'px', marginTop: space.md + 'px', marginBottom: space.md + 'px',
       background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border,
     },
-    role: 'img',
-    'aria-label': title + ' — ' + (hasAmount ? headline + ' — ' : '') + statusText,
   }, svg, readout);
 };
 
