@@ -2,7 +2,7 @@
 
 export const validatePhone = (phone, t) => {
   if (!phone) return { isValid: true, error: '' };
-  const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
+  const cleaned = phone.replace(/[\s\-()./]/g, '');
   const isValid = /^(\+\d{1,3}\d{7,12}|0\d{9})$/.test(cleaned);
   return {
     isValid,
@@ -12,7 +12,7 @@ export const validatePhone = (phone, t) => {
 
 export const formatPhoneOnBlur = (phone) => {
   if (!phone) return '';
-  const cleaned = phone.replace(/[\s\-\(\)\.\/]/g, '');
+  const cleaned = phone.replace(/[\s\-()./]/g, '');
   let prefix, digits;
   if (cleaned.startsWith('+41')) { prefix = '+41'; digits = cleaned.slice(3); }
   else if (cleaned.startsWith('0041')) { prefix = '+41'; digits = cleaned.slice(4); }

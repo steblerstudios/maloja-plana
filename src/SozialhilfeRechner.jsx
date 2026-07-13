@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { berechneSozialhilfe, SKOS_PARAMS } from './data/sozialhilfeRechner.js';
+import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';

@@ -691,7 +691,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionSozialhilfe'),
       rows: sRows,
       status,
-      statusColor: sozialhilfe.eligible ? '#7A8B6F' : '#6B6560',
+      statusColor: sozialhilfe.eligible ? '#5C7150' : '#6B6560',
     });
   }
 
@@ -709,7 +709,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionIPV'),
       rows: iRows,
       status,
-      statusColor: ipv.eligible ? '#7A8B6F' : '#6B6560',
+      statusColor: ipv.eligible ? '#5C7150' : '#6B6560',
     });
   }
 
@@ -719,7 +719,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
       status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
-      statusColor: el.eligible ? '#7A8B6F' : '#6B6560',
+      statusColor: el.eligible ? '#5C7150' : '#6B6560',
     });
   }
 

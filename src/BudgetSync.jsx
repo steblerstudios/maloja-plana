@@ -21,7 +21,7 @@ const formatCHF = (amount) => {
   return (rounded < 0 ? '− ' : '') + 'CHF ' + formatted;
 };
 
-export const BudgetSync = ({ palette, t, data, onUpdate }) => {
+export const BudgetSync = ({ palette, t, data, _onUpdate }) => {
   const [budget, setBudget] = useState(null);
   const [showAnnual, setShowAnnual] = useState(false);
   // Faden 4 / Inkr. A — which orientation infos are expanded (default: none = calm)
@@ -30,7 +30,7 @@ export const BudgetSync = ({ palette, t, data, onUpdate }) => {
   useEffect(() => {
     const synced = calculateMonthlyBudget(data, t);
     setBudget(synced);
-  }, [data]);
+  }, [data, t]);
 
   // Regional-KK: Prämie der Wohngemeinde vs. Schweizer Schnitt (BAG) — neben dem
   // BFS-Ausgaben-Richtwert eine zweite, klar gekennzeichnete KK-Tatsache.

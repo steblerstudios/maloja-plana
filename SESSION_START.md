@@ -14,12 +14,12 @@
 | | |
 |---|---|
 | Aktueller Branch | `main` (Historie 2026-07-11 umgeschrieben) |
-| `main` steht auf | `18df05b` — Merge PR #53 (Runde 2026-07-12 komplett gemergt) |
+| `main` steht auf | `60ded4f` — Merge PR #56 (Stand-Sync); enthält Runde 2026-07-12 (PRs #47–#53) + Code-Review-Cleanups PR #57 (Kantonsnamen Mammo-Block + ScrollFade-Perf) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 | Live (malojaplana.ch) | Bundle `index-d1dacdf3.js` (Stand VOR der Runde 2026-07-12) |
 | **Runde 2026-07-12** | **✅ GEMERGT (PRs #47–#55): Mammografie-Geo, SEO-robots, a11y-Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, Banner-/44px-Tap-Targets, Mammografie-Fakten-Fix, PII-Scrub — alle in `main`** |
-| **Deploy-Gate** | **✅ GRÜN für `18df05b`: Tests 611, PII-Scan Exit 0, 0 🔴 → Freigabe-Marke gesetzt, `bash deploy.sh` frei. NOCH NICHT deployt (neuer Build `index-ed070bd9.js`).** |
+| **Deploy-Gate** | **✅ GRÜN für `60ded4f` (mechanisch re-verifiziert 2026-07-12: Tests 611, PII-Scan Exit 0, Build sauber, Size 64.29/65 kB, de-Chunk + i18n-Parität 5 Spr.) → Freigabe-Marke (`.maloja/predeploy-ok`) auf `60ded4f`, `bash deploy.sh` frei. NOCH NICHT deployt (neuer Build `index-269a5841.js`).** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -29,10 +29,12 @@
 
 
 - **Live:** Bundle `index-d1dacdf3.js` läuft auf malojaplana.ch (Stand VOR der Runde
-  2026-07-12). `main` = `18df05b`; die Runde 2026-07-12 ändert App-Code (neuer Build
-  `index-ed070bd9.js`) und ist **gebaut + in `main`, aber NOCH NICHT deployt**. Deploy-Gate
-  grün (Tests 611, PII-Scan Exit 0, 0 🔴), Freigabe-Marke für `18df05b` gesetzt → nächster
-  Schritt `bash deploy.sh`, dann live gegen den neuen Bundle-Hash gegenprüfen.
+  2026-07-12). `main` = `60ded4f`; die Runde 2026-07-12 (+ Review-Cleanups #57) ändert
+  App-Code (neuer Build `index-269a5841.js`) und ist **gebaut + in `main`, aber NOCH NICHT
+  deployt**. Deploy-Gate grün (mechanisch re-verifiziert 2026-07-12: Tests 611, PII-Scan
+  Exit 0, Build sauber, Size 64.29/65 kB, de-Chunk + i18n-Parität), Freigabe-Marke für
+  `60ded4f` gesetzt → nächster Schritt `bash deploy.sh`, dann live gegen `index-269a5841.js`
+  gegenprüfen.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
@@ -42,10 +44,10 @@
 
 ## Nächste Schritte
 
-1. **Deployen** — Runde 2026-07-12 ist gemergt + Deploy-Gate grün (Freigabe-Marke für
-   `18df05b` gesetzt). `bash deploy.sh` von `main`; danach live gegen `index-ed070bd9.js`
-   gegenprüfen → `FEATURES.md` auf `verified-live`, neuen LIVE-Commit hier + in Memory
-   festhalten. (Deploy-Gate-Hook blockt ohne frische `.maloja/predeploy-ok` → bei weiteren
+1. **Deployen** — Runde 2026-07-12 (+ Review-Cleanups #57) ist gemergt + Deploy-Gate grün
+   (Freigabe-Marke für `60ded4f` gesetzt). `bash deploy.sh` von `main`; danach live gegen
+   `index-269a5841.js` gegenprüfen → `FEATURES.md` auf `verified-live`, neuen LIVE-Commit
+   hier + in Memory festhalten. (Deploy-Gate-Hook blockt ohne frische `.maloja/predeploy-ok` → bei weiteren
    Commits vorher `/maloja-predeploy`.)
 2. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
    gecachten Commits + `refs/pull/*/head` entfernen lassen (Formular

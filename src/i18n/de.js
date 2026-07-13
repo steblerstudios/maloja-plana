@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: { sie: 'Ihr Weg beginnt hier', du: 'Dein Weg beginnt hier' },
-    status: '{started} von {total} begonnen · {done} abgeschlossen',
+    status: '{started} von {total} begonnen',
     allDone: 'Alle Bereiche ausgefüllt',
   },
 
@@ -3616,6 +3616,30 @@ export default {
     open: 'offen',
     allCovered: 'alles gedeckt',
     someOpen: 'offen: {list}',
+  },
+  beleg: {
+    praemie: 'Prämie',
+    verbilligung: 'Verbilligung',
+    selbst: 'selbst',
+    kanton: 'Kanton',
+    geschaetzt: 'geschätzt · Orientierung',
+    keineVerbilligung: 'Über der Grenze — keine Verbilligung. Es gibt andere Wege.',
+    premiumHint: 'KK-Prämie eintragen, um die Aufteilung zu sehen.',
+  },
+  pegel: {
+    grenze: 'Grenze',
+    luft: 'Luft',
+    empty: 'Einkommen und Kanton eingeben — dann zeigt der Pegel, wie viel Luft bleibt.',
+    clear: 'Das Einkommen liegt unter der Grenze — Anspruch besteht, mit Luft.',
+    edge: 'Knapp unter der Grenze — es könnte reichen.',
+    over: 'Über der Grenze — dafür gibt es andere Wege.',
+    perMonthPossible: 'rund {amount} / Monat möglich',
+    bedarf: 'Bedarf',
+    aufstockung: 'Aufstockung',
+    gap: 'Das Einkommen liegt unter dem Bedarf — die Aufstockung hebt es aufs Existenzminimum.',
+    covered: 'Das Einkommen erreicht das Existenzminimum — keine Aufstockung nötig.',
+    deckt: 'könnte rund {amount} / Monat decken',
+    vermoegen: 'Vermögen über dem Freibetrag — das wird zuerst angerechnet. Den Anspruch prüft der Sozialdienst.',
   },
   schnellcheck: {
     title: 'Leistungs-Schnellcheck',

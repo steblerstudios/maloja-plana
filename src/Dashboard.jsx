@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
-import FruchtMitIcon from './FruchtMitIcon.jsx';
 import FruchtStufe from './FruchtStufe.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
@@ -434,7 +433,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile }) => {
+const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile }) => {
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
@@ -636,7 +635,7 @@ const DatenWirken = ({ palette, t, data, completion, lastBackup, text, weight, s
   );
 };
 
-export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, onLeaveDemo, isTablet, isMobile, simpleView, isDarkMode }) => {
+export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, isMobile, simpleView, isDarkMode }) => {
 
   const calculateChapterCompletion = (chapterKey) => {
     const chapter = chapters.find(ch => ch.key === chapterKey);
@@ -763,11 +762,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
-    // ─── Alpha banner ──────────────────────────────────────
-    !alphaDismissed && React.createElement(AlphaBanner, {
-      palette, t, onDismiss: () => setAlphaDismissed(true)
-    }),
-
     // ─── Welcome area ──────────────────────────────────────
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement(PageTitle, {
@@ -779,6 +773,14 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
       null
+    ),
+
+    // ─── Alpha banner — UNTER dem Hero: erst das Versprechen, dann der ruhige
+    // Entwicklungs-Hinweis (auf Handy stand die Warnung sonst vor dem Nutzen). ──
+    !alphaDismissed && React.createElement('div', { style: { marginTop: '20px' } },
+      React.createElement(AlphaBanner, {
+        palette, t, onDismiss: () => setAlphaDismissed(true)
+      })
     ),
 
     // ─── Was ist jetzt dran? — ein leitender nächster Schritt + ruhiger Glance ──
@@ -873,7 +875,10 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             return t('progress.status', { started, done, total });
           })()
         ),
-        React.createElement('div', {
+        // Prozentzahl erst ab spürbarem Fortschritt (≥10%) zeigen — eine einsame
+        // „1%" am Anfang liest sich als „im Rückstand" und widerspricht der Ruhe.
+        // Bis dahin trägt die Status-Zeile links die Orientierung.
+        Math.round(completion) >= 10 && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sageDeep, fontWeight: weight.medium }
         }, Math.round(completion) + '%')
       )
@@ -1319,7 +1324,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             const isLastInTier = chIdx === tier.indices[tier.indices.length - 1];
             const rowOpacity = pct === 0 ? 0.72 : 1;
             const status = getChapterStatus(ch);
-            const statusColors = { leer: palette.soft, begonnen: palette.sand, grundordnung: palette.sage, vertieft: palette.sage };
+            // Deep-Varianten: als 13px-Statustext brauchen sand/sage ≥4.5:1 (roh: 2.34 / 4.34).
+            const statusColors = { leer: palette.soft, begonnen: palette.sandDeep, grundordnung: palette.sageDeep, vertieft: palette.sageDeep };
 
             return React.createElement('button', {
               key: ch.key,

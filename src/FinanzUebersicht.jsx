@@ -239,7 +239,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;
-          const near = vgl.naechsteUeber || vgl.naechsteUnter;
           return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
             React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
               t('finanzUebersicht.branchenvergleich')

@@ -22,7 +22,7 @@ const SIZE_FACTOR = {
 
 let _uid = 0;
 
-export default function FruchtMitIcon({ fruit, iconName, color, cutColor, size = 44, ripeness = 1, title }) {
+export default function FruchtMitIcon({ fruit, iconName, color, size = 44, ripeness = 1, title }) {
   const maskId = React.useMemo(() => 'frucht-cut-' + (_uid++), []);
   const draw = FRUITS[fruit];
   const iconFactory = Icons[iconName];

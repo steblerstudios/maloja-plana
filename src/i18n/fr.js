@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: 'Votre parcours commence ici',
-    status: '{started} sur {total} commencés · {done} terminés',
+    status: '{started} sur {total} commencés',
     allDone: 'Toutes les sections complétées',
   },
 
@@ -3637,6 +3637,30 @@ export default {
     open: 'à faire',
     allCovered: 'tout couvert',
     someOpen: 'à faire : {list}',
+  },
+  beleg: {
+    praemie: 'Prime',
+    verbilligung: 'Réduction',
+    selbst: 'à charge',
+    kanton: 'Canton',
+    geschaetzt: 'estimation · orientation',
+    keineVerbilligung: 'Au-dessus de la limite — pas de réduction. D’autres voies existent.',
+    premiumHint: 'Saisir la prime d’assurance-maladie pour voir la répartition.',
+  },
+  pegel: {
+    grenze: 'Limite',
+    luft: 'marge',
+    empty: 'Saisir le revenu et le canton — la jauge montre alors la marge disponible.',
+    clear: 'Le revenu est sous la limite — le droit existe, avec de la marge.',
+    edge: 'Juste sous la limite — cela pourrait suffire.',
+    over: 'Au-dessus de la limite — d’autres voies existent.',
+    perMonthPossible: 'environ {amount} / mois possible',
+    bedarf: 'Besoin',
+    aufstockung: 'Complément',
+    gap: 'Le revenu est sous le minimum vital — le complément comble l’écart.',
+    covered: 'Le revenu atteint le minimum vital — pas de complément nécessaire.',
+    deckt: 'pourrait couvrir environ {amount} / mois',
+    vermoegen: 'Fortune au-dessus de la franchise — elle est prise en compte d’abord. Le service social évalue le droit.',
   },
   schnellcheck: {
     title: 'Vérification rapide des prestations',

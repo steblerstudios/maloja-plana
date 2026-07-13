@@ -3,6 +3,10 @@ import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { LeistungsKompass } from './components/LeistungsKompass.jsx';
+import { Pegel } from './components/Pegel.jsx';
+import { PraemienBeleg } from './components/PraemienBeleg.jsx';
+import { sozialhilfePegelState } from './data/pegel.js';
+import { praemienBelegState } from './data/praemienBeleg.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
@@ -33,6 +37,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // fliessen die hier frei angepassten Zahlen an den Ergebnis-Schritt weiter —
   // sonst blieben sie in diesem lokalen Zustand gefangen. Ohne Callback (Solo-
   // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
   useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [income, rent, kk, data]);
 
   // Gedeckte Leistungen sammeln — jede mit eigenem Ehrlichkeits-Gate.
@@ -41,7 +46,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (numIncome > 0 && canton) ? calculateIPV(probe) : null;
     if (ipv && ipv.eligible) benefits.push({
-      key: 'ipv', view: 'premium', color: palette.sky,
+      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep,
       label: t('schnellcheck.ipv'), monthly: ipv.amount, note: t('schnellcheck.ipvNote'),
     });
     // Sozialhilfe: nur mit Mietkontext (sonst Bedarf unvollständig) + ungedecktem
@@ -49,16 +54,25 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     if (numRent > 0) {
       const sh = calculateSozialhilfe(probe);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
-        key: 'soz', view: 'sozialhilfe', color: palette.sage,
+        key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
         label: t('nav.sozialhilfe'), monthly: sh.deficit, note: t('schnellcheck.sozNote'),
       });
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
     const el = checkELEligibility(probe);
     if (el?.eligible) benefits.push({
-      key: 'el', view: 'sozialhilfe', color: palette.goldDeep,
+      key: 'el', view: 'sozialhilfe', color: palette.goldDeep, textColor: palette.goldDeep,
       label: t('schnellcheck.el'), qualitative: true, note: t('schnellcheck.elNote'),
     });
+  } catch { /* Orientierung, nie blockierend */ }
+
+  // Instrument-Zustände (Beleg/Pegel) im selben Ehrlichkeits-/Crash-Gate berechnen
+  // wie die Leistungsliste: werfen calculateIPV/calculateSozialhilfe, degradiert die
+  // ganze Ansicht sonst zum leeren Screen statt sanft zu „keine Angabe".
+  let belegState = null, sozPegelState = null;
+  try {
+    if (canton && numIncome > 0) belegState = praemienBelegState(probe);
+    if (canton && numIncome > 0 && numRent > 0) sozPegelState = sozialhilfePegelState(probe);
   } catch { /* Orientierung, nie blockierend */ }
 
   const monetary = benefits.filter(b => !b.qualitative && b.monthly > 0);
@@ -96,7 +110,9 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     React.createElement('div', { style: { display: 'flex', height: '28px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
       monetary.map(b => React.createElement('div', {
         key: b.key,
-        style: { width: (totalMonthly > 0 ? (b.monthly / totalMonthly * 100) : 0).toFixed(1) + '%', background: b.color, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 },
+        // textColor (Deep-Variante) als Fläche, damit der weisse Text ≥4.5:1 hält —
+        // rohes sky/sage trägt weissen Text nur mit 3.20/4.32:1 (AA-Fail).
+        style: { width: (totalMonthly > 0 ? (b.monthly / totalMonthly * 100) : 0).toFixed(1) + '%', background: b.textColor, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 },
       }, (b.monthly / totalMonthly) >= 0.18 ? React.createElement('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, whiteSpace: 'nowrap' } }, b.label) : null))
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px' } }, t('schnellcheck.barHint'))
@@ -121,8 +137,8 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     ),
     React.createElement('div', { style: { flexShrink: 0, textAlign: 'right' } },
       b.qualitative
-        ? React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: b.color } }, t('schnellcheck.pruefen'))
-        : React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.bold, color: b.color, whiteSpace: 'nowrap' } }, fmt(b.monthly) + ' / ' + t('schnellcheck.monat'))
+        ? React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: b.textColor } }, t('schnellcheck.pruefen'))
+        : React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.bold, color: b.textColor, whiteSpace: 'nowrap' } }, fmt(b.monthly) + ' / ' + t('schnellcheck.monat'))
     ),
     React.createElement('span', { style: { color: b.color, flexShrink: 0 }, 'aria-hidden': true }, '→')
   );
@@ -158,6 +174,19 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // Leistungs-Kompass: Peilung über dem Ergebnis (Instrument über derselben Logik)
     React.createElement(LeistungsKompass, {
       palette, t, benefitCount: benefits.length, topLabel, hasIncome: numIncome > 0,
+    }),
+
+    // IPV-Instrument: Prämien-Beleg (Papier) — bewusst anderes Material als der
+    // Sozialhilfe-Pegel (Glas), damit sie nebeneinander unterscheidbar sind.
+    // Reine Anzeige über calculateIPV, Berechnung unberührt.
+    belegState && React.createElement(PraemienBeleg, {
+      palette, t, state: belegState,
+    }),
+
+    // Sozialhilfe-Pegel (Aufstockungs-Modus): dieselbe Metapher, Linie = Existenz-
+    // minimum. Braucht Miet-Kontext, sonst wäre der Bedarf unvollständig.
+    sozPegelState && React.createElement(Pegel, {
+      palette, t, state: sozPegelState,
     }),
 
     // Ergebnis

@@ -34,7 +34,7 @@ const LEGAL_LINKS = {
   'nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de',
 };
 
-const autoLink = (text, palette) => {
+const autoLink = (text, _palette) => {
   if (typeof text !== 'string') return text;
   const parts = [];
   let rest = text;
@@ -71,7 +71,7 @@ const autoLink = (text, palette) => {
 const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
-export const LegalView = ({ palette, t, onNavigate, section, data }) => {
+export const LegalView = ({ palette, t, onNavigate, section }) => {
   const activeSection = section || 'privacy';
 
   const tabs = [

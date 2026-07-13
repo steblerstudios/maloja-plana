@@ -67,6 +67,11 @@ Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy
 - ✅ AHV-Rente als Schätzung labeln — bereits erledigt: Label „Geschätzte AHV-Altersrente"/
   „Geschätzte BVG-Rente" + gerenderte Source-Zeile „Schätzung nach AHVG/BVG … Keine
   rechtsverbindliche Auskunft." (`VorsorgeRechner.jsx:309`).
+- 🟡 **AHV-21-Referenzalter der Frauen (Übergangsgeneration) — Scoped Task, zur Prüfung.**
+  `berechneAltersrente` rechnet mit pauschalem Referenzalter 65; für Frauen JG 1961–1964 ist es
+  gestaffelt tiefer (AHV 21), zudem fehlt `geschlecht` als Input. Aufgeworfen beim Lint-Cleanup
+  2026-07 (ungenutztes `geburtsjahr`). Voller Plan + Tabelle + Testfälle + Quellen:
+  `docs/roadmap/TASK_ahv21-referenzalter-frauen.md`. Vor Umsetzung `swiss-precision-pruefer`.
 
 ## C — Design / Calm-UX (aus Audit)
 

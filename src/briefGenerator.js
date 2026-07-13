@@ -102,7 +102,6 @@ export function getLetterTemplates(t) {
 // ─── Field extraction helpers ─────────────────────────────
 
 function getLeaseTerminationFields(data, t) {
-  const moveDate = data.wohnen?.moveInDate || '';
   return {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),

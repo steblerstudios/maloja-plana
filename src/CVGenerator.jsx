@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { generateCVTemplate, generateCVHTML, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
+import { generateCVTemplate, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
-export const CVGenerator = ({ palette, t, data, onUpdate }) => {
+export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
   const [preview, setPreview] = useState(false);
   // Abschnitts-Überschriften optisch in Versalien, aber im Markup normale
   // Schreibweise (Screenreader liest Wörter statt Buchstaben) — text-transform.
   const headStyle = { textTransform: 'uppercase', letterSpacing: '0.5px' };
 
   const cv = generateCVTemplate(data, t);
-  const cvHtml = generateCVHTML(cv, t);
 
   const handleDownload = () => {
     downloadCVAsHTML(cv, t);
@@ -46,7 +45,7 @@ export const CVGenerator = ({ palette, t, data, onUpdate }) => {
       }, preview ? '✕ ' + t('common.close') : '◉ ' + t('cv.preview')),
       React.createElement('button', {
         onClick: handleDownload,
-        style: { flex: 1, padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+        style: { flex: 1, padding: '10px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, '↙ ' + t('cv.downloadHtml')),
       React.createElement('button', {
         onClick: () => downloadCVAsJSON(data, t),
