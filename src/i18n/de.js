@@ -3790,6 +3790,8 @@ export default {
     monat: 'Monat',
     jahr: 'Jahr',
     jahre: 'Jahre',
+    monate: 'Monate',
+    referenzalter: 'Referenzalter (AHV 21)',
     skalenfaktor: 'Beitragsskala',
     fehlendeBeitragsjahre: 'Fehlende Beitragsjahre',
     vorbezug: 'Kürzung (Vorbezug)',

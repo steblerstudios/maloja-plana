@@ -67,8 +67,8 @@ Männer: unverändert **65** (alle Jahrgänge).
 3. ✅ `differenzMonate = alter*12 − refMonate`; Default-Alter = Referenzalter statt konstant 65.
 4. ✅ Fallback 780 M (65 J) für Männer, `diverse`, unbekanntes Geschlecht, JG ≥ 1964 →
    Nicht-Frauen-Pfad **byte-identisch** zu vorher (per Test abgesichert).
-5. ⏳ **Rest-Politur offen:** Rückgabe enthält `referenzalterMonate`, aber die UI zeigt an den
-   „65"-Stellen noch nicht das echte Referenzalter an. Klein, keine Rechen-Relevanz.
+5. ✅ UI: Ergebnis-Block zeigt eine ruhige Zeile „Referenzalter (AHV 21): X Jahre Y Monate" —
+   nur wenn ≠ 65 (Übergangsgeneration), sonst kein Clutter. Browser-verifiziert.
 
 ### Phase B — Ausgleichsmassnahmen (grösser, braucht Kreisschreiben-Tabellen)
 

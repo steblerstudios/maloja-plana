@@ -3802,6 +3802,8 @@ export default {
     monat: 'month',
     jahr: 'year',
     jahre: 'years',
+    monate: 'months',
+    referenzalter: 'Reference age (AHV 21)',
     skalenfaktor: 'Contribution scale',
     fehlendeBeitragsjahre: 'Missing contribution years',
     vorbezug: 'Reduction (early withdrawal)',
