@@ -832,7 +832,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         }, t('dashboard.nextUpAllDone'));
       })(),
       mvo.fields.some((f) => !f.done) && React.createElement('p', {
-        style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: 1.5 },
+        style: { fontSize: text.xs, color: palette.soft, margin: space.xs + 'px 0 0', lineHeight: leading.normal },
       }, t('dashboard.nextUpReassure')),
       (() => {
         const reminders = loadReminders();
