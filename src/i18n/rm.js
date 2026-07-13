@@ -719,7 +719,6 @@ export default {
   },
   common: {
     appName: 'Maloja Plana',
-    appTagline: "Tut l'impurtant en in lieu.",
     percent: '{value}%',
     chf: 'CHF {value}',
     chfPerMonth: 'CHF {value}/mais',

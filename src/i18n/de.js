@@ -693,7 +693,6 @@ export default {
   },
   common: {
     appName: 'Maloja Plana',
-    appTagline: 'Alles Wichtige an einem Ort.',
     percent: '{value}%',
     chf: 'CHF {value}',
     chfPerMonth: 'CHF {value}/Mt.',
