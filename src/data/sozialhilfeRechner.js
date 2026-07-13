@@ -71,6 +71,19 @@ export function vermoegensfreibetragSKOS(adults = 1, minorChildren = 0) {
   return Math.min(15000, basis + Math.max(0, minorChildren) * 3000);
 }
 
+// Freibetrag bei RÜCKERSTATTUNG rechtmässig bezogener Sozialhilfe wegen günstiger
+// Verhältnisse (Vermögensanfall, z.B. Erbschaft) — NICHT zu verwechseln mit dem
+// Vermögensfreibetrag WÄHREND des Bezugs (oben, 6'000/12'000/+3'000). Andere,
+// höhere Grenze: CHF 30'000 Einzelperson / 50'000 Paar (2+ Erwachsene) + 15'000
+// pro minderjähriges Kind, ohne Deckel. Quelle: § 27 SHG Kanton Zürich +
+// Sozialhilfehandbuch ZH 15.2.03 (Stand ab 1.1.2026). KANTONAL VERSCHIEDEN —
+// nur Orientierung mit Zürcher Werten. Erwerbseinkommen löst i.d.R. keine
+// Rückerstattung aus (SKOS-Empfehlung).
+export function rueckerstattungsFreibetrag(adults = 1, minorChildren = 0) {
+  const basis = adults >= 2 ? 50000 : 30000;
+  return basis + Math.max(0, minorChildren) * 15000;
+}
+
 export function berechneSozialhilfe({
   haushaltGroesse,
   adults = 1,
