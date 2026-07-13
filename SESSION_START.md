@@ -7,19 +7,19 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-12
+**Stand:** 2026-07-13
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
 | Aktueller Branch | `main` (Historie 2026-07-11 umgeschrieben) |
-| `main` steht auf | `60ded4f` — Merge PR #56 (Stand-Sync); enthält Runde 2026-07-12 (PRs #47–#53) + Code-Review-Cleanups PR #57 (Kantonsnamen Mammo-Block + ScrollFade-Perf) |
+| `main` steht auf | `5c64527` — Merge PR #58 (Anspruchs-Instrumente + Design-Docs ent-driftet + a11y-Kontrast/Tap-Targets + ESLint v9 Flat-Config); enthält die Runde 2026-07-12 (PRs #47–#57) |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-d1dacdf3.js` (Stand VOR der Runde 2026-07-12) |
-| **Runde 2026-07-12** | **✅ GEMERGT (PRs #47–#55): Mammografie-Geo, SEO-robots, a11y-Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, Banner-/44px-Tap-Targets, Mammografie-Fakten-Fix, PII-Scrub — alle in `main`** |
-| **Deploy-Gate** | **✅ GRÜN für `60ded4f` (mechanisch re-verifiziert 2026-07-12: Tests 611, PII-Scan Exit 0, Build sauber, Size 64.29/65 kB, de-Chunk + i18n-Parität 5 Spr.) → Freigabe-Marke (`.maloja/predeploy-ok`) auf `60ded4f`, `bash deploy.sh` frei. NOCH NICHT deployt (neuer Build `index-269a5841.js`).** |
+| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = frischer `main`-Build → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13) |
+| **Runde 2026-07-12/13** | **✅ GEMERGT + LIVE (PRs #47–#58): Runde 2026-07-12 (Mammografie-Geo/-Fakten, SEO-robots, a11y-Feld-Labels, Kalenderband-mobil, ScrollFade, 44px-Tap-Targets, PII-Scrub) + Anspruchs-Instrumente (IPV-Prämien-Beleg + Sozialhilfe-Pegel im Schnellcheck) + Design-Docs-Ent-Drift** |
+| **Deploy-Gate** | **✅ Runde deployt & live-verifiziert (2026-07-13): `main` `5c64527` baut zu `index-59c9c3e4.js`, identisch zum Live-Bundle. Tests grün, i18n-Parität 5 Spr., Build sauber.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -28,13 +28,10 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live:** Bundle `index-d1dacdf3.js` läuft auf malojaplana.ch (Stand VOR der Runde
-  2026-07-12). `main` = `60ded4f`; die Runde 2026-07-12 (+ Review-Cleanups #57) ändert
-  App-Code (neuer Build `index-269a5841.js`) und ist **gebaut + in `main`, aber NOCH NICHT
-  deployt**. Deploy-Gate grün (mechanisch re-verifiziert 2026-07-12: Tests 611, PII-Scan
-  Exit 0, Build sauber, Size 64.29/65 kB, de-Chunk + i18n-Parität), Freigabe-Marke für
-  `60ded4f` gesetzt → nächster Schritt `bash deploy.sh`, dann live gegen `index-269a5841.js`
-  gegenprüfen.
+- **Live:** Bundle `index-59c9c3e4.js` läuft auf malojaplana.ch und ist **identisch zum
+  frischen `main`-Build** (`main` = `5c64527`) → die ganze Runde 2026-07-12/13 inkl. der
+  neuen Anspruchs-Instrumente ist **deployt + verified-live** (Bundle-Hash gegengeprüft
+  2026-07-13). Tests grün, i18n-Parität 5 Spr., Build sauber.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
@@ -44,11 +41,13 @@
 
 ## Nächste Schritte
 
-1. **Deployen** — Runde 2026-07-12 (+ Review-Cleanups #57) ist gemergt + Deploy-Gate grün
-   (Freigabe-Marke für `60ded4f` gesetzt). `bash deploy.sh` von `main`; danach live gegen
-   `index-269a5841.js` gegenprüfen → `FEATURES.md` auf `verified-live`, neuen LIVE-Commit
-   hier + in Memory festhalten. (Deploy-Gate-Hook blockt ohne frische `.maloja/predeploy-ok` → bei weiteren
-   Commits vorher `/maloja-predeploy`.)
+1. **IPV-Lebenslinie (Phase 2)** — die Anspruchs-Instrumente (Phase 1) sind live; als
+   Nächstes das IPV-Instrument statefull machen: geschätzt → beantragt → bestätigt (Stempel)
+   → jährlich erneuern. Braucht ein kleines persistiertes Status-Feld (`or5_`, additiv, mit
+   ausdrücklicher Freigabe) + kantonale Ehrlichkeit (IPV oft automatisch via Steuerdaten).
+   **Davor:** `/maloja-ablauf "IPV beantragen"` + `swiss-precision`/`rechts`-Prüfer;
+   rm-Gegenlese der neuen `pegel.*`/`beleg.*`-Keys. Design + Ablauf-Kontext (A2) im Memory
+   `project_metaphor_matrix`. (Weitere Instrumente: EL qualitativ; Pegel-Reuse anderswo.)
 2. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
    gecachten Commits + `refs/pull/*/head` entfernen lassen (Formular
    support.github.com/contact/private-information). Ein normaler `git clone` ist sauber;

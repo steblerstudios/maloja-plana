@@ -13,16 +13,17 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-07-12 · **Live:** App-Bundle `index-d1dacdf3.js` auf malojaplana.ch (Stand VOR der Runde 2026-07-12). `main` = `18df05b`; die Runde 2026-07-12 (PRs #47–#55) ist **gebaut + in `main`, Deploy-Gate grün (Marke gesetzt), aber NOCH NICHT deployt** → neuer Build `index-ed070bd9.js` wird beim nächsten `bash deploy.sh` live.
+**Stand:** 2026-07-13 · **Live:** App-Bundle `index-59c9c3e4.js` auf malojaplana.ch = frischer `main`-Build (`main` = `5c64527`, Merge PR #58). Die Runde 2026-07-12/13 (PRs #47–#58) ist **deployt + verified-live** (Bundle-Hash gegengeprüft 2026-07-13).
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
 | a11y-Pass 3 (PR #19): Tresor-Labels, goldDeep-Token, Onboarding Zurück/Skip/Fortschritt, Arztkoffer-Kontrast, Rechner-Reiter-Scroll, roseDeep-Fix, Torten-SVG aria-hidden | `verified-live` | `0ebb865` (Merge PR #19) | Live-Hash `index-1fb26e10.js` == main-Build (2026-07-10) |
 | Release `0.1.24-beta` (Gepäck-Kür, a11y-Review, Linkshänder-Modus u.a.) | `verified-live` | `v0.1.24-beta` | in `main`/live enthalten, Hash bestätigt |
 | Kapitalbezugssteuer (Bund Art.38 DBG ÷5 + Kanton) | `verified-live` | `e4fe262` | in `main` (Vorfahr von `0ebb865`) = Teil des Live-Builds `index-1fb26e10.js`; 535 Tests grün, browserverif |
-| Runde 2026-07-12 UI/a11y (Mammografie-Geo, SEO-robots, Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, 44px-Tap-Targets) | `built` | `18df05b` (PRs #47–#53) | Tests 611 grün, Build sauber, Deploy-Gate grün; pending `deploy.sh` |
-| Mammografie-Fakten-Fix (Franchise entfällt, nur 10% Selbstbehalt + Kantonsliste +GL/SH) | `built` | PR #55 (`f202b13`) | swiss-precision + swisscancerscreening.ch/KVG Art.64 belegt |
-| PII-Scan-Gate + Scrub (Alt-Mails/Vorname aus getrackten Dateien) | `built` | PR #54 (`c4c2a91`) | `scripts/pii-scan.sh` Exit 0 |
+| Runde 2026-07-12 UI/a11y (Mammografie-Geo, SEO-robots, Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, 44px-Tap-Targets) | `verified-live` | `18df05b` (PRs #47–#53) | Teil von `main` `5c64527`, Live-Hash `index-59c9c3e4.js` == main-Build (2026-07-13) |
+| Mammografie-Fakten-Fix (Franchise entfällt, nur 10% Selbstbehalt + Kantonsliste +GL/SH) | `verified-live` | PR #55 (`f202b13`) | swiss-precision + swisscancerscreening.ch/KVG Art.64 belegt; in Live-Bundle |
+| PII-Scan-Gate + Scrub (Alt-Mails/Vorname aus getrackten Dateien) | `verified-live` | PR #54 (`c4c2a91`) | `scripts/pii-scan.sh` Exit 0; in Live-Bundle |
+| Anspruchs-Instrumente: IPV-Prämien-Beleg (Papier) + Sozialhilfe-Pegel (Glas) im Leistungs-Schnellcheck — reine Anzeige über calculateIPV/-Sozialhilfe, Berechnung unberührt; Vermögens-Gate + AA-Kontrast | `verified-live` | PR #58 (`5c64527`) | Live-Hash `index-59c9c3e4.js` == main-Build; Tests grün, i18n 5 Spr. **Phase 2 (Lebenslinie/Stempel) offen** |
 
 ## Wie pflegen
 
