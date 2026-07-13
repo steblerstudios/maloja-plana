@@ -13,13 +13,14 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (Historie 2026-07-11 umgeschrieben) |
-| `main` steht auf | `5c64527` — Merge PR #58 (Anspruchs-Instrumente + Design-Docs ent-driftet + a11y-Kontrast/Tap-Targets + ESLint v9 Flat-Config); enthält die Runde 2026-07-12 (PRs #47–#57) |
+| Aktueller Branch | `feat/ipv-lebenslinie` — 3 Commits über `main`, **unmerged + unpushed** (Sitzung 2026-07-13) |
+| `main` steht auf | `263d027` — Merge PR #59 (Stand-Sync, nur Doku über `5c64527`); Code = `5c64527`, Live-Bundle unverändert |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = frischer `main`-Build → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13) |
-| **Runde 2026-07-12/13** | **✅ GEMERGT + LIVE (PRs #47–#58): Runde 2026-07-12 (Mammografie-Geo/-Fakten, SEO-robots, a11y-Feld-Labels, Kalenderband-mobil, ScrollFade, 44px-Tap-Targets, PII-Scrub) + Anspruchs-Instrumente (IPV-Prämien-Beleg + Sozialhilfe-Pegel im Schnellcheck) + Design-Docs-Ent-Drift** |
-| **Deploy-Gate** | **✅ Runde deployt & live-verifiziert (2026-07-13): `main` `5c64527` baut zu `index-59c9c3e4.js`, identisch zum Live-Bundle. Tests grün, i18n-Parität 5 Spr., Build sauber.** |
+| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Die `feat`-Arbeit unten ist **NICHT** live. |
+| **Runde 2026-07-12/13** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 (Mammografie, SEO-robots, a11y, Kalenderband, ScrollFade, 44px, PII-Scrub) + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift + Stand-Sync** |
+| **Neu auf `feat/ipv-lebenslinie`** | **⏳ gebaut + verifiziert-LOKAL, nicht deployt (2026-07-13):** `91405d8` IPV-Lebenslinie Phase 2 + a11y-Härtung + Subsidiaritäts-Fix · `671da78` Sozialhilfe-Rückerstattung (Copy belegt korrigiert + Rechner) · `f987d06` Tresor-Lock-Konzept (Spec). Tests 632 grün, `eslint src` sauber, Build ok, Browser verifiziert. **Offen: Predeploy-Gate → PR → main → Deploy.** |
+| **Deploy-Gate** | **⚠️ `.maloja/predeploy-ok` steht auf `b2d6fe6` (Pre-Merge PR #58). Vor dem NÄCHSTEN Deploy `bash deploy.sh`/`/maloja-predeploy` frisch laufen. Live (`5c64527`) ist ok.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -41,14 +42,23 @@
 
 ## Nächste Schritte
 
-1. **IPV-Lebenslinie (Phase 2)** — die Anspruchs-Instrumente (Phase 1) sind live; als
-   Nächstes das IPV-Instrument statefull machen: geschätzt → beantragt → bestätigt (Stempel)
-   → jährlich erneuern. Braucht ein kleines persistiertes Status-Feld (`or5_`, additiv, mit
-   ausdrücklicher Freigabe) + kantonale Ehrlichkeit (IPV oft automatisch via Steuerdaten).
-   **Davor:** `/maloja-ablauf "IPV beantragen"` + `swiss-precision`/`rechts`-Prüfer;
-   rm-Gegenlese der neuen `pegel.*`/`beleg.*`-Keys. Design + Ablauf-Kontext (A2) im Memory
-   `project_metaphor_matrix`. (Weitere Instrumente: EL qualitativ; Pegel-Reuse anderswo.)
-2. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
+1. **`feat/ipv-lebenslinie` nach `main` bringen** (die Sitzung 2026-07-13): pushen →
+   `/maloja-predeploy` (Gate steht noch auf `b2d6fe6`) → PR → `main` → `deploy.sh` →
+   live per Bundle-Hash verifizieren. Enthält: IPV-Lebenslinie Phase 2 (statefull Beleg,
+   additives `data.anspruch.ipv`), a11y-Härtung der Instrumente, Subsidiaritäts-Fix
+   (IPV+Sozialhilfe nicht mehr doppelt), Sozialhilfe-Rückerstattung (belegt korrigiert +
+   Rechner), Tresor-Lock-Spec. Specs: `docs/design/ipv-lebenslinie.md`, `.../tresor-lock.md`.
+2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
+   `schnellcheck.ipvSubsumed/ipvEnthalten`, `sozialhilfe.repayment*` — Muttersprachler:in.
+3. **Design-Vision offen (Discussion/Build):** #3-Instrumente EL (qualitativ) · Baum↔Obstgarten
+   (Entscheid E) · Haus-Karte vs. Skeuo-Liste Metapher-Abgleich. Backlog: `docs/design/design-backlog.md` E.
+4. **Tresor-Lock bauen** (Konzept steht, `docs/design/tresor-lock.md`): opt-in Passphrase-
+   Verschlüsselung aller `or5_*`-Stores, Backup beim Setup. Erst mit ausdrücklicher Freigabe;
+   Native-Secure-Safe-Vision (Ordner auf dem Gerät + Keychain/Keystore) → „Logins-Phase"
+   zusammen mit App-Store/iOS-Recherche.
+5. **Rechts-Feinschliff (offen, belegt vorbereitet):** exakte Kantons-Mechanik IPV automatisch
+   vs. Antrag (schärft die Verzweigung); Rückerstattungs-Zahlen sind ZH-Werte (kantonal prüfen).
+6. **GitHub-Support-Ticket** (Stebler Studios, Account-Aktion): nach dem Historie-Purge die
    gecachten Commits + `refs/pull/*/head` entfernen lassen (Formular
    support.github.com/contact/private-information). Ein normaler `git clone` ist sauber;
    die PR-Refs tragen die Alt-Gmail noch. Force-push erreicht sie nicht. **Zusätzlich:** die
