@@ -178,11 +178,15 @@ export function berechneAltersrente({
 /**
  * Vergleiche Renten bei verschiedenen Bezugsaltern (Vorbezug/Aufschub).
  */
-export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre) {
+export function vergleicheVorbezugAufschub(durchschnittlichesJahreseinkommen, beitragsjahre, geschlecht, geburtsjahr) {
   const alter = [63, 64, 65, 66, 67, 68, 69, 70];
   return alter.map(a => {
     const r = berechneAltersrente({
-      geburtsjahr: 1965,
+      // Geschlecht/Jahrgang durchreichen, damit Vorbezug/Aufschub jeder Zeile gegen das
+      // ECHTE Referenzalter der Person rechnet (AHV 21). Ohne Angabe → 1965/kein
+      // Geschlecht = Referenzalter 65 (unverändertes Verhalten, rückwärtskompatibel).
+      geburtsjahr: geburtsjahr || 1965,
+      geschlecht,
       durchschnittlichesJahreseinkommen,
       beitragsjahre,
       bezugAlter: a,

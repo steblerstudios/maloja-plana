@@ -3774,6 +3774,8 @@ export default {
     zukunftSzenarioWeiter: 'LPP e pilastro 3a continuano a crescere finché versi contributi (3a al massimo fino a 70 anni).',
     szenarioJahr: 'anno',
     szenarioJahre: 'anni',
+    szenarioMonat: 'mese',
+    szenarioMonate: 'mesi',
     einkommen: 'Reddito annuo lordo (CHF)',
     einkommenHint: 'Reddito medio determinante',
     beitragsjahre: 'Anni di contribuzione',
