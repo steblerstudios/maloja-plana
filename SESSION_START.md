@@ -14,15 +14,15 @@
 | | |
 |---|---|
 | Aktueller Branch | `main` (Sitzung 2026-07-13, 3. Runde: Doku-Konsolidierung + Governance-Mechanismus + Momentum-Zeile — **gemergt, aber NICHT deployt**) |
-| `main` steht auf | `2f011e3` — Merge PR #75; enthält gegenüber `69ea85e` (letzter Live-Stand): Doku-Roadmap-Konsolidierung (#72), Release-Konsolidierung (#73), Governance-Feature-Level-Tagging + Runtime-dormant-Notiz (#74), Momentum-Anti-Druck-Zeile im Dashboard (#75, L0–L1). **Alles Doku + eine kleine UI-Zeile — noch nicht deployt.** |
+| `main` steht auf | `b750e9e` — Merge PR #77; enthält gegenüber `69ea85e` (letzter Live-Stand): Doku-Konsolidierung (#72/#73), Governance-Feature-Level-Tagging (#74), Momentum-Anti-Druck-Zeile (#75, L0–L1) + **#77 nextUpReassure Sie/Du-Split + Batterie-Polish** (a11y-Chip-Dunkelkontrast, Token-Hygiene). **Alles Doku + eine kleine UI-Zeile + Politur — noch nicht deployt.** |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 | Live (malojaplana.ch) | Bundle `index-8aeb4a84.js` = Build von `69ea85e` → **DEPLOYT & verified-live** (Live-Hash frisch gegengeprüft 2026-07-13). ⚠️ `main` (`2f011e3`) ist **vor** dem Live-Stand: die 3.-Runde-Änderungen (#72–#75) sind **gemergt, aber NICHT live**. |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
 | **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
 | **Runde 3 (Tresor + AHV-21) — ✅ LIVE** | **✅ PRs #62/#63/#65/#66 (`a9578f1` → in `69ea85e`):** Tresor-Lock cryptoCore/secureStore (**dormant/unverdrahtet**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. **Deployt in `index-8aeb4a84.js`.** |
-| **Runde 4 (Doku + Governance + Momentum) — 🟡 GEMERGT, NICHT LIVE** | **#72/#73** Doku-Sprawl-Konsolidierung (Roadmap+Release; Root 25→22 `.md`, nichts gelöscht, nur nach `docs/archive/` verschoben) · **#74** Feature-Level-Tagging L0–L5 in `GOVERNANCE_LEVELS.md` + `src/runtime/README.md` (Runtime bewusst dormant) · **#75** Momentum-Anti-Druck-Zeile (`nextUpReassure`, 5 Spr., L0–L1, im Dev live verifiziert). In `main` (`2f011e3`), **noch nicht deployt**. |
-| **Deploy-Gate** | **🟡 Marker `.maloja/predeploy-ok` = `69ea85e`, aber HEAD = `2f011e3` → ein Prod-Deploy (`bash deploy.sh`) wird korrekt vom Gate BLOCKIERT. Vor dem nächsten Deploy: `/maloja-predeploy` auf `2f011e3` laufen lassen (neue Marke). Stage-Deploy (`--stage`) frei.** |
+| **Runde 4 (Doku + Governance + Momentum + Sie/Du) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#72/#73** Doku-Sprawl-Konsolidierung · **#74** Feature-Level-Tagging L0–L5 (`GOVERNANCE_LEVELS.md`, Runtime dormant) · **#75** Momentum-Anti-Druck-Zeile (`nextUpReassure`) · **#77** Sie/Du-Split der Zeile + Batterie-Polish (FinanzUebersicht-Chip Dunkelkontrast '60'→'40', `ctrlBtn`/Anrede `radius.sm`, `du`→`Du`, `leading.normal`). **Predeploy-Runde 4: volle Batterie (10 Prüfungen — Security+a11y+Design ganze App + Domänen + code-review) = 0 🔴.** In `main` (`b750e9e`), noch nicht deployt. |
+| **Deploy-Gate** | **✅ GRÜN für `b750e9e` (Predeploy-Runde 4, volle Batterie 0 🔴): Tests 651, PII Exit 0, Build sauber, Size 64.42/65 kB, de-Chunk + i18n-Parität, CSP self-only. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -56,11 +56,14 @@
    (versioniert), Passphrase-Stärke, `VAULT_*`→`TRESOR_*`. Dann UI (Schritt 2), dann
    Voll-Zyklus live verifizieren (Schritt 3). Details: `docs/design/tresor-lock.md`.
    Bau-Freigabe nötig (berührt ALLE Daten — hohe Sorgfalt).
-   **Vorher/parallel:** `main` (`2f011e3`, #72–#75) ist noch nicht deployt — vor `bash deploy.sh`
-   erst `/maloja-predeploy` auf `2f011e3` (Marker steht noch auf `69ea85e`), dann Live-Hash
+   **Vorher/parallel — DEPLOY-BEREIT:** `main` (`b750e9e`, #72–#77) ist Deploy-Gate-GRÜN
+   (Predeploy-Runde 4, volle Batterie 0 🔴, Marke gesetzt). `bash deploy.sh` → Live-Hash
    gegenprüfen + hier/`FEATURES.md` auf verified-live heben.
-   **Weiter geparkt (nicht blockierend):** AHV Phase B (reduzierte Kürzungssätze der
-   Übergangsgeneration) · `LanguageSwitcher` kein 44px (a11y-💡).
+   **Weiter geparkt (nicht blockierend):** AHV Phase B (reduzierte Kürzungssätze) · **whole-app-a11y-Sweep:**
+   Schubladen-Fokus-Management (`MobileNav` settings-Mode: Fokus rein/zurück, Hintergrund inert) ·
+   Doppel-`h1` in `Lebenssituationen.jsx` (→ `PageTitle`/h2) · `DocumentTresor`-Icon-Buttons 36→44px +
+   Lösch-Rückfrage · `LanguageSwitcher` kein 44px · Dashboard-`mvo.fields`-Doppel-Scan (Kosmetik) ·
+   2 ungeschützte `localStorage`-Zeilen (`main.jsx:572`, `Dashboard.jsx:748`) · Meta-CSP als HTTP-Header.
 2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
    `schnellcheck.ipvSubsumed/ipvEnthalten`, `sozialhilfe.repayment*` — Muttersprachler:in.
    **Neu dazu:** die in Predeploy-Runde 2 ergänzten RM-Vus-Formen (`{sie,du}`-Split) sind
