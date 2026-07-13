@@ -3786,6 +3786,8 @@ export default {
     zukunftSzenarioWeiter: 'La LPP et le pilier 3a continuent de croître tant que vous cotisez (3a jusqu’à 70 ans au plus tard).',
     szenarioJahr: 'an',
     szenarioJahre: 'ans',
+    szenarioMonat: 'mois',
+    szenarioMonate: 'mois',
     einkommen: 'Revenu annuel brut (CHF)',
     einkommenHint: 'Revenu moyen déterminant',
     beitragsjahre: 'Années de cotisation',
