@@ -69,7 +69,8 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     fontSize: text.xs, fontWeight: weight.medium, padding: '1px 7px', borderRadius: radius.lg,
     marginLeft: space.xs + 'px', whiteSpace: 'nowrap',
     background: cost === 'paid' ? palette.gold + '22' : cost === 'freemium' ? palette.sky + '18' : palette.sage + '18',
-    color: cost === 'paid' ? palette.gold : cost === 'freemium' ? palette.sky : palette.sage,
+    // Deep-Varianten für lesbaren Badge-Text (roh: gold 2.19 / sky 3.20 / sage 4.34 = AA-Fail).
+    color: cost === 'paid' ? palette.goldDeep : cost === 'freemium' ? palette.skyDeep : palette.sageDeep,
   });
 
   return React.createElement('div', { style: card },

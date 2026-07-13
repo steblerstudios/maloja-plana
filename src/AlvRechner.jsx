@@ -52,7 +52,7 @@ export const AlvRechner = ({ palette, t, data, onNavigate }) => {
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     sublabel: { color: palette.mid, fontSize: text.xs, marginTop: '2px', maxWidth: '320px', lineHeight: 1.5 },
     input: { width: '160px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    toggle: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    toggle: (active) => ({ padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     resultBox: { padding: space.md + 'px', background: palette.sage + '18', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage + '66', marginBottom: space.md + 'px' },
     resLine: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md + 'px', padding: '7px 0', borderBottom: '1px solid ' + palette.border + '66' },
     resKey: { fontSize: text.sm, color: palette.mid },

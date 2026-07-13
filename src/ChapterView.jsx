@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  validatePhone, validateAHV, validateEmail, validatePostalCode, validateCurrency, validateDate, getFileExpiryHint, getExpiryStatus, formatPhoneForDisplay, formatDateForDisplay, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
+  validatePhone, validateAHV, validateEmail, validatePostalCode, getFileExpiryHint, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
 import { Icon } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
@@ -60,8 +60,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     try { localStorage.setItem(storageKey, String(next)); } catch {}
   };
 
-  // t() with fallback if not provided (backward compat)
-  const tr = t || ((k) => k);
+  // t() with fallback if not provided (backward compat). useMemo → stabile Referenz,
+  // damit tr sauber als useEffect-Dep dienen kann (t ist bereits memoisiert).
+  const tr = useMemo(() => t || ((k) => k), [t]);
 
   // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
   // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
@@ -88,7 +89,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     root.addEventListener('scroll', compute, { passive: true });
     window.addEventListener('resize', compute);
     return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
-  }, [chapter.key, expandedSection, showSecondary]);
+  }, [chapter.key, expandedSection, showSecondary, sectionTabs.length]);
 
   // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
   // Hervorhebung immer sichtbar bleibt, auch wenn der Reiter rechts ausserhalb liegt.
@@ -116,7 +117,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       runtimeEventBus.unsubscribe(listener);
       if (timer) clearTimeout(timer);
     };
-  }, []);
+    // tr ist stabil (= memoisiertes t); als Dep wird bei Sprachwechsel sauber neu
+    // abonniert → die Upload-Meldung nutzt die aktuelle Sprache (keine Stale-Closure).
+  }, [tr]);
 
   const validateField = (fieldKey, value) => {
     let error = '';
@@ -994,21 +997,17 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     openPrintWindow(html);
   };
 
-  const bloodTypeColors = {
-    '0+': palette.rose, '0-': palette.rose,
-    'A+': palette.gold, 'A-': palette.gold,
-    'B+': palette.sky, 'B-': palette.sky,
-    'AB+': palette.sage, 'AB-': palette.sage,
-  };
-
   const chapterAccent = {
     basis: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
     wohnen: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
-    finanzen: { bg: palette.gold + '0A', border: palette.gold, icon: palette.gold },
-    versicherungen: { bg: palette.sky + '0A', border: palette.sky, icon: palette.sky },
+    // icon = Vordergrundfarbe für Icon UND kursiven Intro-Text (Zeile ~1023) → muss
+    // lesbar sein (AA ≥4.5). Roh-Akzente (gold 2.19 / sky 3.20 / sand 2.34 / rose 3.59)
+    // fielen als Text durch; darum die *Deep-Varianten. bg/border bleiben roh (dekorativ).
+    finanzen: { bg: palette.gold + '0A', border: palette.gold, icon: palette.goldDeep },
+    versicherungen: { bg: palette.sky + '0A', border: palette.sky, icon: palette.skyDeep },
     ausbildung: { bg: palette.sageMist, border: palette.sage, icon: palette.sageDeep },
-    behoerden: { bg: palette.sand + '0A', border: palette.sand, icon: palette.sand },
-    notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.rose },
+    behoerden: { bg: palette.sand + '0A', border: palette.sand, icon: palette.sandDeep },
+    notfall: { bg: palette.rose + '0A', border: palette.rose, icon: palette.roseDeep },
   };
   const accent = chapterAccent[chapter.key] || chapterAccent.basis;
 

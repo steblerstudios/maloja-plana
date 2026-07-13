@@ -68,7 +68,7 @@ const CatButton = ({ active, label, onClick, palette }) =>
     style: {
       padding: '4px 10px',
       background: active ? palette.sand + '25' : 'transparent',
-      color: active ? palette.sand : palette.soft,
+      color: active ? palette.sandDeep : palette.soft,
       border: active ? '1px solid ' + palette.sand + '40' : '1px solid ' + palette.border,
       borderRadius: '12px',
       cursor: 'pointer',
@@ -400,7 +400,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'ⓘ' }
       : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'ⓘ' };
 
-  const barStyle = (value, max, color) => ({
+  const barStyle = (_value, _max, _color) => ({
     height: '8px',
     background: palette.border,
     borderRadius: '4px',
@@ -507,7 +507,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
               fontSize: text.sm, cursor: 'pointer',
               border: '1px solid ' + (newStatus === s ? palette.sand : palette.border),
               background: newStatus === s ? palette.sand + '20' : 'transparent',
-              color: newStatus === s ? palette.sand : palette.mid,
+              color: newStatus === s ? palette.sandDeep : palette.mid,
               fontWeight: newStatus === s ? weight.semi : weight.normal,
             }
           }, t(s === 'bezahlt' ? 'kvg.belegPaid' : 'kvg.belegOpen'))
@@ -644,7 +644,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
               padding: '4px 10px', borderRadius: '12px', fontFamily: 'inherit', fontSize: text.xs, cursor: 'pointer',
               border: '1px solid ' + (y === selectedYear ? palette.sand + '40' : palette.border),
               background: y === selectedYear ? palette.sand + '25' : 'transparent',
-              color: y === selectedYear ? palette.sand : palette.soft,
+              color: y === selectedYear ? palette.sandDeep : palette.soft,
               fontWeight: y === selectedYear ? weight.medium : weight.normal,
             }
           }, String(y))
@@ -702,7 +702,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                     style: {
                       background: 'none', border: 'none', fontFamily: 'inherit',
                       fontSize: text.xs, fontWeight: weight.medium, padding: '2px 0',
-                      color: remindedIds.has(b.id) ? (palette.sage || '#5a7a5a') : palette.sand,
+                      color: remindedIds.has(b.id) ? (palette.sageDeep || '#4A6657') : palette.sandDeep,
                       cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
                     }
                   }, remindedIds.has(b.id) ? '✓ ' + t('kvg.belegReminded') : t('kvg.belegRemind'))
