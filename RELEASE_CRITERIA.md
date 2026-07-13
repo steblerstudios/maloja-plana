@@ -9,7 +9,7 @@
 - no hardcoded strings
 - no console errors
 - working export/import
-- Vercel deployment live
+- deployment live (Infomaniak, via `deploy.sh` — Deploy-Gate grün)
 
 ## Nice to have
 - animations
