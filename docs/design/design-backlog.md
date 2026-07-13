@@ -89,6 +89,10 @@ Lebensbereich die reale Metapher — „Swiss Living Skeuomorphism", 5 Regeln.
   Passwort/Lock auf den Daten selbst**. Für ein „Schloss auf meinen Unterlagen"-Gefühl
   braucht es entweder Client-Verschlüsselung mit Nutzer-Passphrase (At-Rest) oder einen
   Server (echte Zugangskontrolle). Kein Remote-Angriffsvektor (local-first, CSP self-only).
+  - ⛔ **Phase-2b-Vorbedingung:** das dormant `secureStore`-Fundament hat 4 bestätigte 🔴
+    (Dokumente unverschlüsselt, Klartext-Reste, Crash bei korruptem Record, leeres Backup
+    bei aktivem Tresor) + Härtung (PBKDF2 100k→600k, Passphrase-Mindestlänge, Backup-Zwang).
+    Alle MÜSSEN vor der UI-Verdrahtung behoben sein — Details in `docs/design/tresor-lock.md`.
 
 **Plattform:**
 - **App-Store-/iOS-Anforderungen recherchieren** (PWA vs. native, Store-Guidelines,
