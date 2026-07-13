@@ -14,14 +14,14 @@
 | | |
 |---|---|
 | Aktueller Branch | `main` (Sitzung 2026-07-13, Predeploy-Runde 3 abgeschlossen — Deploy-Gate GRÜN) |
-| `main` steht auf | `a9578f1` — Merge PR #66; enthält Tresor-Lock-Fundament (#62, dormant), AHV-21-Referenzalter (#63) + die Runde-3-Fixes (#65 AHV-Integration, #66 PII+Tresor-Parking). Code über `5c64527`, Live-Bundle unverändert |
+| `main` steht auf | `138216d` — Merge PR #68; enthält Tresor-Fundament (#62, dormant), AHV-21-Referenzalter (#63) + Runde-3-Fixes (#65 AHV-Integration, #66 PII+Tresor-Parking, #68 a11y-44px/Chip/Pensionierung-Frist/vr.source). Code über `5c64527`, Live-Bundle unverändert |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 | Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Alles über `5c64527` (Runden 2+3, `main`=`a9578f1`) ist **gemergt, aber NICHT live** (neuer Build `index-eb033152.js`). |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
 | **Runde 2 (IPV-Lebenslinie, gemergt, NICHT live)** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. |
-| **Runde 3 (Tresor + AHV-21, gemergt, NICHT live)** | **✅ PRs #62/#63/#65/#66 (`a9578f1`):** Tresor-Lock cryptoCore/secureStore (**dormant**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). |
-| **Deploy-Gate** | **✅ GRÜN für `a9578f1` (Predeploy-Runde 3): Tests 651, PII Exit 0, Build sauber, Size 64.32/65 kB, de-Chunk + i18n-Parität 5 Spr., CSP self-only, 0 offene 🔴. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei. Neuer Build `index-eb033152.js`.** |
+| **Runde 3 (Tresor + AHV-21, gemergt, NICHT live)** | **✅ PRs #62/#63/#65/#66 (`a9578f1`):** Tresor-Lock cryptoCore/secureStore (**dormant**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. |
+| **Deploy-Gate** | **✅ GRÜN für `138216d` (Predeploy-Runde 3 + Polish #68): Tests 651, PII Exit 0, Build sauber, Size 64.39/65 kB, de-Chunk + i18n-Parität 5 Spr., CSP self-only, 0 offene 🔴. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -43,17 +43,18 @@
 
 ## Nächste Schritte
 
-1. **Deployen** — `main` (`a9578f1`) ist Deploy-Gate-GRÜN (Predeploy-Runde 3, Marke gesetzt).
+1. **Deployen** — `main` (`138216d`) ist Deploy-Gate-GRÜN (Predeploy-Runde 3 + Polish, Marke gesetzt).
    Reihenfolge: ggf. `/code-review ultra` (billed, Stebler Studios) → `bash deploy.sh` →
-   live gegen den neuen Build `index-eb033152.js` gegenprüfen → in `FEATURES.md` die Runden
+   live gegen den neuen Build (aktueller `index-*.js`) gegenprüfen → in `FEATURES.md` die Runden
    2+3 auf `verified-live` heben, neuen LIVE-Commit hier + in der Memory festhalten.
+   **✅ In Polish #68 erledigt:** a11y 44px-Tap-Ziele der 7 Header-/Schubladen-Schalter + Anrede
+   (`ctrlBtn`-Helfer) · `FinanzUebersicht`-Chip-Kontrast (soft→mid) · `Pensionierung.jsx` Anmelde-
+   Frist ans echte Referenzalter · `vr.source` um Art. 21 AHVG (5 Spr.).
    **Offen/geparkt (nicht blockierend), fürs nächste Mal:** (a) **AHV Phase B** — reduzierte
    Kürzungssätze der Übergangsgeneration beim Vorbezug (deferred, durch Disclaimer abgedeckt);
-   (b) **pre-existing a11y-🔴** 7 Header-Icon-Buttons ohne 44px + unsichtbarer Ruhe-Rand
-   (`main.jsx:780-874`, schon live) + `FinanzUebersicht:254`-Chip 4.28:1; (c) `Pensionierung.jsx:18`
-   Anmelde-Frist hardcodet +65J (Frist-relevant JG1961–63); (d) **Tresor Phase-2b-Vorbedingungen**
-   (`docs/design/tresor-lock.md`: Dokumente wirklich verschlüsseln, Klartext-Reste, Crash-Guard,
-   PBKDF2 100k→600k) VOR jeder UI-Verdrahtung; (e) `vr.source` um Art. 21 AHVG ergänzen.
+   (b) **Tresor Phase-2b-Vorbedingungen** (`docs/design/tresor-lock.md`: Dokumente wirklich
+   verschlüsseln, Klartext-Reste, Crash-Guard, PBKDF2 100k→600k) VOR jeder UI-Verdrahtung;
+   (c) `LanguageSwitcher` (Sprachwähler) ebenfalls kein 44px (a11y-💡, kleiner Rest).
 2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
    `schnellcheck.ipvSubsumed/ipvEnthalten`, `sozialhilfe.repayment*` — Muttersprachler:in.
    **Neu dazu:** die in Predeploy-Runde 2 ergänzten RM-Vus-Formen (`{sie,du}`-Split) sind
