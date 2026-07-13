@@ -3827,7 +3827,7 @@ export default {
     saeule3aHint: { sie: 'Inserisca il Suo avere 3a e il versamento annuale sotto Finanze → Previdenza.', du: 'Inserisci il tuo avere 3a e il versamento annuale sotto Finanze → Previdenza.' },
     totalMitSaeule3a: 'Totale 1° + 2° + 3a pilastro',
     einkommenEingeben: { sie: 'Inserisca il Suo reddito annuo per stimare la rendita.', du: 'Inserisci il tuo reddito annuo per stimare la rendita.' },
-    source: 'Stima secondo [[LAVS Art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it]], [[LPP Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
+    source: 'Stima secondo [[LAVS Art. 21 + 34–40 (età di riferimento, AVS 21)|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/it]], [[LPP Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/it]]. Nessuna informazione giuridicamente vincolante. Stato 2026.',
     tabFreizuegigkeit: 'Libero passaggio',
     fzTitle: { sie: 'Cosa succede al Suo LPP quando cambia lavoro?', du: 'Cosa succede al tuo LPP quando cambi lavoro?' },
     fzIntro: { sie: 'Quando lascia il Suo impiego, il Suo avere previdenziale non viene versato — viene trasferito su un conto di libero passaggio fino al prossimo impiego.', du: 'Quando lasci il tuo impiego, il tuo avere previdenziale non viene versato — viene trasferito su un conto di libero passaggio fino al prossimo impiego.' },
