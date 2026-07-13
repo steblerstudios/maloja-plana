@@ -231,10 +231,12 @@ Fortschritt ohne Prozent), Obstgarten, Rucksack, Frucht-/Farbsystem. Sie leben a
 Rand und beruhigen, statt zu fordern. (Offen: die Reihenfolge Baum ↔ Obstgarten.)
 
 **Instrumente (Ebene 1½):** Schnellchecks/Ansprüche werden zu Messinstrumenten — die
-Datenfrage bestimmt die Form (der **Pegel** für die Prämienverbilligung: Wasserstand
-unter der Anspruchsgrenze zeigt Qualifikation und Menge in einem Bild). Der Kompass
-zeigt Richtung, nicht Menge — reserviert für Orientierung/Entscheide, nicht als
-Leit-Metapher.
+Datenfrage bestimmt die Form. Der **Pegel** (Glas) misst Einkommen gegen eine Linie und
+trägt die Sozialhilfe-Aufstockung: die Lücke bis zum Existenzminimum wird sichtbar
+aufgefüllt. Die Prämienverbilligung bekommt stattdessen den **Prämien-Beleg** (Papier),
+der IPV als das zeigt, was sie ist — ein Abzug von der Prämie. Beide bewusst aus anderem
+Material, damit sie nebeneinander unterscheidbar sind. Der Kompass zeigt Richtung, nicht
+Menge — reserviert für Orientierung/Entscheide, nicht als Leit-Metapher.
 
 Tiefer: [product/design-language-registry.md](product/design-language-registry.md) ·
 [design/emotional-temperature-map.md](design/emotional-temperature-map.md) · die

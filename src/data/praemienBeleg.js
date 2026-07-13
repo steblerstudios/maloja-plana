@@ -22,8 +22,12 @@ export function praemienBelegState(data) {
   if (!ipv?.eligible) {
     return { show: true, mode: 'over', verbilligung: 0, praemie, selbst: praemie, canton };
   }
-  const verbilligung = Number(ipv.amount) || 0;
+  const verbilligungRoh = Number(ipv.amount) || 0;
   const hasPraemie = praemie > 0;
+  // Eine Verbilligung senkt die Prämie — sie kann sie nie übersteigen (keine
+  // Auszahlung). calculateIPV kennt die eingetragene Prämie nicht, also hier bei
+  // bekannter Prämie deckeln, sonst zeigt der Beleg einen unmöglichen Betrag.
+  const verbilligung = hasPraemie ? Math.min(verbilligungRoh, praemie) : verbilligungRoh;
   // „selbst" nur ehrlich wenn die Prämie bekannt ist; nie negativ.
   const selbst = hasPraemie ? Math.max(0, praemie - verbilligung) : 0;
   return {

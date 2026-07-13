@@ -33,9 +33,11 @@ export const PraemienBeleg = ({ palette, t, state }) => {
     const balken = hasBalken ? h('div', null,
       h('div', { style: { display: 'flex', height: '22px', borderRadius: radius.sm + 'px', overflow: 'hidden', background: palette.up } },
         h('div', { style: { width: selbstPct.toFixed(1) + '%', background: palette.sage, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
-          selbstPct >= 22 ? h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, fontFamily: MONO, whiteSpace: 'nowrap' } }, t('beleg.selbst') + ' ' + selbst) : null),
-        h('div', { style: { width: kantonPct.toFixed(1) + '%', background: palette.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
-          kantonPct >= 22 ? h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, fontFamily: MONO, whiteSpace: 'nowrap' } }, t('beleg.kanton') + ' ' + verbilligung) : null)
+          selbstPct >= 22 ? h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, fontFamily: MONO, whiteSpace: 'nowrap' } }, t('beleg.selbst') + ' ' + fmtCHF(selbst)) : null),
+        // goldDeep statt rohem gold: weisser Text auf gold liegt hell nur bei 2.19:1
+        // (AA-Fail); goldDeep (#7C6428) trägt weissen Text mit 5.42:1.
+        h('div', { style: { width: kantonPct.toFixed(1) + '%', background: palette.goldDeep, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0 } },
+          kantonPct >= 22 ? h('span', { style: { fontSize: text.xs, fontWeight: weight.semi, color: palette.surface, fontFamily: MONO, whiteSpace: 'nowrap' } }, t('beleg.kanton') + ' ' + fmtCHF(verbilligung)) : null)
       ),
       h('div', { style: { display: 'flex', justifyContent: 'space-between', marginTop: space.sm + 'px', fontSize: text.xs, color: palette.mid, fontFamily: MONO } },
         h('span', null, t('beleg.praemie')),

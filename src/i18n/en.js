@@ -3660,7 +3660,8 @@ export default {
     aufstockung: 'Top-up',
     gap: 'Income is below the minimum — the top-up lifts it to the subsistence minimum.',
     covered: 'Income reaches the subsistence minimum — no top-up needed.',
-    deckt: 'covers {amount} / month',
+    deckt: 'could cover about {amount} / month',
+    vermoegen: 'Assets above the exemption — these count first. The social services office assesses eligibility.',
   },
   schnellcheck: {
     title: 'Benefits quick check',

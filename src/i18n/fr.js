@@ -3659,7 +3659,8 @@ export default {
     aufstockung: 'Complément',
     gap: 'Le revenu est sous le minimum vital — le complément comble l’écart.',
     covered: 'Le revenu atteint le minimum vital — pas de complément nécessaire.',
-    deckt: 'couvre {amount} / mois',
+    deckt: 'pourrait couvrir environ {amount} / mois',
+    vermoegen: 'Fortune au-dessus de la franchise — elle est prise en compte d’abord. Le service social évalue le droit.',
   },
   schnellcheck: {
     title: 'Vérification rapide des prestations',
