@@ -13,15 +13,15 @@
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (Sitzung 2026-07-13, Predeploy-Runde 3 abgeschlossen — Deploy-Gate GRÜN) |
-| `main` steht auf | `138216d` — Merge PR #68; enthält Tresor-Fundament (#62, dormant), AHV-21-Referenzalter (#63) + Runde-3-Fixes (#65 AHV-Integration, #66 PII+Tresor-Parking, #68 a11y-44px/Chip/Pensionierung-Frist/vr.source). Code über `5c64527`, Live-Bundle unverändert |
+| Aktueller Branch | `main` (Sitzung 2026-07-13, Runden 2+3 deployt — **LIVE**, Deploy-Gate GRÜN) |
+| `main` steht auf | `69ea85e` — Merge PR #69 (stand-sync-r5); enthält Tresor-Fundament (#62, dormant), AHV-21-Referenzalter (#63) + Runde-3-Fixes (#65 AHV-Integration, #66 PII+Tresor-Parking, #68 a11y-44px/Chip/Pensionierung-Frist/vr.source). Deployt → Live-Bundle `index-8aeb4a84.js` |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-59c9c3e4.js` = Build von `5c64527` → **DEPLOYT & verified-live** (Bundle-Hash gegengeprüft 2026-07-13). Alles über `5c64527` (Runden 2+3, `main`=`a9578f1`) ist **gemergt, aber NICHT live** (neuer Build `index-eb033152.js`). |
+| Live (malojaplana.ch) | Bundle `index-8aeb4a84.js` = Build von `69ea85e` → **DEPLOYT & verified-live** (Live-Hash frisch gegengeprüft 2026-07-13). Die Runden 2+3 sind damit **live** (nicht mehr nur gemergt). |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
-| **Runde 2 (IPV-Lebenslinie, gemergt, NICHT live)** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. |
-| **Runde 3 (Tresor + AHV-21, gemergt, NICHT live)** | **✅ PRs #62/#63/#65/#66 (`a9578f1`):** Tresor-Lock cryptoCore/secureStore (**dormant**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. |
-| **Deploy-Gate** | **✅ GRÜN für `138216d` (Predeploy-Runde 3 + Polish #68): Tests 651, PII Exit 0, Build sauber, Size 64.39/65 kB, de-Chunk + i18n-Parität 5 Spr., CSP self-only, 0 offene 🔴. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
+| **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
+| **Runde 3 (Tresor + AHV-21) — ✅ LIVE** | **✅ PRs #62/#63/#65/#66 (`a9578f1` → in `69ea85e`):** Tresor-Lock cryptoCore/secureStore (**dormant/unverdrahtet**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. **Deployt in `index-8aeb4a84.js`.** |
+| **Deploy-Gate** | **✅ GRÜN für `69ea85e` (Predeploy-Runde 3 + Polish #68): Tests 651, PII Exit 0, Build sauber, Size 64.39/65 kB, de-Chunk + i18n-Parität 5 Spr., CSP self-only, 0 offene 🔴. Freigabe-Marke `.maloja/predeploy-ok` = `69ea85e` (= HEAD). Deploy erfolgt → live.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -30,10 +30,10 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live:** Bundle `index-59c9c3e4.js` läuft auf malojaplana.ch und ist **identisch zum
-  frischen `main`-Build** (`main` = `5c64527`) → die ganze Runde 2026-07-12/13 inkl. der
-  neuen Anspruchs-Instrumente ist **deployt + verified-live** (Bundle-Hash gegengeprüft
-  2026-07-13). Tests grün, i18n-Parität 5 Spr., Build sauber.
+- **Live:** Bundle `index-8aeb4a84.js` läuft auf malojaplana.ch und ist **identisch zum
+  frischen `main`-Build** (`main` = `69ea85e`) → die Runden 2026-07-12/13 **plus Runde 2
+  (IPV-Lebenslinie) + Runde 3 (AHV-21 + Tresor-Fundament dormant)** sind **deployt +
+  verified-live** (Live-Hash frisch gegengeprüft 2026-07-13). Tests grün, i18n-Parität 5 Spr., Build sauber.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **GitHub Flow ist scharf:** `main` = einziger Stamm, kein `dev`, kein Sync-back.
@@ -43,10 +43,9 @@
 
 ## Nächste Schritte
 
-1. **Deployen** — `main` (`138216d`) ist Deploy-Gate-GRÜN (Predeploy-Runde 3 + Polish, Marke gesetzt).
-   Reihenfolge: ggf. `/code-review ultra` (billed, Stebler Studios) → `bash deploy.sh` →
-   live gegen den neuen Build (aktueller `index-*.js`) gegenprüfen → in `FEATURES.md` die Runden
-   2+3 auf `verified-live` heben, neuen LIVE-Commit hier + in der Memory festhalten.
+1. **✅ Deployt (2026-07-13)** — `main` (`69ea85e`) ist live: Bundle `index-8aeb4a84.js`,
+   Live-Hash frisch gegengeprüft, `FEATURES.md` + dieser Stand auf `verified-live` nachgezogen
+   (stand-sync-r6). Runden 2+3 (IPV-Lebenslinie, AHV-21, Tresor dormant) sind live.
    **✅ In Polish #68 erledigt:** a11y 44px-Tap-Ziele der 7 Header-/Schubladen-Schalter + Anrede
    (`ctrlBtn`-Helfer) · `FinanzUebersicht`-Chip-Kontrast (soft→mid) · `Pensionierung.jsx` Anmelde-
    Frist ans echte Referenzalter · `vr.source` um Art. 21 AHVG (5 Spr.).
