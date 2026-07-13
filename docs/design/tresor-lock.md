@@ -10,6 +10,30 @@
 
 Stand: Kern-Entscheide geklärt, Spec festgehalten. Verwandt: [[maloja-trust-layer]].
 
+## 0. Einordnung ins Gesamtmodell (ADR-011)
+
+Dieses Dokument beschreibt **Level 1** aus [ADR-011](../architecture/ADR-011-auth-strategy.md)
+(„Local Auth / Encryption at Rest") — Passphrase → Schlüssel → lokale Stores
+ver-/entschlüsseln, **ohne Server**. Zur Vermeidung von Verwechslungen die drei
+Krypto-Flächen im Repo:
+
+| Modul | ADR-011 | Status | Zweck |
+|---|---|---|---|
+| `src/utils/backupCrypto.js` | (danebenliegend) | **live** (via `ZipExport.jsx`) | Passphrase-verschlüsselte Backup-**Datei** (Download/Import) |
+| `src/utils/secureStore.js` | **Level 1** (dieses Dok) | dormant, gebaut | Tresor-Lock: lokale Stores *in place* ver-/entschlüsseln |
+| `src/crypto/vault.js` | **Level 2** (vertagt, → §5) | dormant, PLAN/ENTWURF, **nicht deployt** | Server-gestütztes Zero-Knowledge-Backup (Envelope DEK/KEK, Passkey-PRF + Recovery) |
+
+Alle drei nutzen dieselbe Web-Crypto-Basis, aber **verschiedene Schutzmodelle** —
+`secureStore` ist bewusst schlicht (nur Passphrase), `crypto/vault.js` ist das
+Envelope-Modell für die Logins-Phase (§5). Sie sind **nicht redundant**.
+
+**Begriffe (Abgrenzung):** „Tresor" / „Lock" = Level-1-At-Rest (dieses Dokument,
+`secureStore.js`). „Vault" (Envelope, Recovery, Server) = Level 2 (`crypto/vault.js`,
+[SECURITY_PHASE_1_PLAN.md](../context/SECURITY_PHASE_1_PLAN.md)). `secureStore.js`
+trägt intern noch `VAULT_*`-Bezeichner aus der Bauphase — solange dormant und ohne
+gespeichertes Chiffrat unkritisch; vor dem Verdrahten (Phase 2b) auf `TRESOR_*`/`LOCK_*`
+abgrenzen, damit „Vault" eindeutig für Level 2 reserviert bleibt.
+
 ---
 
 ## 1. Grundmodell — Client-Verschlüsselung mit Passphrase
@@ -49,6 +73,12 @@ additiv — ein Marker `or5_locked` o. ä. zeigt den Zustand). Deaktivieren =
 entschlüsseln zurück. Kein Datenverlust bei sauberem Ab-/Anschalten.
 
 ## 5. Bewusst vertagt → „Logins-Phase" (Grundsatzentscheid nötig)
+
+> **Es existiert bereits ein Client-Baustein dafür:** [`src/crypto/vault.js`](../../src/crypto/vault.js)
+> (Envelope DEK/KEK, Passkey-PRF + Recovery-Codes, Chiffrat-Upload) aus
+> [SECURITY_PHASE_1_PLAN.md](../context/SECURITY_PHASE_1_PLAN.md) — Status PLAN/ENTWURF,
+> Server nicht deployt. Das ist **Level 2** (ADR-011), ein anderes Schutzmodell als der
+> Level-1-Tresor hier. Beim Bau der Logins-Phase dort andocken, nicht neu erfinden.
 
 Stebler-Studios-Vision: **beim nativen Download einen Ordner auf dem Gerät anlegen
 und an einen Secure Safe anschliessen** (OS-Sicherheitsspeicher: iOS Keychain /
