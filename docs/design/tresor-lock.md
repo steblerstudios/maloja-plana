@@ -10,6 +10,36 @@
 
 Stand: Kern-Entscheide geklärt, Spec festgehalten. Verwandt: [[maloja-trust-layer]].
 
+## ⛔ HARTE VORBEDINGUNG für Phase 2b (UI-Verdrahtung) — vor JEDER Aktivierung beheben
+
+Der Predeploy-Review (2026-07-13, Runde 3) hat am gebauten, noch **dormant**en
+`secureStore`-Fundament vier bestätigte 🔴 gefunden. Sie sind aktuell **kein Live-Risiko**
+(nichts aktiviert den Tresor), MÜSSEN aber behoben sein, **bevor** irgendeine UI den Tresor
+aktivierbar macht — sonst würde der Tresor ein Schutzversprechen geben, das er nicht hält:
+
+1. **Dokumente bleiben unverschlüsselt.** `secureStore.js` verschlüsselt nur den
+   `or5_docs`-**Metadaten**-String; die echten Dokument-Dateien (Ausweis-Scans, Arzt-PDFs
+   als dataURLs) liegen weiter im Klartext in **IndexedDB**. Vor dem Verschlüsseln müssen die
+   Blobs hydriert werden (wie es der Backup-Pfad via `collectBackupDataAsync`/`getDocBlob`
+   bereits tut).
+2. **Klartext-Reste überleben.** `activateVault` → `clearStores()` entfernt nur `VAULT_STORES`,
+   nicht die `or5_*_prerestore`-Klartext-Kopien (aus `createPreRestoreSnapshot`) → vollständiger
+   unverschlüsselter Datensatz bleibt neben dem Chiffrat liegen.
+3. **Crash statt Fehlermeldung.** `unlockVault` ruft `unpackRecord`/`atob` VOR dem try/catch →
+   korrupter Record wirft rohen `DOMException` statt der freundlichen „beschädigt"-Meldung
+   (verletzt die 3-States-Regel aus `src/CLAUDE.md`).
+4. **Leeres Backup bei aktivem Tresor.** `collectBackupData` liest `or5_data` etc. direkt aus
+   localStorage — die der aktive Tresor gerade entfernt hat → Backup-Datei wäre leer, sieht
+   aber gültig aus. Datenverlust-Falle beim späteren Restore.
+
+Zusätzlich (Security-Härtung vor 2b): **PBKDF2 100'000 → ~600'000 Iterationen** (OWASP 2026;
+versioniert im Record-Header, Fallback 100k für Alt-Daten), **Passphrase-Mindestlänge/-stärke**
+in `secureStore` (wie `backupCrypto` bereits ≥4), **Backup-Export-Zwang** im Aktivierungs-Flow
+erzwingen (nicht nur Doku-Konvention), und `VAULT_*` → `TRESOR_*`/`LOCK_*` umbenennen
+(Abgrenzung zu `crypto/vault.js` Level 2).
+
+Beleg: `/maloja-predeploy` Runde 3, `sicherheits-pruefer` + `/code-review` (alle CONFIRMED).
+
 ## 0. Einordnung ins Gesamtmodell (ADR-011)
 
 Dieses Dokument beschreibt **Level 1** aus [ADR-011](../architecture/ADR-011-auth-strategy.md)
