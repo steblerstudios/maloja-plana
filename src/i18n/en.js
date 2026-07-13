@@ -2214,9 +2214,17 @@ export default {
     assetLimitTitle: 'Assets above the allowance',
     assetLimitNote: 'Social assistance requires assets to be used up except for an allowance (SKOS: {freibetrag} for this household). The recorded assets are about {ueberschuss} above it — that part generally has to be used first. Orientation, not binding advice.',
     repaymentTitle: 'Repayment of social assistance',
-    repaymentText: 'In most cantons, social assistance received must be repaid if your financial situation improves (e.g. through inheritance, new income, or increased assets).',
+    repaymentText: 'Legitimately received social assistance can be reclaimed in many cantons if you come into significant assets — above all through an inheritance or a windfall. Ordinary earned income is usually not reclaimed (SKOS advises against it).',
+    repaymentInheritance: 'Only the actual increase in assets counts — if you decline an inheritance, there is nothing to repay.',
+    repaymentFreibetrag: 'Only what exceeds an exemption amount is reclaimed (Canton Zurich: 30,000 for one person, 50,000 for couples, plus 15,000 per minor child). This varies by canton.',
     repaymentVaries: 'The timeframe and conditions vary by canton (typically 10–15 years). Some cantons (e.g. Vaud) have abolished the repayment obligation.',
     repaymentAdvice: 'Contact the social services office in your municipality for the rules that apply in your canton.',
+    repaymentRechnerTitle: 'Rough estimate',
+    repaymentRechnerIntro: 'Suppose you come into assets (e.g. through an inheritance) — what would be above the exemption amount?',
+    repaymentAnfallLabel: 'Increase in assets / inheritance (CHF)',
+    repaymentRechnerOver: 'About {ueber} would be above the exemption amount ({freibetrag}). That part could be reclaimed — at most as much as you received in social assistance, and depending on the canton.',
+    repaymentRechnerUnder: 'That would be below the exemption amount ({freibetrag}) — then there would usually be nothing to repay.',
+    repaymentRechnerHint: 'Orientation using Zurich exemption amounts. This varies by canton — when in doubt, check with your municipality\'s social services.',
   },
 
   lohnCheck: {

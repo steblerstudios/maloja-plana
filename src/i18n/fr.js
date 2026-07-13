@@ -2213,9 +2213,17 @@ export default {
     assetLimitTitle: 'Fortune au-dessus de la franchise',
     assetLimitNote: 'L’aide sociale suppose que la fortune soit utilisée jusqu’à une franchise (CSIAS : {freibetrag} pour ce ménage). La fortune saisie la dépasse d’environ {ueberschuss} — cette part doit en règle générale être utilisée d’abord. Orientation, sans valeur contraignante.',
     repaymentTitle: 'Remboursement de l\'aide sociale',
-    repaymentText: { sie: 'Dans la plupart des cantons, l\'aide sociale reçue doit être remboursée si votre situation financière s\'améliore (p. ex. héritage, nouveaux revenus ou augmentation de fortune).', du: 'Dans la plupart des cantons, l\'aide sociale reçue doit être remboursée si ta situation financière s\'améliore (p. ex. héritage, nouveaux revenus ou augmentation de fortune).' },
+    repaymentText: { sie: 'L\'aide sociale perçue de manière légitime peut être réclamée dans de nombreux cantons si vous accédez à une fortune importante — surtout par un héritage ou un gain. Le revenu ordinaire du travail n\'est généralement pas réclamé (la CSIAS le déconseille).', du: 'L\'aide sociale perçue de manière légitime peut être réclamée dans de nombreux cantons si tu accèdes à une fortune importante — surtout par un héritage ou un gain. Le revenu ordinaire du travail n\'est généralement pas réclamé (la CSIAS le déconseille).' },
+    repaymentInheritance: 'Seule l\'augmentation effective de fortune compte — qui répudie un héritage n\'a rien à rembourser.',
+    repaymentFreibetrag: 'Seul ce qui dépasse une franchise est réclamé (canton de Zurich : 30 000 pour une personne, 50 000 pour les couples, plus 15 000 par enfant mineur). Cela varie selon le canton.',
     repaymentVaries: 'Le délai et les conditions varient selon le canton (en général 10 à 15 ans). Certains cantons (p. ex. Vaud) ont supprimé l\'obligation de remboursement.',
     repaymentAdvice: { sie: 'Renseignez-vous auprès du service social de votre commune sur les règles en vigueur dans votre canton.', du: 'Renseigne-toi auprès du service social de ta commune sur les règles en vigueur dans ton canton.' },
+    repaymentRechnerTitle: 'Estimation approximative',
+    repaymentRechnerIntro: 'Supposons que tu accèdes à une fortune (p. ex. par un héritage) — qu\'est-ce qui dépasserait la franchise ?',
+    repaymentAnfallLabel: 'Augmentation de fortune / héritage (CHF)',
+    repaymentRechnerOver: 'Environ {ueber} dépasseraient la franchise ({freibetrag}). Cette part pourrait être réclamée — au plus le montant d\'aide sociale que tu as perçu, et selon le canton.',
+    repaymentRechnerUnder: 'Cela serait en dessous de la franchise ({freibetrag}) — il n\'y aurait alors en général rien à rembourser.',
+    repaymentRechnerHint: 'Orientation avec les franchises zurichoises. Cela varie selon le canton — en cas de doute, renseigne-toi auprès du service social de ta commune.',
   },
 
   lohnCheck: {

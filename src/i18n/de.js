@@ -2216,9 +2216,17 @@ export default {
     assetLimitTitle: 'Vermögen über dem Freibetrag',
     assetLimitNote: 'Sozialhilfe setzt voraus, dass Vermögen bis auf einen Freibetrag aufgebraucht ist (SKOS: {freibetrag} für diesen Haushalt). Das erfasste Vermögen liegt rund {ueberschuss} darüber — dieser Teil muss in der Regel zuerst eingesetzt werden. Orientierung, keine verbindliche Auskunft.',
     repaymentTitle: 'Rückzahlung von Sozialhilfe',
-    repaymentText: 'In den meisten Kantonen muss erhaltene Sozialhilfe zurückgezahlt werden, wenn sich die finanzielle Situation verbessert (z.B. durch Erbschaft, neues Einkommen oder Vermögenszuwachs).',
+    repaymentText: 'Rechtmässig bezogene Sozialhilfe kann in vielen Kantonen zurückgefordert werden, wenn du zu einem grösseren Vermögen kommst — vor allem durch eine Erbschaft oder einen Gewinn. Aus normalem Erwerbseinkommen wird meist nichts zurückverlangt (die SKOS rät davon ab).',
+    repaymentInheritance: 'Es zählt nur der tatsächliche Vermögenszuwachs — wer eine Erbschaft ausschlägt, muss nichts zurückzahlen.',
+    repaymentFreibetrag: 'Zurückgefordert wird nur, was über einem Freibetrag liegt (Kanton Zürich: 30\'000 für eine Person, 50\'000 für Paare, plus 15\'000 pro minderjähriges Kind). Je nach Kanton unterschiedlich.',
     repaymentVaries: 'Die Frist und Bedingungen variieren je nach Kanton (meist 10–15 Jahre). Einige Kantone (z.B. Waadt) haben die Rückzahlungspflicht abgeschafft.',
     repaymentAdvice: { sie: 'Erkundigen Sie sich beim Sozialdienst Ihrer Gemeinde über die geltenden Regeln in Ihrem Kanton.', du: 'Erkundige dich beim Sozialdienst deiner Gemeinde über die geltenden Regeln in deinem Kanton.' },
+    repaymentRechnerTitle: 'Grobe Einschätzung',
+    repaymentRechnerIntro: 'Angenommen, du kommst zu Vermögen (z. B. durch eine Erbschaft) — was läge über dem Freibetrag?',
+    repaymentAnfallLabel: 'Vermögenszuwachs / Erbschaft (CHF)',
+    repaymentRechnerOver: 'Rund {ueber} liegen über dem Freibetrag ({freibetrag}). Dieser Teil könnte zurückgefordert werden — höchstens so viel, wie du an Sozialhilfe bezogen hast, und je nach Kanton.',
+    repaymentRechnerUnder: 'Das läge unter dem Freibetrag ({freibetrag}) — dann wäre in der Regel nichts zurückzuzahlen.',
+    repaymentRechnerHint: 'Orientierung mit Zürcher Freibeträgen. Kantonal unterschiedlich — im Zweifel beim Sozialdienst deiner Gemeinde prüfen.',
   },
 
   lohnCheck: {
