@@ -18,8 +18,9 @@ widerspricht sich teils:
   Runtime-Vision); 2026-07-10 ebenfalls archiviert
 - Memory `project_maloja_plana.md` — lebendig, aber hinkt hinterher (kannte Branch
   `a11y/pass3-tresor-labels` + 4 Commits nicht)
-- `ROADMAP_NEXT.md` / `RELEASE_CRITERIA.md` / `BUGS.md` — Roadmap, aber kein
-  „verified-live"-Status
+- `docs/roadmap/master-roadmap.md` / `RELEASE_CRITERIA.md` / `BUGS.md` — Roadmap, aber kein
+  „verified-live"-Status (das alte Root-`ROADMAP_NEXT.md` ist seit 2026-07-13 nach
+  `docs/archive/roadmap-2026-06/` archiviert)
 
 ## Die vier Bausteine (Artikel → Maloja)
 
