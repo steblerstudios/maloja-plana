@@ -693,7 +693,6 @@ export default {
   },
   common: {
     appName: 'Maloja Plana',
-    appTagline: 'Tout ce qui compte en un seul endroit.',
     percent: '{value}%',
     chf: 'CHF {value}',
     chfPerMonth: 'CHF {value}/mois',
@@ -3802,6 +3801,8 @@ export default {
     monat: 'mois',
     jahr: 'an',
     jahre: 'ans',
+    monate: 'mois',
+    referenzalter: 'Âge de référence (AVS 21)',
     skalenfaktor: 'Échelle de cotisation',
     fehlendeBeitragsjahre: 'Années de cotisation manquantes',
     vorbezug: 'Réduction (anticipation)',

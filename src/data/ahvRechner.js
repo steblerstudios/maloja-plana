@@ -49,24 +49,47 @@ function monatsrenteAusEinkommen(durchschnittlichesJahreseinkommen) {
 }
 
 /**
+ * Referenzalter (Rentenalter) in MONATEN.
+ *
+ * Männer, Geschlecht divers/unbekannt und Frauen ab Jahrgang 1964: 65 Jahre (780 Monate).
+ * Frauen der Übergangsgeneration (AHV 21) gestaffelt tiefer — belegt an der amtlichen Quelle
+ * (BSV FAQ „Wie wird das Frauenrentenalter erhöht?" / AHV-IV-Merkblatt 31), Stand 2026:
+ *   JG ≤1960: 64 J · 1961: 64 J 3 M · 1962: 64 J 6 M · 1963: 64 J 9 M · ab 1964: 65 J.
+ * Monats-Granularität, weil die Erhöhung in 3-Monats-Schritten läuft.
+ *
+ * @param {Object} [params]
+ * @param {'female'|'male'|'diverse'|string} [params.geschlecht]
+ * @param {number} [params.geburtsjahr]
+ * @returns {number} Referenzalter in Monaten
+ */
+export function referenzalterMonate({ geschlecht, geburtsjahr } = {}) {
+  if (geschlecht === 'female' && Number.isFinite(geburtsjahr)) {
+    if (geburtsjahr <= 1960) return 64 * 12;      // 768
+    if (geburtsjahr === 1961) return 64 * 12 + 3; // 771
+    if (geburtsjahr === 1962) return 64 * 12 + 6; // 774
+    if (geburtsjahr === 1963) return 64 * 12 + 9; // 777
+    // ab JG 1964: 65 Jahre (Fallback unten)
+  }
+  return REFERENZALTER * 12;                       // 780 = 65 Jahre
+}
+
+/**
  * Berechne die geschätzte AHV-Altersrente.
  *
  * @param {Object} params
  * @param {number} params.geburtsjahr
+ * @param {'female'|'male'|'diverse'|string} [params.geschlecht] - Für das Frauen-Referenzalter (AHV 21); fehlt/andere → 65
  * @param {number} params.durchschnittlichesJahreseinkommen - Massgebendes Einkommen (Brutto)
  * @param {number} params.beitragsjahre - Anzahl Beitragsjahre (max 44)
  * @param {number} [params.erziehungsjahre=0] - Jahre mit Erziehungsgutschriften
- * @param {number} [params.bezugAlter] - Gewünschtes Bezugsalter (default: 65)
+ * @param {number} [params.bezugAlter] - Gewünschtes Bezugsalter (default: Referenzalter)
  * @param {boolean} [params.verheiratet=false]
  * @param {number} [params.einkommenPartner=0] - Durchschnittseinkommen Partner (für Plafonierung)
  * @returns {Object} Rentenberechnung
  */
 export function berechneAltersrente({
-  // Reserviert: Referenzalter ist derzeit pauschal 65 (REFERENZALTER). Für Frauen
-  // steigt es nach AHV 21 gestaffelt (JG 1961: 64+3M · 1962: 64+6M · 1963: 64+9M ·
-  // ab JG 1964: 65) — NOCH NICHT modelliert; zudem fehlt `geschlecht` als Input.
-  // Scoped Task: docs/roadmap/TASK_ahv21-referenzalter-frauen.md
-  geburtsjahr: _geburtsjahr,
+  geburtsjahr,
+  geschlecht,
   durchschnittlichesJahreseinkommen,
   beitragsjahre,
   erziehungsjahre = 0,
@@ -75,7 +98,11 @@ export function berechneAltersrente({
   verheiratet = false,
   einkommenPartner = 0,
 }) {
-  const alter = bezugAlter || REFERENZALTER;
+  // Referenzalter geschlechts-/jahrgangsabhängig (AHV 21, Frauen-Übergangsgeneration),
+  // in Monaten wegen der 3-Monats-Schritte. Männer/divers/unbekannt = 780 (65 J) →
+  // identisch zum bisherigen pauschalen Referenzalter 65 (kein Verhaltenswechsel).
+  const refMonate = referenzalterMonate({ geschlecht, geburtsjahr });
+  const alter = bezugAlter || (refMonate / 12);
 
   // Einkommen mit Erziehungs- UND Betreuungsgutschriften aufwerten.
   // Beide gleichen Jahresbetrag (3× Minimalrente, Art. 29sexies/29septies AHVG);
@@ -96,7 +123,7 @@ export function berechneAltersrente({
 
   // Vorbezug oder Aufschub
   let vorbezugAufschub = 0;
-  const differenzMonate = (alter - REFERENZALTER) * 12;
+  const differenzMonate = alter * 12 - refMonate;
 
   if (differenzMonate < 0) {
     // Vorbezug (max 24 Monate = 2 Jahre)
@@ -136,6 +163,7 @@ export function berechneAltersrente({
     beitragsjahre: Math.min(beitragsjahre, VOLLE_BEITRAGSJAHRE),
     fehlendeBeitragsjahre: Math.max(0, VOLLE_BEITRAGSJAHRE - beitragsjahre),
     bezugAlter: alter,
+    referenzalterMonate: refMonate,
     vorbezugAufschub: Math.round(vorbezugAufschub * 10000) / 100, // in Prozent
     erziehungsgutschrift: Math.round(gutschriftProJahr), // kombinierte Aufwertung Erziehung + Betreuung (CHF/Jahr)
     gutschriftJahre,

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  berechneAltersrente, vergleicheVorbezugAufschub,
+  berechneAltersrente, referenzalterMonate, vergleicheVorbezugAufschub,
   bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
   AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION,
 } from '../ahvRechner.js';
@@ -125,6 +125,51 @@ describe('ahvRechner', () => {
         beitragsjahre: 44,
       });
       expect(r.monatsrente).toBe(0);
+    });
+  });
+
+  describe('referenzalterMonate (AHV 21)', () => {
+    // Referenzalter-Staffel Frauen — belegt: BSV FAQ „Wie wird das Frauenrentenalter
+    // erhöht?" / AHV-IV-Merkblatt 31 (Stand 2026).
+    it('Männer: immer 780 Monate (65 J)', () => {
+      expect(referenzalterMonate({ geschlecht: 'male', geburtsjahr: 1960 })).toBe(780);
+      expect(referenzalterMonate({ geschlecht: 'male', geburtsjahr: 1963 })).toBe(780);
+    });
+    it('Frauen Übergangsgeneration: gestaffelt 1961–1963', () => {
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1960 })).toBe(768); // 64 J
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1961 })).toBe(771); // 64 J 3 M
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1962 })).toBe(774); // 64 J 6 M
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1963 })).toBe(777); // 64 J 9 M
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1964 })).toBe(780); // 65 J
+      expect(referenzalterMonate({ geschlecht: 'female', geburtsjahr: 1975 })).toBe(780);
+    });
+    it('divers / unbekanntes Geschlecht → Fallback 780 (65 J)', () => {
+      expect(referenzalterMonate({ geschlecht: 'diverse', geburtsjahr: 1962 })).toBe(780);
+      expect(referenzalterMonate({ geburtsjahr: 1962 })).toBe(780);
+      expect(referenzalterMonate({})).toBe(780);
+      expect(referenzalterMonate()).toBe(780);
+    });
+  });
+
+  describe('berechneAltersrente — Referenzalter Frauen (AHV 21)', () => {
+    const base = { durchschnittlichesJahreseinkommen: 80000, beitragsjahre: 44 };
+    it('Frau JG 1962, Bezug 63: kleinerer Vorbezugs-Abschlag als beim Mann (Referenz 64 J 6 M statt 65)', () => {
+      const frau = berechneAltersrente({ ...base, geschlecht: 'female', geburtsjahr: 1962, bezugAlter: 63 });
+      const mann = berechneAltersrente({ ...base, geschlecht: 'male', geburtsjahr: 1962, bezugAlter: 63 });
+      expect(Math.abs(frau.vorbezugAufschub)).toBeLessThan(Math.abs(mann.vorbezugAufschub));
+      expect(frau.monatsrente).toBeGreaterThan(mann.monatsrente);
+      expect(frau.referenzalterMonate).toBe(774);
+    });
+    it('Frau JG 1962 ohne Bezugsalter steht auf ihrem Referenzalter → kein Abschlag', () => {
+      const r = berechneAltersrente({ ...base, geschlecht: 'female', geburtsjahr: 1962 });
+      expect(r.vorbezugAufschub).toBe(0);
+      expect(r.referenzalterMonate).toBe(774);
+    });
+    it('Mann bleibt unverändert (Referenz 780, identisch zum geschlechtslosen Default)', () => {
+      const mitGeschlecht = berechneAltersrente({ ...base, geschlecht: 'male', geburtsjahr: 1962, bezugAlter: 63 });
+      const ohne = berechneAltersrente({ ...base, geburtsjahr: 1962, bezugAlter: 63 });
+      expect(mitGeschlecht.monatsrente).toBe(ohne.monatsrente);
+      expect(mitGeschlecht.vorbezugAufschub).toBe(ohne.vorbezugAufschub);
     });
   });
 
