@@ -2668,9 +2668,17 @@ export default {
     assetLimitTitle: 'Facultad sur la franchisa',
     assetLimitNote: 'L’agid social premetta che la facultad vegnia duvrada fin ad ina franchisa (SKOS: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss} — questa part sto per regla vegnir duvrada l’emprim. Orientaziun, nagina infurmaziun obligatorica.',
     repaymentTitle: "Rembursament d'agid social",
-    repaymentText: "En la gronda part dals chantuns sto agid social retschavì vegnir rembursà, sche la situaziun finanziala sa meglierescha essenzialmain (p.ex. pervia d'ina ierta u d'ina auta entrada).",
+    repaymentText: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).",
+    repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
+    repaymentFreibetrag: "I vegn pretendì enavos mo quai che surpassa ina franchisa (chantun Turitg: 30'000 per ina persuna, 50'000 per pèrs, plus 15'000 per uffant minoren). Quai variescha tenor il chantun.",
     repaymentVaries: "Il termin e las cundiziuns varieschan tenor il chantun (per regla 10–15 onns). Tscherts chantuns renunzian al rembursament en cas da paupertad.",
     repaymentAdvice: { sie: "Infurmai Vus tar il servetsch social da Vossa vischnanca davart las reglas valentas en Voss chantun.", du: "Infurmescha Tai tar il servetsch social da Tia vischnanca davart las reglas valentas en Tes chantun." },
+    repaymentRechnerTitle: "Stima grossa",
+    repaymentRechnerIntro: "Suppona che ti arrivas tar facultad (p.ex. tras ina ierta) — tge fiss sur la franchisa?",
+    repaymentAnfallLabel: "Augment da facultad / ierta (CHF)",
+    repaymentRechnerOver: "Radund {ueber} fissan sur la franchisa ({freibetrag}). Questa part pudess vegnir pretendida enavos — al pli tant sco ti has retschavì da l'agid social, e tenor il chantun.",
+    repaymentRechnerUnder: "Quai fiss sut la franchisa ({freibetrag}) — lura na fiss per regla nagut da rembursar.",
+    repaymentRechnerHint: "Orientaziun cun las franchisas turitgaisas. Variescha tenor il chantun — en cas da dubi, infurmescha tai tar il servetsch social da tia vischnanca.",
   },
 
   tax: {

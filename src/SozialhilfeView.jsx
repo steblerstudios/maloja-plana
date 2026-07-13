@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
+import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { Icon } from './IconSystem.jsx';
@@ -14,6 +15,14 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
   const el = checkELEligibility(data);
+  // Rückerstattungs-Rechner (Orientierung): eigener, höherer Freibetrag als beim
+  // laufenden Bezug (30/50/+15). Haushalt aus dem Profil vorbelegt. Erbschafts-
+  // Betrag frei eingebbar — reine Was-wäre-wenn-Einschätzung, keine Rechnung an
+  // calculateSozialhilfe (Leitplanke).
+  const hh = getHouseholdInfo(data);
+  const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
+  const rueckFreibetrag = rueckerstattungsFreibetrag(hh.adults, minorChildren);
+  const [erbschaft, setErbschaft] = useState('');
   const residenceType = data.wohnen?.residenceType || 'hauptwohnsitz';
   const residenceKey = residenceType === 'wochenaufenthalt' ? 'wochenaufenthalt' : 'hauptwohnsitz';
 
@@ -106,8 +115,31 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
       React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, 'ⓘ ' + t('sozialhilfe.repaymentTitle')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.text, lineHeight: leading.relaxed } },
         React.createElement('p', { style: { marginBottom: space.sm } }, t('sozialhilfe.repaymentText')),
+        React.createElement('p', { style: { marginBottom: space.sm } }, t('sozialhilfe.repaymentInheritance')),
+        React.createElement('p', { style: { marginBottom: space.sm, color: palette.mid } }, t('sozialhilfe.repaymentFreibetrag')),
         React.createElement('p', { style: { marginBottom: space.sm, color: palette.mid } }, t('sozialhilfe.repaymentVaries')),
-        React.createElement('p', { style: { fontWeight: weight.medium } }, t('sozialhilfe.repaymentAdvice'))
+        React.createElement('p', { style: { fontWeight: weight.medium, marginBottom: space.md } }, t('sozialhilfe.repaymentAdvice')),
+
+        // Leichter Orientierungs-Rechner — Was-wäre-wenn bei Vermögensanfall.
+        React.createElement('div', { style: { paddingTop: space.md, borderTop: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, '◰ ' + t('sozialhilfe.repaymentRechnerTitle')),
+          React.createElement('div', { style: { color: palette.mid, marginBottom: space.sm } }, t('sozialhilfe.repaymentRechnerIntro')),
+          React.createElement('label', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('sozialhilfe.repaymentAnfallLabel')),
+          React.createElement('input', {
+            type: 'number', inputMode: 'numeric', min: '0', value: erbschaft,
+            onChange: (e) => setErbschaft(e.target.value),
+            'aria-label': t('sozialhilfe.repaymentAnfallLabel'), placeholder: '0',
+            style: { width: '160px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
+          }),
+          (Number(erbschaft) || 0) > 0 && React.createElement('div', {
+            style: { marginTop: space.sm, padding: space.sm + 'px ' + space.md + 'px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sand, lineHeight: leading.relaxed },
+          },
+            Math.max(0, (Number(erbschaft) || 0) - rueckFreibetrag) > 0
+              ? t('sozialhilfe.repaymentRechnerOver', { ueber: formatCHF(Math.max(0, (Number(erbschaft) || 0) - rueckFreibetrag)), freibetrag: formatCHF(rueckFreibetrag) })
+              : t('sozialhilfe.repaymentRechnerUnder', { freibetrag: formatCHF(rueckFreibetrag) })
+          ),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm, lineHeight: leading.relaxed } }, t('sozialhilfe.repaymentRechnerHint'))
+        )
       )
     ),
 

@@ -2214,9 +2214,17 @@ export default {
     assetLimitTitle: 'Patrimonio oltre la franchigia',
     assetLimitNote: 'L’aiuto sociale presuppone che il patrimonio sia utilizzato fino a una franchigia (COSAS: {freibetrag} per questa economia domestica). Il patrimonio registrato la supera di circa {ueberschuss} — questa parte va di norma utilizzata prima. Orientamento, senza carattere vincolante.',
     repaymentTitle: 'Rimborso dell\'aiuto sociale',
-    repaymentText: 'Nella maggior parte dei cantoni, l\'aiuto sociale ricevuto deve essere rimborsato se la situazione finanziaria migliora (p. es. eredità, nuovi redditi o aumento del patrimonio).',
+    repaymentText: 'L\'aiuto sociale percepito legittimamente può essere richiesto indietro in molti cantoni se accedi a un patrimonio importante — soprattutto tramite un\'eredità o una vincita. Dal normale reddito da lavoro di solito non si richiede nulla (la COSAS lo sconsiglia).',
+    repaymentInheritance: 'Conta solo l\'effettivo aumento del patrimonio — chi rinuncia a un\'eredità non deve rimborsare nulla.',
+    repaymentFreibetrag: 'Si richiede indietro solo ciò che supera una franchigia (Cantone di Zurigo: 30\'000 per una persona, 50\'000 per le coppie, più 15\'000 per figlio minorenne). Varia a seconda del cantone.',
     repaymentVaries: 'I termini e le condizioni variano a seconda del cantone (in genere 10–15 anni). Alcuni cantoni (p. es. Vaud) hanno abolito l\'obbligo di rimborso.',
     repaymentAdvice: { sie: 'Si informi presso il servizio sociale del Suo comune sulle regole vigenti nel Suo cantone.', du: 'Informati presso il servizio sociale del tuo comune sulle regole vigenti nel tuo cantone.' },
+    repaymentRechnerTitle: 'Stima approssimativa',
+    repaymentRechnerIntro: 'Supponiamo che tu acceda a un patrimonio (p. es. tramite un\'eredità) — cosa supererebbe la franchigia?',
+    repaymentAnfallLabel: 'Aumento del patrimonio / eredità (CHF)',
+    repaymentRechnerOver: 'Circa {ueber} supererebbero la franchigia ({freibetrag}). Questa parte potrebbe essere richiesta indietro — al massimo quanto hai percepito in aiuto sociale, e a seconda del cantone.',
+    repaymentRechnerUnder: 'Sarebbe sotto la franchigia ({freibetrag}) — di norma non ci sarebbe nulla da rimborsare.',
+    repaymentRechnerHint: 'Orientamento con le franchigie zurighesi. Varia a seconda del cantone — nel dubbio, verifica presso il servizio sociale del tuo comune.',
   },
 
   tax: {
