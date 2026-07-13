@@ -98,6 +98,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     if (eink <= 0) return null;
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
+      geschlecht: data.basis?.gender,
       durchschnittlichesJahreseinkommen: eink,
       beitragsjahre: bj,
       erziehungsjahre: erz,
@@ -106,7 +107,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear]);
+  }, [ikResult, parsedEinkommen, parsedBeitragsjahre, erziehungsjahre, betreuungsjahre, parsedBezugAlter, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
 
   const vorbezugVergleich = useMemo(() => {
     if (parsedEinkommen <= 0) return [];
@@ -149,6 +150,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     const bj = Number(beitragsjahre) || Math.min(Math.max(0, parsedBezugAlter - 20), AHV_PARAMS.volleBeitragsjahre);
     return berechneAltersrente({
       geburtsjahr: birthYear || 1970,
+      geschlecht: data.basis?.gender,
       durchschnittlichesJahreseinkommen: parsedEinkommen,
       beitragsjahre: bj,
       erziehungsjahre: Number(erziehungsjahre) || 0,
@@ -157,7 +159,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
       verheiratet,
       einkommenPartner: Number(einkommenPartner) || 0,
     });
-  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear]);
+  }, [parsedEinkommen, beitragsjahre, parsedBezugAlter, erziehungsjahre, betreuungsjahre, verheiratet, einkommenPartner, birthYear, data.basis?.gender]);
 
   // Kapitalbezugssteuer auf das voraussichtliche Vorsorgekapital (BVG+3a+3b) bei
   // Rücktritt — falls als Kapital statt Rente bezogen. Bund exakt (Art. 38 DBG),
@@ -438,6 +440,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ),
         ahvResult.vorbezugAufschub !== 0 && React.createElement('div', null,
           (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
+        ),
+        // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
+        // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
+        ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+          t('vr.referenzalter') + ': ' + Math.floor(ahvResult.referenzalterMonate / 12) + ' ' + t('vr.jahre')
+            + (ahvResult.referenzalterMonate % 12 ? ' ' + (ahvResult.referenzalterMonate % 12) + ' ' + t('vr.monate') : '')
         ),
         ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
           t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')

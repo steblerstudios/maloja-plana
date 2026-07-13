@@ -693,7 +693,6 @@ export default {
   },
   common: {
     appName: 'Maloja Plana',
-    appTagline: 'Alles Wichtige an einem Ort.',
     percent: '{value}%',
     chf: 'CHF {value}',
     chfPerMonth: 'CHF {value}/Mt.',
@@ -3791,6 +3790,8 @@ export default {
     monat: 'Monat',
     jahr: 'Jahr',
     jahre: 'Jahre',
+    monate: 'Monate',
+    referenzalter: 'Referenzalter (AHV 21)',
     skalenfaktor: 'Beitragsskala',
     fehlendeBeitragsjahre: 'Fehlende Beitragsjahre',
     vorbezug: 'Kürzung (Vorbezug)',

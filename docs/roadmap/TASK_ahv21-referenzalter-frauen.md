@@ -1,6 +1,9 @@
 # Scoped Task — AHV-21-Referenzalter der Frauen (Übergangsgeneration)
 
-> **Status:** Vorschlag · zur Prüfung (Fach-Gegenlesen nötig, `swiss-precision-pruefer`)
+> **Status:** Phase A **umgesetzt & verifiziert** (2026-07-13, Branch `chore/backlog-cleanup`).
+> Referenzalter-Staffel an der amtlichen Quelle belegt (BSV FAQ), 638 Tests grün, Browser-
+> verifiziert. **Phase B (Ausgleichsmassnahmen) weiterhin offen** — braucht Kreisschreiben-
+> Tabellen + Fach-Gegenlesen (`swiss-precision-pruefer`).
 > **Betrifft:** `src/data/ahvRechner.js` → `berechneAltersrente()`
 > **Aufgeworfen durch:** Lint-Cleanup 2026-07 (ungenutzter Parameter `geburtsjahr`)
 > **Wahrheits-Disziplin:** rechts-/finanzrelevant — vor Umsetzung Zahlen an der Quelle belegen.
@@ -55,15 +58,17 @@ Männer: unverändert **65** (alle Jahrgänge).
 
 ## Umfang (Scope)
 
-### Phase A — Referenzalter korrekt (klar umsetzbar) ✅ empfohlen zuerst
+### Phase A — Referenzalter korrekt (klar umsetzbar) ✅ ERLEDIGT 2026-07-13
 
-1. `geschlecht` (`'w' | 'm' | …`) als Parameter in `berechneAltersrente()` aufnehmen und
-   im Aufrufer aus `basis.gender` durchreichen (`VorsorgeRechner.jsx`, ggf. `Pensionierung.jsx`).
-2. Helper `referenzalter({ geschlecht, geburtsjahr })` → gibt Referenzalter **in Monaten**
-   zurück (wg. 3-Monats-Schritten; z. B. JG 1962 = 774 Monate = 64 J 6 M).
-3. `differenzMonate`/Default-Alter auf dieses Referenzalter beziehen statt auf konstant 65.
-4. `REFERENZALTER = 65` bleibt Default/Fallback (Männer, JG ≥ 1964, unbekanntes Geschlecht).
-5. UI: Referenzalter/Restmonate dort anzeigen, wo heute „65" fix steht.
+1. ✅ `geschlecht` (`'female' | 'male' | 'diverse'`) als Parameter in `berechneAltersrente()`;
+   im Aufrufer aus `data.basis.gender` durchgereicht (`VorsorgeRechner.jsx`, 2 Call-Sites + Deps).
+2. ✅ Helper `referenzalterMonate({ geschlecht, geburtsjahr })` → Referenzalter **in Monaten**
+   (JG 1962 = 774 M = 64 J 6 M); exportiert + getestet.
+3. ✅ `differenzMonate = alter*12 − refMonate`; Default-Alter = Referenzalter statt konstant 65.
+4. ✅ Fallback 780 M (65 J) für Männer, `diverse`, unbekanntes Geschlecht, JG ≥ 1964 →
+   Nicht-Frauen-Pfad **byte-identisch** zu vorher (per Test abgesichert).
+5. ✅ UI: Ergebnis-Block zeigt eine ruhige Zeile „Referenzalter (AHV 21): X Jahre Y Monate" —
+   nur wenn ≠ 65 (Übergangsgeneration), sonst kein Clutter. Browser-verifiziert.
 
 ### Phase B — Ausgleichsmassnahmen (grösser, braucht Kreisschreiben-Tabellen)
 
