@@ -1128,7 +1128,7 @@ export default {
     anspruchAlleLink: '→ Toutes les prestations en aperçu',
     nextUpTitle: 'Quelle est la prochaine étape ?',
     nextUpAllDone: 'Votre base est en place — parfait.',
-    nextUpReassure: 'Juste une suggestion — c’est vous qui donnez le rythme.',
+    nextUpReassure: { sie: 'Juste une suggestion — c’est vous qui donnez le rythme.', du: 'Juste une suggestion — c’est toi qui donnes le rythme.' },
     glanceDeadline: 'Prochain délai',
     glanceNoDeadline: 'aucun en cours',
     glanceSaved: 'Dernière sauvegarde',

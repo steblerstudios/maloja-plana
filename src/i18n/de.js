@@ -1131,7 +1131,7 @@ export default {
     anspruchAlleLink: '→ Alle Ansprüche im Überblick',
     nextUpTitle: 'Was ist jetzt dran?',
     nextUpAllDone: 'Die Grundordnung steht — schön.',
-    nextUpReassure: 'Nur ein Vorschlag — du bestimmst das Tempo.',
+    nextUpReassure: { sie: 'Nur ein Vorschlag — Sie bestimmen das Tempo.', du: 'Nur ein Vorschlag — du bestimmst das Tempo.' },
     glanceDeadline: 'Nächste Frist',
     glanceNoDeadline: 'keine offene',
     glanceSaved: 'Zuletzt gesichert',
