@@ -3964,6 +3964,8 @@ export default {
     zukunftSzenarioWeiter: 'LPP e pitgin 3a creschan vinavant, uschè ditg che ti pajas endament (3a al pli tard fin 70 onns).',
     szenarioJahr: 'onn',
     szenarioJahre: 'onns',
+    szenarioMonat: 'mais',
+    szenarioMonate: 'mais',
     einkommen: 'Entrada annaira brut (CHF)',
     einkommenHint: 'Entrada media determinanta',
     beitragsjahre: 'Onns da contribuziun',

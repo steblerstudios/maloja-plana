@@ -3787,6 +3787,8 @@ export default {
     zukunftSzenarioWeiter: 'BVG and pillar 3a keep growing as long as you pay in (3a until age 70 at the latest).',
     szenarioJahr: 'year',
     szenarioJahre: 'years',
+    szenarioMonat: 'month',
+    szenarioMonate: 'months',
     einkommen: 'Gross annual income (CHF)',
     einkommenHint: 'Average insured income',
     beitragsjahre: 'Contribution years',

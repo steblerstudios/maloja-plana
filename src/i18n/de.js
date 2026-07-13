@@ -3775,6 +3775,8 @@ export default {
     zukunftSzenarioWeiter: 'BVG und 3a wachsen weiter, solange du einzahlst (3a längstens bis 70).',
     szenarioJahr: 'Jahr',
     szenarioJahre: 'Jahre',
+    szenarioMonat: 'Monat',
+    szenarioMonate: 'Monate',
     einkommen: 'Jahreseinkommen brutto (CHF)',
     einkommenHint: 'Massgebendes Durchschnittseinkommen',
     beitragsjahre: 'Beitragsjahre',
