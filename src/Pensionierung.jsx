@@ -1,6 +1,7 @@
 import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
+import { referenzalterMonate } from './data/ahvRechner.js';
 
 // Pensionierung — geführter Ablauf für den Übergang in den Ruhestand. Ruhige Orientierung
 // mit den Dingen, die NICHT automatisch laufen: AHV anmelden (Rente kommt nicht von selbst),
@@ -15,7 +16,10 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
   let ahvReminder = null;
   if (/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
     const r = new Date(dob + 'T00:00:00');
-    r.setFullYear(r.getFullYear() + 65);   // Referenzalter 65
+    // Echtes Referenzalter (AHV 21) statt pauschal 65 — für Frauen JG 1961–63 tiefer,
+    // sonst käme die Anmelde-Erinnerung bis zu 9 Monate zu spät (Frist = Haftung).
+    const refMonate = referenzalterMonate({ geschlecht: data?.basis?.gender, geburtsjahr: r.getFullYear() });
+    r.setMonth(r.getMonth() + refMonate);  // Datum, an dem das Referenzalter erreicht ist
     r.setDate(r.getDate() - 180);          // ~6 Monate vorher anmelden
     const iso = `${r.getFullYear()}-${String(r.getMonth() + 1).padStart(2, '0')}-${String(r.getDate()).padStart(2, '0')}`;
     if (iso >= inDays(0)) ahvReminder = iso;

@@ -4017,7 +4017,7 @@ export default {
     saeule3aHint: { sie: 'Endatai Voss avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.', du: 'Endatescha tes avair 3a e la contribuziun annuala sut Finanzas → Prevenziun.' },
     totalMitSaeule3a: 'Total 1. + 2. + 3a pitga',
     einkommenEingeben: { sie: 'Endatai Vossa entrada annaira per stimar la renta.', du: 'Endatescha Tia entrada annaira per stimar la renta.' },
-    source: 'Stimaziun tenor [[LAVS art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[LPP art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.',
+    source: 'Stimaziun tenor [[LAVS art. 21 + 34–40 (etad da referenza, AVS 21)|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[LPP art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Nagina infurmaziun giuridicamain vinculanta. Stadi 2026.',
     tabFreizuegigkeit: 'Liber passadi',
     fzTitle: { sie: 'Tge capita cun Voss LPP tar midada da plazza?', du: 'Tge capita cun Tes LPP tar midada da plazza?' },
     fzIntro: { sie: "Sche Vus bandunais Vossa plazza, na vegn Voss avair LPP betg pajà ora — el mida sin in conto da liber passadi, enfin che Vus entrais ina nova plazza.", du: "Sche Ti bandunas Tia plazza, na vegn Tes avair LPP betg pajà ora — el mida sin in conto da liber passadi, enfin che Ti entras ina nova plazza." },
