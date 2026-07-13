@@ -23,7 +23,8 @@
 | Runde 2026-07-12 UI/a11y (Mammografie-Geo, SEO-robots, Feld-Labels, Kalenderband-mobil, ScrollFade-Reiter, 44px-Tap-Targets) | `verified-live` | `18df05b` (PRs #47–#53) | Teil von `main` `5c64527`, Live-Hash `index-59c9c3e4.js` == main-Build (2026-07-13) |
 | Mammografie-Fakten-Fix (Franchise entfällt, nur 10% Selbstbehalt + Kantonsliste +GL/SH) | `verified-live` | PR #55 (`f202b13`) | swiss-precision + swisscancerscreening.ch/KVG Art.64 belegt; in Live-Bundle |
 | PII-Scan-Gate + Scrub (Alt-Mails/Vorname aus getrackten Dateien) | `verified-live` | PR #54 (`c4c2a91`) | `scripts/pii-scan.sh` Exit 0; in Live-Bundle |
-| Anspruchs-Instrumente: IPV-Prämien-Beleg (Papier) + Sozialhilfe-Pegel (Glas) im Leistungs-Schnellcheck — reine Anzeige über calculateIPV/-Sozialhilfe, Berechnung unberührt; Vermögens-Gate + AA-Kontrast | `verified-live` | PR #58 (`5c64527`) | Live-Hash `index-59c9c3e4.js` == main-Build; Tests grün, i18n 5 Spr. **Phase 2 (Lebenslinie/Stempel) offen** |
+| Anspruchs-Instrumente: IPV-Prämien-Beleg (Papier) + Sozialhilfe-Pegel (Glas) im Leistungs-Schnellcheck — reine Anzeige über calculateIPV/-Sozialhilfe, Berechnung unberührt; Vermögens-Gate + AA-Kontrast | `verified-live` | PR #58 (`5c64527`) | Live-Hash `index-59c9c3e4.js` == main-Build; Tests grün, i18n 5 Spr. Phase 2 → nächste Zeile |
+| **IPV-Lebenslinie Phase 2** (statefull Beleg: geschätzt→beantragt→bestätigt/Stempel→jährlich, additives `data.anspruch.ipv`) + a11y-Härtung (role='img' raus, Farbenblind-Balken) + Subsidiaritäts-Fix (IPV+Sozialhilfe nicht mehr doppelt) + Sozialhilfe-Rückerstattung (Copy belegt korrigiert + Rechner) | `built` | `feat/ipv-lebenslinie` (`91405d8`·`671da78`·`f987d06`) | Tests 632 grün, `eslint src` sauber, Build ok, Browser verifiziert. **NICHT deployt** (unmerged/unpushed). Quellen: SKOS-Faktenblatt IPV+Sozialhilfe 2024, § 27 SHG ZH. calculateIPV/-Sozialhilfe unberührt |
 
 ## Wie pflegen
 

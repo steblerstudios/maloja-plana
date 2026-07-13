@@ -13,15 +13,20 @@ const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumF
 export const PraemienBeleg = ({ palette, t, state }) => {
   const h = React.createElement;
   if (!state || !state.show || state.mode === 'empty') return null;
-  const { mode, verbilligung, praemie, selbst } = state;
+  const { mode, verbilligung, praemie, selbst, confirmed } = state;
   const over = mode === 'over';
   const hasBalken = mode === 'eligible' && praemie > 0;
   const kantonPct = hasBalken ? Math.min(100, Math.max(0, (Math.min(verbilligung, praemie) / praemie) * 100)) : 0;
   const selbstPct = 100 - kantonPct;
 
+  // Read-only Spiegelung: ist die IPV im Voll-Tool bereits bestätigt, trägt der
+  // Beleg den Stempel statt des „geschätzt"-Hinweises (gesetzt wird nichts hier).
+  const marker = confirmed
+    ? h('span', { style: { border: '1px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontFamily: MONO, padding: '1px 6px', borderRadius: radius.sm + 'px', transform: 'rotate(-4deg)', display: 'inline-block' } }, t('ipvStatus.stamp'))
+    : h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.geschaetzt'));
   const headRow = h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
     h('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('schnellcheck.ipv')),
-    h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.geschaetzt'))
+    marker
   );
 
   let body;
@@ -49,6 +54,9 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   }
 
   // Ein „Papier"-Beleg: warme Fläche, Perforation oben, Sand-Kante links.
+  // Kein role='img': der Inhalt ist echter Text (Betrag, Aufteilung, Hinweise).
+  // role='img' würde Screenreader nur ein knappes Label lesen lassen und den
+  // Deckungsbalken + die Hinweise verschlucken — so wird alles natürlich vorgelesen.
   return h('div', {
     style: {
       padding: space.md + 'px', marginTop: space.md + 'px', marginBottom: space.md + 'px',
@@ -58,8 +66,6 @@ export const PraemienBeleg = ({ palette, t, state }) => {
       borderLeft: '3px solid ' + palette.sand,
       borderRadius: radius.sm + 'px',
     },
-    role: 'img',
-    'aria-label': t('schnellcheck.ipv') + ' — ' + (over ? t('beleg.keineVerbilligung') : fmtCHF(verbilligung) + ' / ' + t('schnellcheck.monat')),
   }, headRow, body);
 };
 

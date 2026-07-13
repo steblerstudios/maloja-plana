@@ -5,9 +5,28 @@ import {
   berechneSozialhilfe,
   vergleicheHaushaltGroessen,
   berechneExistenzminimum,
+  vermoegensfreibetragSKOS,
+  rueckerstattungsFreibetrag,
   SKOS_PARAMS,
   SKOS_DATA_VERSION,
 } from '../sozialhilfeRechner.js';
+
+describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne Deckel', () => {
+  it('Einzelperson 30k, Paar 50k, + 15k pro minderjährigem Kind', () => {
+    expect(rueckerstattungsFreibetrag(1, 0)).toBe(30000);
+    expect(rueckerstattungsFreibetrag(2, 0)).toBe(50000);
+    expect(rueckerstattungsFreibetrag(1, 2)).toBe(60000);
+    expect(rueckerstattungsFreibetrag(2, 3)).toBe(95000);
+  });
+  it('kein Deckel (anders als der Bezugs-Freibetrag mit max. 15k)', () => {
+    expect(rueckerstattungsFreibetrag(2, 5)).toBe(125000);
+    // Kontrast: der Freibetrag WÄHREND des Bezugs ist bei 15k gedeckelt
+    expect(vermoegensfreibetragSKOS(2, 5)).toBe(15000);
+  });
+  it('robust bei negativen Kinderzahlen', () => {
+    expect(rueckerstattungsFreibetrag(1, -3)).toBe(30000);
+  });
+});
 
 describe('SKOS_PARAMS', () => {
   it('exports version and key constants', () => {
