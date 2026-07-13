@@ -4,7 +4,11 @@
 
 export const DARK_PALETTE = {
   bg: '#22211F', surface: '#2B2A26', up: '#343330', top: '#3D3B35',
-  border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#8E929A',
+  border: '#423F39', text: '#E6E3DC', mid: '#9CA0A6', soft: '#989CA4',
+  // soft (Feintext-Tier) angehoben #8E929A→#989CA4: alt trug auf der häufigen
+  // up-Karte (#343330, 184× als bg) nur 4.20:1 → unter AA. Neu 4.76 (up) / 5.22
+  // (surface), bleibt aber unter mid (#9CA0A6) → mid/soft-Hierarchie erhalten.
+  // top (#3D3B35) wird nie als bg genutzt (0×), daher kein Kontrast-Ziel.
   gold: '#C4A870', sage: '#7E9F8C', rose: '#B87070', sky: '#6E90B0', sand: '#C4A06A',
   onSand: '#2A2620', // dunkler Granit-Text auf Sand-Buttons (WCAG-AA; Sand ist in hell+dunkel gleich)
   // Dunkle, modus-invariante Button-Flächen für weissen Text — sage/rose sind als
