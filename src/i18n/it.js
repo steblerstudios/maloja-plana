@@ -1128,6 +1128,7 @@ export default {
     anspruchAlleLink: '→ Tutte le prestazioni in panoramica',
     nextUpTitle: 'Qual è il prossimo passo?',
     nextUpAllDone: 'La tua base c’è — bene così.',
+    nextUpReassure: 'Solo un suggerimento — il ritmo lo decidi tu.',
     glanceDeadline: 'Prossima scadenza',
     glanceNoDeadline: 'nessuna aperta',
     glanceSaved: 'Ultimo salvataggio',

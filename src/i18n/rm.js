@@ -1040,6 +1040,7 @@ export default {
     anspruchAlleLink: '→ Tuttas prestaziuns en survista',
     nextUpTitle: 'Tge è ussa da far?',
     nextUpAllDone: 'Tia basa è en plaz — bel.',
+    nextUpReassure: 'Mo ina proposta — ti fixeschas il tempo.',
     glanceDeadline: 'Proxim termin',
     glanceNoDeadline: 'nagin avert',
     glanceSaved: 'Ultima segirada',
