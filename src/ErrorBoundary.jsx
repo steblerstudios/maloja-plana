@@ -1,5 +1,5 @@
 import React from 'react';
-import { text, weight, radius , leading , space, fontFamily } from './config/tokens.js';
+import { text, weight, radius, space, fontFamily } from './config/tokens.js';
 
 // ─── Error Boundary ────────────────────────────────────────
 // Catches runtime errors in the component tree and shows a

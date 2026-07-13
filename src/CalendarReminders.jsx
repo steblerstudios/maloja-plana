@@ -98,6 +98,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       return r;
     });
     if (changed) setReminders(updated);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Einmaliger Überfällig-Rollover beim Mount; `reminders` bewusst KEINE Dep (sonst würde der Rollover bei jeder Änderung erneut laufen).
   }, []);
 
   const addReminder = () => {

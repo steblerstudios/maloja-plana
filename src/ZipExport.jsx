@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PanelTitle } from './components/Heading.jsx';
-import { prepareDataForExport, prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
+import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
@@ -11,15 +11,6 @@ import { runtimeEventBus } from './runtime/singleton.ts';
 export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [exporting, setExporting] = useState(false);
 
-  if (demoMode) {
-    return React.createElement('div', {
-      style: { maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '40px 20px' }
-    },
-      React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, marginBottom: '12px' } }, t('demo.exportBlocked')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('demo.bannerText'))
-    );
-  }
-
   // Backup & Restore state
   const [passphrase, setPassphrase] = useState('');
   const [passphraseConfirm, setPassphraseConfirm] = useState('');
@@ -27,7 +18,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [importing, setImporting] = useState(false);
   const [importPassphrase, setImportPassphrase] = useState('');
   const [pendingFile, setPendingFile] = useState(null);
-  const [pendingType, setPendingType] = useState(null);
+  const [, setPendingType] = useState(null);
   const [validationWarnings, setValidationWarnings] = useState([]);
 
   const handleExportJSON = () => {
@@ -195,6 +186,17 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     runtimeEventBus.subscribe(listener);
     return () => runtimeEventBus.unsubscribe(listener);
   }, []);
+
+  // Demo-Modus: Export/Backup gesperrt — der Ausstieg steht bewusst NACH allen
+  // Hooks, damit die Hook-Reihenfolge in jedem Render gleich bleibt (Rules of Hooks).
+  if (demoMode) {
+    return React.createElement('div', {
+      style: { maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '40px 20px' }
+    },
+      React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, marginBottom: '12px' } }, t('demo.exportBlocked')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('demo.bannerText'))
+    );
+  }
 
   const dataSummary = {
     person: getFullName(data.basis) || '—',

@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: { sie: 'Ihr Weg beginnt hier', du: 'Dein Weg beginnt hier' },
-    status: '{started} von {total} begonnen · {done} abgeschlossen',
+    status: '{started} von {total} begonnen',
     allDone: 'Alle Bereiche ausgefüllt',
   },
 

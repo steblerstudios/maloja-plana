@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Eyebrow, PageTitle } from './components/Heading.jsx';
 import {
   getNotificationPermission,
@@ -7,7 +7,7 @@ import {
   saveNotificationPrefs,
 } from './utils/notifications.js';
 import { Icon } from './IconSystem.jsx';
-import { text, weight, radius , space, fontFamily, ease, duration } from './config/tokens.js';
+import { text, weight, radius, space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // ─── Notification Settings ─────────────────────────────────

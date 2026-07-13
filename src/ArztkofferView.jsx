@@ -1,7 +1,7 @@
 import React from 'react';
 import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereich } from './data/lebensbereiche.js';
-import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PageTitle } from './components/Heading.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────

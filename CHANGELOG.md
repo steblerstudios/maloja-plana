@@ -11,6 +11,27 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Barrierefreiheit
+- **Durchgehender AA-Kontrast (Hell & Dunkel)**: Sekundär- und Feintext, Kapitel-Untertitel, Statusfarben, aktive Reiter/Umschalter, Badge-Etiketten und die grünen Aktions-Buttons erreichen jetzt auf allen Flächen ≥4.5:1 (WCAG 1.4.3). Ursache waren wenige zentrale Stellen: die Grautöne `mid`/`soft`, `sandDeep` sowie `skyDeep` (Dunkelmodus) waren auf getönten Flächen zu hell, und Kapitel-/Status-/Reiter-Texte nutzten die dekorativen Roh-Akzente statt der lesbaren `*Deep`-Varianten. Geprüft über Dashboard, alle sieben Kapitel und die Rechner-/Situationsansichten (Hell + Dunkel).
+- **Grössere Trefferflächen**: die Kopfzeilen-Symbole (Einstellungen/Barrierefreiheit/Menü) sind 44×44 px, der Vorlese-Knopf erreicht die AA-Mindestgrösse ≥24 px (WCAG 2.5.5/2.5.8) — der Icon bleibt dabei klein und ruhig.
+
+### Geändert
+- **Ruhigerer Einstieg**: Auf der Übersicht steht jetzt zuerst das Versprechen (Titel + Nutzen); der „Frühe Version"-Hinweis rückt darunter — auf dem Handy stand die Warnung sonst vor dem Inhalt.
+- **Leiserer Erscheinungsbild-Umschalter**: Der Hell/Dunkel-Knopf trägt dieselbe ruhige Ghost-Fläche wie die übrigen Kopfzeilen-Schalter; Gold bleibt echten Primär-Aktionen vorbehalten.
+
+### Behoben
+- **Latenter Hook-Reihenfolge-Fehler (Export/Sicherung)**: Im Probier-/Demo-Modus wurden die React-Hooks in wechselnder Reihenfolge aufgerufen (bisher folgenlos, da der Moduswechsel die Ansicht verlässt). Der Ausstieg steht jetzt nach allen Hooks — robust gegen künftige Änderungen.
+- **Doppelte Übersetzungs-Schlüssel entfernt**: `franchise` (rm) und `disclaimer` (it) waren je zweimal definiert; der jeweils verdeckte Eintrag ist raus (keine sichtbare Änderung — die aktive Fassung bleibt).
+
+### Intern
+- **Linting reaktiviert**: ESLint 9 als echte devDependency + schlanke Flat-Config (`eslint.config.js`); `npm run lint` läuft wieder sauber durch (0 Fehler). Die Basisregeln fanden die drei oben behobenen Punkte.
+- **Toter Code entfernt**: ungenutzte Importe/Variablen in ~30 Dateien bereinigt.
+- **Effekt-Abhängigkeiten geprüft (`exhaustive-deps`)**: alle 9 Hinweise einzeln bewertet. Vier bekamen die fehlende Dep (`t`/`tr` ist memoisiert → stabil, Neuberechnung bei Sprachwechsel erwünscht; `sectionTabs.length`); `tr` in ChapterView zusätzlich in `useMemo` stabilisiert. Fünf sind bewusste Auslassungen (Mount-only bzw. abgeleitete Werte, die als Dep jeden Render feuern würden) und tragen jetzt eine begründete `eslint-disable`-Zeile. Sprachwechsel live gegengeprüft (FR↔DE, keine Schleife/kein Crash).
+- **Restliche 4 Domänen-Konstanten geprüft & aufgelöst** → Lint-Stand **76 → 0** (0 Fehler, 0 Warnungen):
+  - `MUTTERSCHAFT_MIN_MONATE_AVS/ARBEIT` (Anspruch EOG Art. 16b) jetzt via `EO_PARAMS` exportiert → für die UI nutzbar statt nur Code-Kommentar.
+  - `FIELD_KEYS` exportiert (wie das Geschwister `CHAPTER_KEYS` — sprachunabhängige Feldkarte für Daten-Init/-Validierung).
+  - `geburtsjahr` in `berechneAltersrente` als **reserviert** dokumentiert: das Referenzalter ist derzeit pauschal 65; die AHV-21-Übergangsjahrgänge der Frauen (1961–1969) sind noch nicht modelliert (bewusst offen — braucht belegte Fach-Prüfung).
+
 ## [0.1.24-beta] — 2026-07-10
 
 ### Neu
