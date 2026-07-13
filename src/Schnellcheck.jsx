@@ -87,7 +87,11 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   const totalMonthly = countedMonetary.reduce((s, b) => s + b.monthly, 0);
   // Stärkster Weg für die Kompass-Peilung: höchster Betrag zuerst, sonst der erste
   // (qualitative wie EL zählen als Weg, aber ohne Betrag hinter den monetären).
-  const topBenefit = [...benefits].sort((a, b) => (b.monthly || 0) - (a.monthly || 0))[0];
+  // Die subsidiäre IPV wird NICHT gepeilt, wenn Sozialhilfe greift — sonst zeigte der
+  // Kompass „stärkster Weg: Prämienverbilligung", während das Ergebnis sie als
+  // „enthalten" markiert (widersprüchliche Führung).
+  const rankPool = benefits.filter(b => !(ipvSubsumed && b.key === 'ipv'));
+  const topBenefit = [...rankPool].sort((a, b) => (b.monthly || 0) - (a.monthly || 0))[0];
   const topLabel = topBenefit ? topBenefit.label : null;
 
   const s = {

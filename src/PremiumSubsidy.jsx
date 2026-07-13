@@ -12,6 +12,9 @@ import { addReminder } from './utils/reminders.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
+// Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
+const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+
 export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
   const vorlesen = useVorlesenContext();
   const [showCalculation, setShowCalculation] = useState(true);
@@ -90,7 +93,12 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   }, label);
 
   const renderLebenslinie = () => {
-    if (!onUpdateData || !hasIncome || !ipvResult.eligible) return null;
+    if (!onUpdateData || !hasIncome) return null;
+    // Ein bereits beantragter/bestätigter Status bleibt sichtbar, auch wenn die
+    // aktuelle Live-Schätzung knapp unter die Grenze fällt — sonst verschwänden
+    // real eingetragene Verfügungsdaten. Nur im reinen Schätz-Zustand blenden wir
+    // die Lebenslinie aus, wenn (noch) kein Anspruch geschätzt wird.
+    if (!ipvResult.eligible && ipvStatus.status === IPV_STATUS.GESCHAETZT) return null;
     const h = React.createElement;
     const card = (children, opts = {}) => h('div', {
       style: {
@@ -107,12 +115,15 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
 
     if (ipvStatus.status === IPV_STATUS.BESTAETIGT) {
       const stamp = h('span', { style: { border: '2px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontWeight: weight.semi, letterSpacing: '0.5px', padding: '2px 8px', borderRadius: '4px', transform: 'rotate(-6deg)', display: 'inline-block' } }, t('ipvStatus.stamp'));
-      const dueNext = (() => { const d = new Date(); d.setFullYear(d.getFullYear() + 1); return d.toISOString().split('T')[0]; })();
+      // Frist an das Verfügungs-Datum koppeln (nicht an „heute"): so bleibt die
+      // dueDate über Tage stabil und die addReminder-Dedup (Titel + Datum) greift —
+      // sonst entstünde bei jedem erneuten Antippen an einem anderen Tag ein Duplikat.
+      const dueNext = (() => { const base = ipvStatus.datum ? new Date(ipvStatus.datum) : new Date(); base.setFullYear(base.getFullYear() + 1); return base.toISOString().split('T')[0]; })();
       return card([
         head(null, stamp),
         lead(t('ipvStatus.confirmedLead')),
         ipvStatus.betrag > 0
-          ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, 'CHF ' + ipvStatus.betrag + ' / ' + t('schnellcheck.monat'))
+          ? h('div', { style: { fontSize: text.lg, fontWeight: weight.bold, color: palette.sageDeep, marginBottom: space.sm } }, fmtCHF(ipvStatus.betrag) + ' / ' + t('schnellcheck.monat'))
           : h('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm } }, t('ipvStatus.betragPrompt')),
         h('label', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('ipvStatus.betragLabel')),
         h('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', marginBottom: space.md, flexWrap: 'wrap' } },
