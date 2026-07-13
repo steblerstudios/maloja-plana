@@ -1128,6 +1128,7 @@ export default {
     anspruchAlleLink: '→ All entitlements at a glance',
     nextUpTitle: 'What’s next?',
     nextUpAllDone: 'Your foundation is in place — lovely.',
+    nextUpReassure: 'Just a suggestion — you set the pace.',
     glanceDeadline: 'Next deadline',
     glanceNoDeadline: 'none open',
     glanceSaved: 'Last saved',
