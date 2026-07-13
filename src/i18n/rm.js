@@ -3979,6 +3979,8 @@ export default {
     monat: 'Mais',
     jahr: 'Onn',
     jahre: 'Onns',
+    monate: 'mais',
+    referenzalter: 'Etad da referenza (AVS 21)',
     skalenfaktor: 'Scala da contribuziun',
     fehlendeBeitragsjahre: 'Onns da contribuziun che mancan',
     vorbezug: 'Reducziun (retschavida anticipada)',

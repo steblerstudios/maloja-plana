@@ -3801,6 +3801,8 @@ export default {
     monat: 'mois',
     jahr: 'an',
     jahre: 'ans',
+    monate: 'mois',
+    referenzalter: 'Âge de référence (AVS 21)',
     skalenfaktor: 'Échelle de cotisation',
     fehlendeBeitragsjahre: 'Années de cotisation manquantes',
     vorbezug: 'Réduction (anticipation)',

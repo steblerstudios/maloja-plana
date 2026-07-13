@@ -441,6 +441,12 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         ahvResult.vorbezugAufschub !== 0 && React.createElement('div', null,
           (ahvResult.vorbezugAufschub > 0 ? t('vr.aufschub') : t('vr.vorbezug')) + ': ' + Math.abs(ahvResult.vorbezugAufschub).toFixed(1) + '%'
         ),
+        // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
+        // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
+        ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
+          t('vr.referenzalter') + ': ' + Math.floor(ahvResult.referenzalterMonate / 12) + ' ' + t('vr.jahre')
+            + (ahvResult.referenzalterMonate % 12 ? ' ' + (ahvResult.referenzalterMonate % 12) + ' ' + t('vr.monate') : '')
+        ),
         ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
           t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
         ),
