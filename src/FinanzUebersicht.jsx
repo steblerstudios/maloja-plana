@@ -251,8 +251,10 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
                   key: b.key,
                   style: {
                     fontSize: '10px', padding: '2px 6px', borderRadius: '3px',
-                    background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '60'),
-                    // mid statt soft: soft (10px) auf border+60 liegt nur bei 4.28:1 (AA-Fail).
+                    // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
+                    // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
+                    // lag es dort mit 4.49:1 knapp darunter).
+                    background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '40'),
                     color: income >= b.lohn ? palette.text : palette.mid,
                     whiteSpace: 'nowrap',
                   }
