@@ -3839,7 +3839,7 @@ export default {
     saeule3aHint: 'Saisissez votre avoir 3a et la cotisation annuelle sous Finances → Prévoyance.',
     totalMitSaeule3a: 'Total 1er + 2e + 3a pilier',
     einkommenEingeben: 'Saisissez votre revenu annuel pour estimer la rente.',
-    source: 'Estimation selon [[LAVS art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/fr]], [[LPP art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/fr]]. Sans valeur juridique. État 2026.',
+    source: 'Estimation selon [[LAVS art. 21 + 34–40 (âge de référence, AVS 21)|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/fr]], [[LPP art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/fr]]. Sans valeur juridique. État 2026.',
     tabFreizuegigkeit: 'Libre passage',
     fzTitle: 'Que se passe-t-il avec votre LPP en cas de changement d\'emploi ?',
     fzIntro: 'Lorsque vous quittez votre emploi, votre avoir de prévoyance n\'est pas versé — il est transféré sur un compte de libre passage jusqu\'à votre prochain emploi.',

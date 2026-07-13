@@ -3828,7 +3828,7 @@ export default {
     saeule3aHint: { sie: 'Erfassen Sie Ihr 3a-Guthaben und die jährliche Einzahlung unter Finanzen → Vorsorge.', du: 'Erfasse Dein 3a-Guthaben und die jährliche Einzahlung unter Finanzen → Vorsorge.' },
     totalMitSaeule3a: 'Total 1. + 2. + 3a Säule',
     einkommenEingeben: { sie: 'Geben Sie Ihr Jahreseinkommen ein, um die Rente zu schätzen.', du: 'Gib Dein Jahreseinkommen ein, um die Rente zu schätzen.' },
-    source: 'Schätzung nach [[AHVG Art. 34–40|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[BVG Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Keine rechtsverbindliche Auskunft. Stand 2026.',
+    source: 'Schätzung nach [[AHVG Art. 21 + 34–40 (Referenzalter, AHV 21)|https://www.fedlex.admin.ch/eli/cc/63/837_843_843/de]], [[BVG Art. 16|https://www.fedlex.admin.ch/eli/cc/1983/797_797_797/de]]. Keine rechtsverbindliche Auskunft. Stand 2026.',
     tabFreizuegigkeit: 'Freizügigkeit',
     fzTitle: { sie: 'Was passiert mit Ihrem BVG bei Jobwechsel?', du: 'Was passiert mit Deinem BVG bei Jobwechsel?' },
     fzIntro: { sie: 'Wenn Sie Ihre Stelle verlassen, wird Ihr BVG-Guthaben nicht ausbezahlt — es wandert auf ein Freizügigkeitskonto, bis Sie eine neue Stelle antreten.', du: 'Wenn Du Deine Stelle verlässt, wird Dein BVG-Guthaben nicht ausbezahlt — es wandert auf ein Freizügigkeitskonto, bis Du eine neue Stelle antrittst.' },

@@ -191,16 +191,18 @@ const VorlesenToggle = ({ palette, t, vorlesen }) => {
     onClick: vorlesen.toggle,
     title: t('vorlesen.toggle'),
     style: {
-      padding: '6px 8px',
+      padding: '6px 8px', minHeight: '44px', minWidth: '44px',
       background: vorlesen.enabled ? palette.sand + '30' : 'transparent',
       color: vorlesen.enabled ? palette.sand : palette.mid,
-      border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid transparent',
+      // Sichtbarer Ruhe-Rand (44px-Tap-Ziel, WCAG 2.5.8) statt transparent.
+      border: vorlesen.enabled ? '1px solid ' + palette.sand + '50' : '1px solid ' + palette.border,
       borderRadius: '4px',
       cursor: 'pointer',
       fontSize: '11px',
       lineHeight: 1,
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       gap: '4px',
       transition: `all ${duration.normal}ms ${ease}`,
     },
@@ -778,13 +780,26 @@ const AppInner = () => {
 
   // Sekundäre Kopfzeilen-Bedienelemente — auf dem Desktop in der Kopfzeile,
   // auf dem Handy ins ☰-Menü eingeklappt (ruhigere, nicht überlaufende Kopfzeile).
+  // Gemeinsamer Button-Stil: 44px Tap-Ziel (WCAG 2.5.8) + sichtbarer Ruhe-Rand
+  // (`palette.border` statt transparent — die a11y-Schalter waren sonst selbst am
+  // schwersten zu treffen). Ausgerichtet zentriert, Icon/Text mittig im 44px-Feld.
+  const ctrlBtn = (active, accent, opts = {}) => ({
+    padding: '6px 9px', minHeight: '44px', minWidth: '44px',
+    background: active ? accent + (opts.bgAlpha || '22') : 'transparent',
+    color: active ? (opts.activeColor || accent) : palette.mid,
+    border: '1px solid ' + (active ? accent + '55' : palette.border),
+    borderRadius: '4px', cursor: 'pointer',
+    lineHeight: opts.lineHeight != null ? opts.lineHeight : 0,
+    display: 'flex', alignItems: opts.alignItems || 'center', justifyContent: 'center',
+    ...(opts.extra || {}),
+  });
   const settingsControls = [
     React.createElement(VorlesenToggle, { key: 'voice', palette, t, vorlesen }),
     React.createElement('button', {
       key: 'readable',
       'aria-label': t('common.readable'), 'aria-pressed': readable, title: t('common.readable'),
       onClick: () => setReadable(r => !r),
-      style: { padding: '6px 9px', background: readable ? palette.sage + '22' : 'transparent', color: readable ? palette.sage : palette.mid, border: '1px solid ' + (readable ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 1, display: 'flex', alignItems: 'baseline', gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" }
+      style: ctrlBtn(readable, palette.sage, { lineHeight: 1, alignItems: 'baseline', extra: { gap: '1px', fontFamily: "'Atkinson Hyperlegible', sans-serif" } })
     },
       React.createElement('span', { style: { fontSize: '15px', fontWeight: 700 } }, 'A'),
       React.createElement('span', { style: { fontSize: '10px', fontWeight: 700 } }, 'a')
@@ -799,7 +814,7 @@ const AppInner = () => {
         'aria-label': 'Anrede: ' + current,
         title: tooltip,
         onClick: () => setAnrede(anrede === 'du' ? 'sie' : 'du'),
-        style: { padding: '6px 9px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, minWidth: '30px' }
+        style: { padding: '6px 9px', minHeight: '44px', minWidth: '44px', background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: '4px', cursor: 'pointer', fontSize: text.xs, fontWeight: 700, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }
       }, current);
     })() : null,
     React.createElement(LanguageSwitcher, { key: 'lang', palette }),
@@ -809,7 +824,7 @@ const AppInner = () => {
       'aria-label': t('common.simpleView'), 'aria-pressed': simpleView, title: t('common.simpleView'),
       // Beim Einschalten automatisch Vorlesen aktivieren (Inkrement-1-Entscheid).
       onClick: () => setSimpleView(v => { const next = !v; if (next) vorlesen.enable(); return next; }),
-      style: { padding: '6px 9px', background: simpleView ? palette.sand + '30' : 'transparent', color: simpleView ? palette.sand : palette.mid, border: '1px solid ' + (simpleView ? palette.sand + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+      style: ctrlBtn(simpleView, palette.sand, { bgAlpha: '30' })
     },
       // Icon: 2×2-Kachelraster = „grosse Symbole" (Outline, konsistent mit dem Icon-Set)
       React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },
@@ -823,7 +838,7 @@ const AppInner = () => {
       key: 'grayscale',
       'aria-label': t('common.grayscale'), 'aria-pressed': grayscale, title: t('common.grayscale'),
       onClick: () => setGrayscale(g => !g),
-      style: { padding: '6px 9px', background: grayscale ? palette.mid + '22' : 'transparent', color: grayscale ? palette.text : palette.mid, border: '1px solid ' + (grayscale ? palette.mid + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+      style: ctrlBtn(grayscale, palette.mid, { activeColor: palette.text })
     },
       // Icon: halb gefüllter Kreis = Kontrast / Schwarzweiss
       React.createElement('svg', { width: '16', height: '16', viewBox: '0 0 24 24', 'aria-hidden': 'true' },
@@ -835,7 +850,7 @@ const AppInner = () => {
       key: 'colorblind',
       'aria-label': t('common.colorBlind'), 'aria-pressed': colorBlind, title: t('common.colorBlind'),
       onClick: () => setColorBlind(c => !c),
-      style: { padding: '6px 9px', background: colorBlind ? palette.sky + '22' : 'transparent', color: colorBlind ? palette.sky : palette.mid, border: '1px solid ' + (colorBlind ? palette.sky + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+      style: ctrlBtn(colorBlind, palette.sky)
     },
       // Icon: ein gefüllter Kreis + ein Umriss-Quadrat = unterscheidbar an Farbe UND Form
       React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', 'aria-hidden': 'true' },
@@ -847,7 +862,7 @@ const AppInner = () => {
       key: 'reducemotion',
       'aria-label': t('common.reduceMotion'), 'aria-pressed': reduceMotion, title: t('common.reduceMotion'),
       onClick: () => setReduceMotion(m => !m),
-      style: { padding: '6px 9px', background: reduceMotion ? palette.sage + '22' : 'transparent', color: reduceMotion ? palette.sage : palette.mid, border: '1px solid ' + (reduceMotion ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+      style: ctrlBtn(reduceMotion, palette.sage)
     },
       // Icon: Punkt mit radierenden Bewegungsbögen = „Bewegung" (aktiv = ruhiggestellt)
       React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', 'aria-hidden': 'true' },
@@ -861,7 +876,7 @@ const AppInner = () => {
       key: 'lefthand',
       'aria-label': t('common.leftHand'), 'aria-pressed': leftHand, title: t('common.leftHand'),
       onClick: () => setLeftHand(v => !v),
-      style: { padding: '6px 9px', background: leftHand ? palette.sage + '22' : 'transparent', color: leftHand ? palette.sage : palette.mid, border: '1px solid ' + (leftHand ? palette.sage + '55' : 'transparent'), borderRadius: '4px', cursor: 'pointer', lineHeight: 0, display: 'flex', alignItems: 'center' }
+      style: ctrlBtn(leftHand, palette.sage)
     },
       // Icon: linke Hand (Daumen links) = Einhand-Bedienung links
       React.createElement('svg', { width: '17', height: '17', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true' },

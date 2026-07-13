@@ -252,7 +252,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
                   style: {
                     fontSize: '10px', padding: '2px 6px', borderRadius: '3px',
                     background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '60'),
-                    color: income >= b.lohn ? palette.text : palette.soft,
+                    // mid statt soft: soft (10px) auf border+60 liegt nur bei 4.28:1 (AA-Fail).
+                    color: income >= b.lohn ? palette.text : palette.mid,
                     whiteSpace: 'nowrap',
                   }
                 }, t('branche.' + b.key))
