@@ -13,7 +13,7 @@
 > Regel: `verified-live` NIE setzen, ohne live geschaut zu haben. Genau dafür ist die
 > Spalte da.
 
-**Stand:** 2026-07-13 · **Live:** App-Bundle `index-8aeb4a84.js` auf malojaplana.ch = frischer `main`-Build (`main` = `69ea85e`, Merge PR #69). Die Runde 2026-07-12/13 (PRs #47–#58) **und die Runden 2 (IPV-Lebenslinie Ph2) + 3 (AHV-21-Referenzalter, Tresor-Fundament dormant)** sind **deployt + verified-live** (Live-Hash `index-8aeb4a84.js` frisch gegengeprüft 2026-07-13; `.maloja/predeploy-ok` = `69ea85e`).
+**Stand:** 2026-07-13 · **Live:** App-Bundle `index-8aeb4a84.js` auf malojaplana.ch = Build von `main`-Stand `69ea85e`. Die Runde 2026-07-12/13 (PRs #47–#58) **und die Runden 2 (IPV-Lebenslinie Ph2) + 3 (AHV-21-Referenzalter, Tresor-Fundament dormant)** sind **deployt + verified-live** (Live-Hash frisch gegengeprüft 2026-07-13; `.maloja/predeploy-ok` = `69ea85e`). ⚠️ **`main` steht seit der 3. Runde auf `2f011e3` (#72–#75) — VOR dem Live-Stand: diese Änderungen sind gemergt, aber noch nicht deployt.**
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
@@ -26,6 +26,7 @@
 | Anspruchs-Instrumente: IPV-Prämien-Beleg (Papier) + Sozialhilfe-Pegel (Glas) im Leistungs-Schnellcheck — reine Anzeige über calculateIPV/-Sozialhilfe, Berechnung unberührt; Vermögens-Gate + AA-Kontrast | `verified-live` | PR #58 (`5c64527`) | Live-Hash `index-59c9c3e4.js` == main-Build; Tests grün, i18n 5 Spr. Phase 2 → nächste Zeile |
 | **IPV-Lebenslinie Phase 2** (statefull Beleg: geschätzt→beantragt→bestätigt/Stempel→jährlich, additives `data.anspruch.ipv`) + a11y-Härtung (role='img' raus, Farbenblind-Balken) + Subsidiaritäts-Fix (IPV+Sozialhilfe nicht mehr doppelt) + Sozialhilfe-Rückerstattung (Copy belegt korrigiert + Rechner) | `verified-live` | `main` via PR #60 (`91405d8`·`671da78`·`f987d06` + Predeploy-Fixes `b090feb`·`382042e`) | **Live** (Live-Hash `index-8aeb4a84.js` == `main`-Build `69ea85e`, frisch gegengeprüft 2026-07-13). Predeploy-Runde 2 grün (5 branch-🔴 gefixt: Stempel/Kompass/Vanish/Total/Sie-Du), ZH-Rückerstattungsbeträge live gegen ZH-Handbuch 15.2.03 §27 SHG verifiziert. calculateIPV/-Sozialhilfe unberührt |
 | **AHV-21-Referenzalter der Frauen** (JG 1961–63 gestaffelt, monatsgenau, konsistent in Hauptergebnis + Vergleichstabelle + Zukunftsbild) + **Tresor-Lock-Fundament** (cryptoCore/secureStore, AES-256-GCM/PBKDF2, **dormant/unverdrahtet**) | `verified-live` | `main` via PRs #62/#63 + Fixes #65/#66/#68 (`69ea85e`) | **Live** (Live-Hash `index-8aeb4a84.js` == `main`-Build `69ea85e`, frisch gegengeprüft 2026-07-13). Predeploy-Runde 3 (19 Agenten) grün: AHV-Referenzalter swiss-precision-verifiziert (JG1962→2'341.33/0 %), Crypto-Primitive solide. **Tresor bleibt dormant/unverdrahtet — Tresor-🔴 (Dokumente unverschlüsselt etc.) als Phase-2b-Blocker geparkt** (`docs/design/tresor-lock.md`). Offen: AHV Phase B (Kürzungssätze). |
+| **Momentum: Anti-Druck-Zeile** beim „Was ist jetzt dran?"-Nudge (`nextUpReassure`, 5 Spr., nur sichtbar wenn ein offener Schritt existiert) | `built` | `main` via PR #75 (`8f1b90b` → `2f011e3`) | Governance-Level **L0–L1** (erster Testfall der Feature-Tagging-Regel). Im Dev live verifiziert (Dashboard, Dark Mode); i18n-Parität 32 Tests grün. **In `main`, NICHT deployt** (Live = `8aeb4a84` = Build `69ea85e`). |
 
 ## Wie pflegen
 
