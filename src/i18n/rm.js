@@ -937,7 +937,7 @@ export default {
     motivation: { sie: 'Vus essas en via. Mintga champ porta urden.', du: 'Ti es en via. Mintga champ porta urden.' },
     completionFull: { sie: 'Vossa urden da vita stat. Quietezza.', du: 'Tia urden da vita stat. Quietezza.' },
     notStarted: { sie: 'Vossa via cumenza qua', du: 'Tia via cumenza qua' },
-    status: '{started} da {total} cumenzà · {done} cumpletà',
+    status: '{started} da {total} cumenzà',
     allDone: 'Tut las secziuns cumpletadas',
   },
 
@@ -1259,7 +1259,6 @@ export default {
       fields: {
         kkInsurer: 'Cassa da malsauns',
         kkPremium: 'Premia mensiala CHF',
-        franchise: 'Franschisa CHF',
         kkModel: { label: 'Model', options: { standard: 'Standard', hmo: 'HMO', telmed: 'Telmed', hausarzt: 'Medi da chasa', basic: 'Basic', comfort: 'Comfort', apotheke: 'Model dad apoteca' } },
         franchise: { label: 'Franschisa CHF', options: { 300: '300', 500: '500', 1000: "1'000", 1500: "1'500", 2500: "2'500", f300: '300', f500: '500', f1000: "1'000", f1500: "1'500", f2500: "2'500" } },
         bvgContribution: 'Contribuziun LPP CHF/mais',

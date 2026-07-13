@@ -37,6 +37,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   // fliessen die hier frei angepassten Zahlen an den Ergebnis-Schritt weiter —
   // sonst blieben sie in diesem lokalen Zustand gefangen. Ohne Callback (Solo-
   // Ansicht) passiert nichts. Kanton bleibt profilgebunden (kein Feld hier).
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Absicht: bei Änderung der Roh-Eingaben feuern und das abgeleitete `probe` durchreichen. `probe` (jedes Render neu) / `onProbeChange` (Prop) als Dep würden bei jedem Render feuern.
   useEffect(() => { if (onProbeChange) onProbeChange(probe); }, [income, rent, kk, data]);
 
   // Gedeckte Leistungen sammeln — jede mit eigenem Ehrlichkeits-Gate.

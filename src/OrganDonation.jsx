@@ -72,7 +72,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       React.createElement('div', { style: { display: 'grid', gap: space.sm, marginBottom: '20px' } },
         React.createElement('button', {
           onClick: () => setStatus('registered'),
-          style: { ...statusButtonStyle, background: status === 'registered' ? palette.sage : palette.up, color: status === 'registered' ? '#000' : palette.text }
+          style: { ...statusButtonStyle, background: status === 'registered' ? palette.sageBtn : palette.up, color: status === 'registered' ? '#fff' : palette.text }
         }, '✓ ' + t('organ.registered')),
         React.createElement('button', {
           onClick: () => setStatus('not_registered'),
@@ -100,7 +100,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         })),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sage, color: '#000' } }, 'ⓘ ' + t('organ.generateQr'))
+      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, 'ⓘ ' + t('organ.generateQr'))
     ),
 
     // Right: Info & QR

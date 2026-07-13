@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { text, weight, space, radius, leading } from './config/tokens.js';
+import { text, weight, space, radius } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';

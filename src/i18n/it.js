@@ -907,7 +907,7 @@ export default {
 
   progress: {
     notStarted: { sie: 'Il Suo percorso inizia qui', du: 'Il tuo percorso inizia qui' },
-    status: '{started} di {total} iniziati · {done} completati',
+    status: '{started} di {total} iniziati',
     allDone: 'Tutte le sezioni completate',
   },
 
@@ -2173,7 +2173,6 @@ export default {
     weeklyResidence: 'Residenza settimanale rilevata',
     weeklyIpvNote: 'La richiesta IPV va presentata nel cantone di residenza principale, non nel luogo di lavoro.',
     weeklyKkNote: 'Il premio dell\'assicurazione malattia si basa sul cantone di residenza principale.',
-    disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
   },
 
   sozialhilfe: {

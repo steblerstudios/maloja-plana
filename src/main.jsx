@@ -4,7 +4,7 @@ import './tokens.css';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
-import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters, CHAPTER_KEYS } from './config/constants.js';
+import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './config/constants.js';
 import { DEMO_DATA } from './config/demoData.js';
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
@@ -549,6 +549,7 @@ const AppInner = () => {
     checkOverdueReminders(t);
     // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
     preloadPLZ();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Nur beim Mount: SW-Registrierung/Preload dürfen bei Sprachwechsel NICHT neu laufen; `t` wird hier einmalig durchgereicht.
   }, []);
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
@@ -563,7 +564,7 @@ const AppInner = () => {
   // Sync document expiry dates → calendar reminders
   useEffect(() => {
     syncDocumentReminders(documents, t);
-  }, [documents]);
+  }, [documents, t]);
 
   useEffect(() => {
     localStorage.setItem('or5_theme', JSON.stringify(isDarkMode));

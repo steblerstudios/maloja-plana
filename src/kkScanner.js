@@ -89,7 +89,7 @@ export const extractKKDataFromText = (text) => {
   if (cardMatch) result.cardNumber = cardMatch[0];
 
   // AHV (756.xxxx.xxxx.xx Format)
-  const ahvMatch = text.match(/756[\.\s]\d{4}[\.\s]\d{4}[\.\s]\d{2}/);
+  const ahvMatch = text.match(/756[.\s]\d{4}[.\s]\d{4}[.\s]\d{2}/);
   if (ahvMatch) result.ahv = ahvMatch[0].replace(/\s/g, '.');
 
   // Franchise
@@ -122,7 +122,7 @@ export const validateKKData = (data, t) => {
 
   if (!data.insurer) errors.push(t ? t('kkScanner.errorNoInsurer') : 'Insurer not recognized');
   if (!data.cardNumber || data.cardNumber.length < 10) errors.push(t ? t('kkScanner.errorCardNumber') : 'Card number invalid');
-  if (data.ahv && !data.ahv.match(/756[\.\s]\d{4}[\.\s]\d{4}[\.\s]\d{2}/)) {
+  if (data.ahv && !data.ahv.match(/756[.\s]\d{4}[.\s]\d{4}[.\s]\d{2}/)) {
     errors.push(t ? t('kkScanner.errorAhvFormat') : 'AHV format invalid');
   }
 
