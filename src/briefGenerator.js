@@ -8,6 +8,56 @@
 //     options.belege (optional) → für kkReklamation: gewählte kkBelege ({datum,betrag})
 
 import { getFullName } from './config/constants.js';
+import { getCantonName } from './config/cantonalData.js';
+import { pruefeLohn, pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+
+// ─── Fristen (Tage) ───────────────────────────────────────
+// (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
+//     braucht einen Lohnlauf; ruhiger, nicht konfrontativer Ton.
+// (b) unpaidWage/ausstehender Lohn: 10 Tage — Lohn ist bereits fällig (OR 323);
+//     ~1 Woche gilt als angemessen, 10 Tage bleibt höflich und hält spätere Schritte offen.
+export const FRIST_TAGE = { wageClaim: 30, unpaidWage: 10 };
+
+// Zahl aus Nutzer-Eingabe (String, evtl. mit Komma) robust lesen.
+function num(v) {
+  return parseFloat(String(v == null ? '' : v).replace(',', '.')) || 0;
+}
+
+// Frist-Datum eines Brieftyps: heute + Frist-Tage → { iso, display }.
+// EINE Quelle der Wahrheit für Brieftext UND Kalender-Eintrag (addReminder).
+export function getFristInfo(templateKey, from = new Date()) {
+  const days = FRIST_TAGE[templateKey];
+  if (!days) return null;
+  const d = new Date(from.getTime());
+  d.setDate(d.getDate() + days);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  return { days, iso: `${d.getFullYear()}-${month}-${day}`, display: `${day}.${month}.${d.getFullYear()}` };
+}
+
+// Lohn-Befund autark aus den Daten rechnen (genauere Stundenlohn-Prüfung, wenn Stunden da).
+function lohnBefund(data) {
+  const kanton = data?.basis?.canton || '';
+  const monthlyIncome = num(data?.finanzen?.monthlyIncome);
+  const wHrs = num(data?.ausbildung?.workHoursPerWeek);
+  if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
+  return wHrs > 0 ? pruefeStundenlohn(monthlyIncome, wHrs, kanton) : pruefeLohn(monthlyIncome, kanton);
+}
+
+// Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`
+// (amtlich noch nicht gegengeprüft) NICHT die unsichere Stelle/den Gesetzestitel in
+// einen versendbaren Brief schreiben — dann neutrale Formulierung. JU hat keine
+// Kontrollstelle → Arbeitsgericht-Fallback; das Wort „Stelle" bleibt bewusst generisch.
+function wageClaimRefs(kanton, t) {
+  const e = getLohnKontrollstelle(kanton);
+  const neutralGesetz = t('briefe.wageClaim.gesetzFallback');
+  const neutralStelle = t('briefe.wageClaim.stelleFallback');
+  if (!e) return { gesetz: neutralGesetz, stelle: neutralStelle };
+  const gesetz = (e.gesetz && !e.verify) ? e.gesetz : neutralGesetz;
+  const stelle = e.verify ? neutralStelle : (e.stelle || e.fallback || neutralStelle);
+  return { gesetz, stelle };
+}
 
 function esc(str) {
   if (!str) return '';
@@ -53,8 +103,9 @@ function recipientPlaceholder(t) {
 
 // ─── Template definitions ─────────────────────────────────
 
-export function getLetterTemplates(t) {
-  return [
+export function getLetterTemplates(t, data) {
+  const kanton = data?.basis?.canton || '';
+  const list = [
     {
       key: 'leaseTermination',
       title: t('briefe.leaseTermination.title'),
@@ -96,7 +147,29 @@ export function getLetterTemplates(t) {
       legalRef: 'ATSG Art. 52',
       chapter: 'versicherungen',
     },
+    {
+      key: 'unpaidWage',
+      title: t('briefe.unpaidWage.title'),
+      description: t('briefe.unpaidWage.description'),
+      icon: 'money',
+      legalRef: 'OR Art. 323',
+      chapter: 'finanzen',
+    },
   ];
+  // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
+  // Sonst behauptet der Brief einen nicht existierenden Mindestlohn (Haftungsrisiko in
+  // ~21/26 Kantonen). Kein Kanton gewählt → auch nicht anbieten (nicht raten).
+  if (kantonHatMindestlohn(kanton)) {
+    list.push({
+      key: 'wageClaim',
+      title: t('briefe.wageClaim.title'),
+      description: t('briefe.wageClaim.description'),
+      icon: 'money',
+      legalRef: 'OR Art. 322',
+      chapter: 'finanzen',
+    });
+  }
+  return list;
 }
 
 // ─── Field extraction helpers ─────────────────────────────
@@ -354,6 +427,78 @@ function generateKkReklamation(data, t, options = {}) {
   `, t);
 }
 
+// ─── Lohn-Briefe ──────────────────────────────────────────
+
+// (a) Lohn unter kantonalem Mindestlohn → höfliche Nachforderung an den Arbeitgeber.
+// Rechnet den Befund autark; ohne belegbare Zahlen bleiben Felder zum Ausfüllen.
+function generateWageClaim(data, t) {
+  const sender = senderBlock(data);
+  const dateStr = today();
+  const city = data.wohnen?.city || '';
+  const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
+
+  const employer = data.finanzen?.employer || t('briefe.fillIn');
+  const kanton = data?.basis?.canton || '';
+  const cantonName = kanton ? getCantonName(kanton, t) : t('briefe.fillIn');
+
+  const befund = lohnBefund(data);
+  const hasFigures = befund && befund.status === 'unterMindestlohn';
+  const lohnStunde = hasFigures ? befund.lohnStunde.toFixed(2) : t('briefe.fillIn');
+  const mindestStunde = hasFigures ? befund.mindestStunde.toFixed(2) : t('briefe.fillIn');
+  const differenz = hasFigures ? formatAmount(befund.differenzMonat) : t('briefe.fillIn');
+  // Jahr inkl. führendem Leerzeichen + Klammern nur wenn belegt (kein doppeltes Leerzeichen).
+  const jahr = hasFigures ? ` (${befund.jahr})` : '';
+
+  const frist = getFristInfo('wageClaim').display;
+  const refs = wageClaimRefs(kanton, t);
+
+  return wrapLetter(`
+    <div class="sender">${sender || fillHint(t)}</div>
+    <div class="recipient">${data.finanzen?.employer ? esc(data.finanzen.employer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + recipientPlaceholder(t) + '</div>'}</div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(t('briefe.wageClaim.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.wageClaim.salutation'))}</p>
+      <p>${esc(t('briefe.wageClaim.body1', { employer, canton: cantonName }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresLohn', { amount: lohnStunde }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresMindest', { canton: cantonName, jahr, amount: mindestStunde }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresDiff', { amount: differenz }))}</p>
+      <p>${esc(t('briefe.wageClaim.body2request', { frist }))}</p>
+      <p>${esc(t('briefe.wageClaim.closing'))}</p>
+    </div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+    <div class="legal-note">${esc(t('briefe.wageClaim.legalNote', { canton: cantonName, gesetz: refs.gesetz, stelle: refs.stelle }))}</div>
+  `, t);
+}
+
+// (b) Ausstehender Lohn → höfliche Mahnung. FIX A: der Weg führt NICHT über die
+// Mindestlohn-Kontrollstelle, sondern über Schlichtungsbehörde/Arbeitsgericht (im
+// legalNote/Reminder abgebildet). Betrag vorbefüllt aus monthlyIncome, Monat(e) Selbst-Eintrag.
+function generateUnpaidWage(data, t) {
+  const sender = senderBlock(data);
+  const dateStr = today();
+  const city = data.wohnen?.city || '';
+  const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
+
+  const months = t('briefe.fillIn');
+  const betrag = num(data.finanzen?.monthlyIncome) > 0 ? formatAmount(data.finanzen.monthlyIncome) : t('briefe.fillIn');
+  const frist = getFristInfo('unpaidWage').display;
+
+  return wrapLetter(`
+    <div class="sender">${sender || fillHint(t)}</div>
+    <div class="recipient">${data.finanzen?.employer ? esc(data.finanzen.employer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + recipientPlaceholder(t) + '</div>'}</div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(t('briefe.unpaidWage.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.unpaidWage.salutation'))}</p>
+      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}</p>
+      <p>${esc(t('briefe.unpaidWage.closing'))}</p>
+    </div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+    <div class="legal-note">${esc(t('briefe.unpaidWage.legalNote'))}</div>
+  `, t);
+}
+
 // ─── Public API ───────────────────────────────────────────
 
 const GENERATORS = {
@@ -362,6 +507,8 @@ const GENERATORS = {
   taxExtension: generateTaxExtension,
   insuranceSwitch: generateInsuranceSwitch,
   kkReklamation: generateKkReklamation,
+  wageClaim: generateWageClaim,
+  unpaidWage: generateUnpaidWage,
 };
 
 export function generateLetter(templateKey, data, t, options = {}) {

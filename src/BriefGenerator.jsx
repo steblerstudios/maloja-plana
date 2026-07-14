@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter } from './briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { openPrintWindow } from './utils/helpers.js';
+import { addReminder } from './utils/reminders.js';
+
+// Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
+const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
+// FIX A: getrennte Reminder-Notiz je Weg — wageClaim → Kontrollstelle,
+// unpaidWage → Schlichtungsbehörde/Arbeitsgericht (nicht dieselbe Stelle).
+const REMINDER_NOTES_KEY = { wageClaim: 'briefe.wageReminder.notesWageClaim', unpaidWage: 'briefe.wageReminder.notesUnpaid' };
 
 // ISO-Datum → TT.MM.JJJJ für die Anzeige in der Beleg-Auswahl.
 const fmtDate = (iso) => {
@@ -18,18 +25,25 @@ const fmtAmount = (n) => {
   return isFinite(num) ? num.toLocaleString('de-CH') : String(n);
 };
 
-const BriefGenerator = ({ palette, t, data, onNavigate }) => {
+const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   const isMobile = useIsMobile();
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(initialTemplate || null);
   const [preview, setPreview] = useState(false);
   const [printed, setPrinted] = useState(false);
+  // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
+  const [reminderAdded, setReminderAdded] = useState(false);
+
+  // Kommt der Aufruf vom Befund („→ nächster Schritt"), ist eine Vorlage vorgewählt.
+  useEffect(() => {
+    if (initialTemplate) { setSelected(initialTemplate); setPreview(false); setPrinted(false); setReminderAdded(false); }
+  }, [initialTemplate]);
   // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
   const [belegIds, setBelegIds] = useState([]);
   // Geführter „was stimmt nicht"-Schritt: gewählte Beanstandungsgründe.
   const [reasons, setReasons] = useState([]);
   const REKLAMATION_GRUENDE = ['nichtErhalten', 'doppelt', 'falscherBetrag', 'franchiseSelbstbehalt', 'nichtGedeckt', 'falschePerson'];
 
-  const templates = getLetterTemplates(t);
+  const templates = getLetterTemplates(t, data);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
 
   const kkBelege = Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
@@ -41,6 +55,21 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
+  };
+
+  // Frist-Datum des gewählten Brieftyps (nur Lohn-Briefe) — dieselbe Quelle wie im Brieftext.
+  const frist = FRIST_TEMPLATES.includes(selected) ? getFristInfo(selected) : null;
+
+  const handleAddReminder = () => {
+    if (!frist) return;
+    const r = addReminder({
+      title: t('briefe.' + selected + '.reminderTitle'),
+      dueDate: frist.iso,
+      category: 'work',
+      recurrence: 'once',
+      notes: t(REMINDER_NOTES_KEY[selected]),
+    });
+    if (r) setReminderAdded(true);
   };
 
   const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons }) : '';
@@ -71,7 +100,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
@@ -178,6 +207,42 @@ const BriefGenerator = ({ palette, t, data, onNavigate }) => {
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
       React.createElement(PrimaryButton, { palette, onClick: handlePrint }, t('briefe.printLetter'))
+    ),
+
+    // Frist → Kalender: den berechneten Rückmelde-Termin ruhig in den Kalender legen.
+    frist && React.createElement('div', {
+      style: {
+        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        borderRadius: radius.sm, marginBottom: space.md,
+        display: 'flex', flexDirection: 'column', gap: space.sm,
+      }
+    },
+      React.createElement('div', {
+        style: { display: 'flex', alignItems: 'flex-start', gap: '10px' }
+      },
+        React.createElement(Icon, { name: 'calendar', size: 18, color: palette.mid }),
+        React.createElement('div', null,
+          React.createElement('div', {
+            style: { fontWeight: weight.semi, fontSize: textTokens.body, marginBottom: space.xs, color: palette.text }
+          }, t('briefe.wageReminder.title')),
+          React.createElement('div', {
+            style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal }
+          }, t('briefe.wageReminder.text', { frist: frist.display, days: String(frist.days) }))
+        )
+      ),
+      reminderAdded
+        ? React.createElement('div', {
+            style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sage, display: 'flex', alignItems: 'center', gap: '6px' }
+          }, '✓ ' + t('briefe.wageReminder.added'))
+        : React.createElement('button', {
+            onClick: handleAddReminder,
+            style: {
+              alignSelf: 'flex-start', padding: '8px 14px', background: palette.surface,
+              border: '1px solid ' + palette.border, borderRadius: radius.sm,
+              cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
+              color: palette.text,
+            }
+          }, t('briefe.wageReminder.cta'))
     ),
 
     // Data status

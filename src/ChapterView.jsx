@@ -1641,9 +1641,21 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                     key: 'hours-minwage-warn',
                     style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   },
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: LOHNCHECK_DATA_VERSION })
+                    // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
+                    // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION })
                   )
                 );
+                // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.
+                if (onNavigate) {
+                  elements.push(
+                    React.createElement('button', {
+                      key: 'hours-minwage-nextstep',
+                      onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
+                      style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
+                    }, tr('lohnCheck.nextStepLink') + ' →')
+                  );
+                }
               }
             }
             // Multi-Job — weitere / frühere Anstellungen
@@ -1782,9 +1794,20 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         .replace('{kanton}', kanton)
                         .replace('{mindestStunde}', result.mindestStunde.toFixed(2))
                         .replace('{lohnStunde}', result.lohnStunde.toFixed(2))
-                        .replace('{jahr}', LOHNCHECK_DATA_VERSION)
+                        // FIX D: pro-Kanton-Jahr, nicht global (TI-Konsistenz Kapitel↔Brief).
+                        .replace('{jahr}', result.jahr || LOHNCHECK_DATA_VERSION)
                     )
                   );
+                  // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.
+                  if (onNavigate) {
+                    elements.push(
+                      React.createElement('button', {
+                        key: 'mindestlohn-nextstep',
+                        onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
+                        style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
+                      }, t('lohnCheck.nextStepLink') + ' →')
+                    );
+                  }
                 }
               }
             }
