@@ -7,23 +7,24 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-13
+**Stand:** 2026-07-14
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
-| Aktueller Branch | `main` (Sitzung 2026-07-13, 3. Runde: Doku-Konsolidierung + Governance-Mechanismus + Momentum-Zeile — **gemergt, aber NICHT deployt**) |
-| `main` steht auf | `e2953f7` — Merge PR #80; enthält gegenüber `69ea85e` (Live): Doku (#72–74), Momentum-Zeile + Sie/Du + Polish (#75/#77), **#79** i18n-Jahr-Interpolation (`lohnCheck`), **#80 Mindestlohn-Daten 2026 (offiziell verifiziert) + Sage-Kontrast-🔴 + DE-Grammatik**. Noch nicht deployt. |
-| Version (package.json) | `0.1.24-beta` |
-| Letzter Tag | `v0.1.24-beta` |
-| Live (malojaplana.ch) | Bundle `index-8aeb4a84.js` = Build von `69ea85e` → **DEPLOYT & verified-live** (Live-Hash frisch gegengeprüft 2026-07-13). ⚠️ `main` (`2f011e3`) ist **vor** dem Live-Stand: die 3.-Runde-Änderungen (#72–#75) sind **gemergt, aber NICHT live**. |
+| Aktueller Branch | `main` (Sitzung 2026-07-14: Deploy-Runde #82/#83/#84 **live**; Ordner-Umbau durch → Frontend liegt in `maloja plana/maloja-frontend`) |
+| `main` steht auf | `31abc36` — Merge PR #84 (Predeploy-Runde 7). Enthält alles bis #84: SEO/GEO-Fundament (#82), roseDeep+tote-Links+Sie/Du-Meta (#83), a11y-Härtung + BWO-Kurz-URL (#84). |
+| Version (package.json) | `0.1.25-beta` |
+| Letzter Tag | `v0.1.24-beta` (⚠️ `0.1.25-beta` noch nicht getaggt) |
+| Live (malojaplana.ch) | Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css` = Build von `31abc36` → **DEPLOYT & verified-live** (Bundle- + de-Chunk-Hash `de-a3e36214.js` frisch gegengeprüft 2026-07-14). Alles bis #84 ist live. ⚠️ **Ausnahme:** r7-`.htaccess`-Fix `geolocation=(self)` NICHT live — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel (dort noch `geolocation=()`). |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
 | **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
 | **Runde 3 (Tresor + AHV-21) — ✅ LIVE** | **✅ PRs #62/#63/#65/#66 (`a9578f1` → in `69ea85e`):** Tresor-Lock cryptoCore/secureStore (**dormant/unverdrahtet**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. **Deployt in `index-8aeb4a84.js`.** |
 | **Runde 4 (Doku + Governance + Momentum + Sie/Du) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#72/#73** Doku-Sprawl-Konsolidierung · **#74** Feature-Level-Tagging L0–L5 (`GOVERNANCE_LEVELS.md`, Runtime dormant) · **#75** Momentum-Anti-Druck-Zeile (`nextUpReassure`) · **#77** Sie/Du-Split der Zeile + Batterie-Polish (FinanzUebersicht-Chip Dunkelkontrast '60'→'40', `ctrlBtn`/Anrede `radius.sm`, `du`→`Du`, `leading.normal`). **Predeploy-Runde 4: volle Batterie (10 Prüfungen — Security+a11y+Design ganze App + Domänen + code-review) = 0 🔴.** In `main` (`b750e9e`), noch nicht deployt. |
 | **Runde 5 (#79/#80) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#79** i18n-Jahr-Interpolation `lohnCheck.unterMindestlohn`. **#80 (Predeploy-Runde 5, volle Batterie erneut = 0 offene 🔴):** zwei pre-existing 🔴 gefixt — (1) **Kantons-Mindestlöhne auf 2026 offiziell verifiziert korrigiert** (GE 24.32→24.59, NE 21.31→21.35, BS 21.00→22.20 + `indexiert`-Flag, JU/TI bestätigt; war False-Negativ-Warnungs-Risiko, Wahrheits-Disziplin) · (2) **Schwarz-auf-Sage-🔴** an 3 Buttons (4.32:1)→`sageBtn`/weiss. Plus DE-Grammatik „beim". |
-| **Deploy-Gate** | **✅ GRÜN für `e2953f7` (Predeploy-Runde 5, volle Batterie 0 offene 🔴): Tests 651, PII Exit 0, Build sauber, Size 64.43/65 kB, i18n-Parität, CSP self-only. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
+| **Runden 4–7 (#72–#84) — ✅ JETZT LIVE** | Doku/Governance (#72–74), Momentum-Zeile+Sie/Du (#75/#77), i18n-Jahr (#79), Mindestlohn 2026 (#80), SEO/GEO-Fundament (#82), roseDeep+tote-Links (#83), Predeploy-r7 a11y+BWO (#84) — **alle deployt + verified-live in `index-1f4c6867.js`** (2026-07-14). Predeploy-Runde 7: volle 8-Agenten-Batterie 0 🔴, alle ⚠️ auf Sophies Wunsch vor Deploy gefixt. |
+| **Deploy-Gate** | **Verbraucht** — letzter Deploy `31abc36` verified-live. Marke `.maloja/predeploy-ok` stand auf `31abc36`. Nächster Deploy braucht frisches `/maloja-predeploy` (neue Marke auf neuem HEAD). |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -48,6 +49,7 @@
 
 ## Nächste Schritte
 
+0. **Infomaniak-Panel: `Permissions-Policy` auf `geolocation=(self)` setzen** (Sophie, Panel-Aktion). Aktuell `geolocation=()` → schaltet Geolocation origin-weit ab und **blockt den Opt-in-Standort der Notfall-Vorlesekarte**. Der r7-`.htaccess`-Fix greift NICHT (`deploy.sh` löscht `dist/.htaccess`, Zeile 111–114; Header laufen übers Panel). Danach live gegenprüfen: `curl -sD - -o /dev/null https://malojaplana.ch/ | grep -i permissions-policy`. Merker: das repo-`.htaccess` ist damit **vestigial** — Header nur im Panel pflegen (oder `.htaccess` mit Kommentar entschärfen). Optional: `0.1.25-beta` taggen.
 1. **⭐ Tresor Phase 2b — Schritt 1 (nächste Session startet HIER).** Bestandsaufnahme
    2026-07-13 fertig (`secureStore.js` dormant/0 Importe, PBKDF2 100k, alle 4 🔴 real im
    Code bestätigt). Sicher beginnen — nichts ist aktiviert, reine Logik + Tests, **KEINE UI**:
