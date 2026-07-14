@@ -29,7 +29,11 @@ DENY='@(gmail|gmx|hotmail|outlook|yahoo|icloud|protonmail|proton|bluewin|hispeed
 $(grep -vE '^\s*#|^\s*$' .pii-deny.txt)"
 
 # Ausnahmen (erlaubt, obwohl sie ein Muster treffen könnten):
+#  • Voller Name im Impressum (nDSG) · Marken-/Rollen-Begriff „Stebler Studios"
+#    (Space UND Bindestrich) — sonst würde ein Nachnamen-Deny-Token die 200+
+#    Marken-Nennungen fälschlich flaggen (CI-Falle 2026-07-14).
 ALLOW='Sophie Stebler
+Stebler[- ]Studios
 info@malojaplana
 /Users/USER
 DEIN-HOST
