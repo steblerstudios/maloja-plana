@@ -22,6 +22,17 @@ jobs:
 
       - run: npm test -- --run
 
+      - name: PII-Scan (kein Name/Mail/Home-Pfad/Token in getrackten Dateien)
+        env:
+          PII_DENY_LIST: ${{ secrets.PII_DENY_LIST }}
+        run: |
+          # Projektspezifische Deny-Tokens (Vorname/Benutzername/Hoster-Kennung)
+          # liegen bewusst NICHT im Repo. In CI aus dem Secret PII_DENY_LIST
+          # rekonstruieren, damit auch Namen geprüft werden. Ohne Secret läuft der
+          # Scan mit den generischen Mustern (Mails/Home-Pfade/Klient-Hashes).
+          if [ -n "${PII_DENY_LIST:-}" ]; then printf '%s\n' "$PII_DENY_LIST" > .pii-deny.txt; fi
+          bash scripts/pii-scan.sh
+
       - run: npm run build
 
       - run: npm run size
