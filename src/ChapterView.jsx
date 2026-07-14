@@ -8,7 +8,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
-import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn } from './data/lohnCheck.js';
+import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION } from './data/lohnCheck.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -1641,7 +1641,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                     key: 'hours-minwage-warn',
                     style: { gridColumn: '1 / -1', background: palette.rose + '15', border: '1px solid ' + palette.rose + '40', borderLeft: '3px solid ' + palette.rose, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.roseDeep, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                   },
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2) })
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: LOHNCHECK_DATA_VERSION })
                   )
                 );
               }
@@ -1782,6 +1782,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         .replace('{kanton}', kanton)
                         .replace('{mindestStunde}', result.mindestStunde.toFixed(2))
                         .replace('{lohnStunde}', result.lohnStunde.toFixed(2))
+                        .replace('{jahr}', LOHNCHECK_DATA_VERSION)
                     )
                   );
                 }
