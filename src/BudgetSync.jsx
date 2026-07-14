@@ -347,7 +347,7 @@ export const BudgetSync = ({ palette, t, data, _onUpdate }) => {
         showAnnual ? t('budgetSync.annualAvailable') : t('budgetSync.available')
       ),
       React.createElement('span', {
-        style: { color: budget.remaining < 0 ? palette.rose : palette.text }
+        style: { color: budget.remaining < 0 ? (palette.roseDeep || palette.rose) : palette.text }
       }, formatCHF(budget.remaining * mult))
     ),
 

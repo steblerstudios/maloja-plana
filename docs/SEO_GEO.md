@@ -49,7 +49,7 @@ Gesamt: **sehr gut**. Vollständige OG-/Twitter-Tags, JSON-LD-`@graph`
 | performance | Font-Preload, CSP; Rest nur live messbar |
 
 ### Erledigt
-- **`<title>` von 80 → 59 Zeichen gekürzt** (`Maloja Plana — Schweizer Lebensordner:
+- **`<title>` von 80 → 60 Zeichen gekürzt** (`Maloja Plana — Schweizer Lebensordner:
   Steuern & Sozialhilfe`), damit Google nicht abschneidet. *(index.html, 2026-07-14)*
 
 ### Offen

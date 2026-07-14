@@ -162,7 +162,7 @@ export const BERATUNG_HILFE = [
     id: 'caritas-schulden',
     name: { de: 'Caritas — Schuldenberatung', en: 'Caritas — debt counselling', fr: 'Caritas — désendettement' },
     beschreibung: { de: 'Vertrauliche Hilfe bei Schulden und Betreibungen, schweizweit', en: 'Confidential help with debt and debt collection, nationwide', fr: 'Aide confidentielle en cas de dettes et de poursuites, dans toute la Suisse' },
-    url: 'https://www.caritas.ch/de/was-wir-tun/im-inland/schuldenberatung/',
+    url: 'https://www.caritas.ch/de/schuldenberatung/',
   },
   {
     id: 'pro-senectute',
@@ -254,7 +254,7 @@ export const CANTONAL_LINKS = {
   },
   TI: {
     steuererklaerung: 'https://www4.ti.ch/dfe/dc/dichiarazione/',
-    sozialdienst: 'https://www4.ti.ch/dss/dasf/temi/sostegno-sociale/prestazioni-finanziarie-di-sostegno-sociale/prestazioni-assistenziali/calcolo-e-funzionamento-della-prestazione-assistenziale-ordinaria',
+    sozialdienst: 'https://www4.ti.ch/dss/dasf/temi/sostegno-sociale/prestazioni-finanziarie-di-sostegno-sociale/prestazioni-assistenziali-assistenza/calcolo-e-funzionamento-della-prestazione-assistenziale-ordinaria',
     ipv: 'https://www4.ti.ch/dss/ias/prestazioni-e-contributi/scheda/p/s/dettaglio/riduzione-dei-premi-dellassicurazione-malattia-ripam-1/riduzione-dei-premi-dellassicurazione-malattia-ripam',
   },
   ZG: {

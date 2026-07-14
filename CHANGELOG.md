@@ -11,9 +11,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.25-beta] — 2026-07-14
+
 ### Barrierefreiheit
 - **Durchgehender AA-Kontrast (Hell & Dunkel)**: Sekundär- und Feintext, Kapitel-Untertitel, Statusfarben, aktive Reiter/Umschalter, Badge-Etiketten und die grünen Aktions-Buttons erreichen jetzt auf allen Flächen ≥4.5:1 (WCAG 1.4.3). Ursache waren wenige zentrale Stellen: die Grautöne `mid`/`soft`, `sandDeep` sowie `skyDeep` (Dunkelmodus) waren auf getönten Flächen zu hell, und Kapitel-/Status-/Reiter-Texte nutzten die dekorativen Roh-Akzente statt der lesbaren `*Deep`-Varianten. Geprüft über Dashboard, alle sieben Kapitel und die Rechner-/Situationsansichten (Hell + Dunkel).
 - **Grössere Trefferflächen**: die Kopfzeilen-Symbole (Einstellungen/Barrierefreiheit/Menü) sind 44×44 px, der Vorlese-Knopf erreicht die AA-Mindestgrösse ≥24 px (WCAG 2.5.5/2.5.8) — der Icon bleibt dabei klein und ruhig.
+- **AA-Kontrast vervollständigt (Status-Rot)**: die letzten Stellen mit dekorativem Roh-Rosa als Text — Speicherfehler-Meldung, negativer Budget-Saldo, Prämien-Abweichung, überfällige-Termine-Zähler und der Frei-Betrag — nutzen jetzt die lesbare `roseDeep`-Variante (≥4.5:1, WCAG 1.4.3, Hell + Dunkel).
 
 ### Geändert
 - **Ruhigerer Einstieg**: Auf der Übersicht steht jetzt zuerst das Versprechen (Titel + Nutzen); der „Frühe Version"-Hinweis rückt darunter — auf dem Handy stand die Warnung sonst vor dem Inhalt.
@@ -22,6 +25,11 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Behoben
 - **Latenter Hook-Reihenfolge-Fehler (Export/Sicherung)**: Im Probier-/Demo-Modus wurden die React-Hooks in wechselnder Reihenfolge aufgerufen (bisher folgenlos, da der Moduswechsel die Ansicht verlässt). Der Ausstieg steht jetzt nach allen Hooks — robust gegen künftige Änderungen.
 - **Doppelte Übersetzungs-Schlüssel entfernt**: `franchise` (rm) und `disclaimer` (it) waren je zweimal definiert; der jeweils verdeckte Eintrag ist raus (keine sichtbare Änderung — die aktive Fassung bleibt).
+- **Vier tote Behörden-Links korrigiert**: die BWO-Kantonshilfen (FR/IT), die Caritas-Schuldenberatung und der Tessiner Sozialdienst-Link liefen ins Leere (404) → auf die aktuellen, einzeln geprüften Ziele umgestellt.
+- **Seiten-Meta wieder in einer Anrede**: der auf 60 Zeichen gekürzte Titel hatte „Dein" verloren, während `og:title`/`twitter:title`/Beschreibung es behielten — jetzt durchgehend neutral, passend zum Sie-Standard der App.
+
+### Auffindbarkeit
+- **SEO/GEO-Fundament**: statischer Titel, Beschreibung, Open-Graph-/Twitter-Karten, mehrsprachige `hreflang`, `canonical`, `robots.txt`/`sitemap.xml` und ein `schema.org`-JSON-LD-Block machen die Seite für Suchmaschinen und KI-Antwortmaschinen sichtbar — die App rendert clientseitig, ohne diese Hülle sähen Crawler ohne JavaScript nichts. Ein Deploy-Gate (`scripts/check-seo.sh`) hält die Bausteine bei jedem Release nach. Alles self-hosted, CSP self-only bleibt unberührt.
 
 ### Intern
 - **Linting reaktiviert**: ESLint 9 als echte devDependency + schlanke Flat-Config (`eslint.config.js`); `npm run lint` läuft wieder sauber durch (0 Fehler). Die Basisregeln fanden die drei oben behobenen Punkte.
@@ -31,6 +39,7 @@ kommt der Changelog immer mit, nie doppelt.*
   - `MUTTERSCHAFT_MIN_MONATE_AVS/ARBEIT` (Anspruch EOG Art. 16b) jetzt via `EO_PARAMS` exportiert → für die UI nutzbar statt nur Code-Kommentar.
   - `FIELD_KEYS` exportiert (wie das Geschwister `CHAPTER_KEYS` — sprachunabhängige Feldkarte für Daten-Init/-Validierung).
   - `geburtsjahr` in `berechneAltersrente` als **reserviert** dokumentiert: das Referenzalter ist derzeit pauschal 65; die AHV-21-Übergangsjahrgänge der Frauen (1961–1969) sind noch nicht modelliert (bewusst offen — braucht belegte Fach-Prüfung).
+- **Repo-Hygiene**: `maloja-server/` (privates Backend) und `_maloja-archiv/` (History-Purge-Backups) in die `.gitignore` aufgenommen — liegen sie im Working Tree, kann `git add -A` sie nicht mehr versehentlich ins öffentliche Repo ziehen.
 
 ## [0.1.24-beta] — 2026-07-10
 
