@@ -9,6 +9,7 @@
 - no hardcoded strings
 - no console errors
 - working export/import
+- SEO/GEO-Fundament grün (`scripts/check-seo.sh dist` — läuft automatisch im Deploy-Gate; Doku: `docs/SEO_GEO.md`)
 - deployment live (Infomaniak, via `deploy.sh` — Deploy-Gate grün)
 
 ## Nice to have
