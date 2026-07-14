@@ -2481,7 +2481,7 @@ export default {
   },
 
   lohnCheck: {
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar l'inspectorat chantunal da lavur. Stadi 2025.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi 2025." },
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}." },
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
     hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
