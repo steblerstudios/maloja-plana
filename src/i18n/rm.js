@@ -3647,7 +3647,7 @@ export default {
     doc1: 'Contract da fittanza',
     doc2: 'Attestaziun da l\'entrada (salari, renta, documents)',
     doc3: 'Indicaziuns davart la chasada (persunas, uffants)',
-    source: 'Funtauna: [[BWO «Agids chantunals»|https://www.bwo.admin.ch/bwo/de/home/wohnraumfoerderung/kantonale-hilfen.html]].',
+    source: 'Funtauna: [[BWO «Agids chantunals»|https://www.bwo.admin.ch/de/kantonale-hilfen]].',
     linkBudget: 'Vesair en il budget',
   },
   calendar: {

@@ -251,7 +251,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 React.createElement('button', {
                   type: 'button',
                   onClick: () => setAdultsList(adultsList.filter((_, i) => i !== idx)),
-                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '2px 6px', fontFamily: fontFamily }
+                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '6px 8px', minHeight: '24px', fontFamily: fontFamily }
                 }, tr('chapters.basis.fields.household.removeChild'))
               ),
               React.createElement('div', { style: { marginBottom: space.sm } },
@@ -329,7 +329,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 React.createElement('button', {
                   type: 'button',
                   onClick: () => updateHousehold({ children: children.filter((_, i) => i !== idx) }),
-                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '2px 6px', fontFamily: fontFamily }
+                  style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: '6px 8px', minHeight: '24px', fontFamily: fontFamily }
                 }, tr('chapters.basis.fields.household.removeChild'))
               ),
               React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: space.sm } },

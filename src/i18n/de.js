@@ -2827,7 +2827,7 @@ export default {
     doc1: 'Mietvertrag',
     doc2: 'Einkommensnachweis (Lohn, Rente, Belege)',
     doc3: 'Angaben zum Haushalt (Personen, Kinder)',
-    source: 'Quelle: [[BWO „Kantonale Hilfen“|https://www.bwo.admin.ch/bwo/de/home/wohnraumfoerderung/kantonale-hilfen.html]].',
+    source: 'Quelle: [[BWO „Kantonale Hilfen“|https://www.bwo.admin.ch/de/kantonale-hilfen]].',
     linkBudget: 'Im Budget ansehen',
   },
   calendar: {
