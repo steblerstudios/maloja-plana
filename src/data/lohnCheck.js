@@ -1,19 +1,22 @@
-// Kantonale Mindestlöhne (CHF/Stunde, brutto)
-// Quellen: Kantonale Gesetze, ch.ch, wageindicator.org
-// Stand: 2025
+// Kantonale Mindestlöhne (CHF/Stunde, brutto), Stand per 1.1.2026 — offiziell verifiziert:
+//   GE 24.59 (ge.ch, jährlich CPI-indexiert)      · NE 21.35 (ne.ch, jährlich indexiert)
+//   BS 22.20 (bs.ch, jährlich indexiert)          · JU 21.40 (jura.ch, kein Auto-Index,
+//     letzte Erhöhung 1.7.2024, per Regierungsentscheid → 2026 unverändert gültig)
+//   TI 20.00 (ti.ch, sektoral 20.00–20.50; konservativer unterer Wert, kein Auto-Index)
+// Verifiziert 2026-07 an den offiziellen Kantonsquellen (Wahrheits-Disziplin: exakte Beträge).
 
 const MINDESTLOHN = {
-  GE: { chfStunde: 24.32, jahr: 2025, indexiert: true },
-  NE: { chfStunde: 21.31, jahr: 2025, indexiert: true },
-  JU: { chfStunde: 21.40, jahr: 2025, indexiert: false },
-  BS: { chfStunde: 21.00, jahr: 2025, indexiert: false },
+  GE: { chfStunde: 24.59, jahr: 2026, indexiert: true },
+  NE: { chfStunde: 21.35, jahr: 2026, indexiert: true },
+  JU: { chfStunde: 21.40, jahr: 2026, indexiert: false },
+  BS: { chfStunde: 22.20, jahr: 2026, indexiert: true },
   // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert
-  TI: { chfStunde: 20.00, jahr: 2025, indexiert: false },
+  TI: { chfStunde: 20.00, jahr: 2026, indexiert: false },
 };
 
 const STUNDEN_PRO_MONAT = 182;
 
-export const LOHNCHECK_DATA_VERSION = '2025';
+export const LOHNCHECK_DATA_VERSION = '2026';
 
 export function kantonHatMindestlohn(kanton) {
   return kanton in MINDESTLOHN;

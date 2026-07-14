@@ -2230,7 +2230,7 @@ export default {
   },
 
   lohnCheck: {
-    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfen Sie Ihre Ansprüche bei der kantonalen Arbeitsinspektorat. Stand {jahr}.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei der kantonalen Arbeitsinspektorat. Stand {jahr}.' },
+    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfen Sie Ihre Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.' },
     keinMindestlohn: { sie: 'In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', du: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.' },
     hoursEquiv: '≈ {month} Std./Monat · {year} Std./Jahr',
     hourlyWage: 'Stundenlohn (aus Monatslohn ÷ tatsächliche Stunden): CHF {wage}',

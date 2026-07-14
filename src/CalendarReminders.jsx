@@ -227,8 +227,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
             'aria-label': r.done ? t('calendar.undo') : t('calendar.markDone'),
             onClick: () => toggleDone(r.id),
             style: {
-              padding: '6px 10px', background: r.done ? palette.gold : palette.sage,
-              color: '#000', border: 'none', borderRadius: '4px',
+              padding: '6px 10px', background: r.done ? palette.gold : palette.sageBtn,
+              color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: '4px',
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
           }, r.done ? '↩' : '✓'),
@@ -474,8 +474,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
         disabled: !newTitle.trim() || !newDate,
         style: {
           width: '100%', padding: '10px', borderRadius: radius.sm,
-          background: newTitle.trim() && newDate ? palette.sage : palette.mid,
-          color: '#000', border: 'none', cursor: newTitle.trim() && newDate ? 'pointer' : 'not-allowed',
+          background: newTitle.trim() && newDate ? palette.sageBtn : palette.mid,
+          color: '#fff', border: 'none', cursor: newTitle.trim() && newDate ? 'pointer' : 'not-allowed',
           fontWeight: weight.semi, fontSize: text.sm
         }
       }, '+ ' + t('calendar.addReminder')),
