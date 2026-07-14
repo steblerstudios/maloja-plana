@@ -138,7 +138,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         'aria-label': t('common.delete') || 'Entfernen',
         style: {
           background: 'none', border: 'none', cursor: 'pointer',
-          color: palette.mid, fontSize: text.sm, fontFamily, padding: '2px 6px',
+          color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',
         }
       }, '✕')
     ),

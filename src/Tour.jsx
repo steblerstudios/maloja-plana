@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from 'react';
 import { text, weight, radius, leading, space, fontFamily, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 
@@ -27,6 +27,7 @@ export const markTourDone = () => {
 export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
   const [i, setI] = useState(0);
   const [rect, setRect] = useState(null); // Bounding-Box des aktuellen Ziels (oder null = zentriert)
+  const dialogRef = useRef(null);
   const step = steps[i];
   const isLast = i === steps.length - 1;
 
@@ -51,6 +52,33 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
     window.addEventListener('scroll', measure, true);
     return () => { clearTimeout(t1); clearTimeout(t2); window.removeEventListener('resize', measure); window.removeEventListener('scroll', measure, true); };
   }, [measure, step]);
+
+  // Fokus-Management (WCAG 2.4.3 / 2.1.2): Escape verschiebt die Tour,
+  // Fokus wandert in den Dialog und bleibt gefangen; beim Schliessen zurück.
+  useEffect(() => {
+    const node = dialogRef.current;
+    if (!node) return;
+    const prevFocus = document.activeElement;
+    const focusables = () => Array.from(node.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.disabled && el.offsetParent !== null);
+    const firstEl = focusables()[0];
+    if (firstEl) firstEl.focus();
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); onLater && onLater(); return; }
+      if (e.key !== 'Tab') return;
+      const els = focusables();
+      if (els.length === 0) return;
+      const a = els[0], z = els[els.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    };
+    node.addEventListener('keydown', onKey);
+    return () => {
+      node.removeEventListener('keydown', onKey);
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+    };
+  }, [i, onLater]);
 
   const finish = () => { markTourDone(); onFinish && onFinish(); }; // erledigt → kommt nicht wieder
   const later = () => { onLater && onLater(); };                    // verschoben → beim nächsten Start wieder
@@ -97,6 +125,7 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
   });
 
   return React.createElement('div', {
+    ref: dialogRef,
     role: 'dialog', 'aria-modal': 'true', 'aria-label': t('tour.a11yLabel'),
     style: { position: 'fixed', inset: 0, zIndex: 10000 }
   },

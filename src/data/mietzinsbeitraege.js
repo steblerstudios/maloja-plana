@@ -11,7 +11,7 @@
 // falsches „none"). Die Programm-Parameter (Stand 2025) sind RICHTWERTE für eine erste
 // Einschätzung — verbindlich ist immer die kantonale bzw. kommunale Stelle. Die Werte
 // ändern jährlich → bei Pflege gegen die Quellen unten prüfen.
-export const MIETZINS_OVERVIEW_URL = 'https://www.bwo.admin.ch/bwo/de/home/wohnraumfoerderung/kantonale-hilfen.html';
+export const MIETZINS_OVERVIEW_URL = 'https://www.bwo.admin.ch/de/kantonale-hilfen';
 
 // Datenstand der Programm-Parameter (für künftige Pflege sichtbar).
 export const MIETZINS_DATA_VERSION = '2025';

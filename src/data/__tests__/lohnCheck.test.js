@@ -31,6 +31,13 @@ describe('lohnCheck', () => {
       expect(ge.indexiert).toBe(true);
     });
 
+    it('returns data for NE (2026 indexed value)', () => {
+      const ne = getMindestlohn('NE');
+      expect(ne.chfStunde).toBe(21.35);
+      expect(ne.indexiert).toBe(true);
+      expect(ne.jahr).toBe(2026);
+    });
+
     it('returns null for unknown canton', () => {
       expect(getMindestlohn('ZH')).toBeNull();
       expect(getMindestlohn('XX')).toBeNull();
@@ -43,6 +50,7 @@ describe('lohnCheck', () => {
       expect(r.status).toBe('unterMindestlohn');
       expect(r.mindestStunde).toBe(24.59);
       expect(r.differenzMonat).toBeGreaterThan(0);
+      expect(r.jahr).toBe(2026);
     });
 
     it('returns ok for salary above minimum in GE', () => {

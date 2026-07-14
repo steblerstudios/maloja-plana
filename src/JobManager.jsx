@@ -33,7 +33,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
           React.createElement('button', {
             onClick: () => removeJob(idx),
             'aria-label': t('common.delete') || 'Entfernen',
-            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '2px 6px' }
+            style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
           }, '✕')
         ),
         React.createElement('div', { style: { marginBottom: space.sm } },
