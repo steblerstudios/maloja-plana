@@ -105,6 +105,14 @@ COMMIT="$(git rev-parse --short HEAD 2>/dev/null || echo '?')"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 
 echo "→ Ziel: ${ENV_NAME} — ${TARGET_URL}"
+
+# ─── PII-Gate ────────────────────────────────────────────────────────────────
+# Kein privater Name/Mail/Home-Pfad/Token in getrackten Dateien (öffentliches
+# Repo). Läuft auch pro PR in CI (.github/workflows/ci.yml); hier zusätzlich als
+# harter Netz vor jedem Upload. Bricht bei Fund ab (set -e). Doku: scripts/pii-scan.sh.
+echo "→ PII-Scan…"
+bash "$(dirname "$0")/scripts/pii-scan.sh"
+
 echo "→ Build…  (Branch ${BRANCH}, Commit ${COMMIT})"
 npm run build
 
@@ -165,6 +173,21 @@ echo "  Stand jetzt: Branch ${BRANCH}, Commit ${COMMIT}"
 if [ "$STAGE" = "1" ]; then
   echo "  Das ist die Vorschau. Passt alles? → PR feat→main mergen, dann  bash deploy.sh  (Produktion)."
 else
-  echo "  Tipp: stabilen Stand markieren →  git tag -a v0.1.x -m 'Release …' && git push origin v0.1.x"
+  # ─── Release-Tag automatisch (verhindert Tag-Drift) ───
+  # Der deployte Prod-Stand wird als v<version aus package.json> markiert, damit
+  # der letzte Live-Stand immer als Tag existiert. Idempotent: ist der Tag schon
+  # da (Version unverändert), passiert nichts. Nicht-fatal: ein Tag-Fehler soll
+  # den erfolgreichen Deploy nicht rot färben.
+  VERSION="$(node -p "require('./package.json').version" 2>/dev/null || echo '')"
+  if [ -n "$VERSION" ]; then
+    TAG="v${VERSION}"
+    if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
+      echo "  ✓ Release-Tag ${TAG} existiert bereits."
+    elif git tag -a "${TAG}" -m "Release ${TAG} — deployt ${STAMP} (${COMMIT})" && git push origin "${TAG}"; then
+      echo "  ✓ Release-Tag ${TAG} gesetzt und gepusht."
+    else
+      echo "  ⚠ Tag ${TAG} nicht gesetzt/gepusht — bei Bedarf manuell nachholen."
+    fi
+  fi
   echo "  Zurückrollen? Siehe RELEASE.md → 'Rollback'."
 fi

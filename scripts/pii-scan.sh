@@ -36,14 +36,13 @@ DEIN-HOST
 DEIN-USER
 DEIN-KLIENT-HASH'
 
-# Nicht durchsuchen: der Scan selbst, Vorlagen, die lokale Deny-Liste.
-# Ausschlüsse: der Scan selbst, Vorlagen, die lokale Deny-Liste, Fremd-
-# Bibliotheken (public/vendor — deren Copyright-Header nennen Autoren-Mails),
-# und das historische Archiv (docs/archive — wird nie deployt; Alt-PII gehört
-# in den bewussten Git-Historie-Purge, nicht ins Deploy-Gate).
+# Ausschlüsse: der Scan selbst, Vorlagen, die lokale Deny-Liste und Fremd-
+# Bibliotheken (public/vendor — deren Copyright-Header nennen Autoren-Mails).
+# (docs/archive wurde 2026-07-14 ganz aus dem Repo genommen — kein Ausschluss
+#  mehr nötig; käme je wieder Archiv-Material rein, wird es mitgeprüft.)
 HITS=$(git grep -nIP -f <(printf '%s\n' "$DENY") -- \
         ':!scripts/pii-scan.sh' ':!*.example' ':!.pii-deny.txt' \
-        ':!public/vendor/**' ':!docs/archive/**' 2>/dev/null \
+        ':!public/vendor/**' 2>/dev/null \
       | grep -vE -f <(printf '%s\n' "$ALLOW") || true)
 
 if [ -n "$HITS" ]; then
