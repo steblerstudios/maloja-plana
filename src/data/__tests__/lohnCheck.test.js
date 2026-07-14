@@ -27,7 +27,7 @@ describe('lohnCheck', () => {
   describe('getMindestlohn', () => {
     it('returns data for GE', () => {
       const ge = getMindestlohn('GE');
-      expect(ge.chfStunde).toBe(24.32);
+      expect(ge.chfStunde).toBe(24.59);
       expect(ge.indexiert).toBe(true);
     });
 
@@ -41,7 +41,7 @@ describe('lohnCheck', () => {
     it('detects salary below minimum in GE', () => {
       const r = pruefeLohn(3500, 'GE');
       expect(r.status).toBe('unterMindestlohn');
-      expect(r.mindestStunde).toBe(24.32);
+      expect(r.mindestStunde).toBe(24.59);
       expect(r.differenzMonat).toBeGreaterThan(0);
     });
 
@@ -61,7 +61,7 @@ describe('lohnCheck', () => {
     });
 
     it('handles edge case at exactly minimum wage', () => {
-      const mindestMonat = 24.32 * 182;
+      const mindestMonat = 24.59 * 182;
       const r = pruefeLohn(mindestMonat, 'GE');
       expect(r.status).toBe('ok');
     });
@@ -69,7 +69,7 @@ describe('lohnCheck', () => {
     it('handles BS minimum wage', () => {
       const r = pruefeLohn(3000, 'BS');
       expect(r.status).toBe('unterMindestlohn');
-      expect(r.mindestStunde).toBe(21.00);
+      expect(r.mindestStunde).toBe(22.20);
     });
 
     it('handles TI minimum wage', () => {
@@ -94,6 +94,6 @@ describe('lohnCheck', () => {
   });
 
   it('has a data version', () => {
-    expect(LOHNCHECK_DATA_VERSION).toBe('2025');
+    expect(LOHNCHECK_DATA_VERSION).toBe('2026');
   });
 });

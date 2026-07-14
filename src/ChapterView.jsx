@@ -2032,8 +2032,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           style: {
             width: '100%',
             padding: '10px',
-            background: uploadFile && uploadType && uploadExpiry ? palette.sage : palette.mid,
-            color: '#000',
+            background: uploadFile && uploadType && uploadExpiry ? palette.sageBtn : palette.mid,
+            color: '#fff',
             border: 'none',
             borderRadius: radius.sm,
             cursor: uploadFile && uploadType && uploadExpiry ? 'pointer' : 'not-allowed',
