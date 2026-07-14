@@ -14,7 +14,7 @@
 | | |
 |---|---|
 | Aktueller Branch | `main` (Sitzung 2026-07-13, 3. Runde: Doku-Konsolidierung + Governance-Mechanismus + Momentum-Zeile — **gemergt, aber NICHT deployt**) |
-| `main` steht auf | `b750e9e` — Merge PR #77; enthält gegenüber `69ea85e` (letzter Live-Stand): Doku-Konsolidierung (#72/#73), Governance-Feature-Level-Tagging (#74), Momentum-Anti-Druck-Zeile (#75, L0–L1) + **#77 nextUpReassure Sie/Du-Split + Batterie-Polish** (a11y-Chip-Dunkelkontrast, Token-Hygiene). **Alles Doku + eine kleine UI-Zeile + Politur — noch nicht deployt.** |
+| `main` steht auf | `e2953f7` — Merge PR #80; enthält gegenüber `69ea85e` (Live): Doku (#72–74), Momentum-Zeile + Sie/Du + Polish (#75/#77), **#79** i18n-Jahr-Interpolation (`lohnCheck`), **#80 Mindestlohn-Daten 2026 (offiziell verifiziert) + Sage-Kontrast-🔴 + DE-Grammatik**. Noch nicht deployt. |
 | Version (package.json) | `0.1.24-beta` |
 | Letzter Tag | `v0.1.24-beta` |
 | Live (malojaplana.ch) | Bundle `index-8aeb4a84.js` = Build von `69ea85e` → **DEPLOYT & verified-live** (Live-Hash frisch gegengeprüft 2026-07-13). ⚠️ `main` (`2f011e3`) ist **vor** dem Live-Stand: die 3.-Runde-Änderungen (#72–#75) sind **gemergt, aber NICHT live**. |
@@ -22,7 +22,8 @@
 | **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
 | **Runde 3 (Tresor + AHV-21) — ✅ LIVE** | **✅ PRs #62/#63/#65/#66 (`a9578f1` → in `69ea85e`):** Tresor-Lock cryptoCore/secureStore (**dormant/unverdrahtet**, Web Crypto, keine Deps) · AHV-21-Referenzalter der Frauen JG1961–63 (monatsgenau, swiss-precision-verifiziert) · a11y-soft-Kontrast. **Predeploy-Runde 3 (19 Agenten)** fand 3 🔴 → alle gefixt: AHV-Integration in Vergleichstabelle/Zukunftsbild/Feld-Default (#65, JG1962→2'341.33/0% statt Phantom-Aufschub), PII-Leak (#66), **Tresor-🔴 als Phase-2b-Blocker geparkt** (dormant, `docs/design/tresor-lock.md`). Polish #68: a11y 44px-Header-Schalter + Chip-Kontrast, Pensionierung-Frist ans echte Referenzalter, vr.source-Zitat. **Deployt in `index-8aeb4a84.js`.** |
 | **Runde 4 (Doku + Governance + Momentum + Sie/Du) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#72/#73** Doku-Sprawl-Konsolidierung · **#74** Feature-Level-Tagging L0–L5 (`GOVERNANCE_LEVELS.md`, Runtime dormant) · **#75** Momentum-Anti-Druck-Zeile (`nextUpReassure`) · **#77** Sie/Du-Split der Zeile + Batterie-Polish (FinanzUebersicht-Chip Dunkelkontrast '60'→'40', `ctrlBtn`/Anrede `radius.sm`, `du`→`Du`, `leading.normal`). **Predeploy-Runde 4: volle Batterie (10 Prüfungen — Security+a11y+Design ganze App + Domänen + code-review) = 0 🔴.** In `main` (`b750e9e`), noch nicht deployt. |
-| **Deploy-Gate** | **✅ GRÜN für `b750e9e` (Predeploy-Runde 4, volle Batterie 0 🔴): Tests 651, PII Exit 0, Build sauber, Size 64.42/65 kB, de-Chunk + i18n-Parität, CSP self-only. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
+| **Runde 5 (#79/#80) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#79** i18n-Jahr-Interpolation `lohnCheck.unterMindestlohn`. **#80 (Predeploy-Runde 5, volle Batterie erneut = 0 offene 🔴):** zwei pre-existing 🔴 gefixt — (1) **Kantons-Mindestlöhne auf 2026 offiziell verifiziert korrigiert** (GE 24.32→24.59, NE 21.31→21.35, BS 21.00→22.20 + `indexiert`-Flag, JU/TI bestätigt; war False-Negativ-Warnungs-Risiko, Wahrheits-Disziplin) · (2) **Schwarz-auf-Sage-🔴** an 3 Buttons (4.32:1)→`sageBtn`/weiss. Plus DE-Grammatik „beim". |
+| **Deploy-Gate** | **✅ GRÜN für `e2953f7` (Predeploy-Runde 5, volle Batterie 0 offene 🔴): Tests 651, PII Exit 0, Build sauber, Size 64.43/65 kB, i18n-Parität, CSP self-only. Freigabe-Marke `.maloja/predeploy-ok` auf dem aktuellen `main`-HEAD → `bash deploy.sh` frei.** |
 
 **⚠️ HISTORIE UMGESCHRIEBEN 2026-07-11:** Alle Commit-Hashes vor heute haben sich geändert (Privatsphäre-Purge: die zwei privaten Alt-Mail-Adressen raus, alle Autoren → „Stebler Studios"). `main` + alle 15 Tags force-gepusht, 22 Alt-Branches gelöscht. **Details/Residual (GitHub-Support-Ticket für PR-Refs offen)** in Claude-Memory `feedback_no_owner_name_in_git`. Backups: `~/Projects/_maloja-archiv/maloja-github-mirror-preHistoryPurge-*.git`.
 
@@ -56,14 +57,18 @@
    (versioniert), Passphrase-Stärke, `VAULT_*`→`TRESOR_*`. Dann UI (Schritt 2), dann
    Voll-Zyklus live verifizieren (Schritt 3). Details: `docs/design/tresor-lock.md`.
    Bau-Freigabe nötig (berührt ALLE Daten — hohe Sorgfalt).
-   **Vorher/parallel — DEPLOY-BEREIT:** `main` (`b750e9e`, #72–#77) ist Deploy-Gate-GRÜN
-   (Predeploy-Runde 4, volle Batterie 0 🔴, Marke gesetzt). `bash deploy.sh` → Live-Hash
-   gegenprüfen + hier/`FEATURES.md` auf verified-live heben.
-   **Weiter geparkt (nicht blockierend):** AHV Phase B (reduzierte Kürzungssätze) · **whole-app-a11y-Sweep:**
-   Schubladen-Fokus-Management (`MobileNav` settings-Mode: Fokus rein/zurück, Hintergrund inert) ·
-   Doppel-`h1` in `Lebenssituationen.jsx` (→ `PageTitle`/h2) · `DocumentTresor`-Icon-Buttons 36→44px +
-   Lösch-Rückfrage · `LanguageSwitcher` kein 44px · Dashboard-`mvo.fields`-Doppel-Scan (Kosmetik) ·
-   2 ungeschützte `localStorage`-Zeilen (`main.jsx:572`, `Dashboard.jsx:748`) · Meta-CSP als HTTP-Header.
+   **Vorher/parallel — DEPLOY-BEREIT:** `main` (`e2953f7`, #72–#80) ist Deploy-Gate-GRÜN
+   (Predeploy-Runde 5, volle Batterie 0 offene 🔴, Marke gesetzt). `bash deploy.sh` → Live-Hash
+   gegenprüfen + hier/`FEATURES.md` auf verified-live heben. ⚠️ Mindestlohn-Daten sind jetzt
+   Stand 2026 (offiziell verifiziert) — vor JEDEM künftigen Jahreswechsel neu prüfen (GE/NE/BS indexiert).
+   **Weiter geparkt (nicht blockierend) — whole-app-a11y/design-Sweep** (aus Runde-4/5-Vollbatterie):
+   `MobileNav`-Schubladen-Fokus-Management (Fokus rein/zurück, Hintergrund inert) · Doppel-`h1`
+   in `Lebenssituationen.jsx` (→ `PageTitle`) · `DocumentTresor`-Icon-Buttons 36→44px + Lösch-Rückfrage ·
+   `LanguageSwitcher` kein 44px · `ChartsAdvanced` Farbenblind (rose-Duplikat + Hex statt Token) ·
+   `htmlFor`/`id`-Kopplung breit (`LabeledField`-Migration fortsetzen) · Zweit-Formular-Tap-Ziele <44px ·
+   `FinanzUebersicht`-StatusCard-SaaS-Muster · Token-Hygiene (Abstands-Drift, `PrimaryButton`-Reuse,
+   Pseudo-Headings, `text.xs-1`) · Dashboard-`mvo.fields`-Doppel-Scan · `ChapterView:1785`-`.replace`-Kette ·
+   2 ungeschützte `localStorage`-Zeilen · Meta-CSP als HTTP-Header · AHV Phase B.
 2. **rm-Gegenlese** der neuen Keys (`TODO(rm)` gesetzt): `ipvStatus.*`, `barKurz.*`,
    `schnellcheck.ipvSubsumed/ipvEnthalten`, `sozialhilfe.repayment*` — Muttersprachler:in.
    **Neu dazu:** die in Predeploy-Runde 2 ergänzten RM-Vus-Formen (`{sie,du}`-Split) sind
