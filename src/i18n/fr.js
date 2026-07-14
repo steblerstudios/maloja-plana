@@ -2848,7 +2848,7 @@ export default {
     doc1: 'Contrat de bail',
     doc2: 'Justificatif de revenu (salaire, rente, relevés)',
     doc3: 'Informations sur le ménage (personnes, enfants)',
-    source: 'Source : [[OFL « Aides cantonales »|https://www.bwo.admin.ch/bwo/fr/home/wohnraumfoerderung/kantonale-hilfen.html]].',
+    source: 'Source : [[OFL « Aides cantonales »|https://www.bwo.admin.ch/fr/aides-cantonales]].',
     linkBudget: 'Voir dans le budget',
   },
   calendar: {
