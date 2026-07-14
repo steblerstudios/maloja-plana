@@ -113,6 +113,15 @@ npm run build
 echo "→ .htaccess aus dem Build entfernen…"
 rm -f dist/.htaccess
 
+# ─── SEO/GEO-Fundament-Gate ──────────────────────────────────────────────────
+# Deterministischer Check über dist/ (analog /seo-geo Modus C, Stebler Studios):
+# title/description/canonical/OG/JSON-LD + robots.txt/sitemap.xml müssen da sein.
+# Maloja rendert clientseitig → KI-Crawler ohne JS sehen nur diese Hülle. Fehlt
+# ein Pflicht-Baustein, bricht 'set -e' hier ab, BEVOR etwas hochgeht.
+# Doku & Befund: docs/SEO_GEO.md
+echo "→ SEO/GEO-Fundament prüfen…"
+bash "$(dirname "$0")/scripts/check-seo.sh" dist
+
 # ─── Rollback-Sicherung: aktuelle Live-Version sichern, BEVOR sie überschrieben wird ──
 # Spiegelt den aktuellen Remote-Stand nach ./.deploy-backups/<zeit>/ (gitignored).
 # Zurückrollen: den gesicherten Ordner wieder hochspielen (siehe RELEASE.md → Rollback).
