@@ -371,7 +371,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('calendar.upcoming'))
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, textAlign: 'center' } },
-        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: overdue.length > 0 ? palette.rose : palette.text } }, overdue.length),
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: overdue.length > 0 ? (palette.roseDeep || palette.rose) : palette.text } }, overdue.length),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('calendar.overdue'))
       ),
       React.createElement('button', { type: 'button', 'aria-pressed': view === 'completed', style: { padding: '12px', background: palette.up, color: palette.text, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', border: '1px solid ' + (view === 'completed' ? palette.sand : palette.border), font: 'inherit' }, onClick: () => setView('completed') },

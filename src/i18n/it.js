@@ -2825,7 +2825,7 @@ export default {
     doc1: 'Contratto d\'affitto',
     doc2: 'Attestazione del reddito (salario, rendita, documenti)',
     doc3: 'Dati sull\'economia domestica (persone, figli)',
-    source: 'Fonte: [[UFAB «Aiuti cantonali»|https://www.bwo.admin.ch/bwo/it/home/wohnraumfoerderung/kantonale-hilfen.html]].',
+    source: 'Fonte: [[UFAB «Aiuti cantonali»|https://www.bwo.admin.ch/it/aiuti-cantonali]].',
     linkBudget: 'Vedi nel budget',
   },
   calendar: {
