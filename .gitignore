@@ -56,6 +56,13 @@ ordnung-ruhe/
 ordnung-ruhe-neu/
 maloja-icons/
 
+# Nachbar-Repos / Backups, die im Working Tree liegen können — NIE ins Frontend-Repo.
+# Schutz vor versehentlichem `git add -A`: maloja-server = privates Backend (300 MB),
+# _maloja-archiv = History-Purge-Mirror-Backups mit PII. Beide gehören ausserhalb.
+maloja-server/
+_maloja-archiv/
+malojaplana-clean*/
+
 # Roh-Quelldaten (BAG-Tabellen) — nur Zutaten für scripts/, NICHT ins Repo.
 # Die genutzten .js (praemienDetail/praemienRegionen/plzGemeinde) sind generiert.
 # Tabellen liegen im lokalen Archiv; bei Bedarf von priminfo.admin.ch neu holen.

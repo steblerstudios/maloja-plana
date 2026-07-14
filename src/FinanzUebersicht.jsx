@@ -369,7 +369,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
       },
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, t('finanzUebersicht.freeAmount')),
         React.createElement('span', {
-          style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? palette.sage : palette.rose }
+          style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? palette.sage : (palette.roseDeep || palette.rose) }
         }, formatCHF(freeAmount))
       )
     ),

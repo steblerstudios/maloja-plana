@@ -26,8 +26,8 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError }) =>
       borderRadius: '4px',
       fontSize: text.sm,
       fontWeight: weight.medium,
-      color: saveError ? palette.rose : palette.mid,
-      background: saveError ? palette.rose + '12' : 'transparent',
+      color: saveError ? (palette.roseDeep || palette.rose) : palette.mid,
+      background: saveError ? (palette.roseDeep || palette.rose) + '12' : 'transparent',
       display: 'flex',
       alignItems: 'center',
       gap: '5px',
@@ -38,7 +38,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError }) =>
     }
   },
     React.createElement('span', {
-      style: { fontSize: text.sm, color: saveError ? palette.rose : palette.sage }
+      style: { fontSize: text.sm, color: saveError ? (palette.roseDeep || palette.rose) : palette.sage }
     }, saveError ? '⚠' : (isSaving ? '...' : '✓')),
     React.createElement('span', null,
       saveError ? t('common.saveError') : (isSaving ? t('common.saving') : t('common.saved'))

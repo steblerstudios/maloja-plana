@@ -275,7 +275,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' } },
           t('po.unfallSaving', { diff: saving.toFixed(2) })
         ),
-        Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? palette.rose : palette.sage } },
+        Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? (palette.roseDeep || palette.rose) : palette.sage } },
           t(userPremium > shownRef ? 'po.premiumAbove' : 'po.premiumBelow', {
             diff: Math.abs(userPremium - shownRef).toFixed(2)
           })
