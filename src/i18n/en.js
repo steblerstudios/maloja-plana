@@ -2915,7 +2915,7 @@ export default {
     doc1: 'Tenancy agreement',
     doc2: 'Proof of income (salary, pension, statements)',
     doc3: 'Household details (people, children)',
-    source: 'Source: [[BWO “Cantonal support”|https://www.bwo.admin.ch/bwo/de/home/wohnraumfoerderung/kantonale-hilfen.html]].',
+    source: 'Source: [[BWO “Cantonal support”|https://www.bwo.admin.ch/de/kantonale-hilfen]].',
     linkBudget: 'View in budget',
   },
   calendar: {
