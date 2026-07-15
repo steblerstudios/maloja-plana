@@ -9,6 +9,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION } from './data/lohnCheck.js';
+import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -18,6 +19,20 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+// Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
+// Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
+// in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
+// diesem Namen nicht (Predeploy-Runde 8).
+//
+// WAHRHEITS-DISZIPLIN: `verify: true` heisst „amtlich noch nicht gegengeprüft" — eine solche
+// Stelle wird NICHT genannt, weder im Brief noch hier. Dann trägt die neutrale Formulierung.
+// Ebenso, wenn der Kanton keine benannte Stelle hat (JU). Nie eine Stelle erfinden.
+function lohnKontrollstelleText(kanton, tr) {
+  const e = getLohnKontrollstelle(kanton);
+  if (!e || e.verify || !e.stelle) return tr('lohnCheck.stelleFallbackKurz');
+  return e.stelle;
+}
+
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));
 const DoctorManager = React.lazy(() => import('./DoctorManager.jsx'));
 const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
@@ -1625,7 +1640,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               const perYear = stundenAufJahr(hrs);
               const kanton = allData && allData.basis && allData.basis.canton;
               const monthlyIncome = parseFloat(allData && allData.finanzen && allData.finanzen.monthlyIncome) || 0;
-              const check = monthlyIncome > 0 ? pruefeStundenlohn(monthlyIncome, hrs, kanton) : null;
+              // Einkommensart mitgeben (Mindestlohn = brutto) — sonst rechnet dieser zweite
+              // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
+              // korrekt schweigt. Fünf Stellen rechneten diesen Befund, jede etwas anders.
+              const check = monthlyIncome > 0
+                ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType)
+                : null;
               elements.push(
                 React.createElement('div', {
                   key: 'hours-calc',
@@ -1643,7 +1663,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   },
                     // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
                     // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION })
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelle: lohnKontrollstelleText(check.kanton, tr) })
                   )
                 );
                 // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.
@@ -1775,7 +1795,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 // führt neu zu einem Brief an den Arbeitgeber. Ohne echte Stunden lieber ruhig
                 // nachfragen als raten; `pruefeStundenlohn` meldet das selbst als 'unvollstaendig'.
                 const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
-                const result = pruefeStundenlohn(lohn, wHrs, kanton);
+                // Einkommensart mitgeben: der Mindestlohn ist ein BRUTTO-Stundenlohn, und der
+                // Feld-Hinweis rät zu Netto. Ohne bekannte Basis kein Befund ('basisUnklar').
+                const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType);
                 if (result.status === 'unvollstaendig' && onNavigate) {
                   elements.push(
                     React.createElement('button', {
@@ -1797,6 +1819,25 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         marginBottom: space.sm + 'px',
                       }
                     }, tr('lohnCheck.hoursMissing') + ' →')
+                  );
+                }
+                // Basis unbekannt → ruhige Einladung, wie bei den fehlenden Stunden.
+                // Kein Alarm: die App weiss es nicht, statt es besser zu wissen.
+                if (result.status === 'basisUnklar') {
+                  elements.push(
+                    React.createElement('div', {
+                      key: 'mindestlohn-basis-unklar',
+                      style: {
+                        gridColumn: '1 / -1',
+                        background: palette.sageMist || palette.up,
+                        borderRadius: radius.sm,
+                        padding: space.sm + 'px ' + space.md + 'px',
+                        fontSize: text.sm,
+                        color: palette.sageDeep || palette.mid,
+                        lineHeight: leading.relaxed,
+                        marginBottom: space.sm + 'px',
+                      }
+                    }, tr(result.einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing'))
                   );
                 }
                 if (result.status === 'unterMindestlohn') {
@@ -1822,6 +1863,12 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         .replace('{lohnStunde}', result.lohnStunde.toFixed(2))
                         // FIX D: pro-Kanton-Jahr, nicht global (TI-Konsistenz Kapitel↔Brief).
                         .replace('{jahr}', result.jahr || LOHNCHECK_DATA_VERSION)
+                        // 🔴 Predeploy-Runde 8: Hier stand fest „beim kantonalen
+                        // Arbeitsinspektorat" — das gibt es unter diesem Namen in JU (gar
+                        // keine Kontrollstelle), BS (AWA) und NE (ORCT) nicht. Der Diff legte
+                        // die kantonsgenaue Registry für den BRIEF an, das Kapitel zeigte
+                        // weiter auf eine erfundene Sammelstelle. Jetzt dieselbe Quelle.
+                        .replace('{stelle}', lohnKontrollstelleText(kanton, tr))
                     )
                   );
                   // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.

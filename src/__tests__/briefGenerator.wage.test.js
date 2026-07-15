@@ -11,10 +11,13 @@ const translations = { de, en, fr, it: itTranslations, rm };
 const t = createT(translations, 'de');
 
 // GE-Mindestlohn 24.59/Std., 42h/Woche → 182 Std./Monat. 3000/182 ≈ 16.48 < 24.59.
+// `incomeType: 'brutto'` ist ab Predeploy-Runde 8 PFLICHT für jeden Befund: der Mindestlohn
+// ist ein Brutto-Stundenlohn, und die App rät im Feld-Hinweis ausdrücklich zu Netto. Ohne
+// ausdrückliches 'brutto' gibt es keinen Befund ('basisUnklar') — siehe eigener Block unten.
 const dataGE = {
   basis: { firstName: 'Anna', lastName: 'Muster', canton: 'GE' },
   wohnen: { city: 'Genève' },
-  finanzen: { monthlyIncome: '3000', employer: 'Muster AG' },
+  finanzen: { monthlyIncome: '3000', employer: 'Muster AG', incomeType: 'brutto' },
   ausbildung: { workHoursPerWeek: '42' },
 };
 
@@ -116,7 +119,7 @@ describe('Lohn-Briefe', () => {
         ...dataGE.finanzen,
         employerAddress: 'Rue du Test 5\n1200 Genève',
         sideIncome: '800', sideEmployer: 'Café Nebenan', sideEmployerAddress: 'Rue Petite 2\n1200 Genève',
-        sideHoursPerWeek: '4',
+        sideHoursPerWeek: '4', sideIncomeType: 'brutto',
       },
     };
     it('ohne Nebenerwerb: nur eine Anstellung zur Auswahl (keine Frage an die Nutzerin)', () => {
@@ -154,19 +157,86 @@ describe('Lohn-Briefe', () => {
       expect(html).toContain('Muster AG');
       expect(html).not.toContain('Café Nebenan');
     });
-    it('unpaidWage job=side: mahnt den Nebenjob-Lohn (800), nicht den Hauptlohn (3000)', () => {
+    // 🔴 Predeploy-Runde 8: Der Betrag war mit EINEM Monatslohn vorbefüllt, während der
+    // Zeitraum offen blieb — wer 3 Monate schuldig war, mahnte gedruckt ein Drittel ein.
+    // Jetzt bleibt der Forderungsbetrag offen; der Monatslohn steht nur als benannter
+    // Anhalt daneben. Der Nebenjob-Bezug bleibt: nie der Hauptlohn.
+    it('unpaidWage job=side: Monatslohn als Anhalt (800), nie der Hauptlohn (3000)', () => {
       const html = generateLetter('unpaidWage', mitNeben, t, { job: 'side' });
       expect(html).toContain('Café Nebenan');
       expect(html).toContain('800');
       expect(html).not.toContain("3'000");
     });
+    it('unpaidWage: Forderungsbetrag bleibt offen, solange der Zeitraum offen ist', () => {
+      const html = generateLetter('unpaidWage', mitNeben, t);
+      // Zeitraum UND Betrag sind Selbst-Eintrag — der Brief behauptet keine Summe.
+      expect(html).toContain('[bitte ergänzen]');
+      expect(html).toContain('Monatslohn'); // der Anhalt, klar als „pro Monat" benannt
+    });
+  });
+
+  // 🔴 Predeploy-Runde 8 — Netto/Brutto. Die App fragt die Einkommensart ab und rät im
+  // Feld-Hinweis ausdrücklich zu NETTO („Netto ist was auf Ihrem Konto ankommt"), die
+  // Mindestlöhne sind aber BRUTTO. Vorher wurde `incomeType` im ganzen Lohn-Pfad nie
+  // gelesen: GE/CHF 4'000 netto auf 42 Std. → 21.98/Std. < 24.59 → Warnung → Einschreiben,
+  // obwohl brutto ~4'550 = 25.00/Std. wären, also legal. Wer der Anleitung der App folgte,
+  // beschuldigte seinen Arbeitgeber zu Unrecht.
+  describe('Netto/Brutto (Falschanschuldigungs-Schutz)', () => {
+    const dataNetto = { ...dataGE, finanzen: { ...dataGE.finanzen, monthlyIncome: '4000', incomeType: 'netto' } };
+    const dataOhneArt = { ...dataGE, finanzen: { ...dataGE.finanzen, monthlyIncome: '4000', incomeType: undefined } };
+
+    it('netto: keine Beträge im Brief (Mindestlohn ist brutto)', () => {
+      const html = generateLetter('wageClaim', dataNetto, t);
+      expect(html).not.toContain('21.98'); // die falsche Netto-gegen-Brutto-Zahl
+      expect(html).toContain('[bitte ergänzen]');
+    });
+    it('Einkommensart nicht gesetzt: keine Beträge (Basis unbekannt, nicht „brutto" annehmen)', () => {
+      const html = generateLetter('wageClaim', dataOhneArt, t);
+      expect(html).not.toContain('21.98');
+      expect(html).toContain('[bitte ergänzen]');
+    });
+    it('brutto: Befund wird gerechnet', () => {
+      const dataBrutto = { ...dataGE, finanzen: { ...dataGE.finanzen, monthlyIncome: '4000', incomeType: 'brutto' } };
+      expect(generateLetter('wageClaim', dataBrutto, t)).toContain('21.98');
+    });
+    it('Nebenerwerb hat eine EIGENE Einkommensart — die des Hauptjobs zählt dort nicht', () => {
+      const neben = {
+        ...dataGE,
+        finanzen: { ...dataGE.finanzen, incomeType: 'brutto', sideIncome: '200', sideEmployer: 'Café Nebenan', sideHoursPerWeek: '4', sideIncomeType: 'netto' },
+      };
+      const html = generateLetter('wageClaim', neben, t, { job: 'side' });
+      expect(html).not.toContain('11.56'); // 200/(4×52/12) — darf bei netto nicht erscheinen
+      expect(html).toContain('[bitte ergänzen]');
+    });
+  });
+
+  // 🔴 Predeploy-Runde 8 — der Brief wurde auch dann angeboten, wenn die App den Verdacht
+  // selbst widerlegt hatte: GE/CHF 8'000 auf 42 Std. = 43.96/Std., Befund 'ok', und der
+  // Brief behauptete trotzdem „dass mein Stundenlohn unter dem … Mindestlohn liegen dürfte"
+  // — mit leeren Beträgen. Jetzt entscheidet der Befund, nicht der Wohnort.
+  describe('Vorlagen-Gating am BEFUND, nicht nur am Kanton', () => {
+    it('gut bezahlt (GE, 8000 auf 42 Std. = 43.96/Std.): KEIN wageClaim angeboten', () => {
+      const gutBezahlt = { ...dataGE, finanzen: { ...dataGE.finanzen, monthlyIncome: '8000' } };
+      expect(getLetterTemplates(t, gutBezahlt).map(x => x.key)).not.toContain('wageClaim');
+    });
+    it('unter Mindestlohn: wageClaim angeboten', () => {
+      expect(getLetterTemplates(t, dataGE).map(x => x.key)).toContain('wageClaim');
+    });
+    it('Daten unvollständig (keine Stunden): wageClaim bleibt angeboten — die App weiss es nicht, statt es besser zu wissen', () => {
+      const ohneStunden = { ...dataGE, ausbildung: {} };
+      expect(getLetterTemplates(t, ohneStunden).map(x => x.key)).toContain('wageClaim');
+    });
+    it('gut bezahlter Hauptjob, aber unterbezahlter Nebenjob: wageClaim angeboten', () => {
+      const nebenUnter = {
+        ...dataGE,
+        finanzen: { ...dataGE.finanzen, monthlyIncome: '8000', sideIncome: '200', sideEmployer: 'Café Nebenan', sideHoursPerWeek: '4', sideIncomeType: 'brutto' },
+      };
+      expect(getLetterTemplates(t, nebenUnter).map(x => x.key)).toContain('wageClaim');
+    });
   });
 
   // BS war bis 2026-07-15 verify:true (neutrale Formulierung). Seit der amtlichen
   // Gegenprüfung an gesetzessammlung.bs.ch + bs.ch/wsu/awa nennt der Brief Gesetz + Stelle.
-  // HINWEIS: Damit trägt aktuell KEIN Kanton mehr verify:true — der neutrale Fallback in
-  // `wageClaimRefs` ist deshalb nicht mehr über einen echten Kanton abgedeckt. Die Regel
-  // „belegter Eintrag braucht Gesetz + Stelle“ hütet lohnRechtsstellen.test.js.
   describe('wageClaim (BS — amtlich belegt)', () => {
     const dataBS = { ...dataGE, basis: { ...dataGE.basis, canton: 'BS' } };
     const html = generateLetter('wageClaim', dataBS, t);

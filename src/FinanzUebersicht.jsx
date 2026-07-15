@@ -5,6 +5,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
+import { LOHN_REFERENZ } from './data/lohnEinordnung.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
@@ -212,12 +213,20 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     ),
 
     hasData && income > 0 && (() => {
+      // ⚠️ Diese Bänder messen das TATSÄCHLICHE Monatseinkommen (armutsrelevant: wer 50%
+      // arbeitet und CHF 3'400 erhält, ist wirklich nahe der Armutsgrenze). Das Barometer
+      // darunter misst das LOHNNIVEAU, auf Vollzeit hochgerechnet. Zwei Fragen, beide wahr —
+      // sie dürfen sich nur nicht wie ein Widerspruch lesen (Predeploy-Runde 8). Darum
+      // benennt das Label ausdrücklich „was monatlich reinkommt".
+      //
+      // Der Median kommt aus LOHN_REFERENZ — hier stand die 6788 HARTKODIERT: eine zweite
+      // Wahrheit neben `branchenLohn.js`, die beim LSE-2024-Update stumm veraltet wäre.
       const thresholds = [
         { max: 2279, key: 'belowPoverty', color: palette.goldDeep || '#c47a20' },
-        { max: 4000, key: 'nearPoverty', color: palette.sand },
-        { max: 6788, key: 'belowMedian', color: palette.mid },
-        { max: 10000, key: 'aboveMedian', color: palette.sage },
-        { max: Infinity, key: 'highIncome', color: palette.sage },
+        { max: 4000, key: 'nearPoverty', color: palette.sandDeep || palette.goldDeep },
+        { max: LOHN_REFERENZ.median, key: 'belowMedian', color: palette.mid },
+        { max: 10000, key: 'aboveMedian', color: palette.sageDeep },
+        { max: Infinity, key: 'highIncome', color: palette.sageDeep },
       ];
       const band = thresholds.find(th => income <= th.max);
       return React.createElement('div', {

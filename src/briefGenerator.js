@@ -59,6 +59,11 @@ export function getJob(data, jobKey) {
     address: (side ? data?.finanzen?.sideEmployerAddress : data?.finanzen?.employerAddress) || '',
     lohn: num(side ? data?.finanzen?.sideIncome : data?.finanzen?.monthlyIncome),
     stunden: num(side ? data?.finanzen?.sideHoursPerWeek : data?.ausbildung?.workHoursPerWeek),
+    // Der Mindestlohn ist ein BRUTTO-Stundenlohn — ohne bekannte Basis kein Befund.
+    // Jeder Job trägt seine eigene Art: der Hauptjob `incomeType`, der Nebenerwerb
+    // `sideIncomeType` (Predeploy-Runde 8 ergänzt — vorher gab es für den Nebenerwerb
+    // gar keine, der Befund wäre also nie berechenbar gewesen).
+    einkommensart: (side ? data?.finanzen?.sideIncomeType : data?.finanzen?.incomeType) || null,
   };
 }
 
@@ -69,11 +74,13 @@ function lohnBefund(data, jobKey) {
   const monthlyIncome = job.lohn;
   const wHrs = job.stunden;
   if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
-  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme. Ohne echte Wochenstunden ist der
-  // Stundenlohn nicht bestimmbar — dieser Brief geht per Einschreiben an einen Arbeitgeber,
-  // eine geratene Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` gibt dann
-  // 'unvollstaendig' zurück; die Beträge im Brief fallen auf „bitte ergänzen" (hasFigures).
-  return pruefeStundenlohn(monthlyIncome, wHrs, kanton);
+  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme und keine Brutto-Annahme. Ohne echte
+  // Wochenstunden ist der Stundenlohn nicht bestimmbar; ohne bekannte Einkommensart ist er
+  // nicht vergleichbar (Netto gegen einen Brutto-Boden erklärt korrekt Bezahlte für
+  // unterbezahlt). Dieser Brief geht per Einschreiben an einen Arbeitgeber — eine geratene
+  // Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` meldet beides selbst
+  // ('unvollstaendig' / 'basisUnklar'); die Beträge fallen auf „bitte ergänzen" (hasFigures).
+  return pruefeStundenlohn(monthlyIncome, wHrs, kanton, job.einkommensart);
 }
 
 // Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`
@@ -201,7 +208,27 @@ export function getLetterTemplates(t, data) {
   // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
   // Sonst behauptet der Brief einen nicht existierenden Mindestlohn (Haftungsrisiko in
   // ~21/26 Kantonen). Kein Kanton gewählt → auch nicht anbieten (nicht raten).
-  if (kantonHatMindestlohn(kanton)) {
+  //
+  // 🔴 Predeploy-Runde 8: Das Kanton-Gate allein reichte nicht. Der Brief wurde auch dann
+  // angeboten, wenn der Befund 'ok' war — GE/CHF 8'000 auf 42 Std. = 43.96/Std., klar über
+  // dem Boden, und trotzdem stand im Brief „dass mein Stundenlohn unter dem … Mindestlohn
+  // liegen dürfte", mit leeren Beträgen (`hasFigures` hängt am Befund). Die App hat den
+  // Verdacht selbst widerlegt und ihn trotzdem ausformuliert — per Einschreiben an einen
+  // Arbeitgeber. Jetzt entscheidet der Befund, nicht der Wohnort.
+  //
+  // Angeboten wird bei:
+  //   'unterMindestlohn' → der Befund trägt den Brief.
+  //   'unvollstaendig'/'basisUnklar' → Verdacht möglich, Daten unvollständig; der Brief
+  //     formuliert vorsichtig und die Beträge bleiben „[bitte ergänzen]". Das ist kein
+  //     Widerspruch: die App weiss es nicht, statt es besser zu wissen.
+  // NICHT angeboten bei 'ok' und 'keinGesetz'.
+  // Nur über Anstellungen urteilen, die es GIBT: `getJobOptions` ist dafür die Wahrheit.
+  // (Sonst liefert der nicht erfasste Nebenjob 'unvollstaendig' — Lohn 0 — und hält den
+  // Brief für jeden offen. Genau die Art zweiter Wahrheit, die diese Runde aufräumt.)
+  const darfWageClaim = (s) => s === 'unterMindestlohn' || s === 'unvollstaendig' || s === 'basisUnklar';
+  const einJobRechtfertigtDenBrief = getJobOptions(data)
+    .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
+  if (kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
     list.push({
       key: 'wageClaim',
       title: t('briefe.wageClaim.title'),
@@ -517,7 +544,15 @@ function generateWageClaim(data, t, options = {}) {
 
 // (b) Ausstehender Lohn → höfliche Mahnung. FIX A: der Weg führt NICHT über die
 // Mindestlohn-Kontrollstelle, sondern über Schlichtungsbehörde/Arbeitsgericht (im
-// legalNote/Reminder abgebildet). Betrag vorbefüllt aus monthlyIncome, Monat(e) Selbst-Eintrag.
+// legalNote/Reminder abgebildet).
+//
+// 🔴 Predeploy-Runde 8: Der Betrag war mit EINEM Monatslohn vorbefüllt, während der
+// Zeitraum `{months}` ein „[bitte ergänzen]" blieb. Der Brief behauptete damit eine
+// konkrete Summe für einen Zeitraum, den die App zugibt nicht zu kennen: Wer drei Monate
+// schuldig ist (3 × 3'800 = 11'400), mahnte gedruckt CHF 3'800 ein — ein Drittel — und
+// legte diese Zahl als eigene Forderung gegenüber dem Arbeitgeber fest.
+// Zeitraum und Betrag hängen zusammen: ist der eine offen, ist es der andere auch.
+// Das ist dieselbe `hasFigures`-Disziplin wie in `generateWageClaim`.
 function generateUnpaidWage(data, t, options = {}) {
   const jobKey = options.job;
   const sender = senderBlock(data);
@@ -527,8 +562,12 @@ function generateUnpaidWage(data, t, options = {}) {
 
   const job = getJob(data, jobKey);
   const months = t('briefe.fillIn');
-  // Der ausstehende Betrag ist der Lohn DIESER Anstellung — beim Nebenjob nie der Hauptlohn.
-  const betrag = job.lohn > 0 ? formatAmount(job.lohn) : t('briefe.fillIn');
+  // Der Zeitraum ist unbekannt (Selbst-Eintrag) → der Betrag darf es auch bleiben.
+  // Der Monatslohn steht als Anhalt in derselben Zeile, klar als „pro Monat" benannt.
+  const betrag = t('briefe.fillIn');
+  const monatslohnHinweis = job.lohn > 0
+    ? t('briefe.unpaidWage.monthlyHint', { amount: formatAmount(job.lohn) })
+    : '';
   const frist = getFristInfo('unpaidWage').display;
 
   return wrapLetter(`
@@ -538,7 +577,7 @@ function generateUnpaidWage(data, t, options = {}) {
     <div class="subject">${esc(t('briefe.unpaidWage.subject'))}</div>
     <div class="body-text">
       <p>${esc(t('briefe.unpaidWage.salutation'))}</p>
-      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}</p>
+      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}${monatslohnHinweis ? ' ' + esc(monatslohnHinweis) : ''}</p>
       <p>${esc(t('briefe.unpaidWage.closing'))}</p>
     </div>
     <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>

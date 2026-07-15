@@ -1188,6 +1188,7 @@ export default {
         sideEmployer: 'Entrada accessorica: patrun',
         sideEmployerAddress: 'Entrada accessorica: adressa dal patrun',
         sideHoursPerWeek: "Entrada accessorica: uras da lavur per l'emna",
+        sideIncomeType: 'Entrada accessorica: spezia da entrada', // TODO(rm): Gegenlese
         taxableIncome: 'Entrada taxabla per onn CHF',
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
         employer: 'Patrun',
@@ -2183,7 +2184,7 @@ export default {
     tankReadout: 'Tia reserva (CHF {savings}) cuvra var {months} mais. {recommend} èn recumandads.',
     printAction: 'Stampar la survista / memorisar sco PDF',
     disclaimer: "Tut las valurs servan a l'orientaziun. Per infurmaziuns vinculantas, contactescha la post cumpetenta.",
-    incomePosition: 'Classificaziun',
+    incomePosition: 'Tge che entra mensilmain', // TODO(rm): Gegenlese
     showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
     nearPoverty: 'Stretgamain sur la limita da povrezza',
@@ -2492,26 +2493,32 @@ export default {
   lohnEinordnung: {
     title: { sie: 'Nua che sa chatta Voss salari?', du: 'Nua che sa chatta tes salari?' },
     median: 'Median',
-    durchschnitt: 'Media',
     mindestlohn: 'Salari minimal',
     yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
     mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
-    fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (42 uras/emna).",
+    // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
+    mindestlohnBreachedLine: { sie: 'Voss salari è sut il salari minimal chantunal.', du: 'Tes salari è sut il salari minimal chantunal.' },
+    fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
-    hoursUnknownNote: { sie: "Il confrunt suppona ina plazza a temp cumplain. Sche Vus lavurais a temp parzial, endatai Vossas uras d'emna — lura quintain nus endretg.", du: "Il confrunt suppona ina plazza a temp cumplain. Sche ti lavuras a temp parzial, endatescha tias uras d'emna — lura quintain nus endretg." },
+    overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
+    hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
     aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
-    source: 'Funtauna: UST Relevaziun svizra da la structura dals salaris 2022 (median CHF {median} · media CHF {durchschnitt}).',
+    source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
   },
   lohnCheck: {
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}." },
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar {stelle}. Stadi {jahr}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar {stelle}. Stadi {jahr}." },
+    stelleFallbackKurz: 'la post chantunal cumpetenta', // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
     hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
     hoursMissing: { sie: "Per la controlla dal salari minimal mancan anc Vossas uras d'emna — senza ellas na po Voss salari per ura betg vegnir calculà. Endatar ussa", du: "Per la controlla dal salari minimal mancan anc Tias uras d'emna — senza ellas na po tes salari per ura betg vegnir calculà. Endatescha ussa" },
+    // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
+    basisMissing: { sie: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherner la spezia da entrada", du: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherna la spezia da entrada" },
+    basisNetto: { sie: "Voss entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Voss salari brut (el sa chatta sin Voss quint da salari).", du: "Tia entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Tes salari brut (el sa chatta sin Tes quint da salari)." },
     nextStepLink: 'Preparar la dumonda da salari',
   },
 
@@ -2894,6 +2901,7 @@ export default {
       description: 'Recumond curteschi al patrun cur ch’il salari duì na vegn betg pajà.',
       subject: 'Salari pendent — dumonda da versament',
       salutation: 'Stimadas dunnas, stimads signurs,',
+      monthlyHint: '(Mes salari mensil brutt importa CHF {amount}.)', // TODO(rm): Gegenlese
       body1: 'mes salari per {months}, da l’import brutt da CHF {amount}, n’è betg entrà enfin oz. Jau Vus prej da versar l’import pendent fin ils {frist}. Jau Vus fiss engraztgaivel per ina curta resposta.',
       closing: 'Cordials salids',
       legalNote: 'Basa: exigibladad dal salari (OR art. 323). Sch’il pajament na succeda betg, maina la via tras l’autoritad da conciliaziun en chaussas da dretg da lavur u il tribunal da lavur al lieu da lavur, eventualmain tras ina execuziun. Ina retenziun da la lavur (OR art. 82) u ina disditga immediata è mo cussegliabla suenter avair consultà in post spezialisà. Questa templata è in agid d’orientaziun, betg ina cussegliaziun giuridica. Recumandaziun: posta recumandada.',
