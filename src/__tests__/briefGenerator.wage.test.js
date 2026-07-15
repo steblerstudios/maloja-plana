@@ -162,11 +162,32 @@ describe('Lohn-Briefe', () => {
     });
   });
 
-  describe('wageClaim (BS = verify:true → neutrale Formulierung, keine unbelegte Stelle)', () => {
+  // BS war bis 2026-07-15 verify:true (neutrale Formulierung). Seit der amtlichen
+  // Gegenprüfung an gesetzessammlung.bs.ch + bs.ch/wsu/awa nennt der Brief Gesetz + Stelle.
+  // HINWEIS: Damit trägt aktuell KEIN Kanton mehr verify:true — der neutrale Fallback in
+  // `wageClaimRefs` ist deshalb nicht mehr über einen echten Kanton abgedeckt. Die Regel
+  // „belegter Eintrag braucht Gesetz + Stelle“ hütet lohnRechtsstellen.test.js.
+  describe('wageClaim (BS — amtlich belegt)', () => {
     const dataBS = { ...dataGE, basis: { ...dataGE.basis, canton: 'BS' } };
     const html = generateLetter('wageClaim', dataBS, t);
-    it('nutzt den neutralen Stellen-Fallback statt einer unbelegten BS-Stelle', () => {
-      expect(html).toContain('die zuständige kantonale Stelle');
+    it('nennt das MiLoG und das AWA statt der neutralen Formulierung', () => {
+      expect(html).toContain('MiLoG');
+      expect(html).toContain('Amt für Wirtschaft und Arbeit');
+      expect(html).not.toContain('die zuständige kantonale Stelle');
+    });
+    it('rechnet mit dem BS-Mindestlohn 22.20', () => {
+      expect(html).toContain('22.20');
+    });
+  });
+
+  describe('wageClaim (NE — amtlich belegt)', () => {
+    const dataNE = { ...dataGE, basis: { ...dataGE.basis, canton: 'NE' } };
+    const html = generateLetter('wageClaim', dataNE, t);
+    it('nennt die LEmpl Art. 32a ff. und den ORCT — kein erfundenes „Mindestlohngesetz“', () => {
+      expect(html).toContain('LEmpl');
+      expect(html).toContain('ORCT');
+      expect(html).not.toContain('Mindestlohngesetz');
+      expect(html).not.toContain('die zuständige kantonale Stelle');
     });
   });
 

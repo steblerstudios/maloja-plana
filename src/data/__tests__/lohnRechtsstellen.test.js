@@ -21,9 +21,33 @@ describe('lohnRechtsstellen', () => {
     expect(e.fallback).toMatch(/prud’hommes/i);
   });
 
-  it('NE + BS: als verify:true markiert (amtlich noch gegenzuprüfen)', () => {
-    expect(getLohnKontrollstelle('NE').verify).toBe(true);
-    expect(getLohnKontrollstelle('BS').verify).toBe(true);
+  // Amtlich gegengeprüft 2026-07-15 (rsn.ne.ch, ne.ch, gesetzessammlung.bs.ch, bs.ch/wsu/awa).
+  it('NE: LEmpl Art. 32a ff. — KEIN eigenes „Mindestlohngesetz“ (der alte Titel war falsch)', () => {
+    const e = getLohnKontrollstelle('NE');
+    expect(e.verify).toBe(false);
+    expect(e.gesetz).toMatch(/LEmpl/);
+    expect(e.gesetz).toMatch(/32a/);
+    expect(e.gesetz).not.toMatch(/Mindestlohngesetz/);
+    expect(e.stelle).toMatch(/ORCT/);
+  });
+
+  it('BS: MiLoG vom 13.01.2021 (SG 812.200), zuständig ist das AWA', () => {
+    const e = getLohnKontrollstelle('BS');
+    expect(e.verify).toBe(false);
+    expect(e.gesetz).toMatch(/MiLoG/);
+    expect(e.gesetz).toMatch(/812\.200/);
+    expect(e.stelle).toMatch(/Amt für Wirtschaft und Arbeit/);
+  });
+
+  // Wahrheits-Disziplin: das Fallback-Verhalten muss erhalten bleiben, auch wenn gerade
+  // kein Kanton mehr verify:true trägt — sonst rutscht beim nächsten neuen Kanton
+  // eine ungeprüfte Stelle in einen versendbaren Brief.
+  it('kein Kanton trägt eine Stelle ohne Beleg (verify:true ⇒ Stelle wird nicht verwendet)', () => {
+    for (const [k, e] of Object.entries(LOHN_KONTROLLSTELLEN)) {
+      if (e.verify) continue;
+      expect(e.gesetz, k + ': belegter Eintrag braucht einen Gesetzestitel').toBeTruthy();
+      expect(e.stelle || e.fallback, k + ': belegter Eintrag braucht Stelle oder Fallback').toBeTruthy();
+    }
   });
 
   it('liefert null für Kantone ohne gesetzlichen Mindestlohn', () => {

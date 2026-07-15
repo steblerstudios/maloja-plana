@@ -34,15 +34,22 @@ export const LOHN_KONTROLLSTELLEN = {
     verify: false,
   },
   NE: {
-    gesetz: 'Neuenburg — kantonales Mindestlohngesetz (17.09.2015)',
-    stelle: 'ORCT — Office des relations et des conditions de travail (mit tripartiter Kommission)',
-    verify: true, // Gesetzestitel vor Versand amtlich gegenprüfen
+    // Gegengeprüft 2026-07-15 an rsn.ne.ch + ne.ch: Neuenburg hat KEIN eigenes
+    // Mindestlohngesetz (der frühere Eintrag „Mindestlohngesetz (17.09.2015)“ war falsch).
+    // Der Mindestlohn steht in der LEmpl von 2004, Art. 32a ff.; Grundlage ist Art. 34a Cst. NE
+    // („lutter contre la pauvreté“). Das Gesetz benennt keine Kontrollstelle — der Kanton
+    // nennt dafür auf ne.ch den Secteur contrôle des ORCT.
+    gesetz: 'Neuenburg — Loi sur l’emploi et l’assurance-chômage (LEmpl) vom 25.05.2004, Art. 32a ff. (RSN 813.10)',
+    stelle: 'ORCT — Office des relations et des conditions de travail, Secteur contrôle',
+    verify: false,
   },
   BS: {
-    gesetz: 'Basel-Stadt — kantonales Mindestlohngesetz',
-    stelle: null,
-    hinweis: 'BS war im ursprünglichen Stand belegt; exakter Amtstext liegt hier nicht vor.',
-    verify: true, // zuständige BS-Stelle vor Versand amtlich verifizieren
+    // Gegengeprüft 2026-07-15 an gesetzessammlung.bs.ch + bs.ch/wsu/awa: Gesetz über den
+    // kantonalen Mindestlohn (MiLoG) vom 13.01.2021, SG 812.200, in Kraft seit 01.07.2022,
+    // jährlich indexiert. Zuständig ist das AWA, Team Arbeitsmarktaufsicht (ami.awa@bs.ch).
+    gesetz: 'Basel-Stadt — Gesetz über den kantonalen Mindestlohn (MiLoG) vom 13.01.2021 (SG 812.200)',
+    stelle: 'Amt für Wirtschaft und Arbeit (AWA), Team Arbeitsmarktaufsicht',
+    verify: false,
   },
 };
 
