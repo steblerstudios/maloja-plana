@@ -12,6 +12,13 @@
 
 ---
 
+> ⚠️ **Verloren & wiederaufzubauen:** Das Feature **Befund→Brief (Lohn)** wurde 2026-07-14 gebaut,
+> aber nie gepusht und ist auf diesem Rechner nicht mehr auffindbar. Vollständige Bau- und
+> Fix-Spezifikation (inkl. GE/NE/JU/TI-Rechtsquellen) in
+> [`TASK_befund-brief-lohn.md`](./TASK_befund-brief-lohn.md). Vor Neuaufbau: anderen Rechner prüfen.
+
+---
+
 ## Inhaltsverzeichnis
 
 1. [Phase 1 — Governance Runtime (Core)](#phase-1--governance-runtime-core)

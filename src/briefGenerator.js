@@ -6,8 +6,89 @@
 //   getLetterTemplates(t) → array of template definitions
 //   generateLetter(templateKey, data, t, options) → HTML string for print
 //     options.belege (optional) → für kkReklamation: gewählte kkBelege ({datum,betrag})
+//     options.job    (optional) → für wageClaim/unpaidWage: 'main' (Vorgabe) | 'side'.
+//                                 Bestimmt Empfänger UND Zahlen — ein Brief über den
+//                                 Nebenjob darf nie den Hauptlohn nennen.
 
 import { getFullName } from './config/constants.js';
+import { getCantonName } from './config/cantonalData.js';
+import { pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+
+// ─── Fristen (Tage) ───────────────────────────────────────
+// (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
+//     braucht einen Lohnlauf; ruhiger, nicht konfrontativer Ton.
+// (b) unpaidWage/ausstehender Lohn: 10 Tage — Lohn ist bereits fällig (OR 323);
+//     ~1 Woche gilt als angemessen, 10 Tage bleibt höflich und hält spätere Schritte offen.
+export const FRIST_TAGE = { wageClaim: 30, unpaidWage: 10 };
+
+// Zahl aus Nutzer-Eingabe (String, evtl. mit Komma) robust lesen.
+function num(v) {
+  return parseFloat(String(v == null ? '' : v).replace(',', '.')) || 0;
+}
+
+// Frist-Datum eines Brieftyps: heute + Frist-Tage → { iso, display }.
+// EINE Quelle der Wahrheit für Brieftext UND Kalender-Eintrag (addReminder).
+export function getFristInfo(templateKey, from = new Date()) {
+  const days = FRIST_TAGE[templateKey];
+  if (!days) return null;
+  const d = new Date(from.getTime());
+  d.setDate(d.getDate() + days);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  return { days, iso: `${d.getFullYear()}-${month}-${day}`, display: `${day}.${month}.${d.getFullYear()}` };
+}
+
+// Welche Anstellung meint der Brief? Haupt- und Nebenerwerb haben eigenen Lohn, eigene
+// Stunden und einen eigenen Arbeitgeber — ein Brief über den Nebenjob darf nie die Zahlen
+// des Hauptjobs tragen. Das Einkommensmodell der App ist durchgehend „Haupt + Neben“
+// (monthlyIncome + sideIncome), dem folgt diese Auswahl.
+export function getJobOptions(data) {
+  const opts = [{ key: 'main', employer: data?.finanzen?.employer || '', address: data?.finanzen?.employerAddress || '' }];
+  if ((data?.finanzen?.sideEmployer || '').trim()) {
+    opts.push({ key: 'side', employer: data.finanzen.sideEmployer, address: data?.finanzen?.sideEmployerAddress || '' });
+  }
+  return opts;
+}
+
+export function getJob(data, jobKey) {
+  const side = jobKey === 'side';
+  return {
+    key: side ? 'side' : 'main',
+    employer: (side ? data?.finanzen?.sideEmployer : data?.finanzen?.employer) || '',
+    address: (side ? data?.finanzen?.sideEmployerAddress : data?.finanzen?.employerAddress) || '',
+    lohn: num(side ? data?.finanzen?.sideIncome : data?.finanzen?.monthlyIncome),
+    stunden: num(side ? data?.finanzen?.sideHoursPerWeek : data?.ausbildung?.workHoursPerWeek),
+  };
+}
+
+// Lohn-Befund autark aus den Daten rechnen (genauere Stundenlohn-Prüfung, wenn Stunden da).
+function lohnBefund(data, jobKey) {
+  const kanton = data?.basis?.canton || '';
+  const job = getJob(data, jobKey);
+  const monthlyIncome = job.lohn;
+  const wHrs = job.stunden;
+  if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
+  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme. Ohne echte Wochenstunden ist der
+  // Stundenlohn nicht bestimmbar — dieser Brief geht per Einschreiben an einen Arbeitgeber,
+  // eine geratene Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` gibt dann
+  // 'unvollstaendig' zurück; die Beträge im Brief fallen auf „bitte ergänzen" (hasFigures).
+  return pruefeStundenlohn(monthlyIncome, wHrs, kanton);
+}
+
+// Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`
+// (amtlich noch nicht gegengeprüft) NICHT die unsichere Stelle/den Gesetzestitel in
+// einen versendbaren Brief schreiben — dann neutrale Formulierung. JU hat keine
+// Kontrollstelle → Arbeitsgericht-Fallback; das Wort „Stelle" bleibt bewusst generisch.
+function wageClaimRefs(kanton, t) {
+  const e = getLohnKontrollstelle(kanton);
+  const neutralGesetz = t('briefe.wageClaim.gesetzFallback');
+  const neutralStelle = t('briefe.wageClaim.stelleFallback');
+  if (!e) return { gesetz: neutralGesetz, stelle: neutralStelle };
+  const gesetz = (e.gesetz && !e.verify) ? e.gesetz : neutralGesetz;
+  const stelle = e.verify ? neutralStelle : (e.stelle || e.fallback || neutralStelle);
+  return { gesetz, stelle };
+}
 
 function esc(str) {
   if (!str) return '';
@@ -51,10 +132,22 @@ function recipientPlaceholder(t) {
   return esc(t('briefe.recipientPlaceholder'));
 }
 
+// Empfängerblock für Arbeitgeber-Briefe: Name + Adresse, so weit belegt. Was fehlt, wird
+// als Lücke markiert statt geraten — der Block sitzt im rechten Sichtfenster des CH-Couverts.
+// esc() pro Zeile: der Rückgabewert wird roh ins Brief-HTML interpoliert.
+function employerRecipient(job, t) {
+  if (!job.employer) return `<div class="placeholder">${recipientPlaceholder(t)}</div>`;
+  const name = esc(job.employer);
+  const addr = String(job.address || '').split('\n').map(l => l.trim()).filter(Boolean);
+  if (!addr.length) return `${name}<div class="placeholder">${esc(t('briefe.fillIn'))}</div>`;
+  return `${name}<br>${addr.map(esc).join('<br>')}`;
+}
+
 // ─── Template definitions ─────────────────────────────────
 
-export function getLetterTemplates(t) {
-  return [
+export function getLetterTemplates(t, data) {
+  const kanton = data?.basis?.canton || '';
+  const list = [
     {
       key: 'leaseTermination',
       title: t('briefe.leaseTermination.title'),
@@ -96,7 +189,29 @@ export function getLetterTemplates(t) {
       legalRef: 'ATSG Art. 52',
       chapter: 'versicherungen',
     },
+    {
+      key: 'unpaidWage',
+      title: t('briefe.unpaidWage.title'),
+      description: t('briefe.unpaidWage.description'),
+      icon: 'money',
+      legalRef: 'OR Art. 323',
+      chapter: 'finanzen',
+    },
   ];
+  // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
+  // Sonst behauptet der Brief einen nicht existierenden Mindestlohn (Haftungsrisiko in
+  // ~21/26 Kantonen). Kein Kanton gewählt → auch nicht anbieten (nicht raten).
+  if (kantonHatMindestlohn(kanton)) {
+    list.push({
+      key: 'wageClaim',
+      title: t('briefe.wageClaim.title'),
+      description: t('briefe.wageClaim.description'),
+      icon: 'money',
+      legalRef: 'OR Art. 322',
+      chapter: 'finanzen',
+    });
+  }
+  return list;
 }
 
 // ─── Field extraction helpers ─────────────────────────────
@@ -354,6 +469,83 @@ function generateKkReklamation(data, t, options = {}) {
   `, t);
 }
 
+// ─── Lohn-Briefe ──────────────────────────────────────────
+
+// (a) Lohn unter kantonalem Mindestlohn → höfliche Nachforderung an den Arbeitgeber.
+// Rechnet den Befund autark; ohne belegbare Zahlen bleiben Felder zum Ausfüllen.
+function generateWageClaim(data, t, options = {}) {
+  const jobKey = options.job;
+  const sender = senderBlock(data);
+  const dateStr = today();
+  const city = data.wohnen?.city || '';
+  const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
+
+  const job = getJob(data, jobKey);
+  const employer = job.employer || t('briefe.fillIn');
+  const kanton = data?.basis?.canton || '';
+  const cantonName = kanton ? getCantonName(kanton, t) : t('briefe.fillIn');
+
+  const befund = lohnBefund(data, jobKey);
+  const hasFigures = befund && befund.status === 'unterMindestlohn';
+  const lohnStunde = hasFigures ? befund.lohnStunde.toFixed(2) : t('briefe.fillIn');
+  const mindestStunde = hasFigures ? befund.mindestStunde.toFixed(2) : t('briefe.fillIn');
+  const differenz = hasFigures ? formatAmount(befund.differenzMonat) : t('briefe.fillIn');
+  // Jahr inkl. führendem Leerzeichen + Klammern nur wenn belegt (kein doppeltes Leerzeichen).
+  const jahr = hasFigures ? ` (${befund.jahr})` : '';
+
+  const frist = getFristInfo('wageClaim').display;
+  const refs = wageClaimRefs(kanton, t);
+
+  return wrapLetter(`
+    <div class="sender">${sender || fillHint(t)}</div>
+    <div class="recipient">${employerRecipient(job, t)}</div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(t('briefe.wageClaim.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.wageClaim.salutation'))}</p>
+      <p>${esc(t('briefe.wageClaim.body1', { employer, canton: cantonName }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresLohn', { amount: lohnStunde }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresMindest', { canton: cantonName, jahr, amount: mindestStunde }))}</p>
+      <p>– ${esc(t('briefe.wageClaim.figuresDiff', { amount: differenz }))}</p>
+      <p>${esc(t('briefe.wageClaim.body2request', { frist }))}</p>
+      <p>${esc(t('briefe.wageClaim.closing'))}</p>
+    </div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+    <div class="legal-note">${esc(t('briefe.wageClaim.legalNote', { canton: cantonName, gesetz: refs.gesetz, stelle: refs.stelle }))}</div>
+  `, t);
+}
+
+// (b) Ausstehender Lohn → höfliche Mahnung. FIX A: der Weg führt NICHT über die
+// Mindestlohn-Kontrollstelle, sondern über Schlichtungsbehörde/Arbeitsgericht (im
+// legalNote/Reminder abgebildet). Betrag vorbefüllt aus monthlyIncome, Monat(e) Selbst-Eintrag.
+function generateUnpaidWage(data, t, options = {}) {
+  const jobKey = options.job;
+  const sender = senderBlock(data);
+  const dateStr = today();
+  const city = data.wohnen?.city || '';
+  const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
+
+  const job = getJob(data, jobKey);
+  const months = t('briefe.fillIn');
+  // Der ausstehende Betrag ist der Lohn DIESER Anstellung — beim Nebenjob nie der Hauptlohn.
+  const betrag = job.lohn > 0 ? formatAmount(job.lohn) : t('briefe.fillIn');
+  const frist = getFristInfo('unpaidWage').display;
+
+  return wrapLetter(`
+    <div class="sender">${sender || fillHint(t)}</div>
+    <div class="recipient">${employerRecipient(job, t)}</div>
+    <div class="date-line">${cityDate}</div>
+    <div class="subject">${esc(t('briefe.unpaidWage.subject'))}</div>
+    <div class="body-text">
+      <p>${esc(t('briefe.unpaidWage.salutation'))}</p>
+      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}</p>
+      <p>${esc(t('briefe.unpaidWage.closing'))}</p>
+    </div>
+    <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>
+    <div class="legal-note">${esc(t('briefe.unpaidWage.legalNote'))}</div>
+  `, t);
+}
+
 // ─── Public API ───────────────────────────────────────────
 
 const GENERATORS = {
@@ -362,6 +554,8 @@ const GENERATORS = {
   taxExtension: generateTaxExtension,
   insuranceSwitch: generateInsuranceSwitch,
   kkReklamation: generateKkReklamation,
+  wageClaim: generateWageClaim,
+  unpaidWage: generateUnpaidWage,
 };
 
 export function generateLetter(templateKey, data, t, options = {}) {

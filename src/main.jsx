@@ -474,6 +474,8 @@ const AppInner = () => {
   const [legalSection, setLegalSection] = useState('privacy');
   const [tresorInitialTab, setTresorInitialTab] = useState('all');
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
+  // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
+  const [briefInitialTemplate, setBriefInitialTemplate] = useState(null);
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
@@ -692,6 +694,14 @@ const AppInner = () => {
       if (chapter === 'ausbildung' && field === 'employer' && value) {
         next.finanzen = { ...next.finanzen, employer: next.finanzen?.employer || value };
       }
+      // Arbeitgeber-Adresse folgt demselben Weg wie der Name: einmal tippen, überall da
+      // (füllt nur, was leer ist — nie eine bestehende Angabe überschreiben).
+      if (chapter === 'finanzen' && field === 'employerAddress' && value) {
+        next.ausbildung = { ...next.ausbildung, employerAddress: next.ausbildung?.employerAddress || value };
+      }
+      if (chapter === 'ausbildung' && field === 'employerAddress' && value) {
+        next.finanzen = { ...next.finanzen, employerAddress: next.finanzen?.employerAddress || value };
+      }
 
       return next;
     });
@@ -758,6 +768,9 @@ const AppInner = () => {
     }
     if (viewName === 'kvg') {
       setKvgInitialTab(extra || 'katalog');
+    }
+    if (viewName === 'briefe') {
+      setBriefInitialTemplate(extra || null);
     }
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
@@ -1336,7 +1349,7 @@ const AppInner = () => {
         view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate }),
+        view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
