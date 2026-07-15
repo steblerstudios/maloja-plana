@@ -53,6 +53,12 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   // Harte Schwelle als „!" auf dem Balken (nur mit eigenem Wert und innerhalb der Skala).
   const hasThreshold = thresholdValue > 0 && hasUser && thresholdValue <= scaleMax;
   const thresholdBreached = hasThreshold && userValue > thresholdValue;
+  // Kollision mit dem Schweizer-Schnitt-Strich: Bei der Miete fällt die Drittel-Schwelle
+  // genau dann auf den Strich, wenn das Einkommen ≈ 3× CH-Schnitt ist — also bei rund
+  // CHF 4'000. Das ist kein Randfall, sondern mitten in unserer Zielgruppe. Die Position
+  // bleibt (sie IST die Aussage), das „!" hebt sich stattdessen über den Strich ab —
+  // dieselbe Lösung, die der Strich schon gegen den Regions-Punkt anwendet.
+  const thresholdNearNational = hasThreshold && Math.abs(pct(thresholdValue) - nationalPct) < 3;
 
   const diffText = t(ns + dir, { pct: Math.abs(rounded) });
   let ariaLabel = t(ns + 'aria', {
@@ -68,7 +74,13 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
-      style: { position: 'relative', height: '10px', background: palette.border, borderRadius: '5px', marginBottom: '12px' },
+      style: {
+        position: 'relative', height: '10px', background: palette.border, borderRadius: '5px',
+        marginBottom: '12px',
+        // Das abgehobene „!" ist absolut positioniert und würde sonst in die Überschrift
+        // ragen — Platz reservieren statt auf Glück hoffen.
+        marginTop: thresholdNearNational ? '18px' : 0,
+      },
     },
       // Füllung = eigener Wert
       React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: barFill, borderRadius: '5px' } }),
@@ -85,7 +97,8 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // nicht im Fliesstext — und wird nur dort rose, wo sie wirklich überschritten ist.
       hasThreshold && React.createElement('div', {
         style: {
-          position: 'absolute', top: '-15px', height: '28px', left: pct(thresholdValue) + '%',
+          position: 'absolute', top: (thresholdNearNational ? '-30px' : '-15px'), height: '28px',
+          left: pct(thresholdValue) + '%',
           marginLeft: '-4px', width: '8px', textAlign: 'center', lineHeight: '28px',
           fontSize: '24px', fontWeight: 700, pointerEvents: 'none',
           color: thresholdBreached ? palette.roseDeep : palette.text,
