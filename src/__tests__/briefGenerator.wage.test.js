@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getLetterTemplates, generateLetter, getFristInfo, FRIST_TAGE } from '../briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, FRIST_TAGE, getJobOptions } from '../briefGenerator.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -89,6 +89,76 @@ describe('Lohn-Briefe', () => {
       const html = generateLetter('wageClaim', dataGE, t);
       expect(html).toContain('16.48');
       expect(html).toContain('24.59');
+    });
+  });
+
+  describe('Empfänger: Arbeitgeber + Adresse', () => {
+    it('Name UND Adresse belegt → beides steht im Empfängerfeld, keine Lücke', () => {
+      const mitAdresse = { ...dataGE, finanzen: { ...dataGE.finanzen, employerAddress: 'Rue du Test 5\n1200 Genève' } };
+      const html = generateLetter('wageClaim', mitAdresse, t);
+      expect(html).toContain('Muster AG');
+      expect(html).toContain('Rue du Test 5');
+      expect(html).toContain('1200 Genève');
+    });
+    it('Name ohne Adresse → Name steht, Adresse bleibt als Lücke markiert', () => {
+      const html = generateLetter('wageClaim', dataGE, t);
+      expect(html).toContain('Muster AG');
+      expect(html).toContain('[bitte ergänzen]');
+    });
+  });
+
+  // Ein Brief über den Nebenjob darf NIE die Zahlen des Hauptjobs tragen — er geht per
+  // Einschreiben an einen anderen Arbeitgeber.
+  describe('Haupt- vs. Nebenerwerb', () => {
+    const mitNeben = {
+      ...dataGE,
+      finanzen: {
+        ...dataGE.finanzen,
+        employerAddress: 'Rue du Test 5\n1200 Genève',
+        sideIncome: '800', sideEmployer: 'Café Nebenan', sideEmployerAddress: 'Rue Petite 2\n1200 Genève',
+        sideHoursPerWeek: '4',
+      },
+    };
+    it('ohne Nebenerwerb: nur eine Anstellung zur Auswahl (keine Frage an die Nutzerin)', () => {
+      expect(getJobOptions(dataGE).map(o => o.key)).toEqual(['main']);
+    });
+    it('mit Nebenerwerb: beide Anstellungen zur Auswahl', () => {
+      expect(getJobOptions(mitNeben).map(o => o.key)).toEqual(['main', 'side']);
+    });
+    it('job=side: Brief geht an den Nebenjob-Arbeitgeber, nicht an den Hauptarbeitgeber', () => {
+      const html = generateLetter('wageClaim', mitNeben, t, { job: 'side' });
+      expect(html).toContain('Café Nebenan');
+      expect(html).toContain('Rue Petite 2');
+      expect(html).not.toContain('Muster AG');
+    });
+    it('job=side, fair bezahlt (800 auf 4 Std./Woche = 46.24/Std.): kein Befund, keine Zahlen', () => {
+      const html = generateLetter('wageClaim', mitNeben, t, { job: 'side' });
+      expect(html).not.toContain('16.48'); // die Hauptjob-Zahl darf hier nie auftauchen
+      expect(html).toContain('[bitte ergänzen]'); // über dem Mindestlohn → nichts zu belegen
+    });
+    it('job=side, unterbezahlt (200 auf 4 Std./Woche = 11.56/Std.): rechnet MIT den Nebenjob-Zahlen', () => {
+      const unterbezahlt = { ...mitNeben, finanzen: { ...mitNeben.finanzen, sideIncome: '200' } };
+      const html = generateLetter('wageClaim', unterbezahlt, t, { job: 'side' });
+      expect(html).toContain('11.56'); // 200 / (4×52/12) — der echte Nebenjob-Stundenlohn
+      expect(html).toContain('24.59'); // GE-Mindestlohn
+      expect(html).not.toContain('16.48'); // NICHT der Hauptjob
+    });
+    it('job=side ohne Nebenjob-Stunden: keine geratenen Beträge', () => {
+      const ohneStd = { ...mitNeben, finanzen: { ...mitNeben.finanzen, sideHoursPerWeek: '' } };
+      const html = generateLetter('wageClaim', ohneStd, t, { job: 'side' });
+      expect(html).toContain('[bitte ergänzen]');
+      expect(html).not.toContain('4.40'); // 800/182 — der Fehlalarm, den die 182h-Annahme erzeugt hätte
+    });
+    it('Vorgabe ohne job-Option: Hauptanstellung', () => {
+      const html = generateLetter('wageClaim', mitNeben, t);
+      expect(html).toContain('Muster AG');
+      expect(html).not.toContain('Café Nebenan');
+    });
+    it('unpaidWage job=side: mahnt den Nebenjob-Lohn (800), nicht den Hauptlohn (3000)', () => {
+      const html = generateLetter('unpaidWage', mitNeben, t, { job: 'side' });
+      expect(html).toContain('Café Nebenan');
+      expect(html).toContain('800');
+      expect(html).not.toContain("3'000");
     });
   });
 

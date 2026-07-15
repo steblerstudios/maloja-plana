@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo } from './briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -10,6 +10,8 @@ import { addReminder } from './utils/reminders.js';
 
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
+// Brieftypen, die sich auf eine konkrete Anstellung beziehen (Haupt- oder Nebenerwerb).
+const JOB_TEMPLATES = ['wageClaim', 'unpaidWage'];
 // FIX A: getrennte Reminder-Notiz je Weg — wageClaim → Kontrollstelle,
 // unpaidWage → Schlichtungsbehörde/Arbeitsgericht (nicht dieselbe Stelle).
 const REMINDER_NOTES_KEY = { wageClaim: 'briefe.wageReminder.notesWageClaim', unpaidWage: 'briefe.wageReminder.notesUnpaid' };
@@ -33,10 +35,18 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   const [reminderAdded, setReminderAdded] = useState(false);
 
+  // Um welche Anstellung geht es? Nur nötig, wenn ein Nebenerwerb erfasst ist —
+  // sonst bleibt es bei der Hauptanstellung und die Auswahl erscheint gar nicht.
+  const [jobKey, setJobKey] = useState('main');
+
   // Kommt der Aufruf vom Befund („→ nächster Schritt"), ist eine Vorlage vorgewählt.
   useEffect(() => {
     if (initialTemplate) { setSelected(initialTemplate); setPreview(false); setPrinted(false); setReminderAdded(false); }
   }, [initialTemplate]);
+
+  // Vorlagenwechsel setzt die Anstellungs-Wahl zurück — sonst trüge ein neuer Brief
+  // stillschweigend die Wahl des vorherigen.
+  useEffect(() => { setJobKey('main'); }, [selected]);
   // Für den Reklamationsbrief: vom Nutzer gewählte Belege (kein Auto-Raten).
   const [belegIds, setBelegIds] = useState([]);
   // Geführter „was stimmt nicht"-Schritt: gewählte Beanstandungsgründe.
@@ -46,12 +56,13 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   const templates = getLetterTemplates(t, data);
   const selectedTmpl = templates.find(tmpl => tmpl.key === selected);
 
+  const jobOptions = getJobOptions(data);
   const kkBelege = Array.isArray(data?.versicherungen?.kkBelege) ? data.versicherungen.kkBelege : [];
   const reklamationBelege = selected === 'kkReklamation' ? kkBelege.filter(b => belegIds.includes(b.id)) : [];
 
   const handlePrint = () => {
     if (!selected) return;
-    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons });
+    const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
     setPrinted(true);
@@ -72,7 +83,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
     if (r) setReminderAdded(true);
   };
 
-  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons }) : '';
+  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }
@@ -125,6 +136,41 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
           }, tmpl.legalRef)
         )
       ))
+    ),
+
+    // Anstellungs-Auswahl — erscheint NUR, wenn wirklich ein Nebenerwerb erfasst ist.
+    // Wer einen Job hat, sieht hier nichts: kein Klick für die Mehrheit. Die Wahl steuert
+    // Empfänger UND Zahlen, damit ein Brief über den Nebenjob nie den Hauptlohn nennt.
+    JOB_TEMPLATES.includes(selected) && jobOptions.length > 1 && React.createElement('div', {
+      style: {
+        padding: '14px 16px', background: palette.up, border: '1px solid ' + palette.border,
+        borderRadius: radius.sm, marginBottom: space.md,
+      }
+    },
+      React.createElement('div', {
+        style: { fontWeight: weight.semi, fontSize: textTokens.body, color: palette.text, marginBottom: space.xs }
+      }, t('briefe.jobPicker.title')),
+      React.createElement('div', {
+        style: { fontSize: textTokens.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.sm }
+      }, t('briefe.jobPicker.intro')),
+      React.createElement('div', {
+        style: { display: 'flex', flexDirection: 'column', gap: '8px' }
+      },
+        jobOptions.map(o => React.createElement('label', {
+          key: o.key,
+          style: { display: 'flex', alignItems: 'center', gap: '10px', fontSize: textTokens.sm, cursor: 'pointer', color: palette.text, ...(isMobile ? { minHeight: '44px' } : {}) }
+        },
+          React.createElement('input', {
+            type: 'radio',
+            name: 'brief-job',
+            checked: jobKey === o.key,
+            onChange: () => setJobKey(o.key),
+            style: { flexShrink: 0 },
+          }),
+          React.createElement('span', { style: { color: palette.text } },
+            t('briefe.jobPicker.' + o.key) + (o.employer ? ' — ' + o.employer : ''))
+        ))
+      )
     ),
 
     // Grund-Auswahl — geführter „was stimmt nicht"-Schritt: die gewählten Gründe

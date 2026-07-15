@@ -193,9 +193,15 @@ export function getChapters(t) {
       fields: [
         { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyIncome'), mvo: true, section: t('sections.finanzen.income'), sectionIntro: si(t, 'finanzen', 'income'), orientation: or(t, 'einkommen') },
         { k: 'sideIncome', label: fl(t, 'finanzen', 'sideIncome'), type: 'currency', hint: hn(t, 'finanzen', 'sideIncome') },
+        // Nebenerwerb-Anstellung: nur nötig, wenn daraus ein Brief werden soll. Die Stunden
+        // sind Pflicht für jeden Lohn-Befund — ohne sie wird nicht gerechnet (kein 182h-Raten).
+        { k: 'sideEmployer', label: fl(t, 'finanzen', 'sideEmployer'), type: 'text', hint: hn(t, 'finanzen', 'sideEmployer') },
+        { k: 'sideEmployerAddress', label: fl(t, 'finanzen', 'sideEmployerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'sideEmployerAddress') },
+        { k: 'sideHoursPerWeek', label: fl(t, 'finanzen', 'sideHoursPerWeek'), type: 'text', hint: hn(t, 'finanzen', 'sideHoursPerWeek') },
         { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
         { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', mvo: true },
+        { k: 'employerAddress', label: fl(t, 'finanzen', 'employerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'employerAddress') },
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
         { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date' },
         { k: 'familienzulagen', label: fl(t, 'finanzen', 'familienzulagen'), type: 'currency', hint: hn(t, 'finanzen', 'familienzulagen') },
@@ -280,6 +286,9 @@ export function getChapters(t) {
         { k: 'efzNumber', label: fl(t, 'ausbildung', 'efzNumber'), type: 'text' },
         { k: 'certifications', label: fl(t, 'ausbildung', 'certifications'), type: 'textarea' },
         { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
+        // Kein `hint`: das Kapitel „Ausbildung & Arbeit" führt bewusst keine Hinweise.
+        // Die Erklärung steht am gekoppelten Feld in Finanzen (Quer-Befüllung, main.jsx).
+        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea' },
         { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text', mvo: true, orientation: or(t, 'beruf') },
         { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date' },
         { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit'), orientation: or(t, 'bewilligung_b') },

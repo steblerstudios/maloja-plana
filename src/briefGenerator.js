@@ -6,6 +6,9 @@
 //   getLetterTemplates(t) → array of template definitions
 //   generateLetter(templateKey, data, t, options) → HTML string for print
 //     options.belege (optional) → für kkReklamation: gewählte kkBelege ({datum,betrag})
+//     options.job    (optional) → für wageClaim/unpaidWage: 'main' (Vorgabe) | 'side'.
+//                                 Bestimmt Empfänger UND Zahlen — ein Brief über den
+//                                 Nebenjob darf nie den Hauptlohn nennen.
 
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
@@ -36,11 +39,35 @@ export function getFristInfo(templateKey, from = new Date()) {
   return { days, iso: `${d.getFullYear()}-${month}-${day}`, display: `${day}.${month}.${d.getFullYear()}` };
 }
 
+// Welche Anstellung meint der Brief? Haupt- und Nebenerwerb haben eigenen Lohn, eigene
+// Stunden und einen eigenen Arbeitgeber — ein Brief über den Nebenjob darf nie die Zahlen
+// des Hauptjobs tragen. Das Einkommensmodell der App ist durchgehend „Haupt + Neben“
+// (monthlyIncome + sideIncome), dem folgt diese Auswahl.
+export function getJobOptions(data) {
+  const opts = [{ key: 'main', employer: data?.finanzen?.employer || '', address: data?.finanzen?.employerAddress || '' }];
+  if ((data?.finanzen?.sideEmployer || '').trim()) {
+    opts.push({ key: 'side', employer: data.finanzen.sideEmployer, address: data?.finanzen?.sideEmployerAddress || '' });
+  }
+  return opts;
+}
+
+export function getJob(data, jobKey) {
+  const side = jobKey === 'side';
+  return {
+    key: side ? 'side' : 'main',
+    employer: (side ? data?.finanzen?.sideEmployer : data?.finanzen?.employer) || '',
+    address: (side ? data?.finanzen?.sideEmployerAddress : data?.finanzen?.employerAddress) || '',
+    lohn: num(side ? data?.finanzen?.sideIncome : data?.finanzen?.monthlyIncome),
+    stunden: num(side ? data?.finanzen?.sideHoursPerWeek : data?.ausbildung?.workHoursPerWeek),
+  };
+}
+
 // Lohn-Befund autark aus den Daten rechnen (genauere Stundenlohn-Prüfung, wenn Stunden da).
-function lohnBefund(data) {
+function lohnBefund(data, jobKey) {
   const kanton = data?.basis?.canton || '';
-  const monthlyIncome = num(data?.finanzen?.monthlyIncome);
-  const wHrs = num(data?.ausbildung?.workHoursPerWeek);
+  const job = getJob(data, jobKey);
+  const monthlyIncome = job.lohn;
+  const wHrs = job.stunden;
   if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
   // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme. Ohne echte Wochenstunden ist der
   // Stundenlohn nicht bestimmbar — dieser Brief geht per Einschreiben an einen Arbeitgeber,
@@ -103,6 +130,17 @@ function senderBlock(data) {
 
 function recipientPlaceholder(t) {
   return esc(t('briefe.recipientPlaceholder'));
+}
+
+// Empfängerblock für Arbeitgeber-Briefe: Name + Adresse, so weit belegt. Was fehlt, wird
+// als Lücke markiert statt geraten — der Block sitzt im rechten Sichtfenster des CH-Couverts.
+// esc() pro Zeile: der Rückgabewert wird roh ins Brief-HTML interpoliert.
+function employerRecipient(job, t) {
+  if (!job.employer) return `<div class="placeholder">${recipientPlaceholder(t)}</div>`;
+  const name = esc(job.employer);
+  const addr = String(job.address || '').split('\n').map(l => l.trim()).filter(Boolean);
+  if (!addr.length) return `${name}<div class="placeholder">${esc(t('briefe.fillIn'))}</div>`;
+  return `${name}<br>${addr.map(esc).join('<br>')}`;
 }
 
 // ─── Template definitions ─────────────────────────────────
@@ -435,17 +473,19 @@ function generateKkReklamation(data, t, options = {}) {
 
 // (a) Lohn unter kantonalem Mindestlohn → höfliche Nachforderung an den Arbeitgeber.
 // Rechnet den Befund autark; ohne belegbare Zahlen bleiben Felder zum Ausfüllen.
-function generateWageClaim(data, t) {
+function generateWageClaim(data, t, options = {}) {
+  const jobKey = options.job;
   const sender = senderBlock(data);
   const dateStr = today();
   const city = data.wohnen?.city || '';
   const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
 
-  const employer = data.finanzen?.employer || t('briefe.fillIn');
+  const job = getJob(data, jobKey);
+  const employer = job.employer || t('briefe.fillIn');
   const kanton = data?.basis?.canton || '';
   const cantonName = kanton ? getCantonName(kanton, t) : t('briefe.fillIn');
 
-  const befund = lohnBefund(data);
+  const befund = lohnBefund(data, jobKey);
   const hasFigures = befund && befund.status === 'unterMindestlohn';
   const lohnStunde = hasFigures ? befund.lohnStunde.toFixed(2) : t('briefe.fillIn');
   const mindestStunde = hasFigures ? befund.mindestStunde.toFixed(2) : t('briefe.fillIn');
@@ -458,7 +498,7 @@ function generateWageClaim(data, t) {
 
   return wrapLetter(`
     <div class="sender">${sender || fillHint(t)}</div>
-    <div class="recipient">${data.finanzen?.employer ? esc(data.finanzen.employer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + recipientPlaceholder(t) + '</div>'}</div>
+    <div class="recipient">${employerRecipient(job, t)}</div>
     <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.wageClaim.subject'))}</div>
     <div class="body-text">
@@ -478,19 +518,22 @@ function generateWageClaim(data, t) {
 // (b) Ausstehender Lohn → höfliche Mahnung. FIX A: der Weg führt NICHT über die
 // Mindestlohn-Kontrollstelle, sondern über Schlichtungsbehörde/Arbeitsgericht (im
 // legalNote/Reminder abgebildet). Betrag vorbefüllt aus monthlyIncome, Monat(e) Selbst-Eintrag.
-function generateUnpaidWage(data, t) {
+function generateUnpaidWage(data, t, options = {}) {
+  const jobKey = options.job;
   const sender = senderBlock(data);
   const dateStr = today();
   const city = data.wohnen?.city || '';
   const cityDate = city ? `${esc(city)}, ${dateStr}` : dateStr;
 
+  const job = getJob(data, jobKey);
   const months = t('briefe.fillIn');
-  const betrag = num(data.finanzen?.monthlyIncome) > 0 ? formatAmount(data.finanzen.monthlyIncome) : t('briefe.fillIn');
+  // Der ausstehende Betrag ist der Lohn DIESER Anstellung — beim Nebenjob nie der Hauptlohn.
+  const betrag = job.lohn > 0 ? formatAmount(job.lohn) : t('briefe.fillIn');
   const frist = getFristInfo('unpaidWage').display;
 
   return wrapLetter(`
     <div class="sender">${sender || fillHint(t)}</div>
-    <div class="recipient">${data.finanzen?.employer ? esc(data.finanzen.employer) + '<div class="placeholder">' + esc(t('briefe.fillIn')) + '</div>' : '<div class="placeholder">' + recipientPlaceholder(t) + '</div>'}</div>
+    <div class="recipient">${employerRecipient(job, t)}</div>
     <div class="date-line">${cityDate}</div>
     <div class="subject">${esc(t('briefe.unpaidWage.subject'))}</div>
     <div class="body-text">

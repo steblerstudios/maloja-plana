@@ -694,6 +694,14 @@ const AppInner = () => {
       if (chapter === 'ausbildung' && field === 'employer' && value) {
         next.finanzen = { ...next.finanzen, employer: next.finanzen?.employer || value };
       }
+      // Arbeitgeber-Adresse folgt demselben Weg wie der Name: einmal tippen, überall da
+      // (füllt nur, was leer ist — nie eine bestehende Angabe überschreiben).
+      if (chapter === 'finanzen' && field === 'employerAddress' && value) {
+        next.ausbildung = { ...next.ausbildung, employerAddress: next.ausbildung?.employerAddress || value };
+      }
+      if (chapter === 'ausbildung' && field === 'employerAddress' && value) {
+        next.finanzen = { ...next.finanzen, employerAddress: next.finanzen?.employerAddress || value };
+      }
 
       return next;
     });
