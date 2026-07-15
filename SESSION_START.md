@@ -13,9 +13,9 @@
 
 | | |
 |---|---|
-| Aktueller Branch | **`main` = `acc52f0`** — die Runde-8-Zweige sind **gemergt** (PR #93 `feat/befund-brief-lohn`, #94 `feat/lohn-mietzins-barometer`, #95 `fix/vitest-exclude-claude-worktrees`, #96 `fix/color-scheme-dark-scrollbar`). Offen: `fix/predeploy-r8` (Blocker-Behebung aus Runde 8). `chore/stand-sync-r13` ist **tot** — sein Inhalt ist über PR #92 in `main`, der Zweig ist 20 Commits zurück und trägt nichts Einzigartiges (löschbar). |
+| Aktueller Branch | **`fix/predeploy-r8`** — die Runde-8-Blocker sind behoben (4 Commits: `a55b68e` Stand-Doku · `cbd422a` Lohn-Logik · `7000c54` Frucht-Farbe + verify · `664c6a4` Belege + legal-note + Kollision). **Noch nicht gemergt**, PR offen. `main` = `acc52f0` — die Runde-8-Feature-Zweige sind gemergt (PR #93/#94/#95/#96). `chore/stand-sync-r13` ist **tot** — sein Inhalt ist über PR #92 in `main`, der Zweig ist 20 Commits zurück und trägt nichts Einzigartiges (löschbar). |
 | `main` steht auf | **`acc52f0`** (= `origin/main`, gegengeprüft 2026-07-15). ⚠️ **Merge-Fallen-Regel — gilt weiter, aber sie deckt nur den Doku-Fall:** Ein Stand-Sync-PR dokumentiert den Zeiger, sein eigener Merge rückt `main` dahinter. Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer**, ist alles in Ordnung. **Ist das Delta NICHT leer, hängt ein echter Deploy.** Genau das ist am 2026-07-15 passiert: Der frühere Eintrag `5a4851c` behauptete „`main` IST live, kein Deploy hängt", während 23 `src/`-Dateien (+1547/−59) davor lagen — die Feature-PRs #93/#94 waren gemergt, der Selbstschutz war beschrieben, aber nie ausgeführt. **Lehre: Die Gegenprobe ist keine Option, sondern Schritt 1.** |
-| Deploy hängt? | **JA.** `git log --oneline 5a4851c..HEAD` = **20 Commits**, `git diff 5a4851c..HEAD -- src/` = **23 Dateien**. Frisch gebautes `main` → Bundle `index-d66cc69c.js` ≠ Live-Bundle `index-1f4c6867.js`. Das ist **kein** Doku-Delta wie bei #86/#87. |
+| Deploy hängt? | **JA.** `git log --oneline 5a4851c..main` = **20 Commits**, `git diff 5a4851c..main -- src/` = **23 Dateien**; dazu die Blocker-Behebung auf `fix/predeploy-r8`. Frisch gebaut → Bundle ≠ Live-Bundle `index-1f4c6867.js`. Das ist **kein** Doku-Delta wie bei #86/#87. |
 | Version (package.json) | `0.1.25-beta` |
 | Letzter Tag | `v0.1.25-beta`. ⚠️ Der Tag zeigt auf `31abc36` — ein Hash, den der Purge **getötet** hat (`git log 31abc36..HEAD` bricht ab). Ab jetzt setzt `deploy.sh` den Tag automatisch aus `package.json`. |
 | Live (malojaplana.ch) | Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css`. Das entspricht dem Stand **`5a4851c`** (Runden 4–7, #72–#84). **`main` (`acc52f0`) ist NICHT live** — die ganze Runde 8 (Lohn-Befund-Brief + Lohn-/Mietzins-Barometer) liegt davor. ⚠️ **Ausnahme:** r7-`.htaccess`-Fix `geolocation=(self)` NICHT live — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel (dort noch `geolocation=()`, am 2026-07-15 per `curl` bestätigt). |
@@ -26,8 +26,9 @@
 | **Runde 4 (Doku + Governance + Momentum + Sie/Du) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#72/#73** Doku-Sprawl-Konsolidierung · **#74** Feature-Level-Tagging L0–L5 (`GOVERNANCE_LEVELS.md`, Runtime dormant) · **#75** Momentum-Anti-Druck-Zeile (`nextUpReassure`) · **#77** Sie/Du-Split der Zeile + Batterie-Polish (FinanzUebersicht-Chip Dunkelkontrast '60'→'40', `ctrlBtn`/Anrede `radius.sm`, `du`→`Du`, `leading.normal`). **Predeploy-Runde 4: volle Batterie (10 Prüfungen — Security+a11y+Design ganze App + Domänen + code-review) = 0 🔴.** In `main` (`b750e9e`), noch nicht deployt. |
 | **Runde 5 (#79/#80) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#79** i18n-Jahr-Interpolation `lohnCheck.unterMindestlohn`. **#80 (Predeploy-Runde 5, volle Batterie erneut = 0 offene 🔴):** zwei pre-existing 🔴 gefixt — (1) **Kantons-Mindestlöhne auf 2026 offiziell verifiziert korrigiert** (GE 24.32→24.59, NE 21.31→21.35, BS 21.00→22.20 + `indexiert`-Flag, JU/TI bestätigt; war False-Negativ-Warnungs-Risiko, Wahrheits-Disziplin) · (2) **Schwarz-auf-Sage-🔴** an 3 Buttons (4.32:1)→`sageBtn`/weiss. Plus DE-Grammatik „beim". |
 | **Runden 4–7 (#72–#84) — ✅ JETZT LIVE** | Doku/Governance (#72–74), Momentum-Zeile+Sie/Du (#75/#77), i18n-Jahr (#79), Mindestlohn 2026 (#80), SEO/GEO-Fundament (#82), roseDeep+tote-Links (#83), Predeploy-r7 a11y+BWO (#84) — **alle deployt + verified-live in `index-1f4c6867.js`** (2026-07-14). Predeploy-Runde 7: volle 8-Agenten-Batterie 0 🔴, alle ⚠️ auf ausdrücklichen Wunsch vor Deploy gefixt. |
-| **Runde 8 (2026-07-15) — 🔴 GEMERGT in `main`, NICHT live, Predeploy-Gate ROT** | ⚠️ **Predeploy-Runde 8 (2026-07-15) hat die Freigabe VERWEIGERT** — keine Marke gesetzt, `deploy.sh` blockt. Volle Batterie gelaufen: 9 Prüf-Agenten + Code-Review (44 Agenten). Alle mechanischen Gates grün (701 Tests / 63 Dateien, Build, SEO 0/0, PII, Size 64.91/65 kB, CSP, de-Chunks in 5 Sprachen). **Die Blocker sitzen in der Fachlogik.** Details unten unter „Nächste Schritte". <br> **`feat/befund-brief-lohn` (`d5a2898`, jetzt via PR #93 in `main`):** `c56272f` **Teilzeit-Fehlalarm behoben** — ohne erfasste Wochenstunden nahm der Mindestlohn-Befund blind Vollzeit an (182 Std.); CHF 3000 bei 50% wurden als 16.48/Std. statt 32.97/Std. gelesen → korrekt bezahlte Teilzeit-Angestellte wurden für unterbezahlt erklärt, **und der Befund führt neu zu einem Brief an den Arbeitgeber**. Jetzt nur `pruefeStundenlohn`; ohne Stunden ruhige Einladung statt Warnung, kein Brief-Knopf. · `1bca5a8` Arbeitgeber-**Adresse** (beide Kapitel, quer befüllt) + **Haupt-/Nebenerwerb-Auswahl** (`options.job` steuert Empfänger UND Zahlen) · `d5a2898` **NE/BS amtlich gegengeprüft** — NE hat KEIN „Mindestlohngesetz", der Mindestlohn steht in der **LEmpl von 2004, Art. 32a ff. (RSN 813.10)**; BS = **MiLoG vom 13.01.2021 (SG 812.200)**, Stelle AWA. Beide von `verify:true` → `false`. <br> **`feat/lohn-mietzins-barometer` (`6c143b0`, ab dem obigen):** `bc52438` **Barometer-Rebuild** nach der Rebuild-Spec (Lohn + Miete spiegelgleich in der Finanz-Übersicht, `data/lohnEinordnung.js`, `components/LohnEinordnung.jsx`, `components/MietVergleich.jsx` in BEIDEN Orten, `RegionalBarometer` + `fillColor`/`thresholdValue`) · `99c741f` `docs/design/farb-und-daten-system.md` · `f6d45b9` **Marken-Kollision** („!" und CH-Schnitt fallen bei ~CHF 4'000 Einkommen aufeinander — 1327×3=3981, mitten in der Zielgruppe) · `6c143b0` **Prüf-Agenten neu gebaut + `.claude/agents\|commands` in git**. |
-| **Deploy-Gate** | **🔴 ROT — Freigabe verweigert (Predeploy-Runde 8, 2026-07-15).** `.maloja/predeploy-ok` trägt noch den toten Hash `31abc36` ≠ HEAD → `deploy.sh` blockt korrekt. **Nicht deployen, bis die Blocker unten erledigt sind.** `deploy.sh` fährt zusätzlich PII- + SEO-Gate und setzt den Release-Tag automatisch. |
+| **Runde 8 (2026-07-15) — 🟡 GEMERGT in `main`, NICHT live; Blocker behoben auf `fix/predeploy-r8`** | ⚠️ **Predeploy-Runde 8 hat die Freigabe VERWEIGERT** — 9 🔴 in der Fachlogik. Volle Batterie: 9 Prüf-Agenten + Code-Review (44 Agenten); alle mechanischen Gates waren grün (701 Tests, Build, SEO 0/0, PII, Size, CSP, de-Chunks) — **die Skripte sahen nichts davon.** Behoben auf `fix/predeploy-r8` (siehe eigene Zeile). Details unten unter „Nächste Schritte" Punkt 0. <br> **`feat/befund-brief-lohn` (`d5a2898`, jetzt via PR #93 in `main`):** `c56272f` **Teilzeit-Fehlalarm behoben** — ohne erfasste Wochenstunden nahm der Mindestlohn-Befund blind Vollzeit an (182 Std.); CHF 3000 bei 50% wurden als 16.48/Std. statt 32.97/Std. gelesen → korrekt bezahlte Teilzeit-Angestellte wurden für unterbezahlt erklärt, **und der Befund führt neu zu einem Brief an den Arbeitgeber**. Jetzt nur `pruefeStundenlohn`; ohne Stunden ruhige Einladung statt Warnung, kein Brief-Knopf. · `1bca5a8` Arbeitgeber-**Adresse** (beide Kapitel, quer befüllt) + **Haupt-/Nebenerwerb-Auswahl** (`options.job` steuert Empfänger UND Zahlen) · `d5a2898` **NE/BS amtlich gegengeprüft** — NE hat KEIN „Mindestlohngesetz", der Mindestlohn steht in der **LEmpl von 2004, Art. 32a ff. (RSN 813.10)**; BS = **MiLoG vom 13.01.2021 (SG 812.200)**, Stelle AWA. Beide von `verify:true` → `false`. <br> **`feat/lohn-mietzins-barometer` (`6c143b0`, ab dem obigen):** `bc52438` **Barometer-Rebuild** nach der Rebuild-Spec (Lohn + Miete spiegelgleich in der Finanz-Übersicht, `data/lohnEinordnung.js`, `components/LohnEinordnung.jsx`, `components/MietVergleich.jsx` in BEIDEN Orten, `RegionalBarometer` + `fillColor`/`thresholdValue`) · `99c741f` `docs/design/farb-und-daten-system.md` · `f6d45b9` **Marken-Kollision** („!" und CH-Schnitt fallen bei ~CHF 4'000 Einkommen aufeinander — 1327×3=3981, mitten in der Zielgruppe) · `6c143b0` **Prüf-Agenten neu gebaut + `.claude/agents\|commands` in git**. |
+| **Blocker-Behebung — 🟡 auf `fix/predeploy-r8`, NICHT gemergt** | Alle 9 🔴 aus Runde 8 behoben (`a55b68e` Stand-Doku · `cbd422a` Lohn-Logik · `7000c54` Frucht-Farbe + verify · `664c6a4` Belege + legal-note + Kollision). 730 Tests grün (64 Dateien), Build sauber, Size **64.96/65 kB**, i18n-Parität 32/32, PII + SEO grün. Zweite Batterie gegen die Behebung selbst gelaufen (5 Prüfer + Code-Review) — siehe „Nächste Schritte" Punkt 0. |
+| **Deploy-Gate** | **🔴 ROT — keine Marke.** `.maloja/predeploy-ok` trägt den toten Hash `31abc36` ≠ HEAD → `deploy.sh` blockt korrekt. **Die Marke hängt am HEAD-Hash** — sie kann erst NACH dem Merge von `fix/predeploy-r8` auf dem dann gültigen `main`-HEAD gesetzt werden, mit einem frischen `/maloja-predeploy`. `deploy.sh` fährt zusätzlich PII- + SEO-Gate und setzt den Release-Tag automatisch. |
 
 **⚠️ HISTORIE UMGESCHRIEBEN — ZWEIMAL.** (1) 2026-07-11: Alt-Mails raus, Autoren → „Stebler Studios". (2) **2026-07-14: Personas/Tester/Freunde/Drittperson („Maria Stebler")/Mac-Benutzername + `docs/archive` (199 Dateien) aus der GESAMTEN Historie** (`filter-repo` invert-paths + replace-text, `main`→`35bd840`, force-push, alle Tags/Branches neu, lokal frisch geklont). Verifiziert 0 Treffer gegen `main`. **Bewusst geblieben:** eigener Name „Sophie Stebler" (Autoren-Angabe README/package.json + nDSG-Impressum, öffentlich). **Offen (2 Reste):** (a) `refs/pull/*/head` blieben beim Push abgelehnt → GitHub-Support-Ticket (SHA-Cache + PR-Refs, Formular private-information); (b) alte lokale Mirror-Backups in `_maloja-archiv/` mit Alt-PII (löschbar, waren Recovery-Netze). Details Claude-Memory `feedback_no_owner_name_in_git` + `project_cleanup_inventory` + Runbook `_maloja-archiv/HISTORIE-PURGE-NAME-2026-07-14.md`.
 
@@ -61,16 +62,33 @@
 
 ## Nächste Schritte
 
-0. **⭐ 🔴 Runde-8-Blocker beheben — die nächste Sitzung startet HIER.** Zweig `fix/predeploy-r8`.
+0. **⭐ Runde-8-Blocker: BEHOBEN auf `fix/predeploy-r8` — die nächste Sitzung startet HIER.**
    ⚠️ Merker: `/maloja-predeploy` Schritt 1 liest den LIVE-Marker aus dieser Datei — der
    Tag-Hash `31abc36` ist tot. **Der LIVE-Marker ist `5a4851c`** (= Bundle `index-1f4c6867.js`).
 
-   **Predeploy-Runde 8 (2026-07-15) verweigerte die Freigabe.** Batterie: 9 Prüf-Agenten +
-   Code-Review (44 Agenten). Mechanik komplett grün — die Funde sitzen in der Fachlogik.
-   Roter Faden: **derselbe Lohn wird an verschiedenen Orten verschieden beurteilt**, und am
-   Ende steht ein Einschreiben an einen Arbeitgeber.
+   **Stand:** Alle 🔴 sind behoben (4 Commits, 730 Tests grün, Size 64.96/65 kB). Eine
+   **zweite Batterie gegen die Behebung selbst** ist gelaufen (swiss-precision, rechts, a11y,
+   copy+qualität, code-review) — mit dem ausdrücklichen Auftrag, den Fix zu zerlegen statt
+   ihn zu bestätigen. **Ergebnis siehe unten unter „Zweite Batterie".**
+   **Noch KEINE Freigabe-Marke gesetzt.** Vor dem Deploy: PR → `main`, dann `/maloja-predeploy`
+   auf dem gemergten Stand (die Marke hängt am HEAD-Hash).
 
-   **(a) Netto/Brutto wird nie geprüft** — `briefGenerator.js:66` (`lohnBefund`), Lohn-Pfad
+   **Warum eine zweite Batterie:** Der Fix ist KI-geschrieben und war zuerst ungeprüft — genau
+   der Zustand, der die Blocker erzeugt hat. Er zahlte sich zweimal aus: der Code-Review fand
+   in Runde 1 zwei Fehler, die **alle neun** Prüfer übersahen (Netto/Brutto, >42-Std.-Freispruch),
+   und eine eigene Render-Probe deckte auf, dass mein erster Netto-Fix nur **halb** war (der
+   Mindestlohn schwieg, der Median-Vergleich lief weiter — der BFS-Median ist auch brutto).
+
+   **Predeploy-Runde 8 (2026-07-15) verweigerte die Freigabe.** Batterie: 9 Prüf-Agenten +
+   Code-Review (44 Agenten). Mechanik komplett grün — die Funde sassen in der Fachlogik.
+   Roter Faden: **derselbe Lohn wurde an fünf Orten verschieden beurteilt** (`ChapterView`
+   2×, `briefGenerator`, Barometer, `getLetterTemplates`), und am Ende steht ein Einschreiben
+   an einen Arbeitgeber. **Die Behebung ist darum kein Flicken je Fund, sondern eine Wahrheit:**
+   `pruefeStundenlohn` entscheidet, alle anderen fragen sie.
+
+   **Was behoben ist** (Details je Commit; ↓ = Fundtext von Runde 8, unverändert als Beleg):
+
+   **✅ (a) Netto/Brutto wird nie geprüft** *(behoben `cbd422a`: 4. Parameter `einkommensart`, nur „brutto" gibt einen Befund; Vergessen ⇒ Schweigen. Neu `sideIncomeType`, sonst wäre der Nebenerwerb eine Sackgasse.)* — `briefGenerator.js:66` (`lohnBefund`), Lohn-Pfad
    liest `finanzen.incomeType` **nirgends** (verifiziert: 0 Treffer). Die App fragt die
    Einkommensart ab (`constants.js:202`) und rät im Hinweis ausdrücklich zu **Netto**
    („Netto ist was auf Ihrem Konto ankommt", `de.js:1314`) — die Mindestlöhne sind aber
@@ -78,37 +96,45 @@
    < 24.59 → rote Warnung → Brief. Brutto wären ~4'550 = 25.00/Std., also **legal**.
    *Wer der Anleitung der App folgt, beschuldigt den Arbeitgeber zu Unrecht.*
 
-   **(b) `incomeFTE` normalisiert nur nach unten** — `lohnEinordnung.js:63/66`:
+   **✅ (b) `incomeFTE` normalisiert nur nach unten** *(behoben `cbd422a`: bei bekannten Stunden IMMER normalisieren; `mlBreached` kommt aus `pruefeStundenlohn` — Kapitel und Barometer stimmen per Konstruktion überein.)* — `lohnEinordnung.js:63/66`:
    `partTime = hoursKnown && stunden < 42` → wer **mehr** als 42 Std. arbeitet, behält den
    Rohlohn. BS, CHF 4'100 bei 45 Std.: Kapitel meldet korrekt „unter Mindestlohn" + Brief-Knopf,
    das Barometer daneben gibt **Entwarnung**. Eine echte Unterschreitung wird stumm freigesprochen.
 
-   **(c) 42 als Klassifikations-Schwelle statt Referenz-Nenner** — dieselbe Zeile. Ein normaler
+   **✅ (c) 42 als Klassifikations-Schwelle statt Referenz-Nenner** *(behoben `cbd422a`: eigene, amtlich belegte Konstante `LSE_VOLLZEIT_STUNDEN_WOCHE = 40`; die Mindestlohn-42 bleibt unangetastet.)* — dieselbe Zeile. Ein normaler
    40-Std.-Vollzeitjob (CHF 6'788 = exakt der Median) wird „Teilzeit … hochgerechnet CHF 7'127" —
    CHF 339 erfunden; bei 39 Std. kippt die Aussage auf „über dem Median" (falsch).
 
-   **(d) `wageClaim`-Brief auch bei Befund `ok`** — `briefGenerator.js:204` gated nur auf
+   **✅ (d) `wageClaim`-Brief auch bei Befund `ok`** *(behoben `cbd422a`: der Befund entscheidet, nicht der Wohnort. Beim Bauen selbst gestolpert — mein erstes Gate fragte den nicht existierenden Nebenjob und hielt den Brief für alle offen; `getJobOptions` wusste es längst.)* — `briefGenerator.js:204` gated nur auf
    `kantonHatMindestlohn`, `:489` gated nur die *Zahlen*. GE/CHF 8'000: Brief behauptet
    „unter dem Mindestlohn … liegen dürfte" mit leeren Beträgen — die App hat den Verdacht
    selbst widerlegt. (Rechts-Prüfer + Code-Review unabhängig.)
 
-   **(e) Anzeige führt die 182h-Annahme wieder ein** — `LohnEinordnung.jsx:130`/`:105`: ohne
+   **✅ (e) Anzeige führt die 182h-Annahme wieder ein** *(behoben `cbd422a`: ohne Stunden ODER ohne Brutto-Basis zeigt das Instrument gar keinen Balken — jede Marke darauf ist Vollzeit UND brutto.)* — `LohnEinordnung.jsx:130`/`:105`: ohne
    Stunden bleibt `incomeFTE` roh, `rel` wird aber gegen den Vollzeit-Median gerechnet + Note
    „Für den Vergleich nehmen wir eine Vollzeitstelle an". Genau der Fehlalarm, den `c56272f`
    im Kapitel abgeschafft hat.
 
-   **(f) `FinanzUebersicht.jsx:222` widerspricht sich in einer Karte** — Band-Label rechnet auf
+   **✅/⚠️ (f) `FinanzUebersicht.jsx:222` widerspricht sich in einer Karte** *(entschärft `cbd422a`. Beim Nachlesen subtiler als gemeldet: **beide Aussagen sind wahr, über verschiedene Fragen** — das Band misst das tatsächliche Monatseinkommen (armutsrelevant), das Barometer das Lohnniveau hochgerechnet. Gefixt ist der echte Fehler: die 6788 war HARTKODIERT (zweite Wahrheit) → `LOHN_REFERENZ.median`. Dazu Label „Einordnung" → „Was monatlich reinkommt". Die Bänder mischen weiterhin Armuts- (roh) und Median-Schwellen (FTE) in einer Skala — das ist ein Design-Entscheid, siehe Punkt 12.)* — Band-Label rechnet auf
    dem **Rohlohn**, das Barometer 11 Zeilen darunter auf **FTE**. 50%/CHF 3'400: „nahe der
    Armutsgrenze" über „Ihr Lohn: CHF 6'800 — nahe am Median".
 
-   **(g) `durchschnitt: 7996` unter BFS-Attribution** — `de.js:2255` (+4 Spr.) nennt die Zahl
+   **✅ (g) `durchschnitt: 7996` unter BFS-Attribution** *(behoben `cbd422a`: ersatzlos raus, kein Ersatz erfunden. **Der Befund war zu gross:** `p10 4487`/`p90 12178` stehen wörtlich in der LSE-2022-Mitteilung — der `verify`-Kommentar war zu pessimistisch. Unbelegt war NUR der Durchschnitt. Dafür fand die Gegenprüfung einen NEUEN Blocker: die **LSE 2024** ist seit 25.11.2025 publiziert → Median 7024, p10 4635, p90 12526, alle drei belegt.)* — `de.js:2255` (+4 Spr.) nennt die Zahl
    namentlich und schreibt sie dem BFS zu; belegt ist nur der Median `6788`
    (BFS-Medienmitteilung 19.03.2024). Mittelwert/Perzentile stehen nur in **STAT-TAB**
    (nicht zitierbar). **Drei unabhängige Prüfer** (swiss-precision, link-checker, code-review).
    ⚠️ `lohnEinordnung.test.js:5` deckt 7996 in derselben Assertion wie den belegten Median ab
    („amtlich belegt") — der Test leiht der ungeprüften Zahl Autorität.
 
-   **(h) a11y-🔴 (a11y-Prüfer + Polygrafin unabhängig):** rohes `palette.gold` als **Text**
+   **✅ (h) a11y-🔴 (a11y-Prüfer + Polygrafin unabhängig)** *(behoben `cbd422a` + `7000c54`:
+   Deep-Varianten für Text — `readoutColor`/`accentText`/`dotTextColor` —, die kräftigen Töne
+   bleiben der Grafik. Eigener Satz `mindestlohnBreachedLine` + im aria-Label, damit die
+   Unterschreitung nicht mehr nur in der Farbe steht. Dazu der Regel-Konflikt Frucht-Farbe
+   vs. WCAG 1.4.11: **die erste Vorlage an Stebler Studios war falsch gerechnet** — „Spur
+   dunkler" macht es schlimmer (2.27→1.71→Tiefpunkt 1.05), weil die Frucht im Hellmodus
+   dunkler ist als die Spur. Gelöst mit `lightDeep` (gleicher Farbton, weniger Helligkeit),
+   Identitätsfarbe `light` unberührt; `lebensbereiche.contrast.test.js` rechnet nach.)*
+   ↓ Fundtext Runde 8: rohes `palette.gold` als **Text**
    = **1.93:1** (nötig 4.5:1) in `LohnEinordnung.jsx:86,114` + `RegionalBarometer.jsx:121,129` —
    der Gold-Fall ist die Unter-Median-Lage, also die Zielgruppe. `readoutColor` (Deep) steht
    27 Zeilen höher fertig da; `MietVergleich.jsx:51` hat den Fix schon.
@@ -116,7 +142,7 @@
    beiden Zuständen identisch, `aria-label` nennt sie nicht, und der ausformulierte Satz
    `lohnCheck.unterMindestlohn` rendert **nur** in `ChapterView`, nicht in `FinanzUebersicht`.
 
-   **(i) `unpaidWage` behauptet einen Betrag für einen unbekannten Zeitraum** —
+   **✅ (i) `unpaidWage` behauptet einen Betrag für einen unbekannten Zeitraum** *(behoben `cbd422a`: Zeitraum offen ⇒ Betrag offen; der Monatslohn steht als benannter Anhalt daneben.)* —
    `briefGenerator.js:531`: `{months}` bleibt „[bitte ergänzen]", der Betrag wird mit **einem**
    Monatslohn gefüllt. Wer 3 Monate schuldet, mahnt gedruckt ein Drittel.
 0a. **Alt-PII auf der Platte löschen — Stebler Studios führt aus** (~85 MB, ausserhalb git):
@@ -188,15 +214,30 @@
    der Purge ersetzte nur Mail-Strings, nicht Fliesstext. Separater Schritt auf ausdrückliche Freigabe.
 10. Offen a11y (nicht-blockierend): #4 Fokusring-Farbe (Kür). rm-Gegenlese (Führerausweis
    + fr/it/rm generell).
-11. **Entscheid offen — Regel-Konflikt Frucht-Farbe vs. WCAG 1.4.11** (aus Predeploy-Runde 8,
-   Polygrafin): Die Balken-Füllung trägt die Frucht-Farbe (Arbeit=Haselnuss `#A8895E`,
-   Wohnen=Birne `#7E9A4E`) gegen die Spur `palette.border #DCDAD6` → **2.35:1** bzw. **2.27:1**
-   im Hellmodus; WCAG 1.4.11 will 3:1 für bedeutungstragende Grafik.
-   **Kein Regress** (das alte `sky` lag bei 2.40:1, im Dunkelmodus hat der neue Code auf
-   4.83:1 **verbessert**) — aber `docs/design/farb-und-daten-system.md:25,33` **schreibt die
-   Frucht-Farbe ausdrücklich vor**. Das ist ein Konflikt zwischen zwei Regeln, kein Versehen:
-   dunklere Spur? Frucht-Deep-Variante? Die Design-Doku muss entscheiden, nicht der Predeploy.
-12. **Governance-Reste aus Runde 8** (nicht blockierend, aber Arbeit ausserhalb git):
+11. **✅ ENTSCHIEDEN — Regel-Konflikt Frucht-Farbe vs. WCAG 1.4.11** (Stebler Studios,
+   2026-07-15; umgesetzt in `7000c54`, Regel 3a in `docs/design/farb-und-daten-system.md`).
+   Die Frucht-Regel der Doku bleibt; die Füllung nimmt einen eigenen **Füll-Ton**
+   (`bereichFillColor` → `lightDeep`): gleicher Farbton, weniger Helligkeit.
+   Birne `#7E9A4E`→`#6C8343` (3.03/3.58 ✓), Haselnuss `#A8895E`→`#947750` (3.00/3.54 ✓).
+   `light` bleibt unberührt (Identität am Baum, den Karten, Reitern, Arztkoffer — und der
+   Helligkeits-Kanal der Reihenfolge). **Nur hell** — im Dunkeln trägt `dark` schon (4.83/4.33).
+   ⚠️ **Lehrstück:** Die erste Vorlage schlug „Spur dunkler" vor und behauptete ≈3.1–3.4:1.
+   Das war **geraten und falsch** — nachgerechnet wird es schlimmer (2.27→1.71, Tiefpunkt
+   ~1.05), weil die Frucht im Hellmodus dunkler ist als die helle Spur. Erst der zweite,
+   gerechnete Anlauf trug. In einer Runde, die geratene Zahlen aufräumt, war das die falsche
+   Art zu fragen: **erst rechnen, dann vorlegen.**
+   Neu offen daraus: neue Instrumente brauchen für ihren Bereich ein `lightDeep`, sonst
+   fällt `bereichFillColor` still auf `light` zurück (Dev-Warnung + Test hüten das).
+12. **Design-Entscheid offen — Einkommens-Bänder in `FinanzUebersicht.jsx:~214`** (aus
+   Runde 8, Fund (f)): Die Bänder mischen **zwei Bezugssysteme in einer Skala** — die
+   Armuts-Schwellen (2279, 4000) messen das TATSÄCHLICHE Monatseinkommen, die
+   Median-Schwellen (`LOHN_REFERENZ.median`, 10000) messen das Lohnniveau, das darunter
+   liegende Barometer rechnet auf Vollzeit hoch. Beide Aussagen sind wahr, über
+   verschiedene Fragen — nebeneinander lasen sie sich als Widerspruch („nahe der
+   Armutsgrenze" über „CHF 6'800 — nahe am Median"). Entschärft ist es über das Label
+   („Was monatlich reinkommt"), gelöst ist es nicht. Offen auch: sind 2279 / 4000 belegt,
+   und auf welcher Basis (netto/brutto)? Kein Blocker, aber ein echter Design-Entscheid.
+13. **Governance-Reste aus Runde 8** (nicht blockierend, aber Arbeit ausserhalb git):
    - `.claude/settings.json` ist weiterhin **ungetrackt** (`.gitignore:21`), enthält aber
      deny/ask-Liste **und** den Tests-vor-Commit-Hook. Massstab der eigenen `.gitignore`:
      „Was nicht in git ist, ist nicht sicher."
