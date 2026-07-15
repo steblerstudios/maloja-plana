@@ -14,24 +14,41 @@
 
 // Kontrollstellen für die MINDESTLOHN-Unterschreitung (wageClaim).
 // Deckungsgleich mit den Kantonen in lohnCheck.js MINDESTLOHN.
+//
+// ⚠️ BELEG-BILANZ dieses Files (Predeploy-Runde 8): Von den beiden Einträgen, die je
+// tatsächlich gegengeprüft wurden, war EINER frei erfunden — für NE stand ein
+// „kantonales Mindestlohngesetz (17.09.2015)", das es nicht gibt (der Mindestlohn steht
+// in der LEmpl vom 25.05.2004, Art. 32a ff.). Nur `verify: true` hielt ihn aus dem Brief.
+// Trefferquote der Prüfung: 1 von 2 falsch. Das ist der Massstab für alles Ungeprüfte hier.
 export const LOHN_KONTROLLSTELLEN = {
+  // ⚠️ verify:true (Stebler-Studios-Entscheid, Predeploy-Runde 8): GE/TI/JU trugen
+  // `verify: false` (= „amtlich belegt"), OHNE dass je ein Commit eine Gegenprüfung
+  // behauptet hätte — anders als NE und BS, die einen Prüf-Kommentar mit Datum + Quelle
+  // tragen. Auffällig: nur diese drei zitieren ohne Erlassnummer (NE: RSN 813.10,
+  // BS: SG 812.200). Bis zur amtlichen Gegenprüfung gilt die neutrale Formulierung —
+  // der Brief bleibt voll funktionsfähig, nennt aber keinen ungeprüften Titel und keine
+  // ungeprüfte Stelle. Gegenprüfung an den Kantonsquellen läuft; was belegt zurückkommt,
+  // geht mit wörtlichem Zitat auf `verify: false`.
   GE: {
     gesetz: 'Genf — Art. 39K LIRT',
     stelle: 'OCIRT — Office cantonal de l’inspection et des relations du travail',
-    verify: false,
+    verify: true, // TODO(beleg): Art. 39K LIRT + vollen Titel + RS-GE-Nummer an ge.ch prüfen
   },
   TI: {
     gesetz: 'Tessin — Legge sul salario minimo (LSM) vom 11.12.2019, Art. 4',
     stelle: 'Ufficio dell’ispettorato del lavoro',
-    verify: false,
+    verify: true, // TODO(beleg): Titel/Datum/RL-Nummer + Art. 4 an ti.ch prüfen
   },
   JU: {
+    // „seit 01.02.2018" ist ein Inkraft-, kein Zitier-Datum — Erlass + RSJU-Nummer fehlen.
     gesetz: 'Jura — Loi sur le salaire minimum cantonal (seit 01.02.2018)',
     // Jura hat KEINE eigene Mindestlohn-Kontrollstelle → Arbeitsgericht.
     stelle: null,
+    // ⚠️ Zuständig ist das Gericht am ARBEITSORT (Bezirk) — „Porrentruy" fest zu nennen
+    // ist für Delémont/Franches-Montagnes falsch. Mit in der Gegenprüfung.
     fallback: 'Conseil de prud’hommes (Arbeitsgericht), Porrentruy',
     hinweis: 'Das Wort „Kontrollstelle“ hier vermeiden — der Weg führt über das Arbeitsgericht.',
-    verify: false,
+    verify: true, // TODO(beleg): Erlass + RSJU-Nummer + Zuständigkeit am Arbeitsort
   },
   NE: {
     // Gegengeprüft 2026-07-15 an rsn.ne.ch + ne.ch: Neuenburg hat KEIN eigenes

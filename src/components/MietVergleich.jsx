@@ -2,7 +2,7 @@ import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { getRentComparison } from '../data/mietpreise.js';
-import { bereichColor } from '../data/lebensbereiche.js';
+import { bereichFillColor } from '../data/lebensbereiche.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 
 // „Wo steht Ihre Miete?" — regionaler BFS-Vergleich + Wohnkostenquote.
@@ -41,7 +41,8 @@ export const MietVergleich = ({ palette, t, data, isDarkMode, showTitle = true, 
 
     rentComparison && React.createElement(RegionalBarometer, {
       palette, t, comparison: rentComparison, userValue: rentMonthly || null, kind: 'rent',
-      fillColor: bereichColor('wohnen', isDarkMode),
+      // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
+      fillColor: bereichFillColor('wohnen', isDarkMode),
       thresholdValue: drittel,
     }),
 

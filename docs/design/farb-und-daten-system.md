@@ -22,7 +22,7 @@
 
 | Marke | Bedeutung | Farbe |
 |---|---|---|
-| **Füllung** | „du" — dein Wert | **Frucht-Farbe des Bereichs** (`bereichColor(key, isDark)`) |
+| **Füllung** | „du" — dein Wert | **Frucht-Farbe des Bereichs** (`bereichFillColor(key, isDark)`) |
 | **● Punkt** | Valenz-Referenz (Median, Regions-Schnitt) | nach **deiner Lage**: `sage` = entspannter · `gold` = enger · `mid` = neutral |
 | **&#124; Strich** | der „Schnitt" (Durchschnitt, CH-Schnitt) | `mid` — neutral, nie wertend |
 | **!** | harte Schwelle | `text` (Graphit) normal · **`roseDeep` nur auf der kritischen Seite** |
@@ -33,9 +33,43 @@ Seite — beim Lohn also *darunter*, bei der Miete *darüber*. Nicht „mehr = g
 **Regel 3: „du" trägt die Frucht-Farbe.** Das löst die Blau-Überladung: Blau bedeutet „du"
 nur im Versicherungs-Instrument, wo Blau (Heidelbeere) ohnehin die Bereichsfarbe ist.
 
+**Regel 3a: Die Füllung nimmt den Füll-Ton, nicht den Identitätston** —
+`bereichFillColor(key, isDark)`, nicht `bereichColor`. *(Predeploy-Runde 8, Entscheid
+Stebler Studios.)*
+
+Warum: Die Füllung **trägt die Aussage** des Instruments, ist also bedeutungstragende
+Grafik und braucht **3:1** gegen ihre Nachbarn (WCAG 1.4.11). Gemessen war sie im
+**Hellmodus** darunter — und zwar an *beiden* Kanten:
+
+| | gegen Spur `#DCDAD6` | gegen Karte `#ECECEA` |
+|---|---|---|
+| Birne `#7E9A4E` | 2.27:1 ✗ | 2.68:1 ✗ |
+| Haselnuss `#A8895E` | 2.35:1 ✗ | 2.77:1 ✗ |
+
+**Die Falle: eine dunklere Spur behebt das nicht — sie verschlimmert es.** Im Hellmodus
+ist die Frucht *dunkler* als die Spur; beide rücken zusammen (2.27 → **1.71** bei
+`#C0BEB9`, Tiefpunkt ~1.05 bei mittlerem Grau). Erst eine fast schwarze Spur trüge
+(4.78:1) — und wäre der lauteste Punkt einer ruhigen Seite.
+
+**Im Dunkelmodus ist die Richtung umgekehrt** (Frucht *heller* als Spur) und alles hält
+bereits: 4.83:1 / 4.33:1. Darum gibt es bewusst **kein `darkDeep`**.
+
+Die Lösung heisst darum `lightDeep`: **gleicher Farbton, weniger Helligkeit**
+(Birne `#6C8343` → 3.03/3.58 ✓ · Haselnuss `#947750` → 3.00/3.54 ✓; Farbton wandert um
+0.5°). Die **Identitätsfarbe `light` bleibt unangetastet** — sie trägt den Lebensbaum, die
+Kapitel-Karten, die Mappen-Reiter und den Arztkoffer, und zugleich den bewussten
+Helligkeits-Kanal der Bereichs-Reihenfolge (hell → dunkel), der Farbenblinden dient.
+Dasselbe Muster wie `sage`/`sageDeep` bei Text: **ein Ton je Zweck, nicht ein Ton für alles.**
+
+⚠️ **Ein neues Instrument braucht für seinen Bereich ein `lightDeep`.** Ohne fällt
+`bereichFillColor` auf `light` zurück und verfehlt 1.4.11 — still. Der Dev-Build warnt,
+und `data/__tests__/lebensbereiche.contrast.test.js` rechnet die Kontraste nach, statt sie
+zu behaupten.
+
 ## Die Frucht-Farben
 
-Aus `data/lebensbereiche.js`, via `bereichColor(key, isDark)`:
+Aus `data/lebensbereiche.js` — `bereichColor(key, isDark)` für Identität (Baum, Karten,
+Reiter), `bereichFillColor(key, isDark)` für Balken-Füllungen (siehe Regel 3a):
 
 | Bereich | Frucht | Instrument |
 |---|---|---|

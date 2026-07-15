@@ -64,8 +64,15 @@ describe('Lohn-Briefe', () => {
       expect(html).toContain('16.48'); // 3000 / 182
       expect(html).toContain('24.59'); // GE-Mindestlohn
     });
-    it('setzt die belegte Stelle ein (GE = OCIRT, verify:false)', () => {
-      expect(html).toContain('OCIRT');
+    // ⚠️ Predeploy-Runde 8: GE steht auf `verify: true`, bis die Rechtsgrundlage amtlich
+    // gegengeprüft ist (Art. 39K LIRT trug nie eine Erlassnummer, und kein Commit behauptet
+    // eine Prüfung). Der Brief nennt darum weder Gesetzestitel noch OCIRT — er bleibt aber
+    // voll funktionsfähig: die neutrale Formulierung trägt ihn. Damit ist der Fallback-Zweig
+    // wieder über einen ECHTEN Kanton getestet, nicht nur über den synthetischen Eintrag.
+    it('ungeprüfter Kanton (GE): keine Stelle, kein Gesetzestitel — neutrale Formulierung', () => {
+      expect(html).not.toContain('OCIRT');
+      expect(html).not.toContain('39K');
+      expect(html).toContain(t('briefe.wageClaim.stelleFallback'));
     });
     it('trägt das berechnete Frist-Datum ein', () => {
       expect(html).toContain(getFristInfo('wageClaim').display);

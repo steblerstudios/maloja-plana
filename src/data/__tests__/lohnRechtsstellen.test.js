@@ -9,10 +9,20 @@ describe('lohnRechtsstellen', () => {
     }
   });
 
-  it('GE: belegte Stelle (OCIRT), nicht verify-pflichtig', () => {
-    const e = getLohnKontrollstelle('GE');
-    expect(e.verify).toBe(false);
-    expect(e.stelle).toMatch(/OCIRT/);
+  // ⚠️ Predeploy-Runde 8: GE/TI/JU trugen `verify: false` (= „amtlich belegt"), ohne dass
+  // je eine Gegenprüfung stattgefunden hätte — nur NE/BS tragen einen Prüf-Kommentar mit
+  // Datum + Quelle. Bis zum Beleg gilt die neutrale Formulierung.
+  // Dieser Test hiess vorher „GE: belegte Stelle (OCIRT), nicht verify-pflichtig" und
+  // hielt genau die Annahme fest, die niemand geprüft hatte.
+  it('GE/TI/JU: ungeprüft ⇒ verify:true, bis der Beleg da ist', () => {
+    for (const k of ['GE', 'TI', 'JU']) {
+      expect(getLohnKontrollstelle(k).verify, k + ': ohne amtlichen Beleg kein verify:false').toBe(true);
+    }
+  });
+  it('NE/BS: amtlich gegengeprüft ⇒ verify:false', () => {
+    for (const k of ['NE', 'BS']) {
+      expect(getLohnKontrollstelle(k).verify, k + ': belegt (Prüf-Kommentar mit Quelle)').toBe(false);
+    }
   });
 
   it('JU: keine Kontrollstelle → Arbeitsgericht-Fallback (Wort „Kontrollstelle" meiden)', () => {

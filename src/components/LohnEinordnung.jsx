@@ -1,6 +1,6 @@
 import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
-import { bereichColor } from '../data/lebensbereiche.js';
+import { bereichFillColor } from '../data/lebensbereiche.js';
 import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { renderSource } from '../utils/renderSource.js';
 
@@ -77,7 +77,8 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
   }
 
   const { incomeFTE, income, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, scaleMin, scaleMax } = state;
-  const arbeitColor = bereichColor('arbeit', isDarkMode);
+  // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
+  const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
   // Dieses Instrument vergleicht gegen VOLLZEIT- und BRUTTO-Bezüge: der BFS-Median ist ein
   // Bruttomedianlohn auf 40 Std./Woche, der Mindestlohn ein Brutto-Stundenlohn. Fehlen die
