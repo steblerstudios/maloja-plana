@@ -38,6 +38,39 @@ export const VOLLZEIT_STUNDEN_WOCHE = 42;
 
 export const LOHNCHECK_DATA_VERSION = '2026';
 
+// ─── Der Mindestlohn-Befund kennt die Ausnahmen NICHT ────────────────────────
+// Predeploy-Runde 8, zweite Batterie (swiss-precision, an den Volltexten belegt).
+// Stebler-Studios-Entscheid 2026-07-15: Befund bleibt (er ordnet ein), BRIEF wird
+// zurückgehalten (er beschuldigt) — bis die Ausnahmen erfasst sind.
+//
+// Was die App nicht weiss, und wen es trifft:
+//  · **Lehre / Praktikum / unter 18** — in ALLEN drei Kantonen ausgenommen:
+//    GE LIRT Art. 39J · TI LSM Art. 3 · JU RSJU 822.41 Art. 3 al. 2 („ne s'applique pas
+//    … aux personnes en formation (apprentis, stagiaires)").
+//    Eine Lernende in GE mit CHF 800/Monat ergibt 4.62/Std. → „unter Mindestlohn".
+//  · **GAV mit beziffertem Mindestlohn** — in TI (Art. 3 cpv. 1 lit. i) und JU (Art. 3
+//    al. 3) ist das Gesetz dann GAR NICHT anwendbar. Das trifft genau Gastro, Reinigung,
+//    Bau — die Tieflohn-Branchen, für die das Feature gebaut wurde.
+//    (GE ist anders: Art. 39L lässt den kantonalen Boden über den GAV siegen — dort ok.)
+//  · **GE hat DREI Sätze, nicht einen:** 24.59 allgemein · **18.07** Landwirtschaft/
+//    Floriculture (Art. 39K al. 2) · **18.44** Ferienjobs Studierender (Art. 39K al. 3,
+//    NEU in Kraft 08.04.2026 nach der Volksabstimmung vom 08.03.2026, = 75 %, max. 60
+//    Tage/Jahr). Der Code kennt nur den höchsten. Bei TI wurde bewusst der UNTERE Wert
+//    genommen (20.00) — bei GE steht der obere.
+//  · **Ferien-/Feiertagszuschläge:** alle drei definieren den Boden OHNE sie (GE Art. 39K
+//    al. 5 · TI Decreto 11.12.2025 · JU). Bei Stundenlohn enthält das Monatseinkommen
+//    diese ~14 % → der abgeleitete Stundenlohn ist zu hoch → verpasste Unterschreitungen.
+//    Sichere Richtung (kein Fehlalarm), darum kein Blocker.
+//
+// Solange das gilt, darf aus dem Befund KEIN Brief an einen Arbeitgeber entstehen:
+// er würde Leute beschuldigen, die korrekt zahlen. Der Befund selbst formuliert darum
+// vorsichtig und nennt die Ausnahmen (`lohnCheck.ausnahmen`).
+//
+// Zum Wieder-Einschalten nötig: Sektor + Status erfassen (Lehre/Praktikum/unter 18/GAV/
+// Landwirtschaft/Ferienjob), GE-Sätze differenzieren, je Satz ein amtlicher Beleg.
+// Dann hier auf `true` — der Brief-Code selbst ist gebaut, geprüft und getestet.
+export const WAGECLAIM_BEREIT = false;
+
 export function kantonHatMindestlohn(kanton) {
   return kanton in MINDESTLOHN;
 }

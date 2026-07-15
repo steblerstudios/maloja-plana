@@ -8,7 +8,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
-import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION } from './data/lohnCheck.js';
+import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -1673,11 +1673,15 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   },
                     // FIX D: pro-Kanton-Jahr (check.jahr), nicht das globale LOHNCHECK_DATA_VERSION —
                     // sonst zeigte ein TI-Nutzer im Kapitel ein anderes Jahr als im Brief.
-                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelle: lohnKontrollstelleText(check.kanton, tr) })
+                    tr('lohnCheck.unterMindestlohn', { kanton: check.kanton, mindestStunde: check.mindestStunde.toFixed(2), lohnStunde: check.lohnStunde.toFixed(2), jahr: check.jahr || LOHNCHECK_DATA_VERSION, stelle: lohnKontrollstelleText(check.kanton, tr), ausnahmen: tr('lohnCheck.ausnahmen') })
                   )
                 );
-                // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.
-                if (onNavigate) {
+                // ⚠️ Der Brief-Knopf ruht (`WAGECLAIM_BEREIT === false`): Der Befund kennt
+                // die gesetzlichen Ausnahmen nicht (Lehre/Praktikum/unter 18/GAV; GE hat drei
+                // Sätze), also darf aus ihm kein Einschreiben an einen Arbeitgeber entstehen.
+                // Begründung + Belege bei der Konstante in `data/lohnCheck.js`.
+                // Keine Sackgasse: der Befund nennt die Ausnahmen und die zuständige Stelle.
+                if (WAGECLAIM_BEREIT && onNavigate) {
                   elements.push(
                     React.createElement('button', {
                       key: 'hours-minwage-nextstep',
@@ -1879,10 +1883,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         // die kantonsgenaue Registry für den BRIEF an, das Kapitel zeigte
                         // weiter auf eine erfundene Sammelstelle. Jetzt dieselbe Quelle.
                         .replace('{stelle}', lohnKontrollstelleText(kanton, tr))
+                        // Der Befund kennt die Ausnahmen nicht → er nennt sie, statt eine
+                        // Rechtsverletzung festzustellen (siehe `WAGECLAIM_BEREIT`).
+                        .replace('{ausnahmen}', tr('lohnCheck.ausnahmen'))
                     )
                   );
-                  // Keine Sackgasse: der Befund führt ruhig zum vorbereiteten Brief.
-                  if (onNavigate) {
+                  // ⚠️ Brief-Knopf ruht — siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
+                  if (WAGECLAIM_BEREIT && onNavigate) {
                     elements.push(
                       React.createElement('button', {
                         key: 'mindestlohn-nextstep',

@@ -173,7 +173,11 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
       t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monat), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
-      mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') : ''
+      // Verdacht, keine Feststellung — und die Ausnahmen dazu. Die App kennt sie nicht
+      // (Lehre/Praktikum/unter 18/GAV; GE hat drei Sätze), also darf sie hier keine
+      // Rechtsverletzung behaupten. Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
+      // Derselbe Ausnahme-Text wie im Kapitel — eine Wahrheit, kein zweiter Wortlaut.
+      mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : ''
     ),
 
     React.createElement('div', {

@@ -2338,7 +2338,7 @@ export default {
     readoutAbove: { sie: 'Il Suo salario è superiore alla mediana svizzera.', du: 'Il tuo salario è superiore alla mediana svizzera.' },
     readoutBelow: { sie: 'Il Suo salario è inferiore alla mediana svizzera.', du: 'Il tuo salario è inferiore alla mediana svizzera.' },
     mindestlohnLine: 'Salario minimo cantonale: CHF {stunde}/ora — a tempo pieno circa CHF {amount} al mese (stato {jahr}).',
-    mindestlohnBreachedLine: { sie: 'Il Suo salario è inferiore al salario minimo cantonale.', du: 'Il tuo salario è inferiore al salario minimo cantonale.' },
+    mindestlohnBreachedLine: { sie: 'Il Suo salario sembra inferiore.', du: 'Il tuo salario sembra inferiore.' },
     fulltimeNote: 'Confronto sulla base di un impiego a tempo pieno (40 ore/settimana, come per la mediana UST).',
     fteNote: 'Tempo parziale ({hours} ore/settimana): proiettato al 100% fa CHF {fte} (registrato: CHF {actual}). Solo così il confronto con la mediana a tempo pieno è lecito.',
     overFteNote: 'Più di un tempo pieno ({hours} ore/settimana): convertito a 40 ore fa CHF {fte} (registrato: CHF {actual}). Solo così il confronto con la mediana a tempo pieno è lecito.',
@@ -2348,7 +2348,8 @@ export default {
     empty: { sie: 'Appena il Suo reddito è registrato, lo collochiamo qui con calma.', du: 'Appena il tuo reddito è registrato, lo collochiamo qui con calma.' },
   },
   lohnCheck: {
-    unterMindestlohn: { sie: 'Nota: il Suo salario (CHF {lohnStunde}/ora) è inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora). Verifichi i Suoi diritti presso {stelle}. Stato {jahr}.', du: 'Nota: il tuo salario (CHF {lohnStunde}/ora) è inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora). Verifica i tuoi diritti presso {stelle}. Stato {jahr}.' },
+    unterMindestlohn: { sie: 'Nota: il Suo salario (CHF {lohnStunde}/ora) sembra inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora, stato {jahr}). {ausnahmen} Se non si applica nulla di tutto ciò, può chiarire i Suoi diritti presso {stelle}.', du: 'Nota: il tuo salario (CHF {lohnStunde}/ora) sembra inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora, stato {jahr}). {ausnahmen} Se non si applica nulla di tutto ciò, puoi chiarire i tuoi diritti presso {stelle}.' },
+    ausnahmen: 'Il salario minimo non vale però per tutti: tirocinio, stage e minori di 18 anni sono esclusi, e in alcuni cantoni anche i settori con un contratto collettivo, l’agricoltura e i lavori estivi.',
     stelleFallbackKurz: 'l\'autorità cantonale competente',
     keinMindestlohn: { sie: 'Nel Suo cantone non esiste un salario minimo legale.', du: 'Nel tuo cantone non esiste un salario minimo legale.' },
     hoursEquiv: '≈ {month} h/mese · {year} h/anno',

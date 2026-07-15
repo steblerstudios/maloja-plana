@@ -2246,7 +2246,7 @@ export default {
     readoutAbove: 'Your wage is above the Swiss median.',
     readoutBelow: 'Your wage is below the Swiss median.',
     mindestlohnLine: 'Cantonal minimum wage: CHF {stunde}/hr — about CHF {amount} a month at full time (as of {jahr}).',
-    mindestlohnBreachedLine: 'Your wage is below the cantonal minimum wage.',
+    mindestlohnBreachedLine: 'Your wage appears to be below it.',
     fulltimeNote: 'Comparison based on a full-time position (40 hrs/week, as used for the FSO median).',
     fteNote: 'Part-time ({hours} hrs/week): extrapolated to 100% that is CHF {fte} (recorded: CHF {actual}). Only this makes the comparison with the full-time median valid.',
     overFteNote: 'More than full time ({hours} hrs/week): converted to 40 hrs that is CHF {fte} (recorded: CHF {actual}). Only this makes the comparison with the full-time median valid.',
@@ -2256,7 +2256,8 @@ export default {
     empty: 'Once your income is recorded, we will place it here calmly.',
   },
   lohnCheck: {
-    unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) is below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr). Check your rights with {stelle}. As of {jahr}.',
+    unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) appears to be below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr, as of {jahr}). {ausnahmen} If none of these apply, you can clarify your rights with {stelle}.',
+    ausnahmen: 'The minimum wage does not apply to everyone: apprenticeships, internships and people under 18 are exempt, and in some cantons also sectors with a collective agreement, agriculture and student holiday jobs.',
     stelleFallbackKurz: 'the competent cantonal authority',
     keinMindestlohn: 'Your canton does not have a legal minimum wage.',
     hoursEquiv: '≈ {month} h/month · {year} h/year',

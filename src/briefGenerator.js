@@ -12,7 +12,7 @@
 
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
-import { pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
@@ -239,7 +239,12 @@ export function getLetterTemplates(t, data) {
   const einJobRechtfertigtDenBrief = getJobOptions(data)
     .filter((o) => getJob(data, o.key).lohn > 0)
     .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
-  if (kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
+  // ⚠️ `WAGECLAIM_BEREIT` ist bewusst `false` (Stebler-Studios-Entscheid, Predeploy-Runde 8):
+  // Der Befund kennt die gesetzlichen Ausnahmen nicht (Lehre/Praktikum/unter 18/GAV, und GE
+  // hat drei Sätze statt einem) — der Brief würde Arbeitgeber beschuldigen, die korrekt
+  // zahlen. Begründung und Belege stehen bei der Konstante in `data/lohnCheck.js`.
+  // Der Brief-Code bleibt vollständig gebaut, geprüft und getestet; nur das Anbieten ruht.
+  if (WAGECLAIM_BEREIT && kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
     list.push({
       key: 'wageClaim',
       title: t('briefe.wageClaim.title'),

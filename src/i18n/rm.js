@@ -2500,7 +2500,7 @@ export default {
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
     mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
-    mindestlohnBreachedLine: { sie: 'Voss salari è sut il salari minimal chantunal.', du: 'Tes salari è sut il salari minimal chantunal.' },
+    mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
@@ -2510,7 +2510,9 @@ export default {
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
   },
   lohnCheck: {
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar {stelle}. Stadi {jahr}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar {stelle}. Stadi {jahr}." },
+    // TODO(rm): Gegenlese Muttersprachler:in
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pudais Vus cleric Voss dretgs tar {stelle}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pos ti cleric Tes dretgs tar {stelle}." },
+    ausnahmen: 'Il salari minimal na vala dentant betg per tuts: emprendissadi, pratica ed uffants sut 18 onns èn exclus, ed en tscherts chantuns era branschas cun in contract collectiv, l’agricultura e lavurs da vacanzas.',
     stelleFallbackKurz: 'la post chantunal cumpetenta', // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',

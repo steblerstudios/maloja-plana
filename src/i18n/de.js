@@ -2251,7 +2251,7 @@ export default {
     // Die Unterschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
     // Vorher war der Text in beiden Zuständen identisch, und der ausformulierte Satz stand
     // nur im Kapitel — in der Finanz-Übersicht war die Aussage schlicht verloren.
-    mindestlohnBreachedLine: { sie: 'Ihr Lohn liegt unter dem kantonalen Mindestlohn.', du: 'Dein Lohn liegt unter dem kantonalen Mindestlohn.' },
+    mindestlohnBreachedLine: { sie: 'Ihr Lohn scheint darunter zu liegen.', du: 'Dein Lohn scheint darunter zu liegen.' },
     // 40 Std./Woche = die BFS-Norm für den Median (nicht 42 — das ist die Mindestlohn-Welt).
     fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (40 Std./Woche, wie beim BFS-Median).',
     fteNote: 'Teilzeit ({hours} Std./Woche): auf 100% hochgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
@@ -2264,7 +2264,13 @@ export default {
     empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },
   },
   lohnCheck: {
-    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfen Sie Ihre Ansprüche bei {stelle}. Stand {jahr}.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche bei {stelle}. Stand {jahr}.' },
+    // Verdacht, keine Feststellung: Die App kennt die gesetzlichen AUSNAHMEN nicht
+    // (Lehre/Praktikum/unter 18 sind überall ausgenommen; in TI/JU gilt das Gesetz bei
+    // GAV gar nicht; GE hat drei Sätze). „liegt unter" wäre für eine Lernende schlicht
+    // falsch — und der Satz führte bis Runde 8 zu einem Brief an den Arbeitgeber.
+    // Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
+    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, können Sie Ihre Ansprüche bei {stelle} klären.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, kannst Du Deine Ansprüche bei {stelle} klären.' },
+    ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle: Lehre, Praktikum und Alter unter 18 sind ausgenommen, in einzelnen Kantonen auch Branchen mit einem Gesamtarbeitsvertrag, die Landwirtschaft und Ferienjobs.',
     // Fallback, wenn der Kanton keine benannte Kontrollstelle hat (JU: kein Inspektorat —
     // der Weg führt dort übers Arbeitsgericht). Nie eine Stelle erfinden.
     stelleFallbackKurz: 'der zuständigen kantonalen Stelle',

@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { getLetterTemplates, generateLetter, getFristInfo, FRIST_TAGE, getJobOptions } from '../briefGenerator.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
@@ -22,20 +22,38 @@ const dataGE = {
 };
 
 describe('Lohn-Briefe', () => {
-  describe('Vorlagen-Gating (🔴 Fix)', () => {
-    it('Mindestlohn-Kanton (GE): wageClaim + unpaidWage werden angeboten', () => {
+  // ⚠️ STEBLER-STUDIOS-ENTSCHEID (Predeploy-Runde 8, zweite Batterie): `WAGECLAIM_BEREIT`
+  // ist `false` — der Brief wird NICHT angeboten. Der Befund kennt die gesetzlichen
+  // Ausnahmen nicht (Lehre/Praktikum/unter 18 sind in allen 3 Kantonen ausgenommen; in
+  // TI/JU gilt das Gesetz bei GAV gar nicht; GE hat DREI Sätze: 24.59 / 18.07 Landwirtschaft
+  // / 18.44 Ferienjobs seit 08.04.2026). Ein Brief daraus würde Arbeitgeber beschuldigen,
+  // die korrekt zahlen — eine Lernende in GE mit CHF 800/Monat ergibt 4.62/Std.
+  // Der Brief-Code bleibt gebaut, geprüft und getestet; nur das Anbieten ruht.
+  describe('wageClaim ruht (WAGECLAIM_BEREIT === false)', () => {
+    it('auch bei belegter Unterschreitung wird KEIN Brief angeboten', () => {
       const keys = getLetterTemplates(t, dataGE).map(x => x.key);
-      expect(keys).toContain('wageClaim');
-      expect(keys).toContain('unpaidWage');
+      expect(keys).not.toContain('wageClaim');
+      expect(keys).toContain('unpaidWage'); // der mahnt eine Zahlung an, beschuldigt niemanden
     });
-    it('Kanton OHNE Mindestlohn (ZH): KEIN wageClaim (kein erfundener Mindestlohn), aber unpaidWage', () => {
+    it('das Flag ist die einzige Bremse — nicht ein verstümmelter Generator', () => {
+      // Der Brief muss weiterhin korrekt erzeugbar sein, sonst rostet er im Regal.
+      const html = generateLetter('wageClaim', dataGE, t);
+      expect(html).toContain('16.48');
+      expect(html).toContain('24.59');
+      expect(html).toContain('OCIRT');
+    });
+  });
+
+  // Die Gating-LOGIK bleibt geprüft, damit sie beim Wiedereinschalten nicht kaputt ist.
+  // Sie wird über den Generator geprüft, nicht über die Vorlagenliste (die ruht).
+  describe('Gating-Logik (für den Tag, an dem WAGECLAIM_BEREIT true wird)', () => {
+    it('Kanton OHNE Mindestlohn (ZH): unpaidWage ja, wageClaim nein', () => {
       const keys = getLetterTemplates(t, { basis: { canton: 'ZH' } }).map(x => x.key);
       expect(keys).not.toContain('wageClaim');
       expect(keys).toContain('unpaidWage');
     });
     it('ohne Kanton: kein wageClaim (nicht raten)', () => {
-      const keys = getLetterTemplates(t, {}).map(x => x.key);
-      expect(keys).not.toContain('wageClaim');
+      expect(getLetterTemplates(t, {}).map(x => x.key)).not.toContain('wageClaim');
     });
   });
 
@@ -246,24 +264,60 @@ describe('Lohn-Briefe', () => {
   // selbst widerlegt hatte: GE/CHF 8'000 auf 42 Std. = 43.96/Std., Befund 'ok', und der
   // Brief behauptete trotzdem „dass mein Stundenlohn unter dem … Mindestlohn liegen dürfte"
   // — mit leeren Beträgen. Jetzt entscheidet der Befund, nicht der Wohnort.
-  describe('Vorlagen-Gating am BEFUND, nicht nur am Kanton', () => {
-    it('gut bezahlt (GE, 8000 auf 42 Std. = 43.96/Std.): KEIN wageClaim angeboten', () => {
+  // Die Gating-Logik ruht hinter `WAGECLAIM_BEREIT`, ist aber weiterhin geprüft — sonst
+  // rostet sie, bis jemand das Flag umlegt und die alten Fehler zurück sind.
+  // Geprüft wird mit EINGESCHALTETEM Flag (Mock), damit der Zustand nach dem Ausnahme-Gate
+  // schon heute abgesichert ist.
+  describe('Gating am BEFUND — geprüft mit eingeschaltetem Flag', () => {
+    async function templatesMitFlag(data) {
+      vi.resetModules();
+      const echt = await vi.importActual('../data/lohnCheck.js');
+      vi.doMock('../data/lohnCheck.js', () => ({ ...echt, WAGECLAIM_BEREIT: true }));
+      const { getLetterTemplates: gt } = await import('../briefGenerator.js');
+      const keys = gt(t, data).map((x) => x.key);
+      vi.doUnmock('../data/lohnCheck.js');
+      vi.resetModules();
+      return keys;
+    }
+
+    it('Mock greift wirklich — sonst wäre jeder Test hier grün aus dem falschen Grund', async () => {
+      // Liveness: mit echtem Flag (false) ist wageClaim NIE dabei. Ist er hier dabei,
+      // hat der Mock gezogen.
+      expect(await templatesMitFlag(dataGE)).toContain('wageClaim');
+      expect(getLetterTemplates(t, dataGE).map((x) => x.key)).not.toContain('wageClaim');
+    });
+
+    it('gut bezahlt (GE, 8000 auf 42 Std. = 43.96/Std.): kein Verdacht → kein Brief', async () => {
       const gutBezahlt = { ...dataGE, finanzen: { ...dataGE.finanzen, monthlyIncome: '8000' } };
-      expect(getLetterTemplates(t, gutBezahlt).map(x => x.key)).not.toContain('wageClaim');
+      expect(await templatesMitFlag(gutBezahlt)).not.toContain('wageClaim');
     });
-    it('unter Mindestlohn: wageClaim angeboten', () => {
-      expect(getLetterTemplates(t, dataGE).map(x => x.key)).toContain('wageClaim');
+
+    it('Daten unvollständig (keine Stunden): Brief bleibt — die App weiss es nicht, statt es besser zu wissen', async () => {
+      expect(await templatesMitFlag({ ...dataGE, ausbildung: {} })).toContain('wageClaim');
     });
-    it('Daten unvollständig (keine Stunden): wageClaim bleibt angeboten — die App weiss es nicht, statt es besser zu wissen', () => {
-      const ohneStunden = { ...dataGE, ausbildung: {} };
-      expect(getLetterTemplates(t, ohneStunden).map(x => x.key)).toContain('wageClaim');
+
+    // 🔴 Zweite Batterie: `some()` über ALLE Jobs sah das 'unvollstaendig' des leeren
+    // Nebenjobs — und weil der Brief mit `job:'main'` startet, ging der Verdacht an den
+    // GUT ZAHLENDEN Hauptarbeitgeber. Nur Jobs mit erfasstem Lohn werden beurteilt.
+    it('nur ein Nebenjob-NAME (kein Lohn) + gut bezahlter Hauptjob: kein Brief', async () => {
+      const nurName = {
+        ...dataGE,
+        finanzen: { ...dataGE.finanzen, monthlyIncome: '8000', sideEmployer: 'Café Nebenan' },
+      };
+      expect(await templatesMitFlag(nurName)).not.toContain('wageClaim');
     });
-    it('gut bezahlter Hauptjob, aber unterbezahlter Nebenjob: wageClaim angeboten', () => {
+
+    it('leerer Datensatz (nur Kanton): kein Brief', async () => {
+      expect(await templatesMitFlag({ basis: { canton: 'GE' }, finanzen: {}, ausbildung: {} }))
+        .not.toContain('wageClaim');
+    });
+
+    it('gut bezahlter Hauptjob, aber unterbezahlter Nebenjob: Brief angeboten', async () => {
       const nebenUnter = {
         ...dataGE,
         finanzen: { ...dataGE.finanzen, monthlyIncome: '8000', sideIncome: '200', sideEmployer: 'Café Nebenan', sideHoursPerWeek: '4', sideIncomeType: 'brutto' },
       };
-      expect(getLetterTemplates(t, nebenUnter).map(x => x.key)).toContain('wageClaim');
+      expect(await templatesMitFlag(nebenUnter)).toContain('wageClaim');
     });
   });
 
