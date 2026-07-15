@@ -69,6 +69,29 @@ describe('Lohn-Briefe', () => {
     });
   });
 
+  // REGRESSION: Die alte 182h-Vollzeit-Annahme (`pruefeLohn`) erklärte korrekt bezahlte
+  // Teilzeit-Angestellte für unterbezahlt — und dieser Befund führt zu einem Brief an den
+  // Arbeitgeber, per Einschreiben. Ohne echte Wochenstunden wird nicht mehr geraten.
+  describe('Teilzeit & fehlende Stunden (Fehlalarm-Schutz)', () => {
+    it('Teilzeit 50% (21 Std./Woche): CHF 3000 sind 32.97/Std. → kein Unter-Mindestlohn-Befund', () => {
+      const teilzeit = { ...dataGE, ausbildung: { workHoursPerWeek: '21' } };
+      const html = generateLetter('wageClaim', teilzeit, t);
+      expect(html).not.toContain('16.48'); // die falsche 182h-Zahl
+      expect(html).toContain('[bitte ergänzen]');
+    });
+    it('ohne Wochenstunden: keine erfundenen Beträge, sondern „bitte ergänzen"', () => {
+      const ohneStunden = { ...dataGE, ausbildung: {} };
+      const html = generateLetter('wageClaim', ohneStunden, t);
+      expect(html).not.toContain('16.48');
+      expect(html).toContain('[bitte ergänzen]');
+    });
+    it('mit echten Vollzeit-Stunden (42): Befund wird weiterhin gerechnet', () => {
+      const html = generateLetter('wageClaim', dataGE, t);
+      expect(html).toContain('16.48');
+      expect(html).toContain('24.59');
+    });
+  });
+
   describe('wageClaim (BS = verify:true → neutrale Formulierung, keine unbelegte Stelle)', () => {
     const dataBS = { ...dataGE, basis: { ...dataGE.basis, canton: 'BS' } };
     const html = generateLetter('wageClaim', dataBS, t);

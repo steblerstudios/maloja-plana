@@ -9,7 +9,7 @@
 
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
-import { pruefeLohn, pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
@@ -42,7 +42,11 @@ function lohnBefund(data) {
   const monthlyIncome = num(data?.finanzen?.monthlyIncome);
   const wHrs = num(data?.ausbildung?.workHoursPerWeek);
   if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
-  return wHrs > 0 ? pruefeStundenlohn(monthlyIncome, wHrs, kanton) : pruefeLohn(monthlyIncome, kanton);
+  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme. Ohne echte Wochenstunden ist der
+  // Stundenlohn nicht bestimmbar — dieser Brief geht per Einschreiben an einen Arbeitgeber,
+  // eine geratene Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` gibt dann
+  // 'unvollstaendig' zurück; die Beträge im Brief fallen auf „bitte ergänzen" (hasFigures).
+  return pruefeStundenlohn(monthlyIncome, wHrs, kanton);
 }
 
 // Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`

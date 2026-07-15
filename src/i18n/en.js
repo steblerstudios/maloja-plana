@@ -2232,6 +2232,7 @@ export default {
     keinMindestlohn: 'Your canton does not have a legal minimum wage.',
     hoursEquiv: '≈ {month} h/month · {year} h/year',
     hourlyWage: 'Hourly wage (monthly salary ÷ actual hours): CHF {wage}',
+    hoursMissing: 'The minimum-wage check still needs your weekly hours — without them your hourly wage cannot be calculated. Add them now',
     nextStepLink: 'Prepare wage inquiry',
   },
 

@@ -26,6 +26,12 @@ export function getMindestlohn(kanton) {
   return MINDESTLOHN[kanton] || null;
 }
 
+// ⚠️ NICHT für den Mindestlohn-Befund verwenden — nimmt blind eine Vollzeit-Anstellung an
+// (182 Std./Monat). Bei Teilzeit ergibt das einen Fehlalarm: CHF 3000 bei 50% sind in
+// Wirklichkeit CHF 32.97/Std., nicht CHF 16.48/Std. Für alles, was Nutzerinnen gezeigt oder
+// in einen Brief geschrieben wird, gilt `pruefeStundenlohn(lohn, wochenstunden, kanton)` —
+// sie meldet fehlende Stunden ehrlich als 'unvollstaendig', statt zu raten.
+// Bleibt nur als reine Referenz-Rechnung (Vollzeit-Monatslohn vs. Vollzeit-Mindestlohn).
 export function pruefeLohn(monatslohnChf, kanton) {
   const ml = MINDESTLOHN[kanton];
   if (!ml) return { status: 'keinGesetz', kanton };

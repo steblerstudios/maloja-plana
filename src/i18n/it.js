@@ -2324,6 +2324,7 @@ export default {
     keinMindestlohn: { sie: 'Nel Suo cantone non esiste un salario minimo legale.', du: 'Nel tuo cantone non esiste un salario minimo legale.' },
     hoursEquiv: '≈ {month} h/mese · {year} h/anno',
     hourlyWage: 'Salario orario (salario mensile ÷ ore effettive): CHF {wage}',
+    hoursMissing: { sie: 'Per la verifica del salario minimo mancano ancora le Sue ore settimanali — senza di esse il Suo salario orario non può essere calcolato. Inserirle ora', du: 'Per la verifica del salario minimo mancano ancora le tue ore settimanali — senza di esse il tuo salario orario non può essere calcolato. Inseriscile ora' },
     nextStepLink: 'Preparare la richiesta salariale',
   },
 

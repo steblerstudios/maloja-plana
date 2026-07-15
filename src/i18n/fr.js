@@ -2231,6 +2231,7 @@ export default {
     keinMindestlohn: { sie: 'Votre canton n\'a pas de salaire minimum légal.', du: 'Ton canton n\'a pas de salaire minimum légal.' },
     hoursEquiv: '≈ {month} h/mois · {year} h/an',
     hourlyWage: 'Salaire horaire (salaire mensuel ÷ heures réelles) : CHF {wage}',
+    hoursMissing: { sie: 'Pour la vérification du salaire minimum, il manque encore vos heures hebdomadaires — sans elles, votre salaire horaire ne peut pas être calculé. Les saisir maintenant', du: 'Pour la vérification du salaire minimum, il manque encore tes heures hebdomadaires — sans elles, ton salaire horaire ne peut pas être calculé. Les saisir maintenant' },
     nextStepLink: 'Préparer la demande de salaire',
   },
 

@@ -2485,6 +2485,7 @@ export default {
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },
     hoursEquiv: '≈ {month} uras/mais · {year} uras/onn',
     hourlyWage: 'Salari per ura (salari mensil ÷ uras effectivas): CHF {wage}',
+    hoursMissing: { sie: "Per la controlla dal salari minimal mancan anc Vossas uras d'emna — senza ellas na po Voss salari per ura betg vegnir calculà. Endatar ussa", du: "Per la controlla dal salari minimal mancan anc Tias uras d'emna — senza ellas na po tes salari per ura betg vegnir calculà. Endatescha ussa" },
     nextStepLink: 'Preparar la dumonda da salari',
   },
 

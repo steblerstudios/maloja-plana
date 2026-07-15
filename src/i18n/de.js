@@ -2234,6 +2234,7 @@ export default {
     keinMindestlohn: { sie: 'In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', du: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.' },
     hoursEquiv: '≈ {month} Std./Monat · {year} Std./Jahr',
     hourlyWage: 'Stundenlohn (aus Monatslohn ÷ tatsächliche Stunden): CHF {wage}',
+    hoursMissing: { sie: 'Für den Mindestlohn-Check fehlen noch Ihre Wochenstunden — ohne sie lässt sich Ihr Stundenlohn nicht berechnen. Jetzt eintragen', du: 'Für den Mindestlohn-Check fehlen noch Deine Wochenstunden — ohne sie lässt sich Dein Stundenlohn nicht berechnen. Jetzt eintragen' },
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
   },
 

@@ -8,7 +8,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
-import { pruefeLohn, kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION } from './data/lohnCheck.js';
+import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION } from './data/lohnCheck.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -1770,9 +1770,35 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;
               if (lohn > 0) {
-                // Use actual weekly hours when available (accurate), else fall back to the 182h assumption
+                // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme mehr. Bei Teilzeit erzeugte sie
+                // einen Fehlalarm (CHF 3000 bei 50% = 32.97/Std., nicht 16.48/Std.) — und der Befund
+                // führt neu zu einem Brief an den Arbeitgeber. Ohne echte Stunden lieber ruhig
+                // nachfragen als raten; `pruefeStundenlohn` meldet das selbst als 'unvollstaendig'.
                 const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
-                const result = wHrs > 0 ? pruefeStundenlohn(lohn, wHrs, kanton) : pruefeLohn(lohn, kanton);
+                const result = pruefeStundenlohn(lohn, wHrs, kanton);
+                if (result.status === 'unvollstaendig' && onNavigate) {
+                  elements.push(
+                    React.createElement('button', {
+                      key: 'mindestlohn-hours-missing',
+                      onClick: () => onNavigate('chapter', 4),
+                      style: {
+                        gridColumn: '1 / -1',
+                        justifySelf: 'stretch',
+                        textAlign: 'left',
+                        background: palette.sageMist || palette.up,
+                        border: 'none',
+                        borderRadius: radius.sm,
+                        padding: space.sm + 'px ' + space.md + 'px',
+                        fontSize: text.sm,
+                        color: palette.sageDeep || palette.mid,
+                        lineHeight: leading.relaxed,
+                        cursor: 'pointer',
+                        fontFamily: 'inherit',
+                        marginBottom: space.sm + 'px',
+                      }
+                    }, tr('lohnCheck.hoursMissing') + ' →')
+                  );
+                }
                 if (result.status === 'unterMindestlohn') {
                   elements.push(
                     React.createElement('div', {
