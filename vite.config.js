@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -38,6 +38,14 @@ export default defineConfig({
     strictPort: true,
     host: '127.0.0.1',
     open: false,
+  },
+  test: {
+    // `.claude/worktrees/*` sind vollstaendige Arbeitskopien des Repos. Sie sind
+    // via .gitignore aus git raus, aber vitest kennt .gitignore nicht — ohne
+    // dieses Exclude zaehlt `npm test` die Tests jeder offenen Parallel-Sitzung
+    // mit (Zahlen vervielfacht, fremde halbfertige Branches faerben das
+    // Ergebnis rot). Das Deploy-Gate muss nur diesen Arbeitsbaum messen.
+    exclude: [...configDefaults.exclude, '**/.claude/**'],
   },
   build: {
     outDir: 'dist',
