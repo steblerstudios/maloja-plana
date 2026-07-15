@@ -93,6 +93,15 @@
    Fläche bleibt an --mp-accent. data-theme setzt main.jsx aus isDarkMode. */
 :root[data-theme="light"] {
   --mp-focus: #7C6428;
+  color-scheme: light;
+}
+
+/* color-scheme sagt dem Browser, in welchem Modus er sein eigenes Chrome zeichnet:
+   Scrollbars (das scrollbare <main>), Select-Dropdowns, Datumsfelder, Autofill.
+   Ohne das bleibt die Scrollbar im Dark Mode hell — ein weisser Balken in der
+   dunklen Oberfläche. Gehört an dieselbe Quelle wie die Farben: data-theme. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 /* ─── Global animation keyframes ────────────────────────── */
