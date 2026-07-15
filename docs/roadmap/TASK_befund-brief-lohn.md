@@ -1,18 +1,21 @@
-# TASK — Befund→Brief (Lohn): gebaut, dann verloren · Wiederaufbau-Spec
+# TASK — Befund→Brief (Lohn): verloren, dann wieder aufgebaut · Spec + Historie
 
-> **Status: VERLOREN (Stand 2026-07-14).** Das Feature wurde am 2026-07-14 gebaut, lokal als
-> Commit `e4b2238` auf `feat/lohn-mietzins-einordnung` committet, rebased und predeploy-geprüft
-> — aber **nie gepusht**. Der Branch/Commit ist auf diesem Rechner **nicht mehr auffindbar**.
+> **Status: ✅ WIEDER AUFGEBAUT und in `main` (Stand 2026-07-15).** Der Wiederaufbau ist über
+> PR #93 (`c7e90cf`·`0d4486d`·`c56272f`·`1bca5a8`·`d5a2898`) gemergt. **Noch nicht live** —
+> Predeploy-Runde 8 hält den Deploy zurück (offene 🔴, siehe `SESSION_START.md` Punkt 0).
 >
-> **Erschöpfende Suche am 2026-07-14 (nichts gefunden):** kein Arbeitsbaum (Haupt-Repo, das
-> `_maloja-archiv/maloja_frontend_STRAY`, keine Mirror-Kopie) enthält `wageClaim`/`unpaidWage`;
-> keine Git-Historie über *alle* Refs *aller* Repos; kein Bare-Mirror; kein Stash; kein Reflog-Rest;
-> `e4b2238` existiert als Objekt nirgends. `git fsck` fand keine verwaisten Commits.
+> ⚠️ **Diese Datei wurde im selben Diff angelegt, der das Feature baute, und trug bis
+> 2026-07-15 „Status: VERLOREN" samt der Anweisung „vor einem Neuaufbau auf einem anderen
+> Rechner schauen".** Sie war beim Anlegen schon falsch — vom Ordnungshüter in Runde 8
+> gefunden. Die Wiederaufbau-Spec unten bleibt als **Referenz** stehen (sie beschreibt, was
+> gebaut werden sollte, und ist gegen den Code abgehakt); die Verlust-Historie steht hier
+> nur noch als Lehrstück.
 >
-> **Vor einem Neuaufbau zuerst:** auf einem **anderen Rechner** nach `e4b2238` /
-> `feat/lohn-mietzins-einordnung` schauen. Erst wenn dort auch nichts liegt, ist Neuaufbau nötig.
-> Der aktuelle `main` ist sauber und enthält das **separate, gemergte** `lohnCheck.js`-Barometer
-> (gut gegated, JU `indexiert:false`, Löhne 2026 verifiziert) — dieses Feature ist NICHT betroffen.
+> **Historie (2026-07-14):** Das Feature wurde gebaut, lokal als Commit `e4b2238` auf
+> `feat/lohn-mietzins-einordnung` committet, rebased und predeploy-geprüft — aber **nie
+> gepusht**, und dann unauffindbar. Erschöpfende Suche (alle Arbeitsbäume, alle Refs aller
+> Repos, Bare-Mirror, Stash, Reflog, `git fsck`) fand nichts. **Lehre:** zügig pushen; was
+> nicht auf `origin` liegt, existiert nicht.
 
 Dieses Dokument ist die vollständige Bau- und Fix-Spezifikation, damit ein Neuaufbau nicht bei
 null beginnt.

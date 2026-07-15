@@ -12,10 +12,12 @@
 
 ---
 
-> ⚠️ **Verloren & wiederaufzubauen:** Das Feature **Befund→Brief (Lohn)** wurde 2026-07-14 gebaut,
-> aber nie gepusht und ist auf diesem Rechner nicht mehr auffindbar. Vollständige Bau- und
-> Fix-Spezifikation (inkl. GE/NE/JU/TI-Rechtsquellen) in
-> [`TASK_befund-brief-lohn.md`](./TASK_befund-brief-lohn.md). Vor Neuaufbau: anderen Rechner prüfen.
+> ✅ **Wieder aufgebaut (2026-07-15):** Das Feature **Befund→Brief (Lohn)** ist über PR #93 in
+> `main`. **Noch nicht live** — Predeploy-Runde 8 hält den Deploy zurück (offene 🔴, siehe
+> `SESSION_START.md` Punkt 0). Spec + Verlust-Historie in
+> [`TASK_befund-brief-lohn.md`](./TASK_befund-brief-lohn.md).
+> *(Dieses Banner sagte bis 2026-07-15 „Verloren & wiederaufzubauen … vor Neuaufbau anderen
+> Rechner prüfen" — es wurde im selben Diff eingefügt, der das Feature baute.)*
 
 ---
 
