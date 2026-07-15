@@ -75,6 +75,12 @@ korrekt bezahlte Person für unterbezahlt erklärt. Siehe `data/lohnEinordnung.j
   Grafik und Punkte dürfen die kräftige Variante nehmen.
 - **Keine positionierten Labels** auf dem Balken — die Werte stehen als Zeile darunter,
   sonst überlappen sie auf schmalen Geräten.
+- **Marken-Kollision: abheben, nie verschieben.** Zwei Marken können auf demselben Punkt
+  landen — bei der Miete fällt die Drittel-Schwelle auf den CH-Schnitt, sobald das Einkommen
+  ≈ 3× CH-Schnitt ist (1'327 × 3 = 3'981, also mitten in unserer Zielgruppe). Die Position
+  einer Marke ist ihre Aussage und wird **nie** zur Kosmetik verrückt. Stattdessen weicht
+  eine Marke vertikal aus (`RegionalBarometer`: „!" von `top -15` auf `-30`, plus 18px Luft
+  am Balken) — dieselbe Lösung, die der Strich schon gegen den Regions-Punkt anwendet.
 - **Skala fest**, nicht datenabhängig (Lohn: 3000–13000). Ein Balken, der zwischen zwei
   Sitzungen springt, ist keine Orientierung.
 - **Charts mit mehreren Serien:** Frucht-Palette kategorial. Zustandsfarben (sage/gold/rose)
