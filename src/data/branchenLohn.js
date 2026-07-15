@@ -5,6 +5,25 @@
 
 export const BRANCHENLOHN_VERSION = '2022';
 
+// Gesamtwirtschaftliche Verteilungswerte für die Lohn-Einordnung (Barometer).
+// Der Median 6788 ist amtlich belegt (BFS-Medienmitteilung „2022 lag der Medianlohn bei
+// 6788 Franken", 19.03.2024) und steht auch unten in BRANCHENLOHN als `gesamt`.
+//
+// ⚠️ `durchschnitt`, `p10` und `p90` sind NICHT amtlich gegengeprüft: Das BFS publiziert
+// Mittelwert und Perzentile nur in der interaktiven Datenbank STAT-TAB, nicht auf einer
+// zitierbaren Seite. Sie stammen aus der ursprünglichen Bauphase (sekundär belegt).
+// → Vor dem nächsten Deploy vom `swiss-precision`-Prüfer an STAT-TAB gegenlesen.
+// Wahrheits-Disziplin: `verify: true` heisst hier NICHT „nicht anzeigen", sondern
+// „vor Deploy belegen" — die Zahl steht unter einer BFS-Quellenangabe.
+export const LSE_VERTEILUNG = {
+  median: 6788,
+  durchschnitt: 7996,
+  p10: 4487,
+  p90: 12178,
+  jahr: 2022,
+  verify: true,
+};
+
 export const BRANCHENLOHN = [
   { key: 'gesamt', lohn: 6788 },
   { key: 'it', lohn: 9412 },

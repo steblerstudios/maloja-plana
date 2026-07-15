@@ -14,7 +14,10 @@ const MINDESTLOHN = {
   TI: { chfStunde: 20.00, jahr: 2026, indexiert: false },
 };
 
-const STUNDEN_PRO_MONAT = 182;
+// 42 Std./Woche × 52 / 12 ≈ 182. Referenz für „Vollzeit" — exportiert, damit die
+// Lohn-Einordnung denselben Nenner nutzt (eine Wahrheit, kein zweiter Umrechnungsweg).
+export const STUNDEN_PRO_MONAT = 182;
+export const VOLLZEIT_STUNDEN_WOCHE = 42;
 
 export const LOHNCHECK_DATA_VERSION = '2026';
 

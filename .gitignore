@@ -12,10 +12,16 @@ dist/
 *~
 .DS_Store
 
-# Claude Code — nur die Skills tracken; Maschinen-Pfade + Permission-Regeln
-# (settings.json, launch.json) und Agenten/Commands bleiben lokal.
+# Claude Code — Skills, Agenten und Commands gehören ins Repo: das ist Arbeit, kein
+# Maschinen-Kram. Sie lagen bis 2026-07-15 unter dieser Regel und waren dadurch nach dem
+# frischen Klon (Historie-Purge) schlicht weg — die ganze Prüf-Batterie, die vorher echte
+# 🔴 gefunden hatte. Was nicht in git ist, ist nicht sicher.
+# Lokal bleiben nur Maschinen-Pfade + Permission-Regeln (settings.json, launch.json)
+# und die Worktrees.
 .claude/*
 !.claude/skills/
+!.claude/agents/
+!.claude/commands/
 
 # Environment
 .env

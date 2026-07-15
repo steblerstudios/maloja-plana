@@ -15,7 +15,13 @@ import { renderSource } from '../utils/renderSource.js';
 //   userValue            — (optional) eigener Wert (Prämie/Miete) → Füllung „wo wir sind"
 //   kind                 — 'premium' | 'rent' (wählt Titel/Quelle/Text), Default 'premium'
 //   compact (optional)   — etwas dichter, ohne Titel (für Einbettung ins Budget)
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact }) => {
+//   fillColor (optional) — Frucht-Farbe des Instruments für „du" (Miete = Wohnen/Birne).
+//                          Ohne sie bleibt es beim bisherigen Sky. Regel: „du" trägt die
+//                          Bereichsfarbe — Blau nur dort, wo Blau ohnehin der Bereich ist.
+//   thresholdValue (opt) — harte Schwelle als Betrag (Miete: ein Drittel des Einkommens).
+//                          Wird als „!" auf dem Balken gesetzt: graphit normal, rose NUR
+//                          wenn überschritten. Einziger Ort für Rose → keine Alarm-Inflation.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year } = comparison;
   const ns = 'po.regionalCompare.';
@@ -34,9 +40,25 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
   // Warmer, nicht-alarmierender Ton (Region vs. Schweiz): drüber=gold, drunter=sage, ≈=mid.
   const accent = dir === 'above' ? palette.gold : dir === 'below' ? palette.sage : palette.mid;
 
-  // Füllung = eigener Wert (sky = „du"); ohne eigenen Wert = Regions-Schnitt (accent).
+  // Füllung = eigener Wert („du"); ohne eigenen Wert = Regions-Schnitt (accent).
   const fillPct = hasUser ? pct(userValue) : regionalPct;
-  const fillColor = hasUser ? palette.sky : accent;
+  const barFill = hasUser ? (fillColor || palette.sky) : accent;
+
+  // Punkt = Regions-Schnitt, gefärbt nach DEINER Lage zur Region (nicht Region-vs-Land).
+  // Valenz statt Richtung: gold = finanziell enger, sage = entspannter, mid = neutral.
+  const dotColor = hasUser
+    ? (userValue > regional * 1.02 ? palette.gold : userValue < regional * 0.98 ? palette.sage : palette.mid)
+    : accent;
+
+  // Harte Schwelle als „!" auf dem Balken (nur mit eigenem Wert und innerhalb der Skala).
+  const hasThreshold = thresholdValue > 0 && hasUser && thresholdValue <= scaleMax;
+  const thresholdBreached = hasThreshold && userValue > thresholdValue;
+  // Kollision mit dem Schweizer-Schnitt-Strich: Bei der Miete fällt die Drittel-Schwelle
+  // genau dann auf den Strich, wenn das Einkommen ≈ 3× CH-Schnitt ist — also bei rund
+  // CHF 4'000. Das ist kein Randfall, sondern mitten in unserer Zielgruppe. Die Position
+  // bleibt (sie IST die Aussage), das „!" hebt sich stattdessen über den Strich ab —
+  // dieselbe Lösung, die der Strich schon gegen den Regions-Punkt anwendet.
+  const thresholdNearNational = hasThreshold && Math.abs(pct(thresholdValue) - nationalPct) < 3;
 
   const diffText = t(ns + dir, { pct: Math.abs(rounded) });
   let ariaLabel = t(ns + 'aria', {
@@ -52,18 +74,37 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Balken: Füllung (eigener Wert) + Punkt (Region) + Strich (Schweizer Schnitt)
     React.createElement('div', {
       role: 'img', 'aria-label': ariaLabel,
-      style: { position: 'relative', height: '10px', background: palette.border, borderRadius: '5px', marginBottom: '12px' },
+      style: {
+        position: 'relative', height: '10px', background: palette.border, borderRadius: '5px',
+        marginBottom: '12px',
+        // Das abgehobene „!" ist absolut positioniert und würde sonst in die Überschrift
+        // ragen — Platz reservieren statt auf Glück hoffen.
+        marginTop: thresholdNearNational ? '18px' : 0,
+      },
     },
       // Füllung = eigener Wert
-      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: fillColor, borderRadius: '5px' } }),
-      // Punkt = Regions-Durchschnitt (nur wenn die Füllung den eigenen Wert zeigt)
+      React.createElement('div', { style: { height: '100%', width: fillPct + '%', background: barFill, borderRadius: '5px' } }),
+      // Punkt = Regions-Durchschnitt (nur wenn die Füllung den eigenen Wert zeigt).
+      // Dünner Halo (1.5px), kein hartes Weiss.
       hasUser && React.createElement('div', {
         style: {
           position: 'absolute', top: '-1px', left: regionalPct + '%', marginLeft: '-6px',
-          width: '12px', height: '12px', borderRadius: '50%', background: accent,
-          border: '2px solid ' + palette.surface,
+          width: '12px', height: '12px', borderRadius: '50%', background: dotColor,
+          border: '1.5px solid ' + palette.surface,
         },
       }),
+      // „!" = die harte Schwelle (Miete über ⅓ des Einkommens). Sitzt auf dem Balken,
+      // nicht im Fliesstext — und wird nur dort rose, wo sie wirklich überschritten ist.
+      hasThreshold && React.createElement('div', {
+        style: {
+          position: 'absolute', top: (thresholdNearNational ? '-30px' : '-15px'), height: '28px',
+          left: pct(thresholdValue) + '%',
+          marginLeft: '-4px', width: '8px', textAlign: 'center', lineHeight: '28px',
+          fontSize: '24px', fontWeight: 700, pointerEvents: 'none',
+          color: thresholdBreached ? palette.roseDeep : palette.text,
+          textShadow: '0 0 2px ' + palette.surface + ', 0 0 2px ' + palette.surface,
+        },
+      }, '!'),
       // Strich = Schweizer Schnitt (Referenz-Marke wie der 10%-Strich). Ragt bewusst oben
       // über den Balken hinaus, damit er auch dann sichtbar bleibt, wenn er fast auf dem
       // Regions-Punkt liegt (Region und Schweizer Schnitt sind nicht immer am selben Ort) —
@@ -76,10 +117,11 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
       React.createElement('span', null, t(ns + 'nationalVal', { amount: national.toFixed(0) })),
-      React.createElement('span', { style: { color: accent } }, '● ' + t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
+      // Punkt-Label trägt dieselbe Valenz-Farbe wie der Punkt — eine Marke, eine Farbe.
+      React.createElement('span', { style: { color: dotColor } }, '● ' + t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),
     hasUser && React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
+      style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
     }, t(k + 'yourVal', { amount: userValue.toFixed(0) })),
 
     // Prozentuale Abweichung (Region vs. Schweiz)

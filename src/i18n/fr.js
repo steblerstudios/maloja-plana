@@ -2235,6 +2235,23 @@ export default {
     repaymentRechnerHint: { sie: 'Orientation avec les franchises zurichoises. Cela varie selon le canton — en cas de doute, renseignez-vous auprès du service social de votre commune.', du: 'Orientation avec les franchises zurichoises. Cela varie selon le canton — en cas de doute, renseigne-toi auprès du service social de ta commune.' },
   },
 
+  lohnEinordnung: {
+    title: { sie: 'Où se situe votre salaire ?', du: 'Où se situe ton salaire ?' },
+    median: 'Médiane',
+    durchschnitt: 'Moyenne',
+    mindestlohn: 'Salaire minimum',
+    yourWage: { sie: 'Votre salaire : CHF {amount}', du: 'Ton salaire : CHF {amount}' },
+    readoutNear: { sie: 'Votre salaire est proche de la médiane suisse.', du: 'Ton salaire est proche de la médiane suisse.' },
+    readoutAbove: { sie: 'Votre salaire est supérieur à la médiane suisse.', du: 'Ton salaire est supérieur à la médiane suisse.' },
+    readoutBelow: { sie: 'Votre salaire est inférieur à la médiane suisse.', du: 'Ton salaire est inférieur à la médiane suisse.' },
+    mindestlohnLine: 'Salaire minimum cantonal : CHF {stunde}/h — environ CHF {amount} par mois à plein temps (état {jahr}).',
+    fulltimeNote: 'Comparaison sur la base d’un poste à plein temps (42 h/semaine).',
+    fteNote: 'Temps partiel ({hours} h/semaine) : extrapolé à 100%, cela fait CHF {fte} (saisi : CHF {actual}). C’est la seule façon de comparer valablement avec la médiane plein temps.',
+    hoursUnknownNote: { sie: 'La comparaison suppose un poste à plein temps. Si vous travaillez à temps partiel, saisissez vos heures hebdomadaires — nous calculerons alors correctement.', du: 'La comparaison suppose un poste à plein temps. Si tu travailles à temps partiel, saisis tes heures hebdomadaires — nous calculerons alors correctement.' },
+    aria: 'Salaire CHF {amount}, médiane suisse CHF {median}.',
+    source: 'Source : OFS Enquête suisse sur la structure des salaires 2022 (médiane CHF {median} · moyenne CHF {durchschnitt}).',
+    empty: { sie: 'Dès que votre revenu est saisi, nous le situons ici en toute tranquillité.', du: 'Dès que ton revenu est saisi, nous le situons ici en toute tranquillité.' },
+  },
   lohnCheck: {
     unterMindestlohn: { sie: 'Remarque : Votre salaire (CHF {lohnStunde}/h) est inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h). Vérifiez vos droits auprès de l\'inspection cantonale du travail. État {jahr}.', du: 'Remarque : Ton salaire (CHF {lohnStunde}/h) est inférieur au salaire minimum légal du canton {kanton} (CHF {mindestStunde}/h). Vérifie tes droits auprès de l\'inspection cantonale du travail. État {jahr}.' },
     keinMindestlohn: { sie: 'Votre canton n\'a pas de salaire minimum légal.', du: 'Ton canton n\'a pas de salaire minimum légal.' },

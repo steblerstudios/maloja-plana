@@ -2328,6 +2328,23 @@ export default {
     situationLink: 'Vedi la situazione «indebitato o in esecuzione»',
   },
 
+  lohnEinordnung: {
+    title: { sie: 'Dove si situa il Suo salario?', du: 'Dove si situa il tuo salario?' },
+    median: 'Mediana',
+    durchschnitt: 'Media',
+    mindestlohn: 'Salario minimo',
+    yourWage: { sie: 'Il Suo salario: CHF {amount}', du: 'Il tuo salario: CHF {amount}' },
+    readoutNear: { sie: 'Il Suo salario è vicino alla mediana svizzera.', du: 'Il tuo salario è vicino alla mediana svizzera.' },
+    readoutAbove: { sie: 'Il Suo salario è superiore alla mediana svizzera.', du: 'Il tuo salario è superiore alla mediana svizzera.' },
+    readoutBelow: { sie: 'Il Suo salario è inferiore alla mediana svizzera.', du: 'Il tuo salario è inferiore alla mediana svizzera.' },
+    mindestlohnLine: 'Salario minimo cantonale: CHF {stunde}/ora — a tempo pieno circa CHF {amount} al mese (stato {jahr}).',
+    fulltimeNote: 'Confronto sulla base di un impiego a tempo pieno (42 ore/settimana).',
+    fteNote: 'Tempo parziale ({hours} ore/settimana): proiettato al 100% fa CHF {fte} (registrato: CHF {actual}). Solo così il confronto con la mediana a tempo pieno è lecito.',
+    hoursUnknownNote: { sie: 'Il confronto presuppone un impiego a tempo pieno. Se lavora a tempo parziale, inserisca le Sue ore settimanali — così calcoliamo correttamente.', du: 'Il confronto presuppone un impiego a tempo pieno. Se lavori a tempo parziale, inserisci le tue ore settimanali — così calcoliamo correttamente.' },
+    aria: 'Salario CHF {amount}, mediana svizzera CHF {median}.',
+    source: 'Fonte: UST Rilevazione svizzera della struttura dei salari 2022 (mediana CHF {median} · media CHF {durchschnitt}).',
+    empty: { sie: 'Appena il Suo reddito è registrato, lo collochiamo qui con calma.', du: 'Appena il tuo reddito è registrato, lo collochiamo qui con calma.' },
+  },
   lohnCheck: {
     unterMindestlohn: { sie: 'Nota: il Suo salario (CHF {lohnStunde}/ora) è inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora). Verifichi i Suoi diritti presso l\'ispettorato del lavoro cantonale. Stato {jahr}.', du: 'Nota: il tuo salario (CHF {lohnStunde}/ora) è inferiore al salario minimo legale nel cantone {kanton} (CHF {mindestStunde}/ora). Verifica i tuoi diritti presso l\'ispettorato del lavoro cantonale. Stato {jahr}.' },
     keinMindestlohn: { sie: 'Nel Suo cantone non esiste un salario minimo legale.', du: 'Nel tuo cantone non esiste un salario minimo legale.' },
