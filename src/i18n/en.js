@@ -2236,6 +2236,23 @@ export default {
     repaymentRechnerHint: 'Orientation using Zurich exemption amounts. This varies by canton — when in doubt, check with your municipality\'s social services.',
   },
 
+  lohnEinordnung: {
+    title: 'Where does your wage stand?',
+    median: 'Median',
+    durchschnitt: 'Average',
+    mindestlohn: 'Minimum wage',
+    yourWage: 'Your wage: CHF {amount}',
+    readoutNear: 'Your wage is close to the Swiss median.',
+    readoutAbove: 'Your wage is above the Swiss median.',
+    readoutBelow: 'Your wage is below the Swiss median.',
+    mindestlohnLine: 'Cantonal minimum wage: CHF {stunde}/hr — about CHF {amount} a month at full time (as of {jahr}).',
+    fulltimeNote: 'Comparison based on a full-time position (42 hrs/week).',
+    fteNote: 'Part-time ({hours} hrs/week): extrapolated to 100% that is CHF {fte} (recorded: CHF {actual}). Only this makes the comparison with the full-time median valid.',
+    hoursUnknownNote: 'The comparison assumes a full-time position. If you work part-time, add your weekly hours — then we can calculate properly.',
+    aria: 'Wage CHF {amount}, Swiss median CHF {median}.',
+    source: 'Source: FSO Swiss Earnings Structure Survey 2022 (median CHF {median} · average CHF {durchschnitt}).',
+    empty: 'Once your income is recorded, we will place it here calmly.',
+  },
   lohnCheck: {
     unterMindestlohn: 'Note: Your wage (CHF {lohnStunde}/hr) is below the legal minimum wage in canton {kanton} (CHF {mindestStunde}/hr). Check your rights with the cantonal labour inspectorate. As of {jahr}.',
     keinMindestlohn: 'Your canton does not have a legal minimum wage.',

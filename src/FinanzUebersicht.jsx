@@ -6,9 +6,11 @@ import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
-import { text, weight, radius, leading, space, duration, ease } from './config/tokens.js';
+import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
+import { LohnEinordnung } from './components/LohnEinordnung.jsx';
+import { MietVergleich } from './components/MietVergleich.jsx';
 import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
@@ -106,7 +108,7 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
     + '</body></html>';
 };
 
-export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
+export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
@@ -218,7 +220,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         { max: Infinity, key: 'highIncome', color: palette.sage },
       ];
       const band = thresholds.find(th => income <= th.max);
-      const pct = Math.min(100, Math.round((income / 6788) * 100));
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
       },
@@ -226,16 +227,10 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
           React.createElement('span', null, t('finanzUebersicht.incomePosition')),
           React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
         ),
-        React.createElement('details', { style: { marginBottom: '4px' } },
-          React.createElement('summary', { style: { fontSize: text.xs, color: palette.mid, cursor: 'pointer' } }, t('finanzUebersicht.showPosition')),
-          React.createElement('div', { style: { height: '4px', background: palette.border, borderRadius: '2px', overflow: 'hidden', marginTop: '8px', marginBottom: '4px' } },
-            React.createElement('div', { style: { height: '100%', width: pct + '%', background: band.color, borderRadius: '2px', transition: `width ${duration.normal}ms ${ease}` } })
-          ),
-          React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs - 1, opacity: 0.7 } },
-            React.createElement('span', null, t('finanzUebersicht.povertyLine') + ' CHF 2’279'),
-            React.createElement('span', null, t('finanzUebersicht.median') + ' CHF 6’788')
-          )
-        ),
+        // Statt des versteckten Dünn-Balkens hinter einem <details>: das Lohn-Barometer,
+        // offen und spiegelgleich zur Miete darunter. Zeigt Median, Durchschnitt und den
+        // kantonalen Mindestlohn-Boden als „!" — und rechnet Teilzeit ehrlich hoch.
+        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true }),
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;
@@ -268,6 +263,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate }) => {
         })()
       );
     })(),
+
+    // Und direkt darunter die Miete — dasselbe Instrument, andere Domäne. Zusammen
+    // beantworten sie die zwei Fragen, die den Monat bestimmen: was kommt rein, was geht
+    // fürs Wohnen raus. Erscheint nur mit Kanton + erfasster Miete (sonst return null).
+    hasData && React.createElement('div', { key: 'miet-vergleich', style: { marginBottom: '16px' } },
+      React.createElement(MietVergleich, { palette, t, data, isDarkMode })
+    ),
 
     hasData && React.createElement(StatusCard, {
       palette, icon: 'money',

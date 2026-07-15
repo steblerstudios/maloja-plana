@@ -5,8 +5,7 @@ import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit } from './data/mietzinsbeitraege.js';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
-import { getRentComparison } from './data/mietpreise.js';
-import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { MietVergleich } from './components/MietVergleich.jsx';
 import { renderSource } from './utils/renderSource.js';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
@@ -15,7 +14,7 @@ import { renderSource } from './utils/renderSource.js';
 // (data/mietzinsbeitraege.js) und die kantonale Mietzins-Limite (getRentLimit, SKOS-belegt).
 // Bewusst eine EINSCHÄTZUNG, keine verbindliche Zusage — die Programme sind kantonal/kommunal
 // fragmentiert; verbindlich ist immer die kantonale Stelle (würdevoll, keine falsche Hoffnung).
-export const MietzinsOrientierung = ({ palette, t, data, onNavigate }) => {
+export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode }) => {
   const canton = data?.basis?.canton || (() => {
     const plz = (data?.wohnen?.postalCode || '').trim();
     if (plz.length < 4) return '';
@@ -35,11 +34,6 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate }) => {
   const rentMonthly = (parseFloat(data?.wohnen?.rentAmount) || 0) + (parseFloat(data?.wohnen?.utilities) || 0);
   const rentLimit = canton ? getRentLimit(canton, householdSize) : 0;
   const incomeLimit = hasProgram ? mietzinsIncomeLimit(info, householdSize, childrenCount) : null;
-
-  // Regionaler Mietvergleich (BFS) — wie beim Budget: Balken = deine Miete, Punkt = Region,
-  // Strich = CH-Schnitt. Plus Wohnkostenquote (% des Einkommens) gegen die Drittel-Faustregel.
-  const rentComparison = canton ? getRentComparison(canton, { rooms: data?.wohnen?.rooms, householdSize }) : null;
-  const rentSharePct = (rentMonthly > 0 && monthlyIncome > 0) ? Math.round((rentMonthly / monthlyIncome) * 100) : null;
 
   // Einschätzung aus erfassten Beträgen + Kanton-Eckwerten (nie verbindlich).
   const assessment = (() => {
@@ -94,15 +88,10 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate }) => {
         assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, '→ ' + t('mietzinsView.enterIncomeLink'))
       ),
 
-      // Wo steht deine Miete? — regionaler BFS-Vergleich (Barometer) + Wohnkostenquote.
-      (rentComparison || rentSharePct != null) && React.createElement('div', { style: card() },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.sm + 'px' } }, t('mietzinsView.compareTitle')),
-        rentComparison && React.createElement(RegionalBarometer, { palette, t, comparison: rentComparison, userValue: rentMonthly || null, kind: 'rent' }),
-        rentSharePct != null && React.createElement('div', { style: { marginTop: space.sm + 'px' } },
-          React.createElement('div', { style: { fontSize: text.sm, color: rentSharePct > 33 ? palette.gold : palette.text, lineHeight: leading.normal } },
-            t('mietzinsView.rentShare', { pct: rentSharePct })),
-          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '2px' } }, t('mietzinsView.rentShareGuide'))
-        )
+      // Wo steht deine Miete? — jetzt aus dem gemeinsamen Bauteil, damit die Finanz-Übersicht
+      // und diese Ansicht nie auseinanderdriften (eine Wahrheit, ein Rechenweg).
+      React.createElement('div', { style: { marginBottom: space.md + 'px' } },
+        React.createElement(MietVergleich, { palette, t, data, isDarkMode, canton })
       ),
 
       // Unterlagen, die meist gebraucht werden.

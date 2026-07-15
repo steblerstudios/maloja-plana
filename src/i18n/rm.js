@@ -2489,6 +2489,23 @@ export default {
     patientenverfuegung: { label: 'Disposiziun dal pazient (ch.ch)', url: 'https://www.ch.ch/de/gesundheit/patientenverfugung/' },
   },
 
+  lohnEinordnung: {
+    title: { sie: 'Nua che sa chatta Voss salari?', du: 'Nua che sa chatta tes salari?' },
+    median: 'Median',
+    durchschnitt: 'Media',
+    mindestlohn: 'Salari minimal',
+    yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
+    readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
+    readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
+    mindestlohnLine: 'Salari minimal chantunal: CHF {stunde}/ura — a temp cumplain circa CHF {amount} al mais (stadi {jahr}).',
+    fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (42 uras/emna).",
+    fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
+    hoursUnknownNote: { sie: "Il confrunt suppona ina plazza a temp cumplain. Sche Vus lavurais a temp parzial, endatai Vossas uras d'emna — lura quintain nus endretg.", du: "Il confrunt suppona ina plazza a temp cumplain. Sche ti lavuras a temp parzial, endatescha tias uras d'emna — lura quintain nus endretg." },
+    aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
+    source: 'Funtauna: UST Relevaziun svizra da la structura dals salaris 2022 (median CHF {median} · media CHF {durchschnitt}).',
+    empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
+  },
   lohnCheck: {
     unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinai Voss dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) è sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura). Examinescha Tes dretgs tar l'inspectorat chantunal da lavur. Stadi {jahr}." },
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },

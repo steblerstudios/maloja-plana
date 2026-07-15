@@ -2238,6 +2238,23 @@ export default {
     repaymentRechnerHint: { sie: 'Orientierung mit Zürcher Freibeträgen. Kantonal unterschiedlich — im Zweifel beim Sozialdienst Ihrer Gemeinde prüfen.', du: 'Orientierung mit Zürcher Freibeträgen. Kantonal unterschiedlich — im Zweifel beim Sozialdienst deiner Gemeinde prüfen.' },
   },
 
+  lohnEinordnung: {
+    title: { sie: 'Wo steht Ihr Lohn?', du: 'Wo steht Dein Lohn?' },
+    median: 'Median',
+    durchschnitt: 'Durchschnitt',
+    mindestlohn: 'Mindestlohn',
+    yourWage: { sie: 'Ihr Lohn: CHF {amount}', du: 'Dein Lohn: CHF {amount}' },
+    readoutNear: { sie: 'Ihr Lohn liegt nahe am Schweizer Median.', du: 'Dein Lohn liegt nahe am Schweizer Median.' },
+    readoutAbove: { sie: 'Ihr Lohn liegt über dem Schweizer Median.', du: 'Dein Lohn liegt über dem Schweizer Median.' },
+    readoutBelow: { sie: 'Ihr Lohn liegt unter dem Schweizer Median.', du: 'Dein Lohn liegt unter dem Schweizer Median.' },
+    mindestlohnLine: 'Kantonaler Mindestlohn: CHF {stunde}/Std. — bei Vollzeit rund CHF {amount} im Monat (Stand {jahr}).',
+    fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (42 Std./Woche).',
+    fteNote: 'Teilzeit ({hours} Std./Woche): auf 100% hochgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
+    hoursUnknownNote: { sie: 'Für den Vergleich nehmen wir eine Vollzeitstelle an. Arbeiten Sie Teilzeit, tragen Sie Ihre Wochenstunden ein — dann rechnen wir richtig.', du: 'Für den Vergleich nehmen wir eine Vollzeitstelle an. Arbeitest Du Teilzeit, trag Deine Wochenstunden ein — dann rechnen wir richtig.' },
+    aria: 'Lohn CHF {amount}, Schweizer Median CHF {median}.',
+    source: 'Quelle: BFS Lohnstrukturerhebung 2022 (Median CHF {median} · Durchschnitt CHF {durchschnitt}).',
+    empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },
+  },
   lohnCheck: {
     unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfen Sie Ihre Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.' },
     keinMindestlohn: { sie: 'In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', du: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.' },
