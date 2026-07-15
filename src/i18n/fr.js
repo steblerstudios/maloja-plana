@@ -2397,6 +2397,7 @@ export default {
     showPreview: 'Aperçu',
     hidePreview: 'Masquer l\'aperçu',
     printLetter: 'Imprimer / PDF',
+    disclaimer: { sie: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. La lettre est sous votre responsabilité — vérifiez-la avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.', du: 'Ces modèles sont une aide à l’orientation, pas un conseil juridique. La lettre est sous ta responsabilité — vérifie-la avant l’envoi. Dans les cas sensibles : envoi recommandé, et un service spécialisé en cas de doute.' },
     dataNote: 'Vos données enregistrées sont insérées automatiquement. Les informations manquantes sont signalées.',
     afterPrint: {
       title: 'Lettre créée — et maintenant ?',

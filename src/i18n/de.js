@@ -2411,6 +2411,9 @@ export default {
     showPreview: 'Vorschau',
     hidePreview: 'Vorschau schliessen',
     printLetter: 'Brief drucken / PDF',
+    // Stand bis Predeploy-Runde 8 NUR im Brief (legal-note) — und wurde mitgedruckt,
+    // landete also beim Empfänger statt bei der Nutzerin, die den Brief verantwortet.
+    disclaimer: { sie: 'Diese Vorlagen sind eine Orientierungshilfe, keine Rechtsberatung. Sie verantworten den Brief — prüfen Sie ihn vor dem Versand. Bei heiklen Fällen: Einschreiben, und im Zweifel eine Fachstelle.', du: 'Diese Vorlagen sind eine Orientierungshilfe, keine Rechtsberatung. Du verantwortest den Brief — prüf ihn vor dem Versand. Bei heiklen Fällen: Einschreiben, und im Zweifel eine Fachstelle.' },
     dataNote: { sie: 'Ihre gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.', du: 'Deine gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.' },
     afterPrint: {
       title: 'Brief erstellt — und jetzt?',

@@ -6,8 +6,16 @@ import { bereichFillColor } from '../data/lebensbereiche.js';
 import { RegionalBarometer } from './RegionalBarometer.jsx';
 
 // „Wo steht Ihre Miete?" — regionaler BFS-Vergleich + Wohnkostenquote.
-// Bewusst EIN Bauteil für beide Orte (Finanz-Übersicht + Mietzins-Ansicht): eine Wahrheit,
-// kein zweiter Rechenweg, der auseinanderdriftet.
+// Bewusst EIN Bauteil für die beiden Orte, die auf den KAPITEL-Daten rechnen
+// (Finanz-Übersicht + Mietzins-Ansicht): eine Wahrheit, kein zweiter Rechenweg.
+//
+// ⚠️ Es gibt einen DRITTEN Miet-Balken: `BudgetSync` (Predeploy-Runde 8 gefunden). Er nutzt
+// bewusst NICHT dieses Bauteil, sondern `RegionalBarometer` direkt — denn dort gelten die
+// BUDGET-Zahlen (`budget.expenses.rent`, `budget.income`) und der Kanton der Wohngemeinde
+// (via PLZ), nicht `wohnen.rentAmount`/`finanzen.monthlyIncome`/`basis.canton`. Im Budget
+// erwartet man die Budget-Zahlen — andere Frage, andere Quelle. Geteilt wird das Instrument
+// und seine KODIERUNG (Frucht-Füllung + Drittel-„!"), nicht der Rechenweg.
+// (Bis Runde 8 stand hier „EIN Bauteil für BEIDE Orte" und im Budget füllte die Miete blau.)
 //
 // Encoding (siehe docs/design/farb-und-daten-system.md):
 //   • Füllung = deine Miete, in der Frucht-Farbe des Bereichs Wohnen (Birne) — „du" trägt

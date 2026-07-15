@@ -2792,6 +2792,8 @@ export default {
     showPreview: 'Prevista',
     hidePreview: 'Serrar la prevista',
     printLetter: 'Stampar la brev / PDF',
+    // TODO(rm): Gegenlese Muttersprachler:in
+    disclaimer: { sie: 'Questas models èn in orientament, betg ina cussegliaziun giuridica. La brev è en Vossa responsabladad — examinai la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.', du: 'Quests models èn in orientament, betg ina cussegliaziun giuridica. La brev è en tia responsabladad — examinescha la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.' },
     dataNote: { sie: 'Vossas datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.', du: 'Tes datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.' },
     // TODO(rm): sauberes Romanisch nachziehen — bewusster DE-Fallback
     afterPrint: {

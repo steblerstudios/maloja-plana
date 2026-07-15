@@ -1,17 +1,28 @@
 // Kantonale Mindestlöhne (CHF/Stunde, brutto), Stand per 1.1.2026 — offiziell verifiziert:
 //   GE 24.59 (ge.ch, jährlich CPI-indexiert)      · NE 21.35 (ne.ch, jährlich indexiert)
-//   BS 22.20 (bs.ch, jährlich indexiert)          · JU 21.40 (jura.ch, kein Auto-Index,
-//     letzte Erhöhung 1.7.2024, per Regierungsentscheid → 2026 unverändert gültig)
-//   TI 20.00 (ti.ch, sektoral 20.00–20.50; konservativer unterer Wert, kein Auto-Index)
-// Verifiziert 2026-07 an den offiziellen Kantonsquellen (Wahrheits-Disziplin: exakte Beträge).
+//   BS 22.20 (bs.ch, jährlich indexiert)
+//   JU 21.40 — Ordonnance RSJU 822.411 Art. 5, in Kraft seit 1.7.2024 → 2026 unverändert.
+//     `indexiert: false` belegt: Art. 5 al. 2 des Gesetzes sagt „Le Gouvernement PEUT
+//     adapter" — Ermessen, kein Automatismus. (Volksinitiative auf 23 Fr. hängig, nicht
+//     in Kraft → nicht einbauen.)
+//   TI 20.00 — sektoral 20.00–20.50, konservativer unterer Wert. Decreto esecutivo vom
+//     11.12.2025 (RL 843.620), in Kraft 1.1.2026.
+// Verifiziert 2026-07-15 an den Volltexten der Kantonsquellen (nicht an Suchtreffern —
+// Wahrheits-Disziplin: exakte Beträge).
 
 const MINDESTLOHN = {
   GE: { chfStunde: 24.59, jahr: 2026, indexiert: true },
   NE: { chfStunde: 21.35, jahr: 2026, indexiert: true },
   JU: { chfStunde: 21.40, jahr: 2026, indexiert: false },
   BS: { chfStunde: 22.20, jahr: 2026, indexiert: true },
-  // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert
-  TI: { chfStunde: 20.00, jahr: 2026, indexiert: false },
+  // TI ist nach Branche differenziert (CHF 20.00–20.50); konservativer unterer Wert.
+  // ⚠️ `indexiert: true` seit Predeploy-Runde 8 — vorher stand hier `false` mit der
+  // Begründung „kein Auto-Index". Das ist sachlich falsch: LSM Art. 4 cpv. 1 ordnet die
+  // jährliche LIK-Anpassung ausdrücklich an („Il salario minimo viene aggiornato
+  // annualmente secondo l'indice nazionale dei prezzi al consumo"). Dass der Wert 2026
+  // unverändert blieb, liegt nur daran, dass die LIK-Veränderung Nov.2025/Nov.2024
+  // 0.0 % betrug — richtiges Ergebnis, falsche Begründung. Also: jährlich prüfen.
+  TI: { chfStunde: 20.00, jahr: 2026, indexiert: true },
 };
 
 // 42 Std./Woche × 52 / 12 ≈ 182. Referenz für „Vollzeit" in der MINDESTLOHN-Welt:

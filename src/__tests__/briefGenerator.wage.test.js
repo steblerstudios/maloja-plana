@@ -64,15 +64,12 @@ describe('Lohn-Briefe', () => {
       expect(html).toContain('16.48'); // 3000 / 182
       expect(html).toContain('24.59'); // GE-Mindestlohn
     });
-    // ⚠️ Predeploy-Runde 8: GE steht auf `verify: true`, bis die Rechtsgrundlage amtlich
-    // gegengeprüft ist (Art. 39K LIRT trug nie eine Erlassnummer, und kein Commit behauptet
-    // eine Prüfung). Der Brief nennt darum weder Gesetzestitel noch OCIRT — er bleibt aber
-    // voll funktionsfähig: die neutrale Formulierung trägt ihn. Damit ist der Fallback-Zweig
-    // wieder über einen ECHTEN Kanton getestet, nicht nur über den synthetischen Eintrag.
-    it('ungeprüfter Kanton (GE): keine Stelle, kein Gesetzestitel — neutrale Formulierung', () => {
-      expect(html).not.toContain('OCIRT');
-      expect(html).not.toContain('39K');
-      expect(html).toContain(t('briefe.wageClaim.stelleFallback'));
+    // GE ist seit Predeploy-Runde 8 am Volltext gegengeprüft (LIRT Art. 39K, RS-GE J 1 05;
+    // OCIRT via RIRT Art. 1) → verify:false, der Brief nennt Gesetz und Stelle.
+    it('setzt die belegte Stelle + das Gesetz mit Erlassnummer ein (GE)', () => {
+      expect(html).toContain('OCIRT');
+      expect(html).toContain('Art. 39K');
+      expect(html).toContain('RS-GE J 1 05'); // ein Zitat ohne Erlassnummer ist angreifbar
     });
     it('trägt das berechnete Frist-Datum ein', () => {
       expect(html).toContain(getFristInfo('wageClaim').display);
@@ -179,6 +176,34 @@ describe('Lohn-Briefe', () => {
       // Zeitraum UND Betrag sind Selbst-Eintrag — der Brief behauptet keine Summe.
       expect(html).toContain('[bitte ergänzen]');
       expect(html).toContain('Monatslohn'); // der Anhalt, klar als „pro Monat" benannt
+    });
+  });
+
+  // Predeploy-Runde 8 (Rechts-Prüfer): Die `legal-note` ist ein Wegweiser für die NUTZERIN
+  // und wurde MITGEDRUCKT — der Arbeitgeber las „Einschreiben empfohlen" in einem Brief, der
+  // bereits angekommen ist, „Diese Vorlage ist eine Orientierungshilfe" (= aus einem
+  // Generator) und beim unpaidWage „Betreibung" / „fristlose Auflösung". Der Brieftext
+  // selbst vermeidet genau diesen Ton sorgfältig. Sie bleibt in der Vorschau, nicht im Couvert.
+  describe('legal-note bleibt auf dem Bildschirm, nicht im Couvert', () => {
+    it('die Druck-Regel blendet legal-note aus', () => {
+      const html = generateLetter('wageClaim', dataGE, t);
+      expect(html).toMatch(/@media print \{[^\n]*\.no-print,\s*\.legal-note\s*\{\s*display:\s*none/);
+    });
+    it('die heiklen Wegweiser stehen NUR in der legal-note', () => {
+      for (const key of ['wageClaim', 'unpaidWage']) {
+        const html = generateLetter(key, dataGE, t);
+        const legal = (html.match(/<div class="legal-note">([\s\S]*?)<\/div>/) || [])[1] || '';
+        const body = (html.match(/<div class="body-text">([\s\S]*?)<\/div>\s*<div class="signature">/) || [])[1] || '';
+        for (const wort of ['Einschreiben', 'Orientierungshilfe']) {
+          expect(body, `${key}: „${wort}" darf nicht im Brieftext stehen`).not.toContain(wort);
+          expect(legal, `${key}: „${wort}" gehört in die legal-note`).toContain(wort);
+        }
+      }
+    });
+    it('der Disclaimer steht in der App, nicht nur im Brief', () => {
+      // Vorher existierte er ausschliesslich in der legal-note — mit `.no-print` wäre er
+      // sonst ersatzlos verschwunden.
+      expect(t('briefe.disclaimer')).toMatch(/keine Rechtsberatung/);
     });
   });
 

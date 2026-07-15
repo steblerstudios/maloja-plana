@@ -2398,6 +2398,7 @@ export default {
     showPreview: 'Anteprima',
     hidePreview: 'Chiudi anteprima',
     printLetter: 'Stampa / PDF',
+    disclaimer: { sie: 'Questi modelli sono un orientamento, non una consulenza legale. La lettera è sotto la Sua responsabilità — la verifichi prima di inviarla. Nei casi delicati: invio raccomandato e, in caso di dubbio, un servizio specializzato.', du: 'Questi modelli sono un orientamento, non una consulenza legale. La lettera è sotto la tua responsabilità — verificala prima di inviarla. Nei casi delicati: invio raccomandato e, in caso di dubbio, un servizio specializzato.' },
     dataNote: { sie: 'I Suoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.', du: 'I tuoi dati salvati vengono inseriti automaticamente. Le informazioni mancanti sono contrassegnate.' },
     afterPrint: {
       title: 'Lettera creata — e adesso?',

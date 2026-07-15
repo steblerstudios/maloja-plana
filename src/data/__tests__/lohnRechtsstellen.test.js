@@ -9,20 +9,38 @@ describe('lohnRechtsstellen', () => {
     }
   });
 
-  // ⚠️ Predeploy-Runde 8: GE/TI/JU trugen `verify: false` (= „amtlich belegt"), ohne dass
-  // je eine Gegenprüfung stattgefunden hätte — nur NE/BS tragen einen Prüf-Kommentar mit
-  // Datum + Quelle. Bis zum Beleg gilt die neutrale Formulierung.
-  // Dieser Test hiess vorher „GE: belegte Stelle (OCIRT), nicht verify-pflichtig" und
-  // hielt genau die Annahme fest, die niemand geprüft hatte.
-  it('GE/TI/JU: ungeprüft ⇒ verify:true, bis der Beleg da ist', () => {
-    for (const k of ['GE', 'TI', 'JU']) {
-      expect(getLohnKontrollstelle(k).verify, k + ': ohne amtlichen Beleg kein verify:false').toBe(true);
+  // Predeploy-Runde 8: GE/TI/JU trugen `verify:false`, ohne dass je eine Gegenprüfung
+  // stattgefunden hätte. Sie wurden vorsorglich auf `true` gesetzt, dann an den VOLLTEXTEN
+  // geprüft (nicht an Suchtreffern) — alle drei halten stand. Damit sind alle 5 Einträge
+  // geprüft. Historische Bilanz: 1 von 5 war erfunden (NE „Mindestlohngesetz (17.09.2015)").
+  it('alle 5 Kantone sind amtlich gegengeprüft ⇒ verify:false', () => {
+    for (const k of ['GE', 'TI', 'JU', 'NE', 'BS']) {
+      expect(getLohnKontrollstelle(k).verify, k + ': Prüf-Kommentar mit Quelle + Datum').toBe(false);
     }
   });
-  it('NE/BS: amtlich gegengeprüft ⇒ verify:false', () => {
-    for (const k of ['NE', 'BS']) {
-      expect(getLohnKontrollstelle(k).verify, k + ': belegt (Prüf-Kommentar mit Quelle)').toBe(false);
+
+  // `briefGenerator.js` druckt `gesetz` bei `verify:false` WÖRTLICH in einen Brief an einen
+  // Arbeitgeber. Ein Zitat ohne Erlassnummer ist juristisch angreifbar — und genau daran
+  // war der erfundene NE-Eintrag zu erkennen: er nannte als einziger keine.
+  it('jeder Gesetzestitel trägt eine Erlassnummer', () => {
+    const NUMMER = {
+      GE: 'RS-GE J 1 05',
+      TI: 'RL 843.600',
+      JU: 'RSJU 822.41',
+      NE: 'RSN 813.10',
+      BS: 'SG 812.200',
+    };
+    for (const [k, nr] of Object.entries(NUMMER)) {
+      expect(getLohnKontrollstelle(k).gesetz, k + ': Erlassnummer fehlt im Zitat').toContain(nr);
     }
+  });
+
+  // Das JU-Zitat nannte bis Runde 8 „seit 01.02.2018" — das ist das INKRAFTTRETEN
+  // (Fussnote 2 des RSJU 822.41), nicht das Erlassdatum (22.11.2017).
+  it('JU zitiert das Erlassdatum, nicht das Inkrafttreten', () => {
+    const e = getLohnKontrollstelle('JU');
+    expect(e.gesetz).toContain('22.11.2017');
+    expect(e.gesetz).not.toContain('01.02.2018');
   });
 
   it('JU: keine Kontrollstelle → Arbeitsgericht-Fallback (Wort „Kontrollstelle" meiden)', () => {

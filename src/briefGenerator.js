@@ -304,7 +304,17 @@ const LETTER_CSS = `
   .signature { margin-top: 15mm; }
   .legal-note { margin-top: 10mm; font-size: 9pt; color: #666; border-top: 1px solid #ddd; padding-top: 4mm; }
   .fill-hint { background: #FFFDE7; padding: 2px 6px; border-radius: 3px; font-style: italic; }
-  @media print { body { padding: 0; } .no-print { display: none; } }
+  /* Die legal-note ist ein Wegweiser für die NUTZERIN, nicht für den Empfänger — sie
+     bleibt auf dem Bildschirm (Vorschau) und geht NICHT ins Couvert. Predeploy-Runde 8,
+     Stebler-Studios-Entscheid: gedruckt las der Arbeitgeber "Einschreiben empfohlen" in
+     einem Brief, der bereits angekommen ist, "Diese Vorlage ist eine Orientierungshilfe"
+     (= das kommt aus einem Generator) und beim unpaidWage "Betreibung" / "fristlose
+     Auflösung" — als Hinweis an die Nutzerin gut gehedged, im Couvert eine Drohkulisse.
+     Der Brieftext selbst vermeidet genau diesen Ton sorgfältig.
+     Der Disclaimer steht dafür neu in der App (briefe.disclaimer) — vorher stand er
+     NUR im Brief.
+     ACHTUNG: Dieser Block ist ein JS-Template-Literal — keine Backticks im Kommentar. */
+  @media print { body { padding: 0; } .no-print, .legal-note { display: none; } }
   @media screen { body { max-width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-height: 297mm; } }
 `;
 

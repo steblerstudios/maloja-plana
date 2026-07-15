@@ -2398,6 +2398,7 @@ export default {
     showPreview: 'Preview',
     hidePreview: 'Hide preview',
     printLetter: 'Print / PDF',
+    disclaimer: 'These templates are guidance, not legal advice. The letter is yours — please check it before sending. For sensitive cases: registered mail, and a specialist service if in doubt.',
     dataNote: 'Your saved data is automatically inserted. Missing information is marked.',
     afterPrint: {
       title: 'Letter created — what now?',

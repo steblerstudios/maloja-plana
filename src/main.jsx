@@ -1303,7 +1303,9 @@ const AppInner = () => {
           data: activeData,
           onSave: (organData) => writeData(prev => ({ ...prev, ...organData }))
         }),
-        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData }),
+        // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
+        // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
+        view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
         view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
