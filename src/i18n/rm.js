@@ -2793,7 +2793,7 @@ export default {
     hidePreview: 'Serrar la prevista',
     printLetter: 'Stampar la brev / PDF',
     // TODO(rm): Gegenlese Muttersprachler:in
-    disclaimer: { sie: 'Questas models èn in orientament, betg ina cussegliaziun giuridica. La brev è en Vossa responsabladad — examinai la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.', du: 'Quests models èn in orientament, betg ina cussegliaziun giuridica. La brev è en tia responsabladad — examinescha la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.' },
+    disclaimer: { sie: 'Quests models èn in orientament, betg ina cussegliaziun giuridica. La brev è en Vossa responsabladad — examinai la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.', du: 'Quests models èn in orientament, betg ina cussegliaziun giuridica. La brev è en tia responsabladad — examinescha la avant il tramess. En cas delicats: brev recumandada, ed en cas da dubi ina post spezialisada.' },
     dataNote: { sie: 'Vossas datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.', du: 'Tes datas memorisadas vegnan endatadas automaticamain. Indicaziuns mancantes èn marcadas.' },
     // TODO(rm): sauberes Romanisch nachziehen — bewusster DE-Fallback
     afterPrint: {
@@ -3018,7 +3018,8 @@ export default {
         title: 'Fittanza regiunala vs. Svizra',
         yourVal: { sie: 'Vossa fittanza: CHF {amount}', du: 'Tia fittanza: CHF {amount}' },
         structural: 'Quai è surtut structural — en citads e regiuns dumandadas èn terren ed abitaziuns pli rars e pli chars. La media svizra na sa chatta là savens betg.',
-        source: 'Funtauna: [[UST|bfs.admin.ch]], dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
+        thresholdBreachedLine: { sie: 'Vossa pigiun surpassa in terz da Vossa entrada.', du: 'Tia pigiun surpassa in terz da tia entrada.' }, // TODO(rm): Gegenlese
+        source: 'Funtauna: [[UST|www.bfs.admin.ch]], dumbraziun da las fittanzas {year} · fittanza netta, senza cuosts secundars',
       },
     },
   },

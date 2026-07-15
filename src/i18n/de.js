@@ -3655,7 +3655,13 @@ export default {
         title: 'Miete regional vs. Schweiz',
         yourVal: { sie: 'Ihre Miete: CHF {amount}', du: 'Deine Miete: CHF {amount}' },
         structural: 'Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.',
-        source: 'Quelle: [[BFS|bfs.admin.ch]], Mietpreiserhebung {year} · Nettomiete, ohne Nebenkosten',
+        // Die Überschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
+        // Im Budget gibt es keine Nachbarzeile, die sie auffängt — dort war das rote „!“ der
+        // einzige Träger der Aussage (Predeploy-Runde 8, zweite Batterie).
+        thresholdBreachedLine: { sie: 'Ihre Miete übersteigt einen Drittel Ihres Einkommens.', du: 'Deine Miete übersteigt einen Drittel Deines Einkommens.' },
+        // ⚠️ `www.` ist Pflicht: die nackte Domain bfs.admin.ch ist als HTTPS-Ziel tot
+        // (Connection refused) — in Runde 8 belegt.
+        source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreiserhebung {year} · Nettomiete, ohne Nebenkosten',
       },
     },
   },

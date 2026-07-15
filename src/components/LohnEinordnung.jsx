@@ -40,13 +40,21 @@ const Barometer = ({ palette, value, fillColor, marks, scaleMin, scaleMax, ariaL
           style: { position: 'absolute', top: '-9px', bottom: '-3px', left, width: '2px', background: m.color },
         });
       }
-      // exclaim — die harte Schwelle
+      // exclaim — die harte Schwelle.
+      // Deckender Ring statt weichem Blur (Predeploy-Runde 8, zweite Batterie): Liegt der
+      // Lohn ÜBER dem Boden — der Normalfall —, läuft die Füllung über das „!" hinweg, und
+      // Graphit auf Frucht trägt im Dunkelmodus nur 1.70–1.89:1. Derselbe Ring wie am
+      // ●-Punkt (`1.5px solid palette.surface`) trennt es sauber: 4.01–4.05:1.
+      // `paintOrder: stroke fill` legt den Ring unter die Glyphe; `textShadow` bleibt Rückfall.
       return React.createElement('div', {
         key: i,
         style: {
           position: 'absolute', top: '-15px', height: '28px', left, marginLeft: '-4px',
           width: '8px', textAlign: 'center', lineHeight: '28px', fontSize: '24px',
           fontWeight: 700, pointerEvents: 'none', color: m.color,
+          WebkitTextStrokeWidth: '2px',
+          WebkitTextStrokeColor: palette.surface,
+          paintOrder: 'stroke fill',
           textShadow: '0 0 2px ' + palette.surface + ', 0 0 2px ' + palette.surface,
         },
       }, '!');

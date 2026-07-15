@@ -241,6 +241,22 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
           )
     ),
 
+    // Data status + Disclaimer.
+    // Der Disclaimer stand bis Predeploy-Runde 8 NUR im Brief selbst (`legal-note`) — und
+    // wurde damit mitgedruckt, landete also beim Empfänger statt bei der Nutzerin. Jetzt
+    // ist die `legal-note` `.no-print` (Bildschirm ja, Couvert nein), und der Hinweis steht
+    // hier, wo er hingehört: bei der Person, die den Brief verantwortet.
+    selected && React.createElement('div', {
+      style: {
+        padding: '10px 14px', background: palette.up, borderRadius: radius.sm,
+        fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
+        marginBottom: space.md,
+      }
+    },
+      React.createElement('div', null, 'ⓘ ' + t('briefe.dataNote')),
+      React.createElement('div', { style: { marginTop: space.xs } }, t('briefe.disclaimer'))
+    ),
+
     // Actions
     selected && React.createElement('div', {
       style: { display: 'flex', gap: space.sm, marginBottom: space.md }
@@ -289,22 +305,6 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
               color: palette.text,
             }
           }, t('briefe.wageReminder.cta'))
-    ),
-
-    // Data status + Disclaimer.
-    // Der Disclaimer stand bis Predeploy-Runde 8 NUR im Brief selbst (`legal-note`) — und
-    // wurde damit mitgedruckt, landete also beim Empfänger statt bei der Nutzerin. Jetzt
-    // ist die `legal-note` `.no-print` (Bildschirm ja, Couvert nein), und der Hinweis steht
-    // hier, wo er hingehört: bei der Person, die den Brief verantwortet.
-    selected && React.createElement('div', {
-      style: {
-        padding: '10px 14px', background: palette.up, borderRadius: radius.sm,
-        fontSize: textTokens.sm, color: palette.mid, lineHeight: '1.6',
-        marginBottom: space.md,
-      }
-    },
-      React.createElement('div', null, 'ⓘ ' + t('briefe.dataNote')),
-      React.createElement('div', { style: { marginTop: space.xs } }, t('briefe.disclaimer'))
     ),
 
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen

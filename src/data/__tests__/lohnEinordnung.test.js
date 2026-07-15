@@ -26,16 +26,61 @@ describe('lohnEinordnung', () => {
     expect(LSE_VOLLZEIT_STUNDEN_WOCHE).toBe(40);
   });
 
-  describe('mindestlohnBoden', () => {
-    it('GE: 24.59 × 182 = 4475/Monat', () => {
+  // ⚠️ Der Boden steht als MARKE auf einem Balken, der `incomeFTE` zeigt — und der ist auf
+  // die LSE-Norm (40 Std.) normalisiert. Also muss der Boden denselben Nenner nehmen.
+  // Dieser Test hiess bis Predeploy-Runde 8 (zweite Batterie) „GE: 24.59 × 182 = 4475/Monat"
+  // und hielt damit die 42-Std.-Welt auf einer 40-Std.-Skala fest.
+  describe('mindestlohnBoden — auf der LSE-Norm (40 Std.), nicht 182', () => {
+    it('GE: 24.59 × (40×52/12) = 4262/Monat', () => {
       const b = mindestlohnBoden('GE');
       expect(b.chfStunde).toBe(24.59);
-      expect(b.monat).toBe(4475);
+      expect(b.monat).toBe(4262);
       expect(b.jahr).toBe(2026);
+    });
+    it('nicht der 182-Wert (42-Std.-Welt) — das wäre eine zweite Norm auf einer Skala', () => {
+      expect(mindestlohnBoden('GE').monat).not.toBe(4475);
     });
     it('Kanton ohne Mindestlohn: null (kein erfundener Boden)', () => {
       expect(mindestlohnBoden('ZH')).toBeNull();
       expect(mindestlohnBoden('')).toBeNull();
+    });
+  });
+
+  // 🔴 Predeploy-Runde 8, ZWEITE Batterie (Qualitäts-Prüfer): Der Balken zeigte `incomeFTE`
+  // (40 Std.), die „!"-Marke `mindestlohn.monat` (182 = 42 Std.) — auf DERSELBEN Skala.
+  // GE, exakt am Boden bei 42 Std. (CHF 4'475): Balken 4'262, Marke 4'475 → der Balken stand
+  // LINKS der Marke, sah also unterschritten aus, während `mlBreached` korrekt `false` war.
+  // Füllung und Marke widersprachen einander, systematisch um 5 %.
+  // Kein Test deckte das ab — dieser tut es: die GRAFIK muss dem BEFUND folgen.
+  describe('Marke und Füllung erzählen dasselbe (eine Skala, ein Nenner)', () => {
+    const fall = (lohn, stunden, kanton) =>
+      lohnBandState({ income: lohn, canton: kanton, hoursPerWeek: stunden, incomeType: 'brutto' });
+
+    it('exakt am Mindestlohn: Balken sitzt AUF der Marke, nicht links davon', () => {
+      // 24.59/Std. × 182 = 4475 bei 42 Std./Woche = exakt der gesetzliche Boden.
+      const s = fall(4475, 42, 'GE');
+      expect(s.befundStatus).toBe('ok');
+      expect(s.mlBreached).toBe(false);
+      expect(s.incomeFTE).toBe(s.mindestlohn.monat); // 4262 — Balken == Marke
+    });
+
+    it('unter dem Mindestlohn: Balken steht links der Marke UND der Befund sagt es', () => {
+      const s = fall(4000, 42, 'GE'); // 21.98/Std. < 24.59
+      expect(s.mlBreached).toBe(true);
+      expect(s.incomeFTE).toBeLessThan(s.mindestlohn.monat);
+    });
+
+    it('über dem Mindestlohn: Balken steht rechts der Marke UND der Befund schweigt', () => {
+      const s = fall(5000, 42, 'GE'); // 27.47/Std. > 24.59
+      expect(s.mlBreached).toBe(false);
+      expect(s.incomeFTE).toBeGreaterThan(s.mindestlohn.monat);
+    });
+
+    // Der Fall, der die ganze Runde ausgelöst hat: Teilzeit darf die Grafik nicht kippen.
+    it('korrekt bezahlte Teilzeit: Balken rechts der Marke (GE, 3000 auf 21 Std.)', () => {
+      const s = fall(3000, 21, 'GE'); // 32.97/Std.
+      expect(s.mlBreached).toBe(false);
+      expect(s.incomeFTE).toBeGreaterThan(s.mindestlohn.monat);
     });
   });
 
@@ -107,8 +152,8 @@ describe('lohnEinordnung', () => {
       expect(s.incomeFTE).toBe(20000); // Clamping macht die Anzeige, nicht die Logik
     });
 
-    it('reicht den Mindestlohn-Boden des Kantons durch', () => {
-      expect(lohnBandState({ income: 5000, canton: 'GE', hoursPerWeek: 40, ...brutto }).mindestlohn.monat).toBe(4475);
+    it('reicht den Mindestlohn-Boden des Kantons durch (auf der LSE-Norm)', () => {
+      expect(lohnBandState({ income: 5000, canton: 'GE', hoursPerWeek: 40, ...brutto }).mindestlohn.monat).toBe(4262);
       expect(lohnBandState({ income: 5000, canton: 'ZH', hoursPerWeek: 40, ...brutto }).mindestlohn).toBeNull();
     });
   });

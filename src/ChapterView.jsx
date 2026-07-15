@@ -26,11 +26,21 @@ import { GlossarText } from './GlossarBegriff.jsx';
 //
 // WAHRHEITS-DISZIPLIN: `verify: true` heisst „amtlich noch nicht gegengeprüft" — eine solche
 // Stelle wird NICHT genannt, weder im Brief noch hier. Dann trägt die neutrale Formulierung.
-// Ebenso, wenn der Kanton keine benannte Stelle hat (JU). Nie eine Stelle erfinden.
+// Nie eine Stelle erfinden.
+//
+// ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Rechts-Prüfer, gegen den Fix selbst): Diese Funktion
+// warf den `fallback` weg (`!e.stelle` → neutral) — `briefGenerator.wageClaimRefs` nutzt ihn
+// dagegen (`e.stelle || e.fallback || neutral`). Für JU (`stelle: null`, `fallback:
+// „Conseil de prud'hommes … Porrentruy"`) sagte das Kapitel darum „der zuständigen
+// kantonalen Stelle", der Brief nannte Porrentruy. Dieselbe Registry, zwei Wahrheiten —
+// und irreführend obendrein: für den JU-Mindestlohn ist gar KEINE kantonale Stelle
+// zuständig, der Weg führt ans Arbeitsgericht. Die App schickte die Nutzerin zu einer
+// Behörde, deren Nichtexistenz sie selbst dokumentiert (`hinweis` im Registry-Eintrag).
+// Jetzt spiegelt diese Funktion `wageClaimRefs` — eine Quelle, eine Regel.
 function lohnKontrollstelleText(kanton, tr) {
   const e = getLohnKontrollstelle(kanton);
-  if (!e || e.verify || !e.stelle) return tr('lohnCheck.stelleFallbackKurz');
-  return e.stelle;
+  if (!e || e.verify) return tr('lohnCheck.stelleFallbackKurz');
+  return e.stelle || e.fallback || tr('lohnCheck.stelleFallbackKurz');
 }
 
 const MedicationManager = React.lazy(() => import('./MedicationManager.jsx'));

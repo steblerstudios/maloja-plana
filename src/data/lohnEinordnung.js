@@ -25,7 +25,10 @@
 // Der Kommentar hier behauptete ausserdem „CHF 3000 bei 50% sind CHF 6800" — es sind 6000.
 
 import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
-import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT } from './lohnCheck.js';
+// ⚠️ Bewusst OHNE `STUNDEN_PRO_MONAT` (182 = 42-Std.-Mindestlohn-Welt): Dieses Modul rechnet
+// durchgehend auf der LSE-Norm (40 Std.). Wer die 182 hier wieder importiert, holt die
+// Zwei-Welten-Krankheit zurück — siehe `mindestlohnBoden`.
+import { getMindestlohn, pruefeStundenlohn } from './lohnCheck.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -47,13 +50,26 @@ const num = (v) => {
   return isFinite(n) ? n : 0;
 };
 
-// Kantonaler Mindestlohn als Monatsbetrag (Vollzeit-Boden), oder null wo es keinen gibt.
+// Kantonaler Mindestlohn als Monatsbetrag — auf der LSE-NORM (40 Std./Woche), weil er als
+// Marke auf DIESEM Balken sitzt und der Balken `incomeFTE` zeigt (ebenfalls auf 40 Std.).
+//
+// ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Qualitäts-Prüfer, gegen den Fix selbst): Hier stand
+// `STUNDEN_PRO_MONAT` (182 = 42-Std.-Welt) — also genau die Zwei-Welten-Krankheit, die
+// dieselbe Runde in `pruefeStundenlohn` behoben und auf dem Barometer übersehen hat.
+// Folge: GE, exakt am Boden bei 42 Std. (CHF 4'475) → Balken bei 4'262, „!"-Marke bei 4'475.
+// Der Balken stand LINKS der Marke — sah unterschritten aus —, während `mlBreached` korrekt
+// `false` war und der Text schwieg. Füllung und Marke widersprachen einander, systematisch
+// um 5 %. Eine Skala, ein Nenner.
+//
+// Der RECHTLICHE Boden bleibt der Stundenlohn (kantonales Recht); die 182-Rechnung ist die
+// Illustration „bei Vollzeit" und lebt weiter in `pruefeStundenlohn`/`mindestMonat`. Hier
+// geht es nur um die Position auf einer 40-Std.-Skala.
 export function mindestlohnBoden(canton) {
   const ml = getMindestlohn(canton);
   if (!ml) return null;
   return {
     chfStunde: ml.chfStunde,
-    monat: Math.round(ml.chfStunde * STUNDEN_PRO_MONAT),
+    monat: Math.round(ml.chfStunde * (LSE_VOLLZEIT_STUNDEN_WOCHE * 52 / 12)),
     jahr: ml.jahr,
   };
 }

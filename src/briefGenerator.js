@@ -222,11 +222,22 @@ export function getLetterTemplates(t, data) {
   //     formuliert vorsichtig und die Beträge bleiben „[bitte ergänzen]". Das ist kein
   //     Widerspruch: die App weiss es nicht, statt es besser zu wissen.
   // NICHT angeboten bei 'ok' und 'keinGesetz'.
-  // Nur über Anstellungen urteilen, die es GIBT: `getJobOptions` ist dafür die Wahrheit.
-  // (Sonst liefert der nicht erfasste Nebenjob 'unvollstaendig' — Lohn 0 — und hält den
-  // Brief für jeden offen. Genau die Art zweiter Wahrheit, die diese Runde aufräumt.)
+  // Nur über Anstellungen urteilen, für die tatsächlich ein LOHN erfasst ist.
+  //
+  // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Code-Review + swiss-precision, gegen den Fix
+  // selbst): Der erste Fix fragte `getJobOptions(...).some(...)` und der Kommentar behauptete
+  // „nur über Anstellungen urteilen, die es GIBT". `getJobOptions` pusht `main` aber
+  // BEDINGUNGSLOS, und ein Job ohne Lohn liefert 'unvollstaendig' — was den Brief öffnet.
+  // Zwei belegte Folgen:
+  //   · Nur der Nebenjob-NAME erfasst, Hauptjob CHF 8'000 = 43.96/Std. (klar 'ok'):
+  //     `some` sah das 'unvollstaendig' des leeren Nebenjobs → Brief angeboten. Und weil
+  //     `BriefGenerator` mit `job: 'main'` startet, ging der Verdachts-Brief an den GUT
+  //     ZAHLENDEN Hauptarbeitgeber — derselbe Fehler wie vorher bei 'ok', neu verpackt.
+  //   · Komplett leerer Datensatz (nur Kanton) → Brief angeboten.
+  // Ein Job ohne Lohn ist kein unvollständiger Verdacht, sondern gar kein Verdacht.
   const darfWageClaim = (s) => s === 'unterMindestlohn' || s === 'unvollstaendig' || s === 'basisUnklar';
   const einJobRechtfertigtDenBrief = getJobOptions(data)
+    .filter((o) => getJob(data, o.key).lohn > 0)
     .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
   if (kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
     list.push({
@@ -573,9 +584,19 @@ function generateUnpaidWage(data, t, options = {}) {
   const job = getJob(data, jobKey);
   const months = t('briefe.fillIn');
   // Der Zeitraum ist unbekannt (Selbst-Eintrag) → der Betrag darf es auch bleiben.
-  // Der Monatslohn steht als Anhalt in derselben Zeile, klar als „pro Monat" benannt.
   const betrag = t('briefe.fillIn');
-  const monatslohnHinweis = job.lohn > 0
+  // Der Monatslohn als Anhalt — aber NUR wenn er nachweislich brutto ist.
+  //
+  // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Rechts-Prüfer, gegen den Fix selbst): Dieser
+  // Satz wurde im selben Commit eingeführt, der die Netto/Brutto-Krankheit für `wageClaim`
+  // heilte — und trug sie hier wieder ein. Er sagt „brutto CHF X", `generateUnpaidWage`
+  // las `incomeType` aber nie. Bei netto erfasstem Lohn unterschrieb die Nutzerin damit
+  // eine falsche Tatsachenbehauptung über die eigene Forderung, ZU IHREN UNGUNSTEN:
+  // CHF 3'800 netto sind brutto ~4'300–4'400, und der Arbeitgeber kann den Satz als
+  // Zugeständnis der Forderungshöhe lesen. Der ganze Brief ist brutto-gerahmt
+  // („in Höhe von brutto CHF …"), während der Feld-Hinweis der App zu Netto rät.
+  // Ohne belegtes Brutto steht hier lieber nichts — der Betrag ist ohnehin Selbst-Eintrag.
+  const monatslohnHinweis = (job.lohn > 0 && job.einkommensart === 'brutto')
     ? t('briefe.unpaidWage.monthlyHint', { amount: formatAmount(job.lohn) })
     : '';
   const frist = getFristInfo('unpaidWage').display;

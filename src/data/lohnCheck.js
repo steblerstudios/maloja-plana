@@ -102,18 +102,27 @@ export function stundenAufJahr(stundenProWoche) {
 // Stundenlohn aus Monatslohn + tatsächlichen Wochenstunden (genauer als die 182h-Annahme).
 // Prüft gegen den kantonalen Mindestlohn, falls vorhanden.
 //
-// WAHRHEITS-DISZIPLIN — `einkommensart` ist Pflicht für jeden Befund:
-// Die Mindestlöhne oben sind BRUTTO-Stundenlöhne. Ein Netto-Einkommen ist damit nicht
-// vergleichbar — und der Feld-Hinweis zu `monthlyIncome` rät ausdrücklich zu Netto
-// („Netto ist was auf Ihrem Konto ankommt"). Ein Netto-Lohn gegen den Brutto-Boden
-// gerechnet erklärt korrekt bezahlte Leute für unterbezahlt: GE, CHF 4'000 netto auf
-// 42 Std. → 21.98/Std. < 24.59 → Warnung + Brief; brutto wären das ~4'550 = 25.00/Std.,
-// also legal. Dieser Befund geht per Einschreiben an einen Arbeitgeber.
-// Ist die Art NICHT gesetzt, ist die Basis unbekannt — sie als brutto zu lesen hiesse,
-// das Gegenteil dessen anzunehmen, wozu die App geraten hat. Beides ⇒ 'basisUnklar'.
-// Nur ein ausdrückliches 'brutto' berechtigt zu einem Befund.
+// WAHRHEITS-DISZIPLIN — die Einkommensart entscheidet, WAS behauptet werden darf:
+// Die Mindestlöhne oben sind BRUTTO-Stundenlöhne. Der Feld-Hinweis zu `monthlyIncome` rät
+// ausdrücklich zu Netto („Netto ist was auf Ihrem Konto ankommt"). Ein Netto-Lohn gegen den
+// Brutto-Boden gerechnet erklärt korrekt bezahlte Leute für unterbezahlt: GE, CHF 4'000
+// netto auf 42 Std. → 21.98/Std. < 24.59 → Warnung + Brief; brutto wären das ~4'550 =
+// 25.00/Std., also legal. Dieser Befund geht per Einschreiben an einen Arbeitgeber.
 //
-// Das ist auch die richtige Fehlerrichtung: wer den Parameter vergisst, bekommt
+// ABER: Die Basis ist nur für EINE Richtung nötig. Brutto ist IMMER ≥ netto (netto =
+// brutto − Abzüge). Also gilt für jede Basis: der echte Bruttolohn ist ≥ dem erfassten Wert.
+//   · Erfasster Stundenlohn ≥ Boden  → 'ok' ist BEWEISBAR, egal welche Basis.
+//     Wer netto schon darüber liegt, liegt brutto erst recht darüber.
+//   · Erfasster Stundenlohn < Boden  → nur mit ausdrücklichem 'brutto' belegt.
+//     Bei netto/unbekannt kann der echte Bruttolohn darüber liegen → 'basisUnklar'.
+//
+// ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Rechts-Prüfer, gegen den Fix selbst): Der erste
+// Fix prüfte die Basis VOR der Rechnung und gab bei netto immer 'basisUnklar' zurück.
+// Damit war GE/CHF 8'000 netto (= 43.96/Std., klar über dem Boden) „unklar" und der
+// Verdachts-Brief wurde angeboten — derselbe Fehler wie vorher bei 'ok', nur umgezogen.
+// Ein halber Fix ist ein Fehler.
+//
+// Richtige Fehlerrichtung bleibt: wer den Parameter vergisst, bekommt im Zweifelsfall
 // Schweigen statt einer Falschanschuldigung.
 // Vorbild im Haus: `AlvRechner` (braucht brutto), `SozialhilfeRechner` (braucht netto) —
 // beide prüfen `finanzen.incomeType` und befüllen bei falscher Basis nicht vor.
@@ -121,24 +130,28 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   const lohn = Number(monatslohnChf) || 0;
   const stundenMonat = stundenAufMonat(stundenProWoche);
   if (lohn <= 0 || stundenMonat <= 0) return { status: 'unvollstaendig' };
-  if (einkommensart !== 'brutto') {
-    return { status: 'basisUnklar', kanton, einkommensart: einkommensart || null };
-  }
 
   const lohnStunde = Math.round((lohn / stundenMonat) * 100) / 100;
   const ml = MINDESTLOHN[kanton];
   const base = { lohnStunde, stundenMonat, kanton };
   if (!ml) return { ...base, status: 'keinGesetz' };
 
-  if (lohnStunde < ml.chfStunde) {
-    return {
-      ...base,
-      status: 'unterMindestlohn',
-      mindestStunde: ml.chfStunde,
-      mindestMonat: Math.round(ml.chfStunde * stundenMonat),
-      differenzMonat: Math.round(ml.chfStunde * stundenMonat - lohn),
-      jahr: ml.jahr,
-    };
+  // Über dem Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne Basis-Frage.
+  if (lohnStunde >= ml.chfStunde) {
+    return { ...base, status: 'ok', mindestStunde: ml.chfStunde, jahr: ml.jahr };
   }
-  return { ...base, status: 'ok', mindestStunde: ml.chfStunde, jahr: ml.jahr };
+
+  // Darunter: nur ein ausdrückliches 'brutto' belegt die Unterschreitung.
+  if (einkommensart !== 'brutto') {
+    return { ...base, status: 'basisUnklar', einkommensart: einkommensart || null };
+  }
+
+  return {
+    ...base,
+    status: 'unterMindestlohn',
+    mindestStunde: ml.chfStunde,
+    mindestMonat: Math.round(ml.chfStunde * stundenMonat),
+    differenzMonat: Math.round(ml.chfStunde * stundenMonat - lohn),
+    jahr: ml.jahr,
+  };
 }
