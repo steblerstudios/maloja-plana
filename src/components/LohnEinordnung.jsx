@@ -172,7 +172,11 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     mindestlohn && React.createElement('div', {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
-      t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monat), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
+      // `monatVollzeit` (42 Std.), NICHT `monat` (40 Std., das ist die Marken-Position):
+      // der Text „bei Vollzeit rund CHF X im Monat" muss dieselbe Zahl nennen wie Kapitel
+      // und Brief (GE 4475, nicht 4262) — sonst widerspricht das Barometer der übrigen App
+      // um ~5 % (Predeploy-Runde 8, dritte Prüfung).
+      t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monatVollzeit), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
       // Verdacht, keine Feststellung — und die Ausnahmen dazu. Die App kennt sie nicht
       // (Lehre/Praktikum/unter 18/GAV; GE hat drei Sätze), also darf sie hier keine
       // Rechtsverletzung behaupten. Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.

@@ -236,15 +236,17 @@ export function getLetterTemplates(t, data) {
   //   · Komplett leerer Datensatz (nur Kanton) → Brief angeboten.
   // Ein Job ohne Lohn ist kein unvollständiger Verdacht, sondern gar kein Verdacht.
   const darfWageClaim = (s) => s === 'unterMindestlohn' || s === 'unvollstaendig' || s === 'basisUnklar';
-  const einJobRechtfertigtDenBrief = getJobOptions(data)
-    .filter((o) => getJob(data, o.key).lohn > 0)
-    .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
   // ⚠️ `WAGECLAIM_BEREIT` ist bewusst `false` (Stebler-Studios-Entscheid, Predeploy-Runde 8):
   // Der Befund kennt die gesetzlichen Ausnahmen nicht (Lehre/Praktikum/unter 18/GAV, und GE
   // hat drei Sätze statt einem) — der Brief würde Arbeitgeber beschuldigen, die korrekt
   // zahlen. Begründung und Belege stehen bei der Konstante in `data/lohnCheck.js`.
   // Der Brief-Code bleibt vollständig gebaut, geprüft und getestet; nur das Anbieten ruht.
-  if (WAGECLAIM_BEREIT && kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
+  // Die Befund-Schleife steht HINTER dem Flag (dritte Prüfung): solange der Brief ruht, ist
+  // sie unnötige Arbeit bei jedem Briefe-View-Render (`.filter(getJob).some(pruefeStundenlohn)`).
+  const einJobRechtfertigtDenBrief = () => getJobOptions(data)
+    .filter((o) => getJob(data, o.key).lohn > 0)
+    .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
+  if (WAGECLAIM_BEREIT && kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief()) {
     list.push({
       key: 'wageClaim',
       title: t('briefe.wageClaim.title'),
@@ -633,9 +635,23 @@ const GENERATORS = {
   unpaidWage: generateUnpaidWage,
 };
 
+// Reine Funktion: Vorlage + Daten → HTML. Die wageClaim-RUHE (WAGECLAIM_BEREIT) ist eine
+// Produkt-Entscheidung und wird an den UI-Grenzen durchgesetzt, wo Briefe ANGEBOTEN und
+// VORGESCHAUT werden (`getLetterTemplates` + `briefCanRender` in `BriefGenerator.jsx`), nicht
+// hier. So bleibt der Generator direkt testbar — die Korrektheit des Briefes bleibt für den
+// Tag des Wiedereinschaltens abgesichert, statt hinter dem Flag zu verrosten.
 export function generateLetter(templateKey, data, t, options = {}) {
   const gen = GENERATORS[templateKey];
   if (!gen) return '';
   return gen(data, t, options);
+}
+
+// Ob eine Vorlage tatsächlich angezeigt/vorgeschaut werden darf. Predeploy-Runde 8, dritte
+// Prüfung: Die Vorlagen-Liste allein reichte nicht — die Vorschau in `BriefGenerator.jsx`
+// baut aus `selected` direkt, und ein wiederhergestellter Deep-Link auf 'wageClaim' hätte den
+// ruhenden Anschuldigungsbrief trotzdem gerendert. Diese Grenze schliesst das.
+export function briefCanRender(templateKey) {
+  if (templateKey === 'wageClaim') return WAGECLAIM_BEREIT;
+  return true;
 }
 

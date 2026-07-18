@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getLetterTemplates, generateLetter, getFristInfo, FRIST_TAGE, getJobOptions } from '../briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, FRIST_TAGE, getJobOptions, briefCanRender } from '../briefGenerator.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -41,6 +41,14 @@ describe('Lohn-Briefe', () => {
       expect(html).toContain('16.48');
       expect(html).toContain('24.59');
       expect(html).toContain('OCIRT');
+    });
+    // Predeploy-Runde 8, dritte Prüfung: die Ruhe muss auch an der VORSCHAU-Grenze greifen,
+    // nicht nur an der Vorlagen-Liste — sonst rendert ein Deep-Link auf 'wageClaim' den
+    // ruhenden Brief. `briefCanRender` ist diese Grenze (genutzt in BriefGenerator.jsx).
+    it('briefCanRender hält den ruhenden wageClaim zurück, lässt unpaidWage durch', () => {
+      expect(briefCanRender('wageClaim')).toBe(false);
+      expect(briefCanRender('unpaidWage')).toBe(true);
+      expect(briefCanRender('leaseTermination')).toBe(true);
     });
   });
 

@@ -21,7 +21,11 @@ import { renderSource } from '../utils/renderSource.js';
 //   thresholdValue (opt) — harte Schwelle als Betrag (Miete: ein Drittel des Einkommens).
 //                          Wird als „!" auf dem Balken gesetzt: graphit normal, rose NUR
 //                          wenn überschritten. Einziger Ort für Rose → keine Alarm-Inflation.
-export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue }) => {
+// `showThresholdText`: die SICHTBARE Überschreitungs-Zeile. Default false — in `MietVergleich`
+// erzählt die Nachbarzeile (`rentShareGuide`) die Drittel-Regel schon, dort wäre sie doppelt
+// (Predeploy-Runde 8, dritte Prüfung). `BudgetSync` hat keine Nachbarzeile → setzt sie true.
+// Das aria-Label trägt die Überschreitung IMMER (WCAG 1.4.1), unabhängig von diesem Prop.
+export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'premium', compact, fillColor, thresholdValue, showThresholdText }) => {
   if (!comparison) return null;
   const { regional, national, diffPct, year } = comparison;
   const ns = 'po.regionalCompare.';
@@ -132,8 +136,9 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       // VERSCHLECHTERT: roseDeep-„!" auf Birne 1.92 → **1.44** (hell) / 1.22 (dunkel).
       // Nötig sind 3:1 (24px/700 = grosse Schrift, 1.4.3 — und bedeutungstragend, 1.4.11).
       // Der `textShadow` ist ein weicher Blur, keine deckende Trennung.
-      // Der ●-Punkt löst dasselbe Problem seit jeher mit `1.5px solid palette.surface` —
-      // gemessen 4.05:1 gegen die neue Füllung. Das „!" bekommt denselben Ring.
+      // Der ●-Punkt löst dasselbe Problem seit jeher mit einem deckenden `surface`-Ring
+      // (dort `1.5px solid`) — gemessen 4.05:1 gegen die neue Füllung. Das „!" bekommt
+      // dieselbe Farbe/Absicht als 2px-Text-Stroke (≈1px Aussen-Halo nach `paintOrder`).
       // `paintOrder: stroke fill` legt den Ring UNTER die Glyphe (sonst frisst er sie an);
       // der `textShadow` bleibt als Rückfall, falls ein Browser den Stroke nicht kennt.
       hasThreshold && React.createElement('div', {
@@ -168,10 +173,10 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
     }, t(k + 'yourVal', { amount: userValue.toFixed(0) })),
 
-    // Die Schwellen-Überschreitung als SATZ — nicht nur als rotes „!". Steht hier im
-    // Bauteil, damit jeder Ort sie bekommt (das Budget hat keine Nachbarzeile, die sie
-    // auffangen würde). `roseDeep` trägt AA in beiden Modi (5.14 / 4.78).
-    breachLine && React.createElement('div', {
+    // Die Schwellen-Überschreitung als SATZ — nur wo die Eltern-Ansicht sie nicht schon
+    // erzählt (`showThresholdText`, siehe Prop-Kommentar). Im aria-Label steht sie immer.
+    // `roseDeep` trägt AA in beiden Modi (5.14 / 4.78).
+    breachLine && showThresholdText && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.roseDeep, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, breachLine),
 

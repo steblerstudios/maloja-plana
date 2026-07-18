@@ -53,10 +53,12 @@ export const LOHNCHECK_DATA_VERSION = '2026';
 //    Bau — die Tieflohn-Branchen, für die das Feature gebaut wurde.
 //    (GE ist anders: Art. 39L lässt den kantonalen Boden über den GAV siegen — dort ok.)
 //  · **GE hat DREI Sätze, nicht einen:** 24.59 allgemein · **18.07** Landwirtschaft/
-//    Floriculture (Art. 39K al. 2) · **18.44** Ferienjobs Studierender (Art. 39K al. 3,
-//    NEU in Kraft 08.04.2026 nach der Volksabstimmung vom 08.03.2026, = 75 %, max. 60
-//    Tage/Jahr). Der Code kennt nur den höchsten. Bei TI wurde bewusst der UNTERE Wert
-//    genommen (20.00) — bei GE steht der obere.
+//    Floriculture (Art. 39K al. 2) · Ferienjobs Studierender (Art. 39K al. 3, NEU in Kraft
+//    08.04.2026 nach der Volksabstimmung vom 08.03.2026). Der Code kennt nur den höchsten.
+//    Bei TI wurde bewusst der UNTERE Wert genommen (20.00) — bei GE steht der obere.
+//    ⚠️ Fürs Wieder-Einschalten am Volltext klären: Die Ferienjob-Regel wird uneinheitlich
+//    referiert — teils als 75 % des Satzes (~18.44, max. 60 Tage/Jahr), teils als GANZE
+//    Ausnahme. Beides spricht fürs Ruhen; der Nutzertext sagt nur generisch „Ferienjobs".
 //  · **Ferien-/Feiertagszuschläge:** alle drei definieren den Boden OHNE sie (GE Art. 39K
 //    al. 5 · TI Decreto 11.12.2025 · JU). Bei Stundenlohn enthält das Monatseinkommen
 //    diese ~14 % → der abgeleitete Stundenlohn ist zu hoch → verpasste Unterschreitungen.
