@@ -32,7 +32,7 @@ function installLocalStorageMock() {
   return map;
 }
 
-const PW = 'passphrase8'; // ≥ TRESOR_MIN_PASSPHRASE
+const PW = 'mein-ganzer-satz'; // ≥ TRESOR_MIN_PASSPHRASE (12)
 const OK = { backupConfirmed: true };
 
 const seed = () => {

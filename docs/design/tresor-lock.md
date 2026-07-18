@@ -42,8 +42,11 @@ zur Nachvollziehbarkeit belassen:
 Zusätzlich (Security-Härtung vor 2b) — **alle in 2b-pre umgesetzt:** ✅ **PBKDF2
 100'000 → 600'000 Iterationen** (`PBKDF2_ITERATIONS_TRESOR`, versioniert im V2-Record-Header,
 Fallback 100k für V1-Alt-Daten; `cryptoCore.PBKDF2_ITERATIONS`=100k bleibt eingefroren fürs
-Backup-Format). ✅ **Passphrase-Mindestlänge** `TRESOR_MIN_PASSPHRASE=8` (bewusst strenger
-als Backup ≥4; reine Längenschwelle für ruhige UX — Design-Entscheid, bei Bedarf justieren).
+Backup-Format). ✅ **Passphrase-Mindestlänge** `TRESOR_MIN_PASSPHRASE=12` (Entscheid Stebler Studios
+2026-07-18; strenger als Backup ≥4, weil der Tresor ALLE Daten at-rest schützt). **2b-UI-Auftrag:**
+die Setup-UX auf „nimm einen ganzen Satz" ausrichten (Passphrase- statt Passwort-Denke — die
+Länge kommt aus einem Merksatz, keine Zeichenklassen-Pflicht = ruhige UX). Der Modul-Fehlertext
+nudged bereits in diese Richtung.
 ✅ **Backup-Export-Zwang**: `activateTresor(pw, { backupConfirmed })` wirft ohne Bestätigung
 (nicht mehr nur Doku-Konvention). ✅ **`VAULT_*` → `TRESOR_*`/`LOCK_*`** umbenannt inkl.
 Record-Key `or5_vault` → `or5_tresor` (dormant, kein gespeichertes Chiffrat → unkritisch).

@@ -30,9 +30,10 @@ export const TRESOR_RECORD_KEY = 'or5_tresor';   // Chiffretext-Datensatz (base6
 export const LOCKED_FLAG = 'or5_locked';         // '1' = Tresor aktiv
 
 // Passphrase-Mindestlänge für den Tresor. Er schützt ALLE persönlichen Daten at
-// rest → bewusst strenger als der Backup-Export (≥4). Design-Entscheid, im PR zu
-// bestätigen. Reine Längenschwelle (keine Zeichenklassen-Pflicht = ruhige UX).
-export const TRESOR_MIN_PASSPHRASE = 8;
+// rest → bewusst strenger als der Backup-Export (≥4). Entscheid Stebler Studios
+// 2026-07-18: 12 Zeichen, UX auf „ganzer Satz" ausrichten (Passphrase- statt
+// Passwort-Denke; die Länge kommt aus einem Merksatz, nicht aus Zeichenklassen).
+export const TRESOR_MIN_PASSPHRASE = 12;
 
 // Alle persönlichen Stores, die der Tresor schützt (Spec §2). Rohe Strings —
 // bewusst nicht JSON.parse/-stringify, um Serialisierungs-Drift zu vermeiden.
@@ -207,7 +208,7 @@ export async function activateTresor(passphrase, { backupConfirmed = false } = {
   if (!isSecureContext()) throw new Error('Web Crypto nicht verfügbar (HTTPS/localhost nötig).');
   if (isTresorActive()) throw new Error('Tresor ist bereits aktiv.');
   if (typeof passphrase !== 'string' || passphrase.length < TRESOR_MIN_PASSPHRASE) {
-    throw new Error(`Passphrase muss mindestens ${TRESOR_MIN_PASSPHRASE} Zeichen haben.`);
+    throw new Error(`Passphrase muss mindestens ${TRESOR_MIN_PASSPHRASE} Zeichen haben — nimm am besten einen ganzen Satz, den du dir merkst.`);
   }
   if (!backupConfirmed) {
     throw new Error('Backup-Export nötig, bevor der Tresor aktiviert wird (Datenverlust-Schutz).');
