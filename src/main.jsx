@@ -5,7 +5,8 @@ import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import './print.css';
 import { version as APP_VERSION } from '../package.json';
 import { DARK_PALETTE, LIGHT_PALETTE, applyColorBlind, getChapters } from './config/constants.js';
-import { DEMO_DATA } from './config/demoData.js';
+// DEMO_DATA wird lazy geladen (nur im Beispiel-Modus gebraucht) — hält den ~3 KB
+// grossen Demo-Datensatz aus dem eager index-Chunk (Byte-Budget).
 import { cantonFromPLZ, gemeindeFromPLZ, preloadPLZ } from './config/cantonalData.js';
 import { I18nProvider, useT } from './i18n/index.js';
 import { useVorlesen } from './hooks/useVorlesen.js';
@@ -498,13 +499,14 @@ const AppInner = () => {
     if (onboardingDone && !isTourDone()) setTourOpen(true);
   }, [onboardingDone]);
   const [demoMode, setDemoMode] = useState(false);
+  const [demoData, setDemoData] = useState(null);
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [dbBlocked, setDbBlocked] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
   const sandboxActive = sandboxMode && sandboxData;
-  const activeData = demoMode ? DEMO_DATA : (sandboxActive ? sandboxData : data);
+  const activeData = demoMode && demoData ? demoData : (sandboxActive ? sandboxData : data);
   // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
   const writeData = sandboxActive ? setSandboxData : setData;
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
@@ -941,7 +943,12 @@ const AppInner = () => {
     }, t('legal.footerLink')),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
-      onClick: () => { setDemoMode(!demoMode); setSandboxMode(false); setSandboxData(null); setView('dashboard'); },
+      onClick: () => {
+        if (demoMode) { setDemoMode(false); setDemoData(null); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
+        // Demo-Datensatz erst beim Betreten laden; demoMode wird erst gesetzt, wenn er da
+        // ist (kein Render-Fenster, in dem demoMode aktiv aber demoData noch null wäre).
+        else { import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }); }
+      },
       style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
     !demoMode && !sandboxMode && React.createElement(React.Fragment, null,
