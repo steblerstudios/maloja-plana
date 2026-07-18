@@ -15,10 +15,10 @@
 |---|---|
 | Aktueller Branch | **`main`** (Sitzung 2026-07-18 endete an drei Merges: #100/#101/#102). Der Abschluss läuft über `chore/session-close-2026-07-18` → PR (GitHub Flow, nicht direkt auf `main`). |
 | `main` steht auf | **`4c79bee`** (= `origin/main`, gegengeprüft 2026-07-18; Merge von #102). ⚠️ **Merge-Fallen-Regel (Gegenprobe = Schritt 1):** Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer** → ok. **Ist das Delta NICHT leer, hängt ein echter Deploy.** |
-| Deploy hängt? | **JA, aber nur eine kleine, live-wirksame Änderung.** `main` (`4c79bee`) baut frisch → `index-c5906715.js`, **≠ Live `index-96dd34ec.js`**. Das Delta ist die **KVG-«Kurz innehalten»-Änderung (#101)**. #100 (Tresor 2b-pre) ist **dormant** (kein Live-Effekt), #102 (LockScreen) ist **dev-only** (Prod byte-neutral). → Ein Deploy bringt nur den KVG-Schritt live; vorher frisches `/maloja-predeploy` auf `4c79bee`. |
+| Deploy hängt? | **NEIN — `main` (`4c79bee`) ist LIVE.** Deployt 2026-07-18 13:59 → Live-Bundle **`index-c5906715.js`** == frischer `main`-Build, per `curl` gegengeprüft. Damit ist die **KVG-«Kurz innehalten»-Änderung (#101) live**; #100 (Tresor 2b-pre) dormant + #102 (LockScreen) dev-only sind byte-neutral mitgegangen. `git diff <predeploy-ok>..HEAD -- src/` als Gegenprobe beim nächsten Mal. |
 | Version (package.json) | `0.1.25-beta` |
 | Letzter Tag | `v0.1.25-beta`. ⚠️ Der Tag zeigt auf `31abc36` — ein Hash, den der Purge **getötet** hat (`git log 31abc36..HEAD` bricht ab). Ab jetzt setzt `deploy.sh` den Tag automatisch aus `package.json`. |
-| Live (malojaplana.ch) | Bundle **`index-96dd34ec.js`** / CSS `index-6b0b5577.css` (Runde 8, deployt **2026-07-18** nach dem `.deploy.local`-Wiederaufbau, per `curl` verifiziert). **Runde 8 (Lohn-Befund-Brief + Lohn-/Mietzins-Barometer) ist damit LIVE.** ⚠️ `main` ist dem Live um die KVG-#101-Änderung voraus (siehe „Deploy hängt?"). ⚠️ **Ausnahme (weiter gültig):** r7-`.htaccess`-Fix `geolocation=(self)` — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel. |
+| Live (malojaplana.ch) | Bundle **`index-c5906715.js`** / CSS `index-6b0b5577.css` (= `main` `4c79bee`, deployt **2026-07-18 13:59**, per `curl` verifiziert). Enthält Runde 8 (Lohn-Befund-Brief + Barometer) **und** Runde 9 (KVG-«Kurz innehalten» sichtbar; #100 Tresor dormant, #102 LockScreen dev-only/nicht im Prod-Bundle). Vorheriges Runde-8-Bundle war `index-96dd34ec.js` (11:53). ⚠️ **Ausnahme (weiter gültig):** r7-`.htaccess`-Fix `geolocation=(self)` — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel. |
 | **Runde 9 (2026-07-18) — 🟢 GEMERGT (#99–#102), teils NICHT live** | **#99** maloja-c-Docs-Extraktion (Zielarchitektur, Positionierung, Tresor-Zielbild — docs-only). **#100 Tresor 2b-pre:** 4 🔴 der harten Vorbedingung + Härtung (Doc-Blobs verschlüsseln, prerestore-Purge best-effort, freundlicher Fehler, Leeres-Backup-Guard; PBKDF2 600k versioniert, `TRESOR_MIN_PASSPHRASE=12` + Merksatz-Nudge, Backup-Zwang, `VAULT_*`→`TRESOR_*`) — **dormant, kein Live-Effekt.** **#101 KVG «Kurz innehalten»:** Anti-Dark-Pattern-Schritt in KVGWechsel + i18n ×5 — **live-wirksam, noch nicht deployt.** **#102 LockScreen-Design:** Tresor-2b-UI-Wand entkoppelt (nur `onUnlock`-Prop), `tresorLock`-i18n ×5, dev-only `#/lockpreview` — **Prod byte-neutral.** 748 Tests grün, Size 64.97/65 kB. |
 | Deploy-Zugang | **`.deploy.local` am 2026-07-18 wiederhergestellt** (war beim Klon verloren): `SFTP_HOST=et9l2r.ftp.infomaniak.com`, `SFTP_USER=et9l2r_admin` (NICHT der `_temporary_`-SSH-Zugang — der ist kein SFTP-Konto), `REMOTE_DIR=/home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/`. Passwort nur interaktiv. **⚠️ ausserhalb git sichern (Passwort-Manager)** — dritter Verlust dieser Art. |
 | ⚠️ Tote Hashes | Alle Hashes von **vor** dem Purge (2026-07-14) lösen nicht mehr auf — u. a. der Live-Marker `31abc36` und `.maloja/predeploy-ok`. **Ein toter Hash heisst NICHT, dass die Arbeit erfunden war.** Nachschlagen: `grep '<hash>' _maloja-archiv/HASH-LANDKARTE-vor-purge.md` (2070 Einträge, PII-frei). |
@@ -67,10 +67,10 @@
 > **Stand 2026-07-18 (Runde 9):** Runde 8 ist LIVE. Der ⭐-Block „Runde-8-Blocker" darunter
 > ist damit **erledigt + deployt** (Historie belassen). Aktuelle offene Schritte:
 
-**A. KVG-«Kurz innehalten» (#101) deployen.** Live-wirksam, noch nicht live. `main`=`4c79bee`
-   baut `index-c5906715.js` ≠ live `index-96dd34ec.js`. Ablauf: frisches `/maloja-predeploy`
-   auf `4c79bee` aus `maloja-frontend/` → `bash deploy.sh` (Zugang steht via `.deploy.local`,
-   User `et9l2r_admin`). #100 dormant + #102 dev-only gehen byte-neutral mit.
+**A. ✅ ERLEDIGT — KVG-«Kurz innehalten» (#101) ist live** (Deploy 2026-07-18 13:59,
+   Bundle `index-c5906715.js` == `main`, curl-verifiziert). Merker fürs nächste Deploy:
+   `.maloja/predeploy-ok` nach jedem `main`-Vorrücken frisch auf HEAD setzen (die Marke
+   war für Runde 8 auf `091c184`, stale fürs KVG-Deploy → neu gesetzt).
 
 **B. Tresor 2b-UI — die echte Verdrahtung (eigene, frische Sitzung, fasst echte Daten an).**
    Fundament #100 (2b-pre) + Wand #102 (LockScreen, design-first) sind gemergt. Offen:
