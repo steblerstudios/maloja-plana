@@ -41,6 +41,25 @@
 > Branchen-Werte weiter auf 2024 heben (STAT-TAB-Recherche) · a11y-Sweep · wageClaim.
 > **13.-Kanton-Belege NE/TI amtlich nachgezogen** (Memory `reference_mindestlohn_13_monatslohn_kantone`).
 >
+> **Fortsetzung 2026-07-18 (3. Sitzung), 3 weitere Commits — a11y-Sweep + Byte-Budget
+> (Branch jetzt 12 Commits total):** `91e5b53` **a11y Variante B** — Branchen-Chip-Touch-Ziel
+> Padding `2px`→`6px` (~16→30 px), trifft WCAG 2.5.8 (24×24); live hell+dunkel verifiziert, Toggle
+> intakt. **Variante A** (✓-Glyph für „erreicht", gegen WCAG 1.4.1) bewusst **GEPARKT** bis Budget/
+> Design-Runde. · `482256f` **DEMO_DATA lazy** (war eager importiert UND im Render-Pfad referenziert
+> → kein Tree-Shaking; jetzt `import('./config/demoData.js')` beim Beispiel-Klick) · `11699ec`
+> **autoBackup lazy** (`createBackup()` läuft best-effort post-mount, jetzt dyn. Import im Effekt).
+> **Bundle 64.98 → 63.35/65 kB** (~30 B → **~1.65 kB Luft**); beide Lazy-Loads live verifiziert
+> (Beispiel rein+raus / `autoBackup`-Chunk lädt on-demand, App rendert). **757 Tests grün** (inkl. 1
+> fremdem Render-Harness `src/__tests__/_ssr_render.test.jsx` aus Parallel-Chat — untracked, nicht meins).
+> **wageClaim stand-geprüft (nichts gebaut):** ruht bewusst (`WAGECLAIM_BEREIT=false`, SS-Entscheid r8);
+> Fix-Register **A–E im Code bereits erledigt** (FIX-A/D-Kommentare, OR-82-„nur-nach-Fachstelle"-Zusatz,
+> TI `jahr:2026`, JU `indexiert:false`). Offen nur: Scharfschalten braucht **Daten-Modell-Runde**
+> (Sektor/Status, GE-Sätze differenzieren, je Satz Beleg) + **(F) Copy-Gegenlesen**. **Branchen-Werte
+> weiter auf 2024 heben: GEPARKT** (BFS-Mitteilung deckt nur Pharma/Bau/Detailhandel/Gesamt — keine
+> weiteren Daten belegbar). **Icon-Registry-Split** als grösster Rest-Byte-Hebel (~4–5 kB) identifiziert,
+> aber als heikler Kern-Eingriff + unzuverlässige statische Analyse **VERTAGT** (eigene sorgfältige Runde).
+> Weiterhin nur localhost, NICHT deployt/gemergt.
+>
 > **Nächster Faden besprochen (NICHT gebaut) — Steuer-Visualisierung:** ruhige **Säulen** im
 > Zivilstand-Vergleich (ledig · verheiratet gemeinsam · verheiratet **einzeln**/Individualbesteuerung),
 > im **Probier-Modus** (`main.jsx` sandboxMode) durchspielbar (AHV/BVG-Muster spiegeln). ⚠️ Individual-
