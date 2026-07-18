@@ -181,7 +181,9 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 
 ## E — Inhalt
 
-- 🟠 **Herzensempfehlung Leihlager** (`heartfelt10`) — braucht Name + URL von Stebler Studios.
+- ✅ **Herzensempfehlung Leihlager — ERLEDIGT (2026-07-18, `6b8b594`).** Als neuer Key `heartfelt25`
+  (nicht heartfelt10 — der ist «Xdo»), Gruppe *gemeinschaft*, URL `leihlager.ch`, de/en/fr/it lokalisiert
+  (rm = deutscher Stopgap wie heartfelt24). Live im Gemeinschafts-Buch verifiziert.
 - ✅ Abschiedsagentur (`heartfelt9`, alle 5 Sprachen)
 - ✅ **Quellen/Links-Check** (erneut 2026-06-27): 121 externe URLs geprüft (27 neue Asyl/Stipendien
   + 94 direktLinks). **0 echte tote Links** — alle 2xx/3xx; einzig 3× `baselland.ch` 403 = bekannter
