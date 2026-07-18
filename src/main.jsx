@@ -238,7 +238,6 @@ const bottomIcon = (name, color, size) => {
   if (name === 'plus') return React.createElement('svg', common, P('M12 5 V19 M5 12 H19'));
   if (name === 'file') return React.createElement('svg', common, P('M7 3 H14 L18 7 V21 H7 Z M14 3 V7 H18'));
   if (name === 'receipt') return React.createElement('svg', common, P('M6 3 H18 V21 L15 19 L12 21 L9 19 L6 21 Z M9 9 H15 M9 13 H15'));
-  if (name === 'calendarPlus') return React.createElement('svg', common, P('M4 6 H20 V20 H4 Z M4 10 H20 M8 3 V7 M16 3 V7 M12 13 V17 M10 15 H14'));
   // Kalender mit heutiger Tageszahl (wie iOS): das Datum steht im Blatt statt einer generischen Uhr.
   if (name === 'calendarToday') {
     const day = String(new Date().getDate());
@@ -306,7 +305,7 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
   const fan = [
     { key: 'tresor', label: t('nav.capDokument'), icon: 'file', left: 'calc(50% - 104px)', bottom: '84px' },
     { key: 'kk', label: t('nav.capBeleg'), icon: 'receipt', left: 'calc(50% - 40px)', bottom: '126px' },
-    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarPlus', left: 'calc(50% + 40px)', bottom: '126px' },
+    { key: 'calendar', label: t('nav.capFrist'), icon: 'calendarToday', left: 'calc(50% + 40px)', bottom: '126px' },
     { key: 'merkliste', label: t('nav.merkliste'), icon: 'pencil', left: 'calc(50% + 104px)', bottom: '84px' },
   ];
   return React.createElement(React.Fragment, null,
