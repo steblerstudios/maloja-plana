@@ -21,14 +21,25 @@
 > gegenprüfen. Die Tresor-2b-**UI** ist bewusst vertagt (Memory `project_tresor_lock_crypto`).
 >
 > **Aktive Arbeit dieser Sitzung — Branch `feat/lohn-barometer-zonen` (ab `main=4c79bee`),
-> 4 Commits, gepusht, NICHT gemergt, kein PR:**
+> 7 Commits, gepusht, NICHT gemergt, kein PR:**
 > `cfe6fb3` Tresor-Doku-Vertagung · `a758bca` Barometer-Verteilungs-Zonen (Bubbles) + Armuts-Band
 > raus · `e951164` Lohn-auf-Miethöhe + Miet-Marken + 13.-Quellenhinweis · **`8f505dc` 13.-Monatslohn-Feld
 > + Mindestlohn-Check rechtskonform** (der 13. zählt an den Mindestlohn = Jahres-Boden; neuer
 > Status `konformMit13`; behebt einen Falsch-Alarm für 13.-Bezüger — amtlich belegt, Memory
-> `reference_mindestlohn_13_monatslohn_kantone`). **756 Tests grün, Bundle 64.97/65 kB (fast voll).**
-> Live-verifiziert nur auf localhost (hell+dunkel), NICHT deployt. Offene Barometer-Fäden:
-> Branchen-Chips interaktiv · Durchschnitt-Strich (nur STAT-TAB belegbar) · Finanz-Tacho-Klärung.
+> `reference_mindestlohn_13_monatslohn_kantone`). **756 Tests grün, Bundle 64.98/65 kB (fast voll).**
+> Live-verifiziert nur auf localhost (hell+dunkel), NICHT deployt.
+>
+> **Fortsetzung 2026-07-18 (2. Sitzung), 3 weitere Commits:** `e6622ff` **Branchen-Chips interaktiv**
+> (Klick → Branchen-Median als neutrale Marke aufs Barometer; Hybrid „Jahr pro Chip": die von der
+> BFS-Mitteilung 2024 WÖRTLICH genannten Werte belegt auf 2024 gehoben — Pharma 10159/Bau 6616/
+> Detailhandel 5214 + Gesamtmedian 7024 —, Rest bleibt 2022; der dormante Durchschnitt-Strich wurde
+> dafür umgebaut) · `584de58` **Code-Review-Fix** (Chips gegen `incomeVergleich` färben statt roh,
+> sonst widersprachen Chip-Farbe und Marker-Position) · `edb18d9` Stand-Doku. `/code-review high`
+> gelaufen: 1 Befund gefixt + verifiziert, 1 akzeptiert (kein Live-Bug). Weiterhin nur localhost.
+> **Offene Barometer-Fäden:** Durchschnitt-Strich → **verworfen** (kein zitierbarer BFS-Mittelwert,
+> nur STAT-TAB; breit gesucht bestätigt — der Median trägt allein) · Finanz-Tacho-Klärung ·
+> Branchen-Werte weiter auf 2024 heben (STAT-TAB-Recherche) · a11y-Sweep · wageClaim.
+> **13.-Kanton-Belege NE/TI amtlich nachgezogen** (Memory `reference_mindestlohn_13_monatslohn_kantone`).
 
 ## Wo stehen wir gerade
 
