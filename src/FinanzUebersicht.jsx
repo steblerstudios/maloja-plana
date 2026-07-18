@@ -5,7 +5,6 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
-import { LOHN_REFERENZ } from './data/lohnEinordnung.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
@@ -213,32 +212,19 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     ),
 
     hasData && income > 0 && (() => {
-      // ⚠️ Diese Bänder messen das TATSÄCHLICHE Monatseinkommen (armutsrelevant: wer 50%
-      // arbeitet und CHF 3'400 erhält, ist wirklich nahe der Armutsgrenze). Das Barometer
-      // darunter misst das LOHNNIVEAU, auf Vollzeit hochgerechnet. Zwei Fragen, beide wahr —
-      // sie dürfen sich nur nicht wie ein Widerspruch lesen (Predeploy-Runde 8). Darum
-      // benennt das Label ausdrücklich „was monatlich reinkommt".
+      // Das Lohn-Barometer trägt die Einordnung „wo steht mein Einkommen" allein — belegt
+      // (LSE 2024: p10/Median/p90), auf Vollzeit-Äquivalent gerechnet, mit den vier
+      // Verteilungs-Zonen und dem kantonalen Mindestlohn-Boden als „!".
       //
-      // Der Median kommt aus LOHN_REFERENZ — hier stand die 6788 HARTKODIERT: eine zweite
-      // Wahrheit neben `branchenLohn.js`, die beim LSE-2024-Update stumm veraltet wäre.
-      const thresholds = [
-        { max: 2279, key: 'belowPoverty', color: palette.goldDeep || '#c47a20' },
-        { max: 4000, key: 'nearPoverty', color: palette.sandDeep || palette.goldDeep },
-        { max: LOHN_REFERENZ.median, key: 'belowMedian', color: palette.mid },
-        { max: 10000, key: 'aboveMedian', color: palette.sageDeep },
-        { max: Infinity, key: 'highIncome', color: palette.sageDeep },
-      ];
-      const band = thresholds.find(th => income <= th.max);
+      // Das frühere Text-Band (Armuts-/Median-Schwellen 2279/4000/… auf ROH-Einkommen) ist
+      // ENTFALLEN (Entscheid Stebler Studios 2026-07-18, frühere Design-Frage §12): Es
+      // verglich rohes Personen-Monatseinkommen mit einer HAUSHALTS-Armutsgrenze (verfügbar,
+      // äquivalenziert) — die falsche Grösse, im Code zudem unbelegt — und war die
+      // ungenauere Doppelung zum Barometer, das dieselbe Frage belegt und Vollzeit-korrekt
+      // beantwortet.
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
       },
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-          React.createElement('span', null, t('finanzUebersicht.incomePosition')),
-          React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
-        ),
-        // Statt des versteckten Dünn-Balkens hinter einem <details>: das Lohn-Barometer,
-        // offen und spiegelgleich zur Miete darunter. Zeigt Median, Durchschnitt und den
-        // kantonalen Mindestlohn-Boden als „!" — und rechnet Teilzeit ehrlich hoch.
         React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true }),
         (() => {
           const vgl = getBranchenvergleich(income);

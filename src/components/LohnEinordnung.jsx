@@ -5,55 +5,91 @@ import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { renderSource } from '../utils/renderSource.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
-// Gleiche Grammatik, andere Domäne. Encoding: docs/design/farb-und-daten-system.md
-//   • Füllung = dein Lohn, in der Frucht-Farbe des Bereichs Arbeit (Haselnuss)
+// Encoding: docs/design/farb-und-daten-system.md
+//   • Zonen  = vier belegte Verteilungs-Abschnitte (p10 / Median / p90, LSE) als tastige
+//     Bubbles, gleich breit (kategorial), damit jede ihren Namen darunter trägt. Neutral
+//     getönt — die Farbe gliedert nur, sie wertet nicht.
+//   • Füllung = dein Lohn füllt die Bubbles bis zu seiner Stelle (Frucht-Farbe Arbeit/Haselnuss)
 //   • ● Punkt = Median, gefärbt nach DEINER Lage (sage = darüber, gold = darunter)
-//   • | Strich = Durchschnitt, neutral
-//   • ! = der kantonale Mindestlohn-Boden. Graphit normal, rose nur wenn unterschritten.
+//   • | Strich = Durchschnitt, neutral (verdrahtet, aber inaktiv bis die belegte BFS-Zahl da ist)
+//   • ! = der kantonale Mindestlohn-Boden, LIEGT ÜBER dem Balken. Graphit normal, rose wenn unterschritten.
 
-// Balken + Marken. Bewusst ohne positionierte Labels — die Werte stehen als Zeile darunter,
-// sonst überlappen sie sich auf schmalen Geräten.
-const Barometer = ({ palette, value, fillColor, marks, scaleMin, scaleMax, ariaLabel }) => {
-  const pct = (v) => Math.max(0, Math.min(100, ((v - scaleMin) / (scaleMax - scaleMin)) * 100));
+// Balken aus gleich breiten Bubble-Segmenten (kategorial/Quantil). Die Skala ist innerhalb
+// jeder Bubble linear nach CHF, die Bubble-Grenzen sind die belegten Quantile — so trägt
+// jede Bubble einen lesbaren Namen und der Lohn füllt sie ehrlich bis zu seiner Stelle.
+const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel }) => {
+  const n = zones.length;
+  // CHF → Pixel-% über die kategorialen Bubbles (jede Bubble = 1/n der Breite, innen linear).
+  const pctCat = (v) => {
+    for (let i = 0; i < n; i++) {
+      const z = zones[i];
+      if (v <= z.max || i === n - 1) {
+        const within = Math.max(0, Math.min(1, (v - z.min) / (z.max - z.min)));
+        return ((i + within) / n) * 100;
+      }
+    }
+    return 100;
+  };
+  const tintBase = isDark ? '236,236,234' : '90,80,66';
+  const alphas = [0.16, 0.10, 0.055, 0.03];
+  const GAP = 6; // px Luft zwischen den Bubbles
+
   return React.createElement('div', {
     role: 'img', 'aria-label': ariaLabel,
-    style: { position: 'relative', height: '10px', background: palette.border, borderRadius: '5px', marginBottom: '12px' },
+    style: { position: 'relative', height: '16px', marginBottom: '4px' },
   },
-    React.createElement('div', {
-      style: { height: '100%', width: pct(value) + '%', background: fillColor, borderRadius: '5px' },
+    // Bubbles (gleich breit). Jede füllt sich Haselnuss bis zu dem Anteil, den der Lohn
+    // in IHREM CHF-Bereich erreicht — Bubbles darunter voll, die eigene teilweise, darüber leer.
+    zones.map((z, i) => {
+      const l = (i / n) * 100;
+      const w = (1 / n) * 100;
+      const leftGap = i === 0 ? 0 : GAP / 2;
+      const rightGap = i === n - 1 ? 0 : GAP / 2;
+      const fillW = value >= z.max ? 100 : value <= z.min ? 0 : ((value - z.min) / (z.max - z.min)) * 100;
+      return React.createElement('div', {
+        key: 'z' + i,
+        style: {
+          position: 'absolute', top: 0, height: '100%', boxSizing: 'border-box', overflow: 'hidden',
+          left: 'calc(' + l + '% + ' + leftGap + 'px)',
+          width: 'calc(' + w + '% - ' + (leftGap + rightGap) + 'px)',
+          background: 'rgba(' + tintBase + ',' + (alphas[i] != null ? alphas[i] : 0.03) + ')',
+          borderRadius: '9px', border: '0.5px solid ' + palette.border,
+        },
+      },
+        fillW > 0 && React.createElement('div', {
+          style: { position: 'absolute', left: 0, top: 0, bottom: 0, width: fillW + '%', background: fillColor },
+        })
+      );
     }),
+
+    // Marken: ● Median-Punkt · | Durchschnitt-Strich · „!" Mindestlohn (über dem Balken).
     marks.map((m, i) => {
-      const left = pct(m.value) + '%';
+      const leftPos = pctCat(m.value) + '%';
       if (m.form === 'dot') {
         return React.createElement('div', {
-          key: i,
+          key: 'm' + i,
           style: {
-            position: 'absolute', top: '-1px', left, marginLeft: '-6px',
-            width: '12px', height: '12px', borderRadius: '50%', background: m.color,
+            position: 'absolute', top: '1px', left: leftPos, marginLeft: '-7px',
+            width: '14px', height: '14px', borderRadius: '50%', background: m.color,
             border: '1.5px solid ' + palette.surface,
           },
         });
       }
       if (m.form === 'line') {
         return React.createElement('div', {
-          key: i,
-          style: { position: 'absolute', top: '-9px', bottom: '-3px', left, width: '2px', background: m.color },
+          key: 'm' + i,
+          style: { position: 'absolute', top: '-7px', bottom: '-3px', left: leftPos, width: '2px', background: m.color },
         });
       }
-      // exclaim — die harte Schwelle.
-      // Deckender Ring statt weichem Blur (Predeploy-Runde 8, zweite Batterie): Liegt der
-      // Lohn ÜBER dem Boden — der Normalfall —, läuft die Füllung über das „!" hinweg, und
-      // Graphit auf Frucht trägt im Dunkelmodus nur 1.70–1.89:1. Derselbe Ring wie am
-      // ●-Punkt (`1.5px solid palette.surface`) trennt es sauber: 4.01–4.05:1.
-      // `paintOrder: stroke fill` legt den Ring unter die Glyphe; `textShadow` bleibt Rückfall.
+      // exclaim — die harte Schwelle, liegt ÜBER dem Balken. Deckender Ring statt Blur
+      // (Predeploy-Runde 8): `paintOrder: stroke fill` legt den surface-Ring unter die Glyphe.
       return React.createElement('div', {
-        key: i,
+        key: 'm' + i,
         style: {
-          position: 'absolute', top: '-15px', height: '28px', left, marginLeft: '-4px',
+          position: 'absolute', top: '-16px', height: '28px', left: leftPos, marginLeft: '-4px',
           width: '8px', textAlign: 'center', lineHeight: '28px', fontSize: '24px',
           fontWeight: 700, pointerEvents: 'none', color: m.color,
-          WebkitTextStrokeWidth: '2px',
-          WebkitTextStrokeColor: palette.surface,
+          WebkitTextStrokeWidth: '2px', WebkitTextStrokeColor: palette.surface,
           paintOrder: 'stroke fill',
           textShadow: '0 0 2px ' + palette.surface + ', 0 0 2px ' + palette.surface,
         },
@@ -88,11 +124,9 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
-  // Dieses Instrument vergleicht gegen VOLLZEIT- und BRUTTO-Bezüge: der BFS-Median ist ein
-  // Bruttomedianlohn auf 40 Std./Woche, der Mindestlohn ein Brutto-Stundenlohn. Fehlen die
-  // Wochenstunden ODER die Einkommensart, deckt keine einzige Marke den gezeigten Wert —
-  // dann ist auch der BALKEN eine Behauptung, nicht nur der Satz darunter. Also gar kein
-  // Balken, sondern eine ruhige Einladung; derselbe Ton wie im Kapitel (Predeploy-Runde 8).
+  // Dieses Instrument vergleicht gegen VOLLZEIT- und BRUTTO-Bezüge. Fehlen die Wochenstunden
+  // ODER die Einkommensart, deckt keine einzige Marke den gezeigten Wert — dann gar kein
+  // Balken, sondern eine ruhige Einladung (Predeploy-Runde 8).
   if (!basisKnown || !hoursKnown) {
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
@@ -103,19 +137,29 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     );
   }
 
-  // `mlBreached` kommt aus `lohnBandState` → `pruefeStundenlohn` — dieselbe Funktion, die
-  // das Kapitel und der Brief benutzen. Hier stand bis Predeploy-Runde 8 eine ZWEITE
-  // Rechnung (`incomeFTE < mindestlohn.monat`), die bei >42 Std. das Gegenteil des Kapitels
-  // sagte und einen Netto-Lohn gegen den Brutto-Boden hielt. Nicht wieder selbst rechnen.
-
-  // Ab hier ist `rel` garantiert gesetzt (der frühe Return oben deckt !comparable ab).
   // Valenz statt Richtung: gold ist die „engere Seite" — beim Lohn also darunter.
   const valenceColor = rel === 'above' ? palette.sage : rel === 'below' ? palette.gold : palette.mid;
   const readoutColor = rel === 'above' ? palette.sageDeep : rel === 'below' ? palette.goldDeep : palette.mid;
 
+  // Vier belegte Verteilungs-Zonen (LSE): unteres Zehntel (<p10) · unterer Bereich
+  // (p10–Median) · oberer Bereich (Median–p90) · oberes Zehntel (>p90).
+  const zones = [
+    { min: scaleMin, max: LOHN_REFERENZ.p10, key: 'zoneLow', sub: 'zoneLowSub' },
+    { min: LOHN_REFERENZ.p10, max: median, key: 'zoneLowerMid' },
+    { min: median, max: LOHN_REFERENZ.p90, key: 'zoneUpperMid' },
+    { min: LOHN_REFERENZ.p90, max: scaleMax, key: 'zoneHigh', sub: 'zoneHighSub' },
+  ];
+  const activeZone = zones.find(z => incomeFTE <= z.max) || zones[zones.length - 1];
+
   const marks = [
     { value: median, form: 'dot', color: valenceColor },
   ];
+  // Durchschnitt-Strich: verdrahtet, aber nur wenn eine BELEGTE Zahl vorliegt. BFS nennt den
+  // Mittelwert nicht in der Medienmitteilung (nur STAT-TAB) → bis die Zahl belegt ist, kein
+  // Strich (keine geratene Zahl auf einer Marke, die eine Tatsache behauptet).
+  if (LOHN_REFERENZ.durchschnitt && LOHN_REFERENZ.durchschnitt < scaleMax) {
+    marks.push({ value: LOHN_REFERENZ.durchschnitt, form: 'line', color: palette.mid });
+  }
   if (mindestlohn && mindestlohn.monat < scaleMax) {
     marks.unshift({ value: mindestlohn.monat, form: 'exclaim', color: mlBreached ? palette.roseDeep : palette.text });
   }
@@ -127,60 +171,71 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
       style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.sm + 'px' },
     }, t('lohnEinordnung.title')),
 
+    // Quantil-Grenzen über dem Balken (p10 / p90) als belegte Zahlen an ihren Bubble-Kanten.
+    React.createElement('div', {
+      style: { position: 'relative', height: '15px', marginBottom: '3px', fontSize: '11px', color: palette.soft },
+    },
+      React.createElement('span', { style: { position: 'absolute', left: '25%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p10)),
+      React.createElement('span', { style: { position: 'absolute', left: '75%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' } }, 'CHF ' + fmt(LOHN_REFERENZ.p90))
+    ),
+
     React.createElement(Barometer, {
-      palette, value: Math.min(incomeFTE, scaleMax), fillColor: arbeitColor, marks, scaleMin, scaleMax,
-      // Die Text-Alternative trägt dieselbe Aussage wie die Farbe: Lage UND
-      // Mindestlohn-Unterschreitung in Worten. Vorher nannte das aria-Label nur zwei Zahlen,
-      // und die Unterschreitung stand ausschliesslich in der Farbe (WCAG 1.4.1, Level A).
+      palette, isDark: isDarkMode, value: Math.min(incomeFTE, scaleMax), fillColor: arbeitColor,
+      marks, zones,
       ariaLabel: [
         t('lohnEinordnung.aria', { amount: fmt(incomeFTE), median: fmt(median) }),
         t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1)),
+        t('lohnEinordnung.' + activeZone.key),
         mlBreached ? t('lohnEinordnung.mindestlohnBreachedLine') : null,
       ].filter(Boolean).join(' '),
     }),
 
-    // Werte-Zeile — die Marke zum Nachlesen.
-    // ⚠️ a11y: `valenceColor` ist die GRAFIK-Farbe (roh sage/gold). Als Text trägt sie AA
-    // nicht — gold auf `up` = 1.93:1 (nötig 4.5:1), und gold ist ausgerechnet der
-    // Unter-Median-Fall, also die Zielgruppe. Für Text gilt die Deep-Variante
-    // (`readoutColor`), für den Punkt auf dem Balken die kräftige. `config/constants.js`
-    // sagt es selbst: „gold bleibt für Akzente/Ringe."
+    // Zonen-Namen UNTER der jeweiligen Bubble (kategorial → gleich breit, kein Überlappen).
+    // Rand-Zonen tragen zusätzlich das vertraute Klartext-Wort (Tieflohn / Spitzenlohn).
+    React.createElement('div', {
+      style: { position: 'relative', height: '30px', marginTop: '5px', marginBottom: space.sm + 'px', fontSize: '10px' },
+    }, zones.map((z, i) => {
+      const center = ((i + 0.5) / zones.length) * 100;
+      const isActive = z.key === activeZone.key;
+      return React.createElement('div', {
+        key: 'zl' + i,
+        style: {
+          position: 'absolute', left: center + '%', transform: 'translateX(-50%)', top: 0,
+          textAlign: 'center', width: (100 / zones.length - 1) + '%',
+          color: isActive ? palette.text : palette.mid, fontWeight: isActive ? weight.medium : weight.regular,
+          lineHeight: 1.25,
+        },
+      },
+        t('lohnEinordnung.' + z.key),
+        z.sub && React.createElement('div', { style: { color: palette.soft, fontWeight: weight.regular } }, t('lohnEinordnung.' + z.sub))
+      );
+    })),
+
+    // Werte-Zeile — Ihr Lohn LINKS, Median RECHTS (Entscheid Stebler Studios 2026-07-18).
+    // ⚠️ a11y: `valenceColor` ist die GRAFIK-Farbe; als Text gilt die Deep-Variante.
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
-      React.createElement('span', { style: { color: readoutColor } },
-        '● ' + t('lohnEinordnung.median') + ': CHF ' + fmt(median)),
       React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } },
-        t('lohnEinordnung.yourWage', { amount: fmt(incomeFTE) }))
+        '▬ ' + t('lohnEinordnung.yourWage', { amount: fmt(incomeFTE) })),
+      React.createElement('span', { style: { color: readoutColor } },
+        '● ' + t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
 
-    // Lage-Aussage. Sie ist hier immer belegt: ohne Stunden oder ohne Brutto-Basis
-    // kommt die Anzeige gar nicht bis hierher (früher Return oben).
     React.createElement('div', {
       style: { fontSize: text.sm, color: readoutColor, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },
     }, t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1))),
 
-    // Wie der Vergleich zustande kommt — ehrlich, je nach Datenlage.
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     }, partTime ? t('lohnEinordnung.fteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
       : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
       : t('lohnEinordnung.fulltimeNote')),
 
-    // Mindestlohn-Zeile. Die Unterschreitung steht jetzt als eigener SATZ da, nicht nur in
-    // Rosé — der Text war vorher in beiden Zuständen identisch (WCAG 1.4.1, Level A).
     mindestlohn && React.createElement('div', {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
-      // `monatVollzeit` (42 Std.), NICHT `monat` (40 Std., das ist die Marken-Position):
-      // der Text „bei Vollzeit rund CHF X im Monat" muss dieselbe Zahl nennen wie Kapitel
-      // und Brief (GE 4475, nicht 4262) — sonst widerspricht das Barometer der übrigen App
-      // um ~5 % (Predeploy-Runde 8, dritte Prüfung).
       t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monatVollzeit), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
-      // Verdacht, keine Feststellung — und die Ausnahmen dazu. Die App kennt sie nicht
-      // (Lehre/Praktikum/unter 18/GAV; GE hat drei Sätze), also darf sie hier keine
-      // Rechtsverletzung behaupten. Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
-      // Derselbe Ausnahme-Text wie im Kapitel — eine Wahrheit, kein zweiter Wortlaut.
       mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : ''
     ),
 
