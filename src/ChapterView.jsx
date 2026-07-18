@@ -1662,7 +1662,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
                 },
                   React.createElement('div', null, tr('lohnCheck.hoursEquiv', { month: String(perMonth), year: String(perYear) })),
-                  check && check.lohnStunde != null && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: check.lohnStunde.toFixed(2) }))
+                  // ⚠️ NUR bei brutto-Basis (Predeploy-Runde 8, dritte Prüfung): Die Umsortierung
+                  // in `pruefeStundenlohn` gibt `lohnStunde` jetzt AUCH bei 'basisUnklar' zurück —
+                  // für einen Netto-Nutzer wäre das der Netto-Stundenlohn, hier im
+                  // Mindestlohn-Kontext (Brutto) unbeschriftet gezeigt. Genau die Netto/Brutto-
+                  // Vermengung, die diese Runde überall sonst trennt. Ohne belegte Brutto-Basis
+                  // steht die Umrechnung „Std./Monat" da, aber kein „Stundenlohn: CHF X".
+                  check && check.lohnStunde != null && allData?.finanzen?.incomeType === 'brutto' && React.createElement('div', { style: { marginTop: space.xs + 'px' } }, tr('lohnCheck.hourlyWage', { wage: check.lohnStunde.toFixed(2) }))
                 )
               );
               if (check && check.status === 'unterMindestlohn') {
@@ -1882,10 +1888,15 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         // keine Kontrollstelle), BS (AWA) und NE (ORCT) nicht. Der Diff legte
                         // die kantonsgenaue Registry für den BRIEF an, das Kapitel zeigte
                         // weiter auf eine erfundene Sammelstelle. Jetzt dieselbe Quelle.
-                        .replace('{stelle}', lohnKontrollstelleText(kanton, tr))
+                        // Funktions-Replacer für die PROSA-Platzhalter (Stelle, Ausnahmen):
+                        // `String.replace(str, str)` würde ein `$`-Zeichen im eingesetzten Text
+                        // als Ersetzungs-Muster lesen ($&, $1, …) und den Text verstümmeln.
+                        // Ein Funktions-Replacer gibt ihn wörtlich zurück (Predeploy-Runde 8,
+                        // dritte Prüfung). Die Zahl-/Code-Platzhalter oben sind ungefährlich.
+                        .replace('{stelle}', () => lohnKontrollstelleText(kanton, tr))
                         // Der Befund kennt die Ausnahmen nicht → er nennt sie, statt eine
                         // Rechtsverletzung festzustellen (siehe `WAGECLAIM_BEREIT`).
-                        .replace('{ausnahmen}', tr('lohnCheck.ausnahmen'))
+                        .replace('{ausnahmen}', () => tr('lohnCheck.ausnahmen'))
                     )
                   );
                   // ⚠️ Brief-Knopf ruht — siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.

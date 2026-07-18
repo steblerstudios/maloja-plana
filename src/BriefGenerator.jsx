@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
-import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions } from './briefGenerator.js';
+import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender } from './briefGenerator.js';
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -61,7 +61,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   const reklamationBelege = selected === 'kkReklamation' ? kkBelege.filter(b => belegIds.includes(b.id)) : [];
 
   const handlePrint = () => {
-    if (!selected) return;
+    // `briefCanRender`: eine ruhende Vorlage (WAGECLAIM_BEREIT=false) wird nicht gedruckt,
+    // auch nicht über einen Deep-Link auf `selected` (Predeploy-Runde 8, dritte Prüfung).
+    if (!selected || !briefCanRender(selected)) return;
     const html = generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey });
     openPrintWindow(html);
     // Loop-Closure: nach dem Drucken ruhig zum Ablegen im Lebensordner führen
@@ -83,7 +85,9 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
     if (r) setReminderAdded(true);
   };
 
-  const previewHtml = selected ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey }) : '';
+  // Vorschau nur für Vorlagen, die auch angeboten werden dürfen — sonst rendert ein
+  // Deep-Link auf 'wageClaim' den ruhenden Anschuldigungsbrief (Predeploy-Runde 8, dritte Prüfung).
+  const previewHtml = (selected && briefCanRender(selected)) ? generateLetter(selected, data, t, { belege: reklamationBelege, reasons, job: jobKey }) : '';
 
   return React.createElement('div', {
     style: { maxWidth: '720px', margin: '0 auto' }

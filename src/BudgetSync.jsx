@@ -213,6 +213,9 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           fillColor: bereichFillColor('wohnen', isDarkMode),
           // Drittel-Faustregel als Betrag — nur mit Einkommen bestimmbar, nie geraten.
           thresholdValue: budget.income > 0 ? Math.round(budget.income / 3) : 0,
+          // Das Budget hat keine Nachbarzeile → die Überschreitung braucht hier den
+          // sichtbaren Satz (in MietVergleich trägt ihn `rentShareGuide`).
+          showThresholdText: true,
         }),
         // Mietzinsbeiträge-Hinweis (analog IPV) — kantonal/kommunal, würdevoll
         React.createElement(MietzinsHinweis, { palette, t, canton: userCanton })

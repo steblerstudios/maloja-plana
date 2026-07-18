@@ -25,10 +25,12 @@
 // Der Kommentar hier behauptete ausserdem „CHF 3000 bei 50% sind CHF 6800" — es sind 6000.
 
 import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
-// ⚠️ Bewusst OHNE `STUNDEN_PRO_MONAT` (182 = 42-Std.-Mindestlohn-Welt): Dieses Modul rechnet
-// durchgehend auf der LSE-Norm (40 Std.). Wer die 182 hier wieder importiert, holt die
-// Zwei-Welten-Krankheit zurück — siehe `mindestlohnBoden`.
-import { getMindestlohn, pruefeStundenlohn } from './lohnCheck.js';
+// ⚠️ `STUNDEN_PRO_MONAT` (182 = 42-Std.-Mindestlohn-Welt) wird HIER nur für den einen
+// legitimen Zweck genutzt: den TEXT „bei Vollzeit im Monat" in `mindestlohnBoden.monatVollzeit`
+// (derselbe Wert wie Kapitel/Brief). Die SKALA/Marke rechnet durchgehend auf der LSE-Norm
+// (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
+// Krankheit zurück — siehe `mindestlohnBoden`.
+import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT } from './lohnCheck.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -61,15 +63,23 @@ const num = (v) => {
 // `false` war und der Text schwieg. Füllung und Marke widersprachen einander, systematisch
 // um 5 %. Eine Skala, ein Nenner.
 //
-// Der RECHTLICHE Boden bleibt der Stundenlohn (kantonales Recht); die 182-Rechnung ist die
-// Illustration „bei Vollzeit" und lebt weiter in `pruefeStundenlohn`/`mindestMonat`. Hier
-// geht es nur um die Position auf einer 40-Std.-Skala.
+// ⚠️ ZWEI Monatsbeträge, weil sie ZWEI Zwecken dienen (Predeploy-Runde 8, DRITTE Prüfung,
+// Code-Review gegen den Fix selbst):
+//   · `monat` = auf der LSE-Norm (40 Std.) → die POSITION der „!"-Marke auf dem Balken, der
+//     `incomeFTE` (ebenfalls 40 Std.) zeigt. GE: 4262. Sonst stünde der Balken systematisch
+//     5 % neben der Marke (die Zwei-Welten-Krankheit, hier korrekt behoben).
+//   · `monatVollzeit` = auf der Mindestlohn-Norm (42 Std., wie `STUNDEN_PRO_MONAT`) → der
+//     TEXT „bei Vollzeit rund CHF X im Monat". GE: 4475 — derselbe Wert wie Kapitel und Brief.
+// Beide sind offiziell: ge.ch publiziert „4263 CHF pour 40 heures … 4475 CHF pour 42 heures".
+// Der Fix der zweiten Batterie nahm für die MARKE die 40 Std. — richtig — liess aber den
+// TEXT auf derselben 40-Std.-Zahl (4262) und widersprach damit dem Rest der App (4475).
 export function mindestlohnBoden(canton) {
   const ml = getMindestlohn(canton);
   if (!ml) return null;
   return {
     chfStunde: ml.chfStunde,
-    monat: Math.round(ml.chfStunde * (LSE_VOLLZEIT_STUNDEN_WOCHE * 52 / 12)),
+    monat: Math.round(ml.chfStunde * (LSE_VOLLZEIT_STUNDEN_WOCHE * 52 / 12)), // 40 Std. — Marke
+    monatVollzeit: Math.round(ml.chfStunde * STUNDEN_PRO_MONAT),              // 42 Std. — Text
     jahr: ml.jahr,
   };
 }

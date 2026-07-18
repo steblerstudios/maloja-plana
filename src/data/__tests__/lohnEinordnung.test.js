@@ -40,6 +40,13 @@ describe('lohnEinordnung', () => {
     it('nicht der 182-Wert (42-Std.-Welt) — das wäre eine zweite Norm auf einer Skala', () => {
       expect(mindestlohnBoden('GE').monat).not.toBe(4475);
     });
+    // Predeploy-Runde 8, dritte Prüfung: `monat` (40 Std.) ist die MARKEN-Position, aber der
+    // TEXT „bei Vollzeit rund CHF X im Monat" braucht die 42-Std.-Zahl — dieselbe wie
+    // Kapitel/Brief (4475). Sonst widerspricht das Barometer der übrigen App um ~5 %.
+    it('monatVollzeit ist der 42-Std.-Wert (4475) für den Text — konsistent mit Kapitel/Brief', () => {
+      expect(mindestlohnBoden('GE').monatVollzeit).toBe(4475);
+      expect(mindestlohnBoden('GE').monatVollzeit).not.toBe(mindestlohnBoden('GE').monat);
+    });
     it('Kanton ohne Mindestlohn: null (kein erfundener Boden)', () => {
       expect(mindestlohnBoden('ZH')).toBeNull();
       expect(mindestlohnBoden('')).toBeNull();

@@ -2511,7 +2511,7 @@ export default {
   },
   lohnCheck: {
     // TODO(rm): Gegenlese Muttersprachler:in
-    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pudais Vus cleric Voss dretgs tar {stelle}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pos ti cleric Tes dretgs tar {stelle}." },
+    unterMindestlohn: { sie: "Indicaziun: Voss salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pudais Vus clerir Voss dretgs tar {stelle}.", du: "Indicaziun: Tes salari (CHF {lohnStunde}/ura) para dad esser sut il salari minimal legal en il chantun {kanton} (CHF {mindestStunde}/ura, stadi {jahr}). {ausnahmen} Sche nagut da quai na vala, pos ti clerir Tes dretgs tar {stelle}." },
     ausnahmen: 'Il salari minimal na vala dentant betg per tuts: emprendissadi, pratica ed uffants sut 18 onns èn exclus, ed en tscherts chantuns era branschas cun in contract collectiv, l’agricultura e lavurs da vacanzas.',
     stelleFallbackKurz: 'la post chantunal cumpetenta', // TODO(rm): Gegenlese Muttersprachler:in
     keinMindestlohn: { sie: 'En Voss chantun na datti nagin salari minimal legal.', du: 'En Tes chantun na datti nagin salari minimal legal.' },

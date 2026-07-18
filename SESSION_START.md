@@ -13,7 +13,7 @@
 
 | | |
 |---|---|
-| Aktueller Branch | **`fix/predeploy-r8`** — die Runde-8-Blocker sind behoben (4 Commits: `a55b68e` Stand-Doku · `cbd422a` Lohn-Logik · `7000c54` Frucht-Farbe + verify · `664c6a4` Belege + legal-note + Kollision). **Noch nicht gemergt**, PR offen. `main` = `acc52f0` — die Runde-8-Feature-Zweige sind gemergt (PR #93/#94/#95/#96). `chore/stand-sync-r13` ist **tot** — sein Inhalt ist über PR #92 in `main`, der Zweig ist 20 Commits zurück und trägt nichts Einzigartiges (löschbar). |
+| Aktueller Branch | **`fix/predeploy-r8-3`** — die Behebung von `fix/predeploy-r8` ist via **PR #97 in `main`** (Merge-Commit); dieser Zweig trägt die zwei echten Fehler nach, die eine **dritte Prüfung** (Predeploy nach dem Merge) in den ungeprüften Commits fand. `chore/stand-sync-r13` ist **tot** (Inhalt via PR #92 in `main`). |
 | `main` steht auf | **`acc52f0`** (= `origin/main`, gegengeprüft 2026-07-15). ⚠️ **Merge-Fallen-Regel — gilt weiter, aber sie deckt nur den Doku-Fall:** Ein Stand-Sync-PR dokumentiert den Zeiger, sein eigener Merge rückt `main` dahinter. Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer**, ist alles in Ordnung. **Ist das Delta NICHT leer, hängt ein echter Deploy.** Genau das ist am 2026-07-15 passiert: Der frühere Eintrag `5a4851c` behauptete „`main` IST live, kein Deploy hängt", während 23 `src/`-Dateien (+1547/−59) davor lagen — die Feature-PRs #93/#94 waren gemergt, der Selbstschutz war beschrieben, aber nie ausgeführt. **Lehre: Die Gegenprobe ist keine Option, sondern Schritt 1.** |
 | Deploy hängt? | **JA.** `git log --oneline 5a4851c..main` = **20 Commits**, `git diff 5a4851c..main -- src/` = **23 Dateien**; dazu die Blocker-Behebung auf `fix/predeploy-r8`. Frisch gebaut → Bundle ≠ Live-Bundle `index-1f4c6867.js`. Das ist **kein** Doku-Delta wie bei #86/#87. |
 | Version (package.json) | `0.1.25-beta` |
@@ -27,8 +27,8 @@
 | **Runde 5 (#79/#80) — 🟢 GEMERGT, Gate GRÜN, NICHT LIVE** | **#79** i18n-Jahr-Interpolation `lohnCheck.unterMindestlohn`. **#80 (Predeploy-Runde 5, volle Batterie erneut = 0 offene 🔴):** zwei pre-existing 🔴 gefixt — (1) **Kantons-Mindestlöhne auf 2026 offiziell verifiziert korrigiert** (GE 24.32→24.59, NE 21.31→21.35, BS 21.00→22.20 + `indexiert`-Flag, JU/TI bestätigt; war False-Negativ-Warnungs-Risiko, Wahrheits-Disziplin) · (2) **Schwarz-auf-Sage-🔴** an 3 Buttons (4.32:1)→`sageBtn`/weiss. Plus DE-Grammatik „beim". |
 | **Runden 4–7 (#72–#84) — ✅ JETZT LIVE** | Doku/Governance (#72–74), Momentum-Zeile+Sie/Du (#75/#77), i18n-Jahr (#79), Mindestlohn 2026 (#80), SEO/GEO-Fundament (#82), roseDeep+tote-Links (#83), Predeploy-r7 a11y+BWO (#84) — **alle deployt + verified-live in `index-1f4c6867.js`** (2026-07-14). Predeploy-Runde 7: volle 8-Agenten-Batterie 0 🔴, alle ⚠️ auf ausdrücklichen Wunsch vor Deploy gefixt. |
 | **Runde 8 (2026-07-15) — 🟡 GEMERGT in `main`, NICHT live; Blocker behoben auf `fix/predeploy-r8`** | ⚠️ **Predeploy-Runde 8 hat die Freigabe VERWEIGERT** — 9 🔴 in der Fachlogik. Volle Batterie: 9 Prüf-Agenten + Code-Review (44 Agenten); alle mechanischen Gates waren grün (701 Tests, Build, SEO 0/0, PII, Size, CSP, de-Chunks) — **die Skripte sahen nichts davon.** Behoben auf `fix/predeploy-r8` (siehe eigene Zeile). Details unten unter „Nächste Schritte" Punkt 0. <br> **`feat/befund-brief-lohn` (`d5a2898`, jetzt via PR #93 in `main`):** `c56272f` **Teilzeit-Fehlalarm behoben** — ohne erfasste Wochenstunden nahm der Mindestlohn-Befund blind Vollzeit an (182 Std.); CHF 3000 bei 50% wurden als 16.48/Std. statt 32.97/Std. gelesen → korrekt bezahlte Teilzeit-Angestellte wurden für unterbezahlt erklärt, **und der Befund führt neu zu einem Brief an den Arbeitgeber**. Jetzt nur `pruefeStundenlohn`; ohne Stunden ruhige Einladung statt Warnung, kein Brief-Knopf. · `1bca5a8` Arbeitgeber-**Adresse** (beide Kapitel, quer befüllt) + **Haupt-/Nebenerwerb-Auswahl** (`options.job` steuert Empfänger UND Zahlen) · `d5a2898` **NE/BS amtlich gegengeprüft** — NE hat KEIN „Mindestlohngesetz", der Mindestlohn steht in der **LEmpl von 2004, Art. 32a ff. (RSN 813.10)**; BS = **MiLoG vom 13.01.2021 (SG 812.200)**, Stelle AWA. Beide von `verify:true` → `false`. <br> **`feat/lohn-mietzins-barometer` (`6c143b0`, ab dem obigen):** `bc52438` **Barometer-Rebuild** nach der Rebuild-Spec (Lohn + Miete spiegelgleich in der Finanz-Übersicht, `data/lohnEinordnung.js`, `components/LohnEinordnung.jsx`, `components/MietVergleich.jsx` in BEIDEN Orten, `RegionalBarometer` + `fillColor`/`thresholdValue`) · `99c741f` `docs/design/farb-und-daten-system.md` · `f6d45b9` **Marken-Kollision** („!" und CH-Schnitt fallen bei ~CHF 4'000 Einkommen aufeinander — 1327×3=3981, mitten in der Zielgruppe) · `6c143b0` **Prüf-Agenten neu gebaut + `.claude/agents\|commands` in git**. |
-| **Blocker-Behebung — 🟡 auf `fix/predeploy-r8`, NICHT gemergt** | Alle 9 🔴 aus Runde 8 behoben (`a55b68e` Stand-Doku · `cbd422a` Lohn-Logik · `7000c54` Frucht-Farbe + verify · `664c6a4` Belege + legal-note + Kollision). 730 Tests grün (64 Dateien), Build sauber, Size **64.96/65 kB**, i18n-Parität 32/32, PII + SEO grün. Zweite Batterie gegen die Behebung selbst gelaufen (5 Prüfer + Code-Review) — siehe „Nächste Schritte" Punkt 0. |
-| **Deploy-Gate** | **🔴 ROT — keine Marke.** `.maloja/predeploy-ok` trägt den toten Hash `31abc36` ≠ HEAD → `deploy.sh` blockt korrekt. **Die Marke hängt am HEAD-Hash** — sie kann erst NACH dem Merge von `fix/predeploy-r8` auf dem dann gültigen `main`-HEAD gesetzt werden, mit einem frischen `/maloja-predeploy`. `deploy.sh` fährt zusätzlich PII- + SEO-Gate und setzt den Release-Tag automatisch. |
+| **Blocker-Behebung — ✅ via PR #97 in `main`, + dritte Prüfung** | Alle 9 🔴 aus Runde 8 behoben, dann DREI Prüf-Durchgänge gegen die Behebung selbst (jeder mit dem Auftrag, sie zu zerlegen). Bilanz: die Durchgänge 2+3 fanden **sechs weitere echte Fehler in den Fixes** (Netto/Brutto in `unpaidWage`, Netto als untere Schranke, Gate an den falschen Arbeitgeber, Zwei-Nenner-Marke, Netto-Stundenlohn unbeschriftet, Barometer-Text 4262 statt 4475) — alle behoben. **740 Tests grün** (64 Dateien), Build sauber, Size **64.96/65 kB**, i18n 32/32, PII + SEO grün. Der wichtigste Befund der Runde: dass die wiederholte adversariale Prüfung nötig war — Mechanik-Gates sahen KEINEN der Fehler. |
+| **Deploy-Gate** | **⏳ Marke wird nach dem Merge von `fix/predeploy-r8-3` gesetzt.** `.maloja/predeploy-ok` ist **lokal + gitignored** (kein Repo-Artefakt) → wird auf den finalen `main`-HEAD geschrieben und lokal von `deploy.sh` gelesen. **Deploy selbst macht Stebler Studios** (nach `/code-review ultra`, billed, von SS ausgelöst — Claude kann es nicht starten). `deploy.sh` fährt PII- + SEO-Gate und setzt den Release-Tag automatisch. |
 
 **⚠️ HISTORIE UMGESCHRIEBEN — ZWEIMAL.** (1) 2026-07-11: Alt-Mails raus, Autoren → „Stebler Studios". (2) **2026-07-14: Personas/Tester/Freunde/Drittperson („Maria Stebler")/Mac-Benutzername + `docs/archive` (199 Dateien) aus der GESAMTEN Historie** (`filter-repo` invert-paths + replace-text, `main`→`35bd840`, force-push, alle Tags/Branches neu, lokal frisch geklont). Verifiziert 0 Treffer gegen `main`. **Bewusst geblieben:** eigener Name „Sophie Stebler" (Autoren-Angabe README/package.json + nDSG-Impressum, öffentlich). **Offen (2 Reste):** (a) `refs/pull/*/head` blieben beim Push abgelehnt → GitHub-Support-Ticket (SHA-Cache + PR-Refs, Formular private-information); (b) alte lokale Mirror-Backups in `_maloja-archiv/` mit Alt-PII (löschbar, waren Recovery-Netze). Details Claude-Memory `feedback_no_owner_name_in_git` + `project_cleanup_inventory` + Runbook `_maloja-archiv/HISTORIE-PURGE-NAME-2026-07-14.md`.
 
@@ -66,19 +66,24 @@
    ⚠️ Merker: `/maloja-predeploy` Schritt 1 liest den LIVE-Marker aus dieser Datei — der
    Tag-Hash `31abc36` ist tot. **Der LIVE-Marker ist `5a4851c`** (= Bundle `index-1f4c6867.js`).
 
-   **Stand:** Alle 🔴 sind behoben (7 Commits, 738 Tests grün, Size 64.96/65 kB). Eine
-   **zweite Batterie gegen die Behebung selbst** ist gelaufen (swiss-precision, rechts, a11y,
-   copy+qualität, code-review) — mit dem ausdrücklichen Auftrag, den Fix zu zerlegen statt
-   ihn zu bestätigen. **Sie fand, dass VIER meiner Fixes selbst falsch waren** (Netto/Brutto
-   in `unpaidWage` wieder eingebaut · Netto als untere Schranke übersehen · Gate öffnete den
-   Brief an den gut zahlenden Arbeitgeber · Zwei-Nenner im Barometer stehengelassen) plus zwei
-   a11y-Regresse durch den Frucht-Fix. Alle behoben (`6c53776`).
-   **Dann fand swiss-precision drei Dinge am FEATURE selbst** (nicht am Fix) → Stebler-Studios-
-   Entscheid: **`wageClaim`-Brief RUHT** (`WAGECLAIM_BEREIT=false`, `2b8e90e`). Details ganz unten.
-
-   ⭐ **NÄCHSTER SCHRITT nach dem Merge:** `/maloja-predeploy` **aus `maloja-frontend/`** starten
-   (nicht aus der Container-Ebene — sonst laden die Agenten nicht, siehe Merker). Die Marke
-   hängt am HEAD-Hash → erst auf dem gemergten `main`-HEAD setzbar.
+   **Stand: alle 🔴 behoben, DREI adversariale Prüf-Durchgänge, alle Funde behoben.**
+   Runde 8 (erste Batterie) fand 9 🔴. Weil die Behebung KI-geschrieben und zuerst ungeprüft
+   war — genau der Zustand, der die 9 erzeugt hat —, lief eine **zweite** Batterie gegen die
+   Behebung: sie fand VIER falsche Fixes (Netto/Brutto in `unpaidWage` · Netto als untere
+   Schranke · Gate an den gut zahlenden Arbeitgeber · Zwei-Nenner im Barometer) + zwei
+   a11y-Regresse. Behoben (`6c53776`). swiss-precision fand zusätzlich drei Dinge am FEATURE
+   selbst → **`wageClaim`-Brief RUHT** (`WAGECLAIM_BEREIT=false`, `2b8e90e`).
+   Nach dem Merge (PR #97) lief eine **dritte** Prüfung gegen die zwei bis dahin ungeprüften
+   Commits — sie fand ZWEI weitere echte Fehler (`fix/predeploy-r8-3`, `8a5eb11`):
+   Netto-Stundenlohn wurde im Kapitel unbeschriftet gezeigt (Folge der Umsortierung), und die
+   Barometer-Textzeile sagte „bei Vollzeit CHF 4262" statt 4475 (Marke braucht 40h, Text 42h)
+   — plus vier latente/Aufräum-Punkte. Alle behoben.
+   **Muster (das eigentliche Ergebnis):** JEDER Prüf-Durchgang fand die vorigen Fixes falsch,
+   auf dieselbe Art wie die Fehler, die sie beheben sollten. Mechanik-Gates (Tests/Build/
+   SEO/PII/Size) sahen KEINEN davon. **Ein KI-Fix ist nicht fertig, bis ihn eine unabhängige
+   adversariale Prüfung nicht mehr umwerfen kann.** Nach der dritten fanden swiss-precision +
+   a11y+copy 0 neue Blocker; der Code-Review 2 (behoben). Eine vierte wäre möglich — die
+   Konvergenz (die dritte fand nur noch 2 statt 4) und der ruhende Brief begrenzen das Risiko.
 
    **Offen aus der zweiten Batterie (⚠️/💡, nicht-blockierend — Feature-Genauigkeit):**
    - **`wageClaim` wieder einschalten** braucht: Sektor + Status erfassen (Lehre/Praktikum/
