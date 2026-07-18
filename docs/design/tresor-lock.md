@@ -127,3 +127,50 @@ grundlegend — darum erst dort entscheiden:
   Rechtliches muss wie beim Beta-Gate ohne Passphrase lesbar bleiben).
 - Performance (Entschlüsseln bei jedem Start) + Verhalten bei vollem Speicher.
 - Zusammenspiel mit dem Backup/Export und dem Beta-Gate.
+
+## 7. Langfrist-Zielbild: Schlüssel-Leiter (aus maloja c, 2026-07-18)
+
+> Quelle: `Ideen Kiste/maloja c/maloja-platform-blueprint/ENCRYPTION-RECOVERY.md`
+> (Codex-Stand). Zielbild für die Zeit NACH Phase 2b — nichts davon ist
+> Vorbedingung für den jetzigen Bau. Maloja entwickelt keine eigene Kryptografie;
+> vor Production braucht es ein unabhängiges Krypto-/Protokollreview.
+
+**Schlüsselhierarchie (Zielbild):**
+
+```text
+Geräteschlüssel (OS-Schutzspeicher)
+  └─ schützt → persönlichen Tresorschlüssel
+       └─ schützt → Objekt-/Bereichsschlüssel
+            └─ verschlüsseln → Dokumente, Angaben, Fristen
+```
+
+Unser Phase-2b-Modell (Passphrase → abgeleiteter Schlüssel → `or5_data`) ist die
+**erste Sprosse** dieser Leiter: ein Tresorschlüssel, noch ohne Geräte- und
+Objektschlüssel-Ebene. `src/crypto/vault.js` (Level 2, ADR-011) ist die zweite
+Sprosse. Jedes verschlüsselte Objekt trägt Algorithmus- und
+Schlüsselversions-Metadaten, damit Rotation und Algorithmuswechsel möglich bleiben.
+
+**Merksatz: Authentisierung ist nicht Entschlüsselung.**
+
+```text
+Passkey        → Konto anmelden
+Geräteschlüssel → Gerät autorisieren
+Tresorschlüssel → Inhalte entschlüsseln
+```
+
+**Recovery-Modell (Zielbild):** bestehendes Gerät bestätigt neues Gerät ·
+offline aufbewahrter Recovery-Code · optional Recovery-Anteile
+(Person + Vertrauensperson) · Supportprozess, der ohne Schlüssel nichts
+entschlüsseln kann · Wartezeit + Benachrichtigung bei riskanter Wiederherstellung.
+**Nicht zulässig:** Master-Hintertür, unverschlüsselte Recovery-Kopie,
+Sicherheitsfragen, stilles Zurücksetzen der E2E-Verschlüsselung, Recovery nur
+über alte E-Mail-Adresse.
+
+**Web-spezifisch (betrifft uns heute):** XSS-Schutz und strenge CSP sind Teil
+des Tresorschutzes — kompromittiertes ausgeliefertes JavaScript schwächt jede
+Client-Verschlüsselung. Gehört ins Threat Model der Phase 2b.
+
+**Pflichtprüfungen vor einer Production-Cloud:** unabhängiges Kryptoreview,
+ASVS/MASVS, Pentest, Recovery-Übung «alle Geräte verloren», Restore aus alter
+Sicherung, Rotation + kompromittierter Schlüssel, Konflikt-/Offline-/
+Doppellöschungstests, Klartext-Prüfung von Logs/Crashreports/Push.
