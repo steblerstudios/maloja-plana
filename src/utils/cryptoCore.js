@@ -13,7 +13,13 @@
 
 export const ALGO = 'AES-GCM';
 export const KEY_LENGTH = 256;
+// Backup-Datei-Format (backupCrypto.js) — EINGEFROREN. Nicht ohne Migrationspfad
+// ändern, sonst werden bestehende verschlüsselte Backups unlesbar.
 export const PBKDF2_ITERATIONS = 100000;
+// Tresor-Lock (At-Rest) — höhere Härtung nach OWASP 2026. Darf frei steigen, weil
+// der Tresor die genutzte Iterationszahl versioniert im Record-Header ablegt und
+// beim Entsperren von dort liest (Fallback 100k für Alt-Datensätze).
+export const PBKDF2_ITERATIONS_TRESOR = 600000;
 export const SALT_BYTES = 16;
 export const IV_BYTES = 12;
 
@@ -24,13 +30,15 @@ export function isSecureContext() {
 
 // Leitet aus Passphrase + Salt einen nicht-extrahierbaren AES-GCM-Schlüssel ab
 // (encrypt + decrypt). Nicht-extrahierbar: der Rohschlüssel verlässt Web Crypto nie.
-export async function deriveKey(passphrase, salt) {
+// `iterations` ist parametrisiert (Default = Backup-Wert), damit der Tresor eine
+// höhere Härtung wählen kann, ohne das eingefrorene Backup-Format zu berühren.
+export async function deriveKey(passphrase, salt, iterations = PBKDF2_ITERATIONS) {
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
     'raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']
   );
   return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+    { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' },
     keyMaterial,
     { name: ALGO, length: KEY_LENGTH },
     false,

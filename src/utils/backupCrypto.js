@@ -6,6 +6,8 @@ import { getDocBlob, saveDocBlob, stripBlob } from './docBlobs.js';
 // Krypto-Primitive (AES-256-GCM + PBKDF2) zentral in cryptoCore.js — geteilt mit
 // dem Tresor-Lock, damit es nur EINE Krypto-Quelle gibt.
 import { ALGO, SALT_BYTES, IV_BYTES, isSecureContext, deriveKey } from './cryptoCore.js';
+// Nur der Aktiv-Marker des Tresors — kein Zyklus (secureStore importiert backupCrypto nicht).
+import { isTresorActive } from './secureStore.js';
 
 // Backup-spezifischer Datei-Kopf (kennzeichnet + versioniert das Backup-Format).
 const BACKUP_MAGIC = 'MALOJA_PLANA_BACKUP_V1';
@@ -15,6 +17,14 @@ const BACKUP_MAGIC = 'MALOJA_PLANA_BACKUP_V1';
  * Includes or5_data, or5_docs, or5_reminders, or5_contacts, or5_merkliste (if present).
  */
 export function collectBackupData() {
+  // Bei aktivem Tresor liegen or5_data etc. NICHT im Klartext in localStorage —
+  // ein direktes Sammeln ergäbe ein leeres, aber gültig aussehendes Backup
+  // (Datenverlust-Falle beim Restore, 🔴 Vorbedingung 4). Der Aufrufer muss erst
+  // entsperren und aus dem entschlüsselten Zustand sichern. Feuert live nie, weil
+  // der Tresor dormant ist.
+  if (isTresorActive()) {
+    throw new Error('Backup bei aktivem Tresor nicht möglich — bitte zuerst entsperren.');
+  }
   const backup = {
     magic: BACKUP_MAGIC,
     created: new Date().toISOString(),

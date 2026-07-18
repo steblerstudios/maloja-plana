@@ -10,12 +10,19 @@
 
 Stand: Kern-Entscheide geklärt, Spec festgehalten. Verwandt: [[maloja-trust-layer]].
 
-## ⛔ HARTE VORBEDINGUNG für Phase 2b (UI-Verdrahtung) — vor JEDER Aktivierung beheben
+## ✅ HARTE VORBEDINGUNG behoben (2b-pre, 2026-07-18) — Live-Verdrahtung bleibt offen
 
-Der Predeploy-Review (2026-07-13, Runde 3) hat am gebauten, noch **dormant**en
-`secureStore`-Fundament vier bestätigte 🔴 gefunden. Sie sind aktuell **kein Live-Risiko**
-(nichts aktiviert den Tresor), MÜSSEN aber behoben sein, **bevor** irgendeine UI den Tresor
-aktivierbar macht — sonst würde der Tresor ein Schutzversprechen geben, das er nicht hält:
+**Stand 2026-07-18:** Die vier 🔴 unten UND die Härtung sind auf **Modul-Ebene**
+behoben und unit-getestet (`secureStore.js` neu, `cryptoCore.js` Iterations-Parameter,
+`backupCrypto.js` Guard; 21 Krypto-Tests grün, volle Suite 748 grün, Size 64.95/65 kB).
+Das Modul bleibt **dormant** — nichts aktiviert den Tresor. **Offen für Phase 2b-UI**
+(eigene, frische Sitzung): LockScreen + Seam in `main.jsx`, Passphrase-Wand, den
+Backup-Export im Flow tatsächlich auslösen (Modul erzwingt jetzt `backupConfirmed`),
+Fehlermeldungen durch i18n routen (5 Sprachen), Doc-Blob-Ladepfad (`main.jsx:744`)
+an den entsperrten In-Memory-Zustand koppeln. Beleg: PR (feat/tresor-2b-pre).
+
+Ursprünglicher Befund (Predeploy-Review 2026-07-13, Runde 3) am dormanten Fundament,
+zur Nachvollziehbarkeit belassen:
 
 1. **Dokumente bleiben unverschlüsselt.** `secureStore.js` verschlüsselt nur den
    `or5_docs`-**Metadaten**-String; die echten Dokument-Dateien (Ausweis-Scans, Arzt-PDFs
@@ -32,13 +39,16 @@ aktivierbar macht — sonst würde der Tresor ein Schutzversprechen geben, das e
    localStorage — die der aktive Tresor gerade entfernt hat → Backup-Datei wäre leer, sieht
    aber gültig aus. Datenverlust-Falle beim späteren Restore.
 
-Zusätzlich (Security-Härtung vor 2b): **PBKDF2 100'000 → ~600'000 Iterationen** (OWASP 2026;
-versioniert im Record-Header, Fallback 100k für Alt-Daten), **Passphrase-Mindestlänge/-stärke**
-in `secureStore` (wie `backupCrypto` bereits ≥4), **Backup-Export-Zwang** im Aktivierungs-Flow
-erzwingen (nicht nur Doku-Konvention), und `VAULT_*` → `TRESOR_*`/`LOCK_*` umbenennen
-(Abgrenzung zu `crypto/vault.js` Level 2).
+Zusätzlich (Security-Härtung vor 2b) — **alle in 2b-pre umgesetzt:** ✅ **PBKDF2
+100'000 → 600'000 Iterationen** (`PBKDF2_ITERATIONS_TRESOR`, versioniert im V2-Record-Header,
+Fallback 100k für V1-Alt-Daten; `cryptoCore.PBKDF2_ITERATIONS`=100k bleibt eingefroren fürs
+Backup-Format). ✅ **Passphrase-Mindestlänge** `TRESOR_MIN_PASSPHRASE=8` (bewusst strenger
+als Backup ≥4; reine Längenschwelle für ruhige UX — Design-Entscheid, bei Bedarf justieren).
+✅ **Backup-Export-Zwang**: `activateTresor(pw, { backupConfirmed })` wirft ohne Bestätigung
+(nicht mehr nur Doku-Konvention). ✅ **`VAULT_*` → `TRESOR_*`/`LOCK_*`** umbenannt inkl.
+Record-Key `or5_vault` → `or5_tresor` (dormant, kein gespeichertes Chiffrat → unkritisch).
 
-Beleg: `/maloja-predeploy` Runde 3, `sicherheits-pruefer` + `/code-review` (alle CONFIRMED).
+Ursprungs-Beleg: `/maloja-predeploy` Runde 3, `sicherheits-pruefer` + `/code-review` (alle CONFIRMED).
 
 ## 0. Einordnung ins Gesamtmodell (ADR-011)
 

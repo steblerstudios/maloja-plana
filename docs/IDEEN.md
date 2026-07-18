@@ -113,6 +113,23 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - 🌱 **Asylwesen** + mehr Sprachen (Albanisch/Tigrinya) · **Business-Model-Gerüst** (Zielgruppe/Persona/USP/PoC).
 - 🌱 **Zertifizierungen** (B Corp/Digital Trust) · **Markenschutz IGE** · **Business-Mail-Entscheid** (Infomaniak/Proton/IncaMail).
 
+## 13 · Aus «Besser wechseln» (maloja-c-Prototyp, 2026-07-18)
+
+> Quelle: `Ideen Kiste/maloja c/maloja-switch-journey-prototype/`. Der Prototyp selbst
+> (Anbieter-Verzeichnis, signierte Bestätigung, verifizierter Nachweis) braucht ein
+> Backend → bleibt Zielbild. Zwei Ideen sind aber **jetzt** in bestehende Flows holbar:
+
+- 🌱 **„Vor dem Wechsel prüfen"-Schritt** in `KVGWechsel`/`ZusatzWechsel` — ruhiger
+  Anti-Dark-Pattern-Zwischenschritt mit der Haltung *„tieferer Preis / mehr Leistung
+  allein ist kein Wechselgrund"*. Kurze Prüfliste (laufende Behandlungen, Franchise-Jahr,
+  Kündigungsfrist, Zusatz-Aufnahmevorbehalt). Bremst statt pusht.
+- 🌱 **Freigabe-/Export-Vorschau „Das verlässt dein Gerät: …"** vor Export-/Dossier-/
+  Brief-Versand — zeigt datensparsam und konkret, welche Angaben rausgehen. Passt zur
+  Trust-Layer; wiederverwendbar über alle Teilen-Momente.
+- ⏸ Geparkt (Zielbild, Backend): zwei getrennte Balken *institutioneller Score* vs.
+  *persönliche Passung* (neutrales Ranking sichtbar gemacht), signierter Nachweis
+  „Maloja Schritt bestätigt" (ist **kein** Firmen-Gütesiegel).
+
 ## 12 · Design-Ressourcen & Tooling (Referenz)
 
 - Icons: fonts.google.com/icons · icons.getbootstrap.com — Fonts: fontshare.com — Farben: coolors.co
