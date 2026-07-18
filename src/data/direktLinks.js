@@ -187,7 +187,7 @@ export const HEARTFELT = [
   { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de', group: 'digital' },
   { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch', group: 'kunst' },
   { key: 'heartfelt5', name: 'Baukunst Nick', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
-  { key: 'heartfelt6', name: 'Living Dream Design', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link
+  { key: 'heartfelt6', name: 'plaant', url: 'https://www.plaant.ch/', group: 'kunst' }, // vormals «Living Dream Design» – neuer Name + Domain (Begrünungen, Pratteln)
   { key: 'heartfelt7', name: 'Pfadibewegung Schweiz', url: 'https://pfadi.swiss', group: 'gemeinschaft' },
   { key: 'heartfelt8', name: 'Tierschutz beider Basel', url: 'https://www.tbb.ch', group: 'tiere' },
   { key: 'heartfelt9', name: 'Abschiedsagentur', url: 'https://abschiedsagentur.ch', group: 'gemeinschaft' },
