@@ -10,6 +10,7 @@ import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
+import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
@@ -231,6 +232,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;
+          // Chips gegen DENSELBEN Wert färben wie das Barometer (Vollzeit-/13.-normiert),
+          // sonst widersprechen sich grüner Chip und Marker-Position (roh 5200 vs. FTE 4952).
+          const vergleichsLohn = lohnBandState({
+            income: data.finanzen?.monthlyIncome, canton: data.basis?.canton,
+            hoursPerWeek: data.ausbildung?.workHoursPerWeek,
+            incomeType: data.finanzen?.incomeType, dreizehnter: data.finanzen?.dreizehnter,
+          }).incomeVergleich || income;
           return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
             React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
               t('finanzUebersicht.branchenvergleich')
@@ -240,7 +248,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
             },
               BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b => {
                 const sel = selBranche && selBranche.key === b.key;
-                const reached = income >= b.lohn;
+                const reached = vergleichsLohn >= b.lohn;
                 const toggle = () => setSelBranche(sel ? null : b);
                 return React.createElement('span', {
                   key: b.key,
