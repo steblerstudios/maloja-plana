@@ -212,6 +212,26 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 - 🟡 Handelsregister prüfen · **Markenschutz „Maloja Plana"/Gipfel-M beim IGE** (~CHF 550)
 - 🟡 Rechnungsvorlage · info@malojaplana.ch Postfach einrichten
 
+## G2 — Aus maloja-c-Audit-Abgleich (2026-07-18)
+
+*Übertragbare Befunde aus den maloja-c-Prototyp-Audits, reproduce-first gegen die echte App
+geprüft. Voller Abgleich: [`docs/design/maloja-c-abgleich.md`](design/maloja-c-abgleich.md).*
+
+- 🟠 **DSFA (Datenschutz-Folgenabschätzung) fehlt** — vor Produktivstart. revDSG/EDÖB verlangen
+  bei besonders schützenswerten Daten (Gesundheit/Sozial/Finanzen) Privacy-by-Design + DSFA. Heute
+  nur `datenschutzerklaerung-ndsg.md`. Local-first entschärft stark, aber Pflicht spätestens vor
+  jeder Cloud/Partner-Öffnung. Quelle: FACH-RECHT-AUDIT (maloja-c).
+- 🟡 **Per-Modul-Freigabe-Register** — je Rechner Fachperson/Rechtsgrundlage/Version/Kanton/Freigabe
+  protokollieren (deckt sich mit Wahrheits-Disziplin; Daten-Versions-Konstanten gibt's, formales
+  Register nicht).
+- 🟡 **Backup-Restore-Härtung (Defense-in-Depth)** — der Restore ist verschlüsselt + Magic-Bytes +
+  Typ-Guard + try/catch, aber ohne Feld-Whitelist / Längen-Caps / Anzahl-Obergrenze
+  (`src/utils/backupCrypto.js`). Verschlüsselung entschärft; Caps + Whitelist nachziehen.
+- ✅ **innerHTML/CSP geprüft:** reine React.createElement-App, kein `dangerouslySetInnerHTML`,
+  strikte CSP → Audit-Punkt bereits erfüllt.
+- ⏸ **Schicht B (Business/Finanzmodell) → Stebler Studios**, **Schicht C (kommerzielle Partner-
+  Plattform) = Grundsatz-Entscheid** — beide bewusst NICHT im Produkt (siehe Abgleich-Notiz).
+
 ## H — Website/UX-Audit (Agenten-Feedback ✅ eingegangen)
 
 *WebFetch war für den Agenten gesperrt → „verlinkte Seiten"-Teil aus Allgemeinwissen, nicht live.*
