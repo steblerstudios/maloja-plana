@@ -606,6 +606,11 @@ export default {
     footerAufnahme: 'Per l’assicuranza da basa vala l’obligaziun d’admissiun: mintga cassa sto t’acceptar, independentamain da vegliadetgna u sanadad. Las assicuranzas cumplementaras èn facultativas e pon vegnir refusadas.',
   },
   kvgWechsel: {
+    checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
+    checkPoint1: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.',
+    checkPoint2: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?',
+    checkPoint3: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.',
+    checkZusatzLink: 'Zusatzversicherung zuerst prüfen',
     title: 'Krankenkasse wechseln',
     intro: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.',
     step1Title: '1 · Lohnt sich der Wechsel?',

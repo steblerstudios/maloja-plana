@@ -593,6 +593,11 @@ export default {
     footerAufnahme: 'Per l’assicurazione di base vige l’obbligo di ammissione: ogni cassa deve accettarti, indipendentemente da età o salute. Le assicurazioni complementari sono facoltative e possono essere rifiutate.',
   },
   kvgWechsel: {
+    checkIntro: 'Un premio più basso da solo non è un motivo per cambiare. Fermati un attimo — il cambio fa davvero al caso tuo?',
+    checkPoint1: "L'assicurazione di base copre le stesse prestazioni previste dalla legge presso tutte le casse. Cambiare non modifica la tua copertura e non interrompe alcuna cura in corso.",
+    checkPoint2: 'Un premio più basso è spesso legato a un modello di risparmio (medico di famiglia, telemedicina, HMO) o a una franchigia più alta. Fa al caso tuo nella vita di tutti i giorni?',
+    checkPoint3: "L'assicurazione complementare è separata e non è garantita. Non disdirla mai prematuramente — verificala prima.",
+    checkZusatzLink: "Verifica prima l'assicurazione complementare",
     title: 'Cambiare cassa malati',
     intro: 'Un percorso tranquillo in quattro passi — confrontare, scegliere una nuova cassa, disdire, assicurare il termine. Non devi decidere tutto in una volta.',
     step1Title: '1 · Vale la pena cambiare?',

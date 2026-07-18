@@ -593,6 +593,11 @@ export default {
     footerAufnahme: 'L’assurance de base est soumise à l’obligation d’admission : chaque caisse doit vous accepter, quel que soit votre âge ou votre santé. Les assurances complémentaires sont facultatives et peuvent être refusées.',
   },
   kvgWechsel: {
+    checkIntro: "Une prime plus basse n'est pas à elle seule une raison de changer. Prenez un instant — le changement vous convient-il vraiment ?",
+    checkPoint1: "L'assurance de base couvre les mêmes prestations légales chez tous les assureurs. Changer ne modifie pas votre couverture et n'interrompt aucun traitement en cours.",
+    checkPoint2: "Une prime plus basse est souvent liée à un modèle d'économie (médecin de famille, télémédecine, HMO) ou à une franchise plus élevée. Est-ce que cela vous convient au quotidien ?",
+    checkPoint3: "L'assurance complémentaire est distincte et n'est pas garantie. Ne la résiliez jamais prématurément — vérifiez-la d'abord.",
+    checkZusatzLink: "Vérifier d'abord l'assurance complémentaire",
     title: 'Changer de caisse-maladie',
     intro: 'Un chemin tranquille en quatre étapes — comparer, choisir une nouvelle caisse, résilier, sécuriser le délai. Vous ne devez pas tout décider d\'un coup.',
     step1Title: '1 · Le changement en vaut-il la peine ?',
