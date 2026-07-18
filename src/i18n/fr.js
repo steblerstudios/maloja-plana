@@ -2275,7 +2275,7 @@ export default {
     fteNote: 'Temps partiel ({hours} h/semaine) : extrapolé à 100%, cela fait CHF {fte} (saisi : CHF {actual}). C’est la seule façon de comparer valablement avec la médiane plein temps.',
     hoursUnknownNote: { sie: 'Sans vos heures hebdomadaires, votre salaire ne peut pas être comparé à la médiane plein temps — saisissez-les et nous le situerons.', du: 'Sans tes heures hebdomadaires, ton salaire ne peut pas être comparé à la médiane plein temps — saisis-les et nous le situerons.' },
     aria: 'Salaire CHF {amount}, médiane suisse CHF {median}.',
-    source: 'Source : [[OFS|www.bfs.admin.ch]], Enquête suisse sur la structure des salaires {jahr} (médiane CHF {median}).',
+    source: 'Source : [[OFS|www.bfs.admin.ch]], Enquête suisse sur la structure des salaires {jahr} (médiane CHF {median}, y c. 13e salaire au prorata).',
     empty: { sie: 'Dès que votre revenu est saisi, nous le situons ici en toute tranquillité.', du: 'Dès que ton revenu est saisi, nous le situons ici en toute tranquillité.' },
   },
   lohnCheck: {

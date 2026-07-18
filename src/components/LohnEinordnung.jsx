@@ -36,7 +36,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 
   return React.createElement('div', {
     role: 'img', 'aria-label': ariaLabel,
-    style: { position: 'relative', height: '16px', marginBottom: '4px' },
+    style: { position: 'relative', height: '10px', marginBottom: '12px' },
   },
     // Bubbles (gleich breit). Jede füllt sich Haselnuss bis zu dem Anteil, den der Lohn
     // in IHREM CHF-Bereich erreicht — Bubbles darunter voll, die eigene teilweise, darüber leer.
@@ -69,8 +69,8 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
         return React.createElement('div', {
           key: 'm' + i,
           style: {
-            position: 'absolute', top: '1px', left: leftPos, marginLeft: '-7px',
-            width: '14px', height: '14px', borderRadius: '50%', background: m.color,
+            position: 'absolute', top: '-1px', left: leftPos, marginLeft: '-6px',
+            width: '12px', height: '12px', borderRadius: '50%', background: m.color,
             border: '1.5px solid ' + palette.surface,
           },
         });
@@ -78,7 +78,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
       if (m.form === 'line') {
         return React.createElement('div', {
           key: 'm' + i,
-          style: { position: 'absolute', top: '-7px', bottom: '-3px', left: leftPos, width: '2px', background: m.color },
+          style: { position: 'absolute', top: '-9px', bottom: '-3px', left: leftPos, width: '2px', background: m.color },
         });
       }
       // exclaim — die harte Schwelle, liegt ÜBER dem Balken. Deckender Ring statt Blur
@@ -86,7 +86,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
       return React.createElement('div', {
         key: 'm' + i,
         style: {
-          position: 'absolute', top: '-16px', height: '28px', left: leftPos, marginLeft: '-4px',
+          position: 'absolute', top: '-15px', height: '28px', left: leftPos, marginLeft: '-4px',
           width: '8px', textAlign: 'center', lineHeight: '28px', fontSize: '24px',
           fontWeight: 700, pointerEvents: 'none', color: m.color,
           WebkitTextStrokeWidth: '2px', WebkitTextStrokeColor: palette.surface,

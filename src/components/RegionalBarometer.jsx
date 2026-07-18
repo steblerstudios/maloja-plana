@@ -165,13 +165,20 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
-      React.createElement('span', null, t(ns + 'nationalVal', { amount: national.toFixed(0) })),
+      // „▏" verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
+      // liest man den Strich leicht als „meinen Wert" statt als Referenz.
+      React.createElement('span', null, '▏ ' + t(ns + 'nationalVal', { amount: national.toFixed(0) })),
       // Punkt-Label trägt dieselbe Valenz-Farbe wie der Punkt — eine Marke, eine Farbe.
       React.createElement('span', { style: { color: dotTextColor } }, '● ' + t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),
     hasUser && React.createElement('div', {
       style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
-    }, t(k + 'yourVal', { amount: userValue.toFixed(0) })),
+    },
+      // „▬" in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
+      // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
+      React.createElement('span', { style: { color: fillColor || palette.skyDeep } }, '▬ '),
+      t(k + 'yourVal', { amount: userValue.toFixed(0) })
+    ),
 
     // Die Schwellen-Überschreitung als SATZ — nur wo die Eltern-Ansicht sie nicht schon
     // erzählt (`showThresholdText`, siehe Prop-Kommentar). Im aria-Label steht sie immer.

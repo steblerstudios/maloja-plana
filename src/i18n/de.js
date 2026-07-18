@@ -2284,7 +2284,7 @@ export default {
     // Ohne Stunden gibt es keine Einordnung, sondern eine ruhige Einladung.
     hoursUnknownNote: { sie: 'Ohne Ihre Wochenstunden lässt sich Ihr Lohn nicht mit dem Vollzeit-Median vergleichen — tragen Sie sie ein, dann ordnen wir ihn ein.', du: 'Ohne Deine Wochenstunden lässt sich Dein Lohn nicht mit dem Vollzeit-Median vergleichen — trag sie ein, dann ordnen wir ihn ein.' },
     aria: 'Lohn CHF {amount}, Schweizer Median CHF {median}.',
-    source: 'Quelle: [[BFS|www.bfs.admin.ch]], Lohnstrukturerhebung {jahr} (Median CHF {median}).',
+    source: 'Quelle: [[BFS|www.bfs.admin.ch]], Lohnstrukturerhebung {jahr} (Median CHF {median}, inkl. anteiligem 13. Monatslohn).',
     empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },
   },
   lohnCheck: {
