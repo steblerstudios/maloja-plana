@@ -159,7 +159,10 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 - 🟠 **Export-Icon** — neue Metapher (warten auf Tester-Feedback)
 - ✅ **Benachrichtigungen → Kuhglocke** — bereits erledigt: `cowbell` konsistent in MobileNav,
   CalendarReminders, NotificationSettings, OverdueBanner; kein Zahnrad mehr dafür (per Grep 2026-06-27).
-- 🟡 **Uhr → Frist/Zeit** Verwendungsstellen finden
+- ⏭️ **Uhr → Frist/Zeit** — **reproduce-first 2026-07-18: kein Bau-Punkt.** Der `kalenderUhr`-Icon
+  (Bahnhofsuhr, `IconSystem.jsx`) existiert, wird aber **nirgends verwendet** (0 Referenzen ausserhalb
+  der Registry). Es gibt keine aktive „Uhr"-Stelle zum Umdeuten; ihn irgendwo als Frist/Zeit zu
+  verdrahten wäre ein Design-Entscheid (gehört in IDEEN.md), keine mechanische Umstellung.
 - ✅ `og-image.svg` aufs Gipfel-M + Granit — bereits erledigt: SVG hat Maloja-Pass-Polyline +
   Goldpunkt, Granit-Palette, Hanken-Wortmarke; PNG regeneriert (`public/og-image.{svg,png}`).
 - ⏭️ Signet-Farben (Ordner+Berg+Pass) an Granit — **gegenstandslos (2026-06-27):** das
@@ -216,7 +219,10 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 
 **🟠 Mittel:**
 - BetaGate-Button Kontrast: weiss auf `palette.sand` → `#000` (wie Onboarding).
-- „Stand: Juni 2026" hartcodiert (`legal.lastUpdated`) → ableiten/Pflege-Flag.
+- ✅ **„Stand: Juni 2026" hartcodiert (`legal.lastUpdated`) → Pflege-Flag (2026-07-18, `e586acf`).**
+  War in allen 5 i18n-Dateien einzeln → jetzt EIN Pflege-Ort `LEGAL_LAST_UPDATED` in `LegalView.jsx`,
+  via `{date}` eingesetzt. Bewusst NICHT aus dem Build abgeleitet (falsche Aktualitäts-Aussage). Output
+  byte-identisch (DE+RM live verifiziert). Branch `feat/polish-legal-datum` ab main.
 - A11y in Onboarding/BetaGate: Focus-Ring auf Sprach-Buttons, `aria-live` für Beta-Fehler, Landmark.
 - „Wert zeigen bevor man fragt" → Demo-Modus (existiert in `main.jsx`) schon am Einstieg anbieten.
 
@@ -428,8 +434,12 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
   **KKScanner (6 Felder), OrganDonation (1), BudgetImport (1)** → auf `LabeledField` migriert
   (Wrapper `marginBottom:0`, Optik 1:1). Browserverifiziert (alle 6 KKScanner-Labels via for/id),
   592 Tests grün. Commit `5fe8851` (dev).
-- 🟡 **Rest Pattern A (finicky Key):** DocumentTresor Inline-Datum + Sortier-Select, Calendar-Notizen-Textarea — brauchen einen passenden i18n-Key (klein).
-- 🟡 **rm-Notfall-Icon:** `notfall.icon` ist `⚠` in de/fr/it/en, fehlt in rm (Icon-Feld, kein Copy — nur Parität, wenn gewünscht).
+- ✅ **Rest Pattern A — reproduce-first 2026-07-18: schon beschriftet.** DocumentTresor-Inline-Datum
+  (`aria-label` `chapterView.expiryDate`, `DocumentTresor.jsx:174`) + Sortier-Select (`tresor.sortBy`,
+  `:309`) + Kalender-Notizen-Textarea (`calendar.noteLabel`, `CalendarReminders.jsx:468`) tragen alle
+  bereits ein `aria-label`; die Keys existieren in allen 5 Sprachen. Nichts offen.
+- ✅ **rm-Notfall-Icon — reproduce-first 2026-07-18: schon da.** `chapters.notfall.icon: '⚠'` ist in
+  ALLEN 5 Sprachen vorhanden, rm inkl. (`rm.js:1409`). Parität bereits gegeben.
 
 ## Runde 2026-07-11 (Feature-Branches, noch nicht gemergt — 10-Commit-Gate)
 
