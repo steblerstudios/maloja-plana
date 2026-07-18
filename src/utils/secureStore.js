@@ -186,7 +186,12 @@ async function purgePlaintext(hydratedDocs) {
   localStorage.removeItem('or5_prerestore_date');
   if (Array.isArray(hydratedDocs)) {
     for (const d of hydratedDocs) {
-      if (d && d.id != null) await deleteDocBlob(d.id);
+      if (d && d.id != null) {
+        // Best-effort: ein einzelner idb-Fehler darf die Aktivierung nicht
+        // abbrechen (sonst bliebe der Tresor aktiv, aber der Rest-Klartext liegen).
+        // Ein Rest-Purge beim nächsten Entsperren (2b-UI) fängt Ausreisser auf.
+        try { await deleteDocBlob(d.id); } catch { /* nächster Blob */ }
+      }
     }
   }
 }
