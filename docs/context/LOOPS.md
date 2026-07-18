@@ -40,6 +40,7 @@ Manuell aufrufbar über den Agent-/Task-Mechanismus, oder gebündelt via `/maloj
 | `/maloja-ablauf` | Lebenssituation durchs 7-Spalten-Raster (docs/ABLAEUFE.md): Bausteine, Lücken, Crosslinks, nächste Aktion. | 1 (assistiv) |
 | `/maloja-council` | Entscheidungs-Council für grosse Weichen: fünf Berater, die streiten müssen, plus Vorsitz-Verdikt. Entscheidet nichts, baut nichts. | 1 (assistiv) |
 | `/maloja-release` | Ruhiger Release-Ablauf: verifiziert, committet, pusht, erstellt den PR nach `main`. Deployt NICHT. | 3 (nur auf Wort) |
+| `/maloja-statistik` | Monatliches Statistik-Ritual: begleitet durch die aggregierten, cookielosen Infomaniak-Zahlen und trägt sie in docs/STATISTIK.md nach. Read-only ausser der Verlaufstabelle; kein Tracking/A-B. | 0–1 (informativ) |
 | `/braindump` | Rohen Ideen-Dump strukturieren/triagieren → datierter Block an docs/TODO.md. | 0–1 |
 
 Deploy selbst bleibt manuell: `bash deploy.sh` (SFTP → Infomaniak), vom Mac von Stebler Studios, bei ~10+ Commits über LIVE.
