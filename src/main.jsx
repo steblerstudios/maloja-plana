@@ -15,7 +15,8 @@ import { registerServiceWorker, checkOverdueReminders } from './utils/notificati
 import { migrateData } from './utils/dataMigration.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, deleteDocBlob, stripBlob, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
-import { createBackup } from './utils/autoBackup.js';
+// createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
+// Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
@@ -564,8 +565,8 @@ const AppInner = () => {
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
   useEffect(() => {
-    createBackup().then(result => {
-      if (result.success) {
+    import('./utils/autoBackup.js').then(({ createBackup }) => createBackup()).then(result => {
+      if (result && result.success) {
         console.info('[app] Auto-backup created:', result.id);
       }
     }).catch(() => { /* backup is best-effort */ });
