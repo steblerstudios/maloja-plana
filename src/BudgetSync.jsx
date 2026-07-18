@@ -7,6 +7,7 @@ import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
+import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 
@@ -21,7 +22,7 @@ const formatCHF = (amount) => {
   return (rounded < 0 ? '− ' : '') + 'CHF ' + formatted;
 };
 
-export const BudgetSync = ({ palette, t, data, _onUpdate }) => {
+export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
   const [budget, setBudget] = useState(null);
   const [showAnnual, setShowAnnual] = useState(false);
   // Faden 4 / Inkr. A — which orientation infos are expanded (default: none = calm)
@@ -195,10 +196,24 @@ export const BudgetSync = ({ palette, t, data, _onUpdate }) => {
         { key: 'kk-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
         React.createElement(RegionalBarometer, { palette, t, comparison: kkComparison, userValue: budget.expenses.healthInsurance || null, kind: 'premium' })
       ),
-      // Regional-Miete-Barometer (BFS, size-matched) — nur im Miet-Feld
+      // Regional-Miete-Barometer (BFS, size-matched) — nur im Miet-Feld.
+      // ⚠️ Bewusst NICHT über `MietVergleich`: das Bauteil rechnet mit den KAPITEL-Daten
+      // (wohnen.rentAmount + utilities, finanzen.monthlyIncome, basis.canton). Hier gelten
+      // die BUDGET-Zahlen und der Kanton der Wohngemeinde (via PLZ) — im Budget erwartet
+      // man die Budget-Zahlen. Andere Frage, andere Quelle; geteilt wird das Instrument.
+      // Die KODIERUNG muss aber dieselbe sein (Predeploy-Runde 8): ohne `fillColor` füllte
+      // die Miete hier BLAU statt Birne — Regel 3 der Matrix sagt, Blau bedeutet „du" nur
+      // im Versicherungs-Instrument. Und ohne `thresholdValue` fehlte das Drittel-„!",
+      // das die beiden anderen Orte zeigen.
       open && rentBaro && React.createElement('div',
         { key: 'rent-baro', style: { paddingLeft: '16px', paddingBottom: '6px' } },
-        React.createElement(RegionalBarometer, { palette, t, comparison: rentComparison, userValue: budget.expenses.rent || null, kind: 'rent' }),
+        React.createElement(RegionalBarometer, {
+          palette, t, comparison: rentComparison,
+          userValue: budget.expenses.rent || null, kind: 'rent',
+          fillColor: bereichFillColor('wohnen', isDarkMode),
+          // Drittel-Faustregel als Betrag — nur mit Einkommen bestimmbar, nie geraten.
+          thresholdValue: budget.income > 0 ? Math.round(budget.income / 3) : 0,
+        }),
         // Mietzinsbeiträge-Hinweis (analog IPV) — kantonal/kommunal, würdevoll
         React.createElement(MietzinsHinweis, { palette, t, canton: userCanton })
       )

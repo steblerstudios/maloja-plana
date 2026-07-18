@@ -198,6 +198,10 @@ export function getChapters(t) {
         { k: 'sideEmployer', label: fl(t, 'finanzen', 'sideEmployer'), type: 'text', hint: hn(t, 'finanzen', 'sideEmployer') },
         { k: 'sideEmployerAddress', label: fl(t, 'finanzen', 'sideEmployerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'sideEmployerAddress') },
         { k: 'sideHoursPerWeek', label: fl(t, 'finanzen', 'sideHoursPerWeek'), type: 'text', hint: hn(t, 'finanzen', 'sideHoursPerWeek') },
+        // Spiegelt `incomeType` für den Nebenerwerb. Ohne dieses Feld wäre die Basis des
+        // Nebenlohns unbekannt → nie ein Mindestlohn-Befund, und die Nutzerin hätte keinen
+        // Weg, das zu ändern (Sackgasse). Der Mindestlohn ist ein BRUTTO-Stundenlohn.
+        { k: 'sideIncomeType', label: fl(t, 'finanzen', 'sideIncomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
         { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', mvo: true },

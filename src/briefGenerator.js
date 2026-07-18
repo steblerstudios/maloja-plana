@@ -12,7 +12,7 @@
 
 import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
-import { pruefeStundenlohn, kantonHatMindestlohn } from './data/lohnCheck.js';
+import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
@@ -59,6 +59,11 @@ export function getJob(data, jobKey) {
     address: (side ? data?.finanzen?.sideEmployerAddress : data?.finanzen?.employerAddress) || '',
     lohn: num(side ? data?.finanzen?.sideIncome : data?.finanzen?.monthlyIncome),
     stunden: num(side ? data?.finanzen?.sideHoursPerWeek : data?.ausbildung?.workHoursPerWeek),
+    // Der Mindestlohn ist ein BRUTTO-Stundenlohn — ohne bekannte Basis kein Befund.
+    // Jeder Job trägt seine eigene Art: der Hauptjob `incomeType`, der Nebenerwerb
+    // `sideIncomeType` (Predeploy-Runde 8 ergänzt — vorher gab es für den Nebenerwerb
+    // gar keine, der Befund wäre also nie berechenbar gewesen).
+    einkommensart: (side ? data?.finanzen?.sideIncomeType : data?.finanzen?.incomeType) || null,
   };
 }
 
@@ -69,11 +74,13 @@ function lohnBefund(data, jobKey) {
   const monthlyIncome = job.lohn;
   const wHrs = job.stunden;
   if (monthlyIncome <= 0 || !kanton) return { status: 'unvollstaendig', kanton };
-  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme. Ohne echte Wochenstunden ist der
-  // Stundenlohn nicht bestimmbar — dieser Brief geht per Einschreiben an einen Arbeitgeber,
-  // eine geratene Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` gibt dann
-  // 'unvollstaendig' zurück; die Beträge im Brief fallen auf „bitte ergänzen" (hasFigures).
-  return pruefeStundenlohn(monthlyIncome, wHrs, kanton);
+  // WAHRHEITS-DISZIPLIN: keine 182h-Vollzeit-Annahme und keine Brutto-Annahme. Ohne echte
+  // Wochenstunden ist der Stundenlohn nicht bestimmbar; ohne bekannte Einkommensart ist er
+  // nicht vergleichbar (Netto gegen einen Brutto-Boden erklärt korrekt Bezahlte für
+  // unterbezahlt). Dieser Brief geht per Einschreiben an einen Arbeitgeber — eine geratene
+  // Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` meldet beides selbst
+  // ('unvollstaendig' / 'basisUnklar'); die Beträge fallen auf „bitte ergänzen" (hasFigures).
+  return pruefeStundenlohn(monthlyIncome, wHrs, kanton, job.einkommensart);
 }
 
 // Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`
@@ -201,7 +208,43 @@ export function getLetterTemplates(t, data) {
   // 🔴 wageClaim nur anbieten, wenn der Kanton einen gesetzlichen Mindestlohn hat.
   // Sonst behauptet der Brief einen nicht existierenden Mindestlohn (Haftungsrisiko in
   // ~21/26 Kantonen). Kein Kanton gewählt → auch nicht anbieten (nicht raten).
-  if (kantonHatMindestlohn(kanton)) {
+  //
+  // 🔴 Predeploy-Runde 8: Das Kanton-Gate allein reichte nicht. Der Brief wurde auch dann
+  // angeboten, wenn der Befund 'ok' war — GE/CHF 8'000 auf 42 Std. = 43.96/Std., klar über
+  // dem Boden, und trotzdem stand im Brief „dass mein Stundenlohn unter dem … Mindestlohn
+  // liegen dürfte", mit leeren Beträgen (`hasFigures` hängt am Befund). Die App hat den
+  // Verdacht selbst widerlegt und ihn trotzdem ausformuliert — per Einschreiben an einen
+  // Arbeitgeber. Jetzt entscheidet der Befund, nicht der Wohnort.
+  //
+  // Angeboten wird bei:
+  //   'unterMindestlohn' → der Befund trägt den Brief.
+  //   'unvollstaendig'/'basisUnklar' → Verdacht möglich, Daten unvollständig; der Brief
+  //     formuliert vorsichtig und die Beträge bleiben „[bitte ergänzen]". Das ist kein
+  //     Widerspruch: die App weiss es nicht, statt es besser zu wissen.
+  // NICHT angeboten bei 'ok' und 'keinGesetz'.
+  // Nur über Anstellungen urteilen, für die tatsächlich ein LOHN erfasst ist.
+  //
+  // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Code-Review + swiss-precision, gegen den Fix
+  // selbst): Der erste Fix fragte `getJobOptions(...).some(...)` und der Kommentar behauptete
+  // „nur über Anstellungen urteilen, die es GIBT". `getJobOptions` pusht `main` aber
+  // BEDINGUNGSLOS, und ein Job ohne Lohn liefert 'unvollstaendig' — was den Brief öffnet.
+  // Zwei belegte Folgen:
+  //   · Nur der Nebenjob-NAME erfasst, Hauptjob CHF 8'000 = 43.96/Std. (klar 'ok'):
+  //     `some` sah das 'unvollstaendig' des leeren Nebenjobs → Brief angeboten. Und weil
+  //     `BriefGenerator` mit `job: 'main'` startet, ging der Verdachts-Brief an den GUT
+  //     ZAHLENDEN Hauptarbeitgeber — derselbe Fehler wie vorher bei 'ok', neu verpackt.
+  //   · Komplett leerer Datensatz (nur Kanton) → Brief angeboten.
+  // Ein Job ohne Lohn ist kein unvollständiger Verdacht, sondern gar kein Verdacht.
+  const darfWageClaim = (s) => s === 'unterMindestlohn' || s === 'unvollstaendig' || s === 'basisUnklar';
+  const einJobRechtfertigtDenBrief = getJobOptions(data)
+    .filter((o) => getJob(data, o.key).lohn > 0)
+    .some((o) => darfWageClaim(lohnBefund(data, o.key).status));
+  // ⚠️ `WAGECLAIM_BEREIT` ist bewusst `false` (Stebler-Studios-Entscheid, Predeploy-Runde 8):
+  // Der Befund kennt die gesetzlichen Ausnahmen nicht (Lehre/Praktikum/unter 18/GAV, und GE
+  // hat drei Sätze statt einem) — der Brief würde Arbeitgeber beschuldigen, die korrekt
+  // zahlen. Begründung und Belege stehen bei der Konstante in `data/lohnCheck.js`.
+  // Der Brief-Code bleibt vollständig gebaut, geprüft und getestet; nur das Anbieten ruht.
+  if (WAGECLAIM_BEREIT && kantonHatMindestlohn(kanton) && einJobRechtfertigtDenBrief) {
     list.push({
       key: 'wageClaim',
       title: t('briefe.wageClaim.title'),
@@ -277,7 +320,17 @@ const LETTER_CSS = `
   .signature { margin-top: 15mm; }
   .legal-note { margin-top: 10mm; font-size: 9pt; color: #666; border-top: 1px solid #ddd; padding-top: 4mm; }
   .fill-hint { background: #FFFDE7; padding: 2px 6px; border-radius: 3px; font-style: italic; }
-  @media print { body { padding: 0; } .no-print { display: none; } }
+  /* Die legal-note ist ein Wegweiser für die NUTZERIN, nicht für den Empfänger — sie
+     bleibt auf dem Bildschirm (Vorschau) und geht NICHT ins Couvert. Predeploy-Runde 8,
+     Stebler-Studios-Entscheid: gedruckt las der Arbeitgeber "Einschreiben empfohlen" in
+     einem Brief, der bereits angekommen ist, "Diese Vorlage ist eine Orientierungshilfe"
+     (= das kommt aus einem Generator) und beim unpaidWage "Betreibung" / "fristlose
+     Auflösung" — als Hinweis an die Nutzerin gut gehedged, im Couvert eine Drohkulisse.
+     Der Brieftext selbst vermeidet genau diesen Ton sorgfältig.
+     Der Disclaimer steht dafür neu in der App (briefe.disclaimer) — vorher stand er
+     NUR im Brief.
+     ACHTUNG: Dieser Block ist ein JS-Template-Literal — keine Backticks im Kommentar. */
+  @media print { body { padding: 0; } .no-print, .legal-note { display: none; } }
   @media screen { body { max-width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-height: 297mm; } }
 `;
 
@@ -517,7 +570,15 @@ function generateWageClaim(data, t, options = {}) {
 
 // (b) Ausstehender Lohn → höfliche Mahnung. FIX A: der Weg führt NICHT über die
 // Mindestlohn-Kontrollstelle, sondern über Schlichtungsbehörde/Arbeitsgericht (im
-// legalNote/Reminder abgebildet). Betrag vorbefüllt aus monthlyIncome, Monat(e) Selbst-Eintrag.
+// legalNote/Reminder abgebildet).
+//
+// 🔴 Predeploy-Runde 8: Der Betrag war mit EINEM Monatslohn vorbefüllt, während der
+// Zeitraum `{months}` ein „[bitte ergänzen]" blieb. Der Brief behauptete damit eine
+// konkrete Summe für einen Zeitraum, den die App zugibt nicht zu kennen: Wer drei Monate
+// schuldig ist (3 × 3'800 = 11'400), mahnte gedruckt CHF 3'800 ein — ein Drittel — und
+// legte diese Zahl als eigene Forderung gegenüber dem Arbeitgeber fest.
+// Zeitraum und Betrag hängen zusammen: ist der eine offen, ist es der andere auch.
+// Das ist dieselbe `hasFigures`-Disziplin wie in `generateWageClaim`.
 function generateUnpaidWage(data, t, options = {}) {
   const jobKey = options.job;
   const sender = senderBlock(data);
@@ -527,8 +588,22 @@ function generateUnpaidWage(data, t, options = {}) {
 
   const job = getJob(data, jobKey);
   const months = t('briefe.fillIn');
-  // Der ausstehende Betrag ist der Lohn DIESER Anstellung — beim Nebenjob nie der Hauptlohn.
-  const betrag = job.lohn > 0 ? formatAmount(job.lohn) : t('briefe.fillIn');
+  // Der Zeitraum ist unbekannt (Selbst-Eintrag) → der Betrag darf es auch bleiben.
+  const betrag = t('briefe.fillIn');
+  // Der Monatslohn als Anhalt — aber NUR wenn er nachweislich brutto ist.
+  //
+  // ⚠️ Predeploy-Runde 8, ZWEITE Batterie (Rechts-Prüfer, gegen den Fix selbst): Dieser
+  // Satz wurde im selben Commit eingeführt, der die Netto/Brutto-Krankheit für `wageClaim`
+  // heilte — und trug sie hier wieder ein. Er sagt „brutto CHF X", `generateUnpaidWage`
+  // las `incomeType` aber nie. Bei netto erfasstem Lohn unterschrieb die Nutzerin damit
+  // eine falsche Tatsachenbehauptung über die eigene Forderung, ZU IHREN UNGUNSTEN:
+  // CHF 3'800 netto sind brutto ~4'300–4'400, und der Arbeitgeber kann den Satz als
+  // Zugeständnis der Forderungshöhe lesen. Der ganze Brief ist brutto-gerahmt
+  // („in Höhe von brutto CHF …"), während der Feld-Hinweis der App zu Netto rät.
+  // Ohne belegtes Brutto steht hier lieber nichts — der Betrag ist ohnehin Selbst-Eintrag.
+  const monatslohnHinweis = (job.lohn > 0 && job.einkommensart === 'brutto')
+    ? t('briefe.unpaidWage.monthlyHint', { amount: formatAmount(job.lohn) })
+    : '';
   const frist = getFristInfo('unpaidWage').display;
 
   return wrapLetter(`
@@ -538,7 +613,7 @@ function generateUnpaidWage(data, t, options = {}) {
     <div class="subject">${esc(t('briefe.unpaidWage.subject'))}</div>
     <div class="body-text">
       <p>${esc(t('briefe.unpaidWage.salutation'))}</p>
-      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}</p>
+      <p>${esc(t('briefe.unpaidWage.body1', { months, amount: betrag, frist }))}${monatslohnHinweis ? ' ' + esc(monatslohnHinweis) : ''}</p>
       <p>${esc(t('briefe.unpaidWage.closing'))}</p>
     </div>
     <div class="signature">${getFullName(data.basis) ? esc(getFullName(data.basis)) : fillHint(t)}</div>

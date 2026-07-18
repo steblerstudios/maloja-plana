@@ -1279,6 +1279,7 @@ export default {
         sideEmployer: 'Nebenerwerb: Arbeitgeber',
         sideEmployerAddress: 'Nebenerwerb: Adresse des Arbeitgebers',
         sideHoursPerWeek: 'Nebenerwerb: Arbeitsstunden pro Woche',
+        sideIncomeType: 'Nebenerwerb: Einkommensart',
         taxableIncome: 'Steuerbares Einkommen pro Jahr CHF',
         incomeType: { label: 'Einkommensart', options: { netto: 'Netto (was ich erhalte)', brutto: 'Brutto (vor Abzügen)' } },
         employer: 'Arbeitgeber',
@@ -2241,26 +2242,47 @@ export default {
   lohnEinordnung: {
     title: { sie: 'Wo steht Ihr Lohn?', du: 'Wo steht Dein Lohn?' },
     median: 'Median',
-    durchschnitt: 'Durchschnitt',
     mindestlohn: 'Mindestlohn',
     yourWage: { sie: 'Ihr Lohn: CHF {amount}', du: 'Dein Lohn: CHF {amount}' },
     readoutNear: { sie: 'Ihr Lohn liegt nahe am Schweizer Median.', du: 'Dein Lohn liegt nahe am Schweizer Median.' },
     readoutAbove: { sie: 'Ihr Lohn liegt über dem Schweizer Median.', du: 'Dein Lohn liegt über dem Schweizer Median.' },
     readoutBelow: { sie: 'Ihr Lohn liegt unter dem Schweizer Median.', du: 'Dein Lohn liegt unter dem Schweizer Median.' },
     mindestlohnLine: 'Kantonaler Mindestlohn: CHF {stunde}/Std. — bei Vollzeit rund CHF {amount} im Monat (Stand {jahr}).',
-    fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (42 Std./Woche).',
+    // Die Unterschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
+    // Vorher war der Text in beiden Zuständen identisch, und der ausformulierte Satz stand
+    // nur im Kapitel — in der Finanz-Übersicht war die Aussage schlicht verloren.
+    mindestlohnBreachedLine: { sie: 'Ihr Lohn scheint darunter zu liegen.', du: 'Dein Lohn scheint darunter zu liegen.' },
+    // 40 Std./Woche = die BFS-Norm für den Median (nicht 42 — das ist die Mindestlohn-Welt).
+    fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (40 Std./Woche, wie beim BFS-Median).',
     fteNote: 'Teilzeit ({hours} Std./Woche): auf 100% hochgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
-    hoursUnknownNote: { sie: 'Für den Vergleich nehmen wir eine Vollzeitstelle an. Arbeiten Sie Teilzeit, tragen Sie Ihre Wochenstunden ein — dann rechnen wir richtig.', du: 'Für den Vergleich nehmen wir eine Vollzeitstelle an. Arbeitest Du Teilzeit, trag Deine Wochenstunden ein — dann rechnen wir richtig.' },
+    overFteNote: 'Mehr als Vollzeit ({hours} Std./Woche): auf 40 Std. umgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
+    // Kein „wir nehmen Vollzeit an" mehr — genau diese Annahme erzeugte den Fehlalarm.
+    // Ohne Stunden gibt es keine Einordnung, sondern eine ruhige Einladung.
+    hoursUnknownNote: { sie: 'Ohne Ihre Wochenstunden lässt sich Ihr Lohn nicht mit dem Vollzeit-Median vergleichen — tragen Sie sie ein, dann ordnen wir ihn ein.', du: 'Ohne Deine Wochenstunden lässt sich Dein Lohn nicht mit dem Vollzeit-Median vergleichen — trag sie ein, dann ordnen wir ihn ein.' },
     aria: 'Lohn CHF {amount}, Schweizer Median CHF {median}.',
-    source: 'Quelle: BFS Lohnstrukturerhebung 2022 (Median CHF {median} · Durchschnitt CHF {durchschnitt}).',
+    source: 'Quelle: [[BFS|www.bfs.admin.ch]], Lohnstrukturerhebung {jahr} (Median CHF {median}).',
     empty: { sie: 'Sobald Ihr Einkommen erfasst ist, ordnen wir es hier ruhig ein.', du: 'Sobald Dein Einkommen erfasst ist, ordnen wir es hier ruhig ein.' },
   },
   lohnCheck: {
-    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfen Sie Ihre Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) liegt unter dem gesetzlichen Mindestlohn im Kanton {kanton} (CHF {mindestStunde}/Std.). Prüfe Deine Ansprüche beim kantonalen Arbeitsinspektorat. Stand {jahr}.' },
+    // Verdacht, keine Feststellung: Die App kennt die gesetzlichen AUSNAHMEN nicht
+    // (Lehre/Praktikum/unter 18 sind überall ausgenommen; in TI/JU gilt das Gesetz bei
+    // GAV gar nicht; GE hat drei Sätze). „liegt unter" wäre für eine Lernende schlicht
+    // falsch — und der Satz führte bis Runde 8 zu einem Brief an den Arbeitgeber.
+    // Siehe `WAGECLAIM_BEREIT` in data/lohnCheck.js.
+    unterMindestlohn: { sie: 'Hinweis: Ihr Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, können Sie Ihre Ansprüche bei {stelle} klären.', du: 'Hinweis: Dein Lohn (CHF {lohnStunde}/Std.) scheint unter dem gesetzlichen Mindestlohn im Kanton {kanton} zu liegen (CHF {mindestStunde}/Std., Stand {jahr}). {ausnahmen} Trifft nichts davon zu, kannst Du Deine Ansprüche bei {stelle} klären.' },
+    ausnahmen: 'Der Mindestlohn gilt allerdings nicht für alle: Lehre, Praktikum und Alter unter 18 sind ausgenommen, in einzelnen Kantonen auch Branchen mit einem Gesamtarbeitsvertrag, die Landwirtschaft und Ferienjobs.',
+    // Fallback, wenn der Kanton keine benannte Kontrollstelle hat (JU: kein Inspektorat —
+    // der Weg führt dort übers Arbeitsgericht). Nie eine Stelle erfinden.
+    stelleFallbackKurz: 'der zuständigen kantonalen Stelle',
     keinMindestlohn: { sie: 'In Ihrem Kanton gibt es keinen gesetzlichen Mindestlohn.', du: 'In Deinem Kanton gibt es keinen gesetzlichen Mindestlohn.' },
     hoursEquiv: '≈ {month} Std./Monat · {year} Std./Jahr',
     hourlyWage: 'Stundenlohn (aus Monatslohn ÷ tatsächliche Stunden): CHF {wage}',
     hoursMissing: { sie: 'Für den Mindestlohn-Check fehlen noch Ihre Wochenstunden — ohne sie lässt sich Ihr Stundenlohn nicht berechnen. Jetzt eintragen', du: 'Für den Mindestlohn-Check fehlen noch Deine Wochenstunden — ohne sie lässt sich Dein Stundenlohn nicht berechnen. Jetzt eintragen' },
+    // Der gesetzliche Mindestlohn ist ein BRUTTO-Stundenlohn. Ohne bekannte Basis kein
+    // Befund — sonst wird ein Netto-Lohn gegen einen Brutto-Boden gerechnet und erklärt
+    // korrekt bezahlte Leute für unterbezahlt (der Befund führt zu einem Einschreiben).
+    basisMissing: { sie: 'Für den Mindestlohn-Check fehlt noch die Einkommensart — der gesetzliche Mindestlohn ist ein Bruttolohn. Einkommensart wählen', du: 'Für den Mindestlohn-Check fehlt noch die Einkommensart — der gesetzliche Mindestlohn ist ein Bruttolohn. Einkommensart wählen' },
+    basisNetto: { sie: 'Ihr Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Ihren Bruttolohn (er steht auf Ihrer Lohnabrechnung).', du: 'Dein Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Deinen Bruttolohn (er steht auf Deiner Lohnabrechnung).' },
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
   },
 
@@ -2395,6 +2417,9 @@ export default {
     showPreview: 'Vorschau',
     hidePreview: 'Vorschau schliessen',
     printLetter: 'Brief drucken / PDF',
+    // Stand bis Predeploy-Runde 8 NUR im Brief (legal-note) — und wurde mitgedruckt,
+    // landete also beim Empfänger statt bei der Nutzerin, die den Brief verantwortet.
+    disclaimer: { sie: 'Diese Vorlagen sind eine Orientierungshilfe, keine Rechtsberatung. Sie verantworten den Brief — prüfen Sie ihn vor dem Versand. Bei heiklen Fällen: Einschreiben, und im Zweifel eine Fachstelle.', du: 'Diese Vorlagen sind eine Orientierungshilfe, keine Rechtsberatung. Du verantwortest den Brief — prüf ihn vor dem Versand. Bei heiklen Fällen: Einschreiben, und im Zweifel eine Fachstelle.' },
     dataNote: { sie: 'Ihre gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.', du: 'Deine gespeicherten Daten werden automatisch eingesetzt. Fehlende Angaben sind markiert.' },
     afterPrint: {
       title: 'Brief erstellt — und jetzt?',
@@ -2421,7 +2446,9 @@ export default {
       title: 'Adressänderung mitteilen',
       description: 'Einer Stelle die neue Adresse mitteilen (Post, Krankenkasse, Arbeitgeber, Bank …).',
       subject: 'Adressänderung',
-      salutation: 'Sehr geehrte Damen und Herren',
+      // Komma zwingend: `body1` beginnt klein. Vorbestehend, nicht aus Runde 8 —
+      // aber derselbe Defekt, dieselbe Datei, ein Zeichen (clean as you go).
+      salutation: 'Sehr geehrte Damen und Herren,',
       body1: 'hiermit teile ich Ihnen mit, dass ich umgezogen bin.',
       body2: 'Meine neue Adresse lautet: {address}.',
       body3: 'Bitte aktualisieren Sie meine Angaben und richten Sie künftige Korrespondenz an die neue Adresse.',
@@ -2486,7 +2513,8 @@ export default {
       title: 'Lohn-Nachfrage (unter Mindestlohn)',
       description: 'Höfliche Nachfrage an den Arbeitgeber, wenn der Stundenlohn unter dem kantonalen Mindestlohn liegt.',
       subject: 'Bitte um Überprüfung und Anpassung meines Lohns',
-      salutation: 'Sehr geehrte Damen und Herren',
+      // Komma zwingend: `body1` beginnt klein (Predeploy-Runde 8).
+      salutation: 'Sehr geehrte Damen und Herren,',
       body1: 'ich arbeite bei {employer}. Bei der Prüfung meiner Lohnabrechnung ist mir aufgefallen, dass mein Stundenlohn unter dem im Kanton {canton} geltenden gesetzlichen Mindestlohn liegen dürfte. Ich gehe von einem Versehen aus und möchte das gerne mit Ihnen klären.',
       figuresLohn: 'Aktueller Stundenlohn: CHF {amount}',
       figuresMindest: 'Gesetzlicher Mindestlohn Kanton {canton}{jahr}: CHF {amount}',
@@ -2502,7 +2530,12 @@ export default {
       title: 'Lohn ausstehend (Mahnung)',
       description: 'Höfliche Mahnung an den Arbeitgeber, wenn der fällige Lohn nicht bezahlt wurde.',
       subject: 'Ausstehende Lohnzahlung — Bitte um Überweisung',
-      salutation: 'Sehr geehrte Damen und Herren',
+      // Komma zwingend: `body1` beginnt klein. DE war die einzige der 5 Sprachen ohne
+      // (Predeploy-Runde 8) — der Brief geht per Einschreiben an einen Arbeitgeber.
+      salutation: 'Sehr geehrte Damen und Herren,',
+      // Der Zeitraum ist Selbst-Eintrag, also bleibt auch der Betrag offen. Der Monatslohn
+      // steht als Anhalt daneben — klar als „pro Monat" benannt, nie als Forderungssumme.
+      monthlyHint: '(Mein Monatslohn beträgt brutto CHF {amount}.)',
       body1: 'mein Lohn für {months} in Höhe von brutto CHF {amount} ist bis heute nicht eingegangen. Ich bitte Sie, den ausstehenden Betrag bis {frist} zu überweisen. Für eine kurze Rückmeldung wäre ich Ihnen dankbar.',
       closing: 'Freundliche Grüsse',
       legalNote: 'Grundlage: Fälligkeit des Lohns (OR Art. 323). Bleibt die Zahlung aus, führt der Weg über die Schlichtungsbehörde in Arbeitsrechtssachen bzw. das Arbeitsgericht am Arbeitsort, allenfalls über eine Betreibung. Eine Zurückbehaltung der Arbeit (OR Art. 82) oder eine fristlose Auflösung ist nur nach Rücksprache mit einer Fachstelle ratsam. Diese Vorlage ist eine Orientierungshilfe, keine Rechtsberatung. Einschreiben empfohlen.',
@@ -3255,7 +3288,10 @@ export default {
     tankReadout: { sie: 'Ihr Notgroschen (CHF {savings}) trägt rund {months} Monate. Empfohlen sind {recommend}.', du: 'Dein Notgroschen (CHF {savings}) trägt rund {months} Monate. Empfohlen sind {recommend}.' },
     printAction: 'Übersicht drucken / als PDF speichern',
     disclaimer: { sie: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wenden Sie sich an die zuständige Stelle.', du: 'Alle Werte sind Orientierungshilfen. Für verbindliche Auskünfte wende Dich an die zuständige Stelle.' },
-    incomePosition: 'Einordnung',
+    // Benennt AUSDRÜCKLICH das tatsächliche Monatseinkommen — darunter steht das
+    // Lohn-Barometer, das auf Vollzeit hochrechnet. Zwei Fragen, beide wahr; ohne
+    // klares Label lesen sie sich als Widerspruch (Predeploy-Runde 8).
+    incomePosition: 'Was monatlich reinkommt',
     showPosition: 'Einordnung anzeigen',
     belowPoverty: 'Unter Armutsgrenze',
     nearPoverty: 'Knapp über Armutsgrenze',
@@ -3625,7 +3661,13 @@ export default {
         title: 'Miete regional vs. Schweiz',
         yourVal: { sie: 'Ihre Miete: CHF {amount}', du: 'Deine Miete: CHF {amount}' },
         structural: 'Das ist vor allem strukturell — in Städten und nachgefragten Regionen sind Bauland und Wohnungen knapper und teurer. Der Schweizer Schnitt ist dort oft gar nicht zu finden.',
-        source: 'Quelle: [[BFS|bfs.admin.ch]], Mietpreiserhebung {year} · Nettomiete, ohne Nebenkosten',
+        // Die Überschreitung braucht ein WORT, nicht nur die Farbe Rosé (WCAG 1.4.1, Level A).
+        // Im Budget gibt es keine Nachbarzeile, die sie auffängt — dort war das rote „!“ der
+        // einzige Träger der Aussage (Predeploy-Runde 8, zweite Batterie).
+        thresholdBreachedLine: { sie: 'Ihre Miete übersteigt einen Drittel Ihres Einkommens.', du: 'Deine Miete übersteigt einen Drittel Deines Einkommens.' },
+        // ⚠️ `www.` ist Pflicht: die nackte Domain bfs.admin.ch ist als HTTPS-Ziel tot
+        // (Connection refused) — in Runde 8 belegt.
+        source: 'Quelle: [[BFS|www.bfs.admin.ch]], Mietpreiserhebung {year} · Nettomiete, ohne Nebenkosten',
       },
     },
   },
