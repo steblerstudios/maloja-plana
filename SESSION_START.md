@@ -66,12 +66,43 @@
    ⚠️ Merker: `/maloja-predeploy` Schritt 1 liest den LIVE-Marker aus dieser Datei — der
    Tag-Hash `31abc36` ist tot. **Der LIVE-Marker ist `5a4851c`** (= Bundle `index-1f4c6867.js`).
 
-   **Stand:** Alle 🔴 sind behoben (4 Commits, 730 Tests grün, Size 64.96/65 kB). Eine
+   **Stand:** Alle 🔴 sind behoben (7 Commits, 738 Tests grün, Size 64.96/65 kB). Eine
    **zweite Batterie gegen die Behebung selbst** ist gelaufen (swiss-precision, rechts, a11y,
    copy+qualität, code-review) — mit dem ausdrücklichen Auftrag, den Fix zu zerlegen statt
-   ihn zu bestätigen. **Ergebnis siehe unten unter „Zweite Batterie".**
-   **Noch KEINE Freigabe-Marke gesetzt.** Vor dem Deploy: PR → `main`, dann `/maloja-predeploy`
-   auf dem gemergten Stand (die Marke hängt am HEAD-Hash).
+   ihn zu bestätigen. **Sie fand, dass VIER meiner Fixes selbst falsch waren** (Netto/Brutto
+   in `unpaidWage` wieder eingebaut · Netto als untere Schranke übersehen · Gate öffnete den
+   Brief an den gut zahlenden Arbeitgeber · Zwei-Nenner im Barometer stehengelassen) plus zwei
+   a11y-Regresse durch den Frucht-Fix. Alle behoben (`6c53776`).
+   **Dann fand swiss-precision drei Dinge am FEATURE selbst** (nicht am Fix) → Stebler-Studios-
+   Entscheid: **`wageClaim`-Brief RUHT** (`WAGECLAIM_BEREIT=false`, `2b8e90e`). Details ganz unten.
+
+   ⭐ **NÄCHSTER SCHRITT nach dem Merge:** `/maloja-predeploy` **aus `maloja-frontend/`** starten
+   (nicht aus der Container-Ebene — sonst laden die Agenten nicht, siehe Merker). Die Marke
+   hängt am HEAD-Hash → erst auf dem gemergten `main`-HEAD setzbar.
+
+   **Offen aus der zweiten Batterie (⚠️/💡, nicht-blockierend — Feature-Genauigkeit):**
+   - **`wageClaim` wieder einschalten** braucht: Sektor + Status erfassen (Lehre/Praktikum/
+     unter 18/GAV/Landwirtschaft/Ferienjob), GE-Sätze differenzieren (24.59/18.07/18.44),
+     je Satz ein amtlicher Beleg. Dann `WAGECLAIM_BEREIT=true`. Der Brief-Code ist fertig.
+   - **LSE-Median enthält ⅟₁₂ des 13. Monatslohns** (BFS-Definition): wer den Monatslohn ohne
+     13. einträgt, liest sich ~8 % zu tief ein. Entweder im Feld nach dem 13. fragen, oder
+     `lohnEinordnung.source` sagt, was der Median einschliesst.
+   - **Armutsgrenze 2279** (`FinanzUebersicht.jsx`): unbelegt, veraltet (BFS 2024: **2388**),
+     und misst die falsche Grösse — sie gilt für *verfügbares äquivalenziertes Haushalts*-
+     einkommen (nach Abzügen), der Code hält sie gegen rohes Personen-`monthlyIncome`. `4000`
+     ebenfalls unbelegt. **Pre-existing (seit `e437a42`), schon live** — kein Regress dieser
+     Runde, aber ein echter Wahrheits-Disziplin-Fund. (Mein eigener Kommentar „armutsrelevant
+     = tatsächliches Geld" war falsch.)
+   - **Branchen-Chips + `belowMedian`-Band** (`FinanzUebersicht.jsx`) vergleichen ROH-Einkommen
+     mit Brutto-VZÄ-Medianen — dieselbe Netto/Brutto-Klasse, die das Barometer streng meidet.
+     Gehört zum Design-Entscheid Punkt 12 (Einkommens-Bänder).
+   - **Haselnuss `#947750` vs. Spur = 3.0003:1** — besteht WCAG 1.4.11 mit null Reserve; jede
+     `border`-Retusche kippt es. Vorschlag `#8E724D` (3.23) + Test-Schwelle auf 3.1.
+   - **Ferien-/Feiertagszuschläge:** alle drei Mindestlöhne sind OHNE definiert; bei Stundenlohn
+     enthält das Monatseinkommen ~14 % davon → abgeleiteter Stundenlohn zu hoch → verpasste
+     Unterschreitungen. Sichere Richtung (kein Fehlalarm), darum nur Merker.
+   - **`ChapterView` „im Kanton GE"** (Code statt Name) — der Brief sagt „Genf". Pre-existing,
+     `getCantonName` liegt bereit.
 
    **Warum eine zweite Batterie:** Der Fix ist KI-geschrieben und war zuerst ungeprüft — genau
    der Zustand, der die Blocker erzeugt hat. Er zahlte sich zweimal aus: der Code-Review fand
