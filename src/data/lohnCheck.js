@@ -161,7 +161,32 @@ export function stundenAufJahr(stundenProWoche) {
 // Schweigen statt einer Falschanschuldigung.
 // Vorbild im Haus: `AlvRechner` (braucht brutto), `SozialhilfeRechner` (braucht netto) —
 // beide prüfen `finanzen.incomeType` und befüllen bei falscher Basis nicht vor.
-export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkommensart) {
+// ─── Der 13. Monatslohn zählt an den Mindestlohn (JAHRES-Boden) ───────────────
+// Amtlich belegt 2026-07-18 für ALLE fünf Mindestlohn-Kantone: der kantonale Mindestlohn
+// ist ein Jahres-Boden. Wird ein 13. bezahlt, darf der Basis-Monats-/Stundenlohn um den
+// Faktor 12/13 tiefer liegen, solange der Jahres-Total den Boden erreicht.
+//   · GE — „peut être versé en 13 mensualités", reduzierter Satz 22.70 (2026), amtlich ge.ch.
+//     24.59 × 12/13 = 22.70. LIRT.
+//   · NE — reduzierter Basis-Satz 19.71 (2026). 21.35 × 12/13 = 19.71.
+//   · JU — kein publizierter Satz; der 13.-Anteil wird an den Boden 21.40 angerechnet
+//     (jura.ch: „la part du 13e est prise en compte"). Gleiche Mathematik.
+//   · BS — bs.ch FAQ: zählt NUR, wenn der 13. anteilig-monatlich ausbezahlt wird
+//     („damit er in der Kontrollperiode berücksichtigt werden kann"). Ein Jahresend-13.
+//     zählt in BS NICHT → darum ist ein hartes 'ok' hier unehrlich, siehe 'konformMit13'.
+//   · TI — LSM: Std.-Satz × Wochenstd. × 4.33 × 12/13 wenn 13. bezahlt.
+// Konsequenz: den 13. NICHT anzurechnen erzeugt Falsch-Alarm (korrekt bezahlte 13.-Bezüger
+// als „unter Mindestlohn"). Der reduzierte Boden = voller Satz × 12/13, auf Rappen gerundet
+// (deckt sich mit den publizierten GE/NE-Sätzen). Beleg + Quellen: Referenz-Memory
+// `reference_mindestlohn_13_monatslohn_kantone`.
+export function reduzierterBoden13(chfStunde) {
+  return Math.round(chfStunde * 12 / 13 * 100) / 100;
+}
+
+function hatDreizehnten(v) {
+  return v === true || v === 'yes' || v === 'ja';
+}
+
+export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkommensart, dreizehnter) {
   const lohn = Number(monatslohnChf) || 0;
   const stundenMonat = stundenAufMonat(stundenProWoche);
   if (lohn <= 0 || stundenMonat <= 0) return { status: 'unvollstaendig' };
@@ -171,22 +196,43 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   const base = { lohnStunde, stundenMonat, kanton };
   if (!ml) return { ...base, status: 'keinGesetz' };
 
-  // Über dem Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne Basis-Frage.
+  // Über dem VOLLEN Boden ist die Unterschreitung arithmetisch ausgeschlossen — ohne
+  // Basis- und ohne 13.-Frage.
   if (lohnStunde >= ml.chfStunde) {
     return { ...base, status: 'ok', mindestStunde: ml.chfStunde, jahr: ml.jahr };
   }
 
-  // Darunter: nur ein ausdrückliches 'brutto' belegt die Unterschreitung.
+  // Mit 13.: zwischen reduziertem (×12/13) und vollem Boden ist der Lohn qualifiziert
+  // konform — SOFERN der 13. an den Mindestlohn angerechnet wird (in BS nur bei anteilig
+  // monatlicher Auszahlung). Kein hartes 'ok' (das würde einen BS-Jahresend-13. maskieren),
+  // kein Falsch-Alarm. Wie 'ok' unabhängig von der Basis beweisbar: liegt schon der erfasste
+  // (evtl. Netto-)Lohn ≥ reduziertem Boden, liegt der echte Bruttolohn erst recht darüber.
+  const reduziert = reduzierterBoden13(ml.chfStunde);
+  const hat13 = hatDreizehnten(dreizehnter);
+  if (hat13 && lohnStunde >= reduziert) {
+    return {
+      ...base,
+      status: 'konformMit13',
+      mindestStunde: ml.chfStunde,
+      reduzierterBoden: reduziert,
+      jahr: ml.jahr,
+    };
+  }
+
+  // Darunter: nur ein ausdrückliches 'brutto' belegt die Unterschreitung. Der maßgebliche
+  // Boden ist mit 13. der reduzierte (der Basislohn muss nur diesen erreichen).
   if (einkommensart !== 'brutto') {
     return { ...base, status: 'basisUnklar', einkommensart: einkommensart || null };
   }
 
+  const boden = hat13 ? reduziert : ml.chfStunde;
   return {
     ...base,
     status: 'unterMindestlohn',
     mindestStunde: ml.chfStunde,
-    mindestMonat: Math.round(ml.chfStunde * stundenMonat),
-    differenzMonat: Math.round(ml.chfStunde * stundenMonat - lohn),
+    ...(hat13 ? { reduzierterBoden: reduziert } : {}),
+    mindestMonat: Math.round(boden * stundenMonat),
+    differenzMonat: Math.round(boden * stundenMonat - lohn),
     jahr: ml.jahr,
   };
 }

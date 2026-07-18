@@ -1654,7 +1654,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
               // korrekt schweigt. Fünf Stellen rechneten diesen Befund, jede etwas anders.
               const check = monthlyIncome > 0
-                ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType)
+                ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType, allData?.finanzen?.dreizehnter)
                 : null;
               elements.push(
                 React.createElement('div', {
@@ -1817,7 +1817,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
                 // Einkommensart mitgeben: der Mindestlohn ist ein BRUTTO-Stundenlohn, und der
                 // Feld-Hinweis rät zu Netto. Ohne bekannte Basis kein Befund ('basisUnklar').
-                const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType);
+                const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType, data.dreizehnter);
                 if (result.status === 'unvollstaendig' && onNavigate) {
                   elements.push(
                     React.createElement('button', {

@@ -1300,6 +1300,7 @@ export default {
         sideIncomeType: 'Nebenerwerb: Einkommensart',
         taxableIncome: 'Steuerbares Einkommen pro Jahr CHF',
         incomeType: { label: 'Einkommensart', options: { netto: 'Netto (was ich erhalte)', brutto: 'Brutto (vor Abzügen)' } },
+        dreizehnter: { label: '13. Monatslohn?', options: { no: 'Nein', yes: 'Ja' } },
         employer: 'Arbeitgeber',
         employerAddress: 'Adresse des Arbeitgebers',
         employmentType: { label: 'Anstellungstyp', options: { employed: 'Angestellt', selfEmployed: 'Selbstständig', freelance: 'Freiberufler', retired: 'Rentner' } },
@@ -2278,6 +2279,9 @@ export default {
     mindestlohnBreachedLine: { sie: 'Ihr Lohn scheint darunter zu liegen.', du: 'Dein Lohn scheint darunter zu liegen.' },
     // 40 Std./Woche = die BFS-Norm für den Median (nicht 42 — das ist die Mindestlohn-Welt).
     fulltimeNote: 'Vergleich auf Basis einer Vollzeitstelle (40 Std./Woche, wie beim BFS-Median).',
+    dreizehnterNote: 'Der Vergleichswert enthält den anteiligen 13. Monatslohn (×13/12), damit er zum BFS-Median passt. Ohne 13. wären es CHF {fte}.',
+    ohneDreizehnterNote: 'Vergleich ohne anteiligen 13. Monatslohn. Mit einem 13. läge der Vergleichswert rund 8 % höher.',
+    konformMit13Line: 'Mit dem 13. Monatslohn gesetzeskonform — sofern der 13. an den Mindestlohn angerechnet wird (in Basel-Stadt nur bei anteilig monatlicher Auszahlung).',
     fteNote: 'Teilzeit ({hours} Std./Woche): auf 100% hochgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
     overFteNote: 'Mehr als Vollzeit ({hours} Std./Woche): auf 40 Std. umgerechnet CHF {fte} (erfasst: CHF {actual}). Nur so ist der Vergleich mit dem Vollzeit-Median zulässig.',
     // Kein „wir nehmen Vollzeit an" mehr — genau diese Annahme erzeugte den Fehlalarm.

@@ -1209,6 +1209,7 @@ export default {
         sideIncomeType: 'Entrada accessorica: spezia da entrada', // TODO(rm): Gegenlese
         taxableIncome: 'Entrada taxabla per onn CHF',
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
+        dreizehnter: { label: '13avel salari mensil?', options: { no: 'Na', yes: 'Gea' } },
         employer: 'Patrun',
         employerAddress: 'Adressa dal patrun',
         employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
@@ -2526,6 +2527,9 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
+    dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
+    ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",
+    konformMit13Line: "Conform grazia al 13avel salari — sche il 13avel vegn quintà tar il salari minimal (a Basilea-Citad mo sch'el vegn pajà mensilmain).",
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },

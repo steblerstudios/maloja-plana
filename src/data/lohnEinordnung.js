@@ -88,10 +88,11 @@ export function mindestlohnBoden(canton) {
 // { show, income, incomeFTE, partTime, overFullTime, hoursKnown, hoursPerWeek,
 //   rel: 'near'|'above'|'below'|null, pct, delta, median,
 //   mindestlohn, mlBreached, befundStatus, scaleMin, scaleMax }
-export function lohnBandState({ income, canton, hoursPerWeek, incomeType } = {}) {
+export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreizehnter } = {}) {
   const lohn = num(income);
   const stunden = num(hoursPerWeek);
   const median = LOHN_REFERENZ.median;
+  const hat13 = dreizehnter === true || dreizehnter === 'yes' || dreizehnter === 'ja';
 
   if (lohn <= 0) return { show: false };
 
@@ -108,8 +109,10 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType } = {})
   // Mindestlohn-Befund NICHT selbst rechnen — `pruefeStundenlohn` ist die eine Wahrheit.
   // Sie kennt die Netto/Brutto-Regel ebenfalls; damit sagen Kapitel und Barometer per
   // Konstruktion dasselbe, nicht per Zufall.
-  const befund = pruefeStundenlohn(lohn, stunden, canton, incomeType);
+  const befund = pruefeStundenlohn(lohn, stunden, canton, incomeType, dreizehnter);
+  // 'konformMit13' ist KEINE Unterschreitung — nur 'unterMindestlohn' färbt die „!"-Marke rot.
   const mlBreached = befund.status === 'unterMindestlohn';
+  const konformMit13 = befund.status === 'konformMit13';
 
   // Vergleichbar ist der Lohn nur mit BEIDEM: bekannter Basis und bekannten Stunden.
   const comparable = basisKnown && hoursKnown;
@@ -123,12 +126,18 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType } = {})
   const partTime = hoursKnown && stunden < LSE_VOLLZEIT_STUNDEN_WOCHE;
   const overFullTime = hoursKnown && stunden > LSE_VOLLZEIT_STUNDEN_WOCHE;
 
+  // Der BFS-Median ist ein standardisierter Monatslohn INKL. anteiligem 13. (Jahreslohn/12).
+  // Ein Monats-Basislohn wird darum erst mit ×13/12 fair vergleichbar; ohne diesen Schritt
+  // liest sich ein 13.-Bezüger rund 8 % zu tief ein. `incomeVergleich` trägt die Median-
+  // und Zonen-Aussage; `incomeFTE` bleibt die reine Teilzeit-Hochrechnung (für die FTE-Notiz).
+  const incomeVergleich = hat13 ? Math.round(incomeFTE * 13 / 12) : incomeFTE;
+
   // Ohne bekannte Stunden ist die Lage gegenüber einem VOLLZEIT-Median nicht bestimmbar;
   // ohne bekannte Basis ist sie es gegenüber einem BRUTTO-Median ebenso wenig.
   // Vorher stand hier trotzdem ein `rel` — die Anzeige machte daraus „Ihr Lohn liegt unter
   // dem Schweizer Median", also genau die Vollzeit-Annahme, die `c56272f` abgeschafft hat.
   // Kein Ersatz-Urteil: `rel: null`, die Anzeige lädt zum Nachtragen ein.
-  const delta = comparable ? incomeFTE - median : null;
+  const delta = comparable ? incomeVergleich - median : null;
   const rel = !comparable ? null
     : Math.abs(delta) / median <= NEAR_TOLERANZ ? 'near'
     : (delta > 0 ? 'above' : 'below');
@@ -138,6 +147,8 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType } = {})
     show: true,
     income: lohn,
     incomeFTE,
+    incomeVergleich,
+    hat13,
     partTime,
     overFullTime,
     hoursKnown,
@@ -151,6 +162,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType } = {})
     median,
     mindestlohn: mindestlohnBoden(canton),
     mlBreached,
+    konformMit13,
     befundStatus: befund.status,
     scaleMin: SCALE_MIN,
     scaleMax: SCALE_MAX,

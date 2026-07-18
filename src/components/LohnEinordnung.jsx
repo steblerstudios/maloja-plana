@@ -107,6 +107,9 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     hoursPerWeek: data?.ausbildung?.workHoursPerWeek,
     // Der Mindestlohn ist ein BRUTTO-Stundenlohn — ohne bekannte Basis kein Befund.
     incomeType: data?.finanzen?.incomeType,
+    // Der BFS-Median enthält den anteiligen 13.; mit einem 13. wird der Lohn ×13/12
+    // vergleichbar gemacht, und der Mindestlohn-Boden sinkt um 12/13 (Jahres-Boden).
+    dreizehnter: data?.finanzen?.dreizehnter,
   });
 
   const card = embedded
@@ -120,7 +123,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     );
   }
 
-  const { incomeFTE, income, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, scaleMin, scaleMax } = state;
+  const { incomeFTE, incomeVergleich, hat13, income, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, scaleMin, scaleMax } = state;
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
@@ -149,7 +152,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     { min: median, max: LOHN_REFERENZ.p90, key: 'zoneUpperMid' },
     { min: LOHN_REFERENZ.p90, max: scaleMax, key: 'zoneHigh', sub: 'zoneHighSub' },
   ];
-  const activeZone = zones.find(z => incomeFTE <= z.max) || zones[zones.length - 1];
+  const activeZone = zones.find(z => incomeVergleich <= z.max) || zones[zones.length - 1];
 
   const marks = [
     { value: median, form: 'dot', color: valenceColor },
@@ -180,10 +183,10 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
     ),
 
     React.createElement(Barometer, {
-      palette, isDark: isDarkMode, value: Math.min(incomeFTE, scaleMax), fillColor: arbeitColor,
+      palette, isDark: isDarkMode, value: Math.min(incomeVergleich, scaleMax), fillColor: arbeitColor,
       marks, zones,
       ariaLabel: [
-        t('lohnEinordnung.aria', { amount: fmt(incomeFTE), median: fmt(median) }),
+        t('lohnEinordnung.aria', { amount: fmt(incomeVergleich), median: fmt(median) }),
         t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1)),
         t('lohnEinordnung.' + activeZone.key),
         mlBreached ? t('lohnEinordnung.mindestlohnBreachedLine') : null,
@@ -217,7 +220,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
       React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } },
-        '▬ ' + t('lohnEinordnung.yourWage', { amount: fmt(incomeFTE) })),
+        '▬ ' + t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor } },
         '● ' + t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
@@ -232,11 +235,23 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
       : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
       : t('lohnEinordnung.fulltimeNote')),
 
+    // Die Basis des Vergleichs IMMER ausweisen (Sophie/Stebler Studios): mit 13. enthält der
+    // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
+    // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
+    React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
+    }, hat13
+      ? t('lohnEinordnung.dreizehnterNote', { fte: fmt(incomeFTE) })
+      : t('lohnEinordnung.ohneDreizehnterNote')),
+
     mindestlohn && React.createElement('div', {
       style: { fontSize: text.xs, color: mlBreached ? palette.roseDeep : palette.mid, marginTop: space.xs + 'px', lineHeight: leading.normal },
     },
       t('lohnEinordnung.mindestlohnLine', { amount: fmt(mindestlohn.monatVollzeit), stunde: mindestlohn.chfStunde.toFixed(2), jahr: mindestlohn.jahr }),
-      mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : ''
+      mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : '',
+      // Qualifiziert konform: Basislohn unter dem vollen, aber über dem reduzierten Boden —
+      // gesetzeskonform, SOFERN der 13. angerechnet wird (in BS nur anteilig-monatlich).
+      konformMit13 ? ' ' + t('lohnEinordnung.konformMit13Line') : ''
     ),
 
     React.createElement('div', {
