@@ -7,7 +7,28 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-15 (Predeploy-Runde 8)
+**Stand:** 2026-07-18 (Lohn-Barometer + 13.-Monatslohn) · *Kopf aktualisiert; r8-Historie unten teils überholt — siehe Banner.*
+
+> ### ⭐ AKTUALISIERUNG 2026-07-18 (verifiziert am git-Stand, NICHT am Live-Bundle)
+>
+> **`main` steht auf `4c79bee`** (Merge PR #102, tresor-lockscreen-design) — per `git` gegengeprüft.
+> Die „Wo stehen wir"-Tabelle + „Nächste Schritte" unten stammen vom **2026-07-15** und
+> beschreiben `main=acc52f0` mit „Runde 8 hängt, nicht live". Das ist **überholt**: laut
+> Claude-Memory `project_maloja_c_wiedereinstieg_2026-07-18` gingen r8 via PR #97/#98 in `main`
+> und **Runde 8 ist live** (`index-96dd34ec.js`, curl-verifiziert am 2026-07-18), dann folgten
+> #99 (Docs), #100 (Tresor 2b-pre), #102 (LockScreen). ⚠️ **Diese Live-Aussage ist aus dem
+> Memory getragen, in DIESER Sitzung nicht per curl neu belegt** — vor dem nächsten Deploy
+> gegenprüfen. Die Tresor-2b-**UI** ist bewusst vertagt (Memory `project_tresor_lock_crypto`).
+>
+> **Aktive Arbeit dieser Sitzung — Branch `feat/lohn-barometer-zonen` (ab `main=4c79bee`),
+> 4 Commits, gepusht, NICHT gemergt, kein PR:**
+> `cfe6fb3` Tresor-Doku-Vertagung · `a758bca` Barometer-Verteilungs-Zonen (Bubbles) + Armuts-Band
+> raus · `e951164` Lohn-auf-Miethöhe + Miet-Marken + 13.-Quellenhinweis · **`8f505dc` 13.-Monatslohn-Feld
+> + Mindestlohn-Check rechtskonform** (der 13. zählt an den Mindestlohn = Jahres-Boden; neuer
+> Status `konformMit13`; behebt einen Falsch-Alarm für 13.-Bezüger — amtlich belegt, Memory
+> `reference_mindestlohn_13_monatslohn_kantone`). **756 Tests grün, Bundle 64.97/65 kB (fast voll).**
+> Live-verifiziert nur auf localhost (hell+dunkel), NICHT deployt. Offene Barometer-Fäden:
+> Branchen-Chips interaktiv · Durchschnitt-Strich (nur STAT-TAB belegbar) · Finanz-Tacho-Klärung.
 
 ## Wo stehen wir gerade
 
