@@ -7,18 +7,20 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-15 (Predeploy-Runde 8)
+**Stand:** 2026-07-18 (Runde 8 LIVE · Runde 9: maloja-c-Extraktion + Tresor 2b-pre/LockScreen)
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
-| Aktueller Branch | **`fix/predeploy-r8-3`** — die Behebung von `fix/predeploy-r8` ist via **PR #97 in `main`** (Merge-Commit); dieser Zweig trägt die zwei echten Fehler nach, die eine **dritte Prüfung** (Predeploy nach dem Merge) in den ungeprüften Commits fand. `chore/stand-sync-r13` ist **tot** (Inhalt via PR #92 in `main`). |
-| `main` steht auf | **`acc52f0`** (= `origin/main`, gegengeprüft 2026-07-15). ⚠️ **Merge-Fallen-Regel — gilt weiter, aber sie deckt nur den Doku-Fall:** Ein Stand-Sync-PR dokumentiert den Zeiger, sein eigener Merge rückt `main` dahinter. Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer**, ist alles in Ordnung. **Ist das Delta NICHT leer, hängt ein echter Deploy.** Genau das ist am 2026-07-15 passiert: Der frühere Eintrag `5a4851c` behauptete „`main` IST live, kein Deploy hängt", während 23 `src/`-Dateien (+1547/−59) davor lagen — die Feature-PRs #93/#94 waren gemergt, der Selbstschutz war beschrieben, aber nie ausgeführt. **Lehre: Die Gegenprobe ist keine Option, sondern Schritt 1.** |
-| Deploy hängt? | **JA.** `git log --oneline 5a4851c..main` = **20 Commits**, `git diff 5a4851c..main -- src/` = **23 Dateien**; dazu die Blocker-Behebung auf `fix/predeploy-r8`. Frisch gebaut → Bundle ≠ Live-Bundle `index-1f4c6867.js`. Das ist **kein** Doku-Delta wie bei #86/#87. |
+| Aktueller Branch | **`main`** (Sitzung 2026-07-18 endete an drei Merges: #100/#101/#102). Der Abschluss läuft über `chore/session-close-2026-07-18` → PR (GitHub Flow, nicht direkt auf `main`). |
+| `main` steht auf | **`4c79bee`** (= `origin/main`, gegengeprüft 2026-07-18; Merge von #102). ⚠️ **Merge-Fallen-Regel (Gegenprobe = Schritt 1):** Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer** → ok. **Ist das Delta NICHT leer, hängt ein echter Deploy.** |
+| Deploy hängt? | **JA, aber nur eine kleine, live-wirksame Änderung.** `main` (`4c79bee`) baut frisch → `index-c5906715.js`, **≠ Live `index-96dd34ec.js`**. Das Delta ist die **KVG-«Kurz innehalten»-Änderung (#101)**. #100 (Tresor 2b-pre) ist **dormant** (kein Live-Effekt), #102 (LockScreen) ist **dev-only** (Prod byte-neutral). → Ein Deploy bringt nur den KVG-Schritt live; vorher frisches `/maloja-predeploy` auf `4c79bee`. |
 | Version (package.json) | `0.1.25-beta` |
 | Letzter Tag | `v0.1.25-beta`. ⚠️ Der Tag zeigt auf `31abc36` — ein Hash, den der Purge **getötet** hat (`git log 31abc36..HEAD` bricht ab). Ab jetzt setzt `deploy.sh` den Tag automatisch aus `package.json`. |
-| Live (malojaplana.ch) | Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css`. Das entspricht dem Stand **`5a4851c`** (Runden 4–7, #72–#84). **`main` (`acc52f0`) ist NICHT live** — die ganze Runde 8 (Lohn-Befund-Brief + Lohn-/Mietzins-Barometer) liegt davor. ⚠️ **Ausnahme:** r7-`.htaccess`-Fix `geolocation=(self)` NICHT live — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel (dort noch `geolocation=()`, am 2026-07-15 per `curl` bestätigt). |
+| Live (malojaplana.ch) | Bundle **`index-96dd34ec.js`** / CSS `index-6b0b5577.css` (Runde 8, deployt **2026-07-18** nach dem `.deploy.local`-Wiederaufbau, per `curl` verifiziert). **Runde 8 (Lohn-Befund-Brief + Lohn-/Mietzins-Barometer) ist damit LIVE.** ⚠️ `main` ist dem Live um die KVG-#101-Änderung voraus (siehe „Deploy hängt?"). ⚠️ **Ausnahme (weiter gültig):** r7-`.htaccess`-Fix `geolocation=(self)` — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel. |
+| **Runde 9 (2026-07-18) — 🟢 GEMERGT (#99–#102), teils NICHT live** | **#99** maloja-c-Docs-Extraktion (Zielarchitektur, Positionierung, Tresor-Zielbild — docs-only). **#100 Tresor 2b-pre:** 4 🔴 der harten Vorbedingung + Härtung (Doc-Blobs verschlüsseln, prerestore-Purge best-effort, freundlicher Fehler, Leeres-Backup-Guard; PBKDF2 600k versioniert, `TRESOR_MIN_PASSPHRASE=12` + Merksatz-Nudge, Backup-Zwang, `VAULT_*`→`TRESOR_*`) — **dormant, kein Live-Effekt.** **#101 KVG «Kurz innehalten»:** Anti-Dark-Pattern-Schritt in KVGWechsel + i18n ×5 — **live-wirksam, noch nicht deployt.** **#102 LockScreen-Design:** Tresor-2b-UI-Wand entkoppelt (nur `onUnlock`-Prop), `tresorLock`-i18n ×5, dev-only `#/lockpreview` — **Prod byte-neutral.** 748 Tests grün, Size 64.97/65 kB. |
+| Deploy-Zugang | **`.deploy.local` am 2026-07-18 wiederhergestellt** (war beim Klon verloren): `SFTP_HOST=et9l2r.ftp.infomaniak.com`, `SFTP_USER=et9l2r_admin` (NICHT der `_temporary_`-SSH-Zugang — der ist kein SFTP-Konto), `REMOTE_DIR=/home/clients/c6c3e5438c4705c1cdcb2a0bc0130c62/sites/malojaplana.ch/`. Passwort nur interaktiv. **⚠️ ausserhalb git sichern (Passwort-Manager)** — dritter Verlust dieser Art. |
 | ⚠️ Tote Hashes | Alle Hashes von **vor** dem Purge (2026-07-14) lösen nicht mehr auf — u. a. der Live-Marker `31abc36` und `.maloja/predeploy-ok`. **Ein toter Hash heisst NICHT, dass die Arbeit erfunden war.** Nachschlagen: `grep '<hash>' _maloja-archiv/HASH-LANDKARTE-vor-purge.md` (2070 Einträge, PII-frei). |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
 | **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
@@ -37,11 +39,11 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live:** Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css` läuft auf malojaplana.ch.
-  Das ist der Stand **`5a4851c`** (Runden 4–7). **`main` (`acc52f0`) ist NICHT live** —
-  am 2026-07-15 belegt, nicht angenommen: `main` frisch gebaut → `index-d66cc69c.js`,
-  **anderer Hash als live**. Ein echter App-Deploy hängt, ist aber **gesperrt** (Gate rot).
-  Tests grün (701/63), i18n-Parität 5 Spr., Build sauber.
+- **Live:** Bundle **`index-96dd34ec.js`** / CSS `index-6b0b5577.css` läuft auf malojaplana.ch
+  (Runde 8, deployt 2026-07-18, per `curl` verifiziert — `BriefGenerator`+`RegionalBarometer`
+  als HTTP 200 belegt). **`main` (`4c79bee`) baut frisch → `index-c5906715.js`, ≠ live** →
+  ein Deploy hängt, aber nur die KVG-#101-Änderung (live-wirksam); #100 dormant, #102 dev-only.
+  **748 Tests grün** (64 Dateien), i18n-Parität 5 Spr., Build sauber, Size 64.97/65 kB.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **✅ Testlauf-Falle behoben** (PR #95, `8c30db3`): `vite.config.js` schliesst `**/.claude/**`
@@ -62,7 +64,30 @@
 
 ## Nächste Schritte
 
-0. **⭐ Runde-8-Blocker: BEHOBEN auf `fix/predeploy-r8` — die nächste Sitzung startet HIER.**
+> **Stand 2026-07-18 (Runde 9):** Runde 8 ist LIVE. Der ⭐-Block „Runde-8-Blocker" darunter
+> ist damit **erledigt + deployt** (Historie belassen). Aktuelle offene Schritte:
+
+**A. KVG-«Kurz innehalten» (#101) deployen.** Live-wirksam, noch nicht live. `main`=`4c79bee`
+   baut `index-c5906715.js` ≠ live `index-96dd34ec.js`. Ablauf: frisches `/maloja-predeploy`
+   auf `4c79bee` aus `maloja-frontend/` → `bash deploy.sh` (Zugang steht via `.deploy.local`,
+   User `et9l2r_admin`). #100 dormant + #102 dev-only gehen byte-neutral mit.
+
+**B. Tresor 2b-UI — die echte Verdrahtung (eigene, frische Sitzung, fasst echte Daten an).**
+   Fundament #100 (2b-pre) + Wand #102 (LockScreen, design-first) sind gemergt. Offen:
+   Seam in `main.jsx` (bei `isTresorActive()` → LockScreen statt App; `onUnlock` → `unlockTresor`
+   → entschlüsselter State; Speichern → `persistTresor`), **Aktivierungs-Flow** mit erzwungenem
+   Backup-Export (`activateTresor` verlangt `backupConfirmed`) + Setup-UX „nimm einen ganzen
+   Satz" (≥12), `tresorLock`-Fehlermeldungen durch i18n, Doc-Ladepfad (`main.jsx:744`
+   `doc.data||getDocBlob`) an den entsperrten In-Memory-Zustand koppeln, `autoBackup.js`
+   mitverschlüsseln. **Verify-Punkt (Self-Review #100):** Doc-Blob-id-Typ (String vs. idb-Key)
+   einmal end-to-end mit echten Dokumenten gegenprüfen. Spec: `docs/design/tresor-lock.md`.
+
+**C. Klein/offen:** IDEEN §13 Rest-Idee „Freigabe-/Export-Vorschau «Das verlässt dein Gerät»";
+   `wageClaim`-Brief-Wiedereinschaltung (siehe alter Punkt 0 unten).
+
+---
+
+0. **⭐ Runde-8-Blocker: BEHOBEN + DEPLOYT (2026-07-18). Historie unten belassen.**
    ⚠️ Merker: `/maloja-predeploy` Schritt 1 liest den LIVE-Marker aus dieser Datei — der
    Tag-Hash `31abc36` ist tot. **Der LIVE-Marker ist `5a4851c`** (= Bundle `index-1f4c6867.js`).
 
