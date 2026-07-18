@@ -211,20 +211,30 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 
 *WebFetch war für den Agenten gesperrt → „verlinkte Seiten"-Teil aus Allgemeinwissen, nicht live.*
 
+> **✅ Reconciliation 2026-07-18 (reproduce-first gegen den Code):** Fast der ganze H-Block war
+> schon gebaut. Belege unten je Punkt. Offen bleibt nur der Demo-Modus am Einstieg (eigene UX-Runde)
+> und ein Focus-Ring-Detail (Kür).
+
 **🔴 Sofort:**
-- **BetaGate = nackte Passwort-Wand** (`BetaGate.jsx`, wrappt App in `main.jsx:662`) → ruhige
-  Intro + Lokal-Badge + Impressum/Datenschutz-Link + „von Stebler Studios, Basel" davor. Idee:
-  Legal-Seiten ohne Code erreichbar machen, nur die App gaten.
-- **Lizenz-Widerspruch** → `legal.terms.ip1` sagt MIT, Projekt ist AGPL-3.0 → in allen 5 i18n fixen.
+- ✅ **BetaGate = nackte Passwort-Wand — ERLEDIGT.** `BetaGate.jsx` hat ruhige Intro (`beta.intro` +
+  `beta.gateMessage`), Lokal-Badge (`TrustLockIcon` + `trust.localBadge`), Legal-Link ohne Code
+  (`beta.legalLink` → `setLegalSection('privacy')`), „Stebler Studios · Basel" (Z.183) und Landmark
+  (`role: 'main'`, Z.81).
+- ✅ **Lizenz-Widerspruch — ERLEDIGT.** `legal.terms.ip1` sagt in allen 5 Sprachen „AGPL-3.0" (nicht MIT).
 
 **🟠 Mittel:**
-- BetaGate-Button Kontrast: weiss auf `palette.sand` → `#000` (wie Onboarding).
+- ✅ **BetaGate-Button Kontrast — ERLEDIGT.** `PrimaryButton` nutzt `palette.onSand` (dunkler Text auf
+  Sand, Kommentar „WCAG-AA; Sand ist in hell+dunkel gleich"). Kein weisser Text mehr.
 - ✅ **„Stand: Juni 2026" hartcodiert (`legal.lastUpdated`) → Pflege-Flag (2026-07-18, `e586acf`).**
   War in allen 5 i18n-Dateien einzeln → jetzt EIN Pflege-Ort `LEGAL_LAST_UPDATED` in `LegalView.jsx`,
   via `{date}` eingesetzt. Bewusst NICHT aus dem Build abgeleitet (falsche Aktualitäts-Aussage). Output
   byte-identisch (DE+RM live verifiziert). Branch `feat/polish-legal-datum` ab main.
-- A11y in Onboarding/BetaGate: Focus-Ring auf Sprach-Buttons, `aria-live` für Beta-Fehler, Landmark.
-- „Wert zeigen bevor man fragt" → Demo-Modus (existiert in `main.jsx`) schon am Einstieg anbieten.
+- 🟠 **A11y Onboarding/BetaGate — GRÖSSTENTEILS erledigt.** `aria-live` für Beta-Fehler ✅
+  (`role: 'alert'` + `aria-invalid`/`aria-describedby`, `BetaGate.jsx:139-143`), Landmark ✅
+  (`role: 'main'`). **Offen (Kür):** Focus-Ring auf den Sprach-Buttons gezielt prüfen.
+- 🟠 **„Wert zeigen bevor man fragt" → Demo-Modus am Einstieg — OFFEN (Stebler Studios: „sehr gerne").**
+  Demo/Sandbox existiert in `main.jsx`, wird am BetaGate aber noch nicht angeboten. Eigene UX-Runde
+  (wo/wie: Knopf am Gate „ohne Code ausprobieren" → Demo-Daten laden, ohne Beta-Freischaltung).
 
 **Vorbilder (übernehmen):** konkrete prüfbare Claims aufs Entry (Infomaniak), Privatsphäre in
 Alltagssprache + „in plain terms" (Posteo), „Warum gratis / wer steckt dahinter" (Ecosia),
@@ -235,16 +245,20 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 
 ## I — Marketing/Positionierung (Agenten-Feedback ✅ eingegangen)
 
+> **✅ Reconciliation 2026-07-18 (reproduce-first):** Alle 🔴-Copy-Punkte erledigt (README-Kopf +
+> i18n gegengelesen). Offen bleibt nur die weiche Positionierungs-/Trust-Arbeit unten (laufend).
+
 **🔴 Sofort (Copy):**
-- **„für Schweizerinnen und Schweizer" → „für Menschen in der Schweiz"** (README + überall extern)
-  — schliesst sonst die echte Zielgruppe aus. Werte-relevant.
-- **README neu schreiben** — aktuell „0.1.0-alpha", emoji-lastig, „später Open Source",
-  „B2B-Versionen (Behörden/Banken)" → ruhige, öffentliche, on-brand Front-Tür (widerspricht sonst
-  der Live-Beta).
+- ✅ **„Schweizerinnen und Schweizer" → „Menschen in der Schweiz" — ERLEDIGT.** README sagt „Menschen
+  in der Schweiz"; die alte Formel steht nur noch in den Audit-Archiven (`docs/**/…AUDIT.txt`, die sie
+  zitieren), nicht im Live-Text.
+- ✅ **README neu — ERLEDIGT.** Kopf ist on-brand: „Dein ruhiger Überblick über das Leben in der
+  Schweiz — privat, offline, kostenlos", `0.1.0-beta`, AGPL-3.0, „von Stebler Studios (Basel)".
+  0 Treffer für „0.1.0-alpha"/„später Open Source"/„B2B-Version".
 - ✅ **Funktionale Claim-Unterzeile:** „Verstehen, was zusteht. Ordnen, was ansteht." ist jetzt
   das Hero-H2 (`dashboard.welcome`) in allen 5 Sprachen — infinitiv-neutral, keine Sie/Du-Variante.
   Ersetzt das wortgleiche „Prüfen Sie Ihre Ansprüche…". Marke „Dein Leben. Deine Übersicht." bleibt.
-  🟡 Offen: toter `appTagline`-Key („— auf deinem Gerät." anhängen; wird nirgends gerendert).
+  ✅ toter `appTagline`-Key: **weg** (kein Treffer mehr in `src/`, reproduce-first 2026-07-18).
 
 **🟠 Positionierung & Trust:**
 - Orientierung vor Organisation kommunizieren (nicht „Lebensordner" als Lead-Wort).
