@@ -40,6 +40,12 @@
 > nur STAT-TAB; breit gesucht bestätigt — der Median trägt allein) · Finanz-Tacho-Klärung ·
 > Branchen-Werte weiter auf 2024 heben (STAT-TAB-Recherche) · a11y-Sweep · wageClaim.
 > **13.-Kanton-Belege NE/TI amtlich nachgezogen** (Memory `reference_mindestlohn_13_monatslohn_kantone`).
+>
+> **Nächster Faden besprochen (NICHT gebaut) — Steuer-Visualisierung:** ruhige **Säulen** im
+> Zivilstand-Vergleich (ledig · verheiratet gemeinsam · verheiratet **einzeln**/Individualbesteuerung),
+> im **Probier-Modus** (`main.jsx` sandboxMode) durchspielbar (AHV/BVG-Muster spiegeln). ⚠️ Individual-
+> besteuerung erst nach amtlichem Rechts-Check + echtem Rechenweg (`berechneBundessteuer` kennt „einzeln"
+> nicht). Kanton/Gem = Faktor-Schätzung → „~". Details: Memory `project_steuer_saeulen_zivilstand`.
 
 ## Wo stehen wir gerade
 
