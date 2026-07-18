@@ -206,6 +206,7 @@ export const HEARTFELT = [
   { key: 'heartfelt22', name: 'Unimed TCM', url: 'https://www.unimed-tcm.ch/', group: 'gesundheit' },
   { key: 'heartfelt23', name: 'Winterhilfe Schweiz', url: 'https://www.winterhilfe.ch', group: 'soziales' },
   { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
+  { key: 'heartfelt25', name: 'Leihlager', url: 'https://www.leihlager.ch/', group: 'gemeinschaft' }, // gemeinnützige Leihplattform Basel («Leihen statt kaufen»), ehrenamtlich
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.

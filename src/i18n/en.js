@@ -1846,6 +1846,7 @@ export default {
       heartfelt22: 'Traditional Chinese Medicine — mindful, holistic treatment.',
       heartfelt23: 'Bridges financial emergencies so people have the essentials and don\'t lose their home.',
       heartfelt24: 'Supports people with mental-health burdens towards a self-determined life — counselling, housing, day structure.',
+      heartfelt25: 'Non-profit lending platform in Basel — "borrow instead of buy": over 1,300 items to borrow, run by volunteers.',
     },
     faq: {
       q1: 'Where is my data stored?',

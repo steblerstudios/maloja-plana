@@ -1845,6 +1845,7 @@ export default {
       heartfelt22: 'Médecine traditionnelle chinoise — un traitement attentif et holistique.',
       heartfelt23: 'Aide à surmonter les situations de détresse financière pour que les personnes aient l\'essentiel et ne perdent pas leur logement.',
       heartfelt24: 'Accompagne les personnes en souffrance psychique vers une vie autodéterminée — conseil, logement, structure de jour.',
+      heartfelt25: 'Plateforme de prêt à but non lucratif à Bâle — « emprunter plutôt qu’acheter » : plus de 1’300 objets à emprunter, gérée par des bénévoles.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
