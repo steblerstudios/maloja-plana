@@ -7,6 +7,22 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
+> ### ⭐ BANNER 2026-07-18 (Polish/Todos-abarbeiten + Inventur)
+>
+> **`main` unverändert `4c79bee`.** Dieser Branch (`feat/polish-legal-datum`) hängt von `main`
+> ab → der Kopf unten (Stand 2026-07-15, Predeploy-r8) ist die **`main`-Version** und hier NICHT
+> überschrieben. **ZWEI parallele unmergte Feature-Branches ab `4c79bee`:**
+> - `feat/lohn-barometer-zonen` (12 Commits, vorige Sitzung; trägt ein eigenes 2026-07-18-Banner)
+> - **`feat/polish-legal-datum` (10 Commits, DIESE Sitzung — 4 Bau, 6 Doku/Analyse, gepusht, kein PR)**
+>
+> **Bau (4):** `e586acf` legal.lastUpdated single-source · `a5302d6` Empfehlung plaant (war «Living
+> Dream Design») · `8563ac4` Frist-Icon = calendarToday überall · `6b8b594` Empfehlung Leihlager
+> (heartfelt25). **Doku/Analyse (6):** TODO/H-I-Audit reproduce-first entstaubt · AHV-21 (Phase A war
+> schon in main / B geparkt) · Design-Faden `docs/design/haushalt-teilen-berechtigung.md` · maloja-c-
+> Abgleich `docs/design/maloja-c-abgleich.md` (+ TODO §G2 Audit-Extraktion: DSFA-Lücke/Freigabe-
+> Register/Backup-Härtung). **749 Tests grün, nur localhost verifiziert, NICHT deployt.**
+> Vollbild: Memory `project_polish_legal_plaant_frist_2026-07-18` + Artifact „Fortschritts-Landkarte".
+
 **Stand:** 2026-07-15 (Predeploy-Runde 8)
 
 ## Wo stehen wir gerade
