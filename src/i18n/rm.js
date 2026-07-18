@@ -1481,7 +1481,7 @@ export default {
       transparency: 'La transparenza è impurtanta per nus: Maloja resta open source, local e senza reclama. Las contribuziuns van en il manaschi, la tgira da datas e la sviluppada.',
     },
     footerLink: 'Protecziun da datas & dretg',
-    lastUpdated: 'Stadi: zercladur 2026 · Tenor la nLPD (en vigur dapi il 1.9.2023)',
+    lastUpdated: 'Stadi: {date} · Tenor la nLPD (en vigur dapi il 1.9.2023)',
     privacy: {
       responsibleTitle: 'Persuna responsabla',
       responsible1: 'Stebler Studios — Sophie Stebler, Basilea, Svizra',

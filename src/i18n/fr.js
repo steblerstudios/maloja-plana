@@ -1673,7 +1673,7 @@ export default {
       transparency: 'La transparence nous tient à cœur : Maloja reste open source, local et sans publicité. Les contributions financent le fonctionnement, l’entretien des données et le développement.',
     },
     footerLink: 'Confidentialité & Mentions légales',
-    lastUpdated: 'Mis à jour : juin 2026 · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
+    lastUpdated: 'Mis à jour : {date} · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
     privacy: {
       responsibleTitle: 'Personne responsable',
       responsible1: 'Stebler Studios — Sophie Stebler, Bâle, Suisse',

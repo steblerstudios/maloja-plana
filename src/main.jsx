@@ -1375,7 +1375,7 @@ const AppInner = () => {
           onExport: () => startTransition(() => setView('export')),
         }),
       )),
-      view === 'legal' && React.createElement(LegalView, { palette, t, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),

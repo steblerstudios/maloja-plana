@@ -27,7 +27,7 @@ async function matchesBetaCode(value) {
 }
 
 export const BetaGate = ({ children }) => {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [granted, setGranted] = useState(() => {
     try { return localStorage.getItem(STORAGE_KEY) === 'true'; } catch { return false; }
   });
@@ -58,7 +58,7 @@ export const BetaGate = ({ children }) => {
     },
       React.createElement(Suspense, { fallback: React.createElement('div', { style: { textAlign: 'center', color: palette.mid, padding: space.xl + 'px' } }, t('common.loading')) },
         React.createElement(LegalView, {
-          palette, t, section: legalSection,
+          palette, t, lang, section: legalSection,
           // 'dashboard' (Zurück) → zur Code-Wand; 'legal' + key → Tab wechseln.
           onNavigate: (view, _idx, key) => setLegalSection(view === 'legal' && key ? key : null),
         })
