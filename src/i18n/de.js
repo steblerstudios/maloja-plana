@@ -593,6 +593,11 @@ export default {
     footerAufnahme: 'Für die Grundversicherung gilt die Aufnahmepflicht: jede Kasse muss dich aufnehmen, unabhängig von Alter oder Gesundheit. Zusatzversicherungen sind freiwillig und können abgelehnt werden.',
   },
   kvgWechsel: {
+    checkIntro: 'Ein tieferer Preis allein ist noch kein Wechselgrund. Kurz innehalten — passt der Wechsel wirklich?',
+    checkPoint1: 'Die Grundversicherung deckt bei allen Kassen gesetzlich dieselben Leistungen. Ein Wechsel ändert deine Deckung nicht und unterbricht keine laufende Behandlung.',
+    checkPoint2: 'Ein tieferer Preis hängt oft an einem Sparmodell (Hausarzt, Telmedizin, HMO) oder einer höheren Franchise. Passt das zu deinem Alltag?',
+    checkPoint3: 'Die Zusatzversicherung ist getrennt und nicht garantiert. Kündige sie nie vorschnell mit — prüfe sie zuerst.',
+    checkZusatzLink: 'Zusatzversicherung zuerst prüfen',
     title: 'Krankenkasse wechseln',
     intro: 'Ein ruhiger Weg in vier Schritten — vergleichen, neue Kasse wählen, kündigen, Frist sichern. Du musst nichts auf einmal entscheiden.',
     step1Title: '1 · Lohnt sich der Wechsel?',

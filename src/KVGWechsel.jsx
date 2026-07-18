@@ -34,6 +34,9 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
     chosenBadge: { fontSize: text.xs, fontWeight: weight.semi, color: palette.sandDeep, marginTop: '6px' },
     inputLabel: { display: 'block', fontSize: text.sm, color: palette.mid, marginTop: space.sm + 'px' },
     input: { display: 'block', width: '100%', maxWidth: '280px', marginTop: '4px', padding: '8px 10px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit' },
+    // „Kurz innehalten"-Prüfliste (Anti-Dark-Pattern: nicht pushen, sondern prüfen).
+    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+    checkItem: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
   };
 
   // Ruhige Karte für einen der beiden Wege — anklickbar, hebt den gewählten hervor.
@@ -74,7 +77,15 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
         currentInsurer
           ? t('kvgWechsel.step1TextKnown', { insurer: currentInsurer })
           : t('kvgWechsel.step1Text')),
-      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.step1Link'), onClick: () => onNavigate('praemien') })
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.step1Link'), onClick: () => onNavigate('praemien') }),
+      // Kurz innehalten — ein tieferer Preis allein ist noch kein Wechselgrund.
+      React.createElement('p', { style: s.reassure }, t('kvgWechsel.checkIntro')),
+      React.createElement('ul', { style: s.checkList },
+        React.createElement('li', { style: s.checkItem }, t('kvgWechsel.checkPoint1')),
+        React.createElement('li', { style: s.checkItem }, t('kvgWechsel.checkPoint2')),
+        React.createElement('li', { style: s.checkItem }, t('kvgWechsel.checkPoint3'))
+      ),
+      onNavigate && React.createElement(AblaufLink, { palette, label: t('kvgWechsel.checkZusatzLink'), onClick: () => onNavigate('zusatzwechsel') })
     ),
 
     // ── Schritt 2 — Neue Kasse, zwei ruhige Wege (anklickbar) ──

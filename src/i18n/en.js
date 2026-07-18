@@ -593,6 +593,11 @@ export default {
     footerAufnahme: 'Basic insurance comes with an obligation to accept: every insurer must take you, regardless of age or health. Supplementary insurance is voluntary and can be declined.',
   },
   kvgWechsel: {
+    checkIntro: "A lower premium alone isn't a reason to switch. Pause for a moment — does the switch really fit?",
+    checkPoint1: "Basic insurance covers the same legally defined benefits at every insurer. Switching doesn't change your coverage and doesn't interrupt ongoing treatment.",
+    checkPoint2: 'A lower premium often comes with a savings model (family doctor, telemedicine, HMO) or a higher deductible. Does that fit your everyday needs?',
+    checkPoint3: 'Supplementary insurance is separate and not guaranteed. Never cancel it prematurely — check it first.',
+    checkZusatzLink: 'Check supplementary insurance first',
     title: 'Switch health insurer',
     intro: 'A calm path in four steps — compare, choose a new insurer, cancel, secure the deadline. You don\'t have to decide everything at once.',
     step1Title: '1 · Is switching worth it?',
