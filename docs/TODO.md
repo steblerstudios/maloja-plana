@@ -227,6 +227,28 @@ geprüft. Voller Abgleich: [`docs/design/maloja-c-abgleich.md`](design/maloja-c-
 - 🟡 **Backup-Restore-Härtung (Defense-in-Depth)** — der Restore ist verschlüsselt + Magic-Bytes +
   Typ-Guard + try/catch, aber ohne Feld-Whitelist / Längen-Caps / Anzahl-Obergrenze
   (`src/utils/backupCrypto.js`). Verschlüsselung entschärft; Caps + Whitelist nachziehen.
+  - **reproduce-first 2026-07-19:** teils schon gebaut — `validateBackupPayload` (`dataValidation.js`)
+    macht Typ-/Form-Prüfung, `applyBackup` hat einen impliziten Top-Level-Whitelist. **ECHTE Lücke:**
+    in `ZipExport.jsx:147-158` greift das Validierungs-Ergebnis nur als **Warnung**, danach schreibt
+    `applyBackup` trotzdem → Struktur-kaputte Payloads werden geschrieben (Pre-Restore-Snapshot rettet).
+    Plus: kein Grössenlimit (`FileReader` liest ungeprüft), keine Anzahl-Caps, `merkliste` fehlt in
+    `validateBackupPayload`. Fix = Validierung als echte Barriere + Caps + Grössenlimit.
+
+## G3 — UI/UX-Blick (statisch, reproduce-first 2026-07-19)
+
+*Code-Inspektion der markierten Baustellen (kein gerendertes Bild — Kontrast/Fokus/Touch als „Annahme").
+Alte Alarm-Funde (OverdueBanner-Gradient, Schulden-KPI-Grid, Armuts-Prozentbalken) sind bereits ruhig
+entschärft — reproduce-first bestätigt. Echt offen:*
+
+- 🟠 **P1 · rohe Unicode-Glyphen als Text-Präfix** — `◰ ● ◇ ↧ □ ✕` in **~102 Vorkommen / 10 Views**
+  (BudgetImport, SchuldenManager, Merkliste, KKScanner, Mietzins, ZipExport, Stipendien, Sozialhilfe,
+  FinanzUebersicht, KVGLeistungen) statt `IconSystem`. Am schamsensibelsten: `SozialhilfeView.jsx:79/125/148/163`
+  (`'◰ ' + …` vor SKOS/IPV/EL-Titeln). `ICON_KONVENTION.md`: funktionale Icons = ein Outline-Set. Vorschlag:
+  durch IconSystem-SVG (`aria-hidden`) ersetzen, Sozialhilfe/Schulden zuerst. a11y → nie unter P1.
+- 🟠 **P1 · Armutsgrenze 2279 hartkodiert** (`FinanzUebersicht.jsx:225`) — unbelegt, veraltet
+  (BFS 2024: **2388**) UND misst die falsche Grösse (gilt fürs äquivalenzierte *verfügbare Haushalts*-
+  einkommen, Code hält sie gegen rohes `monthlyIncome`). Nutzer sieht „belowPoverty"-Label, das falsch
+  sein kann. Nur mit `swiss-precision-pruefer` + Quelle anfassen (Leitplanke).
 - ✅ **innerHTML/CSP geprüft:** reine React.createElement-App, kein `dangerouslySetInnerHTML`,
   strikte CSP → Audit-Punkt bereits erfüllt.
 - ⏸ **Schicht B (Business/Finanzmodell) → Stebler Studios**, **Schicht C (kommerzielle Partner-

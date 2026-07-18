@@ -7,6 +7,20 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
+> ### ⭐ BANNER 2026-07-19 (Inventur-Sitzung + Polish-PR #104)
+>
+> **`main` ist jetzt `93fbe27`** (Merge von #103, dem Session-Close vom 2026-07-18 — docs-only,
+> u.a. Deploy-Zugangsdaten aus SESSION_START entfernt/PII-Gate). Der Körper unten sagt noch
+> `4c79bee`: das ist genau die dokumentierte Merge-Falle (der #103-PR beschrieb den Vor-Merge-Stand,
+> sein eigener Merge rückte `main` auf `93fbe27`). `git diff 4c79bee..93fbe27 -- src/` = **leer**
+> (docs-only) → **live unverändert `index-c5906715.js`, kein hängender Deploy.**
+>
+> **Diese Sitzung (2026-07-19) = Inventur + Polish, kein Feature-Bau:**
+> - **PR [#104](https://github.com/steblerstudios/maloja-plana/pull/104)** (`feat/polish-legal-datum` → `main`, ab `4c79bee`, jetzt mit `origin/main` gemergt): 12 Commits — 4 kleine Bauten (Rechtstext-Datum single-source · plaant · Frist-Icon · Leihlager) + Doku-Entstaubung + `/maloja-statistik` in LOOPS.md nachgetragen. **749 Tests grün · Build · Size 64.95/65 kB.** ⏳ wartet auf `/code-review ultra` + Merge (Stebler Studios).
+> - **Brain-Dump/TODO-Inventur:** alle Sammelstellen gesweept, konsolidiert in die **Fortschritts-Landkarte** (Artifact `55f6484c-…`, jetzt auch als `stebler-studios/maloja-landkarte.html` + im Cockpit verlinkt).
+> - **reproduce-first-Korrekturen:** 9 (nicht 8) Slash-Loops · ~102 (nicht ~60) rohe Glyphen in 10 Views · Lebensereignisse **inventarisiert, aber mehrheitlich nicht verkettet** (35× 🟡, 4× ✅).
+> - **Neue UI/UX-Befunde** (statischer Blick, in docs/TODO.md §G2/UI-UX festgehalten): P1 rohe Glyphen · P1 Armutsgrenze 2279 (unbelegt/veraltet/falsche Grösse) · §G2 `validateBackupPayload` greift nur als Warnung, nicht als Barriere.
+
 **Stand:** 2026-07-18 (Runde 8 LIVE · Runde 9: maloja-c-Extraktion + Tresor 2b-pre/LockScreen)
 
 ## Wo stehen wir gerade
