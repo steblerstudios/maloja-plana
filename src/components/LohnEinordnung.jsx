@@ -11,7 +11,7 @@ import { renderSource } from '../utils/renderSource.js';
 //     getönt — die Farbe gliedert nur, sie wertet nicht.
 //   • Füllung = dein Lohn füllt die Bubbles bis zu seiner Stelle (Frucht-Farbe Arbeit/Haselnuss)
 //   • ● Punkt = Median, gefärbt nach DEINER Lage (sage = darüber, gold = darunter)
-//   • | Strich = Durchschnitt, neutral (verdrahtet, aber inaktiv bis die belegte BFS-Zahl da ist)
+//   • | Strich = Median der angetippten Branche (Finanz-Übersicht), neutral — reine Orientierung
 //   • ! = der kantonale Mindestlohn-Boden, LIEGT ÜBER dem Balken. Graphit normal, rose wenn unterschritten.
 
 // Balken aus gleich breiten Bubble-Segmenten (kategorial/Quantil). Die Skala ist innerhalb
@@ -100,7 +100,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
-export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
+export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark }) => {
   const state = lohnBandState({
     income: data?.finanzen?.monthlyIncome,
     canton: data?.basis?.canton,
@@ -157,11 +157,12 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
   const marks = [
     { value: median, form: 'dot', color: valenceColor },
   ];
-  // Durchschnitt-Strich: verdrahtet, aber nur wenn eine BELEGTE Zahl vorliegt. BFS nennt den
-  // Mittelwert nicht in der Medienmitteilung (nur STAT-TAB) → bis die Zahl belegt ist, kein
-  // Strich (keine geratene Zahl auf einer Marke, die eine Tatsache behauptet).
-  if (LOHN_REFERENZ.durchschnitt && LOHN_REFERENZ.durchschnitt < scaleMax) {
-    marks.push({ value: LOHN_REFERENZ.durchschnitt, form: 'line', color: palette.mid });
+  // Branchen-Marke: Median der in der Finanz-Übersicht angetippten Branche. Neutraler Strich —
+  // eine Branche ist nicht „gut"/„schlecht", das ist reine Orientierung, kein Werturteil.
+  // Ersetzt den früheren Durchschnitt-Strich: der BFS-Mittelwert steht in KEINER zitierbaren
+  // Quelle (nur STAT-TAB) — eine erfundene Zahl auf einer Tatsachen-Marke ist der Runde-8-Fehler.
+  if (branchMark && branchMark.lohn < scaleMax) {
+    marks.push({ value: branchMark.lohn, form: 'line', color: palette.mid });
   }
   if (mindestlohn && mindestlohn.monat < scaleMax) {
     marks.unshift({ value: mindestlohn.monat, form: 'exclaim', color: mlBreached ? palette.roseDeep : palette.text });
@@ -190,6 +191,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded }) => {
         t('lohnEinordnung.readout' + rel.charAt(0).toUpperCase() + rel.slice(1)),
         t('lohnEinordnung.' + activeZone.key),
         mlBreached ? t('lohnEinordnung.mindestlohnBreachedLine') : null,
+        branchMark ? t('branche.' + branchMark.key) + ' CHF ' + fmt(branchMark.lohn) : null,
       ].filter(Boolean).join(' '),
     }),
 

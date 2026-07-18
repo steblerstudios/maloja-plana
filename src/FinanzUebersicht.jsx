@@ -109,6 +109,8 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
 };
 
 export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) => {
+  // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
+  const [selBranche, setSelBranche] = React.useState(null);
   const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
@@ -225,7 +227,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
       },
-        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true }),
+        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;
@@ -236,20 +238,30 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
             React.createElement('div', {
               style: { display: 'flex', flexWrap: 'wrap', gap: '4px' }
             },
-              BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b =>
-                React.createElement('span', {
+              BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b => {
+                const sel = selBranche && selBranche.key === b.key;
+                const reached = income >= b.lohn;
+                const toggle = () => setSelBranche(sel ? null : b);
+                return React.createElement('span', {
                   key: b.key,
+                  onClick: toggle,
+                  role: 'button',
+                  tabIndex: 0,
+                  'aria-pressed': sel,
+                  onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } },
                   style: {
                     fontSize: '10px', padding: '2px 6px', borderRadius: '3px',
+                    cursor: 'pointer',
                     // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                     // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
-                    // lag es dort mit 4.49:1 knapp darunter).
-                    background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '40'),
-                    color: income >= b.lohn ? palette.text : palette.mid,
+                    // lag es dort mit 4.49:1 knapp darunter). Ausgewählt: gold gerahmt.
+                    background: sel ? (palette.gold + '55') : reached ? (palette.sage + '30') : (palette.border + '40'),
+                    color: (sel || reached) ? palette.text : palette.mid,
+                    border: '1px solid ' + (sel ? palette.goldDeep : 'transparent'),
                     whiteSpace: 'nowrap',
                   }
-                }, t('branche.' + b.key))
-              )
+                }, t('branche.' + b.key) + ' ’' + String(b.jahr).slice(2));
+              })
             ),
             React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
               t('finanzUebersicht.branchenQuelle')

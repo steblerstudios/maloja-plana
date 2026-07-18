@@ -3299,7 +3299,7 @@ export default {
     povertyLine: 'Soglia di povertà',
     median: 'Mediana CH',
     branchenvergleich: { sie: 'Il Suo stipendio per settore (salario lordo mediano):', du: 'Il tuo stipendio per settore (salario lordo mediano):' },
-    branchenQuelle: 'Fonte: UST Rilevazione svizzera della struttura dei salari 2022',
+    branchenQuelle: 'Fonte: UST Rilevazione svizzera della struttura dei salari 2022/2024',
     household: 'Nucleo familiare',
     householdDetail: '{adults} adulti, {children} bambini',
     adults: 'adulti',

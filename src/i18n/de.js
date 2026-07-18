@@ -3329,7 +3329,7 @@ export default {
     povertyLine: 'Armutsgrenze',
     median: 'Median CH',
     branchenvergleich: { sie: 'Ihr Lohn im Branchenvergleich (Median-Bruttolohn):', du: 'Dein Lohn im Branchenvergleich (Median-Bruttolohn):' },
-    branchenQuelle: 'Quelle: BFS Lohnstrukturerhebung 2022',
+    branchenQuelle: 'Quelle: BFS Lohnstrukturerhebung 2022/2024',
     household: 'Haushalt',
     householdDetail: '{adults} Erwachsene, {children} Kinder',
     adults: 'Erwachsene',

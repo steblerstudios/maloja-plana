@@ -2216,7 +2216,7 @@ export default {
     householdDetail: '{adults} creschids, {children} uffants',
     adults: 'creschids',
     branchenvergleich: { sie: 'Voss salari en cumparegliaziun da la branscha (salari brut median):', du: 'Tes salari en cumparegliaziun da la branscha (salari brut median):' },
-    branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022',
+    branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022/2024',
   },
 
   notfallSummary: {

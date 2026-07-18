@@ -3323,7 +3323,7 @@ export default {
     povertyLine: 'Poverty line',
     median: 'Median CH',
     branchenvergleich: 'Your salary compared by industry (gross median):',
-    branchenQuelle: 'Source: FSO Swiss Earnings Structure Survey 2022',
+    branchenQuelle: 'Source: FSO Swiss Earnings Structure Survey 2022/2024',
     household: 'Household',
     householdDetail: '{adults} adults, {children} children',
     adults: 'adults',

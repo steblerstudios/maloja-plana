@@ -3322,7 +3322,7 @@ export default {
     povertyLine: 'Seuil de pauvreté',
     median: 'Médiane CH',
     branchenvergleich: { sie: 'Votre salaire par branche (salaire brut médian) :', du: 'Ton salaire par branche (salaire brut médian) :' },
-    branchenQuelle: 'Source : OFS Enquête suisse sur la structure des salaires 2022',
+    branchenQuelle: 'Source : OFS Enquête suisse sur la structure des salaires 2022/2024',
     household: 'Ménage',
     householdDetail: '{adults} adultes, {children} enfants',
     adults: 'adultes',
