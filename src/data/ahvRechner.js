@@ -220,6 +220,41 @@ const BVG_GUTSCHRIFTEN = [
   { von: 55, bis: 65, satz: 18 },
 ];
 
+// BVG-Altersgutschrift-Satz (% des koordinierten Lohns) für ein Alter (Art. 16 BVG).
+// Unter 25 / über 65: keine obligatorischen Sparbeiträge → 0.
+export function bvgAltersgutschriftSatz(alter) {
+  const a = Number(alter);
+  if (!Number.isFinite(a)) return 0;
+  const stufe = BVG_GUTSCHRIFTEN.find(g => a >= g.von && a <= g.bis);
+  return stufe ? stufe.satz : 0;
+}
+
+// Grober Brutto-RICHTWERT aus einem Netto-Monatslohn (inkl. geschätzter PK/BVG).
+// Kehrt die fixen Arbeitnehmer-Abzüge um: AHV/IV/EO 5.3 % + ALV 1.1 % = 6.4 %
+// (Quelle BSV/AHV-IV 2025) PLUS die BVG-Altersgutschrift nach Alter (Art. 16 BVG),
+// als ~halber Arbeitnehmer-Anteil auf dem koordinierten Lohn und erst über der
+// Eintrittsschwelle (CHF 22'680/Jahr). NICHT enthalten: Steuern, NBU-Prämie,
+// überobligatorische PK-Pläne — der PK-Anteil variiert nach Kasse. Bleibt darum
+// bewusst ein «~»-Anhaltspunkt, nie eine verbindliche Zahl. Ohne Alter fällt die
+// PK weg (dann = reiner AHV/ALV-Richtwert).
+export const AHV_ALV_ARBEITNEHMER_SATZ = 0.064;
+
+export function nettoZuBruttoRichtwert(nettoMonat, alter) {
+  const netto = Math.max(0, Number(nettoMonat) || 0);
+  if (netto <= 0) return 0;
+  const gutschrift = bvgAltersgutschriftSatz(alter);
+  // Fixpunkt-Iteration: Brutto minus (AHV/ALV + PK) soll das Netto treffen. Die
+  // Abzüge wachsen monoton mit dem Brutto → wenige Schritte konvergieren.
+  let brutto = netto / (1 - AHV_ALV_ARBEITNEHMER_SATZ);
+  for (let i = 0; i < 8; i++) {
+    const koord = bvgKoordinationsabzug(brutto * 12);
+    const pkMonat = koord.versichert ? (koord.koordinierterLohn / 12) * (gutschrift / 100) / 2 : 0;
+    const nettoCalc = brutto - brutto * AHV_ALV_ARBEITNEHMER_SATZ - pkMonat;
+    brutto += netto - nettoCalc;
+  }
+  return Math.round(brutto);
+}
+
 /**
  * Berechne geschätztes BVG-Altersguthaben bei Pensionierung.
  */

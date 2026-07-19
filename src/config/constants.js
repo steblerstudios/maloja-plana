@@ -204,6 +204,7 @@ export function getChapters(t) {
         { k: 'sideIncomeType', label: fl(t, 'finanzen', 'sideIncomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
         { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
+        { k: 'dreizehnter', label: fl(t, 'finanzen', 'dreizehnter'), type: 'select', options: opts(t, 'finanzen', 'dreizehnter') },
         { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', mvo: true },
         { k: 'employerAddress', label: fl(t, 'finanzen', 'employerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'employerAddress') },
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
@@ -381,7 +382,7 @@ export const CHAPTER_KEYS = ['basis', 'wohnen', 'finanzen', 'versicherungen', 'a
 export const FIELD_KEYS = {
   basis: ['firstName', 'middleName', 'lastName', 'academicTitle', 'dateOfBirth', 'gender', 'pronouns', 'nationality', 'canton', 'phone', 'email', 'ahv', 'maritalStatus'],
   wohnen: ['address', 'postalCode', 'city', 'moveInDate', 'rentAmount', 'utilities', 'landlord', 'landlordPhone', 'mortgageStatus', 'propertyValue', 'buildingsInsurance', 'residenceType'],
-  finanzen: ['monthlyIncome', 'incomeType', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
+  finanzen: ['monthlyIncome', 'incomeType', 'dreizehnter', 'employer', 'employmentType', 'startDate', 'familienzulagen', 'alimenteReceived', 'monthlyTax', 'groceries', 'communication', 'mobility', 'childcare', 'otherInsurance', 'debtPayments', 'alimentePaid', 'savingsGoal', 'savingsAccount', 'bankName', 'creditCard', 'creditCardLimit', 'creditCardBalance', 'loans', 'pension3a', 'pension3aBalance', 'pension3b', 'pension3bBalance', 'investmentFunds'],
   versicherungen: ['kkInsurer', 'kkModel', 'kkPremium', 'franchise', 'kkCardNumber', 'policyNumber', 'kkZusatz', 'bvgInsurer', 'bvgContribution', 'bvgBalance', 'lifeInsurance', 'freizuegigkeit', 'uvg', 'ktg', 'liabilityInsurance', 'liabilityAmount', 'legalInsurance', 'childInsurance', 'householdInsurance', 'householdInsuranceAmount', 'travelInsurance', 'cyberInsurance', 'autoInsurance', 'autoInsuranceAmount', 'ahvContribution'],
   ausbildung: ['schoolName', 'educationLevel', 'efzNumber', 'certifications', 'employer', 'jobTitle', 'employmentStart', 'workPermit', 'workHoursPerWeek', 'languages'],
   behoerden: ['cantoneOfTaxation', 'taxId', 'taxFilingDeadline', 'pendingTaxReturns', 'registryOffice', 'betreibungsStatus', 'courtCases', 'legalRepresentative', 'representativePhone', 'willMade'],

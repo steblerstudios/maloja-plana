@@ -10,6 +10,31 @@
 
 Stand: Kern-Entscheide geklärt, Spec festgehalten. Verwandt: [[maloja-trust-layer]].
 
+## ⏸️ 2b-UI BEWUSST VERTAGT (Entscheid Stebler Studios, 2026-07-18)
+
+**Die Live-Verdrahtung (2b-UI) wird NICHT jetzt gebaut.** Grundsatz-Entscheid: Der
+Tresor/Login ist der komplexeste und folgenreichste Schritt (fasst ALLE Nutzerdaten
+an, L5) — er kommt **zuletzt**, wenn der Rest der App gebaut und stabil ist, gebündelt
+mit der **„Logins-Phase"** (App-Store/iOS-Recherche, §5). Sonst müsste die
+Verschlüsselungs-Schicht bei jedem neuen Feature wieder angefasst werden — genau dort
+passieren die teuren Fehler. Das deckt sich mit `SESSION_START.md` (Tresor unter
+„Bau-Freigabe nötig / Logins-Phase") und war die ursprüngliche Abmachung.
+
+- **2b-pre (PR #100, schon in `main`)** = nur das Krypto-**Fundament** (`secureStore.js`),
+  **dormant**, berührt keine Live-Daten — das durfte gefahrlos liegen bleiben.
+- **LockScreen (PR #102)** = die Entsperr-**Wand**, dev-only, nicht im Prod-Bundle.
+- **2b-UI (unten „Offen für Phase 2b-UI")** = die eigentliche Live-Verdrahtung an alle
+  Daten. **Erst in der Logins-Phase, mit ausdrücklicher Bau-Freigabe.**
+
+> ⚠️ **Für künftige Handoffs/Sessions:** 2b-UI ist NICHT „der nächste Schritt". Nicht
+> wieder als sofort-fällige Aufgabe teed. Ein früherer Handoff hat das getan → Verwirrung.
+> Reichweiten-Befund (falls doch gebaut wird): die 5 Tresor-Stores werden quer durch die
+> App direkt aus `localStorage` gelesen/geschrieben (`reminders.js`, `merkliste.js`,
+> `notifications.js`, `OverdueBanner.jsx`, `MerklisteView.jsx`, `docReminders.js`,
+> `autoBackup.js`, `dataMigration.js`) — der Modul-Vertrag „nur im React-State, nie
+> Klartext" verlangt, ALL diese durch einen In-Memory-Zustand zu führen. Das Daten-Modell
+> (In-Memory treu vs. Session-Entschlüsselung) ist ein offener Stebler-Studios-Entscheid.
+
 ## ✅ HARTE VORBEDINGUNG behoben (2b-pre, 2026-07-18) — Live-Verdrahtung bleibt offen
 
 **Stand 2026-07-18:** Die vier 🔴 unten UND die Härtung sind auf **Modul-Ebene**

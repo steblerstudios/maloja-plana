@@ -3,6 +3,7 @@ import {
   berechneAltersrente, referenzalterMonate, vergleicheVorbezugAufschub,
   bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
   AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION,
+  bvgAltersgutschriftSatz, nettoZuBruttoRichtwert, AHV_ALV_ARBEITNEHMER_SATZ,
 } from '../ahvRechner.js';
 
 describe('ahvRechner', () => {
@@ -324,5 +325,41 @@ describe('ahvRechner', () => {
         expect(p.total).toBe(p.bvg + p.s3a + p.s3b);
       }
     });
+  });
+});
+
+describe('nettoZuBruttoRichtwert — Netto→Brutto-Schätzung (AHV/ALV + PK nach Alter)', () => {
+  it('Satz AHV/IV/EO+ALV = 6.4%; Altersgutschrift-Staffel nach Art. 16 BVG', () => {
+    expect(AHV_ALV_ARBEITNEHMER_SATZ).toBe(0.064);
+    expect(bvgAltersgutschriftSatz(30)).toBe(7);
+    expect(bvgAltersgutschriftSatz(40)).toBe(10);
+    expect(bvgAltersgutschriftSatz(50)).toBe(15);
+    expect(bvgAltersgutschriftSatz(60)).toBe(18);
+    expect(bvgAltersgutschriftSatz(22)).toBe(0);  // unter 25: keine Sparbeiträge
+    expect(bvgAltersgutschriftSatz(undefined)).toBe(0);
+  });
+
+  it('ohne Alter (keine PK) = reiner AHV/ALV-Richtwert netto/0.936', () => {
+    expect(nettoZuBruttoRichtwert(2400)).toBe(Math.round(2400 / 0.936)); // 2564
+  });
+
+  it('tiefer Lohn unter der BVG-Eintrittsschwelle: PK=0 auch mit Alter', () => {
+    // 1500/Mt. = 18'000/Jahr < 22'680 Eintrittsschwelle → keine PK
+    expect(nettoZuBruttoRichtwert(1500, 40)).toBe(Math.round(1500 / 0.936));
+  });
+
+  it('mittlerer Lohn mit Alter: Brutto liegt über dem reinen AHV/ALV-Wert (PK kommt dazu)', () => {
+    const ohnePK = Math.round(5000 / 0.936);       // 5342
+    const mitPK = nettoZuBruttoRichtwert(5000, 40); // + PK
+    expect(mitPK).toBeGreaterThan(ohnePK);
+    // Plausibel: netto 5000 @ 40 → grob 5450–5600 brutto
+    expect(mitPK).toBeGreaterThan(5400);
+    expect(mitPK).toBeLessThan(5650);
+  });
+
+  it('Richtung + Guards: immer über dem Netto, nie negativ', () => {
+    expect(nettoZuBruttoRichtwert(3000, 50)).toBeGreaterThan(3000);
+    expect(nettoZuBruttoRichtwert(0, 40)).toBe(0);
+    expect(nettoZuBruttoRichtwert(-100, 40)).toBe(0);
   });
 });

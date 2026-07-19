@@ -169,3 +169,27 @@ export function berechneExistenzminimum({ haushaltGroesse = 1, miete = 0, kranke
     existenzminimumJahr: total * 12,
   };
 }
+
+// ── BFS-Armutsgrenze (absolute Armut) ────────────────────────────────────────
+// Methodik BFS (in Anlehnung an die SKOS-Richtlinien): die Armutsgrenze eines
+// Haushalts = Grundbedarf für den Lebensunterhalt (SKOS C.3.1) + effektive
+// Wohnkosten (bis zur kantonalen Obergrenze) + CHF 100/Monat pro Person ab 16.
+// Verglichen wird sie mit dem VERFÜGBAREN Haushaltseinkommen — davon sind
+// KK-Prämien, Sozialabgaben, Steuern und Alimente VORGÄNGIG abgezogen; die
+// KK-Prämie gehört also NICHT in die Armutsgrenze (anders als beim Existenz-
+// minimum). Anders als das Lohn-Barometer (Brutto-Lohnniveau) beantwortet sie
+// die Frage «bin ich unter dem Existenzminimum?».
+// Quelle: BFS «Armut in der Schweiz». Durchschnitt 2024: Einzelperson CHF 2388,
+// zwei Erwachsene + zwei Kinder CHF 4159/Monat.
+export const ARMUTSGRENZE_PAUSCHALE_AB16 = 100;
+export const ARMUTSGRENZE_DATA_VERSION = '2024';
+
+export function berechneArmutsgrenze({ grundbedarf, effektiveWohnkosten = 0, personenAb16 = 1 }) {
+  const g = Math.max(0, grundbedarf || 0);
+  const w = Math.max(0, effektiveWohnkosten || 0);
+  const pauschale = ARMUTSGRENZE_PAUSCHALE_AB16 * Math.max(0, personenAb16 || 0);
+  return g + w + pauschale;
+}
+
+// Der Brutto-Richtwert aus einem Netto-Lohn (AHV/ALV + geschätzte PK) lebt in
+// data/ahvRechner.js (nettoZuBruttoRichtwert) — dort, wo die BVG-Bausteine sind.
