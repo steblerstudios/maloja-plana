@@ -7,7 +7,22 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (**DEPLOYT & LIVE** · `main`=`df70cb1` · Live-Bundle `index-c7370d19.js`)
+**Stand:** 2026-07-20 (⚠️ **GEMERGT, ABER NICHT DEPLOYT** · `main`=`e7a3714` · Live-Bundle noch `index-c7370d19.js` von `df70cb1`)
+
+> ### ⚠️ AKTUALISIERUNG 2026-07-20 (Barometer-Fix gemergt — Deploy steht aus)
+>
+> **`main` ist weitergerückt: `07ea86e` → `e7a3714`** (Merge PR
+> [#114](https://github.com/steblerstudios/maloja-plana/pull/114), Lohn-Barometer-Sichtbarkeit:
+> klickbarer Hinweis + Einbettung im Finanz-Kapitel, 4 Dateien, +36/−4, CI grün).
+> Lokales `main` per `pull --ff-only` nachgezogen, Arbeitsbaum sauber, nichts ungepusht.
+>
+> **Live ist davon NICHTS zu sehen.** `curl malojaplana.ch` liefert weiterhin
+> **`index-c7370d19.js`** — das Bundle von `df70cb1`. **Mergen ≠ live.** Der Fix wird erst
+> mit dem nächsten `bash deploy.sh` sichtbar (löst Stebler Studios aus, nie Claude).
+>
+> **Nächster Schritt:** auf `main` (steht schon) `bash deploy.sh`, danach per `curl` prüfen,
+> bis der Bundle-Hash **nicht mehr** `index-c7370d19.js` heisst. Ab 2026-07-20 meldet der
+> Morgenlauf diese Abweichung von selbst (`scripts/stand-erheben.py` im Studio-Cockpit).
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (DEPLOY GELANDET — Live-Stand eingearbeitet)
 >
