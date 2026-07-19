@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (Predeploy-Gate + Quellen belegt · `main`=`7213263`+ · Deploy frei nach frischem Gate)
+**Stand:** 2026-07-19 (Predeploy-Gate GRÜN · Marke gesetzt auf `main`=`2093805` · DEPLOY-BEREIT — Deploy macht Stebler Studios)
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
 >
@@ -28,9 +28,23 @@
 > **✅ Quellen belegt 2026-07-19 (der Deploy-Blocker ist weg):** (a) **SKOS-Grundbedarf 2026 unverändert** —
 > gegen Aargauer Handbuch (SKOS-RL 1.1.2025) 1:1 bestätigt, nächste Anpassung erst 1.1.2027; (b) **BFS-
 > Armutsgrenze 2388/4159 korrekt für Bezugsjahr 2024** (BFS-Medienmitteilung publiziert Feb 2026). Beide
-> Kommentare in `sozialhilfeRechner.js` geschärft, TODO Abschnitt B auf ✅. **Freigabe-Marke `.maloja/
-> predeploy-ok` weiterhin NICHT gesetzt** — vor Deploy einmal frisch `/maloja-predeploy` auf dem neuen HEAD
-> fahren (setzt die Marke), dann `/code-review ultra` → `deploy.sh`.
+> Kommentare in `sozialhilfeRechner.js` geschärft, TODO Abschnitt B auf ✅.
+>
+> **✅ Predeploy-Gate 2026-07-19 GRÜN auf `main`=`2093805` (48 Commits über LIVE):** Mechanik grün
+> (770 Tests · Build · SEO 0/0 · Size 63.43/65 kB · PII · i18n-Parität 32/32 · keine neuen Deps · CSP self-only) ·
+> de-Chunk-Verifikation der Fixes bestätigt · fokussierte Re-Review (a11y/copy/security/swiss-precision über
+> den Fix-Diff) **0 🔴 / 0 ⚠️**. Die volle 9-Prüfer-Batterie lief früher in derselben Sitzung über die
+> Feature-Linie (alle Funde gefixt #109, Quellen belegt #110). **Freigabe-Marke `.maloja/predeploy-ok`
+> GESETZT** (= `2093805`, lokal/gitignored). **FEATURES-Zeilen bleiben `built`** bis `deploy.sh` real lief
+> (dann → `verified-live` mit Bundle-Hash). Nächster Zug (Stebler Studios): `/code-review ultra` → `deploy.sh`
+> von `main` → LIVE gegen die de/fr/it/rm-Chunks gegenprüfen.
+>
+> **⚠️ BLOCKER im Deploy-Hook selbst (gefunden 2026-07-19, „Hüll-Ordner"-Falle wie BD37, jetzt im DEPLOY-Hook):**
+> `.claude/settings.json` macht `cd "…/maloja plana"` (Container) und prüft dort `HEAD == marker`. Der Container
+> ist aber **kein** git-Repo und hat **kein** `.maloja/predeploy-ok` (git-root ist `…/maloja-frontend`). → beide
+> leer → Hook **DENY-t jeden Prod-Deploy**, egal ob die Marke sitzt. Fix nötig: den `cd`-Pfad im Hook auf das
+> git-Toplevel (`…/maloja-frontend`) bzw. `CLAUDE_PROJECT_DIR` ziehen — analog zum Tests-Hook-Fix aus BD37.
+> Marke selbst ist korrekt gesetzt (`2093805` im Frontend-Repo). `--stage` bleibt frei.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (git-Stand gegengeprüft, NICHT am Live-Bundle)
 >
