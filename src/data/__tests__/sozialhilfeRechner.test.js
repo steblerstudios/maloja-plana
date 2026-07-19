@@ -9,6 +9,8 @@ import {
   rueckerstattungsFreibetrag,
   SKOS_PARAMS,
   SKOS_DATA_VERSION,
+  berechneArmutsgrenze,
+  ARMUTSGRENZE_PAUSCHALE_AB16,
 } from '../sozialhilfeRechner.js';
 
 describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne Deckel', () => {
@@ -203,3 +205,36 @@ describe('berechneExistenzminimum', () => {
     expect(r.existenzminimumJahr).toBe(r.existenzminimum * 12);
   });
 });
+
+describe('berechneArmutsgrenze — BFS-Methodik (Grundbedarf + Wohnkosten + 100/Person ab 16)', () => {
+  it('Pauschale: CHF 100 pro Person ab 16, sonst nichts', () => {
+    expect(ARMUTSGRENZE_PAUSCHALE_AB16).toBe(100);
+    expect(berechneArmutsgrenze({ grundbedarf: 0, personenAb16: 1 })).toBe(100);
+    expect(berechneArmutsgrenze({ grundbedarf: 0, personenAb16: 2 })).toBe(200);
+    expect(berechneArmutsgrenze({ grundbedarf: 0, personenAb16: 0 })).toBe(0);
+    expect(berechneArmutsgrenze({ grundbedarf: 0, personenAb16: -1 })).toBe(0); // Guard
+  });
+
+  it('Einzelperson: Grundbedarf + effektive Miete + 100', () => {
+    expect(berechneArmutsgrenze({ grundbedarf: 1061, effektiveWohnkosten: 1200, personenAb16: 1 }))
+      .toBe(1061 + 1200 + 100); // 2361
+  });
+
+  it('reproduziert den BFS-Durchschnitt 2024 (CHF 2388, Einzelperson) bei mittlerer Miete', () => {
+    // BFS «Armut in der Schweiz», Ø 2024: Einzelperson CHF 2388/Monat.
+    // SKOS-Grundbedarf 1061 + 100 Pauschale → CHF 1227 mittlere Wohnkosten.
+    expect(berechneArmutsgrenze({ grundbedarf: 1061, effektiveWohnkosten: 1227, personenAb16: 1 }))
+      .toBe(2388);
+  });
+
+  it('zwei Erwachsene: Pauschale zählt pro Person ab 16 (2×100)', () => {
+    expect(berechneArmutsgrenze({ grundbedarf: 1624, effektiveWohnkosten: 1500, personenAb16: 2 }))
+      .toBe(1624 + 1500 + 200);
+  });
+
+  it('Guards: negative/fehlende Bausteine ergeben nie Negatives', () => {
+    expect(berechneArmutsgrenze({ grundbedarf: -5, effektiveWohnkosten: -10, personenAb16: -1 })).toBe(0);
+    expect(berechneArmutsgrenze({})).toBe(100); // personenAb16 default 1 → nur Pauschale
+  });
+});
+

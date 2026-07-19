@@ -5,12 +5,14 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
-import { LOHN_REFERENZ } from './data/lohnEinordnung.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
+import { berechneArmutsgrenze } from './data/sozialhilfeRechner.js';
+import { nettoZuBruttoRichtwert } from './data/ahvRechner.js';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
+import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
@@ -110,6 +112,8 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
 };
 
 export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) => {
+  // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
+  const [selBranche, setSelBranche] = React.useState(null);
   const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
@@ -213,36 +217,66 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     ),
 
     hasData && income > 0 && (() => {
-      // ⚠️ Diese Bänder messen das TATSÄCHLICHE Monatseinkommen (armutsrelevant: wer 50%
-      // arbeitet und CHF 3'400 erhält, ist wirklich nahe der Armutsgrenze). Das Barometer
-      // darunter misst das LOHNNIVEAU, auf Vollzeit hochgerechnet. Zwei Fragen, beide wahr —
-      // sie dürfen sich nur nicht wie ein Widerspruch lesen (Predeploy-Runde 8). Darum
-      // benennt das Label ausdrücklich „was monatlich reinkommt".
+      // Das Lohn-Barometer trägt die Lohnniveau-Einordnung — belegt (LSE 2024:
+      // p10/Median/p90), auf Vollzeit-Äquivalent gerechnet, mit dem kantonalen
+      // Mindestlohn-Boden als „!". Es braucht ein BRUTTO-Einkommen.
       //
-      // Der Median kommt aus LOHN_REFERENZ — hier stand die 6788 HARTKODIERT: eine zweite
-      // Wahrheit neben `branchenLohn.js`, die beim LSE-2024-Update stumm veraltet wäre.
-      const thresholds = [
-        { max: 2279, key: 'belowPoverty', color: palette.goldDeep || '#c47a20' },
-        { max: 4000, key: 'nearPoverty', color: palette.sandDeep || palette.goldDeep },
-        { max: LOHN_REFERENZ.median, key: 'belowMedian', color: palette.mid },
-        { max: 10000, key: 'aboveMedian', color: palette.sageDeep },
-        { max: Infinity, key: 'highIncome', color: palette.sageDeep },
-      ];
-      const band = thresholds.find(th => income <= th.max);
+      // Daneben (nicht doppelt) steht der belegte Armutsgrenzen-Befund für die ANDERE
+      // Frage: «bin ich unter dem Existenzminimum?». Das frühere rohe Text-Band
+      // (2279/4000 auf ROH-Einkommen) war unbelegt UND mass die falsche Grösse; hier
+      // stattdessen die BFS-Methodik — verfügbares NETTO-Einkommen (netto − Steuern,
+      // Prämien, Abzüge) gegen die haushaltsgenaue Armutsgrenze (SKOS-Grundbedarf +
+      // effektive Wohnkosten + CHF 100/Person ab 16). Erscheint nur bei tragfähiger
+      // Basis (Netto erfasst + Miete bekannt); fehlende Abzüge überschätzen das
+      // Einkommen (sichere Richtung, kein Fehlalarm). Brutto-Nutzerinnen sehen das
+      // Barometer, Netto-Nutzerinnen diesen Befund — sie schliessen einander praktisch
+      // aus (ein incomeType), darum kein Gedränge.
+      const f = data.finanzen || {};
+      const sideIncome = Number(f.sideIncome || 0);
+      const sideNettoOk = sideIncome <= 0 || f.sideIncomeType === 'netto';
+      const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
+      const geb = data.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
+      const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
+      const personenAb16 = hh.adults + (hh.children || []).filter(c => (Number(c.age) || 0) >= 16).length;
+      const armutsgrenze = berechneArmutsgrenze({
+        grundbedarf: sozialhilfe.grundbedarf,
+        effektiveWohnkosten: sozialhilfe.effectiveRent,
+        personenAb16,
+      });
+      const nettoHaushalt = income + (sideNettoOk ? sideIncome : 0) + (hh.partnerIncome || 0)
+        + Number(f.familienzulagen || 0) + Number(f.alimenteReceived || 0);
+      const verfuegbar = Math.max(0, nettoHaushalt - Number(f.monthlyTax || 0)
+        - Number(data.versicherungen?.kkPremium || 0) - Number(f.alimentePaid || 0));
+      const unterArmutsgrenze = f.incomeType === 'netto' && sideNettoOk && rentKnown
+        && armutsgrenze > 0 && verfuegbar < armutsgrenze;
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
       },
-        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
-          React.createElement('span', null, t('finanzUebersicht.incomePosition')),
-          React.createElement('span', { style: { fontWeight: weight.medium, color: band.color } }, t('finanzUebersicht.' + band.key))
+        // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
+        // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
+        unterArmutsgrenze && React.createElement('div', {
+          style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
+            t('finanzUebersicht.belowPoverty')),
+          React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
+            t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) })),
+          // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
+          // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
+          React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+            t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter)) }))
         ),
-        // Statt des versteckten Dünn-Balkens hinter einem <details>: das Lohn-Barometer,
-        // offen und spiegelgleich zur Miete darunter. Zeigt Median, Durchschnitt und den
-        // kantonalen Mindestlohn-Boden als „!" — und rechnet Teilzeit ehrlich hoch.
-        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true }),
+        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;
+          // Chips gegen DENSELBEN Wert färben wie das Barometer (Vollzeit-/13.-normiert),
+          // sonst widersprechen sich grüner Chip und Marker-Position (roh 5200 vs. FTE 4952).
+          const vergleichsLohn = lohnBandState({
+            income: data.finanzen?.monthlyIncome, canton: data.basis?.canton,
+            hoursPerWeek: data.ausbildung?.workHoursPerWeek,
+            incomeType: data.finanzen?.incomeType, dreizehnter: data.finanzen?.dreizehnter,
+          }).incomeVergleich || income;
           return React.createElement('div', { style: { marginTop: '10px', paddingTop: '8px', borderTop: '1px solid ' + palette.border } },
             React.createElement('div', { style: { fontSize: text.xs, marginBottom: '6px' } },
               t('finanzUebersicht.branchenvergleich')
@@ -250,20 +284,32 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
             React.createElement('div', {
               style: { display: 'flex', flexWrap: 'wrap', gap: '4px' }
             },
-              BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b =>
-                React.createElement('span', {
+              BRANCHENLOHN.filter(b => b.key !== 'gesamt').sort((a, b) => a.lohn - b.lohn).map(b => {
+                const sel = selBranche && selBranche.key === b.key;
+                const reached = vergleichsLohn >= b.lohn;
+                const toggle = () => setSelBranche(sel ? null : b);
+                return React.createElement('span', {
                   key: b.key,
+                  onClick: toggle,
+                  role: 'button',
+                  tabIndex: 0,
+                  'aria-pressed': sel,
+                  onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } },
                   style: {
-                    fontSize: '10px', padding: '2px 6px', borderRadius: '3px',
+                    // padding vertikal 6px: 10px-Text (~12px Zeile) + 12px → ~24px hoch,
+                    // damit das Tipp-Ziel WCAG 2.5.8 (24×24) trifft, nicht nur ~16px.
+                    fontSize: '10px', padding: '6px 8px', borderRadius: '3px',
+                    cursor: 'pointer',
                     // Inaktiver Chip: Alpha '40' statt '60' — der weniger aufgehellte
                     // Hintergrund hebt `mid` auch im Dunkelmodus sicher über AA (bei '60'
-                    // lag es dort mit 4.49:1 knapp darunter).
-                    background: income >= b.lohn ? (palette.sage + '30') : (palette.border + '40'),
-                    color: income >= b.lohn ? palette.text : palette.mid,
+                    // lag es dort mit 4.49:1 knapp darunter). Ausgewählt: gold gerahmt.
+                    background: sel ? (palette.gold + '55') : reached ? (palette.sage + '30') : (palette.border + '40'),
+                    color: (sel || reached) ? palette.text : palette.mid,
+                    border: '1px solid ' + (sel ? palette.goldDeep : 'transparent'),
                     whiteSpace: 'nowrap',
                   }
-                }, t('branche.' + b.key))
-              )
+                }, t('branche.' + b.key) + ' ’' + String(b.jahr).slice(2));
+              })
             ),
             React.createElement('div', { style: { fontSize: '10px', color: palette.soft, marginTop: '6px' } },
               t('finanzUebersicht.branchenQuelle')

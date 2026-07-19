@@ -1209,6 +1209,7 @@ export default {
         sideIncomeType: 'Entrada accessorica: spezia da entrada', // TODO(rm): Gegenlese
         taxableIncome: 'Entrada taxabla per onn CHF',
         incomeType: { label: "Tip d'entrada", options: { netto: 'Net (quai che jau retschaiv)', brutto: 'Brut (avant deducziuns)' } },
+        dreizehnter: { label: '13avel salari mensil?', options: { no: 'Na', yes: 'Gea' } },
         employer: 'Patrun',
         employerAddress: 'Adressa dal patrun',
         employmentType: { label: "Tip d'engaschament", options: { employed: 'Emploià/ada', selfEmployed: 'Independent/a', freelance: 'Freelancer', retired: 'Pensiunà/ada' } },
@@ -2205,6 +2206,8 @@ export default {
     incomePosition: 'Tge che entra mensilmain', // TODO(rm): Gegenlese
     showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
+    povertyLineNote: 'Limita da povrezza per Vossa chasada: {amount}/mais (UST 2024). Il confront sa basa sin l\'entrada disponibla: il net, senza taglias, premias e deducziuns.',
+    povertyBruttoHint: 'Vossa entrada neta correspunda radund a ~ {brutto} brut (stimà da AVS/AD e LPP, senza taglias — variabel tenor la cassa da pensiun).',
     nearPoverty: 'Stretgamain sur la limita da povrezza',
     belowMedian: 'Sut la mediana',
     aboveMedian: 'Sur la mediana',
@@ -2215,7 +2218,7 @@ export default {
     householdDetail: '{adults} creschids, {children} uffants',
     adults: 'creschids',
     branchenvergleich: { sie: 'Voss salari en cumparegliaziun da la branscha (salari brut median):', du: 'Tes salari en cumparegliaziun da la branscha (salari brut median):' },
-    branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022',
+    branchenQuelle: 'Funtauna: UST retschertga da la structura da salaris 2022/2024',
   },
 
   notfallSummary: {
@@ -2512,7 +2515,14 @@ export default {
     title: { sie: 'Nua che sa chatta Voss salari?', du: 'Nua che sa chatta tes salari?' },
     median: 'Median',
     mindestlohn: 'Salari minimal',
+    zoneLow: 'unteres Zehntel',
+    zoneLowerMid: 'unterer Bereich',
+    zoneUpperMid: 'oberer Bereich',
+    zoneHigh: 'oberes Zehntel',
+    zoneLowSub: 'Tieflohn',
+    zoneHighSub: 'Spitzenlohn',
     yourWage: { sie: 'Voss salari: CHF {amount}', du: 'Tes salari: CHF {amount}' },
+    geschaetztAusNetto: 'Stimà d\'in net da CHF {netto} — la balla mussa il brut proximativ (la controlla dal salari minim vala mo cun il brut real).',
     readoutNear: { sie: 'Voss salari è datiers dal median svizzer.', du: 'Tes salari è datiers dal median svizzer.' },
     readoutAbove: { sie: 'Voss salari è sur il median svizzer.', du: 'Tes salari è sur il median svizzer.' },
     readoutBelow: { sie: 'Voss salari è sut il median svizzer.', du: 'Tes salari è sut il median svizzer.' },
@@ -2520,11 +2530,14 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     mindestlohnBreachedLine: { sie: 'Voss salari para dad esser sutvart.', du: 'Tes salari para dad esser sutvart.' },
     fulltimeNote: "Confrunt sin la basa d'ina plazza a temp cumplain (40 uras/emna, sco tar il median da l'UST).",
+    dreizehnterNote: "La valur da confrunt cuntegna la part dal 13avel salari (×13/12), per correspunder al median da l'UST. Senza 13avel fissi quai CHF {fte}.",
+    ohneDreizehnterNote: "Confrunt senza part dal 13avel salari. Cun in 13avel fiss la valur var 8 % pli auta.",
+    konformMit13Line: "Conform grazia al 13avel salari — sche il 13avel vegn quintà tar il salari minimal (a Basilea-Citad mo sch'el vegn pajà mensilmain).",
     fteNote: 'Temp parzial ({hours} uras/emna): proiectà sin 100% fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     overFteNote: 'Dapli che temp cumplain ({hours} uras/emna): convertì sin 40 uras fa quai CHF {fte} (registrà: CHF {actual}). Mo uschia è il confrunt cun il median a temp cumplain lubì.',
     hoursUnknownNote: { sie: "Senza Vossas uras d'emna na po Voss salari betg vegnir cumpareglià cun il median a temp cumplain — endatai ellas, lura al plazzain nus.", du: "Senza tias uras d'emna na po tes salari betg vegnir cumpareglià cun il median a temp cumplain — endatescha ellas, lura al plazzain nus." },
     aria: 'Salari CHF {amount}, median svizzer CHF {median}.',
-    source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}).',
+    source: 'Funtauna: [[UST|www.bfs.admin.ch]], Relevaziun svizra da la structura dals salaris {jahr} (median CHF {median}, incl. 13avel salari proporziunal).',
     empty: { sie: 'Uschespert che Voss entrada è registrada, la plazzain nus qua cun calma.', du: 'Uschespert che tia entrada è registrada, la plazzain nus qua cun calma.' },
   },
   lohnCheck: {
@@ -2539,6 +2552,8 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     basisMissing: { sie: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherner la spezia da entrada", du: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherna la spezia da entrada" },
     basisNetto: { sie: "Voss entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Voss salari brut (el sa chatta sin Voss quint da salari).", du: "Tia entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Tes salari brut (el sa chatta sin Tes quint da salari)." },
+    // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
+    dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
   },
 

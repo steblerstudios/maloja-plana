@@ -64,6 +64,9 @@ export function getJob(data, jobKey) {
     // `sideIncomeType` (Predeploy-Runde 8 ergänzt — vorher gab es für den Nebenerwerb
     // gar keine, der Befund wäre also nie berechenbar gewesen).
     einkommensart: (side ? data?.finanzen?.sideIncomeType : data?.finanzen?.incomeType) || null,
+    // Der 13. zählt an den Mindestlohn (Jahres-Boden). Nur der Hauptjob trägt das Feld —
+    // für den Nebenerwerb gibt es keine 13.-Angabe (dann voller Boden, sichere Richtung).
+    dreizehnter: side ? undefined : (data?.finanzen?.dreizehnter || undefined),
   };
 }
 
@@ -80,7 +83,7 @@ function lohnBefund(data, jobKey) {
   // unterbezahlt). Dieser Brief geht per Einschreiben an einen Arbeitgeber — eine geratene
   // Zahl wäre eine falsche Anschuldigung. `pruefeStundenlohn` meldet beides selbst
   // ('unvollstaendig' / 'basisUnklar'); die Beträge fallen auf „bitte ergänzen" (hasFigures).
-  return pruefeStundenlohn(monthlyIncome, wHrs, kanton, job.einkommensart);
+  return pruefeStundenlohn(monthlyIncome, wHrs, kanton, job.einkommensart, job.dreizehnter);
 }
 
 // Gesetz + Stelle für den wageClaim-Brief. WAHRHEITS-DISZIPLIN: bei `verify:true`

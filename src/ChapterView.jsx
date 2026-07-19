@@ -1654,7 +1654,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               // Aufrufer einen Netto-Lohn gegen den Brutto-Boden, während das Finanzen-Kapitel
               // korrekt schweigt. Fünf Stellen rechneten diesen Befund, jede etwas anders.
               const check = monthlyIncome > 0
-                ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType)
+                ? pruefeStundenlohn(monthlyIncome, hrs, kanton, allData?.finanzen?.incomeType, allData?.finanzen?.dreizehnter)
                 : null;
               elements.push(
                 React.createElement('div', {
@@ -1696,6 +1696,17 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                     }, tr('lohnCheck.nextStepLink') + ' →')
                   );
                 }
+              }
+              // Im 12/13-Spalt, 13.-Frage offen: NICHT anklagen, sondern ruhig zur Angabe
+              // einladen (wie 'basisUnklar'). Der Falsch-Alarm gegen einen 13.-Bezüger,
+              // der das Feld nur nicht gesetzt hat, bleibt so aus.
+              if (check && check.status === 'dreizehnterUnklar') {
+                elements.push(
+                  React.createElement('div', {
+                    key: 'hours-dreizehnter-unklar',
+                    style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.sm + 'px ' + space.md + 'px', fontSize: text.sm, color: palette.sageDeep || palette.mid, lineHeight: leading.relaxed, marginBottom: space.sm + 'px' }
+                  }, tr('lohnCheck.dreizehnterUnklar'))
+                );
               }
             }
             // Multi-Job — weitere / frühere Anstellungen
@@ -1817,7 +1828,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                 const wHrs = parseFloat(String(allData && allData.ausbildung && allData.ausbildung.workHoursPerWeek || '').replace(',', '.')) || 0;
                 // Einkommensart mitgeben: der Mindestlohn ist ein BRUTTO-Stundenlohn, und der
                 // Feld-Hinweis rät zu Netto. Ohne bekannte Basis kein Befund ('basisUnklar').
-                const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType);
+                const result = pruefeStundenlohn(lohn, wHrs, kanton, data.incomeType, data.dreizehnter);
                 if (result.status === 'unvollstaendig' && onNavigate) {
                   elements.push(
                     React.createElement('button', {
@@ -1858,6 +1869,24 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                         marginBottom: space.sm + 'px',
                       }
                     }, tr(result.einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing'))
+                  );
+                }
+                // 12/13-Spalt mit offener 13.-Frage: ruhige Einladung statt Alarm (wie 'basisUnklar').
+                if (result.status === 'dreizehnterUnklar') {
+                  elements.push(
+                    React.createElement('div', {
+                      key: 'mindestlohn-dreizehnter-unklar',
+                      style: {
+                        gridColumn: '1 / -1',
+                        background: palette.sageMist || palette.up,
+                        borderRadius: radius.sm,
+                        padding: space.sm + 'px ' + space.md + 'px',
+                        fontSize: text.sm,
+                        color: palette.sageDeep || palette.mid,
+                        lineHeight: leading.relaxed,
+                        marginBottom: space.sm + 'px',
+                      }
+                    }, tr('lohnCheck.dreizehnterUnklar'))
                   );
                 }
                 if (result.status === 'unterMindestlohn') {
