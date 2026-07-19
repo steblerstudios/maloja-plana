@@ -7,7 +7,34 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (Predeploy-Gate GRÜN · Marke gesetzt auf `main`=`2093805` · DEPLOY-BEREIT — Deploy macht Stebler Studios)
+**Stand:** 2026-07-19 (**DEPLOYT & LIVE** · `main`=`df70cb1` · Live-Bundle `index-c7370d19.js`)
+
+> ### ⭐ AKTUALISIERUNG 2026-07-19 (DEPLOY GELANDET — Live-Stand eingearbeitet)
+>
+> **Der Deploy ist real gelandet.** Stebler Studios hat heute deployt; per `dig`+`curl`
+> gegengeprüft (nicht aus Erinnerung): `malojaplana.ch` → `185.176.225.7`, Live-Bundle
+> **`index-c7370d19.js`** / `index-6b0b5577.css`, `last-modified` **2026-07-19 13:59:21 UTC**.
+> Dreifach-Abgleich stimmt: **Live-Hash == lokaler `dist`-Build == `main`=`df70cb1`-Build**
+> (`predeploy-ok`-Marke `df70cb1` @13:58:38 UTC; dist gebaut @13:59:21). Der vorige Stand
+> „DEPLOY-BEREIT auf `2093805`" ist damit **überholt** — `df70cb1` ist `2093805` + drei
+> Docs-only-Commits (#111 Predeploy-Gate-Doku, #112 Marke-Notiz, #113 PII-Fix an dieser Datei),
+> byte-neutral zum App-Bundle.
+>
+> **Was dadurch NEU live ist** (die ~44+ Commits über dem alten Live-Stand `c5906715`/`4c79bee`,
+> 2026-07-18): **Armutsgrenze + Lohn-Barometer-Bubbles (p10/Median/p90) + 13.-Monatslohn-
+> Mindestlohn-Boden (#107/#108)**, Predeploy-Runde 19.07. (a11y/copy/security-Fixes). #100 Tresor
+> **dormant im Bundle** (kein Live-Effekt), #102 LockScreen **dev-only** (nicht im Prod-Bundle).
+> `FEATURES.md` nachgezogen: die #107-Zeilen (13.-Monatslohn · Barometer) sind jetzt `verified-live`.
+>
+> **Weiter offen / unverändert:** ⚠️ r7-`.htaccess`-`geolocation=(self)` NICHT live (deploy.sh
+> strippt `.htaccess` → Header im Infomaniak-Panel, dort noch `geolocation=()`). ⚠️ `wageClaim`-Brief
+> RUHT (`WAGECLAIM_BEREIT=false`). Der Claude-Hook-Pfad-Bug (Claude deployt nie → fail-safe/gewollt)
+> bleibt Kosmetik.
+>
+> **Predeploy-Backlog neu bewerten:** „Predeploy" ist bei Maloja **kein Vor-dem-ersten-Launch-Zustand**
+> (die App ist seit 2026-07-10 live) — der Deploy hebt den „nur notieren"-Freeze also **nicht automatisch
+> auf**. Ob die Backlog-Wünsche (Memory `project-maloja-predeploy-backlog-2026-07-19`) jetzt gebaut werden
+> dürfen, bleibt Sophies Entscheid, nicht meiner.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
 >
