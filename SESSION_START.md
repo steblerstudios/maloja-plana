@@ -39,12 +39,13 @@
 > (dann → `verified-live` mit Bundle-Hash). Nächster Zug (Stebler Studios): `/code-review ultra` → `deploy.sh`
 > von `main` → LIVE gegen die de/fr/it/rm-Chunks gegenprüfen.
 >
-> **⚠️ BLOCKER im Deploy-Hook selbst (gefunden 2026-07-19, „Hüll-Ordner"-Falle wie BD37, jetzt im DEPLOY-Hook):**
-> `.claude/settings.json` macht `cd "…/maloja plana"` (Container) und prüft dort `HEAD == marker`. Der Container
-> ist aber **kein** git-Repo und hat **kein** `.maloja/predeploy-ok` (git-root ist `…/maloja-frontend`). → beide
-> leer → Hook **DENY-t jeden Prod-Deploy**, egal ob die Marke sitzt. Fix nötig: den `cd`-Pfad im Hook auf das
-> git-Toplevel (`…/maloja-frontend`) bzw. `CLAUDE_PROJECT_DIR` ziehen — analog zum Tests-Hook-Fix aus BD37.
-> Marke selbst ist korrekt gesetzt (`2093805` im Frontend-Repo). `--stage` bleibt frei.
+> **Hinweis Deploy-Marke (korrigiert 2026-07-19):** Die `predeploy-ok`-Marke gilt **nur dem Claude-seitigen
+> Hook** (`.claude/settings.json`) — sie gatet, ob **Claude** `deploy.sh` starten darf. Sophies **manueller**
+> Deploy im eigenen Terminal ist davon **unberührt** (kein Claude-Hook feuert dort); `deploy.sh` prüft die Marke
+> nicht selbst, hat aber eigene Gates (Branch=`main`, PII-Scan, SEO-Check, Build). Der Claude-Hook hat einen
+> kleinen Pfad-Bug (`cd` zum Container statt git-Toplevel, „Hüll-Ordner"-Falle wie BD37) → er verweigert Claude
+> den Deploy **immer**; das ist **fail-safe/gewollt** (Claude deployt nie), kein Blocker für Sophie. Optionaler
+> Kosmetik-Fix: `cd`-Pfad auf `…/maloja-frontend`/`CLAUDE_PROJECT_DIR` ziehen. Marke sitzt korrekt auf `main`-HEAD.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (git-Stand gegengeprüft, NICHT am Live-Bundle)
 >
