@@ -17,6 +17,22 @@
 > **Live unverändert** (`index-c5906715.js`) — seit 2026-07-18 kein Deploy, nichts Neues live.
 > #103 war `session-close` (Doku), byte-neutral.
 >
+> #### 🌐 Deploy-/Hosting-Wahrheit — verifiziert 2026-07-19 (DNS + Header + PWA gecurlt)
+> **Production = Infomaniak (Apache), `malojaplana.ch`, deployt manuell via `deploy.sh`** (SFTP,
+> IP-gefiltert gegen CI, nur Stebler Studios). Belegt: `dig malojaplana.ch` → `185.176.225.7`
+> (Infomaniak, **nicht** Vercel `76.76.21.21`); `curl -I` → `server: Apache`. Der Deploy-Weg im
+> Kopf dieser Datei (`bash deploy.sh`) ist korrekt — **„mergen nach `main`" ist KEIN Deploy.**
+>
+> **PWA installierbar, live verifiziert:** `/manifest.json` (`display: standalone`, App-Shortcuts)
+> + `/sw.js` → HTTP 200. Die App wird selbstgehostet von Infomaniak ausgeliefert — **Vercel nie.**
+>
+> **⚠️ Vercel (`ordnung-ruhe-neu`) = totes Überbleibsel der alten Alpha, RETIRED.** Hatte
+> `malojaplana.ch` im Dashboard als Domain eingetragen und baute bei jedem Push mit, aber DNS
+> zeigte **nie** dorthin → hat Production nie serviert. **Git-Integration 2026-07-19 disconnectet**
+> (Auto-Builds gestoppt). Optional restlos löschen (safe — DNS hängt an Infomaniak). Merker gegen
+> Wieder-Verheddern: das Vercel-Dashboard zeigt die Domain irreführend als „Production" — die
+> Wahrheit steht in DNS + `server`-Header, nicht im Dashboard.
+>
 > **Aktive Arbeit — EINE merge-fertige Linie, gepusht, NICHT gemergt, kein PR:**
 > - `feat/lohn-barometer-zonen` (ab `main=4c79bee`, 13 Commits, Tip `c32ef58`) — Barometer als
 >   Verteilungs-**Bubbles** (p10/Median/p90 LSE 2024), 13.-Monatslohn-Feld + rechtskonformer
