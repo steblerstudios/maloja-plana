@@ -266,7 +266,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
             t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter)) }))
         ),
-        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
+        React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche, onNavigate }),
         (() => {
           const vgl = getBranchenvergleich(income);
           if (!vgl) return null;

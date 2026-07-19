@@ -1253,6 +1253,7 @@ const AppInner = () => {
           simpleView,
           nextChapter: chapters[activeChapter + 1] || null,
           onNext: () => handleNavigate('chapter', activeChapter + 1),
+          isDarkMode,
         })
       ),
       React.createElement(ViewErrorBoundary, { palette, t, key: view },
