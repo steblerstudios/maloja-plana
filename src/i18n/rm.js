@@ -2206,6 +2206,7 @@ export default {
     incomePosition: 'Tge che entra mensilmain', // TODO(rm): Gegenlese
     showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
+    povertyLineNote: 'Limita da povrezza per Vossa chasada: {amount}/mais (UST 2024). Il confront sa basa sin l\'entrada disponibla: il net, senza taglias, premias e deducziuns.',
     nearPoverty: 'Stretgamain sur la limita da povrezza',
     belowMedian: 'Sut la mediana',
     aboveMedian: 'Sur la mediana',

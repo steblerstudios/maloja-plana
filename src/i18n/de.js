@@ -3322,6 +3322,7 @@ export default {
     incomePosition: 'Was monatlich reinkommt',
     showPosition: 'Einordnung anzeigen',
     belowPoverty: 'Unter Armutsgrenze',
+    povertyLineNote: 'Armutsgrenze für Ihren Haushalt: {amount}/Monat (BFS 2024). Verglichen wird Ihr verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.',
     nearPoverty: 'Knapp über Armutsgrenze',
     belowMedian: 'Unter Median',
     aboveMedian: 'Über Median',

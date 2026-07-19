@@ -3316,6 +3316,7 @@ export default {
     incomePosition: 'What comes in each month',
     showPosition: 'Show position',
     belowPoverty: 'Below poverty line',
+    povertyLineNote: 'Poverty line for your household: {amount}/month (FSO 2024). The comparison uses your disposable income: net minus taxes, premiums and deductions.',
     nearPoverty: 'Near poverty line',
     belowMedian: 'Below median',
     aboveMedian: 'Above median',

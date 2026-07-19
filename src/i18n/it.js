@@ -3292,6 +3292,7 @@ export default {
     incomePosition: 'Quanto entra ogni mese',
     showPosition: 'Mostra posizionamento',
     belowPoverty: 'Sotto la soglia di povertà',
+    povertyLineNote: 'Soglia di povertà per la sua economia domestica: {amount}/mese (UST 2024). Il confronto si basa sul reddito disponibile: il netto, meno imposte, premi e deduzioni.',
     nearPoverty: 'Vicino alla soglia di povertà',
     belowMedian: 'Sotto la mediana',
     aboveMedian: 'Sopra la mediana',

@@ -9,6 +9,7 @@ import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
+import { berechneArmutsgrenze } from './data/sozialhilfeRechner.js';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
@@ -215,19 +216,49 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     ),
 
     hasData && income > 0 && (() => {
-      // Das Lohn-Barometer trägt die Einordnung „wo steht mein Einkommen" allein — belegt
-      // (LSE 2024: p10/Median/p90), auf Vollzeit-Äquivalent gerechnet, mit den vier
-      // Verteilungs-Zonen und dem kantonalen Mindestlohn-Boden als „!".
+      // Das Lohn-Barometer trägt die Lohnniveau-Einordnung — belegt (LSE 2024:
+      // p10/Median/p90), auf Vollzeit-Äquivalent gerechnet, mit dem kantonalen
+      // Mindestlohn-Boden als „!". Es braucht ein BRUTTO-Einkommen.
       //
-      // Das frühere Text-Band (Armuts-/Median-Schwellen 2279/4000/… auf ROH-Einkommen) ist
-      // ENTFALLEN (Entscheid Stebler Studios 2026-07-18, frühere Design-Frage §12): Es
-      // verglich rohes Personen-Monatseinkommen mit einer HAUSHALTS-Armutsgrenze (verfügbar,
-      // äquivalenziert) — die falsche Grösse, im Code zudem unbelegt — und war die
-      // ungenauere Doppelung zum Barometer, das dieselbe Frage belegt und Vollzeit-korrekt
-      // beantwortet.
+      // Daneben (nicht doppelt) steht der belegte Armutsgrenzen-Befund für die ANDERE
+      // Frage: «bin ich unter dem Existenzminimum?». Das frühere rohe Text-Band
+      // (2279/4000 auf ROH-Einkommen) war unbelegt UND mass die falsche Grösse; hier
+      // stattdessen die BFS-Methodik — verfügbares NETTO-Einkommen (netto − Steuern,
+      // Prämien, Abzüge) gegen die haushaltsgenaue Armutsgrenze (SKOS-Grundbedarf +
+      // effektive Wohnkosten + CHF 100/Person ab 16). Erscheint nur bei tragfähiger
+      // Basis (Netto erfasst + Miete bekannt); fehlende Abzüge überschätzen das
+      // Einkommen (sichere Richtung, kein Fehlalarm). Brutto-Nutzerinnen sehen das
+      // Barometer, Netto-Nutzerinnen diesen Befund — sie schliessen einander praktisch
+      // aus (ein incomeType), darum kein Gedränge.
+      const f = data.finanzen || {};
+      const sideIncome = Number(f.sideIncome || 0);
+      const sideNettoOk = sideIncome <= 0 || f.sideIncomeType === 'netto';
+      const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
+      const personenAb16 = hh.adults + (hh.children || []).filter(c => (Number(c.age) || 0) >= 16).length;
+      const armutsgrenze = berechneArmutsgrenze({
+        grundbedarf: sozialhilfe.grundbedarf,
+        effektiveWohnkosten: sozialhilfe.effectiveRent,
+        personenAb16,
+      });
+      const nettoHaushalt = income + (sideNettoOk ? sideIncome : 0) + (hh.partnerIncome || 0)
+        + Number(f.familienzulagen || 0) + Number(f.alimenteReceived || 0);
+      const verfuegbar = Math.max(0, nettoHaushalt - Number(f.monthlyTax || 0)
+        - Number(data.versicherungen?.kkPremium || 0) - Number(f.alimentePaid || 0));
+      const unterArmutsgrenze = f.incomeType === 'netto' && sideNettoOk && rentKnown
+        && armutsgrenze > 0 && verfuegbar < armutsgrenze;
       return React.createElement('div', {
         style: { padding: '12px 16px', background: palette.up, borderRadius: radius.sm, marginBottom: '16px', fontSize: text.xs, color: palette.mid, lineHeight: '1.6' }
       },
+        // Belegter Armutsgrenzen-Befund (nur Netto + unter der Grenze) — VOR dem
+        // Barometer, weil er für Netto-Nutzerinnen das primäre Signal ist.
+        unterArmutsgrenze && React.createElement('div', {
+          style: { marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid ' + palette.border }
+        },
+          React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
+            t('finanzUebersicht.belowPoverty')),
+          React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
+            t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }))
+        ),
         React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
         (() => {
           const vgl = getBranchenvergleich(income);

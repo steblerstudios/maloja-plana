@@ -3315,6 +3315,7 @@ export default {
     incomePosition: 'Ce qui rentre chaque mois',
     showPosition: 'Afficher le positionnement',
     belowPoverty: 'Sous le seuil de pauvreté',
+    povertyLineNote: 'Seuil de pauvreté pour votre ménage : {amount}/mois (OFS 2024). La comparaison porte sur votre revenu disponible : le net, moins impôts, primes et déductions.',
     nearPoverty: 'Proche du seuil de pauvreté',
     belowMedian: 'Sous la médiane',
     aboveMedian: 'Au-dessus de la médiane',
