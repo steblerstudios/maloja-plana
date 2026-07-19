@@ -3322,15 +3322,10 @@ export default {
     // Benennt AUSDRÜCKLICH das tatsächliche Monatseinkommen — darunter steht das
     // Lohn-Barometer, das auf Vollzeit hochrechnet. Zwei Fragen, beide wahr; ohne
     // klares Label lesen sie sich als Widerspruch (Predeploy-Runde 8).
-    incomePosition: 'Was monatlich reinkommt',
     showPosition: 'Einordnung anzeigen',
     belowPoverty: 'Unter Armutsgrenze',
-    povertyLineNote: 'Armutsgrenze für Ihren Haushalt: {amount}/Monat (BFS 2024). Verglichen wird Ihr verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.',
-    povertyBruttoHint: 'Ihr Netto entspricht grob ~ {brutto} brutto (geschätzt aus AHV/ALV und Pensionskasse, ohne Steuern — je nach Pensionskasse abweichend).',
-    nearPoverty: 'Knapp über Armutsgrenze',
-    belowMedian: 'Unter Median',
-    aboveMedian: 'Über Median',
-    highIncome: 'Deutlich über Median',
+    povertyLineNote: { sie: 'Armutsgrenze für Ihren Haushalt: {amount}/Monat (nach BFS-Methodik 2024). Verglichen wird Ihr verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.', du: 'Armutsgrenze für deinen Haushalt: {amount}/Monat (nach BFS-Methodik 2024). Verglichen wird dein verfügbares Einkommen: Netto minus Steuern, Prämien und Abzüge.' },
+    povertyBruttoHint: { sie: 'Ihr Netto entspricht grob ~ {brutto} brutto (geschätzt aus AHV/ALV und Pensionskasse, ohne Steuern — je nach Pensionskasse abweichend).', du: 'Dein Netto entspricht grob ~ {brutto} brutto (geschätzt aus AHV/ALV und Pensionskasse, ohne Steuern — je nach Pensionskasse abweichend).' },
     povertyLine: 'Armutsgrenze',
     median: 'Median CH',
     branchenvergleich: { sie: 'Ihr Lohn im Branchenvergleich (Median-Bruttolohn):', du: 'Dein Lohn im Branchenvergleich (Median-Bruttolohn):' },

@@ -227,9 +227,11 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
       React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } },
-        '▬ ' + t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
+        React.createElement('span', { 'aria-hidden': true }, '▬ '),
+        t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor } },
-        '● ' + t('lohnEinordnung.median') + ': CHF ' + fmt(median))
+        React.createElement('span', { 'aria-hidden': true }, '● '),
+        t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
 
     // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).

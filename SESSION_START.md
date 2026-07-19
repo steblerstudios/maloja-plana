@@ -7,7 +7,28 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (Lohn-Barometer-Linie in Review · `main` unbewegt, nichts Neues live)
+**Stand:** 2026-07-19 (Predeploy-Gate gelaufen · `main`=`7213263` · Deploy GESPERRT bis Quellen belegt)
+
+> ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
+>
+> **`main` steht auf `7213263`** (PR #108, a11y Barometer-Glyphen aria-hidden). Die Armutsgrenzen-/
+> Netto→Brutto-Linie ist via PR #107 **längst in `main`** (die ältere Notiz unten „gepusht, NICHT gemergt"
+> ist überholt). LIVE unverändert = `4c79bee` / Bundle `index-c5906715.js` (2026-07-18). **44 Commits über
+> LIVE** → Rhythmus reif.
+>
+> **Predeploy-Gate 2026-07-19:** Mechanik grün (770 Tests · Build sauber · SEO 0/0 · Size 63.42/65 kB ·
+> CSP self-only · i18n-Parität). PII-🔴 (`docs/TODO.md`) bereinigt. Volle 9-Prüfer-Batterie: **swiss-precision,
+> security, rechts, a11y, qualität, ordnungshüter, polygrafin, link-checker je 0 🔴** — keine falsche Zahl
+> erreicht Anzeige/Brief, Wächter-Kette hält. Copy-🔴 (Sie/Du-Split fehlte an `povertyLineNote`/
+> `povertyBruttoHint`; rm-Zonen deutsch) + zwei konvergente ⚠️ (Barometer-Glyphen nicht aria-hidden;
+> „(BFS 2024)"→„(nach BFS-Methodik)") **behoben** — plus pre-existing Cleanup (Pill-Kontrast `sageDeep`,
+> `localStorage` try/catch ×2, `noreferrer`, 5 tote i18n-Keys). Release `0.1.26-beta` auf
+> `fix/predeploy-2026-07-19-review-fixes` → PR nach `main` (GitHub Flow).
+>
+> **⛔ Deploy GESPERRT (Entscheid Sophie/Stebler Studios): zwei Quellen blockierend gegenzulesen VOR Deploy**
+> — (a) SKOS-Grundbedarf 2026, (b) BFS-Armutsgrenze 2388/4159 Referenzjahr. Beide als 🔴 in `docs/TODO.md`
+> Abschnitt B. **Freigabe-Marke `.maloja/predeploy-ok` NICHT gesetzt.** Nächster Zug: Quellen belegen →
+> Fixes committen → `/code-review ultra` → `deploy.sh`.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (git-Stand gegengeprüft, NICHT am Live-Bundle)
 >

@@ -61,6 +61,19 @@ Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy
 
 ## B — Berechnungen (vor Fixes offizielle Quelle prüfen!)
 
+- 🔴 **BLOCKIEREND (Sophie/Stebler Studios 2026-07-19) · SKOS-Grundbedarf für 2026 gegenlesen** — `sozialhilfeRechner.js:1`
+  trägt „Stand 1.1.2025" / `SKOS_DATA_VERSION='2025-01'` (Grundbedarf Einzelperson 1061), `cantonalData.js:251`
+  sagt „2025/2026". SKOS legt den Grundbedarf jährlich fest → **vor dem nächsten Deploy** aktiv gegen die
+  SKOS-Ankündigung 2026 bestätigen: unverändert → beide Stand-Labels auf „2025/2026" angleichen; geändert →
+  Werte + Version hochziehen. Quelle: `skos.ch/skos-richtlinien/aktuelle-richtlinien/`. (Predeploy 2026-07-19,
+  swiss-precision-Fund; Deploy bis dahin gesperrt.)
+- 🔴 **BLOCKIEREND (Sophie/Stebler Studios 2026-07-19) · BFS-Armutsgrenze 2388/4159 Referenzjahr belegen** —
+  `sozialhilfeRechner.js:182–183` zitiert „Ø2024: Einzelperson CHF 2388, 2E+2K CHF 4159/Monat" nur im
+  Kommentar (nicht in der UI — dort wird haushaltsindividuell gerechnet). Der zugehörige Test ist zirkulär
+  (löst die Miete rückwärts auf 2388 auf). **Vor Deploy** die Zahlen + Referenzjahr (2023 vs. 2024) am
+  Volltext BFS „Armut in der Schweiz" belegen oder als „ungefähr/Grössenordnung" kennzeichnen. Beim Beleg
+  gleich den anklickbaren `[[BFS|…]]`-Link am Armutsgrenzen-Befund ergänzen (Link-Checker-Fund). (Wahrheits-
+  Disziplin; Deploy bis dahin gesperrt.)
 - ✅ `estimateTaxSavings` + irreführende Kachel entfernt (IPV ist steuerfrei).
 - ✅ AHV Vorbezug-Kürzung war bereits 6.8 %/Jahr (korrekt).
 - ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt.
@@ -72,7 +85,7 @@ Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy
   `data.basis.gender` durch, UI-Zeile „Referenzalter (AHV 21)", Tests grün). Der alte 🟡-Text
   („rechnet pauschal mit 65") war veraltet.
   ⏸️ **Phase B (Ausgleichsmassnahmen: Rentenzuschlag/reduzierte Kürzung) BEWUSST GEPARKT**
-  (Sophie 2026-07-18): keine rechtsverbindliche Zuschlags-Zahl in einer Orientierungs-App
+  (Sophie/Stebler Studios 2026-07-18): keine rechtsverbindliche Zuschlags-Zahl in einer Orientierungs-App
   (Haftung + Wahrheits-Disziplin). Falls je gebaut → ruhiger Anspruchs-Hinweis, nicht gerechnete
   Zahl. Details: `docs/roadmap/TASK_ahv21-referenzalter-frauen.md`.
 
@@ -245,10 +258,15 @@ entschärft — reproduce-first bestätigt. Echt offen:*
   FinanzUebersicht, KVGLeistungen) statt `IconSystem`. Am schamsensibelsten: `SozialhilfeView.jsx:79/125/148/163`
   (`'◰ ' + …` vor SKOS/IPV/EL-Titeln). `ICON_KONVENTION.md`: funktionale Icons = ein Outline-Set. Vorschlag:
   durch IconSystem-SVG (`aria-hidden`) ersetzen, Sozialhilfe/Schulden zuerst. a11y → nie unter P1.
-- 🟠 **P1 · Armutsgrenze 2279 hartkodiert** (`FinanzUebersicht.jsx:225`) — unbelegt, veraltet
-  (BFS 2024: **2388**) UND misst die falsche Grösse (gilt fürs äquivalenzierte *verfügbare Haushalts*-
-  einkommen, Code hält sie gegen rohes `monthlyIncome`). Nutzer sieht „belowPoverty"-Label, das falsch
-  sein kann. Nur mit `swiss-precision-pruefer` + Quelle anfassen (Leitplanke).
+  **Dazu gehören (Sophie/Stebler Studios 2026-07-19, Predeploy-Frage) die Barometer-Legenden-Glyphen** `▬ ● ▏` in
+  `LohnEinordnung.jsx`/`RegionalBarometer.jsx`/`MietVergleich.jsx`: aktuell nur `aria-hidden`-gepflastert
+  (Screenreader-Lärm gelöst), aber die Glyphen SIND eigentlich Legenden-Symbole (dein Wert / Median /
+  Schweizer Schnitt) → sollten logisch echte kleine Icons/Formen sein statt Unicode-Zeichen im Text.
+  Beim Icon-Audit mitnehmen: eine Symbol-Sprache, die die Balken-Marken visuell spiegelt.
+- ✅ **Armutsgrenze 2279 hartkodiert — BEHOBEN** (2026-07-19, `00abfb6`/`1f8c103`): ersetzt durch
+  belegte BFS-Methodik (`berechneArmutsgrenze`: SKOS-Grundbedarf + effektive Wohnkosten + CHF 100/P ab 16
+  vs. *verfügbares* Netto, nicht mehr rohes `monthlyIncome`). Swiss-precision-Predeploy 2026-07-19: 0 🔴.
+  Offene Quellen-Gegenprüfung dazu → Abschnitt B (blockierend).
 - ✅ **innerHTML/CSP geprüft:** reine React.createElement-App, kein `dangerouslySetInnerHTML`,
   strikte CSP → Audit-Punkt bereits erfüllt.
 - ⏸ **Schicht B (Business/Finanzmodell) → Stebler Studios**, **Schicht C (kommerzielle Partner-

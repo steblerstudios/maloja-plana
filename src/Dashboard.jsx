@@ -745,7 +745,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     { d: 'M 665 95 L 690 105 L 720 120', chapter: 6 },
   ];
 
-  const lastBackupRaw = localStorage.getItem('or5_lastBackup');
+  let lastBackupRaw = null;
+  try { lastBackupRaw = localStorage.getItem('or5_lastBackup'); } catch { /* Storage blockiert (Privat-Modus) — Render darf nicht crashen */ }
   const lastBackup = lastBackupRaw ? new Date(lastBackupRaw).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : null;
 
   const [alphaDismissed, setAlphaDismissed] = useState(false);

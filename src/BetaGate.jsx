@@ -69,7 +69,8 @@ export const BetaGate = ({ children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (await matchesBetaCode(input)) {
-      localStorage.setItem(STORAGE_KEY, 'true');
+      // Storage kann im Privat-Modus werfen — die Entsperrung darf nicht daran hängen.
+      try { localStorage.setItem(STORAGE_KEY, 'true'); } catch { /* ignoriert */ }
       setGranted(true);
     } else {
       setError(true);
