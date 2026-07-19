@@ -7,75 +7,20 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-18 (Lohn-Barometer + 13.-Monatslohn) · *Kopf aktualisiert; r8-Historie unten teils überholt — siehe Banner.*
-
-> ### ⭐ AKTUALISIERUNG 2026-07-18 (verifiziert am git-Stand, NICHT am Live-Bundle)
->
-> **`main` steht auf `4c79bee`** (Merge PR #102, tresor-lockscreen-design) — per `git` gegengeprüft.
-> Die „Wo stehen wir"-Tabelle + „Nächste Schritte" unten stammen vom **2026-07-15** und
-> beschreiben `main=acc52f0` mit „Runde 8 hängt, nicht live". Das ist **überholt**: laut
-> Claude-Memory `project_maloja_c_wiedereinstieg_2026-07-18` gingen r8 via PR #97/#98 in `main`
-> und **Runde 8 ist live** (`index-96dd34ec.js`, curl-verifiziert am 2026-07-18), dann folgten
-> #99 (Docs), #100 (Tresor 2b-pre), #102 (LockScreen). ⚠️ **Diese Live-Aussage ist aus dem
-> Memory getragen, in DIESER Sitzung nicht per curl neu belegt** — vor dem nächsten Deploy
-> gegenprüfen. Die Tresor-2b-**UI** ist bewusst vertagt (Memory `project_tresor_lock_crypto`).
->
-> **Aktive Arbeit dieser Sitzung — Branch `feat/lohn-barometer-zonen` (ab `main=4c79bee`),
-> 7 Commits, gepusht, NICHT gemergt, kein PR:**
-> `cfe6fb3` Tresor-Doku-Vertagung · `a758bca` Barometer-Verteilungs-Zonen (Bubbles) + Armuts-Band
-> raus · `e951164` Lohn-auf-Miethöhe + Miet-Marken + 13.-Quellenhinweis · **`8f505dc` 13.-Monatslohn-Feld
-> + Mindestlohn-Check rechtskonform** (der 13. zählt an den Mindestlohn = Jahres-Boden; neuer
-> Status `konformMit13`; behebt einen Falsch-Alarm für 13.-Bezüger — amtlich belegt, Memory
-> `reference_mindestlohn_13_monatslohn_kantone`). **756 Tests grün, Bundle 64.98/65 kB (fast voll).**
-> Live-verifiziert nur auf localhost (hell+dunkel), NICHT deployt.
->
-> **Fortsetzung 2026-07-18 (2. Sitzung), 3 weitere Commits:** `e6622ff` **Branchen-Chips interaktiv**
-> (Klick → Branchen-Median als neutrale Marke aufs Barometer; Hybrid „Jahr pro Chip": die von der
-> BFS-Mitteilung 2024 WÖRTLICH genannten Werte belegt auf 2024 gehoben — Pharma 10159/Bau 6616/
-> Detailhandel 5214 + Gesamtmedian 7024 —, Rest bleibt 2022; der dormante Durchschnitt-Strich wurde
-> dafür umgebaut) · `584de58` **Code-Review-Fix** (Chips gegen `incomeVergleich` färben statt roh,
-> sonst widersprachen Chip-Farbe und Marker-Position) · `edb18d9` Stand-Doku. `/code-review high`
-> gelaufen: 1 Befund gefixt + verifiziert, 1 akzeptiert (kein Live-Bug). Weiterhin nur localhost.
-> **Offene Barometer-Fäden:** Durchschnitt-Strich → **verworfen** (kein zitierbarer BFS-Mittelwert,
-> nur STAT-TAB; breit gesucht bestätigt — der Median trägt allein) · Finanz-Tacho-Klärung ·
-> Branchen-Werte weiter auf 2024 heben (STAT-TAB-Recherche) · a11y-Sweep · wageClaim.
-> **13.-Kanton-Belege NE/TI amtlich nachgezogen** (Memory `reference_mindestlohn_13_monatslohn_kantone`).
->
-> **Fortsetzung 2026-07-18 (3. Sitzung), 3 weitere Commits — a11y-Sweep + Byte-Budget
-> (Branch jetzt 12 Commits total):** `91e5b53` **a11y Variante B** — Branchen-Chip-Touch-Ziel
-> Padding `2px`→`6px` (~16→30 px), trifft WCAG 2.5.8 (24×24); live hell+dunkel verifiziert, Toggle
-> intakt. **Variante A** (✓-Glyph für „erreicht", gegen WCAG 1.4.1) bewusst **GEPARKT** bis Budget/
-> Design-Runde. · `482256f` **DEMO_DATA lazy** (war eager importiert UND im Render-Pfad referenziert
-> → kein Tree-Shaking; jetzt `import('./config/demoData.js')` beim Beispiel-Klick) · `11699ec`
-> **autoBackup lazy** (`createBackup()` läuft best-effort post-mount, jetzt dyn. Import im Effekt).
-> **Bundle 64.98 → 63.35/65 kB** (~30 B → **~1.65 kB Luft**); beide Lazy-Loads live verifiziert
-> (Beispiel rein+raus / `autoBackup`-Chunk lädt on-demand, App rendert). **757 Tests grün** (inkl. 1
-> fremdem Render-Harness `src/__tests__/_ssr_render.test.jsx` aus Parallel-Chat — untracked, nicht meins).
-> **wageClaim stand-geprüft (nichts gebaut):** ruht bewusst (`WAGECLAIM_BEREIT=false`, SS-Entscheid r8);
-> Fix-Register **A–E im Code bereits erledigt** (FIX-A/D-Kommentare, OR-82-„nur-nach-Fachstelle"-Zusatz,
-> TI `jahr:2026`, JU `indexiert:false`). Offen nur: Scharfschalten braucht **Daten-Modell-Runde**
-> (Sektor/Status, GE-Sätze differenzieren, je Satz Beleg) + **(F) Copy-Gegenlesen**. **Branchen-Werte
-> weiter auf 2024 heben: GEPARKT** (BFS-Mitteilung deckt nur Pharma/Bau/Detailhandel/Gesamt — keine
-> weiteren Daten belegbar). **Icon-Registry-Split** als grösster Rest-Byte-Hebel (~4–5 kB) identifiziert,
-> aber als heikler Kern-Eingriff + unzuverlässige statische Analyse **VERTAGT** (eigene sorgfältige Runde).
-> Weiterhin nur localhost, NICHT deployt/gemergt.
->
-> **Nächster Faden besprochen (NICHT gebaut) — Steuer-Visualisierung:** ruhige **Säulen** im
-> Zivilstand-Vergleich (ledig · verheiratet gemeinsam · verheiratet **einzeln**/Individualbesteuerung),
-> im **Probier-Modus** (`main.jsx` sandboxMode) durchspielbar (AHV/BVG-Muster spiegeln). ⚠️ Individual-
-> besteuerung erst nach amtlichem Rechts-Check + echtem Rechenweg (`berechneBundessteuer` kennt „einzeln"
-> nicht). Kanton/Gem = Faktor-Schätzung → „~". Details: Memory `project_steuer_saeulen_zivilstand`.
+**Stand:** 2026-07-18 (Runde 8 LIVE · Runde 9: maloja-c-Extraktion + Tresor 2b-pre/LockScreen)
 
 ## Wo stehen wir gerade
 
 | | |
 |---|---|
-| Aktueller Branch | **`fix/predeploy-r8-3`** — die Behebung von `fix/predeploy-r8` ist via **PR #97 in `main`** (Merge-Commit); dieser Zweig trägt die zwei echten Fehler nach, die eine **dritte Prüfung** (Predeploy nach dem Merge) in den ungeprüften Commits fand. `chore/stand-sync-r13` ist **tot** (Inhalt via PR #92 in `main`). |
-| `main` steht auf | **`acc52f0`** (= `origin/main`, gegengeprüft 2026-07-15). ⚠️ **Merge-Fallen-Regel — gilt weiter, aber sie deckt nur den Doku-Fall:** Ein Stand-Sync-PR dokumentiert den Zeiger, sein eigener Merge rückt `main` dahinter. Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer**, ist alles in Ordnung. **Ist das Delta NICHT leer, hängt ein echter Deploy.** Genau das ist am 2026-07-15 passiert: Der frühere Eintrag `5a4851c` behauptete „`main` IST live, kein Deploy hängt", während 23 `src/`-Dateien (+1547/−59) davor lagen — die Feature-PRs #93/#94 waren gemergt, der Selbstschutz war beschrieben, aber nie ausgeführt. **Lehre: Die Gegenprobe ist keine Option, sondern Schritt 1.** |
-| Deploy hängt? | **JA.** `git log --oneline 5a4851c..main` = **20 Commits**, `git diff 5a4851c..main -- src/` = **23 Dateien**; dazu die Blocker-Behebung auf `fix/predeploy-r8`. Frisch gebaut → Bundle ≠ Live-Bundle `index-1f4c6867.js`. Das ist **kein** Doku-Delta wie bei #86/#87. |
+| Aktueller Branch | **`main`** (Sitzung 2026-07-18 endete an drei Merges: #100/#101/#102). Der Abschluss läuft über `chore/session-close-2026-07-18` → PR (GitHub Flow, nicht direkt auf `main`). |
+| `main` steht auf | **`4c79bee`** (= `origin/main`, gegengeprüft 2026-07-18; Merge von #102). ⚠️ **Merge-Fallen-Regel (Gegenprobe = Schritt 1):** Steht hier ein Hash, der einen Merge alt ist, und `git diff <hier>..main -- src/` ist **leer** → ok. **Ist das Delta NICHT leer, hängt ein echter Deploy.** |
+| Deploy hängt? | **NEIN — `main` (`4c79bee`) ist LIVE.** Deployt 2026-07-18 13:59 → Live-Bundle **`index-c5906715.js`** == frischer `main`-Build, per `curl` gegengeprüft. Damit ist die **KVG-«Kurz innehalten»-Änderung (#101) live**; #100 (Tresor 2b-pre) dormant + #102 (LockScreen) dev-only sind byte-neutral mitgegangen. `git diff <predeploy-ok>..HEAD -- src/` als Gegenprobe beim nächsten Mal. |
 | Version (package.json) | `0.1.25-beta` |
 | Letzter Tag | `v0.1.25-beta`. ⚠️ Der Tag zeigt auf `31abc36` — ein Hash, den der Purge **getötet** hat (`git log 31abc36..HEAD` bricht ab). Ab jetzt setzt `deploy.sh` den Tag automatisch aus `package.json`. |
-| Live (malojaplana.ch) | Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css`. Das entspricht dem Stand **`5a4851c`** (Runden 4–7, #72–#84). **`main` (`acc52f0`) ist NICHT live** — die ganze Runde 8 (Lohn-Befund-Brief + Lohn-/Mietzins-Barometer) liegt davor. ⚠️ **Ausnahme:** r7-`.htaccess`-Fix `geolocation=(self)` NICHT live — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel (dort noch `geolocation=()`, am 2026-07-15 per `curl` bestätigt). |
+| Live (malojaplana.ch) | Bundle **`index-c5906715.js`** / CSS `index-6b0b5577.css` (= `main` `4c79bee`, deployt **2026-07-18 13:59**, per `curl` verifiziert). Enthält Runde 8 (Lohn-Befund-Brief + Barometer) **und** Runde 9 (KVG-«Kurz innehalten» sichtbar; #100 Tresor dormant, #102 LockScreen dev-only/nicht im Prod-Bundle). Vorheriges Runde-8-Bundle war `index-96dd34ec.js` (11:53). ⚠️ **Ausnahme (weiter gültig):** r7-`.htaccess`-Fix `geolocation=(self)` — `deploy.sh` strippt `.htaccess`, Header kommt aus dem Infomaniak-Panel. |
+| **Runde 9 (2026-07-18) — 🟢 GEMERGT (#99–#102), teils NICHT live** | **#99** maloja-c-Docs-Extraktion (Zielarchitektur, Positionierung, Tresor-Zielbild — docs-only). **#100 Tresor 2b-pre:** 4 🔴 der harten Vorbedingung + Härtung (Doc-Blobs verschlüsseln, prerestore-Purge best-effort, freundlicher Fehler, Leeres-Backup-Guard; PBKDF2 600k versioniert, `TRESOR_MIN_PASSPHRASE=12` + Merksatz-Nudge, Backup-Zwang, `VAULT_*`→`TRESOR_*`) — **dormant, kein Live-Effekt.** **#101 KVG «Kurz innehalten»:** Anti-Dark-Pattern-Schritt in KVGWechsel + i18n ×5 — **live-wirksam, noch nicht deployt.** **#102 LockScreen-Design:** Tresor-2b-UI-Wand entkoppelt (nur `onUnlock`-Prop), `tresorLock`-i18n ×5, dev-only `#/lockpreview` — **Prod byte-neutral.** 748 Tests grün, Size 64.97/65 kB. |
+| Deploy-Zugang | **`.deploy.local` am 2026-07-18 wiederhergestellt** (war beim Klon verloren). ⚠️ Konkrete Werte (SFTP-Host/User/Remote-Pfad) stehen **nur** in `.deploy.local` (gitignored) + Claude-Memory `project_maloja_c_wiedereinstieg_2026-07-18` — **nie ins getrackte Repo** (Secret/PII, PII-Scan schlägt sonst an). Merker: der SFTP-User ist der Panel-**Admin**-FTP-Benutzer, NICHT der temporäre SSH-Zugang (der ist kein SFTP-Konto). Passwort nur interaktiv. **⚠️ ausserhalb git sichern (Passwort-Manager)** — dritter Verlust dieser Art. |
 | ⚠️ Tote Hashes | Alle Hashes von **vor** dem Purge (2026-07-14) lösen nicht mehr auf — u. a. der Live-Marker `31abc36` und `.maloja/predeploy-ok`. **Ein toter Hash heisst NICHT, dass die Arbeit erfunden war.** Nachschlagen: `grep '<hash>' _maloja-archiv/HASH-LANDKARTE-vor-purge.md` (2070 Einträge, PII-frei). |
 | **Runde 2026-07-12/13 (live)** | **✅ GEMERGT + LIVE (PRs #47–#59): Runde 2026-07-12 + Anspruchs-Instrumente Phase 1 (IPV-Beleg + Sozialhilfe-Pegel) + Design-Docs-Ent-Drift** |
 | **Runde 2 (IPV-Lebenslinie) — ✅ LIVE** | **✅ PR #60 (`d9ee62b`):** IPV-Lebenslinie Phase 2 + Sozialhilfe-Rückerstattung + Predeploy-Fixes (Stempel/Kompass/Sie-Du/ipvSubsumed). Runde-2-Gate grün, ZH-Beträge live gegen Handbuch verifiziert. **Deployt in `index-8aeb4a84.js`.** |
@@ -94,11 +39,11 @@
 > Feature-für-Feature-Detail (built/deployed/verified-live): [`FEATURES.md`](FEATURES.md).
 
 
-- **Live:** Bundle `index-1f4c6867.js` / CSS `index-0fb5458d.css` läuft auf malojaplana.ch.
-  Das ist der Stand **`5a4851c`** (Runden 4–7). **`main` (`acc52f0`) ist NICHT live** —
-  am 2026-07-15 belegt, nicht angenommen: `main` frisch gebaut → `index-d66cc69c.js`,
-  **anderer Hash als live**. Ein echter App-Deploy hängt, ist aber **gesperrt** (Gate rot).
-  Tests grün (701/63), i18n-Parität 5 Spr., Build sauber.
+- **Live:** Bundle **`index-96dd34ec.js`** / CSS `index-6b0b5577.css` läuft auf malojaplana.ch
+  (Runde 8, deployt 2026-07-18, per `curl` verifiziert — `BriefGenerator`+`RegionalBarometer`
+  als HTTP 200 belegt). **`main` (`4c79bee`) baut frisch → `index-c5906715.js`, ≠ live** →
+  ein Deploy hängt, aber nur die KVG-#101-Änderung (live-wirksam); #100 dormant, #102 dev-only.
+  **748 Tests grün** (64 Dateien), i18n-Parität 5 Spr., Build sauber, Size 64.97/65 kB.
   - Falle (weiter gültig): nach jedem Merge prüfen, dass `deploy.sh` wirklich frisch baut
     (schon mal alter Build ausgeliefert).
 - **✅ Testlauf-Falle behoben** (PR #95, `8c30db3`): `vite.config.js` schliesst `**/.claude/**`
@@ -119,7 +64,30 @@
 
 ## Nächste Schritte
 
-0. **⭐ Runde-8-Blocker: BEHOBEN auf `fix/predeploy-r8` — die nächste Sitzung startet HIER.**
+> **Stand 2026-07-18 (Runde 9):** Runde 8 ist LIVE. Der ⭐-Block „Runde-8-Blocker" darunter
+> ist damit **erledigt + deployt** (Historie belassen). Aktuelle offene Schritte:
+
+**A. ✅ ERLEDIGT — KVG-«Kurz innehalten» (#101) ist live** (Deploy 2026-07-18 13:59,
+   Bundle `index-c5906715.js` == `main`, curl-verifiziert). Merker fürs nächste Deploy:
+   `.maloja/predeploy-ok` nach jedem `main`-Vorrücken frisch auf HEAD setzen (die Marke
+   war für Runde 8 auf `091c184`, stale fürs KVG-Deploy → neu gesetzt).
+
+**B. Tresor 2b-UI — die echte Verdrahtung (eigene, frische Sitzung, fasst echte Daten an).**
+   Fundament #100 (2b-pre) + Wand #102 (LockScreen, design-first) sind gemergt. Offen:
+   Seam in `main.jsx` (bei `isTresorActive()` → LockScreen statt App; `onUnlock` → `unlockTresor`
+   → entschlüsselter State; Speichern → `persistTresor`), **Aktivierungs-Flow** mit erzwungenem
+   Backup-Export (`activateTresor` verlangt `backupConfirmed`) + Setup-UX „nimm einen ganzen
+   Satz" (≥12), `tresorLock`-Fehlermeldungen durch i18n, Doc-Ladepfad (`main.jsx:744`
+   `doc.data||getDocBlob`) an den entsperrten In-Memory-Zustand koppeln, `autoBackup.js`
+   mitverschlüsseln. **Verify-Punkt (Self-Review #100):** Doc-Blob-id-Typ (String vs. idb-Key)
+   einmal end-to-end mit echten Dokumenten gegenprüfen. Spec: `docs/design/tresor-lock.md`.
+
+**C. Klein/offen:** IDEEN §13 Rest-Idee „Freigabe-/Export-Vorschau «Das verlässt dein Gerät»";
+   `wageClaim`-Brief-Wiedereinschaltung (siehe alter Punkt 0 unten).
+
+---
+
+0. **⭐ Runde-8-Blocker: BEHOBEN + DEPLOYT (2026-07-18). Historie unten belassen.**
    ⚠️ Merker: `/maloja-predeploy` Schritt 1 liest den LIVE-Marker aus dieser Datei — der
    Tag-Hash `31abc36` ist tot. **Der LIVE-Marker ist `5a4851c`** (= Bundle `index-1f4c6867.js`).
 
