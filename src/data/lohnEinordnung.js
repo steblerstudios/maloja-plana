@@ -120,6 +120,9 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
   // aus Netto GESCHÄTZTEN Brutto. Auch 'konformMit13' färbt nur bei echtem Brutto.
   const mlBreached = !geschaetztAusNetto && befund.status === 'unterMindestlohn';
   const konformMit13 = !geschaetztAusNetto && befund.status === 'konformMit13';
+  // Im 12/13-Spalt mit offener 13.-Frage: kein Urteil, sondern Einladung zur Angabe.
+  // Ebenfalls dem echten Brutto vorbehalten (auf der Netto-Schätzung schweigt das Instrument).
+  const dreizehnterUnklar = !geschaetztAusNetto && befund.status === 'dreizehnterUnklar';
 
   // Vergleichbar ist der Lohn nur mit BEIDEM: bekannter Basis und bekannten Stunden.
   const comparable = basisKnown && hoursKnown;
@@ -172,6 +175,7 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
     mindestlohn: mindestlohnBoden(canton),
     mlBreached,
     konformMit13,
+    dreizehnterUnklar,
     befundStatus: befund.status,
     scaleMin: SCALE_MIN,
     scaleMax: SCALE_MAX,

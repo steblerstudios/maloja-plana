@@ -170,15 +170,24 @@ describe('lohnEinordnung', () => {
   // aus `pruefeStundenlohn` — dieselbe Funktion, die Kapitel und Brief benutzen.
   // Diese Wächter halten fest, dass es EINE Wahrheit bleibt.
   describe('Mindestlohn-Befund kommt aus pruefeStundenlohn (eine Wahrheit)', () => {
-    it('unterschritten: Barometer meldet es (GE, 4400 auf 42 Std.)', () => {
-      const s = lohnBandState({ income: 4400, canton: 'GE', hoursPerWeek: 42, incomeType: 'brutto' });
+    it('unterschritten (ausdrücklich kein 13.): Barometer meldet es (GE, 4400 auf 42 Std.)', () => {
+      // dreizehnter: 'no' — im 12/13-Spalt ist ohne 13. eine echte Unterschreitung; erst die
+      // ausdrückliche Antwort macht das Urteil eindeutig (unbeantwortet → dreizehnterUnklar).
+      const s = lohnBandState({ income: 4400, canton: 'GE', hoursPerWeek: 42, incomeType: 'brutto', dreizehnter: 'no' });
       expect(s.befundStatus).toBe('unterMindestlohn');
       expect(s.mlBreached).toBe(true);
     });
 
-    it('45 Std. unter Mindestlohn: kein Freispruch mehr (BS, 4100)', () => {
-      const s = lohnBandState({ income: 4100, canton: 'BS', hoursPerWeek: 45, incomeType: 'brutto' });
+    it('45 Std. unter Mindestlohn: kein Freispruch mehr (BS, 4100, ausdrücklich kein 13.)', () => {
+      const s = lohnBandState({ income: 4100, canton: 'BS', hoursPerWeek: 45, incomeType: 'brutto', dreizehnter: 'no' });
       expect(s.mlBreached).toBe(true); // vorher: false → Barometer sprach frei
+    });
+
+    it('12/13-Spalt, 13.-Frage offen: Barometer klagt NICHT an, sondern lädt ein (GE, 4400, kein Alarm)', () => {
+      const s = lohnBandState({ income: 4400, canton: 'GE', hoursPerWeek: 42, incomeType: 'brutto' });
+      expect(s.befundStatus).toBe('dreizehnterUnklar');
+      expect(s.dreizehnterUnklar).toBe(true);
+      expect(s.mlBreached).toBe(false); // kein „!" gegen einen evtl. korrekt bezahlten 13.-Bezüger
     });
 
     it('korrekt bezahlte Teilzeit: kein Fehlalarm (GE, 3000 auf 21 Std. = 32.97/Std.)', () => {

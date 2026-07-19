@@ -2552,6 +2552,8 @@ export default {
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
     basisMissing: { sie: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherner la spezia da entrada", du: "Per la controlla dal salari minimal manca anc la spezia da entrada — il salari minimal legal è in salari brut. Tscherna la spezia da entrada" },
     basisNetto: { sie: "Voss entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Voss salari brut (el sa chatta sin Voss quint da salari).", du: "Tia entrada è registrada sco netto. Il salari minimal legal è in salari brut — per la cumparaziun ans dovrass Tes salari brut (el sa chatta sin Tes quint da salari)." },
+    // TODO(rm): Gegenlese Muttersprachler:in — provisorisch (Rumantsch Grischun).
+    dreizehnterUnklar: "Il salari sa chatta pauc sut il salari minimal cumplet. Cun in 13avel salari mensil po el tuttina esser conform — il 13avel quinta per il salari minimal. Enditgar en il chapitel Finanzas sch'i vegn pajà in 13avel, lura ordinain nus el cleramain.",
     nextStepLink: 'Preparar la dumonda da salari',
   },
 

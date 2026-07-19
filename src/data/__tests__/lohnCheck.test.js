@@ -123,9 +123,27 @@ describe('lohnCheck', () => {
       expect(r.mindestStunde).toBe(24.59);
     });
 
-    it('ohne 13. ist derselbe Lohn eine Unterschreitung (Falsch-Alarm-Umkehr)', () => {
-      const r = pruefeStundenlohn(4000, 40, 'GE', 'brutto');
+    it('ausdrücklich KEIN 13. ist derselbe Lohn eine Unterschreitung (Falsch-Alarm-Umkehr)', () => {
+      const r = pruefeStundenlohn(4000, 40, 'GE', 'brutto', 'no');
       expect(r.status).toBe('unterMindestlohn');
+    });
+
+    it('13.-Frage UNBEANTWORTET im 12/13-Spalt → dreizehnterUnklar (kein Falsch-Alarm)', () => {
+      // Ohne Antwort ist beides — konform oder nicht — eine Behauptung; also einladen statt anklagen.
+      const r = pruefeStundenlohn(4000, 40, 'GE', 'brutto');
+      expect(r.status).toBe('dreizehnterUnklar');
+      expect(r.reduzierterBoden).toBe(22.70);
+      expect(r.mindestStunde).toBe(24.59);
+    });
+
+    it('unbeantwortet, aber UNTER dem reduzierten Boden → weiterhin Unterschreitung (13. ändert nichts)', () => {
+      const r = pruefeStundenlohn(3500, 40, 'GE', 'brutto');
+      expect(r.status).toBe('unterMindestlohn');
+    });
+
+    it('unbeantwortet + netto im Spalt → basisUnklar (Basis-Frage dominiert, kein 13.-Nudge)', () => {
+      const r = pruefeStundenlohn(4000, 40, 'GE', 'netto');
+      expect(r.status).toBe('basisUnklar');
     });
 
     it('konformMit13 gilt unabhängig von der Basis (netto ≥ reduziert ⇒ brutto erst recht)', () => {

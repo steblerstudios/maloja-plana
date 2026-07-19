@@ -2386,6 +2386,7 @@ export default {
     hoursMissing: { sie: 'Per la verifica del salario minimo mancano ancora le Sue ore settimanali — senza di esse il Suo salario orario non può essere calcolato. Inserirle ora', du: 'Per la verifica del salario minimo mancano ancora le tue ore settimanali — senza di esse il tuo salario orario non può essere calcolato. Inseriscile ora' },
     basisMissing: { sie: 'Per la verifica del salario minimo manca ancora il tipo di reddito — il salario minimo legale è un salario lordo. Scegliere il tipo di reddito', du: 'Per la verifica del salario minimo manca ancora il tipo di reddito — il salario minimo legale è un salario lordo. Scegli il tipo di reddito' },
     basisNetto: { sie: 'Il Suo reddito è registrato come netto. Il salario minimo legale è un salario lordo — per il confronto ci servirebbe il Suo salario lordo (è indicato sul Suo conteggio salariale).', du: 'Il tuo reddito è registrato come netto. Il salario minimo legale è un salario lordo — per il confronto ci servirebbe il tuo salario lordo (è indicato sul tuo conteggio salariale).' },
+    dreizehnterUnklar: 'Il salario è di poco inferiore al salario minimo pieno. Con una tredicesima può comunque essere conforme — la tredicesima conta per il salario minimo. Indicare nel capitolo Finanze se viene versata una tredicesima, così potremo classificarlo con chiarezza.',
     nextStepLink: 'Preparare la richiesta salariale',
   },
 

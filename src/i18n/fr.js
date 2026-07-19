@@ -2293,6 +2293,7 @@ export default {
     hoursMissing: { sie: 'Pour la vérification du salaire minimum, il manque encore vos heures hebdomadaires — sans elles, votre salaire horaire ne peut pas être calculé. Les saisir maintenant', du: 'Pour la vérification du salaire minimum, il manque encore tes heures hebdomadaires — sans elles, ton salaire horaire ne peut pas être calculé. Les saisir maintenant' },
     basisMissing: { sie: 'Pour la vérification du salaire minimum, il manque encore le type de revenu — le salaire minimum légal est un salaire brut. Choisir le type de revenu', du: 'Pour la vérification du salaire minimum, il manque encore le type de revenu — le salaire minimum légal est un salaire brut. Choisir le type de revenu' },
     basisNetto: { sie: 'Votre revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait votre salaire brut (il figure sur votre fiche de salaire).', du: 'Ton revenu est enregistré comme net. Le salaire minimum légal est un salaire brut — pour la comparaison, il nous faudrait ton salaire brut (il figure sur ta fiche de salaire).' },
+    dreizehnterUnklar: 'Le salaire est juste en dessous du salaire minimum complet. Avec un 13e salaire mensuel, il peut néanmoins être conforme — le 13e compte pour le salaire minimum. Veuillez indiquer dans le chapitre Finances si un 13e est versé, nous pourrons alors le classer clairement.',
     nextStepLink: 'Préparer la demande de salaire',
   },
 

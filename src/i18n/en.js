@@ -2294,6 +2294,7 @@ export default {
     hoursMissing: 'The minimum-wage check still needs your weekly hours — without them your hourly wage cannot be calculated. Add them now',
     basisMissing: 'The minimum-wage check still needs the income type — the legal minimum wage is a gross wage. Choose income type',
     basisNetto: 'Your income is recorded as net. The legal minimum wage is a gross wage — for the comparison we would need your gross salary (it is on your payslip).',
+    dreizehnterUnklar: 'The wage is just below the full minimum wage. With a 13th month\'s salary it may still comply — the 13th counts towards the minimum wage. Please indicate in the Finances chapter whether a 13th is paid, then we can classify it clearly.',
     nextStepLink: 'Prepare wage inquiry',
   },
 

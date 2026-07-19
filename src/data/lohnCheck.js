@@ -186,6 +186,13 @@ function hatDreizehnten(v) {
   return v === true || v === 'yes' || v === 'ja';
 }
 
+// Wurde die 13.-Frage überhaupt beantwortet? Ein leeres/unbekanntes Feld ist NICHT
+// dasselbe wie „kein 13." — genau diese Vermengung erzeugt im 12/13-Spalt einen
+// Falsch-Alarm gegen einen korrekt bezahlten 13.-Bezüger, der das Feld nur nicht gesetzt hat.
+function dreizehnterAngegeben(v) {
+  return v === true || v === false || v === 'yes' || v === 'ja' || v === 'no' || v === 'nein';
+}
+
 export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkommensart, dreizehnter) {
   const lohn = Number(monatslohnChf) || 0;
   const stundenMonat = stundenAufMonat(stundenProWoche);
@@ -223,6 +230,20 @@ export function pruefeStundenlohn(monatslohnChf, stundenProWoche, kanton, einkom
   // Boden ist mit 13. der reduzierte (der Basislohn muss nur diesen erreichen).
   if (einkommensart !== 'brutto') {
     return { ...base, status: 'basisUnklar', einkommensart: einkommensart || null };
+  }
+
+  // Im 12/13-Spalt [reduzierter Boden … voller Boden) hängt das Urteil AN der 13.-Frage:
+  // mit 13. konform, ohne 13. Unterschreitung. Ist die Frage unbeantwortet, wäre beides
+  // eine Behauptung — also NICHT anklagen, sondern (wie 'basisUnklar') zur Angabe einladen.
+  // Unter dem reduzierten Boden ist es ohnehin eine Unterschreitung (13. ändert nichts).
+  if (!dreizehnterAngegeben(dreizehnter) && lohnStunde >= reduziert) {
+    return {
+      ...base,
+      status: 'dreizehnterUnklar',
+      mindestStunde: ml.chfStunde,
+      reduzierterBoden: reduziert,
+      jahr: ml.jahr,
+    };
   }
 
   const boden = hat13 ? reduziert : ml.chfStunde;

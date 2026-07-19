@@ -128,7 +128,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     );
   }
 
-  const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, scaleMin, scaleMax } = state;
+  const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, dreizehnterUnklar, scaleMin, scaleMax } = state;
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
@@ -263,7 +263,9 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       mlBreached ? ' ' + t('lohnEinordnung.mindestlohnBreachedLine') + ' ' + t('lohnCheck.ausnahmen') : '',
       // Qualifiziert konform: Basislohn unter dem vollen, aber über dem reduzierten Boden —
       // gesetzeskonform, SOFERN der 13. angerechnet wird (in BS nur anteilig-monatlich).
-      konformMit13 ? ' ' + t('lohnEinordnung.konformMit13Line') : ''
+      konformMit13 ? ' ' + t('lohnEinordnung.konformMit13Line') : '',
+      // 12/13-Spalt, 13.-Frage offen: kein Urteil, ruhige Einladung (reuse lohnCheck-String).
+      dreizehnterUnklar ? ' ' + t('lohnCheck.dreizehnterUnklar') : ''
     ),
 
     React.createElement('div', {

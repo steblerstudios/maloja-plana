@@ -2312,6 +2312,7 @@ export default {
     // korrekt bezahlte Leute für unterbezahlt (der Befund führt zu einem Einschreiben).
     basisMissing: { sie: 'Für den Mindestlohn-Check fehlt noch die Einkommensart — der gesetzliche Mindestlohn ist ein Bruttolohn. Einkommensart wählen', du: 'Für den Mindestlohn-Check fehlt noch die Einkommensart — der gesetzliche Mindestlohn ist ein Bruttolohn. Einkommensart wählen' },
     basisNetto: { sie: 'Ihr Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Ihren Bruttolohn (er steht auf Ihrer Lohnabrechnung).', du: 'Dein Einkommen ist als Netto hinterlegt. Der gesetzliche Mindestlohn ist ein Bruttolohn — für den Vergleich bräuchten wir Deinen Bruttolohn (er steht auf Deiner Lohnabrechnung).' },
+    dreizehnterUnklar: 'Der Lohn liegt knapp unter dem vollen Mindestlohn. Mit einem 13. Monatslohn kann er dennoch konform sein — der 13. zählt an den Mindestlohn. Bitte im Finanzen-Kapitel angeben, ob ein 13. bezahlt wird, dann ordnen wir es eindeutig ein.',
     nextStepLink: 'Lohn-Nachfrage vorbereiten',
   },
 
