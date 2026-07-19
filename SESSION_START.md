@@ -7,7 +7,57 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-18 (Runde 8 LIVE · Runde 9: maloja-c-Extraktion + Tresor 2b-pre/LockScreen)
+**Stand:** 2026-07-19 (Lohn-Barometer-Linie in Review · `main` unbewegt, nichts Neues live)
+
+> ### ⭐ AKTUALISIERUNG 2026-07-19 (git-Stand gegengeprüft, NICHT am Live-Bundle)
+>
+> **`main` steht auf `93fbe27`** (Merge PR #103, `chore/session-close-2026-07-18`) — per `git`
+> gegengeprüft. ⚠️ Die „Wo stehen wir"-Tabelle unten stammt vom **2026-07-15/18** und nennt
+> ältere Hashes (`acc52f0` / `4c79bee`); **`93fbe27` ist der aktuelle** `main`-HEAD.
+> **Live unverändert** (`index-c5906715.js`) — seit 2026-07-18 kein Deploy, nichts Neues live.
+> #103 war `session-close` (Doku), byte-neutral.
+>
+> #### 🌐 Deploy-/Hosting-Wahrheit — verifiziert 2026-07-19 (DNS + Header + PWA gecurlt)
+> **Production = Infomaniak (Apache), `malojaplana.ch`, deployt manuell via `deploy.sh`** (SFTP,
+> IP-gefiltert gegen CI, nur Stebler Studios). Belegt: `dig malojaplana.ch` → `185.176.225.7`
+> (Infomaniak, **nicht** Vercel `76.76.21.21`); `curl -I` → `server: Apache`. Der Deploy-Weg im
+> Kopf dieser Datei (`bash deploy.sh`) ist korrekt — **„mergen nach `main`" ist KEIN Deploy.**
+>
+> **PWA installierbar, live verifiziert:** `/manifest.json` (`display: standalone`, App-Shortcuts)
+> + `/sw.js` → HTTP 200. Die App wird selbstgehostet von Infomaniak ausgeliefert — **Vercel nie.**
+>
+> **⚠️ Vercel (`ordnung-ruhe-neu`) = totes Überbleibsel der alten Alpha, RETIRED.** Hatte
+> `malojaplana.ch` im Dashboard als Domain eingetragen und baute bei jedem Push mit, aber DNS
+> zeigte **nie** dorthin → hat Production nie serviert. **Git-Integration 2026-07-19 disconnectet**
+> (Auto-Builds gestoppt). Optional restlos löschen (safe — DNS hängt an Infomaniak). Merker gegen
+> Wieder-Verheddern: das Vercel-Dashboard zeigt die Domain irreführend als „Production" — die
+> Wahrheit steht in DNS + `server`-Header, nicht im Dashboard.
+>
+> **Aktive Arbeit — EINE merge-fertige Linie, gepusht, NICHT gemergt, kein PR:**
+> - `feat/lohn-barometer-zonen` (ab `main=4c79bee`, 13 Commits, Tip `c32ef58`) — Barometer als
+>   Verteilungs-**Bubbles** (p10/Median/p90 LSE 2024), 13.-Monatslohn-Feld + rechtskonformer
+>   Mindestlohn-Check (`konformMit13`, 13. zählt an den Jahres-Boden), interaktive Branchen-Chips,
+>   a11y Variante B (Chip-Touch-Ziel 24×24), Byte-Budget entschärft (DEMO_DATA + autoBackup lazy).
+> - **`feat/armutsgrenze-auf-barometer`** (Kind-Branch ab `c32ef58`, 3 Commits `00abfb6`/`1f8c103`/
+>   `ee6dfa0`; **16 Commits vor `origin/main`**) — **DAS Deliverable dieser Runde.** = Bubbles +
+>   belegte **Armutsgrenze** (`berechneArmutsgrenze()` in `data/sozialhilfeRechner.js`: SKOS-Grundbedarf
+>   + effektive Wohnkosten + CHF 100/Person ab 16 vs. verfügbares Netto; Quelle BFS Ø2024 2388) +
+>   **Netto→Brutto-Brücke** (`nettoZuBruttoRichtwert()` in `data/ahvRechner.js`: AHV/ALV 6.4 % + BVG-
+>   Altersgutschrift nach Alter, Fixpunkt-Iteration). Das Barometer läuft dadurch **auch bei Netto**
+>   (geschätztes Brutto). ⭐ **Regel:** die Mindestlohn-„!"-Warnung (→ Brief) greift **nie** auf
+>   geschätztem Brutto, nur auf echtem (Test-Wächter `mlBreached = !geschaetztAusNetto`).
+>
+> **Review-Reife gegengecheckt (2026-07-19):** 766 Tests grün · Size **63.44/65 kB** (1.56 kB Luft) ·
+> keine Debug-Reste · `geschaetztAusNetto` + `povertyBruttoHint` in allen 5 Sprachen verdrahtet.
+> **Nächster Zug (Stebler Studios):** `/code-review ultra` auf `feat/armutsgrenze-auf-barometer`
+> → Merge → `/maloja-predeploy` → `deploy.sh`. Claude startet weder Review noch Merge/Deploy.
+>
+> **Infrastruktur-Nebenarbeit:** `handoff` + `session-close` als generische Zwillinge nach
+> `~/.claude/skills/` gehoben (Maloja behält die getunten lokalen Versionen, gewinnen lokal) —
+> Prinzip „spicken statt duplizieren". Details: Claude-Memory `reference_globale_skills_layering`.
+>
+> **Noch offen:** GitHub aufräumen (`feat/uiux-p1-glyphen-armutsgrenze` überholt + 2 stale-gemergte
+> Branches löschen) · Steuer-Säulen (nächster Bau-Faden, `project_steuer_saeulen_zivilstand`).
 
 ## Wo stehen wir gerade
 
