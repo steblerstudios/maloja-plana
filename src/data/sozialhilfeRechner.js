@@ -1,9 +1,11 @@
-// Sozialhilfe-Rechner nach SKOS-Richtlinien (Stand 1.1.2025)
+// Sozialhilfe-Rechner nach SKOS-Richtlinien (Stand 1.1.2025, für 2026 unverändert)
 // Quellen: SKOS-RL Kapitel C.3–C.6, Kanton Zürich Sozialhilfehandbuch
+// GBL-Stand gegengeprüft 2026-07-19: SODK/SKOS empfahlen 1061 «spätestens ab 1.1.2026»,
+// nächste Anpassung erst 1.1.2027 (an EL-Teuerung gekoppelt) → Tabelle 2025 = 2026 unverändert.
 
 export const SKOS_DATA_VERSION = '2025-01';
 
-// GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025)
+// GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025, für 2026 unverändert)
 const GBL_TABELLE = [
   0,     // 0 Personen (Platzhalter)
   1061,  // 1 Person
@@ -179,8 +181,10 @@ export function berechneExistenzminimum({ haushaltGroesse = 1, miete = 0, kranke
 // KK-Prämie gehört also NICHT in die Armutsgrenze (anders als beim Existenz-
 // minimum). Anders als das Lohn-Barometer (Brutto-Lohnniveau) beantwortet sie
 // die Frage «bin ich unter dem Existenzminimum?».
-// Quelle: BFS «Armut in der Schweiz». Durchschnitt 2024: Einzelperson CHF 2388,
-// zwei Erwachsene + zwei Kinder CHF 4159/Monat.
+// Quelle: BFS «Armut in der Schweiz», Medienmitteilung publiziert Februar 2026,
+// Bezugsjahr 2024 (neueste verfügbare Zahl): durchschnittliche Armutsgrenze
+// Einzelperson CHF 2388, zwei Erwachsene + zwei Kinder CHF 4159/Monat.
+// (Gegengeprüft 2026-07-19; die älteren 2023-Zahlen waren CHF 2315 / 4051.)
 export const ARMUTSGRENZE_PAUSCHALE_AB16 = 100;
 export const ARMUTSGRENZE_DATA_VERSION = '2024';
 

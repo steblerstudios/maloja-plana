@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (Predeploy-Gate gelaufen · `main`=`7213263` · Deploy GESPERRT bis Quellen belegt)
+**Stand:** 2026-07-19 (Predeploy-Gate + Quellen belegt · `main`=`7213263`+ · Deploy frei nach frischem Gate)
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
 >
@@ -25,10 +25,12 @@
 > `localStorage` try/catch ×2, `noreferrer`, 5 tote i18n-Keys). Release `0.1.26-beta` auf
 > `fix/predeploy-2026-07-19-review-fixes` → PR nach `main` (GitHub Flow).
 >
-> **⛔ Deploy GESPERRT (Entscheid Sophie/Stebler Studios): zwei Quellen blockierend gegenzulesen VOR Deploy**
-> — (a) SKOS-Grundbedarf 2026, (b) BFS-Armutsgrenze 2388/4159 Referenzjahr. Beide als 🔴 in `docs/TODO.md`
-> Abschnitt B. **Freigabe-Marke `.maloja/predeploy-ok` NICHT gesetzt.** Nächster Zug: Quellen belegen →
-> Fixes committen → `/code-review ultra` → `deploy.sh`.
+> **✅ Quellen belegt 2026-07-19 (der Deploy-Blocker ist weg):** (a) **SKOS-Grundbedarf 2026 unverändert** —
+> gegen Aargauer Handbuch (SKOS-RL 1.1.2025) 1:1 bestätigt, nächste Anpassung erst 1.1.2027; (b) **BFS-
+> Armutsgrenze 2388/4159 korrekt für Bezugsjahr 2024** (BFS-Medienmitteilung publiziert Feb 2026). Beide
+> Kommentare in `sozialhilfeRechner.js` geschärft, TODO Abschnitt B auf ✅. **Freigabe-Marke `.maloja/
+> predeploy-ok` weiterhin NICHT gesetzt** — vor Deploy einmal frisch `/maloja-predeploy` auf dem neuen HEAD
+> fahren (setzt die Marke), dann `/code-review ultra` → `deploy.sh`.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (git-Stand gegengeprüft, NICHT am Live-Bundle)
 >

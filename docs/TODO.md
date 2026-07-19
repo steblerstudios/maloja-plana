@@ -61,19 +61,18 @@ Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy
 
 ## B — Berechnungen (vor Fixes offizielle Quelle prüfen!)
 
-- 🔴 **BLOCKIEREND (Sophie/Stebler Studios 2026-07-19) · SKOS-Grundbedarf für 2026 gegenlesen** — `sozialhilfeRechner.js:1`
-  trägt „Stand 1.1.2025" / `SKOS_DATA_VERSION='2025-01'` (Grundbedarf Einzelperson 1061), `cantonalData.js:251`
-  sagt „2025/2026". SKOS legt den Grundbedarf jährlich fest → **vor dem nächsten Deploy** aktiv gegen die
-  SKOS-Ankündigung 2026 bestätigen: unverändert → beide Stand-Labels auf „2025/2026" angleichen; geändert →
-  Werte + Version hochziehen. Quelle: `skos.ch/skos-richtlinien/aktuelle-richtlinien/`. (Predeploy 2026-07-19,
-  swiss-precision-Fund; Deploy bis dahin gesperrt.)
-- 🔴 **BLOCKIEREND (Sophie/Stebler Studios 2026-07-19) · BFS-Armutsgrenze 2388/4159 Referenzjahr belegen** —
-  `sozialhilfeRechner.js:182–183` zitiert „Ø2024: Einzelperson CHF 2388, 2E+2K CHF 4159/Monat" nur im
-  Kommentar (nicht in der UI — dort wird haushaltsindividuell gerechnet). Der zugehörige Test ist zirkulär
-  (löst die Miete rückwärts auf 2388 auf). **Vor Deploy** die Zahlen + Referenzjahr (2023 vs. 2024) am
-  Volltext BFS „Armut in der Schweiz" belegen oder als „ungefähr/Grössenordnung" kennzeichnen. Beim Beleg
-  gleich den anklickbaren `[[BFS|…]]`-Link am Armutsgrenzen-Befund ergänzen (Link-Checker-Fund). (Wahrheits-
-  Disziplin; Deploy bis dahin gesperrt.)
+- ✅ **BELEGT 2026-07-19 · SKOS-Grundbedarf 2026 unverändert** — gegen das Aargauer Sozialhilfe-Handbuch
+  (SKOS-RL 1.1.2025) 1:1 bestätigt: 1061/1624/1974/2271/2568/2784/3000, +216. SODK/SKOS empfahlen 1061
+  „spätestens ab 1.1.2026", **nächste Anpassung erst 1.1.2027** (an EL-Teuerung gekoppelt) → Tabelle 2025 =
+  2026. Kommentar in `sozialhilfeRechner.js` auf „für 2026 unverändert" präzisiert. `cantonalData.js` war
+  schon „2025/2026". Quelle: `skos.ch/skos-richtlinien/grundbedarf-fuer-den-lebensunterhalt` + `ag.ch`-Handbuch 7.1.1.
+- ✅ **BELEGT 2026-07-19 · BFS-Armutsgrenze 2388/4159 ist korrekt (Bezugsjahr 2024)** — BFS «Armut in der
+  Schweiz», Medienmitteilung **publiziert Februar 2026**, Bezugsjahr **2024** (neueste Zahl): Einzelperson
+  CHF 2388, 2 Erw. + 2 Kinder CHF 4159/Monat. Die älteren 2023-Zahlen waren 2315/4051. Kommentar in
+  `sozialhilfeRechner.js` mit Publikationsdatum + Bezugsjahr geschärft. Zahlen sind nur Kommentar (UI rechnet
+  haushaltsindividuell). Quelle: BFS-Armutsseite (assetdetail 36392936). ⏳ **Offen (nicht blockierend):**
+  anklickbaren `[[BFS|…]]`-Link am Armutsgrenzen-Befund ergänzen — braucht Render über `renderSource` +
+  URL in allen 5 Sprachen (Link-Checker-Fund, eigener kleiner Faden).
 - ✅ `estimateTaxSavings` + irreführende Kachel entfernt (IPV ist steuerfrei).
 - ✅ AHV Vorbezug-Kürzung war bereits 6.8 %/Jahr (korrekt).
 - ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt.
