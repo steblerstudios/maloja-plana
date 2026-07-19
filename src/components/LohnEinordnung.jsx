@@ -100,7 +100,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
-export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark }) => {
+export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate }) => {
   // Alter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter).
   const geb = data?.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
   const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
@@ -139,9 +139,24 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
       : 'lohnEinordnung.hoursUnknownNote';
+    // Fehlt die Einkommensart → Kapitel Finanzen (2); fehlen die Wochenstunden → Ausbildung & Arbeit (4).
+    // Mit `onNavigate` wird der Hinweis KLICKBAR und führt genau dorthin, damit die fehlende Angabe
+    // sofort ergänzt werden kann; ohne bleibt er ruhiger Text (spiegelt den Crosslink-Stil der App).
+    const zielKapitel = !basisKnown ? 2 : 4;
     return React.createElement('div', { style: card },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
-      React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis))
+      onNavigate
+        ? React.createElement('button', {
+            type: 'button',
+            onClick: () => onNavigate('chapter', zielKapitel),
+            style: {
+              display: 'block', width: '100%', textAlign: 'left', fontFamily: 'inherit',
+              background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm,
+              padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer',
+              color: palette.sageDeep || palette.mid, fontSize: text.sm, lineHeight: leading.normal,
+            },
+          }, t(hinweis) + ' →')
+        : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis))
     );
   }
 

@@ -19,6 +19,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -50,7 +51,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -1410,6 +1411,21 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%',
         }
       }, t('nav.crosslink.finanzuebersichtHint')),
+
+    // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
+    // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
+    // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
+    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen Feld.
+    chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
+      React.createElement('div', {
+        key: 'lohn-barometer-embed',
+        style: {
+          marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
+          background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border,
+        }
+      },
+        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate })
+      ),
 
     // Familienzulagen: shown in basis when children exist
     chapter.key === 'basis' && allData && allData.basis?.household?.children?.length > 0 &&
