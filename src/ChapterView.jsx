@@ -801,7 +801,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                     border: '1px solid ' + (selected ? palette.sage : palette.border),
                     borderRadius: radius.sm + 'px',
                     background: selected ? palette.sage + '18' : palette.surface,
-                    color: selected ? palette.sage : palette.text,
+                    // a11y: sage als Text verfehlt AA (≈4.2:1) — sageDeep trägt (wie sonst im Farbsystem für Text).
+                    color: selected ? palette.sageDeep : palette.text,
                     cursor: 'pointer',
                     transition: 'all ' + duration.fast + 'ms ' + ease,
                   }

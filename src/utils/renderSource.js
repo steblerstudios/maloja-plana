@@ -19,7 +19,7 @@ export function renderSource(textValue, linkStyle) {
     const target = m[2].trim();
     const href = /^https?:\/\//.test(target) ? target : 'https://' + target;
     parts.push(React.createElement('a', {
-      key: m.index, href, target: '_blank', rel: 'noopener',
+      key: m.index, href, target: '_blank', rel: 'noopener noreferrer',
       style: linkStyle || defaultLinkStyle,
     }, label));
     last = m.index + m[0].length;

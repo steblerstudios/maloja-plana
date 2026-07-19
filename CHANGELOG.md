@@ -11,6 +11,16 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.26-beta] — 2026-07-19
+
+### Behoben (Predeploy-Review 2026-07-19)
+- **Sie/Du-Anrede:** Die Armutsgrenzen-Hinweise (`povertyLineNote`/`povertyBruttoHint`) sprachen im Du-Modus in Sie-Form — jetzt korrekt als `{sie,du}` gesplittet (de/fr/it/rm).
+- **Rätoromanisch:** Die Lohn-Barometer-Zonen waren unübersetzt deutsch — jetzt übersetzt (Muttersprachler-Gegenlese offen, mit `TODO(rm)` markiert).
+- **Barrierefreiheit:** Barometer-Legenden-Glyphen (▬/●) für Screenreader ausgeblendet (`aria-hidden`, wie der Miet-Barometer); Auswahl-Pills nutzen `sageDeep` statt `sage` als Text (WCAG-AA-Kontrast).
+- **Quellen-Redlichkeit:** Armutsgrenze als „nach BFS-Methodik 2024" statt „(BFS 2024)" — die Zahl ist haushaltsindividuell berechnet, nicht vom BFS publiziert.
+- **Robustheit:** `localStorage` in BetaGate/Dashboard gegen blockierten Speicher (Privat-Modus) abgesichert; externe Quellen-Links mit vollständigem `rel="noopener noreferrer"`.
+- **Aufräumen:** 5 ungenutzte i18n-Keys (altes Einkommens-Textband) in allen 5 Sprachen entfernt.
+
 ## [0.1.25-beta] — 2026-07-14
 
 ### Barrierefreiheit
