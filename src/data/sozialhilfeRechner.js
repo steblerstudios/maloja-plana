@@ -191,16 +191,5 @@ export function berechneArmutsgrenze({ grundbedarf, effektiveWohnkosten = 0, per
   return g + w + pauschale;
 }
 
-// Grober Brutto-RICHTWERT aus einem Netto-Monatslohn — kehrt NUR die fixen
-// Arbeitnehmer-Sozialabzüge um: AHV/IV/EO 5.3 % + ALV 1.1 % = 6.4 %.
-// BEWUSST unvollständig: PK/BVG (variiert nach Alter + Pensionskassen-Plan) und
-// Steuern sind NICHT berücksichtigt — der echte Bruttolohn liegt darum eher höher.
-// Nur ein «~»-Anhaltspunkt, nie eine verbindliche Zahl. (ALV gilt bis zum
-// Höchstlohn CHF 148'200/Jahr; darüber entfällt ihr Teil — für tiefe Löhne, wo
-// dieser Richtwert erscheint, immer voll.) Quelle der Sätze: BSV / AHV-IV 2025.
-export const AHV_ALV_ARBEITNEHMER_SATZ = 0.064;
-
-export function bruttoAusNettoRichtwert(nettoMonat) {
-  const n = Math.max(0, nettoMonat || 0);
-  return n > 0 ? Math.round(n / (1 - AHV_ALV_ARBEITNEHMER_SATZ)) : 0;
-}
+// Der Brutto-Richtwert aus einem Netto-Lohn (AHV/ALV + geschätzte PK) lebt in
+// data/ahvRechner.js (nettoZuBruttoRichtwert) — dort, wo die BVG-Bausteine sind.

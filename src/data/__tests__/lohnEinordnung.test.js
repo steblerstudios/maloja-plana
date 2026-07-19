@@ -187,11 +187,17 @@ describe('lohnEinordnung', () => {
       expect(s.mlBreached).toBe(false);
     });
 
-    // 🔴 Netto gegen einen Brutto-Boden erklärt korrekt Bezahlte für unterbezahlt.
-    it('netto: kein Befund (Mindestlohn ist brutto)', () => {
+    // Phase 2: Netto → Brutto wird GESCHÄTZT (Balken läuft), ABER die Mindestlohn-„!"-
+    // Warnung bleibt echtem Brutto vorbehalten — NIE ein Alarm auf einer Schätzung, auch
+    // wenn das geschätzte Brutto rechnerisch unter dem Boden läge (Wahrheits-Disziplin).
+    it('netto: Brutto geschätzt (geschaetzt=true), aber kein Mindestlohn-Alarm', () => {
       const s = lohnBandState({ income: 4000, canton: 'GE', hoursPerWeek: 42, incomeType: 'netto' });
-      expect(s.befundStatus).toBe('basisUnklar');
-      expect(s.mlBreached).toBe(false);
+      expect(s.geschaetzt).toBe(true);
+      expect(s.basisKnown).toBe(true);
+      expect(s.income).toBeGreaterThan(4000); // geschätztes Brutto > erfasstes Netto
+      expect(s.incomeRoh).toBe(4000);
+      expect(s.mlBreached).toBe(false);       // KEIN Alarm auf der Schätzung
+      expect(s.konformMit13).toBe(false);
     });
 
     it('Einkommensart nicht gesetzt: kein Befund (Basis unbekannt)', () => {

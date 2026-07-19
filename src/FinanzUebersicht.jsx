@@ -9,7 +9,8 @@ import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
-import { berechneArmutsgrenze, bruttoAusNettoRichtwert } from './data/sozialhilfeRechner.js';
+import { berechneArmutsgrenze } from './data/sozialhilfeRechner.js';
+import { nettoZuBruttoRichtwert } from './data/ahvRechner.js';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
@@ -234,6 +235,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       const sideIncome = Number(f.sideIncome || 0);
       const sideNettoOk = sideIncome <= 0 || f.sideIncomeType === 'netto';
       const rentKnown = Number(data.wohnen?.rentAmount || 0) > 0;
+      const geb = data.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
+      const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
       const personenAb16 = hh.adults + (hh.children || []).filter(c => (Number(c.age) || 0) >= 16).length;
       const armutsgrenze = berechneArmutsgrenze({
         grundbedarf: sozialhilfe.grundbedarf,
@@ -261,7 +264,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
           // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
-            t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(bruttoAusNettoRichtwert(income)) }))
+            t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(nettoZuBruttoRichtwert(income, alter)) }))
         ),
         React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
         (() => {

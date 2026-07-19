@@ -101,12 +101,17 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
 export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark }) => {
+  // Alter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter).
+  const geb = data?.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
+  const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
   const state = lohnBandState({
     income: data?.finanzen?.monthlyIncome,
     canton: data?.basis?.canton,
     hoursPerWeek: data?.ausbildung?.workHoursPerWeek,
-    // Der Mindestlohn ist ein BRUTTO-Stundenlohn — ohne bekannte Basis kein Befund.
+    // Bei Brutto direkt; bei Netto schätzt lohnBandState das Brutto (AHV/ALV + PK nach Alter)
+    // und markiert es als «geschätzt» — die Mindestlohn-Warnung bleibt echtem Brutto vorbehalten.
     incomeType: data?.finanzen?.incomeType,
+    alter,
     // Der BFS-Median enthält den anteiligen 13.; mit einem 13. wird der Lohn ×13/12
     // vergleichbar gemacht, und der Mindestlohn-Boden sinkt um 12/13 (Jahres-Boden).
     dreizehnter: data?.finanzen?.dreizehnter,
@@ -123,7 +128,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     );
   }
 
-  const { incomeFTE, incomeVergleich, hat13, income, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, scaleMin, scaleMax } = state;
+  const { incomeFTE, incomeVergleich, hat13, income, incomeRoh, geschaetzt, partTime, overFullTime, hoursKnown, basisKnown, einkommensart, hoursPerWeek, rel, median, mindestlohn, mlBreached, konformMit13, scaleMin, scaleMax } = state;
   // Füll-Ton, nicht Identitätston: die Füllung trägt die Aussage → WCAG 1.4.11 (3:1).
   const arbeitColor = bereichFillColor('arbeit', isDarkMode);
 
@@ -226,6 +231,11 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       React.createElement('span', { style: { color: readoutColor } },
         '● ' + t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
+
+    // Netto-Nutzerin: das Brutto ist geschätzt — ausdrücklich ausweisen (Wahrheits-Disziplin).
+    geschaetzt && React.createElement('div', {
+      style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', lineHeight: leading.normal },
+    }, t('lohnEinordnung.geschaetztAusNetto', { netto: fmt(incomeRoh) })),
 
     React.createElement('div', {
       style: { fontSize: text.sm, color: readoutColor, fontWeight: weight.medium, marginTop: space.sm + 'px', lineHeight: leading.normal },

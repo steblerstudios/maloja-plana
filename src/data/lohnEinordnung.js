@@ -31,6 +31,7 @@ import { LSE_VERTEILUNG, LSE_VOLLZEIT_STUNDEN_WOCHE } from './branchenLohn.js';
 // (40 Std.). Wer die 182 für die Marke oder `incomeFTE` verwendet, holt die Zwei-Welten-
 // Krankheit zurück — siehe `mindestlohnBoden`.
 import { getMindestlohn, pruefeStundenlohn, STUNDEN_PRO_MONAT } from './lohnCheck.js';
+import { nettoZuBruttoRichtwert } from './ahvRechner.js';
 
 export const LOHN_REFERENZ = {
   median: LSE_VERTEILUNG.median,
@@ -88,7 +89,7 @@ export function mindestlohnBoden(canton) {
 // { show, income, incomeFTE, partTime, overFullTime, hoursKnown, hoursPerWeek,
 //   rel: 'near'|'above'|'below'|null, pct, delta, median,
 //   mindestlohn, mlBreached, befundStatus, scaleMin, scaleMax }
-export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreizehnter } = {}) {
+export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreizehnter, alter } = {}) {
   const lohn = num(income);
   const stunden = num(hoursPerWeek);
   const median = LOHN_REFERENZ.median;
@@ -104,15 +105,21 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
   // Ohne ausdrückliches 'brutto' sagt dieses Instrument darum GAR NICHTS.
   // (Predeploy-Runde 8 fixte zuerst nur den Mindestlohn; die Median-Aussage lief weiter
   // und erklärte einen Netto-Lohn für „unter dem Schweizer Median". Halber Fix = Fehler.)
-  const basisKnown = incomeType === 'brutto';
+  // Netto-Fähigkeit (Phase 2): ist der Lohn als Netto erfasst, schätzen wir das Brutto
+  // (AHV/ALV + PK nach Alter, `nettoZuBruttoRichtwert`) und rechnen die Skala/Marke darauf —
+  // in der Anzeige deutlich als «geschätzt aus Netto» markiert. Ohne Alter fällt die PK weg.
+  const geschaetztAusNetto = incomeType === 'netto' && lohn > 0;
+  const effektiverLohn = geschaetztAusNetto ? nettoZuBruttoRichtwert(lohn, alter) : lohn;
+  const effektiveBasis = geschaetztAusNetto ? 'brutto' : incomeType;
+  const basisKnown = effektiveBasis === 'brutto';
 
   // Mindestlohn-Befund NICHT selbst rechnen — `pruefeStundenlohn` ist die eine Wahrheit.
-  // Sie kennt die Netto/Brutto-Regel ebenfalls; damit sagen Kapitel und Barometer per
-  // Konstruktion dasselbe, nicht per Zufall.
-  const befund = pruefeStundenlohn(lohn, stunden, canton, incomeType, dreizehnter);
-  // 'konformMit13' ist KEINE Unterschreitung — nur 'unterMindestlohn' färbt die „!"-Marke rot.
-  const mlBreached = befund.status === 'unterMindestlohn';
-  const konformMit13 = befund.status === 'konformMit13';
+  const befund = pruefeStundenlohn(effektiverLohn, stunden, canton, effektiveBasis, dreizehnter);
+  // WAHRHEITS-DISZIPLIN: die Mindestlohn-„!"-Warnung ist eine Rechts-Aussage (→ ggf. Brief
+  // an den Arbeitgeber) und bleibt dem ECHTEN Brutto vorbehalten — NIE ein Alarm auf einem
+  // aus Netto GESCHÄTZTEN Brutto. Auch 'konformMit13' färbt nur bei echtem Brutto.
+  const mlBreached = !geschaetztAusNetto && befund.status === 'unterMindestlohn';
+  const konformMit13 = !geschaetztAusNetto && befund.status === 'konformMit13';
 
   // Vergleichbar ist der Lohn nur mit BEIDEM: bekannter Basis und bekannten Stunden.
   const comparable = basisKnown && hoursKnown;
@@ -121,8 +128,8 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
   // IMMER normalisieren, wenn die Stunden da sind: auch nach unten, wenn jemand mehr
   // als Vollzeit arbeitet. Sonst wird ein 45-Std.-Lohn mit einem 40-Std.-Median verglichen.
   const incomeFTE = hoursKnown
-    ? Math.round(lohn / (stunden / LSE_VOLLZEIT_STUNDEN_WOCHE))
-    : lohn;
+    ? Math.round(effektiverLohn / (stunden / LSE_VOLLZEIT_STUNDEN_WOCHE))
+    : effektiverLohn;
   const partTime = hoursKnown && stunden < LSE_VOLLZEIT_STUNDEN_WOCHE;
   const overFullTime = hoursKnown && stunden > LSE_VOLLZEIT_STUNDEN_WOCHE;
 
@@ -145,7 +152,9 @@ export function lohnBandState({ income, canton, hoursPerWeek, incomeType, dreize
 
   return {
     show: true,
-    income: lohn,
+    income: effektiverLohn,
+    incomeRoh: lohn,
+    geschaetzt: geschaetztAusNetto,
     incomeFTE,
     incomeVergleich,
     hat13,

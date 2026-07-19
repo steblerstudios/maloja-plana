@@ -11,8 +11,6 @@ import {
   SKOS_DATA_VERSION,
   berechneArmutsgrenze,
   ARMUTSGRENZE_PAUSCHALE_AB16,
-  bruttoAusNettoRichtwert,
-  AHV_ALV_ARBEITNEHMER_SATZ,
 } from '../sozialhilfeRechner.js';
 
 describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne Deckel', () => {
@@ -240,19 +238,3 @@ describe('berechneArmutsgrenze — BFS-Methodik (Grundbedarf + Wohnkosten + 100/
   });
 });
 
-describe('bruttoAusNettoRichtwert — grober Brutto-Anhaltspunkt (nur AHV/ALV 6.4%)', () => {
-  it('Satz ist AHV/IV/EO 5.3% + ALV 1.1% = 6.4%', () => {
-    expect(AHV_ALV_ARBEITNEHMER_SATZ).toBe(0.064);
-  });
-
-  it('kehrt die 6.4% um (netto / 0.936), gerundet', () => {
-    expect(bruttoAusNettoRichtwert(2400)).toBe(Math.round(2400 / 0.936)); // 2564
-    expect(bruttoAusNettoRichtwert(4680)).toBe(5000); // 4680 / 0.936 = 5000 exakt
-  });
-
-  it('liegt IMMER über dem Netto (Richtung stimmt) und ist nie negativ', () => {
-    expect(bruttoAusNettoRichtwert(3000)).toBeGreaterThan(3000);
-    expect(bruttoAusNettoRichtwert(0)).toBe(0);
-    expect(bruttoAusNettoRichtwert(-100)).toBe(0);
-  });
-});
