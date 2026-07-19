@@ -9,7 +9,7 @@ import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
-import { berechneArmutsgrenze } from './data/sozialhilfeRechner.js';
+import { berechneArmutsgrenze, bruttoAusNettoRichtwert } from './data/sozialhilfeRechner.js';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { lohnBandState } from './data/lohnEinordnung.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
@@ -257,7 +257,11 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
             t('finanzUebersicht.belowPoverty')),
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
-            t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }))
+            t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) })),
+          // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
+          // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
+          React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },
+            t('finanzUebersicht.povertyBruttoHint', { brutto: formatCHF(bruttoAusNettoRichtwert(income)) }))
         ),
         React.createElement(LohnEinordnung, { palette, t, data, isDarkMode, embedded: true, branchMark: selBranche }),
         (() => {

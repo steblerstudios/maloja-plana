@@ -3317,6 +3317,7 @@ export default {
     showPosition: 'Show position',
     belowPoverty: 'Below poverty line',
     povertyLineNote: 'Poverty line for your household: {amount}/month (FSO 2024). The comparison uses your disposable income: net minus taxes, premiums and deductions.',
+    povertyBruttoHint: 'Your net is roughly ~ {brutto} gross (social security OASI/UI only, without pension fund or taxes — the actual gross salary is likely higher).',
     nearPoverty: 'Near poverty line',
     belowMedian: 'Below median',
     aboveMedian: 'Above median',

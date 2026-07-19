@@ -3293,6 +3293,7 @@ export default {
     showPosition: 'Mostra posizionamento',
     belowPoverty: 'Sotto la soglia di povertà',
     povertyLineNote: 'Soglia di povertà per la sua economia domestica: {amount}/mese (UST 2024). Il confronto si basa sul reddito disponibile: il netto, meno imposte, premi e deduzioni.',
+    povertyBruttoHint: 'Il suo netto corrisponde a circa ~ {brutto} lordo (solo AVS/AD, senza LPP né imposte — il salario lordo effettivo è piuttosto più alto).',
     nearPoverty: 'Vicino alla soglia di povertà',
     belowMedian: 'Sotto la mediana',
     aboveMedian: 'Sopra la mediana',

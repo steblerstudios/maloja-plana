@@ -3316,6 +3316,7 @@ export default {
     showPosition: 'Afficher le positionnement',
     belowPoverty: 'Sous le seuil de pauvreté',
     povertyLineNote: 'Seuil de pauvreté pour votre ménage : {amount}/mois (OFS 2024). La comparaison porte sur votre revenu disponible : le net, moins impôts, primes et déductions.',
+    povertyBruttoHint: 'Votre net correspond à environ ~ {brutto} brut (AVS/AC seulement, sans LPP ni impôts — le salaire brut réel est plutôt plus élevé).',
     nearPoverty: 'Proche du seuil de pauvreté',
     belowMedian: 'Sous la médiane',
     aboveMedian: 'Au-dessus de la médiane',
