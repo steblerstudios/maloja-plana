@@ -1,9 +1,17 @@
 # Scoped Task — AHV-21-Referenzalter der Frauen (Übergangsgeneration)
 
-> **Status:** Phase A **umgesetzt & verifiziert** (2026-07-13, Branch `chore/backlog-cleanup`).
-> Referenzalter-Staffel an der amtlichen Quelle belegt (BSV FAQ), 638 Tests grün, Browser-
-> verifiziert. **Phase B (Ausgleichsmassnahmen) weiterhin offen** — braucht Kreisschreiben-
-> Tabellen + Fach-Gegenlesen (`swiss-precision-pruefer`).
+> **Status:** Phase A **umgesetzt & verifiziert** (2026-07-13, Branch `chore/backlog-cleanup`;
+> in `main`, per reproduce-first 2026-07-18 bestätigt: `referenzalterMonate` + `geschlecht`-Input
+> im Code, Tests grün). Referenzalter-Staffel an der amtlichen Quelle belegt (BSV FAQ).
+>
+> **Phase B (Ausgleichsmassnahmen) — BEWUSST GEPARKT (Sophie/Stebler Studios, 2026-07-18).**
+> Entscheid: Der Rentenzuschlag ist im Kreisschreiben nach Einkommen × Beitragsdauer × Jahrgang
+> fein gestaffelt und **rechtsverbindlich**. Eine falsche Zuschlags-Zahl bei einer Frau kurz vor
+> der Pensionierung ist genau die Art Fehler, die Haftung auslöst — und widerspräche „Orientierung,
+> keine verbindliche Berechnung". Darum wird Phase B **nicht als gerechnete Zahl** gebaut. Falls
+> später gewünscht, ist der on-brand-Weg ein **ruhiger Anspruchs-Hinweis** (möglicher Zuschlag +
+> reduzierte Kürzung bei Vorbezug + Vorbezug ab 62 → Höhe bei der Ausgleichskasse), NICHT die
+> Tabellen-Modellierung. Bis dahin ruht Phase B.
 > **Betrifft:** `src/data/ahvRechner.js` → `berechneAltersrente()`
 > **Aufgeworfen durch:** Lint-Cleanup 2026-07 (ungenutzter Parameter `geburtsjahr`)
 > **Wahrheits-Disziplin:** rechts-/finanzrelevant — vor Umsetzung Zahlen an der Quelle belegen.

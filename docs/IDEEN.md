@@ -107,6 +107,7 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 ## 11 · Strategie & Aussenwelt (eigene Gespräche)
 
 - ⏸ **Backend / Konten / Sync / SwissID** — Grundsatzentscheid Local-First (eigene Session).
+- ⏸ **Haushalt, Teilen & Berechtigung** — wie zwei (+ Kind) als Paar ihre Sachen aufteilen/bezahlen, wer welche Berechtigung/Zugriff hat, und der Nachlass-Zugang. Hängt an Login/Tresor → kommt zuletzt. Voller Faden: [`docs/design/haushalt-teilen-berechtigung.md`](design/haushalt-teilen-berechtigung.md), verlinkt mit der Tresor-Vertagung.
 - ⭐ **Datenschutz-Haltung** — keine Daten verkaufen, kein Google/Apple-Login, SwissID ja, cookieless + aggregierte Stats.
 - 🌱 **SEO** — hreflang, pro-Sprache-Landing, sitemap.xml, Google Search Console (der eigentliche Auffindbarkeits-Hebel) · **Subdomains** (app./mail./news.).
 - 🌱 **Marketing** — mehrsprachige QR-Flyer, Pilot-Outreach (Caritas/HEKS/Gemeinde), Erklär-Seiten pro Thema.

@@ -1677,7 +1677,7 @@ export default {
       transparency: 'Uns ist Transparenz wichtig: Maloja bleibt Open Source, lokal und werbefrei. Beiträge fliessen in Betrieb, Datenpflege und Weiterentwicklung.',
     },
     footerLink: 'Datenschutz & Rechtliches',
-    lastUpdated: 'Stand: Juni 2026 · Gemäss nDSG (in Kraft seit 1.9.2023)',
+    lastUpdated: 'Stand: {date} · Gemäss nDSG (in Kraft seit 1.9.2023)',
     privacy: {
       responsibleTitle: 'Verantwortliche Person',
       responsible1: 'Stebler Studios — Sophie Stebler, Basel, Schweiz',
@@ -1849,6 +1849,7 @@ export default {
       heartfelt22: 'Traditionelle Chinesische Medizin — achtsame, ganzheitliche Behandlung.',
       heartfelt23: 'Überbrückt finanzielle Notlagen, damit Menschen das Nötigste haben und ihre Wohnung nicht verlieren.',
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
+      heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',

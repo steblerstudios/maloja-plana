@@ -25,6 +25,14 @@ const linkStyle = { color: 'inherit', textDecoration: 'underline', textUnderline
 // Leer => UI zeigt ehrlich "Zahlungsweg folgt" statt eines toten Links.
 const CONTRIBUTION_URL = '';
 
+// Einziger Pflege-Ort für das „Stand"-Datum der Rechtstexte. NUR ändern, wenn die
+// Rechtstexte tatsächlich überarbeitet wurden — bewusst NICHT aus dem Build/heutigen
+// Datum abgeleitet (das wäre eine falsche Aktualitäts-Aussage). Wird in alle 5 Sprachen
+// via {date} eingesetzt (legal.lastUpdated), damit die Datumsangabe nicht driftet.
+const LEGAL_LAST_UPDATED = {
+  de: 'Juni 2026', fr: 'juin 2026', it: 'giugno 2026', en: 'June 2026', rm: 'zercladur 2026',
+};
+
 const LEGAL_LINKS = {
   'Art. 28 nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de#art_28',
   'Art. 7': 'https://www.fedlex.admin.ch/eli/cc/1994/1837_1837_1837/de#art_7',
@@ -71,7 +79,7 @@ const autoLink = (text, _palette) => {
 const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
-export const LegalView = ({ palette, t, onNavigate, section }) => {
+export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
   const activeSection = section || 'privacy';
 
   const tabs = [
@@ -376,7 +384,7 @@ export const LegalView = ({ palette, t, onNavigate, section }) => {
         borderTop: '1px solid ' + palette.border,
         fontSize: text.xs, color: palette.soft, lineHeight: leading.relaxed,
       }
-    }, t('legal.lastUpdated'))
+    }, t('legal.lastUpdated', { date: LEGAL_LAST_UPDATED[lang] || LEGAL_LAST_UPDATED.en }))
   );
 };
 

@@ -1674,7 +1674,7 @@ export default {
       transparency: 'La transparence nous tient à cœur : Maloja reste open source, local et sans publicité. Les contributions financent le fonctionnement, l’entretien des données et le développement.',
     },
     footerLink: 'Confidentialité & Mentions légales',
-    lastUpdated: 'Mis à jour : juin 2026 · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
+    lastUpdated: 'Mis à jour : {date} · Conformément à la nLPD (en vigueur depuis le 1.9.2023)',
     privacy: {
       responsibleTitle: 'Personne responsable',
       responsible1: 'Stebler Studios — Sophie Stebler, Bâle, Suisse',
@@ -1846,6 +1846,7 @@ export default {
       heartfelt22: 'Médecine traditionnelle chinoise — un traitement attentif et holistique.',
       heartfelt23: 'Aide à surmonter les situations de détresse financière pour que les personnes aient l\'essentiel et ne perdent pas leur logement.',
       heartfelt24: 'Accompagne les personnes en souffrance psychique vers une vie autodéterminée — conseil, logement, structure de jour.',
+      heartfelt25: 'Plateforme de prêt à but non lucratif à Bâle — « emprunter plutôt qu’acheter » : plus de 1’300 objets à emprunter, gérée par des bénévoles.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',

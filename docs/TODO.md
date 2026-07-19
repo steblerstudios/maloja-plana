@@ -67,11 +67,14 @@ Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy
 - ✅ AHV-Rente als Schätzung labeln — bereits erledigt: Label „Geschätzte AHV-Altersrente"/
   „Geschätzte BVG-Rente" + gerenderte Source-Zeile „Schätzung nach AHVG/BVG … Keine
   rechtsverbindliche Auskunft." (`VorsorgeRechner.jsx:309`).
-- 🟡 **AHV-21-Referenzalter der Frauen (Übergangsgeneration) — Scoped Task, zur Prüfung.**
-  `berechneAltersrente` rechnet mit pauschalem Referenzalter 65; für Frauen JG 1961–1964 ist es
-  gestaffelt tiefer (AHV 21), zudem fehlt `geschlecht` als Input. Aufgeworfen beim Lint-Cleanup
-  2026-07 (ungenutztes `geburtsjahr`). Voller Plan + Tabelle + Testfälle + Quellen:
-  `docs/roadmap/TASK_ahv21-referenzalter-frauen.md`. Vor Umsetzung `swiss-precision-pruefer`.
+- ✅ **AHV-21-Referenzalter der Frauen — Phase A ERLEDIGT** (2026-07-13, reproduce-first bestätigt
+  2026-07-18: `referenzalterMonate`+`geschlecht` in `ahvRechner.js`, `VorsorgeRechner.jsx` reicht
+  `data.basis.gender` durch, UI-Zeile „Referenzalter (AHV 21)", Tests grün). Der alte 🟡-Text
+  („rechnet pauschal mit 65") war veraltet.
+  ⏸️ **Phase B (Ausgleichsmassnahmen: Rentenzuschlag/reduzierte Kürzung) BEWUSST GEPARKT**
+  (Sophie 2026-07-18): keine rechtsverbindliche Zuschlags-Zahl in einer Orientierungs-App
+  (Haftung + Wahrheits-Disziplin). Falls je gebaut → ruhiger Anspruchs-Hinweis, nicht gerechnete
+  Zahl. Details: `docs/roadmap/TASK_ahv21-referenzalter-frauen.md`.
 
 ## C — Design / Calm-UX (aus Audit)
 
@@ -159,7 +162,10 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 - 🟠 **Export-Icon** — neue Metapher (warten auf Tester-Feedback)
 - ✅ **Benachrichtigungen → Kuhglocke** — bereits erledigt: `cowbell` konsistent in MobileNav,
   CalendarReminders, NotificationSettings, OverdueBanner; kein Zahnrad mehr dafür (per Grep 2026-06-27).
-- 🟡 **Uhr → Frist/Zeit** Verwendungsstellen finden
+- ⏭️ **Uhr → Frist/Zeit** — **reproduce-first 2026-07-18: kein Bau-Punkt.** Der `kalenderUhr`-Icon
+  (Bahnhofsuhr, `IconSystem.jsx`) existiert, wird aber **nirgends verwendet** (0 Referenzen ausserhalb
+  der Registry). Es gibt keine aktive „Uhr"-Stelle zum Umdeuten; ihn irgendwo als Frist/Zeit zu
+  verdrahten wäre ein Design-Entscheid (gehört in IDEEN.md), keine mechanische Umstellung.
 - ✅ `og-image.svg` aufs Gipfel-M + Granit — bereits erledigt: SVG hat Maloja-Pass-Polyline +
   Goldpunkt, Granit-Palette, Hanken-Wortmarke; PNG regeneriert (`public/og-image.{svg,png}`).
 - ⏭️ Signet-Farben (Ordner+Berg+Pass) an Granit — **gegenstandslos (2026-06-27):** das
@@ -175,7 +181,9 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 
 ## E — Inhalt
 
-- 🟠 **Herzensempfehlung Leihlager** (`heartfelt10`) — braucht Name + URL von Stebler Studios.
+- ✅ **Herzensempfehlung Leihlager — ERLEDIGT (2026-07-18, `6b8b594`).** Als neuer Key `heartfelt25`
+  (nicht heartfelt10 — der ist «Xdo»), Gruppe *gemeinschaft*, URL `leihlager.ch`, de/en/fr/it lokalisiert
+  (rm = deutscher Stopgap wie heartfelt24). Live im Gemeinschafts-Buch verifiziert.
 - ✅ Abschiedsagentur (`heartfelt9`, alle 5 Sprachen)
 - ✅ **Quellen/Links-Check** (erneut 2026-06-27): 121 externe URLs geprüft (27 neue Asyl/Stipendien
   + 94 direktLinks). **0 echte tote Links** — alle 2xx/3xx; einzig 3× `baselland.ch` 403 = bekannter
@@ -204,21 +212,76 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
 - 🟡 Handelsregister prüfen · **Markenschutz „Maloja Plana"/Gipfel-M beim IGE** (~CHF 550)
 - 🟡 Rechnungsvorlage · info@malojaplana.ch Postfach einrichten
 
+## G2 — Aus maloja-c-Audit-Abgleich (2026-07-18)
+
+*Übertragbare Befunde aus den maloja-c-Prototyp-Audits, reproduce-first gegen die echte App
+geprüft. Voller Abgleich: [`docs/design/maloja-c-abgleich.md`](design/maloja-c-abgleich.md).*
+
+- 🟠 **DSFA (Datenschutz-Folgenabschätzung) fehlt** — vor Produktivstart. revDSG/EDÖB verlangen
+  bei besonders schützenswerten Daten (Gesundheit/Sozial/Finanzen) Privacy-by-Design + DSFA. Heute
+  nur `datenschutzerklaerung-ndsg.md`. Local-first entschärft stark, aber Pflicht spätestens vor
+  jeder Cloud/Partner-Öffnung. Quelle: FACH-RECHT-AUDIT (maloja-c).
+- 🟡 **Per-Modul-Freigabe-Register** — je Rechner Fachperson/Rechtsgrundlage/Version/Kanton/Freigabe
+  protokollieren (deckt sich mit Wahrheits-Disziplin; Daten-Versions-Konstanten gibt's, formales
+  Register nicht).
+- 🟡 **Backup-Restore-Härtung (Defense-in-Depth)** — der Restore ist verschlüsselt + Magic-Bytes +
+  Typ-Guard + try/catch, aber ohne Feld-Whitelist / Längen-Caps / Anzahl-Obergrenze
+  (`src/utils/backupCrypto.js`). Verschlüsselung entschärft; Caps + Whitelist nachziehen.
+  - **reproduce-first 2026-07-19:** teils schon gebaut — `validateBackupPayload` (`dataValidation.js`)
+    macht Typ-/Form-Prüfung, `applyBackup` hat einen impliziten Top-Level-Whitelist. **ECHTE Lücke:**
+    in `ZipExport.jsx:147-158` greift das Validierungs-Ergebnis nur als **Warnung**, danach schreibt
+    `applyBackup` trotzdem → Struktur-kaputte Payloads werden geschrieben (Pre-Restore-Snapshot rettet).
+    Plus: kein Grössenlimit (`FileReader` liest ungeprüft), keine Anzahl-Caps, `merkliste` fehlt in
+    `validateBackupPayload`. Fix = Validierung als echte Barriere + Caps + Grössenlimit.
+
+## G3 — UI/UX-Blick (statisch, reproduce-first 2026-07-19)
+
+*Code-Inspektion der markierten Baustellen (kein gerendertes Bild — Kontrast/Fokus/Touch als „Annahme").
+Alte Alarm-Funde (OverdueBanner-Gradient, Schulden-KPI-Grid, Armuts-Prozentbalken) sind bereits ruhig
+entschärft — reproduce-first bestätigt. Echt offen:*
+
+- 🟠 **P1 · rohe Unicode-Glyphen als Text-Präfix** — `◰ ● ◇ ↧ □ ✕` in **~102 Vorkommen / 10 Views**
+  (BudgetImport, SchuldenManager, Merkliste, KKScanner, Mietzins, ZipExport, Stipendien, Sozialhilfe,
+  FinanzUebersicht, KVGLeistungen) statt `IconSystem`. Am schamsensibelsten: `SozialhilfeView.jsx:79/125/148/163`
+  (`'◰ ' + …` vor SKOS/IPV/EL-Titeln). `ICON_KONVENTION.md`: funktionale Icons = ein Outline-Set. Vorschlag:
+  durch IconSystem-SVG (`aria-hidden`) ersetzen, Sozialhilfe/Schulden zuerst. a11y → nie unter P1.
+- 🟠 **P1 · Armutsgrenze 2279 hartkodiert** (`FinanzUebersicht.jsx:225`) — unbelegt, veraltet
+  (BFS 2024: **2388**) UND misst die falsche Grösse (gilt fürs äquivalenzierte *verfügbare Haushalts*-
+  einkommen, Code hält sie gegen rohes `monthlyIncome`). Nutzer sieht „belowPoverty"-Label, das falsch
+  sein kann. Nur mit `swiss-precision-pruefer` + Quelle anfassen (Leitplanke).
+- ✅ **innerHTML/CSP geprüft:** reine React.createElement-App, kein `dangerouslySetInnerHTML`,
+  strikte CSP → Audit-Punkt bereits erfüllt.
+- ⏸ **Schicht B (Business/Finanzmodell) → Stebler Studios**, **Schicht C (kommerzielle Partner-
+  Plattform) = Grundsatz-Entscheid** — beide bewusst NICHT im Produkt (siehe Abgleich-Notiz).
+
 ## H — Website/UX-Audit (Agenten-Feedback ✅ eingegangen)
 
 *WebFetch war für den Agenten gesperrt → „verlinkte Seiten"-Teil aus Allgemeinwissen, nicht live.*
 
+> **✅ Reconciliation 2026-07-18 (reproduce-first gegen den Code):** Fast der ganze H-Block war
+> schon gebaut. Belege unten je Punkt. Offen bleibt nur der Demo-Modus am Einstieg (eigene UX-Runde)
+> und ein Focus-Ring-Detail (Kür).
+
 **🔴 Sofort:**
-- **BetaGate = nackte Passwort-Wand** (`BetaGate.jsx`, wrappt App in `main.jsx:662`) → ruhige
-  Intro + Lokal-Badge + Impressum/Datenschutz-Link + „von Stebler Studios, Basel" davor. Idee:
-  Legal-Seiten ohne Code erreichbar machen, nur die App gaten.
-- **Lizenz-Widerspruch** → `legal.terms.ip1` sagt MIT, Projekt ist AGPL-3.0 → in allen 5 i18n fixen.
+- ✅ **BetaGate = nackte Passwort-Wand — ERLEDIGT.** `BetaGate.jsx` hat ruhige Intro (`beta.intro` +
+  `beta.gateMessage`), Lokal-Badge (`TrustLockIcon` + `trust.localBadge`), Legal-Link ohne Code
+  (`beta.legalLink` → `setLegalSection('privacy')`), „Stebler Studios · Basel" (Z.183) und Landmark
+  (`role: 'main'`, Z.81).
+- ✅ **Lizenz-Widerspruch — ERLEDIGT.** `legal.terms.ip1` sagt in allen 5 Sprachen „AGPL-3.0" (nicht MIT).
 
 **🟠 Mittel:**
-- BetaGate-Button Kontrast: weiss auf `palette.sand` → `#000` (wie Onboarding).
-- „Stand: Juni 2026" hartcodiert (`legal.lastUpdated`) → ableiten/Pflege-Flag.
-- A11y in Onboarding/BetaGate: Focus-Ring auf Sprach-Buttons, `aria-live` für Beta-Fehler, Landmark.
-- „Wert zeigen bevor man fragt" → Demo-Modus (existiert in `main.jsx`) schon am Einstieg anbieten.
+- ✅ **BetaGate-Button Kontrast — ERLEDIGT.** `PrimaryButton` nutzt `palette.onSand` (dunkler Text auf
+  Sand, Kommentar „WCAG-AA; Sand ist in hell+dunkel gleich"). Kein weisser Text mehr.
+- ✅ **„Stand: Juni 2026" hartcodiert (`legal.lastUpdated`) → Pflege-Flag (2026-07-18, `e586acf`).**
+  War in allen 5 i18n-Dateien einzeln → jetzt EIN Pflege-Ort `LEGAL_LAST_UPDATED` in `LegalView.jsx`,
+  via `{date}` eingesetzt. Bewusst NICHT aus dem Build abgeleitet (falsche Aktualitäts-Aussage). Output
+  byte-identisch (DE+RM live verifiziert). Branch `feat/polish-legal-datum` ab main.
+- 🟠 **A11y Onboarding/BetaGate — GRÖSSTENTEILS erledigt.** `aria-live` für Beta-Fehler ✅
+  (`role: 'alert'` + `aria-invalid`/`aria-describedby`, `BetaGate.jsx:139-143`), Landmark ✅
+  (`role: 'main'`). **Offen (Kür):** Focus-Ring auf den Sprach-Buttons gezielt prüfen.
+- 🟠 **„Wert zeigen bevor man fragt" → Demo-Modus am Einstieg — OFFEN (Stebler Studios: „sehr gerne").**
+  Demo/Sandbox existiert in `main.jsx`, wird am BetaGate aber noch nicht angeboten. Eigene UX-Runde
+  (wo/wie: Knopf am Gate „ohne Code ausprobieren" → Demo-Daten laden, ohne Beta-Freischaltung).
 
 **Vorbilder (übernehmen):** konkrete prüfbare Claims aufs Entry (Infomaniak), Privatsphäre in
 Alltagssprache + „in plain terms" (Posteo), „Warum gratis / wer steckt dahinter" (Ecosia),
@@ -229,16 +292,20 @@ strikte CSP, Meta/PWA, respektvolles Onboarding.
 
 ## I — Marketing/Positionierung (Agenten-Feedback ✅ eingegangen)
 
+> **✅ Reconciliation 2026-07-18 (reproduce-first):** Alle 🔴-Copy-Punkte erledigt (README-Kopf +
+> i18n gegengelesen). Offen bleibt nur die weiche Positionierungs-/Trust-Arbeit unten (laufend).
+
 **🔴 Sofort (Copy):**
-- **„für Schweizerinnen und Schweizer" → „für Menschen in der Schweiz"** (README + überall extern)
-  — schliesst sonst die echte Zielgruppe aus. Werte-relevant.
-- **README neu schreiben** — aktuell „0.1.0-alpha", emoji-lastig, „später Open Source",
-  „B2B-Versionen (Behörden/Banken)" → ruhige, öffentliche, on-brand Front-Tür (widerspricht sonst
-  der Live-Beta).
+- ✅ **„Schweizerinnen und Schweizer" → „Menschen in der Schweiz" — ERLEDIGT.** README sagt „Menschen
+  in der Schweiz"; die alte Formel steht nur noch in den Audit-Archiven (`docs/**/…AUDIT.txt`, die sie
+  zitieren), nicht im Live-Text.
+- ✅ **README neu — ERLEDIGT.** Kopf ist on-brand: „Dein ruhiger Überblick über das Leben in der
+  Schweiz — privat, offline, kostenlos", `0.1.0-beta`, AGPL-3.0, „von Stebler Studios (Basel)".
+  0 Treffer für „0.1.0-alpha"/„später Open Source"/„B2B-Version".
 - ✅ **Funktionale Claim-Unterzeile:** „Verstehen, was zusteht. Ordnen, was ansteht." ist jetzt
   das Hero-H2 (`dashboard.welcome`) in allen 5 Sprachen — infinitiv-neutral, keine Sie/Du-Variante.
   Ersetzt das wortgleiche „Prüfen Sie Ihre Ansprüche…". Marke „Dein Leben. Deine Übersicht." bleibt.
-  🟡 Offen: toter `appTagline`-Key („— auf deinem Gerät." anhängen; wird nirgends gerendert).
+  ✅ toter `appTagline`-Key: **weg** (kein Treffer mehr in `src/`, reproduce-first 2026-07-18).
 
 **🟠 Positionierung & Trust:**
 - Orientierung vor Organisation kommunizieren (nicht „Lebensordner" als Lead-Wort).
@@ -428,8 +495,12 @@ Fast vollständig ja; einzige echte Regression = Router-Allow-Liste (settings/ta
   **KKScanner (6 Felder), OrganDonation (1), BudgetImport (1)** → auf `LabeledField` migriert
   (Wrapper `marginBottom:0`, Optik 1:1). Browserverifiziert (alle 6 KKScanner-Labels via for/id),
   592 Tests grün. Commit `5fe8851` (dev).
-- 🟡 **Rest Pattern A (finicky Key):** DocumentTresor Inline-Datum + Sortier-Select, Calendar-Notizen-Textarea — brauchen einen passenden i18n-Key (klein).
-- 🟡 **rm-Notfall-Icon:** `notfall.icon` ist `⚠` in de/fr/it/en, fehlt in rm (Icon-Feld, kein Copy — nur Parität, wenn gewünscht).
+- ✅ **Rest Pattern A — reproduce-first 2026-07-18: schon beschriftet.** DocumentTresor-Inline-Datum
+  (`aria-label` `chapterView.expiryDate`, `DocumentTresor.jsx:174`) + Sortier-Select (`tresor.sortBy`,
+  `:309`) + Kalender-Notizen-Textarea (`calendar.noteLabel`, `CalendarReminders.jsx:468`) tragen alle
+  bereits ein `aria-label`; die Keys existieren in allen 5 Sprachen. Nichts offen.
+- ✅ **rm-Notfall-Icon — reproduce-first 2026-07-18: schon da.** `chapters.notfall.icon: '⚠'` ist in
+  ALLEN 5 Sprachen vorhanden, rm inkl. (`rm.js:1409`). Parität bereits gegeben.
 
 ## Runde 2026-07-11 (Feature-Branches, noch nicht gemergt — 10-Commit-Gate)
 
