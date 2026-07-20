@@ -48,7 +48,9 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   const kvgLink = getKVGApplicationLink(canton);
 
   const handleApplyOnline = () => {
-    window.open(kvgLink, '_blank');
+    // noopener,noreferrer: window.open vererbt sonst window.opener an die Zielseite (Reverse
+    // Tabnabbing) — anders als <a target="_blank">, das modern von selbst schützt.
+    window.open(kvgLink, '_blank', 'noopener,noreferrer');
   };
 
   const handleDownloadDocument = () => {
