@@ -19,8 +19,7 @@
 | Paket | Datei | Lizenz | Zweck |
 |---|---|---|---|
 | qrcodejs | src/vendor/qrcodejs.js | MIT | QR-Code-Generierung (Organspende, KK-Scanner) |
-| jsQR | src/vendor/jsQR.js (falls vorhanden) | Apache-2.0 | QR-Code-Scanning |
-| jsPDF | src/vendor/jsPDF.js (falls vorhanden) | MIT | PDF-Generierung |
+| jsQR | public/vendor/jsQR.js | Apache-2.0 | QR-Code-Scanning |
 
 ## Dev Dependencies
 

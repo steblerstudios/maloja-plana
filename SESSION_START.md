@@ -7,7 +7,49 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-19 (**DEPLOYT & LIVE** · `main`=`df70cb1` · Live-Bundle `index-c7370d19.js`)
+**Stand:** 2026-07-20 (⚠️ **GEMERGT, ABER NICHT DEPLOYT** · `main`=`e7a3714` · Live-Bundle noch `index-c7370d19.js` von `df70cb1`)
+
+> ### ⭐ AKTUALISIERUNG 2026-07-20 (Predeploy-Gate gelaufen — 6 Funde behoben)
+>
+> **Branch `fix/predeploy-runde-2026-07-20`** (3 Commits über `be75049`), noch **nicht gepusht,
+> kein PR**. Volles Gate + Review-Batterie über `df70cb1..HEAD` gelaufen: **0 🔴 Blocker**,
+> 772 Tests grün (+2), Build/SEO/Size/PII/ESLint sauber, keine neuen Dependencies.
+>
+> **Behoben:**
+> - **Toter Klick** am neu eingebetteten Lohn-Barometer: `incomeType` liegt selbst im Finanzen-
+>   Kapitel, der Hinweis navigierte also auf die Seite, auf der man schon stand. Jetzt nur noch
+>   klickbar, wenn er woandershin führt (`aktuellesKapitel`-Prop).
+> - **Hartcodierte Kapitel-Indizes 2/4** → `CHAPTER_KEYS.indexOf()` + 2 Tests, die die Zuordnung
+>   verankern (Umsortierung wird rot statt still falsch).
+> - **A11y:** Pfeil in `aria-hidden`-Span (Screenreader las „Rechtspfeil" mit), Touch-Ziel ~38px → 44px.
+> - **jsPDF gelöscht** (`public/vendor/jspdf.umd.min.js`, 364 KB): nie importiert, ging aber in jedem
+>   Build live, mit ReDoS-Advisory auf 2.5.x. `VENDOR.md` + `third-party-licenses.md` nachgezogen,
+>   verbleibende Hash-Pins nachgerechnet.
+> - **`window.open` ohne `noopener`** in `PremiumSubsidy.jsx` (einzige von 35 `_blank`-Stellen).
+> - **PII:** nackter Vorname in dieser Datei (kam über `07ea86e`, steht damit in `main`) → Rollen-Begriff.
+>
+> **Bewusst offen gelassen** (systemisch, nicht neu, gehören in den Backlog): Icon-only „✕"-Buttons
+> app-weit mit `minHeight: 24px` (destruktive Aktionen auf Mobil), Label/Input-Kopplung ohne
+> `htmlFor`, `createPreRestoreSnapshot()` ohne `try/catch` (`backupCrypto.js:193`), unescapte
+> i18n-Interpolation `cvGenerator.js:149` (aktuell kein XSS-Weg).
+>
+> **Keine Freigabe-Marke geschrieben** — die gehört auf den Stand, der wirklich deployt wird, und
+> der liegt auf `main`. Reihenfolge bleibt: PR → Merge → `/code-review ultra` → Deploy → live gegenprüfen.
+
+> ### ⚠️ AKTUALISIERUNG 2026-07-20 (Barometer-Fix gemergt — Deploy steht aus)
+>
+> **`main` ist weitergerückt: `07ea86e` → `e7a3714`** (Merge PR
+> [#114](https://github.com/steblerstudios/maloja-plana/pull/114), Lohn-Barometer-Sichtbarkeit:
+> klickbarer Hinweis + Einbettung im Finanz-Kapitel, 4 Dateien, +36/−4, CI grün).
+> Lokales `main` per `pull --ff-only` nachgezogen, Arbeitsbaum sauber, nichts ungepusht.
+>
+> **Live ist davon NICHTS zu sehen.** `curl malojaplana.ch` liefert weiterhin
+> **`index-c7370d19.js`** — das Bundle von `df70cb1`. **Mergen ≠ live.** Der Fix wird erst
+> mit dem nächsten `bash deploy.sh` sichtbar (löst Stebler Studios aus, nie Claude).
+>
+> **Nächster Schritt:** auf `main` (steht schon) `bash deploy.sh`, danach per `curl` prüfen,
+> bis der Bundle-Hash **nicht mehr** `index-c7370d19.js` heisst. Ab 2026-07-20 meldet der
+> Morgenlauf diese Abweichung von selbst (`scripts/stand-erheben.py` im Studio-Cockpit).
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (DEPLOY GELANDET — Live-Stand eingearbeitet)
 >
@@ -34,7 +76,7 @@
 > **Predeploy-Backlog neu bewerten:** „Predeploy" ist bei Maloja **kein Vor-dem-ersten-Launch-Zustand**
 > (die App ist seit 2026-07-10 live) — der Deploy hebt den „nur notieren"-Freeze also **nicht automatisch
 > auf**. Ob die Backlog-Wünsche (Memory `project-maloja-predeploy-backlog-2026-07-19`) jetzt gebaut werden
-> dürfen, bleibt Sophies Entscheid, nicht meiner.
+> dürfen, bleibt der Entscheid von Stebler Studios, nicht meiner.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
 >
