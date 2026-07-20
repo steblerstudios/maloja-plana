@@ -49,7 +49,7 @@
 > **Predeploy-Backlog neu bewerten:** „Predeploy" ist bei Maloja **kein Vor-dem-ersten-Launch-Zustand**
 > (die App ist seit 2026-07-10 live) — der Deploy hebt den „nur notieren"-Freeze also **nicht automatisch
 > auf**. Ob die Backlog-Wünsche (Memory `project-maloja-predeploy-backlog-2026-07-19`) jetzt gebaut werden
-> dürfen, bleibt Sophies Entscheid, nicht meiner.
+> dürfen, bleibt der Entscheid von Stebler Studios, nicht meiner.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-19 (Predeploy-Gate, Runde Armutsgrenze/Barometer)
 >
