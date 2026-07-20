@@ -9,6 +9,33 @@
 
 **Stand:** 2026-07-20 (⚠️ **GEMERGT, ABER NICHT DEPLOYT** · `main`=`e7a3714` · Live-Bundle noch `index-c7370d19.js` von `df70cb1`)
 
+> ### ⭐ AKTUALISIERUNG 2026-07-20 (Predeploy-Gate gelaufen — 6 Funde behoben)
+>
+> **Branch `fix/predeploy-runde-2026-07-20`** (3 Commits über `be75049`), noch **nicht gepusht,
+> kein PR**. Volles Gate + Review-Batterie über `df70cb1..HEAD` gelaufen: **0 🔴 Blocker**,
+> 772 Tests grün (+2), Build/SEO/Size/PII/ESLint sauber, keine neuen Dependencies.
+>
+> **Behoben:**
+> - **Toter Klick** am neu eingebetteten Lohn-Barometer: `incomeType` liegt selbst im Finanzen-
+>   Kapitel, der Hinweis navigierte also auf die Seite, auf der man schon stand. Jetzt nur noch
+>   klickbar, wenn er woandershin führt (`aktuellesKapitel`-Prop).
+> - **Hartcodierte Kapitel-Indizes 2/4** → `CHAPTER_KEYS.indexOf()` + 2 Tests, die die Zuordnung
+>   verankern (Umsortierung wird rot statt still falsch).
+> - **A11y:** Pfeil in `aria-hidden`-Span (Screenreader las „Rechtspfeil" mit), Touch-Ziel ~38px → 44px.
+> - **jsPDF gelöscht** (`public/vendor/jspdf.umd.min.js`, 364 KB): nie importiert, ging aber in jedem
+>   Build live, mit ReDoS-Advisory auf 2.5.x. `VENDOR.md` + `third-party-licenses.md` nachgezogen,
+>   verbleibende Hash-Pins nachgerechnet.
+> - **`window.open` ohne `noopener`** in `PremiumSubsidy.jsx` (einzige von 35 `_blank`-Stellen).
+> - **PII:** nackter Vorname in dieser Datei (kam über `07ea86e`, steht damit in `main`) → Rollen-Begriff.
+>
+> **Bewusst offen gelassen** (systemisch, nicht neu, gehören in den Backlog): Icon-only „✕"-Buttons
+> app-weit mit `minHeight: 24px` (destruktive Aktionen auf Mobil), Label/Input-Kopplung ohne
+> `htmlFor`, `createPreRestoreSnapshot()` ohne `try/catch` (`backupCrypto.js:193`), unescapte
+> i18n-Interpolation `cvGenerator.js:149` (aktuell kein XSS-Weg).
+>
+> **Keine Freigabe-Marke geschrieben** — die gehört auf den Stand, der wirklich deployt wird, und
+> der liegt auf `main`. Reihenfolge bleibt: PR → Merge → `/code-review ultra` → Deploy → live gegenprüfen.
+
 > ### ⚠️ AKTUALISIERUNG 2026-07-20 (Barometer-Fix gemergt — Deploy steht aus)
 >
 > **`main` ist weitergerückt: `07ea86e` → `e7a3714`** (Merge PR

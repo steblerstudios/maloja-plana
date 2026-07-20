@@ -82,3 +82,6 @@ src/data/raw/
 
 # Lokale PII-Deny-Liste für den Scan — nie committen
 .pii-deny.txt
+
+# Generierte Werkstatt-Artefakte (z. B. /architecture-map) — lokal nützlich, nicht ins Repo
+architektur.html
