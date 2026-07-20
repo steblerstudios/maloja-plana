@@ -1415,16 +1415,19 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     // Das Lohn-Barometer jetzt AUCH direkt im Finanzen-Kapitel (nicht nur auf der Finanz-Übersicht),
     // damit man beim Lohn-Eintragen gleich sieht, wo man steht. Nur bei erfasstem Lohn (sonst return
     // null aus der Komponente). `data: allData`, weil das Barometer basis.canton + ausbildung.workHoursPerWeek
-    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen Feld.
+    // aus anderen Kapiteln mitliest. Der „fehlt noch…"-Hinweis ist via onNavigate klickbar zum richtigen
+    // Feld — `aktuellesKapitel` verhindert dabei den Klick ins eigene Kapitel (Einkommensart liegt hier).
     chapter.key === 'finanzen' && allData && Number(allData.finanzen?.monthlyIncome) > 0 &&
+      // Rahmen wie am anderen Einbettungsort (FinanzUebersicht): `palette.up` ohne Rand — derselbe
+      // Baustein soll überall gleich sitzen. Bewusst NICHT die Sage-Hinweisfarbe der Nachbarkarten:
+      // das Barometer ist ein Instrument, kein Hinweis.
       React.createElement('div', {
-        key: 'lohn-barometer-embed',
         style: {
           marginBottom: space.md + 'px', padding: space.sm + 'px ' + space.md + 'px',
-          background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border,
+          background: palette.up, borderRadius: radius.sm,
         }
       },
-        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate })
+        React.createElement(LohnEinordnung, { palette, t, data: allData, isDarkMode, embedded: true, onNavigate, aktuellesKapitel: chapter.key })
       ),
 
     // Familienzulagen: shown in basis when children exist

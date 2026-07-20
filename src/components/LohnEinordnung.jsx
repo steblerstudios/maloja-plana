@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, radius, space, leading } from '../config/tokens.js';
 import { bereichFillColor } from '../data/lebensbereiche.js';
 import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
+import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
@@ -100,7 +101,7 @@ const Barometer = ({ palette, isDark, value, fillColor, marks, zones, ariaLabel 
 
 // `embedded`: ohne eigene Karte rendern — für Orte, die schon in einer `palette.up`-Karte
 // sitzen (Finanz-Übersicht). Sonst läge Karte auf Karte und die Kante verschwände.
-export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate }) => {
+export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchMark, onNavigate, aktuellesKapitel }) => {
   // Alter aus dem Geburtsdatum — für die Netto→Brutto-Schätzung (PK-Anteil nach Alter).
   const geb = data?.basis?.dateOfBirth ? new Date(data.basis.dateOfBirth) : null;
   const alter = geb && !isNaN(geb.getTime()) ? Math.floor((Date.now() - geb.getTime()) / 31557600000) : undefined;
@@ -139,23 +140,34 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     const hinweis = !basisKnown
       ? (einkommensart === 'netto' ? 'lohnCheck.basisNetto' : 'lohnCheck.basisMissing')
       : 'lohnEinordnung.hoursUnknownNote';
-    // Fehlt die Einkommensart → Kapitel Finanzen (2); fehlen die Wochenstunden → Ausbildung & Arbeit (4).
+    // Fehlt die Einkommensart → Kapitel Finanzen; fehlen die Wochenstunden → Ausbildung & Arbeit.
+    // Index aus CHAPTER_KEYS statt hartcodiert: die Kapitel-Reihenfolge darf sich ändern, ohne dass
+    // dieser Hinweis still ins falsche Kapitel führt.
+    const zielKapitelKey = !basisKnown ? 'finanzen' : 'ausbildung';
+    // Sitzt das Barometer bereits IN seinem Zielkapitel (Einbettung im Finanzen-Kapitel, wo das Feld
+    // `incomeType` selbst liegt), wäre der Klick ein No-op — `setActiveChapter` auf dasselbe Kapitel
+    // scrollt nur nach oben. Dann lieber ruhiger Text: kein Versprechen, das ins Leere führt.
+    const fuehrtWoandershin = onNavigate && zielKapitelKey !== aktuellesKapitel;
     // Mit `onNavigate` wird der Hinweis KLICKBAR und führt genau dorthin, damit die fehlende Angabe
     // sofort ergänzt werden kann; ohne bleibt er ruhiger Text (spiegelt den Crosslink-Stil der App).
-    const zielKapitel = !basisKnown ? 2 : 4;
     return React.createElement('div', { style: card },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, t('lohnEinordnung.title')),
-      onNavigate
+      fuehrtWoandershin
         ? React.createElement('button', {
             type: 'button',
-            onClick: () => onNavigate('chapter', zielKapitel),
+            onClick: () => onNavigate('chapter', CHAPTER_KEYS.indexOf(zielKapitelKey)),
             style: {
               display: 'block', width: '100%', textAlign: 'left', fontFamily: 'inherit',
               background: palette.sageMist || palette.up, border: 'none', borderRadius: radius.sm,
-              padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer',
+              // minHeight: 44px-Touch-Ziel (WCAG 2.5.5) — das Token-Padding allein ergäbe ~38px.
+              padding: space.sm + 'px ' + space.md + 'px', cursor: 'pointer', minHeight: '44px',
               color: palette.sageDeep || palette.mid, fontSize: text.sm, lineHeight: leading.normal,
             },
-          }, t(hinweis) + ' →')
+          },
+            t(hinweis),
+            // Der Pfeil ist Dekoration — sonst liest der Screenreader „… eintragen. Rechtspfeil".
+            React.createElement('span', { 'aria-hidden': true }, ' →')
+          )
         : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis))
     );
   }

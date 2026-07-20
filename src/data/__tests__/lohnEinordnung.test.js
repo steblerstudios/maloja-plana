@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { LOHN_REFERENZ, mindestlohnBoden, lohnBandState, SCALE_MIN, SCALE_MAX } from '../lohnEinordnung.js';
 import { LSE_VOLLZEIT_STUNDEN_WOCHE } from '../branchenLohn.js';
+import { CHAPTER_KEYS, FIELD_KEYS } from '../../config/constants.js';
 
 describe('lohnEinordnung', () => {
   // Alle drei Werte stehen wörtlich in der BFS-Medienmitteilung vom 25.11.2025
@@ -213,6 +214,29 @@ describe('lohnEinordnung', () => {
       const s = lohnBandState({ income: 4000, canton: 'GE', hoursPerWeek: 42 });
       expect(s.befundStatus).toBe('basisUnklar');
       expect(s.mlBreached).toBe(false);
+    });
+  });
+
+  // Der „fehlt noch…"-Hinweis in components/LohnEinordnung.jsx navigiert zum Kapitel, in dem
+  // die fehlende Angabe wohnt — über CHAPTER_KEYS.indexOf(), nicht über eine gemerkte Zahl.
+  // Dieser Test hält die Zuordnung fest: wird die Kapitel-Reihenfolge je umsortiert, muss er
+  // mitwandern, statt dass der Hinweis still ins falsche Kapitel führt.
+  describe('Zielkapitel der fehlenden Angaben', () => {
+    it('Einkommensart wohnt in `finanzen`, Wochenstunden in `ausbildung`', () => {
+      expect(CHAPTER_KEYS).toContain('finanzen');
+      expect(CHAPTER_KEYS).toContain('ausbildung');
+      expect(FIELD_KEYS.finanzen).toContain('incomeType');
+      expect(FIELD_KEYS.ausbildung).toContain('workHoursPerWeek');
+    });
+
+    // Die Einkommensart liegt im SELBEN Kapitel, in dem das Barometer eingebettet ist
+    // (ChapterView, chapter.key === 'finanzen'). Genau deshalb darf der Hinweis dort kein
+    // Button sein — er würde auf die Seite führen, auf der man schon steht.
+    it('Einbettungsort `finanzen` ist zugleich das Zielkapitel der Einkommensart', () => {
+      const s = lohnBandState({ income: 4000, canton: 'GE', hoursPerWeek: 42 });
+      expect(s.basisKnown).toBe(false);
+      const zielKapitelKey = !s.basisKnown ? 'finanzen' : 'ausbildung';
+      expect(zielKapitelKey).toBe('finanzen');
     });
   });
 });
