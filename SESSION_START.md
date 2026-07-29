@@ -7,7 +7,31 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-20 (⚠️ **GEMERGT, ABER NICHT DEPLOYT** · `main`=`e7a3714` · Live-Bundle noch `index-c7370d19.js` von `df70cb1`)
+**Stand:** 2026-07-29 (✅ **DEPLOYT & LIVE** · `main`=`74afcc7` · Live-Bundle `index-f66f04c7.js`, last-modified 29.07. · **offener PR [#116](https://github.com/steblerstudios/maloja-plana/pull/116)** Steuer-Säulen + Rechts-Check, noch **nicht** gemergt/live)
+
+> ### ✅ AKTUALISIERUNG 2026-07-29 (Deploy nachgeholt + neuer Faden Steuer-Säulen)
+>
+> **Deploy-Rückstand geschlossen.** Die Predeploy-Runde #115 (`main`=`74afcc7`, gemergt 20.07.)
+> war 10 Tage gemergt-aber-nicht-live (Ferien-Lücke). Heute deployt (`bash deploy.sh`, Stebler
+> Studios) → Live-Bundle **`index-c7370d19.js` → `index-f66f04c7.js`**, last-modified So 19.07.
+> → Mi 29.07. 13:12 GMT, HTTP 200. Per `curl` gegen `malojaplana.ch` verifiziert. `mergen ≠ live`
+> ist geschlossen.
+>
+> **Neuer Faden: Zivilstand-Steuer-Säulen (Probier-Modus).** Branch
+> `feat/steuer-saeulen-zivilstand`, **PR [#116](https://github.com/steblerstudios/maloja-plana/pull/116)
+> offen — nicht gemergt, nicht live.** Neues Bauteil `src/components/SteuerSaeulen.jsx` im
+> `TaxCalculator`: ledig / verheiratet gemeinsam (beide amtlich via `vergleicheTarife()`, DBG
+> Art. 36) + verheiratet einzeln als **zahllose Platzhalter-Säule**. 409 Tests grün, ESLint
+> sauber, size 63.49/65 kB. Copy in allen 5 Sprachen (`tax.saeulen.*`).
+>
+> **Rechts-Check Individualbesteuerung** (`docs/sources/individualbesteuerung-status.md`): das
+> Bundesgesetz wurde **am 8.3.2026 in der Volksabstimmung angenommen** (54,23 % Ja), ist aber
+> **noch nicht in Kraft** (Zeitpunkt offen), neuer Tarif nur als Grafik verfügbar, braucht
+> Pro-Person-Einkommen → die dritte Säule bleibt korrekt zahllos. Kinderabzug direkte
+> Bundessteuer neu 6'800 → 12'000 CHF/Kind (betrifft `steuerRechner.js`, sobald in Kraft).
+>
+> **Offen:** PR #116 → `/code-review ultra` → Merge → Deploy. RM-Copy nur Erstfassung
+> (native gegenlesen). Rechenweg „einzeln" erst bei belegtem Inkrafttreten + Tarif-Stufen.
 
 > ### ⭐ AKTUALISIERUNG 2026-07-20 (Predeploy-Gate gelaufen — 6 Funde behoben)
 >
