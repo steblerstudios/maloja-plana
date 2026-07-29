@@ -2352,6 +2352,21 @@ export default {
     disclaimer: { sie: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge finden Sie bei Ihrer kantonalen Steuerverwaltung.', du: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung.' },
     netIncomeNote: { sie: 'Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.', du: 'Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.' },
     useImportedTaxable: 'Amtliches steuerbares Einkommen verwenden (CHF {value}/Jahr). Abzüge werden dann ignoriert.',
+    saeulen: {
+      title: 'Zivilstand im Vergleich',
+      hint: { sie: 'Tippen Sie eine Säule an, um den Zivilstand auszuprobieren.', du: 'Tippe eine Säule an, um den Zivilstand auszuprobieren.' },
+      ledig: 'Ledig',
+      gemeinsam: 'Verheiratet, gemeinsam',
+      einzeln: 'Verheiratet, einzeln',
+      active: 'aktuell gewählt',
+      cheaper: 'Verheiratet gemeinsam: rund CHF {value} weniger als ledig.',
+      dearer: 'Verheiratet gemeinsam: rund CHF {value} mehr als ledig.',
+      similar: 'Bei diesem Einkommen ist der Unterschied gering.',
+      twoIncomeNote: 'Bei zwei Einkommen im selben Haushalt kann sich das Bild verschieben.',
+      empty: 'Sobald ein steuerbares Einkommen erfasst ist, erscheint hier der Vergleich.',
+      einzelnPending: 'Verheiratet, einzeln (Individualbesteuerung): in der Schweiz noch nicht in Kraft. Die Orientierung folgt, sobald die Reform steht.',
+      scope: 'Nur direkte Bundessteuer (DBG Art. 36). Kanton und Gemeinde sind hier nicht enthalten.',
+    },
   },
 
   schulden: {

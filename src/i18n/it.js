@@ -2292,6 +2292,21 @@ export default {
     disclaimer: { sie: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del Suo cantone.', du: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del tuo cantone.' },
     netIncomeNote: { sie: 'Proiezione basata sul Suo salario netto × 12. L\'onere fiscale effettivo può variare.', du: 'Proiezione basata sul tuo salario netto × 12. L\'onere fiscale effettivo può variare.' },
     useImportedTaxable: 'Usa il reddito imponibile ufficiale (CHF {value}/anno). Le deduzioni vengono ignorate.',
+    saeulen: {
+      title: 'Stato civile a confronto',
+      hint: 'Tocca una colonna per provare uno stato civile.',
+      ledig: 'Celibe/nubile',
+      gemeinsam: 'Coniugato/a, tassazione congiunta',
+      einzeln: 'Coniugato/a, tassazione individuale',
+      active: 'attualmente selezionato',
+      cheaper: 'Coniugati insieme: circa CHF {value} in meno rispetto a celibe/nubile.',
+      dearer: 'Coniugati insieme: circa CHF {value} in più rispetto a celibe/nubile.',
+      similar: 'A questo reddito la differenza è minima.',
+      twoIncomeNote: 'Con due redditi nello stesso nucleo familiare il quadro può cambiare.',
+      empty: 'Non appena viene inserito un reddito imponibile, qui compare il confronto.',
+      einzelnPending: 'Coniugato/a, tassazione individuale: in Svizzera non ancora in vigore. L’orientamento seguirà una volta approvata la riforma.',
+      scope: 'Solo imposta federale diretta (LIFD art. 36). Le imposte cantonali e comunali non sono incluse qui.',
+    },
   },
 
   schulden: {

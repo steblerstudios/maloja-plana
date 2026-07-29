@@ -2784,6 +2784,21 @@ export default {
     disclaimer: "Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.",
     netIncomeNote: { sie: "Projecziun da Voss salari net × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net × 12. La chargia da taglia effectiva po divergiar." },
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
+    saeulen: {
+      title: 'Stadi civil en cumparaziun',
+      hint: 'Tutgai ina colonna per empruvar in stadi civil.',
+      ledig: 'Nunmaridà',
+      gemeinsam: 'Maridà, taxaziun communabla',
+      einzeln: 'Maridà, taxaziun individuala',
+      active: 'tschernì actualmain',
+      cheaper: 'Maridà ensemen: circa CHF {value} damain che nunmaridà.',
+      dearer: 'Maridà ensemen: circa CHF {value} dapli che nunmaridà.',
+      similar: 'Tar questa entrada è la differenza pitschna.',
+      twoIncomeNote: 'Cun duas entradas en la medema chasada po il maletg sa midar.',
+      empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
+      einzelnPending: 'Maridà, taxaziun individuala: en Svizra anc betg en vigur. L’orientaziun suonda uschespert che la refurma è approvada.',
+      scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
+    },
   },
 
   cv: {

@@ -4,10 +4,11 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
-import { berechneBundessteuer, grenzsteuersatz, STEUER_DATA_VERSION } from './data/steuerRechner.js';
+import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
+import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const isMobile = useIsMobile();
@@ -237,6 +238,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         )
       )
     ),
+
+    React.createElement(SteuerSaeulen, {
+      palette, t,
+      istVerheiratet: verheiratet,
+      vergleich: vergleicheTarife(taxableIncome, kinder),
+      onSelect: (v) => setVerheiratet(v),
+    }),
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
 
