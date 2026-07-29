@@ -2796,7 +2796,7 @@ export default {
       similar: 'Tar questa entrada è la differenza pitschna.',
       twoIncomeNote: 'Cun duas entradas en la medema chasada po il maletg sa midar.',
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
-      einzelnPending: 'Maridà, taxaziun individuala: en Svizra anc betg en vigur. L’orientaziun suonda uschespert che la refurma è approvada.',
+      einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, dentant anc betg en vigur — la data resta averta. Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.',
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
     },
   },

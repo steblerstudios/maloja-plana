@@ -2364,7 +2364,7 @@ export default {
       similar: 'Bei diesem Einkommen ist der Unterschied gering.',
       twoIncomeNote: 'Bei zwei Einkommen im selben Haushalt kann sich das Bild verschieben.',
       empty: 'Sobald ein steuerbares Einkommen erfasst ist, erscheint hier der Vergleich.',
-      einzelnPending: 'Verheiratet, einzeln (Individualbesteuerung): in der Schweiz noch nicht in Kraft. Die Orientierung folgt, sobald die Reform steht.',
+      einzelnPending: 'Verheiratet, einzeln (Individualbesteuerung): am 8. März 2026 angenommen, aber noch nicht in Kraft — der Zeitpunkt ist offen. Sobald der neue Tarif gilt, kommt hier eine belegte Zahl.',
       scope: 'Nur direkte Bundessteuer (DBG Art. 36). Kanton und Gemeinde sind hier nicht enthalten.',
     },
   },

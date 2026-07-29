@@ -2345,7 +2345,7 @@ export default {
       similar: 'À ce revenu, la différence est faible.',
       twoIncomeNote: 'Avec deux revenus dans le même ménage, la situation peut changer.',
       empty: 'Dès qu’un revenu imposable est saisi, la comparaison apparaît ici.',
-      einzelnPending: 'Marié·e, imposition individuelle : pas encore en vigueur en Suisse. L’orientation suivra une fois la réforme adoptée.',
+      einzelnPending: 'Marié·e, imposition individuelle : acceptée le 8 mars 2026, mais pas encore en vigueur — la date reste ouverte. Un montant documenté apparaîtra ici dès que le nouveau barème s’appliquera.',
       scope: 'Impôt fédéral direct uniquement (LIFD art. 36). Les impôts cantonal et communal ne sont pas inclus ici.',
     },
   },

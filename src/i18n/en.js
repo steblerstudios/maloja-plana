@@ -2346,7 +2346,7 @@ export default {
       similar: 'At this income the difference is small.',
       twoIncomeNote: 'With two incomes in the same household the picture can shift.',
       empty: 'Once a taxable income is entered, the comparison appears here.',
-      einzelnPending: 'Married, individually (individual taxation): not yet in force in Switzerland. Guidance will follow once the reform is settled.',
+      einzelnPending: 'Married, individually (individual taxation): approved on 8 March 2026, but not yet in force — the date is open. A documented figure will appear here once the new tariff applies.',
       scope: 'Direct federal tax only (DBG Art. 36). Cantonal and municipal taxes are not included here.',
     },
   },

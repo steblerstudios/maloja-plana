@@ -9,9 +9,11 @@ import { text, weight, radius, space } from '../config/tokens.js';
 // - Nur die zwei amtlich belegten Tarife tragen eine Zahl:
 //   «Ledig» (Grundtarif) und «Verheiratet, gemeinsam» (Verheiratetentarif),
 //   beide DBG Art. 36 via vergleicheTarife().
-// - «Verheiratet, einzeln» (Individualbesteuerung) ist in der Schweiz NOCH NICHT
-//   in Kraft (laufende Reform). Diese Säule bleibt bewusst zahllos und wird als
-//   Platzhalter gezeigt — keine erfundene Zahl, bis der Rechts-Check steht.
+// - «Verheiratet, einzeln» (Individualbesteuerung) wurde am 8.3.2026 in der
+//   Volksabstimmung angenommen, ist aber NOCH NICHT in Kraft (Zeitpunkt offen,
+//   neuer Tarif nicht als belegte Zahlen verfügbar, braucht Pro-Person-Einkommen).
+//   Diese Säule bleibt darum bewusst zahllos — keine erfundene Zahl.
+//   Voller Rechts-Check mit Quellen: docs/sources/individualbesteuerung-status.md
 // - Bezugsgrösse ist nur die direkte Bundessteuer; Kanton/Gemeinde bleiben aussen.
 //
 // Interaktion: die zwei belegten Säulen sind Knöpfe, die den Zivilstand im

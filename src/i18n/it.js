@@ -2304,7 +2304,7 @@ export default {
       similar: 'A questo reddito la differenza è minima.',
       twoIncomeNote: 'Con due redditi nello stesso nucleo familiare il quadro può cambiare.',
       empty: 'Non appena viene inserito un reddito imponibile, qui compare il confronto.',
-      einzelnPending: 'Coniugato/a, tassazione individuale: in Svizzera non ancora in vigore. L’orientamento seguirà una volta approvata la riforma.',
+      einzelnPending: 'Coniugato/a, tassazione individuale: approvata l’8 marzo 2026, ma non ancora in vigore — la data è aperta. Un valore documentato apparirà qui non appena si applicherà la nuova tariffa.',
       scope: 'Solo imposta federale diretta (LIFD art. 36). Le imposte cantonali e comunali non sono incluse qui.',
     },
   },
