@@ -2333,6 +2333,21 @@ export default {
     disclaimer: 'Cette orientation montre la charge fiscale estimée (fédérale, cantonale, communale). Les valeurs cantonales sont basées sur le chef-lieu. Les montants exacts se trouvent auprès de votre administration fiscale cantonale.',
     netIncomeNote: 'Projection basée sur votre salaire net × 12. La charge fiscale réelle peut varier.',
     useImportedTaxable: 'Utiliser le revenu imposable officiel (CHF {value}/an). Les déductions sont alors ignorées.',
+    saeulen: {
+      title: 'État civil comparé',
+      hint: 'Touchez une colonne pour essayer un état civil.',
+      ledig: 'Célibataire',
+      gemeinsam: 'Marié·e, imposition commune',
+      einzeln: 'Marié·e, imposition individuelle',
+      active: 'actuellement sélectionné',
+      cheaper: 'Marié·e en commun : environ CHF {value} de moins que célibataire.',
+      dearer: 'Marié·e en commun : environ CHF {value} de plus que célibataire.',
+      similar: 'À ce revenu, la différence est faible.',
+      twoIncomeNote: 'Avec deux revenus dans le même ménage, la situation peut changer.',
+      empty: 'Dès qu’un revenu imposable est saisi, la comparaison apparaît ici.',
+      einzelnPending: 'Marié·e, imposition individuelle : acceptée le 8 mars 2026, mais pas encore en vigueur — la date reste ouverte. Un montant documenté apparaîtra ici dès que le nouveau barème s’appliquera.',
+      scope: 'Impôt fédéral direct uniquement (LIFD art. 36). Les impôts cantonal et communal ne sont pas inclus ici.',
+    },
   },
 
   schulden: {

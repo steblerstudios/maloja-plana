@@ -2334,6 +2334,21 @@ export default {
     disclaimer: 'This orientation shows the estimated tax burden (federal, cantonal, municipal). Cantonal values are based on the cantonal capital. You can find exact amounts at your cantonal tax authority.',
     netIncomeNote: 'Projection based on your net salary × 12. Actual tax liability may differ.',
     useImportedTaxable: 'Use official taxable income (CHF {value}/year). Deductions are then ignored.',
+    saeulen: {
+      title: 'Marital status compared',
+      hint: 'Tap a bar to try out a marital status.',
+      ledig: 'Single',
+      gemeinsam: 'Married, jointly',
+      einzeln: 'Married, individually',
+      active: 'currently selected',
+      cheaper: 'Married jointly: about CHF {value} less than single.',
+      dearer: 'Married jointly: about CHF {value} more than single.',
+      similar: 'At this income the difference is small.',
+      twoIncomeNote: 'With two incomes in the same household the picture can shift.',
+      empty: 'Once a taxable income is entered, the comparison appears here.',
+      einzelnPending: 'Married, individually (individual taxation): approved on 8 March 2026, but not yet in force — the date is open. A documented figure will appear here once the new tariff applies.',
+      scope: 'Direct federal tax only (DBG Art. 36). Cantonal and municipal taxes are not included here.',
+    },
   },
 
   schulden: {
