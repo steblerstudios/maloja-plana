@@ -7,7 +7,25 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-07-29 (✅ **DEPLOYT & LIVE** · `main`=`74afcc7` · Live-Bundle `index-f66f04c7.js`, last-modified 29.07. · **offener PR [#116](https://github.com/steblerstudios/maloja-plana/pull/116)** Steuer-Säulen + Rechts-Check, noch **nicht** gemergt/live)
+**Stand:** 2026-08-13 (`main`=`48ce925` · **keine offenen PRs** · Live-Bundle `index-f66f04c7.js`, HTTP 200, per `curl` verifiziert 13.08. · ⚠️ **`main` ist der Live-Seite zwei Merges voraus** — #116 Steuer-Säulen + #118 Kapitel-Index-Test sind gemergt, aber **nicht deployt**)
+
+> ### ⭐ AKTUALISIERUNG 2026-08-13 (Stand-Korrektur — `main` war zwei Wochen falsch dokumentiert)
+>
+> **Kein Code diese Sitzung, nur die Wahrheit nachgezogen.** Diese Datei behauptete seit dem
+> 29.07. `main`=`74afcc7` mit „offenem PR #116". Beides war überholt: #116, #117 und #118 sind
+> alle am **30.07.** gemergt, `main` steht auf **`48ce925`**. Aufgefallen ist es, weil das lokale
+> Repo seit dem 30.07. nicht gefetcht war — GitHub führte #118 längst als gemergt, lokal zeigte
+> `main` noch `22a2424`. Per `git fetch` + `merge-base` geprüft, lokales `main` nachgezogen.
+>
+> **`mergen ≠ live` ist wieder offen** (bewusst, nicht aus Versehen): die Live-Seite liefert
+> weiterhin `index-f66f04c7.js` vom Deploy am 29.07. Die **Zivilstand-Steuer-Säulen (#116)** und
+> der **Kapitel-Index-Test (#118)** sind also in `main`, aber **nicht** auf `malojaplana.ch`.
+> Das war am 30.07. Stebler Studios' ausdrücklicher Entscheid („kein Deploy"), kein vergessener
+> Schritt. Wer als Nächstes deployt, bringt beide mit.
+>
+> **Nächster Schritt:** entweder deployen (`bash deploy.sh` von `main`, dann Bundle-Hash
+> gegenprüfen und `FEATURES.md` auf `verified-live` heben) — oder bewusst liegen lassen.
+> Der Predeploy-Freeze gilt weiterhin.
 
 > ### ✅ AKTUALISIERUNG 2026-07-29 (Deploy nachgeholt + neuer Faden Steuer-Säulen)
 >
