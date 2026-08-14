@@ -7,25 +7,26 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-08-13 (`main`=`48ce925` · **keine offenen PRs** · Live-Bundle `index-f66f04c7.js`, HTTP 200, per `curl` verifiziert 13.08. · ⚠️ **`main` ist der Live-Seite zwei Merges voraus** — #116 Steuer-Säulen + #118 Kapitel-Index-Test sind gemergt, aber **nicht deployt**)
+**Stand:** 2026-08-14 (✅ **DEPLOYT & LIVE** · `main`=`48ce925` · **keine offenen PRs** · Live-Bundle `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, HTTP 200, per `curl` verifiziert 14.08. · #116 Steuer-Säulen + #118 Kapitel-Index-Test **live**)
 
-> ### ⭐ AKTUALISIERUNG 2026-08-13 (Stand-Korrektur — `main` war zwei Wochen falsch dokumentiert)
+> ### ⭐ AKTUALISIERUNG 2026-08-13/14 (Stand-Korrektur + Deploy nachgezogen)
 >
-> **Kein Code diese Sitzung, nur die Wahrheit nachgezogen.** Diese Datei behauptete seit dem
+> **Erst die Wahrheit nachgezogen.** Diese Datei behauptete seit dem
 > 29.07. `main`=`74afcc7` mit „offenem PR #116". Beides war überholt: #116, #117 und #118 sind
 > alle am **30.07.** gemergt, `main` steht auf **`48ce925`**. Aufgefallen ist es, weil das lokale
 > Repo seit dem 30.07. nicht gefetcht war — GitHub führte #118 längst als gemergt, lokal zeigte
 > `main` noch `22a2424`. Per `git fetch` + `merge-base` geprüft, lokales `main` nachgezogen.
 >
-> **`mergen ≠ live` ist wieder offen** (bewusst, nicht aus Versehen): die Live-Seite liefert
-> weiterhin `index-f66f04c7.js` vom Deploy am 29.07. Die **Zivilstand-Steuer-Säulen (#116)** und
-> der **Kapitel-Index-Test (#118)** sind also in `main`, aber **nicht** auf `malojaplana.ch`.
-> Das war am 30.07. Stebler Studios' ausdrücklicher Entscheid („kein Deploy"), kein vergessener
-> Schritt. Wer als Nächstes deployt, bringt beide mit.
+> **`mergen ≠ live` ist geschlossen — am selben Abend deployt.** Eine Stunde nach dieser
+> Stand-Korrektur wurde `main` deployt (`bash deploy.sh`, Stebler Studios): die Live-Seite
+> liefert seit **13.08. 18:28 GMT** `index-2340fe54.js` == `main`-Build `48ce925` (HTTP 200,
+> per `curl` gegen malojaplana.ch verifiziert 14.08.). Die **Zivilstand-Steuer-Säulen (#116)**
+> und der **Kapitel-Index-Test (#118)** sind damit **live** — beide Zeilen in `FEATURES.md`
+> stehen jetzt auf `verified-live`.
 >
-> **Nächster Schritt:** entweder deployen (`bash deploy.sh` von `main`, dann Bundle-Hash
-> gegenprüfen und `FEATURES.md` auf `verified-live` heben) — oder bewusst liegen lassen.
-> Der Predeploy-Freeze gilt weiterhin.
+> **Offen:** RM-Copy (Rätoromanisch) steht als Erstfassung live und ist noch nicht native
+> gegengelesen. Der Rechenweg „verheiratet einzeln" bleibt zahllos bis zum belegten Inkrafttreten
+> der Individualbesteuerung (`docs/sources/individualbesteuerung-status.md`).
 
 > ### ✅ AKTUALISIERUNG 2026-07-29 (Deploy nachgeholt + neuer Faden Steuer-Säulen)
 >
