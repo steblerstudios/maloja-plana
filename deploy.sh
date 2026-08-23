@@ -167,6 +167,25 @@ echo "→ Upload via SFTP nach ${SFTP_HOST}  (${ENV_NAME})…"
 LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
   -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; mirror -R --verbose ./dist/ \"${TARGET_DIR}\"; bye"
 
+# ─── Verwaiste Build-Dateien auf dem Server entfernen ────────────────────────
+# Vite vergibt inhaltsbasierte Namen (index-<hash>.js). Der Upload oben läuft
+# bewusst OHNE --delete, darum blieb bisher jeder je gebaute Stand liegen:
+# Stand 24.08.2026 lagen 5475 Dateien in assets/ für 115 aktuelle (~48 Deploys).
+#
+# --delete NUR auf assets/, niemals auf das Wurzelverzeichnis: dist/.htaccess
+# wird oben absichtlich entfernt (Infomaniak liefert sonst 503), ein --delete
+# auf der Wurzel würde die serverseitige .htaccess mitnehmen. Lokal nachgestellt
+# und bestätigt. assets/ dagegen stammt zu 100 % aus dem Build.
+#
+# Läuft NACH dem Upload und ist nicht-fatal: schlägt das Aufräumen fehl, ist der
+# Deploy trotzdem gut. Die Rollback-Sicherung entstand vorher (Zeile ~138).
+if [ "$STAGE" != "1" ]; then
+  echo "→ Verwaiste Build-Dateien in assets/ entfernen…"
+  LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
+    -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; mirror -R --delete --verbose ./dist/assets/ \"${TARGET_DIR%/}/assets\"; bye" \
+    || echo "  ⚠️ Aufräumen fehlgeschlagen — der Deploy selbst ist durch."
+fi
+
 echo
 echo "✓ Deploy fertig — ${TARGET_URL}  (${ENV_NAME})"
 echo "  Stand jetzt: Branch ${BRANCH}, Commit ${COMMIT}"
