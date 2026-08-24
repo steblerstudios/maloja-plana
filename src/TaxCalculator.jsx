@@ -30,10 +30,14 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [estimatedTax, setEstimatedTax] = useState(0);
   const [taxResult, setTaxResult] = useState(null);
 
-  // Amtlich steuerbares (Rein-)Einkommen aus dem Steuer-Import — bereits nach
-  // Abzügen. Wenn vorhanden, kann es 1:1 als Basis dienen (kein Doppel-Abzug).
-  const importedTaxable = Number(data.finanzen?.taxableIncome || 0);
-  const [useImportedTaxable, setUseImportedTaxable] = useState(importedTaxable > 0);
+  // Steuerbares Einkommen — die Tarif-Basis (Brutto − Abzüge, DBG Art. 36), nicht das
+  // Reineinkommen. Kann aus dem Steuer-Import kommen ODER direkt eingegeben werden (z.B.
+  // vom Steuerbescheid). Wenn gesetzt, dient es 1:1 als Basis (Abzüge entfallen, kein
+  // Doppel-Abzug). Geteilter Knoten data.finanzen.taxableIncome
+  // — dieselbe Zahl, die EO/IPV/Sozialhilfe später bevorzugt nutzen können.
+  const [taxableInput, setTaxableInput] = useState(data.finanzen?.taxableIncome ? String(data.finanzen.taxableIncome) : '');
+  const enteredTaxable = Number(taxableInput) || 0;
+  const [useEnteredTaxable, setUseEnteredTaxable] = useState(enteredTaxable > 0);
 
   const partnerIncome = Number(data.basis?.household?.partnerIncome || 0);
   const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + partnerIncome) * 12;
@@ -41,13 +45,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   React.useEffect(() => {
     calculateTax();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Die Deps listen die echten Eingaben von calculateTax; die Funktion selbst wird pro Render neu erstellt und würde als Dep jeden Render feuern.
-  }, [taxData, income, canton, verheiratet, kinder, useImportedTaxable]);
+  }, [taxData, income, canton, verheiratet, kinder, enteredTaxable, useEnteredTaxable]);
 
   const calculateTax = () => {
     let result;
-    if (useImportedTaxable && importedTaxable > 0) {
-      // Amtlicher Wert ist schon steuerbar: 1:1 als Basis, keine Abzüge mehr.
-      result = berechneBundessteuer({ bruttoEinkommen: importedTaxable, verheiratet, kinder, abzuege: 0 });
+    if (useEnteredTaxable && enteredTaxable > 0) {
+      // Eingegebener/importierter Wert ist schon steuerbar: 1:1 als Basis, keine Abzüge mehr.
+      result = berechneBundessteuer({ bruttoEinkommen: enteredTaxable, verheiratet, kinder, abzuege: 0 });
     } else {
       let totalDeductions = 0;
       for (const ded of deductions) {
@@ -66,7 +70,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   };
 
   const handleSave = () => {
-    onSave({ ...data, taxData, canton });
+    // taxableIncome als geteilten Knoten mitspeichern (oder tilgen, wenn leer).
+    onSave({ ...data, taxData, canton, finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
   };
 
   const inputStyle = {
@@ -136,19 +141,34 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t('tax.netIncomeNote')),
 
-        importedTaxable > 0 && React.createElement('div', { style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, marginBottom: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        React.createElement(LabeledField, { palette, label: t('tax.taxableIncomeDirect'), style: { marginBottom: space.xs } },
+          React.createElement('input', {
+            type: 'number',
+            inputMode: 'decimal',
+            value: taxableInput,
+            onChange: (e) => {
+              const v = e.target.value;
+              setTaxableInput(v);
+              setUseEnteredTaxable((Number(v) || 0) > 0);
+            },
+            placeholder: t('tax.taxableIncomeDirectPlaceholder'),
+            style: inputStyle
+          })
+        ),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } }, 'ⓘ ' + t('tax.taxableIncomeDirectHint')),
+
+        enteredTaxable > 0 && React.createElement('label', { htmlFor: 'tax-use-entered', style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
             type: 'checkbox',
-            checked: useImportedTaxable,
-            onChange: (e) => setUseImportedTaxable(e.target.checked),
-            id: 'tax-use-imported',
+            checked: useEnteredTaxable,
+            onChange: (e) => setUseEnteredTaxable(e.target.checked),
+            id: 'tax-use-entered',
             style: { accentColor: palette.sand, marginTop: '2px' }
           }),
-          React.createElement('label', { htmlFor: 'tax-use-imported', style: { fontSize: text.sm, color: palette.text, cursor: 'pointer' } },
-            t('tax.useImportedTaxable').replace('{value}', importedTaxable.toFixed(0)))
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.useTaxableEntered'))
         ),
 
-        !useImportedTaxable && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
+        !useEnteredTaxable && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
           React.createElement(LabeledField, { palette, label: ded.label, style: { marginBottom: 0 } },
             React.createElement('input', {
               type: 'number',

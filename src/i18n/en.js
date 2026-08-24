@@ -2334,6 +2334,10 @@ export default {
     disclaimer: 'This orientation shows the estimated tax burden (federal, cantonal, municipal). Cantonal values are based on the cantonal capital. You can find exact amounts at your cantonal tax authority.',
     netIncomeNote: 'Projection based on your net salary × 12. Actual tax liability may differ.',
     useImportedTaxable: 'Use official taxable income (CHF {value}/year). Deductions are then ignored.',
+    taxableIncomeDirect: 'Taxable income (optional)',
+    taxableIncomeDirectPlaceholder: 'e.g. 65 000',
+    taxableIncomeDirectHint: 'Know it from your tax assessment? Enter it directly — the overview then uses it instead of estimating from your net salary.',
+    useTaxableEntered: 'Use this value as the basis — deductions no longer apply (it is already taxable).',
     saeulen: {
       title: 'Marital status compared',
       hint: 'Tap a bar to try out a marital status.',

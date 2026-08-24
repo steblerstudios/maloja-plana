@@ -2784,6 +2784,10 @@ export default {
     disclaimer: "Questa orientaziun mussa la chargia da taglia stimada (confederaziun, chantun, vischnanca). Valurs chantunals sa basan sin il lieu principal.",
     netIncomeNote: { sie: "Projecziun da Voss salari net × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net × 12. La chargia da taglia effectiva po divergiar." },
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
+    taxableIncomeDirect: 'Entrada taxabla (facultativ)',
+    taxableIncomeDirectPlaceholder: 'p.ex. 65 000',
+    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net.',
+    useTaxableEntered: 'Duvrar quest valur sco basa — deducziuns na valan lura betg pli (el è gia taxabel).',
     saeulen: {
       title: 'Stadi civil en cumparaziun',
       hint: 'Tutgai ina colonna per empruvar in stadi civil.',
