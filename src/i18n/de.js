@@ -2352,6 +2352,10 @@ export default {
     disclaimer: { sie: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge finden Sie bei Ihrer kantonalen Steuerverwaltung.', du: 'Diese Orientierung zeigt die geschätzte Steuerbelastung (Bund, Kanton, Gemeinde). Kantonale Werte basieren auf dem Hauptort. Die genauen Beträge findest du bei deiner kantonalen Steuerverwaltung.' },
     netIncomeNote: { sie: 'Hochrechnung aus Ihrem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.', du: 'Hochrechnung aus deinem Nettolohn × 12. Die tatsächliche Steuerlast kann abweichen.' },
     useImportedTaxable: 'Amtliches steuerbares Einkommen verwenden (CHF {value}/Jahr). Abzüge werden dann ignoriert.',
+    taxableIncomeDirect: 'Steuerbares Einkommen (optional)',
+    taxableIncomeDirectPlaceholder: 'z.B. 65 000',
+    taxableIncomeDirectHint: 'Bekannt aus der Steuerveranlagung? Direkt eintragen — dann rechnet die Übersicht damit statt aus dem Nettolohn.',
+    useTaxableEntered: 'Diesen Wert als Basis verwenden — Abzüge entfallen (er ist bereits steuerbar).',
     saeulen: {
       title: 'Zivilstand im Vergleich',
       hint: { sie: 'Tippen Sie eine Säule an, um den Zivilstand auszuprobieren.', du: 'Tippe eine Säule an, um den Zivilstand auszuprobieren.' },

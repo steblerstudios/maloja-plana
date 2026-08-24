@@ -2292,6 +2292,10 @@ export default {
     disclaimer: { sie: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del Suo cantone.', du: 'Questo orientamento mostra l\'onere fiscale stimato (federale, cantonale, comunale). I valori cantonali sono basati sul capoluogo. Gli importi esatti si trovano presso l\'amministrazione fiscale del tuo cantone.' },
     netIncomeNote: { sie: 'Proiezione basata sul Suo salario netto × 12. L\'onere fiscale effettivo può variare.', du: 'Proiezione basata sul tuo salario netto × 12. L\'onere fiscale effettivo può variare.' },
     useImportedTaxable: 'Usa il reddito imponibile ufficiale (CHF {value}/anno). Le deduzioni vengono ignorate.',
+    taxableIncomeDirect: 'Reddito imponibile (facoltativo)',
+    taxableIncomeDirectPlaceholder: 'ad es. 65 000',
+    taxableIncomeDirectHint: 'Noto dalla tassazione? Inserirlo direttamente — il riepilogo lo usa invece di stimarlo dal salario netto.',
+    useTaxableEntered: 'Usa questo valore come base — le deduzioni non si applicano più (è già imponibile).',
     saeulen: {
       title: 'Stato civile a confronto',
       hint: 'Tocca una colonna per provare uno stato civile.',

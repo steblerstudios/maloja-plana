@@ -2333,6 +2333,10 @@ export default {
     disclaimer: 'Cette orientation montre la charge fiscale estimée (fédérale, cantonale, communale). Les valeurs cantonales sont basées sur le chef-lieu. Les montants exacts se trouvent auprès de votre administration fiscale cantonale.',
     netIncomeNote: 'Projection basée sur votre salaire net × 12. La charge fiscale réelle peut varier.',
     useImportedTaxable: 'Utiliser le revenu imposable officiel (CHF {value}/an). Les déductions sont alors ignorées.',
+    taxableIncomeDirect: 'Revenu imposable (facultatif)',
+    taxableIncomeDirectPlaceholder: 'p. ex. 65 000',
+    taxableIncomeDirectHint: 'Connu grâce à votre taxation? Le saisir directement — l’aperçu l’utilise alors au lieu d’une estimation basée sur le salaire net.',
+    useTaxableEntered: 'Utiliser cette valeur comme base — les déductions ne s’appliquent plus (elle est déjà imposable).',
     saeulen: {
       title: 'État civil comparé',
       hint: 'Touchez une colonne pour essayer un état civil.',
