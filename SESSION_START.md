@@ -7,7 +7,37 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-08-14 (✅ **DEPLOYT & LIVE** · `main`=`48ce925` · **keine offenen PRs** · Live-Bundle `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, HTTP 200, per `curl` verifiziert 14.08. · #116 Steuer-Säulen + #118 Kapitel-Index-Test **live**)
+**Stand:** 2026-08-24 (`main`=`4e2ec1d` · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8` · ⚠️ **`main` ist der Live-Version VORAUS** — live läuft weiter `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, per `curl` verifiziert 24.08.)
+
+> ### ⭐ AKTUALISIERUNG 2026-08-24 (zwei Merges + Branch-Wald gerodet)
+>
+> **`main`: `48ce925` → `4e2ec1d`.** Zwei PRs sind seit dem 14.08. dazugekommen:
+> **#119** (Stand-Korrektur 13./14.08.) und **#120** (`feat/reineinkommen-feld` — steuerbares
+> Einkommen direkt eingebbar). Beide gemergt, Arbeitsbaum sauber, nichts ungepusht.
+>
+> **⚠️ Gemergt ≠ live.** Der letzte Deploy stammt vom **13.08.** (`index-2340fe54.js`).
+> `main` trägt seither zwei PRs mehr. Das ist **kein Rückstand, sondern der Predeploy-Stand** —
+> ein Deploy erfolgt bewusst erst nach der Predeploy-Runde und nur von Stebler Studios.
+>
+> **Branch-Wald gerodet.** Von 28 Zweigen auf `origin` und 20 lokal ist **einer** übrig:
+> `fix/deploy-assets-aufraeumen`. Gelöscht wurden 26 `origin`- und 18 lokale Zweige — alle per
+> `git branch -r --merged origin/main` als **vollständig in `main` enthalten** belegt, mit
+> Hash-Liste für den Rückweg (ausserhalb des Repos protokolliert). Gegenprobe mit dem
+> verbliebenen Zweig: korrekt als *nicht* enthalten gemeldet — die Prüfung unterscheidet
+> also wirklich, statt pauschal ✓ zu liefern.
+>
+> **Offen bleibt genau einer:** `fix/deploy-assets-aufraeumen` (**`a1707a8`**, 2 voraus /
+> 0 zurück) ergänzt `deploy.sh` um das Aufräumen verwaister Build-Dateien in `assets/`.
+> `bash -n` sauber.
+>
+> ⚠️ Er lag zwischenzeitlich auf `112de43` und damit **2 Commits hinter `main`** (Abzweig vom
+> 14.08., also vor PR #120). Der Diff sah dann aus, als entferne er das Reineinkommen-Feld —
+> er war nur alt. Da `deploy.sh --stage` aus dem *ausgecheckten* Zweig baut, hätte der
+> Trockenlauf eine veraltete App auf die Stage gestellt. Inzwischen auf `main`-Stand gebracht.
+> **Merkregel: einen Feature-Branch vor dem Deployen auf `main`-Stand bringen.**
+>
+> **Nicht mergen, bevor der SFTP-Trockenlauf gelaufen ist** — der Patch verändert den
+> Produktionsweg und braucht Zugangsdaten, die nur Stebler Studios hat.
 
 > ### ⭐ AKTUALISIERUNG 2026-08-13/14 (Stand-Korrektur + Deploy nachgezogen)
 >
