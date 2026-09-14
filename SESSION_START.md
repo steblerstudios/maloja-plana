@@ -7,7 +7,13 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-08-24 (`main`=`4e2ec1d` · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8` · ⚠️ **`main` ist der Live-Version VORAUS** — live läuft weiter `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, per `curl` verifiziert 24.08.)
+**Stand:** 2026-08-24 (`main`=`575c40d` nach dem Merge von **PR #121** · **keine offenen PRs** · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8` · ⚠️ **`main` ist der Live-Version VORAUS** — live läuft weiter `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, per `curl` verifiziert 24.08.)
+
+> **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
+> dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
+> alt. Das ist normal und kein Fehler. Verlässlich ist die Aussage „`main` = Stand nach PR #N";
+> der exakte Hash gehört immer per `git fetch && git log --oneline -1 origin/main` gegengeprüft,
+> nie aus dieser Datei abgeschrieben.
 
 > ### ⭐ AKTUALISIERUNG 2026-08-24 (zwei Merges + Branch-Wald gerodet)
 >
