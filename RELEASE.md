@@ -92,8 +92,12 @@ unberührt. Zugriffsschutz macht das App-eigene BetaGate.
 Zwei Netze — du kannst immer zurück:
 
 **A) Sofort, aus dem Deploy-Backup.** `deploy.sh` sichert vor jedem Upload die
-aktuelle Live-Version nach `./.deploy-backups/<zeitstempel>/`. Zum Zurückrollen
-den letzten guten Ordner wieder hochspielen:
+aktuelle Live-Version nach `./.deploy-backups/<zeitstempel>/`. Dieses Backup ist
+ein **Gate**: schlägt das Spiegeln fehl oder bleibt der Ordner leer, bricht der
+Deploy ab, **bevor** etwas hochgeht — die Live-Version bleibt unberührt. Nur im
+Notfall und bewusst ohne Rückfallpunkt: `DEPLOY_OHNE_BACKUP=1 bash deploy.sh`.
+(`SKIP_BACKUP=1` versucht das Backup gar nicht erst — ebenfalls nur auf Zuruf.)
+Zum Zurückrollen den letzten guten Ordner wieder hochspielen:
 ```bash
 lftp -c "open -u \"$SFTP_USER\",\"$SFTP_PASSWORD\" sftp://\"$SFTP_HOST\"; \
   mirror -R ./.deploy-backups/<zeitstempel>/ \"$REMOTE_DIR\""

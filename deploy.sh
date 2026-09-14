@@ -10,7 +10,11 @@
 #   bash deploy.sh --stage              # STAGE/Vorschau: deployt den aktuellen Branch nach stage.malojaplana.ch
 #   SFTP_PASSWORD='…' bash deploy.sh    # Passwort aus Umgebungsvariable
 #   ALLOW_ANY_BRANCH=1 bash deploy.sh   # Notfall: PRODUKTION aus einem anderen Branch deployen
-#   SKIP_BACKUP=1 bash deploy.sh        # Rollback-Backup der Live-Version überspringen
+#   SKIP_BACKUP=1 bash deploy.sh        # Rollback-Backup der Live-Version gar nicht erst versuchen
+#   DEPLOY_OHNE_BACKUP=1 bash deploy.sh # Notfall: trotz fehlgeschlagenem/leerem Backup hochladen
+#
+# Das Rollback-Backup ist ein GATE: schlägt es fehl oder bleibt es leer, bricht der
+# Deploy ab, BEVOR etwas hochgeht. Ohne Rückfallpunkt gäbe es keinen Weg zurück.
 #
 # Voraussetzungen: node/npm + lftp  (lftp installieren: brew install lftp)
 # Das Passwort wird NIE in der Datei/im Repo gespeichert.
@@ -133,8 +137,16 @@ bash "$(dirname "$0")/scripts/check-seo.sh" dist
 # ─── Rollback-Sicherung: aktuelle Live-Version sichern, BEVOR sie überschrieben wird ──
 # Spiegelt den aktuellen Remote-Stand nach ./.deploy-backups/<zeit>/ (gitignored).
 # Zurückrollen: den gesicherten Ordner wieder hochspielen (siehe RELEASE.md → Rollback).
-# Nicht-fatal: schlägt das Backup fehl, läuft der Deploy trotzdem weiter.
 # Im Stage-Modus kein Backup: die Vorschau ist wegwerfbar, es gibt nichts zu retten.
+#
+# GATE (seit 14.09.2026): Schlägt das Spiegeln fehl ODER bleibt der Backup-Ordner
+# leer, bricht der Deploy hier ab — die Live-Version wird nicht angefasst.
+# Vorher lief der Deploy nach einem gescheiterten Backup einfach weiter („⚠️ …
+# läuft trotzdem weiter"). Am 14.09.2026 scheiterte das Backup mit «Login
+# incorrect»; der Upload scheiterte damals zufällig am selben Fehler. Bei einer
+# anderen Ursache (Netz, Timeout, falscher/leerer REMOTE_DIR) wäre die
+# Live-Version ohne Rücksprung überschrieben worden. Ein leeres Backup ist kein
+# Backup. Bewusster Ausweg, nur auf ausdrücklichen Zuruf: DEPLOY_OHNE_BACKUP=1.
 if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   BACKUP_DIR="./.deploy-backups/${STAMP}"
   mkdir -p "$BACKUP_DIR"
@@ -142,10 +154,34 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   # Passwort via Umgebungsvariable (LFTP_PASSWORD + --env-password), NICHT im
   # Befehlstext — so können Sonderzeichen (Komma, ", \, $ …) nichts zerbrechen.
   # net:max-retries begrenzt: bei Verbindungsproblemen gibt das Backup auf,
-  # statt endlos „Verbinde…" zu schleifen (der Upload unten ist das Wichtige).
-  LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
-    -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye" \
-    || echo "  ⚠️ Backup fehlgeschlagen — Deploy läuft trotzdem weiter."
+  # statt endlos „Verbinde…" zu schleifen — und läuft dann ins Gate unten.
+  BACKUP_FEHLER=""
+  if ! LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
+      -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye"; then
+    BACKUP_FEHLER="lftp hat das Spiegeln mit Fehler beendet (Login? Netz? Timeout? REMOTE_DIR?)"
+  elif [ -z "$(find "$BACKUP_DIR" -type f -print -quit 2>/dev/null)" ]; then
+    # Exit 0 von lftp heisst nur „Befehl lief durch" — nicht „es kam etwas an".
+    BACKUP_FEHLER="Backup-Ordner ist leer — ein leeres Backup ist kein Backup (REMOTE_DIR falsch oder leer?)"
+  fi
+
+  if [ -n "$BACKUP_FEHLER" ]; then
+    # Unvollständige/leere Sicherung nicht als Rückfallpunkt liegen lassen.
+    # Gefahrlos: die Live-Version selbst ist unberührt (der Upload kam noch nicht).
+    rm -rf "$BACKUP_DIR"
+    if [ "${DEPLOY_OHNE_BACKUP:-0}" = "1" ]; then
+      echo "  ⚠️ Backup fehlgeschlagen: ${BACKUP_FEHLER}"
+      echo "  ⚠️ DEPLOY_OHNE_BACKUP=1 gesetzt — Deploy läuft bewusst OHNE Rückfallpunkt weiter."
+    else
+      echo
+      echo "✗ Deploy abgebrochen — Rollback-Backup fehlgeschlagen:"
+      echo "  ${BACKUP_FEHLER}"
+      echo
+      echo "  Die Live-Version wurde NICHT angefasst. Ohne Backup gäbe es keinen Weg zurück."
+      echo "  Ursache beheben (Zugangsdaten in .deploy.local · Netz · REMOTE_DIR) und neu starten."
+      echo "  Nur im Notfall, bewusst ohne Rückfallpunkt:  DEPLOY_OHNE_BACKUP=1 bash deploy.sh"
+      exit 1
+    fi
+  fi
 
   # Selbst-Aufräumen: .deploy-backups/ soll nicht endlos wachsen (jede volle
   # Sicherung ist ~100 MB). Wir behalten nur die neuesten KEEP_BACKUPS Stück.
@@ -154,8 +190,11 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   if [ -d ./.deploy-backups ]; then
     # 1) leere Fehlstart-Ordner (fehlgeschlagene Backups) entfernen
     find ./.deploy-backups -mindepth 1 -maxdepth 1 -type d -empty -exec rm -rf {} + 2>/dev/null || true
-    # 2) nur die neuesten KEEP_BACKUPS behalten, ältere weg
-    ls -1dt ./.deploy-backups/*/ 2>/dev/null | tail -n +$((KEEP_BACKUPS + 1)) | while read -r old; do
+    # 2) nur die neuesten KEEP_BACKUPS behalten, ältere weg. Ordnernamen sind
+    #    Zeitstempel → alphabetisch absteigend = neueste zuerst. Bewusst find
+    #    statt `ls ./.deploy-backups/*/`: ohne Treffer scheitert ls, und unter
+    #    `set -o pipefail` riss das still den ganzen Deploy ab (Befund 14.09.2026).
+    find ./.deploy-backups -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort -r | tail -n +$((KEEP_BACKUPS + 1)) | while read -r old; do
       echo "  ⌫ alte Rollback-Sicherung entfernen: ${old}"
       rm -rf "$old"
     done
