@@ -7,13 +7,50 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-08-24 (`main`=`575c40d` nach dem Merge von **PR #121** · **keine offenen PRs** · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8` · ⚠️ **`main` ist der Live-Version VORAUS** — live läuft weiter `index-2340fe54.js`, last-modified 13.08. 18:28 GMT, per `curl` verifiziert 24.08.)
+**Stand:** 2026-09-14 (`main`=`aee402e` nach dem Merge von **PR #126** · **keine offenen PRs** · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8`, inzwischen 12 Commits hinter `main` · ✅ **`main` ist LIVE** — Deploy 14.09. 18:32 aus `6b17e6b`, live läuft `index-2d6da893.js`, last-modified 14.09. 16:32 GMT, per `curl` verifiziert 14.09. 23:55; `main` unterscheidet sich vom Live-Build nur in `deploy.sh` + `RELEASE.md`, nicht in der App)
 
 > **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
 > dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
 > alt. Das ist normal und kein Fehler. Verlässlich ist die Aussage „`main` = Stand nach PR #N";
 > der exakte Hash gehört immer per `git fetch && git log --oneline -1 origin/main` gegengeprüft,
 > nie aus dieser Datei abgeschrieben.
+
+> ### ⭐ AKTUALISIERUNG 2026-09-14 (Deploy gelandet — vier PRs live, `mergen ≠ live` geschlossen)
+>
+> **`main`: `575c40d` → `aee402e`.** Fünf PRs an einem Tag: **#122** (Stand-Doku nach #121),
+> **#124** (`sitemap.xml` `lastmod` 07-09 → 08-13 + IndexNow-Schlüsseldatei + `scripts/indexnow-ping.sh`),
+> **#125** (`src/crypto/README.md`, Vault-Entscheid vom 24.08. festgehalten), **#126** (`deploy.sh`:
+> das Rollback-Backup ist jetzt ein **Gate** — lftp-Fehler oder leerer Backup-Ordner brechen ab;
+> Ausweg nur ausdrücklich per `DEPLOY_OHNE_BACKUP=1`; `RELEASE.md` beschreibt es). Alle gemergt,
+> Arbeitsbaum sauber, keine offenen PRs.
+>
+> **Deployt, 14.09. 18:32 (Zürich), aus `6b17e6b`** (= Stand nach #125). Live liefert seit
+> **14.09. 16:32:12 GMT** `index-2d6da893.js` / `index-6b0b5577.css` (HTTP 200), byte-gleich mit
+> dem lokalen `dist`; Sicherung `.deploy-backups/20260914-183209`. Gegenprobe: erfundener
+> Bundle-Name → 404. **Damit live: #120 (steuerbares Einkommen direkt eingebbar), #124, #125.**
+> `#126` kam nach dem Build (`da88589`, 18:34) und berührt nur `deploy.sh` + `RELEASE.md` —
+> `git diff 6b17e6b..main` zeigt genau diese zwei Dateien, **kein App-Delta**. Also: `main` ist
+> live, ein Deploy hängt **nicht**.
+>
+> **Einzeln belegt (curl 14.09. 23:55):** IndexNow-Schlüsseldatei live **200** (erfundener
+> Schlüssel → 404). `sitemap.xml` live mit `lastmod` **2026-08-13** (5×) — so hat es #124 gesetzt;
+> beim **nächsten** Deploy auf das dann gültige Datum ziehen (`public/sitemap.xml`), nicht in
+> einem Doku-PR. `bash scripts/indexnow-ping.sh` nach dem Deploy: **nicht belegt, ob gelaufen.**
+>
+> **Kein Release-Tag gesetzt.** `package.json` steht auf `0.1.26-beta`, letzter Tag `v0.1.26-beta`
+> (19.07.) — der Deploy vom 14.09. trägt keinen eigenen Tag.
+>
+> **Zweige:** vier gemergte Zweige liegen noch lokal und auf `origin` (`docs/crypto-readme`,
+> `docs/stand-nach-121`, `fix/deploy-backup-gate`, `fix/sitemap-lastmod`), alle per `merge-base`
+> als in `main` enthalten belegt, 0 voraus — dürfen weg, nicht Teil dieses PRs.
+> `fix/deploy-assets-aufraeumen` (`a1707a8`, 2 voraus) liegt jetzt **12 Commits hinter `main`**
+> und fasst dieselbe `deploy.sh` an wie #126 → vor dem SFTP-Trockenlauf erst auf `main`-Stand
+> bringen und den Konflikt auflösen (Merkregel vom 24.08. gilt weiter).
+>
+> **Lehre des Tages:** der Deploy war um 18:32 erledigt, während Briefing und Übergabe ihn bis
+> 22:35 als offen führten — vier Stunden Doku-Rückstand ohne einen einzigen `curl`. Vor jedem
+> «Deploy hängt» erst `curl -sI https://malojaplana.ch/` + Bundle-Hash gegen `dist/`, dann
+> schreiben.
 
 > ### ⭐ AKTUALISIERUNG 2026-08-24 (zwei Merges + Branch-Wald gerodet)
 >
