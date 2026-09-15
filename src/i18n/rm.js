@@ -2079,6 +2079,8 @@ export default {
     selectFile: 'Tscherner la datoteca da segirezza',
     fileTypes: '.json u .maloja',
     validationErrors: 'Avertiments da validaziun',
+    structureRejected: 'La segirezza n\'ha betg pudì vegnir legida, perquai che sia structura na correspunda betg al format spetgà. Nagut n\'è vegnì midà.',
+    fileTooLarge: 'La datoteca è pli gronda che {max} ed è perquai betg vegnida legida. Nagut n\'è vegnì midà.',
     restored: 'Restituì',
   },
 

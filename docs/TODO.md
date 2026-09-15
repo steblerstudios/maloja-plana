@@ -1,5 +1,11 @@
 # Maloja Plana — Master-TODO
 
+> **Seit 15.09.2026 gilt eine andere Liste:** [`BAULISTE-2026-09-30.md`](BAULISTE-2026-09-30.md)
+> — die eine Bau-Liste bis 30.09. (12 MUSS · KANN · Entscheide), aus dieser Datei, dem
+> `BACKLOG_MASTER`, `IDEEN.md` und dem Predeploy-Backlog zusammengezogen. **Diese Datei bleibt als
+> Beleg und Fundgrube stehen**, wird aber nicht mehr als Arbeitsliste gepflegt. Was hier offen ist
+> und dort nicht steht, ist bewusst nicht bis 30.09. dran.
+
 *Konsolidierte Arbeitsliste (Stand 2026-06-24). Quelle: Experten-Audits + Brand-Identity +
 Braindumps. Schnellste Wins zuerst. ✅ = erledigt · 🔴 hoch · 🟠 mittel · 🟡 grösser/später.*
 

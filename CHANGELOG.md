@@ -11,7 +11,10 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-### Behoben (Voll-Review Stufe L, 2026-09-15 — neun Prüfer über die ganze App)
+### Behoben
+- **Backup-Restore gehärtet (TODO §G2):** Die Struktur-Prüfung beim Import ist jetzt eine Barriere statt einer Warnung — schlägt `validateBackupPayload` fehl, wird nichts geschrieben (auch kein Pre-Restore-Snapshot); ruhige Meldung in 5 Sprachen. Dazu ein 50-MB-Limit vor dem Lesen der Datei, Anzahl-Obergrenzen für alle Listen (Dokumente, Kalender, Kontakte, Merkliste, Schulden/Betreibung/Verlustscheine) und `merkliste` in der Validierung. Neu `restoreBackup()` in `backupCrypto.js` als eine Stelle für Prüfen → Snapshot → Schreiben; 22 neue Tests.
+
+#### Aus dem Voll-Review Stufe L (2026-09-15 — neun Prüfer über die ganze App)
 - **Recht:** Kündigungsbrief zitierte für die Schriftform «OR Art. 266a» — richtig ist **OR Art. 266l Abs. 1** (5 Sprachen); KVG-Kündigungshinweis nennt jetzt Art. 7 Abs. 2 und den Jahresende-Fall; «null Netzwerkverkehr» → «läuft auch ohne Netz weiter» (der Service Worker ist network-first); `README` verlinkt `LICENSE.txt`.
 - **Copy/Würde:** Schulden-Einordnung «Kritische Schuldenlage … erforderlich!» ruhig umformuliert (5 Sprachen); ALV-Block hatte nur Du-Form → `{sie,du}`-Split für 9 Keys; «Arbeitslosengeld» → «Arbeitslosenentschädigung»/«ALV-Taggeld» (Schweizer Begriff); drei Ausrufezeichen im Onboarding weg.
 - **Brief-Generator:** Objektadresse im Kündigungsbrief war doppelt escaped («Meier &amp;amp; Co»), jetzt genau einmal; Regressionstest.

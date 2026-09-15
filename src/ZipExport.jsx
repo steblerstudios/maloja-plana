@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PanelTitle } from './components/Heading.jsx';
 import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
-import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, createPreRestoreSnapshot, applyBackup, downloadFile } from './utils/backupCrypto.js';
+import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius, space } from './config/tokens.js';
@@ -98,6 +98,14 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     setBackupStatus(null);
     setValidationWarnings([]);
 
+    // Grössenlimit VOR dem Lesen — die Datei wird gar nicht erst in den Speicher
+    // geholt (Begründung bei MAX_BACKUP_FILE_BYTES in backupCrypto.js).
+    if (exceedsBackupFileLimit(file.size)) {
+      setBackupStatus({ type: 'error', msg: t('backup.fileTooLarge', { max: '50 MB' }) });
+      e.target.value = '';
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
       const buffer = reader.result;
@@ -144,9 +152,13 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   };
 
   const confirmAndRestore = async (backup) => {
+    // Barriere, nicht Warnung: passt der Aufbau nicht, wird nichts geschrieben —
+    // und niemand muss erst einen aussichtslosen Restore bestätigen.
     const validation = validateBackupPayload(backup);
-    if (validation.errors.length > 0) {
+    if (!validation.valid) {
       setValidationWarnings(validation.errors);
+      setBackupStatus({ type: 'error', msg: t('backup.structureRejected') });
+      return;
     }
 
     if (!window.confirm(t('backup.confirmRestore'))) {
@@ -154,8 +166,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
       return;
     }
 
-    createPreRestoreSnapshot();
-    const result = await applyBackup(backup);
+    // restoreBackup prüft erneut (Barriere gilt unabhängig vom Aufrufer),
+    // legt den Snapshot an und schreibt erst dann.
+    const result = await restoreBackup(backup);
+
+    if (result.blocked) {
+      setValidationWarnings(result.errors);
+      setBackupStatus({ type: 'error', msg: t('backup.structureRejected') });
+      return;
+    }
 
     if (result.success) {
       setBackupStatus({ type: 'success', msg: t('backup.importSuccess') });

@@ -8,9 +8,32 @@ import { getDocBlob, saveDocBlob, stripBlob } from './docBlobs.js';
 import { ALGO, SALT_BYTES, IV_BYTES, isSecureContext, deriveKey } from './cryptoCore.js';
 // Nur der Aktiv-Marker des Tresors — kein Zyklus (secureStore importiert backupCrypto nicht).
 import { isTresorActive } from './secureStore.js';
+import { validateBackupPayload } from './dataValidation.js';
 
 // Backup-spezifischer Datei-Kopf (kennzeichnet + versioniert das Backup-Format).
 const BACKUP_MAGIC = 'MALOJA_PLANA_BACKUP_V1';
+
+// Grössenlimit VOR dem Lesen der Datei (FileReader). Begründung:
+// - Was ins Backup kommt: or5_data/reminders/contacts/merkliste aus localStorage
+//   (quota-bedingt zusammen im einstelligen MB-Bereich) plus die Dokument-Blobs
+//   aus IndexedDB als base64-dataURL (Faktor ~1,37). Ein einzelnes Dokument ist
+//   beim Upload auf 20 MB begrenzt (ChapterView MAX_DOC_BYTES) → max. ~27 MB im
+//   Backup; typische Scans/Fotos liegen bei 0,3–3 MB.
+// - Der Import materialisiert die Datei mehrfach im RAM: ArrayBuffer → String
+//   (TextDecoder) → JSON.parse → JSON.stringify je Schlüssel. Bei 50 MB sind das
+//   ~200 MB Spitze — in der iOS-Hülle (Capacitor/WKWebView) noch sicher; ein
+//   Tab-Absturz MITTEN im Restore wäre der eigentliche Datenverlust-Fall.
+// 50 MB deckt damit den localStorage-Anteil + ein Maximal-Dokument + gut ein
+// Dutzend typische Scans. Es ist eine Schranke gegen den Fehlgriff (Video,
+// Foto-Ordner) und gegen Speicher-Erschöpfung, kein Ziel-Wert. Eine Stelle
+// zum Anheben, falls echte Backups je darüber liegen.
+export const MAX_BACKUP_FILE_BYTES = 50 * 1024 * 1024;
+
+// true, wenn die Datei nicht gelesen werden soll. Unbrauchbare Grössen
+// (undefined/NaN/negativ) blockieren NICHT — die Inhalts-Prüfung danach greift.
+export function exceedsBackupFileLimit(sizeBytes) {
+  return typeof sizeBytes === 'number' && sizeBytes > MAX_BACKUP_FILE_BYTES;
+}
 
 /**
  * Collect all Maloja Plana data into a single backup object.
@@ -250,6 +273,24 @@ export async function applyBackup(backup) {
   } catch (e) {
     return { success: false, restored, error: e.message };
   }
+}
+
+/**
+ * Validierung als Barriere, dann Snapshot, dann Schreiben — in DIESER Reihenfolge.
+ * Schlägt validateBackupPayload fehl, wird nichts angefasst: kein Snapshot,
+ * kein applyBackup. Die UI prüft zusätzlich vor dem Bestätigungs-Dialog,
+ * damit niemand einen aussichtslosen Restore bestätigen muss; die Barriere
+ * hier gilt aber unabhängig vom Aufrufer.
+ * Returns { success, blocked, errors, restored, error }
+ */
+export async function restoreBackup(backup) {
+  const validation = validateBackupPayload(backup);
+  if (!validation.valid) {
+    return { success: false, blocked: true, errors: validation.errors, restored: [], error: null };
+  }
+  createPreRestoreSnapshot();
+  const result = await applyBackup(backup);
+  return { ...result, blocked: false, errors: [] };
 }
 
 /**
