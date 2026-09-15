@@ -68,7 +68,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
     cb: { flexShrink: 0, width: '20px', height: '20px', cursor: 'pointer', accentColor: palette.sage },
     txt: (d) => ({ flex: 1, fontSize: text.sm, color: d ? palette.mid : palette.text, textDecoration: d ? 'line-through' : 'none', lineHeight: 1.4 }),
     openLink: { background: palette.sageMist || palette.up, color: palette.sageDeep || palette.mid, border: 'none', borderRadius: radius.sm + 'px', padding: '4px 10px', fontSize: text.xs, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' },
-    del: { background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
+    del: { display: 'inline-flex', alignItems: 'center', background: 'none', border: 'none', color: palette.mid, cursor: 'pointer', fontSize: text.sm, padding: '4px' },
     empty: { fontSize: text.sm, color: palette.mid, fontStyle: 'italic', padding: space.md + 'px 0' },
   };
 
@@ -76,7 +76,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
     React.createElement('input', { type: 'checkbox', checked: i.done, onChange: () => toggle(i.id), style: s.cb, 'aria-label': i.done ? t('merkliste.undo') : t('merkliste.markDone') }),
     React.createElement('span', { style: s.txt(i.done) }, i.text),
     i.link && onNavigate && React.createElement('button', { style: s.openLink, onClick: () => onNavigate(i.link) }, '→ ' + labelFor(i.link)),
-    React.createElement('button', { style: s.del, 'aria-label': t('common.delete'), onClick: () => remove(i.id) }, '✕')
+    React.createElement('button', { style: s.del, 'aria-label': t('common.delete'), onClick: () => remove(i.id) }, React.createElement(Icon, { name: 'kreuz', size: 16 }))
   );
 
   return React.createElement('div', { style: s.card },

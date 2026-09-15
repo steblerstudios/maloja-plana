@@ -62,11 +62,11 @@ export const scanBarcodeFromImage = async (imageFile) => {
   });
 };
 
-export const performOCR = async () => {
+const performOCR = async () => {
   throw new Error('OCR not available — use QR/barcode scan or manual input');
 };
 
-export const extractKKDataFromText = (text) => {
+const extractKKDataFromText = (text) => {
   const result = {
     insurer: '',
     cardNumber: '',

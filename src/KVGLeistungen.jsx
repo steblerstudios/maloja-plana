@@ -129,7 +129,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
               fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
               textAlign: 'left',
             }
-          }, (open ? '▾ ' : '▸ ') + (emp
+          }, React.createElement('span', { 'aria-hidden': 'true' }, open ? '▾ ' : '▸ '), (emp
             ? (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))
             : (open ? t('kvg.detailHide') : t('kvg.detailShow')))),
           // Screening-Empfehlung (WHO/EU)
@@ -275,7 +275,7 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
           textAlign: 'left',
         }
-      }, (evidenceOpen ? '▾ ' : '▸ ') + t('kvg.evidenceToggle')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, evidenceOpen ? '▾ ' : '▸ '), t('kvg.evidenceToggle')),
       evidenceOpen && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.normal }
       },
@@ -445,6 +445,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           )
         ),
         React.createElement('div', {
+          'aria-hidden': 'true', // Deko-Pfeil des Auswahlfelds — nicht vorlesen
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
         }, '▾')
       ),
@@ -529,12 +530,13 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
 
       React.createElement('button', {
         onClick: () => setTpOpen(!tpOpen),
+        'aria-expanded': tpOpen,
         style: {
           background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
-      }, (tpOpen ? '▾ ' : '▸ ') + t('kvg.belegFromTp')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, tpOpen ? '▾ ' : '▸ '), t('kvg.belegFromTp')),
 
       tpOpen && React.createElement('div', {
         style: {
@@ -574,12 +576,13 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
 
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
+        'aria-expanded': ngOpen,
         style: {
           background: 'none', border: 'none', color: palette.sandDeep, cursor: 'pointer',
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
-      }, (ngOpen ? '▾ ' : '▸ ') + t('kvg.belegNichtGedeckt')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, ngOpen ? '▾ ' : '▸ '), t('kvg.belegNichtGedeckt')),
 
       ngOpen && React.createElement('div', {
         style: {
@@ -854,6 +857,7 @@ const RechnungTab = ({ palette, t, data }) => {
           cantons.map(c => React.createElement('option', { key: c, value: c }, c + ' (' + TAXPUNKTWERT[c].toFixed(2) + ')'))
         ),
         React.createElement('div', {
+          'aria-hidden': 'true', // Deko-Pfeil des Auswahlfelds — nicht vorlesen
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
         }, '▾')
       )

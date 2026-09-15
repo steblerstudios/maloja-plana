@@ -451,27 +451,30 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       React.createElement('button', {
         onClick: () => onNavigate('sync'),
         style: {
+          display: 'flex', alignItems: 'center', gap: '8px',
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left',
         }
-      }, '◇ ' + t('finanzUebersicht.toBudget')),
+      }, React.createElement(Icon, { name: 'rechner', size: 16 }), t('finanzUebersicht.toBudget')),
       React.createElement('button', {
         onClick: () => onNavigate('behoerdendossier'),
         style: {
+          display: 'flex', alignItems: 'center', gap: '8px',
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left',
         }
-      }, '◇ ' + t('finanzUebersicht.toDossier')),
+      }, React.createElement(Icon, { name: 'mappe', size: 16 }), t('finanzUebersicht.toDossier')),
       React.createElement('button', {
         onClick: handlePrint,
         style: {
+          display: 'flex', alignItems: 'center', gap: '8px',
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, color: palette.text,
           fontFamily: 'inherit', textAlign: 'left', gridColumn: '1 / -1',
         }
-      }, '◇ ' + t('finanzUebersicht.printAction'))
+      }, React.createElement(Icon, { name: 'drucker', size: 16 }), t('finanzUebersicht.printAction'))
     ),
 
     React.createElement('div', {

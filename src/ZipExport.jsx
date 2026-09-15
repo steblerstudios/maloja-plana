@@ -9,6 +9,10 @@ import { text, weight, radius, space } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
 
+// Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
+// der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
+const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '6px' } });
+
 export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [exporting, setExporting] = useState(false);
 
@@ -259,6 +263,8 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   };
 
   const btnStyle = (bg, fg) => ({
+    // inline-flex + gap: Präfix-Icons (Download, Schloss) sitzen mittig neben dem Text.
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
     padding: '10px', background: bg, color: fg || '#fff', border: 'none',
     borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm,
     width: '100%'
@@ -293,20 +299,20 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         // Export formats
         React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '1px solid ' + palette.border } },
-          React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, '↙ ' + t('zipExport.exportFormats')),
+          React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, praefix('download', 16), t('zipExport.exportFormats')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
-              style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ JSON'),
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
-              style: { padding: '10px', background: exporting ? palette.mid : palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '◰ CSV'),
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+            }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
-              style: { padding: '10px', background: exporting ? palette.mid : palette.sage, color: exporting ? '#fff' : '#000', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-            }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ Manifest')
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.sage, color: exporting ? '#fff' : '#000', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
         ),
@@ -330,7 +336,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
         }, t(sessionBackupCount === 1 ? 'backup.sessionCount' : 'backup.sessionCountPlural', { count: sessionBackupCount })),
 
-        React.createElement('button', { onClick: () => { setBackupStatus(null); setVorschau('sicherung'); }, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
+        React.createElement('button', { onClick: () => { setBackupStatus(null); setVorschau('sicherung'); }, style: btnStyle(palette.sand) }, React.createElement(Icon, { name: 'download', size: 14 }), t('backup.exportPlain')),
         vorschauPanel('sicherung'),
 
         React.createElement('div', { style: { margin: '16px 0 8px', fontSize: text.sm, fontWeight: weight.semi } }, t('backup.exportEncrypted')),
@@ -347,7 +353,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           onClick: () => { setBackupStatus(null); if (passphraseOk()) setVorschau('sicherungVerschluesselt'); },
           disabled: !passphrase || passphrase.length < 4 || passphrase !== passphraseConfirm,
           style: btnStyle(passphrase && passphrase.length >= 4 && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
-        }, '◉ ' + t('backup.exportEncrypted')),
+        }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.exportEncrypted')),
         vorschauPanel('sicherungVerschluesselt'),
 
         React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo'))
@@ -361,7 +367,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: '.json,.maloja', onChange: handleFileSelect, style: { display: 'none' } }),
-          React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.xs } }, '□'),
+          React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('backup.selectFile')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('backup.fileTypes'))
         ),
@@ -378,7 +384,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: handleDecryptAndImport, disabled: !importPassphrase,
               style: { ...btnStyle(importPassphrase ? palette.gold : palette.mid, '#000'), flex: 1 }
-            }, '◉ ' + t('backup.decrypting')),
+            }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.decrypting')),
             React.createElement('button', {
               onClick: cancelImport,
               style: { ...btnStyle(palette.up, palette.text), flex: 1, border: '1px solid ' + palette.border }
@@ -417,7 +423,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
         // Security warning
         React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, border: '1px solid ' + palette.rose, fontSize: text.sm, color: palette.mid } },
-          React.createElement('strong', { style: { color: palette.roseDeep } }, '◉ ' + t('zipExport.security') + ':'),
+          React.createElement('strong', { style: { color: palette.roseDeep } }, praefix('lock', 14), t('zipExport.security') + ':'),
           React.createElement('div', { style: { marginTop: '6px' } }, t('zipExport.securityNote'))
         )
       )

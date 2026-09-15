@@ -129,7 +129,13 @@ self.addEventListener('push', (event) => {
 // ─── Notification click: open app ──────────────────────────
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = event.notification.data?.url || '/';
+  // Nur die eigene Origin öffnen: die Adresse stammt aus der Push-Payload (heute dormant,
+  // kein subscribe). Fremde oder ungültige Ziele fallen auf die App-Startseite zurück.
+  let url = '/';
+  try {
+    const target = new URL(event.notification.data?.url || '/', self.location.origin);
+    if (target.origin === self.location.origin) url = target.href;
+  } catch (e) { /* ungültige Adresse → Startseite */ }
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {

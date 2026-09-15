@@ -1,6 +1,6 @@
 // CSV/Excel Import Parser
 
-export const parseCSV = (text) => {
+const parseCSV = (text) => {
   const lines = text.split('\n').filter(l => l.trim());
   const result = [];
   
@@ -19,7 +19,7 @@ export const parseCSV = (text) => {
   return result;
 };
 
-export const parseExcel = async (file) => {
+const parseExcel = async (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -49,7 +49,7 @@ export const parseExcel = async (file) => {
   });
 };
 
-export const parseEBill = (text) => {
+const parseEBill = (text) => {
   const lines = text.split('\n');
   const result = [];
   

@@ -212,7 +212,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
 
     // Next steps
     React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginTop: space.lg } },
-      React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, praefix('kaestchen', 16), t('sozialhilfe.nextSteps')),
+      React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: space.sm } }, praefix('kaestchen', 16), t('sozialhilfe.nextSteps')),
       React.createElement('ul', { style: { fontSize: text.xs, paddingLeft: '20px', margin: 0, color: palette.mid, lineHeight: leading.relaxed } },
         React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step1')),
         React.createElement('li', { style: { marginBottom: space.xs } }, t('sozialhilfe.step2')),

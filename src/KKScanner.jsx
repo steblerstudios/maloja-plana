@@ -90,6 +90,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   };
 
   const buttonStyle = {
+    // inline-flex + gap: das Präfix-Icon (Haken) sitzt mittig neben dem Text.
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
     padding: '10px 16px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm
   };
 
@@ -114,7 +116,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, 'ⓘ ' + t('kkScanner.scanRequiresInternet')),
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
           React.createElement('input', { type: 'file', accept: 'image/*', onChange: handleFileUpload, style: { display: 'none' } }),
-          React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.xs } }, '○'),
+          React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
           React.createElement('div', { style: { fontWeight: weight.semi } }, t('kkScanner.selectImage')),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('kkScanner.qrBarcode'))
         ),
@@ -178,7 +180,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         )
       ),
 
-      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('common.save')),
+      React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly'))
     ),
 
