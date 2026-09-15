@@ -98,9 +98,9 @@ describe('steuerRechner', () => {
       expect(mitAbzug.steuer).toBeLessThan(ohneAbzug.steuer);
     });
 
-    it('applies Kinderabzug from tax amount', () => {
-      const ohneKinder = berechneBundessteuer({ bruttoEinkommen: 80000 });
-      const mitKindern = berechneBundessteuer({ bruttoEinkommen: 80000, kinder: 2 });
+    it('applies the 263-per-child reduction only together with the Abs. 2 tariff (verheiratet)', () => {
+      const ohneKinder = berechneBundessteuer({ bruttoEinkommen: 80000, verheiratet: true });
+      const mitKindern = berechneBundessteuer({ bruttoEinkommen: 80000, verheiratet: true, kinder: 2 });
       expect(mitKindern.kinderabzug).toBe(526);
       expect(mitKindern.steuer).toBe(
         Math.max(0, Math.round((ohneKinder.steuerVorAbzug - 526) * 100) / 100)
@@ -108,7 +108,7 @@ describe('steuerRechner', () => {
     });
 
     it('does not produce negative tax', () => {
-      const result = berechneBundessteuer({ bruttoEinkommen: 15000, kinder: 5 });
+      const result = berechneBundessteuer({ bruttoEinkommen: 15000, kinder: 5, elterntarif: true });
       expect(result.steuer).toBe(0);
     });
 
@@ -118,6 +118,52 @@ describe('steuerRechner', () => {
       expect(result.steuer).toBe(
         Math.max(0, bundessteuerVerheiratet(80000))
       );
+    });
+
+    // Elterntarif, DBG Art. 36 Abs. 2bis (Fassung 1.1.2026). Sollwerte aus der amtlichen Tabelle
+    // ESTV Form. 58c-2026, Spalte «Verheiratete und Einelternfamilien», Fussnote 3 (263 Fr. je Kind):
+    // https://www.estv.admin.ch/dam/de/sd-web/gnde9CmEsalK/dbst-tairfe-58c-2026-dfi.pdf
+    //   60 000 → 369.00 · 100 000 → 1 816.00 (Verheiratete/Einelternfamilien)
+    //   60 000 → 671.40 (Alleinstehende)
+    describe('Elterntarif (DBG Art. 36 Abs. 2bis)', () => {
+      it('ESTV-Tabelle 2026: Verheiratete und Einelternfamilien, 60 000 und 100 000', () => {
+        expect(bundessteuerVerheiratet(60000)).toBe(369.00);
+        expect(bundessteuerVerheiratet(100000)).toBe(1816.00);
+      });
+
+      it('alleinerziehend, 1 Kind, bestätigt, 60 000: 369.00 − 263 = 106.00', () => {
+        const r = berechneBundessteuer({ bruttoEinkommen: 60000, kinder: 1, elterntarif: true });
+        expect(r.tarif).toBe('eltern');
+        expect(r.steuerVorAbzug).toBe(369.00);
+        expect(r.kinderabzug).toBe(263);
+        expect(r.steuer).toBe(106.00);
+      });
+
+      it('alleinerziehend, 2 Kinder, bestätigt, 100 000: 1 816.00 − 526 = 1 290.00', () => {
+        const r = berechneBundessteuer({ bruttoEinkommen: 100000, kinder: 2, elterntarif: true });
+        expect(r.tarif).toBe('eltern');
+        expect(r.steuer).toBe(1290.00);
+      });
+
+      it('gleicher Betrag wie Verheiratete mit 2 Kindern (Abs. 2 sinngemäss)', () => {
+        const eltern = berechneBundessteuer({ bruttoEinkommen: 100000, kinder: 2, elterntarif: true });
+        const ehe = berechneBundessteuer({ bruttoEinkommen: 100000, kinder: 2, verheiratet: true });
+        expect(eltern.steuer).toBe(ehe.steuer);
+        expect(ehe.tarif).toBe('verheiratet');
+      });
+
+      it('nicht bestätigt: vorsichtiger Grundtarif ohne Ermässigung (60 000 → 671.40)', () => {
+        const r = berechneBundessteuer({ bruttoEinkommen: 60000, kinder: 1 });
+        expect(r.tarif).toBe('alleinstehend');
+        expect(r.kinderabzug).toBe(0);
+        expect(r.steuer).toBe(671.40);
+      });
+
+      it('Bestätigung ohne Kinder ändert nichts (Grundtarif)', () => {
+        const r = berechneBundessteuer({ bruttoEinkommen: 60000, kinder: 0, elterntarif: true });
+        expect(r.tarif).toBe('alleinstehend');
+        expect(r.steuer).toBe(671.40);
+      });
     });
 
     it('calculates effective rate', () => {
@@ -160,11 +206,18 @@ describe('steuerRechner', () => {
       expect(result.differenz).toBeGreaterThan(0);
     });
 
-    it('applies Kinderabzug to both', () => {
+    it('ledig mit Kindern ohne Bestätigung: Grundtarif ohne Ermässigung; verheiratet: mit', () => {
       const ohne = vergleicheTarife(100000, 0);
       const mit = vergleicheTarife(100000, 2);
-      expect(mit.alleinstehend).toBeLessThan(ohne.alleinstehend);
-      expect(mit.verheiratet).toBeLessThan(ohne.verheiratet);
+      expect(mit.alleinstehend).toBe(ohne.alleinstehend);
+      expect(mit.verheiratet).toBe(1290.00); // ESTV Form. 58c-2026: 1 816.00 − 2 × 263
+    });
+
+    it('ledig mit bestätigtem Elterntarif = verheiratet (ESTV Form. 58c-2026, 60 000, 1 Kind)', () => {
+      const r = vergleicheTarife(60000, 1, true);
+      expect(r.alleinstehend).toBe(106.00);
+      expect(r.verheiratet).toBe(106.00);
+      expect(r.differenz).toBe(0);
     });
   });
 

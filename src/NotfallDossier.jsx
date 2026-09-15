@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import QRCode from './vendor/qrcodejs.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
@@ -29,6 +30,9 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       });
     } catch (e) { /* QR generation failed silently */ }
   }, [qrText, hasSections]);
+
+  // Export-Vorschau (K3): erst zeigen, was im Dokument steht, dann öffnen.
+  const [vorschau, setVorschau] = useState(false);
 
   const handlePrint = () => {
     const html = generateNotfallDossier(data, chapters, t);
@@ -121,9 +125,17 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     }, 'ⓘ ' + t('notfallDossier.privacyNote')),
 
     hasSections && React.createElement(PrimaryButton, {
-      palette, onClick: handlePrint,
-      style: { width: '100%', padding: '12px', marginBottom: '20px' },
+      palette, onClick: () => setVorschau(true),
+      style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
     }, t('notfallDossier.printAction')),
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+      React.createElement(ExportVorschau, {
+        palette, t, art: 'dossier',
+        quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })) },
+        onWeiter: () => { setVorschau(false); handlePrint(); },
+        onZurueck: () => setVorschau(false),
+      })
+    ),
 
     hasSections && React.createElement('div', {
       style: {

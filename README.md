@@ -77,7 +77,7 @@ Konten, ohne Cloud** — und das bleibt so.
 ## Datenschutz & Haftung
 
 Alle Daten bleiben lokal auf deinem Gerät. Sichere dein Gerät und exportiere regelmässig ein
-Backup (ZIP-Export). Die Rechner sind Orientierungshilfen auf Basis öffentlicher Quellen;
+Backup als Datei (JSON oder CSV, auf Wunsch verschlüsselt). Die Rechner sind Orientierungshilfen auf Basis öffentlicher Quellen;
 verbindliche Auskünfte erteilt die zuständige Behörde oder Fachstelle. Details findest du in der
 App unter **Datenschutz** und **Impressum**.
 

@@ -52,6 +52,23 @@ describe('bestimmeAnspruchstage', () => {
   });
 });
 
+// K14: Werte am 15.09.2026 gegen Fedlex geprüft (AVIG Fassung 1.1.2026, AVIV Fassung 1.8.2026,
+// UVV Fassung 1.1.2026) — unverändert. Quellen-URLs stehen am Wert in ../alvRechner.js.
+describe('ALV_PARAMS — amtlich belegt, Stand 2026', () => {
+  it('Höchstverdienst = UVV Art. 22 Abs. 1 (148 200 Fr./Jahr) ÷ 12', () => {
+    expect(ALV_PARAMS.versicherterVerdienstMax).toBe(148200 / 12);
+  });
+  it('Mindestverdienst 500 Fr./Monat (AVIV Art. 40)', () => {
+    expect(ALV_PARAMS.versicherterVerdienstMin).toBe(500);
+  });
+  it('80-%-Schwelle folgt aus AVIG Art. 22 Abs. 2 Bst. b (volles Taggeld > 140 Fr.)', () => {
+    expect(ALV_PARAMS.satz80Schwelle).toBe(Math.floor(140 * 21.7 / 0.8));
+    expect(ALV_PARAMS.satzHoch).toBe(0.8);
+    expect(ALV_PARAMS.satzTief).toBe(0.7);
+    expect(ALV_PARAMS.version).toBe('2026');
+  });
+});
+
 describe('berechneTaggeld', () => {
   it('kein Anspruch unter CHF 500', () => {
     expect(berechneTaggeld({ versicherterVerdienst: 400 }).anspruch).toBe(false);

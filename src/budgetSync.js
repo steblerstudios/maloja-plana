@@ -62,6 +62,12 @@ export const benchmarkFor = (map, key, htype) => {
 // Faden 4 / Inkrement 3b — Teuerung pro Kategorie seit der Basis (belegbar).
 // Quelle: BFS Landesindex der Konsumentenpreise (LIK), Basis Dezember 2020 = 100,
 // Stand August 2025 (letzter Stand dieser Basisreihe; ab 2026 neu basiert).
+// Geprüft 15.09.2026, unverändert: BFS-Tabelle LIK20B20 «Monatswerte», August 2025
+// (Total 107,6873 · Wohnen und Energie 114,3502 · Verkehr 109,6233 · Nahrungsmittel 107,3341 ·
+// Nachrichtenübermittlung 98,3433), https://dam-api.bfs.admin.ch/hub/api/dam/assets/36161502/master
+// Neue Basis Dezember 2025 = 100 ab Januar 2026 (BFS, LIK Januar 2026: 99,9 Punkte),
+// https://www.bfs.admin.ch/news/de/2026-0050 — ein Wechsel auf die neue Basis ist ein Entscheid
+// (Vergleich «seit 2020» fiele weg), darum hier bewusst nicht vollzogen.
 // Zeigt ehrlich, wo die Lebenshaltung wirklich stärker teuerte: Wohnen & Energie (114,4)
 // liegt weit über dem Gesamtschnitt (107,7), während Nahrungsmittel (107,3) im Schnitt
 // und Nachrichtenübermittlung (98,3) sogar darunter liegen — korrigiert die Annahme,

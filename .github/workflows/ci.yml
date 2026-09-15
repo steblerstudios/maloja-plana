@@ -22,10 +22,12 @@ jobs:
           node-version: 22
           cache: npm
 
-      # Bewusst noch npm install: npm ci wäre besser (bindet das Lockfile), scheiterte am
-      # 15.09.2026 aber, weil das Lockfile die Plattform-Pakete von esbuild 0.28 nicht führt.
-      # Erst Lockfile erneuern, dann umstellen (Bau-Liste K15).
-      - run: npm install
+      # npm ci bindet den Lauf an das Lockfile (Bau-Liste K15). Der erste Versuch (#134)
+      # scheiterte, weil npm 10 (hier: Node 22) für den optionalen Peer esbuild@^0.28 von
+      # vite 8 (unter vitest) einen Eintrag im Lockfile erwartet, den npm 11 nicht schreibt.
+      # Das Lockfile ist darum mit npm 10 erneuert; npm 10 und 11 installieren es beide.
+      # Nach Paket-Änderungen: `npx npm@10 install --package-lock-only`, sonst bricht CI hier.
+      - run: npm ci
 
       - run: npm test -- --run
 
