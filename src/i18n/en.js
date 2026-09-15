@@ -3195,6 +3195,8 @@ export default {
     selectFile: 'Select backup file',
     fileTypes: '.json or .maloja',
     validationErrors: 'Validation warnings',
+    structureRejected: 'The backup could not be read because its structure does not match the expected format. Nothing was changed.',
+    fileTooLarge: 'The file is larger than {max} and was therefore not read. Nothing was changed.',
     restored: 'Restored',
   },
 
