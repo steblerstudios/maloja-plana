@@ -1,4 +1,6 @@
 import React from 'react';
+import { text, weight, space, leading } from './config/tokens.js';
+import { renderSource } from './utils/renderSource.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 
 // Zusatzversicherung (VVG) kündigen — der 2. geführte Ablauf, gebaut auf der Ablauf-Schale.
@@ -17,7 +19,14 @@ const nextSep30 = () => {
 };
 
 export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
-  const s = ablaufStyles(palette);
+  // Geteilte Schalen-Styles + die „Vor dem Wechsel prüfen"-Liste wie im KVG-Faden (#101).
+  const s = {
+    ...ablaufStyles(palette),
+    reassure: { fontSize: text.sm, color: palette.sageDeep, fontWeight: weight.medium, marginTop: space.sm + 'px' },
+    checkList: { margin: space.xs + 'px 0 0', paddingLeft: '1.15em', display: 'flex', flexDirection: 'column', gap: '6px' },
+    checkItem: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal },
+    source: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: space.xs + 'px' },
+  };
   const currentZusatz = data?.versicherungen?.kkZusatz || '';
   const deadline = nextSep30();
   const deadlineYear = deadline.slice(0, 4);
@@ -32,7 +41,16 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
       React.createElement('p', { style: s.stepText },
         currentZusatz
           ? t('zusatzWechsel.step1Known', { insurer: currentZusatz })
-          : t('zusatzWechsel.step1OptionsNote'))
+          : t('zusatzWechsel.step1OptionsNote')),
+      // Vor dem Wechsel prüfen — VVG statt KVG: Gesundheitsfragen, Anzeigepflicht,
+      // Kündigungsrecht nur bei der versicherungsnehmenden Person. Jeder Punkt mit Artikel.
+      React.createElement('p', { style: s.reassure }, t('zusatzWechsel.checkIntro')),
+      React.createElement('ul', { style: s.checkList },
+        React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint1')),
+        React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint2')),
+        React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint3'))
+      ),
+      React.createElement('p', { style: s.source }, renderSource(t('zusatzWechsel.checkSource')))
     ),
 
     // Schritt 2 — Wichtig: keine Aufnahmepflicht
