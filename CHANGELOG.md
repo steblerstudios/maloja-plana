@@ -20,7 +20,7 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Brief-Generator:** Objektadresse im Kündigungsbrief war doppelt escaped («Meier &amp;amp; Co»), jetzt genau einmal; Regressionstest.
 - **Barrierefreiheit:** Text `onSand` auf Fläche `sky` lag bei 4.496:1 (unter AA) → Buttons auf `skyDeep`/`surface`; drei Textknoten mit rohem `sage` auf `sageDeep`; Prämienverbilligung: Checklisten-Titel h4 → h3 (kein Überschriften-Sprung).
 - **Robustheit:** Dokument-Upload meldet jetzt auch unlesbare Dateien (`FileReader.onerror`); Thema-Speichern in try/catch wie alle anderen Storage-Zugriffe.
-- **CI/Deploy:** `npm ci` statt `npm install` (Lockfile bindet), `permissions: contents: read` in beiden Workflows, SFTP-Passwort im dormanten Deploy-Workflow nicht mehr im Befehlstext (`--env-password` wie `deploy.sh`); `public/icon-preview.html` (Dev-Werkzeug, lag live) nach `docs/design/`.
+- **CI/Deploy:** `permissions: contents: read` in beiden Workflows, SFTP-Passwort im dormanten Deploy-Workflow nicht mehr im Befehlstext (`--env-password` wie `deploy.sh`); `public/icon-preview.html` (Dev-Werkzeug, lag live) nach `docs/design/`.
 
 ## [0.1.26-beta] — 2026-07-19
 
