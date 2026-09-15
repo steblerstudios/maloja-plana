@@ -1,6 +1,6 @@
 # Impressum — Maloja Plana
 
-**Gemäss Art. 3 Abs. 1 lit. s UWG / Art. 2 Abs. 1 lit. b VDSG**
+**Gemäss Art. 3 Abs. 1 lit. s UWG**
 
 ---
 
@@ -54,3 +54,9 @@ Kurzfassung: Maloja Plana ist eine Local-First-Anwendung. Es werden **keine pers
 ## Anwendbares Recht und Gerichtsstand
 
 Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.
+
+---
+
+Bis zum 15.09.2026 nannte die Kopfzeile zusätzlich «Art. 2 Abs. 1 lit. b VDSG». Die VDSG ist seit dem 1.9.2023 durch die Datenschutzverordnung (DSV, SR 235.11) abgelöst; der Verweis ist gestrichen. Die Impressumspflicht stützt sich auf Art. 3 Abs. 1 lit. s UWG.
+
+Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.

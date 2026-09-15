@@ -30,14 +30,17 @@ Details: [docs/security/](docs/security/)
 
 ## Security-Header
 
-Im Browser gesetzt (via `index.html`):
-- **Content-Security-Policy** — `default-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'` (Clickjacking-Schutz), `base-uri 'self'`, `form-action 'self'`.
+Im Browser gesetzt (via `index.html`, Meta-Tags):
+- **Content-Security-Policy** — `default-src 'self'`, `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`. Die Direktive `frame-ancestors 'none'` steht ebenfalls im Meta-Tag, wird dort vom Browser aber **ignoriert** — sie wirkt nur als HTTP-Header. Der Clickjacking-Schutz kommt deshalb nicht aus der CSP, sondern aus dem HTTP-Header `X-Frame-Options: SAMEORIGIN` (unten). Bis zum 15.09.2026 stand hier «`frame-ancestors 'none'` (Clickjacking-Schutz)» bei der Meta-CSP; das war nicht zutreffend.
 - **Referrer-Policy** — `strict-origin-when-cross-origin` (`<meta name="referrer">`).
 
-Nur als **echte HTTP-Header** wirksam (Browser ignorieren sie als `<meta>`) — im Infomaniak-Hosting-Panel zu setzen, sobald möglich. Kein `.htaccess` (löst 503 aus):
-- `Strict-Transport-Security: max-age=31536000; includeSubDomains` — erzwingt HTTPS.
-- `X-Content-Type-Options: nosniff` — verhindert MIME-Sniffing.
-- `Permissions-Policy: camera=(), microphone=(), geolocation=(self)` — deaktiviert ungenutzte Browser-Funktionen (Geolocation nur self, für Notfallkarte).
+Als **echte HTTP-Header** live gemessen (`curl -sI https://malojaplana.ch`, 15.09.2026; gesetzt im Infomaniak-Hosting-Panel, kein `.htaccess` — löst 503 aus):
+- `strict-transport-security: max-age=16000000` — erzwingt HTTPS. **Ohne** `includeSubDomains`. Bis zum 15.09.2026 stand hier `max-age=31536000; includeSubDomains` als Soll; der gemessene Stand ist ein anderer.
+- `x-frame-options: SAMEORIGIN` — Clickjacking-Schutz (Einbettung nur von derselben Herkunft).
+- `x-content-type-options: nosniff` — verhindert MIME-Sniffing.
+- `referrer-policy: strict-origin-when-cross-origin` — zusätzlich zum Meta-Tag auch als Header.
+- `permissions-policy: camera=(), microphone=(), geolocation=()` — Geolocation ist damit **vollständig** deaktiviert, nicht `(self)` wie hier bis zum 15.09.2026 stand. `src/NotfallVorlesekarte.jsx` Z. 47–49 ruft `navigator.geolocation.getCurrentPosition` auf; ob dieser Aufruf unter dem Live-Header noch funktioniert, ist nicht geprüft. Offen: entweder den Header auf `geolocation=(self)` setzen oder die Standort-Funktion der Notfallkarte als nicht verfügbar behandeln.
+- Kein CSP-Header — die CSP wirkt nur als Meta-Tag (siehe oben).
 
 ## Referenz-Checkliste
 
@@ -47,3 +50,7 @@ Angewandte, an local-first angepasste Fassung des Security-Prompt-Packs:
 ## Reaktionszeit
 
 Wir bemühen uns, innerhalb von 7 Tagen zu antworten.
+
+---
+
+Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.

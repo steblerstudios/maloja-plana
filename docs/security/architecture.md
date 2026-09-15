@@ -64,7 +64,7 @@ Maloja Plana follows a **local-first, zero-backend** architecture. There are no 
 ### What leaves the device
 - Nothing during normal operation
 - Exported backup files (user-initiated, explicit action)
-- Initial page load (Vercel serves static assets)
+- Initial page load (Infomaniak, Switzerland, serves the static assets via `deploy.sh`; Vercel is no longer used — corrected 15.09.2026)
 
 ### Known external call
 - QR code generation loads `qrcodejs` from cdnjs.cloudflare.com (to be vendored in Phase 15)

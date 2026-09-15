@@ -38,12 +38,19 @@ Die folgenden Daten werden ausschliesslich in Deinem Browser gespeichert:
 | Persönliche Angaben (Name, Geburtsdatum, Adresse, Kontaktdaten) | localStorage (`or5_data`) | Selbstorganisation, Kapitelübersichten |
 | Haushaltsdaten (Wohnsituation, Miete, Einkommen) | localStorage (`or5_data`) | Budget- und Sozialhilfe-Orientierung |
 | Versicherungsdaten (KVG-Prämien, Policen) | localStorage (`or5_data`) | Versicherungsübersicht |
-| Dokumente und Dateien | IndexedDB (`ordnung-ruhe-documents`) | Dokumentenablage |
+| Dokumente — Metadaten (Titel, Kategorie, Datum) | localStorage (`or5_docs`) | Dokumentenablage |
+| Dokumente — Dateiinhalte (PDF, Bilder) | IndexedDB (`maloja-plana-documents`) | Dokumentenablage |
+| Kontakte (Notfallkontakte, Ansprechpersonen) | localStorage (`or5_contacts`) | Notfall- und Kontaktübersicht |
+| Merkliste | localStorage (`or5_merkliste`) | Gemerkte Inhalte |
 | Erinnerungen und Fristen | localStorage (`or5_reminders`) | Fristenverwaltung |
-| Backups | IndexedDB (`ordnung-ruhe-backups`) | Datensicherung |
+| Automatische Backups (Schnappschüsse) | IndexedDB (`maloja-plana-backups`) | Datensicherung |
+| Sicherheitskopien vor einer Wiederherstellung | localStorage (`or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date`) | Rückgängig-Möglichkeit nach einem Backup-Import; werden nicht automatisch gelöscht |
+| Beta-Zugang | localStorage (`or5_beta_access`) | Zugangsschranke während der Beta (nur UI-Hürde, keine Verschlüsselung) |
 | Einstellungen (Sprache, Theme, Onboarding) | localStorage (`or5_lang`, `or5_theme`, `or5_onboarding_done`) | App-Konfiguration |
 
-**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei (ZIP-Backup).
+Daneben legt die App weitere Schlüssel mit dem Präfix `or5_` an (Barrierefreiheits-Einstellungen, Zeitstempel des letzten Backups, Migrations-Schnappschuss `or5_data_premigration`); sie enthalten Einstellungen oder Kopien der oben genannten Daten. Die Speichernamen sind im Quellcode belegt (`src/utils/storage.js` Z. 51, `src/utils/autoBackup.js` Z. 11, `src/utils/backupCrypto.js` Z. 214–225, `src/utils/docBlobs.js` Z. 4–6, `src/BetaGate.jsx` Z. 15, `src/MerklisteView.jsx` Z. 10). Ältere Installationen wurden von `ordnung-ruhe-documents` / `ordnung-ruhe-backups` auf die neuen Namen migriert; die alten Datenbanken werden dabei gelöscht (`storage.js` Z. 88, `autoBackup.js` Z. 52).
+
+**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei (Backup-Export, JSON oder verschlüsselt).
 
 ---
 
@@ -63,13 +70,18 @@ Da diese Daten **ausschliesslich lokal** gespeichert werden und **nie an einen S
 
 ### 5.1 Hosting
 
-Die statische Webanwendung (HTML, CSS, JavaScript — ohne Nutzerdaten) wird über **Vercel** gehostet. Beim Abruf der Webseite werden standardmässig folgende technische Daten durch den Hosting-Provider verarbeitet:
+Die statische Webanwendung (HTML, CSS, JavaScript — ohne Nutzerdaten) wird bei **Infomaniak Network SA, Genf, Schweiz** gehostet (Rechenzentren in der Schweiz). Beim Abruf der Webseite werden standardmässig folgende technische Daten durch den Hosting-Provider verarbeitet:
 
-- IP-Adresse (in Server-Logs, automatisch gelöscht)
+- IP-Adresse (in Server-Logs)
 - Browsertyp, Betriebssystem
 - Zeitpunkt des Zugriffs
 
-Diese Verarbeitung liegt in der Verantwortung des Hosting-Providers und ist technisch notwendig für die Auslieferung der Webseite.
+Diese Verarbeitung ist technisch notwendig für die Auslieferung der Webseite.
+
+- **Aufbewahrungsdauer der Server-Logs:** nicht belegt (Infomaniak-Standard; bei Bedarf beim Hoster erfragen).
+- **Auftragsbearbeitungsvertrag (Art. 9 DSG):** offen — ob die Standard-Vertragsbedingungen von Infomaniak diese Anforderung abdecken, ist nicht geprüft.
+
+Belege für den Hoster: `deploy.sh` Z. 2 (SFTP-Deploy zu Infomaniak), `src/i18n/de.js` `privacy.hosting1`, `docs/legal/third-party-licenses.md` («Vercel — nicht mehr verwendet»). Bis zum 15.09.2026 nannte diese Erklärung noch Vercel Inc. (USA); das war seit dem Hosting-Wechsel nicht mehr zutreffend.
 
 ### 5.2 Keine weiteren Dritten
 
@@ -86,7 +98,7 @@ Es gibt **keine** weiteren Datenempfänger:
 
 Personendaten werden **nicht ins Ausland übertragen**, da sie Dein Gerät nicht verlassen.
 
-Die einzige grenzüberschreitende Datenbearbeitung betrifft die in Abschnitt 5 genannten technischen Daten (Server-Logs) durch Vercel Inc. in den USA. Diese Übermittlung stützt sich auf das Swiss-U.S. Data Privacy Framework.
+Auch die in Abschnitt 5 genannten technischen Daten (Server-Logs) verbleiben in der Schweiz: der Hoster Infomaniak Network SA betreibt seine Rechenzentren in der Schweiz. Ein Auslandtransfer findet nach heutigem Stand nicht statt. (Bis zum 15.09.2026 stand hier ein Transfer an Vercel Inc., USA, unter dem Swiss-U.S. Data Privacy Framework; dieser Transfer findet seit dem Hosting-Wechsel nicht mehr statt.)
 
 ---
 
@@ -97,12 +109,14 @@ Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **dire
 
 ### 7.2 Recht auf Löschung
 Du kannst Deine Daten jederzeit löschen:
-- **In der App**: Einzelne Einträge löschen oder alle Daten zurücksetzen
-- **Im Browser**: Browserdaten/localStorage löschen
+- **In der App**: Einzelne Einträge (Felder, Dokumente, Erinnerungen, Kontakte) löschen
+- **Im Browser**: Browserdaten (localStorage und IndexedDB) für malojaplana.ch löschen — das ist heute der Weg, um **alle** Daten auf einmal zu entfernen
 - Es gibt **keine serverseitigen Kopien**, die gelöscht werden müssten
 
+Eine Funktion «alle Daten zurücksetzen» in der App ist geplant, aber nicht gebaut (Stand 15.09.2026): `storage.clear()` in `src/utils/storage.js` Z. 37–45 ist definiert, hat aber keinen Aufrufer; `src/SettingsView.jsx` enthält keinen Reset. Bis dahin gilt der Weg über die Browser-Einstellungen. Hinweis: Die Sicherheitskopien `or5_*_prerestore` (Abschnitt 3) bleiben nach einem Backup-Import bestehen und werden nur mit den Browserdaten entfernt.
+
 ### 7.3 Recht auf Datenherausgabe (Art. 28 nDSG)
-Du kannst Deine Daten jederzeit als ZIP-Datei exportieren. Das Exportformat enthält maschinenlesbare JSON-Dateien.
+Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Klartext), als CSV oder als verschlüsselte `.maloja`-Datei (`src/ZipExport.jsx` Z. 24–28, 56, 85). Ein ZIP-Archiv wird nicht erzeugt — bis zum 15.09.2026 stand hier «ZIP-Datei»; der Export liefert Einzeldateien. (Die App-Texte `legal.privacy.backup1` und `rights3` in `src/i18n/de.js` nennen noch «ZIP-Datei»; das ist ein offener Punkt an den i18n-Texten, nicht Teil dieser Doku-Runde.)
 
 ### 7.4 Weitere Rechte
 Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting und zu Performance-Metriken wende Dich an info@malojaplana.ch.
@@ -134,11 +148,14 @@ Maloja Plana trifft **keine automatisierten Einzelentscheidungen** im Sinne des 
 
 ## 10. Datenschutz-Folgenabschätzung (Art. 22 nDSG)
 
-Eine formelle DSFA ist nicht erforderlich, da:
-- Keine systematische, umfangreiche Bearbeitung besonders schützenswerter Daten stattfindet
-- Keine Profiling-Aktivitäten durchgeführt werden
-- Keine Daten an Dritte zur Weiterverarbeitung übermittelt werden
-- Das Risiko durch die rein lokale Speicherung minimiert wird
+Eine Kurzfassung einer Datenschutz-Folgenabschätzung liegt als Entwurf vor (`docs/legal/dsfa-kurzfassung.md`, auf `main` seit PR #132, Merge `15bb60a`), juristisch nicht geprüft. Ob eine DSFA nach Art. 22 DSG formell erforderlich ist, hängt davon ab, ob die Betreiberin für rein gerätelokale Daten überhaupt «Verantwortliche» ist — diese Frage ist im Entwurf (Abschnitt 7) offen gehalten und einer Fachperson vorzulegen.
+
+Gründe, die im Entwurf für ein geringes Risiko sprechen:
+- Keine Übermittlung von Nutzerdaten an die Betreiberin oder Dritte
+- Keine Profiling-Aktivitäten
+- Rein lokale Speicherung auf dem Gerät der nutzenden Person
+
+Bis zum 15.09.2026 stand hier «Eine formelle DSFA ist nicht erforderlich». Diese Aussage ist zurückgenommen, bis die juristische Prüfung vorliegt.
 
 ---
 
@@ -178,3 +195,7 @@ info@malojaplana.ch
 Eidgenössischer Datenschutz- und Öffentlichkeitsbeauftragter (EDÖB)
 Feldeggweg 1, CH-3003 Bern
 https://www.edoeb.admin.ch
+
+---
+
+Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
