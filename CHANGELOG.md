@@ -13,8 +13,8 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.27-beta] — 2026-09-15
 
-*Stand seit 0.1.26-beta: PR #114 bis #138. Der Deploy dieser Version steht noch aus; das Tag
-`v0.1.27-beta` wird erst gesetzt, wenn sie live ist (`RELEASE.md`, Schritt 6).*
+*Stand seit 0.1.26-beta: PR #114 bis #139. **Live seit 15.09.2026, 22:14** (`index-4a2ca1ae.js`);
+Tag `v0.1.27-beta` auf `f368fbb` (`RELEASE.md`, Schritt 6).*
 
 ### Barrierefreiheit
 - **Barrierefreiheit/Icons (M8, erste Hälfte):** Rohe Text-Glyphen `◰ □ ● ✕` in Sozialhilfe und Schulden-Manager durch IconSystem-SVGs ersetzt (neu: `rechner`, `kaestchen`, `kreuz`, je ein Element); die Barometer-Legenden `▬ ● ▏` (Lohn-Einordnung, Regional-/Miet-Barometer) sind jetzt echte SVG-Marken aus einer gemeinsamen `LegendenMarke`-Komponente, die die Balken-Marken spiegeln (Füllung · Punkt · Strich · «!»). Texte und i18n-Keys unverändert; Bundle 63.49 → 63.65 kB.

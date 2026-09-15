@@ -7,7 +7,17 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15 abends (`main`=`2be5338` nach dem Merge von **PR #138**, mit dem Abschluss-PR eine Kommastelle weiter · ⚠️ **gemergt, NICHT live**: live läuft weiter `index-2d6da893.js` vom 14.09. (curl 15.09. 22:04); `main` trägt seit #133–#136 App-Änderungen, die erst mit dem nächsten Deploy live gehen · Version **0.1.27-beta** mit dem Abschluss-PR, Tag `v0.1.27-beta` erst nach dem Deploy · keine offenen Feature-Branches)
+**Stand:** 2026-09-15 spätabends (`main`=`f368fbb` nach dem Merge von **PR #139**, mit diesem Stand-PR eine Kommastelle weiter · ✅ **DEPLOYT 22:14 aus `f368fbb`**: live `index-4a2ca1ae.js`, Version `0.1.27-beta` im Bundle, altes Bundle 404, Backup `20260915-221444` = 161 Dateien · **Tag `v0.1.27-beta` = `f368fbb`, auf origin** · `main` = live · keine offenen Feature-Branches, 0 offene PRs)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-15 spätabends (Deploy 0.1.27-beta gelandet)
+>
+> `bash deploy.sh` von `main` (`f368fbb`) um **22:14**, Hand von Stebler Studios. Per `curl` 22:20
+> belegt: `index-4a2ca1ae.js` 200 und gleich wie `dist/`, `0.1.27-beta` im Bundle, `index-2d6da893.js`
+> → 404, erfundener Name → 404, Sitemap 200. Damit sind **#133 · #134 · #135 · #136** live; ihre
+> Zeilen in `FEATURES.md` stehen auf `verified-live`. Tag `v0.1.27-beta` zeigt auf `f368fbb` und
+> liegt auf origin (`RELEASE.md` Schritt 6 erledigt). Bau-Liste §7: M3 · M10 · M14 erledigt.
+> **Offen aus der Bau-Liste:** M4 (Postfach `info@`, Hand), M13/E9 (IPV-Beträge), M15 (Panel:
+> `Permissions-Policy`), K1–K7 · K9–K17, Entscheide E1 · E3 · E9–E12.
 
 > **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
 > dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
