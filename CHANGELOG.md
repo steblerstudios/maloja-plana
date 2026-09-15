@@ -7,6 +7,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+- **Barrierefreiheit/Icons (M8, erste Hälfte):** Rohe Text-Glyphen `◰ □ ● ✕` in Sozialhilfe und Schulden-Manager durch IconSystem-SVGs ersetzt (neu: `rechner`, `kaestchen`, `kreuz`, je ein Element); die Barometer-Legenden `▬ ● ▏` (Lohn-Einordnung, Regional-/Miet-Barometer) sind jetzt echte SVG-Marken aus einer gemeinsamen `LegendenMarke`-Komponente, die die Balken-Marken spiegeln (Füllung · Punkt · Strich · «!»). Texte und i18n-Keys unverändert; Bundle 63.49 → 63.65 kB.
+
 *Hier sammelst du Zeilen während der Arbeit. Beim Release wird aus „Unreleased"
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
