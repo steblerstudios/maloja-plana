@@ -17,10 +17,10 @@ Spalte «Urteil». Diese Datei ist der Beleg; umgesetzt wird über die Bau-Liste
 | Sicherheit | 0 | 5 | 5 |
 | Qualität | 0 | 2 | 5 |
 | Polygrafin | 0 | 3 | 2 |
-| Link-Checker | Lauf brach am 15.09. am Nutzungslimit ab, Neustart läuft; Ergebnis wird hier nachgetragen | | |
-| **Summe (8 von 9)** | **10** | **29** | **20** |
+| Link-Checker (Neustart, `main` 9e6d9b1) | 1 | 1 | 2 |
+| **Summe (9 von 9)** | **11** | **30** | **22** |
 
-**Wo die 10 🔴 hingehen:**
+**Wo die 11 🔴 hingehen:**
 
 | 🔴 | Befund | Stand |
 |---|---|---|
@@ -32,6 +32,7 @@ Spalte «Urteil». Diese Datei ist der Beleg; umgesetzt wird über die Bau-Liste
 | Copy 1–3 | Schulden-Alarm mit «!», ALV-Block nur Du, «Arbeitslosengeld» | PR #134 |
 | a11y 1 | `onSand` auf `sky` 4.496:1 | PR #134 |
 | Ordnung 1 | `docs/TODO.md` widerspricht sich selbst (hreflang) | PR #134 |
+| Link 1 | `petitionen.ch` scheitert am Zertifikat (lautet auf `petition.ch`); die Domain leitet selbst per http auf `https://petition.ch` um (200) | PR #134, 5 Sprachen |
 
 Die ⚠️ und 💡 sind unten je Prüfer mit Urteil; was nicht in #134/#136 steckt, steht in der
 Bau-Liste als KANN oder als Oktober-Punkt.
@@ -164,3 +165,16 @@ Bestätigt: `SESSION_START`, `FEATURES`, `RELEASE_CRITERIA` stimmen mit Live üb
 | ⚠️ | Datenschutzerklärung §7.2 | verspricht «alle Daten zurücksetzen»; `storage.clear()` ohne Aufrufer, SettingsView ohne removeItem | nachstellen: gibt es den Knopf? sonst Bug oder Text |
 | 💡 | `backupCrypto.js:193-205` | `_prerestore`-Klartextkopien im Live-Pfad nie gelöscht | K-Punkt |
 | 💡 | `ZipExport.jsx:73` | Backup-Passphrase-Minimum 4 Zeichen | K-Punkt (TODO sagt «empfiehlt 12+», prüfen) |
+
+## Link-Checker (Neustart nach Nutzungslimit, 80k Token, 78 Zugriffe)
+
+**168 einzigartige URLs (193 Vorkommen):** 155 × 2xx · 6 × 3xx auf dieselbe Domain · 5 × 403 (4 × baselland.ch WAF, bekannt · 1 × ecosia.org, blockt Bots) · 0 × 404/410 · 1 × 503 · 1 × SSL-Fehler.
+
+| Sym | Stelle | Befund | Urteil |
+|---|---|---|---|
+| 🔴 | `de.js:1810` (+ 4 Sprachen) `petition2` | `https://petitionen.ch` → SSL-Fehler; `http://petitionen.ch` leitet auf `https://petition.ch` (200) | **fixen** → `petition.ch` (PR #134); Beleg ist die Umleitung der Domain selbst, keine Vermutung |
+| ⚠️ | `direktLinks.js:197` | `abstraktum-odemis.ch` 503, zweimal | kein Amt; beim nächsten Quartal erneut prüfen |
+| 💡 | `direktLinks.js:185` | `ecosia.org` 403 (Bot-Filter) | kein Handlungsbedarf |
+| 💡 | `regionaleVerguenstigungen.js` | 6 × `kulturlegi.ch/<kanton>` → 307 auf `/angebote/angebot-waehlen` | unbedenklich |
+
+Bestätigt: keine 404/410 auf eine im Produkt zitierte Behörden-Quelle; alle `target="_blank"` mit `rel="noopener noreferrer"`; `lohnRechtsstellen.js` ohne externe URLs.
