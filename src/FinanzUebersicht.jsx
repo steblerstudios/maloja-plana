@@ -17,6 +17,7 @@ import { MietVergleich } from './components/MietVergleich.jsx';
 import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
+import { renderSource } from './utils/renderSource.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -261,7 +262,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           React.createElement('div', { style: { fontWeight: weight.medium, color: palette.goldDeep || '#c47a20', marginBottom: '2px' } },
             t('finanzUebersicht.belowPoverty')),
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
-            t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) })),
+            // Link führt zur BFS-Methodik (Erhebung Armutsstatistik), nicht zu einer
+            // publizierten Zahl — der Betrag hier ist haushaltsindividuell gerechnet.
+            renderSource(t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }))),
           // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
           // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },

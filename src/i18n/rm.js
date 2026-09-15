@@ -181,6 +181,12 @@ export default {
     step1Title: '1 · Welche Zusatz hast du?',
     step1Known: 'Erfasst: {insurer}. Prüfe, was sie dir bringt — und ob du sie noch brauchst.',
     step1OptionsNote: 'Noch keine erfasst. Typische Zusätze: ambulant, Spital (halbprivat/privat), Zahn, Brille, Alternativmedizin, Ausland.',
+    // TODO(rm): «Vor dem Wechsel prüfen» (VVG) — DE-Fallback wie der ganze Block.
+    checkIntro: 'Vor dem Wechsel prüfen: Für die Zusatzversicherung gilt das Versicherungsvertragsgesetz (VVG), nicht das KVG. Drei Punkte, bevor du etwas kündigst.',
+    checkPoint1: 'Die neue Versicherung fragt dich vor dem Abschluss schriftlich nach allem, was für die Beurteilung des Risikos erheblich ist — bei einer Zusatzversicherung zur Krankenversicherung also auch nach deiner Gesundheit. Je nach Antworten kann sie den Vertrag ablehnen oder nur zu anderen Bedingungen anbieten (VVG Art. 4).',
+    checkPoint2: 'Beantworte die Fragen vollständig und wahrheitsgetreu. Wird eine erfragte, erhebliche Tatsache verschwiegen oder falsch angegeben, darf die Versicherung den Vertrag kündigen; für bereits eingetretene Schäden, soweit sie davon beeinflusst sind, entfällt dann auch die Leistung (VVG Art. 6).',
+    checkPoint3: 'Deine bisherige Zusatzversicherung kann dir nicht ordentlich kündigen: In der Zusatzversicherung zur Krankenversicherung hat dieses Recht nur die versicherungsnehmende Person (VVG Art. 35a Abs. 4). Es gibt also keinen Grund, die alte Police vorschnell aufzugeben.',
+    checkSource: 'Quelle: [[VVG Art. 4|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_4]], [[Art. 6|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_6]], [[Art. 35a|https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de#art_35_a]] (Stand 1. Januar 2024, abgerufen am 15.09.2026).',
     step2Title: '2 · Wichtig: keine Aufnahmepflicht',
     step2Text: 'Anders als die Grundversicherung darf die Zusatzversicherung dich ablehnen (Gesundheitsprüfung).',
     step2Warn: 'Kündige erst, wenn die neue Zusatzversicherung dich schriftlich aufgenommen hat.',
@@ -2211,7 +2217,7 @@ export default {
     showPosition: 'Mussar la classificaziun',
     belowPoverty: 'Sut la limita da povrezza',
     // TODO(rm): Gegenlese Muttersprachler:in — Bau-Qualität wie die übrigen neuen rm-Strings
-    povertyLineNote: { sie: 'Limita da povrezza per Vossa chasada: {amount}/mais (tenor la metodologia UST 2024). Il confront sa basa sin Vossa entrada disponibla: il net, senza taglias, premias e deducziuns.', du: 'Limita da povrezza per tia chasada: {amount}/mais (tenor la metodologia UST 2024). Il confront sa basa sin tia entrada disponibla: il net, senza taglias, premias e deducziuns.' },
+    povertyLineNote: { sie: 'Limita da povrezza per Vossa chasada: {amount}/mais (tenor la [[metodologia UST|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Il confront sa basa sin Vossa entrada disponibla: il net, senza taglias, premias e deducziuns.', du: 'Limita da povrezza per tia chasada: {amount}/mais (tenor la [[metodologia UST|https://www.bfs.admin.ch/bfs/de/home/statistiken/wirtschaftliche-soziale-situation-bevoelkerung/erhebungen/armutsstatistik.html]] 2024). Il confront sa basa sin tia entrada disponibla: il net, senza taglias, premias e deducziuns.' },
     povertyBruttoHint: { sie: 'Vossa entrada neta correspunda radund a ~ {brutto} brut (stimà da AVS/AD e LPP, senza taglias — variabel tenor la cassa da pensiun).', du: 'Tia entrada neta correspunda radund a ~ {brutto} brut (stimà da AVS/AD e LPP, senza taglias — variabel tenor la cassa da pensiun).' },
     povertyLine: 'Limita da povrezza',
     median: 'Mediana CH',
