@@ -42,23 +42,44 @@ LC_ALL=C LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password 
   -e "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; mirror -R --delete --dry-run --verbose ./dist/assets/ \"${REMOTE_DIR%/}/assets\"; bye" \
   > "$PROTOKOLL" 2>&1 || { echo "✗ lftp-Fehler:"; tail -5 "$PROTOKOLL"; exit 1; }
 
-ENTFERNEN="$(grep -cE '^(rm |Removing )' "$PROTOKOLL" || true)"
-SENDEN="$(grep -cE '^(get |put |Transferring |Sending )' "$PROTOKOLL" || true)"
+# Gezählt wird über die BEFEHLSZEILEN, nicht über die Meldungen. Gemessen am
+# 15.09.2026 gegen die Produktion: lftp schreibt pro ersetztem File «Removing old
+# file …» UND «Transferring file …», dazu je einen «rm»- bzw. «get -e»-Befehl —
+# eine Zählung über die Meldungen war deshalb doppelt (11185 statt 5535).
+#   rm  <url>          = echtes Löschen einer verwaisten Datei
+#   get -e … <lokal>   = Ersetzen einer aktuellen Datei (-e = Ziel vorher löschen)
+# Zur Gegenprobe steht lftps eigene Summe («Removed: … files», «Modified: … files»)
+# am Ende des Protokolls; beide Zahlen müssen übereinstimmen.
+grep '^rm ' "$PROTOKOLL" | grep -oE '/assets/[^ ]+' | sed 's#.*/assets/##' | sort -u > "${PROTOKOLL}.rm" || true
+grep '^get ' "$PROTOKOLL" | grep -oE 'dist/assets/[^ ]+' | sed 's#dist/assets/##' | sort -u > "${PROTOKOLL}.get" || true
+ENTFERNEN="$(wc -l < "${PROTOKOLL}.rm" | tr -d ' ')"
+SENDEN="$(wc -l < "${PROTOKOLL}.get" | tr -d ' ')"
+LFTP_REMOVED="$(grep -oE '^Removed: [0-9]+ directories, [0-9]+ files' "$PROTOKOLL" | grep -oE '[0-9]+ files' | grep -oE '[0-9]+' || echo '?')"
+LFTP_MODIFIED="$(grep -oE '^Modified: [0-9]+ files' "$PROTOKOLL" | grep -oE '[0-9]+' || echo '?')"
 
 echo
-echo "  Würde entfernen:  ${ENTFERNEN} Dateien"
-echo "  Würde senden:     ${SENDEN} Dateien"
-echo "  Protokoll:        ${PROTOKOLL}"
+echo "  Würde entfernen (verwaist):   ${ENTFERNEN} Dateien   (lftp-Summe: ${LFTP_REMOVED})"
+echo "  Würde ersetzen (aktuell):     ${SENDEN} Dateien   (lftp-Summe: ${LFTP_MODIFIED})"
+echo "  Protokoll:                    ${PROTOKOLL}"
 echo
 
-# Plausibilität: Was gesendet würde, muss lokal existieren; was entfernt würde,
-# darf NICHT im lokalen Build liegen. Ein Treffer hier heisst: Muster falsch
-# gezählt oder Build veraltet — dann nicht deployen, sondern erst schauen.
+# Plausibilität: Was entfernt würde, darf NICHT im lokalen Build liegen; was
+# ersetzt würde, MUSS im lokalen Build liegen; und meine Zählung muss lftps
+# eigener Summe entsprechen. Ein Treffer heisst: Muster falsch oder Build
+# veraltet — dann nicht deployen, sondern erst schauen.
 FEHLER=0
-grep -E '^(rm |Removing )' "$PROTOKOLL" | grep -oE 'assets/[^ '"'"'`]+' | sed 's#^assets/##' | sort -u > "${PROTOKOLL}.rm" || true
 while IFS= read -r f; do
   [ -n "$f" ] && [ -f "dist/assets/$f" ] && { echo "  ✗ würde entfernen, liegt aber im lokalen Build: $f"; FEHLER=1; }
 done < "${PROTOKOLL}.rm"
+while IFS= read -r f; do
+  [ -n "$f" ] && [ ! -f "dist/assets/$f" ] && { echo "  ✗ würde ersetzen, liegt aber nicht im lokalen Build: $f"; FEHLER=1; }
+done < "${PROTOKOLL}.get"
+if [ "$LFTP_REMOVED" != "?" ] && [ "$LFTP_REMOVED" != "$ENTFERNEN" ]; then
+  echo "  ✗ Zählung (${ENTFERNEN}) und lftp-Summe (${LFTP_REMOVED}) stimmen nicht überein."; FEHLER=1
+fi
+if [ "$LFTP_MODIFIED" != "?" ] && [ "$LFTP_MODIFIED" != "$SENDEN" ]; then
+  echo "  ✗ Zählung (${SENDEN}) und lftp-Summe (${LFTP_MODIFIED}) stimmen nicht überein."; FEHLER=1
+fi
 
 if [ "$FEHLER" = "1" ]; then
   echo "✗ Trockenlauf NICHT plausibel — nichts deployen, Protokoll lesen."
