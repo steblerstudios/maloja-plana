@@ -116,3 +116,41 @@
 - Landmarks: banner, main, contentinfo vorhanden
 - Focus-Visible: aktiv
 - 59 Buttons, alle mit Accessible Name
+
+### 2026-09-15 — Q3 (Issue #123, drei Wochen nach Fälligkeit)
+
+*Erhoben von Claude Code auf Stand `main` = `4b922ac`, Sophie merged. Alles gemessen, nichts geraten.*
+
+**`npm audit`:** **0 Lücken in Produktions-Abhängigkeiten** (`--omit=dev`). In den Dev-Abhängigkeiten
+meldet `npm audit` Lücken, alle in der Build-/Test-Kette (vite 4, vitest, tar, postcss, xmldom) —
+sie laufen nie im Browser der Nutzer. Beheben würde die Majors unten bedeuten.
+
+**Dependency-Status:**
+| Package | Installiert | Latest | Aktion |
+|---|---|---|---|
+| vite | 4.5.14 | 8.3.0 | Major — **nicht** im Q3, eigener Spike mit Build-Vergleich (Q4/Januar) |
+| @vitejs/plugin-react | 4.7.0 | 6.1.1 | mit Vite zusammen |
+| react / react-dom | 18.3.1 | 19.3.0 | Major — eigener Entscheid (React-19-Compiler, `createElement`-Stil bleibt) |
+| vitest | 4.1.9 | 4.1.11 (5.0.1) | **Patch verfügbar** — im nächsten Schritt einspielen (`node_modules` war während der Sitzung mit drei Worktrees geteilt, deshalb nicht mitten im Lauf) |
+| eslint | 9.39.5 | 10.10.0 | Major — bleibt |
+| size-limit / @size-limit/file | 12.1.0 | 14.0.0 | Major — bleibt |
+
+**Build (Production):**
+| Metrik | Wert |
+|---|---|
+| Build-Zeit | 1.94 s |
+| Hauptbundle gzip (`size-limit`) | **63.49 kB von 65 kB** — Reserve 1.5 kB, jedes Feature muss das mitdenken |
+| Grösster Chunk | siehe Zeile «grösste Chunks» im PR; kein Chunk über 300 kB gzip |
+| Tests | 65 Dateien, **779 grün** |
+| ESLint | sauber |
+
+**Link-Stichprobe (5 von 122 URLs in `direktLinks.js`, jede 24.):** skos.ch 200 · plaant.ch 200 ·
+steuern.lu.ch 200 · jura.ch 200 · baselland.ch **403** = bekannter WAF-Fehlalarm (im Browser gültig,
+siehe Q2). Kein toter Link.
+
+**CI:** die letzten vier Läufe vom 15.09. grün (PR #129, #130 und beide Merges).
+
+**Nicht erledigt, Sophies Hand:** Analytics-Zeile aus dem Infomaniak-Server-Log ablesen
+(`analytics-weg1-anleitung.md`) — braucht das Panel.
+
+**Nächste Wartung:** Dezember (Q4). Januar 2027 = Datenquellen-Update (Tabelle oben).
