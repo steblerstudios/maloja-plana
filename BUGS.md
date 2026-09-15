@@ -21,6 +21,26 @@ Ein Bug ist erst **weg**, wenn ein Test ihn festhält. So kommt derselbe Fehler 
 
 Und die wichtigste Vorregel: **erst nachstellen, dann eintragen.** Kein Bug wandert hierher, ohne dass jemand ihn gesehen hat. Was sich beim Nachstellen als *schon erledigt* oder als *fehlendes Feature* entpuppt, gehört nicht in diese Liste.
 
+## Wie ein Bug hierher kommt (der Eingang)
+
+Zwei Türen, beide führen in dieselbe Liste:
+
+1. **Aus der App:** der Feedback-Knopf im Menü öffnet eine Mail an `info@malojaplana.ch`
+   (`src/main.jsx`, `feedbackHref`). Das ist die Tür für die Menschen, die Maloja benutzen. Sie
+   funktioniert nur, wenn das Postfach existiert und jemand es liest — das ist die Verantwortung
+   von Stebler Studios, nicht des Codes.
+2. **Aus GitHub:** die Issue-Vorlage `.github/ISSUE_TEMPLATE/bug_report.md`. Die Tür für alle,
+   die das Repo kennen.
+
+Der Weg danach ist immer derselbe: Meldung lesen → **nachstellen** (Schritte notieren, gerne mit
+Sprache, Gerät, Kanton) → Zeile unter «Offen» → roter Test → Fix im Feature-Branch → PR → nach dem
+Deploy die Zeile nach «Zuletzt behoben». Wer eine Adresse hinterlassen hat, bekommt eine kurze
+Antwort, was daraus wurde. Ein Punkt, der beim Nachstellen zum Feature-Wunsch wird, wandert nach
+`docs/IDEEN.md` oder in die Bau-Liste, nicht hierher.
+
+Meldungen zu **anderen** Projekten von Stebler Studios (Kunden-Websites) gehören nicht in diese
+Datei; dafür hat das Studio einen eigenen Weg.
+
 ---
 
 ## Offen

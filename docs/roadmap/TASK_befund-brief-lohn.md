@@ -37,6 +37,30 @@ Zwei Vorlagen in `src/briefGenerator.js`:
 - Rechts-Tabelle `src/data/lohnRechtsstellen.js`: nur BS belegt, GE/NE/JU/TI `null` + Fallback.
 - i18n ×5 (de/en/fr/it/rm) + 2 Testdateien.
 
+## Stand 15.09.2026 — `wageClaim` bewusst geparkt (Zettel, kein Vergessen)
+
+> **Was gilt:** Der Code für `wageClaim` und `unpaidWage` ist gebaut, getestet und seit 18.07. im
+> Live-Bundle. Der Schalter `WAGECLAIM_BEREIT` steht auf `false`: die Vorlage wird **nicht
+> angeboten**. Das bleibt so, bis die vier 🔴 aus Predeploy-Runde 8 und die zwei Datenfragen
+> geklärt sind — nicht, weil es vergessen wäre, sondern weil ein halb richtiger Lohnbrief an einen
+> Arbeitgeber genau die Art Fehler ist, die Haftung auslöst («Orientierung, keine verbindliche
+> Berechnung»).
+>
+> **Die vier 🔴 (Runde 8, `FEATURES.md`):** Netto/Brutto im Brief ungeprüft · Brief auch bei
+> Befund `ok` · `unpaidWage` behauptet einen Monatslohn für unbekannten Zeitraum · GE/TI/JU tragen
+> `verify:false`, ohne je amtlich gegengeprüft worden zu sein.
+> **Die zwei Datenfragen** (Gedächtnis `project-maloja-wageclaim-predeploy-reentry`): der LSE-Median
+> enthält den 13. Monatslohn anteilig (rund 8 % Aufschlag), und die GE-Ausnahmen (Lehre, Praktikum,
+> unter 18, GAV, Landwirtschaft, Ferienjob) haben eigene Sätze.
+>
+> **Weg zurück, wenn es soweit ist:** Ausnahmen erfassen → GE-Sätze differenzieren → die vier 🔴
+> fixen (je ein roter Test) → `swiss-precision-` und `rechts-pruefer` über den Brief → Schalter auf
+> `true` → eigener PR. Grösse: mehrere Tage, nicht ein Nachmittag.
+>
+> *Empfehlung von Claude Code in der Bau-Liste bis 30.09. (Entscheid E1): parken. Stebler Studios
+> hat den Entscheid noch nicht ausgesprochen; dieser Zettel gilt bis dahin als Vorschlag, nicht
+> als Beschluss.*
+
 ## Fix-Register (aus dem Predeploy-Review 2026-07-14 — beim Neuaufbau direkt einbauen)
 
 **🔴 BLOCKER (swiss-precision) — einziges echtes Haftungsrisiko in einem versendbaren Brief:**
