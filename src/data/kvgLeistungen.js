@@ -36,13 +36,27 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
   };
 }
 
-// Taxpunktwert (TPW) pro Kanton in CHF (TARDOC/Tarmed, Stand 2025)
+// Taxpunktwert (TPW) pro Kanton in CHF, für freipraktizierende Ärztinnen und Ärzte.
+// Seit 1.1.2026 gilt TARDOC + ambulante Pauschalen; die TARMED-Taxpunktwerte sind per
+// 31.12.2025 «ausnahmslos dahingefallen» (RRB ZH 1299/2025, Ziff. A). Der Bundesrat empfahl,
+// die kantonalen TPW 2026 auf dem Stand 2025 zu belassen; die Kantone setzen sie meist
+// provisorisch fest, oft je Leistungserbringer und Versicherergruppe verschieden.
+// Amtlich geprüft, abgerufen 15.09.2026:
+//   ZH 0.91 — RRB ZH Nr. 1299/2025 vom 10.12.2025, Dispositiv I.1 (provisorisch ab 1.1.2026,
+//             freipraktizierende Ärzte ↔ HSK, tarifsuisse, CSS)
+//             https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/1299/RRB-2025-1299.pdf
+//   BE 0.86 — GSI BE, Verfügung 2025.GSI.2252 vom 22.01.2026: für die BEKAG am 9.12.2025
+//             provisorisch 0.86 verfügt; Dispositiv 3.6 (übrige Leistungserbringer) 0.86
+//             https://www.gsi.be.ch/content/dam/gsi/dokumente-bilder/de/themen/gesundheit/gesundheitsversorger/verfuegung-prov-tpw-tardoc-2026-de.pdf
+//   BS 0.91 — Regierungsrat BS, Bulletin 10.02.2026: bisheriger TARMED-TPW 0.91 als provisorischer Tarif
+//             https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2
+// Alle übrigen Kantone: Stand 2025 (TARMED), NICHT gegen eine amtliche Quelle 2026 geprüft.
 export const TAXPUNKTWERT = {
-  AG: 0.89, AI: 0.89, AR: 0.89, BE: 0.89, BL: 0.89, BS: 0.91,
+  AG: 0.89, AI: 0.89, AR: 0.89, BE: 0.86, BL: 0.89, BS: 0.91,
   FR: 0.88, GE: 0.96, GL: 0.87, GR: 0.89, JU: 0.88, LU: 0.87,
   NE: 0.92, NW: 0.87, OW: 0.87, SG: 0.87, SH: 0.87, SO: 0.89,
   SZ: 0.87, TG: 0.86, TI: 0.90, UR: 0.87, VD: 0.93, VS: 0.86,
-  ZG: 0.89, ZH: 0.89,
+  ZG: 0.89, ZH: 0.91,
 };
 
 export function berechneArztrechnung(taxpunkte, canton) {

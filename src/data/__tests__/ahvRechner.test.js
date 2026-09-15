@@ -104,6 +104,25 @@ describe('ahvRechner', () => {
       expect(r.totalEhepaar).toBeLessThanOrEqual(3780);
     });
 
+    // K14: 13. Altersrente = ein Zwölftel der im Kalenderjahr BEZOGENEN Altersrente
+    // (Art. 34ter Abs. 2 AHVG, Fassung 1.1.2026, Fedlex abgerufen 15.09.2026). Art. 35 AHVG
+    // nimmt nur den Zuschlag nach Art. 34bis von der Kürzung aus, nicht Art. 34ter → bei
+    // Ehepaaren wird die 13. Rente auf der plafonierten Rente gerechnet (BSV-Merkblatt 3.01,
+    // Stand 1.1.2026, Ziff. 4 + 23).
+    it('13. Altersrente bei Ehepaaren auf der plafonierten Rente (Art. 34ter AHVG)', () => {
+      const r = berechneAltersrente({
+        geburtsjahr: 1961,
+        durchschnittlichesJahreseinkommen: 90720,
+        beitragsjahre: 44,
+        verheiratet: true,
+        einkommenPartner: 90720,
+      });
+      expect(r.plafoniert).toBe(true);
+      expect(r.monatsrente).toBe(1890); // 3780 ÷ 2
+      expect(r.dreizehnteRente).toBe(r.monatsrente);
+      expect(r.jahresrente).toBe(1890 * 13);
+    });
+
     it('adds Erziehungsgutschriften', () => {
       const ohne = berechneAltersrente({
         geburtsjahr: 1970,

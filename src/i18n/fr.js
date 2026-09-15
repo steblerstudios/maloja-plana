@@ -3474,7 +3474,8 @@ export default {
     nichtSlMedi: 'Médicaments (hors LS)',
     nichtSlMediNote: 'Les médicaments hors liste LS ne sont pas remboursés.',
     generika: 'Génériques',
-    generikaNote: 'Couverts, souvent avec une quote-part réduite (10% au lieu de 20%).',
+    // OPAS art. 38a (depuis 1.1.2024 : 40 % au lieu de 20 %), source voir de.js, consulté 15.09.2026
+    generikaNote: 'Couverts, souvent avec une quote-part réduite (10% au lieu de 40%).',
     generikaBonus: 'Quote-part réduite possible',
     spitalAllg: 'Hôpital (division commune)',
     spitalAllgNote: 'Traitement stationnaire en division commune dans le canton de résidence.',
