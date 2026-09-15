@@ -15,9 +15,40 @@ const VOLLE_BEITRAGSJAHRE = 44;   // Skala 44 = Vollrente
 const KOORDINATIONSABZUG = 26460; // BVG-Koordinationsabzug 2026
 const MAX_VERSICHERTES_EINKOMMEN = 90720; // Obere Grenze massg. Einkommen (= 3× max. jährl. AHV-Rente)
 
-// Vorbezug/Aufschub
+// Vorbezug
 const VORBEZUG_KUERZUNG_PRO_MONAT = 0.005667; // 6.8% pro Jahr (gesetzlicher AHV-Vorbezugssatz)
-const AUFSCHUB_ZUSCHLAG_PRO_MONAT = 0.002667;  // ~3.2% pro Jahr ≈ 0.267% pro Monat
+
+// Aufschub: Erhöhungssätze in Prozent der Altersrente, Art. 55ter Abs. 1 AHVV (SR 831.101),
+// Fassung in Kraft seit 1.1.2025 (AS 2024 462), konsolidierter Stand 1.1.2026. Wörtlich aus
+// https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/63/1185_1183_1185/20260101/de/html/fedlex-data-admin-ch-eli-cc-63-1185_1183_1185-20260101-de-html.html
+// (abgerufen 2026-09-15 15:56 UTC); identisch im BSV-Merkblatt 3.04 «Flexibler Rentenbezug»
+// Ziff. 14, Stand 1.1.2026 (https://www.ahv-iv.ch/p/3.04.d, abgerufen 2026-09-15 15:54 UTC).
+// Zeile = volle Aufschubsjahre 1–5, Spalte = zusätzliche Monate 0–2 / 3–5 / 6–8 / 9–11.
+// Nicht linear: die Tabelle ist versicherungsmathematisch gestaffelt (Art. 39 Abs. 3 AHVG).
+const AUFSCHUB_ZUSCHLAG_TABELLE = [
+  [5.2, 6.6, 8.0, 9.4],      // 1 Jahr
+  [10.8, 12.3, 13.9, 15.5],  // 2 Jahre
+  [17.1, 18.8, 20.5, 22.2],  // 3 Jahre
+  [24.0, 25.8, 27.7, 29.6],  // 4 Jahre
+  [31.5],                    // 5 Jahre = Höchstdauer
+];
+const AUFSCHUB_MIN_MONATE = 12; // Art. 39 Abs. 1 AHVG: «um mindestens ein Jahr, höchstens aber um fünf Jahre»
+const AUFSCHUB_MAX_MONATE = 60;
+
+/**
+ * Zuschlag beim Rentenaufschub in Prozent, nach Aufschubsdauer in Monaten.
+ * Unter 12 Monaten gibt es keinen Aufschub (Art. 39 Abs. 1 AHVG) und damit keinen
+ * Zuschlag; über 60 Monaten bleibt es beim Höchstwert 31,5 %.
+ *
+ * @param {number} monate - Aufschubsdauer in Monaten
+ * @returns {number} Erhöhungssatz in Prozent (z. B. 5.2)
+ */
+export function aufschubZuschlagProzent(monate) {
+  const m = Math.min(Math.max(0, Math.floor(Number(monate) || 0)), AUFSCHUB_MAX_MONATE);
+  if (m < AUFSCHUB_MIN_MONATE) return 0;
+  const zeile = AUFSCHUB_ZUSCHLAG_TABELLE[Math.floor(m / 12) - 1];
+  return zeile[Math.min(Math.floor((m % 12) / 3), zeile.length - 1)];
+}
 
 // Erziehungsgutschriften pro Kind (pauschal, jährlich, geteilt bei gemeinsamer elterlicher Sorge)
 const ERZIEHUNGSGUTSCHRIFT_JAHR = 45360; // 3× minimale jährliche Altersrente (3× 15'120)
@@ -132,9 +163,10 @@ export function berechneAltersrente({
     vorbezugAufschub = -kuerzung;
     rente = Math.round(rente * (1 - kuerzung) * 100) / 100;
   } else if (differenzMonate > 0) {
-    // Aufschub (max 60 Monate = 5 Jahre)
-    const monate = Math.min(differenzMonate, 60);
-    const zuschlag = monate * AUFSCHUB_ZUSCHLAG_PRO_MONAT;
+    // Aufschub: Tabelle Art. 55ter AHVV (1–5 Jahre, monatlich gestaffelt); unter
+    // 12 Monaten kein Zuschlag (Art. 39 Abs. 1 AHVG), z. B. Frau JG 1962 mit
+    // Referenzalter 64 J 6 M und Bezug mit 65.
+    const zuschlag = aufschubZuschlagProzent(differenzMonate) / 100;
     vorbezugAufschub = zuschlag;
     rente = Math.round(rente * (1 + zuschlag) * 100) / 100;
   }
@@ -478,4 +510,4 @@ export const SAEULE3A_ZINSSCHWELLE = 20000;
 // WARTUNG: AHV/ALV/BVG-Werte sind Stand 2026. Im Januar 2027 gegen die neuen
 // BSV-Rententabellen und AHVV-Anpassungen prüfen und diese Version hochziehen.
 export const AHV_DATA_VERSION = '2026';
-export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV, BSV Rententabellen 2026';
+export const AHV_DATA_SOURCE = 'AHVG Art. 34–40, AHVV Art. 55ter, BSV Rententabellen 2026';

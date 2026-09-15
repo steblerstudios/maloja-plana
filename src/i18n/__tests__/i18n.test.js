@@ -179,6 +179,24 @@ describe('i18n Anrede-Objekte sind vollständig (sie UND du als String)', () => 
 // Der Übersetzungs-Kern selbst (Schlüssel-Auflösung, Fallback-Kette, Sie/Du-Wahl,
 // Param-Interpolation) — mit kontrollierten Fixtures statt der echten Sprachdateien.
 // DEFAULT_LANG ist 'en' (Fallback-Sprache).
+describe('Vorsorge-Szenario: Referenzalter als Platzhalter, nicht fest «65»', () => {
+  // AHV 21: Frauen JG 1961–63 haben ein Referenzalter unter 65 (64 J 3/6/9 M). Die
+  // Szenariotexte müssen den echten Wert aus dem Rechner zeigen, nicht pauschal 65.
+  const all = { en, de, fr, it: itTranslations, rm };
+  const keys = ['vr.zukunftSzenarioFrueh', 'vr.zukunftSzenarioAufschub', 'vr.zukunftSzenarioReferenz'];
+  for (const lang of Object.keys(all)) {
+    it(`${lang}: {referenzalter} wird eingesetzt, keine feste 65`, () => {
+      const t = createT(all, lang, 'sie');
+      for (const key of keys) {
+        const out = t(key, { dauer: '2 X', referenzalter: '64 Y 6 Z' });
+        expect(out, `${lang} ${key}`).toContain('64 Y 6 Z');
+        expect(out, `${lang} ${key}`).not.toMatch(/65/);
+        expect(out, `${lang} ${key}`).not.toMatch(/\{\w+\}/);
+      }
+    });
+  }
+});
+
 describe('createT (Übersetzungs-Kern)', () => {
   const fixtures = {
     en: {
