@@ -2174,6 +2174,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
             if (uploadFile.size > MAX_DOC_BYTES) { setUploadError(tr('chapterView.fileTooLarge', { max: '20 MB' })); return; }
             setUploadError('');
             const reader = new FileReader();
+            // Dritter Zustand (Robustheits-Checkliste): eine unlesbare Datei darf den Knopf nicht
+            // stumm stehen lassen — vorher gab es nur Erfolg oder nichts (Voll-Review 15.09.2026).
+            reader.onerror = () => { setUploadError(tr('chapterView.uploadError') + ': ' + (reader.error?.message || uploadFile.name)); };
             reader.onload = async () => {
               try {
                 await onAddDocument({

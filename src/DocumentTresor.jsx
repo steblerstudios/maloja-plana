@@ -198,7 +198,7 @@ export const DocumentTresor = ({
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
-          style: { padding: '10px 12px', background: palette.sky, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
+          style: { padding: '10px 12px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky lag bei 4.496:1 (unter AA), surface/skyDeep 5.42 hell · 5.94 dunkel (Voll-Review 15.09.2026) */ border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
         }, '○'),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),

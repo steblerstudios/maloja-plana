@@ -303,7 +303,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
 
       // Checklist
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
-        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, '□ ' + t('premium.requiredDocs') + ':'),
+        // h3, nicht h4: die Checkliste ist eine eigene Sektion unter dem h2-Ergebnis, kein Unterpunkt (WCAG 1.3.1, Voll-Review 15.09.2026)
+        React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, '□ ' + t('premium.requiredDocs') + ':'),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
             React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc)
@@ -321,7 +322,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
         React.createElement('button', {
           onClick: handleDownloadDocument,
           disabled: !ipvResult.eligible,
-          style: { padding: '10px', background: ipvResult.eligible ? palette.sky : palette.mid, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
+          style: { padding: '10px', background: ipvResult.eligible ? palette.skyDeep : palette.mid, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '□ ' + t('premium.document')),
         React.createElement('button', {
           onClick: () => setShowCalculation(false),

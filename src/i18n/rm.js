@@ -1501,14 +1501,14 @@ export default {
       sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, donaziun d'organs), datas davart mesiras d'agid social u convicziuns religiusas.",
       sensitive2: { sie: 'Cunquai che questas datas vegnan memorisadas exclusivamain localmain e mai transmessas ad in server, è il ristg per Voss dretgs da persunalitad pitschen.', du: 'Cunquai che questas datas vegnan memorisadas exclusivamain localmain e mai transmessas ad in server, è il ristg per Tes dretgs da persunalitad pitschen.' },
       hostingTitle: 'Hosting',
-      hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina web vegnan elavuradas automaticamain datas tecnicas (adressa IP, tip da navigatur) en server logs e stizzadas automaticamain.",
+      hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina web vegnan elavuradas automaticamain datas tecnicas (adressa IP, tip da navigatur) en server logs e stizzadas suenter il termin da conservaziun dal purschider.",
       hosting2: "I na dat nagins cookies d'analisa, nagin tracking, nagins Social-Media-Plugins e nagina reclama.",
       backupTitle: 'Segirezzas',
-      backup1: { sie: "Las segirezzas vegnan memorisadas localmain en il navigatur. Vus pudais exportar Vossas datas da tut temp sco datoteca ZIP criptada. Questa datoteca banduna Voss apparat mo sche Vus la dastgais vinavant activamain.", du: "Las segirezzas vegnan memorisadas localmain en il navigatur. Ti pos exportar Tes datas da tut temp sco datoteca ZIP criptada. Questa datoteca banduna Tes apparat mo sch'Ti la dastgas vinavant activamain." },
+      backup1: { sie: "Las segirezzas vegnan memorisadas localmain en il navigatur. Vus pudais exportar Vossas datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). Questa datoteca banduna Voss apparat mo sche Vus la dastgais vinavant activamain.", du: "Las segirezzas vegnan memorisadas localmain en il navigatur. Ti pos exportar Tes datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). Questa datoteca banduna Tes apparat mo sch'Ti la dastgas vinavant activamain." },
       rightsTitle: { sie: 'Voss dretgs (nLPD)', du: 'Tes dretgs (nLPD)' },
       rights1: { sie: "Cunquai che tut las datas èn memorisadas localmain, avais Vus da tut temp access direct a tut Vossas datas — senza dumonda d'infurmaziun.", du: "Cunquai che tut las datas èn memorisadas localmain, has Ti da tut temp access direct a tut Tes datas — senza dumonda d'infurmaziun." },
       rights2: { sie: "Vus pudais stizzar Vossas datas da tut temp (en l'app u via las datas dal navigatur). I na dat naginas copias sin servers.", du: "Ti pos stizzar Tes datas da tut temp (en l'app u via las datas dal navigatur). I na dat naginas copias sin servers." },
-      rights3: { sie: 'Vus pudais exportar Vossas datas sco datoteca ZIP legibla da maschinas (dretg da consegna da datas, art. 28 nLPD).', du: 'Ti pos exportar Tes datas sco datoteca ZIP legibla da maschinas (dretg da consegna da datas, art. 28 nLPD).' },
+      rights3: { sie: 'Vus pudais exportar Vossas datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).', du: 'Ti pos exportar Tes datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).' },
       securityTitle: 'Segirezza da datas',
       security1: { sie: "Las datas d'utilisader na bandunan betg Voss apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain.", du: "Las datas d'utilisader na bandunan betg Tes apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain." },
       security2: { sie: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Vossa responsabladad: Segirai Voss apparat cun in pled-clav e fai regularmain segirezzas.', du: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Tia responsabladad: Segirescha Tes apparat cun in pled-clav e fai regularmain segirezzas.' },
@@ -1598,7 +1598,7 @@ export default {
       sustain1: "Maloja Plana consuma uschè pauca energia sco pussaivel: Nagin backend, nagin server en modus permanent, naginas dumondas da banca da datas.",
       sustain2: "Hosting tar Infomaniak Network SA (Genevra, Svizra): centers da datas en Svizra, manads cun energia regenerabla (forza idraulica).",
       sustain3: "Infomaniak è certifitgà ISO 14001 e cumpensescha sias emissiuns da CO₂ restantas via myclimate.",
-      sustain4: "Offline-abel: Suenter il emprim chargiar zero traffic da rait.",
+      sustain4: "Offline-abel: Ina giada chargiada funcziuna l'app vinavant era senza rait.", // TODO(rm): Gegenlese Muttersprache
       contactTitle: 'Donaziuns & participar',
       contact1: { sie: "Maloja Plana è in project Open Source d'utilitad publica. Sche Vus vulais gidar — cun code, translaziuns, feedback u ina donaziun — annunziai Vus gugent.", du: "Maloja Plana è in project Open Source d'utilitad publica. Sche Ti vuls gidar — cun code, translaziuns, feedback u ina donaziun — annunziescha Tai gugent." },
       contact2: 'Contact: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
@@ -1612,7 +1612,7 @@ export default {
       secureSafe: { name: 'SecureSafe', url: 'https://www.securesafe.com', desc: 'Tresor svizzer da datas per pleds-clav e documents (protecziun dal secret bancari).' },
       incamail: { name: 'IncaMail', url: 'https://www.incamail.com', desc: 'E-mail recommandà da la Posta Svizra, giuridicamain valid.' },
       petition1: { sie: "En Svizra avais Vus il dretg da dar en petiziuns (art. 33 CF). Plattafurmas:", du: "En Svizra has Ti il dretg da dar en petiziuns (art. 33 CF). Plattafurmas:" },
-      petition2: { name: 'petitionen.ch', url: 'https://petitionen.ch', desc: 'Plattafurma svizra da petiziuns' },
+      petition2: { name: 'petition.ch', url: 'https://petition.ch', desc: 'Plattafurma svizra da petiziuns' },
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
       localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
@@ -2588,7 +2588,7 @@ export default {
     low: 'Ils debits èn sut controlla. Cuntinuar da pajar regularmain.',
     medium: 'Ils debits duessian vegnir reducids. Far in plan da pajament.',
     high: "Ils debits èn considerabels. Cussegliaziun spezialisada vegn recumandada.",
-    critical: "Situaziun critica da debits. Cussegliaziun da debits immediata è necessaria!",
+    critical: "La situaziun da debits è seriusa. Ina cussegliaziun da debits po gidar ussa.", // TODO(rm): Gegenlese Muttersprache
   },
 
   debtValidation: {
@@ -2890,7 +2890,7 @@ export default {
       body2: "Object da locaziun: {address}",
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266a succeder per scrit. Tar abitaziuns da famiglia è il consentiment dad omadus conjugals necessari (ZGB art. 169).",
+      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Tar abitaziuns da famiglia è il consentiment dad omadus conjugals necessari (ZGB art. 169). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it)
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
@@ -2910,7 +2910,7 @@ export default {
       policyRef: 'Numer da polizza: {number}',
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: La disditga da l'assicuranza da basa sto tenor LAMal art. 7 arrivar tar l'assicurader il pli tard ils 30 da november.",
+      legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
     },
     kkReklamation: {
       title: 'Cassa da malsauns: contestar in quint',

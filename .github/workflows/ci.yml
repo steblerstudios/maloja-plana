@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# Kleinstmögliche Rechte für das GITHUB_TOKEN (Voll-Review 15.09.2026): der Lauf liest nur.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,6 +22,9 @@ jobs:
           node-version: 22
           cache: npm
 
+      # Bewusst noch npm install: npm ci wäre besser (bindet das Lockfile), scheiterte am
+      # 15.09.2026 aber, weil das Lockfile die Plattform-Pakete von esbuild 0.28 nicht führt.
+      # Erst Lockfile erneuern, dann umstellen (Bau-Liste K15).
       - run: npm install
 
       - run: npm test -- --run

@@ -85,7 +85,7 @@ App unter **Datenschutz** und **Impressum**.
 
 ## Lizenz
 
-**AGPL-3.0** — quelloffen. Siehe [LICENSE](LICENSE). Der Name „Maloja Plana", das Logo und die
+**AGPL-3.0** — quelloffen. Siehe [LICENSE.txt](LICENSE.txt). Der Name „Maloja Plana", das Logo und die
 visuelle Identität sind nicht durch die AGPL abgedeckt.
 
 ---

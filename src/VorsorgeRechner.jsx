@@ -335,7 +335,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           React.createElement('div', { style: s.label }, t('vr.ikSummary')),
           React.createElement('div', null, t('vr.ikBeitragsjahre') + ': ' + r.beitragsjahre + '/' + AHV_PARAMS.volleBeitragsjahre),
           React.createElement('div', null, t('vr.ikDurchschnitt') + ': CHF ' + fmt(r.durchschnittlichesJahreseinkommen)),
-          r.jugendjahreGenutzt > 0 && React.createElement('div', { style: { color: palette.sage } }, t('vr.ikJugendGenutzt') + ': ' + r.jugendjahreGenutzt),
+          r.jugendjahreGenutzt > 0 && React.createElement('div', { style: { color: palette.sageDeep } }, t('vr.ikJugendGenutzt') + ': ' + r.jugendjahreGenutzt),
           r.luecken > 0 && React.createElement('div', { style: { color: palette.goldDeep } }, t('vr.ikLuecken') + ': ' + r.luecken),
           r.alvJahre > 0 && React.createElement('div', { style: { color: palette.mid, fontSize: text.xs, marginTop: space.xs + 'px', lineHeight: 1.5 } }, t('vr.ikAlvHinweis', { n: r.alvJahre }))
         ),

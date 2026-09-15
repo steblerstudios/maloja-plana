@@ -268,7 +268,9 @@ function getLeaseTerminationFields(data, t) {
   return {
     sender: senderBlock(data),
     recipient: recipientPlaceholder(t),
-    objectAddress: data.wohnen?.address ? esc(data.wohnen.address) : esc(t('briefe.fillIn')),
+    // Klartext, nicht esc(): der Wert wird in body2 über esc(t(…, { address })) genau einmal
+    // escaped. Vorher doppelt → «Meier &amp; Co» stand als «&amp;amp;» im Brief (Voll-Review 15.09.2026).
+    objectAddress: data.wohnen?.address ? data.wohnen.address : t('briefe.fillIn'),
     city: data.wohnen?.city || '',
     filled: {
       name: !!getFullName(data.basis),

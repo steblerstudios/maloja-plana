@@ -273,7 +273,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ JSON'),
             React.createElement('button', {
               onClick: handleExportCSV, disabled: exporting,
-              style: { padding: '10px', background: exporting ? palette.mid : palette.sky, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+              style: { padding: '10px', background: exporting ? palette.mid : palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '◰ CSV'),
             React.createElement('button', {
               onClick: handleExportManifest, disabled: exporting,

@@ -31,6 +31,9 @@ on:
   #   branches: [dev]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -43,7 +46,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm install
+      - run: npm install  # npm ci erst nach Lockfile-Erneuerung (Bau-Liste K15)
       - run: npm run build
 
       # Infomaniak liefert 503, wenn ein .htaccess vorhanden ist → vor dem Upload entfernen.
@@ -55,10 +58,15 @@ jobs:
       # nicht-destruktiv (lftp löscht standardmässig keine Server-Dateien).
       # Robustheit: max-retries/timeout verhindern den Endlos-Retry-Hänger
       # (lftp-Default = unendlich), parallel-transfer-count beschleunigt den Upload.
+      # Passwort nie im Befehlstext (Voll-Review 15.09.2026): lftp liest es mit
+      # --env-password aus LFTP_PASSWORD — dasselbe Muster wie deploy.sh. Host und
+      # Zielpfad kommen als Umgebungsvariablen in die Shell, nicht roh interpoliert.
       - name: Deploy to Infomaniak via SFTP
         env:
           SFTP_USER: ${{ secrets.FTP_USERNAME }}
-          SFTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SFTP_HOST: ${{ vars.SFTP_HOST }}
+          REMOTE_DIR: ${{ vars.REMOTE_DIR }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -c "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; open -u \"$SFTP_USER\",\"$SFTP_PASS\" sftp://${{ vars.SFTP_HOST }}; mirror -R --verbose ./dist/ ${{ vars.REMOTE_DIR }}"
+          lftp -c "set sftp:auto-confirm yes; set net:max-retries 3; set net:timeout 20; set net:reconnect-interval-base 5; set mirror:parallel-transfer-count 4; open --env-password -u \"$SFTP_USER\" \"sftp://$SFTP_HOST\"; mirror -R --verbose ./dist/ \"$REMOTE_DIR\""
