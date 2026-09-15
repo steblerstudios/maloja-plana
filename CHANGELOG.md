@@ -7,11 +7,17 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
-- **Barrierefreiheit/Icons (M8, erste Hälfte):** Rohe Text-Glyphen `◰ □ ● ✕` in Sozialhilfe und Schulden-Manager durch IconSystem-SVGs ersetzt (neu: `rechner`, `kaestchen`, `kreuz`, je ein Element); die Barometer-Legenden `▬ ● ▏` (Lohn-Einordnung, Regional-/Miet-Barometer) sind jetzt echte SVG-Marken aus einer gemeinsamen `LegendenMarke`-Komponente, die die Balken-Marken spiegeln (Füllung · Punkt · Strich · «!»). Texte und i18n-Keys unverändert; Bundle 63.49 → 63.65 kB.
-
 *Hier sammelst du Zeilen während der Arbeit. Beim Release wird aus „Unreleased"
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
+
+## [0.1.27-beta] — 2026-09-15
+
+*Stand seit 0.1.26-beta: PR #114 bis #138. Der Deploy dieser Version steht noch aus; das Tag
+`v0.1.27-beta` wird erst gesetzt, wenn sie live ist (`RELEASE.md`, Schritt 6).*
+
+### Barrierefreiheit
+- **Barrierefreiheit/Icons (M8, erste Hälfte):** Rohe Text-Glyphen `◰ □ ● ✕` in Sozialhilfe und Schulden-Manager durch IconSystem-SVGs ersetzt (neu: `rechner`, `kaestchen`, `kreuz`, je ein Element); die Barometer-Legenden `▬ ● ▏` (Lohn-Einordnung, Regional-/Miet-Barometer) sind jetzt echte SVG-Marken aus einer gemeinsamen `LegendenMarke`-Komponente, die die Balken-Marken spiegeln (Füllung · Punkt · Strich · «!»). Texte und i18n-Keys unverändert; Bundle 63.49 → 63.65 kB.
 
 ### Behoben
 - **AHV-Aufschubszuschlag nach Art. 55ter AHVV (Swiss-Precision 15.09., 🔴 1):** Der Zuschlag beim Rentenaufschub war linear mit 3,2 %/Jahr modelliert (5 Jahre → 16,0 %). Neu die amtliche Tabelle aus Art. 55ter Abs. 1 AHVV (SR 831.101, Stand 1.1.2026; identisch BSV-Merkblatt 3.04 Ziff. 14): 1 J 5,2 · 2 J 10,8 · 3 J 17,1 · 4 J 24,0 · 5 J 31,5 %, dazwischen nach Monatsgruppen 0–2/3–5/6–8/9–11. Unter 12 Monaten kein Zuschlag (Art. 39 Abs. 1 AHVG, Mindestdauer ein Jahr). Die Vorbezugskürzung (6,8 %/Jahr) ist unverändert. Neu `aufschubZuschlagProzent()`, 7 Tests.
@@ -26,6 +32,14 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Datenschutz-Texte (nDSG-Wahrheit):** der Export schreibt Einzeldateien (JSON, CSV, verschlüsselt `.maloja`), nicht «ZIP» — `legal.privacy.backup1`/`rights3` in 5 Sprachen korrigiert; Server-Logs «automatisch gelöscht» → «nach der Aufbewahrungsfrist des Hosters gelöscht» (`hosting1`). Petitions-Plattform: `petitionen.ch` (SSL-Fehler) → `petition.ch`, auf das die Domain selbst umleitet.
 - **Robustheit:** Dokument-Upload meldet jetzt auch unlesbare Dateien (`FileReader.onerror`); Thema-Speichern in try/catch wie alle anderen Storage-Zugriffe.
 - **CI/Deploy:** `permissions: contents: read` in beiden Workflows, SFTP-Passwort im dormanten Deploy-Workflow nicht mehr im Befehlstext (`--env-password` wie `deploy.sh`); `public/icon-preview.html` (Dev-Werkzeug, lag live) nach `docs/design/`.
+
+### Seit 0.1.26-beta schon live, bisher ohne Changelog-Zeile
+- **Lohn-Barometer sichtbarer** (#114) und **Predeploy-Runde 20.07.** (#115: toter Klick am Barometer, a11y, totes jsPDF entfernt).
+- **Steuer-Säulen nach Zivilstand im Probier-Modus** (#116) · **Kapitel-Reihenfolge per Test verankert** (#118) · **steuerbares Einkommen direkt eingebbar** (#120).
+- **Sitemap `lastmod` + IndexNow** (#124) · **Krypto-README** (#125) · **Deploy: Rollback-Backup als Gate** (#126) · **verwaiste Build-Dateien werden nach dem Upload entfernt** (#128).
+
+### Dokumentation
+- Q3-Wartungsprotokoll (#131) · Bau-Liste bis 30.09. mit Bug-Eingang, wageClaim-Zettel und DSFA-Entwurf (#132) · Befund-Liste Voll-Review Stufe L (#137) · Rechts- und Security-Doku auf Code-Stand (#138).
 
 ## [0.1.26-beta] — 2026-07-19
 
