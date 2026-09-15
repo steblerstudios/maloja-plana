@@ -24,7 +24,7 @@
 | Nr. | Risiko | Eintritt | Schwere |
 |---|---|---|---|
 | R1 | **Geräteverlust / Diebstahl:** localStorage und IndexedDB liegen im Klartext; wer das entsperrte Gerät hat, liest alles (`docs/security/threat-model.md`, «Gerät wird gestohlen»). | mittel | hoch (C4-Daten) |
-| R2 | **Backup-Datei in falschen Händen:** Der Klartext-Export (JSON/CSV/ZIP) enthält alle Stores inkl. Dokument-Blobs (`backupCrypto.js` Z. 54–69, `collectBackupDataAsync`). | mittel | hoch |
+| R2 | **Backup-Datei in falschen Händen:** Die Klartext-Sicherung (JSON) enthält alle Stores inkl. Dokument-Blobs (`backupCrypto.js` Z. 54–69, `collectBackupDataAsync`); JSON- und CSV-Export der Kapitel-Angaben kommen als eigene Dateien dazu. Ein ZIP entsteht nicht (bis 15.09.2026 stand hier «JSON/CSV/ZIP»). | mittel | hoch |
 | R3 | **Gemeinsam genutztes Gerät / Browserprofil:** Kein App-Lock, keine Sitzungssperre; jede Person am selben Profil sieht die Daten (Abschnitt 4, M4). | hoch bei geteilten Geräten | hoch |
 | R4 | **Export / Brief-Versand:** Gedruckte Dossiers und Briefe an Behörden verlassen den Schutzbereich der App vollständig; Fehlversand oder liegengelassene Ausdrucke liegen ausserhalb technischer Kontrolle. | niedrig–mittel | mittel–hoch |
 | R5 | **Server-Log-Statistik:** IP-Adressen sind Personendaten; Auswertung ist aggregiert, aber Roh-Logs existieren beim Hoster (`analytics-decision.md`, Weg 1). | niedrig | niedrig (keine Inhaltsdaten) |

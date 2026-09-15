@@ -202,9 +202,9 @@ Stand: 2026-05-26
 - **Implementiert:** DocumentTresor.jsx — verschlüsselte lokale Dokumentenablage (IndexedDB)
 - **Verschlüsselung:** AES-256 via Web Crypto API
 
-### 8.2 ZIP-Export
-- **Implementiert:** ZipExport.jsx + zipExport.js — vollständiger Datenexport als ZIP
-- **Formate:** JSON (strukturiert), PDF-Metadaten, Dokumentenarchiv
+### 8.2 Datensicherung & Export
+- **Implementiert:** ZipExport.jsx + zipExport.js + utils/backupCrypto.js — Datenexport als Einzeldateien (kein ZIP-Archiv, trotz Dateiname)
+- **Formate:** JSON und CSV der Kapitel-Angaben, `MANIFEST.txt`; Sicherung als JSON oder verschlüsselt `.maloja` (mit Dokumenten)
 
 ### 8.3 CSV-Import
 - **Implementiert:** csvImport.js — Budget-Datenimport aus CSV
@@ -258,7 +258,7 @@ Stand: 2026-05-26
 | Generator | Status | Datei | Regelbasiert | CH-spezifisch |
 |-----------|--------|-------|--------------|---------------|
 | CV-Generator | Implementiert | CVGenerator.jsx, cvGenerator.js | Ja | Ja (Bewilligungstyp, EFZ) |
-| ZIP-Export | Implementiert | ZipExport.jsx, zipExport.js | Ja | Ja (CH-Datenstruktur) |
+| Export (Einzeldateien) | Implementiert | ZipExport.jsx, zipExport.js | Ja | Ja (CH-Datenstruktur) |
 | KK-Scanner | Implementiert | KKScanner.jsx, kkScanner.js | Ja | Ja (KVG-Karte) |
 | Budget-Import (CSV) | Implementiert | BudgetImport.jsx, csvImport.js | Ja | Teilweise |
 | Budget-Sync | Implementiert | BudgetSync.jsx, budgetSync.js | Ja | Ja |
@@ -281,7 +281,7 @@ Stand: 2026-05-26
 1. **Regelbasiert, nicht AI-generiert** — Jede Berechnung, jeder Hinweis basiert auf nachvollziehbaren Regeln und Rechtsgrundlagen
 2. **Versionierbar** — Alle Daten und Regeln sind in Code oder strukturierten Dateien, versioniert via Git
 3. **Auditierbar** — Jede Berechnung ist reproduzierbar, jede Quelle nachvollziehbar
-4. **Exportierbar** — Alle Nutzerdaten können als JSON/ZIP exportiert werden
+4. **Exportierbar** — Alle Nutzerdaten können als JSON exportiert werden (dazu CSV; verschlüsselt als `.maloja`)
 5. **Kantonal differenziert** — Wo nötig, kantonale Unterschiede explizit modelliert
 6. **Quellenangabe** — Jede Regel verweist auf die Rechtsgrundlage (SR-Nummer oder Quelle)
 7. **Kein juristischer Rat** — Hinweise, keine Beratung; Disclaimer an allen sensiblen Stellen

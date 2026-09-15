@@ -49,7 +49,7 @@
 | 1 | Kuhglocke-Erinnerungen (Fristen) | done — CalendarReminders + OverdueBanner + NotificationSettings |
 | 2 | Erweiterte Verbindungen (EL, RAV, IPV-Hinweise) | done — Kontextuelle Budget-Hinweise: IPV, Sozialhilfe, EL. 4 Sprachen. |
 | 3 | Kapitel-Einleitungen als Orientierungsseiten | done — Intro-Texte in allen 7 Kapiteln |
-| 4 | Export-Architektur (PDF, JSON, ZIP) erweitern | teilweise — Lebensmappe, Notfalldossier, Briefvorlagen, ZIP-Export |
+| 4 | Export-Architektur (PDF, JSON, ZIP) erweitern | teilweise — Lebensmappe, Notfalldossier, Briefvorlagen, Datei-Export (JSON/CSV/`.maloja`; ein ZIP gibt es nicht) |
 | 5 | Bundesordner-Metapher im Dokumenten-Tresor | done — Ordner-Icon, Register-Tabs, gruppierte Ansicht, warme Sprache. 4 Sprachen. |
 | 6 | Multi-Sprach-Audit (FR, IT Qualität) | done — IT vollständig auf Parität mit DE/EN/FR (0 fehlende Keys). Mobile inputMode="decimal" bei allen CHF-Feldern. Touch-Zielgrössen Tresor verbessert. |
 

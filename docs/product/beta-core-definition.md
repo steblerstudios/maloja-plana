@@ -58,7 +58,7 @@ Du weisst, wo alles ist. Du bist vorbereitet.
 | IPV-Rechner (26 Kantone) | PremiumSubsidy.jsx + premiumCalc.js | Done | Behalten |
 | CV-Generator | CVGenerator.jsx + cvGenerator.js | Done | Behalten |
 | Sozialhilfe-View (SKOS) | SozialhilfeView.jsx | Done | **Bug fixen** (Household) |
-| ZIP-Export | ZipExport.jsx + zipExport.js | Done | Behalten (als Backup) |
+| Datei-Export (Einzeldateien, kein ZIP) | ZipExport.jsx + zipExport.js | Done | Behalten (als Backup) |
 | Budget-Import (CSV) | BudgetImport.jsx + csvImport.js | Done | Behalten |
 | Charts | ChartsAdvanced.jsx | Done | Behalten |
 | Kalender-Erinnerungen | CalendarReminders.jsx | Done | Behalten |
@@ -394,7 +394,7 @@ Nicht Features. Lebenssituationen.
 | **Datenbedarf** | Alle Kapitel-Zusammenfassungen |
 | **Exportbedarf** | Lebensmappe (Beta-Core) |
 | **Beta-Relevanz** | **Core** — Kernproduktversprechen |
-| **Aktueller Stand** | ZIP-Export existiert, aber technisch, nicht menschlich |
+| **Aktueller Stand** | Datei-Export (Einzeldateien, kein ZIP) existiert, aber technisch, nicht menschlich |
 | **Beta-Ziel** | "Meine Unterlagen" Bereich + Lebensmappe als PDF |
 
 ### Flow 6: "Wie funktioniert AHV / BVG / Krankenkasse?"
