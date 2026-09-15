@@ -4,6 +4,7 @@ import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, radius, space } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
@@ -20,6 +21,9 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const [pendingFile, setPendingFile] = useState(null);
   const [, setPendingType] = useState(null);
   const [validationWarnings, setValidationWarnings] = useState([]);
+  // Export-Vorschau (K3): null | 'json' | 'csv' | 'manifest' | 'sicherung' | 'sicherungVerschluesselt'.
+  // Jeder Export-Knopf öffnet zuerst die Vorschau; erst «Datei erstellen» schreibt.
+  const [vorschau, setVorschau] = useState(null);
 
   const handleExportJSON = () => {
     setExporting(true);
@@ -68,16 +72,23 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     }
   };
 
-  const handleExportEncryptedBackup = async () => {
-    setBackupStatus(null);
+  // Dieselbe Prüfung vor der Vorschau und vor dem Verschlüsseln: die Vorschau soll nie
+  // eine Sicherung ankündigen, die dann an einem zu kurzen Passwort scheitert.
+  const passphraseOk = () => {
     if (!passphrase || passphrase.length < 4) {
       setBackupStatus({ type: 'error', msg: t('backup.passphraseHint') });
-      return;
+      return false;
     }
     if (passphrase !== passphraseConfirm) {
       setBackupStatus({ type: 'error', msg: t('backup.passphraseMismatch') });
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const handleExportEncryptedBackup = async () => {
+    setBackupStatus(null);
+    if (!passphraseOk()) return;
     setBackupStatus({ type: 'info', msg: t('backup.encrypting') });
     try {
       const encrypted = await exportEncrypted(passphrase);
@@ -224,6 +235,23 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     dataSize: JSON.stringify(data).length
   };
 
+  // Nach «Datei erstellen» der eigentliche Export; die Vorschau erscheint direkt
+  // unter dem Knopf, der sie geöffnet hat.
+  const exportFuer = {
+    json: handleExportJSON,
+    csv: handleExportCSV,
+    manifest: handleExportManifest,
+    sicherung: handleExportPlainBackup,
+    sicherungVerschluesselt: handleExportEncryptedBackup,
+  };
+  const vorschauPanel = (...arten) => (vorschau && arten.includes(vorschau))
+    ? React.createElement(ExportVorschau, {
+        palette, t, art: vorschau, quelle: { data, documents },
+        onWeiter: () => { const f = exportFuer[vorschau]; setVorschau(null); f(); },
+        onZurueck: () => setVorschau(null),
+      })
+    : null;
+
   const inputStyle = {
     width: '100%', padding: space.sm, marginBottom: space.sm, borderRadius: radius.sm,
     border: '1px solid ' + palette.border, background: palette.surface,
@@ -268,18 +296,19 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, '↙ ' + t('zipExport.exportFormats')),
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
-              onClick: handleExportJSON, disabled: exporting,
+              onClick: () => setVorschau('json'), disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ JSON'),
             React.createElement('button', {
-              onClick: handleExportCSV, disabled: exporting,
+              onClick: () => setVorschau('csv'), disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '◰ CSV'),
             React.createElement('button', {
-              onClick: handleExportManifest, disabled: exporting,
+              onClick: () => setVorschau('manifest'), disabled: exporting,
               style: { padding: '10px', background: exporting ? palette.mid : palette.sage, color: exporting ? '#fff' : '#000', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
             }, exporting ? 'ⓘ ' + t('zipExport.exporting') : '□ Manifest')
-          )
+          ),
+          vorschauPanel('json', 'csv', 'manifest')
         ),
 
         // Info
@@ -301,7 +330,8 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
         }, t(sessionBackupCount === 1 ? 'backup.sessionCount' : 'backup.sessionCountPlural', { count: sessionBackupCount })),
 
-        React.createElement('button', { onClick: handleExportPlainBackup, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
+        React.createElement('button', { onClick: () => { setBackupStatus(null); setVorschau('sicherung'); }, style: btnStyle(palette.sand) }, '□ ' + t('backup.exportPlain')),
+        vorschauPanel('sicherung'),
 
         React.createElement('div', { style: { margin: '16px 0 8px', fontSize: text.sm, fontWeight: weight.semi } }, t('backup.exportEncrypted')),
         React.createElement('input', {
@@ -314,10 +344,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         }),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('backup.passphraseHint')),
         React.createElement('button', {
-          onClick: handleExportEncryptedBackup,
+          onClick: () => { setBackupStatus(null); if (passphraseOk()) setVorschau('sicherungVerschluesselt'); },
           disabled: !passphrase || passphrase.length < 4 || passphrase !== passphraseConfirm,
           style: btnStyle(passphrase && passphrase.length >= 4 && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
         }, '◉ ' + t('backup.exportEncrypted')),
+        vorschauPanel('sicherungVerschluesselt'),
 
         React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo'))
       )

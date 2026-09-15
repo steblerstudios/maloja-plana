@@ -5,6 +5,7 @@ import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefC
 import { Icon } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 import { addReminder } from './utils/reminders.js';
 
@@ -34,6 +35,8 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
   const [printed, setPrinted] = useState(false);
   // Frist in den Kalender gelegt (ruhige Bestätigung statt Doppel-Anlage).
   const [reminderAdded, setReminderAdded] = useState(false);
+  // Export-Vorschau (K3): vor dem Öffnen zeigen, welche Angaben im Brief stehen.
+  const [exportVorschau, setExportVorschau] = useState(false);
 
   // Um welche Anstellung geht es? Nur nötig, wenn ein Nebenerwerb erfasst ist —
   // sonst bleibt es bei der Hauptanstellung und die Auswahl erscheint gar nicht.
@@ -115,7 +118,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
     },
       templates.map(tmpl => React.createElement('button', {
         key: tmpl.key,
-        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); },
+        onClick: () => { setSelected(tmpl.key); setPreview(false); setPrinted(false); setBelegIds([]); setReasons([]); setReminderAdded(false); setExportVorschau(false); },
         style: {
           padding: '14px 16px', background: selected === tmpl.key ? palette.up : palette.surface,
           border: '1px solid ' + (selected === tmpl.key ? palette.sage : palette.border),
@@ -272,7 +275,15 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
         }
       }, preview ? t('briefe.hidePreview') : t('briefe.showPreview')),
-      React.createElement(PrimaryButton, { palette, onClick: handlePrint }, t('briefe.printLetter'))
+      React.createElement(PrimaryButton, { palette, onClick: () => { if (selected && briefCanRender(selected)) setExportVorschau(true); } }, t('briefe.printLetter'))
+    ),
+    selected && exportVorschau && React.createElement('div', { style: { marginBottom: space.md } },
+      React.createElement(ExportVorschau, {
+        palette, t, art: 'brief',
+        quelle: { data, templateKey: selected, belegeCount: reklamationBelege.length, job: jobKey },
+        onWeiter: () => { setExportVorschau(false); handlePrint(); },
+        onZurueck: () => setExportVorschau(false),
+      })
     ),
 
     // Frist → Kalender: den berechneten Rückmelde-Termin ruhig in den Kalender legen.

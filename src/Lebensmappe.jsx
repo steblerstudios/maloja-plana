@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -14,6 +15,8 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
 
   const preview = getLebensMappePreview(data, chapters, t, documents);
   const hasSections = preview.sections.length > 0;
+  // Export-Vorschau (K3): erst zeigen, was im Dokument steht, dann öffnen.
+  const [vorschau, setVorschau] = useState(false);
 
   const handlePrint = () => {
     const html = generateLebensmappe(data, chapters, t, documents);
@@ -106,9 +109,17 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
 
     // ─── Print button ───────────────────────────────────
     hasSections && React.createElement(PrimaryButton, {
-      palette, onClick: handlePrint,
-      style: { width: '100%', padding: '12px', marginBottom: '20px' },
+      palette, onClick: () => setVorschau(true),
+      style: { width: '100%', padding: '12px', marginBottom: vorschau ? 0 : '20px' },
     }, t('lebensmappe.printAction')),
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+      React.createElement(ExportVorschau, {
+        palette, t, art: 'dossier',
+        quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })), dokumente: preview.docCount },
+        onWeiter: () => { setVorschau(false); handlePrint(); },
+        onZurueck: () => setVorschau(false),
+      })
+    ),
 
     // ─── Preview note ───────────────────────────────────
     hasSections && React.createElement('div', {
