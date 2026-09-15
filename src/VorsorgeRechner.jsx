@@ -33,6 +33,10 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   // der Rechner ihnen einen ungefragten „Aufschub" auf 65, den sie nie gewählt haben.
   const refAlterMonate = referenzalterMonate({ geschlecht: data.basis?.gender, geburtsjahr: birthYear });
   const refAlterJahre = refAlterMonate / 12;
+  // Referenzalter als Text: «65 Jahre» oder «64 Jahre 6 Monate» (Übergangsjahrgänge) —
+  // für Ergebnisblock und Szenariotexte, damit nirgends eine feste «65» steht.
+  const fmtAlterMonate = (monate) => Math.floor(monate / 12) + ' ' + t('vr.jahre')
+    + (monate % 12 ? ' ' + (monate % 12) + ' ' + t('vr.monate') : '');
 
   const [einkommen, setEinkommen] = useState(data.finanzen?.monthlyIncome ? String(Math.round(Number(data.finanzen.monthlyIncome) * 12)) : '');
   const [beitragsjahre, setBeitragsjahre] = useState('');
@@ -449,8 +453,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         // Referenzalter nur zeigen, wenn es von 65 abweicht (Frauen der AHV-21-Übergangs-
         // generation) — sonst kein Clutter. Quelle: berechneAltersrente → referenzalterMonate.
         ahvResult.referenzalterMonate !== 780 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } },
-          t('vr.referenzalter') + ': ' + Math.floor(ahvResult.referenzalterMonate / 12) + ' ' + t('vr.jahre')
-            + (ahvResult.referenzalterMonate % 12 ? ' ' + (ahvResult.referenzalterMonate % 12) + ' ' + t('vr.monate') : '')
+          t('vr.referenzalter') + ': ' + fmtAlterMonate(ahvResult.referenzalterMonate)
         ),
         ahvResult.erziehungsgutschrift > 0 && React.createElement('div', null,
           t('vr.erziehungsgutschrift') + ': CHF ' + fmt(ahvResult.erziehungsgutschrift) + ' / ' + t('vr.jahr')
@@ -750,19 +753,20 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
             const pctVal = projektionAhv ? projektionAhv.vorbezugAufschub : 0;
             const pct = (pctVal > 0 ? '+' : '') + pctVal.toFixed(1) + '%';
             const ahvBezug = Math.max(ahvMin, Math.min(70, ret));
+            const referenzalter = fmtAlterMonate(refAlterMonate);
             const line = (txt, key) => React.createElement('div', { key, style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5, marginTop: '3px' } }, txt);
             const rows = [];
             if (delta < 0) {
-              rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer }), 'a'));
+              rows.push(line(t('vr.zukunftSzenarioFrueh', { dauer, referenzalter }), 'a'));
               rows.push(line(t('vr.zukunftSzenarioAhvFrueh', { alter: ahvBezug, pct }), 'b'));
               if (ret < ahvMin) rows.push(line(t('vr.zukunftSzenarioBridge', { von: ret }), 'c'));
               rows.push(line(t('vr.zukunftSzenarioSaeulen'), 'd'));
             } else if (delta > 0) {
-              rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer }), 'a'));
+              rows.push(line(t('vr.zukunftSzenarioAufschub', { dauer, referenzalter }), 'a'));
               rows.push(line(t('vr.zukunftSzenarioAhvAufschub', { alter: ahvBezug, pct }), 'b'));
               rows.push(line(t('vr.zukunftSzenarioWeiter'), 'c'));
             } else {
-              rows.push(line(t('vr.zukunftSzenarioReferenz'), 'a'));
+              rows.push(line(t('vr.zukunftSzenarioReferenz', { referenzalter }), 'a'));
             }
             return React.createElement('div', { style: { ...s.section, marginBottom: space.md + 'px' } },
               React.createElement('div', { style: s.label }, t('vr.zukunftSzenarioTitle')),

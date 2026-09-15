@@ -4,6 +4,7 @@ import {
   bvgKoordinationsabzug, berechneBVGGuthaben, projiziereVorsorge,
   AHV_PARAMS, BVG_PARAMS, AHV_DATA_VERSION,
   bvgAltersgutschriftSatz, nettoZuBruttoRichtwert, AHV_ALV_ARBEITNEHMER_SATZ,
+  aufschubZuschlagProzent,
 } from '../ahvRechner.js';
 
 describe('ahvRechner', () => {
@@ -171,6 +172,58 @@ describe('ahvRechner', () => {
       const ohne = berechneAltersrente({ ...base, geburtsjahr: 1962, bezugAlter: 63 });
       expect(mitGeschlecht.monatsrente).toBe(ohne.monatsrente);
       expect(mitGeschlecht.vorbezugAufschub).toBe(ohne.vorbezugAufschub);
+    });
+  });
+
+  describe('aufschubZuschlagProzent — Art. 55ter Abs. 1 AHVV (SR 831.101)', () => {
+    // Werte wörtlich aus der Tabelle in Art. 55ter Abs. 1 AHVV (Fassung in Kraft seit
+    // 1.1.2025, konsolidierter Stand 1.1.2026), identisch im BSV-Merkblatt 3.04 Ziff. 14.
+    it('Jahreswerte: 1 J 5,2 · 2 J 10,8 · 3 J 17,1 · 4 J 24,0 · 5 J 31,5', () => {
+      expect(aufschubZuschlagProzent(12)).toBe(5.2);
+      expect(aufschubZuschlagProzent(24)).toBe(10.8);
+      expect(aufschubZuschlagProzent(36)).toBe(17.1);
+      expect(aufschubZuschlagProzent(48)).toBe(24.0);
+      expect(aufschubZuschlagProzent(60)).toBe(31.5);
+    });
+    it('Monatsgruppen 0–2 / 3–5 / 6–8 / 9–11 innerhalb eines Jahres', () => {
+      expect(aufschubZuschlagProzent(14)).toBe(5.2);  // 1 J 2 M → Gruppe 0–2
+      expect(aufschubZuschlagProzent(15)).toBe(6.6);  // 1 J 3 M
+      expect(aufschubZuschlagProzent(17)).toBe(6.6);  // 1 J 5 M
+      expect(aufschubZuschlagProzent(18)).toBe(8.0);  // 1 J 6 M
+      expect(aufschubZuschlagProzent(23)).toBe(9.4);  // 1 J 11 M
+      expect(aufschubZuschlagProzent(30)).toBe(13.9); // 2 J 6 M
+      expect(aufschubZuschlagProzent(41)).toBe(18.8); // 3 J 5 M → Spalte 3–5 (Zeile 3: 17,1 · 18,8 · 20,5 · 22,2)
+      expect(aufschubZuschlagProzent(42)).toBe(20.5); // 3 J 6 M → Spalte 6–8
+      expect(aufschubZuschlagProzent(59)).toBe(29.6); // 4 J 11 M
+    });
+    it('unter der Mindestdauer von einem Jahr (Art. 39 Abs. 1 AHVG) kein Zuschlag', () => {
+      expect(aufschubZuschlagProzent(0)).toBe(0);
+      expect(aufschubZuschlagProzent(6)).toBe(0);
+      expect(aufschubZuschlagProzent(11)).toBe(0);
+    });
+    it('über fünf Jahre gedeckelt auf 31,5; Unfug → 0', () => {
+      expect(aufschubZuschlagProzent(72)).toBe(31.5);
+      expect(aufschubZuschlagProzent(-5)).toBe(0);
+      expect(aufschubZuschlagProzent(NaN)).toBe(0);
+    });
+    it('berechneAltersrente nutzt die Tabelle: Aufschub 65→70 = +31,5 %, 65→66 = +5,2 %', () => {
+      const base = { geburtsjahr: 1961, geschlecht: 'male', durchschnittlichesJahreseinkommen: 80000, beitragsjahre: 44 };
+      const ref = berechneAltersrente({ ...base });
+      const plus5 = berechneAltersrente({ ...base, bezugAlter: 70 });
+      const plus1 = berechneAltersrente({ ...base, bezugAlter: 66 });
+      expect(plus5.vorbezugAufschub).toBe(31.5);
+      expect(plus5.monatsrente).toBe(Math.round(ref.monatsrente * 1.315 * 100) / 100);
+      expect(plus1.vorbezugAufschub).toBe(5.2);
+      expect(ref.vorbezugAufschub).toBe(0);
+    });
+    it('Frau JG 1962 (Referenz 64 J 6 M), Bezug 65 = 6 Monate → unter Mindestdauer, 0 %', () => {
+      const r = berechneAltersrente({ geburtsjahr: 1962, geschlecht: 'female', durchschnittlichesJahreseinkommen: 80000, beitragsjahre: 44, bezugAlter: 65 });
+      expect(r.vorbezugAufschub).toBe(0);
+    });
+    it('Vorbezug bleibt linear 6,8 %/Jahr (nicht angefasst)', () => {
+      const base = { geburtsjahr: 1961, geschlecht: 'male', durchschnittlichesJahreseinkommen: 80000, beitragsjahre: 44 };
+      expect(berechneAltersrente({ ...base, bezugAlter: 64 }).vorbezugAufschub).toBe(-6.8);
+      expect(berechneAltersrente({ ...base, bezugAlter: 63 }).vorbezugAufschub).toBe(-13.6);
     });
   });
 

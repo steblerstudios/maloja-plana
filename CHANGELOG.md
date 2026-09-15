@@ -12,6 +12,8 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Behoben
+- **AHV-Aufschubszuschlag nach Art. 55ter AHVV (Swiss-Precision 15.09., 🔴 1):** Der Zuschlag beim Rentenaufschub war linear mit 3,2 %/Jahr modelliert (5 Jahre → 16,0 %). Neu die amtliche Tabelle aus Art. 55ter Abs. 1 AHVV (SR 831.101, Stand 1.1.2026; identisch BSV-Merkblatt 3.04 Ziff. 14): 1 J 5,2 · 2 J 10,8 · 3 J 17,1 · 4 J 24,0 · 5 J 31,5 %, dazwischen nach Monatsgruppen 0–2/3–5/6–8/9–11. Unter 12 Monaten kein Zuschlag (Art. 39 Abs. 1 AHVG, Mindestdauer ein Jahr). Die Vorbezugskürzung (6,8 %/Jahr) ist unverändert. Neu `aufschubZuschlagProzent()`, 7 Tests.
+- **Referenzalter im Zukunfts-Szenario nicht mehr fest «65» (Swiss-Precision 15.09., 🔴 2):** Die Texte «vor/über das Referenzalter 65» und «Rücktritt mit 65» zeigen jetzt das gerechnete Referenzalter der Person (`{referenzalter}`, z. B. «64 Jahre 6 Monate» für Frauen JG 1962), in allen 5 Sprachen; Test je Sprache.
 - **Backup-Restore gehärtet (TODO §G2):** Die Struktur-Prüfung beim Import ist jetzt eine Barriere statt einer Warnung — schlägt `validateBackupPayload` fehl, wird nichts geschrieben (auch kein Pre-Restore-Snapshot); ruhige Meldung in 5 Sprachen. Dazu ein 50-MB-Limit vor dem Lesen der Datei, Anzahl-Obergrenzen für alle Listen (Dokumente, Kalender, Kontakte, Merkliste, Schulden/Betreibung/Verlustscheine) und `merkliste` in der Validierung. Neu `restoreBackup()` in `backupCrypto.js` als eine Stelle für Prüfen → Snapshot → Schreiben; 22 neue Tests.
 
 ## [0.1.26-beta] — 2026-07-19
