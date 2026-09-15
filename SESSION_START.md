@@ -7,7 +7,18 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15 spätabends (`main`=`f368fbb` nach dem Merge von **PR #139**, mit diesem Stand-PR eine Kommastelle weiter · ✅ **DEPLOYT 22:14 aus `f368fbb`**: live `index-4a2ca1ae.js`, Version `0.1.27-beta` im Bundle, altes Bundle 404, Backup `20260915-221444` = 161 Dateien · **Tag `v0.1.27-beta` = `f368fbb`, auf origin** · `main` = live · keine offenen Feature-Branches, 0 offene PRs)
+**Stand:** 2026-09-15 spätabends (`main`=`16e56b4` nach dem Merge von **PR #150**, mit diesem Stand-PR weiter · ⚠️ **K-Runde gemergt, NICHT live**: live weiter `index-4a2ca1ae.js` = 0.1.27-beta aus `f368fbb` (Deploy 22:14) · gemergt #141 – #145 · #147 – #150, **offen #146** · Tag `v0.1.27-beta` = `f368fbb`)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-15 spätabends (K-Runde gemergt, nicht deployt)
+>
+> Acht K-Gruppen parallel in eigenen Arbeitskopien gebaut, je ein PR mit grüner CI: #142 (K4, K15)
+> · #144 (K12 Elterntarif) · #145 (K3, K17) · #146 (K5, K6, K16, **offen**) · #147 (K1, K2) ·
+> #148 (K14 Datenquellen 2026) · #149 (K9 – K11) · #150 (K7 Demo). Dazu aus einer anderen Sitzung
+> #141 und #143 (Fremd-Audit, Bau-Liste §8). Stand je Punkt und die neuen Fragen E20 – E27:
+> Bau-Liste §9.
+> **Vor dem nächsten Deploy:** #146 mergen, dann `git pull` im Haupt-Checkout. **Nach dem Deploy:**
+> die K-Zeilen in `FEATURES.md` per Bundle-Hash auf `verified-live`, Klick-Proben für die
+> Export-Vorschau (K3) und die Demo (K7), Blick hell und dunkel auf die Icons (K5).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-15 spätabends (Deploy 0.1.27-beta gelandet)
 >

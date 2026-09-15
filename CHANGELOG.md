@@ -11,6 +11,31 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+*K-Runde vom 15.09.2026 spätabends: gemergt, **noch nicht deployt**.*
+
+### Behoben
+- **Elterntarif der direkten Bundessteuer (K12, #144):** Alleinerziehende wurden mit dem Grundtarif minus 263 Franken je Kind gerechnet. Diese Mischung kennt das DBG nicht. Neu nach DBG Art. 36 Abs. 2bis: Tarif für Verheiratete, minus CHF 263 je Kind (V EFD über die kalte Progression, AS 2024 479; Tarifstufen 2026 AS 2025 579; ESTV Form. 58c-2026). Die App weiss nicht sicher, ob die Voraussetzung erfüllt ist; deshalb gibt es eine Bestätigung, ohne sie rechnet sie vorsichtig mit dem Grundtarif. 8 Tests mit Sollwerten aus der ESTV-Tabelle.
+- **Generika-Selbstbehalt (K14, #148):** Der Hinweis nannte «10 % statt 20 %». Nach KLV Art. 38a sind es 10 % bzw. 40 %. In 5 Sprachen korrigiert.
+- **Tardoc-Taxpunktwerte 2026 (K14, #148):** Zürich 0.91 statt 0.89 (RRB ZH 1299/2025), Bern 0.86 statt 0.89 (Verfügung 2025.GSI.2252). Die Werte der übrigen 23 Kantone sind Stand 2025 und im Code als ungeprüft markiert.
+- **Hilfe und FAQ versprachen eine «verschlüsselte ZIP-Datei» (K17, #145):** Geschrieben werden Einzeldateien (JSON, CSV, verschlüsselt `.maloja`). Texte in 5 Sprachen und `README.md` angepasst, Menüpfad wie in der App.
+- **Heller Blitz im Dunkelmodus (K4, #142):** `public/theme-init.js` setzt `data-theme` vor dem ersten Rendern. Die CSP ist unverändert.
+- **Beispiel-Modus:** Die Speichern-Knöpfe der Rechner schrieben Beispielwerte in die echten Daten; jetzt landen sie in der Beispiel-Kopie (#150).
+
+### Neu
+- **Export-Vorschau (K3, #145):** Vor Export, Dossier und Brief zeigt ein ruhiger Schritt, welche Angaben in der Datei stehen und ob sie verschlüsselt ist. 9 Knöpfe in 5 Ansichten, eigener Teil (2.6 kB gzip).
+- **Ohne Code ausprobieren (K7, #150):** zweiter Weg auf der Code-Wand in den Beispiel-Modus. Ein Speicher-Schirm hält localStorage und sessionStorage im Arbeitsspeicher und sperrt IndexedDB; das Beta-Gate bleibt unangetastet.
+- **Quellen (K1, K2, #147):** «BFS-Methodik» im Armutsgrenzen-Befund verlinkt auf die BFS-Armutsstatistik. Im Wechsel der Zusatzversicherung steht neu «Vor dem Wechsel prüfen» mit VVG Art. 4, 6 und 35a Abs. 4.
+
+### Barrierefreiheit
+- **Glyphen, zweite Hälfte (K5, #146):** 20 rohe Zeichen in 6 Ansichten durch Icons ersetzt, zwei neue Icons (`mappe`, `drucker`). Kalender-Knopfgruppen mit `role="group"`, Wiederholungs-Knöpfe mit `aria-pressed`, Sozialhilfe «Nächste Schritte» als h3. Fokusring nachgerechnet (K6): überall mindestens 4:1, nichts geändert.
+
+### Technik
+- **Lockfile mit npm 10 erneuert, `npm ci` in beiden Workflows (K15, #142).** Solange die CI auf Node 22 mit npm 10 läuft, das Lockfile nach Paketänderungen mit `npx npm@10 install --package-lock-only` erneuern.
+- **Tote Exporte entfernt, `sw.js` öffnet nur noch die eigene Origin (K16, #146).**
+
+### Dokumentation
+- Freigabe-Register je Modul `docs/legal/freigabe-register.md` (K9), Crosslink-Test Kanton mit zwei neuen Einträgen in `BUGS.md` (K10), Notiz zu den `rm.js`-Keys (K11), alles #149. Fremd-Audit gegen den Code gelegt, Bau-Liste §8 (#141, #143).
+
 ## [0.1.27-beta] — 2026-09-15
 
 *Stand seit 0.1.26-beta: PR #114 bis #139. **Live seit 15.09.2026, 22:14** (`index-4a2ca1ae.js`);
