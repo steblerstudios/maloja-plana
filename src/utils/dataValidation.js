@@ -142,8 +142,57 @@ export function validateContacts(contacts) {
 }
 
 /**
+ * Validate or5_merkliste shape.
+ * Expected: array of { id, text, link?, done? } (MerklisteView.jsx).
+ */
+export function validateMerkliste(items) {
+  const errors = [];
+
+  if (!Array.isArray(items)) {
+    return { valid: false, errors: ['or5_merkliste is not an array'], sanitized: [] };
+  }
+
+  const sanitized = items.filter((m, idx) => {
+    if (!isPlainObject(m)) {
+      errors.push('merkliste[' + idx + '] is not an object');
+      return false;
+    }
+    if (!m.id) {
+      errors.push('merkliste[' + idx + '] missing id');
+      return false;
+    }
+    if (m.text !== undefined && !isString(m.text)) {
+      errors.push('merkliste[' + idx + '] text is not a string');
+      return false;
+    }
+    return true;
+  });
+
+  return { valid: errors.length === 0, errors, sanitized };
+}
+
+// Anzahl-Obergrenzen für Listen im Backup — grosszügig, aber endlich.
+// Zweck: eine manipulierte oder kaputte Datei darf den Restore nicht mit
+// Millionen Einträgen in localStorage/IndexedDB treiben. Die Werte liegen
+// weit über dem, was ein Lebensordner real enthält:
+// - docs 2000: ~200 Scans/Jahr über 10 Jahre (Lohnabrechnungen, Policen, Verfügungen).
+// - reminders 5000: Kalender-Einträge inkl. Wiederholungen über Jahre.
+// - contacts/merkliste 2000: Adressen bzw. Notizen — real Dutzende, nicht Tausende.
+// - schulden/betreibung/verlustscheine 1000: ein Betreibungsregister-Auszug
+//   hat Dutzende Posten; 1000 ist die Grössenordnung „kann nicht echt sein".
+export const BACKUP_LIST_LIMITS = {
+  docs: 2000, reminders: 5000, contacts: 2000, merkliste: 2000,
+  schulden: 1000, betreibung: 1000, verlustscheine: 1000,
+};
+
+function exceedsLimit(list, key) {
+  return Array.isArray(list) && list.length > BACKUP_LIST_LIMITS[key];
+}
+
+/**
  * Validate a complete backup payload (as produced by export).
  * Returns { valid, errors } without modifying the payload.
+ * Der Aufrufer (restoreBackup / ZipExport) schreibt bei valid=false NICHTS.
  */
 export function validateBackupPayload(payload) {
   const errors = [];
@@ -163,21 +212,31 @@ export function validateBackupPayload(payload) {
   if (payload.data !== undefined) {
     const dataResult = validateData(payload.data);
     errors.push(...dataResult.errors.map(e => 'data: ' + e));
+    // Listen innerhalb von or5_data (SchuldenManager) — nur zählen, Form prüft die App.
+    if (isPlainObject(payload.data)) {
+      for (const key of ['schulden', 'betreibung', 'verlustscheine']) {
+        if (exceedsLimit(payload.data[key], key)) {
+          errors.push('data: ' + key + ' exceeds limit of ' + BACKUP_LIST_LIMITS[key]);
+        }
+      }
+    }
   }
 
-  if (payload.docs !== undefined) {
-    const docsResult = validateDocs(payload.docs);
-    errors.push(...docsResult.errors.map(e => 'docs: ' + e));
-  }
-
-  if (payload.reminders !== undefined) {
-    const remResult = validateReminders(payload.reminders);
-    errors.push(...remResult.errors.map(e => 'reminders: ' + e));
-  }
-
-  if (payload.contacts !== undefined) {
-    const conResult = validateContacts(payload.contacts);
-    errors.push(...conResult.errors.map(e => 'contacts: ' + e));
+  // Top-Level-Listen: erst der Cap (ein Fehler statt Tausender Element-Fehler),
+  // sonst die Form-Prüfung.
+  const lists = [
+    ['docs', validateDocs],
+    ['reminders', validateReminders],
+    ['contacts', validateContacts],
+    ['merkliste', validateMerkliste],
+  ];
+  for (const [key, validate] of lists) {
+    if (payload[key] === undefined) continue;
+    if (exceedsLimit(payload[key], key)) {
+      errors.push(key + ': exceeds limit of ' + BACKUP_LIST_LIMITS[key] + ' entries');
+      continue;
+    }
+    errors.push(...validate(payload[key]).errors.map(e => key + ': ' + e));
   }
 
   return { valid: errors.length === 0, errors };

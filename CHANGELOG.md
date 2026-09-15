@@ -11,6 +11,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Backup-Restore gehärtet (TODO §G2):** Die Struktur-Prüfung beim Import ist jetzt eine Barriere statt einer Warnung — schlägt `validateBackupPayload` fehl, wird nichts geschrieben (auch kein Pre-Restore-Snapshot); ruhige Meldung in 5 Sprachen. Dazu ein 50-MB-Limit vor dem Lesen der Datei, Anzahl-Obergrenzen für alle Listen (Dokumente, Kalender, Kontakte, Merkliste, Schulden/Betreibung/Verlustscheine) und `merkliste` in der Validierung. Neu `restoreBackup()` in `backupCrypto.js` als eine Stelle für Prüfen → Snapshot → Schreiben; 22 neue Tests.
+
 ## [0.1.26-beta] — 2026-07-19
 
 ### Behoben (Predeploy-Review 2026-07-19)

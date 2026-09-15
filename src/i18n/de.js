@@ -3198,6 +3198,8 @@ export default {
     selectFile: 'Sicherungsdatei wählen',
     fileTypes: '.json oder .maloja',
     validationErrors: 'Validierungswarnungen',
+    structureRejected: 'Die Sicherung konnte nicht gelesen werden, weil ihr Aufbau nicht dem erwarteten Format entspricht. Nichts wurde verändert.',
+    fileTooLarge: 'Die Datei ist grösser als {max} und wurde deshalb nicht gelesen. Nichts wurde verändert.',
     restored: 'Wiederhergestellt',
   },
 
