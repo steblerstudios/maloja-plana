@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15 (`main`=`0cc8e80` nach dem Merge von **PR #128** · **keine offenen PRs** · **kein offener Feature-Branch** — der Branch-Wald ist leer · ✅ **App-Stand ist LIVE** — Deploy 14.09. 18:32 aus `6b17e6b`, live läuft `index-2d6da893.js`, per `curl` verifiziert 14.09. 23:55; `main` unterscheidet sich vom Live-Build in `deploy.sh`, `RELEASE.md`, `scripts/` und **`public/sitemap.xml` (`lastmod` → 2026-09-14, dieser PR)** — Letzteres ist live-wirksam, also **hängt ein kleiner Deploy**, der zugleich der erste echte Lauf des Aufräumens ist)
+**Stand:** 2026-09-15 (`main`=`0cc8e80` nach dem Merge von **PR #128** · **kein offener Feature-Branch** — der Branch-Wald ist leer · ✅ **`main` ist LIVE** — Deploy **15.09. 15:52** aus `0cc8e80`, live läuft weiter `index-2d6da893.js` (App unverändert seit 14.09.), per `curl` verifiziert 15.09. 16:05 · ✅ **Aufräumen ist gelaufen**: verwaiste Bundles (`index-1fb26e10.js`, `index-2340fe54.js`, `AblaufSchale-00e61fd0.js`) → **404**, aktuelles Bundle → 200, erfundener Name → 404; Backup `.deploy-backups/20260915-155206` = 5696 Dateien (davon 5650 in `assets/`), das ist der letzte Stand **vor** dem Aufräumen · ⚠️ **`public/sitemap.xml` (`lastmod` → 2026-09-14, dieser PR) ist noch nicht live** — live steht 2026-08-13; ein kleiner Deploy nach dem Merge holt das nach)
 
 > **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
 > dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
@@ -28,8 +28,12 @@
 > auf `assets/`): würde **5535 verwaiste Dateien entfernen** und **115 aktuelle ersetzen**,
 > lftp-Summe `Removed: 5535 files`, `Modified: 115 files`, kein aktuelles File in der
 > Löschliste; Gegenproben: Juli-Bundle `index-1fb26e10.js` drin, aktuelles `index-2d6da893.js`
-> nicht. Der erste echte Lauf ist der nächste `bash deploy.sh` — danach sollte das
-> Rollback-Backup ~150 statt 5608 Dateien spiegeln (14.09.: 147 MB in 234 s).
+> nicht. **Erster echter Lauf: Deploy 15.09. 15:52 aus `0cc8e80`** (Stebler Studios, noch vor
+> dem Merge dieses PRs). Belegt per `curl` 16:05: die drei Stichproben aus der Löschliste
+> (`index-1fb26e10.js` Juli-Bundle, `index-2340fe54.js` August-Bundle, `AblaufSchale-00e61fd0.js`)
+> → **404**, aktuelles `index-2d6da893.js` → 200, erfundener Name → 404. Das Backup
+> `20260915-155206` (5696 Dateien, 5650 in `assets/`) ist der letzte Stand vor dem Aufräumen;
+> das nächste Backup sollte ~150 Dateien spiegeln, in Sekunden statt in vier Minuten.
 >
 > **`public/sitemap.xml`: `lastmod` 2026-08-13 → 2026-09-14** (Datum des letzten
 > App-Deploys, in diesem PR). Ist erst live, wenn deployt. Danach einmal
