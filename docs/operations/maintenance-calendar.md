@@ -119,7 +119,7 @@
 
 ### 2026-09-15 — Q3 (Issue #123, drei Wochen nach Fälligkeit)
 
-*Erhoben von Claude Code auf Stand `main` = `4b922ac`, Sophie merged. Alles gemessen, nichts geraten.*
+*Erhoben von Claude Code auf Stand `main` = `4b922ac`, Stebler Studios merged. Alles gemessen, nichts geraten.*
 
 **`npm audit`:** **0 Lücken in Produktions-Abhängigkeiten** (`--omit=dev`). In den Dev-Abhängigkeiten
 meldet `npm audit` Lücken, alle in der Build-/Test-Kette (vite 4, vitest, tar, postcss, xmldom) —
@@ -150,7 +150,7 @@ siehe Q2). Kein toter Link.
 
 **CI:** die letzten vier Läufe vom 15.09. grün (PR #129, #130 und beide Merges).
 
-**Nicht erledigt, Sophies Hand:** Analytics-Zeile aus dem Infomaniak-Server-Log ablesen
+**Nicht erledigt, Hand von Stebler Studios:** Analytics-Zeile aus dem Infomaniak-Server-Log ablesen
 (`analytics-weg1-anleitung.md`) — braucht das Panel.
 
 **Nächste Wartung:** Dezember (Q4). Januar 2027 = Datenquellen-Update (Tabelle oben).
