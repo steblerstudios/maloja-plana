@@ -3,6 +3,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
+import { LegendenMarke } from './components/LegendenMarke.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -113,6 +114,10 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
   };
 
   const buttonStyle = {
+    // inline-flex + gap: Präfix-Icons (Kreuz, Rechner, Haken) sitzen mittig neben dem Text.
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '4px',
     padding: space.sm + 'px ' + space.sm + 'px ' + space.sm + 'px ' + (space.sm + 4) + 'px',
     background: palette.sand,
     color: palette.onSand,
@@ -209,7 +214,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
               React.createElement('span', { style: { fontWeight: weight.semi } }, (idx + 1) + '. ' + (d.creditor || '—')),
               React.createElement('span', { style: { fontWeight: weight.semi } }, 'CHF ' + Number(d.amount || 0).toFixed(2))
             ),
-            React.createElement('div', { style: { display: 'inline-block', fontSize: text.xs, fontWeight: weight.semi, color: tierColor, marginBottom: '4px' } }, '● ' + tierLabel),
+            React.createElement('div', { style: { display: 'inline-block', fontSize: text.xs, fontWeight: weight.semi, color: tierColor, marginBottom: '4px' } }, React.createElement(LegendenMarke, { form: 'punkt', color: tierColor, palette }), tierLabel),
             React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.5 } }, tierReason)
           );
         })
@@ -256,12 +261,12 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)
           ),
-          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, '✕ ' + t('common.delete'))
+          React.createElement('button', { 'aria-label': t('common.delete') + ' ' + debt.creditor, onClick: () => handleDeleteDebt(debt.id), style: { ...buttonStyle, background: palette.rose } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       ),
 
       schulden.some(d => d.interestRate > 0) && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('button', { onClick: () => setDebtPlan(createDebtPlan(debtStatus.totalDebt, 500, schulden[0]?.interestRate || 0)), style: buttonStyle }, '◰ ' + t('schulden.paymentPlan'))
+        React.createElement('button', { onClick: () => setDebtPlan(createDebtPlan(debtStatus.totalDebt, 500, schulden[0]?.interestRate || 0)), style: buttonStyle }, React.createElement(Icon, { name: 'rechner', size: 14 }), t('schulden.paymentPlan'))
       ),
 
       debtPlan && React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, maxHeight: '400px', overflowY: 'auto' } },
@@ -289,7 +294,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
               React.createElement('option', { value: 'paid' }, t('schulden.statusPaid'))
             )
           ),
-          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...buttonStyle, background: palette.rose, marginTop: space.xs } }, '✕ ' + t('common.delete'))
+          React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteBetreibung(entry.id), style: { ...buttonStyle, background: palette.rose, marginTop: space.xs } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
         ))
       )
     ),
@@ -312,7 +317,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
           ),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center' } },
             React.createElement('input', { type: 'date', value: entry.date || '', onChange: (e) => handleUpdateVerlustschein(entry.id, 'date', e.target.value), 'aria-label': t('schulden.date'), style: { ...inputStyle, width: '160px', marginBottom: 0 } }),
-            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: { ...buttonStyle, background: palette.rose } }, '✕ ' + t('common.delete'))
+            React.createElement('button', { 'aria-label': t('common.delete'), onClick: () => handleDeleteVerlustschein(entry.id), style: { ...buttonStyle, background: palette.rose } }, React.createElement(Icon, { name: 'kreuz', size: 14 }), t('common.delete'))
           )
         ))
       )
@@ -325,7 +330,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),
 
     // Save Button
-    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, width: '100%', padding: '12px', marginTop: space.sm, background: palette.sageBtn, color: '#fff' } }, '□ ' + t('common.save'))
+    React.createElement('button', { onClick: handleSaveAll, style: { ...buttonStyle, justifyContent: 'center', width: '100%', padding: '12px', marginTop: space.sm, background: palette.sageBtn, color: '#fff' } }, React.createElement(Icon, { name: 'check', size: 14 }), t('common.save'))
   );
 };
 

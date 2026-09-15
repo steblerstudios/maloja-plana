@@ -652,6 +652,23 @@ const _check = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('polyline', { points: '4,12 10,18 20,6' })
 );
 
+// Drei schlichte Outline-Präfixe (je EIN Element, Bundle-Budget) — ersetzen die rohen
+// Text-Glyphen ◰ □ ✕ vor Titeln/Knöpfen (docs/TODO.md §G3 P1, docs/ICON_KONVENTION.md).
+// Rechner/Aufstellung — Berechnungs-Abschnitte (SKOS, IPV, EL, Zahlungsplan).
+const _rechner = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM8.5 7.5h7M8.5 12h7M8.5 16.5h4' })
+);
+
+// Leeres Kästchen — Merkpunkte und nächste Schritte.
+const _kaestchen = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('rect', { x: '4', y: '4', width: '16', height: '16', rx: '2' })
+);
+
+// Kreuz — Entfernen/Löschen, so leicht wie die frühere ✕-Glyphe (kein Abfalleimer-Gewicht).
+const _kreuz = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
+);
+
 const _warning = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 12 2 L 22 20 L 2 20 Z' }),
   React.createElement('line', { x1: '12', y1: '9', x2: '12', y2: '14', stroke: 'white', strokeWidth: '2', strokeLinecap: 'round' }),
@@ -980,6 +997,9 @@ const _iconFactories = {
   download: _download,
   delete: _delete,
   check: _check,
+  rechner: _rechner,
+  kaestchen: _kaestchen,
+  kreuz: _kreuz,
   warning: _warning,
   dashboard: _dashboard,
   settings: _settings,

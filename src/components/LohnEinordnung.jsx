@@ -4,6 +4,7 @@ import { bereichFillColor } from '../data/lebensbereiche.js';
 import { lohnBandState, LOHN_REFERENZ } from '../data/lohnEinordnung.js';
 import { CHAPTER_KEYS } from '../config/constants.js';
 import { renderSource } from '../utils/renderSource.js';
+import { LegendenMarke } from './LegendenMarke.jsx';
 
 // „Wo steht Ihr Lohn?" — spiegelgleich zum Miet-Barometer (components/MietVergleich).
 // Encoding: docs/design/farb-und-daten-system.md
@@ -249,15 +250,17 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
     })),
 
     // Werte-Zeile — Ihr Lohn LINKS, Median RECHTS (Entscheid Stebler Studios 2026-07-18).
-    // ⚠️ a11y: `valenceColor` ist die GRAFIK-Farbe; als Text gilt die Deep-Variante.
+    // Die Legenden-Marken spiegeln die Marken auf dem Balken (Füllung in `arbeitColor`,
+    // Punkt in `valenceColor`) — eine Marke, eine Farbe.
+    // ⚠️ a11y: `valenceColor` ist die GRAFIK-Farbe (3:1); als Text gilt die Deep-Variante.
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
       React.createElement('span', { style: { color: palette.text, fontWeight: weight.medium } },
-        React.createElement('span', { 'aria-hidden': true }, '▬ '),
+        React.createElement(LegendenMarke, { form: 'fuellung', color: arbeitColor, palette }),
         t('lohnEinordnung.yourWage', { amount: fmt(incomeVergleich) })),
       React.createElement('span', { style: { color: readoutColor } },
-        React.createElement('span', { 'aria-hidden': true }, '● '),
+        React.createElement(LegendenMarke, { form: 'punkt', color: valenceColor, palette }),
         t('lohnEinordnung.median') + ': CHF ' + fmt(median))
     ),
 

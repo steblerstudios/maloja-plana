@@ -272,6 +272,17 @@ entschärft — reproduce-first bestätigt. Echt offen:*
   (Screenreader-Lärm gelöst), aber die Glyphen SIND eigentlich Legenden-Symbole (dein Wert / Median /
   Schweizer Schnitt) → sollten logisch echte kleine Icons/Formen sein statt Unicode-Zeichen im Text.
   Beim Icon-Audit mitnehmen: eine Symbol-Sprache, die die Balken-Marken visuell spiegelt.
+  **Stand 2026-09-15 (M8, erste Hälfte gebaut, Branch `a11y/glyphen-sozialhilfe-schulden`):**
+  Sozialhilfe (8) + Schulden-Manager (6) glyphenfrei — neue Outline-Icons `rechner`/`kaestchen`/`kreuz`
+  in `IconSystem.jsx`, `●` über `LegendenMarke`. Barometer-Legenden `▬ ● ▏` in `LohnEinordnung`/
+  `RegionalBarometer` durch `components/LegendenMarke.jsx` (Füllung · Punkt · Strich · «!») ersetzt;
+  `MietVergleich.jsx` hatte im Code keine Glyphe (nur im Kommentar) und erbt die Legende über
+  `RegionalBarometer`. Gemessen (`grep "'[◰●◇↧□✕▬▏] "`, Codezeilen ohne Kommentare): vorher 46,
+  jetzt **Rest: 27 in 12 Dateien** — `□` 14 · `◇` 5 · `✕` 5 · `◰` 2 · `↧` 1 (ZipExport 4, PremiumSubsidy 4,
+  ChapterView 4, FinanzUebersicht 3, TaxCalculator 2, OrganDonation 2, CVGenerator 2, BudgetImport 2,
+  TaxImport 1, MietzinsOrientierung 1, KKScanner 1, CalendarReminders 1). Bewusst NICHT in dieser
+  Hälfte: die Präfixe `ⓘ` (104) · `✓` (37) · `→` (31) — systematische Hinweis-/Status-/Pfeil-Sprache
+  quer durch die App, gehört in einen eigenen Durchgang, sonst driften zwei Dateien vom Rest ab.
 - ✅ **Armutsgrenze 2279 hartkodiert — BEHOBEN** (2026-07-19, `00abfb6`/`1f8c103`): ersetzt durch
   belegte BFS-Methodik (`berechneArmutsgrenze`: SKOS-Grundbedarf + effektive Wohnkosten + CHF 100/P ab 16
   vs. *verfügbares* Netto, nicht mehr rohes `monthlyIncome`). Swiss-precision-Predeploy 2026-07-19: 0 🔴.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { renderSource } from '../utils/renderSource.js';
+import { LegendenMarke } from './LegendenMarke.jsx';
 
 // Ruhiges Regional-Barometer im Stil der „KK-Last"-Karte. Encoding (Stebler Studios):
 //   • Füllung  = eigener Wert (deine Prämie/Miete) — wie bei KK-Last die eigene Last
@@ -161,36 +162,38 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
       React.createElement('div', { style: { position: 'absolute', top: '-9px', bottom: '-3px', left: nationalPct + '%', width: '2px', background: palette.text } }),
     ),
 
-    // Werte als Marken (Farben = Encoding)
+    // Werte als Marken (Farben = Encoding). Die Legenden-Marken (`LegendenMarke`) spiegeln
+    // die Marken AUF dem Balken in derselben Farbvariablen — eine Marke, eine Farbe.
+    // Rein dekorativ (`aria-hidden`), der Wert steht im Text daneben.
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', fontSize: text.xs, color: palette.mid },
     },
-      // „▏" verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
-      // liest man den Strich leicht als „meinen Wert" statt als Referenz. Rein dekorativ →
-      // `aria-hidden`, damit Screenreader nicht „Achtel-Block-Zeichen" vorlesen (der Wert steht im Text).
+      // Strich verbindet das Label mit dem Strich auf dem Balken (Schweizer Schnitt) — sonst
+      // liest man den Strich leicht als „meinen Wert" statt als Referenz.
       React.createElement('span', null,
-        React.createElement('span', { 'aria-hidden': true }, '▏ '),
+        React.createElement(LegendenMarke, { form: 'strich', color: palette.text, palette }),
         t(ns + 'nationalVal', { amount: national.toFixed(0) })),
-      // Punkt-Label trägt dieselbe Valenz-Farbe wie der Punkt — eine Marke, eine Farbe.
+      // Punkt in der Grafik-Farbe des Punkts, Label in der lesbaren Deep-Variante.
       React.createElement('span', { style: { color: dotTextColor } },
-        React.createElement('span', { 'aria-hidden': true }, '● '),
+        React.createElement(LegendenMarke, { form: 'punkt', color: dotColor, palette }),
         t(ns + 'regionalVal', { amount: regional.toFixed(0) })),
     ),
     hasUser && React.createElement('div', {
       style: { fontSize: text.xs, color: fillColor ? palette.text : palette.skyDeep, marginTop: '2px', fontWeight: weight.medium },
     },
-      // „▬" in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
+      // Füllung in der Füll-Farbe (Miete = Birne) verbindet das Label mit der Füllung — damit
       // klar ist: die FÜLLUNG ist dein Wert, der Strich ist der Schweizer Schnitt.
-      React.createElement('span', { 'aria-hidden': true, style: { color: fillColor || palette.skyDeep } }, '▬ '),
+      React.createElement(LegendenMarke, { form: 'fuellung', color: barFill, palette }),
       t(k + 'yourVal', { amount: userValue.toFixed(0) })
     ),
 
     // Die Schwellen-Überschreitung als SATZ — nur wo die Eltern-Ansicht sie nicht schon
     // erzählt (`showThresholdText`, siehe Prop-Kommentar). Im aria-Label steht sie immer.
-    // `roseDeep` trägt AA in beiden Modi (5.14 / 4.78).
+    // `roseDeep` trägt AA in beiden Modi (5.14 / 4.78). Die «!»-Marke davor bindet den Satz
+    // an das «!» auf dem Balken (dieselbe Symbol-Sprache wie Füllung/Punkt/Strich).
     breachLine && showThresholdText && React.createElement('div', {
       style: { fontSize: text.xs, color: palette.roseDeep, marginTop: space.xs + 'px', lineHeight: leading.normal },
-    }, breachLine),
+    }, React.createElement(LegendenMarke, { form: 'schwelle', color: palette.roseDeep, palette }), breachLine),
 
     // Prozentuale Abweichung (Region vs. Schweiz)
     React.createElement('div', {
