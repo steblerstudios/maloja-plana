@@ -1692,6 +1692,9 @@ export default {
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
     enter: 'Avrir',
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    demoEnter: 'Empruvar senza code',
+    demoHint: 'Demo — nagut na vegn memorisà.',
     legalLink: 'Protecziun da datas & infurmaziuns giuridicas',
     feedbackMail: 'Feedback via e-mail',
     feedbackContext: 'Questas infurmaziuns gidan a diagnostitgar il problem (facultativ, stridabel):',

@@ -3590,6 +3590,8 @@ export default {
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
     enter: 'Open',
+    demoEnter: 'Try without a code',
+    demoHint: 'Demo — nothing is saved.',
     legalLink: 'Privacy & legal notice',
     bannerLabel: 'Closed Beta',
     feedbackMail: 'Feedback by email',

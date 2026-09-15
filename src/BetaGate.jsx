@@ -13,6 +13,11 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 // Zugangs-Gate braucht den Server (Login-/Backend-Grundsatzentscheid).
 const BETA_CODE_HASH = 'bc0d786f0beb06f7442b099a677ee08642acec8050aa56abd7a19711095f15b9';
 const STORAGE_KEY = 'or5_beta_access';
+// Gemeinsame Form der zwei ruhigen Knöpfe unter «Öffnen» (Demo · Einfache Ansicht).
+const ruhigerKnopf = {
+  marginTop: space.md, width: '100%', padding: '10px', borderRadius: radius.sm,
+  cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
+};
 
 async function matchesBetaCode(value) {
   const normalized = value.trim().toLowerCase();
@@ -45,8 +50,20 @@ export const BetaGate = ({ children }) => {
     try { localStorage.setItem('or5_simpleView', next ? '1' : '0'); if (next) localStorage.setItem('or5_vorlesen', '1'); } catch {}
     return next;
   });
+  // K7 · Demo am Einstieg: die App mit dem Beispiel-Datensatz, ohne Code. Schirm und
+  // Daten kommen lazy; der Schirm steht, BEVOR die App rendert. Verlassen lädt die
+  // Seite neu: Schirm, Überlagerung und Demo-Zustand verfallen mit dem Arbeitsspeicher,
+  // zurück bleibt die Code-Wand. or5_beta_access bleibt unberührt.
+  const [demo, setDemo] = useState(null); // null | 'laedt' | { data, onLeave }
+  const startDemo = () => {
+    setDemo('laedt');
+    import('./demo/demoSpeicher.js')
+      .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, onLeave: () => location.reload() }); })
+      .catch(() => setDemo(null)); // Ladefehler (z. B. offline): Knopf wieder frei
+  };
 
   if (granted) return children;
+  if (demo?.data) return React.cloneElement(children, { demo });
 
   const palette = LIGHT_PALETTE;
 
@@ -146,6 +163,11 @@ export const BetaGate = ({ children }) => {
         palette, type: 'submit',
         style: { marginTop: space.md, width: '100%', padding: '10px', fontSize: text.body },
       }, t('beta.enter')),
+      // K7 · der ruhige zweite Weg: Beispiel ansehen, ohne Code (nichts wird gespeichert).
+      React.createElement('button', {
+        type: 'button', onClick: startDemo, disabled: !!demo,
+        style: { ...ruhigerKnopf, background: 'transparent', color: palette.text, border: '1px solid ' + palette.border },
+      }, t('beta.demoEnter')),
       // „Einfache Ansicht"-Umschalter (Icon-Modus + Vorlesen) — direkt am Einstieg.
       React.createElement('button', {
         type: 'button',
@@ -153,13 +175,11 @@ export const BetaGate = ({ children }) => {
         'aria-pressed': simpleView,
         title: t('common.simpleView'),
         style: {
-          marginTop: space.md, width: '100%', padding: '10px',
+          ...ruhigerKnopf,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
           background: simpleView ? palette.sand + '30' : 'transparent',
           color: simpleView ? palette.text : palette.mid,
           border: '1px solid ' + (simpleView ? palette.sand : palette.border),
-          borderRadius: radius.sm, cursor: 'pointer', fontFamily: 'inherit',
-          fontSize: text.sm, fontWeight: weight.medium,
         }
       },
         React.createElement('svg', { width: '18', height: '18', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinejoin: 'round', 'aria-hidden': 'true' },

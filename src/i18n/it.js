@@ -3567,6 +3567,8 @@ export default {
     codePlaceholder: 'Codice di accesso',
     codeWrong: 'Questo codice non è valido.',
     enter: 'Apri',
+    demoEnter: 'Provare senza codice',
+    demoHint: 'Demo — non viene salvato nulla.',
     bannerLabel: 'Beta chiusa',
     feedbackMail: 'Feedback via e-mail',
     feedbackContext: 'Questi dati facilitano la diagnosi (facoltativi, eliminabili):',

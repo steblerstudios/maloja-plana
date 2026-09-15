@@ -373,7 +373,8 @@ const useViewport = () => {
   return w;
 };
 
-const AppInner = () => {
+// demo: nur gesetzt, wenn die Code-Wand die Demo öffnet (K7) — { data, onLeave }.
+const AppInner = ({ demo }) => {
   const { t, lang, setLanguage, supportedLanguages, anrede, setAnrede } = useT();
   const [isDarkMode, setIsDarkMode] = useState(() => { try { return JSON.parse(localStorage.getItem('or5_theme') || 'true'); } catch { return true; } });
   const [readable, setReadable] = useState(() => { try { return localStorage.getItem('or5_readable') === 'true'; } catch { return false; } });
@@ -484,7 +485,7 @@ const AppInner = () => {
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
-  const [onboardingDone, setOnboardingDone] = useState(isOnboardingDone);
+  const [onboardingDone, setOnboardingDone] = useState(demo ? true : isOnboardingDone);
   // Kleine Tour nach dem Onboarding — zeigt sich, bis sie erledigt ODER übersprungen
   // ist; „später" (×) verschiebt sie auf den nächsten Start. Jederzeit übers Menü wieder.
   const [tourOpen, setTourOpen] = useState(false);
@@ -498,8 +499,10 @@ const AppInner = () => {
   useEffect(() => {
     if (onboardingDone && !isTourDone()) setTourOpen(true);
   }, [onboardingDone]);
-  const [demoMode, setDemoMode] = useState(false);
-  const [demoData, setDemoData] = useState(null);
+  const [demoModeOn, setDemoMode] = useState(false);
+  const [demoData, setDemoData] = useState(demo && demo.data);
+  // Demo von der Code-Wand bleibt Demo, bis onLeave zur Code-Wand zurückführt.
+  const demoMode = !!demo || demoModeOn;
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
@@ -508,7 +511,9 @@ const AppInner = () => {
   const sandboxActive = sandboxMode && sandboxData;
   const activeData = demoMode && demoData ? demoData : (sandboxActive ? sandboxData : data);
   // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
-  const writeData = sandboxActive ? setSandboxData : setData;
+  // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
+  // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
+  const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
   const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde
@@ -563,6 +568,8 @@ const AppInner = () => {
   }, []);
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
+  // In der Demo (K7) läuft das ins Leere: der Speicher-Schirm sperrt IndexedDB,
+  // createBackup scheitert still im .catch unten.
   useEffect(() => {
     import('./utils/autoBackup.js').then(({ createBackup }) => createBackup()).then(result => {
       if (result && result.success) {
@@ -946,7 +953,8 @@ const AppInner = () => {
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
     React.createElement('button', {
       onClick: () => {
-        if (demoMode) { setDemoMode(false); setDemoData(null); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
+        if (demo) demo.onLeave();
+        else if (demoMode) { setDemoMode(false); setDemoData(null); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         // Demo-Datensatz erst beim Betreten laden; demoMode wird erst gesetzt, wenn er da
         // ist (kein Render-Fenster, in dem demoMode aktiv aber demoData noch null wäre).
         else { import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }); }
@@ -1130,10 +1138,10 @@ const AppInner = () => {
     },
       React.createElement('div', { role: 'status', style: { flex: 1, minWidth: 0 } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('demo.bannerTitle')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t('demo.bannerText'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t(demo ? 'beta.demoHint' : 'demo.bannerText'))
       ),
       React.createElement('button', {
-        onClick: () => setDemoMode(false),
+        onClick: demo ? demo.onLeave : () => setDemoMode(false),
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
