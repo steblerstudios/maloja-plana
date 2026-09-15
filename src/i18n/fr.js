@@ -3633,6 +3633,8 @@ export default {
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
     enter: 'Ouvrir',
+    demoEnter: 'Essayer sans code',
+    demoHint: 'Démo — rien n\'est enregistré.',
     legalLink: 'Confidentialité & mentions légales',
     bannerLabel: 'Bêta fermée',
     feedbackMail: 'Feedback par e-mail',

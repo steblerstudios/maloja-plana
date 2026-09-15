@@ -3645,6 +3645,8 @@ export default {
     legalLink: 'Datenschutz & Rechtliches',
     codeWrong: 'Dieser Code ist leider nicht gültig.',
     enter: 'Öffnen',
+    demoEnter: 'Ohne Code ausprobieren',
+    demoHint: 'Demo — nichts wird gespeichert.',
     bannerLabel: 'Geschlossene Beta',
     feedbackMail: 'Feedback per E-Mail',
     feedbackContext: 'Diese Angaben helfen beim Nachvollziehen (jederzeit löschbar):',
