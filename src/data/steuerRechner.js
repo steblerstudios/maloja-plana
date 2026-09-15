@@ -42,7 +42,20 @@ const VERHEIRATETENTARIF_STUFEN = [
 const VERHEIRATET_FLAT_GRENZE = 941300;
 const VERHEIRATET_FLAT_SATZ = 0.115;
 
-// Kinderabzug vom Steuerbetrag (Art. 36 Abs. 2bis DBG)
+// Elterntarif (Art. 36 Abs. 2bis DBG), Wortlaut Stand 1.1.2026, abgerufen 15.09.2026:
+//   «Für die in rechtlich und tatsächlich ungetrennter Ehe lebenden Ehepaare und die
+//   verwitweten, gerichtlich oder tatsächlich getrennt lebenden, geschiedenen und ledigen
+//   steuerpflichtigen Personen, die mit Kindern oder unterstützungsbedürftigen Personen im
+//   gleichen Haushalt zusammenleben und deren Unterhalt zur Hauptsache bestreiten, gilt
+//   Absatz 2 sinngemäss. Der so ermittelte Steuerbetrag ermässigt sich um 263 Franken für
+//   jedes Kind oder jede unterstützungsbedürftige Person.»
+//   https://www.fedlex.admin.ch/eli/cc/1991/1184_1184_1184/de (Fassung 20260101; Betrag 263
+//   gemäss V EFD vom 22.8.2024 über die kalte Progression, AS 2024 479, in Kraft seit 1.1.2025).
+//   ESTV Form. 58c-2026 (Tabelle «Verheiratete und Einelternfamilien», Fussnote 3: 263 Franken
+//   je Kind): https://www.estv.admin.ch/dam/de/sd-web/gnde9CmEsalK/dbst-tairfe-58c-2026-dfi.pdf
+// Folge: Die 263 Franken gibt es NUR zusammen mit dem Tarif nach Abs. 2 — nie auf den
+// Grundtarif (Abs. 1). Der Kinderabzug vom Einkommen (Art. 35 Abs. 1 lit. a, 6800 Franken)
+// ist ein eigener Abzug und bleibt daneben bestehen.
 const KINDERABZUG_PRO_KIND = 263;
 
 // Standardabzüge vom steuerbaren Einkommen (Bundessteuer)
@@ -104,21 +117,38 @@ export function bundessteuerVerheiratet(steuerBaresEinkommen) {
 }
 
 /**
- * Vollständige Bundessteuer-Berechnung mit Abzügen und Kinderabzug.
+ * Greift Art. 36 Abs. 2bis DBG (Tarif nach Abs. 2 + 263 Franken je Kind)?
+ * Verheiratete mit Kindern: wie bisher angenommen (die Kinder aus dem Haushalts-Kapitel
+ * leben im gemeinsamen Haushalt). Alle anderen (verwitwet, getrennt, geschieden, ledig):
+ * nur, wenn die Person bestätigt hat, dass die Kinder im gleichen Haushalt leben und sie
+ * deren Unterhalt zur Hauptsache bestreitet — sonst der vorsichtige Grundtarif ohne Ermässigung.
+ */
+function elterntarifGreift(verheiratet, kinder, elterntarif) {
+  return kinder > 0 && (verheiratet || elterntarif === true);
+}
+
+/**
+ * Vollständige Bundessteuer-Berechnung mit Abzügen und Elterntarif.
  *
  * @param {Object} params
  * @param {number} params.bruttoEinkommen - Brutto-Jahreseinkommen
  * @param {boolean} [params.verheiratet=false]
- * @param {number} [params.kinder=0]
+ * @param {number} [params.kinder=0] - Kinder bzw. unterstützungsbedürftige Personen
+ * @param {boolean} [params.elterntarif=false] - Nicht Verheiratete: Voraussetzungen von
+ *   Art. 36 Abs. 2bis DBG bestätigt (gleicher Haushalt, Unterhalt zur Hauptsache)
  * @param {number} [params.abzuege=0] - Summe aller Abzüge vom Einkommen
- * @returns {Object}
+ * @returns {Object} tarif: 'verheiratet' | 'eltern' | 'alleinstehend'
  */
 export function berechneBundessteuer({
   bruttoEinkommen,
   verheiratet = false,
   kinder = 0,
+  elterntarif = false,
   abzuege = 0,
 }) {
+  const abs2bis = elterntarifGreift(verheiratet, kinder, elterntarif);
+  const tarif = verheiratet ? 'verheiratet' : (abs2bis ? 'eltern' : 'alleinstehend');
+
   if (bruttoEinkommen <= 0) {
     return {
       bruttoEinkommen: 0,
@@ -128,17 +158,17 @@ export function berechneBundessteuer({
       kinderabzug: 0,
       steuer: 0,
       effektiverSatz: 0,
-      tarif: verheiratet ? 'verheiratet' : 'alleinstehend',
+      tarif,
     };
   }
 
   const steuerBaresEinkommen = Math.max(0, bruttoEinkommen - abzuege);
 
-  const steuerVorAbzug = verheiratet
+  const steuerVorAbzug = (verheiratet || abs2bis)
     ? bundessteuerVerheiratet(steuerBaresEinkommen)
     : bundessteuerAlleinstehend(steuerBaresEinkommen);
 
-  const kinderabzug = kinder * KINDERABZUG_PRO_KIND;
+  const kinderabzug = abs2bis ? kinder * KINDERABZUG_PRO_KIND : 0;
   const steuer = Math.max(0, Math.round((steuerVorAbzug - kinderabzug) * 100) / 100);
 
   const effektiverSatz = bruttoEinkommen > 0
@@ -153,7 +183,7 @@ export function berechneBundessteuer({
     kinderabzug,
     steuer,
     effektiverSatz,
-    tarif: verheiratet ? 'verheiratet' : 'alleinstehend',
+    tarif,
   };
 }
 
@@ -180,15 +210,22 @@ export function grenzsteuersatz(einkommen, verheiratet = false) {
 
 /**
  * Vergleiche Steuerbelastung: alleinstehend vs. verheiratet.
+ * «Alleinstehend» mit Kindern bekommt den Elterntarif (Art. 36 Abs. 2bis DBG) nur, wenn die
+ * Voraussetzungen bestätigt sind — sonst Grundtarif ohne Ermässigung je Kind.
  */
-export function vergleicheTarife(steuerBaresEinkommen, kinder = 0) {
-  const alleinstehend = bundessteuerAlleinstehend(steuerBaresEinkommen);
-  const verheiratet = bundessteuerVerheiratet(steuerBaresEinkommen);
-  const kinderabzug = kinder * KINDERABZUG_PRO_KIND;
+export function vergleicheTarife(steuerBaresEinkommen, kinder = 0, elterntarif = false) {
+  const ermaessigung = kinder > 0 ? kinder * KINDERABZUG_PRO_KIND : 0;
+  const verheiratetRoh = bundessteuerVerheiratet(steuerBaresEinkommen);
+  const alleinstehendRoh = elterntarifGreift(false, kinder, elterntarif)
+    ? verheiratetRoh - ermaessigung
+    : bundessteuerAlleinstehend(steuerBaresEinkommen);
+
+  const alleinstehend = Math.max(0, Math.round(alleinstehendRoh * 100) / 100);
+  const verheiratet = Math.max(0, Math.round((verheiratetRoh - ermaessigung) * 100) / 100);
 
   return {
-    alleinstehend: Math.max(0, alleinstehend - kinderabzug),
-    verheiratet: Math.max(0, verheiratet - kinderabzug),
+    alleinstehend,
+    verheiratet,
     differenz: Math.round((alleinstehend - verheiratet) * 100) / 100,
     steuerBaresEinkommen,
   };

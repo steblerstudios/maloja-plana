@@ -4,7 +4,7 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
-import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION } from './data/steuerRechner.js';
+import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -29,6 +29,9 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [taxableIncome, setTaxableIncome] = useState(0);
   const [estimatedTax, setEstimatedTax] = useState(0);
   const [taxResult, setTaxResult] = useState(null);
+  // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete: nur mit ausdrücklicher Bestätigung
+  // (Kinder im gleichen Haushalt, Unterhalt zur Hauptsache). Ohne sie: vorsichtiger Grundtarif.
+  const elterntarif = taxData.elterntarif === true;
 
   // Steuerbares Einkommen — die Tarif-Basis (Brutto − Abzüge, DBG Art. 36), nicht das
   // Reineinkommen. Kann aus dem Steuer-Import kommen ODER direkt eingegeben werden (z.B.
@@ -51,13 +54,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     let result;
     if (useEnteredTaxable && enteredTaxable > 0) {
       // Eingegebener/importierter Wert ist schon steuerbar: 1:1 als Basis, keine Abzüge mehr.
-      result = berechneBundessteuer({ bruttoEinkommen: enteredTaxable, verheiratet, kinder, abzuege: 0 });
+      result = berechneBundessteuer({ bruttoEinkommen: enteredTaxable, verheiratet, kinder, elterntarif, abzuege: 0 });
     } else {
       let totalDeductions = 0;
       for (const ded of deductions) {
         totalDeductions += Number(taxData[ded.key] || 0);
       }
-      result = berechneBundessteuer({ bruttoEinkommen: income, verheiratet, kinder, abzuege: totalDeductions });
+      result = berechneBundessteuer({ bruttoEinkommen: income, verheiratet, kinder, elterntarif, abzuege: totalDeductions });
     }
 
     setTaxableIncome(result.steuerBaresEinkommen);
@@ -136,6 +139,20 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           )
         ),
 
+        !verheiratet && kinder > 0 && React.createElement('label', { htmlFor: 'tax-elterntarif', style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, marginBottom: space.xs, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
+          React.createElement('input', {
+            type: 'checkbox',
+            id: 'tax-elterntarif',
+            checked: elterntarif,
+            onChange: (e) => setTaxData(prev => ({ ...prev, elterntarif: e.target.checked })),
+            style: { accentColor: palette.sand, marginTop: '2px' }
+          }),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.elterntarifConfirm'))
+        ),
+        !verheiratet && kinder > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } },
+          'ⓘ ' + t('tax.elterntarifHint', { value: STEUER_PARAMS.kinderabzugProKind })
+        ),
+
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
         React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
@@ -206,7 +223,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0))
         ),
 
-        taxResult && kinder > 0 ? React.createElement('div', { style: { marginBottom: '12px' } },
+        taxResult && taxResult.kinderabzug > 0 ? React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.childDeduction')),
           React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- CHF ' + taxResult.kinderabzug)
         ) : null,
@@ -220,8 +237,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           ),
           React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + estimatedTax.toFixed(0)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-            t('tax.tariff') + ': ' + (verheiratet ? t('tax.marriedTariff') : t('tax.singleTariff')),
-            ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet).toFixed(2) + '%'
+            t('tax.tariff') + ': ' + (taxResult?.tarif === 'eltern' ? t('tax.parentTariff') : verheiratet ? t('tax.marriedTariff') : t('tax.singleTariff')),
+            ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet || taxResult?.tarif === 'eltern').toFixed(2) + '%'
           )
         ),
 
@@ -262,7 +279,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     React.createElement(SteuerSaeulen, {
       palette, t,
       istVerheiratet: verheiratet,
-      vergleich: vergleicheTarife(taxableIncome, kinder),
+      vergleich: vergleicheTarife(taxableIncome, kinder, elterntarif),
       onSelect: (v) => setVerheiratet(v),
     }),
 
