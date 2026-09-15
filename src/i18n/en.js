@@ -3518,7 +3518,8 @@ export default {
     nichtSlMedi: 'Medications (not on SL)',
     nichtSlMediNote: 'Medications not on the SL list are not reimbursed.',
     generika: 'Generics',
-    generikaNote: 'Covered, often with lower co-payment (10% instead of 20%).',
+    // KLV Art. 38a (seit 1.1.2024: 40 % statt 20 %), Quelle siehe de.js, abgerufen 15.09.2026
+    generikaNote: 'Covered, often with lower co-payment (10% instead of 40%).',
     generikaBonus: 'Lower co-payment possible',
     spitalAllg: 'Hospital (general ward)',
     spitalAllgNote: 'Inpatient treatment in general ward in canton of residence.',

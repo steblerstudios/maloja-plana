@@ -3526,7 +3526,10 @@ export default {
     nichtSlMedi: 'Medikamente (nicht auf SL)',
     nichtSlMediNote: 'Nicht auf der SL gelistete Medikamente werden nicht erstattet.',
     generika: 'Generika',
-    generikaNote: 'Gedeckt, oft mit tieferem Selbstbehalt (10% statt 20%).',
+    // KLV Art. 38a Abs. 1+2 (Fassung seit 1.1.2024): 40 % Selbstbehalt für zu teure Präparate
+    // (auch Generika), sonst 10 %. Fedlex, Fassung 1.8.2026, abgerufen 15.09.2026:
+    // https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/de/html/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-de-html.html
+    generikaNote: 'Gedeckt, oft mit tieferem Selbstbehalt (10% statt 40%).',
     generikaBonus: 'Tieferer Selbstbehalt möglich',
     spitalAllg: 'Spital (allgemeine Abteilung)',
     spitalAllgNote: 'Stationäre Behandlung in der allgemeinen Abteilung im Wohnkanton.',

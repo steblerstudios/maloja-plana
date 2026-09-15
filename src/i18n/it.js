@@ -3494,7 +3494,8 @@ export default {
     nichtSlMedi: 'Medicamenti (fuori LS)',
     nichtSlMediNote: 'I medicamenti fuori lista LS non sono rimborsati.',
     generika: 'Generici',
-    generikaNote: 'Coperti, spesso con aliquota ridotta (10% invece di 20%).',
+    // OPre art. 38a (dal 1.1.2024: 40 % invece di 20 %), fonte vedi de.js, consultato 15.09.2026
+    generikaNote: 'Coperti, spesso con aliquota ridotta (10% invece di 40%).',
     generikaBonus: 'Aliquota ridotta possibile',
     spitalAllg: 'Ospedale (reparto comune)',
     spitalAllgNote: 'Trattamento stazionario in reparto comune nel cantone di residenza.',

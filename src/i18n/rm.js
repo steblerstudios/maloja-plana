@@ -3248,7 +3248,8 @@ export default {
     nichtSlMedi: 'Medicaments (betg sin SL)',
     nichtSlMediNote: 'Medicaments betg sin la glista SL na vegnan betg rembursads.',
     generika: 'Generica',
-    generikaNote: 'Cupids, savens cun parteniment pli bass (10% empè da 20%).',
+    // KLV Art. 38a (dapi 1.1.2024: 40 % empè da 20 %), funtauna vesair de.js, consultà 15.09.2026
+    generikaNote: 'Cupids, savens cun parteniment pli bass (10% empè da 40%).',
     generikaBonus: 'Parteniment pli bass pussaivel',
     spitalAllg: 'Clinica (secziun generala)',
     spitalAllgNote: 'Tractament staziunar en la secziun generala en il chantun da domicil.',

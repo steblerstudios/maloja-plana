@@ -187,7 +187,14 @@ export function berechneAltersrente({
 
   return {
     monatsrente: rente,
-    // 13 Auszahlungen pro Jahr seit 01.01.2026 (13. AHV-Rente)
+    // 13. Altersrente, Art. 34ter AHVG (in Kraft seit 1.1.2026): «einem Zwölftel der im
+    // betreffenden Kalenderjahr bezogenen Altersrente», ausbezahlt im Dezember, erstmals
+    // Dezember 2026. Bei Ehepaaren damit auf der plafonierten Rente: Art. 35 AHVG kennt keine
+    // Ausnahme für Art. 34ter (von der Kürzung ausgenommen ist nur der Rentenzuschlag nach
+    // Art. 34bis). Fedlex, Fassung 1.1.2026, abgerufen 15.09.2026:
+    // https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/63/837_843_843/20260101/de/html/fedlex-data-admin-ch-eli-cc-63-837_843_843-20260101-de-html.html
+    // Gleich im BSV-Merkblatt 3.01, Stand 1.1.2026, Ziff. 3/4/23 (https://www.ahv-iv.ch/p/3.01.d).
+    // Gerechnet für ein volles Rentenjahr (im Startjahr anteilig, Art. 34ter Abs. 2).
     jahresrente: Math.round(rente * 13 * 100) / 100,
     dreizehnteRente: rente,
     vollrente,
