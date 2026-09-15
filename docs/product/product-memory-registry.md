@@ -264,7 +264,7 @@ Stand: 2026-06-22
 | Feature | Datei(en) | Output |
 |---------|-----------|--------|
 | CV-Generator | CVGenerator.jsx, cvGenerator.js | HTML/PDF |
-| ZIP-Export | ZipExport.jsx, zipExport.js | ZIP (JSON + CSV + MANIFEST) |
+| Export (Einzeldateien) | ZipExport.jsx, zipExport.js | JSON · CSV · MANIFEST.txt · Sicherung `.json`/`.maloja` (kein ZIP) |
 | Budget-Import | BudgetImport.jsx, csvImport.js | CSV/Excel/eBill → Daten |
 | Budget-Sync | BudgetSync.jsx, budgetSync.js | Cross-Chapter-Verknüpfung |
 | Dokument-Tresor | DocumentTresor.jsx | IndexedDB (AES-256) |

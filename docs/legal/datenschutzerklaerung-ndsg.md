@@ -105,7 +105,7 @@ Auch die in Abschnitt 5 genannten technischen Daten (Server-Logs) verbleiben in 
 ## 7. Deine Rechte (Art. 25–29 nDSG)
 
 ### 7.1 Auskunftsrecht (Art. 25 nDSG)
-Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **direkten Zugang** zu allen Deinen Daten. Du brauchst kein Auskunftsgesuch — Du kannst Deine Daten direkt in der App einsehen und als ZIP-Datei exportieren.
+Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **direkten Zugang** zu allen Deinen Daten. Du brauchst kein Auskunftsgesuch — Du kannst Deine Daten direkt in der App einsehen und als Datei exportieren (JSON oder CSV, auf Wunsch verschlüsselt; siehe 7.3).
 
 ### 7.2 Recht auf Löschung
 Du kannst Deine Daten jederzeit löschen:
@@ -116,7 +116,7 @@ Du kannst Deine Daten jederzeit löschen:
 Eine Funktion «alle Daten zurücksetzen» in der App ist geplant, aber nicht gebaut (Stand 15.09.2026): `storage.clear()` in `src/utils/storage.js` Z. 37–45 ist definiert, hat aber keinen Aufrufer; `src/SettingsView.jsx` enthält keinen Reset. Bis dahin gilt der Weg über die Browser-Einstellungen. Hinweis: Die Sicherheitskopien `or5_*_prerestore` (Abschnitt 3) bleiben nach einem Backup-Import bestehen und werden nur mit den Browserdaten entfernt.
 
 ### 7.3 Recht auf Datenherausgabe (Art. 28 nDSG)
-Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Klartext), als CSV oder als verschlüsselte `.maloja`-Datei (`src/ZipExport.jsx` Z. 24–28, 56, 85). Ein ZIP-Archiv wird nicht erzeugt — bis zum 15.09.2026 stand hier «ZIP-Datei»; der Export liefert Einzeldateien. (Die App-Texte `legal.privacy.backup1` und `rights3` in `src/i18n/de.js` nennen noch «ZIP-Datei»; das ist ein offener Punkt an den i18n-Texten, nicht Teil dieser Doku-Runde.)
+Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Klartext), als CSV oder als verschlüsselte `.maloja`-Datei; dazu gibt es eine Übersicht als `MANIFEST.txt`. Jede davon wird als eigene Datei heruntergeladen, ein ZIP-Archiv entsteht nicht (`src/ZipExport.jsx` Z. 32–57 und 59–108; `src/zipExport.js` Z. 146–161). Bis zum 15.09.2026 stand hier «ZIP-Datei». Die App-Texte `legal.privacy.backup1` und `rights3` sagen seit PR #134 dasselbe.
 
 ### 7.4 Weitere Rechte
 Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting und zu Performance-Metriken wende Dich an info@malojaplana.ch.
@@ -199,3 +199,4 @@ https://www.edoeb.admin.ch
 ---
 
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
+Abschnitt 7.1 und 7.3 (Benennung des Exports): auf Code-Stand `main` 0274ce9 gebracht, nicht juristisch geprüft.

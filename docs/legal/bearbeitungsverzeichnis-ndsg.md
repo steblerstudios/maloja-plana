@@ -147,7 +147,8 @@ Nutzende Person
     │       └── Nur im Arbeitsspeicher, keine separate Speicherung
     │       └── ❌ KEINE Übertragung an Server
     │
-    ├── [LOKAL] Backup-Export (ZIP-Datei)
+    ├── [LOKAL] Export als Einzeldateien (JSON, CSV, MANIFEST.txt; Sicherung
+    │           als .json oder verschlüsselt .maloja; kein ZIP)
     │       └── Datei auf dem Gerät der nutzenden Person
     │       └── ❌ KEINE automatische Übertragung
     │
