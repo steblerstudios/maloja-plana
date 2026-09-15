@@ -7,13 +7,38 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-14 (`main`=`aee402e` nach dem Merge von **PR #126** · **keine offenen PRs** · **genau ein offener Feature-Branch**: `fix/deploy-assets-aufraeumen`=`a1707a8`, inzwischen 12 Commits hinter `main` · ✅ **`main` ist LIVE** — Deploy 14.09. 18:32 aus `6b17e6b`, live läuft `index-2d6da893.js`, last-modified 14.09. 16:32 GMT, per `curl` verifiziert 14.09. 23:55; `main` unterscheidet sich vom Live-Build nur in `deploy.sh` + `RELEASE.md`, nicht in der App)
+**Stand:** 2026-09-15 (`main`=`0cc8e80` nach dem Merge von **PR #128** · **keine offenen PRs** · **kein offener Feature-Branch** — der Branch-Wald ist leer · ✅ **App-Stand ist LIVE** — Deploy 14.09. 18:32 aus `6b17e6b`, live läuft `index-2d6da893.js`, per `curl` verifiziert 14.09. 23:55; `main` unterscheidet sich vom Live-Build in `deploy.sh`, `RELEASE.md`, `scripts/` und **`public/sitemap.xml` (`lastmod` → 2026-09-14, dieser PR)** — Letzteres ist live-wirksam, also **hängt ein kleiner Deploy**, der zugleich der erste echte Lauf des Aufräumens ist)
 
 > **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
 > dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
 > alt. Das ist normal und kein Fehler. Verlässlich ist die Aussage „`main` = Stand nach PR #N";
 > der exakte Hash gehört immer per `git fetch && git log --oneline -1 origin/main` gegengeprüft,
 > nie aus dieser Datei abgeschrieben.
+
+> ### ⭐ AKTUALISIERUNG 2026-09-15 (Branch-Wald leer, Aufräumen gemergt, Sitemap nachgezogen)
+>
+> **`main`: `aee402e` → `0cc8e80`.** Zwei PRs: **#127** (Stand-Doku 14.09.) und **#128**
+> (`fix/deploy-assets-aufraeumen`: `deploy.sh` spiegelt nach dem Upload ein zweites Mal nur
+> `assets/` mit `--delete`, nicht-fatal, im Stage-Modus übersprungen; dazu
+> `scripts/aufraeumen-trockenlauf.sh`). Alle sechs Zweige gelöscht, jeder per `merge-base` als
+> in `main` enthalten belegt, Gegenprobe vorher mit dem damals offenen Zweig. **Kein offener
+> Feature-Branch mehr, keine offenen PRs.**
+>
+> **Trockenlauf gegen die Produktion, 15.09.** (Stebler Studios, `mirror --delete --dry-run`
+> auf `assets/`): würde **5535 verwaiste Dateien entfernen** und **115 aktuelle ersetzen**,
+> lftp-Summe `Removed: 5535 files`, `Modified: 115 files`, kein aktuelles File in der
+> Löschliste; Gegenproben: Juli-Bundle `index-1fb26e10.js` drin, aktuelles `index-2d6da893.js`
+> nicht. Der erste echte Lauf ist der nächste `bash deploy.sh` — danach sollte das
+> Rollback-Backup ~150 statt 5608 Dateien spiegeln (14.09.: 147 MB in 234 s).
+>
+> **`public/sitemap.xml`: `lastmod` 2026-08-13 → 2026-09-14** (Datum des letzten
+> App-Deploys, in diesem PR). Ist erst live, wenn deployt. Danach einmal
+> `bash scripts/indexnow-ping.sh` — ob der Ping nach dem 14.09.-Deploy lief, ist nicht belegt.
+>
+> ⚠️ Zwei Messfehler aus dem Trockenlauf, damit sie nicht wiederkommen: (1) die erste
+> Skript-Fassung zählte lftp-Meldungen UND Befehlszeilen → 11185 statt 5535; jetzt zählt sie
+> `rm`/`get -e` und gleicht gegen lftps eigene Summe ab. (2) «würde senden 0» war die falsche
+> Erwartung — lftp ersetzt aktuelle Files mit neuerem mtime, der normale Upload tut dasselbe.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-14 (Deploy gelandet — vier PRs live, `mergen ≠ live` geschlossen)
 >
