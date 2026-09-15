@@ -35,10 +35,18 @@ Einzige echte Angriffsfläche im Frontend. `React.createElement` schützt by def
 - 🟡 ErrorBoundary vorhanden. Keine sensiblen `console.log` mit Personendaten einbauen.
 
 ### 9 · HTTPS & Transport-Security
-- ✅ CSP self-only in `index.html`; `frame-ancestors 'none'` = Clickjacking-Schutz.
-- ✅ Referrer-Policy `strict-origin-when-cross-origin` (Meta-Tag).
-- ⬜ HSTS / `X-Content-Type-Options: nosniff` / `Permissions-Policy` — nur als echte
-  HTTP-Header wirksam, im Infomaniak-Panel zu setzen (kein `.htaccess`). Siehe SECURITY.md.
+- ✅ CSP self-only in `index.html` (Meta-Tag). `frame-ancestors 'none'` steht dort ebenfalls,
+  wird als Meta aber vom Browser ignoriert — **kein** Clickjacking-Schutz aus der CSP. Bis
+  15.09.2026 stand hier «`frame-ancestors 'none'` = Clickjacking-Schutz»; nicht zutreffend.
+- ✅ Clickjacking-Schutz über den HTTP-Header `X-Frame-Options: SAMEORIGIN` — live gemessen
+  15.09.2026 (`curl -sI https://malojaplana.ch`), gesetzt im Infomaniak-Panel.
+- ✅ Referrer-Policy `strict-origin-when-cross-origin` (Meta-Tag und HTTP-Header).
+- ✅ HSTS (`max-age=16000000`, ohne `includeSubDomains`) / `X-Content-Type-Options: nosniff` /
+  `Permissions-Policy` — als echte HTTP-Header live gemessen 15.09.2026, gesetzt im
+  Infomaniak-Panel (kein `.htaccess`). Bis 15.09.2026 stand dieser Punkt auf ⬜.
+- 🟡 Permissions-Policy live `geolocation=()` (vollständig aus), nicht `(self)`; die
+  Notfallkarte (`src/NotfallVorlesekarte.jsx` Z. 47–49) nutzt Geolocation. Nicht geprüft, ob
+  das unter dem Header funktioniert. Siehe SECURITY.md.
 
 ---
 
@@ -101,3 +109,5 @@ Genau deshalb ist die Backend-Richtung ein **Grundsatzentscheid, nicht einfach b
 
 Quelle: „The Security Prompt Pack" (teknical.ai), sinngemäss übernommen und an die
 Architektur von Maloja Plana angepasst.
+
+Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
