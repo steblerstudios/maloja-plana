@@ -60,7 +60,7 @@ For the current alpha phase:
 1. User reports issue via feedback channel
 2. Developer inspects browser console logs (user can share screenshot)
 3. Fix is implemented on `dev` branch
-4. Build verified, pushed to Vercel
+4. Build verified, deployed to Infomaniak with `bash deploy.sh` (the rollback backup is a gate; see `RELEASE.md`) — corrected 15.09.2026, previously «pushed to Vercel»
 5. User refreshes to get update
 
 For future production:

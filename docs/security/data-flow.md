@@ -71,7 +71,7 @@ How data moves through Maloja Plana. All flows are local — no data leaves the 
 The app makes ZERO network calls during normal operation.
 
 Exceptions:
-- Initial page load (Vercel serves static files)
+- Initial page load (Infomaniak, Switzerland, serves the static files; Vercel is no longer used — corrected 15.09.2026)
 - QR code generation loads `qrcodejs` from cdnjs.cloudflare.com (known risk, to be vendored in Phase 15)
 
 No data is ever transmitted to any server. No analytics. No telemetry.
