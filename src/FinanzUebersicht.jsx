@@ -125,7 +125,8 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const ipv = calculateIPV(data);
   const el = checkELEligibility(data);
   const taxResult = annualIncome > 0
-    ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount })
+    // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete nur mit der Bestätigung aus dem Steuerrechner.
+    ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount, elterntarif: data.taxData?.elterntarif === true })
     : null;
   const kantonal = taxResult && canton ? schaetzeKantonaleSteuer(taxResult.steuer, canton) : null;
 
