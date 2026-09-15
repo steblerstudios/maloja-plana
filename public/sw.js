@@ -27,6 +27,9 @@ self.addEventListener('install', (event) => {
       // can never abort the whole install and break offline caching.
       return Promise.allSettled([
         OFFLINE_URL,
+        // Synchron im <head> geladen (K4): offline ohne Cache fiele der Abruf sonst auf
+        // OFFLINE_URL zurück — HTML statt Skript.
+        '/theme-init.js',
         '/fonts/lexend-latin-400-normal.woff2',
         '/fonts/lexend-latin-600-normal.woff2',
       ].map((url) => cache.add(url)));

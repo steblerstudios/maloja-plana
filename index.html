@@ -6,6 +6,10 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'">
   <!-- Referrer-Policy wirkt als Meta-Tag; HSTS/nosniff/Permissions-Policy nur als echte HTTP-Header (Infomaniak-Panel, siehe SECURITY.md). -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Thema vor dem ersten Rendern (Bau-Liste K4): setzt data-theme aus or5_theme, damit der
+       Dunkelmodus beim Laden nicht hell aufblitzt. Eigene Datei, weil die CSP nur script-src 'self'
+       erlaubt (kein Inline-Script). Bewusst synchron: ohne defer/async, ohne type="module". -->
+  <script src="/theme-init.js"></script>
   <meta name="description" content="Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, IPV, Notfallkarte — 100% privat, offline, kostenlos.">
   <meta name="keywords" content="Maloja Plana, Maloja Plana Lebensordner, Stebler Studios, Lebensordner Schweiz, Schweiz, Steuerrechner, Sozialhilfe, IPV, Prämienverbilligung, Notfallkarte, Vorsorge, lokal, privat, offline, kostenlos, open source">
   <meta name="author" content="Stebler Studios">
@@ -109,6 +113,11 @@
       width: 100%;
       height: 100%;
     }
+    /* Grund vor dem ersten React-Rendern (K4): theme-init.js setzt data-theme, hier bekommt
+       die Seite dieselbe Grundfarbe wie palette.bg (src/config/constants.js — ein Test hält
+       beide gleich). Danach deckt die App-Fläche alles ab. */
+    :root[data-theme="dark"]  { background: #22211F; color-scheme: dark; }
+    :root[data-theme="light"] { background: #F2F2F0; color-scheme: light; }
     body {
       font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       -webkit-font-smoothing: antialiased;
