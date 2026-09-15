@@ -1790,7 +1790,7 @@ export default {
       sustain1: 'Maloja Plana consomme le moins d\'énergie possible : pas de backend, pas de serveur permanent, pas de requêtes de base de données.',
       sustain2: 'Hébergement chez Infomaniak Network SA (Genève, Suisse) : centres de données en Suisse, alimentés en énergie renouvelable (énergie hydraulique).',
       sustain3: 'Infomaniak est certifié ISO 14001 et compense ses émissions de CO₂ restantes via myclimate.',
-      sustain4: 'Fonctionne hors ligne : zéro trafic réseau après le premier chargement.',
+      sustain4: 'Fonctionne hors ligne : une fois chargée, l\'app continue de fonctionner sans connexion.',
       contactTitle: 'Dons & Contribution',
       contact1: { sie: 'Maloja Plana est un projet open source à but non lucratif. Si vous voulez aider — avec du code, des traductions, des retours ou un don — contactez-nous.', du: 'Maloja Plana est un projet open source à but non lucratif. Si tu veux aider — avec du code, des traductions, des retours ou un don — contacte-nous.' },
       contact2: 'Contact : info@malojaplana.ch · GitHub : https://github.com/steblerstudios/maloja-plana',
@@ -2490,7 +2490,7 @@ export default {
       body2: 'Objet loué : {address}',
       body3: 'Je vous prie de bien vouloir me confirmer la réception de cette résiliation par écrit et de convenir d\'un rendez-vous pour l\'état des lieux.',
       closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
-      legalNote: 'Remarque : La résiliation du bail doit être faite par écrit selon CO art. 266a. Pour les logements familiaux, le consentement des deux époux est requis (CC art. 169). Veuillez respecter les délais contractuels.',
+      legalNote: 'Remarque : La résiliation du bail doit être faite par écrit selon CO art. 266l al. 1. Pour les logements familiaux, le consentement des deux époux est requis (CC art. 169). Veuillez respecter les délais contractuels.',
     },
     taxExtension: {
       title: 'Prolongation du délai fiscal',
@@ -2510,7 +2510,7 @@ export default {
       policyRef: 'Numéro de police : {number}',
       body2: 'Je vous prie de bien vouloir me faire parvenir une confirmation écrite de la résiliation.',
       closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
-      legalNote: 'Remarque : La résiliation de l\'assurance de base doit parvenir à l\'assureur au plus tard le 30 novembre selon LAMal art. 7. Envoi recommandé conseillé.',
+      legalNote: 'Remarque : La résiliation de l\'assurance de base pour la fin de l\'année doit parvenir à l\'assureur au plus tard le 30 novembre selon LAMal art. 7 al. 2 (après communication de la nouvelle prime). Envoi recommandé conseillé.',
     },
     kkReklamation: {
       title: 'Assurance-maladie : contester une facture',
@@ -2786,7 +2786,7 @@ export default {
     low: 'Les dettes sont sous contrôle. Continuez à payer régulièrement.',
     medium: 'Les dettes devraient être réduites. Établissez un plan de paiement.',
     high: 'Les dettes sont considérables. Un conseil professionnel est recommandé.',
-    critical: 'Situation d\'endettement critique. Consultez un service de désendettement immédiatement !',
+    critical: 'La situation d\'endettement est sérieuse. Un service de désendettement peut aider dès maintenant.',
   },
 
   debtValidation: {

@@ -395,7 +395,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   // Ein ruhiger Standort-Satz: wo stehe ich dieses Jahr? (drei Zonen)
   const statusMsg = !hasInput ? null
     : result.selbstbehaltAusgeschoepft
-      ? { text: t('kvg.selbstbehaltDone'), color: palette.sage || '#5a7a5a', icon: '✓' }
+      ? { text: t('kvg.selbstbehaltDone'), color: palette.sageDeep || '#4A6657', icon: '✓' }
     : result.franchiseOffen > 0
       ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'ⓘ' }
       : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'ⓘ' };
@@ -716,7 +716,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                   style: {
                     background: 'none', border: 'none', fontFamily: 'inherit', fontSize: text.xs,
                     padding: '2px 0', marginTop: '4px', cursor: 'pointer', display: 'block', textAlign: 'left',
-                    color: b.eingereicht ? (palette.sage || '#5a7a5a') : palette.soft,
+                    color: b.eingereicht ? (palette.sageDeep || '#4A6657') : palette.soft,
                     fontWeight: b.eingereicht ? weight.medium : weight.normal,
                   }
                 }, (b.eingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted'))

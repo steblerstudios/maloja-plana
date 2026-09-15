@@ -1791,7 +1791,7 @@ export default {
       sustain1: 'Maloja Plana consuma il meno energia possibile: nessun backend, nessun server permanente, nessuna query al database.',
       sustain2: 'Hosting presso Infomaniak Network SA (Ginevra, Svizzera): data center in Svizzera, alimentati con energia rinnovabile (energia idrica).',
       sustain3: 'Infomaniak è certificato ISO 14001 e compensa le proprie emissioni di CO₂ residue tramite myclimate.',
-      sustain4: 'Funziona offline: zero traffico di rete dopo il primo caricamento.',
+      sustain4: 'Funziona offline: una volta caricata, l\'app continua a funzionare senza connessione.',
       contactTitle: 'Donazioni & Contribuire',
       contact1: 'Maloja Plana è un progetto open source senza scopo di lucro. Se vuoi aiutare — con codice, traduzioni, feedback o una donazione — contattaci.',
       contact2: 'Contatto: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
@@ -2491,7 +2491,7 @@ export default {
       body2: 'Oggetto in locazione: {address}',
       body3: 'Vi prego di confermarmi per iscritto il ricevimento della presente disdetta e di fissare un appuntamento per la consegna.',
       closing: 'Distinti saluti',
-      legalNote: 'Nota: La disdetta della locazione deve essere comunicata per iscritto secondo CO art. 266a. Per le abitazioni familiari è richiesto il consenso di entrambi i coniugi (CC art. 169). Rispettare i termini contrattuali.',
+      legalNote: 'Nota: La disdetta della locazione deve essere comunicata per iscritto secondo CO art. 266l cpv. 1. Per le abitazioni familiari è richiesto il consenso di entrambi i coniugi (CC art. 169). Rispettare i termini contrattuali.',
     },
     taxExtension: {
       title: 'Proroga fiscale',
@@ -2511,7 +2511,7 @@ export default {
       policyRef: 'Numero di polizza: {number}',
       body2: 'Vi prego di inviarmi una conferma scritta della disdetta.',
       closing: 'Distinti saluti',
-      legalNote: 'Nota: La disdetta dell\'assicurazione di base deve pervenire all\'assicuratore entro il 30 novembre secondo LAMal art. 7. Si consiglia l\'invio raccomandata.',
+      legalNote: 'Nota: La disdetta dell\'assicurazione di base per la fine dell\'anno deve pervenire all\'assicuratore entro il 30 novembre secondo LAMal art. 7 cpv. 2 (dopo la comunicazione del nuovo premio). Si consiglia l\'invio per raccomandata.',
     },
     kkReklamation: {
       title: 'Cassa malati: contestare una fattura',
@@ -2787,7 +2787,7 @@ export default {
     low: 'I debiti sono sotto controllo. Continua a pagare regolarmente.',
     medium: 'I debiti dovrebbero essere ridotti. Crea un piano di pagamento.',
     high: 'I debiti sono considerevoli. Si consiglia una consulenza professionale.',
-    critical: 'Situazione debitoria critica. Consulta immediatamente un servizio di consulenza debiti!',
+    critical: 'La situazione debitoria è seria. Un servizio di consulenza debiti può aiutare fin da ora.',
   },
 
   debtValidation: {

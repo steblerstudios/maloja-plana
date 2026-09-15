@@ -1791,7 +1791,7 @@ export default {
       sustain1: 'Maloja Plana uses as little energy as possible: no backend, no permanent server, no database queries.',
       sustain2: 'Hosted by Infomaniak Network SA (Geneva, Switzerland): data centres in Switzerland, powered by renewable energy (hydropower).',
       sustain3: 'Infomaniak is ISO 14001 certified and offsets its remaining carbon emissions via myclimate.',
-      sustain4: 'Offline-capable: zero network traffic after the first load.',
+      sustain4: 'Offline-capable: once loaded, the app keeps working without a connection.',
       contactTitle: 'Donate & Contribute',
       contact1: 'Maloja Plana is a non-profit open-source project. If you want to help — with code, translations, feedback, or a donation — please get in touch.',
       contact2: 'Contact: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
@@ -2491,7 +2491,7 @@ export default {
       body2: 'Property: {address}',
       body3: 'Please confirm receipt of this termination in writing and arrange an appointment for the handover.',
       closing: 'Kind regards',
-      legalNote: 'Note: Lease terminations must be in writing per OR Art. 266a. For family dwellings, consent of both spouses is required (ZGB Art. 169). Please observe the contractually agreed notice periods.',
+      legalNote: 'Note: Lease terminations must be in writing per OR Art. 266l para. 1. For family dwellings, consent of both spouses is required (ZGB Art. 169). Please observe the contractually agreed notice periods.',
     },
     taxExtension: {
       title: 'Tax filing extension',
@@ -2511,7 +2511,7 @@ export default {
       policyRef: 'Policy number: {number}',
       body2: 'Please send me a written confirmation of the cancellation.',
       closing: 'Kind regards',
-      legalNote: 'Note: Cancellation of basic insurance must reach the insurer by November 30 at the latest per KVG Art. 7. Registered mail recommended.',
+      legalNote: 'Note: Cancellation of basic insurance for the end of the year must reach the insurer by November 30 at the latest per KVG Art. 7 para. 2 (after notification of the new premium). Registered mail recommended.',
     },
     kkReklamation: {
       title: 'Health insurer: dispute a bill',
@@ -2787,7 +2787,7 @@ export default {
     low: 'Debt is under control. Keep paying regularly.',
     medium: 'Debt should be reduced. Consider creating a payment plan.',
     high: 'Debt is significant. Professional advice is recommended.',
-    critical: 'Critical debt situation. Seek debt counselling immediately!',
+    critical: 'The debt situation is serious. Debt counselling can help now.',
   },
 
   debtValidation: {

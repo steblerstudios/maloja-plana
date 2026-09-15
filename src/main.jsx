@@ -577,7 +577,9 @@ const AppInner = () => {
   }, [documents, t]);
 
   useEffect(() => {
-    localStorage.setItem('or5_theme', JSON.stringify(isDarkMode));
+    // try/catch wie bei allen anderen Storage-Zugriffen in dieser Datei: im Privat-Modus oder
+    // bei vollem Speicher wirft setItem, und das Thema darf nie die App in den ErrorBoundary reissen.
+    try { localStorage.setItem('or5_theme', JSON.stringify(isDarkMode)); } catch (e) { /* Thema bleibt für diese Sitzung */ }
     // data-theme markiert den Modus für tokens.css (Fokusring braucht im Hellmodus
     // eine dunklere Farbe für WCAG 1.4.11; der Rest der Farben kommt aus den JS-Paletten).
     try { document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light'); } catch {}

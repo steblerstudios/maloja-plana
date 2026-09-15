@@ -15,8 +15,10 @@ Abschiedsagentur-Empfehlung · Bergketten-Karte (Granit-Opacity).
 **Von Agenten (committet):** Autocomplete-A11y (Combobox) · palette.soft-Kontrast (AA) ·
 Service-Worker-Offline-Fix · doctors.label · Fortschrittskarte-Icons · IPV-Crosslinks.
 
-**Noch offen → siehe unten.** Die meisten verbleibenden Punkte sind grösser (Voice-Toggle,
-Atkinson, hreflang) oder brauchen einen Entscheid von Stebler Studios (Hero-Copy, Export-Icon).
+**Noch offen → siehe unten.** ~~Die meisten verbleibenden Punkte sind grösser (Voice-Toggle,
+Atkinson, hreflang)~~ ⟨überholt, gemessen 15.09.2026: Sie/Du-Schalter (`main.jsx` `setAnrede`),
+Atkinson-Schrift (`main.jsx:821`) und hreflang (§I, seit 09.07.) sind alle gebaut⟩ — offen sind
+nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Export-Icon).
 
 ## ✅ Erledigt 2026-06-25 (Fortsetzungs-Session)
 
@@ -185,7 +187,9 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
   Asset. Aktiv genutzt wird das Gipfel-M (Wortmarke/App-Icon), bereits Granit. `src/assets/logo.svg`
   ist ein ungenutztes (kein Import), farb-neutrales Bergketten-Linien-Icon → nichts umzufärben.
   Erst relevant, falls das Signet wirklich gebaut wird.
-- 🟡 **Voice/Anrede-Toggle (Sie/Du)** implementieren + Atkinson-Font wiren (Accessibility)
+- ✅ **Voice/Anrede-Toggle (Sie/Du)** + Atkinson-Font — **beides gebaut** (reproduce-first 15.09.2026,
+  Voll-Review/Ordnungshüter): Schalter in `main.jsx` (`anrede`/`setAnrede`, Kopfzeile), Atkinson als
+  Lesbarkeits-Toggle `main.jsx:821`. Die Zeile stand seit Juni als offen, obwohl längst erledigt.
 - ✅ OFL-Lizenztexte zu den WOFF2 legen — `public/fonts/OFL.txt` (exakte Upstream-Header + voller
   OFL-1.1-Text) + `README.md`; wird nach `dist/fonts/` ausgeliefert (Commit `5f1c40d`).
 - 🟡 Wortmarke für Produktion in Pfade outlinen *(Design-Asset, offen)*

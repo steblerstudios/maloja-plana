@@ -1598,7 +1598,7 @@ export default {
       sustain1: "Maloja Plana consuma uschè pauca energia sco pussaivel: Nagin backend, nagin server en modus permanent, naginas dumondas da banca da datas.",
       sustain2: "Hosting tar Infomaniak Network SA (Genevra, Svizra): centers da datas en Svizra, manads cun energia regenerabla (forza idraulica).",
       sustain3: "Infomaniak è certifitgà ISO 14001 e cumpensescha sias emissiuns da CO₂ restantas via myclimate.",
-      sustain4: "Offline-abel: Suenter il emprim chargiar zero traffic da rait.",
+      sustain4: "Offline-abel: Ina giada chargiada funcziuna l'app vinavant era senza rait.", // TODO(rm): Gegenlese Muttersprache
       contactTitle: 'Donaziuns & participar',
       contact1: { sie: "Maloja Plana è in project Open Source d'utilitad publica. Sche Vus vulais gidar — cun code, translaziuns, feedback u ina donaziun — annunziai Vus gugent.", du: "Maloja Plana è in project Open Source d'utilitad publica. Sche Ti vuls gidar — cun code, translaziuns, feedback u ina donaziun — annunziescha Tai gugent." },
       contact2: 'Contact: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
@@ -2586,7 +2586,7 @@ export default {
     low: 'Ils debits èn sut controlla. Cuntinuar da pajar regularmain.',
     medium: 'Ils debits duessian vegnir reducids. Far in plan da pajament.',
     high: "Ils debits èn considerabels. Cussegliaziun spezialisada vegn recumandada.",
-    critical: "Situaziun critica da debits. Cussegliaziun da debits immediata è necessaria!",
+    critical: "La situaziun da debits è seriusa. Ina cussegliaziun da debits po gidar ussa.", // TODO(rm): Gegenlese Muttersprache
   },
 
   debtValidation: {
@@ -2888,7 +2888,7 @@ export default {
       body2: "Object da locaziun: {address}",
       body3: 'Jau As rog da confermar la recepziun da questa disditga per scrit e da fixar in termin per la surdat da la abitaziun.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266a succeder per scrit. Tar abitaziuns da famiglia è il consentiment dad omadus conjugals necessari (ZGB art. 169).",
+      legalNote: "Indicaziun: Disditgas da locaziun ston tenor OR art. 266l al. 1 succeder per scrit. Tar abitaziuns da famiglia è il consentiment dad omadus conjugals necessari (ZGB art. 169). Resguardai per plaschair ils termins da disditga fixads en il contract.", // TODO(rm): Gegenlese Muttersprache (letzter Satz ergänzt 15.09.2026, Parität mit de/en/fr/it)
     },
     taxExtension: {
       title: 'Prolungaziun dal termin da taglia',
@@ -2908,7 +2908,7 @@ export default {
       policyRef: 'Numer da polizza: {number}',
       body2: 'Jau As rog da ma trametter ina conferma scritta da la disditga.',
       closing: 'Cun salids amicaivels',
-      legalNote: "Indicaziun: La disditga da l'assicuranza da basa sto tenor LAMal art. 7 arrivar tar l'assicurader il pli tard ils 30 da november.",
+      legalNote: "Indicaziun: La disditga da l'assicuranza da basa per la fin da l'onn sto tenor LAMal art. 7 al. 2 arrivar tar l'assicurader il pli tard ils 30 da november. Recumandà: trametter per posta recumandada.", // TODO(rm): Gegenlese Muttersprache (al. 2 + Einschreiben ergänzt 15.09.2026)
     },
     kkReklamation: {
       title: 'Cassa da malsauns: contestar in quint',
