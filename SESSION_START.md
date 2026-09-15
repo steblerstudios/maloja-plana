@@ -7,13 +7,44 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15 (`main`=`531332b` nach dem Merge von **PR #129** · **keine offenen PRs, kein Feature-Branch** · ✅ **`main` ist LIVE** — Deploy **15.09. 16:56** aus `531332b`, live läuft weiter `index-2d6da893.js` (App unverändert seit 14.09.), Sitemap live `lastmod` **2026-09-14** ×5, per `curl` verifiziert 15.09. 16:58, Gegenprobe erfundene Sitemap-URL → 404 · ✅ **Aufräumen wirkt**: erster Lauf 15:52 (verwaiste Bundles → 404), zweiter Lauf 16:56 — Backup `.deploy-backups/20260915-165657` = **161 Dateien, 115 in `assets/`** = exakt der aktuelle Build (Vorgänger `20260915-155206`: 5696) · ⚠️ nicht belegt: ob `scripts/indexnow-ping.sh` nach dem Deploy lief)
+**Stand:** 2026-09-15 abends (`main`=`2be5338` nach dem Merge von **PR #138**, mit dem Abschluss-PR eine Kommastelle weiter · ⚠️ **gemergt, NICHT live**: live läuft weiter `index-2d6da893.js` vom 14.09. (curl 15.09. 22:04); `main` trägt seit #133–#136 App-Änderungen, die erst mit dem nächsten Deploy live gehen · Version **0.1.27-beta** mit dem Abschluss-PR, Tag `v0.1.27-beta` erst nach dem Deploy · keine offenen Feature-Branches)
 
 > **Merke zur Stand-Zeile:** Wer sie am Sitzungs-Ende via PR nachzieht, verschiebt `main` mit
 > dem eigenen Merge erneut — die Zeile ist also im Moment des Mergens schon eine Kommastelle
 > alt. Das ist normal und kein Fehler. Verlässlich ist die Aussage „`main` = Stand nach PR #N";
 > der exakte Hash gehört immer per `git fetch && git log --oneline -1 origin/main` gegengeprüft,
 > nie aus dieser Datei abgeschrieben.
+
+> ### ⭐ AKTUALISIERUNG 2026-09-15 abends (Bau-Liste M1–M12, Voll-Review Stufe L, acht PRs gemergt — nicht deployt)
+>
+> **`main`: `531332b` → `2be5338`.** Acht PRs, alle mit grüner CI, gemergt von Stebler Studios:
+> **#131** Q3-Wartungsprotokoll · **#132** Bau-Liste `docs/BAULISTE-2026-09-30.md`, Bug-Eingang in
+> `BUGS.md`, wageClaim-Zettel, DSFA-Entwurf · **#133** Backup-Restore-Härtung · **#134** Fixes aus dem
+> Voll-Review (OR 266l, ruhige Schulden-Copy, ALV Sie/Du, Kontrast, Brief-Escape, FileReader,
+> CI-permissions, Datenschutz-Texte, petition.ch) · **#135** Glyphen → Icons, erste Hälfte · **#136**
+> AHV-Aufschub nach Art. 55ter AHVV + Referenzalter-Platzhalter · **#137** Befund-Liste
+> `docs/audits/voll-review-L-2026-09-15.md`, Bau-Liste §7, Vornamen aus Repo-Doku entfernt ·
+> **#138** Rechts- und Security-Doku auf Code-Stand.
+>
+> **Nicht live.** Live liefert weiter `index-2d6da893.js`. Der nächste Deploy bringt die
+> App-Änderungen aus #133–#136; danach die vier `built`-Zeilen in `FEATURES.md` auf `verified-live`
+> (Bundle-Hash gegen frischen Build) und das Tag `v0.1.27-beta` setzen.
+>
+> **Vor dem Deploy:** `git pull` im Haupt-Checkout (steht lokal noch auf `4b922ac`) · `/maloja-predeploy`
+> für den neuen HEAD · `bash scripts/pii-scan.sh` mit lokaler Deny-Liste — erwartet 0 Treffer, seit
+> #137 belegt. Ohne #137 hätte das PII-Gate in `deploy.sh` angehalten.
+>
+> **Voll-Review Stufe L:** 11 🔴 · 30 ⚠️ · 22 💡; 10 der 11 🔴 behoben und gemergt. **Offen:**
+> `CANTONAL_IPV` ist mustergeneriert und zeigt trotzdem «Berechtigt» und einen CHF-Betrag →
+> Entscheid E9 (Bau-Liste M13).
+>
+> **Offen bei Stebler Studios** (Bau-Liste §7): Deploy · Postfach `info@` + Testmail (M4) ·
+> Infomaniak-Panel `geolocation=(self)` für die Notfall-Vorlesekarte (M15) · Analytics-Zeile für
+> Issue #123 · Entscheide E1 und E9–E12.
+>
+> ⚠️ Zwei Merker aus der Sitzung: Force-Push ist per `.claude/settings.json` gesperrt — bei einem
+> Rebase-Konflikt auf einem gepushten PR-Zweig `merge origin/main` statt Rebase. `npm ci` scheitert
+> in der CI am Lockfile (esbuild-0.28-Plattformpakete fehlen) → erst Lockfile erneuern (Bau-Liste K15).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-15 (Branch-Wald leer, Aufräumen gemergt, Sitemap nachgezogen)
 >
