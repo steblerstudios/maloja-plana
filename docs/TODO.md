@@ -59,6 +59,11 @@ nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Ex
     → zeilenweises Löschen unzuverlässig (Scanner-Test: 294 verfehlt/81 falsch); sauber ginge nur
     ein AST-Parser + Reprint, der aber die ganze Datei neu formatiert (riesiger Diff, Kollision mit
     Agenten). **0 sichtbarer Nutzen** (~10 kB) → Bulk-Löschung bewusst gelassen, Analyse dokumentiert.
+  - ⏸️ **Bleibt bewusst stehen — bestätigt 15.09.2026** (Bau-Liste `docs/BAULISTE-2026-09-30.md`,
+    Punkt K11): die 129 toten `rm.js`-Keys werden nicht gelöscht. Grund unverändert: sauber ginge es
+    nur per AST-Reprint, und dessen Diff über die ganze Datei ist zu gross (Kollision mit parallelen
+    Arbeitsbäumen, kein sichtbarer Nutzen). Kein offener Punkt mehr, nur ein Vermerk — wer die Datei
+    ohnehin neu formatiert (z. B. bei der RM-Gegenlese), kann die Liste dann mitnehmen.
   - ✅ **Nebenbefund behoben:** 2 der Kandidaten (`kkModel.options.basic`/`.comfort`) waren NICHT
     tot — KKScanner nutzt sie, aber sie fehlten in en/de/fr/it → Dropdown zeigte rohen Key-String.
     Keys ergänzt (Commit zu kkModel basic/comfort).
@@ -243,9 +248,10 @@ geprüft. Voller Abgleich: [`docs/design/maloja-c-abgleich.md`](design/maloja-c-
   bei besonders schützenswerten Daten (Gesundheit/Sozial/Finanzen) Privacy-by-Design + DSFA. Heute
   nur `datenschutzerklaerung-ndsg.md`. Local-first entschärft stark, aber Pflicht spätestens vor
   jeder Cloud/Partner-Öffnung. Quelle: FACH-RECHT-AUDIT (maloja-c).
-- 🟡 **Per-Modul-Freigabe-Register** — je Rechner Fachperson/Rechtsgrundlage/Version/Kanton/Freigabe
+- ✅ **Per-Modul-Freigabe-Register** — je Rechner Fachperson/Rechtsgrundlage/Version/Kanton/Freigabe
   protokollieren (deckt sich mit Wahrheits-Disziplin; Daten-Versions-Konstanten gibt's, formales
-  Register nicht).
+  Register nicht). **Angelegt 15.09.2026** als [`docs/legal/freigabe-register.md`](legal/freigabe-register.md)
+  (Bau-Liste K9): 24 Module, bei keinem eine externe fachliche Prüfung dokumentiert.
 - 🟡 **Backup-Restore-Härtung (Defense-in-Depth)** — der Restore ist verschlüsselt + Magic-Bytes +
   Typ-Guard + try/catch, aber ohne Feld-Whitelist / Längen-Caps / Anzahl-Obergrenze
   (`src/utils/backupCrypto.js`). Verschlüsselung entschärft; Caps + Whitelist nachziehen.
