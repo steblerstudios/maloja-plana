@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
@@ -9,6 +10,8 @@ import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
+  // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
+  const [vorschau, setVorschau] = useState(null);
 
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
@@ -132,9 +135,9 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       }, t('behoerdenDossier.subtitle'))
     ),
 
-    hasSections && React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: '20px' } },
+    hasSections && React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: vorschau ? 0 : '20px' } },
       React.createElement('button', {
-        onClick: handlePrint,
+        onClick: () => setVorschau('druck'),
         style: {
           flex: 1, padding: '12px',
           background: palette.sand, color: palette.onSand, border: 'none',
@@ -144,7 +147,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         }
       }, t('behoerdenDossier.printAction')),
       React.createElement('button', {
-        onClick: handleExportJSON,
+        onClick: () => setVorschau('json'),
         style: {
           flex: 1, padding: '12px',
           background: palette.sageBtn, color: '#fff', border: 'none',
@@ -153,6 +156,17 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
           letterSpacing: '0.2px',
         }
       }, t('behoerdenDossier.exportJSON'))
+    ),
+    hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
+      React.createElement(ExportVorschau, {
+        palette, t,
+        art: vorschau === 'json' ? 'dossierJson' : 'dossier',
+        quelle: vorschau === 'json'
+          ? { dossier: generateBehoerdenJSON(data, calculations) }
+          : { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })) },
+        onWeiter: () => { const art = vorschau; setVorschau(null); if (art === 'json') handleExportJSON(); else handlePrint(); },
+        onZurueck: () => setVorschau(null),
+      })
     ),
 
     hasSections && React.createElement('div', {
