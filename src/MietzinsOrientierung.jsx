@@ -96,7 +96,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
 
       // Unterlagen, die meist gebraucht werden.
       React.createElement('div', { style: card() },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px' } }, '□ ' + t('mietzinsView.docsTitle')),
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '8px' } }, React.createElement(Icon, { name: 'kaestchen', size: 16, style: { verticalAlign: '-3px', marginRight: '6px' } }), t('mietzinsView.docsTitle')),
         React.createElement('ul', { style: { fontSize: text.sm, color: palette.mid, paddingLeft: '20px', margin: 0 } },
           [t('mietzinsView.doc1'), t('mietzinsView.doc2'), t('mietzinsView.doc3')].map((d, i) =>
             React.createElement('li', { key: i, style: { marginBottom: '4px' } }, d))

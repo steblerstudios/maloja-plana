@@ -669,6 +669,17 @@ const _kreuz = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'n
   React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
 );
 
+// Mappe — ein Dossier / eine Unterlagen-Sammlung (Finanz-Übersicht → Behördendossier).
+const _mappe = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z' })
+);
+
+// Drucker — Druckansicht (Finanz-Übersicht). Mappe + Drucker ersetzen dort die rohe
+// Glyphe ◇ (docs/TODO.md §G3 P1); je EIN Element, wie die drei Präfixe oben (Bundle-Budget).
+const _drucker = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7Z' })
+);
+
 const _warning = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 12 2 L 22 20 L 2 20 Z' }),
   React.createElement('line', { x1: '12', y1: '9', x2: '12', y2: '14', stroke: 'white', strokeWidth: '2', strokeLinecap: 'round' }),
@@ -1000,6 +1011,8 @@ const _iconFactories = {
   rechner: _rechner,
   kaestchen: _kaestchen,
   kreuz: _kreuz,
+  mappe: _mappe,
+  drucker: _drucker,
   warning: _warning,
   dashboard: _dashboard,
   settings: _settings,

@@ -6,6 +6,10 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 
+// Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
+// der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
+const praefix = (name, size) => React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '6px' } });
+
 export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
   const [importing, setImporting] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -58,17 +62,17 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
 
       React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.up, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
         React.createElement('input', { type: 'file', accept: '.csv,.xlsx,.xls,.txt,.tsv', onChange: handleFileSelect, style: { display: 'none' } }),
-        React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.xs } }, '□'),
+        React.createElement('div', { style: { marginBottom: space.xs } }, React.createElement(Icon, { name: 'upload', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.selectFile')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
       ),
 
       importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, 'ⓘ ' + t('budgetImport.importing')),
 
-      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, '✕ ' + importError),
+      importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
 
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, '□ ' + t('budgetImport.formatExample') + ':'),
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, praefix('kaestchen', 14), t('budgetImport.formatExample') + ':'),
         React.createElement('code', { style: { display: 'block', fontSize: text.xs, fontFamily: 'monospace', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '6px' } },
           `Date,Description,Amount,Category,Type
 01.04.2024,Rent,1500,rent,expense
@@ -104,7 +108,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
           React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
-        React.createElement('div', { style: { fontSize: text.lg, marginBottom: space.sm } }, '□'),
+        React.createElement('div', { style: { marginBottom: space.sm } }, React.createElement(Icon, { name: 'kaestchen', size: 24 })),
         React.createElement('div', { style: { fontWeight: weight.semi } }, t('budgetImport.noFile')),
         React.createElement('div', { style: { fontSize: text.sm, marginTop: space.sm } }, t('budgetImport.selectCsvOrExcel'))
       )

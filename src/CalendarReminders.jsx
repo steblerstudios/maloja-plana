@@ -424,7 +424,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       // Optional, nur bei Gesundheit: Deckung dieses Jahr (gedeckt/selbst/unsicher; erneut klicken = leer)
       newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
         React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
-        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        React.createElement('div', { role: 'group', 'aria-label': t('calendar.coverageThisYear.label'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           ['covered', 'selfpay', 'unsure'].map(opt =>
             React.createElement('button', {
               key: opt,
@@ -445,10 +445,11 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
       React.createElement('div', { style: { marginBottom: '12px' } },
         React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.recurring')),
-        React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        React.createElement('div', { role: 'group', 'aria-label': t('calendar.recurring'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           ['once', 'daily', 'weekly', 'monthly', 'quarterly', 'halfYearly', 'yearly'].map(freq =>
             React.createElement('button', {
               key: freq,
+              'aria-pressed': newRecurrence === freq,
               onClick: () => { setNewRecurrence(freq); if (newLastVisit) setNewDate(nextDueFrom(newLastVisit, freq)); },
               style: {
                 padding: '6px 12px', borderRadius: '4px', cursor: 'pointer',
