@@ -7,7 +7,18 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15 spätabends (`main`=`16e56b4` nach dem Merge von **PR #150**, mit diesem Stand-PR weiter · ⚠️ **K-Runde gemergt, NICHT live**: live weiter `index-4a2ca1ae.js` = 0.1.27-beta aus `f368fbb` (Deploy 22:14) · gemergt #141 – #145 · #147 – #150, **offen #146** · Tag `v0.1.27-beta` = `f368fbb`)
+**Stand:** 2026-09-15, 23:30 (`main`=`f482576` nach dem Merge von **PR #151**, mit diesem Stand-PR weiter · ✅ **K-Runde DEPLOYT 23:25 aus `f482576`**: live `index-f4a79e77.js` · Footer-Version weiter `0.1.27-beta`, Tag `v0.1.27-beta` = `f368fbb` · `main` = live · 0 offene Feature-Branches)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-15, 23:30 (K-Runde live)
+>
+> `bash deploy.sh` von `main` (`f482576`) um **23:25**, Hand von Stebler Studios. Per `curl` belegt:
+> `index-f4a79e77.js` = lokaler Build, alle 118 Dateien aus `dist/assets` live 200, `index.html` ·
+> `theme-init.js` · `sw.js` · `sitemap.xml` prüfsummengleich, altes Bundle `index-4a2ca1ae.js` → 404,
+> erfundener Name → 404. Merkmale je K-Punkt in den ausgelieferten Dateien gefunden (BFS-Link,
+> VVG 35a, Vorschau-Titel, Demo-Knopf, Elterntarif, Generika 40 %, Tardoc ZH .91 / BE .86); «ZIP-Datei»
+> kommt im deutschen Sprach-Teil nicht mehr vor. Backup `20260915-232551` = 162 Dateien, 116 in `assets/`.
+> **Offen:** eigene Versionsnummer für diesen Stand (0.1.28-beta, Release-PR + Tag), Entscheide der
+> Bau-Liste §9.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-15 spätabends (K-Runde gemergt, nicht deployt)
 >

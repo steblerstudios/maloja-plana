@@ -11,7 +11,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-*K-Runde vom 15.09.2026 spätabends: gemergt, **noch nicht deployt**.*
+*K-Runde vom 15.09.2026 spätabends: **live seit 23:25** (`index-f4a79e77.js` aus `f482576`). Die Footer-Version zeigt noch `0.1.27-beta`; eine eigene Versionsnummer bekommt der Stand mit dem nächsten Release-PR.*
 
 ### Behoben
 - **Elterntarif der direkten Bundessteuer (K12, #144):** Alleinerziehende wurden mit dem Grundtarif minus 263 Franken je Kind gerechnet. Diese Mischung kennt das DBG nicht. Neu nach DBG Art. 36 Abs. 2bis: Tarif für Verheiratete, minus CHF 263 je Kind (V EFD über die kalte Progression, AS 2024 479; Tarifstufen 2026 AS 2025 579; ESTV Form. 58c-2026). Die App weiss nicht sicher, ob die Voraussetzung erfüllt ist; deshalb gibt es eine Bestätigung, ohne sie rechnet sie vorsichtig mit dem Grundtarif. 8 Tests mit Sollwerten aus der ESTV-Tabelle.
