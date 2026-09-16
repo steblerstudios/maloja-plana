@@ -135,6 +135,8 @@ function dl(t, chapterKey, docKey) {
 // Feld-Merkmale (E17): `mvo` = zählt zur Grundordnung · `recommended` = empfohlen,
 // zählt nicht zur Grundordnung · `naOk` = bietet den Schalter «trifft nicht zu» an
 // (Markierung in `data[kapitel]._na`, siehe utils/vollstaendigkeit.js).
+// K38: `naMit` = Felder, die beim Markieren mitgehen · `naVon` = hängt an einem anderen
+// Feld und bleibt verdeckt, solange jenes markiert ist (siehe utils/naGruppen.js).
 export function getChapters(t) {
   return [
     {
@@ -216,7 +218,7 @@ export function getChapters(t) {
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
         { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date', naOk: true },
         { k: 'familienzulagen', label: fl(t, 'finanzen', 'familienzulagen'), type: 'currency', hint: hn(t, 'finanzen', 'familienzulagen') },
-        { k: 'alimenteReceived', label: fl(t, 'finanzen', 'alimenteReceived'), type: 'currency', hint: hn(t, 'finanzen', 'alimenteReceived') },
+        { k: 'alimenteReceived', label: fl(t, 'finanzen', 'alimenteReceived'), type: 'currency', hint: hn(t, 'finanzen', 'alimenteReceived'), naOk: true },
         { k: 'monthlyTax', label: fl(t, 'finanzen', 'monthlyTax'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyTax'), section: t('sections.finanzen.budgetLight'), sectionIntro: si(t, 'finanzen', 'budgetLight'), orientation: or(t, 'steuern') },
         { k: 'groceries', label: fl(t, 'finanzen', 'groceries'), type: 'currency', itemized: true, hint: hn(t, 'finanzen', 'groceries') },
         { k: 'communication', label: fl(t, 'finanzen', 'communication'), type: 'currency', itemized: true, hint: hn(t, 'finanzen', 'communication') },
@@ -224,7 +226,7 @@ export function getChapters(t) {
         { k: 'childcare', label: fl(t, 'finanzen', 'childcare'), type: 'currency', hint: hn(t, 'finanzen', 'childcare') },
         { k: 'otherInsurance', label: fl(t, 'finanzen', 'otherInsurance'), type: 'currency', hint: hn(t, 'finanzen', 'otherInsurance') },
         { k: 'debtPayments', label: fl(t, 'finanzen', 'debtPayments'), type: 'currency', hint: hn(t, 'finanzen', 'debtPayments'), section: t('sections.finanzen.obligations'), sectionIntro: si(t, 'finanzen', 'obligations'), orientation: or(t, 'schuldenraten') },
-        { k: 'alimentePaid', label: fl(t, 'finanzen', 'alimentePaid'), type: 'currency', hint: hn(t, 'finanzen', 'alimentePaid') },
+        { k: 'alimentePaid', label: fl(t, 'finanzen', 'alimentePaid'), type: 'currency', hint: hn(t, 'finanzen', 'alimentePaid'), naOk: true },
         { k: 'savingsGoal', label: fl(t, 'finanzen', 'savingsGoal'), type: 'currency', section: t('sections.finanzen.savings'), sectionIntro: si(t, 'finanzen', 'savings') },
         { k: 'savingsAccount', label: fl(t, 'finanzen', 'savingsAccount'), type: 'currency' },
         { k: 'bankName', label: fl(t, 'finanzen', 'bankName'), type: 'text' },
@@ -346,8 +348,8 @@ export function getChapters(t) {
       description: t('chapters.notfall.description'),
       icon: t('chapters.notfall.icon'),
       fields: [
-        { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', required: true, mvo: true, section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
-        { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', required: true, mvo: true },
+        { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', required: true, mvo: true, naOk: true, naMit: ['emergencyPhone'], section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
+        { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', required: true, mvo: true, naVon: 'emergencyContact' },
         { k: 'bloodType', label: fl(t, 'notfall', 'bloodType'), type: 'select', options: opts(t, 'notfall', 'bloodType'), section: t('sections.notfall.medical'), sectionIntro: si(t, 'notfall', 'medical') },
         { k: 'allergies', label: fl(t, 'notfall', 'allergies'), type: 'textarea' },
         { k: 'medications', label: fl(t, 'notfall', 'medications'), type: 'textarea' },

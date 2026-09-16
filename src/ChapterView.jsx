@@ -21,7 +21,8 @@ import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
-import { trifftNichtZu, naUmschalten, NA_FELD } from './utils/vollstaendigkeit.js';
+import { trifftNichtZu, NA_FELD } from './utils/vollstaendigkeit.js';
+import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -53,7 +54,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
+export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -461,12 +462,20 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   // das Feld als erledigt und wird nicht als nächste Angabe vorgeschlagen; zurücknehmbar.
   // Nur angeboten, solange das Feld leer ist — wer etwas eingetragen hat, braucht ihn nicht.
   // Im Beispiel schreibt updateData ohnehin nichts, darum dort kein Schalter.
+  // K38: `naMit` nimmt Felder mit (Notfallkontakt → Telefon), `naVon`-Felder bleiben dann verdeckt.
   const renderFeldMitNa = (field) => {
+    if (naVerdeckt(data, field)) return null;
     const el = renderField(field);
     if (!field.naOk || demoMode) return el;
     const na = trifftNichtZu(data, field.k);
     if (!na && data[field.k]) return el;
-    const umschalten = () => onUpdate(NA_FELD, naUmschalten(data, field.k));
+    // K38: gekoppelte Felder (Arbeitgeber) gleich auch im anderen Kapitel umschalten.
+    const umschalten = () => {
+      const neu = naGruppeUmschalten(data, field);
+      onUpdate(NA_FELD, neu);
+      const kopplung = naKopplung(allData, chapter.key, neu);
+      if (kopplung && onUpdateIn) onUpdateIn(kopplung.kapitel, NA_FELD, kopplung.liste);
+    };
     const knopf = React.createElement('button', {
       type: 'button', onClick: umschalten, 'data-na': na ? '1' : '0',
       'aria-label': field.label + ': ' + tr(na ? 'naZustand.zuruecknehmen' : 'naZustand.markieren'),
@@ -494,7 +503,11 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         React.createElement('span', { style: { color: palette.text } }, field.label),
         ' — ' + tr('naZustand.markiert')
       ),
-      knopf
+      knopf,
+      // K38: eine leise Anregung, nur hier beim Feld — keine Wiederholung anderswo.
+      field.k === 'emergencyContact' && React.createElement('p', {
+        style: { flexBasis: '100%', margin: 0, fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed },
+      }, tr('naZustand.notfallAnregung'))
     );
   };
 
@@ -1037,6 +1050,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       const felder = [tr('chapters.notfall.fields.emergencyContact')];
       if (data.emergencyPhone) { rows.push('<div>' + escapeHtml(data.emergencyPhone) + '</div>'); felder.push(tr('chapters.notfall.fields.emergencyPhone')); }
       sections.push({ title: tr('notfallSummary.handoverContact'), felder, html: rows.join('') });
+    } else if (keineKontaktperson(data)) {
+      sections.push({ title: tr('notfallSummary.handoverContact'), felder: [], html: '<div style="color:#666">' + escapeHtml(tr('naZustand.keineKontaktperson')) + '</div>' });
     }
     const medRows = [];
     const medFelder = [];
@@ -1183,6 +1198,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
         const rows = [data.emergencyContact];
         if (data.emergencyPhone) rows.push(data.emergencyPhone);
         sections.push({ title: tr('notfallSummary.handoverContact'), rows: rows });
+      } else if (keineKontaktperson(data)) {
+        sections.push({ title: tr('notfallSummary.handoverContact'), rows: [tr('naZustand.keineKontaktperson')] });
       }
       const medRows = [];
       if (hasBlood) medRows.push(tr('notfallSummary.bloodType') + ': ' + data.bloodType);
@@ -2083,7 +2100,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
           if (field.k === 'kkModel' && chapter.key === 'versicherungen') {
             crosslinkBtn('kkModel', 'praemien', 'nav.crosslink.kkModelHint');
           }
-          if (field.k === 'emergencyContact' && chapter.key === 'notfall') {
+          // K38: der Hinweis sagt «Kontakt hinterlegt» — also nur, wenn wirklich einer da ist.
+          if (field.k === 'emergencyContact' && chapter.key === 'notfall' && data.emergencyContact) {
             crosslinkBtn('notfallkarte', 'notfalleinstieg', 'nav.crosslink.notfallkarteHint');
           }
           return elements;

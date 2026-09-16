@@ -11,6 +11,7 @@
 //   getBehoerdenDossierPreview(data, chapters, t, calculations) → structured data for React preview
 
 import { getFullName } from './config/constants.js';
+import { keineKontaktperson } from './utils/naGruppen.js';
 
 // ─── Helpers ──────────────────────────────────────────────
 
@@ -380,7 +381,7 @@ function getNotfallSections(data, chapters, t) {
   const dt = (chapterKey, fieldKey) => formatDate(d(chapterKey, fieldKey));
   const lbl = (chapterKey, fieldKey) => fieldLabel(chapters, chapterKey, fieldKey);
 
-  return [
+  const sections = [
     {
       key: 'person',
       title: t('notfallDossier.sectionPerson'),
@@ -438,6 +439,15 @@ function getNotfallSections(data, chapters, t) {
       ].filter(r => r.value),
     },
   ];
+
+  // K38: Kontaktperson bewusst als «trifft nicht zu» markiert → ruhig benennen statt
+  // leer lassen. Nur wenn das Dossier sonst etwas enthält; `platzhalter` hält den
+  // Feldnamen aus der Export-Vorschau heraus (es steht kein Wert der Person da).
+  const kontakt = sections.find(s => s.key === 'contact');
+  if (!kontakt.rows.length && keineKontaktperson(data.notfall) && sections.some(s => s.rows.length)) {
+    kontakt.rows.push({ label: lbl('notfall', 'emergencyContact'), value: t('naZustand.keineKontaktperson'), platzhalter: true });
+  }
+  return sections;
 }
 
 // ─── Notfall Preview Data (for React rendering) ─────────

@@ -1754,6 +1754,10 @@ export default {
     markieren: 'Na concerna betg',
     zuruecknehmen: 'Revocar',
     markiert: 'na concerna betg. Vala sco fatg.',
+    // K38 · persuna da contact «na concerna betg»
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    keineKontaktperson: 'Nagina persuna da contact deponida',
+    notfallAnregung: { sie: 'Forsa vulais Vus dumandar ina persuna da confidenza, sch’ella vul esser Vossa persuna da contact en cas d’urgenza. Quai ha temp.', du: 'Forsa vuls Ti dumandar ina persuna da confidenza, sch’ella vul esser Tia persuna da contact en cas d’urgenza. Quai ha temp.' },
   },
   // E18 · «Stizzar tut las datas sin quest apparat» (glista O11)
   // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
