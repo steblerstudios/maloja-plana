@@ -97,6 +97,10 @@ festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechn
   nicht liest. Möglich: (a) im Steuerrechner `cantoneOfTaxation` lesen und schreiben, (b) den Kanton
   in `taxData` speichern und beim Öffnen bevorzugen, (c) nach `basis.canton` schreiben — dann rechnen
   auch IPV und Sozialhilfe mit dem neuen Kanton. **Entscheid Stebler Studios.**
+- **Entschieden (E23, 16.09.2026):** Weg (a). Dazu fragt der Steuerrechner bei einer Abweichung,
+  ob der Kanton auch als Wohnkanton gelten soll. `basis.canton` ändert sich nur auf «Ja».
+  **Fix in PR #165** (roter Test und Fix in `src/__tests__/steuerkanton.test.js`), nach dem Deploy
+  nach «Zuletzt behoben».
 
 ## Geprüft — kein offener Bug (2026-07-08)
 
