@@ -1098,6 +1098,7 @@ export default {
     abbrechen: 'Abbrechen',
     weiter: 'Weiter',
     endgueltig: 'Das lässt sich nicht rückgängig machen. Ohne Sicherung sind die Daten danach nicht mehr da. Maloja startet anschliessend neu, wie beim ersten Mal.',
+    andereFenster: 'Bitte andere Maloja-Fenster und -Tabs vorher schliessen.',
     verstanden: 'Ich habe verstanden und möchte alle Daten auf diesem Gerät löschen.',
     zurueck: 'Zurück',
     jetztLoeschen: 'Jetzt alles löschen',

@@ -1420,6 +1420,17 @@ const App = () => React.createElement(I18nProvider, null,
   )
 );
 
+// R4: Löschweg in einem anderen Maloja-Tab (utils/datenLoeschen.js, LOESCH_SIGNAL) —
+// hier nichts mehr zurückschreiben, nach dem Löschen neu laden (leerer Stand).
+window.addEventListener('storage', (e) => {
+  if (e.key !== 'or5_loeschsignal' || !e.newValue) return;
+  try {
+    Object.getPrototypeOf(localStorage).setItem = () => {};
+    Object.getPrototypeOf(indexedDB).open = () => { throw new Error('Daten gelöscht'); };
+  } catch { /* ohne Speicher nichts zu sperren */ }
+  if (e.newValue === 'neu') location.reload();
+});
+
 // Prevent duplicate createRoot calls during Vite HMR
 const container = document.getElementById('root');
 if (!container._reactRoot) {

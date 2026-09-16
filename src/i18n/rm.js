@@ -1780,6 +1780,8 @@ export default {
     abbrechen: 'Interrumper',
     weiter: 'Vinavant',
     endgueltig: "Quai na sa lascha betg revocar. Senza copia da segirezza n'èn las datas suenter betg pli qua. Maloja cumenza silsuenter da nov, sco l'emprima giada.",
+    // TODO(rm): andereFenster durch Fachperson gegenlesen lassen
+    andereFenster: { sie: 'Per plaschair serrar avant las autras fanestras e tabs da Maloja.', du: 'Serra avant las autras fanestras e tabs da Maloja.' },
     verstanden: "Jau hai chapì e vuless stizzar tut las datas sin quest apparat.",
     zurueck: 'Enavos',
     jetztLoeschen: 'Stizzar tut ussa',

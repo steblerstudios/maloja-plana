@@ -1095,6 +1095,7 @@ export default {
     abbrechen: 'Annuler',
     weiter: 'Continuer',
     endgueltig: 'Cette action est irréversible. Sans sauvegarde, les données ne seront plus disponibles. Maloja redémarre ensuite comme la première fois.',
+    andereFenster: { sie: 'Veuillez d’abord fermer les autres fenêtres et onglets Maloja.', du: 'Ferme d’abord les autres fenêtres et onglets Maloja.' },
     verstanden: 'J\'ai compris et je souhaite supprimer toutes les données de cet appareil.',
     zurueck: 'Retour',
     jetztLoeschen: 'Tout supprimer maintenant',

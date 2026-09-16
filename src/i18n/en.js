@@ -1095,6 +1095,7 @@ export default {
     abbrechen: 'Cancel',
     weiter: 'Continue',
     endgueltig: 'This cannot be undone. Without a backup, the data will be gone. Maloja then restarts as it did the first time.',
+    andereFenster: 'Please close any other Maloja windows and tabs first.',
     verstanden: 'I understand and want to delete all data on this device.',
     zurueck: 'Back',
     jetztLoeschen: 'Delete everything now',

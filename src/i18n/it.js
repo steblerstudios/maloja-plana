@@ -1095,6 +1095,7 @@ export default {
     abbrechen: 'Annulla',
     weiter: 'Avanti',
     endgueltig: 'L\'operazione non si può annullare. Senza backup, i dati non ci saranno più. Maloja poi si riavvia come la prima volta.',
+    andereFenster: { sie: 'La preghiamo di chiudere prima le altre finestre e schede di Maloja.', du: 'Chiudi prima le altre finestre e schede di Maloja.' },
     verstanden: 'Ho capito e voglio eliminare tutti i dati su questo dispositivo.',
     zurueck: 'Indietro',
     jetztLoeschen: 'Elimina tutto ora',
