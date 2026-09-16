@@ -31,6 +31,9 @@ describe('TAXPUNKTWERT — TARDOC 2026, amtlich belegte Kantone', () => {
 
 // K22: TARDOC-Taxpunktwerte 2026 der übrigen Kantone, abgerufen 16.09.2026.
 // Behördliche Quelle:
+//   LU 0.85 — RRB Kanton Luzern Nr. 1487/2025 vom 16.12.2025, Ziff. 1, wörtlich wiedergegeben
+//             im Urteil BVGer C-437/2026 vom 12.03.2026 (Nichteintreten, RRB bleibt in Kraft)
+//             https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf
 //   SG 0.86 — Kanton St. Gallen, «OKP-Tarife Ambulant ärztliche Leistungen 2019-2028»,
 //             Stand 1.9.2026, Zeile «Freipraktizierende Ärztinnen und Ärzte», Spalte 2026
 //             https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf
@@ -40,17 +43,18 @@ describe('TAXPUNKTWERT — TARDOC 2026, amtlich belegte Kantone', () => {
 //             Ziff. 2 «Freie Praxis» (AGZG), prov. 0.82 für tarifsuisse, HSK und CSS
 //             https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf
 // Quelle: Tarifpartner, keine behördliche Festsetzung — VZAG / Ärztegesellschaft des
-// Kantons Luzern, «Update Taxpunktwert Kanton Luzern» (LU 0.85 · SZ 0.85 · OW 0.86 · NW 0.88):
+// Kantons Luzern, «Update Taxpunktwert Kanton Luzern» (SZ 0.85 für tarifsuisse, CSS und HSK
+// 0.86 · OW 0.86 · NW 0.88):
 //   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
 describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
-  const behoerdlich = { SG: 0.86, UR: 0.88, ZG: 0.82 };
+  const behoerdlich = { LU: 0.85, SG: 0.86, UR: 0.88, ZG: 0.82 };
   for (const [kanton, wert] of Object.entries(behoerdlich)) {
     it(`${kanton} ${wert} (behördliche Quelle 2026)`, () => {
       expect(TAXPUNKTWERT[kanton]).toBe(wert);
     });
   }
 
-  const tarifpartner = { LU: 0.85, SZ: 0.85, OW: 0.86, NW: 0.88 };
+  const tarifpartner = { SZ: 0.85, OW: 0.86, NW: 0.88 };
   for (const [kanton, wert] of Object.entries(tarifpartner)) {
     it(`${kanton} ${wert} (Tarifpartner-Publikation, provisorischer Arbeitstarif)`, () => {
       expect(TAXPUNKTWERT[kanton]).toBe(wert);

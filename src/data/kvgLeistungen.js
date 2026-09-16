@@ -52,6 +52,14 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2
 //
 // K22, abgerufen 16.09.2026 — behördliche Quelle (Festsetzung oder amtliche Publikation):
+//   LU 0.85 — RRB des Regierungsrats des Kantons Luzern Nr. 1487/2025 vom 16.12.2025, Ziff. 1:
+//             «für die Vergütung der ambulanten ärztlichen Leistungen nach KVG der frei
+//             praktizierenden oder in einer ambulanten Einrichtung tätigen Ärztinnen und Ärzte
+//             des Kantons Luzern durch die tarifsuisse ag vertretenen Krankenversicherer ein
+//             provisorischer Tardoc-Taxpunktwert von Fr. 0.85». Wörtlich wiedergegeben im
+//             Urteil des Bundesverwaltungsgerichts C-437/2026 vom 12.03.2026 (auf die
+//             Beschwerde der Versicherer wurde nicht eingetreten, der RRB bleibt in Kraft).
+//             https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf
 //   SG 0.86 — Kanton St. Gallen, Gesundheitsdepartement, «OKP-Tarife Ambulant ärztliche
 //             Leistungen 2019-2028», Stand 1.9.2026, Zeile «Freipraktizierende Ärztinnen und
 //             Ärzte», Spalte 2026: CSS 0.86 · HSK 0.86 · santéservices 0.86 (vormals tarifsuisse)
@@ -61,6 +69,10 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             gilt im Kanton Uri für ambulante ärztliche Leistungen ein neuer Arbeitstarif von
 //             0.88 Franken pro Taxpunkt» — provisorisch bis zum definitiven Tarif
 //             https://www.ur.ch/mmregierungsrat/132029
+//             Zugrunde liegt RRB Nr. 2025-768 R-721-13 vom 16.12.2025 (Arbeitstarif Fr. 0.88
+//             praxisambulant, im Verhältnis zur Einkaufsgemeinschaft HSK AG), wiedergegeben im
+//             Urteil BVGer C-409/2026 vom 12.03.2026 (Nichteintreten)
+//             https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf
 //   ZG 0.82 — Gesundheitsdirektion Kanton Zug, «Ambulante Tarife 2026 Kanton Zug», Stand
 //             13.1.2026, Ziff. 2 «Freie Praxis», Ärzte-Gesellschaft des Kantons Zug (AGZG):
 //             prov. 0.82 für tarifsuisse ag, HSK AG und CSS AG. Die Übersicht nennt sich selbst
@@ -72,10 +84,16 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 // Luzern, «Update Taxpunktwert Kanton Luzern», Abschnitt «Zur Übersicht die aktuellen
 // Taxpunktwerte ab 1. Januar … in der Region Zentralschweiz»; jeweils «provisorischer
 // Arbeitstarif festgelegt durch» die jeweilige Kantonsregierung:
-//   LU 0.85 · OW 0.86 · NW 0.88
+//   OW 0.86 · NW 0.88
 //   SZ 0.85 — für tarifsuisse (heute santéservices). Für CSS und HSK gilt in SZ 0.86; die App
-//             führt wie bei ZH/BE den Wert der grössten Einkaufsgemeinschaft
-//   (UR wird dort ebenfalls mit 0.88 genannt, deckungsgleich mit der Urner Medienmitteilung)
+//             führt den Wert der grössten Einkaufsgemeinschaft, die für alle übrigen
+//             Versicherer verhandelt. Der Wert 0.86 für die CSS ist zusätzlich behördlich
+//             belegt: Verfügung Nr. 909/25 des Departements des Innern des Kantons Schwyz
+//             vom 23.12.2025, Ziff. 1, wiedergegeben im Urteil BVGer C-718/2026 vom 15.04.2026
+//             https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-718-2026_2026-04-15.pdf
+//   (LU 0.85 und UR 0.88 werden dort ebenfalls genannt, deckungsgleich mit RRB LU 1487/2025
+//   und der Urner Medienmitteilung. Für LU hält die Seite fest, dass HSK und CSS die 0.85
+//   nicht angefochten haben — der RRB selbst regelt nur das Verhältnis zu tarifsuisse.)
 //   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
 //
 // Alle übrigen Kantone (AG, AI, AR, BL, FR, GE, GL, GR, JU, NE, SH, SO, TG, TI, VD, VS):
