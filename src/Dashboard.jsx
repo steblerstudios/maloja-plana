@@ -1085,10 +1085,22 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 // lineHeight explizit setzen: der Berg-Wrapper (weiter oben, 'data-tour': 'berge')
                 // erzwingt lineHeight:0 gegen den Leerraum unters SVG — das erbt sich sonst auf
                 // dieses Label und liesse zweizeilig getrennte Wörter übereinanderfallen.
+                // K41: `mid` bei 0.5/0.75 Deckkraft auf der Berg-SVG (bis zu 3 gestapelte
+                // sage-Lagen) mass gemessen 1.6–3.8:1 — unter AA (4.5:1), hell UND dunkel,
+                // Farbenblind-Palette eingeschlossen. Fix: volle Deckkraft auf einer eigenen,
+                // undurchsichtigen Fläche (= palette.surface, dieselbe Fläche wie die Karte)
+                // statt auf der variablen Bergfläche — dafür trägt `mid` laut Konstanten-
+                // Kommentar ≥4.5:1. Gemessen danach: hell 5.94:1 / dunkel 5.47:1, unverändert
+                // durch den Farbenblind-Modus (der lässt mid und surface unangetastet).
+                // «Noch nicht begonnen» bleibt erkennbar — jetzt über Kursiv (Form), nicht
+                // mehr über reduzierte Deckkraft (Farbe allein wäre kein a11y-taugliches Signal).
                 fontSize: text.xs, lineHeight: 1.15, color: palette.mid, maxWidth: '76px', textAlign: 'center',
-                opacity: maturity === 'sketch' ? 0.5 : 0.75,
+                background: palette.surface,
+                padding: '1px 5px',
+                borderRadius: radius.sm,
+                fontStyle: maturity === 'sketch' ? 'italic' : 'normal',
                 fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
-                transition: `opacity ${duration.cinematic}ms ease`,
+                transition: `background ${duration.cinematic}ms ease`,
                 ...hyphenStyle,
               }
             }, shortLabel)
