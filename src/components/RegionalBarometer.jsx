@@ -208,7 +208,7 @@ export const RegionalBarometer = ({ palette, t, comparison, userValue, kind = 'p
     // Quelle
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
-    }, renderSource(t(k + 'source', { year }))),
+    }, renderSource(t(k + 'source', { year }), null, t)),
   );
 };
 

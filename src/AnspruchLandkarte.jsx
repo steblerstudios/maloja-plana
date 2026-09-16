@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { ANSPRUCH_GRUPPEN } from './data/anspruchLandkarte.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 
@@ -40,7 +41,7 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
     ];
 
     return isExternal
-      ? React.createElement('a', { key: item.key, href: item.url, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
+      ? React.createElement(ExternerLink, { key: item.key, t, href: item.url, style: cardStyle, ...hover }, inner)
       : React.createElement('button', {
           key: item.key, type: 'button',
           onClick: () => onNavigate(item.view, item.chapterIndex, item.extra),

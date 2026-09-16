@@ -3,6 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
 import { Icon, Icons } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -485,7 +486,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { key: sit.key, style: s.intlSit },
           React.createElement('div', { style: s.intlSitTitle }, t(sit.title)),
           React.createElement('div', { style: s.intlSitText }, t(sit.text)),
-          React.createElement('a', { href: sit.url, target: '_blank', rel: 'noopener noreferrer', style: s.intlLink }, t('vr.intlMore'))
+          React.createElement(ExternerLink, { t, href: sit.url, style: s.intlLink }, t('vr.intlMore'))
         )
       ),
       React.createElement('div', { style: s.intlContact }, t('vr.intlContact'))
@@ -886,8 +887,8 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
         // Disclaimer + amtlicher Rechner
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbDisclaimer')),
-        React.createElement('a', { href: 'https://swisstaxcalculator.estv.admin.ch/', target: '_blank', rel: 'noopener noreferrer', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink') + ' →'),
-        React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource')))
+        React.createElement(ExternerLink, { t, href: 'https://swisstaxcalculator.estv.admin.ch/', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink') + ' →'),
+        React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource'), null, t))
       )
     ),
 
@@ -986,10 +987,9 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
           { key: 'FINMA', url: 'https://www.finma.ch/en/authorisation/types-of-licensing/' },
         ].map(link =>
           React.createElement('div', { key: link.key, style: { marginBottom: space.xs + 'px' } },
-            React.createElement('a', {
+            React.createElement(ExternerLink, {
+              t,
               href: link.url,
-              target: '_blank',
-              rel: 'noopener noreferrer',
               style: { fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none' }
             }, t('vr.fzLink' + link.key) + ' →')
           )
@@ -1002,7 +1002,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     React.createElement(OfficialLinkBox, { palette, t, data, ids: ['ahv', 'ergaenzungsleistungen', 'prosenectute'] }),
 
     React.createElement('div', { style: s.source },
-      renderSource(t('vr.source'))
+      renderSource(t('vr.source'), null, t)
     ),
 
     onNavigate && React.createElement('button', {

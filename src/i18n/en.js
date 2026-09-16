@@ -1,4 +1,9 @@
 export default {
+  a11y: {
+    // R4: screen reader hint on external links that open in a new tab
+    // (target="_blank") — WCAG 3.2.5 / G201.
+    neuerTab: 'opens in a new tab',
+  },
   lebenszustaende: {
     sectionTitle: 'Does one of these situations apply?',
     sectionIntro: 'Some support depends not on a single event but on an ongoing situation. Choose what fits. It stays on your device and only helps show what suits you — no profile, no judgement.',

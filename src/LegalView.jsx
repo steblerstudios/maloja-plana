@@ -1,6 +1,13 @@
 import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
+
+// autoLink() ist ein modulweiter Helfer ohne eigenen Zugriff auf t() (P() reicht
+// ihn nicht durch — würde alle ~90 Aufrufstellen betreffen). Statt t an jede
+// Stelle durchzureichen, hält LegalView beim Rendern die aktuelle Übersetzung
+// hier fest; autoLink liest sie nur für den a11y-Hinweis auf externen Links.
+let _legalViewT = (k) => k;
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
@@ -59,7 +66,7 @@ const autoLink = (text, _palette) => {
       parts.push(React.createElement('a', { key: match.index, href: 'mailto:' + val, style: linkStyle }, val));
     } else {
       const label = val.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
-      parts.push(React.createElement('a', { key: match.index, href: val, target: '_blank', rel: 'noopener', style: linkStyle }, label));
+      parts.push(React.createElement(ExternerLink, { key: match.index, t: _legalViewT, href: val, style: linkStyle }, label));
     }
     lastIdx = match.index + val.length;
   }
@@ -70,7 +77,7 @@ const autoLink = (text, _palette) => {
         const idx = parts[i].indexOf(term);
         const before = parts[i].slice(0, idx);
         const after = parts[i].slice(idx + term.length);
-        const link = React.createElement('a', { key: 'law-' + i, href: url, target: '_blank', rel: 'noopener', style: linkStyle }, term);
+        const link = React.createElement(ExternerLink, { key: 'law-' + i, t: _legalViewT, href: url, style: linkStyle }, term);
         parts.splice(i, 1, before, link, after);
         i += 2;
       }
@@ -83,6 +90,7 @@ const P = ({ children, palette }) =>
   React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
 
 export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
+  _legalViewT = t;
   const activeSection = section || 'privacy';
 
   const tabs = [
@@ -172,9 +180,9 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.privacy.hosting2') }),
         // Offizielles Green-Web-Badge — lokal gehostet (kein externer Request/IP-Leak),
         // verlinkt auf den Live-Check der Green Web Foundation.
-        React.createElement('a', {
+        React.createElement(ExternerLink, {
+          t,
           href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
-          target: '_blank', rel: 'noopener noreferrer',
           style: { display: 'inline-block', marginTop: space.xs },
         },
           React.createElement('img', {
@@ -337,8 +345,8 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.support.howTitle'), palette, children: [
         CONTRIBUTION_URL
-          ? React.createElement('a', {
-              href: CONTRIBUTION_URL, target: '_blank', rel: 'noopener',
+          ? React.createElement(ExternerLink, {
+              t, href: CONTRIBUTION_URL,
               style: {
                 display: 'inline-block', marginBottom: '12px', padding: '10px 16px',
                 background: palette.sand, color: palette.onSand, borderRadius: radius.sm,

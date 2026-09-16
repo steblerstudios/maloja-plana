@@ -2,6 +2,7 @@ import React from 'react';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { inDays, formatDE } from './utils/helpers.js';
 import { referenzalterMonate } from './data/ahvRechner.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Pensionierung — geführter Ablauf für den Übergang in den Ruhestand. Ruhige Orientierung
 // mit den Dingen, die NICHT automatisch laufen: AHV anmelden (Rente kommt nicht von selbst),
@@ -77,7 +78,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pensionierung.step5Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5Link'), onClick: () => onNavigate('vorsorge') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5LinkSituation'), onClick: () => onNavigate('situationen') }),
-      React.createElement('a', { href: 'https://www.prosenectute.ch/', target: '_blank', rel: 'noopener noreferrer', style: { ...s.link, textDecoration: 'none' } }, '→ ' + t('pensionierung.step5LinkProSenectute') + ' ↗')
+      React.createElement(ExternerLink, { t, href: 'https://www.prosenectute.ch/', style: { ...s.link, textDecoration: 'none' } }, '→ ' + t('pensionierung.step5LinkProSenectute') + ' ↗')
     ),
 
     React.createElement(AblaufFooter, { palette, notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })

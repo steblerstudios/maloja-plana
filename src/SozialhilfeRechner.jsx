@@ -221,7 +221,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
 
     !result && React.createElement('div', { style: { ...s.section, color: palette.mid } }, t('sh.eingeben')),
 
-    React.createElement('div', { style: s.source }, renderSource(t('sh.source')))
+    React.createElement('div', { style: s.source }, renderSource(t('sh.source'), null, t))
   );
 };
 

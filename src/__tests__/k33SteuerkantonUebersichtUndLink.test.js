@@ -31,6 +31,9 @@ vi.mock('../hooks/vorlesenContext.js', () => ({ useVorlesenContext: () => null }
 const { FinanzUebersicht } = await import('../FinanzUebersicht.jsx');
 const { OfficialLinkBox } = await import('../OfficialLinkBox.jsx');
 const { CANTONAL_LINKS } = await import('../data/direktLinks.js');
+// R4: externe Links rendern seit dem a11y-Hinweis (WCAG 3.2.5) über ExternerLink statt
+// eines rohen <a> — knoten() muss es expandieren, damit das erzeugte <a href> gefunden wird.
+const { ExternerLink } = await import('../components/ExternerLink.jsx');
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' ? k + '(' + Object.values(p).join('|') + ')' : k);
@@ -41,6 +44,7 @@ const knoten = (el, out = []) => {
   if (Array.isArray(el)) { el.forEach((c) => knoten(c, out)); return out; }
   if (!el || typeof el !== 'object' || !el.props) return out;
   out.push(el);
+  if (el.type === ExternerLink) knoten(ExternerLink(el.props), out);
   knoten(el.props.children, out);
   return out;
 };

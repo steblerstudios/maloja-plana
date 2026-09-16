@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit } from './data/mietzinsbeitraege.js';
 import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonalData.js';
@@ -62,8 +63,8 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('mietzinsView.cantonLabel', { name: getCantonName(canton, t) || canton })),
         React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('mietzins.' + info.state)),
         hasProgram && info.noteKey && React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } }, 'ⓘ ' + t(info.noteKey)),
-        info.url && React.createElement('a', {
-          href: info.url, target: '_blank', rel: 'noopener noreferrer',
+        info.url && React.createElement(ExternerLink, {
+          t, href: info.url,
           style: { ...linkBtn, display: 'inline-block', textDecoration: 'underline', textUnderlineOffset: '2px' },
         }, info.state === 'has' ? t('mietzins.linkCanton') : t('mietzins.linkOverview'))
       ),
@@ -103,7 +104,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         )
       ),
 
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' } }, renderSource(t('mietzinsView.source'))),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' } }, renderSource(t('mietzinsView.source'), null, t)),
 
       onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('sync') }, '→ ' + t('mietzinsView.linkBudget')),
       onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, '→ ' + t('nav.finanzUebersicht'))

@@ -5,6 +5,7 @@ import { getCantonName } from './config/cantonalData.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Bücherregal mit mehreren Etagen: jede Kategorie (und jedes Sonderthema) ist ein
 // Buch, dessen Rücken auf einem Regalbrett steht. Ein Klick klappt das Buch unter
@@ -109,13 +110,13 @@ export const DirektLinks = ({ palette, t, data }) => {
   const entryCard = (e) => React.createElement('div', { key: e.key, style: s.entryCard },
     React.createElement('div', null,
       e.url
-        ? React.createElement('a', { href: e.url, target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, e.name)
+        ? React.createElement(ExternerLink, { t, href: e.url, style: s.entryNameLink }, e.name)
         : React.createElement('span', { style: s.entryName }, e.name),
       e.affiliate ? React.createElement('span', { style: s.aff }, ' · ' + t('legal.resources.affiliateMarker')) : null
     ),
     e.desc ? React.createElement('div', { style: s.entryDesc }, e.desc) : null,
     ...(e.extras || []).map((x, i) => React.createElement('div', { key: 'x' + i, style: s.entryMeta },
-      x.url ? React.createElement('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', style: s.entryMetaLink }, x.label) : x.label
+      x.url ? React.createElement(ExternerLink, { t, href: x.url, style: s.entryMetaLink }, x.label) : x.label
     ))
   );
 
@@ -145,7 +146,7 @@ export const DirektLinks = ({ palette, t, data }) => {
     if (city) links.push(React.createElement('span', { key: 'gm', style: s.entryName }, city));
     if (cantonName) {
       if (city) links.push(' · ');
-      links.push(React.createElement('a', { key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
+      links.push(React.createElement(ExternerLink, { key: 'kt', t, href: cantonPortalUrl(canton), style: s.entryNameLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
     }
     return React.createElement('div', { key: 'lg', style: s.entryCard },
       React.createElement('div', null, ...links),
@@ -239,14 +240,14 @@ export const DirektLinks = ({ palette, t, data }) => {
       React.createElement('div', { style: s.cantonTitle }, t('dl.cantonalTitle', { canton: getCantonName(data.basis.canton, t) })),
       Object.entries(getCantonalLinks(data.basis.canton)).map(([key, url]) =>
         React.createElement('div', { key, style: { marginBottom: space.xs + 'px' } },
-          React.createElement('a', { href: url, target: '_blank', rel: 'noopener noreferrer', style: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' } },
+          React.createElement(ExternerLink, { t, href: url, style: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' } },
             t('dl.cantonal.' + key) + ' →'
           )
         )
       )
     ),
 
-    React.createElement('div', { style: s.source }, renderSource(t('dl.source')))
+    React.createElement('div', { style: s.source }, renderSource(t('dl.source'), null, t))
   );
 };
 

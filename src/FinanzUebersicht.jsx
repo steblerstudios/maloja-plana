@@ -309,7 +309,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5' } },
             // Link führt zur BFS-Methodik (Erhebung Armutsstatistik), nicht zu einer
             // publizierten Zahl — der Betrag hier ist haushaltsindividuell gerechnet.
-            renderSource(t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }))),
+            renderSource(t('finanzUebersicht.povertyLineNote', { amount: formatCHF(Math.round(armutsgrenze)) }), null, t)),
           // Phase 1: grober Brutto-Anhaltspunkt (nur AHV/ALV) — hilft, das Netto
           // einzuordnen und zum Lohn-Barometer (das Brutto braucht) zu überbrücken.
           React.createElement('div', { style: { fontSize: '10px', color: palette.soft, lineHeight: '1.5', marginTop: '3px' } },

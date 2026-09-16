@@ -3,6 +3,7 @@ import { getLinkById, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius } from './config/tokens.js';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Reusable "mirror" of an official DirektLinks entry, shown in context next to a
 // calculator or section (e.g. the Sozialhilfe link beside the Sozialhilfe view).
@@ -51,7 +52,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
 
     links.map((link, i) =>
       React.createElement('div', { key: link.id, style: { marginBottom: i < links.length - 1 ? space.sm + 'px' : 0 } },
-        React.createElement('a', { href: link.url, target: '_blank', rel: 'noopener', style: nameLinkStyle }, l(link.name) + ' ↗'),
+        React.createElement(ExternerLink, { t, href: link.url, style: nameLinkStyle }, l(link.name) + ' ↗'),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, l(link.beschreibung)),
         React.createElement('div', { style: urlHintStyle }, link.url),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } }, t('dl.antragsstelle') + ': ' + l(link.antragsstelle))
@@ -61,7 +62,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
     cantonalUrl && React.createElement('div', {
       style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border }
     },
-      React.createElement('a', { href: cantonalUrl, target: '_blank', rel: 'noopener', style: linkStyle },
+      React.createElement(ExternerLink, { t, href: cantonalUrl, style: linkStyle },
         '↗ ' + t('dl.cantonalTitle', { canton: getCantonName(canton, t) }) + ' — ' + t('dl.cantonal.' + cantonalKey)
       )
     )

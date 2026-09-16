@@ -1,6 +1,7 @@
 import React from 'react';
 import { text, weight, space, leading } from '../config/tokens.js';
 import { getMietzinsbeitraege } from '../data/mietzinsbeitraege.js';
+import { ExternerLink } from './ExternerLink.jsx';
 
 // Ruhiger Hinweis zu Mietzinsbeiträgen — analog zur IPV, aber kantonal/kommunal
 // fragmentiert. Drei Zustände: bestätigt (affirmativ), keines (ausgegraut), unklar
@@ -10,8 +11,8 @@ export const MietzinsHinweis = ({ palette, t, canton }) => {
   const info = getMietzinsbeitraege(canton);
 
   const linkStyle = { color: palette.skyDeep, textDecoration: 'none', fontWeight: weight.medium };
-  const link = (label) => info.url && React.createElement('a',
-    { href: info.url, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, label + ' →');
+  const link = (label) => info.url && React.createElement(ExternerLink,
+    { t, href: info.url, style: linkStyle }, label + ' →');
 
   // Farbe/Ton je Zustand: has = sage (positiv), none = soft (ausgegraut), check = mid (neutral)
   const body = info.state === 'has'

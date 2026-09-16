@@ -50,7 +50,7 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
         React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint2')),
         React.createElement('li', { style: s.checkItem }, t('zusatzWechsel.checkPoint3'))
       ),
-      React.createElement('p', { style: s.source }, renderSource(t('zusatzWechsel.checkSource')))
+      React.createElement('p', { style: s.source }, renderSource(t('zusatzWechsel.checkSource'), null, t))
     ),
 
     // Schritt 2 — Wichtig: keine Aufnahmepflicht

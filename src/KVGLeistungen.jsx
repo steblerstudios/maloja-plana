@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026 } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
@@ -222,8 +223,8 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
               React.createElement('div', { style: { marginTop: '4px', color: palette.soft } }, t('kvg.mammoGeoTardoc')),
               React.createElement('div', { style: { marginTop: '4px', color: palette.soft } },
                 t('kvg.mammoGeoCheck') + ' ',
-                React.createElement('a', {
-                  href: MAMMO_GEO_URL, target: '_blank', rel: 'noopener noreferrer',
+                React.createElement(ExternerLink, {
+                  t, href: MAMMO_GEO_URL,
                   style: { color: palette.sandDeep, textDecoration: 'underline' }
                 }, t('kvg.mammoGeoLinkLabel'))
               )
@@ -967,7 +968,7 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
     },
       'ⓘ ' + t('kvg.disclaimer'),
       React.createElement('br'),
-      'ⓘ ', renderSource(t('kvg.source')), ' · v' + KVG_DATA_VERSION
+      'ⓘ ', renderSource(t('kvg.source'), null, t), ' · v' + KVG_DATA_VERSION
     )
   );
 };

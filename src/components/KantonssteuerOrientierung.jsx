@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, radius, space } from '../config/tokens.js';
 import { getCantonName } from '../config/cantonalData.js';
 import { getLinkById, getCantonalLinks } from '../data/direktLinks.js';
+import { ExternerLink } from './ExternerLink.jsx';
 
 // E38: Wenn die Tabelle für die Kantons- und Gemeindesteuer nicht trägt (Einkommen ausserhalb,
 // Lage nicht gemessen), zeigen TaxCalculator und FinanzUebersicht keine Zahl, sondern diesen
@@ -53,8 +54,8 @@ export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr
       orientierungsText(t, schaetzung, jahr)
     ),
     React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
-      estvLink && React.createElement('a', { href: estvLink.url, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, '→ ' + t('tax.bandLinkEstv')),
-      kantonsLink && React.createElement('a', { href: kantonsLink, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, '→ ' + t('tax.bandLinkKanton', { canton: getCantonName(canton, t) }))
+      estvLink && React.createElement(ExternerLink, { t, href: estvLink.url, style: linkStyle }, '→ ' + t('tax.bandLinkEstv')),
+      kantonsLink && React.createElement(ExternerLink, { t, href: kantonsLink, style: linkStyle }, '→ ' + t('tax.bandLinkKanton', { canton: getCantonName(canton, t) }))
     )
   );
 };

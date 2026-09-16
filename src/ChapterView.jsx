@@ -8,6 +8,7 @@ import { text, weight, leading, space, radius, shadow, fontFamily, duration, eas
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import MirrorCards from './MirrorCards.jsx';
 import { Schutzschild } from './components/Schutzschild.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
@@ -422,8 +423,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + field.orientation));
     }
     if (field.link) {
-      parts.push(React.createElement('a', {
-        key: 'lk', href: field.link.url, target: '_blank', rel: 'noopener noreferrer',
+      parts.push(React.createElement(ExternerLink, {
+        key: 'lk', t: tr, href: field.link.url,
         style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
       }, '→ ' + field.link.label));
     }
@@ -451,8 +452,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     React.createElement('div', {
       style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
     }, React.createElement(GlossarText, { t: tr, palette }, tr('beistand.wegweiserBody'))),
-    React.createElement('a', {
-      href: 'https://kesb-kurz-erklaert.ch/erwachsene/', target: '_blank', rel: 'noopener noreferrer',
+    React.createElement(ExternerLink, {
+      t: tr, href: 'https://kesb-kurz-erklaert.ch/erwachsene/',
       style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
     }, '→ ' + tr('beistand.wegweiserLink'))
   );
@@ -1749,7 +1750,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   pathItem('path2Title', 'path2'),
                   pathItem('path3Title', 'path3'),
                   React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' } }, tr('edu.pathsHow')),
-                  React.createElement('a', { href: 'https://www.berufsbildung.ch/de/lexikon/berufsabschluss-fuer-erwachsene', target: '_blank', rel: 'noopener noreferrer', style: eduLink }, '→ ' + tr('edu.pathsLink'))
+                  React.createElement(ExternerLink, { t: tr, href: 'https://www.berufsbildung.ch/de/lexikon/berufsabschluss-fuer-erwachsene', style: eduLink }, '→ ' + tr('edu.pathsLink'))
                 )
               )
             );
@@ -1912,9 +1913,9 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
                   React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.noFormula')),
                   React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.magnitude')),
                   React.createElement('p', { style: { margin: 0 } }, tr('alimentInfo.binding')),
-                  React.createElement('a', {
+                  React.createElement(ExternerLink, {
+                    t: tr,
                     href: 'https://www.gerichte-zh.ch/themen/partnerschaft/hilfen/unterhaltsberechnung.html',
-                    target: '_blank', rel: 'noopener noreferrer',
                     style: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
                   }, '→ ' + tr('alimentInfo.linkLabel'))
                 )
