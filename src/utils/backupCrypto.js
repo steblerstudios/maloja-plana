@@ -288,7 +288,13 @@ export async function restoreBackup(backup) {
   if (!validation.valid) {
     return { success: false, blocked: true, errors: validation.errors, restored: [], error: null };
   }
-  createPreRestoreSnapshot();
+  // Scheitert der Schnappschuss (z. B. Speicher voll), wird nichts überschrieben —
+  // ohne Schnappschuss kein Wiederherstellen (R4, Predeploy-Gate 16.09.2026).
+  try {
+    createPreRestoreSnapshot();
+  } catch (e) {
+    return { success: false, blocked: false, errors: [], restored: [], error: (e && e.message) || String(e) };
+  }
   const result = await applyBackup(backup);
   return { ...result, blocked: false, errors: [] };
 }

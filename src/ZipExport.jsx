@@ -141,11 +141,11 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     e.target.value = '';
   };
 
-  const processPlaintextImport = (buffer) => {
+  const processPlaintextImport = async (buffer) => {
     try {
       const text = new TextDecoder().decode(buffer);
       const backup = parsePlaintextBackup(text);
-      confirmAndRestore(backup);
+      await confirmAndRestore(backup);
     } catch (e) {
       setBackupStatus({ type: 'error', msg: t('backup.importFailed', { error: e.message }) });
     }
@@ -154,16 +154,19 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   const handleDecryptAndImport = async () => {
     if (!pendingFile || !importPassphrase) return;
     setBackupStatus({ type: 'info', msg: t('backup.decrypting') });
+    let backup;
     try {
-      const backup = await decryptBackup(pendingFile, importPassphrase);
+      backup = await decryptBackup(pendingFile, importPassphrase);
       setImporting(false);
       setImportPassphrase('');
       setPendingFile(null);
       setPendingType(null);
-      confirmAndRestore(backup);
     } catch (e) {
       setBackupStatus({ type: 'error', msg: t('backup.wrongPassphrase') });
+      return;
     }
+    // Ausserhalb des try: ein Fehler beim Wiederherstellen ist kein falsches Passwort.
+    await confirmAndRestore(backup);
   };
 
   const confirmAndRestore = async (backup) => {
@@ -183,7 +186,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
 
     // restoreBackup prüft erneut (Barriere gilt unabhängig vom Aufrufer),
     // legt den Snapshot an und schreibt erst dann.
-    const result = await restoreBackup(backup);
+    // R4: auch ein unerwarteter Wurf (Speicher voll) endet in einer ruhigen Meldung,
+    // nicht in einem unbehandelten Fehler. restoreBackup schreibt dann nichts.
+    let result;
+    try {
+      result = await restoreBackup(backup);
+    } catch (e) {
+      setBackupStatus({ type: 'error', msg: t('backup.importFailed', { error: (e && e.message) || String(e) }) });
+      return;
+    }
 
     if (result.blocked) {
       setValidationWarnings(result.errors);
