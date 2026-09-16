@@ -705,7 +705,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     const status = ipv.eligible
       ? t('premium.eligible')
       : ipv.belegt === false
-        ? t(ipv.anspruchMoeglich ? 'ipv.statusWahrscheinlich' : 'ipv.statusOffen')
+        ? t('ipv.statusOffen')
         : t('premium.notEligible');
     sections.push({
       key: 'ipv',
@@ -839,7 +839,7 @@ export function generateBehoerdenJSON(data, calculations) {
   if (ipv) {
     // E9: ohne amtlich belegten Kanton gehen keine Beträge in die Datei.
     dossier.calculations.ipv = ipv.belegt === false
-      ? { eligible: false, belegt: false, einschaetzung: ipv.anspruchMoeglich ? 'anspruch-wahrscheinlich' : 'beim-kanton-pruefen' }
+      ? { eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' }
       : {
           eligible: !!ipv.eligible,
           monthlyAmount: ipv.amount || 0,

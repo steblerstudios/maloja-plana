@@ -223,10 +223,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
         React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
-      // E9: unbelegt nur der Hinweis, wo die Verbilligung läuft — ohne Modell und Grenze.
-      ohneBetrag && CANTONAL_IPV[canton] && React.createElement('div', { style: { color: palette.mid } },
-        t('premium.note', { value: t(CANTONAL_IPV[canton].noteKey, CANTONAL_IPV[canton].noteParams) })
-      ),
+      // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
+      // falsch) — der Weg zum Kanton steht als Link im Orientierungs-Kasten darunter.
       !canton && React.createElement('div', { style: { color: palette.roseDeep } }, t('premium.enterCanton'))
     ),
 

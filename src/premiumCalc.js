@@ -16,7 +16,7 @@ const ipvErgebnisFuerDokument = (r, t) => {
   if (!r || r.belegt !== false) return r;
   return {
     belegt: false,
-    einschaetzung: r.anspruchMoeglich ? 'anspruch-wahrscheinlich' : 'beim-kanton-pruefen',
+    einschaetzung: 'beim-kanton-pruefen',
     hinweis: t ? t(r.noteKey, r.noteParams) : r.noteKey,
     kantonaleStelle: (getCantonalLinks(r.canton) || {}).ipv || null,
   };

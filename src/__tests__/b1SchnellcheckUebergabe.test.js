@@ -104,9 +104,10 @@ describe('B-1 · der IPV-Rechner rechnet mit den Schnellcheck-Zahlen, das Profil
     expect(html).toContain('premium.schnellcheckGerechnet');
     expect(html).toContain('premium.schnellcheckProfilBleibt');
     expect(html).toContain('premium.schnellcheckUebernehmen');
-    // BE ist nicht amtlich belegt (E9): mit 3000 wahrscheinlich ein Anspruch, mit 5000 offen.
-    expect(html).toContain('ipv.orientierungWahrscheinlich');
-    expect(html).not.toContain('ipv.orientierungOffen');
+    // BE ist nicht amtlich belegt (E9): neutrale Orientierung, kein Betrag.
+    // Dass mit 3000 statt 5000 gerechnet wird, zeigt der Test mit belegtem Kanton unten.
+    expect(html).toContain('ipv.orientierungOffen');
+    expect(html).toContain('CHF 3');
     expect(writes).toEqual([]);
   });
 

@@ -20,8 +20,9 @@ import { anspruchSignale } from '../data/anspruchSignale.js';
 // E9 (Entscheid 16.09.2026, Bau-Liste M13): Die kantonalen IPV-Werte sind
 // mustergeneriert. Solange ein Kanton nicht amtlich belegt ist, erscheint an
 // KEINER Stelle ein IPV-Betrag, ein «Berechtigt» oder eine Einkommensgrenze —
-// nur die Orientierung «wahrscheinlich ein Anspruch, die Höhe legt der Kanton
-// fest». Ein belegter Kanton (hier simuliert) zeigt den Betrag wie bisher.
+// nur der neutrale Hinweis «ob ein Anspruch besteht und wie hoch er ist, legt der
+// Kanton fest» — ohne Einschätzung aus der (unbelegten) Grenze, bei tiefem und hohem
+// Einkommen gleich. Ein belegter Kanton (hier simuliert) zeigt den Betrag wie bisher.
 // ─────────────────────────────────────────────────────────────
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
@@ -56,9 +57,28 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(r.amount).toBeNull();
   });
 
+  it('tiefes und hohes Einkommen: dieselbe Ausgabe im Rechner, Schnellcheck, Budget und in der Finanzübersicht', () => {
+    const tief = profil({ finanzen: { monthlyIncome: 800 } });
+    const hoch = profil({ finanzen: { monthlyIncome: 25000 } });
+    expect(calculateIPV(hoch)).toEqual(calculateIPV(tief));
+    expect(render(PremiumSubsidy, { data: hoch, onUpdateData: () => {} })).toBe(render(PremiumSubsidy, { data: tief, onUpdateData: () => {} }));
+    expect(calculateMonthlyBudget(hoch, t).recommendations.map((r) => r.text)).toContain('budget.ipvHintOhneBetrag');
+    const ipvZeile = (d) => render(Schnellcheck, { data: d }).includes('schnellcheck.ipvOhneBetragNote');
+    expect(ipvZeile(hoch)).toBe(true);
+    expect(ipvZeile(tief)).toBe(true);
+    expect(render(FinanzUebersicht, { data: hoch })).toContain('ipv.statusOffen');
+  });
+
+  it('Verfahrens-Hinweis je Kanton ist ausgeblendet, der Link zur Stelle bleibt', () => {
+    const html = render(PremiumSubsidy, { data: profil({ basis: { canton: 'GL', household: { adults: 1, children: [] } } }), onUpdateData: () => {} });
+    expect(html).not.toContain('premium.note');
+    expect(html).not.toContain('ipv.noteAutoTaxData');
+    expect(html).toContain('href="' + CANTONAL_LINKS.GL.ipv + '"');
+  });
+
   it('IPV-Rechner: Orientierung + Link zur kantonalen Stelle, kein Betrag, kein Verdikt, keine Grenze', () => {
     const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
-    expect(html).toContain('ipv.orientierungWahrscheinlich');
+    expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.zurStelle');
     expect(html).toContain('href="' + CANTONAL_LINKS.BE.ipv + '"');
     expect(html).toContain('ipvStatus.orientierungLead');
@@ -108,8 +128,8 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     const dok = buildIpvDokument(profil(), t, calculateIPV(profil()));
     expect(dok.result).toEqual({
       belegt: false,
-      einschaetzung: 'anspruch-wahrscheinlich',
-      hinweis: 'ipv.orientierungWahrscheinlich',
+      einschaetzung: 'beim-kanton-pruefen',
+      hinweis: 'ipv.orientierungOffen',
       kantonaleStelle: CANTONAL_LINKS.BE.ipv,
     });
     expect(JSON.stringify(dok)).not.toMatch(/amount|annual|maxIncome|subsidy/);
@@ -130,33 +150,33 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     const ipv = calculateIPV(profil());
     const preview = getBehoerdenDossierPreview(profil(), [], t, { ipv });
     const abschnitt = preview.sections.find((s) => s.key === 'ipv');
-    expect(abschnitt.status).toBe('ipv.statusWahrscheinlich');
+    expect(abschnitt.status).toBe('ipv.statusOffen');
     expect(abschnitt.rows).toEqual([]);
     const json = generateBehoerdenJSON(profil(), { ipv });
-    expect(json.calculations.ipv).toEqual({ eligible: false, belegt: false, einschaetzung: 'anspruch-wahrscheinlich' });
+    expect(json.calculations.ipv).toEqual({ eligible: false, belegt: false, einschaetzung: 'beim-kanton-pruefen' });
   });
 
   it('Finanzübersicht (Karte + Druck): Orientierung statt Betrag oder «nicht berechtigt»', () => {
     const html = render(FinanzUebersicht, { data: profil() });
-    expect(html).toContain('ipv.statusWahrscheinlich');
+    expect(html).toContain('ipv.statusOffen');
     expect(html).not.toContain('finanzUebersicht.notEligible');
     expect(html).not.toContain('ipv.incomeAboveLimit');
     const zeilen = druckAbschnitte(t, { income: 2000, canton: 'BE', ipv: calculateIPV(profil()), sozialhilfe: {}, el: {} })
       .flatMap((a) => a.zeilen || a.rows || []);
     const ipvZeile = JSON.stringify(zeilen);
-    expect(ipvZeile).toContain('ipv.statusWahrscheinlich');
+    expect(ipvZeile).toContain('ipv.statusOffen');
     expect(ipvZeile).not.toContain('finanzUebersicht.notEligible');
   });
 
   it('Sozialhilfe-Ansicht: Orientierung, kein «Berechtigt: CHF …»', () => {
     const html = render(SozialhilfeView, { data: profil() });
-    expect(html).toContain('ipv.orientierungWahrscheinlich');
+    expect(html).toContain('ipv.orientierungOffen');
     expect(html).not.toContain('premium.eligible');
   });
 
   it('KK-Last-Karte: Orientierung statt Entlastungsbetrag oder «kein Anspruch»', () => {
     const html = render(KKLastCard, { data: profil() });
-    expect(html).toContain('ipv.orientierungWahrscheinlich');
+    expect(html).toContain('ipv.orientierungOffen');
     expect(html).not.toContain('kkLast.ipvRelief');
     expect(html).not.toContain('kkLast.ipvNoClaim');
   });
@@ -164,7 +184,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
   it('Dashboard (Kurz-Check): kein IPV-Betrag in der Zeile', () => {
     const html = render(QuickCheck, { data: profil() });
     expect(html).toContain('dashboard.quickCheckIpv');
-    expect(html).toContain('ipv.orientierungWahrscheinlich');
+    expect(html).toContain('ipv.orientierungOffen');
     expect(html).not.toContain('dashboard.quickCheckResult');
     expect(html).not.toContain('≈ CHF');
   });
@@ -183,7 +203,7 @@ describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
     expect(html).toContain('CHF ' + r.amount);
     expect(html).toContain('premium.maxIncome');
     expect(html).toContain('premium.compareCantons');
-    expect(html).not.toContain('ipv.orientierungWahrscheinlich');
+    expect(html).not.toContain('ipv.orientierungOffen');
   });
 
   it('Schnellcheck zeigt den Betrag', () => {

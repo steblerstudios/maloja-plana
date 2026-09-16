@@ -8,8 +8,8 @@
 //   over       → über der Einkommensgrenze: keine Verbilligung, andere Wege
 //   nopremium  → Anspruch da, aber KK-Prämie fehlt → Betrag ohne Aufteilung
 //   eligible   → Anspruch + Prämie bekannt → voller Beleg mit Deckungsbalken
-//   orientierung → Kanton nicht amtlich belegt (E9), Anspruch wahrscheinlich:
-//                  Beleg ohne Betrag, nur der Hinweis «Höhe legt der Kanton fest»
+//   orientierung → Kanton nicht amtlich belegt (E9) und Prämie erfasst: Beleg ohne
+//                  Betrag, nur der neutrale Hinweis «Anspruch und Höhe legt der Kanton fest»
 import { calculateIPV } from '../config/cantonalData.js';
 import { isIpvConfirmed } from './ipvStatus.js';
 

@@ -8,10 +8,14 @@ describe('anspruchSignale: gedeckte Ansprüche → Lebensbaum-Ast', () => {
     expect(anspruchSignaleListe({})).toEqual([]);
   });
 
-  it('IPV bei Kanton + Einkommen unter der Grenze → Ast „versicherungen"', () => {
-    const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 3000 } };
+  it('IPV bei Kanton + Einkommen + erfasster Prämie → Ast „versicherungen" (E9: prüfenswert, ohne Grenzvergleich)', () => {
+    const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 3000 }, versicherungen: { kkPremium: 400 } };
     const sig = anspruchSignale(data);
     expect(sig.versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
+    // unbelegter Kanton: auch bei hohem Einkommen, weil die Grenze nicht belegt ist
+    expect(anspruchSignale({ ...data, finanzen: { monthlyIncome: 30000 } }).versicherungen).toEqual([{ key: 'ipv', view: 'premium' }]);
+    // ohne Prämie kein Signal
+    expect(anspruchSignale({ ...data, versicherungen: {} }).versicherungen).toBeUndefined();
   });
 
   it('ohne Kanton kein IPV-Signal (kein erfundener Betrag)', () => {
@@ -41,7 +45,7 @@ describe('anspruchSignale: gedeckte Ansprüche → Lebensbaum-Ast', () => {
   });
 
   it('anspruchSignaleListe hängt den Ast-Schlüssel an jedes Signal', () => {
-    const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 3000 } };
+    const data = { basis: { canton: 'BS' }, finanzen: { monthlyIncome: 3000 }, versicherungen: { kkPremium: 400 } };
     const liste = anspruchSignaleListe(data);
     expect(liste).toContainEqual({ key: 'ipv', view: 'premium', chapterKey: 'versicherungen' });
   });

@@ -337,16 +337,12 @@ export function calculateSozialhilfe(data) {
 // Ergebnis-Felder (E9):
 //   belegt           true nur, wenn die Kantonszeile amtlich belegt ist (beleg.quelle)
 //   eligible/amount  nur bei belegtem Kanton; sonst eligible false, amount null
-//   anspruchMoeglich belegt: = eligible. Unbelegt: nach den Angaben wahrscheinlich ein
-//                    Anspruch (ohne Betrag) — für Hinweise und die Orientierung
-// Unbelegt gibt es weder «nicht berechtigt» noch eine Grenze: die kennt nur der Kanton.
-//   (annual/maxAnnual/reductionPercent/cantonData fehlen dann ganz — keine Grenze, kein Betrag)
-const ipvOhneBetrag = (wahrscheinlich, canton, youngAdultsCount) => ({
-  eligible: false, belegt: false, anspruchMoeglich: wahrscheinlich, amount: null,
-  noteKey: wahrscheinlich ? 'ipv.orientierungWahrscheinlich' : 'ipv.orientierungOffen',
-  youngAdultsCount, canton,
-});
-
+//   anspruchMoeglich belegt: = eligible. Unbelegt: «prüfenswert», OHNE Vergleich mit der
+//                    (unbelegten) Grenze — sobald eine KK-Prämie erfasst ist
+// Unbelegt gibt es keine Einschätzung aus Grenze oder Einkommen (die Muster-Grenzen sind
+// in vielen Kantonen nachweislich falsch, docs/sources/ipv-kantone-2026.md, PR #161):
+// immer derselbe neutrale Hinweis, weder «wahrscheinlich» noch «nicht berechtigt», und
+// ohne cantonData (auch der Verfahrens-Hinweis je Kanton ist unbelegt).
 export function calculateIPV(data) {
   const canton = data.basis?.canton || '';
   const ipvData = CANTONAL_IPV[canton];
@@ -363,7 +359,10 @@ export function calculateIPV(data) {
     return age >= 19 && age <= 25;
   }).length;
 
-  const belegt = !!(ipvData.beleg && ipvData.beleg.quelle);
+  if (!(ipvData.beleg && ipvData.beleg.quelle)) return {
+    eligible: false, belegt: false, amount: null, noteKey: 'ipv.orientierungOffen',
+    anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton,
+  };
 
   let maxAnnualSubsidy;
   if (childrenCount > 0) {
@@ -377,15 +376,13 @@ export function calculateIPV(data) {
   const annualSubsidy = Math.round(maxAnnualSubsidy * reductionFactor);
   const monthlySubsidy = Math.round(annualSubsidy / 12);
 
-  if (!belegt) return ipvOhneBetrag(annualSubsidy > 0, canton, youngAdultsCount);
-
   if (annualSubsidy <= 0) {
-    return { eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
+    return { belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: ipvData.maxIncome }, canton, cantonData: ipvData };
   }
 
   return {
     eligible: true,
-    belegt,
+    belegt: true,
     anspruchMoeglich: true,
     amount: monthlySubsidy,
     annual: annualSubsidy,
