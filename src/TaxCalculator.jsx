@@ -6,9 +6,40 @@ import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
-import { getHouseholdInfo } from './config/cantonalData.js';
+import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
+
+// E23 (B-2): Der Steuerrechner liest und schreibt den Steuerkanton im Profil
+// (behoerden.cantoneOfTaxation). Leer → Wohnkanton (basis.canton).
+// Dazwischen: der Schlüssel `canton` auf oberster Ebene. Dorthin schrieb der
+// Steuerrechner bis 0.1.28 beim Speichern, gelesen hat ihn niemand. Er ist die
+// einzige Spur einer früher gespeicherten Wahl — darum nur lesen, nie löschen,
+// und nur solange cantoneOfTaxation leer ist. Das nächste Speichern schreibt
+// cantoneOfTaxation, danach spielt er keine Rolle mehr.
+export const steuerkantonVorbelegung = (data) =>
+  data?.behoerden?.cantoneOfTaxation || (typeof data?.canton === 'string' ? data.canton : '') || data?.basis?.canton || '';
+
+// Frage «auch Wohnkanton?» nur, wenn der gewählte Kanton vom Wohnkanton abweicht.
+export const fragtNachWohnkanton = (data, canton) => Boolean(canton) && canton !== (data?.basis?.canton || '');
+
+// Was gespeichert wird. Der Wohnkanton nur mit alsWohnkanton — also nur auf den Klick «Ja».
+export const steuerkantonSpeichern = (data, canton, alsWohnkanton = false) => ({
+  behoerden: { ...data?.behoerden, cantoneOfTaxation: canton },
+  ...(alsWohnkanton ? { basis: { ...data?.basis, canton } } : {}),
+});
+
+// Ruhige Rückfrage unter dem Kantonsfeld. Ohne Hooks, damit sie direkt prüfbar ist.
+export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
+  const knopf = { padding: '8px 12px', borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
+  return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+    React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('tax.wohnkantonFrage', { canton: getCantonName(canton, t) })),
+    React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },
+      React.createElement('button', { type: 'button', onClick: onJa, style: { ...knopf, background: palette.sand, color: palette.onSand, border: 'none' } }, t('tax.wohnkantonJa')),
+      React.createElement('button', { type: 'button', onClick: onNein, style: { ...knopf, background: 'none', color: palette.text, border: '1px solid ' + palette.border } }, t('tax.wohnkantonNein'))
+    )
+  );
+};
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const isMobile = useIsMobile();
@@ -23,7 +54,9 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   ];
 
   const [taxData, setTaxData] = useState(data.taxData || {});
-  const [canton, setCanton] = useState(data.basis?.canton || '');
+  const [canton, setCanton] = useState(() => steuerkantonVorbelegung(data));
+  const [frage, setFrage] = useState(false);
+  const [uebernommen, setUebernommen] = useState(false);
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [kinder, setKinder] = useState(hh.childrenCount);
   const [taxableIncome, setTaxableIncome] = useState(0);
@@ -74,7 +107,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
   const handleSave = () => {
     // taxableIncome als geteilten Knoten mitspeichern (oder tilgen, wenn leer).
-    onSave({ ...data, taxData, canton, finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
+    onSave({ ...data, taxData, ...steuerkantonSpeichern(data, canton), finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
   };
 
   const inputStyle = {
@@ -112,13 +145,20 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
         React.createElement(LabeledField, { palette, label: t('tax.taxCanton'), style: { marginBottom: space.md } },
           (id) => React.createElement('div', { style: { position: 'relative' } },
-            React.createElement('select', { id, value: canton, onChange: (e) => setCanton(e.target.value), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
+            React.createElement('select', { id, value: canton, onChange: (e) => { const c = e.target.value; setCanton(c); setUebernommen(false); setFrage(fragtNachWohnkanton(data, c)); }, style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
               React.createElement('option', { value: '' }, t('common.select')),
               ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
             ),
             React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
           )
         ),
+        frage && React.createElement(WohnkantonFrage, {
+          palette, t, canton,
+          // Nur dieser Klick ändert den Wohnkanton — und speichert beide Kantone sofort.
+          onJa: () => { onSave(steuerkantonSpeichern(data, canton, true)); setFrage(false); setUebernommen(true); },
+          onNein: () => setFrage(false),
+        }),
+        uebernommen && React.createElement('div', { role: 'status', style: { marginBottom: space.md, fontSize: text.xs, color: palette.mid } }, '✓ ' + t('tax.wohnkantonUebernommen', { canton: getCantonName(canton, t) })),
 
         React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {

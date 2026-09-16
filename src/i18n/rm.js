@@ -2767,6 +2767,11 @@ export default {
     intro: { sie: "Quest survista As dat ina stima approximativa da Vossa chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Vus pudais empruvar differentas deducziuns e vesair co che Vossa situaziun sa mida.", du: "Quest survista ta dat ina stima approximativa da Tia chargia fiscala — sco orientaziun, betg sco cussegliaziun fiscala. Ti pos empruvar differentas deducziuns e vesair co che Tia situaziun sa mida." },
     inputs: 'Endataziuns',
     taxCanton: 'Chantun da taglia',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E23, Wohnkanton-Frage).
+    wohnkantonFrage: { sie: 'Abitais Vus er en quest chantun ({canton})? Lura il surpigliain nus sco chantun da domicil — quai ha er effect sin la reducziun da premias e l’agid social.', du: 'Abitas ti er en quest chantun ({canton})? Lura il surpigliain nus sco chantun da domicil — quai ha er effect sin la reducziun da premias e l’agid social.' },
+    wohnkantonJa: 'Gea, surpigliar',
+    wohnkantonNein: 'Na, mo chantun da taglia',
+    wohnkantonUebernommen: 'Chantun da domicil surpiglià: {canton}.',
     grossIncome: "Entrada annaira (basà sin il salari net)",
     workCosts: 'Custs professiunals',
     pension3a: 'Prevenziun da vegliadetgna 3. pitga',
