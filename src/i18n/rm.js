@@ -2808,7 +2808,10 @@ export default {
     cantonalAndMunicipal: 'Taglia chantunalas e communala',
     totalEstimate: 'Taglia totala stimada',
     selectCantonHint: { sie: 'Tschernai in chantun per vesair la chargia da taglia chantunalas.', du: 'Tscherna in chantun per vesair la chargia da taglia chantunalas.' },
-    basedOnHauptort: "Valur d'orientaziun, basà sin il lieu principal dal chantun.",
+    // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
+    // linguist/a natal/a.
+    basedOnHauptort: "Valur d'orientaziun, basà sin il lieu principal dal chantun. Il factur è calibrà tar in'entrada da radund CHF 80'000 (persuna singula) ed applitgà linear a mintga entrada — tar in'entrada considerablamain pli auta u pli bassa po la deviaziun esser pli gronda che mussà qua.",
+    roughEstimateBadge: 'Stimaziun aproximativa',
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
