@@ -22,6 +22,28 @@ export const getDocBlob = async (id) => {
 // Entfernt den Blob zu einer Dokument-id.
 export const deleteDocBlob = (id) => idb.delete(id);
 
+// Schreibwege der Dokument-Liste in main.jsx (Upload, Löschen, Ablaufdatum).
+// Echt: die Datei geht nach IndexedDB, in die Liste (→ Auto-Save nach or5_docs) nur
+// die Metadaten. Im Beispiel-Modus (K24) bleibt alles in der Beispiel-Liste im
+// Arbeitsspeicher: kein IndexedDB, die Datei bleibt inline (Herunterladen geht),
+// die echte Liste wird nicht angefasst. Belegt in src/__tests__/beispielDokumente.test.js.
+export const dokumentAktionen = ({ demoMode, setDocuments, setDemoDocs }) => {
+  const setDocs = demoMode ? setDemoDocs : setDocuments;
+  return {
+    hinzufuegen: async (doc) => {
+      if (demoMode) { setDocs((prev) => [...prev, doc]); return; }
+      if (doc.data != null) await saveDocBlob(doc.id, doc.data);
+      setDocs((prev) => [...prev, stripBlob(doc)]);
+    },
+    loeschen: (id) => {
+      setDocs((prev) => prev.filter((d) => d.id !== id));
+      return demoMode ? Promise.resolve(true) : deleteDocBlob(id);
+    },
+    ablaufAendern: (id, expiryDate) =>
+      setDocs((prev) => prev.map((d) => (d.id === id ? { ...d, expiryDate } : d))),
+  };
+};
+
 // Sammelt alle Blobs als { [id]: dataUrl } — für selbst-enthaltende Backups.
 export const getAllDocBlobs = async () => {
   const keys = await idb.getAllKeys();
