@@ -87,7 +87,14 @@ sind. Dieses Dokument ändert keinen Code.
 - **SZ:** Die 11 % Selbstbehalt stehen in den Merkblättern der Ausgleichskasse; der festlegende
   Kantonsratsbeschluss wurde nicht gefunden. Einkommensgrenzen sind nur für Mietzinsregion 3
   publiziert.
-- **GL / ZG / TG:** nur teilweise. GL: Richtprämien 2026 nur abgeleitet (85 % der
+- **BS:** Eine Zelle widerspricht sich (Gruppe 09, Erwachsene mit alternativem Modell): Verordnung
+  und Bericht 240, Beitragstabelle des Amts 230. Es gilt die Verordnung.
+- **SH:** Die SVA-Seite zeigt noch die Richtprämien 2025; die Werte 2026 stehen nur in der
+  Verordnung.
+- **AR:** Gesetzessammlung online nur «Stand 1. Januar 2017»; Zahlen 2026 aus dem Merkblatt der
+  Kasse. Gesetzesrevision hängig.
+- **SO / GL / ZG / TG:** nur teilweise. SO: Ankerpunkte der linearen Eigenanteil-Skala (10–16 %)
+  nicht publiziert, Richtprämien ohne Angabe Monat/Jahr. GL: Richtprämien 2026 nur abgeleitet (85 % der
   EDI-Durchschnittsprämie), gl.ch antwortet mit HTTP 403. ZG: Einzelpersonen-Grenze nicht
   beziffert, nur über den Online-Rechner ermittelbar (bewusst nicht abgeschickt). TG: rechnet mit
   dem Steuerbetrag (einfache Steuer), nicht mit dem Einkommen.
@@ -100,7 +107,7 @@ CHF/Jahr) unter dem amtlichen Betrag für eine erwachsene Einzelperson ohne Eink
 rund 2'650–7'330 CHF/Jahr, in den meisten Kantonen 4'400–6'100). Der lineare Abbau der App
 drückt den Betrag zusätzlich. Die **Einkommensgrenzen** weichen in beide Richtungen ab: in FR,
 BL, BS, BE, SZ, AR, VD und JU ist die App-Grenze für Einzelpersonen zu hoch (die App nennt Personen
-berechtigt, die es nicht sind), in NW, OW, ZH, GE und NE zu tief.
+berechtigt, die es nicht sind), in NW, OW, ZH, GE, NE und SO zu tief.
 
 Zusätzliche Modell-Lücken der App: Prämienregionen (u. a. ZH, BE, LU, FR, SG, GR, SH) fehlen;
 Vermögen zählt in mehreren Kantonen zum massgebenden Einkommen oder schliesst aus (TG: jedes
@@ -125,9 +132,10 @@ teuerste Region):
 | GL | 42'000 | 2'100 | ≈ 50'000 (abgel.) | 5'446.80 (abgel., Richtprämie nicht amtlich beziffert) |
 | ZG | 60'000 | 3'600 | ≈ 62'310 (abgel.); tiefere Einzelpersonen-Grenze nicht beziffert | 4'984.80 |
 | FR | 48'000 | 2'400 | 37'000 | 4'438.20 (R1) · 4'087.20 (R2) |
+| SO | 48'000 | 2'400 | 74'000 (inkl. 50 % des satzbestimmenden Vermögens) | nicht eindeutig: Richtprämie «422.-» ohne Angabe Monat/Jahr |
 | BS | 54'000 | 3'000 | 49'375 | 5'328 (444/Monat, tiefste Gruppe) |
 | BL | 51'000 | 2'700 | 31'000 | 4'596 |
-| SH | 45'000 | 2'250 | ≈ 39'647 (abgel., R1) | 3'865.55 (R1) |
+| SH | 45'000 | 2'250 | ≈ 39'647 (abgel., R1; die SVA nennt den Wert als Schwelle für den Formularversand) | 3'865.55 (R1) |
 | AR | 42'000 | 2'100 | 35'000 | 6'025.20 |
 | AI | 42'000 | 2'100 | ≈ 55'000–56'000 (abgel.) | 4'640 |
 | SG | 48'000 | 2'400 | ≈ 36'000–39'000 je Region (abgel.) | 5'681.40–6'285.60 je Region |
