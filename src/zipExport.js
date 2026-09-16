@@ -127,6 +127,25 @@ const createJSONBackup = (data, docs = []) => {
   return JSON.stringify(backup, null, 2);
 };
 
+// CSV-Formelschutz (Bau-Liste E14/O2, MP-089): Zellen, die mit `=` `+` `-` `@` Tab
+// oder Wagenrücklauf beginnen, öffnet manche Tabellenkalkulation als Formel — die
+// Zeile bekommt dann Zugriff auf Datei/Netz statt nur als Text zu erscheinen.
+// Vorgehen nach OWASP «CSV Injection»: https://owasp.org/www-community/attacks/CSV_Injection
+// (abgerufen 16.09.2026) — ein vorangestelltes `'` entschärft die Zelle, Tabellenprogramme
+// zeigen es nicht an, lesen die Zelle aber als Text.
+// Ausnahme: eine echte Zahl (auch negativ, z. B. "-120.50") bleibt unverändert — der Export
+// schreibt Zahlen immer als reines `String(zahl)` ohne Tausendertrennzeichen (kein `+`, kein
+// führendes `@`/Tab/CR), darum genügt eine einfache Ziffern-Regel, um sie von einer echten
+// Formel-Gefahr zu unterscheiden.
+const CSV_FORMULA_TRIGGER = /^[=+\-@\t\r]/;
+const CSV_PLAIN_NUMBER = /^[+-]?\d+(\.\d+)?$/;
+
+export const escapeCsvFormula = (value) => {
+  const str = String(value ?? '');
+  if (CSV_PLAIN_NUMBER.test(str)) return str;
+  return CSV_FORMULA_TRIGGER.test(str) ? `'${str}` : str;
+};
+
 const generateCSVBackup = (data, t) => {
   const m = (key) => t ? t('zipExport.manifest.' + key) : key;
   const rows = [
@@ -139,8 +158,8 @@ const generateCSVBackup = (data, t) => {
       ])
     )
   ];
-  
-  return rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+
+  return rows.map(row => row.map(cell => `"${escapeCsvFormula(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
 };
 
 export const prepareDownloadFiles = (data, docs = [], t) => {
