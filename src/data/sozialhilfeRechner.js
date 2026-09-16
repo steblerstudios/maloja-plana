@@ -1,9 +1,14 @@
-// Sozialhilfe-Rechner nach SKOS-Richtlinien (Stand 1.1.2025, für 2026 unverändert)
-// Quellen: SKOS-RL Kapitel C.3–C.6, Kanton Zürich Sozialhilfehandbuch
+// Sozialhilfe-Rechner nach SKOS-Richtlinien, Stand 1.1.2026
+// (2. Etappe der Richtlinienrevision, von der SODK am 15.5.2025 genehmigt, in Kraft 1.1.2026:
+// https://skos.ch/skos-richtlinien/laufende-richtlinienrevision, abgerufen 16.09.2026).
+// Quellen: SKOS-RL Kapitel C.3–C.6 und D.3.1, Kanton Zürich Sozialhilfehandbuch
 // GBL-Stand gegengeprüft 2026-07-19: SODK/SKOS empfahlen 1061 «spätestens ab 1.1.2026»,
-// nächste Anpassung erst 1.1.2027 (an EL-Teuerung gekoppelt) → Tabelle 2025 = 2026 unverändert.
+// nächste Anpassung erst 1.1.2027 (an EL-Teuerung gekoppelt) → Tabelle 2025 gilt 2026 unverändert.
+// Neu per 1.1.2026 ist der Vermögensfreibetrag (D.3.1, unten): 6000 statt 4000 Franken für
+// Einzelpersonen, 12 000 für Paare (skos.ch, Artikel «Vermögensfreibetrag auch im Kanton
+// Thurgau», 28.08.2025, abgerufen 16.09.2026). Datenstand deshalb 2026-01, nicht mehr 2025-01.
 
-export const SKOS_DATA_VERSION = '2025-01';
+export const SKOS_DATA_VERSION = '2026-01';
 
 // GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025, für 2026 unverändert)
 const GBL_TABELLE = [

@@ -186,7 +186,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                   React.createElement('div', { style: { color: palette.mid } }, t('kvg.nextRecommended', { date: nextStr })),
                   overdue && React.createElement('div', { style: { color: palette.mid, marginTop: '3px' } }, t('kvg.overdueHint')),
                   overdue && (reminderSaved
-                    ? React.createElement('div', { style: { color: palette.sage, marginTop: '4px' } }, '✓ ' + t('kvg.reminderSaved'))
+                    ? React.createElement('div', { style: { color: palette.sageDeep || '#4A6657', marginTop: '4px' } }, '✓ ' + t('kvg.reminderSaved'))
                     : React.createElement('button', {
                         type: 'button',
                         onClick: () => {
@@ -614,7 +614,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         style: {
           background: 'none', border: 'none', fontFamily: 'inherit', fontSize: text.sm,
           padding: '4px 0', marginBottom: '8px', cursor: 'pointer', display: 'block', textAlign: 'left',
-          color: newEingereicht ? (palette.sage || '#5a7a5a') : palette.mid,
+          color: newEingereicht ? (palette.sageDeep || '#4A6657') : palette.mid, // Text: sageDeep statt sage (AA)
           fontWeight: newEingereicht ? weight.medium : weight.normal,
         }
       }, (newEingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted')),
