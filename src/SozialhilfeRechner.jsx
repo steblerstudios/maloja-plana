@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
+import { vermoegensfreibetragUnbestaetigt } from './data/vermoegensfreibetragUnbestaetigt.js';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
@@ -9,6 +10,8 @@ import { renderSource } from './utils/renderSource.js';
 export const SozialhilfeRechner = ({ palette, t, data }) => {
   const isMobile = useIsMobile();
   const household = data?.basis?.household;
+  // Kanton aus dem Profil → kantonaler Vermögensfreibetrag (ohne Kanton: SKOS-Empfehlung).
+  const kanton = data?.basis?.canton || '';
   const initAdults = household?.adults || 1;
   const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
 
@@ -40,8 +43,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       vermoegen: Number(vermoegen) || 0,
       erwerbstaetig,
       integrationsMassnahme: integration,
+      kanton,
     });
-  }, [adults, kinderCount, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration]);
+  }, [adults, kinderCount, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration, kanton]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -205,7 +209,9 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       result.anrechenbaresVermoegen > 0 && React.createElement('div', {
         style: { ...s.section, marginTop: space.md + 'px', color: palette.warn || palette.mid, border: '1px solid ' + (palette.warn || palette.mid), background: (palette.warn || palette.mid) + '15' }
       },
-        t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ')'
+        t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ', '
+          + (kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton) }) : t('sozialhilfe.assetLimitBasisSkos')) + ')',
+        vermoegensfreibetragUnbestaetigt(kanton) && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))
       )
     ),
 

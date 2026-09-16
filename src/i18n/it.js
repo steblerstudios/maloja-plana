@@ -2252,7 +2252,10 @@ export default {
     childrenNote: 'Per i bambini possono essere richieste prestazioni aggiuntive (assistenza, materiale scolastico, abbigliamento). Informati presso il servizio sociale.',
     childrenEducationNote: 'I ragazzi dai 16 anni in formazione possono ricevere assegni di formazione.',
     assetLimitTitle: 'Patrimonio oltre la franchigia',
-    assetLimitNote: 'L’aiuto sociale presuppone che il patrimonio sia utilizzato fino a una franchigia (COSAS: {freibetrag} per questa economia domestica). Il patrimonio registrato la supera di circa {ueberschuss} — questa parte va di norma utilizzata prima. Orientamento, senza carattere vincolante.',
+    assetLimitNote: 'L’aiuto sociale presuppone che il patrimonio sia utilizzato fino a una franchigia ({basis}: {freibetrag} per questa economia domestica). Il patrimonio registrato la supera di circa {ueberschuss} — questa parte va di norma utilizzata prima. Orientamento, senza carattere vincolante.',
+    assetLimitBasisCanton: 'Cantone {name}',
+    assetLimitBasisSkos: 'raccomandazione COSAS',
+    assetLimitUnconfirmed: { sie: 'Non confermato dal Cantone — La preghiamo di verificare presso il servizio sociale del Suo comune.', du: 'Non confermato dal Cantone — verifica presso il servizio sociale del tuo comune.' },
     repaymentTitle: 'Rimborso dell\'aiuto sociale',
     repaymentText: { sie: 'L\'aiuto sociale percepito legittimamente può essere richiesto indietro in molti cantoni se accede a un patrimonio importante — soprattutto tramite un\'eredità o una vincita. Dal normale reddito da lavoro di solito non si richiede nulla (la COSAS lo sconsiglia).', du: 'L\'aiuto sociale percepito legittimamente può essere richiesto indietro in molti cantoni se accedi a un patrimonio importante — soprattutto tramite un\'eredità o una vincita. Dal normale reddito da lavoro di solito non si richiede nulla (la COSAS lo sconsiglia).' },
     repaymentInheritance: 'Conta solo l\'effettivo aumento del patrimonio — chi rinuncia a un\'eredità non deve rimborsare nulla.',
@@ -4150,7 +4153,7 @@ export default {
     vermoegenHinweis: 'Il patrimonio supera la franchigia — nessun diritto',
     freibetrag: 'Franchigia',
     eingeben: 'Inserisci affitto e premio LAMal per calcolare il diritto.',
-    source: 'Calcolo secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2025). Nessuna informazione giuridicamente vincolante.',
+    source: 'Calcolo secondo le [[direttive COSAS|skos.ch]] (stato 1.1.2026); franchigia sul patrimonio secondo il cantone. Nessuna informazione giuridicamente vincolante.',
   },
 
   dl: {

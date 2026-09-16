@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { SKOS_GRUNDBEDARF, getGrundbedarf, calculateSozialhilfe, calculateIPV, checkELEligibility, CANTONAL_IPV } from '../cantonalData.js';
-import { grundbedarfFuerHaushalt } from '../../data/sozialhilfeRechner.js';
+import { SKOS_GRUNDBEDARF, getGrundbedarf, calculateSozialhilfe, calculateIPV, checkELEligibility, CANTONAL_IPV, CANTON_CODES } from '../cantonalData.js';
+import { grundbedarfFuerHaushalt, berechneSozialhilfe } from '../../data/sozialhilfeRechner.js';
+import { vermoegensfreibetragUnbestaetigt } from '../../data/vermoegensfreibetragUnbestaetigt.js';
 import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
 
 describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
@@ -33,6 +34,43 @@ describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
     for (let n = 1; n <= 12; n++) {
       expect(getGrundbedarf(n)).toBe(grundbedarfFuerHaushalt(n));
     }
+  });
+});
+
+// Entscheid 16.09.2026: Vermögensfreibetrag je Kanton. Beide Rechenwege (Sozialhilfe-
+// Ansicht über cantonalData, Rechner über sozialhilfeRechner) müssen für jeden Kanton
+// und jede Haushaltsform denselben Betrag liefern.
+describe('calculateSozialhilfe — Vermögensfreibetrag je Kanton', () => {
+  const haushalte = [[1, 0], [2, 0], [1, 2], [2, 1], [2, 5]];
+  it('stimmt für alle 26 Kantone mit berechneSozialhilfe überein', () => {
+    expect(CANTON_CODES).toHaveLength(26);
+    for (const canton of CANTON_CODES) {
+      for (const [adults, kids] of haushalte) {
+        const a = calculateSozialhilfe({
+          basis: { canton, household: { adults, children: Array.from({ length: kids }, () => ({ age: 5 })) } },
+          finanzen: {}, wohnen: {}, versicherungen: {},
+        });
+        const b = berechneSozialhilfe({ adults, kinderImHaushalt: kids, kanton: canton });
+        expect(a.vermoegensfreibetrag, `${canton} ${adults}/${kids}`).toBe(b.vermoegensfreibetrag);
+      }
+    }
+  });
+
+  it('BS (Unterstützungsrichtlinien WSU Ziff. 14): Paar mit Kind 20000, nicht gekennzeichnet', () => {
+    const r = calculateSozialhilfe({
+      basis: { canton: 'BS', household: { adults: 2, children: [{ age: 3 }] } },
+      finanzen: { savingsAccount: 19000 }, wohnen: {}, versicherungen: {},
+    });
+    expect(r.vermoegensfreibetrag).toBe(20000);
+    expect(r.vermoegenUeberFreibetrag).toBe(0);
+    expect(vermoegensfreibetragUnbestaetigt(r.canton)).toBe(false);
+  });
+
+  it('BL (nur SKOS-Karte, 2200): gekennzeichnet', () => {
+    const r = calculateSozialhilfe({ basis: { canton: 'BL' }, finanzen: { savingsAccount: 3000 }, wohnen: {}, versicherungen: {} });
+    expect(r.vermoegensfreibetrag).toBe(2200);
+    expect(r.vermoegenUeberFreibetrag).toBe(800);
+    expect(vermoegensfreibetragUnbestaetigt(r.canton)).toBe(true);
   });
 });
 

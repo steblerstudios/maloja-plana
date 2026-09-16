@@ -6,12 +6,14 @@ import {
   vergleicheHaushaltGroessen,
   berechneExistenzminimum,
   vermoegensfreibetragSKOS,
+  vermoegensfreibetragKanton,
   rueckerstattungsFreibetrag,
   SKOS_PARAMS,
   SKOS_DATA_VERSION,
   berechneArmutsgrenze,
   ARMUTSGRENZE_PAUSCHALE_AB16,
 } from '../sozialhilfeRechner.js';
+import { vermoegensfreibetragUnbestaetigt, VFB_UNBESTAETIGT } from '../vermoegensfreibetragUnbestaetigt.js';
 
 describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne Deckel', () => {
   it('Einzelperson 30k, Paar 50k, + 15k pro minderjährigem Kind', () => {
@@ -27,6 +29,91 @@ describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne 
   });
   it('robust bei negativen Kinderzahlen', () => {
     expect(rueckerstattungsFreibetrag(1, -3)).toBe(30000);
+  });
+});
+
+// Vermögensfreibetrag je Kanton (Entscheid 16.09.2026). Sollwerte aus
+// docs/sources/skos-vermoegensfreibetrag-2026.md (PR #166), dort je Kanton mit Zitat.
+describe('vermoegensfreibetragKanton — je Kanton, gekennzeichnet', () => {
+  // [Einzel, Paar, Paar + 1 Kind, Paar mit vielen Kindern (= Höchstbetrag)]
+  const eigeneZahl = {
+    AG: [1500, 3000, 4500, 4500],     // «pro Person 1'500, max. 4'500 pro Unterstützungseinheit» (§ 11 Abs. 4 SPV)
+    SH: [2000, 4000, 4000, 4000],     // Einzel 2'000 / Paar 4'000; Kind + Max nicht geregelt (Ziff. D.6.1)
+    SO: [2000, 4000, 5000, 5000],     // 2'000/4'000/+1'000/max. 5'000 (§ 93 Abs. 1 Bst. j SV)
+    BE: [4000, 8000, 10000, 10000],   // 4'000/8'000/+2'000/max. 10'000 (Art. 8n SHV)
+    NE: [4000, 8000, 10000, 10000],   // Art. 18 ANCAM
+    GE: [4000, 8000, 10000, 10000],   // Art. 3 RASLP
+    BS: [8000, 16000, 20000, 20000],  // 8'000/16'000/+4'000/max. 20'000 (WSU-Richtlinien Ziff. 14)
+  };
+  for (const [kt, [einzel, paar, paarKind, max]] of Object.entries(eigeneZahl)) {
+    it(`${kt}: eigene kantonale Zahl, nicht gekennzeichnet`, () => {
+      expect(vermoegensfreibetragKanton(kt, 1, 0)).toBe(einzel);
+      expect(vermoegensfreibetragKanton(kt, 2, 0)).toBe(paar);
+      expect(vermoegensfreibetragKanton(kt, 2, 1)).toBe(paarKind);
+      expect(vermoegensfreibetragKanton(kt, 2, 6)).toBe(max);
+      expect(vermoegensfreibetragUnbestaetigt(kt)).toBe(false);
+    });
+  }
+
+  it('SO: Einzelperson mit Kindern staffelt bis zum Höchstbetrag', () => {
+    expect(vermoegensfreibetragKanton('SO', 1, 2)).toBe(4000);  // 2'000 + 2×1'000
+    expect(vermoegensfreibetragKanton('SO', 1, 4)).toBe(5000);  // gedeckelt
+  });
+
+  // ZH/GR/JU/VS: eigene Zahl = SKOS D.3.1; ZG/SZ/LU/NW/GL/TG/AR/UR: Verweis auf SKOS
+  const skosKantone = ['ZH', 'GR', 'JU', 'VS', 'ZG', 'SZ', 'LU', 'NW', 'GL', 'TG', 'AR', 'UR'];
+  it.each(skosKantone)('%s: SKOS-Standard 6000/12000/+3000/max. 15000, nicht gekennzeichnet', (kt) => {
+    expect(vermoegensfreibetragKanton(kt, 1, 0)).toBe(6000);
+    expect(vermoegensfreibetragKanton(kt, 2, 0)).toBe(12000);
+    expect(vermoegensfreibetragKanton(kt, 1, 1)).toBe(9000);
+    expect(vermoegensfreibetragKanton(kt, 2, 3)).toBe(15000);
+    expect(vermoegensfreibetragUnbestaetigt(kt)).toBe(false);
+  });
+
+  it('ohne oder mit unbekanntem Kanton: SKOS-Empfehlung, nicht gekennzeichnet', () => {
+    expect(vermoegensfreibetragKanton('', 2, 1)).toBe(15000);
+    expect(vermoegensfreibetragKanton(undefined, 1, 0)).toBe(6000);
+    expect(vermoegensfreibetragKanton('XX', 2, 0)).toBe(12000);
+    expect(vermoegensfreibetragSKOS(2, 0)).toBe(12000);
+    expect(vermoegensfreibetragUnbestaetigt('')).toBe(false);
+    expect(vermoegensfreibetragUnbestaetigt(undefined)).toBe(false);
+  });
+
+  it('unbestätigte Kantone tragen die Kennzeichnung; Einzelbetrag = SKOS-Karte (Stand 1.1.2026)', () => {
+    const karte = { BL: 2200, SG: 2500, FR: 4000, VD: 4000, AI: 6000, OW: 6000, TI: 10000 };
+    for (const [kt, einzel] of Object.entries(karte)) {
+      expect(vermoegensfreibetragUnbestaetigt(kt)).toBe(true);
+      expect(vermoegensfreibetragKanton(kt, 1, 0)).toBe(einzel);
+    }
+    expect([...VFB_UNBESTAETIGT].sort()).toEqual(Object.keys(karte).sort());
+  });
+
+  it('unbestätigte Kantone: Staffel nur, wo das Beleg-Dokument sie nennt', () => {
+    // SG: Beiblatt KOS-Handbuch (Stadt Wil) 2'500/5'000/+1'250/max. 6'250
+    expect(vermoegensfreibetragKanton('SG', 2, 1)).toBe(6250);
+    expect(vermoegensfreibetragKanton('SG', 1, 1)).toBe(3750);
+    // FR/VD: veraltete Quelle 4'000/8'000/+2'000/max. 10'000
+    expect(vermoegensfreibetragKanton('FR', 2, 3)).toBe(10000);
+    expect(vermoegensfreibetragKanton('VD', 1, 1)).toBe(6000);
+    // AI/OW: Kartenwert = SKOS-Einzelbetrag → SKOS-Staffel
+    expect(vermoegensfreibetragKanton('AI', 2, 1)).toBe(15000);
+    // BL/TI: keine Staffel belegt → nur der Einzelbetrag, für jede Haushaltsgrösse
+    expect(vermoegensfreibetragKanton('BL', 2, 2)).toBe(2200);
+    expect(vermoegensfreibetragKanton('TI', 2, 2)).toBe(10000);
+  });
+
+  it('berechneSozialhilfe rechnet mit dem Kantonswert', () => {
+    const basis = { adults: 2, kinderImHaushalt: 1, miete: 1200, krankenkassePraemie: 400, vermoegen: 9000 };
+    const be = berechneSozialhilfe({ ...basis, kanton: 'BE' });
+    expect(be.vermoegensfreibetrag).toBe(10000);
+    expect(be.anrechenbaresVermoegen).toBe(0);
+    const ag = berechneSozialhilfe({ ...basis, kanton: 'AG' });
+    expect(ag.vermoegensfreibetrag).toBe(4500);
+    expect(ag.anrechenbaresVermoegen).toBe(4500);
+    expect(ag.hatAnspruch).toBe(false);
+    const ti = berechneSozialhilfe({ ...basis, kanton: 'TI' });
+    expect(ti.vermoegensfreibetrag).toBe(10000);
+    expect(berechneSozialhilfe(basis).vermoegensfreibetrag).toBe(15000); // ohne Kanton: SKOS
   });
 });
 

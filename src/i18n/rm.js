@@ -2757,7 +2757,11 @@ export default {
     childrenNote: { sie: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariai quai cun il servetsch social.", du: "Per uffants pon vegnir dumondadas prestaziuns supplementaras (tgira, material da scola, vestgadira). Clariescha quai cun il servetsch social." },
     childrenEducationNote: "Uffants a partir da 16 en furmaziun pon retschaiver allocaziuns da furmaziun.",
     assetLimitTitle: 'Facultad sur la franchisa',
-    assetLimitNote: 'L’agid social premetta che la facultad vegnia duvrada fin ad ina franchisa (SKOS: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss} — questa part sto per regla vegnir duvrada l’emprim. Orientaziun, nagina infurmaziun obligatorica.',
+    assetLimitNote: 'L’agid social premetta che la facultad vegnia duvrada fin ad ina franchisa ({basis}: {freibetrag} per questa chasada). La facultad registrada surpassa quai per radund {ueberschuss} — questa part sto per regla vegnir duvrada l’emprim. Orientaziun, nagina infurmaziun obligatorica.',
+    // TODO(rm): assetLimitBasis*/assetLimitUnconfirmed durch Fachperson gegenlesen lassen
+    assetLimitBasisCanton: 'Chantun {name}',
+    assetLimitBasisSkos: 'recumandaziun SKOS',
+    assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
     repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
@@ -3164,7 +3168,7 @@ export default {
     vermoegenHinweis: 'La facultad surpassa la limita libra — nagin dretg',
     freibetrag: 'Import liber',
     eingeben: "Endatescha il tschains e la premia LAMal per calcular il dretg.",
-    source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2025). Nagina infurmaziun giuridicamain vinculanta.',
+    source: 'Calculaziun tenor [[directivas COSAS|skos.ch]] (stadi 1.1.2026); franchisa sin la facultad tenor chantun. Nagina infurmaziun giuridicamain vinculanta.',
   },
 
   kvg: {
