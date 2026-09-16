@@ -88,6 +88,42 @@ describe('restoreBackup — Validierung ist eine Barriere', () => {
   });
 });
 
+// R4 (Predeploy-Gate 16.09.): der Schnappschuss vor dem Wiederherstellen kann am
+// vollen Speicher scheitern (QuotaExceededError). Dann: sauber melden, nichts schreiben.
+describe('restoreBackup — Schnappschuss scheitert (Speicher voll)', () => {
+  let map;
+  beforeEach(() => {
+    map = installLocalStorageMock();
+    idbMap.clear();
+    seed();
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => {
+      if (k.endsWith('_prerestore')) { const e = new Error('Speicher voll'); e.name = 'QuotaExceededError'; throw e; }
+      echt(k, v);
+    };
+  });
+
+  it('wirft nicht, meldet den Fehler und überschreibt nichts', async () => {
+    const vorher = JSON.stringify([...map.entries()]);
+    const r = await restoreBackup(gut());
+    expect(r.success).toBe(false);
+    expect(r.blocked).toBe(false);
+    expect(r.error).toBe('Speicher voll');
+    expect(r.restored).toEqual([]);
+    expect(JSON.stringify([...map.entries()])).toBe(vorher);
+    expect(idbMap.size).toBe(0);
+  });
+
+  it('ZipExport wartet auf den Restore und zeigt backup.importFailed auch bei einem Wurf', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync(new URL('../../ZipExport.jsx', import.meta.url), 'utf8');
+    expect(src).not.toMatch(/^\s+confirmAndRestore\(backup\);/m);
+    expect((src.match(/await confirmAndRestore\(backup\);/g) || []).length).toBe(2);
+    const block = src.slice(src.indexOf('const confirmAndRestore'));
+    expect(block).toMatch(/try \{\s*result = await restoreBackup\(backup\);/);
+  });
+});
+
 describe('Grössenlimit vor dem Lesen', () => {
   it('Limit ist 50 MB', () => {
     expect(MAX_BACKUP_FILE_BYTES).toBe(50 * 1024 * 1024);

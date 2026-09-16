@@ -123,7 +123,8 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
         key: 'soz', view: 'sozialhilfe', label: t('nav.sozialhilfe'), color: palette.sage,
         monthly: sh.deficit,
-        detail: t('dashboard.anspruchMoeglich'),
+        // R4: Freibetrag kantonal nicht bestätigt → leise mitsagen.
+        detail: t('dashboard.anspruchMoeglich') + (sh.vfbUnbestaetigt ? ' · ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
       });
     }
   } catch { /* Orientierung, nie blockierend */ }

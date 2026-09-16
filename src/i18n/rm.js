@@ -1639,6 +1639,8 @@ export default {
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
       localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
+      // TODO(rm): communeHint durch Fachperson gegenlesen lassen
+      communeHint: 'La pagina d’internet da la vischnanca {city} n’è betg deponida qua — ella sa lascha chattar sur il portal chantunal u cun ina tschertga.',
       helpTitle: 'Posts da cussegliaziun',
       help1: { name: 'La Maun Dertgida · tel. 143', url: 'tel:143', desc: 'Permanent, gratuit, anonim.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · tel. 147', url: 'tel:147', desc: 'Cussegliaziun per uffants e giuvenils.', web: 'https://www.projuventute.ch' },
@@ -1780,6 +1782,8 @@ export default {
     abbrechen: 'Interrumper',
     weiter: 'Vinavant',
     endgueltig: "Quai na sa lascha betg revocar. Senza copia da segirezza n'èn las datas suenter betg pli qua. Maloja cumenza silsuenter da nov, sco l'emprima giada.",
+    // TODO(rm): andereFenster durch Fachperson gegenlesen lassen
+    andereFenster: { sie: 'Per plaschair serrar avant las autras fanestras e tabs da Maloja.', du: 'Serra avant las autras fanestras e tabs da Maloja.' },
     verstanden: "Jau hai chapì e vuless stizzar tut las datas sin quest apparat.",
     zurueck: 'Enavos',
     jetztLoeschen: 'Stizzar tut ussa',
@@ -2826,6 +2830,9 @@ export default {
     assetLimitBasisCanton: 'Chantun {name}',
     assetLimitBasisSkos: 'recumandaziun SKOS',
     assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
+    assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    assetLimitUnconfirmedShort: 'Franchisa da facultad betg confermada dal chantun.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
     repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
@@ -3462,8 +3469,10 @@ export default {
     berechneterBetrag: 'Import calculà',
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per AG, BL, SO, AI, GL, SH, JU, NE e VS n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
     tpwDataVersion: 'Stadi da la valur dal punct',
+    // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
+    tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

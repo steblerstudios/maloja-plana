@@ -8,6 +8,8 @@
 // Einzelpersonen, 12 000 für Paare (skos.ch, Artikel «Vermögensfreibetrag auch im Kanton
 // Thurgau», 28.08.2025, abgerufen 16.09.2026). Datenstand deshalb 2026-01, nicht mehr 2025-01.
 
+import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
+
 export const SKOS_DATA_VERSION = '2026-01';
 
 // GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025, für 2026 unverändert)
@@ -85,9 +87,10 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 //   Paar ist überall 2× Einzel, begrenzt durch Max (bei BL/TI: Max = Einzel → Paar = Einzel).
 // Kantonal NICHT bestätigte Kantone: zusätzlich in data/vermoegensfreibetragUnbestaetigt.js.
 const VFB_KANTON = {
-  // AG: § 11 Abs. 4 SPV (SAR 851.211) / Handbuch Soziales AG Ziff. 9.2, «Freibeträge pro
-  // Person 1'500, Maximalbetrag pro Unterstützungseinheit 4'500»
-  // https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen
+  // AG: § 11 Abs. 4 SPV (SAR 851.211) / Handbuch Soziales AG Ziff. 9.2, «Freibeträge (pro
+  // Person Fr. 1'500.—, maximal Fr. 4'500.— pro Unterstützungseinheit)» (Wortlaut am
+  // 16.09.2026 an der neuen Adresse nachgelesen; die alte /de/verwaltung/…-Adresse leitet per 301 hierher)
+  // https://www.ag.ch/de/themen/soziales-gesellschaft/soziale-sicherheit/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen
   // Gelesen als: jede Person der Einheit (auch Kinder) 1'500 → Paar 3'000, Kind +1'500, max. 4'500.
   AG: [15, 15, 45],
   // SH: Richtlinien Bemessung der Sozialhilfe, Ziff. D.6.1, gültig ab 1.1.2022
@@ -141,7 +144,9 @@ export function vermoegensfreibetragKanton(kanton, adults = 1, minorChildren = 0
 }
 
 // Die Kennzeichnung «kantonal nicht bestätigt» (SG · FR · VD · AI · OW · BL · TI) steht in
-// data/vermoegensfreibetragUnbestaetigt.js — nur die Anzeige braucht sie (Lazy-Chunk).
+// data/vermoegensfreibetragUnbestaetigt.js. Seit R4 (16.09.2026) liefern berechneSozialhilfe
+// und calculateSozialhilfe sie als Flag `vfbUnbestaetigt` mit — auch UNTER dem Freibetrag,
+// weil der unbestätigte Betrag dort direkt in die Aussage «Anspruch» einfliesst.
 
 // SKOS-Empfehlung D.3.1 ohne Kanton (Standard-Staffel).
 export const vermoegensfreibetragSKOS = (adults, minorChildren) => vermoegensfreibetragKanton('', adults, minorChildren);
@@ -200,6 +205,8 @@ export function berechneSozialhilfe({
   const vermoegensfreibetrag = vermoegensfreibetragKanton(kanton, adults, minderjaehrigeKinder);
   const anrechenbaresVermoegen = Math.max(0, vermoegen - vermoegensfreibetrag);
   const hatAnspruch = anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch > 0;
+  // Vermögen erfasst UND der Freibetrag dieses Kantons ist kantonal nicht bestätigt.
+  const vfbUnbestaetigt = vermoegen > 0 && vermoegensfreibetragUnbestaetigt(kanton, minderjaehrigeKinder);
 
   return {
     gbl,
@@ -216,6 +223,7 @@ export function berechneSozialhilfe({
     vermoegensfreibetrag,
     anrechenbaresVermoegen,
     hatAnspruch,
+    vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,
   };

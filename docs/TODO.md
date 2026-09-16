@@ -88,7 +88,7 @@ nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Ex
   URL in allen 5 Sprachen (Link-Checker-Fund, eigener kleiner Faden).
 - ✅ `estimateTaxSavings` + irreführende Kachel entfernt (IPV ist steuerfrei).
 - ✅ AHV Vorbezug-Kürzung war bereits 6.8 %/Jahr (korrekt).
-- ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt.
+- ✅ Mindestlohn TI/NE 2025 aktualisiert · `CANTONAL_DATA_VERSION` ergänzt (am 16.09.2026 wieder entfernt: nirgends angezeigt, verwaist).
 - ✅ AHV-Rente als Schätzung labeln — bereits erledigt: Label „Geschätzte AHV-Altersrente"/
   „Geschätzte BVG-Rente" + gerenderte Source-Zeile „Schätzung nach AHVG/BVG … Keine
   rechtsverbindliche Auskunft." (`VorsorgeRechner.jsx:309`).

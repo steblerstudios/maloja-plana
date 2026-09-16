@@ -153,8 +153,14 @@ Kartenwert steht im Raum).
 Quelle: Handbuch Soziales des Kantons Aargau, Kapitel 9.2 «Vermögen», mit
 Verweis auf § 11 Abs. 4 SPV (Sozialhilfe- und Präventionsverordnung, SAR
 851.211).
-<https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen>
-— abgerufen 16.09.2026, in dieser Sitzung direkt gegengeprüft.
+<https://www.ag.ch/de/themen/soziales-gesellschaft/soziale-sicherheit/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen>
+— abgerufen 16.09.2026, in dieser Sitzung direkt gegengeprüft. (Die früher hier
+genannte Adresse unter `/de/verwaltung/dgs/gesellschaft/soziales/…` leitet per 301
+über eine Zwischenstufe auf diese Adresse um; Stand 16.09.2026, `curl -sIL`.)
+Nachtrag R4 (16.09.2026): Im Seitentext an der neuen Adresse steht der Satz als
+«… Freibeträge (pro Person Fr. 1'500.—, maximal Fr. 4'500.— pro
+Unterstützungseinheit)»; das Wort «Maximalbetrag» aus dem Zitat oben kam im
+abgerufenen HTML nicht vor. Beträge und Struktur stimmen überein.
 
 Struktur weicht von Einzel/Paar/Kind ab: AG rechnet **pro Person** (nicht nach
 Einzelperson/Paar gestaffelt) mit einem Haushalts-Deckel.

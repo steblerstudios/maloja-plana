@@ -63,7 +63,9 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
       const sh = calculateSozialhilfe(probe);
       if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefits.push({
         key: 'soz', view: 'sozialhilfe', color: palette.sage, textColor: palette.sageDeep,
-        label: t('nav.sozialhilfe'), monthly: sh.deficit, note: t('schnellcheck.sozNote'),
+        label: t('nav.sozialhilfe'), monthly: sh.deficit,
+        // R4: Betrag hängt am Freibetrag — ist er kantonal nicht bestätigt, leise dazusagen.
+        note: t('schnellcheck.sozNote') + (sh.vfbUnbestaetigt ? ' ' + t('sozialhilfe.assetLimitUnconfirmedShort') : ''),
       });
     }
     // EL: nur bei AHV-/IV-Kontext (Renten hinterlegt). Qualitativ, kein Betrag.
