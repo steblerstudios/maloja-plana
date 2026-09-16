@@ -19,14 +19,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
-      # npm ci bindet den Lauf an das Lockfile (Bau-Liste K15). Der erste Versuch (#134)
-      # scheiterte, weil npm 10 (hier: Node 22) für den optionalen Peer esbuild@^0.28 von
-      # vite 8 (unter vitest) einen Eintrag im Lockfile erwartet, den npm 11 nicht schreibt.
-      # Das Lockfile ist darum mit npm 10 erneuert; npm 10 und 11 installieren es beide.
-      # Nach Paket-Änderungen: `npx npm@10 install --package-lock-only`, sonst bricht CI hier.
+      # npm ci bindet den Lauf an das Lockfile (Bau-Liste K15/E27). CI läuft seit E27 auf
+      # Node 24 (npm 11) — das Lockfile wird damit erzeugt und erneuert, kein npm-10-Umweg
+      # mehr nötig. Nach Paket-Änderungen genügt das lokale `npm install`.
       - run: npm ci
 
       - run: npm test -- --run

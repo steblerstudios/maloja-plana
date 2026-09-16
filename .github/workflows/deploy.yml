@@ -43,10 +43,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
-      - run: npm ci  # an das Lockfile gebunden (Bau-Liste K15, Begründung in ci.yml)
+      - run: npm ci  # an das Lockfile gebunden (Bau-Liste K15/E27, Begründung in ci.yml)
       - run: npm run build
 
       # Infomaniak liefert 503, wenn ein .htaccess vorhanden ist → vor dem Upload entfernen.
