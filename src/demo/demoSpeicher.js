@@ -25,6 +25,14 @@ export { DEMO_DATA } from '../config/demoData.js';
 
 const DEMO_FEHLER = 'Demo: es wird nichts gespeichert';
 
+// K25 · Verlassen: die Adresse zuerst auf den Einstieg zurücksetzen (ohne die zuletzt
+// gesehene Ansicht, z. B. #/export; die Sprache in ?lang= bleibt), dann neu laden.
+// Sonst landet, wer danach den Code eingibt, in der letzten Demo-Ansicht.
+export function demoVerlassen(loc = location, hist = history) {
+  hist.replaceState(null, '', loc.pathname + loc.search);
+  loc.reload();
+}
+
 export function speicherAbschirmen(
   storageProto = typeof Storage !== 'undefined' ? Storage.prototype : null,
   idbProto = typeof IDBFactory !== 'undefined' ? IDBFactory.prototype : null,

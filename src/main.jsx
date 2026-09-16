@@ -14,7 +14,7 @@ import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
-import { saveDocBlob, getDocBlob, deleteDocBlob, stripBlob, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
+import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
 // Paint nötig) — hält autoBackup.js aus dem eager index-Chunk (Byte-Budget).
 import { parseHash, setHash, replaceHash, onHashChange } from './utils/hashRouter.js';
@@ -501,8 +501,11 @@ const AppInner = ({ demo }) => {
   }, [onboardingDone]);
   const [demoModeOn, setDemoMode] = useState(false);
   const [demoData, setDemoData] = useState(demo && demo.data);
+  // K24: Dokumente im Beispiel — eigene Liste nur im Arbeitsspeicher.
+  const [demoDocs, setDemoDocs] = useState([]);
   // Demo von der Code-Wand bleibt Demo, bis onLeave zur Code-Wand zurückführt.
   const demoMode = !!demo || demoModeOn;
+  const docs = demoMode ? demoDocs : documents;
   const [sandboxMode, setSandboxMode] = useState(false);
   const [sandboxData, setSandboxData] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
@@ -514,14 +517,17 @@ const AppInner = ({ demo }) => {
   // Im Beispiel landen Speichern-Knöpfe der Rechner in der Beispiel-Kopie (nur im
   // Arbeitsspeicher) — vorher mischten sie Beispielwerte in den echten Stand.
   const writeData = demoMode ? setDemoData : sandboxActive ? setSandboxData : setData;
-  const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); setDemoMode(false); };
+  // K24: Beim Verlassen des Beispiels fällt die Beispiel-Dokumentliste mit weg — sie lag
+  // nur im Arbeitsspeicher, und ein nächstes Beispiel beginnt wieder leer.
+  const beispielVerlassen = () => { setDemoMode(false); setDemoData(null); setDemoDocs([]); };
+  const enterSandbox = () => { setSandboxData(JSON.parse(JSON.stringify(data))); setSandboxMode(true); beispielVerlassen(); };
   const discardSandbox = () => { setSandboxMode(false); setSandboxData(null); };
   // Guard auf nicht-leeren Stand: ein leeres Sandbox-Objekt ({}) ist truthy, würde
   // aber via setData({}) alle Kapitel löschen (siehe blankSandbox).
   const applySandbox = () => { if (sandboxData && Object.keys(sandboxData).length > 0) setData(sandboxData); setSandboxMode(false); setSandboxData(null); };
   // Leere Tafel im Probier-Modus: für ein frisches Beispiel (z.B. jemandem zeigen),
   // ohne die eigenen Zahlen — nichts wird persistiert.
-  const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); setDemoMode(false); };
+  const blankSandbox = () => { setSandboxData({}); setSandboxMode(true); beispielVerlassen(); };
   // Views where "neben dem eigenen Stand rechnen" is meaningful → prominent entry chip
   const SANDBOX_VIEWS = ['tax', 'budget', 'vorsorge', 'alv', 'eo', 'schulden', 'premium', 'sozialhilfe', 'finanzuebersicht', 'schnellcheck', 'anspruchcheck'];
 
@@ -568,15 +574,18 @@ const AppInner = ({ demo }) => {
   }, []);
 
   // ─── Automatic backup on mount (once per 12h) ─────────────
-  // In der Demo (K7) läuft das ins Leere: der Speicher-Schirm sperrt IndexedDB,
-  // createBackup scheitert still im .catch unten.
+  // K25: In der Demo von der Code-Wand (K7) sperrt der Speicher-Schirm IndexedDB.
+  // Der Backup-Lauf scheiterte dort zwar folgenlos, schrieb aber zwei rote Zeilen in
+  // die Konsole («IDB getAllKeys error», «[backup] Failed»). Im Demo-Zustand wird der
+  // Weg deshalb gar nicht erst betreten — der Schirm bleibt unangetastet.
   useEffect(() => {
+    if (demo) return;
     import('./utils/autoBackup.js').then(({ createBackup }) => createBackup()).then(result => {
       if (result && result.success) {
         console.info('[app] Auto-backup created:', result.id);
       }
     }).catch(() => { /* backup is best-effort */ });
-  }, []);
+  }, [demo]);
 
   // Sync document expiry dates → calendar reminders
   useEffect(() => {
@@ -728,22 +737,18 @@ const AppInner = ({ demo }) => {
     return total > 0 ? Math.round((filled / total) * 100) : 0;
   };
 
-  const handleAddDocument = async (doc) => {
-    const id = Date.now().toString();
-    const newDoc = { ...doc, id, chapter: chapters[activeChapter]?.key || 'basis' };
-    // Blob (dataURL) wandert nach IndexedDB; im State/localStorage bleiben nur
-    // Metadaten → kein localStorage-Quota-Risiko mehr. Bei idb-Fehler wird der
-    // Fehler geworfen, damit die Upload-UI ihn ruhig anzeigen kann.
-    if (newDoc.data != null) {
-      await saveDocBlob(id, newDoc.data);
-    }
-    setDocuments(prev => [...prev, stripBlob(newDoc)]);
-  };
+  // Blob (dataURL) wandert nach IndexedDB; im State/localStorage bleiben nur Metadaten
+  // → kein localStorage-Quota-Risiko. K24: im Beispiel landen Upload, Löschen und
+  // Ablaufdatum nur in demoDocs (Arbeitsspeicher), nie in IndexedDB oder or5_docs.
+  const docAktionen = dokumentAktionen({ demoMode, setDocs: demoMode ? setDemoDocs : setDocuments });
+
+  // Bei idb-Fehler wird geworfen, damit die Upload-UI ihn ruhig anzeigen kann.
+  const handleAddDocument = (doc) =>
+    docAktionen.hinzufuegen({ ...doc, id: Date.now().toString(), chapter: chapters[activeChapter]?.key || 'basis' });
 
   const handleDeleteDocument = (docId) => {
-    setDocuments(prev => prev.filter(d => d.id !== docId));
     // Verwaisten Blob aus IndexedDB entfernen (fire-and-forget).
-    deleteDocBlob(docId).catch((e) => console.warn('[app] Blob-Löschen fehlgeschlagen:', e.message));
+    docAktionen.loeschen(docId).catch((e) => console.warn('[app] Blob-Löschen fehlgeschlagen:', e.message));
     runtimeEventBus.publish({
       id: crypto.randomUUID(),
       eventType: 'DOCUMENT_DELETED',
@@ -767,9 +772,6 @@ const AppInner = ({ demo }) => {
     }
   };
 
-  const handleUpdateDocExpiry = (docId, newDate) => {
-    setDocuments(prev => prev.map(d => d.id === docId ? { ...d, expiryDate: newDate } : d));
-  };
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
     if (viewName === 'chapter' && chapterIdx !== undefined) {
@@ -954,10 +956,11 @@ const AppInner = ({ demo }) => {
     React.createElement('button', {
       onClick: () => {
         if (demo) demo.onLeave();
-        else if (demoMode) { setDemoMode(false); setDemoData(null); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
+        else if (demoMode) { beispielVerlassen(); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }
         // Demo-Datensatz erst beim Betreten laden; demoMode wird erst gesetzt, wenn er da
         // ist (kein Render-Fenster, in dem demoMode aktiv aber demoData noch null wäre).
-        else { import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }); }
+        // Das Beispiel beginnt ohne Dokumente — die eigenen bleiben aussen vor (K24).
+        else { import('./config/demoData.js').then((m) => { setDemoData(m.DEMO_DATA); setDemoDocs([]); setDemoMode(true); setSandboxMode(false); setSandboxData(null); setView('dashboard'); }); }
       },
       style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.xs, padding: 0, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'underline', textUnderlineOffset: '2px' }
     }, demoMode ? t('demo.leave') : t('demo.footerLink')),
@@ -1141,7 +1144,7 @@ const AppInner = ({ demo }) => {
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t(demo ? 'beta.demoHint' : 'demo.bannerText'))
       ),
       React.createElement('button', {
-        onClick: demo ? demo.onLeave : () => setDemoMode(false),
+        onClick: demo ? demo.onLeave : beispielVerlassen,
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
@@ -1243,8 +1246,8 @@ const AppInner = ({ demo }) => {
           onNavigate: handleNavigate,
           simpleView,
           demoMode,
-          onEnterDemo: () => { setDemoMode(true); setView('dashboard'); },
-          onLeaveDemo: () => setDemoMode(false),
+          onEnterDemo: () => { setDemoDocs([]); setDemoMode(true); setView('dashboard'); },
+          onLeaveDemo: beispielVerlassen,
           isTablet,
           isMobile,
           isDarkMode,
@@ -1270,11 +1273,11 @@ const AppInner = ({ demo }) => {
       React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
         view === 'tresor' && React.createElement(DocumentTresor, {
           palette, t,
-          documents: documents,
+          documents: docs,
           chapters: chapters,
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
-          onUpdateExpiry: handleUpdateDocExpiry,
+          onUpdateExpiry: docAktionen.ablaufAendern,
           initialTab: tresorInitialTab,
           isDarkMode
         }),
@@ -1377,14 +1380,14 @@ const AppInner = ({ demo }) => {
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate }),
         view === 'unterlagen' && React.createElement(MeineUnterlagen, { palette, t, onNavigate: handleNavigate }),
-        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents, onNavigate: handleNavigate }),
+        view === 'lebensmappe' && React.createElement(Lebensmappe, { palette, t, data: activeData, chapters, documents: docs, onNavigate: handleNavigate }),
         view === 'notfalldossier' && React.createElement(NotfallDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'behoerdendossier' && React.createElement(BehoerdenDossier, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'briefe' && React.createElement(BriefGenerator, { palette, t, data: activeData, onNavigate: handleNavigate, initialTemplate: briefInitialTemplate }),
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents, demoMode }),
+        view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
         view === 'settings' && React.createElement(SettingsView, {

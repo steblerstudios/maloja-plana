@@ -58,7 +58,7 @@ export const BetaGate = ({ children }) => {
   const startDemo = () => {
     setDemo('laedt');
     import('./demo/demoSpeicher.js')
-      .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, onLeave: () => location.reload() }); })
+      .then((s) => { s.speicherAbschirmen(); setDemo({ data: s.DEMO_DATA, onLeave: s.demoVerlassen }); })
       .catch(() => setDemo(null)); // Ladefehler (z. B. offline): Knopf wieder frei
   };
 
