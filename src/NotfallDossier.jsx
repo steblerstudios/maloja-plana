@@ -131,7 +131,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     hasSections && vorschau && React.createElement('div', { style: { marginBottom: '20px' } },
       React.createElement(ExportVorschau, {
         palette, t, art: 'dossier',
-        quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })) },
+        quelle: { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.filter(r => !r.platzhalter).map(r => r.label) })) },
         onWeiter: () => { setVorschau(false); handlePrint(); },
         onZurueck: () => setVorschau(false),
       })

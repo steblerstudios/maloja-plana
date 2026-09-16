@@ -1263,6 +1263,7 @@ const AppInner = ({ demo }) => {
           data: activeData[chapters[activeChapter].key] || {},
           allData: activeData,
           onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
+          onUpdateIn: updateData,
           onAddDocument: handleAddDocument,
           onNavigate: handleNavigate,
           demoMode,

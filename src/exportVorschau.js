@@ -43,10 +43,16 @@ const anzahl = (liste) => (Array.isArray(liste) ? liste.length : 0);
 // Kapitel mit mindestens einem erfassten Wert, in fester Reihenfolge; weitere Bereiche
 // (Rechner, Abläufe: z. B. `vorsorge`, `anspruch`) werden gezählt, nicht einzeln benannt.
 // Schlüssel mit `_` sind interne Verwaltungsfelder (`_version`, `_migratedAt`).
+// K38: auch innerhalb eines Bereichs zählen `_`-Felder (z. B. `_na`, «trifft nicht zu») nicht
+// als Angabe — ein Kapitel, das nur Markierungen trägt, «hat» keine Angaben.
+const ohneIntern = (v) => (v && typeof v === 'object' && !Array.isArray(v)
+  ? Object.fromEntries(Object.entries(v).filter(([k]) => !k.startsWith('_')))
+  : v);
+
 function kapitelAus(data) {
   const d = data && typeof data === 'object' ? data : {};
-  const out = KAPITEL.filter(k => hatWert(d[k])).map(k => ({ id: 'kapitel', chapter: k }));
-  const weitere = Object.keys(d).filter(k => !k.startsWith('_') && !KAPITEL.includes(k) && hatWert(d[k]));
+  const out = KAPITEL.filter(k => hatWert(ohneIntern(d[k]))).map(k => ({ id: 'kapitel', chapter: k }));
+  const weitere = Object.keys(d).filter(k => !k.startsWith('_') && !KAPITEL.includes(k) && hatWert(ohneIntern(d[k])));
   if (weitere.length) out.push({ id: 'weitere', count: weitere.length });
   return out;
 }
