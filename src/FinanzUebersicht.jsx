@@ -19,6 +19,7 @@ import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
 import { renderSource } from './utils/renderSource.js';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -139,6 +140,12 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
   const canton = data.basis?.canton || '';
+  // K33/E23: Für die Steuerschätzung zählt der Steuerkanton — kann vom Wohnkanton
+  // abweichen (z. B. Wochenaufenthalt). Dasselbe Vorbelegungsmuster wie im
+  // Steuerrechner (TaxCalculator.jsx, PR #165: behoerden.cantoneOfTaxation → alter
+  // Schlüssel canton → basis.canton). Überall sonst in dieser Übersicht bleibt
+  // `canton` der Wohnkanton (Lohn-Barometer, Miete, IPV, gedruckte „Kanton"-Zeile).
+  const steuerkanton = steuerkantonVorbelegung(data);
   const verheiratet = data.basis?.maritalStatus === 'married';
   const hh = getHouseholdInfo(data);
 
@@ -149,7 +156,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete nur mit der Bestätigung aus dem Steuerrechner.
     ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount, elterntarif: data.taxData?.elterntarif === true })
     : null;
-  const kantonal = taxResult && canton ? schaetzeKantonaleSteuer(taxResult.steuer, canton) : null;
+  const kantonal = taxResult && steuerkanton ? schaetzeKantonaleSteuer(taxResult.steuer, steuerkanton) : null;
 
   const hasData = income > 0;
 
@@ -366,7 +373,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       statusColor: palette.text,
       detail: kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ': ' + formatCHF(kantonal.kantonalUndGemeinde)
-        : !canton ? t('finanzUebersicht.selectCanton') : null,
+        : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
       onClick: () => onNavigate('tax'),
     }),
 

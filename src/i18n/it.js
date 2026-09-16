@@ -2747,7 +2747,7 @@ export default {
     documentMetadata: 'Metadati dei documenti',
     settingsAndPreferences: 'Impostazioni e preferenze',
     security: 'Sicurezza',
-    securityNote: 'Il file esportato contiene dati personali. Conservalo in modo sicuro.',
+    securityNote: { sie: 'Il file esportato contiene dati personali. Lo conservi in modo sicuro.', du: 'Il file esportato contiene dati personali. Conservalo in modo sicuro.' },
     // Anteprima prima di esportazione, dossier e lettera (Bau-Liste K3).
     vorschau: {
       titelDatei: 'Ecco cosa contiene il file',
