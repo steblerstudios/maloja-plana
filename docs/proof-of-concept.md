@@ -19,7 +19,7 @@ Maloja Plana strukturiert das Leben in ruhige Kapitel und hilft Schritt für Sch
 ohne Wertung, ohne Druck:
 
 - **Orientierungs-Rechner**: Steuern, Prämienverbilligung (IPV), Sozialhilfe, AHV/BVG, ALV, EO
-- **Dokumenten-Tresor** & **Behörden-Dossier** (lokal, exportierbar als verschlüsseltes ZIP)
+- **Dokumenten-Tresor** & **Behörden-Dossier** (lokal, als Datei exportierbar, auf Wunsch verschlüsselt)
 - **Brief-Generator** (Mietkündigung, KK-Wechsel, Steuerfrist) & **Lebenslauf** (auch maschinenlesbar/ATS)
 - **Schulden-Orientierung** nach Schweizer Beratungs-Praxis (mit Verweis auf Fachstellen)
 - **Notfallkarte**, **Merkliste**, **Suche**, **Einfache Ansicht** mit Vorlesen

@@ -173,6 +173,87 @@ describe('steuerRechner', () => {
     });
   });
 
+  // Rundung und Erhebungsgrenze (K23), abgerufen 15.09.2026. Sollwerte aus der amtlichen Tabelle
+  // ESTV Form. 58c-2026 (ESTV / DVS 01.2026),
+  // https://www.estv.admin.ch/dam/de/sd-web/gnde9CmEsalK/dbst-tairfe-58c-2026-dfi.pdf
+  //   Fussnote 1: «Restbeträge von weniger als CHF 100 fallen ausser Betracht.»
+  //   Fussnote 2: «Die Jahressteuer wird gegebenenfalls auf die nächsten 5 Rp. abgerundet.»
+  //   Fussnote 3: 263 Franken je Kind (Spalte «Verheiratete und Einelternfamilien»)
+  // DBG Art. 36 Abs. 3 (Fedlex, Stand 1.1.2026): «Steuerbeträge unter 25 Franken werden nicht erhoben.»
+  // Die Tabelle weist die Jahressteuer ungerundet aus (z. B. 36.96); Fussnote 2 rundet sie.
+  describe('Rundung und Erhebungsgrenze (DBG Art. 36 Abs. 3, Form. 58c-2026)', () => {
+    const grund = (e) => berechneBundessteuer({ bruttoEinkommen: e });
+    const verh = (e) => berechneBundessteuer({ bruttoEinkommen: e, verheiratet: true });
+    const eltern = (e, k) => berechneBundessteuer({ bruttoEinkommen: e, kinder: k, elterntarif: true });
+
+    it('Grundtarif: Tabellenwerte, die schon auf 5 Rp. stehen, bleiben (60 000 → 671.40, 100 000 → 2 684.35)', () => {
+      expect(grund(60000).steuer).toBe(671.40);
+      expect(grund(100000).steuer).toBe(2684.35);
+    });
+
+    it('Grundtarif: Fussnote 2, Tabelle 20 000 → 36.96, Jahressteuer 36.95; 76 100 → 1 149.57 → 1 149.55', () => {
+      expect(grund(20000).steuerVorAbzug).toBe(36.96);
+      expect(grund(20000).steuer).toBe(36.95);
+      expect(grund(76100).steuer).toBe(1149.55);
+    });
+
+    it('Fussnote 1: Restbetrag unter 100 fällt weg (knapp über / unter einem Hunderter)', () => {
+      // 60 050 und 60 099 → 60 000 → 671.40 (Tabelle)
+      expect(grund(60050).massgebendesEinkommen).toBe(60000);
+      expect(grund(60050).steuer).toBe(671.40);
+      expect(grund(60099).steuer).toBe(671.40);
+      // 60 100: Tabelle 60 000 (671.40) + 2.97 je 100 = 674.37 → 674.35
+      expect(grund(60100).steuer).toBe(674.35);
+      // 59 999 → 59 900: 671.40 − 2.97 = 668.43 → 668.40
+      expect(grund(59999).steuer).toBe(668.40);
+    });
+
+    it('Widerspruch 76 200: Gesetz 1 152.55, Tabelle 1 152.50 — die App folgt der Tabelle', () => {
+      // Art. 36 Abs. 1 DBG (Fedlex, FR/IT, AS 2025 579): 1 152.55. Form. 58c-2026: 1 152.50.
+      // Beides ist 612.00 + 182 × 2.97 = 1 152.54, auf 5 Rp. gerundet: Gesetz zum nächsten
+      // Wert, Tabelle nach unten (Fussnote 2). Nur die Tabellenkette trifft die nächste
+      // Gesetzesstufe: 1 152.50 + 59 × 5.94 = 1 502.96 → 1 502.95 (82 100, Gesetz und Tabelle).
+      expect(Math.round((612.00 + 182 * 2.97) * 100) / 100).toBe(1152.54);
+      expect(grund(76200).steuer).toBe(1152.50);
+      expect(grund(82000).steuerVorAbzug).toBe(1497.02); // Tabelle 82 000
+      expect(grund(82000).steuer).toBe(1497.00);
+      expect(grund(82100).steuer).toBe(1502.95);          // Gesetz und Tabelle
+    });
+
+    it('Grundtarif: unter 25 Franken wird nicht erhoben (Art. 36 Abs. 3)', () => {
+      // Tabelle 18 500 → 25.41 → 25.40: erhoben. 18 400: 25.41 − 0.77 = 24.64 → 24.60: nicht erhoben.
+      expect(grund(18500).steuer).toBe(25.40);
+      expect(grund(18400).steuer).toBe(0);
+    });
+
+    it('Verheiratete: Tabellenwerte (60 000 → 369.00, 100 000 → 1 816.00, 33 000 → 33.00)', () => {
+      expect(verh(60000).steuer).toBe(369.00);
+      expect(verh(100000).steuer).toBe(1816.00);
+      expect(verh(33000).steuer).toBe(33.00);
+    });
+
+    it('Verheiratete: Erhebungsgrenze ist kein Freibetrag (25.00 wird erhoben, 24.00 nicht)', () => {
+      // Tabelle 33 000 → 33.00, je 100 Franken 1.00: 32 200 → 25.00, 32 100 → 24.00
+      expect(verh(32200).steuer).toBe(25.00);
+      expect(verh(32100).steuer).toBe(0);
+    });
+
+    it('Elterntarif: Rundung und Grenze nach der Ermässigung von 263 Franken', () => {
+      // Tabelle Verheiratete/Einelternfamilien: 60 000 → 369.00, 55 000 → 269.00, 56 000 → 289.00
+      expect(eltern(60050, 1).steuer).toBe(106.00);  // 60 000: 369.00 − 263
+      expect(eltern(56000, 1).steuer).toBe(26.00);   // 289.00 − 263 = 26.00: erhoben
+      expect(eltern(55000, 1).steuer).toBe(0);       // 269.00 − 263 = 6.00: unter 25, nicht erhoben
+      expect(eltern(100000, 2).steuer).toBe(1290.00);
+    });
+
+    it('vergleicheTarife rechnet mit denselben Regeln', () => {
+      const r = vergleicheTarife(55000, 1, true);
+      expect(r.alleinstehend).toBe(0);
+      expect(r.verheiratet).toBe(0);
+      expect(vergleicheTarife(20000).alleinstehend).toBe(36.95);
+    });
+  });
+
   describe('grenzsteuersatz', () => {
     it('returns 0 for zero income', () => {
       expect(grenzsteuersatz(0)).toBe(0);
