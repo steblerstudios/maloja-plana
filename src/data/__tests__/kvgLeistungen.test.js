@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { TAXPUNKTWERT, berechneArztrechnung, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, KVG_DATA_VERSION } from '../kvgLeistungen.js';
 import de from '../../i18n/de.js';
 import en from '../../i18n/en.js';
@@ -124,14 +125,19 @@ describe('TAXPUNKTWERT_DATA_VERSION — eigener Datenstand (K27)', () => {
 
 // K26 (Bauliste §10, E28): die Fussnote nennt den provisorischen Charakter (KVG Art. 46
 // Abs. 4) und die neun Kantone ohne Beleg 2026, in allen 5 Sprachen.
+// R4 (16.09.): die Kantonsliste kommt als Platzhalter {kantone} aus
+// TAXPUNKTWERT_UNBELEGT_2026 — nicht mehr von Hand in fünf Sprachen.
 describe('kvg.tpwNote — provisorisch + neun unbelegte Kantone (K26)', () => {
   const sprachen = { de, en, fr, it: it_, rm };
   for (const [code, dict] of Object.entries(sprachen)) {
-    it(`${code}: nennt alle neun unbelegten Kantone`, () => {
+    it(`${code}: Kantonsliste als Platzhalter, keine handgeschriebene Liste`, () => {
       const note = dict.kvg.tpwNote;
-      for (const kanton of TAXPUNKTWERT_UNBELEGT_2026) {
-        expect(note).toContain(kanton);
-      }
+      expect(note).toContain('{kantone}');
+      expect(note).not.toMatch(/\b(AG|BL|SO|AI|GL|SH|JU|NE|VS)\b/);
+    });
+    it(`${code}: Stand-Text für unbelegte Kantone (provisorisch, nicht amtlich bestätigt)`, () => {
+      expect(dict.kvg.tpwStandUnbelegt).toContain('{kanton}');
+      expect(dict.kvg.tpwStandUnbelegt).toContain('2025');
     });
     it(`${code}: nennt den Stand 2025 der unbelegten Kantone`, () => {
       expect(dict.kvg.tpwNote).toContain('2025');
@@ -152,4 +158,14 @@ describe('kvg.generikaNote — Selbstbehalt nach KLV Art. 38a', () => {
       expect(note).not.toContain('20%');
     });
   }
+});
+
+// R4 (16.09.): der Rechnungs-Tab zeigt den Stand je gewähltem Kanton aus der Konstante.
+describe('KVGLeistungen: Taxpunktwert-Stand je Kanton (R4)', () => {
+  const src = readFileSync(new URL('../../KVGLeistungen.jsx', import.meta.url), 'utf8');
+  it('liest TAXPUNKTWERT_UNBELEGT_2026 und füllt {kantone}/{kanton}', () => {
+    expect(src).toContain('TAXPUNKTWERT_UNBELEGT_2026.includes(selCanton)');
+    expect(src).toMatch(/t\('kvg\.tpwNote', \{ kantone: TAXPUNKTWERT_UNBELEGT_2026\.join/);
+    expect(src).toContain("t('kvg.tpwStandUnbelegt', { kanton: selCanton })");
+  });
 });
