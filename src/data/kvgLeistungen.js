@@ -81,7 +81,9 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //
 // K22, abgerufen 16.09.2026 — Quelle: Tarifpartner, keine behördliche Festsetzung.
 // Vereinigung Zentralschweizer Ärztegesellschaften (VZAG) / Ärztegesellschaft des Kantons
-// Luzern, «Update Taxpunktwert Kanton Luzern», Abschnitt «Zur Übersicht die aktuellen
+// Luzern, «Update Taxpunktwert Kanton Luzern» (die Seite trägt kein Publikationsdatum; sie
+// nennt die Beschwerde gegen den Luzerner Beschluss als noch hängig, stammt also aus dem
+// ersten Quartal 2026 — abgerufen 16.09.2026), Abschnitt «Zur Übersicht die aktuellen
 // Taxpunktwerte ab 1. Januar … in der Region Zentralschweiz»; jeweils «provisorischer
 // Arbeitstarif festgelegt durch» die jeweilige Kantonsregierung:
 //   OW 0.86 · NW 0.88
