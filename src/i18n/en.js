@@ -3721,7 +3721,7 @@ export default {
     taxpunkte: 'Tax points on the bill',
     taxpunktwert: 'Tax point value',
     berechneterBetrag: 'Calculated amount',
-    tpwNote: 'Tax point value varies by canton. The 2026 values are provisional almost everywhere (KVG Art. 46 para. 4) — they change once a canton sets the definitive tariff. For AG, BL, SO, AI, GL, SH, JU, NE and VS there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
+    tpwNote: 'Tax point value varies by canton. The 2026 values are provisional almost everywhere — they change once a canton sets the definitive tariff. For AG, BL, SO, AI, GL, SH, JU, NE and VS there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
     tpwDataVersion: 'Tax point value as of',
     disclaimer: 'Guidance based on KVG/KLV. For binding information: your health insurer.',
     source: 'Source: [[FOPH|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',

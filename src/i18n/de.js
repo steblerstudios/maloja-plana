@@ -3732,7 +3732,7 @@ export default {
     taxpunkte: 'Taxpunkte auf der Rechnung',
     taxpunktwert: 'Taxpunktwert',
     berechneterBetrag: 'Berechneter Betrag',
-    tpwNote: 'Taxpunktwert variiert je nach Kanton. Die Werte 2026 sind fast überall provisorisch festgesetzt (KVG Art. 46 Abs. 4) — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für AG, BL, SO, AI, GL, SH, JU, NE und VS liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
+    tpwNote: 'Taxpunktwert variiert je nach Kanton. Die Werte 2026 sind fast überall provisorisch festgesetzt — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für AG, BL, SO, AI, GL, SH, JU, NE und VS liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
     tpwDataVersion: 'Taxpunktwert-Stand',
     disclaimer: { sie: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Ihre Krankenkasse.', du: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Deine Krankenkasse.' },
     source: 'Quelle: [[BAG|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
