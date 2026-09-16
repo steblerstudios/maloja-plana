@@ -98,9 +98,13 @@ async function messen() {
     }
   }
   let i = 0;
+  // Den amtlichen Server schonen: ein Abruf nach dem anderen, kurze Pause dazwischen
+  // (~3500 Abrufe ≈ 10 Minuten). Beim Messen am 16.09.2026 liefen noch 4 parallel.
+  const PAUSE_MS = 150;
   async function arbeiter() {
     while (i < auftraege.length) {
       const a = auftraege[i++];
+      await new Promise((r) => setTimeout(r, PAUSE_MS));
       const r = await post('API_calculateDetailedTaxes', {
         SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: a.o.id, Relationship: a.rel,
         Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: a.brutto, Fortune: 0,
@@ -114,7 +118,7 @@ async function messen() {
       punkte.push([a.kt, a.zs, a.brutto, r.TaxableIncomeFed, r.IncomeTaxFed, r.IncomeTaxCanton, r.IncomeTaxCity, r.PersonalTax || 0, r.IncomeTaxChurch, r.TotalTax, kantonUndGemeinde]);
     }
   }
-  await Promise.all([arbeiter(), arbeiter(), arbeiter(), arbeiter()]);
+  await arbeiter();
   punkte.sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2]);
   writeFileSync(MESS_PATH, JSON.stringify({
     quelle: 'ESTV Steuerrechner, API_calculateDetailedTaxes (' + API + ')',
