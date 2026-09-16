@@ -42,10 +42,12 @@ export function formatDE(iso) {
 // ============================================================================
 
 // Escape HTML entities before user-entered text is written into a print/export
-// document via document.write. Print windows are privilege-less about:blank pages
-// showing the user's own data, so the risk is low — but a name or medication that
-// contains <, > or & would otherwise break the printed layout. Escape at the point
-// of interpolation. Mirrors the local esc() in briefGenerator.js/dossierGenerator.js.
+// document via document.write. Print windows opened with window.open('', '_blank')
+// share the app's origin (and its localStorage) and inherit its CSP (script-src
+// 'self', no inline scripts) — so escape every value that can come from data or an
+// imported backup, not only free text. A name or medication that contains <, > or &
+// would otherwise also break the printed layout. Escape at the point of
+// interpolation. Mirrors the local esc() in briefGenerator.js/dossierGenerator.js.
 export function escapeHtml(str) {
   if (!str) return '';
   return String(str)

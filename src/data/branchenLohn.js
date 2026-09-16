@@ -2,7 +2,7 @@
 // Quelle: BFS T39 «Monatlicher Bruttolohn nach Wirtschaftsabteilungen»
 // Vollzeit-Äquivalent, privater + öffentlicher Sektor
 //
-// ⚠️ ZWEI JAHRGÄNGE, BEWUSST GEMISCHT — jede Zeile trägt ihr `jahr` (Sophie/Stebler Studios
+// ⚠️ ZWEI JAHRGÄNGE, BEWUSST GEMISCHT — jede Zeile trägt ihr `jahr` (Stebler Studios
 // 2026-07-18, „Hybrid, Jahr pro Chip"):
 //   · LSE_VERTEILUNG (Barometer)  = LSE **2024** — alle Werte amtlich belegt, siehe unten.
 //   · BRANCHENLOHN   (Branchen)   = GEMISCHT. Die Werte, die die BFS-Medienmitteilung 2024

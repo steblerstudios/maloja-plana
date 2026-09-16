@@ -39,7 +39,7 @@ export const steuerkantonSpeichern = (data, canton, alsWohnkanton = false) => ({
 
 // Ruhige Rückfrage unter dem Kantonsfeld. Ohne Hooks, damit sie direkt prüfbar ist.
 export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
-  const knopf = { padding: '8px 12px', borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
+  const knopf = { padding: '8px 12px', minHeight: '44px', borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium };
   return React.createElement('div', { role: 'group', 'aria-live': 'polite', style: { marginBottom: space.md, padding: space.sm + 'px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
     React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, t('tax.wohnkantonFrage', { canton: getCantonName(canton, t) })),
     React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: space.sm } },

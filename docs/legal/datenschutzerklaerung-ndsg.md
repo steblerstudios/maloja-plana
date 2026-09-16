@@ -139,7 +139,7 @@ Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speiche
 ### Technische Massnahmen
 - **Keine Datenübertragung**: Nutzerdaten verlassen das Gerät nicht
 - **HTTPS/TLS**: Alle Verbindungen zur Webseite sind verschlüsselt
-- **Verschlüsselte Sicherung als Voreinstellung**: Die Sicherungsdatei wird ohne andere Wahl verschlüsselt (AES-256-GCM, Passwort mind. 12 Zeichen, siehe 7.3); eine unverschlüsselte Sicherung ist eine bewusste Wahl. Die automatischen Schnappschüsse im Browser sind nicht verschlüsselt, ebenso die übrigen Angaben im Browser-Speicher (Abschnitt 3). Bis zum 16.09.2026 stand hier: «Lokale Backup-Dateien können verschlüsselt exportiert werden».
+- **Verschlüsselte Sicherung als Voreinstellung**: Der verschlüsselte Weg für die Sicherungsdatei steht zuerst und ist als Voreinstellung benannt (AES-256-GCM, Passwort mind. 12 Zeichen, siehe 7.3); eine unverschlüsselte Sicherung ist ein eigener, bewusst zu wählender Knopf darunter. Vorausgewählt wird nichts — jede Sicherung beginnt mit einem Klick auf einen der beiden Wege. *(Präzisiert 16.09.2026 abends nach der Rechts-Prüfung vor dem Deploy; vorher stand hier «ohne andere Wahl verschlüsselt».)* Die automatischen Schnappschüsse im Browser sind nicht verschlüsselt, ebenso die übrigen Angaben im Browser-Speicher (Abschnitt 3). Bis zum 16.09.2026 stand hier: «Lokale Backup-Dateien können verschlüsselt exportiert werden».
 - **Kein serverseitiger Datenzugriff**: Weder die Betreiberin noch Dritte können auf Deine Daten zugreifen
 - **Open Source**: Der Quellcode ist öffentlich einsehbar und überprüfbar
 

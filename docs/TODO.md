@@ -97,7 +97,7 @@ nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Ex
   `data.basis.gender` durch, UI-Zeile „Referenzalter (AHV 21)", Tests grün). Der alte 🟡-Text
   („rechnet pauschal mit 65") war veraltet.
   ⏸️ **Phase B (Ausgleichsmassnahmen: Rentenzuschlag/reduzierte Kürzung) BEWUSST GEPARKT**
-  (Sophie/Stebler Studios 2026-07-18): keine rechtsverbindliche Zuschlags-Zahl in einer Orientierungs-App
+  (Stebler Studios 2026-07-18): keine rechtsverbindliche Zuschlags-Zahl in einer Orientierungs-App
   (Haftung + Wahrheits-Disziplin). Falls je gebaut → ruhiger Anspruchs-Hinweis, nicht gerechnete
   Zahl. Details: `docs/roadmap/TASK_ahv21-referenzalter-frauen.md`.
 
@@ -273,7 +273,7 @@ entschärft — reproduce-first bestätigt. Echt offen:*
   FinanzUebersicht, KVGLeistungen) statt `IconSystem`. Am schamsensibelsten: `SozialhilfeView.jsx:79/125/148/163`
   (`'◰ ' + …` vor SKOS/IPV/EL-Titeln). `ICON_KONVENTION.md`: funktionale Icons = ein Outline-Set. Vorschlag:
   durch IconSystem-SVG (`aria-hidden`) ersetzen, Sozialhilfe/Schulden zuerst. a11y → nie unter P1.
-  **Dazu gehören (Sophie/Stebler Studios 2026-07-19, Predeploy-Frage) die Barometer-Legenden-Glyphen** `▬ ● ▏` in
+  **Dazu gehören (Stebler Studios 2026-07-19, Predeploy-Frage) die Barometer-Legenden-Glyphen** `▬ ● ▏` in
   `LohnEinordnung.jsx`/`RegionalBarometer.jsx`/`MietVergleich.jsx`: aktuell nur `aria-hidden`-gepflastert
   (Screenreader-Lärm gelöst), aber die Glyphen SIND eigentlich Legenden-Symbole (dein Wert / Median /
   Schweizer Schnitt) → sollten logisch echte kleine Icons/Formen sein statt Unicode-Zeichen im Text.

@@ -279,7 +279,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
       : overFullTime ? t('lohnEinordnung.overFteNote', { hours: hoursPerWeek, fte: fmt(incomeFTE), actual: fmt(income) })
       : t('lohnEinordnung.fulltimeNote')),
 
-    // Die Basis des Vergleichs IMMER ausweisen (Sophie/Stebler Studios): mit 13. enthält der
+    // Die Basis des Vergleichs IMMER ausweisen (Stebler Studios): mit 13. enthält der
     // Vergleichswert den anteiligen 13. (×13/12, standardisiert wie der BFS-Median); ohne 13.
     // wird der Basislohn direkt verglichen — mit Hinweis, dass ein 13. den Wert hebt.
     React.createElement('div', {

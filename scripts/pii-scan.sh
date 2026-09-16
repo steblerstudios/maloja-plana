@@ -44,10 +44,26 @@ DEIN-KLIENT-HASH'
 # Bibliotheken (public/vendor — deren Copyright-Header nennen Autoren-Mails).
 # (docs/archive wurde 2026-07-14 ganz aus dem Repo genommen — kein Ausschluss
 #  mehr nötig; käme je wieder Archiv-Material rein, wird es mitgeprüft.)
+# Ausnahmen gelten nur für die erlaubte Stelle selbst, nicht für die ganze Zeile
+# (Befund 16.09.2026: eine Zeile mit «Stebler Studios» verdeckte einen fremden
+# Namen daneben). Darum: erlaubte Teile herausschneiden, Rest erneut prüfen.
+# perl statt grep -P: läuft gleich auf macOS und Linux und versteht dieselben
+# PCRE-Muster wie git grep -P. Ein Muster, das perl nicht versteht, bricht ab
+# (Exit 2), statt still «sauber» zu melden.
 HITS=$(git grep -nIP -f <(printf '%s\n' "$DENY") -- \
         ':!scripts/pii-scan.sh' ':!*.example' ':!.pii-deny.txt' \
         ':!public/vendor/**' 2>/dev/null \
-      | grep -vE -f <(printf '%s\n' "$ALLOW") || true)
+      | DENY="$DENY" ALLOW="$ALLOW" perl -ne '
+          BEGIN {
+            @d = grep { length } split /\n/, $ENV{DENY};
+            @a = grep { length } split /\n/, $ENV{ALLOW};
+            for (@d, @a) { eval { qr/$_/ } or do { print STDERR "Muster ungültig: $_\n"; exit 2 } }
+          }
+          chomp; my $z = $_; (my $rest = $z) =~ s/^[^:]*:\d+://;
+          $rest =~ s/$_//g for @a;
+          for my $p (@d) { if ($rest =~ /$p/) { print "$z\n"; last } }
+        ')
+[ $? -eq 2 ] && { echo "✗ PII-Scan: Muster ungültig (siehe oben)"; exit 2; }
 
 if [ -n "$HITS" ]; then
   echo "✗ PII-Scan: mögliche persönliche/sensible Daten in getrackten Dateien:"
