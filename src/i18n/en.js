@@ -2416,6 +2416,14 @@ export default {
     federalNotCheckedBrutto: 'Maloja shows no federal tax here for this situation: your salary is entered as gross pay, and Maloja does not know the exact deductions down to taxable income. With your net pay or the taxable income from your assessment, an estimate appears. The FTA tax calculator works out the exact amount.',
     federalNotCheckedPartner: 'Maloja shows no federal tax here for this situation: for married couples both incomes are added together, with a separate deduction for two earners; for unmarried parents the child deduction may be split between them. With the taxable income from the assessment, an estimate appears. The FTA tax calculator works out the amount.',
     noTaxFigure: 'no estimate — FTA tax calculator',
+    // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
+    ohneZahlRente: "Maloja shows no tax estimate for this situation: your profile says you are retired. The standard deductions Maloja uses were measured for employees and do not apply to pensions in the same way (for example, there are no professional expenses). With the taxable income from your assessment, an estimate appears. The FTA tax calculator works out the amount.",
+    ohneZahlSelbstaendig: "Maloja shows no tax estimate for this situation: your profile says you are self-employed. What is taxed then is the income from self-employment after business-related costs — not a net salary with the employee deductions Maloja uses. With the taxable income from your assessment, an estimate appears. The FTA tax calculator works out the amount.",
+    ohneZahlPartnerOffen: "Maloja does not show a tax estimate yet for this situation: you are recorded as married, and the partner income is missing. For married couples both incomes are added together. Please add the partner income in your profile (Personal basics → «Partner net salary»; enter 0 if there is none).",
+    annahmeOhneDreizehnten: "Calculated without a 13th monthly salary — if you receive one, the tax is higher. You can state this in the «Finances» chapter.",
+    annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
+    netIncomeNote13: "Projection based on your net salary: main salary × 13 (with 13th monthly salary), side income × 12. Actual tax liability may differ.",
+    annahmenLabel: "Assumptions",
     totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
     tariff: 'Tariff',
     singleTariff: 'Basic tariff',
@@ -2444,6 +2452,8 @@ export default {
       empty: 'Once a taxable income is entered, the comparison appears here.',
       einzelnPending: 'Married, individually (individual taxation): approved on 8 March 2026, but not yet in force — the date is open. A documented figure will appear here once the new tariff applies.',
       scope: 'Direct federal tax only (DBG Art. 36). Cantonal and municipal taxes are not included here.',
+      abzuegeNote: "Each marital status is calculated with its own deductions — taxable income single CHF {ledig}, married CHF {verheiratet} (single-earner couple, with the married-couple deduction and the higher insurance deduction).",
+      nurGeschaetzt: "The comparison appears when Maloja estimates the taxable income from your net salary. A figure entered from your assessment applies only to your current marital status.",
     },
   },
 

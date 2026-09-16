@@ -5,7 +5,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
-import { KantonssteuerOrientierung, bundOhneZahlText } from './components/KantonssteuerOrientierung.jsx';
+import { KantonssteuerOrientierung, bundOhneZahlText, annahmenTexte, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
@@ -78,6 +78,11 @@ export const druckAbschnitte = (t, w) => {
     zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(w.taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>' });
   } else if (w.steuerOhneZahl) {
     zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + '</td><td class="r">' + escapeHtml(t('tax.noTaxFigure')) + '</td></tr>' });
+  }
+  // R4: die Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
+  const annahmen = (w.kantonal || w.taxResult) ? annahmenTexte(t, w.annahmen) : [];
+  if (annahmen.length) {
+    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#888">' + annahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
 
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
@@ -162,6 +167,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const steuerOhneZahl = steuern && !taxResult ? steuern.grund : null;
   const kantonsSchaetzung = steuern ? steuern.kanton : null;
   const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
+  // R4: Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
+  const annahmen = steuern ? steuern.annahmen : null;
+  const annahmenSatz = taxResult ? annahmenTexte(t, annahmen).join(' ') : '';
 
   const hasData = income > 0;
 
@@ -190,7 +198,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
 
   // Die Werte, die gedruckt werden — auch die Quelle der Export-Vorschau (K20).
   const druckWerte = {
-    income, canton, taxResult, steuerOhneZahl, kantonal, ipv, sozialhilfe, el,
+    income, canton, taxResult, steuerOhneZahl, kantonal, annahmen, ipv, sozialhilfe, el,
     totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten,
   };
 
@@ -377,9 +385,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
           : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
       statusColor: palette.text,
       detail: kantonal
-        ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
-        : steuerOhneZahl ? (steuerkanton && steuerOhneZahl === 'brutto' ? null : bundOhneZahlText(t, steuerOhneZahl))
-          : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
+        ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION }) + (annahmenSatz ? ' ' + annahmenSatz : '')
+        : steuerOhneZahl ? (steuerkanton && ERKLAERT_IN_ORIENTIERUNG.includes(steuerOhneZahl) ? null : bundOhneZahlText(t, steuerOhneZahl))
+          : [!steuerkanton ? t('finanzUebersicht.selectCanton') : '', annahmenSatz].filter(Boolean).join(' ') || null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,

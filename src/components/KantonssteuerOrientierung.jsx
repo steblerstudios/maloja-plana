@@ -11,20 +11,35 @@ import { getLinkById, getCantonalLinks } from '../data/direktLinks.js';
 // Tausendertrennung wie in FinanzUebersicht/dossierGenerator — nicht von der Laufzeit-Locale abhängig.
 const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’');
 
+// R4: Gründe ohne jede Steuerzahl (Bund und Kanton), mit einem gemeinsamen Text.
+const OHNE_ZAHL_TEXT = { rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen' };
+
+// Gründe, die die Orientierung unter der Zahl schon erklärt — dort nicht doppelt nennen.
+export const ERKLAERT_IN_ORIENTIERUNG = ['brutto', ...Object.keys(OHNE_ZAHL_TEXT)];
+
 export const orientierungsText = (t, schaetzung, jahr) =>
   schaetzung.lage === 'ausserhalb' && schaetzung.bereich
     ? t('tax.bandOutside', { min: chf(schaetzung.bereich.min), max: chf(schaetzung.bereich.max), year: jahr })
-    : schaetzung.grund === 'partner'
-      ? t('tax.bandNotCheckedPartner')
-      : schaetzung.grund === 'brutto'
-        ? t('tax.bandNotCheckedBrutto')
-        : t('tax.bandNotChecked');
+    : OHNE_ZAHL_TEXT[schaetzung.grund]
+      ? t(OHNE_ZAHL_TEXT[schaetzung.grund])
+      : schaetzung.grund === 'partner'
+        ? t('tax.bandNotCheckedPartner')
+        : schaetzung.grund === 'brutto'
+          ? t('tax.bandNotCheckedBrutto')
+          : t('tax.bandNotChecked');
 
 // E39: warum es keine Bundessteuer-Zahl gibt (grund aus steuerbaresEinkommenFuerProfil).
 export const bundOhneZahlText = (t, grund) =>
   grund === 'brutto' ? t('tax.federalNotCheckedBrutto')
     : grund === 'partner' ? t('tax.federalNotCheckedPartner')
-      : t('tax.noTaxFigure');
+      : OHNE_ZAHL_TEXT[grund] ? t(OHNE_ZAHL_TEXT[grund])
+        : t('tax.noTaxFigure');
+
+// R4: die Annahmen hinter einer gezeigten Zahl (annahmen aus steuernFuerProfil), als Sätze.
+export const annahmenTexte = (t, annahmen) => [
+  annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
+  annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
+].filter(Boolean);
 
 export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr, style }) => {
   const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;

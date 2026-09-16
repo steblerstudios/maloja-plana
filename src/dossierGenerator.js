@@ -755,6 +755,12 @@ function getBehoerdenSections(data, chapters, t, calculations) {
         taxRows.push({ label: t('tax.cantonalAndMunicipal'), value: t('tax.noCantonalFigure') });
       }
     }
+    // R4: die Annahmen hinter der Zahl (dieselben wie im Steuerrechner und in der Finanzübersicht).
+    const annahmen = [
+      tax.annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
+      tax.annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
+    ].filter(Boolean);
+    if (annahmen.length) taxRows.push({ label: t('tax.annahmenLabel'), value: annahmen.join(' ') });
     sections.push({
       key: 'steuern',
       title: t('behoerdenDossier.sectionSteuern'),
@@ -875,6 +881,11 @@ export function generateBehoerdenJSON(data, calculations) {
       cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : null,
       totalEstimate: tax.kantonal ? tax.kantonal.total : null,
       ...(tax.kantonal ? { cantonalBasis: 'ESTV-Steuerrechner ' + (tax.datenstand || '') + ', Hauptort ' + tax.kantonal.hauptort + ', ohne Kirchensteuer, grobe Schätzung' } : {}),
+      // R4: Annahmen der Schätzung
+      assumptions: [
+        ...(tax.annahmen?.ohneDreizehnten ? ['ohne 13. Monatslohn gerechnet'] : []),
+        ...(tax.annahmen?.alleinverdiener ? ['Alleinverdiener-Ehepaar (Partnereinkommen 0)'] : []),
+      ],
     };
   }
 

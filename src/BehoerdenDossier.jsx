@@ -36,6 +36,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       // 'estv' = geschätzt nach den Standardabzügen der ESTV, 'direkt' = selbst eingetragen
       taxableQuelle: steuern.quelle,
       kantonal,
+      // R4: Annahmen der Schätzung (13. Monatslohn offen, Alleinverdiener-Ehepaar)
+      annahmen: steuern.annahmen,
       // Für die Zeile «keine Schätzung» im Dossier: Kanton gewählt, Tabelle trägt nicht.
       kantonOhneZahl: Boolean(canton) && !kantonal,
       datenstand: KANTONAL_DATA_VERSION,
