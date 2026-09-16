@@ -5,24 +5,16 @@ import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
-import { steuerbandLage, STEUERBAND_TOLERANZ, STEUERBAND_STAND, STEUERBAND_GEPRUEFT_AM } from './data/steuerfaktorBand.js';
+import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
-import { getLinkById, getCantonalLinks } from './data/direktLinks.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
+import { KantonssteuerOrientierung } from './components/KantonssteuerOrientierung.jsx';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
-// E37 (K37): Kantons-/Gemeindesteuer nur als Zahl, wenn das Einkommen im Band liegt, in dem der
-// Faktor am ESTV-Steuerrechner geprüft ist (src/data/steuerfaktorBand.js,
-// docs/sources/steuerfaktor-band-2026.md). Sonst: keine Zahl, nur der Weg zum amtlichen Rechner.
-export const kantonsschaetzung = (canton, bundessteuer, steuerbaresEinkommen, { verheiratet = false, kinder = 0 } = {}) => {
-  if (!canton) return { lage: 'keinKanton', band: null, kantonal: null };
-  const { lage, band } = steuerbandLage(canton, steuerbaresEinkommen, { verheiratet, kinder });
-  const kantonal = lage === 'innerhalb' ? schaetzeKantonaleSteuer(bundessteuer, canton) : null;
-  return { lage, band, kantonal };
-};
-
-const chf = (n) => Math.round(n).toLocaleString('de-CH');
+// E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
+// docs/sources/kantonssteuer-tabelle-2026.md) — dieselbe Regel wie FinanzUebersicht und
+// BehoerdenDossier. Zahl nur, wo die Tabelle trägt; sonst der Weg zum amtlichen Rechner.
 const datumCH = (iso) => iso.split('-').reverse().join('.');
 
 // E23 (B-2): Der Steuerrechner liest und schreibt den Steuerkanton im Profil
@@ -32,8 +24,9 @@ const datumCH = (iso) => iso.split('-').reverse().join('.');
 // einzige Spur einer früher gespeicherten Wahl — darum nur lesen, nie löschen,
 // und nur solange cantoneOfTaxation leer ist. Das nächste Speichern schreibt
 // cantoneOfTaxation, danach spielt er keine Rolle mehr.
-export const steuerkantonVorbelegung = (data) =>
-  data?.behoerden?.cantoneOfTaxation || (typeof data?.canton === 'string' ? data.canton : '') || data?.basis?.canton || '';
+// Die Vorbelegung selbst liegt seit K33 in src/utils/steuerkanton.js (auch FinanzUebersicht und
+// OfficialLinkBox nutzen sie); hier weiter exportiert für bestehende Importe.
+export { steuerkantonVorbelegung };
 
 // Frage «auch Wohnkanton?» nur, wenn der gewählte Kanton vom Wohnkanton abweicht.
 export const fragtNachWohnkanton = (data, canton) => Boolean(canton) && canton !== (data?.basis?.canton || '');
@@ -137,14 +130,19 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     fontSize: text.sm
   };
 
-  const schaetzung = kantonsschaetzung(canton, estimatedTax, taxableIncome, { verheiratet, kinder });
+  // Die Tabelle wird mit dem steuerbaren Einkommen nach den Standardabzügen der ESTV gelesen
+  // (steuerbarNachEstv) — oder mit dem direkt eingetragenen Wert.
+  const schaetzung = kantonssteuerFuerProfil({
+    kanton: canton,
+    nettolohnJahr: (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0)) * 12,
+    direktSteuerbar: useEnteredTaxable ? enteredTaxable : 0,
+    einkommensart: data.finanzen?.incomeType || null,
+    partnerEinkommen: partnerIncome,
+    verheiratet, kinder, elterntarif,
+    ...abzuegeAusTaxData(taxData),
+    bundessteuer: estimatedTax,
+  });
   const kantonal = schaetzung.kantonal;
-  const bandText = schaetzung.band
-    ? { min: chf(schaetzung.band.bandMin), max: chf(schaetzung.band.bandMax), tol: Math.round(STEUERBAND_TOLERANZ * 100), year: STEUERBAND_STAND }
-    : null;
-  const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;
-  const estvLink = getLinkById('steuern');
-  const linkStyle = { fontSize: text.sm, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px', fontWeight: weight.medium };
 
   const buttonStyle = {
     padding: '10px 16px',
@@ -310,19 +308,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           if (!canton) return React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px dashed ' + palette.border } },
             React.createElement('div', { style: { fontSize: text.sm, color: palette.soft, fontStyle: 'italic' } }, t('tax.selectCantonHint'))
           );
-          // E37: ausserhalb des geprüften Bands keine Zahl — ruhige Orientierung mit dem Weg zum amtlichen Rechner.
-          if (!kantonal) return React.createElement('div', { 'data-testid': 'kantonssteuer-orientierung', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-            React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
-              t('tax.cantonalAndMunicipal') + ' · ' + getCantonName(canton, t)
-            ),
-            React.createElement('p', { style: { margin: 0, marginBottom: space.sm, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
-              schaetzung.lage === 'ausserhalb' && bandText ? t('tax.bandOutside', bandText) : t('tax.bandNotChecked')
-            ),
-            React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
-              estvLink && React.createElement('a', { href: estvLink.url, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, '→ ' + t('tax.bandLinkEstv')),
-              kantonsLink && React.createElement('a', { href: kantonsLink, target: '_blank', rel: 'noopener noreferrer', style: linkStyle }, '→ ' + t('tax.bandLinkKanton', { canton: getCantonName(canton, t) }))
-            )
-          );
+          // E38: wo die Tabelle nicht trägt, keine Zahl — ruhige Orientierung mit dem Weg zum amtlichen Rechner.
+          if (!kantonal) return React.createElement(KantonssteuerOrientierung, { palette, t, canton, schaetzung, jahr: KANTONAL_DATA_VERSION });
           return React.createElement(React.Fragment, null,
             React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
               React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs, marginBottom: space.xs, flexWrap: 'wrap' } },
@@ -336,7 +323,10 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
               ),
               React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.kantonalUndGemeinde),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-                t('tax.basedOnHauptort', bandText || {})
+                t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
+              ),
+              !useEnteredTaxable && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+                t('tax.cantonalTaxableBasis', { value: Math.round(schaetzung.steuerbar).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’') })
               )
             ),
             React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },
@@ -373,7 +363,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, 'ⓘ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
-    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + KANTONAL_DATA_VERSION + ' · ' + t('tax.bandChecked', { year: STEUERBAND_STAND, date: datumCH(STEUERBAND_GEPRUEFT_AM), tol: Math.round(STEUERBAND_TOLERANZ * 100) })),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(KANTONAL_DATA_ABGERUFEN) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('trust.localOnly')),

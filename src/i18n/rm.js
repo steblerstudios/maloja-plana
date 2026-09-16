@@ -2874,16 +2874,24 @@ export default {
     selectCantonHint: { sie: 'Tschernai in chantun per vesair la chargia da taglia chantunalas.', du: 'Tscherna in chantun per vesair la chargia da taglia chantunalas.' },
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    // TODO(rm): E37 — provisorisch, von Muttersprachler:in gegenlesen.
-    basedOnHauptort: "Valur d'orientaziun per il lieu principal dal chantun. Controllà cun il calculatur da taglia da l'AFT (onn fiscal {year}): tar in'entrada taxabla tranter CHF {min} e CHF {max} sa deviescha el al pli {tol} % da la valur uffiziala (senza taglia da baselgia). En autras vischnancas po la taglia esser considerablamain autra.",
+    // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
+    basedOnHauptort: "Valur d'orientaziun da puncts da mesiraziun dal calculatur da taglia da l'AFT (onn fiscal {year}): lieu principal dal chantun, senza taglia da baselgia; en autras vischnancas po la taglia esser considerablamain autra.",
     roughEstimateBadge: 'Stimaziun aproximativa',
-    // TODO(rm): E37 (K37) — provisorisch, von Muttersprachler:in gegenlesen.
-    bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La stimaziun è controllada mo tranter CHF {min} e CHF {max} (lieu principal, senza uffants, onn fiscal {year}); ordaifer è ella memia lunsch da la valur uffiziala. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La stimaziun è controllada mo tranter CHF {min} e CHF {max} (lieu principal, senza uffants, onn fiscal {year}); ordaifer è ella memia lunsch da la valur uffiziala. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
-    bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import: la stimaziun è cumprovada mo per chasadas senza uffants ed en in sectur d'entradas controllà. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import: la stimaziun è cumprovada mo per chasadas senza uffants ed en in sectur d'entradas controllà. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    // TODO(rm): E37/E38 — provisorisch, von Muttersprachler:in gegenlesen.
+    bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La tabella dal calculatur da taglia da l'AFT va da CHF {min} fin CHF {max} (lieu principal, onn fiscal {year}); ordaifer quai na quinta Maloja betg vinavant. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import. La taglia chantunala e communala è mesirada per persunas nubilas e maridadas cun fin trais uffants; per persunas betg maridadas mo, sch'ils uffants vivan en la medema chasada (confirmaziun tar la tariffa per geniturs). Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
     bandLinkEstv: "Calculatur da taglia da l'AFT",
     bandLinkKanton: 'Administraziun da taglia {canton}',
-    bandChecked: "sectur d'entradas controllà cun il calculatur da taglia da l'AFT, onn fiscal {year}, ils {date} (toleranza ±{tol} %)",
+    bandChecked: "tabella dal calculatur da taglia da l'AFT, onn fiscal {year}, consultada ils {date}",
     netIncomeFederalOnly: 'Mo la taglia federala è deducida — la taglia chantunala e communala manca en questa cifra.',
+    // E38: Hinweis/Zeile im Behördendossier
+    // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
+    cantonalNoteLabel: 'Remartga davart la taglia chantunala e communala',
+    noCantonalFigure: "nagina stimaziun per questa situaziun — calculatur da taglia da l'AFT: swisstaxcalculator.estv.admin.ch",
+    // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
+    bandNotCheckedPartner: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
+    bandNotCheckedBrutto: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
+    cantonalTaxableBasis: "Legì cun in'entrada taxabla da CHF {value}: paja netta main las deducziuns standard dal calculatur da l'AFT (custs professiunals, assicuranzas, persunas maridadas, uffants) e las deducziuns registradas.",
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
@@ -2896,7 +2904,7 @@ export default {
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
     taxableIncomeDirect: 'Entrada taxabla (facultativ)',
     taxableIncomeDirectPlaceholder: 'p.ex. 65 000',
-    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net.',
+    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net. I sa tracta da la valur per la taglia federala directa (la taxaziun nomna separadamain Confederaziun e chantun).', // TODO(rm): E38-Zusatz provisorisch
     useTaxableEntered: 'Duvrar quest valur sco basa — deducziuns na valan lura betg pli (el è gia taxabel).',
     saeulen: {
       title: 'Stadi civil en cumparaziun',

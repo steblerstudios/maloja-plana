@@ -3,11 +3,12 @@ import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
-import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
+import { calculateSozialhilfe, calculateIPV, checkELEligibility, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
+import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
@@ -18,11 +19,21 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
   const el = checkELEligibility(data);
 
   const income = parseFloat((data.finanzen || {}).monthlyIncome) || 0;
-  const canton = (data.basis || {}).canton || '';
+  // K33/E38: Steuerkanton wie im Steuerrechner und in der Finanzübersicht.
+  const canton = steuerkantonVorbelegung(data);
+  // E38: dieselben Eingaben und dieselbe Regel wie FinanzUebersicht — Kinder aus dem Haushalt,
+  // Elterntarif nur mit der Bestätigung aus dem Steuerrechner. (Bis E38 rechnete das Dossier
+  // die Bundessteuer immer ohne Kinder.)
+  const verheiratet = (data.basis || {}).maritalStatus === 'married';
+  const kinder = getHouseholdInfo(data).childrenCount;
+  const elterntarif = data.taxData?.elterntarif === true;
   const taxResult = income > 0
-    ? berechneBundessteuer({ bruttoEinkommen: income * 12, verheiratet: (data.basis || {}).maritalStatus === 'married', kinder: 0 })
+    ? berechneBundessteuer({ bruttoEinkommen: income * 12, verheiratet, kinder, elterntarif })
     : null;
-  const kantonal = taxResult && canton ? schaetzeKantonaleSteuer(taxResult.steuer, canton) : null;
+  const kantonsSchaetzung = taxResult
+    ? kantonssteuerFuerProfil({ kanton: canton, nettolohnJahr: income * 12, direktSteuerbar: Number(data.finanzen?.taxableIncome) || 0, einkommensart: data.finanzen?.incomeType || null, partnerEinkommen: getHouseholdInfo(data).partnerIncome, verheiratet, kinder, elterntarif, ...abzuegeAusTaxData(data.taxData), bundessteuer: taxResult.steuer })
+    : null;
+  const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
 
   const calculations = {
     sozialhilfe,
@@ -32,6 +43,9 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       total: taxResult.steuer,
       taxableIncome: taxResult.steuerBaresEinkommen,
       kantonal,
+      // Für die Zeile «keine Schätzung» im Dossier: Kanton gewählt, Tabelle trägt nicht.
+      kantonOhneZahl: Boolean(canton) && !kantonal,
+      datenstand: KANTONAL_DATA_VERSION,
     } : null,
   };
 

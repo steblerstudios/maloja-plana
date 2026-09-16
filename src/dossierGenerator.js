@@ -736,18 +736,24 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     });
   }
 
-  if (tax && tax.total > 0) {
+  // E38: auch bei Bundessteuer 0 zeigen, wenn eine Kantonszahl da ist.
+  if (tax && (tax.total > 0 || tax.kantonal)) {
     const taxRows = [
       { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
       { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear') },
     ];
     if (tax.kantonal) {
+      // E38: aus der ESTV-Tabelle (Hauptort, ohne Kirchensteuer) — als grobe Schätzung gekennzeichnet.
       taxRows.push(
-        { label: t('tax.cantonalAndMunicipal') + ' (' + tax.kantonal.hauptort + ')', value: formatCHF(tax.kantonal.kantonalUndGemeinde) + t('common.perYear') },
+        { label: t('tax.cantonalAndMunicipal') + ' (' + tax.kantonal.hauptort + ', ' + t('tax.roughEstimateBadge') + ')', value: formatCHF(tax.kantonal.kantonalUndGemeinde) + t('common.perYear') },
         { label: t('tax.totalEstimate'), value: formatCHF(tax.kantonal.total) + t('common.perYear'), bold: true },
+        { label: t('tax.cantonalNoteLabel'), value: t('tax.basedOnHauptort', { year: tax.datenstand || '' }) },
       );
     } else {
       taxRows[taxRows.length - 1].bold = true;
+      if (tax.kantonOhneZahl) {
+        taxRows.push({ label: t('tax.cantonalAndMunicipal'), value: t('tax.noCantonalFigure') });
+      }
     }
     sections.push({
       key: 'steuern',
@@ -859,12 +865,14 @@ export function generateBehoerdenJSON(data, calculations) {
   if (el) {
     dossier.calculations.el = { eligible: !!el.eligible };
   }
-  if (tax && tax.total > 0) {
+  if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {
       taxableIncome: tax.taxableIncome || 0,
       federalTax: tax.total || 0,
-      cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : 0,
-      totalEstimate: tax.kantonal ? tax.kantonal.total : tax.total,
+      // E38: ohne Tabellenwert null statt 0 — «nicht geschätzt» ist nicht «keine Steuer».
+      cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : null,
+      totalEstimate: tax.kantonal ? tax.kantonal.total : null,
+      ...(tax.kantonal ? { cantonalBasis: 'ESTV-Steuerrechner ' + (tax.datenstand || '') + ', Hauptort ' + tax.kantonal.hauptort + ', ohne Kirchensteuer, grobe Schätzung' } : {}),
     };
   }
 
