@@ -46,8 +46,24 @@ describe('TAXPUNKTWERT — TARDOC 2026, amtlich belegte Kantone', () => {
 // Kantons Luzern, «Update Taxpunktwert Kanton Luzern» (SZ 0.85 für tarifsuisse, CSS und HSK
 // 0.86 · OW 0.86 · NW 0.88):
 //   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
+// Weitere behördliche Quellen der K22-Runde:
+//   AR 0.86 — Beschluss des Regierungsrates AR vom 12.01.2026, Ziff. 5 (freiberufliche Ärzte)
+//             https://amtsblattportal.ch/api/v1/publications/261ae13b-1a69-475a-bac6-f40c18f7e696/attachments/36e30134-6bd5-4601-a192-c0a62e3ec610
+//   FR 0.91 — Ordonnance du Conseil d'État FR du 13.01.2026, RSF 842.1.24, Art. 2
+//             https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24
+//   GE 0.94 — Conseil d'État GE, communiqué du 24.06.2026 (Arrêté, nur für die CSS belegt)
+//             https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026
+//   GR 0.86 — Gesundheitsamt Graubünden, «TARDOC-Taxpunktwerte 2026», Stand 07.09.2026
+//   TG 0.86 — Amt für Gesundheit Thurgau, «Tarifübersicht Tarife ambulant», Stand 19.08.2026
+//   TI 0.93 — Decreto esecutivo del Consiglio di Stato dell'11.02.2026, Art. 1 (BU 6/2026)
+//             https://www3.ti.ch/CAN/fu/2026/BU_006.pdf
+//   VD 0.94 — Conseil d'État VD, Sitzung vom 20.05.2026 (santéservices SA ↔ SVM)
+//             https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981
 describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
-  const behoerdlich = { LU: 0.85, SG: 0.86, UR: 0.88, ZG: 0.82 };
+  const behoerdlich = {
+    AR: 0.86, FR: 0.91, GE: 0.94, GR: 0.86, LU: 0.85, SG: 0.86,
+    TG: 0.86, TI: 0.93, UR: 0.88, VD: 0.94, ZG: 0.82,
+  };
   for (const [kanton, wert] of Object.entries(behoerdlich)) {
     it(`${kanton} ${wert} (behördliche Quelle 2026)`, () => {
       expect(TAXPUNKTWERT[kanton]).toBe(wert);
@@ -61,15 +77,26 @@ describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
     });
   }
 
+  // Diese neun Kantone bleiben bewusst auf dem Stand 2025 (TARMED): für 2026 wurde weder eine
+  // behördliche Festsetzung noch eine Publikation eines Tarifpartners gefunden. Der Test hält
+  // fest, dass sie ungeprüft sind — er ist kein Beleg für ihre Richtigkeit.
   it('ungeprüfte Kantone behalten den Stand 2025 (TARMED)', () => {
     const ungeprueft = {
-      AG: 0.89, AI: 0.89, AR: 0.89, BL: 0.89, FR: 0.88, GE: 0.96, GL: 0.87,
-      GR: 0.89, JU: 0.88, NE: 0.92, SH: 0.87, SO: 0.89, TG: 0.86, TI: 0.90,
-      VD: 0.93, VS: 0.86,
+      AG: 0.89, AI: 0.89, BL: 0.89, GL: 0.87, JU: 0.88, NE: 0.92,
+      SH: 0.87, SO: 0.89, VS: 0.86,
     };
     for (const [kanton, wert] of Object.entries(ungeprueft)) {
       expect(TAXPUNKTWERT[kanton]).toBe(wert);
     }
+  });
+
+  it('17 der 26 Kantone sind für 2026 belegt, 9 bleiben ungeprüft', () => {
+    const belegt2026 = [
+      'AR', 'BE', 'BS', 'FR', 'GE', 'GR', 'LU', 'NW', 'OW',
+      'SG', 'SZ', 'TG', 'TI', 'UR', 'VD', 'ZG', 'ZH',
+    ];
+    expect(belegt2026).toHaveLength(17);
+    expect(Object.keys(TAXPUNKTWERT).filter(k => !belegt2026.includes(k))).toHaveLength(9);
   });
 
   it('alle 26 Kantone sind erfasst', () => {
