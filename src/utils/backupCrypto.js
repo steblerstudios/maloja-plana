@@ -1,7 +1,7 @@
 // ─── Encrypted Backup & Restore ─────────────────────────────
 // Browser-native Web Crypto API (AES-256-GCM + PBKDF2).
 // No external dependencies. No network calls.
-// Encryption is optional — plaintext export always available.
+// Encryption is the UI default (E10) — plaintext export stays available as a choice.
 import { getDocBlob, saveDocBlob, stripBlob } from './docBlobs.js';
 // Krypto-Primitive (AES-256-GCM + PBKDF2) zentral in cryptoCore.js — geteilt mit
 // dem Tresor-Lock, damit es nur EINE Krypto-Quelle gibt.
@@ -104,8 +104,8 @@ export async function exportEncrypted(passphrase) {
   if (!isSecureContext()) {
     throw new Error('Web Crypto API not available. Use HTTPS or localhost.');
   }
-  if (!passphrase || passphrase.length < 4) {
-    throw new Error('Passphrase must be at least 4 characters.');
+  if (!passphraseLangGenug(passphrase)) {
+    throw new Error('Passphrase must be at least ' + MIN_PASSPHRASE_LENGTH + ' characters.');
   }
 
   const backup = await collectBackupDataAsync();
@@ -307,4 +307,14 @@ export function downloadFile(filename, content, mimeType) {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 200);
+}
+
+// ─── Passphrase-Mindestlänge (E10, 16.09.2026) ──────────────
+// Gilt nur für NEUE verschlüsselte Sicherungen (vorher 4 Zeichen). decryptBackup
+// prüft bewusst keine Länge, damit ältere Sicherungen mit kürzerer Passphrase
+// lesbar bleiben. Steht am Dateiende, damit die Zeilen-Belege in docs/ gültig bleiben.
+export const MIN_PASSPHRASE_LENGTH = 12;
+
+export function passphraseLangGenug(passphrase) {
+  return typeof passphrase === 'string' && passphrase.length >= MIN_PASSPHRASE_LENGTH;
 }

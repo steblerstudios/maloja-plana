@@ -3244,7 +3244,7 @@ export default {
     exportEncrypted: 'Export (chiffré)',
     importFile: 'Importer une sauvegarde',
     passphrase: 'Mot de passe',
-    passphraseHint: 'Au moins 4 caractères — 12 ou plus recommandés, par exemple plusieurs mots. Retenez-le, il n\'y a pas de récupération.',
+    passphraseHint: 'Au moins {min} caractères, idéalement plusieurs mots. Retenez-le, il n\'y a pas de récupération.',
     passphraseConfirm: 'Confirmer le mot de passe',
     passphraseMismatch: 'Les mots de passe ne correspondent pas.',
     encrypting: 'Chiffrement...',
@@ -3267,6 +3267,14 @@ export default {
     structureRejected: 'La sauvegarde n\'a pas pu être lue, car sa structure ne correspond pas au format attendu. Rien n\'a été modifié.',
     fileTooLarge: 'Le fichier dépasse {max} et n\'a donc pas été lu. Rien n\'a été modifié.',
     restored: 'Restauré',
+  },
+
+  // E10 (16.09.2026) : sauvegarde chiffrée par défaut, mot de passe d'au moins 12 caractères.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Sauvegarder avec un mot de passe (par défaut)',
+    titelUnverschluesselt: 'Sauvegarder sans chiffrement',
+    hinweisUnverschluesselt: 'Toute personne qui ouvre ce fichier peut le lire. Choisissez cette option uniquement si vous conservez le fichier dans un endroit protégé.',
+    altePasswoerter: 'Les sauvegardes plus anciennes avec un mot de passe plus court peuvent toujours être ouvertes.',
   },
 
   behoerdenDossier: {

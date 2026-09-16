@@ -3221,7 +3221,7 @@ export default {
     exportEncrypted: 'Esporta (crittografato)',
     importFile: 'Importa backup',
     passphrase: 'Password',
-    passphraseHint: 'Almeno 4 caratteri — meglio 12 o più, ad esempio più parole. Ricordala, non c\'è recupero.',
+    passphraseHint: 'Almeno {min} caratteri, meglio più parole. Ricordala, non c\'è recupero.',
     passphraseConfirm: 'Conferma password',
     passphraseMismatch: 'Le password non corrispondono.',
     encrypting: 'Crittografia...',
@@ -3244,6 +3244,14 @@ export default {
     structureRejected: 'Il backup non ha potuto essere letto perché la sua struttura non corrisponde al formato previsto. Nulla è stato modificato.',
     fileTooLarge: 'Il file supera {max} e quindi non è stato letto. Nulla è stato modificato.',
     restored: 'Ripristinato',
+  },
+
+  // E10 (16.09.2026): backup cifrato come impostazione predefinita, password di almeno 12 caratteri.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Salvare con password (predefinito)',
+    titelUnverschluesselt: 'Salvare senza crittografia',
+    hinweisUnverschluesselt: 'Chiunque apra questo file può leggerlo. Scegli questa opzione solo se conservi il file in un luogo protetto.',
+    altePasswoerter: 'I backup meno recenti con una password più corta si possono ancora aprire.',
   },
 
   behoerdenDossier: {

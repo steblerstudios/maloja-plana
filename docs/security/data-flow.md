@@ -40,15 +40,15 @@ How data moves through Maloja Plana. All flows are local — no data leaves the 
 3. Old backups beyond 3 are pruned
 4. Timestamp stored in `or5_last_backup`
 
-### Export path (plaintext)
-1. User clicks export in ZipExport view
+### Export path (plaintext, a choice since build list E10)
+1. User chooses «Back up without encryption» in the ZipExport view (shown below the encrypted path, with a notice)
 2. `collectBackupData()` reads all `or5_*` localStorage keys
 3. JSON string is generated client-side
 4. Browser download dialog is triggered via Blob URL
 5. No network calls
 
-### Export path (encrypted)
-1. User enters passphrase (min 4 characters, confirmed twice)
+### Export path (encrypted, default since build list E10)
+1. User enters passphrase (min 12 characters for new backups, confirmed twice; 4 until 16.09.2026)
 2. `exportEncrypted()` collects data, serializes to JSON
 3. PBKDF2 derives key from passphrase + random salt (100k iterations)
 4. AES-256-GCM encrypts the JSON with random IV

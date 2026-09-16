@@ -3245,7 +3245,7 @@ export default {
     exportEncrypted: 'Export (encrypted)',
     importFile: 'Import backup',
     passphrase: 'Passphrase',
-    passphraseHint: 'At least 4 characters — 12 or more recommended, e.g. several words. Remember this, there is no recovery.',
+    passphraseHint: 'At least {min} characters, ideally several words. Remember this, there is no recovery.',
     passphraseConfirm: 'Confirm passphrase',
     passphraseMismatch: 'Passphrases do not match.',
     encrypting: 'Encrypting...',
@@ -3268,6 +3268,14 @@ export default {
     structureRejected: 'The backup could not be read because its structure does not match the expected format. Nothing was changed.',
     fileTooLarge: 'The file is larger than {max} and was therefore not read. Nothing was changed.',
     restored: 'Restored',
+  },
+
+  // E10 (16.09.2026): encrypted backup as the default, passphrase at least 12 characters.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Back up with a password (default)',
+    titelUnverschluesselt: 'Back up without encryption',
+    hinweisUnverschluesselt: 'Anyone who opens this file can read it. Choose this option only if you keep the file in a protected place.',
+    altePasswoerter: 'Older backups with a shorter password can still be opened.',
   },
 
   behoerdenDossier: {

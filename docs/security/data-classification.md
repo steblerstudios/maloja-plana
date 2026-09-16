@@ -19,15 +19,15 @@
 
 | Klassifikation | Speicherort | Verschlüsselung | Übermittlung |
 |---|---|---|---|
-| C4 | localStorage + IndexedDB (lokal), unverschlüsselt at rest | Beim Backup-Export **optional** (AES-256-GCM); Klartext-Export gleichberechtigt möglich | Keine |
-| C3 | localStorage (lokal), unverschlüsselt at rest | Beim Backup-Export **optional** (AES-256-GCM); Klartext-Export gleichberechtigt möglich | Keine |
-| C2 | localStorage (lokal), unverschlüsselt at rest | Beim Backup-Export **optional** (AES-256-GCM); Klartext-Export gleichberechtigt möglich | Keine |
+| C4 | localStorage + IndexedDB (lokal), unverschlüsselt at rest | Beim Backup-Export **Voreinstellung** (AES-256-GCM, seit E10); Klartext-Export wählbar | Keine |
+| C3 | localStorage (lokal), unverschlüsselt at rest | Beim Backup-Export **Voreinstellung** (AES-256-GCM, seit E10); Klartext-Export wählbar | Keine |
+| C2 | localStorage (lokal), unverschlüsselt at rest | Beim Backup-Export **Voreinstellung** (AES-256-GCM, seit E10); Klartext-Export wählbar | Keine |
 | C1 | localStorage (lokal) | Nein (nicht nötig) | Keine |
 
 **Alle Stufen: Keine serverseitige Verarbeitung, keine Cloud, keine Übermittlung an Dritte.**
 
 Zum Stand der Verschlüsselung (15.09.2026, Code-Stand `main` 9e6d9b1):
-- **Gebaut:** verschlüsselter Export als `.maloja`-Datei (AES-256-GCM, PBKDF2, Passphrase mindestens 4 Zeichen — `src/utils/backupCrypto.js` Z. 107, Krypto-Primitive in `src/utils/cryptoCore.js`). Die nutzende Person wählt beim Export; der Klartext-Export (JSON) ist der Standardweg und immer verfügbar (`backupCrypto.js` Z. 4: «Encryption is optional — plaintext export always available»; `src/ZipExport.jsx` Z. 24–28, 56, 85). Die automatischen Schnappschüsse in der IndexedDB `maloja-plana-backups` sind unverschlüsselt.
+- **Gebaut:** verschlüsselter Export als `.maloja`-Datei (AES-256-GCM, PBKDF2, Passphrase mindestens 12 Zeichen für neue Sicherungen — `src/utils/backupCrypto.js` Z. 107 und 316–320, Krypto-Primitive in `src/utils/cryptoCore.js`). Seit Bau-Liste E10 (16.09.2026) ist er die Voreinstellung (`src/ZipExport.jsx` Z. 339–358); die nutzende Person kann stattdessen den Klartext-Export (JSON) wählen, der mit Hinweis darunter steht (`ZipExport.jsx` Z. 360–367). Bis dahin war der Klartext-Export der Standardweg und die Mindestlänge 4 Zeichen. Die automatischen Schnappschüsse in der IndexedDB `maloja-plana-backups` sind unverschlüsselt.
 - **Geplant / nicht gebaut:** Verschlüsselung der Daten at rest (Tresor). Konzept in `docs/design/tresor-lock.md`; das Krypto-Fundament (`secureStore.js`) liegt dormant, die Live-Verdrahtung ist bewusst auf die «Logins-Phase» vertagt.
 - Bis zum 15.09.2026 stand in der Tabelle für C2–C4 «AES-256 bei Backup/Export» ohne den Zusatz «optional»; das las sich wie eine Pflicht-Verschlüsselung, die es nicht gibt.
 
