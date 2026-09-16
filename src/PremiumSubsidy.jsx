@@ -12,13 +12,20 @@ import { getCantonalLinks } from './data/direktLinks.js';
 import { addTodo } from './utils/merkliste.js';
 import { addReminder } from './utils/reminders.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
+import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
 import { text, weight, radius , space } from './config/tokens.js';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
 const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
 
-export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) => {
+// schnellcheckZahlen (B-1/E22): { monthlyIncome, rentAmount, kkPremium } aus dem
+// Schnellcheck, übergeben von main.jsx. Der Rechner rechnet damit und sagt es; das
+// Profil ändert sich erst auf «Ins Profil übernehmen».
+export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateData, schnellcheckZahlen }) => {
   const vorlesen = useVorlesenContext();
+  const [uebernommen, setUebernommen] = useState(false);
+  const offeneZahlen = abweichungen(profil, schnellcheckZahlen);
+  const data = mitUebergabe(profil, offeneZahlen);
   const [showCalculation, setShowCalculation] = useState(true);
   // IPV-Lebenslinie (Phase 2): der Beleg als Gesicht seines Ablaufs. Verfügungs-
   // Betrag lokal gepuffert (Init aus dem persistierten Status), Erinnerungs-Flag
@@ -222,6 +229,22 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
       ),
       !canton && React.createElement('div', { style: { color: palette.roseDeep } }, t('premium.enterCanton'))
     ),
+
+    // B-1/E22: sichtbar sagen, dass mit den Schnellcheck-Zahlen gerechnet wird.
+    // Ins Profil geht nichts ohne den Klick auf den Knopf.
+    offeneZahlen.length > 0 ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, borderLeft: '3px solid ' + palette.sky, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.text, marginBottom: space.xs } }, t('premium.schnellcheckGerechnet')),
+      React.createElement('ul', { style: { margin: '0 0 ' + space.xs + 'px', paddingLeft: '18px', color: palette.text } },
+        offeneZahlen.map(([, feld, wert]) => React.createElement('li', { key: feld },
+          t(feld === 'monthlyIncome' ? 'schnellcheck.income' : feld === 'rentAmount' ? 'schnellcheck.rent' : 'schnellcheck.kk') + ': ' + fmtCHF(wert)))
+      ),
+      React.createElement('div', { style: { color: palette.mid, marginBottom: onUpdateData ? space.sm : 0 } }, t('premium.schnellcheckProfilBleibt')),
+      onUpdateData && React.createElement('button', {
+        type: 'button',
+        onClick: () => { offeneZahlen.forEach(([kapitel, feld, wert]) => onUpdateData(kapitel, feld, wert)); setUebernommen(true); },
+        style: { cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, padding: '8px 14px', minHeight: '44px', borderRadius: radius.sm, background: 'none', color: palette.sandDeep, border: '1px solid ' + palette.border },
+      }, t('premium.schnellcheckUebernehmen'))
+    ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, '✓ ' + t('premium.schnellcheckUebernommen')),
 
     // Residence type warning
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },

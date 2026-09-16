@@ -7,6 +7,7 @@ import { Pegel } from './components/Pegel.jsx';
 import { PraemienBeleg } from './components/PraemienBeleg.jsx';
 import { sozialhilfePegelState } from './data/pegel.js';
 import { praemienBelegState } from './data/praemienBeleg.js';
+import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, shadow } from './config/tokens.js';
 
 // Leistungs-Schnellcheck (Basel-Stadt-Leistungsrechner als Vorbild): EIN Satz
@@ -46,12 +47,14 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (numIncome > 0 && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
+    // B-1/E22: die hier eingetippten Zahlen gehen beim Klick an den IPV-Rechner mit.
+    const uebergabe = uebergabeAusProbe(probe);
     if (ipv && ipv.eligible) benefits.push({
-      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep,
+      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
       label: t('schnellcheck.ipv'), monthly: ipv.amount, note: t('schnellcheck.ipvNote'),
     });
     else if (ipv && ipv.anspruchMoeglich) benefits.push({
-      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep,
+      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep, uebergabe,
       label: t('schnellcheck.ipv'), qualitative: true, note: t('schnellcheck.ipvOhneBetragNote'),
     });
     // Sozialhilfe: nur mit Mietkontext (sonst Bedarf unvollständig) + ungedecktem
@@ -161,7 +164,7 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
     const subsumed = ipvSubsumed && b.key === 'ipv';
     return React.createElement('button', {
     key: b.key,
-    onClick: () => onNavigate && onNavigate(b.view),
+    onClick: () => onNavigate && (b.uebergabe ? onNavigate(b.view, undefined, b.uebergabe) : onNavigate(b.view)),
     style: {
       display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left',
       padding: '12px 14px', marginBottom: space.sm + 'px', cursor: 'pointer', fontFamily: 'inherit',

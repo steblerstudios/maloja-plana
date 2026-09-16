@@ -7,6 +7,7 @@ import { calculateIPV } from '../config/cantonalData.js';
 import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
 import { PremiumSubsidy } from '../PremiumSubsidy.jsx';
 import { Schnellcheck } from '../Schnellcheck.jsx';
+import { QuickCheck } from '../Dashboard.jsx';
 
 // ─────────────────────────────────────────────────────────────
 // B-1 (BUGS.md) · Entscheid E22 vom 16.09.2026
@@ -64,6 +65,26 @@ describe('B-1 · der Klick im Schnellcheck nimmt die eingetippten Zahlen mit', (
     expect(onNavigate).toHaveBeenCalledWith('premium', undefined, {
       schnellcheck: { monthlyIncome: 3000, rentAmount: 1100, kkPremium: 380 },
     });
+  });
+
+  it('auch der Schnell-Check auf dem Dashboard übergibt sein Einkommen', () => {
+    const onNavigate = vi.fn();
+    const { gesehen } = renderMitProps(QuickCheck, { data: profil({ monthlyIncome: 3000 }), onNavigate });
+    const zeile = gesehen.find((e) => e.typ === 'button' && e.p.key === 'ipv');
+    expect(zeile).toBeTruthy();
+    zeile.p.onClick();
+    expect(onNavigate).toHaveBeenCalledWith('premium', undefined, { schnellcheck: { monthlyIncome: 3000 } });
+  });
+
+  it('andere Zeilen im Schnellcheck tragen keine Übergabe', () => {
+    const onNavigate = vi.fn();
+    const stand = profil({ monthlyIncome: 800 });
+    const { gesehen } = renderMitProps(Schnellcheck, { data: stand, onNavigate });
+    const soz = gesehen.find((e) => e.typ === 'button' && e.p.key === 'soz');
+    expect(soz).toBeTruthy();
+    soz.p.onClick();
+    expect(onNavigate).toHaveBeenCalledWith('sozialhilfe');
+    expect(onNavigate.mock.calls[0]).toHaveLength(1);
   });
 
   it('main.jsx reicht die Übergabe an den IPV-Rechner weiter und trägt sie nur beim Weg dorthin', () => {

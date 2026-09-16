@@ -100,8 +100,10 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
     // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
+    // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
     if (ipv && ipv.anspruchMoeglich) benefits.push({
       key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
+      uebergabe: { schnellcheck: { monthlyIncome: Number(income) } },
       monthly: ipv.amount,
       detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
     });
@@ -135,7 +137,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
 
   const row = (b) => React.createElement('button', {
     key: b.key,
-    onClick: () => onNavigate(b.view),
+    onClick: () => onNavigate(b.view, undefined, b.uebergabe),
     style: {
       display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
       padding: '10px 14px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',

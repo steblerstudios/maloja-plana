@@ -82,7 +82,7 @@ describe('K10 · Aussage 1 in den Ansichten: kein Rechner fragt den Kanton nochm
   });
 });
 
-describe('K10 · Aussage 2: der IPV-Rechner übernimmt das Profil — aber nicht die Zahlen aus dem Schnellcheck (B-1)', () => {
+describe('K10 · Aussage 2: der IPV-Rechner übernimmt das Profil (Schnellcheck-Zahlen seit B-1 als Übergabe, siehe b1SchnellcheckUebergabe.test.js)', () => {
   it('ohne Profil-Einkommen fragt der IPV-Rechner danach und schreibt die Eingabe ins Profil-Feld finanzen.monthlyIncome', () => {
     const writes = [];
     const html = render(PremiumSubsidy, { data: profil({ canton: 'BE' }), onUpdateData: (...a) => writes.push(a) });
@@ -91,14 +91,14 @@ describe('K10 · Aussage 2: der IPV-Rechner übernimmt das Profil — aber nicht
     expect(html).toContain('premium.canton(cantons.BE)');
   });
 
-  it('B-1 Ist-Zustand: gleiche Engine, andere Eingabe — der Schnellcheck rechnet mit seiner lokalen Zahl, der IPV-Rechner mit dem Profil', () => {
+  it('B-1: gleiche Engine, andere Eingabe — ohne Übergabe (Weg über das Menü) rechnet der IPV-Rechner mit dem Profil', () => {
     // Profil: 5000/Monat in BE. Im Schnellcheck tippt jemand 3000 ein (Schnellcheck.jsx:21, lokaler Zustand).
     const profilDaten = profil({ canton: 'BE', income: 5000 });
     const schnellcheckProbe = { ...profilDaten, finanzen: { ...profilDaten.finanzen, monthlyIncome: 3000 } };
     // Der Schnellcheck zeigt einen möglichen Anspruch und verlinkt auf view 'premium' …
     // (E9: ohne amtlich belegten Kanton als Orientierung ohne Betrag)
     expect(calculateIPV(schnellcheckProbe).anspruchMoeglich).toBe(true);
-    // … der IPV-Rechner bekommt aber nur `data` (main.jsx:1323) und rechnet mit 5000.
+    // … ohne `schnellcheckZahlen` rechnet der IPV-Rechner mit dem Profil (5000).
     expect(calculateIPV(profilDaten).anspruchMoeglich).toBe(false);
     const html = render(PremiumSubsidy, { data: profilDaten, onUpdateData: () => {} });
     expect(html).toContain('ipv.orientierungOffen');
