@@ -7,7 +7,18 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-16, 12:10 (`main`=`8c1bd46` nach dem Merge von **PR #157**, mit diesem Stand-PR weiter · ⚠️ **zweite K-Runde gemergt, NICHT live**: live weiter `index-f4a79e77.js` vom Deploy am 15.09. 23:25 · Version im Repo neu **0.1.28-beta**, Tag erst nach dem Deploy · 951 Tests grün, Hauptbundle 64.21 kB · 0 offene PRs)
+**Stand:** 2026-09-16, 12:30 (`main`=`2aaeff5` nach dem Merge von **PR #159**, mit diesem Stand-PR weiter · ✅ **0.1.28-beta DEPLOYT 12:23 aus `2aaeff5`**: live `index-2301b4b1.js`, Footer `0.1.28-beta`, Tag `v0.1.28-beta` = `2aaeff5` auf origin · `main` = live · 0 offene PRs · B-3 behoben und live)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-16, 12:30 (0.1.28-beta live)
+>
+> `bash deploy.sh` von `main` (`2aaeff5`) um **12:23**, Hand von Stebler Studios; der Lauf hat das
+> Tag `v0.1.28-beta` selbst gesetzt. Per `curl` 12:25 belegt: `index-2301b4b1.js` = lokaler Build,
+> alle 118 Dateien live 200, `index.html` · `theme-init.js` · `sw.js` · `sitemap.xml`
+> prüfsummengleich, altes Bundle `index-f4a79e77.js` → 404, erfundener Name → 404, `0.1.28-beta`
+> im Bundle. Merkmale von K20 und K22 in den ausgelieferten Teilen gefunden. Backup
+> `20260916-122343` = 165 Dateien. **Nicht im Browser geprüft:** der Browser-Tab hielt die echte
+> Sitzung von Stebler Studios; dort wird nichts angeklickt. Die Sichtproben mit Zugangscode
+> (K3, K5, K12, K20, K24) bleiben bei Stebler Studios. B-3 steht jetzt unter «Zuletzt behoben».
 
 > ### ⭐ AKTUALISIERUNG 2026-09-16, 12:10 (K20 – K25 gemergt, nicht deployt)
 >
