@@ -1863,6 +1863,7 @@ export default {
       petition3: 'Municipal website — For local concerns, directly with your municipality.',
       cantonPortal: 'Canton of {canton} ↗',
       localGovDesc: 'for local matters — your commune and canton.',
+      communeHint: 'The website of {city} is not listed here — it can be found via the cantonal portal or a web search.',
       helpTitle: 'Helplines',
       help1: { name: 'The Samaritans (Die Dargebotene Hand) · Tel. 143', url: 'tel:143', desc: '24/7, free, anonymous.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · Tel. 147', url: 'tel:147', desc: 'Counselling for children and young people.', web: 'https://www.projuventute.ch' },

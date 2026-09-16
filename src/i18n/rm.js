@@ -1639,6 +1639,8 @@ export default {
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
       localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
+      // TODO(rm): communeHint durch Fachperson gegenlesen lassen
+      communeHint: 'La pagina d’internet da la vischnanca {city} n’è betg deponida qua — ella sa lascha chattar sur il portal chantunal u cun ina tschertga.',
       helpTitle: 'Posts da cussegliaziun',
       help1: { name: 'La Maun Dertgida · tel. 143', url: 'tel:143', desc: 'Permanent, gratuit, anonim.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · tel. 147', url: 'tel:147', desc: 'Cussegliaziun per uffants e giuvenils.', web: 'https://www.projuventute.ch' },

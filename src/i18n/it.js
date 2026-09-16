@@ -1863,6 +1863,7 @@ export default {
       petition3: { sie: 'Sito del Suo comune — Per le questioni locali, direttamente presso il Suo comune.', du: 'Sito del tuo comune — Per le questioni locali, direttamente presso il tuo comune.' },
       cantonPortal: 'Cantone {canton} ↗',
       localGovDesc: 'per le pratiche locali — il Suo comune e cantone.',
+      communeHint: 'Il sito del comune di {city} non è indicato qui — si trova tramite il portale cantonale o una ricerca online.',
       helpTitle: 'Linee di aiuto',
       help1: { name: 'Telefono Amico · Tel. 143', url: 'tel:143', desc: '24/7, gratuito, anonimo.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · Tel. 147', url: 'tel:147', desc: 'Consulenza per bambini e giovani.', web: 'https://www.projuventute.ch' },

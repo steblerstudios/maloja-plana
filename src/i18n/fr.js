@@ -1862,6 +1862,7 @@ export default {
       petition3: { sie: 'Site de votre commune — Pour les préoccupations locales, directement auprès de votre commune.', du: 'Site de ta commune — Pour les préoccupations locales, directement auprès de ta commune.' },
       cantonPortal: 'Canton de {canton} ↗',
       localGovDesc: 'pour les démarches locales — votre commune et votre canton.',
+      communeHint: 'Le site de la commune de {city} n’est pas répertorié ici — il se trouve via le portail cantonal ou une recherche en ligne.',
       helpTitle: 'Lignes d\'aide',
       help1: { name: 'La Main Tendue · Tél. 143', url: 'tel:143', desc: '24h/24, gratuit, anonyme.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · Tél. 147', url: 'tel:147', desc: 'Conseil pour enfants et jeunes.', web: 'https://www.projuventute.ch' },

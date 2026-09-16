@@ -33,17 +33,14 @@ const SONDER = {
 const HERZ_TON = { digital: 'sky', soziales: 'sage', konsum: 'gold', tiere: 'sand', gesundheit: 'rose', kunst: 'soft', gemeinschaft: 'sage' };
 const HERZ_ICON = { digital: 'globe', soziales: 'sozialhilfe', konsum: 'tag', tiere: 'paw', gesundheit: 'health', kunst: 'palette', gemeinschaft: 'family' };
 
-// Kanton-/Gemeinde-Portal nach dem Muster www.<code|gemeinde>.ch (Entscheid von Stebler Studios:
-// trifft meist, gelegentlich daneben, bewusst akzeptiert).
+// Kantonsportal nach dem Muster www.<code>.ch. Gemessen 16.09.2026 (curl -L) für alle
+// 26 Kantone: 22 antworten 200, teils über Weiterleitung (z. B. bl → baselland.ch,
+// ju → jura.ch, so → so.ch); GL, SZ und BL antworten 403 (Bot-Schutz — derselbe Host wie
+// die Kantons-Links in data/direktLinks.js), FR war von hier aus nicht erreichbar (derselbe
+// Host www.fr.ch wie dort).
+// Gemeinde: KEIN Link mehr (R4). Die Adresse www.<ort>.ch war geraten, und im Repo gibt es
+// keine belegten Gemeinde-Websites (data/plzGemeinde.js führt nur Name, BFS-Nr., Kanton).
 const cantonPortalUrl = (code) => 'https://www.' + String(code).toLowerCase() + '.ch';
-const communeUrl = (city) => {
-  const slug = String(city).toLowerCase()
-    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
-    .replace(/[àâá]/g, 'a').replace(/[èéêë]/g, 'e').replace(/[ìíî]/g, 'i')
-    .replace(/[òóô]/g, 'o').replace(/[ùúû]/g, 'u').replace(/ç/g, 'c').replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  return slug ? 'https://www.' + slug + '.ch' : null;
-};
 
 export const DirektLinks = ({ palette, t, data }) => {
   const kategorien = getAllKategorien();
@@ -145,14 +142,15 @@ export const DirektLinks = ({ palette, t, data }) => {
     if (!city && !cantonName) return React.createElement('div', { key: 'lg', style: s.entryCard },
       React.createElement('div', { style: s.entryName }, t('legal.resources.petition3')));
     const links = [];
-    if (city) { const cUrl = communeUrl(city); links.push(cUrl ? React.createElement('a', { key: 'gm', href: cUrl, target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, city) : React.createElement('span', { key: 'gm', style: s.entryName }, city)); }
+    if (city) links.push(React.createElement('span', { key: 'gm', style: s.entryName }, city));
     if (cantonName) {
       if (city) links.push(' · ');
       links.push(React.createElement('a', { key: 'kt', href: cantonPortalUrl(canton), target: '_blank', rel: 'noopener noreferrer', style: s.entryNameLink }, t('legal.resources.cantonPortal', { canton: cantonName })));
     }
     return React.createElement('div', { key: 'lg', style: s.entryCard },
       React.createElement('div', null, ...links),
-      React.createElement('div', { style: s.entryDesc }, t('legal.resources.localGovDesc'))
+      React.createElement('div', { style: s.entryDesc }, t('legal.resources.localGovDesc')),
+      city && React.createElement('div', { style: s.entryDesc }, t('legal.resources.communeHint', { city }))
     );
   };
 

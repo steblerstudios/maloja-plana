@@ -1866,6 +1866,7 @@ export default {
       petition3: { sie: 'Gemeinde-Website — Für lokale Anliegen direkt bei Ihrer Gemeinde.', du: 'Gemeinde-Website — Für lokale Anliegen direkt bei Deiner Gemeinde.' },
       cantonPortal: 'Kanton {canton} ↗',
       localGovDesc: 'für lokale Anliegen — direkt bei Gemeinde und Kanton.',
+      communeHint: 'Die Website der Gemeinde {city} ist hier nicht hinterlegt — sie lässt sich über das Kantonsportal oder eine Suche finden.',
       helpTitle: 'Beratungsstellen',
       help1: { name: 'Die Dargebotene Hand · Tel. 143', url: 'tel:143', desc: 'Rund um die Uhr, kostenlos, anonym.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · Tel. 147', url: 'tel:147', desc: 'Beratung für Kinder und Jugendliche.', web: 'https://www.projuventute.ch' },
