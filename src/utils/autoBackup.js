@@ -1,6 +1,6 @@
 // ─── Automatic Local Backup ─────────────────────────────────
 // Creates periodic snapshots of or5_data and or5_docs in IndexedDB.
-// Keeps up to 3 rolling backups (one per day max).
+// Keeps up to 5 rolling backups (MAX_BACKUPS; at most one per 12 hours).
 // Restores are manual — user must explicitly trigger.
 //
 // Storage: IndexedDB 'maloja-plana-backups' store.
