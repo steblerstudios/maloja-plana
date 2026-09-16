@@ -87,9 +87,10 @@ export function einkommensfreibetrag(erwerbseinkommen) {
 //   Paar ist überall 2× Einzel, begrenzt durch Max (bei BL/TI: Max = Einzel → Paar = Einzel).
 // Kantonal NICHT bestätigte Kantone: zusätzlich in data/vermoegensfreibetragUnbestaetigt.js.
 const VFB_KANTON = {
-  // AG: § 11 Abs. 4 SPV (SAR 851.211) / Handbuch Soziales AG Ziff. 9.2, «Freibeträge pro
-  // Person 1'500, Maximalbetrag pro Unterstützungseinheit 4'500»
-  // https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen
+  // AG: § 11 Abs. 4 SPV (SAR 851.211) / Handbuch Soziales AG Ziff. 9.2, «Freibeträge (pro
+  // Person Fr. 1'500.—, maximal Fr. 4'500.— pro Unterstützungseinheit)» (Wortlaut am
+  // 16.09.2026 an der neuen Adresse nachgelesen; die alte /de/verwaltung/…-Adresse leitet per 301 hierher)
+  // https://www.ag.ch/de/themen/soziales-gesellschaft/soziale-sicherheit/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen
   // Gelesen als: jede Person der Einheit (auch Kinder) 1'500 → Paar 3'000, Kind +1'500, max. 4'500.
   AG: [15, 15, 45],
   // SH: Richtlinien Bemessung der Sozialhilfe, Ziff. D.6.1, gültig ab 1.1.2022
