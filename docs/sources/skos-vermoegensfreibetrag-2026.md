@@ -101,15 +101,30 @@ Status-Legende: ✅ kantonal belegt (amtliche Quelle mit Zahl) ·
 ⚠️ nur SKOS-Karte / nur indirekt-kommunal belegt, keine tragfähige amtliche
 kantonale Einzelquelle gefunden · 🔍 in Arbeit.
 
+Spalte «Art der Quelle»: **eigene Zahl** (Kanton beziffert den Freibetrag
+selbst, unabhängig von SKOS) · **Verweis auf SKOS** (kantonales Recht
+erklärt die SKOS-Richtlinien für verbindlich/wegleitend, ohne selbst eine
+Zahl zu nennen — der Betrag kommt dann ausschliesslich aus der
+SKOS-Richtlinie D.3.1 selbst, siehe Abschnitt weiter unten) · **nur
+SKOS-Karte** (weder eigene Zahl noch auffindbarer Verweis; nur der
+Kartenwert steht im Raum).
+
 | Kanton | Einzel | Paar | je Kind | Max | Quelle | Art der Quelle | Status |
 |---|---|---|---|---|---|---|---|
-| AG | 1'500 (pro Person) | — | — | 4'500 (pro Unterstützungseinheit) | § 11 Abs. 4 SPV (SAR 851.211), Handbuch Soziales AG Ziff. 9.2 | kantonales Handbuch | ✅ |
-| SH | 2'000 | 4'000 | nicht geregelt | nicht geregelt | Richtlinien für die Bemessung der Sozialhilfe, Ziff. D.6.1, gültig ab 1.1.2022 | kantonale Richtlinie | ✅ |
-| SO | 2'000 | 4'000 | 1'000 | 5'000 (pro Familie) | § 93 Abs. 1 Bst. j SV, Sozialhilfehandbuch SO | Gesetz + kantonales Handbuch | ✅ |
-| BL | — | — | — | — | — | — | ⚠️ nicht amtlich belegt |
-| SG | 2'500 | 5'000 | 1'250 | 6'250 (pro Familie) | «Beiblatt zum KOS-Handbuch Kanton St. Gallen» in der Anwendung Stadt Wil, ab 1.1.2026 | kommunale Anwendung einer kantonalen Praxishilfe — **nicht** die generelle kantonale Regelung für reguläre Sozialhilfe | ⚠️ nur indirekt belegt |
-| NE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 18 ANCAM (RSN 831.02), état au 1er avril 2026 | kantonaler Erlass | ✅ |
-| BE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 8n SHV (BSG 860.111), zitiert in den Unterstützungsrichtlinien Sozialhilfe der Stadt Bern | kantonale Verordnung (über städtische Publikation zitiert) | ✅ |
+| AG | 1'500 (pro Person) | — | — | 4'500 (pro Unterstützungseinheit) | § 11 Abs. 4 SPV (SAR 851.211), Handbuch Soziales AG Ziff. 9.2 | eigene Zahl | ✅ |
+| SH | 2'000 | 4'000 | nicht geregelt | nicht geregelt | Richtlinien für die Bemessung der Sozialhilfe, Ziff. D.6.1, gültig ab 1.1.2022 | eigene Zahl | ✅ |
+| SO | 2'000 | 4'000 | 1'000 | 5'000 (pro Familie) | § 93 Abs. 1 Bst. j SV, Sozialhilfehandbuch SO | eigene Zahl | ✅ |
+| BL | — | — | — | — | — | nur SKOS-Karte | ⚠️ nicht amtlich belegt |
+| SG | 2'500 | 5'000 | 1'250 | 6'250 (pro Familie) | «Beiblatt zum KOS-Handbuch Kanton St. Gallen» in der Anwendung Stadt Wil, ab 1.1.2026 | eigene Zahl (nur kommunal/Asylsozialhilfe belegt, nicht sicher generalisierbar) | ⚠️ nur indirekt belegt |
+| NE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 18 ANCAM (RSN 831.02), état au 1er avril 2026 | eigene Zahl | ✅ |
+| BE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 8n SHV (BSG 860.111), zitiert in den Unterstützungsrichtlinien Sozialhilfe der Stadt Bern | eigene Zahl | ✅ |
+| AI | — | — | — | — | Art. 5 Abs. 2 ShiV (GS 850.010): Standeskommission legt eigene, nicht-öffentliche Richtlinien fest | nur SKOS-Karte | ⚠️ nicht amtlich belegt |
+| ZG | SKOS-Kartenwert 6'000 (Verweis) | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | § 9 SHV (BGS 861.41) | Verweis auf SKOS | ✅ (Verweisnorm belegt) |
+| SZ | SKOS-Kartenwert 6'000 (Verweis) | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | § 4 Abs. 2 SRSZ 380.111 | Verweis auf SKOS | ✅ (Verweisnorm belegt) |
+| LU | SKOS-Kartenwert 6'000 (Verweis) | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | § 31 Abs. 1 SHG (SRL 892) + Luzerner Handbuch 2026, Anhang zu D.3.1 | Verweis auf SKOS | ✅ (Verweisnorm belegt) |
+| NW | SKOS-Kartenwert 6'000 (Verweis) | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | § 8 Abs. 1 SHV (NG 761.11, Stand 1.1.2026) | Verweis auf SKOS | ✅ (Verweisnorm belegt) |
+| GL | SKOS-Kartenwert 6'000 (Verweis) | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | gemäss SKOS-Richtlinie D.3.1 — Wortlaut offen | SHV GS VIII E/21/5 (Stand 1.3.2026) | Verweis auf SKOS | ✅ (Verweisnorm belegt) |
+| OW | — | — | — | — | SHG GDB 870.1 / SHV GDB 870.11 — kein Vermögensartikel gefunden | nur SKOS-Karte | ⚠️ nicht amtlich belegt |
 
 *(Weitere Kantone folgen in den nächsten Commits; siehe Zitate weiter unten.)*
 
@@ -228,6 +243,93 @@ Erlasstext (belex.sites.be.ch) steht noch aus — die städtische Publikation
 zitiert Art. 8n SHV jedoch namentlich und wörtlich mit Datum/Nummer, das
 genügt als kantonale Rechtsgrundlage.
 
+### AI — Appenzell Innerrhoden ⚠️ nicht amtlich belegt
+
+> «Die Standeskommission legt verbindliche Richtlinien für die Bemessung
+> der materiellen Hilfe fest.»
+
+Quelle: Art. 5 Abs. 2 Verordnung zum Sozialhilfegesetz (ShiV, GS 850.010).
+<https://ai.clex.ch/api/de/versions/1381/pdf_file> (offizielle
+Erlass-PDF, verlinkt von <https://ai.clex.ch/app/de/texts_of_law/850.010>)
+— abgerufen 16.09.2026, in dieser Sitzung per PDF-Volltext direkt
+gegengeprüft. Die Verordnung selbst nennt keine Frankenbeträge zum
+Vermögensfreibetrag; die Bemessung liegt bei **nicht-öffentlichen**
+Richtlinien der Standeskommission. **Status: nur SKOS-Kartenwert (CHF
+6'000), keine amtlich zugängliche kantonale Zahl.** Für eine verbindliche
+Auskunft ist eine Nachfrage beim kantonalen Sozialamt nötig.
+
+### ZG — Zug ✅ (Verweisnorm belegt)
+
+> «§ 9 Anwendbarkeit der SKOS-Richtlinien — Die Ausgestaltung und das
+> Ausmass der Unterstützung (§§ 20 und 29 SHG) richten sich nach den
+> Richtlinien der Schweizerischen Konferenz für Sozialhilfe
+> (SKOS-Richtlinien). Der Regierungsrat kann ergänzende und präzisierende
+> Vorschriften zu den SKOS-Richtlinien erlassen oder festlegen, dass
+> bestimmte Teile nicht anwendbar sind.»
+
+Quelle: § 9 Verordnung zum Sozialhilfegesetz (Sozialhilfeverordnung, BGS
+861.41). <https://bgs.zg.ch/api/de/versions/2505/pdf_file> (offizielle
+Erlass-PDF, verlinkt von <https://bgs.zg.ch/app/de/texts_of_law/861.41>)
+— abgerufen 16.09.2026, in dieser Sitzung per PDF-Volltext direkt
+gegengeprüft, wörtlich bestätigt. Keine eigene Abweichung beim Vermögen
+gefunden — der Betrag kommt vollständig aus der SKOS-Richtlinie selbst.
+
+### SZ — Schwyz ✅ (Verweisnorm belegt)
+
+Quelle: § 4 Abs. 2 Vollzugsverordnung zum Sozialhilfegesetz (SRSZ
+380.111): SKOS-Richtlinien sind «wegleitend, soweit … keine andere
+Regelung» im kantonalen Recht besteht.
+<https://www.sz.ch/public/upload/assets/32455/380_111.pdf>
+— abgerufen 16.09.2026 (Fundstelle vom Recherche-Subagenten geliefert, in
+dieser Sitzung nicht zusätzlich erneut geöffnet). Keine eigene Zahl zum
+Vermögensfreibetrag im Verweistext.
+
+### LU — Luzern ✅ (Verweisnorm belegt)
+
+> «§ 31 Umfang — Die wirtschaftliche Sozialhilfe deckt das soziale
+> Existenzminimum ab. Für dessen Bemessung sind die Empfehlungen der
+> Schweizerischen Konferenz für Sozialhilfe (Skos-Richtlinien)
+> wegleitend. Der Regierungsrat kann durch Verordnung Abweichungen von
+> den Skos-Richtlinien beschliessen.»
+
+Quelle: § 31 Abs. 1 Sozialhilfegesetz (SHG, SRL 892).
+<https://srl.lu.ch/api/de/versions/4151/pdf_file> (offizielle Erlass-PDF,
+verlinkt von <https://srl.lu.ch/app/de/texts_of_law/892>) — abgerufen
+16.09.2026, in dieser Sitzung per PDF-Volltext direkt gegengeprüft,
+wörtlich bestätigt. Ergänzend nennt das Luzerner Handbuch Sozialhilfe 2026
+im Anhang zu D.3.1 «Freibetrag gemäss SKOS-RL D.3.1»
+(<https://disg.lu.ch/-/media/DISG/Dokumente/Themen/Sozialhilfe/Luzerner_Handbuch_Sozialhilfe/2026_Luzerner_Handbuch_Sozialhilfe.pdf>,
+vom Recherche-Subagenten geliefert, in dieser Sitzung nicht separat
+gegengeprüft) — auch das Handbuch beziffert den Freibetrag nicht selbst,
+sondern verweist auf D.3.1.
+
+### NW — Nidwalden ✅ (Verweisnorm belegt)
+
+Quelle: § 8 Abs. 1 Sozialhilfeverordnung (SHV, NG 761.11, Stand
+1.1.2026), mit Anhängen 1/2.
+<https://gesetze.nw.ch/app/de/texts_of_law/761.11>
+— abgerufen 16.09.2026 (Fundstelle vom Recherche-Subagenten geliefert, in
+dieser Sitzung nicht zusätzlich erneut geöffnet). Keine eigene Abweichung
+beim Vermögen gefunden.
+
+### GL — Glarus ✅ (Verweisnorm belegt)
+
+Quelle: Sozialhilfeverordnung (SHV, GS VIII E/21/5, Stand 1.3.2026).
+<https://gesetze.gl.ch/app/de/texts_of_law/VIII%20E%2F21%2F5>
+— abgerufen 16.09.2026 (Fundstelle vom Recherche-Subagenten geliefert, in
+dieser Sitzung nicht zusätzlich erneut geöffnet). Die Verordnung weicht
+bei anderen Positionen von SKOS ab, nennt beim Vermögensfreibetrag aber
+keine eigene Zahl — dort gilt der SKOS-Wert.
+
+### OW — Obwalden ⚠️ nicht amtlich belegt
+
+Sozialhilfegesetz (SHG, GDB 870.1) und Sozialhilfeverordnung (SHV, GDB
+870.11) enthalten keinen Artikel zum Vermögensfreibetrag; ein separates
+«Handbuch Sozialwesen OW» war nicht auffindbar. **Status: nur
+SKOS-Kartenwert (CHF 6'000), keine amtlich zugängliche kantonale Zahl.**
+Für eine verbindliche Auskunft ist eine Nachfrage beim kantonalen
+Sozialamt nötig.
+
 ---
 
 ## Die SKOS-Empfehlung selbst (+3'000/Kind, Deckel 15'000)
@@ -253,8 +355,20 @@ Deckel 15'000:)*
 | SG | 6'000 / 12'000 / +3'000 / 15'000 | 2'500 / 5'000 / 1'250 / 6'250 (nur indirekt belegt) | vermutlich **zu hoch**, Quelle nicht sicher generalisierbar |
 | NE | 6'000 / 12'000 / +3'000 / 15'000 | 4'000 / 8'000 / 2'000 / 10'000 | App **zu hoch** bei allen vier Werten |
 | BE | 6'000 / 12'000 / +3'000 / 15'000 | 4'000 / 8'000 / 2'000 / 10'000 | App **zu hoch** bei allen vier Werten |
+| AI | 6'000 / 12'000 / +3'000 / 15'000 | nicht belegt (Karte: 6'000, Delegation an nicht-öffentliche Richtlinien) | unklar — kantonal nicht prüfbar |
+| ZG | 6'000 / 12'000 / +3'000 / 15'000 | Verweis auf SKOS D.3.1 (Grundbetrag 6'000 laut Karte) | **Grundbetrag passt zur Karte**, Kind-Zuschlag/Deckel der App nicht durch D.3.1-Wortlaut bestätigt |
+| SZ | 6'000 / 12'000 / +3'000 / 15'000 | Verweis auf SKOS D.3.1 (Grundbetrag 6'000 laut Karte) | **Grundbetrag passt zur Karte**, Kind-Zuschlag/Deckel offen |
+| LU | 6'000 / 12'000 / +3'000 / 15'000 | Verweis auf SKOS D.3.1 (Grundbetrag 6'000 laut Karte) | **Grundbetrag passt zur Karte**, Kind-Zuschlag/Deckel offen |
+| NW | 6'000 / 12'000 / +3'000 / 15'000 | Verweis auf SKOS D.3.1 (Grundbetrag 6'000 laut Karte) | **Grundbetrag passt zur Karte**, Kind-Zuschlag/Deckel offen |
+| GL | 6'000 / 12'000 / +3'000 / 15'000 | Verweis auf SKOS D.3.1 (Grundbetrag 6'000 laut Karte) | **Grundbetrag passt zur Karte**, Kind-Zuschlag/Deckel offen |
+| OW | 6'000 / 12'000 / +3'000 / 15'000 | nicht belegt (Karte: 6'000, kein Vermögensartikel gefunden) | unklar — kantonal nicht prüfbar |
 
-Für alle bisher geprüften Kantone gilt: nicht nur der Grundbetrag weicht ab
-— auch der pauschale Kinderzuschlag (+3'000) und der Deckel (15'000) der
-App sind für AG/SH/SO/NE/BE kantonal falsch (SO/NE/BE kennen 1'000–2'000 je
-Kind und einen deutlich tieferen Deckel von 4'500–10'000).
+Für AG/SH/SO/NE/BE gilt: nicht nur der Grundbetrag weicht ab — auch der
+pauschale Kinderzuschlag (+3'000) und der Deckel (15'000) der App sind
+kantonal falsch (SO/NE/BE kennen 1'000–2'000 je Kind und einen deutlich
+tieferen Deckel von 4'500–10'000). Für die fünf «Verweis auf SKOS»-Kantone
+(ZG, SZ, LU, NW, GL) passt der Grundbetrag der App zur SKOS-Karte (6'000) —
+ob Kinderzuschlag (+3'000) und Deckel (15'000) ebenfalls korrekt sind, hängt
+am Wortlaut der SKOS-Richtlinie D.3.1 selbst (siehe Abschnitt oben), der in
+dieser Sitzung noch nicht gefunden wurde. AI und OW sind kantonal nicht
+prüfbar (keine amtlich zugängliche Zahl).
