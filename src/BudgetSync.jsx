@@ -10,6 +10,7 @@ import { RegionalBarometer } from './components/RegionalBarometer.jsx';
 import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -27,6 +28,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
   const [showAnnual, setShowAnnual] = useState(false);
   // Faden 4 / Inkr. A — which orientation infos are expanded (default: none = calm)
   const [openInfo, setOpenInfo] = useState(() => new Set());
+  // Export-Vorschau (K20): erst zeigen, was im Budget-Bericht steht, dann herunterladen.
+  const [berichtVorschau, setBerichtVorschau] = useState(false);
 
   useEffect(() => {
     const synced = calculateMonthlyBudget(data, t);
@@ -456,7 +459,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         }
       }, showAnnual ? 'ⓘ ' + t('budgetSync.title') : 'ⓘ ' + t('budgetSync.annualView')),
       React.createElement('button', {
-        onClick: handleExportReport,
+        onClick: () => setBerichtVorschau(true),
         style: {
           padding: '9px 14px', background: palette.up, color: palette.mid,
           border: '1px solid ' + palette.border, borderRadius: radius.sm,
@@ -464,6 +467,14 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         }
       }, t('nav.export'))
     ),
+
+    // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
+    berichtVorschau && React.createElement(ExportVorschau, {
+      palette, t, art: 'budgetJson',
+      quelle: { report: createBudgetReport(data, t), data },
+      onWeiter: () => { setBerichtVorschau(false); handleExportReport(); },
+      onZurueck: () => setBerichtVorschau(false),
+    }),
 
     // === Auto-update note ===
     React.createElement('div', {

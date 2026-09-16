@@ -10,7 +10,8 @@ import { leiteKategorienAb } from '../exportVorschau.js';
 //
 // Liegt NICHT im Hauptbundle: importiert wird die Vorschau nur aus Ansichten, die
 // ihrerseits per React.lazy geladen werden (ZipExport, Lebensmappe, Notfall- und
-// Behörden-Dossier, Briefvorlagen). Statisch statt eigenem lazy(): so kann das
+// Behörden-Dossier, Briefvorlagen; seit K20 auch Finanzübersicht, Kapitel-Ansicht
+// mit der Notfallkarte, IPV, Budget, Lebenslauf, Kalender). Statisch statt eigenem lazy(): so kann das
 // Nachladen nie scheitern, wenn die Ansicht selbst schon geladen ist (offline).
 
 // Die Sicherung nimmt Termine, Kontakte und Merkliste mit — dieselben Schlüssel wie

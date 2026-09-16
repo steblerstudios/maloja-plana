@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { generateCVTemplate, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
+import { generateCVTemplate, generateJSONResume, downloadCVAsHTML, downloadCVAsJSON } from './cvGenerator.js';
 import { Icon } from './IconSystem.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 
 export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
   const [preview, setPreview] = useState(false);
+  // Export-Vorschau (K20): null | 'html' | 'json' — erst zeigen, was in der Datei steht.
+  const [vorschau, setVorschau] = useState(null);
   // Abschnitts-Überschriften optisch in Versalien, aber im Markup normale
   // Schreibweise (Screenreader liest Wörter statt Buchstaben) — text-transform.
   const headStyle = { textTransform: 'uppercase', letterSpacing: '0.5px' };
@@ -38,20 +41,35 @@ export const CVGenerator = ({ palette, t, data, _onUpdate }) => {
       )
     ),
 
-    React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: space.md } },
+    React.createElement('div', { style: { display: 'flex', gap: space.sm, marginBottom: vorschau ? 0 : space.md } },
       React.createElement('button', {
         onClick: () => setPreview(!preview),
         style: { flex: 1, padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, preview ? '✕ ' + t('common.close') : '◉ ' + t('cv.preview')),
       React.createElement('button', {
-        onClick: handleDownload,
+        onClick: () => setVorschau('html'),
         style: { flex: 1, padding: '10px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, '↙ ' + t('cv.downloadHtml')),
       React.createElement('button', {
-        onClick: () => downloadCVAsJSON(data, t),
+        onClick: () => setVorschau('json'),
         title: t('cv.downloadJsonHint'),
         style: { flex: 1, padding: '10px', background: 'transparent', color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
       }, '{ } ' + t('cv.downloadJson'))
+    ),
+
+    // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
+    vorschau && React.createElement('div', { style: { marginBottom: space.md } },
+      React.createElement(ExportVorschau, {
+        palette, t,
+        art: vorschau === 'json' ? 'cvJson' : 'cvHtml',
+        quelle: vorschau === 'json' ? { resume: generateJSONResume(data, t) } : { cv, data },
+        onWeiter: () => {
+          const json = vorschau === 'json';
+          setVorschau(null);
+          if (json) downloadCVAsJSON(data, t); else handleDownload();
+        },
+        onZurueck: () => setVorschau(null),
+      })
     ),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px' } }, 'ⓘ ' + t('trust.localOnly')),

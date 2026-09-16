@@ -177,7 +177,8 @@ export const downloadCVAsHTML = (cvData, t) => {
 
 // JSON Resume (jsonresume.org) — maschinenlesbarer, ATS-tauglicher Standard.
 // Bewusst ohne Geburtsdatum/Zivilstand (Datensparsamkeit + anti-diskriminierend).
-const generateJSONResume = (data, _t) => {
+// Exportiert für die Export-Vorschau (K20): sie liest dasselbe Objekt, das downloadCVAsJSON schreibt.
+export const generateJSONResume = (data, _t) => {
   const b = data.basis || {};
   const w = data.wohnen || {};
   const a = data.ausbildung || {};

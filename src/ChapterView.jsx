@@ -14,6 +14,7 @@ import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { PLZAutocomplete } from './PLZAutocomplete.jsx';
@@ -89,6 +90,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   // t() with fallback if not provided (backward compat). useMemo → stabile Referenz,
   // damit tr sauber als useEffect-Dep dienen kann (t ist bereits memoisiert).
   const tr = useMemo(() => t || ((k) => k), [t]);
+  // Export-Vorschau (K20) vor der Notfallkarte: erst zeigen, was im Dokument steht.
+  const [kartenVorschau, setKartenVorschau] = useState(false);
 
   // Scroll-Spy: hebt den Reiter der Sektion hervor, die man gerade liest.
   // Nicht per schmalem Intersection-Band (die Sektionsköpfe sind dünn und rutschen
@@ -970,44 +973,60 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
   const hasDoctors = Array.isArray(data.doctorsList) && data.doctorsList.some(d => d.name);
   const hasMedical = isNotfall && (hasContact || hasBlood || data.allergies || (Array.isArray(data.medicationsList) && data.medicationsList.some(m => m.name)) || hasDoctors || data.doctor);
 
-  const handleSaveCard = () => {
+  // Notfallkarte: je Abschnitt das Druck-HTML UND die Feldnamen. Eine Quelle für Druck und
+  // Export-Vorschau (K20) — die Vorschau nennt genau die gedruckten Abschnitte, ohne Werte.
+  const notfallkarteAbschnitte = () => {
     const basis = allData && allData.basis || {};
     const name = [basis.firstName, basis.middleName, basis.lastName].filter(Boolean).join(' ');
     const dob = basis.dateOfBirth ? new Date(basis.dateOfBirth).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
     const sections = [];
     if (name || dob) {
       const rows = [];
-      if (name) rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>');
-      if (dob) rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>');
-      sections.push({ title: tr('notfallSummary.cardPerson'), html: rows.join('') });
+      const felder = [];
+      if (name) { rows.push('<div style="font-size:18px;font-weight:500">' + escapeHtml(name) + '</div>'); felder.push(tr('zipExport.manifest.name')); }
+      if (dob) { rows.push('<div style="color:#666">' + tr('notfallSummary.cardDateOfBirth') + ': ' + dob + '</div>'); felder.push(tr('notfallSummary.cardDateOfBirth')); }
+      sections.push({ title: tr('notfallSummary.cardPerson'), felder, html: rows.join('') });
     }
     if (data.emergencyContact) {
       const rows = ['<div>' + escapeHtml(data.emergencyContact) + '</div>'];
-      if (data.emergencyPhone) rows.push('<div>' + escapeHtml(data.emergencyPhone) + '</div>');
-      sections.push({ title: tr('notfallSummary.handoverContact'), html: rows.join('') });
+      const felder = [tr('chapters.notfall.fields.emergencyContact')];
+      if (data.emergencyPhone) { rows.push('<div>' + escapeHtml(data.emergencyPhone) + '</div>'); felder.push(tr('chapters.notfall.fields.emergencyPhone')); }
+      sections.push({ title: tr('notfallSummary.handoverContact'), felder, html: rows.join('') });
     }
     const medRows = [];
-    if (hasBlood) medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>');
-    if (data.allergies) medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    const medFelder = [];
+    if (hasBlood) { medRows.push('<div>' + tr('notfallSummary.bloodType') + ': <strong>' + escapeHtml(data.bloodType) + '</strong></div>'); medFelder.push(tr('notfallSummary.bloodType')); }
+    if (data.allergies) { medRows.push('<div>' + tr('chapters.notfall.fields.allergies') + ': ' + tr('notfallSummary.cardRecorded') + '</div>'); medFelder.push(tr('chapters.notfall.fields.allergies')); }
     const medList = Array.isArray(data.medicationsList) ? data.medicationsList.filter(m => m.name) : [];
     if (medList.length) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + medList.map(m => escapeHtml(m.name) + (m.dose ? ' ' + escapeHtml(m.dose) + ' ' + escapeHtml(m.unit) : '')).join(', ') + '</div>');
     else if (data.medications) medRows.push('<div>' + tr('chapters.notfall.fields.medications') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
+    if (medList.length || data.medications) medFelder.push(tr('chapters.notfall.fields.medications'));
     const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList.filter(d => d.name) : [];
     if (dList.length) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + dList.map(d => escapeHtml(d.name) + (d.code ? ' (' + escapeHtml(d.code) + ')' : '')).join(', ') + '</div>');
     else if (data.chronicDiseases) medRows.push('<div>' + tr('chapters.notfall.fields.chronicDiseases') + ': ' + tr('notfallSummary.cardRecorded') + '</div>');
-    if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), html: medRows.join('') });
+    if (dList.length || data.chronicDiseases) medFelder.push(tr('chapters.notfall.fields.chronicDiseases'));
+    if (medRows.length) sections.push({ title: tr('notfallSummary.handoverMedical'), felder: medFelder, html: medRows.join('') });
     const docList = Array.isArray(data.doctorsList) ? data.doctorsList.filter(d => d.name) : [];
     if (docList.length) {
       const rows = docList.map(d => '<div>' + escapeHtml(d.name) + (d.phone ? ' · ' + escapeHtml(d.phone) : '') + '</div>');
-      sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
+      const felder = [tr('chapters.notfall.fields.doctor')];
+      if (docList.some(d => d.phone)) felder.push(tr('chapters.notfall.fields.doctorPhone'));
+      sections.push({ title: tr('notfallSummary.cardDoctor'), felder, html: rows.join('') });
     } else if (data.doctor) {
       const rows = ['<div>' + escapeHtml(data.doctor) + (data.doctorPhone ? ' · ' + escapeHtml(data.doctorPhone) : '') + '</div>'];
-      sections.push({ title: tr('notfallSummary.cardDoctor'), html: rows.join('') });
+      const felder = [tr('chapters.notfall.fields.doctor')];
+      if (data.doctorPhone) felder.push(tr('chapters.notfall.fields.doctorPhone'));
+      sections.push({ title: tr('notfallSummary.cardDoctor'), felder, html: rows.join('') });
     }
     const provRows = [];
-    if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push('<div>' + tr('notfallSummary.cardAdvanceDirective') + '</div>');
-    if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push('<div>' + tr('notfallSummary.cardPowerOfAttorney') + '</div>');
-    if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), html: provRows.join('') });
+    if (data.patientenverfuegung && data.patientenverfuegung !== 'no') provRows.push(tr('notfallSummary.cardAdvanceDirective'));
+    if (data.vorsorgeauftrag && data.vorsorgeauftrag !== 'no') provRows.push(tr('notfallSummary.cardPowerOfAttorney'));
+    if (provRows.length) sections.push({ title: tr('notfallSummary.handoverProvision'), felder: provRows, html: provRows.map(r => '<div>' + r + '</div>').join('') });
+    return sections;
+  };
+
+  const handleSaveCard = () => {
+    const sections = notfallkarteAbschnitte();
     const sectionHtml = sections.map(s =>
       '<div style="margin-bottom:16px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:#888;margin-bottom:4px">' + s.title + '</div>' + s.html + '</div>'
     ).join('');
@@ -1171,16 +1190,25 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       style: { marginBottom: space.md }
     },
       React.createElement('span', {
-        onClick: handleSaveCard,
+        onClick: () => setKartenVorschau(true),
         role: 'button',
         tabIndex: 0,
-        onKeyDown: (e) => { if (e.key === 'Enter') handleSaveCard(); },
+        onKeyDown: (e) => { if (e.key === 'Enter') setKartenVorschau(true); },
         style: {
           fontSize: text.sm, color: palette.mid, cursor: 'pointer', letterSpacing: '0.2px',
           borderBottom: '1px solid ' + palette.border,
           paddingBottom: '1px',
         }
-      }, '□ ' + tr('notfallSummary.printCard'))
+      }, '□ ' + tr('notfallSummary.printCard')),
+
+      // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
+      // Abschnitte der Karte mit Feldnamen, nie mit Werten.
+      kartenVorschau && React.createElement(ExportVorschau, {
+        palette, t: tr, art: 'dossier',
+        quelle: { abschnitte: notfallkarteAbschnitte().map(s => ({ titel: s.title, felder: s.felder })) },
+        onWeiter: () => { setKartenVorschau(false); handleSaveCard(); },
+        onZurueck: () => setKartenVorschau(false),
+      })
     ),
 
     // Versicherungsübersicht — coverage overview when at least one field is filled

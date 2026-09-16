@@ -135,14 +135,98 @@ function briefKategorien(q) {
   return out;
 }
 
+// ─── K20: die übrigen Stellen, an denen Daten das Gerät als Datei oder Druck verlassen ───
+// Jede Ableitung liest das Objekt (oder den Text), das der jeweilige Export gleich
+// schreibt — nicht die Rohdaten. Fällt ein Export ohne Namen auf einen Platzhalter
+// zurück (Budget-Bericht, Lebenslauf), zählt der Name aus den Daten, nicht aus dem Platzhalter.
+
+const hatName = (b) => !!b && (hatWert(b.firstName) || hatWert(b.middleName) || hatWert(b.lastName) || hatWert(b.fullName));
+
+// IPV-Antrag (PremiumSubsidy): das Objekt aus buildIpvDokument (premiumCalc.js).
+function ipvKategorien(dok) {
+  const o = dok && typeof dok === 'object' ? dok : {};
+  const out = [];
+  if (hatWert(o.applicant)) out.push({ id: 'name' });
+  if (hatWert(o.ahv)) out.push({ id: 'ahv' });
+  if (hatWert(o.canton)) out.push({ id: 'kanton' });
+  // Das Ergebnis steht immer in der Datei — auch «kein Anspruch». Darum Vorhandensein
+  // statt hatWert: `{ eligible: false, amount: 0 }` ist eine Aussage, keine Leerstelle.
+  if (o.result != null) out.push({ id: 'ipvErgebnis' });
+  return out;
+}
+
+// Budget-Bericht (BudgetSync): das Objekt aus createBudgetReport (budgetSync.js).
+// Schuldenabzahlungen eigens genannt, weil sie heikel sind — wie die Gesundheitsangaben.
+function budgetKategorien(report, data) {
+  const b = (report && report.budget) || {};
+  const ausgaben = { ...(b.expenses || {}) };
+  const schulden = ausgaben.debtPayments;
+  delete ausgaben.debtPayments;
+  const out = [];
+  if (hatName(data && data.basis)) out.push({ id: 'name' });
+  if (hatWert(b.income) || hatWert(b.incomeDetail)) out.push({ id: 'einkommen' });
+  if (hatWert(b.ipvRelief)) out.push({ id: 'ipvErgebnis' });
+  if (hatWert(ausgaben) || hatWert(b.reference)) out.push({ id: 'ausgaben' });
+  if (hatWert(schulden)) out.push({ id: 'schulden' });
+  if (hatWert(b.householdContext)) out.push({ id: 'haushalt' });
+  return out;
+}
+
+// Lebenslauf als HTML (CVGenerator): das Objekt aus generateCVTemplate, das
+// generateCVHTML ausschreibt. Die aktuelle Stelle erscheint dort nur mit Berufsbezeichnung.
+function cvHtmlKategorien(cv, data) {
+  const c = cv && typeof cv === 'object' ? cv : {};
+  const h = c.header || {};
+  const exp = c.experience || {};
+  const out = [];
+  if (hatName(data && data.basis)) out.push({ id: 'name' });
+  if (hatWert(h.phone) || hatWert(h.email)) out.push({ id: 'kontakt' });
+  if (hatWert(h.address) || hatWert(h.city)) out.push({ id: 'adresse' });
+  if (hatWert(c.personal)) out.push({ id: 'persoenlich' });
+  if (hatWert(exp.current && exp.current.title) || hatWert(exp.previous)) out.push({ id: 'beruf' });
+  if (hatWert(c.education)) out.push({ id: 'ausbildung' });
+  if (hatWert(c.languages && c.languages.list)) out.push({ id: 'sprachen' });
+  return out;
+}
+
+// Lebenslauf als JSON Resume (CVGenerator): das Objekt aus generateJSONResume.
+// Bewusst ohne Geburtsdatum und Zivilstand — darum hier keine «persoenlich»-Kategorie.
+function cvJsonKategorien(resume) {
+  const r = resume && typeof resume === 'object' ? resume : {};
+  const b = r.basics || {};
+  const ort = { ...(b.location || {}) };
+  delete ort.countryCode;   // fest «CH», keine Angabe der Person
+  const out = [];
+  if (hatWert(b.name)) out.push({ id: 'name' });
+  if (hatWert(b.email) || hatWert(b.phone)) out.push({ id: 'kontakt' });
+  if (hatWert(ort)) out.push({ id: 'adresse' });
+  if (hatWert(b.label) || hatWert(r.work)) out.push({ id: 'beruf' });
+  if (hatWert(r.education)) out.push({ id: 'ausbildung' });
+  if (hatWert(r.languages)) out.push({ id: 'sprachen' });
+  return out;
+}
+
+// Kalender (.ics): gezählt wird im Text, den buildICS schreibt (utils/icsExport.js).
+// Ein Termin ohne Datum fällt dort weg und zählt darum auch hier nicht.
+function kalenderKategorien(ics) {
+  const n = String(ics || '').split(/\r?\n/).filter(l => l === 'BEGIN:VEVENT').length;
+  return n ? [{ id: 'kalenderTermine', count: n }] : [];
+}
+
 // q je Art:
 //   json      { data, documents }
 //   csv       { data }
 //   manifest  { data, documents }
 //   sicherung / sicherungVerschluesselt  { data, documents, reminders, contacts, merkliste } (Anzahlen oder Listen)
-//   dossier   { abschnitte: [{ titel, felder: [label…] }], dokumente }  (Druck)
+//   dossier   { abschnitte: [{ titel, felder: [label…] }], dokumente, name? }  (Druck; auch
+//             Finanzübersicht und Notfallkarte, K20)
 //   dossierJson { dossier }
 //   brief     { data, templateKey, belegeCount, job }  (Druck)
+//   ipvJson   { dokument }          (buildIpvDokument)
+//   budgetJson { report, data }     (createBudgetReport)
+//   cvHtml    { cv, data }          (generateCVTemplate)
+//   cvJson    { resume }            (generateJSONResume)
+//   kalender  { ics }               (Text aus buildICS)
 export function leiteKategorienAb(art, q = {}) {
   const zahl = (x) => (typeof x === 'number' ? x : anzahl(x));
   switch (art) {
@@ -171,9 +255,11 @@ export function leiteKategorienAb(art, q = {}) {
       return { form: 'datei', verschluesselt: art === 'sicherungVerschluesselt', kategorien: out };
     }
     case 'dossier': {
-      const out = (Array.isArray(q.abschnitte) ? q.abschnitte : [])
+      // `name: true`, wenn der Druck den Namen im Titel trägt (Finanzübersicht, K20).
+      const out = q.name ? [{ id: 'name' }] : [];
+      out.push(...(Array.isArray(q.abschnitte) ? q.abschnitte : [])
         .filter(a => a && a.titel)
-        .map(a => ({ id: 'abschnitt', label: a.titel, detail: (a.felder || []).filter(Boolean).join(', ') }));
+        .map(a => ({ id: 'abschnitt', label: a.titel, detail: (a.felder || []).filter(Boolean).join(', ') })));
       const docs = zahl(q.dokumente);
       if (docs) out.push({ id: 'dokumenteListe', count: docs });
       return { form: 'druck', verschluesselt: false, kategorien: out };
@@ -182,6 +268,16 @@ export function leiteKategorienAb(art, q = {}) {
       return { form: 'datei', verschluesselt: false, kategorien: dossierJsonKategorien(q.dossier) };
     case 'brief':
       return { form: 'druck', verschluesselt: false, kategorien: briefKategorien(q) };
+    case 'ipvJson':
+      return { form: 'datei', verschluesselt: false, kategorien: ipvKategorien(q.dokument) };
+    case 'budgetJson':
+      return { form: 'datei', verschluesselt: false, kategorien: budgetKategorien(q.report, q.data) };
+    case 'cvHtml':
+      return { form: 'datei', verschluesselt: false, kategorien: cvHtmlKategorien(q.cv, q.data) };
+    case 'cvJson':
+      return { form: 'datei', verschluesselt: false, kategorien: cvJsonKategorien(q.resume) };
+    case 'kalender':
+      return { form: 'datei', verschluesselt: false, kategorien: kalenderKategorien(q.ics) };
     default:
       return { form: 'datei', verschluesselt: false, kategorien: [] };
   }
