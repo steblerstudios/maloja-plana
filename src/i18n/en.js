@@ -1086,6 +1086,11 @@ export default {
     begonnen: 'Started',
     grundordnung: 'Overview in place',
     vertieft: 'Well documented',
+    // K18: short labels for the narrow status column (readable at 13px, Bauliste E20).
+    leerShort: 'Open',
+    begonnenShort: 'Started',
+    grundordnungShort: 'Overview',
+    vertieftShort: 'Detailed',
   },
   ankunft: {
     basis: 'Your basics are now visible.',
@@ -1198,6 +1203,7 @@ export default {
   chapters: {
     basis: {
       title: 'Personal basics',
+      short: 'Basics',
       description: 'Your identity and contact information',
       intro: 'Your personal basics are the foundation. Start with your name and canton — everything else can wait.',
       emptyState: 'Your canton determines tax, premium reduction and social assistance — two entries are enough.',
@@ -1260,6 +1266,7 @@ export default {
     },
     wohnen: {
       title: 'Housing',
+      short: 'Housing',
       description: 'Your home, rent, and living situation',
       intro: 'Everything about where you live. Useful for tax returns, insurance, and benefits applications.',
       emptyState: 'Your rent feeds into your budget and social assistance calculation.',
@@ -1288,6 +1295,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      short: 'Finances',
       description: 'Your income, savings, and bank details',
       intro: 'A clear picture of your financial situation. This helps with budgeting, tax, and subsidy applications.',
       emptyState: 'Your income unlocks the tax calculator, premium reduction check and minimum wage check.',
@@ -1366,6 +1374,7 @@ export default {
     },
     versicherungen: {
       title: 'Insurance',
+      short: 'Insurance',
       description: 'Health insurance, pension, and coverage',
       intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',
       emptyState: 'Your health insurance premium determines whether you qualify for premium reduction.',
@@ -1420,6 +1429,7 @@ export default {
     },
     ausbildung: {
       title: 'Education and work',
+      short: 'Education',
       description: 'Your qualifications and employment',
       intro: 'Your education and work history. Useful for CV building, job applications, and work permit renewals.',
       emptyState: 'Your occupation and employment level feed into tax and pension overview.',
@@ -1447,6 +1457,7 @@ export default {
     },
     behoerden: {
       title: 'Authorities and legal',
+      short: 'Authorities',
       description: 'Taxes, legal matters, and official documents',
       intro: 'Your dealings with authorities and legal matters. Keeps important deadlines and contacts together.',
       emptyState: 'Authority contacts at your fingertips — saves time at your next appointment or call.',
@@ -1474,6 +1485,7 @@ export default {
     },
     notfall: {
       title: 'Emergency',
+      short: 'Emergency',
       description: 'Emergency contacts, medical information',
       intro: 'Important information for emergencies. Having this ready can make a real difference for you and your family.',
       emptyState: 'Your emergency card — ready in 2 minutes, there when it matters.',

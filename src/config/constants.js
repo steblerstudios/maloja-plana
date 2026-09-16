@@ -137,6 +137,7 @@ export function getChapters(t) {
     {
       key: 'basis',
       title: t('chapters.basis.title'),
+      short: t('chapters.basis.short'),
       description: t('chapters.basis.description'),
       icon: t('chapters.basis.icon'),
       fields: [
@@ -163,6 +164,7 @@ export function getChapters(t) {
     {
       key: 'wohnen',
       title: t('chapters.wohnen.title'),
+      short: t('chapters.wohnen.short'),
       description: t('chapters.wohnen.description'),
       icon: t('chapters.wohnen.icon'),
       fields: [
@@ -188,6 +190,7 @@ export function getChapters(t) {
     {
       key: 'finanzen',
       title: t('chapters.finanzen.title'),
+      short: t('chapters.finanzen.short'),
       description: t('chapters.finanzen.description'),
       icon: t('chapters.finanzen.icon'),
       fields: [
@@ -243,6 +246,7 @@ export function getChapters(t) {
     {
       key: 'versicherungen',
       title: t('chapters.versicherungen.title'),
+      short: t('chapters.versicherungen.short'),
       description: t('chapters.versicherungen.description'),
       icon: t('chapters.versicherungen.icon'),
       fields: [
@@ -283,6 +287,7 @@ export function getChapters(t) {
     {
       key: 'ausbildung',
       title: t('chapters.ausbildung.title'),
+      short: t('chapters.ausbildung.short'),
       description: t('chapters.ausbildung.description'),
       icon: t('chapters.ausbildung.icon'),
       fields: [
@@ -309,6 +314,7 @@ export function getChapters(t) {
     {
       key: 'behoerden',
       title: t('chapters.behoerden.title'),
+      short: t('chapters.behoerden.short'),
       description: t('chapters.behoerden.description'),
       icon: t('chapters.behoerden.icon'),
       fields: [
@@ -333,6 +339,7 @@ export function getChapters(t) {
     {
       key: 'notfall',
       title: t('chapters.notfall.title'),
+      short: t('chapters.notfall.short'),
       description: t('chapters.notfall.description'),
       icon: t('chapters.notfall.icon'),
       fields: [

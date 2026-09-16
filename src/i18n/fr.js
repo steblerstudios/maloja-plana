@@ -1086,6 +1086,11 @@ export default {
     begonnen: 'Commencé',
     grundordnung: 'Vue d\'ensemble en place',
     vertieft: 'Bien documenté',
+    // K18 : libellés courts pour la colonne de statut étroite (lisible à 13px, Bauliste E20).
+    leerShort: 'Ouvert',
+    begonnenShort: 'Commencé',
+    grundordnungShort: 'Aperçu',
+    vertieftShort: 'Détaillé',
   },
   ankunft: {
     basis: { sie: 'Vos données de base sont maintenant visibles.', du: 'Tes données de base sont maintenant visibles.' },
@@ -1197,6 +1202,7 @@ export default {
   chapters: {
     basis: {
       title: 'Données personnelles',
+      short: 'Profil',
       description: 'Votre identité et vos coordonnées',
       intro: 'Vos données personnelles sont la base. Commencez par votre nom et canton — le reste peut attendre.',
       emptyState: { sie: 'Votre canton détermine impôts, réduction de primes et aide sociale — deux indications suffisent.', du: 'Ton canton détermine impôts, réduction de primes et aide sociale — deux indications suffisent.' },
@@ -1259,6 +1265,7 @@ export default {
     },
     wohnen: {
       title: 'Logement',
+      short: 'Logement',
       description: 'Votre domicile, loyer et situation de logement',
       intro: 'Tout sur votre logement. Utile pour la déclaration d\'impôts, les assurances et les demandes de prestations.',
       emptyState: { sie: 'Votre loyer alimente le budget et le calcul d\'aide sociale.', du: 'Ton loyer alimente le budget et le calcul d\'aide sociale.' },
@@ -1287,6 +1294,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      short: 'Finances',
       description: 'Vos revenus, épargne et coordonnées bancaires',
       intro: 'Une vue claire de votre situation financière. Utile pour le budget, les impôts et les demandes de subsides.',
       emptyState: { sie: 'Votre revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.', du: 'Ton revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.' },
@@ -1365,6 +1373,7 @@ export default {
     },
     versicherungen: {
       title: 'Assurances',
+      short: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
       intro: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.',
       emptyState: { sie: 'Votre prime d\'assurance maladie détermine si vous avez droit à une réduction de primes.', du: 'Ta prime d\'assurance maladie détermine si tu as droit à une réduction de primes.' },
@@ -1419,6 +1428,7 @@ export default {
     },
     ausbildung: {
       title: 'Formation et emploi',
+      short: 'Formation',
       description: 'Vos qualifications et votre emploi',
       intro: 'Votre formation et expérience professionnelle. Utile pour le CV, les candidatures et les permis de travail.',
       emptyState: { sie: 'Votre profession et votre taux d\'occupation alimentent l\'aperçu fiscal et prévoyance.', du: 'Ta profession et ton taux d\'occupation alimentent l\'aperçu fiscal et prévoyance.' },
@@ -1446,6 +1456,7 @@ export default {
     },
     behoerden: {
       title: 'Autorités et juridique',
+      short: 'Autorités',
       description: 'Impôts, affaires juridiques et documents officiels',
       intro: 'Vos contacts avec les autorités et affaires juridiques. Gardez les délais importants et contacts ensemble.',
       emptyState: { sie: 'Vos contacts administratifs à portée de main — du temps gagné pour le prochain rendez-vous.', du: 'Tes contacts administratifs à portée de main — du temps gagné pour le prochain rendez-vous.' },
@@ -1473,6 +1484,7 @@ export default {
     },
     notfall: {
       title: 'Urgence',
+      short: 'Urgence',
       description: 'Contacts d\'urgence, informations médicales',
       intro: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.',
       emptyState: { sie: 'Votre carte d\'urgence — prête en 2 minutes, là quand ça compte.', du: 'Ta carte d\'urgence — prête en 2 minutes, là quand ça compte.' },

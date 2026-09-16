@@ -987,6 +987,12 @@ export default {
     begonnen: 'Cumenzà',
     grundordnung: 'Survista stat',
     vertieft: 'Bain documentà',
+    // TODO(rm): K18-Kurzlabels — dal DE-Original tradüts, betg controlads d'ina/in
+    // linguist/a natal/a.
+    leerShort: 'Avert',
+    begonnenShort: 'Cumenzà',
+    grundordnungShort: 'Survista',
+    vertieftShort: 'Detaglià',
   },
 
   synthesis: {
@@ -1110,6 +1116,7 @@ export default {
   chapters: {
     basis: {
       title: 'Basa persunala',
+      short: 'Basa',
       description: { sie: 'Vossa identitad e datas da contact', du: 'Tia identitad e datas da contact' },
       intro: { sie: 'Vossas datas persunalas da basa èn il fundament. Cumenzai cun num e chantun — tut auter ha temp.', du: 'Tias datas persunalas da basa èn il fundament. Cumenza cun num e chantun — tut auter ha temp.' },
       emptyState: { sie: 'Voss chantun determinescha taglia, IPV e agid social — duas indicaziuns bastan.', du: 'Tes chantun determinescha taglia, IPV e agid social — duas indicaziuns bastan.' },
@@ -1172,6 +1179,7 @@ export default {
     },
     wohnen: {
       title: 'Abitar & viver',
+      short: 'Abitar',
       description: { sie: "Vossa chasa, tschains e situaziun d'abitar", du: "Tia chasa, tschains e situaziun d'abitar" },
       intro: { sie: "Tut enturn Vossa chasa. Util per la decleraziun da taglia, assicuranzas e dumondas d'agid.", du: "Tut enturn Tia chasa. Util per la decleraziun da taglia, assicuranzas e dumondas d'agid." },
       emptyState: { sie: "Voss tschains flueschan en il budget e la calculaziun da l'agid social.", du: "Tes tschains flueschan en il budget e la calculaziun da l'agid social." },
@@ -1200,6 +1208,7 @@ export default {
     },
     finanzen: {
       title: 'Finanzas & daners',
+      short: 'Finanzas',
       description: { sie: 'Vossa entrada, spargn e datas bancaras', du: 'Tia entrada, spargn e datas bancaras' },
       intro: { sie: "Ina maletg clara da Vossa situaziun finanziala. Gida tar budget, taglia e dumondas d'agid.", du: "Ina maletg clara da Tia situaziun finanziala. Gida tar budget, taglia e dumondas d'agid." },
       emptyState: { sie: "Vossa entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari.", du: "Tia entrada activescha il calculatur da taglia, l'examinaziun IPV ed il controlla dal salari." },
@@ -1284,6 +1293,9 @@ export default {
     },
     versicherungen: {
       title: 'Assicuranzas & prevenziun',
+      // TODO(rm): 'Assicuranza' (singular) da la fuorma plurala dal titel — controlar tar
+      // ina/in linguist/a natal/a.
+      short: 'Assicuranza',
       description: 'Cassa da malsauns, cassa da pensiun e protecziun',
       intro: { sie: 'Vossas assicuranzas protegian Vus. Impurtant: la cassa da malsauns è obligatorica en Svizra.', du: 'Tias assicuranzas protegian Tai. Impurtant: la cassa da malsauns è obligatorica en Svizra.' },
       emptyState: { sie: 'Vossa premia da la cassa da malsauns activescha la calculaziun IPV.', du: 'Tia premia da la cassa da malsauns activescha la calculaziun IPV.' },
@@ -1342,6 +1354,7 @@ export default {
     },
     ausbildung: {
       title: 'Furmaziun & lavur',
+      short: 'Furmaziun',
       description: { sie: 'Vossas qualificaziuns e plazza da lavur', du: 'Tias qualificaziuns e plazza da lavur' },
       intro: { sie: 'Vossa furmaziun e Voss engaschament — relevant per il curriculum vitae ed ils dretgs sin il plaz da lavur.', du: 'Tia furmaziun e Tes engaschament — relevant per il curriculum vitae ed ils dretgs sin il plaz da lavur.' },
       emptyState: { sie: 'Voss patrun ed il tip d\'engaschament gidan tar documents e referenzas.', du: 'Tes patrun ed il tip d\'engaschament gidan tar documents e referenzas.' },
@@ -1375,6 +1388,7 @@ export default {
     },
     behoerden: {
       title: 'Autoritads & dretg',
+      short: 'Autoritads',
       description: 'Taglia, affars legals',
       intro: 'Documents ed infurmaziuns per ils contacts cun autoritads.',
       emptyState: { sie: 'Voss chantun da taglia activescha la calculaziun da taglia.', du: 'Tes chantun da taglia activescha la calculaziun da taglia.' },
@@ -1408,6 +1422,7 @@ export default {
     },
     notfall: {
       title: 'Urgenza',
+      short: 'Urgenza',
       description: "Contacts d'urgenza e datas medicalas",
       intro: "Per il cas d'urgenza: contacts, datas medicalas, allergias. Pront en 2 minutas.",
       emptyState: "Ina carta d'urgenza po salvar vitas. Endatar il contact d'urgenza e la gruppa da sang.",

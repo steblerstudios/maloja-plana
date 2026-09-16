@@ -1086,6 +1086,11 @@ export default {
     begonnen: 'Iniziato',
     grundordnung: 'Panoramica pronta',
     vertieft: 'Ben documentato',
+    // K18: etichette brevi per la colonna di stato stretta (leggibile a 13px, Bauliste E20).
+    leerShort: 'Aperto',
+    begonnenShort: 'Iniziato',
+    grundordnungShort: 'Panoramica',
+    vertieftShort: 'Dettagliato',
   },
   ankunft: {
     basis: { sie: 'Le Sue informazioni di base sono ora visibili.', du: 'Le tue informazioni di base sono ora visibili.' },
@@ -1198,6 +1203,7 @@ export default {
   chapters: {
     basis: {
       title: 'Dati personali',
+      short: 'Profilo',
       description: { sie: 'La Sua identità e le informazioni di contatto', du: 'La tua identità e le informazioni di contatto' },
       intro: { sie: 'I Suoi dati personali sono la base. Inizi con nome e cantone — tutto il resto può aspettare.', du: 'I tuoi dati personali sono la base. Inizia con nome e cantone — tutto il resto può aspettare.' },
       emptyState: { sie: 'Il Suo cantone determina imposte, riduzione premi e assistenza sociale — bastano due dati.', du: 'Il tuo cantone determina imposte, riduzione premi e assistenza sociale — bastano due dati.' },
@@ -1260,6 +1266,7 @@ export default {
     },
     wohnen: {
       title: 'Abitazione',
+      short: 'Abitazione',
       description: { sie: 'La Sua casa, l\'affitto e la situazione abitativa', du: 'La tua casa, l\'affitto e la situazione abitativa' },
       intro: { sie: 'Tutto sulla Sua situazione abitativa. Utile per la dichiarazione fiscale, le assicurazioni e le richieste di sostegno.', du: 'Tutto sulla tua situazione abitativa. Utile per la dichiarazione fiscale, le assicurazioni e le richieste di sostegno.' },
       emptyState: { sie: 'Il Suo affitto alimenta il budget e il calcolo dell\'assistenza sociale.', du: 'Il tuo affitto alimenta il budget e il calcolo dell\'assistenza sociale.' },
@@ -1288,6 +1295,7 @@ export default {
     },
     finanzen: {
       title: 'Finanze',
+      short: 'Finanze',
       description: { sie: 'Il Suo reddito, i risparmi e i dati bancari', du: 'Il tuo reddito, i risparmi e i dati bancari' },
       intro: { sie: 'Un quadro chiaro della Sua situazione finanziaria. Utile per il budget, le tasse e le richieste di sostegno.', du: 'Un quadro chiaro della tua situazione finanziaria. Utile per il budget, le tasse e le richieste di sostegno.' },
       emptyState: { sie: 'Il Suo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.', du: 'Il tuo reddito attiva il calcolatore fiscale, la verifica riduzione premi e il controllo salario minimo.' },
@@ -1366,6 +1374,7 @@ export default {
     },
     versicherungen: {
       title: 'Assicurazioni',
+      short: 'Assicurazioni',
       description: 'Cassa malati, previdenza e coperture',
       intro: { sie: 'I dettagli delle Sue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.', du: 'I dettagli delle tue assicurazioni in un unico posto. Utile per cambiare cassa malati o richiedere la riduzione dei premi.' },
       emptyState: { sie: 'Il Suo premio cassa malati determina se ha diritto alla riduzione dei premi.', du: 'Il tuo premio cassa malati determina se hai diritto alla riduzione dei premi.' },
@@ -1420,6 +1429,7 @@ export default {
     },
     ausbildung: {
       title: 'Formazione e lavoro',
+      short: 'Formazione',
       description: { sie: 'Le Sue qualifiche e il Suo impiego', du: 'Le tue qualifiche e il tuo impiego' },
       intro: { sie: 'La Sua formazione e la Sua esperienza professionale. Utile per il CV, le candidature e i permessi di lavoro.', du: 'La tua formazione e la tua esperienza professionale. Utile per il CV, le candidature e i permessi di lavoro.' },
       emptyState: { sie: 'La Sua professione e il grado di occupazione alimentano la panoramica fiscale e previdenziale.', du: 'La tua professione e il grado di occupazione alimentano la panoramica fiscale e previdenziale.' },
@@ -1447,6 +1457,7 @@ export default {
     },
     behoerden: {
       title: 'Autorità e aspetti legali',
+      short: 'Autorità',
       description: 'Imposte, questioni legali e documenti ufficiali',
       intro: { sie: 'I Suoi contatti con le autorità e le questioni legali. Tiene insieme scadenze importanti e referenti.', du: 'I tuoi contatti con le autorità e le questioni legali. Tiene insieme scadenze importanti e referenti.' },
       emptyState: 'Contatti con le autorità a portata di mano — risparmia tempo al prossimo appuntamento.',
@@ -1474,6 +1485,7 @@ export default {
     },
     notfall: {
       title: 'Emergenza',
+      short: 'Emergenza',
       description: 'Contatti di emergenza, informazioni mediche',
       intro: { sie: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per Lei e la Sua famiglia.', du: 'Informazioni importanti per le emergenze. Averle pronte può fare una vera differenza per te e la tua famiglia.' },
       emptyState: { sie: 'La Sua scheda di emergenza — pronta in 2 minuti, lì quando serve.', du: 'La tua scheda di emergenza — pronta in 2 minuti, lì quando serve.' },

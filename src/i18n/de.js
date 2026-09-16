@@ -1089,6 +1089,11 @@ export default {
     begonnen: 'Begonnen',
     grundordnung: 'Überblick steht',
     vertieft: 'Vertieft',
+    // K18: Kurzlabels für die schmale Status-Spalte (mind. 13px lesbar, Baulliste E20).
+    leerShort: 'Offen',
+    begonnenShort: 'Begonnen',
+    grundordnungShort: 'Überblick',
+    vertieftShort: 'Vertieft',
   },
   ankunft: {
     basis: { sie: 'Ihre Grundlagen sind jetzt sichtbar.', du: 'Deine Grundlagen sind jetzt sichtbar.' },
@@ -1200,6 +1205,7 @@ export default {
   chapters: {
     basis: {
       title: 'Persönliche Basis',
+      short: 'Basis',
       description: { sie: 'Ihre Identität und Kontaktdaten', du: 'Deine Identität und Kontaktdaten' },
       intro: { sie: 'Ihre persönlichen Grunddaten sind das Fundament. Beginnen Sie mit Name und Kanton — alles andere hat Zeit.', du: 'Deine persönlichen Grunddaten sind das Fundament. Beginne mit Name und Kanton — alles andere hat Zeit.' },
       emptyState: { sie: 'Ihr Kanton bestimmt Steuer, IPV und Sozialhilfe — zwei Angaben genügen.', du: 'Dein Kanton bestimmt Steuer, IPV und Sozialhilfe — zwei Angaben genügen.' },
@@ -1262,6 +1268,7 @@ export default {
     },
     wohnen: {
       title: 'Wohnen & Leben',
+      short: 'Wohnen',
       description: { sie: 'Ihr Zuhause, Miete und Wohnsituation', du: 'Dein Zuhause, Miete und Wohnsituation' },
       intro: { sie: 'Alles rund um Ihr Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.', du: 'Alles rund um Dein Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.' },
       emptyState: { sie: 'Ihre Miete fliesst in Budget und Sozialhilfe-Berechnung ein.', du: 'Deine Miete fliesst in Budget und Sozialhilfe-Berechnung ein.' },
@@ -1290,6 +1297,7 @@ export default {
     },
     finanzen: {
       title: 'Finanzen & Geld',
+      short: 'Finanzen',
       description: { sie: 'Ihr Einkommen, Erspartes und Bankdaten', du: 'Dein Einkommen, Erspartes und Bankdaten' },
       intro: { sie: 'Ein klares Bild Ihrer finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.', du: 'Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.' },
       emptyState: { sie: 'Ihr Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.', du: 'Dein Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.' },
@@ -1368,6 +1376,7 @@ export default {
     },
     versicherungen: {
       title: 'Versicherungen & Vorsorge',
+      short: 'Versicherung',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
       intro: { sie: 'Ihre Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.', du: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.' },
       emptyState: { sie: 'Ihre KK-Prämie bestimmt, ob Sie Anspruch auf Prämienverbilligung haben.', du: 'Deine KK-Prämie bestimmt, ob Du Anspruch auf Prämienverbilligung hast.' },
@@ -1422,6 +1431,7 @@ export default {
     },
     ausbildung: {
       title: 'Ausbildung & Arbeit',
+      short: 'Ausbildung',
       description: { sie: 'Ihre Qualifikationen und Arbeitsstelle', du: 'Deine Qualifikationen und Arbeitsstelle' },
       intro: { sie: 'Ihre Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.', du: 'Deine Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.' },
       emptyState: 'Beruf und Beschäftigungsgrad fliessen in Steuer und Vorsorge-Überblick ein.',
@@ -1449,6 +1459,7 @@ export default {
     },
     behoerden: {
       title: 'Behörden & Rechtliches',
+      short: 'Behörden',
       description: 'Steuern, rechtliche Angelegenheiten und amtliche Dokumente',
       intro: { sie: 'Ihre Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.', du: 'Deine Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.' },
       emptyState: 'Behördenkontakte griffbereit — spart Zeit beim nächsten Termin oder Anruf.',
@@ -1476,6 +1487,7 @@ export default {
     },
     notfall: {
       title: 'Notfall',
+      short: 'Notfall',
       description: 'Notfallkontakte und medizinische Informationen',
       intro: { sie: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.', du: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Dich und Deine Familie einen echten Unterschied machen.' },
       emptyState: { sie: 'Ihre Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.', du: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.' },
