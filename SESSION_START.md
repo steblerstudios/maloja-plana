@@ -7,7 +7,24 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-16, 18:00 (`main`=`77bf8b1` nach dem Merge von **PR #170**, mit diesem Abschluss-PR weiter · ⚠️ **gemergt, NICHT live**: live weiter `index-2301b4b1.js` = 0.1.28-beta vom 12:23 · **Deploy-Versuch 17:45 vom Rollback-Backup-Tor gestoppt**, Live-Version unberührt · Version im Repo neu **0.1.29-beta**, Tag setzt der nächste erfolgreiche Deploy · 1072 Tests grün, Hauptbundle 64.66 kB von 65 · 0 offene PRs)
+**Stand:** 2026-09-17, früh (`main` nach **PR #187**, #188 bereit · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187 · 1750 Tests grün mit #188, Hauptbundle 61.5 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, früh (0.1.29-beta live, R4 gemergt)
+>
+> **Deploy 01:46** von `main` = `2fcf409` (Hand von Stebler Studios), Tag `v0.1.29-beta` vom Lauf
+> gesetzt. Per `curl` belegt: `index-91c30770.js` = lokaler Build, **alle 159 Build-Dateien live 200**,
+> altes `index-2301b4b1.js` → 404, erfundener Name → 404, `0.1.29-beta` im Bundle, Teil
+> `kantonaleSteuerdaten-41e98bdc.js` 200, Merkmale von #173–#185 im ausgelieferten Code (Gegenprobe 0).
+> Backup `20260917-014608` = 165 Dateien. Sitemap-`lastmod` weiter 2026-09-14.
+> **Live damit:** #161–#170 (Nachmittag 16.09.) und #172–#185 (Abend): Kantonssteuer als ESTV-Tabelle,
+> Bundessteuer mit ESTV-steuerbarem Einkommen, IPV ohne Beleg ohne Betrag, Vermögensfreibetrag je
+> Kanton, Sicherung verschlüsselt als Voreinstellung, Löschweg, «trifft nicht zu», Hauptbundle 61 kB.
+> **Vor dem Deploy:** Prüf-Batterie 9/9 über `2aaeff5..0c9cc43`, kein Blocker; Befunde in #185
+> (darunter: `pii-scan.sh` verdeckte Namen in Zeilen mit «Stebler Studios» — behoben).
+> **Danach gemergt, nicht live:** #186 (R4 Hinweise/Robustheit), #187 (R4 Steuer-Annahmen).
+> **Bereit:** #188. **Offen:** Bau-Liste §13 (K49–K53) und §12.
+> Merker: der Haupt-Checkout liegt unter `~/Claude/Projects/maloja plana/maloja-frontend`
+> (nicht mehr `~/Projects`).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-16, 18:00 (Entscheid-Runde gemergt, Deploy gestoppt)
 >
