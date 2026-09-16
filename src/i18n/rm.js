@@ -2899,6 +2899,14 @@ export default {
     federalNotCheckedBrutto: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l\'entrada taxabla. Cun la paja netta u cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import exact.',
     federalNotCheckedPartner: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: tar persunas maridadas vegnan las duas entradas sumadas, cun ina atgna deducziun per pèrs cun duas entradas; tar geniturs betg maridads po la deducziun per uffants vegnir partida tranter els. Cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import.',
     noTaxFigure: 'nagina stimaziun — calculatur da taglia da l\'AFT',
+    // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
+    ohneZahlRente: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
+    ohneZahlSelbstaendig: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica ina activitad da gudogn independenta. Taxabla è lura l'entrada da l'activitad independenta suenter deducziun dals custs giustifitgads commerzialmain u professiunalmain — betg ina paja netta cun las deducziuns per persunas empleadas che Maloja dovra. Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
+    ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; senza entrada endatar 0).", // TODO(rm): provisorisch
+    annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
+    annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
+    netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
+    annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
@@ -2927,6 +2935,8 @@ export default {
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
       einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, dentant anc betg en vigur — la data resta averta. Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.',
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
+      abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
+      nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
     },
   },
 

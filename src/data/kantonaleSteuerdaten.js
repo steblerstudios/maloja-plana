@@ -16,7 +16,7 @@ import {
   KANTONSSTEUER_ABGERUFEN,
   KANTONSSTEUER_MAX_KINDER,
 } from './kantonssteuerTabelle.js';
-import { bundessteuerAusSteuerbarem } from './steuerRechner.js';
+import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 
@@ -186,12 +186,17 @@ export function abzuegeAusTaxData(taxData = {}) {
 export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
+  erwerbsart = null, partnerAngegeben = true,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
   let grund = null;
   if (Number(partnerEinkommen) > 0) grund = 'partner';
   else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
+  else if (!direkt && ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) grund = ERWERBSART_OHNE_SCHAETZUNG[erwerbsart];
+  // R4: Die Reihe «verheiratet» ist als Alleinverdiener-Ehepaar gemessen. Ohne Angabe zum
+  // Partnereinkommen ist offen, ob das zutrifft — auch bei direkt eingetragenem Wert.
+  else if (verheiratet && !partnerAngegeben) grund = 'partnerOffen';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
@@ -209,34 +214,73 @@ export function kantonssteuerFuerProfil({
  *   sonst Nettolohn → steuerbarNachEstv() (quelle 'estv'). Konkubinat ohne Kinder: nur das eigene
  *     Einkommen zählt (keine Zusammenrechnung), die Abzüge sind die einer alleinstehenden Person.
  *   Mehr als 3 Kinder: die Abzüge je Kind gelten weiter (Bund rechnet, nur die Kantonstabelle nicht).
- * @returns {{ steuerbar: number|null, quelle: 'direkt'|'estv'|null, grund: 'brutto'|'partner'|'keinLohn'|null }}
+ *   R4: employmentType Rentner/Selbständig → keine Zahl (grund 'rente'/'selbstaendig'): die Standard-
+ *     abzüge oben sind für Unselbständige gemessen (Berufsauslagen nach DBG Art. 26 gibt es nur bei
+ *     unselbständiger Erwerbstätigkeit; Selbständige versteuern das Einkommen nach Art. 18 mit den
+ *     Abzügen nach Art. 27). Ein direkt eingetragener Wert rechnet weiter.
+ *   R4: verheiratet und Partnereinkommen nie beantwortet → keine Zahl (grund 'partnerOffen');
+ *     bewusst 0 → Alleinverdiener-Ehepaar, so wie gemessen.
+ * @returns {{ steuerbar: number|null, quelle: 'direkt'|'estv'|null,
+ *             grund: 'brutto'|'rente'|'selbstaendig'|'partner'|'partnerOffen'|'keinLohn'|null }}
  */
 export function steuerbaresEinkommenFuerProfil({
   nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0,
+  erwerbsart = null, partnerAngegeben = true,
 } = {}) {
   if (Number(direktSteuerbar) > 0) return { steuerbar: Number(direktSteuerbar), quelle: 'direkt', grund: null };
   if (einkommensart === 'brutto') return { steuerbar: null, quelle: null, grund: 'brutto' };
+  if (ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) return { steuerbar: null, quelle: null, grund: ERWERBSART_OHNE_SCHAETZUNG[erwerbsart] };
   if (Number(partnerEinkommen) > 0 && (verheiratet || kinder > 0)) return { steuerbar: null, quelle: null, grund: 'partner' };
+  if (verheiratet && !partnerAngegeben) return { steuerbar: null, quelle: null, grund: 'partnerOffen' };
   if (!(Number(nettolohnJahr) > 0)) return { steuerbar: null, quelle: null, grund: 'keinLohn' };
   return { steuerbar: steuerbarNachEstv({ nettolohnJahr, verheiratet, kinder, berufsauslagen, weitereAbzuege }), quelle: 'estv', grund: null };
 }
 
+// R4: Anstellungstyp (Finanzen-Kapitel, Optionen employed/selfEmployed/freelance/retired), für den
+// die Standardabzüge der ESTV nicht gemessen sind. «employed» und ohne Angabe: wie gemessen.
+export const ERWERBSART_OHNE_SCHAETZUNG = Object.freeze({ retired: 'rente', selfEmployed: 'selbstaendig', freelance: 'selbstaendig' });
+
+// R4: Frage «13. Monatslohn?» im Finanzen-Kapitel (Optionen yes/no). Dieselben Schreibweisen wie
+// hatDreizehnten()/dreizehnterAngegeben() in src/data/lohnCheck.js. Leer ist nicht «nein».
+export function dreizehnterStatus(v) {
+  if (v === true || v === 'yes' || v === 'ja') return 'ja';
+  if (v === false || v === 'no' || v === 'nein') return 'nein';
+  return 'offen';
+}
+
+// R4: Wurde das Partnereinkommen beantwortet? ChapterView legt household.partnerIncome erst an,
+// wenn etwas eingetippt wird (Wert als Text); ein geleertes Feld ist ''. «0» ist eine Antwort.
+export function partnerEinkommenAngegeben(data = {}) {
+  const v = data?.basis?.household?.partnerIncome;
+  return v !== undefined && v !== null && String(v).trim() !== '';
+}
+
 /**
  * E39: Die Eingaben der Steuerschätzung aus dem Profil — gleich für alle drei Seiten.
- * Nettolohn = Hauptlohn + Nebenerwerb (je × 12). Ist einer der beiden als Bruttolohn erfasst,
- * gilt die Einkommensart 'brutto'.
+ * Nettolohn = Hauptlohn × 12 (× 13 mit 13. Monatslohn) + Nebenerwerb × 12. Ist einer der beiden
+ * als Bruttolohn erfasst, gilt die Einkommensart 'brutto'.
+ * R4: Der 13. Monatslohn zählt nur beim Hauptlohn — die Frage im Finanzen-Kapitel steht beim
+ * Hauptlohn und gilt nur ihm (auch briefGenerator.js gibt sie dem Nebenerwerb nicht mit).
+ * R4: Direkt eingetragenes steuerbares Einkommen gilt, ausser das Häkchen im Steuerrechner ist
+ * ausdrücklich entfernt (taxData.useEnteredTaxable === false). Fehlt der Wert (Profile vor R4,
+ * Eingabe im Finanzen-Kapitel oder Steuer-Import): der eingetragene Wert gilt — so haben
+ * Finanzübersicht und Dossier bisher immer gerechnet, und so öffnet der Steuerrechner das Häkchen.
  */
 export function steuerEingabenAusDaten(data = {}) {
   const f = data?.finanzen || {};
   const hh = getHouseholdInfo(data);
   const neben = Number(f.sideIncome) || 0;
+  const dreizehnter = dreizehnterStatus(f.dreizehnter);
   return {
     kanton: steuerkantonVorbelegung(data),
-    nettolohnJahr: ((Number(f.monthlyIncome) || 0) + neben) * 12,
-    direktSteuerbar: Number(f.taxableIncome) || 0,
+    nettolohnJahr: (Number(f.monthlyIncome) || 0) * (dreizehnter === 'ja' ? 13 : 12) + neben * 12,
+    dreizehnter,
+    direktSteuerbar: data?.taxData?.useEnteredTaxable === false ? 0 : (Number(f.taxableIncome) || 0),
     einkommensart: f.incomeType === 'brutto' || (neben > 0 && f.sideIncomeType === 'brutto') ? 'brutto' : (f.incomeType || null),
+    erwerbsart: f.employmentType || null,
     partnerEinkommen: hh.partnerIncome,
+    partnerAngegeben: partnerEinkommenAngegeben(data),
     verheiratet: data?.basis?.maritalStatus === 'married',
     kinder: hh.childrenCount,
     elterntarif: data?.taxData?.elterntarif === true,
@@ -246,8 +290,12 @@ export function steuerEingabenAusDaten(data = {}) {
 
 /**
  * E39: Bundessteuer und Kantons-/Gemeindesteuer aus demselben steuerbaren Einkommen.
- * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object }}
+ * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object,
+ *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean } }}
  *   bund = null, wenn es kein steuerbares Einkommen gibt (grund sagt warum).
+ *   annahmen (R4) = was die Seiten zur Zahl dazuschreiben:
+ *     ohneDreizehnten — aus dem Nettolohn geschätzt, Frage nach dem 13. Monatslohn offen
+ *     alleinverdiener — verheiratet und gerechnet wie gemessen (Partnereinkommen 0)
  */
 export function steuernFuerProfil(p = {}) {
   const basis = steuerbaresEinkommenFuerProfil(p);
@@ -257,7 +305,29 @@ export function steuernFuerProfil(p = {}) {
     einkommen: p.nettolohnJahr,
   });
   const kanton = kantonssteuerFuerProfil({ ...p, bundessteuer: bund ? bund.steuer : 0 });
-  return { ...basis, bund, kanton };
+  const annahmen = {
+    ohneDreizehnten: basis.quelle === 'estv' && p.dreizehnter === 'offen',
+    alleinverdiener: p.verheiratet === true && (basis.quelle === 'estv' || Boolean(kanton.kantonal)),
+  };
+  return { ...basis, bund, kanton, annahmen };
+}
+
+/**
+ * R4: Tarifvergleich ledig/verheiratet (SteuerSaeulen) — je mit dem steuerbaren Einkommen, das
+ * zum Zivilstand gehört (Verheiratetenabzug, höherer Versicherungsabzug; verheiratet wie gemessen
+ * als Alleinverdiener-Ehepaar). Nur auf dem Weg über den Nettolohn: ein direkt eingetragener Wert
+ * stammt aus einer Veranlagung mit einem bestimmten Zivilstand, der andere ist nicht bekannt.
+ * @returns {object|null} vergleicheTarife() oder null
+ */
+export function tarifvergleichFuerProfil(p = {}) {
+  const basis = steuerbaresEinkommenFuerProfil(p);
+  if (basis.quelle !== 'estv') return null;
+  const abz = { nettolohnJahr: p.nettolohnJahr, kinder: p.kinder, berufsauslagen: p.berufsauslagen, weitereAbzuege: p.weitereAbzuege };
+  return vergleicheTarife(
+    steuerbarNachEstv({ ...abz, verheiratet: false }),
+    p.kinder, p.elterntarif,
+    steuerbarNachEstv({ ...abz, verheiratet: true }),
+  );
 }
 
 export function getHauptort(kuerzel) {

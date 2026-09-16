@@ -2411,6 +2411,14 @@ export default {
     federalNotCheckedBrutto: 'Pour cette situation, Maloja n\'affiche pas d\'impôt fédéral ici : votre salaire est saisi en brut, et Maloja ne connaît pas exactement les déductions jusqu\'au revenu imposable. Avec le salaire net ou le revenu imposable de la taxation, une estimation apparaît. Le calculateur d\'impôts de l\'AFC calcule le montant exact.',
     federalNotCheckedPartner: 'Pour cette situation, Maloja n\'affiche pas d\'impôt fédéral ici : pour les personnes mariées, les deux revenus sont additionnés, avec une déduction propre aux couples à deux revenus ; pour les parents non mariés, la déduction pour enfant peut être partagée entre eux. Avec le revenu imposable de la taxation, une estimation apparaît. Le calculateur d\'impôts de l\'AFC calcule le montant.',
     noTaxFigure: 'pas d\'estimation — calculateur d\'impôts de l\'AFC',
+    // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
+    ohneZahlRente: "Pour cette situation, Maloja n'affiche pas d'estimation fiscale : votre profil indique que vous êtes à la retraite. Les déductions standard qu'utilise Maloja ont été mesurées pour les personnes salariées et ne s'appliquent pas telles quelles aux rentes (par exemple, pas de frais professionnels). Avec le revenu imposable de la taxation, une estimation apparaît. Le calculateur d'impôts de l'AFC calcule le montant.",
+    ohneZahlSelbstaendig: "Pour cette situation, Maloja n'affiche pas d'estimation fiscale : votre profil indique une activité lucrative indépendante. Est alors imposable le revenu de l'activité indépendante, après déduction des frais justifiés par l'usage commercial ou professionnel — et non un salaire net avec les déductions des personnes salariées qu'utilise Maloja. Avec le revenu imposable de la taxation, une estimation apparaît. Le calculateur d'impôts de l'AFC calcule le montant.",
+    ohneZahlPartnerOffen: "Pour cette situation, Maloja n'affiche pas encore d'estimation fiscale : l'état civil enregistré est « marié » et le revenu du ou de la partenaire n'est pas indiqué. Pour les personnes mariées, les deux revenus sont additionnés. Merci de compléter ce revenu dans le profil (Données personnelles → « Salaire net partenaire » ; sans revenu, indiquer 0).",
+    annahmeOhneDreizehnten: "Calculé sans 13e salaire — si vous en recevez un, l'impôt est plus élevé. Vous pouvez l'indiquer dans le chapitre « Finances ».",
+    annahmeAlleinverdiener: "Calculé comme couple marié à un seul revenu (sans revenu du ou de la partenaire).",
+    netIncomeNote13: "Projection basée sur votre salaire net : salaire principal × 13 (avec 13e salaire), revenu accessoire × 12. La charge fiscale réelle peut varier.",
+    annahmenLabel: "Hypothèses",
     totalNote: 'Fédéral + cantonal + communal (orientation). La charge réelle dépend de votre commune et situation personnelle.',
     tariff: 'Tarif',
     singleTariff: 'Tarif de base',
@@ -2439,6 +2447,8 @@ export default {
       empty: 'Dès qu’un revenu imposable est saisi, la comparaison apparaît ici.',
       einzelnPending: 'Marié·e, imposition individuelle : acceptée le 8 mars 2026, mais pas encore en vigueur — la date reste ouverte. Un montant documenté apparaîtra ici dès que le nouveau barème s’appliquera.',
       scope: 'Impôt fédéral direct uniquement (LIFD art. 36). Les impôts cantonal et communal ne sont pas inclus ici.',
+      abzuegeNote: "Chaque état civil est calculé avec ses propres déductions — revenu imposable célibataire CHF {ledig}, marié CHF {verheiratet} (couple à un seul revenu, avec la déduction pour personnes mariées et la déduction d'assurance plus élevée).",
+      nurGeschaetzt: "La comparaison apparaît lorsque Maloja estime le revenu imposable à partir du salaire net. Un montant saisi à partir de la taxation ne vaut que pour votre état civil actuel.",
     },
   },
 

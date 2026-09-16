@@ -284,18 +284,21 @@ export function grenzsteuersatz(einkommen, verheiratet = false) {
  * Vergleiche Steuerbelastung: alleinstehend vs. verheiratet.
  * «Alleinstehend» mit Kindern bekommt den Elterntarif (Art. 36 Abs. 2bis DBG) nur, wenn die
  * Voraussetzungen bestätigt sind — sonst Grundtarif ohne Ermässigung je Kind.
+ * R4: steuerbarVerheiratet = steuerbares Einkommen im Fall «verheiratet» (andere Abzüge als ledig,
+ * siehe tarifvergleichFuerProfil in kantonaleSteuerdaten.js). Ohne Angabe: dasselbe wie ledig.
  */
-export function vergleicheTarife(steuerBaresEinkommen, kinder = 0, elterntarif = false) {
+export function vergleicheTarife(steuerBaresEinkommen, kinder = 0, elterntarif = false, steuerbarVerheiratet = steuerBaresEinkommen) {
   const ermaessigung = kinder > 0 ? kinder * KINDERABZUG_PRO_KIND : 0;
   const eltern = elterntarifGreift(false, kinder, elterntarif);
   const alleinstehend = jahressteuer(steuerBaresEinkommen, eltern, eltern ? ermaessigung : 0).steuer;
-  const verheiratet = jahressteuer(steuerBaresEinkommen, true, ermaessigung).steuer;
+  const verheiratet = jahressteuer(steuerbarVerheiratet, true, ermaessigung).steuer;
 
   return {
     alleinstehend,
     verheiratet,
     differenz: Math.round((alleinstehend - verheiratet) * 100) / 100,
     steuerBaresEinkommen,
+    steuerBaresEinkommenVerheiratet: steuerbarVerheiratet,
   };
 }
 

@@ -21,8 +21,10 @@ const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '
 const render = (C, props) => renderToStaticMarkup(React.createElement(C, { palette, t, onNavigate: () => {}, chapters: [], ...props }));
 const tausender = (n) => { const r = Math.round(n); return r >= 1000 ? r.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’') : String(r); };
 
+// R4: verheiratet ohne Partnerangabe zeigt keine Zahl mehr. Gemessen ist das Alleinverdiener-Ehepaar,
+// darum tragen die verheirateten Profile hier das Partnereinkommen 0 ausdrücklich ein.
 const profil = ({ canton = 'ZH', monat, verheiratet = false, kinder = 0, elterntarif, incomeType, partnerIncome, steuerkanton } = {}) => ({
-  basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : {}) } },
+  basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : verheiratet ? { partnerIncome: '0' } : {}) } },
   finanzen: { monthlyIncome: monat, ...(incomeType ? { incomeType } : {}) },
   ...(steuerkanton ? { behoerden: { cantoneOfTaxation: steuerkanton } } : {}),
   wohnen: {},
