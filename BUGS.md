@@ -53,7 +53,7 @@ festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechn
 
 ### B-1 · Zahlen aus dem Schnellcheck kommen im IPV-Rechner nicht an
 
-> **Fix in PR (Zweig `fix/e9-e22-ipv-orientierung-schnellcheck`), nach dem Deploy nach
+> **Fix in PR #167 (Zweig `fix/e9-e22-ipv-orientierung-schnellcheck`), nach dem Deploy nach
 > «Zuletzt behoben».** Entscheid E22 (16.09.2026): Weg (b). Die Zahlen gehen als Übergabe
 > an den IPV-Rechner (`handleNavigate` → `schnellcheckZahlen`), der Rechner sagt «Gerechnet
 > mit den Zahlen aus dem Schnellcheck» und schreibt erst auf «Ins Profil übernehmen» ins
