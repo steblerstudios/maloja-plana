@@ -2387,15 +2387,18 @@ export default {
     cantonalAndMunicipal: 'Cantonal and municipal tax',
     totalEstimate: 'Estimated total tax',
     selectCantonHint: 'Select a canton to see the cantonal tax estimate.',
-    basedOnHauptort: 'Approximate value for the cantonal capital. Checked against the FTA tax calculator (tax year {year}): for a taxable income between CHF {min} and CHF {max}, it is at most {tol}% away from the official figure (excluding church tax). In other municipalities, the tax can differ considerably.',
+    basedOnHauptort: 'Approximate value from data points of the FTA tax calculator (tax year {year}): cantonal capital, excluding church tax; in other municipalities, the tax can differ considerably.',
     roughEstimateBadge: 'Rough estimate',
-    // E37 (K37): no cantonal figure outside the checked income band
-    bandOutside: 'Maloja shows no amount here for this taxable income. The estimate is only checked between CHF {min} and CHF {max} (cantonal capital, no children, tax year {year}); outside that range it is too far from the official figure. The FTA tax calculator works out the amount for your municipality.',
-    bandNotChecked: 'Maloja shows no amount here for this situation: the estimate is only checked for households without children and within a checked income range. The FTA tax calculator works out the amount for your municipality.',
+    // E37/E38: no cantonal figure where the FTA table does not apply
+    bandOutside: 'Maloja shows no amount here for this taxable income. The table from the FTA tax calculator covers CHF {min} to CHF {max} (cantonal capital, tax year {year}); Maloja does not extend it outside that range. The FTA tax calculator works out the amount for your municipality.',
+    bandNotChecked: 'Maloja shows no amount here for this situation. Cantonal and municipal tax has been measured for single and married people with up to three children; for people who are not married, only if the children live in the same household (confirmation under the parent tariff). The FTA tax calculator works out the amount for your municipality.',
     bandLinkEstv: 'FTA tax calculator',
     bandLinkKanton: 'Tax administration {canton}',
-    bandChecked: 'income range checked against the FTA tax calculator, tax year {year}, on {date} (tolerance ±{tol}%)',
+    bandChecked: 'table from the FTA tax calculator, tax year {year}, retrieved on {date}',
     netIncomeFederalOnly: 'Only federal tax is deducted — cantonal and municipal tax are not included in this figure.',
+    // E38: Hinweis/Zeile im Behördendossier
+    cantonalNoteLabel: 'Note on cantonal and municipal tax',
+    noCantonalFigure: 'no estimate for this situation — FTA tax calculator: swisstaxcalculator.estv.admin.ch',
     totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
     tariff: 'Tariff',
     singleTariff: 'Basic tariff',

@@ -2345,15 +2345,18 @@ export default {
     cantonalAndMunicipal: 'Imposta cantonale e comunale',
     totalEstimate: 'Stima fiscale totale',
     selectCantonHint: 'Seleziona un cantone per vedere la stima cantonale.',
-    basedOnHauptort: 'Valore indicativo per il capoluogo del cantone. Verificato con il calcolatore d’imposta dell’AFC (anno fiscale {year}): per un reddito imponibile tra CHF {min} e CHF {max} si scosta al massimo del {tol} % dal valore ufficiale (senza imposta di culto). In altri comuni l’imposta può essere molto diversa.',
+    basedOnHauptort: 'Valore indicativo tratto da punti di misura del calcolatore d’imposta dell’AFC (anno fiscale {year}): capoluogo del cantone, senza imposta di culto; in altri comuni l’imposta può essere molto diversa.',
     roughEstimateBadge: 'Stima approssimativa',
-    // E37 (K37): nessun importo cantonale fuori dalla fascia di reddito verificata
-    bandOutside: 'Per questo reddito imponibile Maloja non mostra qui alcun importo. La stima è verificata solo tra CHF {min} e CHF {max} (capoluogo, senza figli, anno fiscale {year}); al di fuori si scosta troppo dal valore ufficiale. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
-    bandNotChecked: 'Per questa situazione Maloja non mostra qui alcun importo: la stima è verificata solo per economie domestiche senza figli e in una fascia di reddito verificata. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
+    // E37/E38: nessun importo cantonale dove la tabella AFC non si applica
+    bandOutside: 'Per questo reddito imponibile Maloja non mostra qui alcun importo. La tabella del calcolatore d’imposta dell’AFC va da CHF {min} a CHF {max} (capoluogo, anno fiscale {year}); al di fuori Maloja non la estende. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
+    bandNotChecked: 'Per questa situazione Maloja non mostra qui alcun importo. L’imposta cantonale e comunale è stata misurata per persone nubili o celibi e coniugate con al massimo tre figli; per le persone non coniugate, solo se i figli vivono nella stessa economia domestica (conferma alla tariffa per genitori). Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
     bandLinkEstv: 'Calcolatore d’imposta dell’AFC',
     bandLinkKanton: 'Amministrazione delle contribuzioni {canton}',
-    bandChecked: 'fascia di reddito verificata con il calcolatore d’imposta dell’AFC, anno fiscale {year}, il {date} (tolleranza ±{tol} %)',
+    bandChecked: 'tabella del calcolatore d’imposta dell’AFC, anno fiscale {year}, consultata il {date}',
     netIncomeFederalOnly: 'È dedotta solo l’imposta federale — l’imposta cantonale e comunale non è inclusa in questa cifra.',
+    // E38: Hinweis/Zeile im Behördendossier
+    cantonalNoteLabel: 'Nota sull’imposta cantonale e comunale',
+    noCantonalFigure: 'nessuna stima per questa situazione — calcolatore d’imposta dell’AFC: swisstaxcalculator.estv.admin.ch',
     totalNote: 'Federale + cantonale + comunale (orientamento). L\'onere effettivo dipende dal comune e dalla situazione personale.',
     tariff: 'Tariffa',
     singleTariff: 'Tariffa base',

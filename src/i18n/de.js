@@ -2406,15 +2406,18 @@ export default {
     cantonalAndMunicipal: 'Kantons- und Gemeindesteuer',
     totalEstimate: 'Geschätzte Gesamtsteuer',
     selectCantonHint: { sie: 'Wählen Sie einen Kanton, um die kantonale Steuerbelastung zu sehen.', du: 'Wähle einen Kanton, um die kantonale Steuerbelastung zu sehen.' },
-    basedOnHauptort: 'Orientierungswert für den Hauptort des Kantons. Am Steuerrechner der ESTV geprüft (Steuerjahr {year}): Bei einem steuerbaren Einkommen zwischen CHF {min} und CHF {max} liegt er höchstens {tol} % neben dem amtlichen Wert (ohne Kirchensteuer). In anderen Gemeinden kann die Steuer deutlich abweichen.',
+    basedOnHauptort: 'Orientierungswert aus Messpunkten des Steuerrechners der ESTV (Steuerjahr {year}): Hauptort des Kantons, ohne Kirchensteuer; in anderen Gemeinden kann die Steuer deutlich abweichen.',
     roughEstimateBadge: 'Grobe Schätzung',
-    // E37 (K37): ausserhalb des geprüften Einkommensbands keine Kantonszahl
-    bandOutside: { sie: 'Für Ihr steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Schätzung ist nur zwischen CHF {min} und CHF {max} geprüft (Hauptort, ohne Kinder, Steuerjahr {year}); ausserhalb liegt sie zu weit neben dem amtlichen Wert. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für dein steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Schätzung ist nur zwischen CHF {min} und CHF {max} geprüft (Hauptort, ohne Kinder, Steuerjahr {year}); ausserhalb liegt sie zu weit neben dem amtlichen Wert. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
-    bandNotChecked: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag: Die Schätzung ist nur für Haushalte ohne Kinder und nur in einem geprüften Einkommensbereich belegt. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag: Die Schätzung ist nur für Haushalte ohne Kinder und nur in einem geprüften Einkommensbereich belegt. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
+    // E37/E38: wo die ESTV-Tabelle nicht trägt, keine Kantonszahl
+    bandOutside: { sie: 'Für Ihr steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für dein steuerbares Einkommen zeigt Maloja hier keinen Betrag. Die Tabelle aus dem Steuerrechner der ESTV reicht von CHF {min} bis CHF {max} (Hauptort, Steuerjahr {year}); ausserhalb davon rechnet Maloja nicht weiter. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
+    bandNotChecked: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag. Gemessen ist die Kantons- und Gemeindesteuer für alleinstehende und verheiratete Personen mit bis zu drei Kindern; bei Personen, die nicht verheiratet sind, nur, wenn die Kinder im gleichen Haushalt leben (Bestätigung beim Elterntarif). Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
     bandLinkEstv: 'Steuerrechner der ESTV',
     bandLinkKanton: 'Steuerverwaltung {canton}',
-    bandChecked: 'Einkommensbereich geprüft am Steuerrechner der ESTV, Steuerjahr {year}, am {date} (Toleranz ±{tol} %)',
+    bandChecked: 'Tabelle aus dem Steuerrechner der ESTV, Steuerjahr {year}, abgerufen am {date}',
     netIncomeFederalOnly: 'Nur die Bundessteuer ist abgezogen — die Kantons- und Gemeindesteuer fehlt in dieser Zahl.',
+    // E38: Hinweis/Zeile im Behördendossier
+    cantonalNoteLabel: 'Hinweis zur Kantons- und Gemeindesteuer',
+    noCantonalFigure: 'keine Schätzung für diese Situation — Steuerrechner der ESTV: swisstaxcalculator.estv.admin.ch',
     totalNote: 'Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.',
     tariff: 'Tarif',
     singleTariff: 'Grundtarif',
