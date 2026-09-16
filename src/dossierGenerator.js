@@ -739,7 +739,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   // E38: auch bei Bundessteuer 0 zeigen, wenn eine Kantonszahl da ist.
   if (tax && (tax.total > 0 || tax.kantonal)) {
     const taxRows = [
-      { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
+      { label: tax.taxableQuelle === 'estv' ? t('tax.taxableIncomeEstimated') : t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
       { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear') },
     ];
     if (tax.kantonal) {
@@ -868,6 +868,8 @@ export function generateBehoerdenJSON(data, calculations) {
   if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {
       taxableIncome: tax.taxableIncome || 0,
+      // E39: woher das steuerbare Einkommen kommt (für Bund und Kanton dasselbe)
+      ...(tax.taxableQuelle ? { taxableIncomeBasis: tax.taxableQuelle === 'estv' ? 'geschätzt: Nettolohn abzüglich der Standardabzüge des ESTV-Steuerrechners ' + (tax.datenstand || '') : 'eingetragen (steuerbares Einkommen direkte Bundessteuer)' } : {}),
       federalTax: tax.total || 0,
       // E38: ohne Tabellenwert null statt 0 — «nicht geschätzt» ist nicht «keine Steuer».
       cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : null,

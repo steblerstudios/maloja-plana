@@ -2891,7 +2891,14 @@ export default {
     // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
     bandNotCheckedPartner: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
     bandNotCheckedBrutto: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
-    cantonalTaxableBasis: "Legì cun in'entrada taxabla da CHF {value}: paja netta main las deducziuns standard dal calculatur da l'AFT (custs professiunals, assicuranzas, persunas maridadas, uffants) e las deducziuns registradas.",
+    // E39: ein steuerbares Einkommen für Bund und Kanton
+    // TODO(rm): E39 — provisorisch, von Muttersprachler:in gegenlesen.
+    taxableIncomeEstimated: 'Entrada taxabla (stimada tenor las deducziuns standard da l\'AFT)',
+    taxableEstimatedHint: 'Paja netta main las deducziuns standard ch\'il calculatur da taglia da l\'AFT utilisescha: custs professiunals (3 %, almain CHF 2 000, maximalmain CHF 4 000 — u ils custs professiunals registrads), deducziun per assicuranzas, deducziuns per persunas maridadas e per uffants, ultra da quai las deducziuns registradas. Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.',
+    taxableEnteredHint: 'Endatà da Vus (cifra per la taglia federala directa). Cun questa cifra quinta Maloja la taglia federala e legia la taglia chantunala e communala.',
+    federalNotCheckedBrutto: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l\'entrada taxabla. Cun la paja netta u cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import exact.',
+    federalNotCheckedPartner: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: tar persunas maridadas vegnan las duas entradas sumadas, cun ina atgna deducziun per pèrs cun duas entradas; tar geniturs betg maridads po la deducziun per uffants vegnir partida tranter els. Cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import.',
+    noTaxFigure: 'nagina stimaziun — calculatur da taglia da l\'AFT',
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',

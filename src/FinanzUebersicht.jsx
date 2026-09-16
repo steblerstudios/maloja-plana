@@ -4,9 +4,8 @@ import { Icon } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
-import { berechneBundessteuer } from './data/steuerRechner.js';
-import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
-import { KantonssteuerOrientierung } from './components/KantonssteuerOrientierung.jsx';
+import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
+import { KantonssteuerOrientierung, bundOhneZahlText } from './components/KantonssteuerOrientierung.jsx';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
@@ -77,6 +76,8 @@ export const druckAbschnitte = (t, w) => {
       + '<tr><td colspan="2" style="font-size:12px;color:#888">' + escapeHtml(t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })) + '</td></tr>' });
   } else if (w.taxResult) {
     zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(w.taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>' });
+  } else if (w.steuerOhneZahl) {
+    zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + '</td><td class="r">' + escapeHtml(t('tax.noTaxFigure')) + '</td></tr>' });
   }
 
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
@@ -140,7 +141,6 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const [druckVorschau, setDruckVorschau] = React.useState(false);
   const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
-  const annualIncome = income * 12;
   const canton = data.basis?.canton || '';
   // K33/E23: Für die Steuerschätzung zählt der Steuerkanton — kann vom Wohnkanton
   // abweichen (z. B. Wochenaufenthalt). Dasselbe Vorbelegungsmuster wie im
@@ -148,22 +148,19 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   // Schlüssel canton → basis.canton). Überall sonst in dieser Übersicht bleibt
   // `canton` der Wohnkanton (Lohn-Barometer, Miete, IPV, gedruckte „Kanton"-Zeile).
   const steuerkanton = steuerkantonVorbelegung(data);
-  const verheiratet = data.basis?.maritalStatus === 'married';
   const hh = getHouseholdInfo(data);
 
   const sozialhilfe = calculateSozialhilfe(data);
   const ipv = calculateIPV(data);
   const el = checkELEligibility(data);
-  // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete nur mit der Bestätigung aus dem Steuerrechner.
-  const elterntarif = data.taxData?.elterntarif === true;
-  const taxResult = annualIncome > 0
-    ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount, elterntarif })
-    : null;
-  // E38: dieselbe Regel wie im Steuerrechner — Zahl nur, wo die ESTV-Tabelle trägt.
+  // E38/E39: dieselbe Regel wie im Steuerrechner — ein steuerbares Einkommen (Standardabzüge der
+  // ESTV) für Bund und Kanton; Kantonszahl nur, wo die ESTV-Tabelle trägt.
   // K33: gerechnet wird im Steuerkanton (nicht zwingend der Wohnkanton).
-  const kantonsSchaetzung = taxResult
-    ? kantonssteuerFuerProfil({ kanton: steuerkanton, nettolohnJahr: annualIncome, direktSteuerbar: Number(data.finanzen?.taxableIncome) || 0, einkommensart: data.finanzen?.incomeType || null, partnerEinkommen: hh.partnerIncome, verheiratet, kinder: hh.childrenCount, elterntarif, ...abzuegeAusTaxData(data.taxData), bundessteuer: taxResult.steuer })
-    : null;
+  const steuern = income > 0 ? steuernFuerProfil(steuerEingabenAusDaten(data)) : null;
+  const taxResult = steuern ? steuern.bund : null;
+  // Lohn erfasst, aber keine Bundessteuer-Schätzung (Bruttolohn, Ehe mit zwei Einkommen …).
+  const steuerOhneZahl = steuern && !taxResult ? steuern.grund : null;
+  const kantonsSchaetzung = steuern ? steuern.kanton : null;
   const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
 
   const hasData = income > 0;
@@ -193,7 +190,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
 
   // Die Werte, die gedruckt werden — auch die Quelle der Export-Vorschau (K20).
   const druckWerte = {
-    income, canton, taxResult, kantonal, ipv, sozialhilfe, el,
+    income, canton, taxResult, steuerOhneZahl, kantonal, ipv, sozialhilfe, el,
     totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten,
   };
 
@@ -377,11 +374,12 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
         ? '~ ' + formatCHF(kantonal.total) + ' ' + t('common.perYear')
         : taxResult
           ? '~ ' + formatCHF(taxResult.steuer) + ' ' + t('common.perYear') + ' (' + t('tax.federalOnly') + ')'
-          : t('finanzUebersicht.noIncome'),
+          : steuerOhneZahl ? t('tax.noTaxFigure') : t('finanzUebersicht.noIncome'),
       statusColor: palette.text,
       detail: kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
-        : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
+        : steuerOhneZahl ? bundOhneZahlText(t, steuerOhneZahl)
+          : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,

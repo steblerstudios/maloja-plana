@@ -230,6 +230,36 @@ export function berechneBundessteuer({
 }
 
 /**
+ * E39: Bundessteuer auf ein SCHON steuerbares Einkommen (keine weiteren Abzüge).
+ * So rechnen TaxCalculator, FinanzUebersicht und BehoerdenDossier: Das steuerbare Einkommen
+ * kommt aus steuerbaresEinkommenFuerProfil() (src/data/kantonaleSteuerdaten.js) — dieselbe Zahl,
+ * mit der die Kantonstabelle gelesen wird. Kein zweiter Abzug hier.
+ * @param {Object} p
+ * @param {number} p.steuerbaresEinkommen
+ * @param {boolean} [p.verheiratet=false]
+ * @param {number} [p.kinder=0]
+ * @param {boolean} [p.elterntarif=false]
+ * @param {number} [p.einkommen=0] Jahres-Nettolohn als Bezugsgrösse für Anzeige und effektiven
+ *   Satz; 0 → Bezug ist das steuerbare Einkommen selbst.
+ */
+export function bundessteuerAusSteuerbarem({
+  steuerbaresEinkommen,
+  verheiratet = false,
+  kinder = 0,
+  elterntarif = false,
+  einkommen = 0,
+}) {
+  const r = berechneBundessteuer({ bruttoEinkommen: Number(steuerbaresEinkommen) || 0, verheiratet, kinder, elterntarif, abzuege: 0 });
+  const bezug = Number(einkommen) > 0 ? Number(einkommen) : r.steuerBaresEinkommen;
+  return {
+    ...r,
+    bruttoEinkommen: bezug,
+    abzuege: Math.max(0, bezug - r.steuerBaresEinkommen),
+    effektiverSatz: bezug > 0 ? Math.round((r.steuer / bezug) * 10000) / 100 : 0,
+  };
+}
+
+/**
  * Grenzsteuersatz bei einem bestimmten Einkommen ermitteln.
  */
 export function grenzsteuersatz(einkommen, verheiratet = false) {

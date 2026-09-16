@@ -5,8 +5,7 @@ import { readFileSync } from 'node:fs';
 import { FinanzUebersicht, druckAbschnitte } from '../FinanzUebersicht.jsx';
 import { BehoerdenDossier } from '../BehoerdenDossier.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenJSON } from '../dossierGenerator.js';
-import { berechneBundessteuer } from '../data/steuerRechner.js';
-import { kantonssteuerFuerProfil } from '../data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten } from '../data/kantonaleSteuerdaten.js';
 
 // ─────────────────────────────────────────────────────────────
 // E38 · FinanzUebersicht und BehoerdenDossier nutzen dieselbe Regel wie der Steuerrechner:
@@ -14,6 +13,7 @@ import { kantonssteuerFuerProfil } from '../data/kantonaleSteuerdaten.js';
 // Einkommen), Einkommensart, Partnereinkommen, Zivilstand, Kinderzahl, Elterntarif-Bestätigung und
 // den erfassten Abzügen. Zahl nur, wo die ESTV-Tabelle trägt — sonst keine Kantonszahl.
 // Kein Aufrufer hat eine eigene Rechnung.
+// E39 · Die Bundessteuer nutzt dasselbe steuerbare Einkommen (steuernFuerProfil).
 // ─────────────────────────────────────────────────────────────
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
@@ -32,16 +32,13 @@ const profil = ({ canton = 'ZH', monat, verheiratet = false, kinder = 0, elternt
 
 // Was die eine Regel für dieses Profil sagt — so rechnen beide Seiten.
 const erwartet = (p) => {
-  const verheiratet = p.basis.maritalStatus === 'married';
-  const kinder = p.basis.household.children.length;
-  const elterntarif = p.taxData?.elterntarif === true;
-  const bund = berechneBundessteuer({ bruttoEinkommen: p.finanzen.monthlyIncome * 12, verheiratet, kinder, elterntarif });
-  return { bund, ...kantonssteuerFuerProfil({ kanton: p.behoerden?.cantoneOfTaxation || p.basis.canton, nettolohnJahr: p.finanzen.monthlyIncome * 12, einkommensart: p.finanzen.incomeType || null, partnerEinkommen: p.basis.household.partnerIncome || 0, bundessteuer: bund.steuer, verheiratet, kinder, elterntarif }) };
+  const s = steuernFuerProfil(steuerEingabenAusDaten(p));
+  return { bund: s.bund, quelle: s.quelle, ...s.kanton };
 };
 
 const dossierDaten = (p) => {
   const e = erwartet(p);
-  return { tax: { total: e.bund.steuer, taxableIncome: e.bund.steuerBaresEinkommen, kantonal: e.kantonal, kantonOhneZahl: !e.kantonal, datenstand: '2026' } };
+  return { tax: e.bund ? { total: e.bund.steuer, taxableIncome: e.bund.steuerBaresEinkommen, taxableQuelle: e.quelle, kantonal: e.kantonal, kantonOhneZahl: !e.kantonal, datenstand: '2026' } : null };
 };
 
 const FAELLE = [
@@ -49,17 +46,19 @@ const FAELLE = [
   { name: 'VD verheiratet, 2 Kinder, 9 000/Monat', p: profil({ canton: 'VD', monat: 9000, verheiratet: true, kinder: 2 }), zahl: true },
   { name: 'BE alleinerziehend bestätigt, 1 Kind, 6 000/Monat', p: profil({ canton: 'BE', monat: 6000, kinder: 1, elterntarif: true }), zahl: true },
   { name: 'BE ledig mit Kind, ohne Bestätigung', p: profil({ canton: 'BE', monat: 6000, kinder: 1 }), zahl: false },
-  { name: 'GE verheiratet, 4 Kinder', p: profil({ canton: 'GE', monat: 9000, verheiratet: true, kinder: 4 }), zahl: false },
+  { name: 'GE verheiratet, 4 Kinder', p: profil({ canton: 'GE', monat: 12000, verheiratet: true, kinder: 4 }), zahl: false },
   { name: 'ZH ledig, 40 000/Monat (über der Tabelle)', p: profil({ monat: 40000 }), zahl: false },
-  { name: 'ZH verheiratet mit Partnereinkommen', p: profil({ monat: 6000, verheiratet: true, partnerIncome: 3000 }), zahl: false },
-  { name: 'ZH ledig, Lohn als Bruttolohn erfasst', p: profil({ monat: 6000, incomeType: 'brutto' }), zahl: false },
+  { name: 'ZH verheiratet mit Partnereinkommen', p: profil({ monat: 6000, verheiratet: true, partnerIncome: 3000 }), zahl: false, bund: false },
+  { name: 'ZH ledig, Lohn als Bruttolohn erfasst', p: profil({ monat: 6000, incomeType: 'brutto' }), zahl: false, bund: false },
+  { name: 'ZH Konkubinat ohne Kinder, Partnereinkommen', p: profil({ monat: 6000, partnerIncome: 3000 }), zahl: false },
   { name: 'Wohnkanton ZH, Steuerkanton GE', p: profil({ monat: 6000, steuerkanton: 'GE' }), zahl: true },
 ];
 
 describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () => {
-  it.each(FAELLE)('$name', ({ p, zahl }) => {
+  it.each(FAELLE)('$name', ({ p, zahl, bund = true }) => {
     const e = erwartet(p);
     expect(Boolean(e.kantonal)).toBe(zahl);
+    expect(Boolean(e.bund)).toBe(bund);
 
     const fu = render(FinanzUebersicht, { data: p });
     const bd = render(BehoerdenDossier, { data: p });
@@ -83,6 +82,15 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
       expect(json.cantonalAndMunicipal).toBe(e.kantonal.kantonalUndGemeinde);
       expect(json.totalEstimate).toBe(e.kantonal.total);
       expect(json.cantonalBasis).toMatch(/ESTV-Steuerrechner 2026, Hauptort .+, ohne Kirchensteuer, grobe Schätzung/);
+    } else if (!bund) {
+      // E39: kein steuerbares Einkommen → weder Bundes- noch Kantonszahl; Dossier ohne Steuerteil.
+      expect(fu).toContain('tax.noTaxFigure');
+      expect(fu).not.toContain('tax.federalOnly');
+      expect(fu).toContain('kantonssteuer-orientierung');
+      expect(fu).toContain(p.finanzen.incomeType === 'brutto' ? 'tax.federalNotCheckedBrutto' : 'tax.federalNotCheckedPartner');
+      expect(bd).not.toContain('tax.federalTax');
+      expect(steuern).toBeUndefined();
+      expect(json).toBeUndefined();
     } else {
       // Keine Kantonszahl, keine Gesamtsumme — nur Bundessteuer und der Weg zum amtlichen Rechner.
       expect(fu).toContain('(tax.federalOnly)');
@@ -101,6 +109,10 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     const p = profil({ canton: 'VD', monat: 9000, verheiratet: true, kinder: 2 });
     const e = erwartet(p);
     expect(e.bund.tarif).toBe('verheiratet');
+    // E39: steuerbar nach den ESTV-Standardabzügen, nicht der Nettolohn × 12
+    expect(e.bund.steuerBaresEinkommen).toBe(108000 - 3240 - 3700 - 1400 - 2800 - 13600);
+    expect(render(BehoerdenDossier, { data: p })).toContain('tax.taxableIncomeEstimated');
+    expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.bund.steuerBaresEinkommen));
     expect(e.bund.kinderabzug).toBe(2 * 263);
     expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.bund.steuer));
     expect(render(FinanzUebersicht, { data: p })).toContain('tax.federalTax: CHF ' + tausender(e.bund.steuer));
@@ -123,6 +135,28 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     expect(render(BehoerdenDossier, { data: p })).toContain('CHF ' + tausender(e.kantonal.kantonalUndGemeinde));
   });
 
+  // E39: dieselbe Bundessteuer wie im Steuerrechner (kantonssteuerAnsicht.test.js zeigt dort 906 / 114 / 551)
+  // und wie die ESTV (IncomeTaxFed, Messdateien); Nettolohn laut ESTV als Monatslohn erfasst.
+  it.each([
+    ['ZH', false, 0, 71883, 906, 67927],
+    ['ZH', false, 1, 71883, 114, 60427],
+    ['VD', true, 2, 107602, 551, 82874],
+  ])('E39 Bundessteuer: %s verheiratet=%s, %i Kinder, Nettolohn %i → ESTV %i, steuerbar %i', (canton, verheiratet, kinder, netto, estv, steuerbar) => {
+    const p = profil({ canton, monat: netto / 12, verheiratet, kinder, elterntarif: kinder > 0 && !verheiratet ? true : undefined });
+    const e = erwartet(p);
+    expect(e.bund.steuer).toBe(estv);
+    expect(e.bund.steuerBaresEinkommen).toBe(steuerbar);
+    const fu = render(FinanzUebersicht, { data: p });
+    const bd = render(BehoerdenDossier, { data: p });
+    expect(fu).toContain('tax.federalTax: CHF ' + tausender(estv) + ' +');
+    expect(bd).toContain('CHF ' + tausender(estv) + 'common.perYear');
+    expect(bd).toContain('tax.taxableIncomeEstimated');
+    expect(bd).toContain('CHF ' + tausender(steuerbar) + '<');
+    const json = generateBehoerdenJSON(p, dossierDaten(p)).calculations.tax;
+    expect(json).toMatchObject({ taxableIncome: steuerbar, federalTax: estv });
+    expect(json.taxableIncomeBasis).toMatch(/Standardabzüge des ESTV-Steuerrechners 2026/);
+  });
+
   it('Druck der Finanzübersicht: Kennzeichnung und Hinweis bei geschätzter Kantonssteuer', () => {
     const p = profil({ monat: 5000 });
     const e = erwartet(p);
@@ -130,6 +164,9 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     const html = druckAbschnitte(t, w)[0].zeilen.map((z) => z.html).join('');
     expect(html).toContain('finanzUebersicht.taxes (tax.roughEstimateBadge)');
     expect(html).toContain('tax.basedOnHauptort(2026)');
+    // E39: ohne steuerbares Einkommen (z. B. Bruttolohn) steht «keine Schätzung», kein Betrag.
+    const ohne = druckAbschnitte(t, { income: 5000, canton: 'ZH', taxResult: null, steuerOhneZahl: 'brutto', kantonal: null, ipv: {}, sozialhilfe: {}, el: {} })[0].zeilen.map((z) => z.html).join('');
+    expect(ohne).toContain('finanzUebersicht.taxes</td><td class="r">tax.noTaxFigure');
   });
 
   it('keiner der Aufrufer rechnet selbst: kein Faktor, kein eigener Tabellenzugriff', () => {
@@ -139,8 +176,8 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     }
     for (const datei of ['../FinanzUebersicht.jsx', '../BehoerdenDossier.jsx', '../TaxCalculator.jsx']) {
       const code = readFileSync(new URL(datei, import.meta.url), 'utf-8');
-      expect(code, datei).toMatch(/kantonssteuerFuerProfil\(\{/);
-      expect(code, datei).not.toMatch(/schaetzeKantonaleSteuer\(/);
+      expect(code, datei).toMatch(/steuernFuerProfil\(/);
+      expect(code, datei).not.toMatch(/schaetzeKantonaleSteuer\(|kantonssteuerFuerProfil\(|berechneBundessteuer\(|steuerbarNachEstv\(/);
     }
   });
 });

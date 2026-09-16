@@ -3,6 +3,8 @@ import { describe, it, expect, vi } from 'vitest';
 // ─────────────────────────────────────────────────────────────
 // E37 / E38 · Der Steuerrechner zeigt die Kantons-/Gemeindesteuer aus der ESTV-Tabelle —
 // nur dort, wo sie trägt.
+// E39 · Bundessteuer und Kantonstabelle nutzen dasselbe steuerbare Einkommen; die Seite zeigt
+// genau eines (auch auf dem Nettolohn-Weg trifft die Bundessteuer die ESTV auf CHF 1).
 //
 // Kein DOM im Repo: wie in steuerkanton.test.js ersetzt ein kleiner Speicher die
 // React-Hooks. useEffect wird gesammelt und nach dem ersten Aufruf ausgeführt, damit
@@ -88,19 +90,37 @@ const zeigtZahl = (v, estvBund, estvKG) => {
   expect(v.text).not.toContain('tax.netIncomeFederalOnly');
   expect(v.betraege).toHaveLength(3);
   const [bund, kantonal, total] = v.betraege;
-  // Auf dem Nettolohn-Weg rechnet die Bundessteuer der App ohne die ESTV-Pauschalen (offener Entscheid).
-  if (estvBund !== null) expect(Math.abs(bund - estvBund)).toBeLessThanOrEqual(1);
+  // ESTV rundet auf ganze Franken, die App auf 5 Rappen (Form. 58c) → höchstens CHF 1 daneben.
+  expect(Math.abs(bund - estvBund)).toBeLessThanOrEqual(1);
   expect(imRahmen(kantonal, estvKG)).toBe(true);
   expect(total).toBe(Math.round(bund) + kantonal);
 };
 
-const zeigtKeineZahl = (v, textKey) => {
+const zeigtKeineZahl = (v, textKey, bund = 'mitBund') => {
   expect(v.orientierung).toBeDefined();
   expect(v.text).toContain(textKey);
   expect(v.text).not.toContain('tax.roughEstimateBadge');
   expect(v.text).not.toContain('tax.totalEstimate');
-  expect(v.text).toContain('tax.netIncomeFederalOnly');
+  if (bund === 'mitBund' && v.betraege.length) expect(v.text).toContain('tax.netIncomeFederalOnly');
   expect(v.alle.filter((k) => k.type === 'a').map((k) => k.props.href)).toContain('https://swisstaxcalculator.estv.admin.ch/');
+};
+
+// E39: genau ein steuerbares Einkommen auf der Seite, mit ehrlicher Beschriftung.
+const einSteuerbares = (v, wert, label) => {
+  const boxen = v.alle.filter((k) => k.props['data-testid'] === 'steuerbares-einkommen');
+  expect(boxen).toHaveLength(1);
+  const inhalt = texte(knoten(boxen[0].props.children));
+  expect(inhalt).toContain(label + '\nCHF ' + wert + '\n');
+  expect(inhalt).toContain(label === 'tax.taxableIncomeEstimated' ? 'tax.taxableEstimatedHint' : 'tax.taxableEnteredHint');
+  expect(v.text).not.toContain('cantonalTaxableBasis');
+};
+
+const keineBundessteuer = (v, textKey) => {
+  expect(v.betraege).toEqual([]);
+  expect(v.text).toContain(textKey);
+  expect(v.alle.some((k) => k.props['data-testid'] === 'bundessteuer-ohne-zahl')).toBe(true);
+  expect(v.alle.some((k) => k.props['data-testid'] === 'steuerbares-einkommen')).toBe(false);
+  expect(v.text).not.toContain('tax.netIncome\n');
 };
 
 describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
@@ -120,16 +140,36 @@ describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
 
   it('Nettolohn 71 883 (Brutto 80 000): die Tabelle wird mit steuerbar 67 927 gelesen → ±3 % neben ESTV 7 039', () => {
     const v = zeige(null, { nettolohn: 71883 });
-    zeigtZahl(v, null, 7039);
-    expect(v.text).toContain('tax.cantonalTaxableBasis(67’927)');
+    zeigtZahl(v, 906, 7039);
+    einSteuerbares(v, 67927, 'tax.taxableIncomeEstimated');
   });
 
-  it('Lohn als Bruttolohn erfasst: keine Kantonszahl', () => {
-    zeigtKeineZahl(zeige(null, { nettolohn: 80000, incomeType: 'brutto' }), 'tax.bandNotCheckedBrutto');
+  it('direkt eingetragen: ein steuerbares Einkommen, als eingetragen beschriftet', () => {
+    einSteuerbares(zeige(67927), 67927, 'tax.taxableIncome');
   });
 
-  it('mit Partnereinkommen (nicht gemessen): keine Kantonszahl', () => {
-    zeigtKeineZahl(zeige(null, { nettolohn: 71883, verheiratet: true, partnerIncome: 2000 }), 'tax.bandNotCheckedPartner');
+  it('Lohn als Bruttolohn erfasst: weder Bundessteuer noch Kantonszahl', () => {
+    const v = zeige(null, { nettolohn: 80000, incomeType: 'brutto' });
+    zeigtKeineZahl(v, 'tax.bandNotCheckedBrutto');
+    keineBundessteuer(v, 'tax.federalNotCheckedBrutto');
+  });
+
+  it('verheiratet mit Partnereinkommen (nicht gemessen): weder Bundessteuer noch Kantonszahl', () => {
+    const v = zeige(null, { nettolohn: 71883, verheiratet: true, partnerIncome: 2000 });
+    zeigtKeineZahl(v, 'tax.bandNotCheckedPartner');
+    keineBundessteuer(v, 'tax.federalNotCheckedPartner');
+  });
+
+  it('Konkubinat ohne Kinder: Bundessteuer auf dem eigenen Einkommen (ESTV 906), keine Kantonszahl', () => {
+    const v = zeige(null, { nettolohn: 71883, partnerIncome: 2000 });
+    zeigtKeineZahl(v, 'tax.bandNotCheckedPartner', 'mitBund');
+    expect(v.betraege).toEqual([906]);
+    einSteuerbares(v, 67927, 'tax.taxableIncomeEstimated');
+  });
+
+  it('Konkubinat mit Kind: keine Bundessteuer (Kinderabzug kann aufgeteilt sein)', () => {
+    const v = zeige(null, { nettolohn: 71883, partnerIncome: 2000, kinder: 1, elterntarif: true });
+    keineBundessteuer(v, 'tax.federalNotCheckedPartner');
   });
 
   it('unter der Tabelle (steuerbar 10 000): keine Kantonszahl', () => {
@@ -140,8 +180,8 @@ describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
 describe('E38 · mit Kindern', () => {
   it('ZH alleinerziehend mit 1 Kind, Elterntarif bestätigt, Nettolohn 71 883: ±3 % neben ESTV 3 689', () => {
     const v = zeige(null, { nettolohn: 71883, kinder: 1, elterntarif: true });
-    zeigtZahl(v, null, 3689);
-    expect(v.text).toContain('tax.cantonalTaxableBasis(60’427)');
+    zeigtZahl(v, 114, 3689);
+    einSteuerbares(v, 60427, 'tax.taxableIncomeEstimated');
   });
 
   it('ZH alleinerziehend, direkt steuerbar 60 427: Bundessteuer = ESTV 114 (Elterntarif), K+G ±3 % neben 3 689', () => {
@@ -150,8 +190,8 @@ describe('E38 · mit Kindern', () => {
 
   it('VD verheiratet mit 2 Kindern, Nettolohn 107 602: ±3 % neben ESTV 11 340', () => {
     const v = zeige(null, { canton: 'VD', nettolohn: 107602, verheiratet: true, kinder: 2 });
-    zeigtZahl(v, null, 11340);
-    expect(v.text).toContain('tax.cantonalTaxableBasis(82’874)');
+    zeigtZahl(v, 551, 11340);
+    einSteuerbares(v, 82874, 'tax.taxableIncomeEstimated');
   });
 
   it('VD verheiratet mit 2 Kindern, direkt steuerbar 82 874: Bundessteuer = ESTV 551', () => {
