@@ -1,6 +1,6 @@
 // Datenstand der kantonalen Werte (SKOS-Grundbedarf, IPV, EL, Mietzinsmaxima).
 // Diese ändern jährlich — bei Aktualisierung hochzählen.
-import { vermoegensfreibetragSKOS } from '../data/sozialhilfeRechner.js';
+import { vermoegensfreibetragKanton } from '../data/sozialhilfeRechner.js';
 
 export const CANTONAL_DATA_VERSION = '2024/2025';
 
@@ -298,13 +298,12 @@ export function calculateSozialhilfe(data) {
   const totalBedarf = grundbedarf + effectiveRent + effectiveKK;
   const deficit = totalBedarf - income;
 
-  // Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2026): CHF 6'000 Einzelperson /
-  // CHF 12'000 Paar / + CHF 3'000 pro minderjähriges Kind / max. CHF 15'000.
-  // Vereinheitlichter Helper (data/sozialhilfeRechner.js) — Orientierung:
+  // Vermögensfreibetrag je Kanton (Tabelle + Quellen in data/sozialhilfeRechner.js;
+  // ohne eigenen Eintrag: SKOS-RL D.3.1, ab 1.1.2026). Orientierung:
   // Vermögen über dem Freibetrag muss i.d.R. zuerst eingesetzt werden.
   const vermoegen = Number(data.finanzen?.securitiesValue || 0) + Number(data.finanzen?.otherAssets || 0) + Number(data.finanzen?.savingsAccount || 0);
   const minorChildren = hh.children.filter(c => (Number(c.age) || 0) < 18).length;
-  const vermoegensfreibetrag = vermoegensfreibetragSKOS(hh.adults, minorChildren);
+  const vermoegensfreibetrag = vermoegensfreibetragKanton(canton, hh.adults, minorChildren);
   const vermoegenUeberFreibetrag = Math.max(0, vermoegen - vermoegensfreibetrag);
 
   return {
