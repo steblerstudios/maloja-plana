@@ -14,7 +14,11 @@ const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, 'â€
 export const orientierungsText = (t, schaetzung, jahr) =>
   schaetzung.lage === 'ausserhalb' && schaetzung.bereich
     ? t('tax.bandOutside', { min: chf(schaetzung.bereich.min), max: chf(schaetzung.bereich.max), year: jahr })
-    : t('tax.bandNotChecked');
+    : schaetzung.grund === 'partner'
+      ? t('tax.bandNotCheckedPartner')
+      : schaetzung.grund === 'brutto'
+        ? t('tax.bandNotCheckedBrutto')
+        : t('tax.bandNotChecked');
 
 export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr, style }) => {
   const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;

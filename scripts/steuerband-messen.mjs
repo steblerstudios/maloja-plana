@@ -10,10 +10,13 @@
 //
 //   node scripts/steuerband-messen.mjs --messen --kinder
 //     Dasselbe mit 1, 2 und 3 Kindern → docs/sources/kantonssteuer-kinder-2026.messpunkte.json (E38).
+//
+//   node scripts/steuerband-messen.mjs --messen --abzuege
+//     Nettolohn und Abzugsposten Bund je Bruttolohn → docs/sources/nettolohn-abzuege-2026.messpunkte.json.
 //     Nur dieses Entwickler-Skript geht ins Netz. Die App selbst bleibt ohne Netzwerk-Calls.
 //
 //   node scripts/steuerband-messen.mjs
-//     Wertet beide Messdateien aus und schreibt
+//     Wertet die Messdateien aus, prüft steuerbarNachEstv() an allen Punkten und schreibt
 //       src/data/kantonssteuerTabelle.js            (Stütztabelle, generiert)
 //       docs/sources/kantonssteuer-tabelle-2026.md  (Methode, Fehler, Abdeckung, Stützpunkte)
 //
@@ -21,13 +24,14 @@
 // Konfession «andere/keine» (also ohne Kirchensteuer), kein Vermögen. Verheiratet:
 // Alleinverdiener-Ehepaar. Die ESTV rechnet vom Bruttolohn mit ihren Standardabzügen (AHV/IV/EO,
 // ALV, NBU, BVG, Berufsauslagen, Versicherungs- und Kinderabzüge) und liefert das steuerbare
-// Einkommen Bund dazu. Die Tabelle ist nach diesem steuerbaren Einkommen Bund geordnet — das ist
-// die Grösse, aus der die App auch die Bundessteuer rechnet (steuerRechner.js).
+// Einkommen Bund dazu. Die Tabelle ist nach diesem steuerbaren Einkommen Bund geordnet; die App
+// leitet es mit steuerbarNachEstv() (kantonaleSteuerdaten.js) aus ihrem Nettolohn ab.
 
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { berechneBundessteuer } from '../src/data/steuerRechner.js';
+import { steuerbarNachEstv } from '../src/data/kantonaleSteuerdaten.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const MESS_PATH = resolve(__dirname, '../docs/sources/steuerfaktor-band-2026.messpunkte.json');
@@ -230,6 +234,42 @@ async function messenKinder() {
   console.log('gemessen mit Kindern:', mess.punkte.length, 'Punkte in', mess.bloecke.length, 'Blöcken');
 }
 
+// E38 — Wie kommt die ESTV vom Nettolohn zum steuerbaren Einkommen Bund? Die App kennt den
+// Nettolohn (Kapitel Finanzen), nicht das steuerbare Einkommen der ESTV. Die Abzüge des Bundes
+// hängen nicht vom Kanton ab; gemessen wird deshalb an einem Ort (Zürich), je Bruttolohn einmal
+// ledig ohne Kinder, mit den Abzugsposten, die der Rechner ausweist (InfoBoth).
+const ABZUG_PATH = resolve(__dirname, '../docs/sources/nettolohn-abzuege-2026.messpunkte.json');
+
+async function messenAbzuege() {
+  let gegenprobe = 'fehlgeschlagen wie erwartet';
+  try { await post('API_gibtEsNicht_' + Date.now(), {}); gegenprobe = 'UNERWARTET beantwortet'; } catch { /* erwartet */ }
+  if (gegenprobe !== 'fehlgeschlagen wie erwartet') throw new Error('Gegenprobe: ' + gegenprobe);
+  const beginn = new Date().toISOString();
+  const punkte = [];
+  for (const brutto of BRUTTO) {
+    await new Promise((r) => setTimeout(r, 150));
+    const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
+      SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: ORTE.ZH.id, Relationship: 1,
+      Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: brutto, Fortune: 0,
+      Confession2: 0, Age2: 0, RevenueType2: 0, Revenue2: 0, Budget: [],
+    }));
+    const posten = {};
+    for (const e of r.InfoBoth || []) if (e.Fed) posten[e.Entry.DE] = e.Fed;
+    punkte.push([brutto, r.IncomeP1.NetIncome, r.IncomeP1.BVGContribution, r.TaxableIncomeFed, posten]);
+  }
+  writeFileSync(ABZUG_PATH, JSON.stringify({
+    quelle: 'ESTV Steuerrechner, API_calculateDetailedTaxes (' + API + ')',
+    webseite: 'https://swisstaxcalculator.estv.admin.ch/',
+    steuerjahr: STEUERJAHR,
+    abgerufen: beginn,
+    gegenprobe: 'erfundene Operation → ' + gegenprobe,
+    anlage: 'Zürich, ledig, ohne Kinder, unselbständig, Alter 40; Abzugsposten Bund aus InfoBoth (Fed ≠ 0)',
+    spalten: ['brutto', 'nettolohn', 'bvgBeitrag', 'steuerbarBund', 'posten'],
+    punkte,
+  }, null, 0).replace(/\],\[/g, '],\n[') + '\n');
+  console.log('Abzüge gemessen:', punkte.length);
+}
+
 const chf = (n) => Math.round(n).toLocaleString('de-CH').replace(/[’,]/g, "'");
 const pct = (x) => (Math.round(x * 1000) / 10).toFixed(1) + ' %';
 
@@ -287,13 +327,24 @@ function reihenAus(mess0, messK) {
   return gruppen;
 }
 
-function auswerten(mess0, messK) {
+function auswerten(mess0, messK, messA) {
   const gruppen = reihenAus(mess0, messK);
   const reihen = [];
   const dbgAbw = [];
+  const xAbw = [];
+  let xGeprueft = 0;
+  const netto = new Map(messA ? messA.punkte.map((p) => [p[0], p[1]]) : []);
   let ohneSteuerbar = 0;
   for (const g of gruppen.values()) {
     g.pts.sort((a, b) => a.brutto - b.brutto);
+    // Weg der App: Nettolohn → steuerbar nach ESTV-Abzügen (kantonaleSteuerdaten.js) muss das
+    // gemessene steuerbare Einkommen Bund treffen — in jedem Kanton, weil die Abzüge Bund sind.
+    for (const p of g.pts) {
+      if (!netto.has(p.brutto)) continue;
+      xGeprueft++;
+      const x = steuerbarNachEstv({ nettolohnJahr: netto.get(p.brutto), verheiratet: g.zs === 'verheiratet', kinder: g.kinder });
+      if (Math.abs(x - p.x) > 1) xAbw.push({ kt: g.kt, zs: g.zs, kinder: g.kinder, brutto: p.brutto, netto: netto.get(p.brutto), formel: x, estv: p.x });
+    }
     // Eigene Bundessteuer gegen die ESTV — alleinerziehend mit Elterntarif (Art. 36 Abs. 2bis DBG).
     for (const p of g.pts) {
       const eigen = berechneBundessteuer({ bruttoEinkommen: p.x, verheiratet: g.zs === 'verheiratet', kinder: g.kinder, elterntarif: g.kinder > 0 }).steuer;
@@ -317,12 +368,18 @@ function auswerten(mess0, messK) {
     });
     reihen.push({ ...g, alle: g.pts, reihe, pts, stufe, fehler, anzahl: idx.length });
   }
-  return { reihen, dbgAbw, ohneSteuerbar };
+  // Abdeckung gegen alle Kombinationen, nicht nur gegen die gemessenen.
+  const kinderStufen = [0, 1, 2, 3];
+  const fehlend = [];
+  for (const kt of Object.keys(ORTE)) for (const zs of Object.keys(ZIVILSTAND)) for (const k of kinderStufen) {
+    if (!reihen.some((r) => r.kt === kt && r.zs === zs && r.kinder === k && r.reihe)) fehlend.push(kt + ' ' + zs + ' ' + k);
+  }
+  return { reihen, dbgAbw, ohneSteuerbar, xAbw, xGeprueft, fehlend };
 }
 
 const median = (arr) => { const s = [...arr].sort((a, b) => a - b); return s.length ? s[s.length >> 1] : 0; };
 
-function schreiben(mess0, messK, { reihen, dbgAbw, ohneSteuerbar }) {
+function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, xGeprueft, fehlend }) {
   const abgerufen = [mess0.abgerufen, ...(messK ? messK.laeufe.map((l) => l.beginn) : [])];
   const letzterAbruf = abgerufen.slice().sort().at(-1).slice(0, 10);
   const kinderStufen = [0, ...(messK ? [...new Set(messK.punkte.map((p) => p[2]))].sort() : [])];
@@ -370,7 +427,6 @@ function schreiben(mess0, messK, { reihen, dbgAbw, ohneSteuerbar }) {
   const anz = reihen.filter((r) => r.reihe).map((r) => r.anzahl);
   const stufenZahl = {};
   for (const r of reihen.filter((q) => q.reihe)) { const k = pct(r.stufe.rel) + ' / CHF ' + r.stufe.abs; stufenZahl[k] = (stufenZahl[k] || 0) + 1; }
-  const ohneReihe = reihen.filter((r) => !r.reihe);
 
   const L = [];
   L.push('# Kantons- und Gemeindesteuer — Stütztabelle 2026 (E38)', '');
@@ -402,15 +458,28 @@ function schreiben(mess0, messK, { reihen, dbgAbw, ohneSteuerbar }) {
     '  Kleinkinder oder Kinder in Ausbildung, keine Fremdbetreuungskosten.',
     '- Bruttolohn 20 000–150 000 in Schritten von 2 500, danach bis 300 000 in Schritten von 10 000 (68 Werte).',
     '- **ESTV K+G** = Kantonssteuer + Gemeindesteuer + Personal-/Kopfsteuer auf dem Einkommen, ohne Kirchensteuer.',
-    '- **x-Achse = steuerbares Einkommen Bund** (`TaxableIncomeFed`), so wie die App rechnet: Sie berechnet die',
-    '  Bundessteuer aus ihrem steuerbaren Einkommen und liest mit derselben Zahl die Tabelle. Die ESTV-Standardabzüge',
-    '  (inkl. Kinderabzug Bund 6 800 und Versicherungsabzug 700 je Kind) sind in x schon enthalten.',
+    '- **x-Achse = steuerbares Einkommen Bund der ESTV** (`TaxableIncomeFed`), also nach den Standardabzügen des',
+    '  Rechners. Die App kennt dagegen den **Nettolohn** und die selbst erfassten Abzüge. Sie liest die Tabelle deshalb',
+    '  mit `steuerbarNachEstv()` (src/data/kantonaleSteuerdaten.js): Nettolohn − Berufsauslagen-Pauschale (oder erfasste',
+    '  Berufsauslagen) − Versicherungsabzug − Verheiratetenabzug − Kinderabzug − übrige erfasste Abzüge. Ein direkt',
+    '  eingetragenes steuerbares Einkommen gilt als Wert der direkten Bundessteuer und wird unverändert gelesen.',
     '- Messpunkte gesamt: **' + (mess0.punkte.length + (messK ? messK.punkte.length : 0)) + '** (' + mess0.punkte.length + ' ohne Kinder, ' + (messK ? messK.punkte.length : 0) + ' mit Kindern). ' +
       ohneSteuerbar + ' davon haben steuerbares Einkommen Bund 0 und gehen nicht in die Tabelle (sehr tiefe Löhne mit Kindern).',
     '', '### Kontrolle der eigenen Bundessteuer', '',
     '- ' + (dbgAbw.length === 0
       ? 'An allen Messpunkten liegt `steuerRechner.js` höchstens CHF 1 neben der ESTV-Bundessteuer — ledig mit Kindern mit Elterntarif gerechnet. Der ESTV-Rechner wendet den Elterntarif für ledige Personen mit Kindern also an.'
       : dbgAbw.length + ' Messpunkte weichen um mehr als CHF 1 ab (Liste am Ende).'), '');
+  L.push('### Vom Nettolohn zur x-Achse (Weg der App)', '',
+    '- Abzugsposten der ESTV je Bruttolohn: `nettolohn-abzuege-2026.messpunkte.json` (Zürich, ledig; abgerufen ' + (messA ? messA.abgerufen : '–') + ', Gegenprobe: ' + (messA ? messA.gegenprobe : '–') + ').',
+    '- Posten Bund laut Rechner: «Übrige Berufsauslagen» 3 % des Nettolohns (mind. 2 000, höchstens 4 000), «Abzug private',
+    '  Versicherungen / Sparzinsen» 1 800 bzw. 3 700 + 700 je Kind (ohne BVG-Beitrag Grundbetrag × 1,5), «Abzug verheiratete',
+    '  Steuerpflichtige» 2 800, «Kindersozialabzug» 6 800 je Kind.',
+    '- Prüfung der Formel an ' + xGeprueft + ' Messpunkten (alle Kantone, Zivilstände, Kinderzahlen): ' +
+      (xAbw.length === 0 ? '**alle höchstens CHF 1 neben dem steuerbaren Einkommen der ESTV.**' : '**' + xAbw.length + ' Abweichungen > CHF 1** (Liste am Ende).'),
+    '- Nicht abgebildet: Die ESTV kennt den Bruttolohn und damit, ob ein BVG-Beitrag anfällt; die App schliesst das aus',
+    '  dem Nettolohn (gemessen: Brutto 22 500 ohne, 25 000 mit BVG-Beitrag). Zwischen Nettolohn 20 969 und 23 111 kann x',
+    '  deshalb um 900 (ledig) zu hoch oder zu tief liegen. Der 13. Monatslohn und Nebeneinkommen gehen so ein, wie die',
+    '  App den Jahreslohn bildet.', '');
   L.push('## Tabelle und Randregel', '',
     '- Je Kanton × Zivilstand × Kinderzahl eine Reihe von **Stützpunkten**. Jeder Stützpunkt ist ein Messpunkt.',
     '  Zwischen zwei Stützpunkten wird **linear interpoliert**.',
@@ -437,7 +506,7 @@ function schreiben(mess0, messK, { reihen, dbgAbw, ohneSteuerbar }) {
       Object.entries(stufenZahl).map(([k, v]) => k + ' → ' + v + ' Reihen').join('; ') + '.', '');
   L.push('## Abdeckung', '',
     '- Reihen mit Tabelle: **' + reihen.filter((r) => r.reihe).length + '** von ' + reihen.length + ' (26 Kantone × 2 Zivilstände × ' + kinderStufen.length + ' Kinderzahlen = ' + 26 * 2 * kinderStufen.length + ').',
-    ohneReihe.length ? '- Ohne Tabelle: ' + ohneReihe.map((r) => r.kt + ' ' + r.zs + ' ' + r.kinder).join(', ') : '- Keine Reihe fehlt.',
+    fehlend.length ? '- **Ohne Tabelle:** ' + fehlend.join(', ') : '- Keine der ' + 26 * 2 * kinderStufen.length + ' Kombinationen fehlt (geprüft gegen alle Kombinationen, nicht nur gegen die gemessenen).',
     '', '| Kanton | Zivilstand | Kinder | steuerbar Bund von–bis | Stützpunkte | max. Abw. CHF | max. Abw. % (K+G ≥ 1 000) | ESTV K+G bei Brutto 50 000 / 80 000 / 120 000 |',
     '|---|---|---:|---|---:|---:|---:|---|');
   const sortiert = reihen.slice().sort((a, b) => a.kt.localeCompare(b.kt) || a.zs.localeCompare(b.zs) || a.kinder - b.kinder);
@@ -459,15 +528,20 @@ function schreiben(mess0, messK, { reihen, dbgAbw, ohneSteuerbar }) {
     L.push('', '</details>', '');
   }
   if (dbgAbw.length) L.push('## Abweichungen der eigenen Bundessteuer (> CHF 1)', '', '```', ...dbgAbw.map((a) => JSON.stringify(a)), '```', '');
+  if (xAbw.length) L.push('## Abweichungen Nettolohn-Formel (> CHF 1)', '', '```', ...xAbw.map((a) => JSON.stringify(a)), '```', '');
   if (ausserhalb.length) L.push('## Messpunkte ausserhalb der Grenze', '', '```', ...ausserhalb.map((a) => JSON.stringify(a)), '```', '');
   writeFileSync(DOC_PATH, L.join('\n'));
 
   console.log('Reihen:', reihen.filter((r) => r.reihe).length, '/', reihen.length, '· Messpunkte in Tabellen:', alle.length, '· ausserhalb Grenze:', ausserhalb.length);
   console.log('max Abw CHF', maxAbs, '· median', median(alle.map((f) => Math.abs(f.abs))), '· max rel (K+G≥1000)', pct(maxRel), '· Stützpunkte', Math.min(...anz), median(anz), Math.max(...anz));
+  console.log('Nettolohn-Formel geprüft:', xGeprueft, '· Abweichungen > 1 CHF:', xAbw.length, xAbw.slice(0, 5));
+  console.log('fehlende Kombinationen:', fehlend.length);
   console.log('Stufen:', JSON.stringify(stufenZahl), '· DBG-Abweichungen > 1 CHF:', dbgAbw.length, '· ohne steuerbar:', ohneSteuerbar);
 }
 
-if (process.argv.includes('--messen') && process.argv.includes('--kinder')) {
+if (process.argv.includes('--messen') && process.argv.includes('--abzuege')) {
+  await messenAbzuege();
+} else if (process.argv.includes('--messen') && process.argv.includes('--kinder')) {
   await messenKinder();
 } else if (process.argv.includes('--messen')) {
   await messen();
@@ -475,5 +549,7 @@ if (process.argv.includes('--messen') && process.argv.includes('--kinder')) {
   const mess0 = JSON.parse(readFileSync(MESS_PATH, 'utf-8'));
   let messK = null;
   try { messK = JSON.parse(readFileSync(KINDER_PATH, 'utf-8')); } catch { console.warn('ohne Kinder-Messung:', KINDER_PATH); }
-  schreiben(mess0, messK, auswerten(mess0, messK));
+  let messA = null;
+  try { messA = JSON.parse(readFileSync(ABZUG_PATH, 'utf-8')); } catch { console.warn('ohne Abzugs-Messung:', ABZUG_PATH); }
+  schreiben(mess0, messK, messA, auswerten(mess0, messK, messA));
 }

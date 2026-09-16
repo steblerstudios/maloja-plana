@@ -2423,6 +2423,9 @@ export default {
     // E38: Hinweis/Zeile im Behördendossier
     cantonalNoteLabel: 'Hinweis zur Kantons- und Gemeindesteuer',
     noCantonalFigure: 'keine Schätzung für diese Situation — Steuerrechner der ESTV: swisstaxcalculator.estv.admin.ch',
+    bandNotCheckedPartner: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag: Gemessen ist die Kantons- und Gemeindesteuer nur für Haushalte mit einem Einkommen. Mit einem zweiten Einkommen (Ehe mit zwei Einkommen oder Konkubinat) gelten andere Abzüge. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag: Gemessen ist die Kantons- und Gemeindesteuer nur für Haushalte mit einem Einkommen. Mit einem zweiten Einkommen (Ehe mit zwei Einkommen oder Konkubinat) gelten andere Abzüge. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
+    bandNotCheckedBrutto: { sie: 'Für diese Situation zeigt Maloja hier keinen Betrag: Ihr Lohn ist als Bruttolohn erfasst, und die Abzüge bis zum steuerbaren Einkommen kennt Maloja nicht genau. Mit dem Nettolohn oder dem steuerbaren Einkommen aus der Veranlagung erscheint eine Schätzung. Den Betrag für Ihre Gemeinde berechnet der Steuerrechner der ESTV.', du: 'Für diese Situation zeigt Maloja hier keinen Betrag: Dein Lohn ist als Bruttolohn erfasst, und die Abzüge bis zum steuerbaren Einkommen kennt Maloja nicht genau. Mit dem Nettolohn oder dem steuerbaren Einkommen aus der Veranlagung erscheint eine Schätzung. Den Betrag für deine Gemeinde berechnet der Steuerrechner der ESTV.' },
+    cantonalTaxableBasis: 'Gelesen mit einem steuerbaren Einkommen von CHF {value}: Nettolohn abzüglich der Standardabzüge des ESTV-Rechners (Berufsauslagen, Versicherungen, Verheiratete, Kinder) und der erfassten Abzüge.',
     totalNote: 'Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.',
     tariff: 'Tarif',
     singleTariff: 'Grundtarif',
@@ -2435,7 +2438,7 @@ export default {
     useImportedTaxable: 'Amtliches steuerbares Einkommen verwenden (CHF {value}/Jahr). Abzüge werden dann ignoriert.',
     taxableIncomeDirect: 'Steuerbares Einkommen (optional)',
     taxableIncomeDirectPlaceholder: 'z.B. 65 000',
-    taxableIncomeDirectHint: 'Bekannt aus der Steuerveranlagung? Direkt eintragen — dann rechnet die Übersicht damit statt aus dem Nettolohn.',
+    taxableIncomeDirectHint: 'Bekannt aus der Steuerveranlagung? Direkt eintragen — dann rechnet die Übersicht damit statt aus dem Nettolohn. Gemeint ist der Wert für die direkte Bundessteuer (die Veranlagung nennt Bund und Kanton getrennt).',
     useTaxableEntered: 'Diesen Wert als Basis verwenden — Abzüge entfallen (er ist bereits steuerbar).',
     saeulen: {
       title: 'Zivilstand im Vergleich',

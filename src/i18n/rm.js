@@ -2888,6 +2888,10 @@ export default {
     // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
     cantonalNoteLabel: 'Remartga davart la taglia chantunala e communala',
     noCantonalFigure: "nagina stimaziun per questa situaziun — calculatur da taglia da l'AFT: swisstaxcalculator.estv.admin.ch",
+    // TODO(rm): E38 — provisorisch, von Muttersprachler:in gegenlesen.
+    bandNotCheckedPartner: "Per questa situaziun na mussa Maloja qua nagin import: la taglia chantunala e communala è mesirada mo per chasadas cun ina entrada. Cun ina segunda entrada (pèr maridà cun duas entradas u concubinat) valan autras deducziuns. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
+    bandNotCheckedBrutto: "Per questa situaziun na mussa Maloja qua nagin import: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l'entrada taxabla. Cun la paja netta u cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.",
+    cantonalTaxableBasis: "Legì cun in'entrada taxabla da CHF {value}: paja netta main las deducziuns standard dal calculatur da l'AFT (custs professiunals, assicuranzas, persunas maridadas, uffants) e las deducziuns registradas.",
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
@@ -2900,7 +2904,7 @@ export default {
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
     taxableIncomeDirect: 'Entrada taxabla (facultativ)',
     taxableIncomeDirectPlaceholder: 'p.ex. 65 000',
-    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net.',
+    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net. I sa tracta da la valur per la taglia federala directa (la taxaziun nomna separadamain Confederaziun e chantun).', // TODO(rm): E38-Zusatz provisorisch
     useTaxableEntered: 'Duvrar quest valur sco basa — deducziuns na valan lura betg pli (el è gia taxabel).',
     saeulen: {
       title: 'Stadi civil en cumparaziun',

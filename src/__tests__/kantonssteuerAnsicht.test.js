@@ -13,7 +13,10 @@ import { describe, it, expect, vi } from 'vitest';
 //   ZH ledig, Brutto  80 000 → steuerbar Bund  67 927, Bundessteuer   906, K+G  7 039
 //   ZH ledig, Brutto 150 000 → steuerbar Bund 128 739, Bundessteuer 5 014, K+G 18 912
 //   ZH ledig, Tabelle von steuerbar 13 940 bis 265 539
-// __KINDER_KOMMENTAR__
+//   Nettolohn-Weg (Nettolohn laut ESTV, docs/sources/nettolohn-abzuege-2026.messpunkte.json):
+//   ZH ledig, 1 Kind (alleinerziehend), Brutto  80 000 → Nettolohn  71 883, K+G  3 689
+//   VD verheiratet, 2 Kinder,          Brutto 120 000 → Nettolohn 107 602, K+G 11 340
+//   ZH ledig, ohne Kinder,             Brutto  80 000 → Nettolohn  71 883, K+G  7 039
 // ─────────────────────────────────────────────────────────────
 
 const zustand = { slots: [], i: 0, effekte: [] };
@@ -51,10 +54,11 @@ const knoten = (el, out = []) => {
 };
 const texte = (alle) => alle.map((k) => k.props.children).flat().filter((c) => typeof c === 'string').join('\n');
 
-const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elterntarif } = {}) => {
+const zeige = (steuerbar, { canton = 'ZH', kinder = 0, verheiratet = false, elterntarif, nettolohn, incomeType, partnerIncome } = {}) => {
   const data = {
-    basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })) } },
-    finanzen: { taxableIncome: steuerbar },
+    basis: { canton, maritalStatus: verheiratet ? 'married' : 'single', household: { adults: verheiratet ? 2 : 1, children: Array.from({ length: kinder }, () => ({ age: 8 })), ...(partnerIncome ? { partnerIncome } : {}) } },
+    // steuerbar = direkt eingetragenes steuerbares Einkommen; nettolohn = Weg über den Nettolohn.
+    finanzen: nettolohn ? { monthlyIncome: nettolohn / 12, ...(incomeType ? { incomeType } : {}) } : { taxableIncome: steuerbar },
     versicherungen: {},
     ...(elterntarif === undefined ? {} : { taxData: { elterntarif } }),
   };
@@ -84,7 +88,8 @@ const zeigtZahl = (v, estvBund, estvKG) => {
   expect(v.text).not.toContain('tax.netIncomeFederalOnly');
   expect(v.betraege).toHaveLength(3);
   const [bund, kantonal, total] = v.betraege;
-  expect(Math.abs(bund - estvBund)).toBeLessThanOrEqual(1);
+  // Auf dem Nettolohn-Weg rechnet die Bundessteuer der App ohne die ESTV-Pauschalen (offener Entscheid).
+  if (estvBund !== null) expect(Math.abs(bund - estvBund)).toBeLessThanOrEqual(1);
   expect(imRahmen(kantonal, estvKG)).toBe(true);
   expect(total).toBe(Math.round(bund) + kantonal);
 };
@@ -113,13 +118,45 @@ describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
     expect(v.alle.filter((k) => k.type === 'a').map((k) => k.props.href)).toContain('https://www.zh.ch/de/steuern-finanzen/steuern.html');
   });
 
+  it('Nettolohn 71 883 (Brutto 80 000): die Tabelle wird mit steuerbar 67 927 gelesen → ±3 % neben ESTV 7 039', () => {
+    const v = zeige(null, { nettolohn: 71883 });
+    zeigtZahl(v, null, 7039);
+    expect(v.text).toContain('tax.cantonalTaxableBasis(67’927)');
+  });
+
+  it('Lohn als Bruttolohn erfasst: keine Kantonszahl', () => {
+    zeigtKeineZahl(zeige(null, { nettolohn: 80000, incomeType: 'brutto' }), 'tax.bandNotCheckedBrutto');
+  });
+
+  it('mit Partnereinkommen (nicht gemessen): keine Kantonszahl', () => {
+    zeigtKeineZahl(zeige(null, { nettolohn: 71883, verheiratet: true, partnerIncome: 2000 }), 'tax.bandNotCheckedPartner');
+  });
+
   it('unter der Tabelle (steuerbar 10 000): keine Kantonszahl', () => {
     zeigtKeineZahl(zeige(10000), 'tax.bandOutside(13’940|265’539|2026)');
   });
 });
 
 describe('E38 · mit Kindern', () => {
-  // __KINDER_TESTS__
+  it('ZH alleinerziehend mit 1 Kind, Elterntarif bestätigt, Nettolohn 71 883: ±3 % neben ESTV 3 689', () => {
+    const v = zeige(null, { nettolohn: 71883, kinder: 1, elterntarif: true });
+    zeigtZahl(v, null, 3689);
+    expect(v.text).toContain('tax.cantonalTaxableBasis(60’427)');
+  });
+
+  it('ZH alleinerziehend, direkt steuerbar 60 427: Bundessteuer = ESTV 114 (Elterntarif), K+G ±3 % neben 3 689', () => {
+    zeigtZahl(zeige(60427, { kinder: 1, elterntarif: true }), 114, 3689);
+  });
+
+  it('VD verheiratet mit 2 Kindern, Nettolohn 107 602: ±3 % neben ESTV 11 340', () => {
+    const v = zeige(null, { canton: 'VD', nettolohn: 107602, verheiratet: true, kinder: 2 });
+    zeigtZahl(v, null, 11340);
+    expect(v.text).toContain('tax.cantonalTaxableBasis(82’874)');
+  });
+
+  it('VD verheiratet mit 2 Kindern, direkt steuerbar 82 874: Bundessteuer = ESTV 551', () => {
+    zeigtZahl(zeige(82874, { canton: 'VD', verheiratet: true, kinder: 2 }), 551, 11340);
+  });
 
   it('ledig mit Kind ohne Bestätigung des Elterntarifs: keine Kantonszahl', () => {
     zeigtKeineZahl(zeige(60000, { kinder: 1 }), 'tax.bandNotChecked');

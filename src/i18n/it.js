@@ -2361,6 +2361,9 @@ export default {
     // E38: Hinweis/Zeile im Behördendossier
     cantonalNoteLabel: 'Nota sull’imposta cantonale e comunale',
     noCantonalFigure: 'nessuna stima per questa situazione — calcolatore d’imposta dell’AFC: swisstaxcalculator.estv.admin.ch',
+    bandNotCheckedPartner: 'Per questa situazione Maloja non mostra qui alcun importo: l’imposta cantonale e comunale è stata misurata solo per economie domestiche con un solo reddito. Con un secondo reddito (coniugi con due redditi o concubinato) valgono altre deduzioni. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
+    bandNotCheckedBrutto: 'Per questa situazione Maloja non mostra qui alcun importo: il salario è registrato come lordo e Maloja non conosce con esattezza le deduzioni fino al reddito imponibile. Con il salario netto o il reddito imponibile della tassazione appare una stima. Il calcolatore d’imposta dell’AFC calcola l’importo per il tuo comune.',
+    cantonalTaxableBasis: 'Letto con un reddito imponibile di CHF {value}: salario netto meno le deduzioni standard del calcolatore dell’AFC (spese professionali, assicurazioni, persone coniugate, figli) e le deduzioni registrate.',
     totalNote: 'Federale + cantonale + comunale (orientamento). L\'onere effettivo dipende dal comune e dalla situazione personale.',
     tariff: 'Tariffa',
     singleTariff: 'Tariffa base',
@@ -2373,7 +2376,7 @@ export default {
     useImportedTaxable: 'Usa il reddito imponibile ufficiale (CHF {value}/anno). Le deduzioni vengono ignorate.',
     taxableIncomeDirect: 'Reddito imponibile (facoltativo)',
     taxableIncomeDirectPlaceholder: 'ad es. 65 000',
-    taxableIncomeDirectHint: 'Noto dalla tassazione? Inserirlo direttamente — il riepilogo lo usa invece di stimarlo dal salario netto.',
+    taxableIncomeDirectHint: 'Noto dalla tassazione? Inserirlo direttamente — il riepilogo lo usa invece di stimarlo dal salario netto. Si intende il valore per l’imposta federale diretta (la tassazione indica separatamente Confederazione e Cantone).',
     useTaxableEntered: 'Usa questo valore come base — le deduzioni non si applicano più (è già imponibile).',
     saeulen: {
       title: 'Stato civile a confronto',

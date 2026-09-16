@@ -5,7 +5,7 @@ import { Icon } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
+import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
@@ -31,7 +31,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
     ? berechneBundessteuer({ bruttoEinkommen: income * 12, verheiratet, kinder, elterntarif })
     : null;
   const kantonsSchaetzung = taxResult
-    ? schaetzeKantonaleSteuer({ kanton: canton, steuerbaresEinkommen: taxResult.steuerBaresEinkommen, bundessteuer: taxResult.steuer, verheiratet, kinder, elterntarif })
+    ? kantonssteuerFuerProfil({ kanton: canton, nettolohnJahr: income * 12, direktSteuerbar: Number(data.finanzen?.taxableIncome) || 0, einkommensart: data.finanzen?.incomeType || null, partnerEinkommen: getHouseholdInfo(data).partnerIncome, verheiratet, kinder, elterntarif, ...abzuegeAusTaxData(data.taxData), bundessteuer: taxResult.steuer })
     : null;
   const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
 

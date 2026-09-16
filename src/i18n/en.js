@@ -2403,6 +2403,9 @@ export default {
     // E38: Hinweis/Zeile im Behördendossier
     cantonalNoteLabel: 'Note on cantonal and municipal tax',
     noCantonalFigure: 'no estimate for this situation — FTA tax calculator: swisstaxcalculator.estv.admin.ch',
+    bandNotCheckedPartner: 'Maloja shows no amount here for this situation: cantonal and municipal tax has only been measured for single-income households. With a second income (married couple with two incomes or cohabiting partners), other deductions apply. The FTA tax calculator works out the amount for your municipality.',
+    bandNotCheckedBrutto: 'Maloja shows no amount here for this situation: your salary is entered as gross pay, and Maloja does not know the exact deductions down to taxable income. With your net pay or the taxable income from your assessment, an estimate appears. The FTA tax calculator works out the amount for your municipality.',
+    cantonalTaxableBasis: 'Read with a taxable income of CHF {value}: net pay minus the standard deductions of the FTA calculator (work expenses, insurance, married persons, children) and the deductions you entered.',
     totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
     tariff: 'Tariff',
     singleTariff: 'Basic tariff',
@@ -2415,7 +2418,7 @@ export default {
     useImportedTaxable: 'Use official taxable income (CHF {value}/year). Deductions are then ignored.',
     taxableIncomeDirect: 'Taxable income (optional)',
     taxableIncomeDirectPlaceholder: 'e.g. 65 000',
-    taxableIncomeDirectHint: 'Know it from your tax assessment? Enter it directly — the overview then uses it instead of estimating from your net salary.',
+    taxableIncomeDirectHint: 'Know it from your tax assessment? Enter it directly — the overview then uses it instead of estimating from your net salary. Use the figure for direct federal tax (the assessment lists federal and cantonal figures separately).',
     useTaxableEntered: 'Use this value as the basis — deductions no longer apply (it is already taxable).',
     saeulen: {
       title: 'Marital status compared',

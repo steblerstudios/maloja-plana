@@ -5,7 +5,7 @@ import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
 import { berechneBundessteuer } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
+import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { KantonssteuerOrientierung } from './components/KantonssteuerOrientierung.jsx';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
@@ -162,7 +162,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   // E38: dieselbe Regel wie im Steuerrechner — Zahl nur, wo die ESTV-Tabelle trägt.
   // K33: gerechnet wird im Steuerkanton (nicht zwingend der Wohnkanton).
   const kantonsSchaetzung = taxResult
-    ? schaetzeKantonaleSteuer({ kanton: steuerkanton, steuerbaresEinkommen: taxResult.steuerBaresEinkommen, bundessteuer: taxResult.steuer, verheiratet, kinder: hh.childrenCount, elterntarif })
+    ? kantonssteuerFuerProfil({ kanton: steuerkanton, nettolohnJahr: annualIncome, direktSteuerbar: Number(data.finanzen?.taxableIncome) || 0, einkommensart: data.finanzen?.incomeType || null, partnerEinkommen: hh.partnerIncome, verheiratet, kinder: hh.childrenCount, elterntarif, ...abzuegeAusTaxData(data.taxData), bundessteuer: taxResult.steuer })
     : null;
   const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
 

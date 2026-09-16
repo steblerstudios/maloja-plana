@@ -2402,6 +2402,9 @@ export default {
     // E38: Hinweis/Zeile im Behördendossier
     cantonalNoteLabel: 'Remarque sur l\'impôt cantonal et communal',
     noCantonalFigure: 'pas d\'estimation pour cette situation — calculateur d\'impôts de l\'AFC : swisstaxcalculator.estv.admin.ch',
+    bandNotCheckedPartner: 'Pour cette situation, Maloja n\'affiche pas de montant ici : l\'impôt cantonal et communal n\'a été mesuré que pour les ménages à un seul revenu. Avec un deuxième revenu (couple marié à deux revenus ou concubinage), d\'autres déductions s\'appliquent. Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.',
+    bandNotCheckedBrutto: 'Pour cette situation, Maloja n\'affiche pas de montant ici : votre salaire est saisi en brut, et Maloja ne connaît pas exactement les déductions jusqu\'au revenu imposable. Avec le salaire net ou le revenu imposable de la taxation, une estimation apparaît. Le calculateur d\'impôts de l\'AFC calcule le montant pour votre commune.',
+    cantonalTaxableBasis: 'Lu avec un revenu imposable de CHF {value} : salaire net moins les déductions standard du calculateur de l\'AFC (frais professionnels, assurances, personnes mariées, enfants) et les déductions que vous avez saisies.',
     totalNote: 'Fédéral + cantonal + communal (orientation). La charge réelle dépend de votre commune et situation personnelle.',
     tariff: 'Tarif',
     singleTariff: 'Tarif de base',
@@ -2414,7 +2417,7 @@ export default {
     useImportedTaxable: 'Utiliser le revenu imposable officiel (CHF {value}/an). Les déductions sont alors ignorées.',
     taxableIncomeDirect: 'Revenu imposable (facultatif)',
     taxableIncomeDirectPlaceholder: 'p. ex. 65 000',
-    taxableIncomeDirectHint: 'Connu grâce à votre taxation? Le saisir directement — l’aperçu l’utilise alors au lieu d’une estimation basée sur le salaire net.',
+    taxableIncomeDirectHint: 'Connu grâce à votre taxation? Le saisir directement — l’aperçu l’utilise alors au lieu d’une estimation basée sur le salaire net. Il s’agit de la valeur pour l’impôt fédéral direct (la taxation indique séparément Confédération et canton).',
     useTaxableEntered: 'Utiliser cette valeur comme base — les déductions ne s’appliquent plus (elle est déjà imposable).',
     saeulen: {
       title: 'État civil comparé',

@@ -5,7 +5,7 @@ import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
@@ -130,7 +130,18 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     fontSize: text.sm
   };
 
-  const schaetzung = schaetzeKantonaleSteuer({ kanton: canton, steuerbaresEinkommen: taxableIncome, bundessteuer: estimatedTax, verheiratet, kinder, elterntarif });
+  // Die Tabelle wird mit dem steuerbaren Einkommen nach den Standardabzügen der ESTV gelesen
+  // (steuerbarNachEstv) — oder mit dem direkt eingetragenen Wert.
+  const schaetzung = kantonssteuerFuerProfil({
+    kanton: canton,
+    nettolohnJahr: (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0)) * 12,
+    direktSteuerbar: useEnteredTaxable ? enteredTaxable : 0,
+    einkommensart: data.finanzen?.incomeType || null,
+    partnerEinkommen: partnerIncome,
+    verheiratet, kinder, elterntarif,
+    ...abzuegeAusTaxData(taxData),
+    bundessteuer: estimatedTax,
+  });
   const kantonal = schaetzung.kantonal;
 
   const buttonStyle = {
@@ -313,6 +324,9 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
               React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.kantonalUndGemeinde),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
                 t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
+              ),
+              !useEnteredTaxable && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+                t('tax.cantonalTaxableBasis', { value: Math.round(schaetzung.steuerbar).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’') })
               )
             ),
             React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },

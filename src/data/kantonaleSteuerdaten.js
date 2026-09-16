@@ -111,6 +111,86 @@ export function schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen, bundesst
   };
 }
 
+// ── Vom Nettolohn zur x-Achse der Tabelle ─────────────────────────────────────────────────
+// Die Tabelle ist nach dem steuerbaren Einkommen Bund der ESTV geordnet, also NACH den
+// Standardabzügen, die der ESTV-Rechner vom Nettolohn abzieht. Die App kennt nur den Nettolohn
+// und die selbst erfassten Abzüge. Damit die Tabelle mit derselben Grösse gelesen wird, mit der
+// sie gemessen wurde, zieht diese Funktion dieselben Posten ab. Beträge so, wie sie der
+// ESTV-Steuerrechner 2026 ausweist (docs/sources/nettolohn-abzuege-2026.messpunkte.json; das
+// Skript prüft die Formel an allen Messpunkten, docs/sources/kantonssteuer-tabelle-2026.md):
+//   «Übrige Berufsauslagen»: 3 % des Nettolohns, mindestens 2 000, höchstens 4 000
+//   «Abzug private Versicherungen / Sparzinsen»: 1 800 (verheiratet 3 700) + 700 je Kind;
+//      ohne BVG-Beitrag der Grundbetrag × 1,5 (ESTV bei Bruttolohn 20 000 und 22 500)
+//   «Abzug verheiratete Steuerpflichtige»: 2 800
+//   «Kindersozialabzug»: 6 800 je Kind
+// Rechtsgrundlagen (vgl.): DBG Art. 26, 33 Abs. 1 lit. g und Abs. 1bis, 35 Abs. 1 lit. a und c.
+// Die Bundessteuer der App rechnet (noch) ohne diese Pauschalen — offener Entscheid, siehe PR E38.
+export const ESTV_ABZUEGE_2026 = {
+  berufsauslagen: { satz: 0.03, min: 2000, max: 4000 },
+  versicherung: { ledig: 1800, verheiratet: 3700, proKind: 700, ohneBvgFaktor: 1.5 },
+  // Kleinster gemessener Nettolohn MIT BVG-Beitrag (Brutto 25 000); darunter rechnet die ESTV ohne.
+  bvgAbNettolohn: 23111,
+  verheiratete: 2800,
+  kind: 6800,
+};
+
+/**
+ * Steuerbares Einkommen Bund so, wie es der ESTV-Rechner aus einem Nettolohn ableitet.
+ * @param {object} p
+ * @param {number} p.nettolohnJahr
+ * @param {boolean} [p.verheiratet]
+ * @param {number} [p.kinder]
+ * @param {number} [p.berufsauslagen] selbst erfasste Berufsauslagen; > 0 ersetzt die Pauschale
+ * @param {number} [p.weitereAbzuege] übrige selbst erfasste Abzüge (3a, Schuldzinsen, …)
+ */
+export function steuerbarNachEstv({ nettolohnJahr, verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0 }) {
+  const a = ESTV_ABZUEGE_2026;
+  const netto = Number(nettolohnJahr) || 0;
+  if (netto <= 0) return 0;
+  const pauschale = Math.round(Math.min(a.berufsauslagen.max, Math.max(a.berufsauslagen.min, netto * a.berufsauslagen.satz)));
+  const ba = Number(berufsauslagen) > 0 ? Number(berufsauslagen) : pauschale;
+  const grund = verheiratet ? a.versicherung.verheiratet : a.versicherung.ledig;
+  const vers = grund * (netto < a.bvgAbNettolohn ? a.versicherung.ohneBvgFaktor : 1) + a.versicherung.proKind * kinder;
+  const x = netto - ba - vers - (verheiratet ? a.verheiratete : 0) - a.kind * kinder - (Number(weitereAbzuege) || 0);
+  return Math.max(0, Math.round(x));
+}
+
+// Selbst erfasste Abzüge aus dem Steuerrechner (data.taxData): Berufsauslagen getrennt, weil sie
+// die Pauschale ersetzen.
+const WEITERE_ABZUEGE = ['pension3a', 'debtInterest', 'maintenance', 'education', 'other'];
+export function abzuegeAusTaxData(taxData = {}) {
+  return {
+    berufsauslagen: Number(taxData?.workCosts) || 0,
+    weitereAbzuege: WEITERE_ABZUEGE.reduce((s, k) => s + (Number(taxData?.[k]) || 0), 0),
+  };
+}
+
+/**
+ * Die Regel, die TaxCalculator, FinanzUebersicht und BehoerdenDossier gemeinsam nutzen.
+ * Leitet aus den Angaben der App die x-Achse der Tabelle ab und schätzt dann.
+ *   direktSteuerbar > 0      → dieser Wert (steuerbares Einkommen direkte Bundessteuer)
+ *   sonst Nettolohn          → steuerbarNachEstv()
+ * Keine Zahl ('ungeprueft'), wenn die Lage nicht gemessen ist:
+ *   Partnereinkommen > 0 (Doppelverdiener oder Konkubinat), Lohn als Bruttolohn erfasst
+ *   (die Abzüge vom Brutto kennt die App nicht), sowie die Fälle aus schaetzeKantonaleSteuer().
+ * @returns {{ lage, bereich, kantonal, steuerbar: number|null, grund: string|null }}
+ */
+export function kantonssteuerFuerProfil({
+  kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
+  verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
+} = {}) {
+  if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
+  const direkt = Number(direktSteuerbar) > 0;
+  let grund = null;
+  if (Number(partnerEinkommen) > 0) grund = 'partner';
+  else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
+  if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
+  const steuerbar = direkt
+    ? Number(direktSteuerbar)
+    : steuerbarNachEstv({ nettolohnJahr, verheiratet, kinder, berufsauslagen, weitereAbzuege });
+  return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
+}
+
 export function getHauptort(kuerzel) {
   return HAUPTORTE[kuerzel] || null;
 }

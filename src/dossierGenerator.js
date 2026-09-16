@@ -736,7 +736,8 @@ function getBehoerdenSections(data, chapters, t, calculations) {
     });
   }
 
-  if (tax && tax.total > 0) {
+  // E38: auch bei Bundessteuer 0 zeigen, wenn eine Kantonszahl da ist.
+  if (tax && (tax.total > 0 || tax.kantonal)) {
     const taxRows = [
       { label: t('tax.taxableIncome'), value: formatCHF(tax.taxableIncome) },
       { label: t('tax.federalTax'), value: formatCHF(tax.total) + t('common.perYear') },
@@ -864,7 +865,7 @@ export function generateBehoerdenJSON(data, calculations) {
   if (el) {
     dossier.calculations.el = { eligible: !!el.eligible };
   }
-  if (tax && tax.total > 0) {
+  if (tax && (tax.total > 0 || tax.kantonal)) {
     dossier.calculations.tax = {
       taxableIncome: tax.taxableIncome || 0,
       federalTax: tax.total || 0,

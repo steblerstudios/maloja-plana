@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
   schaetzeKantonaleSteuer, kantonssteuerReihe, interpoliere,
+  steuerbarNachEstv, kantonssteuerFuerProfil, abzuegeAusTaxData,
   KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN, KANTONAL_MAX_KINDER,
 } from '../kantonaleSteuerdaten.js';
 import { KANTONSSTEUER_TABELLE, KANTONSSTEUER_QUELLE } from '../kantonssteuerTabelle.js';
@@ -20,6 +21,8 @@ const imRahmen = (wert, estv) => Math.abs(wert - estv) <= Math.max(0.03 * estv, 
 const lies = (datei) => JSON.parse(readFileSync(new URL('../../../docs/sources/' + datei, import.meta.url), 'utf-8'));
 const ohneKinder = lies('steuerfaktor-band-2026.messpunkte.json');
 const mitKindern = lies('kantonssteuer-kinder-2026.messpunkte.json');
+const abzuege = lies('nettolohn-abzuege-2026.messpunkte.json');
+const NETTO = new Map(abzuege.punkte.map((p) => [p[0], p[1]]));
 // Einheitlich: [kanton, zivilstand, kinder, brutto, steuerbarBund, ESTV K+G]
 const PUNKTE = [
   ...ohneKinder.punkte.map((p) => [p[0], p[1], 0, p[2], p[3], p[10]]),
@@ -85,6 +88,71 @@ describe('E38 · Tabelle gegen alle Messpunkte', () => {
         }
       }
     }
+  });
+});
+
+describe('E38 · Nettolohn → steuerbares Einkommen wie die ESTV', () => {
+  it('Abzugsmessung: ESTV 2026, Gegenprobe bestanden, 68 Bruttolöhne', () => {
+    expect(abzuege.webseite).toBe('https://swisstaxcalculator.estv.admin.ch/');
+    expect(abzuege.steuerjahr).toBe(2026);
+    expect(abzuege.gegenprobe).toMatch(/fehlgeschlagen wie erwartet/);
+    expect(abzuege.punkte).toHaveLength(68);
+  });
+
+  it('trifft an allen Messpunkten (alle Kantone, Zivilstände, Kinderzahlen) das steuerbare Einkommen Bund der ESTV', () => {
+    const fehler = [];
+    for (const [kt, zs, kinder, brutto, steuerbar] of PUNKTE) {
+      const x = steuerbarNachEstv({ nettolohnJahr: NETTO.get(brutto), verheiratet: zs === 'verheiratet', kinder });
+      if (Math.abs(x - steuerbar) > 1) fehler.push([kt, zs, kinder, brutto, x, steuerbar]);
+    }
+    expect(fehler).toEqual([]);
+  });
+
+  it('Beispiele aus den ESTV-Abzugsposten', () => {
+    // Brutto 80 000: Nettolohn 71 883 − Berufsauslagen 2 156 − Versicherungen 1 800 = 67 927
+    expect(steuerbarNachEstv({ nettolohnJahr: 71883 })).toBe(67927);
+    // verheiratet, 2 Kinder: − 2 156 − 5 100 − 2 800 − 13 600 = 48 227
+    expect(steuerbarNachEstv({ nettolohnJahr: 71883, verheiratet: true, kinder: 2 })).toBe(48227);
+    // Brutto 20 000 ohne BVG-Beitrag: − 2 000 (Minimum) − 2 700 (1 800 × 1,5) = 13 940
+    expect(steuerbarNachEstv({ nettolohnJahr: 18640 })).toBe(13940);
+    // Brutto 300 000: Berufsauslagen höchstens 4 000
+    expect(steuerbarNachEstv({ nettolohnJahr: 271339 })).toBe(265539);
+  });
+
+  it('erfasste Berufsauslagen ersetzen die Pauschale, übrige Abzüge werden abgezogen, nie unter 0', () => {
+    expect(steuerbarNachEstv({ nettolohnJahr: 71883, berufsauslagen: 5000 })).toBe(71883 - 5000 - 1800);
+    expect(steuerbarNachEstv({ nettolohnJahr: 71883, weitereAbzuege: 7258 })).toBe(67927 - 7258);
+    expect(steuerbarNachEstv({ nettolohnJahr: 5000, kinder: 3 })).toBe(0);
+    expect(steuerbarNachEstv({ nettolohnJahr: 0 })).toBe(0);
+    expect(abzuegeAusTaxData({ workCosts: 3000, pension3a: 7258, other: 100, elterntarif: true })).toEqual({ berufsauslagen: 3000, weitereAbzuege: 7358 });
+    expect(abzuegeAusTaxData(undefined)).toEqual({ berufsauslagen: 0, weitereAbzuege: 0 });
+  });
+});
+
+describe('E38 · kantonssteuerFuerProfil', () => {
+  it('Nettolohn-Weg liest die Tabelle mit steuerbar nach ESTV', () => {
+    const r = kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, bundessteuer: 1717 });
+    expect(r.steuerbar).toBe(67927);
+    expect(r.lage).toBe('innerhalb');
+    expect(imRahmen(r.kantonal.kantonalUndGemeinde, 7039)).toBe(true);
+  });
+
+  it('direkt eingetragenes steuerbares Einkommen wird unverändert gelesen — auch bei Bruttolohn', () => {
+    const r = kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 999999, direktSteuerbar: 67927, einkommensart: 'brutto' });
+    expect(r.steuerbar).toBe(67927);
+    expect(r.lage).toBe('innerhalb');
+  });
+
+  it('Partnereinkommen (Doppelverdiener, Konkubinat) und Bruttolohn → keine Zahl, mit Grund', () => {
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, verheiratet: true, partnerEinkommen: 1 })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'partner' });
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500 })).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'brutto' })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'brutto' });
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'netto' }).lage).toBe('innerhalb');
+  });
+
+  it('ohne Kanton → keinKanton; sehr tiefer Nettolohn → ausserhalb', () => {
+    expect(kantonssteuerFuerProfil({ kanton: '', nettolohnJahr: 71883 }).lage).toBe('keinKanton');
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 8000 }).lage).toBe('ausserhalb');
   });
 });
 

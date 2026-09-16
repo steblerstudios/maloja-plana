@@ -33,14 +33,28 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
   Kleinkinder oder Kinder in Ausbildung, keine Fremdbetreuungskosten.
 - Bruttolohn 20 000–150 000 in Schritten von 2 500, danach bis 300 000 in Schritten von 10 000 (68 Werte).
 - **ESTV K+G** = Kantonssteuer + Gemeindesteuer + Personal-/Kopfsteuer auf dem Einkommen, ohne Kirchensteuer.
-- **x-Achse = steuerbares Einkommen Bund** (`TaxableIncomeFed`), so wie die App rechnet: Sie berechnet die
-  Bundessteuer aus ihrem steuerbaren Einkommen und liest mit derselben Zahl die Tabelle. Die ESTV-Standardabzüge
-  (inkl. Kinderabzug Bund 6 800 und Versicherungsabzug 700 je Kind) sind in x schon enthalten.
+- **x-Achse = steuerbares Einkommen Bund der ESTV** (`TaxableIncomeFed`), also nach den Standardabzügen des
+  Rechners. Die App kennt dagegen den **Nettolohn** und die selbst erfassten Abzüge. Sie liest die Tabelle deshalb
+  mit `steuerbarNachEstv()` (src/data/kantonaleSteuerdaten.js): Nettolohn − Berufsauslagen-Pauschale (oder erfasste
+  Berufsauslagen) − Versicherungsabzug − Verheiratetenabzug − Kinderabzug − übrige erfasste Abzüge. Ein direkt
+  eingetragenes steuerbares Einkommen gilt als Wert der direkten Bundessteuer und wird unverändert gelesen.
 - Messpunkte gesamt: **14144** (3536 ohne Kinder, 10608 mit Kindern). 364 davon haben steuerbares Einkommen Bund 0 und gehen nicht in die Tabelle (sehr tiefe Löhne mit Kindern).
 
 ### Kontrolle der eigenen Bundessteuer
 
 - An allen Messpunkten liegt `steuerRechner.js` höchstens CHF 1 neben der ESTV-Bundessteuer — ledig mit Kindern mit Elterntarif gerechnet. Der ESTV-Rechner wendet den Elterntarif für ledige Personen mit Kindern also an.
+
+### Vom Nettolohn zur x-Achse (Weg der App)
+
+- Abzugsposten der ESTV je Bruttolohn: `nettolohn-abzuege-2026.messpunkte.json` (Zürich, ledig; abgerufen 2026-09-16T18:29:32.021Z, Gegenprobe: erfundene Operation → fehlgeschlagen wie erwartet).
+- Posten Bund laut Rechner: «Übrige Berufsauslagen» 3 % des Nettolohns (mind. 2 000, höchstens 4 000), «Abzug private
+  Versicherungen / Sparzinsen» 1 800 bzw. 3 700 + 700 je Kind (ohne BVG-Beitrag Grundbetrag × 1,5), «Abzug verheiratete
+  Steuerpflichtige» 2 800, «Kindersozialabzug» 6 800 je Kind.
+- Prüfung der Formel an 14144 Messpunkten (alle Kantone, Zivilstände, Kinderzahlen): **alle höchstens CHF 1 neben dem steuerbaren Einkommen der ESTV.**
+- Nicht abgebildet: Die ESTV kennt den Bruttolohn und damit, ob ein BVG-Beitrag anfällt; die App schliesst das aus
+  dem Nettolohn (gemessen: Brutto 22 500 ohne, 25 000 mit BVG-Beitrag). Zwischen Nettolohn 20 969 und 23 111 kann x
+  deshalb um 900 (ledig) zu hoch oder zu tief liegen. Der 13. Monatslohn und Nebeneinkommen gehen so ein, wie die
+  App den Jahreslohn bildet.
 
 ## Tabelle und Randregel
 
@@ -71,7 +85,7 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
 ## Abdeckung
 
 - Reihen mit Tabelle: **208** von 208 (26 Kantone × 2 Zivilstände × 4 Kinderzahlen = 208).
-- Keine Reihe fehlt.
+- Keine der 208 Kombinationen fehlt (geprüft gegen alle Kombinationen, nicht nur gegen die gemessenen).
 
 | Kanton | Zivilstand | Kinder | steuerbar Bund von–bis | Stützpunkte | max. Abw. CHF | max. Abw. % (K+G ≥ 1 000) | ESTV K+G bei Brutto 50 000 / 80 000 / 120 000 |
 |---|---|---:|---|---:|---:|---:|---|
