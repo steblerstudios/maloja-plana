@@ -11,7 +11,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-*Entscheid-Runde 16.09.2026 abends (#172–#175). Gemergt: #172–#174; #175 bereit. Nicht live.*
+*Entscheid-Runden 16.09.2026 abends (#172–#182). Alle gemergt, nicht live.*
 
 ### Geändert
 - **Sicherung verschlüsselt als Voreinstellung, Passwort mindestens 12 Zeichen (E10, #173):** «Mit Passwort sichern» steht zuerst, «Ohne Verschlüsselung sichern» bleibt wählbar mit ruhigem Hinweis (DSG Art. 7 Abs. 3). Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die automatischen Schnappschüsse bleiben bewusst unverschlüsselt (K34, Begründung in `docs/security/backup-strategy.md`).
@@ -19,10 +19,19 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Kennzeichnungen (#175):** Kantons-/Gemeindesteuer als «grobe Schätzung» (K13, erster Teil) · Dashboard-Beschriftungen in lesbarer Grösse mit Kurzlabels und Silbentrennung (K18) · Taxpunktwerte als provisorisch gekennzeichnet, neun Kantone mit Stand 2025 genannt (K26), eigener Datenstand je Block (K27) · Rumantsch in der Sprachwahl als provisorisch (O14).
 - **CI auf Node 24 / npm 11 (E27, #172),** Lockfile mit npm 11 erneuert, keine Versionssprünge.
 
+### Behoben
+- **Kantons- und Gemeindesteuer aus amtlichen Messpunkten (E37 #180, E38 #182):** Der eine Faktor je Kanton lag bei CHF 80'000 brutto (ledig) in allen 26 Kantonen 44–70 % unter dem ESTV-Steuerrechner 2026. Jetzt eine Stütztabelle je Kanton, Zivilstand und 0–3 Kindern (14'144 Messpunkte, Hauptort, ohne Kirchensteuer; Abweichung im Median CHF 5, höchstens CHF 391). Das steuerbare Einkommen wird nach den Standardabzügen der ESTV geschätzt. Steuerrechner, Finanzübersicht und Behördendossier nutzen dieselbe Regel und den Steuerkanton; ohne Messung (zwei Einkommen, Lohn als Brutto erfasst, mehr als drei Kinder, ausserhalb der Tabelle) keine Kantonszahl, sondern Links zur ESTV und zur kantonalen Steuerverwaltung. Das Behördendossier rechnet die Bundessteuer jetzt mit den Kindern im Haushalt.
+- **Notfallkontakt «trifft nicht zu» (K38, #179):** mit einer leisen Anregung, eine Person des Vertrauens zu fragen; Notfallkarte, Vorlesekarte und Dossier zeigen «Keine Kontaktperson hinterlegt». Der Hinweis «Kontakt hinterlegt → Notfallkarte» erscheint nur noch mit Kontakt. Die Markierung beim Arbeitgeber (und seiner Adresse) gilt in «Finanzen» und «Ausbildung & Arbeit». Alimente-Felder markierbar. CSV-Export und Export-Vorschau ohne interne `_`-Felder (`_migratedAt` wurde bisher Zeichen für Zeichen zerlegt).
+- **Sie-Form der Export-Notiz (K40, #181)** in de, it, rm · **Kontrast der Berg-Beschriftungen (K41, #181)** von teils 1.6:1 auf 5.9:1 (hell) bzw. 5.5:1 (dunkel), «noch nicht begonnen» jetzt kursiv statt blass · **Steuerkanton (K33, #181)** auch in Finanzübersicht und Steuererklärungs-Link.
+
 ### Hinzugefügt
 - **«Alle Daten auf diesem Gerät löschen» (E18, #174):** in den Einstellungen, mit Erklärung, Angebot «vorher sichern» und zweistufiger Bestätigung. Löscht alle `or5_`-Schlüssel (ausser dem Beta-Zugang) und die IndexedDB-Datenbanken der App; im Beispiel-Modus ausgeschaltet.
 
+### Performance
+- **Hauptbundle 64.94 → 61.00 kB (E36, #177):** Onboarding und Tour wurden trotz `React.lazy` zusätzlich direkt importiert; die Statusabfrage liegt jetzt in `src/utils/einfuehrungStatus.js`. Ein Test verhindert, dass ein nachgeladenes Modul wieder direkt importiert wird.
+
 ### Dokumentation
+- **Rechtstexte (K39, #178):** Datenschutz, FAQ und Nutzungsbedingungen (5 Sprachen) sowie `docs/legal/*` nennen die verschlüsselte Voreinstellung, die unverschlüsselten automatischen Schnappschüsse und den Löschweg. Sieben offene Rechtsfragen stehen in #178.
 - Anzahl der automatischen Schnappschüsse korrigiert (5, nicht 3; höchstens einer je 12 Stunden) und IndexedDB-Namen in `docs/security/data-flow.md` nachgeführt.
 
 ## [0.1.29-beta] — 2026-09-16
