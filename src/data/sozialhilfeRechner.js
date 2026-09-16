@@ -8,6 +8,8 @@
 // Einzelpersonen, 12 000 für Paare (skos.ch, Artikel «Vermögensfreibetrag auch im Kanton
 // Thurgau», 28.08.2025, abgerufen 16.09.2026). Datenstand deshalb 2026-01, nicht mehr 2025-01.
 
+import { vermoegensfreibetragUnbestaetigt } from './vermoegensfreibetragUnbestaetigt.js';
+
 export const SKOS_DATA_VERSION = '2026-01';
 
 // GBL = Grundbedarf für den Lebensunterhalt (SKOS C.3.1, ab 1.1.2025, für 2026 unverändert)
@@ -141,7 +143,9 @@ export function vermoegensfreibetragKanton(kanton, adults = 1, minorChildren = 0
 }
 
 // Die Kennzeichnung «kantonal nicht bestätigt» (SG · FR · VD · AI · OW · BL · TI) steht in
-// data/vermoegensfreibetragUnbestaetigt.js — nur die Anzeige braucht sie (Lazy-Chunk).
+// data/vermoegensfreibetragUnbestaetigt.js. Seit R4 (16.09.2026) liefern berechneSozialhilfe
+// und calculateSozialhilfe sie als Flag `vfbUnbestaetigt` mit — auch UNTER dem Freibetrag,
+// weil der unbestätigte Betrag dort direkt in die Aussage «Anspruch» einfliesst.
 
 // SKOS-Empfehlung D.3.1 ohne Kanton (Standard-Staffel).
 export const vermoegensfreibetragSKOS = (adults, minorChildren) => vermoegensfreibetragKanton('', adults, minorChildren);
@@ -200,6 +204,8 @@ export function berechneSozialhilfe({
   const vermoegensfreibetrag = vermoegensfreibetragKanton(kanton, adults, minderjaehrigeKinder);
   const anrechenbaresVermoegen = Math.max(0, vermoegen - vermoegensfreibetrag);
   const hatAnspruch = anrechenbaresVermoegen <= 0 && sozialhilfeAnspruch > 0;
+  // Vermögen erfasst UND der Freibetrag dieses Kantons ist kantonal nicht bestätigt.
+  const vfbUnbestaetigt = vermoegen > 0 && vermoegensfreibetragUnbestaetigt(kanton, minderjaehrigeKinder);
 
   return {
     gbl,
@@ -216,6 +222,7 @@ export function berechneSozialhilfe({
     vermoegensfreibetrag,
     anrechenbaresVermoegen,
     hatAnspruch,
+    vfbUnbestaetigt,
     haushaltGroesse,
     kinderImHaushalt,
   };

@@ -2308,6 +2308,8 @@ export default {
     assetLimitBasisCanton: 'Kanton {name}',
     assetLimitBasisSkos: 'SKOS-Empfehlung',
     assetLimitUnconfirmed: { sie: 'Kantonal nicht bestätigt — bitte beim Sozialdienst Ihrer Gemeinde prüfen.', du: 'Kantonal nicht bestätigt — bitte beim Sozialdienst deiner Gemeinde prüfen.' },
+    assetLimitUnconfirmedUnder: { sie: 'Das erfasste Vermögen liegt unter dem Freibetrag von {freibetrag}. Dieser Freibetrag ist kantonal nicht bestätigt — bitte beim Sozialdienst Ihrer Gemeinde prüfen.', du: 'Das erfasste Vermögen liegt unter dem Freibetrag von {freibetrag}. Dieser Freibetrag ist kantonal nicht bestätigt — bitte beim Sozialdienst deiner Gemeinde prüfen.' },
+    assetLimitUnconfirmedShort: 'Vermögensfreibetrag kantonal nicht bestätigt.',
     repaymentTitle: 'Rückzahlung von Sozialhilfe',
     repaymentText: { sie: 'Rechtmässig bezogene Sozialhilfe kann in vielen Kantonen zurückgefordert werden, wenn Sie zu einem grösseren Vermögen kommen — vor allem durch eine Erbschaft oder einen Gewinn. Aus normalem Erwerbseinkommen wird meist nichts zurückverlangt (die SKOS rät davon ab).', du: 'Rechtmässig bezogene Sozialhilfe kann in vielen Kantonen zurückgefordert werden, wenn du zu einem grösseren Vermögen kommst — vor allem durch eine Erbschaft oder einen Gewinn. Aus normalem Erwerbseinkommen wird meist nichts zurückverlangt (die SKOS rät davon ab).' },
     repaymentInheritance: 'Es zählt nur der tatsächliche Vermögenszuwachs — wer eine Erbschaft ausschlägt, muss nichts zurückzahlen.',

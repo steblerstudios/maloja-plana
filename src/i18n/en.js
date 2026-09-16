@@ -2304,6 +2304,8 @@ export default {
     assetLimitBasisCanton: 'Canton of {name}',
     assetLimitBasisSkos: 'SKOS recommendation',
     assetLimitUnconfirmed: 'Not confirmed by the canton — please check with the social services office in your municipality.',
+    assetLimitUnconfirmedUnder: 'The recorded assets are below the allowance of {freibetrag}. This allowance is not confirmed by the canton — please check with the social services office in your municipality.',
+    assetLimitUnconfirmedShort: 'Asset allowance not confirmed by the canton.',
     repaymentTitle: 'Repayment of social assistance',
     repaymentText: 'Legitimately received social assistance can be reclaimed in many cantons if you come into significant assets — above all through an inheritance or a windfall. Ordinary earned income is usually not reclaimed (SKOS advises against it).',
     repaymentInheritance: 'Only the actual increase in assets counts — if you decline an inheritance, there is nothing to repay.',

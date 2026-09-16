@@ -2826,6 +2826,9 @@ export default {
     assetLimitBasisCanton: 'Chantun {name}',
     assetLimitBasisSkos: 'recumandaziun SKOS',
     assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
+    assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    assetLimitUnconfirmedShort: 'Franchisa da facultad betg confermada dal chantun.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
     repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",

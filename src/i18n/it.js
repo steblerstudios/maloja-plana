@@ -2304,6 +2304,8 @@ export default {
     assetLimitBasisCanton: 'Cantone {name}',
     assetLimitBasisSkos: 'raccomandazione COSAS',
     assetLimitUnconfirmed: { sie: 'Non confermato dal Cantone — La preghiamo di verificare presso il servizio sociale del Suo comune.', du: 'Non confermato dal Cantone — verifica presso il servizio sociale del tuo comune.' },
+    assetLimitUnconfirmedUnder: { sie: 'Il patrimonio registrato è inferiore alla franchigia di {freibetrag}. Questa franchigia non è confermata dal Cantone — La preghiamo di verificare presso il servizio sociale del Suo comune.', du: 'Il patrimonio registrato è inferiore alla franchigia di {freibetrag}. Questa franchigia non è confermata dal Cantone — verifica presso il servizio sociale del tuo comune.' },
+    assetLimitUnconfirmedShort: 'Franchigia sul patrimonio non confermata dal Cantone.',
     repaymentTitle: 'Rimborso dell\'aiuto sociale',
     repaymentText: { sie: 'L\'aiuto sociale percepito legittimamente può essere richiesto indietro in molti cantoni se accede a un patrimonio importante — soprattutto tramite un\'eredità o una vincita. Dal normale reddito da lavoro di solito non si richiede nulla (la COSAS lo sconsiglia).', du: 'L\'aiuto sociale percepito legittimamente può essere richiesto indietro in molti cantoni se accedi a un patrimonio importante — soprattutto tramite un\'eredità o una vincita. Dal normale reddito da lavoro di solito non si richiede nulla (la COSAS lo sconsiglia).' },
     repaymentInheritance: 'Conta solo l\'effettivo aumento del patrimonio — chi rinuncia a un\'eredità non deve rimborsare nulla.',

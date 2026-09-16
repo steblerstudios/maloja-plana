@@ -1,6 +1,7 @@
 // Datenstand der kantonalen Werte (SKOS-Grundbedarf, IPV, EL, Mietzinsmaxima).
 // Diese ändern jährlich — bei Aktualisierung hochzählen.
 import { vermoegensfreibetragKanton } from '../data/sozialhilfeRechner.js';
+import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 
 export const CANTONAL_DATA_VERSION = '2024/2025';
 
@@ -318,6 +319,8 @@ export function calculateSozialhilfe(data) {
     vermoegen,
     vermoegensfreibetrag,
     vermoegenUeberFreibetrag,
+    // Vermögen erfasst UND Freibetrag kantonal nicht bestätigt (R4) — auch unter dem Freibetrag.
+    vfbUnbestaetigt: vermoegen > 0 && vermoegensfreibetragUnbestaetigt(canton, minorChildren),
     householdSize,
     adults: hh.adults,
     childrenCount: hh.childrenCount,

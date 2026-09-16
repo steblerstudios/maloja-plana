@@ -2303,6 +2303,8 @@ export default {
     assetLimitBasisCanton: 'canton de {name}',
     assetLimitBasisSkos: 'recommandation CSIAS',
     assetLimitUnconfirmed: { sie: 'Non confirmé par le canton — veuillez vérifier auprès du service social de votre commune.', du: 'Non confirmé par le canton — vérifie auprès du service social de ta commune.' },
+    assetLimitUnconfirmedUnder: { sie: 'La fortune saisie est inférieure à la franchise de {freibetrag}. Cette franchise n’est pas confirmée par le canton — veuillez vérifier auprès du service social de votre commune.', du: 'La fortune saisie est inférieure à la franchise de {freibetrag}. Cette franchise n’est pas confirmée par le canton — vérifie auprès du service social de ta commune.' },
+    assetLimitUnconfirmedShort: 'Franchise sur la fortune non confirmée par le canton.',
     repaymentTitle: 'Remboursement de l\'aide sociale',
     repaymentText: { sie: 'L\'aide sociale perçue de manière légitime peut être réclamée dans de nombreux cantons si vous accédez à une fortune importante — surtout par un héritage ou un gain. Le revenu ordinaire du travail n\'est généralement pas réclamé (la CSIAS le déconseille).', du: 'L\'aide sociale perçue de manière légitime peut être réclamée dans de nombreux cantons si tu accèdes à une fortune importante — surtout par un héritage ou un gain. Le revenu ordinaire du travail n\'est généralement pas réclamé (la CSIAS le déconseille).' },
     repaymentInheritance: 'Seule l\'augmentation effective de fortune compte — qui répudie un héritage n\'a rien à rembourser.',
