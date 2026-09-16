@@ -11,9 +11,25 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-*K-Runde vom 15.09.2026 spätabends: **live seit 23:25** (`index-f4a79e77.js` aus `f482576`). Die Footer-Version zeigt noch `0.1.27-beta`; eine eigene Versionsnummer bekommt der Stand mit dem nächsten Release-PR.*
+## [0.1.28-beta] — 2026-09-16
 
-### Behoben
+*Die K-Runde vom 15. und 16.09.2026. Der Stand vom 15.09., 23:25 ist live (`index-f4a79e77.js`);
+die Punkte K20 bis K25 sind gemergt und gehen mit dem nächsten Deploy live. Das Tag
+`v0.1.28-beta` wird erst nach diesem Deploy gesetzt (`RELEASE.md`, Schritt 6).*
+
+### Behoben (16.09.)
+- **Der Beispiel-Modus griff auf echte Dokumente zu (K24, #156):** Wer den Beispiel-Modus innerhalb der App betrat, konnte dort Dokumente hochladen und löschen — beides wirkte auf die echten Dokumente samt Datei. Erst nachgestellt (`beispielDokumente.test.js`), als B-3 in `BUGS.md` eingetragen, dann behoben: im Beispiel laufen Hochladen, Löschen und Ablaufdatum über eine Kopie im Arbeitsspeicher, die beim Betreten und Verlassen geleert wird.
+- **Tardoc-Taxpunktwerte 2026 für 14 weitere Kantone (K22, #157):** AR 0.86 · FR 0.91 · GE 0.94 · GR 0.86 · LU 0.85 · SG 0.86 · TI 0.93 · UR 0.88 · VD 0.94 · ZG 0.82 · SZ 0.85 · OW 0.86 · NW 0.88; TG 0.86 bestätigt. Elf davon aus behördlichen Beschlüssen, drei aus Tarifpartner-Publikationen, jede Quelle einzeln gelesen und im Code zitiert. Neun Kantone bleiben ohne Beleg und stehen weiter als ungeprüft auf Stand 2025.
+- **Rundung und Erhebungsgrenze der direkten Bundessteuer (K23, #154):** steuerbares Einkommen auf 100 Franken abgerundet, Jahressteuer auf 5 Rappen, keine Steuer unter 25 Franken (DBG Art. 36 Abs. 3; die beiden Rundungen stehen in der ESTV-Tabelle Form. 58c-2026, nicht im Gesetz). Gilt für alle Tarife.
+
+### Neu (16.09.)
+- **Export-Vorschau vor sechs weiteren Ausgaben (K20, #155):** Finanzübersicht drucken, Notfallkarte, IPV-Antrag, Budget-Bericht, Lebenslauf und Kalender-Datei zeigen vorher, was in der Datei stehen wird. 14 neue Tests, jeder gegen den echten Generator.
+
+### Ruhe und Wahrheit (16.09.)
+- **Demo leiser (K25, #156):** Die automatische Sicherung ruht im Beispiel-Modus, damit keine Fehlermeldungen mehr in der Konsole landen; nach «Beispiel verlassen» zeigt die Adresse wieder den Einstieg. Der Speicher-Schirm bleibt unverändert scharf.
+- **«ZIP» aus der Doku (K21, #153):** 17 Stellen in 11 Dokumenten beschrieben den Export als ZIP-Archiv. Ein solches hat die App nie erzeugt. Historische und datierte Dokumente blieben unangetastet.
+
+### Behoben (15.09.)
 - **Elterntarif der direkten Bundessteuer (K12, #144):** Alleinerziehende wurden mit dem Grundtarif minus 263 Franken je Kind gerechnet. Diese Mischung kennt das DBG nicht. Neu nach DBG Art. 36 Abs. 2bis: Tarif für Verheiratete, minus CHF 263 je Kind (V EFD über die kalte Progression, AS 2024 479; Tarifstufen 2026 AS 2025 579; ESTV Form. 58c-2026). Die App weiss nicht sicher, ob die Voraussetzung erfüllt ist; deshalb gibt es eine Bestätigung, ohne sie rechnet sie vorsichtig mit dem Grundtarif. 8 Tests mit Sollwerten aus der ESTV-Tabelle.
 - **Generika-Selbstbehalt (K14, #148):** Der Hinweis nannte «10 % statt 20 %». Nach KLV Art. 38a sind es 10 % bzw. 40 %. In 5 Sprachen korrigiert.
 - **Tardoc-Taxpunktwerte 2026 (K14, #148):** Zürich 0.91 statt 0.89 (RRB ZH 1299/2025), Bern 0.86 statt 0.89 (Verfügung 2025.GSI.2252). Die Werte der übrigen 23 Kantone sind Stand 2025 und im Code als ungeprüft markiert.

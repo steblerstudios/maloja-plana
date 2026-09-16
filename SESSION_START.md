@@ -7,7 +7,19 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-15, 23:30 (`main`=`f482576` nach dem Merge von **PR #151**, mit diesem Stand-PR weiter · ✅ **K-Runde DEPLOYT 23:25 aus `f482576`**: live `index-f4a79e77.js` · Footer-Version weiter `0.1.27-beta`, Tag `v0.1.27-beta` = `f368fbb` · `main` = live · 0 offene Feature-Branches)
+**Stand:** 2026-09-16, 12:10 (`main`=`8c1bd46` nach dem Merge von **PR #157**, mit diesem Stand-PR weiter · ⚠️ **zweite K-Runde gemergt, NICHT live**: live weiter `index-f4a79e77.js` vom Deploy am 15.09. 23:25 · Version im Repo neu **0.1.28-beta**, Tag erst nach dem Deploy · 951 Tests grün, Hauptbundle 64.21 kB · 0 offene PRs)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-16, 12:10 (K20 – K25 gemergt, nicht deployt)
+>
+> Fünf PRs, alle mit grüner CI: **#153** «ZIP» aus der Doku (K21) · **#154** Rundung und
+> Erhebungsgrenze der Bundessteuer (K23) · **#155** Export-Vorschau vor sechs weiteren Ausgaben
+> (K20) · **#156** Beispiel-Modus traf echte Dokumente, Bug B-3 in `BUGS.md`, dazu die leisere
+> Demo (K24, K25) · **#157** Tardoc 2026 für 14 weitere Kantone (K22).
+> Vier Agenten waren zwischendurch am Nutzungslimit abgebrochen; ihre angefangene Arbeit lag
+> unkommittiert in den Arbeitskopien und wurde weitergebaut, nichts verworfen.
+> **Vor dem Deploy:** `git pull` im Haupt-Checkout. **Nach dem Deploy:** die neuen Zeilen in
+> `FEATURES.md` per Bundle-Hash prüfen, Tag `v0.1.28-beta` setzen, B-3 in `BUGS.md` nach «Zuletzt
+> behoben» schieben. Offene Entscheide: Bau-Liste §9, neu E28 – E31.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-15, 23:30 (K-Runde live)
 >
