@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, früh (`main` nach **PR #187**, #188 bereit · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187 · 1750 Tests grün mit #188, Hauptbundle 61.5 kB von 65)
+**Stand:** 2026-09-17, früh (`main` = `6cdcef6` nach **PR #189**, 0 offene PRs · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187, #188 · 1750 Tests grün, Hauptbundle 61.5 kB von 65)
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, früh (0.1.29-beta live, R4 gemergt)
 >
@@ -22,7 +22,7 @@
 > **Vor dem Deploy:** Prüf-Batterie 9/9 über `2aaeff5..0c9cc43`, kein Blocker; Befunde in #185
 > (darunter: `pii-scan.sh` verdeckte Namen in Zeilen mit «Stebler Studios» — behoben).
 > **Danach gemergt, nicht live:** #186 (R4 Hinweise/Robustheit), #187 (R4 Steuer-Annahmen).
-> **Bereit:** #188. **Offen:** Bau-Liste §13 (K49–K53) und §12.
+> **Danach auch gemergt:** #188 («öffnet in neuem Tab», fr/it Sie/Du in `legal.*`) und #189 (diese Doku). **Nächster Deploy** bringt #186–#188. **Offen:** Bau-Liste §13 (K49–K53) und §12.
 > Merker: der Haupt-Checkout liegt unter `~/Claude/Projects/maloja plana/maloja-frontend`
 > (nicht mehr `~/Projects`).
 

@@ -13,6 +13,12 @@ kommt der Changelog immer mit, nie doppelt.*
 
 *R4 vom 17.09.2026 (#186–#188). Gemergt, nicht live.*
 
+### Barrierefreiheit
+- **«Öffnet in neuem Tab» hörbar (R4, #188):** 38 externe Links in 21 Dateien über `ExternerLink.jsx`, `rel="noopener noreferrer"` erzwungen; optisch unverändert.
+
+### Sprache
+- **fr/it mit Sie- und Du-Form in allen Rechtstexten (R4, #188);** ein Test verhindert neue Lücken, rund 356 ältere stehen als bekannte Lücke (Bau-Liste K49).
+
 ### Behoben
 - **Steuer-Annahmen (R4, #187):** 13. Monatslohn wird mitgerechnet (bei «ja»; sonst Hinweis) · keine Schätzung aus dem Nettolohn für Rentner und Selbständige · verheiratet ohne Angabe zum Partnereinkommen → keine Zahl, bei ausdrücklich 0 «Alleinverdiener-Ehepaar» · Steuerrechner, Finanzübersicht und Dossier lesen dieselbe Regel für das eingetragene steuerbare Einkommen · Tarifvergleich mit dem passenden steuerbaren Einkommen je Zivilstand.
 - **Hinweise und Robustheit (R4, #186):** «Kantonal nicht bestätigt» auch bei Vermögen unter dem Freibetrag (Sozialhilfe, Schnellcheck, Dashboard) · Taxpunktwert-Stand je Kanton aus den Daten · Löschweg benachrichtigt andere offene Tabs · Wiederherstellen überschreibt nichts, wenn der Schnappschuss scheitert · Gemeinde ohne geratene Web-Adresse · AG-Links auf die neue Adresse · `CANTONAL_DATA_VERSION` entfernt.

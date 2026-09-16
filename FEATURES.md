@@ -91,6 +91,7 @@
 | **Predeploy-Befunde** — PII-Scan ohne Zeilen-Ausnahme, Tippflächen 44 px, fr-Texte, KVG-Artikel entfernt | `verified-live` | PR #185 | Live seit 17.09.2026 01:46 (`index-91c30770.js`), Merkmal im Live-Bundle gefunden: pii-scan Exit 0 auf `2fcf409`. |
 | **R4 · Hinweise und Robustheit** (Freibetrag-Hinweis, Taxpunktwert je Kanton, Löschweg mehrere Tabs, Wiederherstellen, Gemeinde nur als Text) | `built` | PR #186 | Gemergt, nicht live. |
 | **R4 · Steuer-Annahmen** (13. Monatslohn, Rentner/Selbständige, Ehepaare ohne Partnerangabe, eine Zahl überall, Tarifvergleich) | `built` | PR #187 | Gemergt, nicht live. |
+| **R4 · «öffnet in neuem Tab»** für 38 externe Links (`ExternerLink.jsx`) · fr/it `legal.*` mit Sie/Du · Paritätstest gegen neue Lücken | `built` | PR #188 | Gemergt, nicht live. |
 | **Belege IPV / Freibetrag, Rechts-Doku K28** | gemergt (Doku, kein Live-Artefakt) | PR #161, #166, #164 | IPV: 21 abbildbar, 5 teilweise · Freibetrag: 19 kantonal belegt · Rechts-Doku: fünf rechtliche Wertungen gemeldet (u. a. unverschlüsselte Sicherung als Voreinstellung und DSG Art. 7 Abs. 3). |
 | **K21 · «ZIP» aus der Doku** | gemergt (Doku, kein Live-Artefakt) | PR #153 | 17 Stellen in 11 Dateien; Historie bewusst unverändert. Fünf weitere Widersprüche Doku ↔ Code im PR gemeldet, darunter `security/backup-strategy.md` («immer verschlüsselt», tatsächlich optional). |
 
