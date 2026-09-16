@@ -98,40 +98,6 @@ festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechn
   in `taxData` speichern und beim Öffnen bevorzugen, (c) nach `basis.canton` schreiben — dann rechnen
   auch IPV und Sozialhilfe mit dem neuen Kanton. **Entscheid Stebler Studios.**
 
-### B-3 · Beispiel-Modus: Dokument-Upload, -Löschen und Ablaufdatum wirken auf die echten Dokumente
-
-*Bau-Liste K24. Fix in diesem PR, nach dem Deploy nach «Zuletzt behoben».*
-
-- **Versprochen:** Im Beispiel («Beispiel: Maria Muster, 34, Zürich») bleibt der eigene Stand
-  unberührt. Kapitel-Felder sind nur lesbar, die Speichern-Knöpfe der Rechner landen seit #150 in
-  der Beispiel-Kopie im Arbeitsspeicher.
-- **Hält nicht:** Die Dokument-Wege in `main.jsx` (`handleAddDocument`, `handleDeleteDocument`,
-  `handleUpdateDocExpiry`) kennen den Beispiel-Modus nicht. Der Upload im Kapitel-Reiter
-  «Dokumente» (`ChapterView.jsx`, dort ohne `demoMode`-Sperre) schreibt die Datei nach IndexedDB
-  `maloja-plana-documents` und die Metadaten in den echten Zustand `documents`. Diesen schreibt der
-  Auto-Save alle 5 s nach `or5_docs`, auch im Beispiel. Löschen in der Dokumentenablage entfernt
-  das echte Dokument samt Datei, das Ändern des Ablaufdatums ändert das echte Dokument. Die
-  Dokumentenablage zeigt im Beispiel die eigenen Dokumente.
-- **Nicht betroffen:** die Demo von der Code-Wand («Ohne Code ausprobieren»). Dort sperrt der
-  Speicher-Schirm (`src/demo/demoSpeicher.js`) IndexedDB und überlagert localStorage.
-- **Nachstellen** (am Code und im Test, nicht im Browser):
-  1. Mit eigenem Stand in der Fusszeile «Beispiel» wählen.
-  2. Ein Kapitel mit Reiter «Dokumente» öffnen, eine Datei hochladen.
-  3. «Beispiel verlassen» → das Dokument liegt in der eigenen Dokumentenablage.
-  4. Variante: im Beispiel die Dokumentenablage öffnen und ein eigenes Dokument löschen → nach dem
-     Verlassen ist es weg, die Datei in IndexedDB auch.
-- **Test:** `src/__tests__/beispielDokumente.test.js`. Der erste Block («Nachstellen») führt den
-  alten Weg aus `main.jsx` (Stand `0274ce9`) vor: die hochgeladene Datei landete in der
-  Dokument-DB, das echte Dokument samt Datei war nach dem Löschen weg. Die übrigen Blöcke halten
-  das Verhalten nach dem Fix fest — im Beispiel und daneben auch den echten Weg (Kontrolle).
-- **Fix:** Im Beispiel führt `main.jsx` eine eigene Dokument-Liste im Arbeitsspeicher
-  (`demoDocs`). Upload, Löschen und Ablaufdatum gehen dorthin (`dokumentAktionen` in
-  `src/utils/docBlobs.js`), ohne IndexedDB. Dokumentenablage, Lebensmappe und Export zeigen im
-  Beispiel diese Liste; sie beginnt leer, die eigenen Dokumente bleiben aussen vor. Verlassen
-  leert sie. Gewählt gegen die Alternative «Knöpfe im Beispiel deaktivieren», weil das Beispiel
-  damit vollständig ausprobierbar bleibt (wie schon bei den Speichern-Knöpfen der Rechner, #150)
-  und weil der Weg an einer Stelle zusammenläuft statt in jeder Dokument-Oberfläche.
-
 ## Geprüft — kein offener Bug (2026-07-08)
 
 Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich: keiner ist ein Bug. Festgehalten, damit sie nicht als Phantome wiederkommen.
@@ -145,4 +111,5 @@ Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich
 
 *(Neueste zuoberst. Nur zum Nachschauen — schön, wenn die Liste hier wächst.)*
 
+- 2026-09-16 · **B-3** · Im Beispiel-Modus innerhalb der App wirkten Dokument-Upload, -Löschen und Ablaufdatum auf die echten Dokumente samt Datei in IndexedDB (Bau-Liste K24) → im Beispiel laufen alle drei über eine eigene Liste im Arbeitsspeicher, die beim Betreten und Verlassen geleert wird; die Demo von der Code-Wand war nie betroffen. Nachgestellt und festgehalten in `src/__tests__/beispielDokumente.test.js`, Fix PR #156, **live seit 16.09.2026, 12:23** (`index-2301b4b1.js`, 0.1.28-beta). Die ausführliche Beschreibung mit Nachstell-Schritten steht in PR #156 und in der Git-Historie dieser Datei.
 - 2026-07-08 · Zukunft-Graph nannte AHV/BVG-Säulen, auch wenn es sie gar nicht gab → nur vorhandene Säulen werden benannt (`9134b86`).

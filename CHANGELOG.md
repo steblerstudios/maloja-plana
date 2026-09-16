@@ -13,9 +13,8 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.28-beta] — 2026-09-16
 
-*Die K-Runde vom 15. und 16.09.2026. Der Stand vom 15.09., 23:25 ist live (`index-f4a79e77.js`);
-die Punkte K20 bis K25 sind gemergt und gehen mit dem nächsten Deploy live. Das Tag
-`v0.1.28-beta` wird erst nach diesem Deploy gesetzt (`RELEASE.md`, Schritt 6).*
+*Die K-Runde vom 15. und 16.09.2026. **Live seit 16.09.2026, 12:23** (`index-2301b4b1.js` aus
+`2aaeff5`), Tag `v0.1.28-beta` gesetzt (`RELEASE.md`, Schritt 6).*
 
 ### Behoben (16.09.)
 - **Der Beispiel-Modus griff auf echte Dokumente zu (K24, #156):** Wer den Beispiel-Modus innerhalb der App betrat, konnte dort Dokumente hochladen und löschen — beides wirkte auf die echten Dokumente samt Datei. Erst nachgestellt (`beispielDokumente.test.js`), als B-3 in `BUGS.md` eingetragen, dann behoben: im Beispiel laufen Hochladen, Löschen und Ablaufdatum über eine Kopie im Arbeitsspeicher, die beim Betreten und Verlassen geleert wird.
