@@ -25,7 +25,7 @@ sind. Dieses Dokument ändert keinen Code.
 - Werte ändern sich jährlich (Richtprämien, Prozentsätze, Grenzen). Vor jeder Freigabe den
   Stand an der Quelle erneut prüfen; ab Herbst 2026 erscheinen die Werte für 2027.
 
-**Erfasst:** 13 von 26 Kantonen. 11× abbildbar · 2× teilweise
+**Erfasst:** 17 von 26 Kantonen. 15× abbildbar · 2× teilweise
 
 ## Übersicht
 
@@ -33,8 +33,8 @@ sind. Dieses Dokument ändert keinen Code.
 |---|---|---|---|---|
 | ZH | Zürich | Referenzprämie (70 % der regionalen Durchschnittsprämie) minus Eigenanteil 8,4 % (Alleinstehende/Alleinerziehende) bzw. 10,5 % (Verheiratete) des massgebenden Einkommens; 3 Prämienregionen; Vermögensgrenze 150'000 / 300'000 | abbildbar | <https://svazurich.ch/unsere-produkte/weitere-produkte/krankenversicherung--kvg-/praemienverbilligung/leistung.html> |
 | BE | Bern | Stufentabelle: fester Monatsbetrag je Prämienregion (3), Altersgruppe und Einkommensstufe (bis 9'000 / 17'000 / 25'000 / 35'000; Familien bis 45'000); Kinder und junge Erwachsene in Ausbildung Pauschalbetrag | abbildbar | <https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Berechnungsschema%202026_de.pdf> |
-| LU | Luzern | *noch nicht erfasst* | — | — |
-| UR | Uri | *noch nicht erfasst* | — | — |
+| LU | Luzern | Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind) | abbildbar | <https://srl.lu.ch/app/de/texts_of_law/866a> |
+| UR | Uri | Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt | abbildbar | <https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213> |
 | SZ | Schwyz | *noch nicht erfasst* | — | — |
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
@@ -43,7 +43,7 @@ sind. Dieses Dokument ändert keinen Code.
 | FR | Freiburg | *noch nicht erfasst* | — | — |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
-| BL | Basel-Landschaft | *noch nicht erfasst* | — | — |
+| BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
 | SH | Schaffhausen | *noch nicht erfasst* | — | — |
 | AR | Appenzell Ausserrhoden | *noch nicht erfasst* | — | — |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
@@ -56,7 +56,30 @@ sind. Dieses Dokument ändert keinen Code.
 | VS | Wallis | *noch nicht erfasst* | — | — |
 | NE | Neuenburg | 15 Klassen (S1–S15) nach revenu déterminant und Haushaltstyp/Kinderzahl; fester Monats-Höchstbetrag je Klasse und Alterskategorie (% einer Referenzprämie) | abbildbar (mit Vorbehalt: Webseite und Erlass nennen ab S3 unterschiedliche Monatsbeträge, siehe «Offen») | <https://rsn.ne.ch/DATA/program/books/rsne/pdf/821.102.pdf> |
 | GE | Genf | 8 Gruppen (+ Gruppe 9 nur für Kinder/junge Erwachsene) nach RDU und Haushalt; fester Monatsbetrag je Gruppe und Person (Erw. 348 → 55, junge Erw. 231, Kind 132), Grenzen +6'000 je Unterhaltspflicht | abbildbar | <https://www.ge.ch/document/baremes-categories-2026-subsides-assurance-maladie> |
-| JU | Jura | *noch nicht erfasst* | — | — |
+| JU | Jura | Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999 | abbildbar | <https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1> |
+
+## Auffällige Befunde
+
+- **Kein Kanton rechnet wie die App.** Die App rechnet einen einheitlichen linearen Abbau von
+  `subsidySingle` (bei Einkommen 0) auf null (bei `maxIncome`), Familie = 2× Einzel, Kind = ½.
+  Die Kantone nutzen entweder *Richtprämie minus Selbstbehalt in % des massgebenden
+  Einkommens* (linear, aber mit kantonalen Richtprämien, Prozentsätzen und eigener Rechnung für
+  Kinder/junge Erwachsene) oder *Stufentabellen* mit festen Monatsbeträgen je Person. Die
+  Stufenkantone (u. a. BS, NE, GE, JU) rechnen nicht linear.
+- **ZH:** Das Berechnungsbeispiel der SVA nennt als Referenzprämie Region 1 «CHF 5'776»; aus der
+  regionalen Durchschnittsprämie (640 × 12 × 70 %) und den publizierten Einkommensgrenzen ergibt
+  sich 5'376. An der Quelle nachgeprüft. Vermutlich Tippfehler im Beispiel — nicht übernehmen.
+  Die SVA hält fest, dass die Grundlagen 2026 «bis zum Herbst 2026 noch angepasst werden» können.
+- **NE:** Widerspruch zwischen Kantonsseite «Classifications et montants» (geändert 08.09.2026)
+  und dem Erlass RSN 821.102 ab Klasse S3 (z. B. Erwachsene S3: Seite 515, Erlass 514). An beiden
+  Quellen nachgeprüft. Kein Änderungsbeschluss gefunden. **Verbindlich bis auf Weiteres der
+  Erlass**; beim OCAB nachfragen.
+- **GE:** Beträge stammen aus dem amtlichen Tarif-PDF «Barème subsides 2026»; der
+  Indexierungsbeschluss des Conseil d'État für 2026 (Art. 9B RaLAMal) wurde nicht gefunden. Der
+  Gesetzestext enthält noch die nicht indexierten Beträge.
+- **JU:** Im Arrêté-PDF steht im Textlayer der Tabellenseite zusätzlich eine verdeckte Überschrift
+  «pour l'année 2025»; sichtbar steht «pour l'année 2026». Die Werte wurden am Seitenbild geprüft.
+  Wer das PDF maschinell ausliest, muss das beachten.
 
 ---
 
@@ -184,6 +207,127 @@ Der heutige App-Wert (maxIncome/subsidySingle BE) lag dem Unteragenten nicht vor
 1. Berechnungsschema, «Gültig ab 1. Januar 2026», Direktion für Inneres und Justiz, Amt für Sozialversicherungen, Abteilung Prämienverbilligung und Obligatorium (PDF, 5 S.). https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Berechnungsschema%202026_de.pdf — abgerufen 16.09.2026
 2. Prämienverbilligung beantragen, Amt für Sozialversicherungen Kanton Bern, Stand ohne Datum. https://www.asv.dij.be.ch/de/start/themen/pv/pv_anrecht-auf-pv-beantragen.html — abgerufen 16.09.2026
 3. Publikationen (Informationsblatt 2026, Berechnungsschema 2026), Amt für Sozialversicherungen Kanton Bern. https://www.asv.dij.be.ch/de/start/themen/pv/formulare---publikationen.html — abgerufen 16.09.2026
+
+---
+
+## LU — Luzern
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind)
+**Zuständig / Weg:** WAS Wirtschaft Arbeit Soziales, Ausgleichskasse Luzern (Sozialversicherungszentrum); Anmeldung nötig, «spätestens Ende Oktober des Vorjahres» (für 2026: bis 31.10.2025; für 2027: bis 31.10.2026); bei späterer Anmeldung werden nur die danach fällig werdenden Prämien verbilligt; Auszahlung an den Krankenversicherer
+**Gültigkeit:** 2026 definitiv (Prämienverbilligungsverordnung, in Kraft seit 01.01.2026, Beschlussdatum 04.11.2025)
+
+### Rechenmodell
+> «Ein Anspruch auf Prämienverbilligung … besteht für das Jahr 2026, soweit die anrechenbaren Prämien das massgebende Einkommen um einen bestimmten Prozentsatz übersteigen. Dieser Prozentsatz beträgt für das Jahr 2026 mindestens 10 Prozent. Für jeden Franken des massgebenden Einkommens steigt er um 0,00006 Prozentpunkte an.» — § 2 Abs. 1 Prämienverbilligungsverordnung, Quelle [1]
+
+> «Eltern oder Elternteile, unter deren Obhut Kinder bis zum vollendeten 18. Lebensjahr leben, haben für das Jahr 2026 Anspruch auf die Verbilligung der anrechenbaren Prämien für Kinder um 80 Prozent, sofern … ihr massgebendes Einkommen … eine bestimmte Einkommensgrenze nicht überschreitet.» — § 2a Abs. 1, Quelle [1]
+
+> «Prämienverbilligungen gemäss § 2a sind von den Leistungen, die gemäss § 2 festgesetzt werden, abzuziehen.» — § 2b, Quelle [1]
+
+> «Liegt der gesamte Anspruch auf Prämienverbilligung unter 100 Franken, wird der Betrag nicht ausbezahlt.» — § 7, Quelle [1]
+
+Formel (aus [1], [2]): Anspruch = Summe der anrechenbaren Richtprämien − p(E) × E, mit p(E) = 10 % + 0,00006 Prozentpunkte × E (E = massgebendes Einkommen in CHF). Das Berechnungsbeispiel der WAS [4] bestätigt: «einem fixen Prozentsatz von 10% plus einem variablen Prozentsatz je nach massgebendem Einkommen».
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Richtprämie Region 1 (Ebikon, Emmen, Horw, Kriens, Luzern) | Erwachsene 5'628 · junge Erwachsene 4'044 · Kinder 1'308 CHF/Jahr | [1] § 3, [3] |
+| Richtprämie Region 2 (Adligenswil … Wolhusen, Liste in [3]) | Erwachsene 5'304 · junge Erwachsene 3'780 · Kinder 1'224 CHF/Jahr | [1] § 3, [3] |
+| Richtprämie Region 3 (übrige Gemeinden) | Erwachsene 5'100 · junge Erwachsene 3'660 · Kinder 1'176 CHF/Jahr | [1] § 3, [3] |
+| Altersabgrenzung 2026 | Erwachsene «ab Jahrgang 2000» · junge Erwachsene «Jahrgang 2001-2007» · Kinder «Jahrgang 2008-2026» | [3] |
+| Selbstbehalt-Prozentsatz | 10 % + 0,00006 Prozentpunkte je Franken massg. Einkommen | [1] § 2 |
+| Gesetzliche Obergrenze des Prozentsatzes | höchstens 10 % + 0,00015 Prozentpunkte je Franken | [2] § 7 Abs. 1 |
+| Einkommensgrenze Kinder (80 %) und junge Erw. in Ausbildung (50 %) | Eltern 96'392 · ein Elternteil 77'114 | [1] § 2a |
+| Pauschalbetrag je Kind / jungem Erwachsenen in Ausbildung | 9'000 | [1] § 3b |
+| BVG-Einkäufe werden zugerechnet, soweit über | 20'000 pro Steuerjahr | [1] § 3a |
+| Vermögensgrenze (Reinvermögen) | Verheiratete 200'000 · Alleinstehende 100'000; +50'000 pro Kind/jungem Erw. in Ausbildung | [2] § 7 Abs. 2, [5] |
+| Mindestauszahlung | Gesamtanspruch unter 100 CHF wird nicht ausbezahlt | [1] § 7 |
+| Richtprämien-Untergrenze (Gesetz) | mindestens 84 % der EL-Durchschnittsprämien | [2] § 6 |
+
+Eigene Rechnung (kein Zitat): Einzelperson Erwachsene, kein Vermögen — Anspruch endet dort, wo (0,10 + 0,0000006 × E) × E = Richtprämie, also bei E ≈ 44'434 (Region 1), ≈ 42'303 (Region 2), ≈ 40'942 (Region 3). Anspruch bei E = 0: voller Richtbetrag (5'628 / 5'304 / 5'100). Beispiel R1, E = 20'000: p = 10 % + 1,2 = 11,2 % → Selbstbehalt 2'240 → Anspruch 3'388.
+
+### Massgebendes Einkommen
+> «Zur Bestimmung des massgebenden Einkommens … ist vom Nettoeinkommen gemäss der Steuerveranlagung auszugehen. Als Nettoeinkommen gelten die um die Aufwendungen nach den §§ 33–39 sowie 40 Absatz 1a–g des Steuergesetzes … verminderten steuerbaren Einkünfte.» Hinzugezählt werden u. a. BVG-Einkäufe über dem Pauschalbetrag, Säule 3a, verrechenbare Geschäftsverluste, im vereinfachten Verfahren versteuerte Einkünfte, Liegenschaftsunterhalt über 20 % und «10 Prozent des Reinvermögens; als Reinvermögen gilt das Vermögen vor Abzug der steuerfreien Beträge» — § 7 Abs. 2 Prämienverbilligungsgesetz, Quelle [2]
+
+> «Massgebend sind die Steuerwerte der letzten rechtskräftigen Steuerveranlagung gemäss Steuergesetz.» — § 7 Abs. 4, Quelle [2]
+
+### Abweichung zur App
+Der heutige App-Wert (maxIncome/subsidySingle LU) lag dem Unteragenten nicht vor. Belegte Vergleichsgrössen: Einzelperson Region 1 — voller Betrag 5'628 CHF/Jahr bei Einkommen 0; der Abbau ist **nicht linear**, sondern quadratisch (Prozentsatz steigt mit dem Einkommen), Nullpunkt rechnerisch bei ≈ 44'434. Ein linearer Abbau bis maxIncome überschätzt den Anspruch im mittleren Bereich.
+
+### Offen / nicht gefunden
+- Wortlaut von § 7 Abs. 2a Prämienverbilligungsgesetz (wie genau der Pauschalbetrag von 9'000 je Kind wirkt — vermutlich Abzug vom massgebenden Einkommen) wurde beim Auslesen der SRL-Daten nicht sauber getrennt; vor dem Umsetzen im Gesetzestext prüfen.
+- Rundungsregel: Berechnungsbeispiel [4] sagt «Ungerade Beträge runden wir auf» — Genauigkeit (Franken?) nicht präzisiert.
+- Merkblatt «Prämienverbilligung 2026 Anspruch» (Nr. 02/25) unter der alten Adresse https://www.was-luzern.ch/sites/default/files/documents/AK_Merkblatt_IPV_0.pdf → HTTP 404; ebenso die alte Richtprämien-Adresse mit «2026%20-%20Richtpr…» → HTTP 404. Genutzt wurde die neue Adresse [3].
+- Faktoren 2027 werden laut WAS «erst Mitte November 2026 festgelegt»; Anmeldung 2027 läuft (Frist 31.10.2026).
+
+### Quellen
+1. Verordnung zum Gesetz über die Verbilligung von Prämien der Krankenversicherung (Prämienverbilligungsverordnung), SRL Nr. 866a, Kanton Luzern, Version in Kraft seit 01.01.2026 (Beschlussdatum 04.11.2025). https://srl.lu.ch/app/de/texts_of_law/866a (Daten über https://srl.lu.ch/api/de/texts_of_law/866a/show_as_json) — abgerufen 16.09.2026
+2. Gesetz über die Verbilligung von Prämien der Krankenversicherung (Prämienverbilligungsgesetz), SRL Nr. 866, Kanton Luzern, Version in Kraft seit 01.07.2021. https://srl.lu.ch/app/de/texts_of_law/866 — abgerufen 16.09.2026
+3. Richtprämien 2026 für die Berechnung der Prämienverbilligung im Kanton LU / Prämienregionen 2026, WAS Ausgleichskasse Luzern, November 2025 (PDF). https://www.was-luzern.ch/sites/default/files/documents/2026_Richtpr%C3%A4mien_Pr%C3%A4mienregion.pdf — abgerufen 16.09.2026
+4. Berechnungsbeispiel Prämienverbilligung / Anspruch Prämienverbilligung 2026, WAS Ausgleichskasse Luzern, ohne Datum (PDF). https://www.was-luzern.ch/sites/default/files/documents/AK_IPV_Merkblatt_Berechnungsbeispiel_2026.pdf — abgerufen 16.09.2026
+5. Berechnung der Prämienverbilligung (Online-Rechner-Seite), WAS Luzern. https://www.was-luzern.ch/berechnung-ipv — abgerufen 16.09.2026
+6. News «Prämienverbilligung 2026 – jetzt anmelden», WAS Luzern, 18.08.2025 («Die Anmeldefrist läuft bis am 31. Oktober 2025.»). https://www.was-luzern.ch/news/praemienverbilligung-2026-jetzt-anmelden — abgerufen 16.09.2026
+
+---
+
+## UR — Uri
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Summe der Richtprämien (eine Prämienregion) minus Selbstbehalt 8,5 % des PV-Einkommens (Nettoeinkünfte + 15 % des steuerbaren Vermögens); bis PV-Einkommen 90'000 Kinder mind. 80 % und junge Erwachsene in Ausbildung mind. 50 % verbilligt
+**Zuständig / Weg:** Sozialversicherungsstelle Uri (SVS Uri), Altdorf; automatisch von Amtes wegen für ordentlich Besteuerte mit Wohnsitz Uri am 1. Januar (Basis: Steuerveranlagung 2024); Antrag nötig für Quellenbesteuerte (bis 30. April des Anspruchsjahrs) und Zuzüger aus dem Ausland (bis 30. Juni); Auszahlung an die Krankenkasse
+**Gültigkeit:** 2026 definitiv (Steuerungsgrössen in der Medienmitteilung vom 18.12.2025, bestätigt durch das amtliche Berechnungsformular 2026)
+
+### Rechenmodell
+> «Ein Anspruch auf Prämienverbilligung besteht, soweit die anrechenbaren Prämien einen vom Regierungsrat festzulegenden Prozentsatz des PV-Einkommens übersteigen.» — Art. 4 Abs. 2 Prämienverbilligungsreglement, Quelle [1]
+
+> «Bis zur Obergrenze des mittleren PV-Einkommens werden die Prämien von Kindern um mindestens 80 Prozent und die Prämien von jungen Erwachsenen in Ausbildung um mindestens 50 Prozent verbilligt.» — Art. 4 Abs. 3, Quelle [1]
+
+> «Bis zur Obergrenze des mittleren PV-Einkommens sind für Kinder höchstens 20 Prozent der Richtprämie und für junge Erwachsene in Ausbildung höchstens 50 Prozent der Richtprämie massgebend.» — Art. 6 Abs. 3, Quelle [1]
+
+> «Selbstbehalt des PV-Einkommens 8,5 Prozent» — Quelle [2]
+
+Formel (aus dem amtlichen Berechnungsformular [3]): Anspruch = max(0, Summe anrechenbare Prämien − 8,5 % × PV-Einkommen) + fixer Kinder-/Ausbildungsanteil (Kinder 80 %, junge Erw. in Ausbildung 50 % der Richtprämie, nur wenn PV-Einkommen ≤ 90'000; darüber zählen sie mit 100 % in die anrechenbaren Prämien und der fixe Anteil entfällt).
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Richtprämie Erwachsene (26 Jahre und älter) | Fr. 4'368 pro Jahr (2025: 4'164) | [2], [3] |
+| Richtprämie junge Erwachsene (19–25 Jahre) | Fr. 2'844 pro Jahr (2025: 2'724) | [2], [3] |
+| Richtprämie Kinder/Jugendliche (bis 18 Jahre) | Fr. 1'104 pro Jahr (2025: 1'068) | [2], [3] |
+| Selbstbehalt | 8,5 % des PV-Einkommens | [2], [3] |
+| Anrechnung steuerbares Vermögen | 15 % («unverändert») | [2], [3] |
+| Obergrenze des mittleren PV-Einkommens (Kinder 80 % / junge Erw. in Ausbildung 50 %) | Fr. 90'000 | [2], [3] |
+| Quellensteuer: PV-Einkommen | 75 % des der Quellensteuer zugrunde liegenden Einkommens | [1] Art. 7 Abs. 4 |
+| EL-Beziehende | volle kantonale Durchschnittsprämie (höchstens tatsächliche Prämie) | [1] Art. 4 Abs. 4 |
+| Sozialhilfe-Beziehende | volle Richtprämie | [1] Art. 4 Abs. 5 |
+| Vermögensgrenze (fester Ausschluss) | keine gefunden — Vermögen wirkt nur über die 15 %-Anrechnung | [1], [3] |
+
+Eigene Rechnung (kein Zitat): Einzelperson Erwachsene ohne Vermögen — Anspruch bei PV-Einkommen 0 = 4'368; Anspruch endet bei 4'368 / 0,085 ≈ 51'388. Ehepaar ohne Kinder: 8'736 / 0,085 ≈ 102'776. Abbau linear (8,5 Rappen je Franken).
+
+⚠️ **Widerspruch zwischen zwei amtlichen Mitteilungen zum Vorjahreswert:** Die Medienmitteilung vom 18.12.2025 [2] nennt den Selbstbehalt 2025 in Klammern mit «9,75 %», jene vom 02.07.2026 [4] spricht von «9,25 Prozent im Vorjahr». Der Wert 2026 (8,5 %) ist in beiden gleich — für die App unerheblich, aber nicht als Vorjahreswert zitieren.
+
+### Massgebendes Einkommen
+> «Bei ordentlich besteuerten Personen bestimmt sich das PV-Einkommen aufgrund der massgebenden Nettoeinkünfte zuzüglich eines vom Regierungsrat festzulegenden Anteils des steuerbaren Vermögens.» — Art. 7 Abs. 1, Quelle [1]
+
+> Massgebende Nettoeinkünfte: «den Einkünften (ohne Einkünfte aus Liegenschaften), wobei die Renteneinkommen aus beruflicher Vorsorge oder privater Versicherung zu 100 Prozent angerechnet werden», zuzüglich Mietwert, Miet-/Pachtzinse, Wohnrecht/Nutzniessung, «abzüglich: Liegenschaftsunterhalt und Schuldzinsen bis maximal zur Höhe des Liegenschaftsertrags, Berufskosten, berufsorientierte Aus- und Weiterbildungskosten, Unterhaltsbeiträge und Rentenleistungen, Krankheits- und Unfallkosten, behinderungsbedingte Kosten» — Art. 7 Abs. 2, Quelle [1]
+
+> «Grundlage für die Berechnung bildet die rechtskräftige Steuerveranlagung des Steuerjahrs, das dem Anspruchsjahr zwei Jahre vorausgeht.» — Art. 7 Abs. 3, Quelle [1]
+
+Hinweis: Uri zieht **keine** Sozialabzüge und keine BVG-/3a-Abzüge ab (Einkünfte minus nur die genannten Positionen) — das PV-Einkommen liegt damit nahe am Bruttoeinkommen minus Berufskosten.
+
+### Abweichung zur App
+Der heutige App-Wert (maxIncome/subsidySingle UR) lag dem Unteragenten nicht vor. Belegte Vergleichsgrössen: Einzelperson — voller Betrag 4'368 CHF/Jahr, Nullpunkt rechnerisch ≈ 51'388 PV-Einkommen; Uri rechnet tatsächlich linear, das App-Modell passt strukturell, wenn maxIncome = Richtprämie / 0,085 gesetzt wird.
+
+### Offen / nicht gefunden
+- Der Regierungsratsbeschluss selbst (Festlegung der Steuerungsgrössen 2026) nicht gefunden; Zahlen aus der Medienmitteilung der Direktion und dem amtlichen Berechnungsformular der SVS Uri.
+- Rundungsregeln und Mindestauszahlungsbetrag nicht geprüft (Rest des Reglements ab Art. 12 nicht ausgewertet).
+
+### Quellen
+1. Reglement über die Prämienverbilligung für die Krankenpflege-Grundversicherung (Prämienverbilligungsreglement), RB 20.2213, Kanton Uri, Version in Kraft seit 01.11.2024 (Beschlussdatum 24.09.2024). https://rechtsbuch.ur.ch/app/de/texts_of_law/20.2213 (Daten über https://rechtsbuch.ur.ch/api/de/texts_of_law/20.2213/show_as_json) — abgerufen 16.09.2026
+2. Medienmitteilung «22,4 Millionen Franken für die Verbilligung der Krankenkassenprämien 2026», Kanton Uri, Gesundheits-, Sozial- und Umweltdirektion, 18.12.2025 (Abschnitt «Urner Steuerungsgrössen für die Prämienverbilligung 2026»). https://www.ur.ch/mmdirektionen/131963 — abgerufen 16.09.2026
+3. Berechnung Prämienverbilligung 2026 (Excel-Berechnungsformular), Sozialversicherungsstelle Uri. https://www.svsuri.ch/uploads/PDF-sonstige/SVS.Uri.IPV.Berechnungsformular_2026.xlsx — abgerufen 16.09.2026 (verlinkt auf https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv)
+4. Medienmitteilung «Deutlich mehr Urner Haushalte erhalten Prämienverbilligungen», Kanton Uri, 02.07.2026. https://www.ur.ch/mmdirektionen/136717 — abgerufen 16.09.2026
+5. Prämienverbilligung (IPV) — Anmeldung und Fristen, Sozialversicherungsstelle Uri, Stand ohne Datum. https://www.svsuri.ch/dienstleistungen/pr%C3%A4mienverbilligung-ipv — abgerufen 16.09.2026
 
 ---
 
@@ -506,6 +650,68 @@ Die App führt `maxIncome` 54'000 und `subsidySingle` 3'000/Jahr mit linearem Ab
 6. Verordnung über die Harmonisierung und Koordination von bedarfsabhängigen Sozialleistungen (SoHaV), SG 890.710, §§ 11, 28, 29, in Kraft seit 01.07.2021. https://www.gesetzessammlung.bs.ch/api/de/versions/5476/pdf_file — abgerufen 16.09.2026
 7. Gesetz über die Harmonisierung und Koordination von bedarfsabhängigen Sozialleistungen (SoHaG), SG 890.700, §§ 6–7, in Kraft seit 01.07.2025. https://www.gesetzessammlung.bs.ch/api/de/versions/6622/pdf_file — abgerufen 16.09.2026
 8. Merkblatt Prämienverbilligung (Ausgabe 01.2026), Amt für Sozialbeiträge. https://media.bs.ch/original_file/5fe6904e84baed32e2ffd98bb846fa9144cd536a/pv-merkblatt-2026.pdf — abgerufen 16.09.2026
+
+---
+
+## BL — Basel-Landschaft
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie
+**Zuständig / Weg:** Ausgleichskasse Basel-Landschaft (SVA BL); Antragsformular wird «in der Regel von Amtes wegen» zugestellt (Basis: definitive Steuerveranlagung des Vor-Vorjahres), Rücksendung innert 1 Jahr seit Zustellung; sonst schriftliches Gesuch bis Ende des Anspruchsjahres
+**Gültigkeit:** 2026 definitiv (PVV Stand 01.01.2026, Richtprämien geändert per RRB 18.11.2025; Dekret Stand 01.01.2014 weiterhin in Kraft)
+
+### Rechenmodell
+> «Die Höhe der Prämienverbilligung entspricht der Differenz zwischen der Jahresrichtprämie und einem Prozentanteil am massgebenden Jahreseinkommen.» — § 8 Abs. 2 EG KVG, Quelle [1]
+
+> «Der ausbezahlte Betrag darf die tatsächlich bezahlte Prämie nicht übersteigen.» — § 8 Abs. 2bis EG KVG, Quelle [1]
+
+> «Für anspruchsberechtigte Kinder werden mindestens 80 % und für anspruchsberechtigte junge Erwachsene bis 25 Jahre mindestens 50 % der entsprechenden kantonalen Jahresrichtprämie ausgerichtet.» — § 8 Abs. 3 EG KVG, Quelle [1]
+
+> «Die anspruchsabschliessende Obergrenze des massgebenden Jahreseinkommens für die Prämienverbilligung beträgt für Berechnungseinheiten gemäss § 9 Absatz 4 EG KVG mit: […]» — § 1 Abs. 1 Dekret, Quelle [2]
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Prozentanteil am massgebenden Jahreseinkommen | «7,75%» | [2] § 2 |
+| Richtprämie Erwachsene | «CHF 383.– im Monat» | [3] § 5 |
+| Richtprämie junge Erwachsene | «CHF 318.– im Monat» | [3] § 5 |
+| Richtprämie Kinder | «CHF 164.– im Monat» | [3] § 5 |
+| Obergrenze 1 Erwachsene/r ohne Kinder | «CHF 31'000» | [2] |
+| 1 Erwachsene/r mit 1 Kind | «CHF 52'000» | [2] |
+| 1 Erwachsene/r mit 2 Kindern | «CHF 68'000» | [2] |
+| 1 Erwachsene/r, pro weiteres Kind | «je CHF 11'000» | [2] |
+| 2 Erwachsene ohne Kinder | «CHF 51'000» | [2] |
+| 2 Erwachsene mit 1 Kind | «CHF 72'000» | [2] |
+| 2 Erwachsene mit 2 Kindern | «CHF 88'000» | [2] |
+| 2 Erwachsene, pro weiteres Kind | «je CHF 11'000» | [2] |
+| «Erwachsene Person» im Sinne der Obergrenzen | «umfasst auch junge Erwachsene bis 25 Jahre» | [2] § 1 Abs. 2 |
+| Mindestbetrag Auszahlung | «besteht kein Mindestbetrag» | [3] § 6 Abs. 2 |
+| Junge Erwachsene mit Ausbildungszulage | kein Anspruch, wenn Eltern-MGE mehr als Faktor 2,75 × Obergrenze (plus Unterhaltszuschlag, z. B. «CHF 21‘000.–» für eine junge erwachsene Person) | [1] § 8 Abs. 1bis, [3] § 14c |
+| Richtprämie Erwachsene rechtlich | «mindestens 20 % unter dem kantonalen Prämiendurchschnitt» | [1] § 8a Abs. 2 |
+
+Eigene Nachrechnung (kein Beleg, nur zur Plausibilität): Einzelperson 383 × 12 = 4'596 Fr.; bei MGE 31'000 wären 7,75 % = 2'402.50 Fr. → 2'193.50 Fr. IPV; oberhalb 31'000 fällt der Anspruch ganz weg (Schwelleneffekt, keine lineare Auslaufzone).
+
+### Massgebendes Einkommen
+> «Das massgebende Jahreseinkommen entspricht dem Zwischentotal der steuerbaren Einkünfte (ohne Einkünfte aus Liegenschaften) vermehrt um: a. das Nettoeinkommen aus nicht selbst bewohnten Liegenschaften; b. 20 % des steuerbaren Vermögens, sowie vermindert um c. geleistete Unterhaltsbeiträge, für die bei der Staatsteuer ein Abzug gewährt wird; d. CHF 5'000 für jedes Kind, für welches bei der Staatssteuer ein Kinderabzug gewährt wird.» — § 9 Abs. 1 EG KVG, Quelle [1]
+
+> «Massgebend ist die rechtskräftige Steuerveranlagung für das Vor-Vorjahr.» — § 9 Abs. 3 EG KVG, Quelle [1] (PVV § 3a: «definitiven Steuerveranlagung», Quelle [3])
+
+Quellenbesteuerte: laut SVA «70 % vom Bruttoeinkommen des Vor-Vorjahres» (Quelle [5]). Anpassung bei Einkommensänderung über 20 % nur auf Gesuch (§ 9a EG KVG).
+
+### Abweichung zur App
+Die App führt `maxIncome` 51'000 und `subsidySingle` 2'700 mit linearem Abbau; belegt ist für eine Einzelperson eine Obergrenze von 31'000 (51'000 gilt für zwei Erwachsene ohne Kinder) und ein Betrag von 4'596 Fr. minus 7,75 % des massgebenden Einkommens.
+
+### Offen / nicht gefunden
+- Ordentlicher Anspruch laut SVA-Seite nur für Personen, die «seit mindestens zwei Jahren im Kanton Basel-Landschaft steuerpflichtig sind»; Zuziehende über separates Gesuch (Regeln §§ in PVV nicht vollständig ausgewertet).
+- Keine eigene Vermögensgrenze; Vermögen wirkt über 20 % des steuerbaren Vermögens im MGE.
+- Sonderregeln Sozialhilfe/EL/Quellensteuer nicht im Detail ausgewertet.
+
+### Quellen
+1. Einführungsgesetz zum Bundesgesetz über die Krankenversicherung (EG KVG), SGS 362, §§ 8–9c, Kanton Basel-Landschaft, Version in Kraft seit 01.04.2023. https://bl.clex.ch/api/de/versions/4310/pdf_file (Eintrag: https://bl.clex.ch/app/de/texts_of_law/362) — abgerufen 16.09.2026
+2. Dekret über die Einkommensobergrenzen und den Prozentanteil in der Prämienverbilligung, SGS 362.1, Stand 1. Januar 2014 (aktuelle Version). https://bl.clex.ch/api/de/versions/1922/pdf_file (Eintrag: https://bl.clex.ch/app/de/texts_of_law/362.1) — abgerufen 16.09.2026
+3. Verordnung über die Prämienverbilligung in der Krankenpflegeversicherung (PVV), SGS 362.12, Stand 1. Januar 2026 (§ 5 geändert 18.11.2025, GS 2025.058). https://bl.clex.ch/api/de/versions/4361/pdf_file (Eintrag: https://bl.clex.ch/app/de/texts_of_law/362.12) — abgerufen 16.09.2026
+4. Ordentlicher Anspruch IPV, SVA Basel-Landschaft. https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv/ordentlicher-anspruch — abgerufen 16.09.2026
+5. Häufige Fragen IPV, SVA Basel-Landschaft. https://www.sva-bl.ch/de/ausgleichskasse/individuelle-praemienverbilligung-ipv/haeufige-fragen-ipv — abgerufen 16.09.2026
 
 ---
 
@@ -924,3 +1130,106 @@ App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Beleg
 4. Loi sur le revenu déterminant unifié (LRDU), rsGE J 4 06, Dernières modifications au 1er janvier 2025. https://silgeneve.ch/legis/data/rsg_j4_06.htm — abgerufen 16.09.2026
 5. Demander un subside d'assurance-maladie 2026, ge.ch (SAM), Dernière mise à jour 9 juillet 2026. https://www.ge.ch/demander-subside-assurance-maladie-2026 — abgerufen 16.09.2026
 6. Informations générales sur le subside de l'assurance-maladie, ge.ch, Dernière mise à jour 28 mai 2026. https://www.ge.ch/informations-generales-subside-assurance-maladie — abgerufen 16.09.2026
+
+---
+
+## JU — Jura
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Stufentabelle in 1'000er-Schritten des revenu déterminant (korrigiertes steuerbares Einkommen 2024); Erwachsene 225 → 15 CHF/Monat bis RDU 26'999; Kinder 100 und junge Erw. in Ausbildung 196 CHF pauschal bis 52'999; Vermögensgrenze 150'000; Familienzuschlag bis RDU 17'999
+**Zuständig / Weg:** Caisse de compensation du canton du Jura (ECAS); von Amtes wegen nach definitiver Veranlagung 2024 (Entscheid oder Fragebogen); sonst Antrag bis 31.12.2026 (Eingang ECAS); Antrag nötig u. a. für Quellenbesteuerte, Konkubinatspaare mit gemeinsamem Kind, Personen < 25 in Ausbildung (über die Eltern); amtlich Veranlagte ausgeschlossen
+**Gültigkeit:** 2026 definitiv (Arrêté vom 28.10.2025, gültig 1.1.–31.12.2026)
+
+### Rechenmodell
+> «Le montant maximal du revenu déterminant donnant droit aux réductions de primes, ainsi que les réductions mensuelles et annuelles accordées en fonction des différents paliers du revenu déterminant, sont fixés dans le tableau joint en annexe au présent arrêté.» — Art. 3 Arrêté 832.115.1 [1]
+
+> «La réduction maximale s'élève mensuellement aux montants suivants : a) pour les adultes fr. 225.- b) pour les adultes de moins de 25 ans révolus fr. 160.- c) pour les adultes de moins de 25 ans révolus en formation fr. 196.- d) pour les enfants entre 16 et 18 ans révolus qui ne sont pas en formation fr. 45.- e) pour les enfants de moins de 18 ans révolus fr. 100.-» — Art. 2 al. 2 [1]
+
+> «Les assurés dont la fortune déterminante est supérieure à 150 000 francs n'ont pas droit à la réduction des primes» — Art. 7a al. 1 Ordonnance 832.115 [2]
+
+> «La réduction annuelle accordée à un assuré ne peut dépasser le montant de sa prime annuelle.» — Art. 20 [2]
+
+Referenz: Art. 2 al. 1 [1] bindet die Höchstreduktion an einen Prozentsatz (Erwachsene 39 %, < 25 J. 40 %, < 25 J. in Ausbildung 50 %, 16–18 nicht in Ausbildung 36 %, Kinder < 18 80 %) der günstigsten Hausarztmodell-Prämie mit Unfall im Kanton.
+
+### Zahlen 2026
+Annexe 1 [1], CHF pro Monat (Jahr = × 12, in der Tabelle ebenfalls ausgewiesen):
+
+| RDU (CHF) | Erwachsene | Erw. < 25 | Erw. < 25 in Ausbildung | 16–18 nicht in Ausbildung | Kinder < 18 | Quelle |
+|---|---|---|---|---|---|---|
+| unter 0 | 225 | 160 | 196 | 45 | 100 | [1] |
+| 0–999 | 225 | 160 | 196 | 45 | 100 | [1] |
+| 1'000–1'999 | 215 | 155 | 196 | 45 | 100 | [1] |
+| 2'000–2'999 | 205 | 150 | 196 | 45 | 100 | [1] |
+| 3'000–3'999 | 195 | 145 | 196 | 45 | 100 | [1] |
+| 4'000–4'999 | 185 | 140 | 196 | 40 | 100 | [1] |
+| 5'000–5'999 | 175 | 135 | 196 | 40 | 100 | [1] |
+| 6'000–6'999 | 165 | 130 | 196 | 40 | 100 | [1] |
+| 7'000–7'999 | 155 | 125 | 196 | 35 | 100 | [1] |
+| 8'000–8'999 | 145 | 120 | 196 | 35 | 100 | [1] |
+| 9'000–9'999 | 125 | 110 | 196 | 35 | 100 | [1] |
+| 10'000–10'999 | 110 | 100 | 196 | 30 | 100 | [1] |
+| 11'000–11'999 | 100 | 90 | 196 | 30 | 100 | [1] |
+| 12'000–12'999 | 95 | 85 | 196 | 30 | 100 | [1] |
+| 13'000–13'999 | 90 | 80 | 196 | 25 | 100 | [1] |
+| 14'000–14'999 | 85 | 75 | 196 | 25 | 100 | [1] |
+| 15'000–15'999 | 75 | 70 | 196 | 25 | 100 | [1] |
+| 16'000–16'999 | 70 | 65 | 196 | 20 | 100 | [1] |
+| 17'000–17'999 | 65 | 60 | 196 | 20 | 100 | [1] |
+| 18'000–18'999 | 60 | 55 | 196 | 20 | 100 | [1] |
+| 19'000–19'999 | 55 | 50 | 196 | 15 | 100 | [1] |
+| 20'000–20'999 | 45 | 45 | 196 | 15 | 100 | [1] |
+| 21'000–21'999 | 40 | 40 | 196 | 15 | 100 | [1] |
+| 22'000–22'999 | 35 | 35 | 196 | 10 | 100 | [1] |
+| 23'000–23'999 | 30 | 30 | 196 | 10 | 100 | [1] |
+| 24'000–24'999 | 25 | 25 | 196 | 10 | 100 | [1] |
+| 25'000–25'999 | 20 | 20 | 196 | 10 | 100 | [1] |
+| 26'000–26'999 | 15 | 15 | 196 | 10 | 100 | [1] |
+| 27'000–52'999 | 0 | 0 | 196 | 0 | 100 | [1] |
+
+Annexe 2 — Familienzuschlag (je Erwachsene/r, Eltern mit Kind und Haupterwerb, RDU < 18'000) [1]:
+
+| RDU | CHF/Monat |
+|---|---|
+| unter 0 bis 3'999 | 300 |
+| 4'000–4'999 | 285 |
+| 5'000–5'999 | 265 |
+| 6'000–6'999 | 235 |
+| 7'000–7'999 | 205 |
+| 8'000–8'999 | 175 |
+| 9'000–9'999 | 145 |
+| 10'000–10'999 | 115 |
+| 11'000–11'999 | 105 |
+| 12'000–12'999 | 95 |
+| 13'000–13'999 | 85 |
+| 14'000–14'999 | 70 |
+| 15'000–15'999 | 55 |
+| 16'000–16'999 | 25 |
+| 17'000–17'999 | 15 |
+| über 17'999 | 0 |
+
+| Weitere Grösse | Wert | Quelle |
+|---|---|---|
+| Einkommensgrenze Erwachsene | RDU 26'999 | [1] Annexe; [3] |
+| Einkommensgrenze Kinder / junge Erw. in Ausbildung | RDU 52'999 | [1] Annexe; [3] |
+| Vermögensgrenze | fortune déterminante > 150'000 → kein Anspruch; massgebend = «titres et autres placements de capitaux selon avis de taxation (chiffre 740)» | [2] Art. 7a; [1] Art. 1 al. 2 |
+| Referenzprämie PC/Sozialhilfe (Erwachsene) | 568.30 CHF/Monat (günstigste Hausarztprämie, Franchise 300, mit Unfall) | [3]; [5] |
+
+### Massgebendes Einkommen
+> «le revenu imposable taxé définitivement pour l'année fiscale 2024 sert de base de calcul.» / «Par revenu imposable au sens du présent article, on entend le revenu déterminant pour le taux, soit le revenu suisse et étranger (revenu mondial).» — Art. 1 al. 1 und 3 [1]
+
+> Korrekturen (Art. 1 al. 4 [1]): Liegenschaftsertrag minus, Liegenschafts-Aufwandüberschuss / Schuldzinsen / Geschäftsverluste / Verlustvorträge / Liquidationsverluste / 2.-Säule-Einkäufe / Säule-3a-Beiträge werden wieder aufgerechnet; zusätzliche Abzüge (al. 5): «par contribuable marié, veuf, divorcé ou séparé, sans enfant à charge fr. 5 000.-», «par couple marié, personne veuve, divorcée, séparée ou célibataire, au bénéfice d'une déduction fiscale pour "enfants à charge" (chiffre 620) fr. 10 000.-», je Kind «pour les deux premiers enfants fr. 4 000.-», «à partir du troisième enfant fr. 6 000.-»; zudem «Le revenu imposable est majoré de 5 % de la fortune imposable (chiffre 890)» (al. 6) — [1]
+
+### Abweichung zur App
+App-Wert (maxIncome/subsidySingle) wurde mit dem Auftrag nicht mitgegeben. Belegte Vergleichswerte: Erwachsene max. RDU 26'999, Höchstbetrag 225 CHF/Monat (= 2'700 CHF/Jahr); Abbau in 1'000er-Stufen annähernd, aber nicht exakt linear (z. B. Sprung 145 → 125 bei 9'000). Kinderbetrag 100 CHF/Monat ist einkommensunabhängig bis 52'999.
+
+### Offen / nicht gefunden
+- Das Arrêté-PDF enthält im Textlayer auf der Tabellenseite zusätzlich eine verdeckte Überschrift «pour l'année 2025»; die sichtbare Seite (gerendert und geprüft) lautet «pour l'année 2026». Werte deshalb am Seitenbild kontrolliert.
+- Ob das Arrêté in der RSJU-Online-Sammlung (832.115.1) bereits in dieser Fassung publiziert ist, nicht separat geprüft; Quelle ist das von der ECAS verlinkte unterzeichnete PDF.
+- Genaue Regel für Konkubinatspaare und Quellenbesteuerte (Unterseiten ECAS) nicht einzeln geöffnet.
+
+### Quellen
+1. Arrêté concernant la réduction des primes dans l'assurance-maladie pour l'année 2026 (RSJU 832.115.1) avec les 2 tableaux annexés, Gouvernement de la République et Canton du Jura, vom 28.10.2025, in Kraft 1.1.2026 bis 31.12.2026. https://www.ecasjura.ch/Htdocs/Files/v/5f96a91e0eb5f044bed32b1e94ba290c44619d65fb5d3f26f4180819cda93fe4.pdf/Arrete-2026-avec-annexes.pdf?download=1 — abgerufen 16.09.2026
+2. Ordonnance concernant la réduction des primes dans l'assurance-maladie (RSJU 832.115), vom 25.10.2011, Fassung «valable dès 01.01.2026». https://www.ecasjura.ch/Htdocs/Files/v/bee518871de457c7d9af3cdfad0dfa39037365333dfc328573cdf2e7eb86da34.pdf/ORPAMal-valable-des-01.01.2026.pdf?download=1 — abgerufen 16.09.2026
+3. Communiqué «Subsides des primes de l'assurance-maladie dans le canton du Jura pour 2026», République et Canton du Jura, 30.10.2025. https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Subsides-des-primes-de-l-assurance-maladie-dans-le-canton-du-Jura-pour-2026.html — abgerufen 16.09.2026
+4. Réduction des primes d'assurance-maladie (RPI) - Informations générales 2026, ECAS Jura. https://www.ecasjura.ch/fr/Assurances/Assurance-maladie/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026/Reduction-des-primes-d-assurance-maladie-RPI-Informations-generales-2026.html — abgerufen 16.09.2026
+5. Modèle médecin de famille, maladie et accident, pour les adultes (Primes 2026), ECAS Jura. https://www.ecasjura.ch/Htdocs/Files/v/6ea884aaab5803991c5901a89b1e2072c8caa7d882fb86c9ceb069f7a68a898d.pdf/MED-adultes-avec-risque-accidents.pdf?download=1 — abgerufen 16.09.2026
