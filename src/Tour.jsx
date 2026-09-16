@@ -12,16 +12,10 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 // Menü wieder aufrufbar. Local-first, kein Tracking. Calm-Tech: ruhig,
 // nicht aufdringlich, jederzeit wegklickbar.
 
-const TOUR_KEY = 'or5_tour_done';
-
-export const isTourDone = () => {
-  try { return localStorage.getItem(TOUR_KEY) === 'true'; }
-  catch { return false; }
-};
-
-export const markTourDone = () => {
-  try { localStorage.setItem(TOUR_KEY, 'true'); } catch { /* localStorage n/a */ }
-};
+// Status-Funktionen liegen in utils/einfuehrungStatus.js (E36: hält die Tour aus
+// dem Hauptbundle); hier weiter exportiert, damit bestehende Importe gültig bleiben.
+import { markTourDone } from './utils/einfuehrungStatus.js';
+export { isTourDone, markTourDone } from './utils/einfuehrungStatus.js';
 
 // steps: [{ key, target? }]. Sichtbare Texte in i18n unter tour.<key>.title/text.
 export const Tour = ({ palette, t, steps, onFinish, onLater }) => {

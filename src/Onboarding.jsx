@@ -16,10 +16,9 @@ const SITUATIONS_KEY = 'or5_lebenszustaende';
 
 const STORAGE_KEY = 'or5_onboarding_done';
 
-export const isOnboardingDone = () => {
-  try { return localStorage.getItem(STORAGE_KEY) === 'true'; }
-  catch { return false; }
-};
+// Prüf-Funktion liegt in utils/einfuehrungStatus.js (E36: hält Onboarding aus dem
+// Hauptbundle); hier weiter exportiert, damit bestehende Importe gültig bleiben.
+export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
 
