@@ -1,7 +1,13 @@
 // Kantonale Steuer-Orientierung
 // Approximative Multiplikatoren: (Kantons- + Gemeindesteuer) / Bundessteuer
-// Basis: ESTV Steuerbelastung 2024, Hauptort, alleinstehend, ~CHF 80'000
+// Basis laut ursprünglichem Eintrag: ESTV Steuerbelastung 2024, Hauptort, alleinstehend, ~CHF 80'000
 // Nur für Orientierung — keine verbindliche Berechnung.
+//
+// E37 (16.09.2026): Gegen den ESTV-Steuerrechner 2026 gemessen (docs/sources/steuerfaktor-band-2026.md).
+// Der Eichpunkt «~80'000» lässt sich dort NICHT bestätigen: bei Brutto 80'000 (ledig) liegt das Modell in
+// allen 26 Kantonen 44–70 % unter der ESTV-Kantons- und Gemeindesteuer. Innerhalb ±15 % liegt es je
+// Kanton nur in einem Band höherer Einkommen — src/data/steuerfaktorBand.js. Der TaxCalculator zeigt
+// die Zahl nur dort. Die Faktoren selbst sind unverändert (neu eichen = eigener Entscheid).
 
 const KANTONALE_DATEN = {
   AG: { hauptort: 'Aarau',         faktor: 3.3 },
