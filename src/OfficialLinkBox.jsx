@@ -2,6 +2,7 @@ import React from 'react';
 import { getLinkById, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius } from './config/tokens.js';
+import { steuerkantonVorbelegung } from './TaxCalculator.jsx';
 
 // Reusable "mirror" of an official DirektLinks entry, shown in context next to a
 // calculator or section (e.g. the Sozialhilfe link beside the Sozialhilfe view).
@@ -11,7 +12,14 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
   const links = (Array.isArray(ids) ? ids : [ids]).map(getLinkById).filter(Boolean);
   if (!links.length) return null;
 
-  const canton = data && data.basis && data.basis.canton;
+  // K33/E23: Nur der Steuererklärungs-Link (TaxCalculator.jsx nutzt
+  // cantonalKey:'steuererklaerung') zeigt auf den Steuerkanton — kann vom
+  // Wohnkanton abweichen. Jeder andere Aufruf (Sozialhilfe, IPV, AHV, ALV …)
+  // bleibt beim Wohnkanton. Dasselbe Vorbelegungsmuster wie im Steuerrechner
+  // (PR #165), hier ohne Änderung an der Aufrufstelle in TaxCalculator.jsx.
+  const canton = cantonalKey === 'steuererklaerung'
+    ? steuerkantonVorbelegung(data)
+    : (data && data.basis && data.basis.canton);
   const cantonalLinks = canton ? getCantonalLinks(canton) : null;
   const cantonalUrl = cantonalLinks && cantonalKey ? cantonalLinks[cantonalKey] : null;
 
