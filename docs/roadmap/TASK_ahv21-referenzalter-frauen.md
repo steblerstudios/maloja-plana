@@ -4,7 +4,7 @@
 > in `main`, per reproduce-first 2026-07-18 bestätigt: `referenzalterMonate` + `geschlecht`-Input
 > im Code, Tests grün). Referenzalter-Staffel an der amtlichen Quelle belegt (BSV FAQ).
 >
-> **Phase B (Ausgleichsmassnahmen) — BEWUSST GEPARKT (Sophie/Stebler Studios, 2026-07-18).**
+> **Phase B (Ausgleichsmassnahmen) — BEWUSST GEPARKT (Stebler Studios, 2026-07-18).**
 > Entscheid: Der Rentenzuschlag ist im Kreisschreiben nach Einkommen × Beitragsdauer × Jahrgang
 > fein gestaffelt und **rechtsverbindlich**. Eine falsche Zuschlags-Zahl bei einer Frau kurz vor
 > der Pensionierung ist genau die Art Fehler, die Haftung auslöst — und widerspräche „Orientierung,

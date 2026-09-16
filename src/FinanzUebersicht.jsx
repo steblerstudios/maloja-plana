@@ -69,7 +69,7 @@ export const druckAbschnitte = (t, w) => {
   const zeilen = [];
 
   zeilen.push({ label: t('finanzUebersicht.monthlyIncome'), html: '<tr><td>' + t('finanzUebersicht.monthlyIncome') + '</td><td class="r">' + fmt(w.income) + ' ' + t('common.perMonth') + '</td></tr>' });
-  if (w.canton) zeilen.push({ label: t('finanzUebersicht.canton'), html: '<tr><td>' + t('finanzUebersicht.canton') + '</td><td class="r">' + getCantonName(w.canton, t) + '</td></tr>' });
+  if (w.canton) zeilen.push({ label: t('finanzUebersicht.canton'), html: '<tr><td>' + t('finanzUebersicht.canton') + '</td><td class="r">' + escapeHtml(getCantonName(w.canton, t)) + '</td></tr>' });
 
   if (w.kantonal) {
     zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.roughEstimateBadge') + ')</td><td class="r">~ ' + fmt(w.kantonal.total) + ' ' + t('common.perYear') + '</td></tr>'

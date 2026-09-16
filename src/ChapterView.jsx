@@ -480,7 +480,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
       type: 'button', onClick: umschalten, 'data-na': na ? '1' : '0',
       'aria-label': field.label + ': ' + tr(na ? 'naZustand.zuruecknehmen' : 'naZustand.markieren'),
       style: {
-        background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer', fontFamily: 'inherit',
+        // Tippfläche mind. 44 px hoch (WCAG 2.5.5, Predeploy 16.09.), optisch weiter ein leiser Textlink.
+        background: 'none', border: 'none', padding: '10px 0', minHeight: '44px', cursor: 'pointer', fontFamily: 'inherit',
         fontSize: text.xs, color: palette.mid, textDecoration: 'underline', textUnderlineOffset: '3px',
         textDecorationColor: palette.border,
       },
