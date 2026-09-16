@@ -1525,10 +1525,12 @@ export default {
       hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina web vegnan elavuradas automaticamain datas tecnicas (adressa IP, tip da navigatur) en server logs e stizzadas suenter il termin da conservaziun dal purschider.",
       hosting2: "I na dat nagins cookies d'analisa, nagin tracking, nagins Social-Media-Plugins e nagina reclama.",
       backupTitle: 'Segirezzas',
-      backup1: { sie: "Las segirezzas vegnan memorisadas localmain en il navigatur. Vus pudais exportar Vossas datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). Questa datoteca banduna Voss apparat mo sche Vus la dastgais vinavant activamain.", du: "Las segirezzas vegnan memorisadas localmain en il navigatur. Ti pos exportar Tes datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). Questa datoteca banduna Tes apparat mo sch'Ti la dastgas vinavant activamain." },
+      // K39: backup1/rights2/faq a1/a5/a7 adattads ad E10 ed E18.
+      // TODO(rm): provisoric — laschar controllar d'ina persuna da lingua materna.
+      backup1: { sie: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Vossas indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca faschais Vus sut Utensils → Export: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pudais Vus la tscherner conscientamain. Ultra da quai pudais Vus exportar Vossas indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Voss apparat mo sche Vus las dastgais vinavant activamain.", du: "Cun aviar l'app fa Maloja automaticamain maletgs instantans da Tias indicaziuns e documents en il navigatur (IndexedDB, maximalmain in mintga 12 uras, ils ultims 5 restan). Quests maletgs instantans n'èn betg criptads. Ina segirezza sco datoteca fas Ti sut Utensils → Export: sco predefiniziun è ella criptada cun in pled-clav d'almain 12 caracters; senza criptaziun pos Ti la tscherner conscientamain. Ultra da quai pos Ti exportar Tias indicaziuns senza criptaziun sco JSON u CSV. Questas datotecas bandunan Tes apparat mo sch'Ti las dastgas vinavant activamain." },
       rightsTitle: { sie: 'Voss dretgs (nLPD)', du: 'Tes dretgs (nLPD)' },
       rights1: { sie: "Cunquai che tut las datas èn memorisadas localmain, avais Vus da tut temp access direct a tut Vossas datas — senza dumonda d'infurmaziun.", du: "Cunquai che tut las datas èn memorisadas localmain, has Ti da tut temp access direct a tut Tes datas — senza dumonda d'infurmaziun." },
-      rights2: { sie: "Vus pudais stizzar Vossas datas da tut temp (en l'app u via las datas dal navigatur). I na dat naginas copias sin servers.", du: "Ti pos stizzar Tes datas da tut temp (en l'app u via las datas dal navigatur). I na dat naginas copias sin servers." },
+      rights2: { sie: "Vus pudais stizzar Vossas datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzais Vus sez. I na dat naginas copias sin servers.", du: "Ti pos stizzar Tes datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzas Ti sez. I na dat naginas copias sin servers." },
       rights3: { sie: 'Vus pudais exportar Vossas datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).', du: 'Ti pos exportar Tes datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).' },
       securityTitle: 'Segirezza da datas',
       security1: { sie: "Las datas d'utilisader na bandunan betg Voss apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain.", du: "Las datas d'utilisader na bandunan betg Tes apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain." },
@@ -1560,11 +1562,11 @@ export default {
       availability1: "Maloja Plana è in'applicaziun offline. Ella funcziuna senza connexiun d'internet uschè prest ch'ella è chargiada. I na dat nagina dependenza da server e nagin SLA.",
       availability2: "Nus ans stentan da mantegnair l'applicaziun stabila e actuala, ma na pudain betg garantir ina disponibladad nuninterrutta.",
       dataLossTitle: 'Memorisaziun & perdita da datas',
-      dataLoss1: { sie: 'Tut Vossas datas vegnan memorisadas exclusivamain en la memoria locala da Voss navigatur. Maloja Plana na ha nagin access a Vossas datas.', du: 'Tut Tias datas vegnan memorisadas exclusivamain en la memoria locala da Tes navigatur. Maloja Plana na ha nagin access a Tias datas.' },
+      dataLoss1: { sie: 'Tut Vossas datas vegnan memorisadas exclusivamain en Voss navigatur (localStorage ed IndexedDB). Maloja Plana na ha nagin access a Vossas datas.', du: 'Tut Tias datas vegnan memorisadas exclusivamain en Tes navigatur (localStorage ed IndexedDB). Maloja Plana na ha nagin access a Tias datas.' },
       dataLoss2: { sie: "Stizzar las datas dal navigatur, midar il navigatur u reinizialisar l'apparat po manar a la perdita da Vossas datas. Dovrai regularmain la funcziun d'export per crear backups.", du: "Stizzar las datas dal navigatur, midar il navigatur u reinizialisar l'apparat po manar a la perdita da Tias datas. Dovra regularmain la funcziun d'export per crear backups." },
       changesTitle: 'Midadas',
       changes1: "Questas cundiziuns d'utilisaziun pon vegnir adattadas da tut temp. Midadas entran en vigur cun la proxima utilisaziun da l'applicaziun.",
-      changes2: 'Stadi: zercladur 2026',
+      changes2: 'Stadi: settember 2026',
     },
     imprint: {
       operatorTitle: 'Exploratrice',
@@ -1681,7 +1683,7 @@ export default {
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
-      a1: { sie: 'Tut las datas restan sin Voss apparat en la memoria dal navigatur (localStorage). Nagut vegn tramess ad in server. Sche Vus stizzais la memoria dal navigatur, èn las datas idas — segirai perquai regularmain Vossas datas sco datoteca (Utensils → Export).', du: 'Tut las datas restan sin tes apparat en la memoria dal navigatur (localStorage). Nagut vegn tramess ad in server. Sche ti stizzas la memoria dal navigatur, èn las datas idas — segirescha perquai regularmain tias datas sco datoteca (Utensils → Export).' },
+      a1: { sie: 'Tut las datas restan sin Voss apparat en la memoria dal navigatur (localStorage ed IndexedDB). Nagut vegn tramess ad in server. Sche Vus stizzais la memoria dal navigatur, èn las datas idas — segirai perquai regularmain Vossas datas sco datoteca (Utensils → Export).', du: 'Tut las datas restan sin tes apparat en la memoria dal navigatur (localStorage ed IndexedDB). Nagut vegn tramess ad in server. Sche ti stizzas la memoria dal navigatur, èn las datas idas — segirescha perquai regularmain tias datas sco datoteca (Utensils → Export).' },
       q2: 'È Maloja Plana gratuita?',
       a2: 'Gea, cumplettamain e permanentamain. Nagin abunament, nagins custs zuppads, nagina reclama. Il code font è open source (AGPL-3.0).',
       q3: 'Funcziuna l\'app senza internet?',
@@ -1691,11 +1693,11 @@ export default {
       q5: 'Poss jau exportar mias datas?',
       // K17: l'export scriva datotecas singulas (JSON, CSV, .maloja criptà), nagin ZIP.
       // TODO(rm): a1/a5/a7 laschar controllar d'ina persuna da lingua materna.
-      a5: { sie: 'Gea. Sut Utensils → Export pudais Vus telechargiar Vossas datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). La segirezza cuntegna tuts chapitels, documents ed opziuns.', du: 'Gea. Sut Utensils → Export pos ti telechargiar tias datas da tut temp sco datoteca (JSON u CSV, sin giavisch criptada). La segirezza cuntegna tuts chapitels, documents ed opziuns.' },
+      a5: { sie: 'Gea. Sut Utensils → Export pudais Vus telechargiar Vossas datas da tut temp sco datoteca: sco segirezza, sco predefiniziun criptada cun pled-clav (senza criptaziun sche Vus tschernis quai), u senza criptaziun sco JSON u CSV. La segirezza cuntegna tuts chapitels, documents ed opziuns.', du: 'Gea. Sut Utensils → Export pos ti telechargiar tias datas da tut temp sco datoteca: sco segirezza, sco predefiniziun criptada cun pled-clav (senza criptaziun sche ti tschernas quai), u senza criptaziun sco JSON u CSV. La segirezza cuntegna tuts chapitels, documents ed opziuns.' },
       q6: 'Tge navigaturs vegnan sustegnids?',
       a6: 'Tuts navigaturs moderns: Chrome, Firefox, Safari, Edge. L\'app funcziuna il meglier sin il smartphone sco PWA (agiuntar a la pagina principala).',
       q7: 'Tge capita sch\'jau midel l\'apparat?',
-      a7: { sie: 'Creai sut Utensils → Export ina segirezza (JSON u criptada) e importai ella sin il nov apparat. I na dat nagina sincronisaziun automatica — quai dovress in server.', du: 'Creescha sut Utensils → Export ina segirezza (JSON u criptada) e importescha ella sin il nov apparat. I na dat nagina sincronisaziun automatica — quai dovress in server.' },
+      a7: { sie: 'Creai sut Utensils → Export ina segirezza (sco predefiniziun criptada, senza criptaziun sche Vus tschernis quai) e importai ella sin il nov apparat. Sin il vegl apparat pudais Vus lura stizzar tut sut Configuraziuns → «Datas sin quest apparat». I na dat nagina sincronisaziun automatica — quai dovress in server.', du: 'Creescha sut Utensils → Export ina segirezza (sco predefiniziun criptada, senza criptaziun sche ti tschernas quai) e importescha ella sin il nov apparat. Sin il vegl apparat pos ti lura stizzar tut sut Configuraziuns → «Datas sin quest apparat». I na dat nagina sincronisaziun automatica — quai dovress in server.' },
       q8: 'Quant actuals èn las datas (taglia, assicuranza da malsogna, AVS)?',
       a8: 'Las datas sa basan sin las valurs uffizialas 2026. Midadas da taglia, premias d\'assicuranza e parameters AVS vegnan actualisads cun ils updates da l\'app.',
     },
