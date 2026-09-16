@@ -50,13 +50,42 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             https://www.gsi.be.ch/content/dam/gsi/dokumente-bilder/de/themen/gesundheit/gesundheitsversorger/verfuegung-prov-tpw-tardoc-2026-de.pdf
 //   BS 0.91 — Regierungsrat BS, Bulletin 10.02.2026: bisheriger TARMED-TPW 0.91 als provisorischer Tarif
 //             https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2
-// Alle übrigen Kantone: Stand 2025 (TARMED), NICHT gegen eine amtliche Quelle 2026 geprüft.
+//
+// K22, abgerufen 16.09.2026 — behördliche Quelle (Festsetzung oder amtliche Publikation):
+//   SG 0.86 — Kanton St. Gallen, Gesundheitsdepartement, «OKP-Tarife Ambulant ärztliche
+//             Leistungen 2019-2028», Stand 1.9.2026, Zeile «Freipraktizierende Ärztinnen und
+//             Ärzte», Spalte 2026: CSS 0.86 · HSK 0.86 · santéservices 0.86 (vormals tarifsuisse)
+//             https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf
+//   UR 0.88 — Kanton Uri, Medienmitteilung des Regierungsrats vom 23.12.2025 «Kanton Uri setzt
+//             neuen Arbeitstarif für ambulante ärztliche Leistungen fest»: «Ab dem 1. Januar
+//             gilt im Kanton Uri für ambulante ärztliche Leistungen ein neuer Arbeitstarif von
+//             0.88 Franken pro Taxpunkt» — provisorisch bis zum definitiven Tarif
+//             https://www.ur.ch/mmregierungsrat/132029
+//   ZG 0.82 — Gesundheitsdirektion Kanton Zug, «Ambulante Tarife 2026 Kanton Zug», Stand
+//             13.1.2026, Ziff. 2 «Freie Praxis», Ärzte-Gesellschaft des Kantons Zug (AGZG):
+//             prov. 0.82 für tarifsuisse ag, HSK AG und CSS AG. Die Übersicht nennt sich selbst
+//             nicht rechtsverbindlich; massgebend bleiben Verträge und Beschlüsse
+//             https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf
+//
+// K22, abgerufen 16.09.2026 — Quelle: Tarifpartner, keine behördliche Festsetzung.
+// Vereinigung Zentralschweizer Ärztegesellschaften (VZAG) / Ärztegesellschaft des Kantons
+// Luzern, «Update Taxpunktwert Kanton Luzern», Abschnitt «Zur Übersicht die aktuellen
+// Taxpunktwerte ab 1. Januar … in der Region Zentralschweiz»; jeweils «provisorischer
+// Arbeitstarif festgelegt durch» die jeweilige Kantonsregierung:
+//   LU 0.85 · OW 0.86 · NW 0.88
+//   SZ 0.85 — für tarifsuisse (heute santéservices). Für CSS und HSK gilt in SZ 0.86; die App
+//             führt wie bei ZH/BE den Wert der grössten Einkaufsgemeinschaft
+//   (UR wird dort ebenfalls mit 0.88 genannt, deckungsgleich mit der Urner Medienmitteilung)
+//   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
+//
+// Alle übrigen Kantone (AG, AI, AR, BL, FR, GE, GL, GR, JU, NE, SH, SO, TG, TI, VD, VS):
+// Stand 2025 (TARMED), NICHT gegen eine Quelle 2026 geprüft — ungeprüft.
 export const TAXPUNKTWERT = {
   AG: 0.89, AI: 0.89, AR: 0.89, BE: 0.86, BL: 0.89, BS: 0.91,
-  FR: 0.88, GE: 0.96, GL: 0.87, GR: 0.89, JU: 0.88, LU: 0.87,
-  NE: 0.92, NW: 0.87, OW: 0.87, SG: 0.87, SH: 0.87, SO: 0.89,
-  SZ: 0.87, TG: 0.86, TI: 0.90, UR: 0.87, VD: 0.93, VS: 0.86,
-  ZG: 0.89, ZH: 0.91,
+  FR: 0.88, GE: 0.96, GL: 0.87, GR: 0.89, JU: 0.88, LU: 0.85,
+  NE: 0.92, NW: 0.88, OW: 0.86, SG: 0.86, SH: 0.87, SO: 0.89,
+  SZ: 0.85, TG: 0.86, TI: 0.90, UR: 0.88, VD: 0.93, VS: 0.86,
+  ZG: 0.82, ZH: 0.91,
 };
 
 export function berechneArztrechnung(taxpunkte, canton) {
