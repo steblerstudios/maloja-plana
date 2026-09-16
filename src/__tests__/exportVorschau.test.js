@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { leiteKategorienAb, hatWert } from '../exportVorschau.js';
 import { generateBehoerdenJSON, getLebensMappePreview } from '../dossierGenerator.js';
+import { buildIpvDokument } from '../premiumCalc.js';
+import { createBudgetReport } from '../budgetSync.js';
+import { generateCVTemplate, generateJSONResume } from '../cvGenerator.js';
+import { buildICS } from '../utils/icsExport.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
 import en from '../i18n/en.js';
@@ -121,10 +125,132 @@ describe('Dossiers und Brief (Druck)', () => {
   });
 });
 
+// ─── K20: die übrigen Stellen, an denen Daten das Gerät als Datei oder Druck verlassen ───
+// Jede Ableitung wird gegen das Objekt bzw. den Text geprüft, den der echte Generator
+// schreibt — nicht gegen eine nachgebaute Annahme.
+
+describe('IPV-Antrag (JSON)', () => {
+  const t = createT({ de, en, fr, it: itTranslations, rm }, 'de');
+
+  it('nennt genau, was im IPV-Dokument steht', () => {
+    const data = { basis: { firstName: 'Anna', lastName: 'Muster', ahv: '756.0000.0000.00', canton: 'BS' } };
+    const dokument = buildIpvDokument(data, t, { eligible: true, amount: 120 });
+    const r = leiteKategorienAb('ipvJson', { dokument });
+    expect(r.form).toBe('datei');
+    expect(ids(r)).toEqual(['name', 'ahv', 'kanton', 'ipvErgebnis']);
+    expect(JSON.stringify(r)).not.toContain('756.0000');   // Feldnamen, keine Werte
+  });
+
+  it('ohne Name, AHV und Kanton bleibt nur das Ergebnis', () => {
+    const dokument = buildIpvDokument({ basis: {} }, t, { eligible: false, amount: 0 });
+    expect(ids(leiteKategorienAb('ipvJson', { dokument }))).toEqual(['ipvErgebnis']);
+  });
+});
+
+describe('Budget-Bericht (JSON)', () => {
+  const t = createT({ de, en, fr, it: itTranslations, rm }, 'de');
+  const data = {
+    basis: { firstName: 'Anna', lastName: 'Muster', canton: 'BS' },
+    wohnen: { rentAmount: 1400, utilities: 120 },
+    finanzen: { monthlyIncome: 5200, debtPayments: 250 },
+    versicherungen: { kkPremium: 380 },
+  };
+
+  it('nennt Einkommen, Ausgaben, Haushalt — Schulden eigens', () => {
+    const report = createBudgetReport(data, t);
+    const r = leiteKategorienAb('budgetJson', { report, data });
+    expect(r.form).toBe('datei');
+    expect(ids(r)).toContain('name');
+    expect(ids(r)).toContain('einkommen');
+    expect(ids(r)).toContain('ausgaben');
+    expect(ids(r)).toContain('schulden');
+    expect(ids(r)).toContain('haushalt');
+    expect(JSON.stringify(r)).not.toContain('5200');
+  });
+
+  it('ohne Schuldenabzahlungen fehlt die Kategorie', () => {
+    const ohne = { ...data, finanzen: { monthlyIncome: 5200 } };
+    expect(ids(leiteKategorienAb('budgetJson', { report: createBudgetReport(ohne, t), data: ohne }))).not.toContain('schulden');
+  });
+
+  it('der Platzhalter-Name aus dem Bericht zählt nicht als Angabe', () => {
+    const ohneName = { finanzen: { monthlyIncome: 5200 } };
+    const report = createBudgetReport(ohneName, t);
+    expect(report.person).toBeTruthy();                       // der Bericht trägt einen Platzhalter
+    expect(ids(leiteKategorienAb('budgetJson', { report, data: ohneName }))).not.toContain('name');
+  });
+});
+
+describe('Lebenslauf (HTML und JSON Resume)', () => {
+  const t = createT({ de, en, fr, it: itTranslations, rm }, 'de');
+  const data = {
+    basis: { firstName: 'Anna', lastName: 'Muster', phone: '061 000 00 00', dateOfBirth: '1990-04-01', canton: 'BS' },
+    wohnen: { address: 'Musterweg 1', postalCode: '4051', city: 'Basel' },
+    ausbildung: { jobTitle: 'Pflegefachfrau', employer: 'Spital X', educationLevel: 'HF', languages: 'Deutsch, Französisch' },
+  };
+
+  it('HTML: aus dem Objekt, das ausgeschrieben wird', () => {
+    const r = leiteKategorienAb('cvHtml', { cv: generateCVTemplate(data, t), data });
+    expect(r.form).toBe('datei');
+    expect(ids(r)).toEqual(['name', 'kontakt', 'adresse', 'persoenlich', 'beruf', 'ausbildung', 'sprachen']);
+    expect(JSON.stringify(r)).not.toContain('Musterweg');
+  });
+
+  it('JSON Resume: ohne Geburtsdatum und Zivilstand, darum ohne «persoenlich»', () => {
+    const r = leiteKategorienAb('cvJson', { resume: generateJSONResume(data, t) });
+    expect(ids(r)).toEqual(['name', 'kontakt', 'adresse', 'beruf', 'ausbildung', 'sprachen']);
+  });
+
+  it('JSON Resume: der feste Ländercode allein ist keine Adresse', () => {
+    const leer = generateJSONResume({ basis: {}, wohnen: {}, ausbildung: {} }, t);
+    expect(leer.basics.location.countryCode).toBe('CH');
+    expect(ids(leiteKategorienAb('cvJson', { resume: leer }))).toEqual([]);
+  });
+});
+
+describe('Kalender (.ics)', () => {
+  it('zählt die Termine, die wirklich in der Datei landen', () => {
+    const ics = buildICS([
+      { id: 'a', title: 'Steuererklärung', dueDate: '2026-03-31', category: 'steuern' },
+      { id: 'b', title: 'Zahnarzt', dueDate: '2026-04-02' },
+      { id: 'c', title: 'Ohne Datum', dueDate: '' },   // fällt aus der Datei — und aus der Vorschau
+    ]);
+    const r = leiteKategorienAb('kalender', { ics });
+    expect(r.form).toBe('datei');
+    expect(ids(r)).toEqual(['kalenderTermine']);
+    expect(r.kategorien[0].count).toBe(2);
+    expect(JSON.stringify(r)).not.toContain('Zahnarzt');
+  });
+
+  it('ohne Termine bleibt die Liste leer', () => {
+    expect(ids(leiteKategorienAb('kalender', { ics: buildICS([]) }))).toEqual([]);
+  });
+});
+
+describe('Druck mit Namen im Titel (Finanzübersicht)', () => {
+  it('nennt den Namen zuerst, dann die gedruckten Abschnitte', () => {
+    const r = leiteKategorienAb('dossier', {
+      name: true,
+      abschnitte: [{ titel: 'Finanzübersicht', felder: ['Monatslohn', 'Kanton'] }],
+    });
+    expect(r.form).toBe('druck');
+    expect(ids(r)).toEqual(['name', 'abschnitt']);
+    expect(r.kategorien[1].detail).toBe('Monatslohn, Kanton');
+  });
+
+  it('ohne Namen im Titel fehlt die Kategorie', () => {
+    const r = leiteKategorienAb('dossier', { name: false, abschnitte: [{ titel: 'Finanzübersicht', felder: [] }] });
+    expect(ids(r)).toEqual(['abschnitt']);
+  });
+});
+
 describe('i18n: jede Kategorie hat einen Text in allen 5 Sprachen', () => {
   const alle = ['weitere', 'ahv', 'gesundheit', 'dokumenteListe', 'dokumenteInhalt', 'termine', 'kontakte',
     'merkliste', 'einstellungen', 'person', 'adresse', 'berechnungen', 'name', 'kanton', 'versicherung',
-    'belege', 'arbeitgeber', 'lohn'];
+    'belege', 'arbeitgeber', 'lohn',
+    // K20
+    'ipvErgebnis', 'einkommen', 'ausgaben', 'schulden', 'haushalt', 'kontakt', 'persoenlich',
+    'beruf', 'ausbildung', 'sprachen', 'kalenderTermine'];
   const saetze = ['titelDatei', 'titelDruck', 'introDatei', 'introDruck', 'leer', 'verschluesselt', 'offen',
     'offenDruck', 'weiterDatei', 'weiterDruck', 'zurueck'];
   for (const [lang, tr] of Object.entries({ de, en, fr, it: itTranslations, rm })) {

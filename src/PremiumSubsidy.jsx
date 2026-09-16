@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
-import { getKVGApplicationLink } from './premiumCalc.js';
+import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -26,6 +27,8 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
     return s.betrag ? String(s.betrag) : '';
   });
   const [renewAdded, setRenewAdded] = useState(false);
+  // Export-Vorschau (K20): erst zeigen, was im IPV-Dokument steht, dann herunterladen.
+  const [ipvVorschau, setIpvVorschau] = useState(false);
   // Unterlagen für den IPV-Antrag als offenen Punkt in die Merkliste legen (Muster wie Umzug),
   // nimmt der „Welche Papiere brauche ich?"-Unsicherheit die Spitze. Idempotent, Link → Lebensordner.
   const [permitAdded, setPermitAdded] = useState(false);
@@ -54,15 +57,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
   };
 
   const handleDownloadDocument = () => {
-    const doc = {
-      title: 'KVG IPV — Kantonal',
-      date: new Date().toLocaleDateString(),
-      canton,
-      cantonName: getCantonName(canton, t),
-      applicant: getFullName(data.basis) || '',
-      ahv: data.basis?.ahv || '',
-      result: ipvResult
-    };
+    const doc = buildIpvDokument(data, t, ipvResult);
     const text = JSON.stringify(doc, null, 2);
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -320,7 +315,7 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
           style: { padding: '10px', background: ipvResult.eligible ? palette.sand : palette.mid, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '↗ ' + t('premium.applyOnline')),
         React.createElement('button', {
-          onClick: handleDownloadDocument,
+          onClick: () => setIpvVorschau(true),
           disabled: !ipvResult.eligible,
           style: { padding: '10px', background: ipvResult.eligible ? palette.skyDeep : palette.mid, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: ipvResult.eligible ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: ipvResult.eligible ? 1 : 0.6 }
         }, '□ ' + t('premium.document')),
@@ -328,7 +323,15 @@ export const PremiumSubsidy = ({ palette, t, data, onNavigate, onUpdateData }) =
           onClick: () => setShowCalculation(false),
           style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
         }, '✕ ' + t('common.close'))
-      )
+      ),
+
+      // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
+      ipvVorschau && React.createElement(ExportVorschau, {
+        palette, t, art: 'ipvJson',
+        quelle: { dokument: buildIpvDokument(data, t, ipvResult) },
+        onWeiter: () => { setIpvVorschau(false); handleDownloadDocument(); },
+        onZurueck: () => setIpvVorschau(false),
+      })
     ),
 
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv' }),

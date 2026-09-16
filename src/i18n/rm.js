@@ -3675,6 +3675,18 @@ export default {
         belege: 'Quittanzas tschernidas ({count})',
         arbeitgeber: 'Patrun ed adressa',
         lohn: 'Datas da salari',
+        // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+        ipvErgebnis: 'Reducziun da premias stimada (RIP)',
+        einkommen: 'Entrada (salari, supplements per famiglias, alimentaziuns)',
+        ausgaben: 'Expensas mensilas tenor sectur',
+        schulden: 'Pajaments da debits',
+        haushalt: 'Grondezza da la chasada (creschids, uffants)',
+        kontakt: 'Telefon ed e-mail',
+        persoenlich: 'Data da naschientscha, naziunalitad, stadi civil',
+        beruf: 'Experientscha professiunala',
+        ausbildung: 'Furmaziun e diploms',
+        sprachen: 'Linguas',
+        kalenderTermine: 'Termins averts ({count}): titel, data, categoria, repetiziun',
       },
     },
     manifest: {

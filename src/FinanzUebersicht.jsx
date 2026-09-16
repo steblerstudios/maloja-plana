@@ -8,6 +8,7 @@ import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
 import { berechneArmutsgrenze } from './data/sozialhilfeRechner.js';
 import { nettoZuBruttoRichtwert } from './data/ahvRechner.js';
@@ -58,39 +59,56 @@ const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick
     }, detail)
   );
 
-const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten) => {
+// Die gedruckte Übersicht als Abschnitte: je Zeile der Feldname UND das Druck-HTML.
+// Eine Quelle für den Druck und die Export-Vorschau (K20) — die Vorschau nennt genau
+// diese Feldnamen, nie die Beträge. Wird eine Zeile nicht gedruckt, fehlt sie auch dort.
+export const druckAbschnitte = (t, w) => {
+  const fmt = (v) => formatCHF(v);
+  const abschnitte = [];
+  const zeilen = [];
+
+  zeilen.push({ label: t('finanzUebersicht.monthlyIncome'), html: '<tr><td>' + t('finanzUebersicht.monthlyIncome') + '</td><td class="r">' + fmt(w.income) + ' ' + t('common.perMonth') + '</td></tr>' });
+  if (w.canton) zeilen.push({ label: t('finanzUebersicht.canton'), html: '<tr><td>' + t('finanzUebersicht.canton') + '</td><td class="r">' + getCantonName(w.canton, t) + '</td></tr>' });
+
+  if (w.kantonal) {
+    zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + '</td><td class="r">~ ' + fmt(w.kantonal.total) + ' ' + t('common.perYear') + '</td></tr>' });
+  } else if (w.taxResult) {
+    zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(w.taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>' });
+  }
+
+  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
+
+  if (w.hasAssets) {
+    zeilen.push({ label: t('finanzUebersicht.assets'), html: '<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(w.totalAssets) + '</td></tr>' });
+  }
+
+  if (w.gesundheitskosten > 0) {
+    zeilen.push({ label: t('finanzUebersicht.healthCosts'), html: '<tr><td>' + t('finanzUebersicht.healthCosts') + '</td><td class="r">' + fmt(w.gesundheitskosten) + ' ' + t('common.perYear') + '</td></tr>' });
+  }
+
+  abschnitte.push({ titel: t('finanzUebersicht.title'), zeilen });
+
+  if (w.hasExpenses) {
+    abschnitte.push({
+      titel: t('finanzUebersicht.budgetBalance'),
+      kopfHtml: '<tr class="sep"><td colspan="2" style="font-weight:600;padding-top:12px">' + t('finanzUebersicht.budgetBalance') + '</td></tr>',
+      zeilen: [
+        { label: t('finanzUebersicht.totalIncome'), html: '<tr><td>' + t('finanzUebersicht.totalIncome') + '</td><td class="r">' + fmt(w.totalIncome) + '</td></tr>' },
+        { label: t('finanzUebersicht.totalExpenses'), html: '<tr><td>' + t('finanzUebersicht.totalExpenses') + '</td><td class="r">− ' + fmt(w.totalExpenses) + '</td></tr>' },
+        { label: t('finanzUebersicht.freeAmount'), html: '<tr class="total"><td>' + t('finanzUebersicht.freeAmount') + '</td><td class="r ' + (w.freeAmount >= 0 ? 'pos' : 'neg') + '">' + fmt(w.freeAmount) + '</td></tr>' },
+      ],
+    });
+  }
+
+  return abschnitte;
+};
+
+const generatePrintHTML = (t, data, w) => {
   const name = [data.basis?.firstName, data.basis?.lastName].filter(Boolean).join(' ') || '';
   const date = new Date().toLocaleDateString('de-CH');
-  const fmt = (v) => formatCHF(v);
-  const rows = [];
-
-  rows.push('<tr><td>' + t('finanzUebersicht.monthlyIncome') + '</td><td class="r">' + fmt(income) + ' ' + t('common.perMonth') + '</td></tr>');
-  if (canton) rows.push('<tr><td>' + t('finanzUebersicht.canton') + '</td><td class="r">' + getCantonName(canton, t) + '</td></tr>');
-
-  if (kantonal) {
-    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.taxes') + '</td><td class="r">~ ' + fmt(kantonal.total) + ' ' + t('common.perYear') + '</td></tr>');
-  } else if (taxResult) {
-    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>');
-  }
-
-  rows.push('<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (ipv.eligible ? '✓ ' + fmt(ipv.amount) + ' ' + t('common.perMonth') : t('finanzUebersicht.notEligible')) + '</td></tr>');
-  rows.push('<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (sozialhilfe.eligible ? fmt(sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>');
-  rows.push('<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (el.eligible ? fmt(el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>');
-
-  if (hasAssets) {
-    rows.push('<tr class="sep"><td>' + t('finanzUebersicht.assets') + '</td><td class="r">' + fmt(totalAssets) + '</td></tr>');
-  }
-
-  if (gesundheitskosten > 0) {
-    rows.push('<tr><td>' + t('finanzUebersicht.healthCosts') + '</td><td class="r">' + fmt(gesundheitskosten) + ' ' + t('common.perYear') + '</td></tr>');
-  }
-
-  if (hasExpenses) {
-    rows.push('<tr class="sep"><td colspan="2" style="font-weight:600;padding-top:12px">' + t('finanzUebersicht.budgetBalance') + '</td></tr>');
-    rows.push('<tr><td>' + t('finanzUebersicht.totalIncome') + '</td><td class="r">' + fmt(totalIncome) + '</td></tr>');
-    rows.push('<tr><td>' + t('finanzUebersicht.totalExpenses') + '</td><td class="r">− ' + fmt(totalExpenses) + '</td></tr>');
-    rows.push('<tr class="total"><td>' + t('finanzUebersicht.freeAmount') + '</td><td class="r ' + (freeAmount >= 0 ? 'pos' : 'neg') + '">' + fmt(freeAmount) + '</td></tr>');
-  }
+  const rows = druckAbschnitte(t, w).flatMap(a => [...(a.kopfHtml ? [a.kopfHtml] : []), ...a.zeilen.map(z => z.html)]);
 
   return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + t('finanzUebersicht.title') + '</title><style>'
     + 'body{font-family:system-ui,sans-serif;max-width:600px;margin:40px auto;color:#333;padding:0 20px}'
@@ -115,6 +133,8 @@ const generatePrintHTML = (t, data, income, canton, taxResult, kantonal, ipv, so
 export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
+  // Export-Vorschau (K20): erst zeigen, was auf dem Ausdruck steht, dann drucken.
+  const [druckVorschau, setDruckVorschau] = React.useState(false);
   const vorlesen = useVorlesenContext();
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
@@ -156,9 +176,14 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const freeAmount = totalIncome - totalExpenses;
   const hasExpenses = totalExpenses > 0;
 
+  // Die Werte, die gedruckt werden — auch die Quelle der Export-Vorschau (K20).
+  const druckWerte = {
+    income, canton, taxResult, kantonal, ipv, sozialhilfe, el,
+    totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten,
+  };
+
   const handlePrint = () => {
-    const html = generatePrintHTML(t, data, income, canton, taxResult, kantonal, ipv, sozialhilfe, el, totalIncome, totalExpenses, freeAmount, hasExpenses, totalAssets, hasAssets, gesundheitskosten);
-    openPrintWindow(html);
+    openPrintWindow(generatePrintHTML(t, data, druckWerte));
   };
 
   return React.createElement('div', { style: { maxWidth: '520px' } },
@@ -467,7 +492,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
         }
       }, React.createElement(Icon, { name: 'mappe', size: 16 }), t('finanzUebersicht.toDossier')),
       React.createElement('button', {
-        onClick: handlePrint,
+        onClick: () => setDruckVorschau(true),
         style: {
           display: 'flex', alignItems: 'center', gap: '8px',
           padding: '12px', background: palette.up, border: '1px solid ' + palette.border,
@@ -476,6 +501,18 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
         }
       }, React.createElement(Icon, { name: 'drucker', size: 16 }), t('finanzUebersicht.printAction'))
     ),
+
+    // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
+    druckVorschau && React.createElement(ExportVorschau, {
+      palette, t, art: 'dossier',
+      quelle: {
+        // Der Ausdruck trägt den Namen im Titel — darum eigens genannt.
+        name: !!(data.basis?.firstName || data.basis?.lastName),
+        abschnitte: druckAbschnitte(t, druckWerte).map(a => ({ titel: a.titel, felder: a.zeilen.map(z => z.label) })),
+      },
+      onWeiter: () => { setDruckVorschau(false); handlePrint(); },
+      onZurueck: () => setDruckVorschau(false),
+    }),
 
     React.createElement('div', {
       style: { marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4' }

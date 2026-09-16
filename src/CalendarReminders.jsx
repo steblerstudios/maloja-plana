@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Eyebrow, PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
-import { downloadICS } from './utils/icsExport.js';
+import { buildICS, downloadICS } from './utils/icsExport.js';
+import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -66,6 +67,8 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
   const [calYear, setCalYear] = useState(now.getFullYear());
   const [calMonth, setCalMonth] = useState(now.getMonth());
   const [selDate, setSelDate] = useState(null); // ISO des angetippten Tages
+  // Export-Vorschau (K20): erst zeigen, was in der .ics-Datei steht, dann herunterladen.
+  const [icsVorschau, setIcsVorschau] = useState(false);
 
   // New reminder form
   const [newTitle, setNewTitle] = useState('');
@@ -354,14 +357,22 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
     upcoming.length > 0 && React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement('button', {
         type: 'button',
-        onClick: () => downloadICS(upcoming, t),
+        onClick: () => setIcsVorschau(true),
         style: {
           background: 'none', border: '1px solid ' + palette.border, borderRadius: radius.sm,
           padding: space.xs + 'px ' + space.md + 'px', fontSize: text.xs, color: palette.mid,
           cursor: 'pointer', fontFamily: 'inherit',
         }
       }, '↧ ' + t('calendar.exportIcs')),
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('calendar.exportIcsHint'))
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('calendar.exportIcsHint')),
+
+      // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
+      icsVorschau && React.createElement(ExportVorschau, {
+        palette, t, art: 'kalender',
+        quelle: { ics: buildICS(upcoming, t) },
+        onWeiter: () => { setIcsVorschau(false); downloadICS(upcoming, t); },
+        onZurueck: () => setIcsVorschau(false),
+      })
     ),
 
     // Stats
