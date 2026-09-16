@@ -211,7 +211,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       },
         t('sh.vermoegenHinweis') + ' (CHF ' + fmt(result.vermoegensfreibetrag) + ' ' + t('sh.freibetrag') + ', '
           + (kanton ? t('sozialhilfe.assetLimitBasisCanton', { name: t('cantons.' + kanton) }) : t('sozialhilfe.assetLimitBasisSkos')) + ')',
-        vermoegensfreibetragUnbestaetigt(kanton) && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))
+        vermoegensfreibetragUnbestaetigt(kanton, kinderCount) && React.createElement('div', { style: { marginTop: space.xs + 'px', color: palette.mid } }, t('sozialhilfe.assetLimitUnconfirmed'))
       )
     ),
 

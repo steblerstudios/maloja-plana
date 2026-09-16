@@ -66,6 +66,17 @@ describe('calculateSozialhilfe — Vermögensfreibetrag je Kanton', () => {
     expect(vermoegensfreibetragUnbestaetigt(r.canton)).toBe(false);
   });
 
+  it('SH mit Kind (Zuschlag nicht geregelt): 4000, gekennzeichnet nur mit Kindern', () => {
+    const r = calculateSozialhilfe({
+      basis: { canton: 'SH', household: { adults: 2, children: [{ age: 7 }, { age: 19 }] } },
+      finanzen: {}, wohnen: {}, versicherungen: {},
+    });
+    expect(r.vermoegensfreibetrag).toBe(4000);
+    const minor = r.children.filter(c => c.age < 18).length;
+    expect(vermoegensfreibetragUnbestaetigt(r.canton, minor)).toBe(true);
+    expect(vermoegensfreibetragUnbestaetigt(r.canton, 0)).toBe(false);
+  });
+
   it('BL (nur SKOS-Karte, 2200): gekennzeichnet', () => {
     const r = calculateSozialhilfe({ basis: { canton: 'BL' }, finanzen: { savingsAccount: 3000 }, wohnen: {}, versicherungen: {} });
     expect(r.vermoegensfreibetrag).toBe(2200);
