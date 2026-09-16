@@ -13,4 +13,11 @@
 // Sozialdienst der Gemeinde prüfen».
 export const VFB_UNBESTAETIGT = ['SG', 'FR', 'VD', 'AI', 'OW', 'BL', 'TI'];
 
-export const vermoegensfreibetragUnbestaetigt = (kanton) => VFB_UNBESTAETIGT.includes(kanton);
+// Nur für Haushalte MIT minderjährigen Kindern nicht bestätigt (Einzel/Paar dort belegt,
+// die Kinder-Regel ist von uns gedeutet — Entscheid 16.09.2026):
+//   SH  Kinderzuschlag und Höchstbetrag in Ziff. D.6.1 nicht geregelt → App rechnet ohne Zuschlag
+//   AG  «Freibeträge pro Person» → App liest: Kinder zählen als Person (+1'500, max. 4'500)
+export const VFB_UNBESTAETIGT_MIT_KINDERN = ['SH', 'AG'];
+
+export const vermoegensfreibetragUnbestaetigt = (kanton, minorChildren = 0) =>
+  VFB_UNBESTAETIGT.includes(kanton) || (minorChildren > 0 && VFB_UNBESTAETIGT_MIT_KINDERN.includes(kanton));

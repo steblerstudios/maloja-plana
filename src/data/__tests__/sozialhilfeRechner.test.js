@@ -13,7 +13,7 @@ import {
   berechneArmutsgrenze,
   ARMUTSGRENZE_PAUSCHALE_AB16,
 } from '../sozialhilfeRechner.js';
-import { vermoegensfreibetragUnbestaetigt, VFB_UNBESTAETIGT } from '../vermoegensfreibetragUnbestaetigt.js';
+import { vermoegensfreibetragUnbestaetigt, VFB_UNBESTAETIGT, VFB_UNBESTAETIGT_MIT_KINDERN } from '../vermoegensfreibetragUnbestaetigt.js';
 
 describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne Deckel', () => {
   it('Einzelperson 30k, Paar 50k, + 15k pro minderjährigem Kind', () => {
@@ -46,14 +46,30 @@ describe('vermoegensfreibetragKanton — je Kanton, gekennzeichnet', () => {
     BS: [8000, 16000, 20000, 20000],  // 8'000/16'000/+4'000/max. 20'000 (WSU-Richtlinien Ziff. 14)
   };
   for (const [kt, [einzel, paar, paarKind, max]] of Object.entries(eigeneZahl)) {
-    it(`${kt}: eigene kantonale Zahl, nicht gekennzeichnet`, () => {
+    it(`${kt}: eigene kantonale Zahl, ohne Kinder nicht gekennzeichnet`, () => {
       expect(vermoegensfreibetragKanton(kt, 1, 0)).toBe(einzel);
       expect(vermoegensfreibetragKanton(kt, 2, 0)).toBe(paar);
       expect(vermoegensfreibetragKanton(kt, 2, 1)).toBe(paarKind);
       expect(vermoegensfreibetragKanton(kt, 2, 6)).toBe(max);
       expect(vermoegensfreibetragUnbestaetigt(kt)).toBe(false);
+      expect(vermoegensfreibetragUnbestaetigt(kt, 2)).toBe(VFB_UNBESTAETIGT_MIT_KINDERN.includes(kt));
     });
   }
+
+  it('SH und AG: Kennzeichnung nur für Haushalte mit minderjährigen Kindern (Kinder-Regel gedeutet)', () => {
+    for (const kt of VFB_UNBESTAETIGT_MIT_KINDERN) {
+      expect(vermoegensfreibetragUnbestaetigt(kt), kt).toBe(false);
+      expect(vermoegensfreibetragUnbestaetigt(kt, 0), kt).toBe(false);
+      expect(vermoegensfreibetragUnbestaetigt(kt, 1), kt).toBe(true);
+      expect(vermoegensfreibetragUnbestaetigt(kt, 3), kt).toBe(true);
+    }
+    expect([...VFB_UNBESTAETIGT_MIT_KINDERN].sort()).toEqual(['AG', 'SH']);
+    // Rechnung unverändert: SH ohne Kinderzuschlag, AG +1'500 je Kind bis 4'500
+    expect(vermoegensfreibetragKanton('SH', 1, 2)).toBe(2000);
+    expect(vermoegensfreibetragKanton('AG', 1, 1)).toBe(3000);
+    // Andere Kantone mit eigener Zahl bleiben auch mit Kindern ungekennzeichnet
+    expect(vermoegensfreibetragUnbestaetigt('BE', 2)).toBe(false);
+  });
 
   it('SO: Einzelperson mit Kindern staffelt bis zum Höchstbetrag', () => {
     expect(vermoegensfreibetragKanton('SO', 1, 2)).toBe(4000);  // 2'000 + 2×1'000
@@ -83,6 +99,7 @@ describe('vermoegensfreibetragKanton — je Kanton, gekennzeichnet', () => {
     const karte = { BL: 2200, SG: 2500, FR: 4000, VD: 4000, AI: 6000, OW: 6000, TI: 10000 };
     for (const [kt, einzel] of Object.entries(karte)) {
       expect(vermoegensfreibetragUnbestaetigt(kt)).toBe(true);
+      expect(vermoegensfreibetragUnbestaetigt(kt, 2)).toBe(true);
       expect(vermoegensfreibetragKanton(kt, 1, 0)).toBe(einzel);
     }
     expect([...VFB_UNBESTAETIGT].sort()).toEqual(Object.keys(karte).sort());
