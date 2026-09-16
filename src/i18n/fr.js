@@ -2187,7 +2187,7 @@ export default {
     eligible: 'Éligible',
     disclaimer: 'À titre indicatif. Le droit effectif est vérifié par l\'autorité compétente.',
     notEligible: 'Non éligible',
-    schnellcheckGerechnet: 'Calculé avec les chiffres du check rapide',
+    schnellcheckGerechnet: 'Calculé avec les chiffres de la vérification rapide',
     schnellcheckProfilBleibt: { sie: 'Votre profil reste inchangé tant que vous n’y reprenez pas les chiffres.', du: 'Ton profil reste inchangé tant que tu n’y reprends pas les chiffres.' },
     schnellcheckUebernehmen: 'Reprendre dans le profil',
     schnellcheckUebernommen: 'Repris dans le profil',

@@ -2188,7 +2188,7 @@ export default {
     eligible: 'Avente diritto',
     disclaimer: 'Orientamento. Il diritto effettivo viene verificato dall\'ufficio competente.',
     notEligible: 'Non avente diritto',
-    schnellcheckGerechnet: 'Calcolato con le cifre del controllo rapido',
+    schnellcheckGerechnet: 'Calcolato con le cifre della verifica rapida',
     schnellcheckProfilBleibt: { sie: 'Il Suo profilo resta invariato finché non vi riprende le cifre.', du: 'Il tuo profilo resta invariato finché non vi riprendi le cifre.' },
     schnellcheckUebernehmen: 'Riprendere nel profilo',
     schnellcheckUebernommen: 'Ripreso nel profilo',
