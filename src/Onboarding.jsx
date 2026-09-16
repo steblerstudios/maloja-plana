@@ -51,7 +51,9 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
     return next;
   });
 
-  const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano', rm: 'Rumantsch' };
+  // O14: Rumantsch ist provisorisch (rm.js Z. 2) — die Sprachwahl sagt das, statt es
+  // als fertige Sprache anzubieten (Bauliste §10, E30).
+  const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano', rm: 'Rumantsch (provisoric)' };
 
 
   const finish = () => {
