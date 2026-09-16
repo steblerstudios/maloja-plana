@@ -35,7 +35,7 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   let body;
   if (orientierung) {
     // E9: Kanton nicht amtlich belegt — keine Zahl, nur die ruhige Orientierung.
-    body = h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t(state.noteKey || 'ipv.orientierungWahrscheinlich'));
+    body = h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t(state.noteKey || 'ipv.orientierungOffen'));
   } else if (over) {
     body = h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('beleg.keineVerbilligung'));
   } else {

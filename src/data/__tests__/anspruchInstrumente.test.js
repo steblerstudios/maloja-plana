@@ -62,11 +62,15 @@ describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
     const state = praemienBelegState(base);
     expect(state.mode).toBe('orientierung');
     expect(state.verbilligung).toBe(0);
-    expect(state.noteKey).toBe('ipv.orientierungWahrscheinlich');
+    expect(state.noteKey).toBe('ipv.orientierungOffen');
   });
 
-  it('sagt bei hohem Einkommen weder «keine Verbilligung» noch etwas anderes (leer)', () => {
-    expect(praemienBelegState({ ...base, finanzen: { monthlyIncome: 6000 } }).mode).toBe('empty');
+  it('hohes Einkommen: dieselbe Orientierung wie tiefes (kein Grenzvergleich, kein «keine Verbilligung»)', () => {
+    expect(praemienBelegState({ ...base, finanzen: { monthlyIncome: 60000 } })).toEqual(praemienBelegState(base));
+  });
+
+  it('ohne erfasste Prämie kein Beleg', () => {
+    expect(praemienBelegState({ ...base, versicherungen: {} }).mode).toBe('empty');
   });
 });
 

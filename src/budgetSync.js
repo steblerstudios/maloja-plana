@@ -99,7 +99,7 @@ const syncBudgetFromChapters = (data) => {
   // E9: nur ein amtlich belegter Kanton liefert einen Betrag fürs Budget. Unbelegt
   // fliesst nichts ins Budget; es bleibt beim Hinweis ohne Betrag (ipvOrientierung).
   const ipvRelief = ipv.eligible && ipv.belegt ? (Number(ipv.amount) || 0) : 0;
-  const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich;
+  const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich; // prüfenswert, ohne Grenzvergleich
 
   const budget = {
     income: totalIncome,
@@ -227,7 +227,7 @@ const getBudgetRecommendations = (budget, t) => {
     recommendations.push({
       level: 'info',
       icon: '○',
-      text: t ? t('budget.ipvHintOhneBetrag') : 'You are probably entitled to a premium reduction (IPV). The canton sets the amount.'
+      text: t ? t('budget.ipvHintOhneBetrag') : 'Check the premium reduction (IPV): the canton decides on entitlement and amount.'
     });
   }
 

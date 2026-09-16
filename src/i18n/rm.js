@@ -1924,9 +1924,7 @@ export default {
     incomeAboveLimit: 'Entrada sur la limita (CHF {value})',
     eligible: 'Dretg a la reducziun da premias: CHF {value}/mais',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (E9, 16.09.2026).
-    orientierungWahrscheinlich: { sie: 'Tenor Vossas indicaziuns avais Vus probablamain dretg ad ina reducziun. L’import fixescha il chantun — per plaschair examinar là.', du: 'Tenor tias indicaziuns has ti probablamain dretg ad ina reducziun. L’import fixescha il chantun — per plaschair examinar là.' },
-    orientierungOffen: 'Sch’ina reducziun da premias è pussaivla ed en tge autezza, decida il chantun — per plaschair examinar là.',
-    statusWahrscheinlich: 'Probablamain dretg · l’import fixescha il chantun',
+    orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
     statusOffen: 'Examinar tar il chantun',
     zurStelle: 'Al post chantunal per la reducziun da premias',
   },
@@ -2348,7 +2346,7 @@ export default {
     deficitInfo: { sie: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Voss chantun chattais Vus agid.", du: "Las expensas èn actualmain pli autas che las entradas. Quai po esser temporar — tar la cussegliaziun da debits da Tes chantun chattas Ti agid." },
     budgetCalm: { sie: 'Vus avais ina survista da Vossas finanzas. Mintga sectur registrà gida.', du: 'Ti has ina survista da Tias finanzas. Mintga sectur registrà gida.' },
     ipvHint: { sie: "Vus avais eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Vossa vischnanca u cassa da cumpensaziun chantunala.", du: "Ti has eventualmain dretg a la reducziun da premias (IPV) — ca. CHF {amount}/mais. L'IPV po vegnir dumandada tar Tia vischnanca u cassa da cumpensaziun chantunalas." },
-    ipvHintOhneBetrag: { sie: 'Tenor Vossas indicaziuns avais Vus probablamain dretg a la reducziun da premias (IPV). L’import fixescha il chantun — per plaschair examinar là.', du: 'Tenor tias indicaziuns has ti probablamain dretg a la reducziun da premias (IPV). L’import fixescha il chantun — per plaschair examinar là.' }, // TODO(rm): provisorisch
+    ipvHintOhneBetrag: 'Reducziun da premias (IPV): dretg ed import decida il chantun. Cunzunt cun in budget stretg vala la paina dad examinar.', // TODO(rm): provisorisch
     sozialhilfeHint: { sie: "Vossa entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita.", du: "Tia entrada è sut il basegn da basa COSAS. L'agid social po esser ina pussaivladad — la cussegliaziun è confidenziala e gratuita." },
     elHint: { sie: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Vossa filiala AVS As cussegliescha gratuitamain.", du: "Tar ina entrada modesta en pensiun pon prestaziuns cumplementaras (PC) vegnir en dumonda. Tia filiala AVS Ta cussegliescha gratuitamain." },
   },
@@ -4094,7 +4092,7 @@ export default {
     ipvEnthalten: 'includida en l’agid social',
     ipv: 'Reducziun da premias',
     ipvNote: 'Reducziun chantunala da tia premia da la cassa da malsauns.',
-    ipvOhneBetragNote: 'Probablamain in dretg — l’import fixescha il chantun.', // TODO(rm): provisorisch
+    ipvOhneBetragNote: 'Vala la paina dad examinar — dretg ed import decida il chantun.', // TODO(rm): provisorisch
     sozNote: 'Cuvra la largia fin al minimum existenzial (COSAS).',
     el: 'Prestaziuns cumplementaras (PC)',
     elNote: 'Cun ina renta AVS u AI che na basta betg per viver.',

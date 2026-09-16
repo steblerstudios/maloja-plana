@@ -98,7 +98,13 @@ describe('calculateIPV — E9: heute ist kein Kanton amtlich belegt', () => {
     for (const [, v] of zeilen) expect(v).toHaveProperty('beleg', null);
   });
 
-  it.each(Object.keys(CANTONAL_IPV))('%s: kein Betrag, kein «berechtigt», keine Grenze — nur Orientierung', (canton) => {
+  it.each(Object.keys(CANTONAL_IPV))('%s: kein Betrag, kein «berechtigt», keine Grenze — tief und hoch dieselbe Ausgabe', (canton) => {
+    const ausgabe = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } });
+    for (const kkPremium of [0, 400]) {
+      const tief = ausgabe(500, kkPremium);
+      for (const monthlyIncome of [0, 1500, 3000, 6000, 20000, 60000]) expect(ausgabe(monthlyIncome, kkPremium)).toEqual(tief);
+      expect(tief.anspruchMoeglich).toBe(kkPremium > 0);
+    }
     for (const monthlyIncome of [0, 1500, 3000, 6000, 20000]) {
       const r = calculateIPV({ basis: { canton }, finanzen: { monthlyIncome } });
       expect(r.belegt).toBe(false);
@@ -108,13 +114,15 @@ describe('calculateIPV — E9: heute ist kein Kanton amtlich belegt', () => {
       expect(r.maxAnnual).toBeUndefined();
       expect(r.cantonData).toBeUndefined();
       expect(r.noteKey).not.toBe('ipv.incomeAboveLimit');
-      expect(r.noteKey).toBe(r.anspruchMoeglich ? 'ipv.orientierungWahrscheinlich' : 'ipv.orientierungOffen');
+      expect(r.noteKey).toBe('ipv.orientierungOffen');
     }
   });
 
-  it('niedriges Einkommen → «wahrscheinlich», sehr hohes → offen (kein Nein)', () => {
-    expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 1000 } }).anspruchMoeglich).toBe(true);
-    expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 50000 } }).anspruchMoeglich).toBe(false);
+  it('prüfenswert hängt nur an der erfassten Prämie, nie an der (unbelegten) Grenze', () => {
+    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
+    expect(r(1000, 300)).toBe(true);
+    expect(r(50000, 300)).toBe(true);
+    expect(r(1000, 0)).toBe(false);
   });
 
   it('ein beleg ohne quelle zählt nicht als belegt', () => {
