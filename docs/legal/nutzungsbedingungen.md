@@ -1,6 +1,6 @@
 # Nutzungsbedingungen — Maloja Plana
 
-**Stand: Juni 2026**
+**Stand: 16.09.2026** (erstellt Juni 2026; Nachführung am Ende)
 
 ---
 
@@ -40,10 +40,10 @@ Berechnungen basieren auf öffentlich zugänglichen Rechtsgrundlagen (DBG, KVG, 
 - Alle Daten werden ausschliesslich lokal im Browser gespeichert (localStorage, IndexedDB)
 - Die Anbieterin hat **keinen Zugang** zu den Daten der nutzenden Person
 - Die nutzende Person ist selbst verantwortlich für:
-  - Regelmässige Backups (Sicherungsfunktion in der Anwendung)
+  - Regelmässige Backups (Sicherungsfunktion in der Anwendung unter Werkzeuge → Export; die Sicherungsdatei ist in der Voreinstellung mit einem Passwort verschlüsselt, das die Anbieterin nicht kennt und nicht zurücksetzen kann)
   - Schutz des Geräts vor unbefugtem Zugriff
-  - Löschen der Daten bei Gerätewechsel oder -entsorgung
-- Das Löschen des Browser-Cache oder der Browserdaten führt zum **unwiderruflichen Verlust** aller nicht gesicherten Daten
+  - Löschen der Daten bei Gerätewechsel oder -entsorgung (in der Anwendung unter Einstellungen → «Daten auf diesem Gerät» → «Alle Daten auf diesem Gerät löschen», oder über die Browserdaten)
+- Das Löschen der Browserdaten oder der Löschweg in der Anwendung führt zum **unwiderruflichen Verlust** aller nicht als Datei gesicherten Daten
 
 ---
 
@@ -82,3 +82,7 @@ Die Anbieterin behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern.
 ## 9. Anwendbares Recht und Gerichtsstand
 
 Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.
+
+---
+
+Abschnitt 4 und Kopf-Datum: am 16.09.2026 an Verschlüsselung als Voreinstellung (Bau-Liste E10) und den Löschweg (E18) angeglichen, Code-Stand `main` 3500330 (Bau-Liste K39), nicht juristisch geprüft. Bis dahin stand in Abschnitt 4 «Das Löschen des Browser-Cache oder der Browserdaten führt zum unwiderruflichen Verlust»; die Angaben liegen im localStorage und in der IndexedDB, der Cache des Service Workers enthält nur App-Dateien (`public/sw.js`, Kommentar in `src/utils/datenLoeschen.js` Z. 10–11).

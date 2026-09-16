@@ -1,7 +1,7 @@
 # Datenschutzerklärung — Maloja Plana
 
 **Gemäss neuem Datenschutzgesetz (nDSG), in Kraft seit 1. September 2023**
-**Stand: Juni 2026**
+**Stand: 16.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 
 ---
 
@@ -43,14 +43,16 @@ Die folgenden Daten werden ausschliesslich in Deinem Browser gespeichert:
 | Kontakte (Notfallkontakte, Ansprechpersonen) | localStorage (`or5_contacts`) | Notfall- und Kontaktübersicht |
 | Merkliste | localStorage (`or5_merkliste`) | Gemerkte Inhalte |
 | Erinnerungen und Fristen | localStorage (`or5_reminders`) | Fristenverwaltung |
-| Automatische Backups (Schnappschüsse) | IndexedDB (`maloja-plana-backups`) | Datensicherung |
-| Sicherheitskopien vor einer Wiederherstellung | localStorage (`or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date`) | Rückgängig-Möglichkeit nach einem Backup-Import; werden nicht automatisch gelöscht |
+| Automatische Backups (Schnappschüsse der Angaben, Dokumente samt Dateien, Erinnerungen, Kontakte und Merkliste) | IndexedDB (`maloja-plana-backups`) | Datensicherung; entstehen beim Start der App, höchstens einer je 12 Stunden, die letzten 5 bleiben (`src/utils/autoBackup.js` Z. 14–15 und 114–166, `src/main.jsx` Z. 586–592); **nicht verschlüsselt** (Bau-Liste K34) |
+| Sicherheitskopien vor einer Wiederherstellung | localStorage (`or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date`) | Rückgängig-Möglichkeit nach einem Backup-Import; werden nicht automatisch gelöscht, wohl aber mit «Alle Daten auf diesem Gerät löschen» (7.2) |
 | Beta-Zugang | localStorage (`or5_beta_access`) | Zugangsschranke während der Beta (nur UI-Hürde, keine Verschlüsselung) |
 | Einstellungen (Sprache, Theme, Onboarding) | localStorage (`or5_lang`, `or5_theme`, `or5_onboarding_done`) | App-Konfiguration |
 
+Markiert jemand ein Feld als «trifft nicht zu», steht in `or5_data` je Kapitel eine Liste der betroffenen Feldnamen (`_na`, `src/utils/vollstaendigkeit.js` Z. 4–8). Sie enthält keine weiteren Angaben, wird mitgesichert und mitgelöscht.
+
 Daneben legt die App weitere Schlüssel mit dem Präfix `or5_` an (Barrierefreiheits-Einstellungen, Zeitstempel des letzten Backups, Migrations-Schnappschuss `or5_data_premigration`); sie enthalten Einstellungen oder Kopien der oben genannten Daten. Die Speichernamen sind im Quellcode belegt (`src/utils/storage.js` Z. 51, `src/utils/autoBackup.js` Z. 11, `src/utils/backupCrypto.js` Z. 216–227, `src/utils/docBlobs.js` Z. 4–6, `src/BetaGate.jsx` Z. 15, `src/MerklisteView.jsx` Z. 10). Ältere Installationen wurden von `ordnung-ruhe-documents` / `ordnung-ruhe-backups` auf die neuen Namen migriert; die alten Datenbanken werden dabei gelöscht (`storage.js` Z. 88, `autoBackup.js` Z. 52).
 
-**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei (JSON oder CSV, auf Wunsch verschlüsselt; unter Werkzeuge → Export, siehe 7.3). Einzelne Ansichten bieten zusätzlich eigene Dateien an, ebenfalls nur auf Deinen Klick: Behörden-Dossier, Budget-Bericht und Unterlagen zur Prämienverbilligung als JSON, Lebenslauf als HTML oder JSON, Termine als Kalenderdatei (`.ics`), Dossiers, Briefe und weitere Druckansichten zum Drucken oder Speichern als PDF (blockiert der Browser das neue Fenster, wird die Ansicht als `.html`-Datei heruntergeladen, `src/utils/helpers.js` Z. 58–72). Vor jeder solchen Datei zeigt die App, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx`). Bis zum 16.09.2026 stand hier «(Backup-Export, JSON oder verschlüsselt)»; CSV, `MANIFEST.txt` und die Dateien aus den übrigen Ansichten fehlten.
+**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei unter Werkzeuge → Export (siehe 7.3): als Sicherung, in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar, oder unverschlüsselt als JSON oder CSV. Einzelne Ansichten bieten zusätzlich eigene Dateien an, ebenfalls nur auf Deinen Klick: Behörden-Dossier, Budget-Bericht und Unterlagen zur Prämienverbilligung als JSON, Lebenslauf als HTML oder JSON, Termine als Kalenderdatei (`.ics`), Dossiers, Briefe und weitere Druckansichten zum Drucken oder Speichern als PDF (blockiert der Browser das neue Fenster, wird die Ansicht als `.html`-Datei heruntergeladen, `src/utils/helpers.js` Z. 58–72). Vor jeder solchen Datei zeigt die App, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx`). Bis zum 16.09.2026 stand hier «(Backup-Export, JSON oder verschlüsselt)»; CSV, `MANIFEST.txt` und die Dateien aus den übrigen Ansichten fehlten. Danach, bis zur Bau-Liste K39 am selben Tag, stand hier «(JSON oder CSV, auf Wunsch verschlüsselt)»; seit E10 ist die verschlüsselte Sicherung die Voreinstellung.
 
 ---
 
@@ -105,7 +107,7 @@ Auch die in Abschnitt 5 genannten technischen Daten (Server-Logs) verbleiben in 
 ## 7. Deine Rechte (Art. 25–29 nDSG)
 
 ### 7.1 Auskunftsrecht (Art. 25 nDSG)
-Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **direkten Zugang** zu allen Deinen Daten. Du brauchst kein Auskunftsgesuch — Du kannst Deine Daten direkt in der App einsehen und als Datei exportieren (JSON oder CSV, auf Wunsch verschlüsselt; siehe 7.3).
+Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **direkten Zugang** zu allen Deinen Daten. Du brauchst kein Auskunftsgesuch — Du kannst Deine Daten direkt in der App einsehen und als Datei exportieren (siehe 7.3). Bis zur Bau-Liste K39 (16.09.2026) stand hier «JSON oder CSV, auf Wunsch verschlüsselt».
 
 ### 7.2 Recht auf Löschung
 Du kannst Deine Daten jederzeit löschen:
@@ -125,6 +127,8 @@ Bis zum 16.09.2026 stand hier, eine Funktion «alle Daten zurücksetzen» sei ge
 ### 7.3 Recht auf Datenherausgabe (Art. 28 nDSG)
 Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Klartext), als CSV oder als verschlüsselte `.maloja`-Datei; dazu gibt es eine Übersicht als `MANIFEST.txt`. Jede davon wird als eigene Datei heruntergeladen, ein ZIP-Archiv entsteht nicht (`src/ZipExport.jsx` Z. 32–57 und 59–108; `src/zipExport.js` Z. 146–161). Bis zum 15.09.2026 stand hier «ZIP-Datei». Die App-Texte `legal.privacy.backup1` und `rights3` sagen seit PR #134 dasselbe.
 
+**Verschlüsselung (Bau-Liste E10):** Unter «Sicherung» steht der verschlüsselte Weg zuerst und ist als Voreinstellung benannt (`src/ZipExport.jsx` Z. 339–358); neue verschlüsselte Sicherungen verlangen ein Passwort von mindestens 12 Zeichen (`src/utils/backupCrypto.js` Z. 107 und 316–320). Die Klartext-Sicherung bleibt wählbar, steht darunter und trägt einen Hinweis (`ZipExport.jsx` Z. 360–367). JSON, CSV und `MANIFEST.txt` sind immer unverschlüsselt. Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die App-Texte `legal.privacy.backup1` und `legal.faq.a5`/`a7` sagen seit der Bau-Liste K39 dasselbe; bis dahin stand dort «auf Wunsch verschlüsselt».
+
 ### 7.4 Weitere Rechte
 Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting und zu Performance-Metriken wende Dich an info@malojaplana.ch.
 
@@ -135,7 +139,7 @@ Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speiche
 ### Technische Massnahmen
 - **Keine Datenübertragung**: Nutzerdaten verlassen das Gerät nicht
 - **HTTPS/TLS**: Alle Verbindungen zur Webseite sind verschlüsselt
-- **Verschlüsselte Backups**: Lokale Backup-Dateien können verschlüsselt exportiert werden
+- **Verschlüsselte Sicherung als Voreinstellung**: Die Sicherungsdatei wird ohne andere Wahl verschlüsselt (AES-256-GCM, Passwort mind. 12 Zeichen, siehe 7.3); eine unverschlüsselte Sicherung ist eine bewusste Wahl. Die automatischen Schnappschüsse im Browser sind nicht verschlüsselt, ebenso die übrigen Angaben im Browser-Speicher (Abschnitt 3). Bis zum 16.09.2026 stand hier: «Lokale Backup-Dateien können verschlüsselt exportiert werden».
 - **Kein serverseitiger Datenzugriff**: Weder die Betreiberin noch Dritte können auf Deine Daten zugreifen
 - **Open Source**: Der Quellcode ist öffentlich einsehbar und überprüfbar
 
@@ -208,4 +212,5 @@ https://www.edoeb.admin.ch
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
 Abschnitt 7.1 und 7.3 (Benennung des Exports): auf Code-Stand `main` 0274ce9 gebracht, nicht juristisch geprüft.
 Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
-Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht, nicht juristisch geprüft.
+Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht (seit PR #174 auf `main`), nicht juristisch geprüft.
+Kopf-Datum, Abschnitte 3, 7.1, 7.3 und 8 (Verschlüsselung als Voreinstellung E10, Schnappschüsse K34, «trifft nicht zu» E17): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.

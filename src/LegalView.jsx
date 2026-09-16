@@ -29,8 +29,10 @@ const CONTRIBUTION_URL = '';
 // Rechtstexte tatsächlich überarbeitet wurden — bewusst NICHT aus dem Build/heutigen
 // Datum abgeleitet (das wäre eine falsche Aktualitäts-Aussage). Wird in alle 5 Sprachen
 // via {date} eingesetzt (legal.lastUpdated), damit die Datumsangabe nicht driftet.
+// K39 (16.09.2026): Datenschutz-/Nutzungstexte an Verschlüsselung als Voreinstellung (E10)
+// und den Löschweg (E18) angeglichen → Stand September 2026. TODO(rm): Monatsname gegenlesen.
 const LEGAL_LAST_UPDATED = {
-  de: 'Juni 2026', fr: 'juin 2026', it: 'giugno 2026', en: 'June 2026', rm: 'zercladur 2026',
+  de: 'September 2026', fr: 'septembre 2026', it: 'settembre 2026', en: 'September 2026', rm: 'settember 2026',
 };
 
 const LEGAL_LINKS = {
