@@ -7,7 +7,28 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-16, 12:30 (`main`=`2aaeff5` nach dem Merge von **PR #159**, mit diesem Stand-PR weiter · ✅ **0.1.28-beta DEPLOYT 12:23 aus `2aaeff5`**: live `index-2301b4b1.js`, Footer `0.1.28-beta`, Tag `v0.1.28-beta` = `2aaeff5` auf origin · `main` = live · 0 offene PRs · B-3 behoben und live)
+**Stand:** 2026-09-16, 18:00 (`main`=`77bf8b1` nach dem Merge von **PR #170**, mit diesem Abschluss-PR weiter · ⚠️ **gemergt, NICHT live**: live weiter `index-2301b4b1.js` = 0.1.28-beta vom 12:23 · **Deploy-Versuch 17:45 vom Rollback-Backup-Tor gestoppt**, Live-Version unberührt · Version im Repo neu **0.1.29-beta**, Tag setzt der nächste erfolgreiche Deploy · 1072 Tests grün, Hauptbundle 64.66 kB von 65 · 0 offene PRs)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-16, 18:00 (Entscheid-Runde gemergt, Deploy gestoppt)
+>
+> **Gemergt seit 12:23:** #161 IPV-Belege je Kanton · #162 Voll-Review-Rest · #163 CSV-Formelschutz
+> (E14) · #164 Rechts-Doku an den Code (K28) · #165 Steuerkanton (B-2/E23) · #166 Freibetrags-Belege ·
+> #167 + #168 Prämienverbilligung ohne Beleg ohne Betrag (E9) und Schnellcheck-Übergabe (B-1/E22) ·
+> #169 + #170 Vermögensfreibetrag je Kanton.
+> **Deploy 17:45:** `dist/` wurde gebaut (`index-3b23d185.js`), danach kein neues Backup und keine
+> Änderung live — Signatur des Tors «Rollback-Backup fehlgeschlagen» (`deploy.sh` ab Z. 150: der
+> leere Backup-Ordner wird gelöscht, `.deploy-backups/` trägt den Zeitstempel 17:45). Die genaue
+> Meldung stand im Terminal von Stebler Studios und ist nicht belegt. **Nächster Schritt:** nach dem
+> Merge dieses PRs `git pull`, `bash deploy.sh` erneut; bei erneutem Abbruch die Meldung sichern
+> (Login · Netz · Zeitüberschreitung). `DEPLOY_OHNE_BACKUP=1` nur bewusst.
+> **Nach dem Deploy:** Bundle-Hash prüfen, die neuen Zeilen in `FEATURES.md` auf `deployed`,
+> B-1 und B-2 in `BUGS.md` nach «Zuletzt behoben», Tag `v0.1.29-beta` prüfen.
+> **Gerettet:** §8.7 der Bau-Liste (Teil 7, O15–O19) lag nur auf dem Zweig
+> `docs/bauliste-8b-audit-teil-1-6` (Commit nach dem Merge von #143) und kommt mit diesem PR nach `main`.
+> Seine beiden Entscheide heissen dort jetzt **E32/E33** (auf dem Zweig E20/E21); §9 behält E20/E21,
+> weil Stebler Studios am 16.09. auf §9-E20 geantwortet hat.
+> **Entscheide vom 16.09. abends** (E10, E17, E18, §9-E20, E27–E30, K13, E3) stehen in Bau-Liste §10.
+> **Offen und Oktober:** Bau-Liste §10.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-16, 12:30 (0.1.28-beta live)
 >
