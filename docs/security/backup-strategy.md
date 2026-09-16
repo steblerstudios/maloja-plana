@@ -16,7 +16,7 @@ Maloja Plana ist local-first — die Anbieterin erstellt keine Backups der Nutze
 |---|---|---|---|
 | Manuelles Backup | JSON (AES-256-verschlüsselt) | Ja, Passwort der nutzenden Person | Button im Dashboard |
 | Lebensmappe Export | HTML | Nein (Klartext) | Button in Lebensmappe |
-| ZIP-Gesamtexport | ZIP mit JSON + Manifest | Optional | Button in Einstellungen |
+| Datei-Export (Einzeldateien, kein ZIP) | JSON, CSV, `MANIFEST.txt` | Nein | Werkzeuge → Export |
 | Auto-Backup Erinnerung | — | — | Banner nach 30 Tagen ohne Backup |
 
 ---

@@ -217,7 +217,7 @@
 | MP-EXP-003 | YAML Export | experimental | post-beta | idea |
 | MP-EXP-004 | Swiss CSV Export (Semikolon-separiert, CH-Format) | important | beta | idea |
 | MP-EXP-005 | Excel-kompatibler Budget-Export (.xlsx oder CSV) | experimental | post-beta | idea |
-| MP-EXP-006 | ZIP Export (verschlüsselt, bestehend) | core | alpha | done |
+| MP-EXP-006 | Datei-Export (Einzeldateien JSON/CSV, Sicherung auf Wunsch verschlüsselt `.maloja`; kein ZIP) | core | alpha | done |
 | MP-EXP-007 | DOCX Export (für editierbare Dokumente) | experimental | post-beta | idea |
 | MP-EXP-008 | LaTeX/Overleaf Export | maybe | future | idea |
 | MP-EXP-009 | CSV/PDF Import (BudgetImport, bestehend, teilweise) | core | alpha | done |

@@ -58,6 +58,48 @@ const VERHEIRATET_FLAT_SATZ = 0.115;
 // ist ein eigener Abzug und bleibt daneben bestehen.
 const KINDERABZUG_PRO_KIND = 263;
 
+// Rundung und Erhebungsgrenze, gilt für alle Tarife (Abs. 1, 2, 2bis). Abgerufen 15.09.2026:
+//   1) Einkommen auf 100 Franken abrunden. ESTV Form. 58c-2026, Fussnote 1: «Restbeträge von
+//      weniger als CHF 100 fallen ausser Betracht.» Die Tarife in Art. 36 DBG steigen «für je
+//      weitere 100 Franken Einkommen».
+//   2) Jahressteuer auf 5 Rappen abrunden. ESTV Form. 58c-2026, Fussnote 2: «Die Jahressteuer
+//      wird gegebenenfalls auf die nächsten 5 Rp. abgerundet.» Im DBG und in der VKP vom
+//      10.9.2025 (AS 2025 579) steht dazu nichts. Weil die 263 Franken ganze Franken sind,
+//      ergibt Abrunden vor oder nach der Ermässigung dasselbe.
+//   3) Art. 36 Abs. 3 DBG: «Steuerbeträge unter 25 Franken werden nicht erhoben.» Das ist eine
+//      Erhebungsgrenze, kein Freibetrag: 25.00 wird voll erhoben. Sie gilt für den Betrag, der
+//      erhoben würde, also nach der Ermässigung von Abs. 2bis.
+// Reihenfolge: Einkommen abrunden → Tarif → minus 263 je Kind → auf 5 Rp. abrunden → unter 25 = 0.
+//
+// Widerspruch Gesetz ↔ Tabelle bei 76 200 Franken (Grundtarif): Art. 36 Abs. 1 DBG (Fedlex,
+// Stand 1.1.2026, gleich in FR/IT und in AS 2025 579) nennt 1 152.55, Form. 58c-2026 nennt
+// 1 152.50. Beide sind Rundungen von 612.00 + 182 × 2.97 = 1 152.54 auf 5 Rappen, das Gesetz
+// zum nächsten Wert, die Tabelle nach unten (Fussnote 2). Nur die Tabellenkette trifft die
+// nächste Stufe des Gesetzes: 1 152.50 + 59 × 5.94 = 1 502.96 → 1 502.95. Die App folgt der
+// Tabelle; zwischen 76 200 und 82 000 Franken liegt sie damit 5 Rappen unter dem Gesetzestext.
+const ERHEBUNGSGRENZE = 25;
+
+function abrundenAufHundert(einkommen) {
+  return Math.floor(einkommen / 100) * 100;
+}
+
+function abrundenAufFuenfRappen(betrag) {
+  return (Math.floor(Math.round(betrag * 100) / 5) * 5) / 100;
+}
+
+/**
+ * Jahressteuer nach Art. 36 DBG mit Rundung und Erhebungsgrenze (Reihenfolge siehe oben).
+ */
+function jahressteuer(steuerBaresEinkommen, tarifAbs2, ermaessigung) {
+  const massgebendesEinkommen = abrundenAufHundert(Math.max(0, steuerBaresEinkommen));
+  const steuerVorAbzug = tarifAbs2
+    ? bundessteuerVerheiratet(massgebendesEinkommen)
+    : bundessteuerAlleinstehend(massgebendesEinkommen);
+  const gerundet = abrundenAufFuenfRappen(Math.max(0, steuerVorAbzug - ermaessigung));
+  const steuer = gerundet < ERHEBUNGSGRENZE ? 0 : gerundet;
+  return { massgebendesEinkommen, steuerVorAbzug, steuer };
+}
+
 // Standardabzüge vom steuerbaren Einkommen (Bundessteuer)
 const ABZUEGE = {
   versicherung: { alleinstehend: 1800, verheiratet: 3700, proKind: 700 },
@@ -93,7 +135,9 @@ function berechneStufentarif(einkommen, stufen, flatGrenze, flatSatz) {
 }
 
 /**
- * Berechne direkte Bundessteuer für Alleinstehende (Grundtarif).
+ * Tarifwert Grundtarif (Art. 36 Abs. 1 DBG) wie in der Tabelle, OHNE Rundung und ohne
+ * Erhebungsgrenze. Die Jahressteuer liefert berechneBundessteuer(). Die Kapitalleistungen
+ * (Art. 38, kapitalbezugSteuer.js) rechnen bewusst weiter mit diesem Rohwert.
  */
 export function bundessteuerAlleinstehend(steuerBaresEinkommen) {
   return berechneStufentarif(
@@ -154,6 +198,7 @@ export function berechneBundessteuer({
       bruttoEinkommen: 0,
       abzuege: 0,
       steuerBaresEinkommen: 0,
+      massgebendesEinkommen: 0,
       steuerVorAbzug: 0,
       kinderabzug: 0,
       steuer: 0,
@@ -163,13 +208,9 @@ export function berechneBundessteuer({
   }
 
   const steuerBaresEinkommen = Math.max(0, bruttoEinkommen - abzuege);
-
-  const steuerVorAbzug = (verheiratet || abs2bis)
-    ? bundessteuerVerheiratet(steuerBaresEinkommen)
-    : bundessteuerAlleinstehend(steuerBaresEinkommen);
-
   const kinderabzug = abs2bis ? kinder * KINDERABZUG_PRO_KIND : 0;
-  const steuer = Math.max(0, Math.round((steuerVorAbzug - kinderabzug) * 100) / 100);
+  const { massgebendesEinkommen, steuerVorAbzug, steuer } =
+    jahressteuer(steuerBaresEinkommen, verheiratet || abs2bis, kinderabzug);
 
   const effektiverSatz = bruttoEinkommen > 0
     ? Math.round((steuer / bruttoEinkommen) * 10000) / 100
@@ -179,6 +220,7 @@ export function berechneBundessteuer({
     bruttoEinkommen,
     abzuege,
     steuerBaresEinkommen,
+    massgebendesEinkommen,
     steuerVorAbzug,
     kinderabzug,
     steuer,
@@ -215,13 +257,9 @@ export function grenzsteuersatz(einkommen, verheiratet = false) {
  */
 export function vergleicheTarife(steuerBaresEinkommen, kinder = 0, elterntarif = false) {
   const ermaessigung = kinder > 0 ? kinder * KINDERABZUG_PRO_KIND : 0;
-  const verheiratetRoh = bundessteuerVerheiratet(steuerBaresEinkommen);
-  const alleinstehendRoh = elterntarifGreift(false, kinder, elterntarif)
-    ? verheiratetRoh - ermaessigung
-    : bundessteuerAlleinstehend(steuerBaresEinkommen);
-
-  const alleinstehend = Math.max(0, Math.round(alleinstehendRoh * 100) / 100);
-  const verheiratet = Math.max(0, Math.round((verheiratetRoh - ermaessigung) * 100) / 100);
+  const eltern = elterntarifGreift(false, kinder, elterntarif);
+  const alleinstehend = jahressteuer(steuerBaresEinkommen, eltern, eltern ? ermaessigung : 0).steuer;
+  const verheiratet = jahressteuer(steuerBaresEinkommen, true, ermaessigung).steuer;
 
   return {
     alleinstehend,

@@ -17,8 +17,8 @@
 
 ### Backup
 - Automatische lokale Backups im Browser (IndexedDB)
-- Manueller ZIP-Export möglich
-- Backup-Dateien sind unverschlüsselt (Klartext JSON)
+- Manueller Export als Einzeldateien möglich (JSON, CSV, `MANIFEST.txt`; kein ZIP)
+- Sicherung als Klartext-JSON oder, auf Wunsch, verschlüsselt als `.maloja` (AES-256-GCM, `src/utils/backupCrypto.js`)
 
 ### Offline-Fähigkeit
 - Vollständig offline nutzbar nach erstem Laden
