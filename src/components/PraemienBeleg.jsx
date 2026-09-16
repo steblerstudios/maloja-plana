@@ -15,13 +15,16 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   if (!state || !state.show || state.mode === 'empty') return null;
   const { mode, verbilligung, praemie, selbst, confirmed } = state;
   const over = mode === 'over';
+  const orientierung = mode === 'orientierung';
   const hasBalken = mode === 'eligible' && praemie > 0;
   const kantonPct = hasBalken ? Math.min(100, Math.max(0, (Math.min(verbilligung, praemie) / praemie) * 100)) : 0;
   const selbstPct = 100 - kantonPct;
 
   // Read-only Spiegelung: ist die IPV im Voll-Tool bereits bestätigt, trägt der
   // Beleg den Stempel statt des „geschätzt"-Hinweises (gesetzt wird nichts hier).
-  const marker = confirmed
+  const marker = orientierung
+    ? h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.orientierung'))
+    : confirmed
     ? h('span', { style: { border: '1px solid ' + palette.sageDeep, color: palette.sageDeep, fontSize: text.xs, fontFamily: MONO, padding: '1px 6px', borderRadius: radius.sm + 'px', transform: 'rotate(-4deg)', display: 'inline-block' } }, t('ipvStatus.stamp'))
     : h('div', { style: { fontSize: text.xs, color: palette.soft, fontFamily: MONO } }, t('beleg.geschaetzt'));
   const headRow = h('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm + 'px', marginBottom: space.sm + 'px' } },
@@ -30,7 +33,10 @@ export const PraemienBeleg = ({ palette, t, state }) => {
   );
 
   let body;
-  if (over) {
+  if (orientierung) {
+    // E9: Kanton nicht amtlich belegt — keine Zahl, nur die ruhige Orientierung.
+    body = h('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal } }, t(state.noteKey || 'ipv.orientierungWahrscheinlich'));
+  } else if (over) {
     body = h('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('beleg.keineVerbilligung'));
   } else {
     const amount = h('div', { style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.sageDeep, lineHeight: leading.tight, marginBottom: space.sm + 'px' } },

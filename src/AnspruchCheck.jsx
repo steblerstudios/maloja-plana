@@ -4,6 +4,7 @@ import Lebenssituationen from './Lebenssituationen.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from './config/cantonalData.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
+import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
@@ -41,8 +42,10 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       const canton = probe?.basis?.canton || '';
       const income = Number(probe?.finanzen?.monthlyIncome) || 0;
       const rent = Number(probe?.wohnen?.rentAmount) || 0;
-      if (income > 0 && canton && calculateIPV(probe)?.eligible) {
-        incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium' });
+      // anspruchMoeglich: auch bei unbelegtem Kanton (E9) ein Weg — ohne Betrag.
+      if (income > 0 && canton && calculateIPV(probe)?.anspruchMoeglich) {
+        // B-1/E22: die Zahlen aus Schritt 1 gehen an den IPV-Rechner mit (nicht ins Profil).
+        incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium', uebergabe: uebergabeAusProbe(probe) });
       }
       if (rent > 0) {
         const sh = calculateSozialhilfe(probe);
@@ -91,7 +94,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
 
       sectionHeader(t('anspruchCheck.resultIncomeHeader')),
       incomeBenefits.length
-        ? incomeBenefits.map((b) => row(b.key, b.label, () => onNavigate(b.view)))
+        ? incomeBenefits.map((b) => row(b.key, b.label, () => (b.uebergabe ? onNavigate(b.view, undefined, b.uebergabe) : onNavigate(b.view))))
         : emptyLine(t('anspruchCheck.resultEmptyIncome')),
 
       sectionHeader(t('anspruchCheck.resultSituationHeader')),

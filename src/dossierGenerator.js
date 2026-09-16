@@ -701,9 +701,12 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       iRows.push({ label: t('premium.monthlySubsidy'), value: formatCHF(ipv.amount) + t('common.perMonth'), bold: true });
       iRows.push({ label: t('premium.annualSubsidy'), value: formatCHF(ipv.amount * 12) + t('common.perYear') });
     }
+    // E9: ohne amtlich belegten Kanton kein «berechtigt»/«nicht berechtigt», nur die Orientierung.
     const status = ipv.eligible
       ? t('premium.eligible')
-      : t('premium.notEligible');
+      : ipv.belegt === false
+        ? t(ipv.anspruchMoeglich ? 'ipv.statusWahrscheinlich' : 'ipv.statusOffen')
+        : t('premium.notEligible');
     sections.push({
       key: 'ipv',
       title: t('behoerdenDossier.sectionIPV'),
@@ -834,11 +837,14 @@ export function generateBehoerdenJSON(data, calculations) {
     };
   }
   if (ipv) {
-    dossier.calculations.ipv = {
-      eligible: !!ipv.eligible,
-      monthlyAmount: ipv.amount || 0,
-      annualAmount: (ipv.amount || 0) * 12,
-    };
+    // E9: ohne amtlich belegten Kanton gehen keine Beträge in die Datei.
+    dossier.calculations.ipv = ipv.belegt === false
+      ? { eligible: false, belegt: false, einschaetzung: ipv.anspruchMoeglich ? 'anspruch-wahrscheinlich' : 'beim-kanton-pruefen' }
+      : {
+          eligible: !!ipv.eligible,
+          monthlyAmount: ipv.amount || 0,
+          annualAmount: (ipv.amount || 0) * 12,
+        };
   }
   if (el) {
     dossier.calculations.el = { eligible: !!el.eligible };

@@ -3,10 +3,11 @@
 // selbst (das tun cantonalData/sozialhilfeRechner-Tests), sondern dass die
 // Instrumente die berechneten Werte EHRLICH anzeigen — kein Betrag, den der
 // Rest der App verneint, keine Zahl, die eine Zusage vortäuscht.
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { sozialhilfePegelState } from '../pegel.js';
 import { praemienBelegState } from '../praemienBeleg.js';
 import { calculateSozialhilfe, calculateIPV } from '../../config/cantonalData.js';
+import { kantoneBelegtSimulieren } from '../../config/__tests__/ipvBelegtSimulieren.js';
 
 describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
   // ZH, Einperson: Bedarf klar über dem Einkommen → Aufstockung.
@@ -54,7 +55,25 @@ describe('sozialhilfePegelState — Vermögens-Gate (B1)', () => {
   });
 });
 
-describe('praemienBelegState — Verbilligung nie über der Prämie (B2)', () => {
+describe('praemienBelegState — E9: Kanton nicht amtlich belegt', () => {
+  const base = { basis: { canton: 'ZG' }, finanzen: { monthlyIncome: 500 }, versicherungen: { kkPremium: 200 } };
+
+  it('zeigt eine Orientierung ohne Betrag statt einer Verbilligung', () => {
+    const state = praemienBelegState(base);
+    expect(state.mode).toBe('orientierung');
+    expect(state.verbilligung).toBe(0);
+    expect(state.noteKey).toBe('ipv.orientierungWahrscheinlich');
+  });
+
+  it('sagt bei hohem Einkommen weder «keine Verbilligung» noch etwas anderes (leer)', () => {
+    expect(praemienBelegState({ ...base, finanzen: { monthlyIncome: 6000 } }).mode).toBe('empty');
+  });
+});
+
+describe('praemienBelegState — Verbilligung nie über der Prämie (B2, belegter Kanton simuliert)', () => {
+  let zuruecksetzen;
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['ZG']); });
+  afterAll(() => zuruecksetzen());
   // ZG, Einperson, tiefes Einkommen → hohe IPV; niedrige Prämie eingetragen.
   const base = {
     basis: { canton: 'ZG' },

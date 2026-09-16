@@ -84,7 +84,7 @@ function buildSnippet(chapterKey, chData, allData, t) {
   return null;
 }
 
-const QuickCheck = ({ palette, t, onNavigate, data }) => {
+export const QuickCheck = ({ palette, t, onNavigate, data }) => {
   const [income, setIncome] = useState(data?.finanzen?.monthlyIncome || '');
   const annual = (Number(income) || 0) * 12;
   const canton = data?.basis?.canton;
@@ -99,10 +99,13 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
   try {
     // IPV: kantonal, einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (annual > 0 && canton) ? calculateIPV(probe) : null;
-    if (ipv && ipv.eligible) benefits.push({
+    // E9: ohne amtlich belegten Kanton kein Betrag, nur die Orientierung.
+    // B-1/E22: das hier eingetippte Einkommen geht an den IPV-Rechner mit (nicht ins Profil).
+    if (ipv && ipv.anspruchMoeglich) benefits.push({
       key: 'ipv', view: 'premium', label: t('dashboard.quickCheckIpv'), color: palette.sky,
+      uebergabe: { schnellcheck: { monthlyIncome: Number(income) } },
       monthly: ipv.amount,
-      detail: t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }),
+      detail: ipv.eligible ? t('dashboard.quickCheckResult', { income: fmt(annual), amount: fmt(ipv.annual) }) : t(ipv.noteKey),
     });
     // Sozialhilfe: nur zeigen, wenn Mietkontext vorhanden (sonst wäre der Bedarf
     // unvollständig) UND Bedarf ungedeckt UND kein Vermögen über dem Freibetrag —
@@ -134,7 +137,7 @@ const QuickCheck = ({ palette, t, onNavigate, data }) => {
 
   const row = (b) => React.createElement('button', {
     key: b.key,
-    onClick: () => onNavigate(b.view),
+    onClick: () => onNavigate(b.view, undefined, b.uebergabe),
     style: {
       display: 'flex', alignItems: 'center', gap: '10px', width: '100%',
       padding: '10px 14px', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
@@ -1492,7 +1495,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         let ipvHint = false, sozialhilfeHint = false;
         try {
           if (incomeEntered && canton) {
-            ipvHint = !!calculateIPV(data)?.eligible;
+            ipvHint = !!calculateIPV(data)?.anspruchMoeglich;
           }
           if (incomeEntered) {
             const sh = calculateSozialhilfe(data);

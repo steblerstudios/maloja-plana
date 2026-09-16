@@ -5,9 +5,23 @@
 
 import { getCantonName } from './config/cantonalData.js';
 import { getFullName } from './config/constants.js';
+import { getCantonalLinks } from './data/direktLinks.js';
 
 // Das IPV-Dokument, das PremiumSubsidy als JSON herunterlädt. Eine Quelle für Datei
 // und Export-Vorschau (K20): die Vorschau nennt, was genau dieses Objekt enthält.
+//
+// E9: Bei einem Kanton ohne amtlichen Beleg steht im Dokument KEIN Betrag und keine
+// Grenze — nur die Einschätzung, der Hinweistext und der Weg zur kantonalen Stelle.
+const ipvErgebnisFuerDokument = (r, t) => {
+  if (!r || r.belegt !== false) return r;
+  return {
+    belegt: false,
+    einschaetzung: r.anspruchMoeglich ? 'anspruch-wahrscheinlich' : 'beim-kanton-pruefen',
+    hinweis: t ? t(r.noteKey, r.noteParams) : r.noteKey,
+    kantonaleStelle: (getCantonalLinks(r.canton) || {}).ipv || null,
+  };
+};
+
 export const buildIpvDokument = (data, t, ipvResult) => {
   const canton = (data && data.basis && data.basis.canton) || '';
   return {
@@ -17,7 +31,7 @@ export const buildIpvDokument = (data, t, ipvResult) => {
     cantonName: getCantonName(canton, t),
     applicant: getFullName(data && data.basis) || '',
     ahv: (data && data.basis && data.basis.ahv) || '',
-    result: ipvResult,
+    result: ipvErgebnisFuerDokument(ipvResult, t),
   };
 };
 

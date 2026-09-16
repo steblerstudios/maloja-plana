@@ -82,7 +82,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
     const income = Number(data?.finanzen?.monthlyIncome) || 0;
     const rent = Number(data?.wohnen?.rentAmount) || 0;
     const canton = data?.basis?.canton;
-    if (income > 0 && canton && calculateIPV(data)?.eligible) benefitCount++;
+    if (income > 0 && canton && calculateIPV(data)?.anspruchMoeglich) benefitCount++;
     if (rent > 0) { const sh = calculateSozialhilfe(data); if (sh?.eligible && (sh?.vermoegenUeberFreibetrag || 0) === 0) benefitCount++; }
     if (checkELEligibility(data)?.eligible) benefitCount++;
   } catch { /* Orientierung, nie blockierend */ }

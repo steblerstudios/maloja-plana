@@ -76,7 +76,7 @@ export const druckAbschnitte = (t, w) => {
     zeilen.push({ label: t('finanzUebersicht.taxes'), html: '<tr class="sep"><td>' + t('finanzUebersicht.taxes') + ' (' + t('tax.federalOnly') + ')</td><td class="r">~ ' + fmt(w.taxResult.steuer) + ' ' + t('common.perYear') + '</td></tr>' });
   }
 
-  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
+  zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t(w.ipv.anspruchMoeglich ? 'ipv.statusWahrscheinlich' : 'ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.sozialhilfe'), html: '<tr><td>' + t('finanzUebersicht.sozialhilfe') + '</td><td class="r">' + (w.sozialhilfe.eligible ? fmt(w.sozialhilfe.deficit) + ' ' + t('common.perMonth') : t('sozialhilfe.notEntitled')) + '</td></tr>' });
   zeilen.push({ label: t('finanzUebersicht.el'), html: '<tr><td>' + t('finanzUebersicht.el') + '</td><td class="r">' + (w.el.eligible ? fmt(w.el.deficit) + ' ' + t('common.perMonth') : t('finanzUebersicht.notApplicable')) + '</td></tr>' });
 
@@ -373,13 +373,18 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     hasData && React.createElement(StatusCard, {
       palette, icon: 'insurance',
       title: t('finanzUebersicht.ipv'),
+      // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
       status: ipv.eligible
         ? '✓ ' + formatCHF(ipv.amount) + ' ' + t('common.perMonth')
-        : t('finanzUebersicht.notEligible'),
+        : ipv.belegt === false
+          ? t(ipv.anspruchMoeglich ? 'ipv.statusWahrscheinlich' : 'ipv.statusOffen')
+          : t('finanzUebersicht.notEligible'),
       statusColor: ipv.eligible ? palette.sage : palette.mid,
       detail: ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear')
-        : ipv.canton ? t('ipv.incomeAboveLimit', { value: ipv.cantonData?.maxIncome || '' }) : t('finanzUebersicht.selectCanton'),
+        : ipv.belegt === false
+          ? t(ipv.noteKey, ipv.noteParams)
+          : ipv.canton ? t('ipv.incomeAboveLimit', { value: ipv.cantonData?.maxIncome || '' }) : t('finanzUebersicht.selectCanton'),
       onClick: () => onNavigate('premium'),
     }),
 

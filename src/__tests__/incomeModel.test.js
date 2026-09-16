@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, onTestFinished } from 'vitest';
 import { mapTaxFields } from '../taxImport.js';
 import { calculateSozialhilfe, calculateIPV } from '../config/cantonalData.js';
+import { kantoneBelegtSimulieren } from '../config/__tests__/ipvBelegtSimulieren.js';
 
 // ─────────────────────────────────────────────────────────────
 // Einkommens-Modell: Nebenerwerb (sideIncome) + steuerbares
@@ -53,9 +54,12 @@ describe('Berechtigungslogik: Nebenerwerb zählt als Einkommen', () => {
     expect(mit.deficit).toBeLessThan(ohne.deficit);
   });
 
-  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt', () => {
+  it('IPV-Beitrag sinkt (oder gleich), wenn Nebenerwerb dazukommt (BE belegt simuliert, E9)', () => {
+    const zuruecksetzen = kantoneBelegtSimulieren(['BE']);
+    onTestFinished(zuruecksetzen);
     const ohne = calculateIPV(base);
     const mit = calculateIPV({ ...base, finanzen: { ...base.finanzen, sideIncome: 800 } });
+    expect(ohne.amount).toBeGreaterThan(0);
     expect((mit.amount || 0)).toBeLessThanOrEqual(ohne.amount || 0);
   });
 });

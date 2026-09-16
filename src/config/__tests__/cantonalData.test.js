@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { SKOS_GRUNDBEDARF, getGrundbedarf, calculateSozialhilfe, calculateIPV, checkELEligibility, CANTONAL_IPV } from '../cantonalData.js';
 import { grundbedarfFuerHaushalt } from '../../data/sozialhilfeRechner.js';
+import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
 
 describe('SKOS_GRUNDBEDARF (cantonalData)', () => {
   it('matches the official SKOS GBL 2025/2026 scale (SKOS-RL C.3.1)', () => {
@@ -90,9 +91,49 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
   });
 });
 
-describe('calculateIPV — kantonale Prämienverbilligung', () => {
+describe('calculateIPV — E9: heute ist kein Kanton amtlich belegt', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand), heute überall null', () => {
+    const zeilen = Object.entries(CANTONAL_IPV);
+    expect(zeilen).toHaveLength(26);
+    for (const [, v] of zeilen) expect(v).toHaveProperty('beleg', null);
+  });
+
+  it.each(Object.keys(CANTONAL_IPV))('%s: kein Betrag, kein «berechtigt», keine Grenze — nur Orientierung', (canton) => {
+    for (const monthlyIncome of [0, 1500, 3000, 6000, 20000]) {
+      const r = calculateIPV({ basis: { canton }, finanzen: { monthlyIncome } });
+      expect(r.belegt).toBe(false);
+      expect(r.eligible).toBe(false);
+      expect(r.amount).toBeNull();
+      expect(r.annual).toBeUndefined();
+      expect(r.maxAnnual).toBeUndefined();
+      expect(r.cantonData).toBeUndefined();
+      expect(r.noteKey).not.toBe('ipv.incomeAboveLimit');
+      expect(r.noteKey).toBe(r.anspruchMoeglich ? 'ipv.orientierungWahrscheinlich' : 'ipv.orientierungOffen');
+    }
+  });
+
+  it('niedriges Einkommen → «wahrscheinlich», sehr hohes → offen (kein Nein)', () => {
+    expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 1000 } }).anspruchMoeglich).toBe(true);
+    expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 50000 } }).anspruchMoeglich).toBe(false);
+  });
+
+  it('ein beleg ohne quelle zählt nicht als belegt', () => {
+    CANTONAL_IPV.ZH.beleg = { quelle: '', stand: '2026' };
+    try {
+      expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
+    } finally {
+      CANTONAL_IPV.ZH.beleg = null;
+    }
+  });
+});
+
+describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simuliert)', () => {
   // Tests reference the canonical CANTONAL_IPV table (no duplicated magic numbers),
   // so they verify the model — not a snapshot of yearly-updated figures.
+  // E9: das Modell rechnet nur für amtlich belegte Kantone; hier simuliert.
+  let zuruecksetzen;
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['ZH']); });
+  afterAll(() => zuruecksetzen());
   const zh = CANTONAL_IPV.ZH;
   const ipv = (overrides = {}) => calculateIPV({
     basis: { canton: 'ZH' },
@@ -110,6 +151,8 @@ describe('calculateIPV — kantonale Prämienverbilligung', () => {
   it('grants the full single subsidy at zero income', () => {
     const r = ipv({ finanzen: { monthlyIncome: 0 } });
     expect(r.eligible).toBe(true);
+    expect(r.belegt).toBe(true);
+    expect(r.anspruchMoeglich).toBe(true);
     expect(r.reductionPercent).toBe(100);
     expect(r.maxAnnual).toBe(zh.subsidySingle);
     expect(r.annual).toBe(zh.subsidySingle);

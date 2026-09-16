@@ -482,6 +482,8 @@ const AppInner = ({ demo }) => {
   const [kvgInitialTab, setKvgInitialTab] = useState('katalog');
   // Vom Befund („→ nächster Schritt") vorgewählte Brief-Vorlage.
   const [briefInitialTemplate, setBriefInitialTemplate] = useState(null);
+  // B-1/E22: Zahlen aus dem Schnellcheck, mit denen der IPV-Rechner rechnet (nie im Profil).
+  const [ipvUebergabe, setIpvUebergabe] = useState(null);
   const [lastSave, setLastSave] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
@@ -774,6 +776,8 @@ const AppInner = ({ demo }) => {
 
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
+    // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
+    setIpvUebergabe(viewName === 'premium' && extra ? extra.schnellcheck : null);
     if (viewName === 'chapter' && chapterIdx !== undefined) {
       setActiveChapter(chapterIdx);
     }
@@ -1331,7 +1335,7 @@ const AppInner = ({ demo }) => {
         // isDarkMode: das Miet-Barometer im Budget braucht die Frucht-Farbe („du" trägt die
         // Bereichsfarbe) — ohne den Prop läge `bereichFillColor` im Dunkelmodus stumm daneben.
         view === 'sync' && React.createElement(BudgetSync, { palette, t, data: activeData, isDarkMode }),
-        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
+        view === 'premium' && React.createElement(PremiumSubsidy, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData, schnellcheckZahlen: ipvUebergabe }),
         view === 'praemien' && React.createElement(PraemienOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, onUpdateData: updateData }),
         view === 'mietzins' && React.createElement(MietzinsOrientierung, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
         view === 'kvgwechsel' && React.createElement(KVGWechsel, { palette, t, data: activeData, onNavigate: handleNavigate }),
