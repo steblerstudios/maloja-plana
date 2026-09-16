@@ -16,6 +16,9 @@ import {
   KANTONSSTEUER_ABGERUFEN,
   KANTONSSTEUER_MAX_KINDER,
 } from './kantonssteuerTabelle.js';
+import { bundessteuerAusSteuerbarem } from './steuerRechner.js';
+import { getHouseholdInfo } from '../config/cantonalData.js';
+import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
 
 const HAUPTORTE = {
   AG: 'Aarau',
@@ -124,7 +127,7 @@ export function schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen, bundesst
 //   «Abzug verheiratete Steuerpflichtige»: 2 800
 //   «Kindersozialabzug»: 6 800 je Kind
 // Rechtsgrundlagen (vgl.): DBG Art. 26, 33 Abs. 1 lit. g und Abs. 1bis, 35 Abs. 1 lit. a und c.
-// Die Bundessteuer der App rechnet (noch) ohne diese Pauschalen — offener Entscheid, siehe PR E38.
+// Seit E39 rechnet auch die Bundessteuer mit diesem steuerbaren Einkommen (steuernFuerProfil).
 export const ESTV_ABZUEGE_2026 = {
   berufsauslagen: { satz: 0.03, min: 2000, max: 4000 },
   versicherung: { ledig: 1800, verheiratet: 3700, proKind: 700, ohneBvgFaktor: 1.5 },
@@ -147,7 +150,12 @@ export function steuerbarNachEstv({ nettolohnJahr, verheiratet = false, kinder =
   const a = ESTV_ABZUEGE_2026;
   const netto = Number(nettolohnJahr) || 0;
   if (netto <= 0) return 0;
-  const pauschale = Math.round(Math.min(a.berufsauslagen.max, Math.max(a.berufsauslagen.min, netto * a.berufsauslagen.satz)));
+  // E39: abgerundet. An allen 30 gemessenen Nettolöhnen mit einer Pauschale zwischen 2 000 und 4 000
+  // weist die ESTV den abgerundeten Wert aus (z. B. 3 % von 114 329 = 3 429.87 → 3 429); kaufmännisch
+  // gerundet traf nur jeder zweite. Beim Nettolohn 114 329 lag das steuerbare Einkommen damit CHF 1 zu
+  // tief (109 099 statt 109 100), die Abrundung auf 100 Franken (Form. 58c) kippte, und die
+  // Bundessteuer lag bis CHF 8.45 neben der ESTV.
+  const pauschale = Math.floor(Math.min(a.berufsauslagen.max, Math.max(a.berufsauslagen.min, netto * a.berufsauslagen.satz)));
   const ba = Number(berufsauslagen) > 0 ? Number(berufsauslagen) : pauschale;
   const grund = verheiratet ? a.versicherung.verheiratet : a.versicherung.ledig;
   const vers = grund * (netto < a.bvgAbNettolohn ? a.versicherung.ohneBvgFaktor : 1) + a.versicherung.proKind * kinder;
@@ -185,10 +193,71 @@ export function kantonssteuerFuerProfil({
   if (Number(partnerEinkommen) > 0) grund = 'partner';
   else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
-  const steuerbar = direkt
-    ? Number(direktSteuerbar)
-    : steuerbarNachEstv({ nettolohnJahr, verheiratet, kinder, berufsauslagen, weitereAbzuege });
+  const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
+}
+
+/**
+ * E39: EIN steuerbares Einkommen je Profil — für die Bundessteuer und für die Kantonstabelle.
+ *   direktSteuerbar > 0 → dieser Wert (quelle 'direkt'; aus der Veranlagung, Bund)
+ *   Lohn als Bruttolohn erfasst → keine Zahl (grund 'brutto'): die Abzüge vom Brutto kennt die App nicht
+ *   Partnereinkommen > 0 und verheiratet → keine Zahl (grund 'partner'): Einkommen der Ehegatten
+ *     werden zusammengerechnet (DBG Art. 9 Abs. 1), dazu der Zweiverdienerabzug (Art. 33 Abs. 2) —
+ *     beides ist nicht gemessen
+ *   Partnereinkommen > 0, nicht verheiratet, mit Kindern → keine Zahl (grund 'partner'): bei getrennt
+ *     besteuerten Eltern wird der Kinderabzug unter Umständen hälftig aufgeteilt (Art. 35 Abs. 1 lit. a)
+ *   sonst Nettolohn → steuerbarNachEstv() (quelle 'estv'). Konkubinat ohne Kinder: nur das eigene
+ *     Einkommen zählt (keine Zusammenrechnung), die Abzüge sind die einer alleinstehenden Person.
+ *   Mehr als 3 Kinder: die Abzüge je Kind gelten weiter (Bund rechnet, nur die Kantonstabelle nicht).
+ * @returns {{ steuerbar: number|null, quelle: 'direkt'|'estv'|null, grund: 'brutto'|'partner'|'keinLohn'|null }}
+ */
+export function steuerbaresEinkommenFuerProfil({
+  nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
+  verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0,
+} = {}) {
+  if (Number(direktSteuerbar) > 0) return { steuerbar: Number(direktSteuerbar), quelle: 'direkt', grund: null };
+  if (einkommensart === 'brutto') return { steuerbar: null, quelle: null, grund: 'brutto' };
+  if (Number(partnerEinkommen) > 0 && (verheiratet || kinder > 0)) return { steuerbar: null, quelle: null, grund: 'partner' };
+  if (!(Number(nettolohnJahr) > 0)) return { steuerbar: null, quelle: null, grund: 'keinLohn' };
+  return { steuerbar: steuerbarNachEstv({ nettolohnJahr, verheiratet, kinder, berufsauslagen, weitereAbzuege }), quelle: 'estv', grund: null };
+}
+
+/**
+ * E39: Die Eingaben der Steuerschätzung aus dem Profil — gleich für alle drei Seiten.
+ * Nettolohn = Hauptlohn + Nebenerwerb (je × 12). Ist einer der beiden als Bruttolohn erfasst,
+ * gilt die Einkommensart 'brutto'.
+ */
+export function steuerEingabenAusDaten(data = {}) {
+  const f = data?.finanzen || {};
+  const hh = getHouseholdInfo(data);
+  const neben = Number(f.sideIncome) || 0;
+  return {
+    kanton: steuerkantonVorbelegung(data),
+    nettolohnJahr: ((Number(f.monthlyIncome) || 0) + neben) * 12,
+    direktSteuerbar: Number(f.taxableIncome) || 0,
+    einkommensart: f.incomeType === 'brutto' || (neben > 0 && f.sideIncomeType === 'brutto') ? 'brutto' : (f.incomeType || null),
+    partnerEinkommen: hh.partnerIncome,
+    verheiratet: data?.basis?.maritalStatus === 'married',
+    kinder: hh.childrenCount,
+    elterntarif: data?.taxData?.elterntarif === true,
+    ...abzuegeAusTaxData(data?.taxData),
+  };
+}
+
+/**
+ * E39: Bundessteuer und Kantons-/Gemeindesteuer aus demselben steuerbaren Einkommen.
+ * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object }}
+ *   bund = null, wenn es kein steuerbares Einkommen gibt (grund sagt warum).
+ */
+export function steuernFuerProfil(p = {}) {
+  const basis = steuerbaresEinkommenFuerProfil(p);
+  const bund = basis.steuerbar == null ? null : bundessteuerAusSteuerbarem({
+    steuerbaresEinkommen: basis.steuerbar,
+    verheiratet: p.verheiratet, kinder: p.kinder, elterntarif: p.elterntarif,
+    einkommen: p.nettolohnJahr,
+  });
+  const kanton = kantonssteuerFuerProfil({ ...p, bundessteuer: bund ? bund.steuer : 0 });
+  return { ...basis, bund, kanton };
 }
 
 export function getHauptort(kuerzel) {

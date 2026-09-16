@@ -4,12 +4,12 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
-import { berechneBundessteuer, grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { kantonssteuerFuerProfil, abzuegeAusTaxData, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, abzuegeAusTaxData, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
-import { KantonssteuerOrientierung } from './components/KantonssteuerOrientierung.jsx';
+import { KantonssteuerOrientierung, bundOhneZahlText } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
@@ -67,9 +67,6 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [uebernommen, setUebernommen] = useState(false);
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
   const [kinder, setKinder] = useState(hh.childrenCount);
-  const [taxableIncome, setTaxableIncome] = useState(0);
-  const [estimatedTax, setEstimatedTax] = useState(0);
-  const [taxResult, setTaxResult] = useState(null);
   // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete: nur mit ausdrücklicher Bestätigung
   // (Kinder im gleichen Haushalt, Unterhalt zur Hauptsache). Ohne sie: vorsichtiger Grundtarif.
   const elterntarif = taxData.elterntarif === true;
@@ -83,31 +80,20 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const enteredTaxable = Number(taxableInput) || 0;
   const [useEnteredTaxable, setUseEnteredTaxable] = useState(enteredTaxable > 0);
 
-  const partnerIncome = Number(data.basis?.household?.partnerIncome || 0);
-  const income = (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0) + partnerIncome) * 12;
-
-  React.useEffect(() => {
-    calculateTax();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Die Deps listen die echten Eingaben von calculateTax; die Funktion selbst wird pro Render neu erstellt und würde als Dep jeden Render feuern.
-  }, [taxData, income, canton, verheiratet, kinder, enteredTaxable, useEnteredTaxable]);
-
-  const calculateTax = () => {
-    let result;
-    if (useEnteredTaxable && enteredTaxable > 0) {
-      // Eingegebener/importierter Wert ist schon steuerbar: 1:1 als Basis, keine Abzüge mehr.
-      result = berechneBundessteuer({ bruttoEinkommen: enteredTaxable, verheiratet, kinder, elterntarif, abzuege: 0 });
-    } else {
-      let totalDeductions = 0;
-      for (const ded of deductions) {
-        totalDeductions += Number(taxData[ded.key] || 0);
-      }
-      result = berechneBundessteuer({ bruttoEinkommen: income, verheiratet, kinder, elterntarif, abzuege: totalDeductions });
-    }
-
-    setTaxableIncome(result.steuerBaresEinkommen);
-    setEstimatedTax(result.steuer);
-    setTaxResult(result);
-  };
+  // E39: EIN steuerbares Einkommen für Bund und Kanton — dieselbe Regel wie FinanzUebersicht und
+  // BehoerdenDossier (steuernFuerProfil), mit den Live-Eingaben dieser Seite. Nettolohn = Hauptlohn +
+  // Nebenerwerb; das Partnereinkommen zählt nicht dazu (Ehe mit zwei Einkommen → keine Zahl).
+  const steuern = steuernFuerProfil({
+    ...steuerEingabenAusDaten(data),
+    kanton: canton,
+    direktSteuerbar: useEnteredTaxable ? enteredTaxable : 0,
+    verheiratet, kinder, elterntarif,
+    ...abzuegeAusTaxData(taxData),
+  });
+  const income = steuerEingabenAusDaten(data).nettolohnJahr;
+  const taxResult = steuern.bund;
+  const taxableIncome = steuern.steuerbar ?? 0;
+  const estimatedTax = taxResult ? taxResult.steuer : 0;
 
   const handleInputChange = (key, value) => {
     setTaxData(prev => ({ ...prev, [key]: Number(value) || 0 }));
@@ -130,18 +116,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     fontSize: text.sm
   };
 
-  // Die Tabelle wird mit dem steuerbaren Einkommen nach den Standardabzügen der ESTV gelesen
-  // (steuerbarNachEstv) — oder mit dem direkt eingetragenen Wert.
-  const schaetzung = kantonssteuerFuerProfil({
-    kanton: canton,
-    nettolohnJahr: (Number(data.finanzen?.monthlyIncome || 0) + Number(data.finanzen?.sideIncome || 0)) * 12,
-    direktSteuerbar: useEnteredTaxable ? enteredTaxable : 0,
-    einkommensart: data.finanzen?.incomeType || null,
-    partnerEinkommen: partnerIncome,
-    verheiratet, kinder, elterntarif,
-    ...abzuegeAusTaxData(taxData),
-    bundessteuer: estimatedTax,
-  });
+  // Die Kantonstabelle wird mit demselben steuerbaren Einkommen gelesen.
+  const schaetzung = steuern.kanton;
   const kantonal = schaetzung.kantonal;
 
   const buttonStyle = {
@@ -273,16 +249,20 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: '12px' } },
+        steuern.quelle === 'estv' && React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('common.total') + ' (-)'),
           React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '- CHF ' + (income - taxableIncome).toFixed(0))
         ),
 
-        React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
+        steuern.quelle === 'estv' && React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.taxableIncome')),
-          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0))
+        // E39: das eine steuerbare Einkommen — für Bund und Kanton.
+        steuern.steuerbar != null && React.createElement('div', { 'data-testid': 'steuerbares-einkommen', style: { marginBottom: space.md, padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, steuern.quelle === 'estv' ? t('tax.taxableIncomeEstimated') : t('tax.taxableIncome')),
+          React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0)),
+          React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+            steuern.quelle === 'estv' ? t('tax.taxableEstimatedHint') : t('tax.taxableEnteredHint')
+          )
         ),
 
         taxResult && taxResult.kinderabzug > 0 ? React.createElement('div', { style: { marginBottom: '12px' } },
@@ -292,7 +272,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
-        React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        // Bruttolohn: dieselbe Begründung steht gleich darunter bei der Kantonssteuer — hier nur kurz.
+        !taxResult && React.createElement('div', { 'data-testid': 'bundessteuer-ohne-zahl', style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.federalTax')),
+          React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, (canton && steuern.grund === 'brutto') ? t('tax.noTaxFigure') : bundOhneZahlText(t, steuern.grund))
+        ),
+
+        taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
             t('tax.federalTax'),
             taxResult ? ' ~' + taxResult.effektiverSatz + '%' : ''
@@ -324,9 +310,6 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
               React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.kantonalUndGemeinde),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
                 t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
-              ),
-              !useEnteredTaxable && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-                t('tax.cantonalTaxableBasis', { value: Math.round(schaetzung.steuerbar).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’') })
               )
             ),
             React.createElement('div', { 'aria-live': 'polite', style: { marginBottom: space.md, padding: '12px', background: palette.sand + '12', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '30' } },
@@ -339,7 +322,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           );
         })(),
 
-        React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        taxResult && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.netIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
             'CHF ' + (income - (kantonal ? kantonal.total : estimatedTax)).toFixed(0)
@@ -349,7 +332,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       )
     ),
 
-    React.createElement(SteuerSaeulen, {
+    taxResult && React.createElement(SteuerSaeulen, {
       palette, t,
       istVerheiratet: verheiratet,
       vergleich: vergleicheTarife(taxableIncome, kinder, elterntarif),

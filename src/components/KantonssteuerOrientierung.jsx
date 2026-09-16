@@ -20,6 +20,12 @@ export const orientierungsText = (t, schaetzung, jahr) =>
         ? t('tax.bandNotCheckedBrutto')
         : t('tax.bandNotChecked');
 
+// E39: warum es keine Bundessteuer-Zahl gibt (grund aus steuerbaresEinkommenFuerProfil).
+export const bundOhneZahlText = (t, grund) =>
+  grund === 'brutto' ? t('tax.federalNotCheckedBrutto')
+    : grund === 'partner' ? t('tax.federalNotCheckedPartner')
+      : t('tax.noTaxFigure');
+
 export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr, style }) => {
   const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;
   const estvLink = getLinkById('steuern');
