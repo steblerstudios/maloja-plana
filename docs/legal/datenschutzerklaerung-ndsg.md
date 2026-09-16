@@ -48,9 +48,9 @@ Die folgenden Daten werden ausschliesslich in Deinem Browser gespeichert:
 | Beta-Zugang | localStorage (`or5_beta_access`) | Zugangsschranke während der Beta (nur UI-Hürde, keine Verschlüsselung) |
 | Einstellungen (Sprache, Theme, Onboarding) | localStorage (`or5_lang`, `or5_theme`, `or5_onboarding_done`) | App-Konfiguration |
 
-Daneben legt die App weitere Schlüssel mit dem Präfix `or5_` an (Barrierefreiheits-Einstellungen, Zeitstempel des letzten Backups, Migrations-Schnappschuss `or5_data_premigration`); sie enthalten Einstellungen oder Kopien der oben genannten Daten. Die Speichernamen sind im Quellcode belegt (`src/utils/storage.js` Z. 51, `src/utils/autoBackup.js` Z. 11, `src/utils/backupCrypto.js` Z. 214–225, `src/utils/docBlobs.js` Z. 4–6, `src/BetaGate.jsx` Z. 15, `src/MerklisteView.jsx` Z. 10). Ältere Installationen wurden von `ordnung-ruhe-documents` / `ordnung-ruhe-backups` auf die neuen Namen migriert; die alten Datenbanken werden dabei gelöscht (`storage.js` Z. 88, `autoBackup.js` Z. 52).
+Daneben legt die App weitere Schlüssel mit dem Präfix `or5_` an (Barrierefreiheits-Einstellungen, Zeitstempel des letzten Backups, Migrations-Schnappschuss `or5_data_premigration`); sie enthalten Einstellungen oder Kopien der oben genannten Daten. Die Speichernamen sind im Quellcode belegt (`src/utils/storage.js` Z. 51, `src/utils/autoBackup.js` Z. 11, `src/utils/backupCrypto.js` Z. 216–227, `src/utils/docBlobs.js` Z. 4–6, `src/BetaGate.jsx` Z. 15, `src/MerklisteView.jsx` Z. 10). Ältere Installationen wurden von `ordnung-ruhe-documents` / `ordnung-ruhe-backups` auf die neuen Namen migriert; die alten Datenbanken werden dabei gelöscht (`storage.js` Z. 88, `autoBackup.js` Z. 52).
 
-**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei (Backup-Export, JSON oder verschlüsselt).
+**Diese Daten verlassen Dein Gerät nicht**, ausser Du exportierst sie aktiv als Datei (JSON oder CSV, auf Wunsch verschlüsselt; unter Werkzeuge → Export, siehe 7.3). Einzelne Ansichten bieten zusätzlich eigene Dateien an, ebenfalls nur auf Deinen Klick: Behörden-Dossier, Budget-Bericht und Unterlagen zur Prämienverbilligung als JSON, Lebenslauf als HTML oder JSON, Termine als Kalenderdatei (`.ics`), Dossiers, Briefe und weitere Druckansichten zum Drucken oder Speichern als PDF (blockiert der Browser das neue Fenster, wird die Ansicht als `.html`-Datei heruntergeladen, `src/utils/helpers.js` Z. 58–72). Vor jeder solchen Datei zeigt die App, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx`). Bis zum 16.09.2026 stand hier «(Backup-Export, JSON oder verschlüsselt)»; CSV, `MANIFEST.txt` und die Dateien aus den übrigen Ansichten fehlten.
 
 ---
 
@@ -200,3 +200,4 @@ https://www.edoeb.admin.ch
 
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
 Abschnitt 7.1 und 7.3 (Benennung des Exports): auf Code-Stand `main` 0274ce9 gebracht, nicht juristisch geprüft.
+Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
