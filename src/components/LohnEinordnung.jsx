@@ -302,7 +302,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
 
     React.createElement('div', {
       style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px', fontStyle: 'italic' },
-    }, renderSource(t('lohnEinordnung.source', { median: fmt(median), jahr: LOHN_REFERENZ.jahr })))
+    }, renderSource(t('lohnEinordnung.source', { median: fmt(median), jahr: LOHN_REFERENZ.jahr }), null, t))
   );
 };
 

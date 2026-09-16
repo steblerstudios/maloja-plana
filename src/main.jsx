@@ -33,6 +33,7 @@ const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
 import MobileNav from './MobileNav.jsx';
 import { Icon } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
@@ -974,9 +975,10 @@ const AppInner = ({ demo }) => {
       }, t('sandbox.footerLink'))
     ),
     React.createElement('span', { style: { pointerEvents: 'none' } }, '·'),
-    React.createElement('a', {
+    React.createElement(ExternerLink, {
+      t,
       href: 'https://www.thegreenwebfoundation.org/green-web-check/?domain=malojaplana.ch',
-      target: '_blank', rel: 'noopener noreferrer', title: t('greenHostingFooter'),
+      title: t('greenHostingFooter'),
       style: { color: palette.sageDeep, fontSize: text.xs, fontFamily: 'inherit', letterSpacing: '0.3px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }
     },
       React.createElement(Icon, { name: 'leaf', size: 13 }),

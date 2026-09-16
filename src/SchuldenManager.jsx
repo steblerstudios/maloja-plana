@@ -3,6 +3,7 @@ import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
 import { Icon } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { LegendenMarke } from './components/LegendenMarke.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -188,7 +189,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.6, marginBottom: space.sm } }, t('schulden.helpBody')),
         React.createElement('div', { style: { display: 'flex', gap: space.md, flexWrap: 'wrap', fontSize: text.sm, fontWeight: weight.semi } },
           React.createElement('a', { href: 'tel:0800708708', style: { color: palette.sageDeep, textDecoration: 'none' } }, '0800 708 708'),
-          React.createElement('a', { href: 'https://schulden.ch', target: '_blank', rel: 'noopener', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
+          React.createElement(ExternerLink, { t, href: 'https://schulden.ch', style: { color: palette.sageDeep, textDecoration: 'none' } }, 'schulden.ch')
         ),
         onNavigate && React.createElement('div', { style: { marginTop: space.sm } },
           React.createElement(AblaufLink, { palette, label: t('schulden.situationLink'), onClick: () => onNavigate('situationen') })

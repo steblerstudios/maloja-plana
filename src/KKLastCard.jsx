@@ -75,7 +75,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       t('kkLast.underWithIpv')
     ),
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, t('kkLast.whoNote')),
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, renderSource(t('kkLast.source'))),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, renderSource(t('kkLast.source'), null, t)),
     over && onNavigate && React.createElement('button', {
       type: 'button',
       onClick: () => onNavigate('premium'),

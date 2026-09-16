@@ -375,8 +375,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         }, '→ ' + t('po.reserveCheckLink'))
       ),
       // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'))),
-      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource')))
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'), null, t)),
+      React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs + 'px' } }, renderSource(t('po.franchiseOptSource'), null, t))
     ),
 
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
@@ -479,7 +479,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       t('po.disclaimer')
     ),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs } },
-      renderSource(t('po.source'))
+      renderSource(t('po.source'), null, t)
     ),
 
     // Crosslink: vom Vergleich in den geführten Wechsel-Ablauf

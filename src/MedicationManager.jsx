@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 let _searchMedications = null;
 const getSearch = async () => {
@@ -271,8 +272,8 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
     ),
 
     // Compendium link
-    compendiumUrl && React.createElement('a', {
-      href: compendiumUrl, target: '_blank', rel: 'noopener',
+    compendiumUrl && React.createElement(ExternerLink, {
+      t, href: compendiumUrl,
       style: {
         display: 'inline-flex', alignItems: 'center', gap: '4px',
         fontSize: text.xs, color: palette.mid, textDecoration: 'underline',

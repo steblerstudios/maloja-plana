@@ -2,6 +2,7 @@ import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
 import { Icon } from './IconSystem.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -121,9 +122,9 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     React.createElement(PanelTitle, { palette, style: { marginBottom: space.md + 'px' } }, t('asyl.orgsTitle')),
     React.createElement('div', null,
       ASYL_ORGS.map((org, i) =>
-        React.createElement('a', {
-          key: org.id,
-          href: org.url, target: '_blank', rel: 'noopener noreferrer',
+        React.createElement(ExternerLink, {
+          key: org.id, t,
+          href: org.url,
           style: { ...s.orgRow, ...(i === ASYL_ORGS.length - 1 ? { borderBottom: 'none' } : {}) },
         },
           React.createElement('div', { style: s.orgName },
@@ -141,8 +142,8 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
       React.createElement(PanelTitle, { palette, style: { marginTop: space.lg + 'px', marginBottom: space.md + 'px' } },
         t('asyl.cantonOfficeTitle', { canton: t('cantons.' + canton) || canton })),
       React.createElement('div', { style: s.cantonBox },
-        React.createElement('a', {
-          href: cantonOffice.url, target: '_blank', rel: 'noopener noreferrer',
+        React.createElement(ExternerLink, {
+          t, href: cantonOffice.url,
           style: s.cantonOfficeLink,
         }, cantonOffice.name + ' →'),
         cantonOffice.phone && React.createElement('div', { style: s.cantonOfficePhone },

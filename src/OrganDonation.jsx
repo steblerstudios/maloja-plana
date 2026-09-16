@@ -6,6 +6,7 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , space } from './config/tokens.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 export const OrganDonation = ({ palette, t, data, onSave }) => {
   const [status, setStatus] = useState(data.organStatus || 'registered');
@@ -121,7 +122,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('strong', { style: { color: palette.text } }, t('organ.swissOrganDonation')),
           React.createElement('div', { style: { marginTop: '6px' } },
-            React.createElement('a', { href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', target: '_blank', rel: 'noopener noreferrer', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, '↗ swisstransplant.org')
+            React.createElement(ExternerLink, { t, href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, '↗ swisstransplant.org')
           )
         )
       )

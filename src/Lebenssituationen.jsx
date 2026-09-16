@@ -6,6 +6,7 @@ import { getFamilienEL } from './data/familienEL.js';
 import { getMutterschaftsbeihilfe } from './data/mutterschaftsbeihilfe.js';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // ─── Lebenssituationen (Subpage) ──────────────────────────
 // Lebenszustände — andauernde Situationen, die versteckte Berechtigungen
@@ -63,8 +64,8 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
 
   // Externe ↗-Karte (gleicher Stil wie die Berechtigungs-Karten), für regionale Angebote.
   const extCard = (key, url, titel, textStr) =>
-    React.createElement('a', {
-      key, href: url, target: '_blank', rel: 'noopener noreferrer',
+    React.createElement(ExternerLink, {
+      key, t, href: url,
       style: {
         display: 'block', width: '100%', textAlign: 'left', boxSizing: 'border-box',
         padding: '10px 12px', marginBottom: space.xs + 'px',
@@ -192,7 +193,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
             }, t('lebenszustaende.quelleLabel') + ': ' + b.quelle + ' · ' + t('lebenszustaende.standLabel') + ' ' + b.stand)
           ];
           return isExternal
-            ? React.createElement('a', { key: b.key, href: cardUrl, target: '_blank', rel: 'noopener noreferrer', style: cardStyle, ...hover }, inner)
+            ? React.createElement(ExternerLink, { key: b.key, t, href: cardUrl, style: cardStyle, ...hover }, inner)
             : React.createElement('button', { key: b.key, type: 'button', onClick: () => onNavigate(b.view), style: cardStyle, ...hover }, inner);
         }),
         // Kanton-bewusste regionale Vergünstigungen (nur bei markierten Zuständen).

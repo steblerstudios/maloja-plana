@@ -1,5 +1,10 @@
 export default {
   // TODO(rm): Romanisch von Muttersprachler:in prüfen lassen (Rumantsch Grischun, provisorisch).
+  a11y: {
+    // R4: infurmaziun per screen reader sin colliaziuns externas che s'avran en
+    // in nov tab (target="_blank") — WCAG 3.2.5 / G201.
+    neuerTab: 'sa avra en in nov tab',
+  },
   lebenszustaende: {
     sectionTitle: 'Pertutga ina da questas situaziuns a Vus?',
     sectionIntro: 'Tscherts agids na dependan betg d’in singul eveniment, mabain d’ina situaziun che dura. Tscherni quai che correspunda. Quai resta sin Voss apparat ed agida mo a mussar a Vus quai che va bain per Vus — nagin profil, nagina valitaziun.',

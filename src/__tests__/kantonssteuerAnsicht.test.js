@@ -40,6 +40,10 @@ globalThis.window ??= { innerWidth: 1024, addEventListener: () => {}, removeEven
 const { TaxCalculator } = await import('../TaxCalculator.jsx');
 const { LabeledField } = await import('../components/LabeledField.jsx');
 const { KantonssteuerOrientierung } = await import('../components/KantonssteuerOrientierung.jsx');
+// R4: estvLink/kantonsLink rendern seit dem a11y-Hinweis (WCAG 3.2.5) über ExternerLink
+// statt eines rohen <a> — knoten() muss es wie KantonssteuerOrientierung expandieren,
+// damit das erzeugte <a href> weiter unten gefunden wird.
+const { ExternerLink } = await import('../components/ExternerLink.jsx');
 
 const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
 const t = (k, p) => (p && typeof p === 'object' ? k + '(' + Object.values(p).join('|') + ')' : k);
@@ -51,6 +55,7 @@ const knoten = (el, out = []) => {
   let kinder = el.props.children;
   if (el.type === LabeledField && typeof kinder === 'function') kinder = kinder('id');
   if (el.type === KantonssteuerOrientierung) kinder = KantonssteuerOrientierung(el.props);
+  if (el.type === ExternerLink) knoten(ExternerLink(el.props), out);
   knoten(kinder, out);
   return out;
 };

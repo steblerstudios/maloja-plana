@@ -7,6 +7,7 @@ import { STIPENDIEN_OFFICIAL, STIPENDIEN_ELIGIBILITY, STIPENDIEN_PRIVATE } from 
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Ergebnis-Marker des Berechtigungs-Checks: eigenes Zeichen je Ton, damit sich
 // „Ja / Nein / Vielleicht" auch OHNE Farbe (Schwarzweiss-Modus) unterscheiden —
@@ -118,7 +119,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
       canton && React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } },
         t('stip.yourCanton', { canton: getCantonName(canton, t) })
       ),
-      React.createElement('a', { href: STIPENDIEN_OFFICIAL.edkCantonalOffices, target: '_blank', rel: 'noopener', style: linkStyle },
+      React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: linkStyle },
         '↗ ' + t('stip.cantonalLink')
       )
     ),
@@ -132,7 +133,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     React.createElement('p', { style: { ...intro, marginBottom: space.sm + 'px' } }, t('stip.privateIntro')),
     STIPENDIEN_PRIVATE.map(p =>
       React.createElement('div', { key: p.id, style: { ...item, justifyContent: 'space-between' } },
-        React.createElement('a', { href: p.url, target: '_blank', rel: 'noopener', style: linkStyle }, '↗ ' + t('stip.private.' + p.id)),
+        React.createElement(ExternerLink, { t, href: p.url, style: linkStyle }, '↗ ' + t('stip.private.' + p.id)),
         React.createElement('span', { style: costStyle(p.cost) }, t('stip.cost.' + p.cost))
       )
     ),
@@ -148,7 +149,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     }, '→ ' + t('nav.direktlinks')),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
-      'ⓘ ', renderSource(t('stip.source'))
+      'ⓘ ', renderSource(t('stip.source'), null, t)
     )
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
@@ -48,7 +49,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
     ),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),
     React.createElement('div', { style: s.note }, t('pflege.entl.disclaimer')),
-    React.createElement('a', { style: s.extLink, href: 'https://www.spitex.ch', target: '_blank', rel: 'noopener noreferrer' }, t('pflege.entl.extLink') + ' ↗')
+    React.createElement(ExternerLink, { t, style: s.extLink, href: 'https://www.spitex.ch' }, t('pflege.entl.extLink') + ' ↗')
   );
 };
 

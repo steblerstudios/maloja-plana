@@ -1,4 +1,9 @@
 export default {
+  a11y: {
+    // R4: Hinweis für Screenreader auf externen Links, die in einem neuen Tab
+    // öffnen (target="_blank") — WCAG 3.2.5 / G201.
+    neuerTab: 'öffnet in neuem Tab',
+  },
   lebenszustaende: {
     sectionTitle: 'Trifft eine dieser Situationen zu?',
     sectionIntro: 'Manches steht einem nicht wegen eines einzelnen Ereignisses zu, sondern wegen einer andauernden Situation. Wähle, was passt. Das bleibt auf deinem Gerät und hilft nur, dir Passendes zu zeigen — kein Profil, keine Bewertung.',
