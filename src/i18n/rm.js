@@ -1728,9 +1728,43 @@ export default {
 
   mvo: {
     title: { sie: 'Vossa urden essentiala', du: 'Tia urden essentiala' },
-    empty: { sie: "Ils 18 champs ils pli impurtants — tut quai che Vus dovrais per autoritads, cas d'urgenza e la vita da mintgadi.", du: "Ils 18 champs ils pli impurtants — tut quai che Ti dovras per autoritads, cas d'urgenza e la vita da mintgadi." },
+    empty: { sie: "Ils 15 champs ils pli impurtants — tut quai che Vus dovrais per autoritads, cas d'urgenza e la vita da mintgadi.", du: "Ils 15 champs ils pli impurtants — tut quai che Ti dovras per autoritads, cas d'urgenza e la vita da mintgadi." },
     progress: { sie: 'Vus essas en via. Mintga champ porta urden.', du: 'Ti es en via. Mintga champ porta urden.' },
     complete: { sie: 'Vossa urden essentiala stat. Il fundament è mess.', du: 'Tia urden essentiala stat. Il fundament è mess.' },
+  },
+  // E17 · stadi «na concerna betg» (glista O9)
+  // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+  naZustand: {
+    empfohlen: 'recumandà',
+    markieren: 'Na concerna betg',
+    zuruecknehmen: 'Revocar',
+    markiert: 'na concerna betg. Vala sco fatg.',
+  },
+  // E18 · «Stizzar tut las datas sin quest apparat» (glista O11)
+  // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+  datenLoeschen: {
+    bereich: 'Datas sin quest apparat',
+    kurz: { sie: 'Maloja memorisescha tut mo en quest navigatur. Qua pudais Vus allontanar tut.', du: 'Maloja memorisescha tut mo en quest navigatur. Qua pos Ti allontanar tut.' },
+    beispielAus: "En l'exempel è il stizzar deactivà — las datas mussadas èn datas d'exempel.",
+    titel: 'Stizzar tut las datas sin quest apparat',
+    titelBestaetigen: 'Propi stizzar tut?',
+    intro: 'Stizzà vegn tut quai che Maloja ha memorisà en quest navigatur:',
+    wasAngaben: { sie: 'Vossas indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias', du: 'Tias indicaziuns en tut ils chapitels, las promemorias, ils contacts e la glista da notizias' },
+    wasDokumente: 'tut ils documents deponids cun lur datotecas e las copias da segirezza automaticas en il navigatur',
+    wasEinstellungen: 'parameters sco lingua e preschentaziun, er in tresor installà',
+    bleibt: { sie: "Betg pertutgadas èn las datotecas da segirezza che Vus avais telechargià e l'access beta. Sin auters apparats na sa mida nagut.", du: "Betg pertutgadas èn las datotecas da segirezza che Ti has telechargià e l'access beta. Sin auters apparats na sa mida nagut." },
+    letzteSicherung: 'Ultima copia da segirezza telechargiada: {datum}',
+    keineSicherung: "Sin quest apparat n'è anc registrada nagina copia da segirezza telechargiada.",
+    zuerstSichern: "L'emprim far ina copia da segirezza",
+    abbrechen: 'Interrumper',
+    weiter: 'Vinavant',
+    endgueltig: "Quai na sa lascha betg revocar. Senza copia da segirezza n'èn las datas suenter betg pli qua. Maloja cumenza silsuenter da nov, sco l'emprima giada.",
+    verstanden: "Jau hai chapì e vuless stizzar tut las datas sin quest apparat.",
+    zurueck: 'Enavos',
+    jetztLoeschen: 'Stizzar tut ussa',
+    laeuft: 'Las datas vegnan stizzadas …',
+    fehler: { sie: "Ina part n'ha betg pudì vegnir stizzada. Las ulteriuras datas da la website pudais Vus allontanar en ils parameters dal navigatur.", du: "Ina part n'ha betg pudì vegnir stizzada. Las ulteriuras datas da la website pos Ti allontanar en ils parameters dal navigatur." },
+    neuStarten: 'Cumenzar da nov',
   },
 
   greenHostingFooter: 'Hosting verd',

@@ -21,6 +21,7 @@ import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
+import { trifftNichtZu, naUmschalten, NA_FELD } from './utils/vollstaendigkeit.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -455,6 +456,48 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     }, '→ ' + tr('beistand.wegweiserLink'))
   );
 
+  // E17 · «trifft nicht zu»: ein kleiner, ruhiger Schalter unter Feldern, die für manche
+  // Lebenslagen nicht passen (`naOk`, z. B. Arbeitgeber bei Pensionierten). Markiert zählt
+  // das Feld als erledigt und wird nicht als nächste Angabe vorgeschlagen; zurücknehmbar.
+  // Nur angeboten, solange das Feld leer ist — wer etwas eingetragen hat, braucht ihn nicht.
+  // Im Beispiel schreibt updateData ohnehin nichts, darum dort kein Schalter.
+  const renderFeldMitNa = (field) => {
+    const el = renderField(field);
+    if (!field.naOk || demoMode) return el;
+    const na = trifftNichtZu(data, field.k);
+    if (!na && data[field.k]) return el;
+    const umschalten = () => onUpdate(NA_FELD, naUmschalten(data, field.k));
+    const knopf = React.createElement('button', {
+      type: 'button', onClick: umschalten, 'data-na': na ? '1' : '0',
+      'aria-label': field.label + ': ' + tr(na ? 'naZustand.zuruecknehmen' : 'naZustand.markieren'),
+      style: {
+        background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer', fontFamily: 'inherit',
+        fontSize: text.xs, color: palette.mid, textDecoration: 'underline', textUnderlineOffset: '3px',
+        textDecorationColor: palette.border,
+      },
+    }, tr(na ? 'naZustand.zuruecknehmen' : 'naZustand.markieren'));
+    if (!na) {
+      return React.createElement('div', { key: field.k },
+        el,
+        React.createElement('div', { style: { marginTop: -(space.lg - space.xs) + 'px', marginBottom: space.lg + 'px' } }, knopf)
+      );
+    }
+    return React.createElement('div', {
+      key: field.k,
+      style: {
+        marginBottom: space.lg + 'px', padding: space.sm + 'px ' + space.md + 'px',
+        background: palette.up, borderRadius: radius.sm, border: '1px dashed ' + palette.border,
+        display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: space.sm + 'px', flexWrap: 'wrap',
+      },
+    },
+      React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } },
+        React.createElement('span', { style: { color: palette.text } }, field.label),
+        ' — ' + tr('naZustand.markiert')
+      ),
+      knopf
+    );
+  };
+
   const renderField = (field) => {
     if (field.type === 'household') return renderHouseholdFields();
     const value = data[field.k] || '';
@@ -474,6 +517,8 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
 
     const renderLabel = (fieldId, labelText, hint) => React.createElement('label', { id: fieldId + '-label', htmlFor: fieldId, style: labelStyle },
       labelText,
+      // E17: empfohlen statt Pflicht — leise, ohne Stern.
+      field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen')),
       vorlesen?.enabled && React.createElement(VorlesenButton, { text: labelText + (hint ? '. ' + hint : ''), speak: vorlesen.speak, color: palette.mid, label: tr('vorlesen.label') })
     );
 
@@ -1611,7 +1656,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               );
             }
           }
-          elements.push(renderField(field));
+          elements.push(renderFeldMitNa(field));
           const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
             React.createElement('button', {
               key: 'crosslink-' + key,
@@ -2136,7 +2181,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
               );
             }
           }
-          elements.push(renderField(field));
+          elements.push(renderFeldMitNa(field));
           if (field.k === 'vorsorgeauftrag' && chapter.key === 'notfall') {
             elements.push(renderBeistandWegweiser());
           }

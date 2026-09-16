@@ -132,6 +132,9 @@ function dl(t, chapterKey, docKey) {
   return t('chapters.' + chapterKey + '.docs.' + docKey);
 }
 
+// Feld-Merkmale (E17): `mvo` = zählt zur Grundordnung · `recommended` = empfohlen,
+// zählt nicht zur Grundordnung · `naOk` = bietet den Schalter «trifft nicht zu» an
+// (Markierung in `data[kapitel]._na`, siehe utils/vollstaendigkeit.js).
 export function getChapters(t) {
   return [
     {
@@ -149,8 +152,8 @@ export function getChapters(t) {
         { k: 'pronouns', label: fl(t, 'basis', 'pronouns'), type: 'select', options: opts(t, 'basis', 'pronouns') },
         { k: 'nationality', label: fl(t, 'basis', 'nationality'), type: 'select', options: opts(t, 'basis', 'nationality') },
         { k: 'canton', label: fl(t, 'basis', 'canton'), type: 'select', options: cantonOptions(t), mvo: true },
-        { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone'), mvo: true, autoComplete: 'tel', section: t('sections.basis.contact'), sectionIntro: si(t, 'basis', 'contact') },
-        { k: 'email', label: fl(t, 'basis', 'email'), type: 'email', mvo: true, autoComplete: 'email' },
+        { k: 'phone', label: fl(t, 'basis', 'phone'), type: 'tel', placeholder: ph(t, 'basis', 'phone'), recommended: true, naOk: true, autoComplete: 'tel', section: t('sections.basis.contact'), sectionIntro: si(t, 'basis', 'contact') },
+        { k: 'email', label: fl(t, 'basis', 'email'), type: 'email', recommended: true, naOk: true, autoComplete: 'email' },
         { k: 'ahv', label: fl(t, 'basis', 'ahv'), type: 'text', placeholder: ph(t, 'basis', 'ahv'), hint: hn(t, 'basis', 'ahv'), orientation: or(t, 'ahv') },
         { k: 'maritalStatus', label: fl(t, 'basis', 'maritalStatus'), type: 'select', options: opts(t, 'basis', 'maritalStatus'), section: t('sections.basis.family'), sectionIntro: si(t, 'basis', 'family') },
         { k: 'household', type: 'household' },
@@ -205,10 +208,10 @@ export function getChapters(t) {
         { k: 'taxableIncome', label: fl(t, 'finanzen', 'taxableIncome'), type: 'currency', hint: hn(t, 'finanzen', 'taxableIncome'), secondary: true },
         { k: 'incomeType', label: fl(t, 'finanzen', 'incomeType'), type: 'select', options: opts(t, 'finanzen', 'incomeType') },
         { k: 'dreizehnter', label: fl(t, 'finanzen', 'dreizehnter'), type: 'select', options: opts(t, 'finanzen', 'dreizehnter') },
-        { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', mvo: true },
-        { k: 'employerAddress', label: fl(t, 'finanzen', 'employerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'employerAddress') },
+        { k: 'employer', label: fl(t, 'finanzen', 'employer'), type: 'text', recommended: true, naOk: true },
+        { k: 'employerAddress', label: fl(t, 'finanzen', 'employerAddress'), type: 'textarea', hint: hn(t, 'finanzen', 'employerAddress'), naOk: true },
         { k: 'employmentType', label: fl(t, 'finanzen', 'employmentType'), type: 'select', options: opts(t, 'finanzen', 'employmentType') },
-        { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date' },
+        { k: 'startDate', label: fl(t, 'finanzen', 'startDate'), type: 'date', naOk: true },
         { k: 'familienzulagen', label: fl(t, 'finanzen', 'familienzulagen'), type: 'currency', hint: hn(t, 'finanzen', 'familienzulagen') },
         { k: 'alimenteReceived', label: fl(t, 'finanzen', 'alimenteReceived'), type: 'currency', hint: hn(t, 'finanzen', 'alimenteReceived') },
         { k: 'monthlyTax', label: fl(t, 'finanzen', 'monthlyTax'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyTax'), section: t('sections.finanzen.budgetLight'), sectionIntro: si(t, 'finanzen', 'budgetLight'), orientation: or(t, 'steuern') },
@@ -290,14 +293,14 @@ export function getChapters(t) {
         { k: 'educationLevel', label: fl(t, 'ausbildung', 'educationLevel'), type: 'select', options: opts(t, 'ausbildung', 'educationLevel') },
         { k: 'efzNumber', label: fl(t, 'ausbildung', 'efzNumber'), type: 'text' },
         { k: 'certifications', label: fl(t, 'ausbildung', 'certifications'), type: 'textarea' },
-        { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
+        { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', naOk: true, section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
         // Kein `hint`: das Kapitel „Ausbildung & Arbeit" führt bewusst keine Hinweise.
         // Die Erklärung steht am gekoppelten Feld in Finanzen (Quer-Befüllung, main.jsx).
-        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea' },
-        { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text', mvo: true, orientation: or(t, 'beruf') },
-        { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date' },
+        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea', naOk: true },
+        { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text', mvo: true, naOk: true, orientation: or(t, 'beruf') },
+        { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date', naOk: true },
         { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit'), orientation: or(t, 'bewilligung_b') },
-        { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text' },
+        { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text', naOk: true },
         { k: 'languages', label: fl(t, 'ausbildung', 'languages'), type: 'textarea', section: t('sections.ausbildung.languages'), sectionIntro: si(t, 'ausbildung', 'languages') },
       ],
       docs: [
