@@ -25,7 +25,9 @@
 > B-1 und B-2 in `BUGS.md` nach «Zuletzt behoben», Tag `v0.1.29-beta` prüfen.
 > **Gerettet:** §8.7 der Bau-Liste (Teil 7, O15–O19) lag nur auf dem Zweig
 > `docs/bauliste-8b-audit-teil-1-6` (Commit nach dem Merge von #143) und kommt mit diesem PR nach `main`.
-> Die dadurch doppelten Nummern E20/E21 in §9 heissen jetzt E32/E33.
+> Seine beiden Entscheide heissen dort jetzt **E32/E33** (auf dem Zweig E20/E21); §9 behält E20/E21,
+> weil Stebler Studios am 16.09. auf §9-E20 geantwortet hat.
+> **Entscheide vom 16.09. abends** (E10, E17, E18, §9-E20, E27–E30, K13, E3) stehen in Bau-Liste §10.
 > **Offen und Oktober:** Bau-Liste §10.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-16, 12:30 (0.1.28-beta live)
