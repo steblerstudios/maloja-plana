@@ -1063,9 +1063,16 @@ export default {
   },
   mvo: {
     title: { sie: 'Il Suo ordine essenziale', du: 'Il tuo ordine essenziale' },
-    empty: 'I 18 campi più importanti — tutto ciò che serve per autorità, emergenze e vita quotidiana.',
+    empty: 'I 15 campi più importanti — tutto ciò che serve per autorità, emergenze e vita quotidiana.',
     progress: { sie: 'È sulla buona strada. Ogni campo compilato porta ordine.', du: 'Sei sulla buona strada. Ogni campo compilato porta ordine.' },
     complete: { sie: 'Il Suo ordine essenziale è completo. Le basi sono coperte.', du: 'Il tuo ordine essenziale è completo. Le basi sono coperte.' },
+  },
+  // E17 · stato «non pertinente» (lista O9)
+  naZustand: {
+    empfohlen: 'consigliato',
+    markieren: 'Non pertinente',
+    zuruecknehmen: 'Annulla',
+    markiert: 'non pertinente. Vale come completato.',
   },
   synthesis: {
     expenses: 'spese registrate',

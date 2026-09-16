@@ -1063,9 +1063,16 @@ export default {
   },
   mvo: {
     title: { sie: 'Votre ordre essentiel', du: 'Ton ordre essentiel' },
-    empty: 'Les 18 champs les plus importants — tout ce qu\'il faut pour les autorités, les urgences et le quotidien.',
+    empty: 'Les 15 champs les plus importants — tout ce qu\'il faut pour les autorités, les urgences et le quotidien.',
     progress: { sie: 'Vous êtes en chemin. Chaque champ rempli apporte de l\'ordre.', du: 'Tu es en chemin. Chaque champ rempli apporte de l\'ordre.' },
     complete: { sie: 'Votre ordre essentiel est en place. L\'essentiel est couvert.', du: 'Ton ordre essentiel est en place. L\'essentiel est couvert.' },
+  },
+  // E17 · état « ne s'applique pas » (liste O9)
+  naZustand: {
+    empfohlen: 'recommandé',
+    markieren: 'Ne s\'applique pas',
+    zuruecknehmen: 'Annuler',
+    markiert: 'ne s\'applique pas. Compte comme réglé.',
   },
   synthesis: {
     expenses: 'dépenses enregistrées',

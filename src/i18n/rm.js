@@ -1728,9 +1728,17 @@ export default {
 
   mvo: {
     title: { sie: 'Vossa urden essentiala', du: 'Tia urden essentiala' },
-    empty: { sie: "Ils 18 champs ils pli impurtants — tut quai che Vus dovrais per autoritads, cas d'urgenza e la vita da mintgadi.", du: "Ils 18 champs ils pli impurtants — tut quai che Ti dovras per autoritads, cas d'urgenza e la vita da mintgadi." },
+    empty: { sie: "Ils 15 champs ils pli impurtants — tut quai che Vus dovrais per autoritads, cas d'urgenza e la vita da mintgadi.", du: "Ils 15 champs ils pli impurtants — tut quai che Ti dovras per autoritads, cas d'urgenza e la vita da mintgadi." },
     progress: { sie: 'Vus essas en via. Mintga champ porta urden.', du: 'Ti es en via. Mintga champ porta urden.' },
     complete: { sie: 'Vossa urden essentiala stat. Il fundament è mess.', du: 'Tia urden essentiala stat. Il fundament è mess.' },
+  },
+  // E17 · stadi «na concerna betg» (glista O9)
+  // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+  naZustand: {
+    empfohlen: 'recumandà',
+    markieren: 'Na concerna betg',
+    zuruecknehmen: 'Revocar',
+    markiert: 'na concerna betg. Vala sco fatg.',
   },
 
   greenHostingFooter: 'Hosting verd',

@@ -1063,9 +1063,16 @@ export default {
   },
   mvo: {
     title: 'Your Essential Order',
-    empty: 'The 18 most important fields — everything you need for authorities, emergencies, and daily life.',
+    empty: 'The 15 most important fields — everything you need for authorities, emergencies, and daily life.',
     progress: 'You\'re on your way. Every field brings order.',
     complete: 'Your essential order is in place. The basics are covered.',
+  },
+  // E17 · state "does not apply" (build list O9)
+  naZustand: {
+    empfohlen: 'recommended',
+    markieren: 'Does not apply',
+    zuruecknehmen: 'Undo',
+    markiert: 'does not apply. Counts as done.',
   },
   synthesis: {
     expenses: 'recorded expenses',

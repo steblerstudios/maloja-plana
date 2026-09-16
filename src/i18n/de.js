@@ -1066,9 +1066,16 @@ export default {
   },
   mvo: {
     title: { sie: 'Ihre Grundordnung', du: 'Deine Grundordnung' },
-    empty: { sie: 'Die 18 wichtigsten Angaben — alles, was Sie für Behörden, Notfall und Alltag brauchen.', du: 'Die 18 wichtigsten Angaben — alles, was Du für Behörden, Notfall und Alltag brauchst.' },
+    empty: { sie: 'Die 15 wichtigsten Angaben — alles, was Sie für Behörden, Notfall und Alltag brauchen.', du: 'Die 15 wichtigsten Angaben — alles, was Du für Behörden, Notfall und Alltag brauchst.' },
     progress: { sie: 'Sie sind auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.', du: 'Du bist auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.' },
     complete: { sie: 'Ihre Grundordnung steht. Das Wichtigste ist an seinem Platz.', du: 'Deine Grundordnung steht. Das Wichtigste ist an seinem Platz.' },
+  },
+  // E17 · Zustand «trifft nicht zu» (Bau-Liste O9)
+  naZustand: {
+    empfohlen: 'empfohlen',
+    markieren: 'Trifft nicht zu',
+    zuruecknehmen: 'Zurücknehmen',
+    markiert: 'trifft nicht zu. Zählt als erledigt.',
   },
   synthesis: {
     expenses: 'erfasste Ausgaben',
