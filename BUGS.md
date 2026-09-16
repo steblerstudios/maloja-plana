@@ -53,8 +53,8 @@ festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechn
 
 ### B-1 · Zahlen aus dem Schnellcheck kommen im IPV-Rechner nicht an
 
-> **Fix in PR #167 (Zweig `fix/e9-e22-ipv-orientierung-schnellcheck`), nach dem Deploy nach
-> «Zuletzt behoben».** Entscheid E22 (16.09.2026): Weg (b). Die Zahlen gehen als Übergabe
+> **Fix gemergt (#167, 16.09.2026), noch nicht live** — der Deploy-Versuch um 17:45 wurde vom
+> Backup-Tor gestoppt. Nach dem nächsten erfolgreichen Deploy nach «Zuletzt behoben». Entscheid E22 (16.09.2026): Weg (b). Die Zahlen gehen als Übergabe
 > an den IPV-Rechner (`handleNavigate` → `schnellcheckZahlen`), der Rechner sagt «Gerechnet
 > mit den Zahlen aus dem Schnellcheck» und schreibt erst auf «Ins Profil übernehmen» ins
 > Profil. Festgehalten in `src/__tests__/b1SchnellcheckUebergabe.test.js` (zuerst rot).
@@ -105,8 +105,9 @@ festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechn
   auch IPV und Sozialhilfe mit dem neuen Kanton. **Entscheid Stebler Studios.**
 - **Entschieden (E23, 16.09.2026):** Weg (a). Dazu fragt der Steuerrechner bei einer Abweichung,
   ob der Kanton auch als Wohnkanton gelten soll. `basis.canton` ändert sich nur auf «Ja».
-  **Fix in PR #165** (roter Test und Fix in `src/__tests__/steuerkanton.test.js`), nach dem Deploy
-  nach «Zuletzt behoben».
+  **Fix gemergt (#165, 16.09.2026), noch nicht live** (roter Test und Fix in
+  `src/__tests__/steuerkanton.test.js`); der Deploy-Versuch um 17:45 wurde vom Backup-Tor
+  gestoppt. Nach dem nächsten erfolgreichen Deploy nach «Zuletzt behoben».
 
 ## Geprüft — kein offener Bug (2026-07-08)
 

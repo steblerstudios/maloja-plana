@@ -11,6 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.29-beta] — 2026-09-16
+
+*Die Entscheid-Runde vom 16.09.2026 nachmittags (#161–#170). Gemergt, **noch nicht live**: der
+Deploy-Versuch um 17:45 wurde vom Rollback-Backup-Tor gestoppt, die Live-Version blieb
+unberührt. Das Tag `v0.1.29-beta` setzt der nächste erfolgreiche Deploy-Lauf.*
+
+### Behoben
+- **Prämienverbilligung ohne Beleg ohne Betrag (E9, #167, #168):** Die kantonalen IPV-Werte der App waren nach einem Muster erzeugt. Die Recherche in #161 zeigt: Die Beträge lagen in jedem belegten Kanton zu tief, die Einkommensgrenzen teils zu hoch, teils zu tief, und kein Kanton rechnet wie das Muster. Solange ein Kanton nicht amtlich belegt ist (heute alle 26), zeigt die App an keiner Stelle einen Betrag, kein «berechtigt» und keine Einschätzung aus der Einkommensgrenze, sondern einen neutralen Hinweis mit dem Link zur kantonalen Stelle. Ins Budget fliesst kein unbelegter Betrag. Der Verfahrens-Hinweis je Kanton ist ausgeblendet (für Glarus war er falsch).
+- **Vermögensfreibetrag je Kanton (#169, #170):** Die App rechnete für alle Kantone mit der SKOS-Empfehlung 6'000 / 12'000 / +3'000 je Kind / höchstens 15'000. Zehn Kantone rechnen tiefer (AG, SH, SO, BL, SG, BE, NE, FR, VD, GE), Basel-Stadt und Tessin höher (Beleg: #166). Jetzt je Kanton; wo kein aktueller kantonaler Beleg vorliegt (BL, AI, OW, TI, SG, FR, VD) oder eine Lücke gedeutet werden musste (SH und AG mit Kindern), steht «Kantonal nicht bestätigt — bitte beim Sozialdienst Ihrer Gemeinde prüfen».
+- **B-1 · Schnellcheck-Zahlen kommen im IPV-Rechner an (E22, #167):** Übergabe beim Klick, sichtbar «Gerechnet mit den Zahlen aus dem Schnellcheck», ins Profil nur auf «Ins Profil übernehmen».
+- **B-2 · Steuerrechner merkt sich den Steuerkanton (E23, #165):** liest und schreibt `behoerden.cantoneOfTaxation`; bei Abweichung vom Wohnkanton fragt er, ob dieser mitgeändert werden soll.
+- **CSV-Export gegen Formel-Injection geschützt (E14, #163):** Zellen mit `= + - @` Tab oder Wagenrücklauf am Anfang bekommen ein `'`; reine Zahlen bleiben Zahlen (OWASP «CSV Injection»).
+- **Voll-Review-Rest (#162):** Ausrufezeichen in fr/it/en/rm entfernt, drei Textfarben auf `sageDeep`, SKOS-Datenstand 2026-01.
+
+### Dokumentation
+- Prämienverbilligung 2026 je Kanton amtlich belegt, 21 abbildbar, 5 teilweise (#161) · Vermögensfreibetrag je Kanton mit Quellen (#166) · Rechts- und Sicherheits-Doku an den Code angeglichen, u. a. «Sicherung standardmässig unverschlüsselt» ehrlich benannt (#164).
+
 ## [0.1.28-beta] — 2026-09-16
 
 *Die K-Runde vom 15. und 16.09.2026. **Live seit 16.09.2026, 12:23** (`index-2301b4b1.js` aus
