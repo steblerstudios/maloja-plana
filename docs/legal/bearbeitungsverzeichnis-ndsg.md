@@ -33,7 +33,7 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Kategorien betroffener Personen** | Nutzende der Webanwendung (Immigrant:innen, Geflüchtete, Expats in der Schweiz) |
 | **Kategorien von Personendaten** | Name, Geburtsdatum, Adresse, Telefon, E-Mail, Zivilstand, Wohnsituation, Mietkosten, Einkommen, Versicherungsdaten, Haushaltszusammensetzung |
 | **Besonders schützenswerte Daten** | Möglich: Gesundheitsdaten (Medikamente, Organspende), Daten zu Sozialhilfemassnahmen, religiöse Überzeugungen (nur wenn freiwillig eingegeben) |
-| **Speicherort** | Browser-localStorage auf dem Endgerät: `or5_data` (Stammdaten), `or5_contacts` (Kontakte), `or5_merkliste` (Merkliste), `or5_beta_access` (Beta-Zugang, nur UI-Hürde), `or5_lang` / `or5_theme` / `or5_onboarding_done` (Einstellungen). Belege: `src/main.jsx` Z. 415, `src/utils/backupCrypto.js` Z. 60–66, `src/MerklisteView.jsx` Z. 10, `src/BetaGate.jsx` Z. 15, `src/Onboarding.jsx` Z. 17 |
+| **Speicherort** | Browser-localStorage auf dem Endgerät: `or5_data` (Stammdaten), `or5_contacts` (Kontakte), `or5_merkliste` (Merkliste), `or5_beta_access` (Beta-Zugang, nur UI-Hürde), `or5_lang` / `or5_theme` / `or5_onboarding_done` (Einstellungen). Belege: `src/main.jsx` Z. 416, `src/utils/backupCrypto.js` Z. 57–67, `src/MerklisteView.jsx` Z. 10, `src/BetaGate.jsx` Z. 15, `src/Onboarding.jsx` Z. 17 |
 | **Empfänger** | Keine — Daten verlassen das Gerät nicht |
 | **Übermittlung ins Ausland** | Keine |
 | **Aufbewahrungsfrist** | Unbegrenzt, bis die nutzende Person die Daten löscht (Browserdaten löschen; ein App-Reset ist nicht gebaut, Stand 15.09.2026 — siehe Datenschutzerklärung §7.2) |
@@ -69,11 +69,11 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Zweck** | Schutz vor Datenverlust durch lokale Backups und Export-Möglichkeit |
 | **Kategorien betroffener Personen** | Nutzende der Webanwendung |
 | **Kategorien von Personendaten** | Alle in Tätigkeiten 1–2 genannten Datenkategorien |
-| **Speicherort** | Automatische Schnappschüsse in der Browser-IndexedDB `maloja-plana-backups` (`src/utils/autoBackup.js` Z. 11; früherer Name `ordnung-ruhe-backups` wird migriert und gelöscht, Z. 12, 52). Manueller Export als Datei-Download (`.json` Klartext oder `.maloja` verschlüsselt, `src/ZipExport.jsx` Z. 51–93). Vor jedem Backup-Import legt die App Sicherheitskopien im localStorage an: `or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date` (`src/utils/backupCrypto.js` Z. 216–227) |
+| **Speicherort** | Automatische Schnappschüsse in der Browser-IndexedDB `maloja-plana-backups` (`src/utils/autoBackup.js` Z. 11; früherer Name `ordnung-ruhe-backups` wird migriert und gelöscht, Z. 12, 52). Manueller Export unter Werkzeuge → Export als Einzeldateien: Sicherung als `.json` (Klartext) oder `.maloja` (verschlüsselt), dazu JSON- und CSV-Export der Kapitel-Angaben und eine Übersicht `MANIFEST.txt`; ein ZIP entsteht nicht (`src/ZipExport.jsx` Z. 32–57 und 59–108, `src/zipExport.js` Z. 146–161). Bis zum 16.09.2026 fehlten hier CSV und `MANIFEST.txt`. Vor jedem Backup-Import legt die App Sicherheitskopien im localStorage an: `or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date` (`src/utils/backupCrypto.js` Z. 216–227) |
 | **Empfänger** | Keine — Export-Datei bleibt auf dem Gerät, es sei denn, die nutzende Person gibt sie aktiv weiter |
 | **Übermittlung ins Ausland** | Keine |
 | **Aufbewahrungsfrist** | Automatische Schnappschüsse: rollierend, max. 5 (`autoBackup.js` Z. 14). Export-Dateien: unter Kontrolle der nutzenden Person. `_prerestore`-Kopien: werden von der App nicht automatisch gelöscht (offen, DSFA-Entwurf Abschnitt 7 Punkt 10) |
-| **Technische Massnahmen** | Verschlüsselter Export ist optional (AES-256-GCM, PBKDF2, Passphrase mind. 4 Zeichen — `backupCrypto.js` Z. 107); der Klartext-Export ist gleichberechtigt verfügbar. Backup-Erinnerungen |
+| **Technische Massnahmen** | Verschlüsselter Export ist optional (AES-256-GCM, PBKDF2, Passphrase mind. 4 Zeichen — `backupCrypto.js` Z. 107); der Klartext-Export ist gleichberechtigt verfügbar und braucht keine Eingabe. JSON-/CSV-Export und `MANIFEST.txt` sind immer unverschlüsselt, ebenso die automatischen Schnappschüsse. Vor jeder Datei zeigt eine Vorschau, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx` Z. 66–68). Erinnerung, wenn die letzte Sicherung fehlt oder älter als 7 Tage ist (`src/Dashboard.jsx` Z. 1680–1712) |
 | **Rechtsgrundlage** | Einwilligung / berechtigtes Interesse am Schutz vor Datenverlust |
 
 ---
@@ -173,3 +173,4 @@ Dieses Verzeichnis wird bei wesentlichen Änderungen aktualisiert, insbesondere 
 *Nächste Überprüfung: Bei wesentlicher Änderung oder spätestens Dezember 2026*
 
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
+Tätigkeiten 1 und 3 (Export-Formate, Zeilenbelege): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
