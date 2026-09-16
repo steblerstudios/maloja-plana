@@ -20,6 +20,7 @@ import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
 import { renderSource } from './utils/renderSource.js';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -141,6 +142,12 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
   const income = Number(data.finanzen?.monthlyIncome || 0);
   const annualIncome = income * 12;
   const canton = data.basis?.canton || '';
+  // K33/E23: Für die Steuerschätzung zählt der Steuerkanton — kann vom Wohnkanton
+  // abweichen (z. B. Wochenaufenthalt). Dasselbe Vorbelegungsmuster wie im
+  // Steuerrechner (TaxCalculator.jsx, PR #165: behoerden.cantoneOfTaxation → alter
+  // Schlüssel canton → basis.canton). Überall sonst in dieser Übersicht bleibt
+  // `canton` der Wohnkanton (Lohn-Barometer, Miete, IPV, gedruckte „Kanton"-Zeile).
+  const steuerkanton = steuerkantonVorbelegung(data);
   const verheiratet = data.basis?.maritalStatus === 'married';
   const hh = getHouseholdInfo(data);
 
@@ -153,8 +160,9 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     ? berechneBundessteuer({ bruttoEinkommen: annualIncome, verheiratet, kinder: hh.childrenCount, elterntarif })
     : null;
   // E38: dieselbe Regel wie im Steuerrechner — Zahl nur, wo die ESTV-Tabelle trägt.
+  // K33: gerechnet wird im Steuerkanton (nicht zwingend der Wohnkanton).
   const kantonsSchaetzung = taxResult
-    ? schaetzeKantonaleSteuer({ kanton: canton, steuerbaresEinkommen: taxResult.steuerBaresEinkommen, bundessteuer: taxResult.steuer, verheiratet, kinder: hh.childrenCount, elterntarif })
+    ? schaetzeKantonaleSteuer({ kanton: steuerkanton, steuerbaresEinkommen: taxResult.steuerBaresEinkommen, bundessteuer: taxResult.steuer, verheiratet, kinder: hh.childrenCount, elterntarif })
     : null;
   const kantonal = kantonsSchaetzung ? kantonsSchaetzung.kantonal : null;
 
@@ -373,13 +381,13 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       statusColor: palette.text,
       detail: kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
-        : !canton ? t('finanzUebersicht.selectCanton') : null,
+        : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
       onClick: () => onNavigate('tax'),
     }),
     // E38: keine Kantonszahl → ruhige Orientierung mit den amtlichen Wegen (ausserhalb der Karte,
     // weil die Karte selbst ein Knopf ist und keine Links enthalten darf).
-    hasData && canton && kantonsSchaetzung && !kantonal && React.createElement(KantonssteuerOrientierung, {
-      palette, t, canton, schaetzung: kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
+    hasData && steuerkanton && kantonsSchaetzung && !kantonal && React.createElement(KantonssteuerOrientierung, {
+      palette, t, canton: steuerkanton, schaetzung: kantonsSchaetzung, jahr: KANTONAL_DATA_VERSION, style: { marginTop: '-4px' },
     }),
 
     hasData && React.createElement(StatusCard, {

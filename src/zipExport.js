@@ -1,5 +1,6 @@
 // ZIP-Export für Datensicherung
 import { getFullName } from './config/constants.js';
+import { keineKontaktperson } from './utils/naGruppen.js';
 
 export const prepareDataForExport = (data, docs = []) => {
   return {
@@ -81,7 +82,7 @@ ${m('chBehoerden')}
 
 ${m('chNotfall')}
    - ${m('bloodType')}: ${data.chapters.notfall?.bloodType || dash}
-   - ${m('emergencyContact')}: ${data.chapters.notfall?.emergencyContact || dash}
+   - ${m('emergencyContact')}: ${data.chapters.notfall?.emergencyContact || (keineKontaktperson(data.chapters.notfall) && t ? t('naZustand.keineKontaktperson') : dash)}
    - ${m('allergies')}: ${data.chapters.notfall?.allergies || dash}
    - ${m('organDonor')}: ${data.chapters.notfall?.organDonor || m('unknown')}
 
@@ -150,8 +151,10 @@ const generateCSVBackup = (data, t) => {
   const m = (key) => t ? t('zipExport.manifest.' + key) : key;
   const rows = [
     [m('csvCategory'), m('csvField'), m('csvValue')],
-    ...Object.entries(data).flatMap(([chapter, fields]) =>
-      Object.entries(fields).map(([key, value]) => [
+    // `_`-Schlüssel sind Verwaltungsfelder (`_version`, `_migratedAt`, je Kapitel `_na`),
+    // keine Angaben — die CSV ist eine Wertetabelle. Die JSON-Sicherung behält sie (K38).
+    ...Object.entries(data).filter(([chapter, fields]) => !chapter.startsWith('_') && fields && typeof fields === 'object').flatMap(([chapter, fields]) =>
+      Object.entries(fields).filter(([key]) => !key.startsWith('_')).map(([key, value]) => [
         chapter.toUpperCase(),
         key,
         String(value || '')

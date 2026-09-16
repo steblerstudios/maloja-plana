@@ -10,6 +10,7 @@ import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung } from './components/KantonssteuerOrientierung.jsx';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
 // docs/sources/kantonssteuer-tabelle-2026.md) — dieselbe Regel wie FinanzUebersicht und
@@ -23,8 +24,9 @@ const datumCH = (iso) => iso.split('-').reverse().join('.');
 // einzige Spur einer früher gespeicherten Wahl — darum nur lesen, nie löschen,
 // und nur solange cantoneOfTaxation leer ist. Das nächste Speichern schreibt
 // cantoneOfTaxation, danach spielt er keine Rolle mehr.
-export const steuerkantonVorbelegung = (data) =>
-  data?.behoerden?.cantoneOfTaxation || (typeof data?.canton === 'string' ? data.canton : '') || data?.basis?.canton || '';
+// Die Vorbelegung selbst liegt seit K33 in src/utils/steuerkanton.js (auch FinanzUebersicht und
+// OfficialLinkBox nutzen sie); hier weiter exportiert für bestehende Importe.
+export { steuerkantonVorbelegung };
 
 // Frage «auch Wohnkanton?» nur, wenn der gewählte Kanton vom Wohnkanton abweicht.
 export const fragtNachWohnkanton = (data, canton) => Boolean(canton) && canton !== (data?.basis?.canton || '');

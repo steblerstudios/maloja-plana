@@ -8,6 +8,7 @@ import { berechneBundessteuer } from './data/steuerRechner.js';
 import { schaetzeKantonaleSteuer, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => {
   // Export-Vorschau (K3): null | 'druck' | 'json' — erst zeigen, was rausgeht, dann erstellen.
@@ -18,7 +19,8 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
   const el = checkELEligibility(data);
 
   const income = parseFloat((data.finanzen || {}).monthlyIncome) || 0;
-  const canton = (data.basis || {}).canton || '';
+  // K33/E38: Steuerkanton wie im Steuerrechner und in der Finanzübersicht.
+  const canton = steuerkantonVorbelegung(data);
   // E38: dieselben Eingaben und dieselbe Regel wie FinanzUebersicht — Kinder aus dem Haushalt,
   // Elterntarif nur mit der Bestätigung aus dem Steuerrechner. (Bis E38 rechnete das Dossier
   // die Bundessteuer immer ohne Kinder.)

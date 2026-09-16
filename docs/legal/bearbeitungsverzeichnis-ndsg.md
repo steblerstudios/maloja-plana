@@ -1,7 +1,7 @@
 # Verzeichnis der Bearbeitungstätigkeiten — Maloja Plana
 
 **Gemäss Art. 12 nDSG / Art. 24 DSV**
-**Stand: Juni 2026**
+**Stand: 16.09.2026** (erstellt Juni 2026; die Nachführungen stehen am Ende)
 
 ---
 
@@ -33,12 +33,12 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Kategorien betroffener Personen** | Nutzende der Webanwendung (Immigrant:innen, Geflüchtete, Expats in der Schweiz) |
 | **Kategorien von Personendaten** | Name, Geburtsdatum, Adresse, Telefon, E-Mail, Zivilstand, Wohnsituation, Mietkosten, Einkommen, Versicherungsdaten, Haushaltszusammensetzung |
 | **Besonders schützenswerte Daten** | Möglich: Gesundheitsdaten (Medikamente, Organspende), Daten zu Sozialhilfemassnahmen, religiöse Überzeugungen (nur wenn freiwillig eingegeben) |
-| **Speicherort** | Browser-localStorage auf dem Endgerät: `or5_data` (Stammdaten), `or5_contacts` (Kontakte), `or5_merkliste` (Merkliste), `or5_beta_access` (Beta-Zugang, nur UI-Hürde), `or5_lang` / `or5_theme` / `or5_onboarding_done` (Einstellungen). Belege: `src/main.jsx` Z. 416, `src/utils/backupCrypto.js` Z. 57–67, `src/MerklisteView.jsx` Z. 10, `src/BetaGate.jsx` Z. 15, `src/Onboarding.jsx` Z. 17 |
+| **Speicherort** | Browser-localStorage auf dem Endgerät: `or5_data` (Stammdaten), `or5_contacts` (Kontakte), `or5_merkliste` (Merkliste), `or5_beta_access` (Beta-Zugang, nur UI-Hürde), `or5_lang` / `or5_theme` / `or5_onboarding_done` (Einstellungen). Belege: `src/main.jsx` Z. 416, `src/utils/backupCrypto.js` Z. 57–67, `src/MerklisteView.jsx` Z. 10, `src/BetaGate.jsx` Z. 15, `src/Onboarding.jsx` Z. 17. In `or5_data` steht je Kapitel optional die Liste `_na` der als «trifft nicht zu» markierten Feldnamen (`src/utils/vollstaendigkeit.js` Z. 4–8), ohne weitere Angaben |
 | **Empfänger** | Keine — Daten verlassen das Gerät nicht |
 | **Übermittlung ins Ausland** | Keine |
-| **Aufbewahrungsfrist** | Unbegrenzt, bis die nutzende Person die Daten löscht (Browserdaten löschen; ein App-Reset ist nicht gebaut, Stand 15.09.2026 — siehe Datenschutzerklärung §7.2) |
+| **Aufbewahrungsfrist** | Unbegrenzt, bis die nutzende Person die Daten löscht: einzeln in der App, alles auf einmal unter Einstellungen → «Daten auf diesem Gerät» (`src/utils/datenLoeschen.js`, `src/components/DatenLoeschen.jsx`, `src/SettingsView.jsx` Z. 72) oder über die Browserdaten; siehe Datenschutzerklärung §7.2. Der Löschweg entfernt alle `or5_`-Schlüssel ausser `or5_beta_access` (`datenLoeschen.js` Z. 22, 29–37). Bis zum 16.09.2026 stand hier «ein App-Reset ist nicht gebaut» |
 | **Technische Massnahmen** | Keine Datenübertragung, Open-Source-Code. Die Daten liegen unverschlüsselt im localStorage; eine Verschlüsselung at rest (Tresor) ist geplant und bewusst vertagt (`docs/design/tresor-lock.md`) |
-| **Organisatorische Massnahmen** | Hinweis auf Eigenverantwortung bei geteilten Geräten |
+| **Organisatorische Massnahmen** | Hinweis auf Eigenverantwortung bei geteilten Geräten; für geteilte Geräte zusätzlich der Löschweg «Alle Daten auf diesem Gerät löschen» mit zweiter Bestätigung und Angebot, vorher zu sichern (Datenschutzerklärung §7.2, §8) |
 | **Rechtsgrundlage** | Einwilligung durch aktive Dateneingabe (Art. 6 Abs. 6 nDSG) |
 
 ---
@@ -55,7 +55,7 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Speicherort** | Dateiinhalte in der Browser-IndexedDB `maloja-plana-documents` (`src/utils/storage.js` Z. 51); Metadaten (ohne Dateiinhalt) im localStorage `or5_docs` (`src/utils/docBlobs.js` Z. 4–6). Der frühere Name `ordnung-ruhe-documents` wird beim Start migriert und gelöscht (`storage.js` Z. 52, 88) |
 | **Empfänger** | Keine |
 | **Übermittlung ins Ausland** | Keine |
-| **Aufbewahrungsfrist** | Unbegrenzt, bis die nutzende Person die Daten löscht |
+| **Aufbewahrungsfrist** | Unbegrenzt, bis die nutzende Person die Daten löscht (einzeln oder mit «Alle Daten auf diesem Gerät löschen», das die Datenbank `maloja-plana-documents` entfernt, `datenLoeschen.js` Z. 24) |
 | **Technische Massnahmen** | Keine Datenübertragung, Grössenlimit je Dokument beim Upload (`MAX_DOC_BYTES`, siehe `src/utils/backupCrypto.js` Kommentar Z. 17–21) |
 | **Rechtsgrundlage** | Einwilligung durch aktives Hochladen |
 
@@ -72,7 +72,7 @@ Dieses Verzeichnis dokumentiert dennoch alle Datenflüsse vollständig, einschli
 | **Speicherort** | Automatische Schnappschüsse in der Browser-IndexedDB `maloja-plana-backups` (`src/utils/autoBackup.js` Z. 11; früherer Name `ordnung-ruhe-backups` wird migriert und gelöscht, Z. 12, 52). Manueller Export unter Werkzeuge → Export als Einzeldateien: Sicherung als `.json` (Klartext) oder `.maloja` (verschlüsselt), dazu JSON- und CSV-Export der Kapitel-Angaben und eine Übersicht `MANIFEST.txt`; ein ZIP entsteht nicht (`src/ZipExport.jsx` Z. 32–57 und 59–108, `src/zipExport.js` Z. 146–161). Bis zum 16.09.2026 fehlten hier CSV und `MANIFEST.txt`. Vor jedem Backup-Import legt die App Sicherheitskopien im localStorage an: `or5_data_prerestore`, `or5_docs_prerestore`, `or5_reminders_prerestore`, `or5_contacts_prerestore`, `or5_merkliste_prerestore`, `or5_prerestore_date` (`src/utils/backupCrypto.js` Z. 216–227) |
 | **Empfänger** | Keine — Export-Datei bleibt auf dem Gerät, es sei denn, die nutzende Person gibt sie aktiv weiter |
 | **Übermittlung ins Ausland** | Keine |
-| **Aufbewahrungsfrist** | Automatische Schnappschüsse: rollierend, max. 5 (`autoBackup.js` Z. 14). Export-Dateien: unter Kontrolle der nutzenden Person. `_prerestore`-Kopien: werden von der App nicht automatisch gelöscht (offen, DSFA-Entwurf Abschnitt 7 Punkt 10) |
+| **Aufbewahrungsfrist** | Automatische Schnappschüsse: rollierend, max. 5, höchstens einer je 12 Stunden, beim Start der App (`autoBackup.js` Z. 14–15; `src/main.jsx` Z. 586–592). Export-Dateien: unter Kontrolle der nutzenden Person. `_prerestore`-Kopien: werden von der App nicht automatisch gelöscht (offen, DSFA-Entwurf Abschnitt 7 Punkt 10). Schnappschüsse und `_prerestore`-Kopien entfernt der Löschweg «Alle Daten auf diesem Gerät löschen» (`datenLoeschen.js` Z. 24 und 29–37); heruntergeladene Dateien nicht |
 | **Technische Massnahmen** | Verschlüsselte Sicherung ist die Voreinstellung (AES-256-GCM, PBKDF2, Passphrase mind. 12 Zeichen für neue Sicherungen — `backupCrypto.js` Z. 107 und 316–320; `ZipExport.jsx` Z. 339–358); die Klartext-Sicherung bleibt wählbar, steht darunter mit Hinweis und braucht keine Eingabe (`ZipExport.jsx` Z. 360–367). Ältere Sicherungen mit kürzerer Passphrase bleiben lesbar. Bis zum 16.09.2026 war die Verschlüsselung optional, der Klartext-Export der erste Weg und das Passphrase-Minimum 4 Zeichen (Bau-Liste E10). JSON-/CSV-Export und `MANIFEST.txt` sind immer unverschlüsselt, ebenso die automatischen Schnappschüsse. Vor jeder Datei zeigt eine Vorschau, was darin steht und ob sie verschlüsselt ist (`src/components/ExportVorschau.jsx` Z. 66–68). Erinnerung, wenn die letzte Sicherung fehlt oder älter als 7 Tage ist (`src/Dashboard.jsx` Z. 1680–1712) |
 | **Rechtsgrundlage** | Einwilligung / berechtigtes Interesse am Schutz vor Datenverlust |
 
@@ -174,3 +174,4 @@ Dieses Verzeichnis wird bei wesentlichen Änderungen aktualisiert, insbesondere 
 
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
 Tätigkeiten 1 und 3 (Export-Formate, Zeilenbelege): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
+Kopf-Datum, Tätigkeiten 1–3 (Löschweg E18, «trifft nicht zu» E17, Schnappschuss-Takt): auf Code-Stand `main` 3500330 gebracht (Bau-Liste K39), nicht juristisch geprüft.

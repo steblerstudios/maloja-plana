@@ -2,6 +2,7 @@ import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
+import { feldErledigt } from './utils/vollstaendigkeit.js';
 
 const SCENARIOS = [
   {
@@ -60,10 +61,8 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
     return field ? field.label : fieldKey;
   };
 
-  const hasValue = (chapterKey, fieldKey) => {
-    const val = data[chapterKey]?.[fieldKey];
-    return Boolean(val);
-  };
+  // K38: «trifft nicht zu» (z. B. keine Kontaktperson) zählt als erledigt, wie in den Kapiteln.
+  const hasValue = (chapterKey, fieldKey) => feldErledigt(data[chapterKey], fieldKey);
 
   const goToChapter = (chapterKey) => {
     const idx = CHAPTER_INDICES[chapterKey];

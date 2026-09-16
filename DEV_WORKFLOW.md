@@ -92,6 +92,27 @@ Claude-Neustart aktiv (gleiche Watcher-Falle wie beim Tests-vor-Commit-Hook).
 
 ---
 
+## Hauptbundle klein halten (Size-Limit)
+
+`npm run size` misst `dist/assets/index-*.js` (gzip) gegen das Limit in `package.json`.
+**Das Limit wird nicht angehoben** — Platz wird geschaffen (Entscheid E36).
+
+- **Neue Ansichten per `React.lazy`** in `main.jsx`, wie die bestehenden.
+- **Kein statischer Import aus einem Lazy-Modul.** Braucht `main.jsx` nur eine kleine
+  Hilfsfunktion (z. B. «schon erledigt?»), gehört sie in eine eigene Datei unter
+  `src/utils/` — sonst zieht der statische Import die ganze Komponente ins Hauptbundle,
+  trotz `React.lazy`. Beispiel: `utils/einfuehrungStatus.js` (Onboarding/Tour, E36:
+  64.94 → 61.00 kB). Der Test `src/__tests__/hauptbundleLazy.test.js` wacht darüber.
+- **Grosse Daten** nicht in Dateien, die `main.jsx` oder `Dashboard.jsx` direkt importieren;
+  sonst per `import()` nachladen oder in `manualChunks` (`vite.config.js`) auslagern.
+- **Nachsehen, was drinliegt** — lokal, nichts committen:
+  `npx vite build --sourcemap --outDir /tmp/maloja-sm` und die `.map` des `index-*.js`
+  auswerten (Bytes je Quelldatei). Keine Analyse-Abhängigkeit ins Repo.
+- Neue Chunks braucht der Service Worker nicht einzeln zu kennen: `public/sw.js` legt
+  alles unter `/assets/` beim ersten Abruf in den Cache (cache-first).
+
+---
+
 ## Bug gemeldet — was jetzt?
 
 Bugs kommen über die **Feedback-Mail** in der Fusszeile („Feedback per E-Mail").

@@ -25,9 +25,8 @@ const SettingsView = React.lazy(() => import('./SettingsView.jsx'));
 import Dashboard from './Dashboard.jsx';
 const ChapterView = React.lazy(() => import('./ChapterView.jsx'));
 import OverdueBanner from './OverdueBanner.jsx';
-import { isOnboardingDone } from './Onboarding.jsx';
+import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
-import { isTourDone } from './Tour.jsx';
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
@@ -1263,6 +1262,7 @@ const AppInner = ({ demo }) => {
           data: activeData[chapters[activeChapter].key] || {},
           allData: activeData,
           onUpdate: (field, value) => updateData(chapters[activeChapter].key, field, value),
+          onUpdateIn: updateData,
           onAddDocument: handleAddDocument,
           onNavigate: handleNavigate,
           demoMode,

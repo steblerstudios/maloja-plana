@@ -1076,6 +1076,9 @@ export default {
     markieren: 'Trifft nicht zu',
     zuruecknehmen: 'Zurücknehmen',
     markiert: 'trifft nicht zu. Zählt als erledigt.',
+    // K38 · Notfallkontakt «trifft nicht zu»
+    keineKontaktperson: 'Keine Kontaktperson hinterlegt',
+    notfallAnregung: { sie: 'Vielleicht mögen Sie eine Person Ihres Vertrauens fragen, ob sie im Notfall Ihre Kontaktperson sein möchte. Das hat Zeit.', du: 'Vielleicht magst Du eine Person Deines Vertrauens fragen, ob sie im Notfall Deine Kontaktperson sein möchte. Das hat Zeit.' },
   },
   // E18 · Löschweg «Alle Daten auf diesem Gerät löschen» (Bau-Liste O11)
   datenLoeschen: {
@@ -1748,10 +1751,12 @@ export default {
       hosting1: 'Die statische Webanwendung (ohne Nutzerdaten) wird bei Infomaniak Network SA (Genf, Schweiz) gehostet — einem Schweizer Anbieter mit Rechenzentren in der Schweiz. Beim Abruf der Webseite werden standardmässig technische Daten (IP-Adresse, Browsertyp) in Server-Logs verarbeitet und nach der Aufbewahrungsfrist des Hosters gelöscht.',
       hosting2: 'Es gibt keine Analyse-Cookies, kein Tracking, keine Social-Media-Plugins und keine Werbung.',
       backupTitle: 'Backups',
-      backup1: { sie: 'Backups werden lokal im Browser gespeichert. Sie können Ihre Daten jederzeit als Datei exportieren (JSON oder CSV, auf Wunsch verschlüsselt). Diese Datei verlässt Ihr Gerät nur, wenn Sie sie aktiv weitergeben.', du: 'Backups werden lokal im Browser gespeichert. Du kannst Deine Daten jederzeit als Datei exportieren (JSON oder CSV, auf Wunsch verschlüsselt). Diese Datei verlässt Dein Gerät nur, wenn Du sie aktiv weitergibst.' },
+      // K39 (16.09.2026): backup1/rights2/faq a5+a7 an E10 (verschlüsselt als Voreinstellung,
+      // mind. 12 Zeichen, K34 Schnappschüsse unverschlüsselt) und E18 (Löschweg) angeglichen.
+      backup1: { sie: 'Beim Start legt Maloja automatisch Schnappschüsse Ihrer Angaben und Dokumente im Browser ab (IndexedDB, höchstens einer alle 12 Stunden, die letzten 5 bleiben). Diese Schnappschüsse sind nicht verschlüsselt. Eine Sicherung als Datei erstellen Sie unter Werkzeuge → Export: In der Voreinstellung ist sie mit einem Passwort von mindestens 12 Zeichen verschlüsselt; ohne Verschlüsselung können Sie sie bewusst wählen. Zusätzlich können Sie Ihre Angaben unverschlüsselt als JSON oder CSV exportieren. Diese Dateien verlassen Ihr Gerät nur, wenn Sie sie aktiv weitergeben.', du: 'Beim Start legt Maloja automatisch Schnappschüsse Deiner Angaben und Dokumente im Browser ab (IndexedDB, höchstens einer alle 12 Stunden, die letzten 5 bleiben). Diese Schnappschüsse sind nicht verschlüsselt. Eine Sicherung als Datei erstellst Du unter Werkzeuge → Export: In der Voreinstellung ist sie mit einem Passwort von mindestens 12 Zeichen verschlüsselt; ohne Verschlüsselung kannst Du sie bewusst wählen. Zusätzlich kannst Du Deine Angaben unverschlüsselt als JSON oder CSV exportieren. Diese Dateien verlassen Dein Gerät nur, wenn Du sie aktiv weitergibst.' },
       rightsTitle: { sie: 'Ihre Rechte (nDSG)', du: 'Deine Rechte (nDSG)' },
       rights1: { sie: 'Da alle Daten lokal gespeichert sind, haben Sie jederzeit direkten Zugang zu allen Ihren Daten — ohne Auskunftsgesuch.', du: 'Da alle Daten lokal gespeichert sind, hast Du jederzeit direkten Zugang zu allen Deinen Daten — ohne Auskunftsgesuch.' },
-      rights2: { sie: 'Sie können Ihre Daten jederzeit löschen (in der App oder über die Browserdaten). Es gibt keine serverseitigen Kopien.', du: 'Du kannst Deine Daten jederzeit löschen (in der App oder über die Browserdaten). Es gibt keine serverseitigen Kopien.' },
+      rights2: { sie: 'Sie können Ihre Daten jederzeit löschen: einzeln in der App, alles auf einmal unter Einstellungen → «Daten auf diesem Gerät» → «Alle Daten auf diesem Gerät löschen» oder über die Browserdaten. Heruntergeladene Sicherungsdateien liegen ausserhalb der App; diese löschen Sie selbst. Es gibt keine serverseitigen Kopien.', du: 'Du kannst Deine Daten jederzeit löschen: einzeln in der App, alles auf einmal unter Einstellungen → «Daten auf diesem Gerät» → «Alle Daten auf diesem Gerät löschen» oder über die Browserdaten. Heruntergeladene Sicherungsdateien liegen ausserhalb der App; diese löschst Du selbst. Es gibt keine serverseitigen Kopien.' },
       rights3: { sie: 'Sie können Ihre Daten in einem maschinenlesbaren Format (JSON oder CSV) exportieren (Recht auf Datenherausgabe, Art. 28 nDSG).', du: 'Du kannst Deine Daten in einem maschinenlesbaren Format (JSON oder CSV) exportieren (Recht auf Datenherausgabe, Art. 28 nDSG).' },
       securityTitle: 'Datensicherheit',
       security1: { sie: 'Nutzerdaten verlassen Ihr Gerät nicht. Alle Verbindungen zur Webseite sind HTTPS-verschlüsselt. Der Quellcode ist öffentlich einsehbar.', du: 'Nutzerdaten verlassen Dein Gerät nicht. Alle Verbindungen zur Webseite sind HTTPS-verschlüsselt. Der Quellcode ist öffentlich einsehbar.' },
@@ -1783,11 +1788,11 @@ export default {
       availability1: 'Maloja Plana ist eine Offline-Anwendung. Sie funktioniert ohne Internetverbindung, sobald sie einmal geladen wurde. Es gibt keine Server-Abhängigkeit und kein SLA.',
       availability2: 'Wir bemühen uns, die Anwendung stabil und aktuell zu halten, können aber keine ununterbrochene Verfügbarkeit garantieren.',
       dataLossTitle: 'Datenspeicherung & Datenverlust',
-      dataLoss1: { sie: 'Alle Ihre Daten werden ausschliesslich lokal in Ihrem Browser gespeichert (localStorage). Maloja Plana hat keinen Zugriff auf Ihre Daten.', du: 'Alle Deine Daten werden ausschliesslich lokal in Deinem Browser gespeichert (localStorage). Maloja Plana hat keinen Zugriff auf Deine Daten.' },
+      dataLoss1: { sie: 'Alle Ihre Daten werden ausschliesslich lokal in Ihrem Browser gespeichert (localStorage und IndexedDB). Maloja Plana hat keinen Zugriff auf Ihre Daten.', du: 'Alle Deine Daten werden ausschliesslich lokal in Deinem Browser gespeichert (localStorage und IndexedDB). Maloja Plana hat keinen Zugriff auf Deine Daten.' },
       dataLoss2: { sie: 'Das Löschen von Browserdaten, ein Browser-Wechsel oder das Zurücksetzen des Geräts kann zum Verlust Ihrer Daten führen. Nutzen Sie regelmässig die Export-Funktion, um Backups zu erstellen.', du: 'Das Löschen von Browserdaten, ein Browser-Wechsel oder das Zurücksetzen des Geräts kann zum Verlust Deiner Daten führen. Nutze regelmässig die Export-Funktion, um Backups zu erstellen.' },
       changesTitle: 'Änderungen',
       changes1: 'Diese Nutzungsbedingungen können jederzeit angepasst werden. Änderungen treten mit der nächsten Nutzung der Anwendung in Kraft.',
-      changes2: 'Stand: Juni 2026',
+      changes2: 'Stand: September 2026',
     },
     imprint: {
       operatorTitle: 'Betreiberin',
@@ -1902,7 +1907,7 @@ export default {
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
-      a1: { sie: 'Alle Daten bleiben auf Ihrem Gerät im Browser-Speicher (localStorage). Nichts wird an einen Server gesendet. Wenn Sie den Browser-Speicher löschen, sind die Daten weg — sichern Sie sie deshalb regelmässig als Datei (Werkzeuge → Export).', du: 'Alle Daten bleiben auf Deinem Gerät im Browser-Speicher (localStorage). Nichts wird an einen Server gesendet. Wenn Du den Browser-Speicher löschst, sind die Daten weg — sichere sie deshalb regelmässig als Datei (Werkzeuge → Export).' },
+      a1: { sie: 'Alle Daten bleiben auf Ihrem Gerät im Browser-Speicher (localStorage und IndexedDB). Nichts wird an einen Server gesendet. Wenn Sie den Browser-Speicher löschen, sind die Daten weg — sichern Sie sie deshalb regelmässig als Datei (Werkzeuge → Export).', du: 'Alle Daten bleiben auf Deinem Gerät im Browser-Speicher (localStorage und IndexedDB). Nichts wird an einen Server gesendet. Wenn Du den Browser-Speicher löschst, sind die Daten weg — sichere sie deshalb regelmässig als Datei (Werkzeuge → Export).' },
       q2: 'Ist Maloja Plana kostenlos?',
       a2: 'Ja, vollständig und dauerhaft. Kein Abo, keine versteckten Kosten, keine Werbung. Der Quellcode ist Open Source (AGPL-3.0).',
       q3: 'Funktioniert die App ohne Internet?',
@@ -1912,11 +1917,11 @@ export default {
       q5: 'Kann ich meine Daten exportieren?',
       // K17: der Export schreibt Einzeldateien (JSON, CSV, verschlüsselt .maloja), kein ZIP —
       // Wortwahl wie legal.privacy.backup1 (#134).
-      a5: { sie: 'Ja. Unter Werkzeuge → Export können Sie Ihre Daten jederzeit als Datei herunterladen (JSON oder CSV, auf Wunsch verschlüsselt). Die Sicherung enthält alle Kapitel, Dokumente und Einstellungen.', du: 'Ja. Unter Werkzeuge → Export kannst Du Deine Daten jederzeit als Datei herunterladen (JSON oder CSV, auf Wunsch verschlüsselt). Die Sicherung enthält alle Kapitel, Dokumente und Einstellungen.' },
+      a5: { sie: 'Ja. Unter Werkzeuge → Export können Sie Ihre Daten jederzeit als Datei herunterladen: als Sicherung, in der Voreinstellung mit Passwort verschlüsselt (ohne Verschlüsselung wählbar), oder unverschlüsselt als JSON oder CSV. Die Sicherung enthält alle Kapitel, Dokumente und Einstellungen.', du: 'Ja. Unter Werkzeuge → Export kannst Du Deine Daten jederzeit als Datei herunterladen: als Sicherung, in der Voreinstellung mit Passwort verschlüsselt (ohne Verschlüsselung wählbar), oder unverschlüsselt als JSON oder CSV. Die Sicherung enthält alle Kapitel, Dokumente und Einstellungen.' },
       q6: 'Welche Browser werden unterstützt?',
       a6: 'Alle modernen Browser: Chrome, Firefox, Safari, Edge. Am besten funktioniert die App auf dem Smartphone als PWA (zum Homescreen hinzufügen).',
       q7: 'Was passiert, wenn ich mein Gerät wechsle?',
-      a7: { sie: 'Erstellen Sie unter Werkzeuge → Export eine Sicherung (JSON oder verschlüsselt) und importieren Sie sie auf dem neuen Gerät. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.', du: 'Erstelle unter Werkzeuge → Export eine Sicherung (JSON oder verschlüsselt) und importiere sie auf dem neuen Gerät. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.' },
+      a7: { sie: 'Erstellen Sie unter Werkzeuge → Export eine Sicherung (in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar) und importieren Sie sie auf dem neuen Gerät. Auf dem alten Gerät können Sie danach unter Einstellungen → «Daten auf diesem Gerät» alles löschen. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.', du: 'Erstelle unter Werkzeuge → Export eine Sicherung (in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar) und importiere sie auf dem neuen Gerät. Auf dem alten Gerät kannst Du danach unter Einstellungen → «Daten auf diesem Gerät» alles löschen. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.' },
       q8: 'Wie aktuell sind die Daten (Steuern, KVG, AHV)?',
       a8: 'Die Daten basieren auf den offiziellen Werten 2026. Steueränderungen, KVG-Prämien und AHV-Parameter werden bei Updates der App aktualisiert.',
     },
@@ -2782,7 +2787,7 @@ export default {
     documentMetadata: 'Dokument-Metadaten',
     settingsAndPreferences: 'Einstellungen & Voreinstellungen',
     security: 'Sicherheit',
-    securityNote: 'Die exportierte Datei enthält persönliche Daten. Bewahre sie sicher auf.',
+    securityNote: { sie: 'Die exportierte Datei enthält persönliche Daten. Bewahren Sie sie sicher auf.', du: 'Die exportierte Datei enthält persönliche Daten. Bewahre sie sicher auf.' },
     // Export-Vorschau vor Export, Dossier und Brief (Bau-Liste K3): nennt, was in der Datei
     // steht, und ob sie verschlüsselt ist. Ruhig, ohne Ausrufezeichen (Test prüft das).
     vorschau: {

@@ -1073,6 +1073,9 @@ export default {
     markieren: 'Ne s\'applique pas',
     zuruecknehmen: 'Annuler',
     markiert: 'ne s\'applique pas. Compte comme réglé.',
+    // K38 · personne de contact « ne s'applique pas »
+    keineKontaktperson: 'Aucune personne de contact enregistrée',
+    notfallAnregung: { sie: 'Peut-être aimeriez-vous demander à une personne de confiance si elle souhaite être votre personne de contact en cas d’urgence. Rien ne presse.', du: 'Peut-être aimerais-tu demander à une personne de confiance si elle souhaite être ta personne de contact en cas d’urgence. Rien ne presse.' },
   },
   // E18 · « Supprimer toutes les données de cet appareil » (liste O11)
   datenLoeschen: {
@@ -1745,10 +1748,11 @@ export default {
       hosting1: 'L\'application web statique (sans données utilisateur) est hébergée par Infomaniak Network SA (Genève, Suisse) — un prestataire suisse avec des centres de données en Suisse. Lors de l\'accès au site, des données techniques (adresse IP, type de navigateur) sont traitées dans les logs serveur et supprimées à l’échéance du délai de conservation de l’hébergeur.',
       hosting2: 'Il n\'y a pas de cookies d\'analyse, pas de suivi, pas de plugins de réseaux sociaux et pas de publicité.',
       backupTitle: 'Sauvegardes',
-      backup1: 'Les sauvegardes sont stockées localement dans votre navigateur. Vous pouvez exporter vos données sous forme de fichier à tout moment (JSON ou CSV, chiffré si souhaité). Ce fichier ne quitte votre appareil que si vous le partagez activement.',
+      // K39 : backup1/rights2/faq a5+a7 alignés sur E10 (chiffré par défaut) et E18 (suppression).
+      backup1: "Au démarrage, Maloja enregistre automatiquement des instantanés de vos données et documents dans le navigateur (IndexedDB, au plus un toutes les 12 heures, les 5 derniers sont conservés). Ces instantanés ne sont pas chiffrés. Pour enregistrer une sauvegarde sous forme de fichier, allez dans Outils → Export : par défaut, elle est chiffrée avec un mot de passe d'au moins 12 caractères ; vous pouvez choisir délibérément de la créer sans chiffrement. Vous pouvez aussi exporter vos données sans chiffrement en JSON ou CSV. Ces fichiers ne quittent votre appareil que si vous les partagez activement.",
       rightsTitle: 'Vos droits (nLPD)',
       rights1: 'Toutes vos données étant stockées localement, vous y avez un accès direct à tout moment — sans demande de renseignements.',
-      rights2: 'Vous pouvez supprimer vos données à tout moment (dans l\'application ou via les données du navigateur). Il n\'existe aucune copie côté serveur.',
+      rights2: "Vous pouvez supprimer vos données à tout moment : individuellement dans l'application, en une seule fois sous Paramètres → « Données sur cet appareil » → « Supprimer toutes les données de cet appareil », ou via les données du navigateur. Les fichiers de sauvegarde téléchargés se trouvent hors de l'application ; c'est à vous de les supprimer. Il n'existe aucune copie côté serveur.",
       rights3: 'Vous pouvez exporter vos données dans un format lisible par machine (JSON ou CSV) (droit à la remise des données, art. 28 nLPD).',
       securityTitle: 'Sécurité des données',
       security1: 'Les données utilisateur ne quittent jamais votre appareil. Toutes les connexions au site sont chiffrées en HTTPS. Le code source est accessible publiquement.',
@@ -1780,11 +1784,11 @@ export default {
       availability1: 'Maloja Plana est une application hors ligne. Elle fonctionne sans connexion internet une fois chargée. Il n\'y a pas de dépendance serveur ni de SLA.',
       availability2: 'Nous nous efforçons de maintenir l\'application stable et à jour, mais ne pouvons garantir une disponibilité ininterrompue.',
       dataLossTitle: 'Stockage et perte de données',
-      dataLoss1: 'Toutes vos données sont stockées exclusivement dans le stockage local de votre navigateur. Maloja Plana n\'a pas accès à vos données.',
+      dataLoss1: 'Toutes vos données sont stockées exclusivement dans votre navigateur (localStorage et IndexedDB). Maloja Plana n\'a pas accès à vos données.',
       dataLoss2: 'La suppression des données du navigateur, un changement de navigateur ou la réinitialisation de l\'appareil peut entraîner une perte de données. Utilisez régulièrement la fonction d\'exportation pour créer des sauvegardes.',
       changesTitle: 'Modifications',
       changes1: 'Ces conditions d\'utilisation peuvent être modifiées à tout moment. Les modifications prennent effet lors de la prochaine utilisation de l\'application.',
-      changes2: 'Dernière mise à jour : juin 2026',
+      changes2: 'Dernière mise à jour : septembre 2026',
     },
     imprint: {
       operatorTitle: 'Exploitant',
@@ -1899,7 +1903,7 @@ export default {
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
-      a1: 'Toutes les données restent sur votre appareil dans le stockage du navigateur (localStorage). Rien n\'est envoyé à un serveur. Si vous videz le stockage, les données sont perdues — sauvegardez-les donc régulièrement dans un fichier (Outils → Export).',
+      a1: 'Toutes les données restent sur votre appareil dans le stockage du navigateur (localStorage et IndexedDB). Rien n\'est envoyé à un serveur. Si vous videz le stockage, les données sont perdues — sauvegardez-les donc régulièrement dans un fichier (Outils → Export).',
       q2: 'Maloja Plana est-il gratuit ?',
       a2: 'Oui, entièrement et durablement. Pas d\'abonnement, pas de coûts cachés, pas de publicité. Le code source est open source (AGPL-3.0).',
       q3: 'L\'application fonctionne-t-elle hors ligne ?',
@@ -1908,11 +1912,11 @@ export default {
       a4: 'Non. Tous les calculateurs (impôts, subsides, assurance maladie, aide sociale) sont des outils d\'orientation basés sur des données publiques. Pour des informations contraignantes, contactez l\'autorité compétente.',
       q5: 'Puis-je exporter mes données ?',
       // K17 : l'export écrit des fichiers séparés (JSON, CSV, .maloja chiffré), pas de ZIP.
-      a5: 'Oui. Sous Outils → Export, vous pouvez télécharger vos données à tout moment sous forme de fichier (JSON ou CSV, chiffré si souhaité). La sauvegarde contient tous les chapitres, documents et paramètres.',
+      a5: 'Oui. Sous Outils → Export, vous pouvez télécharger vos données à tout moment sous forme de fichier : comme sauvegarde, chiffrée par défaut avec un mot de passe (sans chiffrement si vous le choisissez), ou sans chiffrement en JSON ou CSV. La sauvegarde contient tous les chapitres, documents et paramètres.',
       q6: 'Quels navigateurs sont pris en charge ?',
       a6: 'Tous les navigateurs modernes : Chrome, Firefox, Safari, Edge. L\'application fonctionne mieux sur smartphone en tant que PWA (ajouter à l\'écran d\'accueil).',
       q7: 'Que se passe-t-il si je change d\'appareil ?',
-      a7: 'Créez une sauvegarde sous Outils → Export (JSON ou chiffrée) et importez-la sur le nouvel appareil. Il n\'y a pas de synchronisation automatique par choix — cela nécessiterait un serveur.',
+      a7: "Créez une sauvegarde sous Outils → Export (chiffrée par défaut, sans chiffrement si vous le choisissez) et importez-la sur le nouvel appareil. Sur l'ancien appareil, vous pouvez ensuite tout supprimer sous Paramètres → « Données sur cet appareil ». Il n'y a pas de synchronisation automatique par choix — cela nécessiterait un serveur.",
       q8: 'Les données (impôts, assurance maladie, AVS) sont-elles à jour ?',
       a8: 'Les données sont basées sur les valeurs officielles 2026. Les modifications fiscales, les primes d\'assurance et les paramètres AVS sont mis à jour avec les nouvelles versions.',
     },
