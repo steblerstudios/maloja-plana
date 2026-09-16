@@ -25,7 +25,7 @@ sind. Dieses Dokument ändert keinen Code.
 - Werte ändern sich jährlich (Richtprämien, Prozentsätze, Grenzen). Vor jeder Freigabe den
   Stand an der Quelle erneut prüfen; ab Herbst 2026 erscheinen die Werte für 2027.
 
-**Erfasst:** 17 von 26 Kantonen. 15× abbildbar · 2× teilweise
+**Erfasst:** 20 von 26 Kantonen. 17× abbildbar · 3× teilweise
 
 ## Übersicht
 
@@ -39,17 +39,17 @@ sind. Dieses Dokument ändert keinen Code.
 | OW | Obwalden | Richtprämie − Selbstbehalt (9,5 % des anrechenbaren Einkommens bis CHF 35'000, darüber +0,01 %-Punkt je CHF 100); Anspruch nur bei anrechenbarem Einkommen < CHF 50'000 (mit Kindern +25'000 = < 75'000); Mindestanspruch Kinder 80 %, junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gdb.ow.ch/app/de/texts_of_law/851.12> |
 | NW | Nidwalden | Selbstbehalt 10 % der «Summe der Steuerwerte» (Reineinkommen + Aufrechnungen + 20 % Reinvermögen); IPV = Richtprämie − Selbstbehalt; Kinder 80 % (Eltern ≤ CHF 100'000), junge Erwachsene in Ausbildung 50 % | abbildbar | <https://gesetze.nw.ch/app/de/texts_of_law/742.111> |
 | GL | Glarus | Richtprämie − Selbstbehalt; Selbstbehalt in Stufen 9–14 % des ganzen anrechenbaren Einkommens (bis 40'000: 9 % … über 80'000: 14 %); Kinder mind. 80 %, junge Erwachsene in Ausbildung mind. 50 % bei Haushalts-AE ≤ CHF 85'000; Richtprämie = 85 % (Kinder 100 %) der EDI-Durchschnittsprämie | teilweise | <https://gesetze.gl.ch/app/de/texts_of_law/VIII%20D/21/3> |
-| ZG | Zug | *noch nicht erfasst* | — | — |
+| ZG | Zug | Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 % | teilweise | <https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf> |
 | FR | Freiburg | *noch nicht erfasst* | — | — |
 | SO | Solothurn | Richtprämie (Durchschnittsprämie −30 %) minus Eigenanteil 10–16 % des massgebenden Einkommens (linear), Grenze MGE 74'000; Kinder ≥80 %, junge Erw. ≥50 % bis 74'000 | teilweise | <https://www.akso.ch/uploads/PDF-Formulare-AKSO/IPV/2026-01-27-Verfuegung-Parameter-Individuelle-Praemie.pdf> |
 | BS | Basel-Stadt | Stufentabelle: 22 Beitragsgruppen nach massgeblichem Haushaltseinkommen und Haushaltsgrösse (1–8 Pers.), fester Monatsbeitrag je Person (Erwachsene / junge Erw. / Kinder), Zuschlag bei alternativem Versicherungsmodell (AVM) | abbildbar | <https://www.gesetzessammlung.bs.ch/api/de/versions/6727/pdf_file> |
 | BL | Basel-Landschaft | Jahresrichtprämie minus 7,75 % des massgebenden Jahreseinkommens, mit harter Einkommensobergrenze je Berechnungseinheit (Einzelperson 31'000); Kinder ≥80 %, junge Erw. ≥50 % der Richtprämie | abbildbar | <https://bl.clex.ch/api/de/versions/4310/pdf_file> |
-| SH | Schaffhausen | *noch nicht erfasst* | — | — |
+| SH | Schaffhausen | Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung | abbildbar | <https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file> |
 | AR | Appenzell Ausserrhoden | *noch nicht erfasst* | — | — |
 | AI | Appenzell Innerrhoden | Richtprämie (Summe Haushalt) minus Selbstbehalt 7–12 % des massgebenden Gesamteinkommens (gestuft +0,125 %/Fr. 1'000 zwischen 45'000 und 85'000); Kinder/JE in Ausbildung Mindest-IPV 80 %/50 % der Richtprämie bis MGE 75'000 | abbildbar | <https://www.ai.ch/themen/gesundheit-alter-und-soziales/individuelle-praemienverbilligung/merkblatt-ipv/merkblatt-ipv-2024/@@download/file/Merkblatt%20IPV%202026.pdf> |
 | SG | St. Gallen | Regionale Referenzprämie (3 Regionen) minus Belastungsgrenze in % des massgebenden Einkommens; Satz steigt linear pro Franken über einem Sockel (z. B. Alleinstehend ohne Kinder: 12,16 % bis 18'700, +0,0002 Prozentpunkte je Franken darüber); Vermögensgrenze 100'000; Minimalgarantie Kinder 80 % / JE in Ausbildung 50 % bis Einkommens-Obergrenze | abbildbar | <https://www.gesetzessammlung.sg.ch/api/de/versions/3847/pdf_file_with_annexes> |
 | GR | Graubünden | Regionale Richtprämie (3 Regionen, 90 % der BAG-Durchschnittsprämie) minus Selbstbehalt nach Einkommenskategorie (5 % / 6,5 % / 8 % / 9 % / 10 % des anrechenbaren Einkommens); Kinder und JE in Ausbildung alternativ 100/75/50/25 % Verbilligung bis 65'000/70'000/75'000/80'000, höherer Betrag gilt | abbildbar | <https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf> |
-| AG | Aargau | *noch nicht erfasst* | — | — |
+| AG | Aargau | Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie | abbildbar | <https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes> |
 | TG | Thurgau | *noch nicht erfasst* | — | — |
 | TI | Tessin | Quadratische Formel: Normbetrag = PMR − PMR × RD²/RDM², × kantonaler Koeffizient 76,5 %; RDM = Konstante × 50 % der Laps-Bedarfsgrenze | abbildbar | <https://m3.ti.ch/CAN/RLeggi/public/index.php/index/nuovafinestra/atto/370/volume//numLegge/853.100> |
 | VD | Waadt | *noch nicht erfasst* | — | — |
@@ -507,6 +507,66 @@ App: maxIncome 42'000, subsidySingle 2'100, modelFlat, Hinweis «automatisch aus
 
 ---
 
+## ZG — Zug
+
+**Beurteilung:** teilweise
+**Modell (kurz):** Richtprämien − Selbstbehalt 8 % des massgebenden Einkommens; reduzierter Anspruch bei ME 70'000–89'900 (−0,5 % je CHF 100 über 70'000), darüber kein Anspruch; tiefere Grenzen für Einzelpersonen (Betrag nicht publiziert gefunden); Kinder/junge Erw. in Ausbildung mind. 80 % / 50 %
+**Zuständig / Weg:** Ausgleichskasse Zug (Durchführung), Gemeindestellen (Eingang Papierformular). Antrag nötig (online mit Login aus dem Schreiben oder Papier), Frist 30. April 2026 (abgelaufen); EL-Beziehende automatisch.
+**Gültigkeit:** 2026 definitiv (Werte vom Regierungsrat für 2026 festgelegt, laut Broschüre Stand Dezember 2025)
+
+### Rechenmodell
+> «Die massgebenden Prämien werden verbilligt, soweit sie einen vom Regierungsrat festgelegten Prozentsatz des massgebenden Einkommens übersteigen.» — IPVG § 6 Abs. 1, Quelle [2]
+
+> «Sie haben Anspruch auf Prämienverbilligung, wenn die gesamten Richtprämien höher sind als 8 % Ihres massgebenden Einkommens. Die Differenz zwischen diesem Selbstbehalt und den Richtprämien wird verbilligt.» — Quelle [1], S. 5
+
+> «Pro Fr. 100.–, die das massgebende Einkommen von Fr. 70’000.– übersteigen, reduziert sich Ihr Anspruch um 0,5 %. Für die Berechnung des Reduktionsfaktors wird das massgebende Einkommen auf die nächsten Fr. 100.– aufgerundet. Übersteigt ihr massgebendes Einkommen die Obergrenze von Fr. 89’900.–, besteht kein Anspruch auf Prämienverbilligung.» — Quelle [1], S. 5
+
+> «Die Grenzwerte für das massgebende Einkommen fallen bei Einzelpersonen und gewissen Haushalten mit nur einer erwachsenen Person tiefer aus.» — Quelle [1], S. 5
+
+Rechenweg (abgeleitet): IPV = (Summe Richtprämien − 8 % × ME) × Reduktionsfaktor; Reduktionsfaktor = 1 bis ME 70'000, sonst 1 − 0,005 × (aufgerundetes ME − 70'000)/100; 0 über 89'900. Beispiel Einzelperson ohne Reduktion (abgeleitet): ME 0 → CHF 4'984.80; Anspruch endet bei ME 62'310 (4'984.80 / 8 %), sofern die tiefere Einzelpersonen-Grenze nicht früher greift — diese ist nicht beziffert.
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Richtprämie Erwachsene | CHF 4'984.80 | [1] S. 4 |
+| Richtprämie junge Erwachsene (Jg. 2001–2007) | CHF 3'472.80 | [1] S. 4 |
+| Richtprämie Kinder und Jugendliche (Jg. 2008–2025) | CHF 1'224.00 | [1] S. 4 |
+| Selbstbehalt | 8 % des massgebenden Einkommens | [1] S. 5 |
+| Beginn reduzierter Anspruch (Haushalte) | ME CHF 70'000; −0,5 % je CHF 100 | [1] S. 5 |
+| Obergrenze (Haushalte) | ME CHF 89'900 | [1] S. 5 |
+| Grenzen Einzelpersonen / Einelternhaushalte | «tiefer» — **Betrag nicht gefunden** | [1] S. 5 |
+| Mindestanspruch (nur bei nicht reduziertem Anspruch) | Kinder mind. 80 %, junge Erw. in Ausbildung mind. 50 % der Richtprämie | [1] S. 5 |
+| Kinderabzug | CHF 8'500 pro Kind | [2] § 6 Abs. 1, [3] § 1 |
+| Vermögenszuschlag | 10 % des Reinvermögens | [3] § 1 |
+| Mindestauszahlung | Beiträge unter CHF 50 pro Jahr nicht ausbezahlt | [1] S. 6 |
+| Bemessung | definitive Steuerveranlagung 2024 (Zuzug 2025 und 19-Jährige: 2025) | [1] S. 4 |
+| Neuberechnung | wenn ME 2025 mindestens 25 % tiefer als 2024, Gesuch innert 20 Tagen nach Verfügung | [1] S. 4, [2] § 6ter |
+
+Hinweis: Das Gesetz ([2] § 7bis) nennt als Mindestanspruch «mindestens die Hälfte der für sie massgebenden Prämie» für Kinder und junge Erwachsene in Ausbildung; die Broschüre 2026 nennt für Kinder 80 %. Die 80 % sind damit durch Regierungsratsfestlegung/Praxis belegt, nicht durch den Gesetzeswortlaut.
+
+### Massgebendes Einkommen
+> «a) Reineinkommen gemäss kantonalem Steuergesetz; b) zuzüglich 10 % des Reinvermögens gemäss kantonalem Steuergesetz; b1) zuzüglich allfällig abgezogener, freiwilliger Einkäufe in die 2. Säule […]; c) zuzüglich allfällig abgezogener Beiträge an die gebundene Selbstvorsorge (Säule 3a) […]; c1) zuzüglich das Total der Liegenschaftsunterhaltskosten […], soweit diese 20 % des Totals der steuerbaren Bruttoerträge der Liegenschaften des Privatvermögens […] übersteigen; d) abzüglich Kinderabzug in der Höhe von 8500 Franken pro Kind.» — Verordnung IPVG § 1 Abs. 1, Quelle [3]
+
+Der Online-Rechner der AK Zug fragt entsprechend: Reineinkommen (Code 299), Beiträge Säule 2 (Code 250/251), Säule 3a (Code 220/221), Reinvermögen (Code 660), Steuerperiode 2024 — Quelle [4].
+
+### Abweichung zur App
+App: maxIncome 60'000, subsidySingle 3'600, linearer Abbau. Belegt ist für eine erwachsene Einzelperson ein Höchstbetrag von CHF 4'984.80 (bei ME 0) und ein Abbau um 8 Rappen je Franken, rechnerisch null bei ME 62'310; die App liegt beim Höchstbetrag zu tief, die Grenze ist ähnlich, aber die tiefere amtliche Einzelpersonen-Grenze ist nicht beziffert.
+
+### Offen / nicht gefunden
+- **Einkommensgrenzen für Einzelpersonen und Einelternhaushalte** (Beginn Reduktion, Obergrenze): nur «tiefer» belegt, keine Zahl. Der Online-Rechner (Quelle [4]) rechnet serverseitig; ich habe ihn nicht mit Testwerten abgeschickt (Formularversand). Der zugrunde liegende Regierungsratsbeschluss 2026 ist nicht in der BGS erfasst und wurde nicht gefunden.
+- Die Medienmitteilung des Kantons vom 26.01.2026 (Quelle [5]) bestätigt Frist und Verfahren, nennt aber keine Parameter.
+- Die Broschüre verweist auf eine «Berechnungsvorlage in diesem Dokument»; im Textlayer ist keine enthalten (die zwei eingebetteten Bilder wurden nicht ausgewertet).
+
+### Quellen
+1. «Prämienverbilligung 2026 im Kanton Zug — Informationen und Adressen» (Broschüre), Ausgleichskasse / IV-Stelle Zug, PDF erstellt 12.12.2025. https://www.akzug.ch/uploads/PDF-sonstige/Broschuere_IPV_2026.pdf — abgerufen 16.09.2026
+2. BGS 842.6 Gesetz betreffend individuelle Prämienverbilligung in der Krankenpflegeversicherung (IPVG), vom 15.12.1994, Stand 01.01.2025. https://bgs.zg.ch/app/de/texts_of_law/842.6 (Text über https://bgs.zg.ch/api/de/texts_of_law/842.6/show_as_json) — abgerufen 16.09.2026
+3. BGS 842.61 Verordnung zum Gesetz betreffend individuelle Prämienverbilligung, vom 19.12.2017, Stand 01.01.2021. https://bgs.zg.ch/app/de/texts_of_law/842.61 — abgerufen 16.09.2026
+4. Online-Rechner «Prämienverbilligung 2026 – provisorische Berechnung als Einzelperson», Ausgleichskasse Zug. https://www.akzug.ch/online-services/online-rechner/praemienverbilligung-2026-provisorische-berechnung-des-anspruches/praemienverbilligung-2025-provisorische-berechnung-als-einzelperson — abgerufen 16.09.2026 (nur Eingabefelder gelesen)
+5. Medienmitteilung «Gezielte Zusatzentlastung bei den Krankenkassenprämien», Kanton Zug, 26.01.2026. https://zg.ch/news/news~_2026_1_gezielte-zusatzentlastung-bei-den-krankenkassenpraemien~.html — abgerufen 16.09.2026
+6. Webseite «Prämienverbilligung (IPV)», Ausgleichskasse Zug (Frist 30.04.2026 abgelaufen). https://www.akzug.ch/dienstleistungen/praemienverbilligung — abgerufen 16.09.2026
+
+---
+
 ## SO — Solothurn
 
 **Beurteilung:** teilweise
@@ -715,6 +775,72 @@ Die App führt `maxIncome` 51'000 und `subsidySingle` 2'700 mit linearem Abbau; 
 
 ---
 
+## SH — Schaffhausen
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Selbstbehalt: Summe der Richtprämien (2 Prämienregionen) minus 15 % des anrechenbaren Einkommens, höchstens 65 % der anrechenbaren Prämien, unter Fr. 100 keine Auszahlung
+**Zuständig / Weg:** SVA Schaffhausen (AHV-Ausgleichskasse); Antragsformular wird bis 31.01.2026 an voraussichtlich Berechtigte versandt, sonst anfordern; **Antrag** bis 30.04.2026 (Nachfrist bei wichtigen Gründen 15.06.2026)
+**Gültigkeit:** 2026 definitiv (Anhang 1 der Verordnung, «Durchführung der Prämienverbilligung im Jahre 2026», RRB 18.11.2025, in Kraft 01.01.2026). Hinweis: Die SVA-Seite «Berechnung» zeigt heute noch die **Richtprämien 2025** — nicht verwenden.
+
+### Rechenmodell
+> «Ein Anspruch auf Prämienverbilligung kann geltend gemacht werden, wenn die anrechenbaren Prämien der obligatorischen Krankenpflegeversicherung 15% des anrechenbaren Einkommens übersteigen» — § 10 Dekret, Quelle [2] (gleichlautend Art. 1 Abs. 2 Krankenversicherungsgesetz, Quelle [3])
+
+> «Die Höhe der Beiträge entspricht der Differenz zwischen den anrechenbaren Prämien und dem gemäss § 10 massgeblichen Prozentsatz des anrechenbaren Einkommens.» — § 13 Abs. 1 Dekret, Quelle [2]
+
+> «Beträgt die Differenz weniger als Fr. 100.00, wird kein Betrag ausbezahlt.» — § 13 Abs. 2 Dekret, Quelle [2]
+
+> «Unter Vorbehalt von § 19 werden maximal 65 Prozent der anrechenbaren Prämien erstattet.» — § 13 Abs. 3 Dekret, Quelle [2] (§ 19 = Sozialhilfe: effektive Prämie bis EL-Durchschnittsprämie)
+
+> «Die anrechenbaren Prämien entsprechen den folgenden Anteilen der vom Bund für die Ergänzungsleistungen zur AHV / IV im Kanton Schaffhausen festgelegten Durchschnittsprämien: a) 85% der Durchschnittsprämien bei Personen ab dem 26. Altersjahr sowie bei Kindern bis zum vollendeten 18. Altersjahr b) 75% der Durchschnittsprämien bei Personen vom 19. bis zum vollendeten 25. Altersjahr» — § 11 Dekret, Quelle [2]
+
+> «Massgebende Jahresprämien = Summe der Richtprämien der gemeinsam besteuerten Personen» — Quelle [5]
+
+Kinder/junge Erwachsene in Ausbildung: Betrag wird «primär zur Deckung der Mindestansprüche» nach Art. 65 Abs. 1bis KVG eingesetzt und bei Bedarf erhöht (§ 13bis Dekret, Quelle [2]).
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Selbstbehalt | 15 % des anrechenbaren Einkommens | [2], [3] |
+| Maximale Erstattung | 65 % der anrechenbaren Prämien | [2] |
+| Auszahlungsschwelle | unter Fr. 100.00 keine Auszahlung | [2] |
+| Richtprämie Region 1 (Stadt Schaffhausen, Neuhausen), Jahrgänge 2000 und älter | «Fr. 5'947.00» (Jahresprämie) | [1] § A1-1 |
+| Region 1, Jahrgänge 2001–2007 | «Fr. 3'879.00» | [1] |
+| Region 1, Kinder (Jahrgänge 2008 und jünger) | «Fr. 1'387.00» | [1] |
+| Richtprämie Region 2 (übrige Gemeinden), Jahrgänge 2000 und älter | «Fr. 5'620.00» | [1] |
+| Region 2, Jahrgänge 2001–2007 | «Fr. 3'618.00» | [1] |
+| Region 2, Kinder | «Fr. 1'295.00» | [1] |
+| Grundabzug im anrechenbaren Einkommen | «Fr. 9'000.00 bei Haushalten mit Kindern bis zum vollendeten 20. Altersjahr, die mit den Eltern einen gemeinschaftlichen Anspruch haben, bzw. Fr. 4'500.00 bei den übrigen Haushalten» | [2] § 12 |
+| Vermögenszuschlag | «15% des nach kantonalem Recht steuerpflichtigen Vermögens» | [2] § 12 |
+| Versand-Grenzwerte Region 1 (keine Anspruchsgrenze, sondern Versandschwelle) | Alleinstehende Jg. 2000 und älter «Fr. 39'647.00»; Jg. 2001–2005 «Fr. 25'860.00»; Verheiratete «Fr. 79'294.00»; pro Kind Jg. 2008+ «Fr. 9'247.00»; pro Kind Jg. 2006/2007 «Fr. 25'860.00» | [1] § A1-2 |
+| Versand-Grenzwerte Region 2 | «Fr. 37'467.00» / «Fr. 24'120.00» / «Fr. 74'934.00» / «Fr. 8'634.00» / «Fr. 24'120.00» | [1] § A1-2 |
+| Fristen 2026 | Versand «bis 31. Januar 2026»; Einreichung «30. April 2026»; Nachfrist «15. Juni 2026» | [1] § A1-3 |
+| Steuerdaten | «Steuerfaktoren, die […] im Januar 2026 verfügbar sind» | [1] § A1-1 Abs. 3 |
+| Richtprämien laut Regierungsrat | «Erwachsene: 5'947 Franken pro Jahr; Junge Erwachsene (19 - 25 Jahre): 3'879 Franken pro Jahr; Kinder: 1'387 Franken pro Jahr» (Stadt/Neuhausen) | [4] |
+
+Eigene Nachrechnung (kein Beleg): Die Versand-Grenzwerte entsprechen Richtprämie ÷ 15 % (5'947 ÷ 0,15 = 39'647) — also dem rechnerischen Nullpunkt. Einzelperson Region 1: Maximum 65 % × 5'947 = 3'865.55 Fr. (greift bis anrechenbares Einkommen ca. 13'876), danach 5'947 − 0,15 × Einkommen, unter 100 Fr. null (ab ca. 38'980).
+
+### Massgebendes Einkommen
+> «Als anrechenbares Einkommen gilt das Reineinkommen nach kantonalem Steuerrecht, korrigiert um die nachfolgenden Elemente: a) Grund-Abzug […] b) Entlastungsabzug gemäss Art. 37 Abs. 1 Bst. d des kantonalen Steuergesetzes […] c) Zuschlag 15% des nach kantonalem Recht steuerpflichtigen Vermögens d) Aufrechnung allfälliger Negativsaldi der Einkünfte aus Grundeigentum […] e) Aufrechnung allfälliger Abzüge für Einlagen in die gebundene Selbstvorsorge sowie für Zuwendungen an gemeinnützige Organisationen und politische Parteien» — § 12 Abs. 1 Dekret, Quelle [2]
+
+> «Massgebend sind die definitiven Steuerwerte für das zweite dem Zahlungsjahr vorangehende Jahr.» — § 12 Abs. 2 Dekret, Quelle [2] (fehlen sie: letzte provisorische Werte, Abs. 3)
+
+### Abweichung zur App
+Die App führt `maxIncome` 45'000 und `subsidySingle` 2'250 (Modell «flat»); belegt ist für eine Einzelperson (Region 1) ein Höchstbetrag von 3'865.55 Fr. (65 % von 5'947) mit Abbau um 15 % des anrechenbaren Einkommens bis Nullpunkt ca. 39'647 — kein Pauschalbetrag.
+
+### Offen / nicht gefunden
+- Entlastungsabzug nach Art. 37 Abs. 1 Bst. d Steuergesetz (Beträge) nicht nachgeschlagen — für die App-Vereinfachung nötig.
+- Jahrgangs-Abgrenzung: Anhang nennt für Erwachsene «Jahrgänge 2000 und älter», für junge Erwachsene «2001 – 2007», die Versandgrenzen aber «Jahrgang 2001 bis 2005» plus «Kind Jahrgang 2006 / 2007» (gemeinschaftlicher Anspruch mit Eltern).
+- SVA-Seite «Berechnung» (Quelle [5]) ist nicht auf 2026 nachgeführt (Richtprämien 2025, Steuerjahr 2023).
+
+### Quellen
+1. Verordnung über den Vollzug des Krankenversicherungsgesetzes, SHR 832.111, Anhang 1 «Durchführung der Prämienverbilligung im Jahre 2026», Kanton Schaffhausen, Stand 1. August 2026 (Anhang geändert 18.11.2025, in Kraft 01.01.2026). https://rechtsbuch.sh.ch/api/de/versions/2086/pdf_file (Eintrag: https://rechtsbuch.sh.ch/app/de/texts_of_law/832.111) — abgerufen 16.09.2026
+2. Dekret über den Vollzug des Krankenversicherungsgesetzes, SHR 832.110, §§ 10–13bis, 19, Version in Kraft seit 01.01.2025. https://rechtsbuch.sh.ch/api/de/versions/1927/pdf_file (Eintrag: https://rechtsbuch.sh.ch/app/de/texts_of_law/832.110) — abgerufen 16.09.2026
+3. Krankenversicherungsgesetz, SHR 832.100, Art. 1, Version in Kraft seit 01.01.2014. https://rechtsbuch.sh.ch/api/de/versions/1383/pdf_file — abgerufen 16.09.2026
+4. «Aus den Verhandlungen des Regierungsrates vom 18. November 2025», Staatskanzlei Schaffhausen (Medienmitteilung). https://sh.ch/CMS/get/file/e85a1e0a-bb32-4954-b114-30bf8b4dbc21 — abgerufen 16.09.2026
+5. Berechnung (IPV), SVA Schaffhausen (Stand: noch Werte 2025). https://www.svash.ch/ipv/berechnung/ und Anmeldung https://www.svash.ch/ipv/anmeldung/ — abgerufen 16.09.2026
+
+---
+
 ## AI — Appenzell Innerrhoden
 
 **Beurteilung:** abbildbar
@@ -891,6 +1017,69 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 1. Wegleitung Individuelle Prämienverbilligung 2026, SVA Graubünden, PDF vom 05.01.2026. https://formulare.sva.gr.ch/downloads/ipv_wegleitung_d.pdf — abgerufen 16.09.2026 (unter https://www.sva.gr.ch/downloads/ipv_wegleitung_d.pdf: HTTP 404)
 2. Gesetz über die Krankenversicherung und die Prämienverbilligung (KPVG, BR 542.100), Kanton Graubünden, aktuelle Version in Kraft seit 01.01.2025. https://www.gr-lex.gr.ch/api/de/versions/3445/pdf_file_with_annexes (kanonisch https://www.gr-lex.gr.ch/app/de/texts_of_law/542.100) — abgerufen 16.09.2026
 3. Verordnung zum Gesetz über die Krankenversicherung und die Prämienverbilligung (VOzKPVG, BR 542.120), Stand 1.1.2026. https://www.gr-lex.gr.ch/api/de/versions/3606/pdf_file_with_annexes — abgerufen 16.09.2026
+
+---
+
+## AG — Aargau
+
+**Beurteilung:** abbildbar
+**Modell (kurz):** Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie
+**Zuständig / Weg:** SVA Aargau; SVA ermittelt Berechtigte aus Steuerdaten und schreibt sie an, Antrag innert sechs Wochen; spätestens 31. Dezember im Vorjahr (für 2026: 31.12.2025, abgelaufen), sonst verwirkt
+**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».
+
+### Rechenmodell
+> «Anspruch auf Prämienverbilligung besteht, wenn die Richtprämie einen prozentualen Anteil des massgebenden Einkommens übersteigt. Bei Mehrpersonenhaushalten werden die Richtprämien der einzelnen Haushaltsmitglieder zusammengezählt.» — Quelle [1], § 6 Abs. 1
+
+> «Dazu gehören der Einkommenssatz (Prozentsatz, mit dem das massgebende Einkommen gemäss § 6 Abs. 1 multipliziert wird), der Einkommensabzug und die Richtprämien.» — Quelle [1], § 5 Abs. 1
+
+> «Für Haushalte mit Kindern oder jungen Erwachsenen in Ausbildung, die zusammen mit den Eltern eingestuft werden, kommt neben dem Einkommensabzug ein zusätzlicher Kinderabzug zum Tragen.» — Quelle [1], § 5 Abs. 4
+
+> «Besteht ein Anspruch gemäss § 6 Abs. 1, beträgt die Prämienverbilligung von Kindern und jungen Erwachsenen in Ausbildung mindestens 50 % der effektiven Prämie.» — Quelle [1], § 7 Abs. 2 (dazu V KVGG § 4 Abs. 5: Erhöhung, wenn der Mindestanspruch nach Art. 65 Abs. 1bis KVG nicht eingehalten ist [2])
+
+> «Die Prämienverbilligung wird höchstens im Umfang der effektiven Prämie des Anspruchsjahres ausgerichtet.» — Quelle [1], § 7 Abs. 3
+
+### Zahlen 2026
+| Grösse | Wert | Quelle |
+|---|---|---|
+| Richtprämie Erwachsene | Fr. 5'830 / Jahr | [2] Anhang 1, [3] |
+| Richtprämie junge Erwachsene (19–25) | Fr. 4'260 / Jahr | [2] Anhang 1, [3] |
+| Richtprämie Kinder | Fr. 1'380 / Jahr | [2] Anhang 1, [3] |
+| Einkommenssatz | 17,5 % | [2] Anhang 1, [3] |
+| Einkommensabzug Alleinstehende | Fr. 8'500 | [2] Anhang 1 |
+| Einkommensabzug Alleinstehende mit Kind(ern) | Fr. 12'200 | [2] Anhang 1 |
+| Einkommensabzug Ehepaare | Fr. 0 | [2] Anhang 1 |
+| Einkommensabzug Ehepaare mit Kind(ern) | Fr. 8'000 | [2] Anhang 1 |
+| Zusatzabzug pro Kind / gemeinsam eingestuften JE in Ausbildung | Fr. 2'500 | [2] Anhang 1 |
+| Vermögen | 1/5 (20 %) des steuerbaren Vermögens wird angerechnet; keine separate Vermögensgrenze | [1] § 6 Abs. 2 |
+| Säule 3a ohne Pensionskasse | nur aufgerechnet, soweit über 10 % des Nettoerwerbseinkommens | [2] § 5 Abs. 1 |
+| Grenzwert selbstständiger Lebensunterhalt JE | steuerbares Einkommen höher als Fr. 24'000 | [2] § 5 Abs. 2 |
+| Datenzugriff SVA (Vorauswahl) | steuerbares Einkommen + 20 % Vermögen bis Tarif A Fr. 44'000 / Tarif B Fr. 140'000 | [2] § 5 Abs. 3 |
+| Einkommensgrenze (§ 5 Abs. 5 KVGG: «das höchste massgebende Einkommen, bis zu welchem Prämienverbilligung bezogen werden kann») | **nicht als Zahl publiziert gefunden**. Abgeleitet (nicht amtlich), Einzelperson: 5'830 / 0,175 = massgebendes Einkommen Fr. 33'314; + Abzug 8'500 → bereinigtes steuerbares Einkommen (+20 % Vermögen) ca. Fr. 41'814 | abgeleitet aus [1], [2] |
+
+Rechenbeispiel (eigene Rechnung, nicht amtlich): Einzelperson, bereinigtes steuerbares Einkommen 20'000, kein Vermögen → massgebend 11'500 → 5'830 − 17,5 % × 11'500 = 3'817.50.
+
+### Massgebendes Einkommen
+> «Das massgebende Einkommen besteht aus dem bereinigten steuerbaren Einkommen, zuzüglich einem Fünftel des steuerbaren Vermögens des massgebenden Steuerjahres, abzüglich eines Einkommensabzugs.» — Quelle [1], § 6 Abs. 2
+
+> «Das bereinigte steuerbare Einkommen entspricht dem rechtskräftig veranlagten steuerbaren Einkommen ohne Berücksichtigung a) der Abzüge für Liegenschaftsunterhaltskosten, soweit sie über dem Pauschalabzug liegen, b) der Abzüge für Einkaufsbeiträge an die Säule 2 und Beiträge an die Säule 3a, c) der Abzüge für freiwillige Zuwendungen, d) der Abzüge für Zuwendungen an politische Parteien, e) der Abzüge für Verluste früherer Geschäftsjahre bei Selbstständigerwerbenden, f) des zusätzlichen Sozialabzugs für tiefe Einkommen.» — Quelle [1], § 6 Abs. 3 (+ BGSA-Einkommen nach Abs. 4)
+
+> «Das massgebende Steuerjahr ist dasjenige Jahr, das drei Jahre vor dem Anspruchsjahr begonnen hat.» — Quelle [1], § 7 Abs. 1 (für 2026 also Steuerjahr 2023)
+
+### Abweichung zur App
+Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einzelperson bei Einkommen 0 erhält Fr. 5'830 (Richtprämie; begrenzt auf effektive Prämie); der Abbau ist in AG tatsächlich linear (17,5 % je Franken massgebendes Einkommen), aber erst nach dem Einkommensabzug von Fr. 8'500 — Nullpunkt Einzelperson ca. Fr. 41'814 bereinigtes steuerbares Einkommen (abgeleitet).
+
+### Offen / nicht gefunden
+- ⚠️ **Widerspruch SVA-Seite:** Die SVA-Aargau-Seite «Allgemeine Informationen» nennt heute «Sie betragen für das Bezugsjahr 2026: für Erwachsene: 6'070 Franken jährlich» und «Der Einkommenssatz beträgt 19.25 Prozent», steht aber im Satz davor unter «Berechnungsbasis für die Prämienverbilligung 2027». Die Rechtssammlung (Anhang 1 V KVGG, «Prämienverbilligung 2026») und das Kantons-PDF nennen für 2026 Fr. 5'830 und 17,5 %. Wahrscheinlich sind 6'070 / 4'440 / 1'450 / 19,25 % die Werte **2027** und «2026» auf der SVA-Seite ist ein Beschriftungsfehler — **nicht belegt**; der Regierungsratsbeschluss für 2027 ist in der Gesetzessammlung noch nicht eingepflegt (aktuelle Fassung V KVGG in Kraft seit 1.9.2025). Für 2026 gilt die Rechtssammlung.
+- Genaue Formel für Haushalte mit Kindern (Einkommensabzug 12'200 bzw. 8'000 **plus** 2'500 je Kind) aus Wortlaut § 5 Abs. 4 KVGG abgeleitet; kein amtliches Rechenbeispiel geöffnet.
+- Online-Rechner (www.sva-aargau.ch/rechner) steht bereits auf 2027; keine Gegenprobe für 2026 möglich.
+- Mindestbetrag (Bagatellgrenze) nicht gefunden.
+
+### Quellen
+1. Gesetz zum Bundesgesetz über die Krankenversicherung (KVGG, SAR 837.200), Kanton Aargau, aktuelle Version in Kraft seit 01.12.2025. https://gesetzessammlungen.ag.ch/api/de/versions/3878/pdf_file_with_annexes (kanonisch https://gesetzessammlungen.ag.ch/app/de/texts_of_law/837.200) — abgerufen 16.09.2026
+2. Verordnung zum Gesetz zum Bundesgesetz über die Krankenversicherung (V KVGG, SAR 837.211) mit Anhang 1 «Berechnungselemente für die Verteilung der Prämienverbilligung 2026» (Stand 1. September 2025), Version in Kraft seit 01.09.2025 (Beschluss 27.08.2025). https://gesetzessammlungen.ag.ch/api/de/versions/3870/pdf_file_with_annexes — abgerufen 16.09.2026
+3. Anhang 1 Berechnungselemente für die Verteilung der Prämienverbilligung 2026 (AGS 2025/…), Kanton Aargau, Handbuch Soziales, PDF geändert 05.11.2025. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpr-mien-2026.pdf — abgerufen 16.09.2026
+4. Allgemeine Informationen (Prämienverbilligung), SVA Aargau (widersprüchliche Jahresangabe, s. oben). https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine — abgerufen 16.09.2026
+5. Informationsblatt Prämienverbilligung 2027, SVA Aargau (enthält keine Zahlen). https://www.sva-aargau.ch/informationsblattpv — abgerufen 16.09.2026
 
 ---
 
