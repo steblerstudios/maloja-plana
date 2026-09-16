@@ -3724,7 +3724,7 @@ export default {
     documentMetadata: 'Metadatas da documents',
     settingsAndPreferences: 'Configuraziuns & preferenzas',
     security: 'Segirezza',
-    securityNote: 'La datoteca exportada cuntegna datas persunalas. Conservescha ella en segirezza.',
+    securityNote: { sie: 'La datoteca exportada cuntegna datas persunalas. Conservai ella en segirezza.', du: 'La datoteca exportada cuntegna datas persunalas. Conservescha ella en segirezza.' },
     // Prevista avant export, dossier e brev (Bau-Liste K3).
     // TODO(rm): Formulaziun da laschar controllar d'ina persuna da lingua materna.
     vorschau: {

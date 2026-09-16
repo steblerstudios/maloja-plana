@@ -2772,7 +2772,7 @@ export default {
     documentMetadata: 'Dokument-Metadaten',
     settingsAndPreferences: 'Einstellungen & Voreinstellungen',
     security: 'Sicherheit',
-    securityNote: 'Die exportierte Datei enthält persönliche Daten. Bewahre sie sicher auf.',
+    securityNote: { sie: 'Die exportierte Datei enthält persönliche Daten. Bewahren Sie sie sicher auf.', du: 'Die exportierte Datei enthält persönliche Daten. Bewahre sie sicher auf.' },
     // Export-Vorschau vor Export, Dossier und Brief (Bau-Liste K3): nennt, was in der Datei
     // steht, und ob sie verschlüsselt ist. Ruhig, ohne Ausrufezeichen (Test prüft das).
     vorschau: {
