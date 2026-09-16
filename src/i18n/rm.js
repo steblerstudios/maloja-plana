@@ -2074,7 +2074,7 @@ export default {
     exportEncrypted: 'Export (criptà)',
     importFile: 'Importar ina segirezza',
     passphrase: 'Pled-clav',
-    passphraseHint: "Almain 4 segns — meglier 12 u dapli, per exempel plirs pleds. Regorda il, i na dat nagina restituziun.",
+    passphraseHint: "Almain {min} segns, il meglier plirs pleds. Regorda il, i na dat nagina restituziun.",
     passphraseConfirm: 'Confermar il pled-clav',
     passphraseMismatch: 'Ils pleds-clavs na correspundan betg.',
     encrypting: 'Criptar...',
@@ -2097,6 +2097,15 @@ export default {
     structureRejected: 'La segirezza n\'ha betg pudì vegnir legida, perquai che sia structura na correspunda betg al format spetgà. Nagut n\'è vegnì midà.',
     fileTooLarge: 'La datoteca è pli gronda che {max} ed è perquai betg vegnida legida. Nagut n\'è vegnì midà.',
     restored: 'Restituì',
+  },
+
+  // E10 (16.09.2026): segirezza criptada sco predefiniziun, pled-clav almain 12 segns.
+  // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Segirar cun pled-clav (predefinì)',
+    titelUnverschluesselt: 'Segirar senza criptar',
+    hinweisUnverschluesselt: 'Tgi che avra questa datoteca, la po leger. Tscherna questa via mo, sche ti conservas la datoteca en in lieu protegì.',
+    altePasswoerter: 'Segirezzas pli veglias cun in pled-clav pli curt sa laschan anc adina avrir.',
   },
 
   tour: {

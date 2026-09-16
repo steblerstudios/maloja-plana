@@ -16,7 +16,7 @@ Minderung — gebaut:
 Minderung — geplant / nicht gebaut (Stand 15.09.2026):
 - **AES-Verschlüsselung** der Daten at rest: die Daten liegen heute unverschlüsselt im localStorage (`or5_*`) und in der IndexedDB. Der Tresor ist als Konzept festgehalten (`docs/design/tresor-lock.md`); das Krypto-Fundament (`src/utils/secureStore.js`) liegt dormant, die Live-Verdrahtung ist bewusst auf die «Logins-Phase» vertagt.
 - **Session-Lock**: kein Lock im Prod-Build. `LockScreen.jsx` ist eine Design-Vorschau, die nur im DEV-Modus geladen wird (`src/main.jsx` Z. 70, 1325–1327; `import.meta.env.DEV`).
-- **«Kein Klartext-Export»**: trifft nicht zu. Der Klartext-Export (JSON) ist der Standardweg und steht gleichberechtigt neben dem verschlüsselten Export (`src/ZipExport.jsx` Z. 24–28, 56, 85; `backupCrypto.js` Z. 4: «Encryption is optional — plaintext export always available»). Ein Hinweis vor dem Klartext-Export ist offen (DSFA-Entwurf, Abschnitt 7 Punkt 10).
+- **«Kein Klartext-Export»**: trifft nicht zu. Seit Bau-Liste E10 (16.09.2026) ist der verschlüsselte Export die Voreinstellung (`src/ZipExport.jsx` Z. 339–358); der Klartext-Export (JSON) bleibt wählbar, mit Hinweis darunter (Z. 360–367) und mit der Export-Vorschau davor (`src/components/ExportVorschau.jsx` Z. 66–68). Bis dahin war der Klartext-Export der Standardweg, und hier stand, ein Hinweis davor sei offen.
 
 ---
 

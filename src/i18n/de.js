@@ -3250,7 +3250,7 @@ export default {
     exportEncrypted: 'Export (verschlüsselt)',
     importFile: 'Sicherung importieren',
     passphrase: 'Passwort',
-    passphraseHint: { sie: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merken Sie es sich, es gibt keine Wiederherstellung.', du: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merke es dir, es gibt keine Wiederherstellung.' },
+    passphraseHint: { sie: 'Mindestens {min} Zeichen, am besten mehrere Wörter. Merken Sie es sich, es gibt keine Wiederherstellung.', du: 'Mindestens {min} Zeichen, am besten mehrere Wörter. Merke es dir, es gibt keine Wiederherstellung.' },
     passphraseConfirm: 'Passwort bestätigen',
     passphraseMismatch: 'Passwörter stimmen nicht überein.',
     encrypting: 'Verschlüsseln...',
@@ -3273,6 +3273,14 @@ export default {
     structureRejected: 'Die Sicherung konnte nicht gelesen werden, weil ihr Aufbau nicht dem erwarteten Format entspricht. Nichts wurde verändert.',
     fileTooLarge: 'Die Datei ist grösser als {max} und wurde deshalb nicht gelesen. Nichts wurde verändert.',
     restored: 'Wiederhergestellt',
+  },
+
+  // E10 (16.09.2026): verschlüsselte Sicherung als Voreinstellung, Passphrase mind. 12 Zeichen.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Mit Passwort sichern (Voreinstellung)',
+    titelUnverschluesselt: 'Ohne Verschlüsselung sichern',
+    hinweisUnverschluesselt: { sie: 'Diese Datei kann lesen, wer sie öffnet. Wählen Sie diesen Weg nur, wenn Sie die Datei an einem geschützten Ort aufbewahren.', du: 'Diese Datei kann lesen, wer sie öffnet. Wähle diesen Weg nur, wenn du die Datei an einem geschützten Ort aufbewahrst.' },
+    altePasswoerter: 'Ältere Sicherungen mit kürzerem Passwort lassen sich weiterhin öffnen.',
   },
 
   behoerdenDossier: {

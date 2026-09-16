@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PanelTitle } from './components/Heading.jsx';
 import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
-import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile } from './utils/backupCrypto.js';
+import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile, MIN_PASSPHRASE_LENGTH, passphraseLangGenug } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
 import { Icon } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
@@ -77,10 +77,10 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
   };
 
   // Dieselbe Prüfung vor der Vorschau und vor dem Verschlüsseln: die Vorschau soll nie
-  // eine Sicherung ankündigen, die dann an einem zu kurzen Passwort scheitert.
+  // eine Sicherung ankündigen, die dann an einem zu kurzen Passwort scheitert (E10: 12 Zeichen).
   const passphraseOk = () => {
-    if (!passphrase || passphrase.length < 4) {
-      setBackupStatus({ type: 'error', msg: t('backup.passphraseHint') });
+    if (!passphraseLangGenug(passphrase)) {
+      setBackupStatus({ type: 'error', msg: t('backup.passphraseHint', { min: MIN_PASSPHRASE_LENGTH }) });
       return false;
     }
     if (passphrase !== passphraseConfirm) {
@@ -336,10 +336,9 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           style: { fontSize: text.sm, color: palette.mid, marginBottom: '12px', padding: '8px 12px', background: palette.up, borderRadius: radius.sm }
         }, t(sessionBackupCount === 1 ? 'backup.sessionCount' : 'backup.sessionCountPlural', { count: sessionBackupCount })),
 
-        React.createElement('button', { onClick: () => { setBackupStatus(null); setVorschau('sicherung'); }, style: btnStyle(palette.sand) }, React.createElement(Icon, { name: 'download', size: 14 }), t('backup.exportPlain')),
-        vorschauPanel('sicherung'),
-
-        React.createElement('div', { style: { margin: '16px 0 8px', fontSize: text.sm, fontWeight: weight.semi } }, t('backup.exportEncrypted')),
+        // E10: verschlüsselt ist die Voreinstellung (DSG Art. 7 Abs. 3) — dieser Weg steht
+        // zuerst; der unverschlüsselte folgt als bewusste Wahl mit Hinweis.
+        React.createElement('div', { style: { margin: '0 0 8px', fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('backupVoreinstellung.titelVerschluesselt')),
         React.createElement('input', {
           type: 'password', value: passphrase, placeholder: t('backup.passphrase'),
           onChange: (e) => setPassphrase(e.target.value), 'aria-label': t('backup.passphrase'), style: inputStyle
@@ -348,15 +347,24 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           type: 'password', value: passphraseConfirm, placeholder: t('backup.passphraseConfirm'),
           onChange: (e) => setPassphraseConfirm(e.target.value), 'aria-label': t('backup.passphraseConfirm'), style: inputStyle
         }),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('backup.passphraseHint')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('backup.passphraseHint', { min: MIN_PASSPHRASE_LENGTH })),
         React.createElement('button', {
           onClick: () => { setBackupStatus(null); if (passphraseOk()) setVorschau('sicherungVerschluesselt'); },
-          disabled: !passphrase || passphrase.length < 4 || passphrase !== passphraseConfirm,
-          style: btnStyle(passphrase && passphrase.length >= 4 && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
+          disabled: !passphraseLangGenug(passphrase) || passphrase !== passphraseConfirm,
+          style: btnStyle(passphraseLangGenug(passphrase) && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
         }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.exportEncrypted')),
         vorschauPanel('sicherungVerschluesselt'),
 
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo'))
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.skyDeep, marginTop: '12px', padding: space.sm, background: palette.sky + '08', borderRadius: '4px' } }, t('backup.encryptionInfo')),
+
+        // Unverschlüsselt bleibt wählbar — zurückhaltend gestaltet, mit ruhigem Hinweis.
+        React.createElement('div', { style: { margin: '20px 0 6px', paddingTop: space.md, borderTop: '1px solid ' + palette.border, fontSize: text.sm, fontWeight: weight.semi, color: palette.text } }, t('backupVoreinstellung.titelUnverschluesselt')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, lineHeight: '1.5' } }, t('backupVoreinstellung.hinweisUnverschluesselt')),
+        React.createElement('button', {
+          onClick: () => { setBackupStatus(null); setVorschau('sicherung'); },
+          style: { ...btnStyle(palette.up, palette.text), border: '1px solid ' + palette.border }
+        }, React.createElement(Icon, { name: 'download', size: 14 }), t('backup.exportPlain')),
+        vorschauPanel('sicherung')
       )
     ),
 
@@ -417,7 +425,8 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },
             React.createElement('div', null, '✓ ' + t('backup.preRestoreNote')),
-            React.createElement('div', null, '✓ ' + t('backup.encryptionInfo'))
+            React.createElement('div', null, '✓ ' + t('backup.encryptionInfo')),
+            React.createElement('div', null, '✓ ' + t('backupVoreinstellung.altePasswoerter'))
           )
         ),
 

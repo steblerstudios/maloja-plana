@@ -32,7 +32,7 @@ File extension: `.maloja`
 
 ## Key Derivation
 
-1. User enters passphrase (minimum 4 characters, confirmed twice)
+1. User enters passphrase (minimum 12 characters for new backups, confirmed twice; 4 until 16.09.2026, build list E10). Encrypted is the default in the UI; plaintext stays available as a choice
 2. PBKDF2 derives a 256-bit key from passphrase + random salt
 3. Key exists only in memory during encryption/decryption
 4. Key is never stored, logged, or transmitted
@@ -73,7 +73,7 @@ File extension: `.maloja`
 ## Limitations
 
 - Passphrase strength depends entirely on the user
-- Minimum 4 characters is low — UI encourages longer passphrases
+- Minimum 12 characters for new backups (`MIN_PASSPHRASE_LENGTH` in `src/utils/backupCrypto.js`); decryption checks no length, so older backups with a shorter passphrase (minimum 4 before E10) stay readable
 - No key escrow, no recovery mechanism (by design)
 - Web Crypto API requires HTTPS or localhost
 - Older browsers may not support Web Crypto (graceful fallback: encrypted export disabled, plaintext still available)
