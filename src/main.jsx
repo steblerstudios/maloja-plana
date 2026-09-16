@@ -1395,6 +1395,7 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
+          demoMode,
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
