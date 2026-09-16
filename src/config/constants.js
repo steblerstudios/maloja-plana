@@ -293,14 +293,14 @@ export function getChapters(t) {
         { k: 'educationLevel', label: fl(t, 'ausbildung', 'educationLevel'), type: 'select', options: opts(t, 'ausbildung', 'educationLevel') },
         { k: 'efzNumber', label: fl(t, 'ausbildung', 'efzNumber'), type: 'text' },
         { k: 'certifications', label: fl(t, 'ausbildung', 'certifications'), type: 'textarea' },
-        { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
+        { k: 'employer', label: fl(t, 'ausbildung', 'employer'), type: 'text', naOk: true, section: t('sections.ausbildung.work'), sectionIntro: si(t, 'ausbildung', 'work') },
         // Kein `hint`: das Kapitel „Ausbildung & Arbeit" führt bewusst keine Hinweise.
         // Die Erklärung steht am gekoppelten Feld in Finanzen (Quer-Befüllung, main.jsx).
-        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea' },
+        { k: 'employerAddress', label: fl(t, 'ausbildung', 'employerAddress'), type: 'textarea', naOk: true },
         { k: 'jobTitle', label: fl(t, 'ausbildung', 'jobTitle'), type: 'text', mvo: true, naOk: true, orientation: or(t, 'beruf') },
-        { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date' },
+        { k: 'employmentStart', label: fl(t, 'ausbildung', 'employmentStart'), type: 'date', naOk: true },
         { k: 'workPermit', label: fl(t, 'ausbildung', 'workPermit'), type: 'select', options: opts(t, 'ausbildung', 'workPermit'), orientation: or(t, 'bewilligung_b') },
-        { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text' },
+        { k: 'workHoursPerWeek', label: fl(t, 'ausbildung', 'workHoursPerWeek'), type: 'text', naOk: true },
         { k: 'languages', label: fl(t, 'ausbildung', 'languages'), type: 'textarea', section: t('sections.ausbildung.languages'), sectionIntro: si(t, 'ausbildung', 'languages') },
       ],
       docs: [

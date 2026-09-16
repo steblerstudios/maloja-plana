@@ -111,7 +111,7 @@ describe('E17 · Zustand «trifft nicht zu»', () => {
   it('nur ausgewählte Felder bieten «trifft nicht zu» an — nicht Name oder Geburtsdatum', () => {
     expect(feld('basis', 'firstName').naOk).toBeFalsy();
     expect(feld('basis', 'dateOfBirth').naOk).toBeFalsy();
-    for (const [kap, k] of [['finanzen', 'employer'], ['basis', 'phone'], ['basis', 'email'], ['ausbildung', 'jobTitle']]) {
+    for (const [kap, k] of [['finanzen', 'employer'], ['basis', 'phone'], ['basis', 'email'], ['ausbildung', 'jobTitle'], ['ausbildung', 'employer'], ['ausbildung', 'workHoursPerWeek']]) {
       expect(feld(kap, k).naOk, k).toBe(true);
     }
   });

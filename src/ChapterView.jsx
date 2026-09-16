@@ -468,7 +468,7 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     if (!na && data[field.k]) return el;
     const umschalten = () => onUpdate(NA_FELD, naUmschalten(data, field.k));
     const knopf = React.createElement('button', {
-      type: 'button', onClick: umschalten, 'aria-pressed': na,
+      type: 'button', onClick: umschalten, 'data-na': na ? '1' : '0',
       'aria-label': field.label + ': ' + tr(na ? 'naZustand.zuruecknehmen' : 'naZustand.markieren'),
       style: {
         background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer', fontFamily: 'inherit',
