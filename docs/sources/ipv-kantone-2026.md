@@ -115,8 +115,8 @@ Kanton, für den ein belegter Höchstbetrag vorliegt, liegt `subsidySingle` (App
 CHF/Jahr) unter dem amtlichen Betrag für eine erwachsene Einzelperson ohne Einkommen (amtlich
 rund 2'650–7'330 CHF/Jahr, in den meisten Kantonen 4'400–6'100). Der lineare Abbau der App
 drückt den Betrag zusätzlich. Die **Einkommensgrenzen** weichen in beide Richtungen ab: in FR,
-BL, BS, BE, SZ, AR, VD, VS, TI, SG, SH und JU ist die App-Grenze für Einzelpersonen zu hoch (die App nennt Personen
-berechtigt, die es nicht sind), in NW, OW, ZH, GE, NE und SO zu tief.
+BL, BS, BE, AR, VD, VS, TI, SG, SH und JU ist die App-Grenze für Einzelpersonen zu hoch (die App nennt Personen
+berechtigt, die es nicht sind), in NW, OW, ZH, GE, NE und SO zu tief; in SZ ist die Grenze nur für eine Mietzinsregion publiziert und nicht vergleichbar. Grenzen mit «abgel.» sind aus den belegten Parametern gerechnet.
 
 Zusätzliche Modell-Lücken der App: Prämienregionen (u. a. ZH, BE, LU, FR, SG, GR, SH, VS) fehlen;
 Vermögen zählt in mehreren Kantonen zum massgebenden Einkommen oder schliesst aus (TG: jedes
