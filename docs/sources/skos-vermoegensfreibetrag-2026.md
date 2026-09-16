@@ -98,20 +98,135 @@ vorliegt, gegengeprüft.
 ## Schritt 2 — Kantonale Prüfung
 
 Status-Legende: ✅ kantonal belegt (amtliche Quelle mit Zahl) ·
-⚠️ nur SKOS-Karte, keine amtliche kantonale Einzelquelle gefunden ·
-🔍 in Arbeit.
+⚠️ nur SKOS-Karte / nur indirekt-kommunal belegt, keine tragfähige amtliche
+kantonale Einzelquelle gefunden · 🔍 in Arbeit.
 
 | Kanton | Einzel | Paar | je Kind | Max | Quelle | Art der Quelle | Status |
 |---|---|---|---|---|---|---|---|
-| _wird in den folgenden Commits ergänzt_ | | | | | | | 🔍 |
+| AG | 1'500 (pro Person) | — | — | 4'500 (pro Unterstützungseinheit) | § 11 Abs. 4 SPV (SAR 851.211), Handbuch Soziales AG Ziff. 9.2 | kantonales Handbuch | ✅ |
+| SH | 2'000 | 4'000 | nicht geregelt | nicht geregelt | Richtlinien für die Bemessung der Sozialhilfe, Ziff. D.6.1, gültig ab 1.1.2022 | kantonale Richtlinie | ✅ |
+| SO | 2'000 | 4'000 | 1'000 | 5'000 (pro Familie) | § 93 Abs. 1 Bst. j SV, Sozialhilfehandbuch SO | Gesetz + kantonales Handbuch | ✅ |
+| BL | — | — | — | — | — | — | ⚠️ nicht amtlich belegt |
+| SG | 2'500 | 5'000 | 1'250 | 6'250 (pro Familie) | «Beiblatt zum KOS-Handbuch Kanton St. Gallen» in der Anwendung Stadt Wil, ab 1.1.2026 | kommunale Anwendung einer kantonalen Praxishilfe — **nicht** die generelle kantonale Regelung für reguläre Sozialhilfe | ⚠️ nur indirekt belegt |
+| NE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 18 ANCAM (RSN 831.02), état au 1er avril 2026 | kantonaler Erlass | ✅ |
+| BE | 4'000 | 8'000 | 2'000 | 10'000 (pro Familie) | Art. 8n SHV (BSG 860.111), zitiert in den Unterstützungsrichtlinien Sozialhilfe der Stadt Bern | kantonale Verordnung (über städtische Publikation zitiert) | ✅ |
 
-*(Tabelle wird nach Kanton befüllt; siehe Zitate weiter unten je Kanton.)*
+*(Weitere Kantone folgen in den nächsten Commits; siehe Zitate weiter unten.)*
 
 ---
 
 ## Zitate je Kanton
 
-*(wird ergänzt)*
+### AG — Aargau ✅
+
+> «Freibeträge pro Person: CHF 1'500.—; Maximalbetrag pro Unterstützungseinheit:
+> CHF 4'500.—» — «Nur Vermögen, das über den Freibetrag hinausgeht, muss, soweit
+> dies möglich ist, realisiert werden.»
+
+Quelle: Handbuch Soziales des Kantons Aargau, Kapitel 9.2 «Vermögen», mit
+Verweis auf § 11 Abs. 4 SPV (Sozialhilfe- und Präventionsverordnung, SAR
+851.211).
+<https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/handbuch-soziales/9-anrechnung-von-eigenen-mitteln-(einkommen-und-vermoegen)/9-2-vermoegen>
+— abgerufen 16.09.2026, in dieser Sitzung direkt gegengeprüft.
+
+Struktur weicht von Einzel/Paar/Kind ab: AG rechnet **pro Person** (nicht nach
+Einzelperson/Paar gestaffelt) mit einem Haushalts-Deckel.
+
+### SH — Schaffhausen ✅
+
+> «Die Freibeträge bei liquidem Vermögen betragen für Einzelpersonen
+> Fr. 2'000.–, für Ehepaare oder eingetragene Paare Fr. 4'000.–.»
+
+Quelle: Kanton Schaffhausen, Departement des Innern, «Richtlinien für die
+Bemessung der Sozialhilfe gültig ab 1.1.2022», Ziffer D.6.1 «Grundsatz und
+Freibeträge».
+<https://sh.ch/CMS/get/file/9dd85ebc-6cb7-4bb0-bfee-d1e9de104705>
+— abgerufen 16.09.2026, in dieser Sitzung direkt gegengeprüft (PDF-Volltext).
+Kein Zuschlag pro Kind und kein separater Höchstbetrag in diesem Abschnitt
+gefunden — im Dokument nicht geregelt, nicht als "0" misszuverstehen.
+
+### SO — Solothurn ✅
+
+> Vermögensfreibeträge gemäss § 93 Abs. 1 Bst. j SV: Einzelpersonen CHF 2'000,
+> Ehepaare und eingetragene Partnerschaften CHF 4'000, pro minderjähriges Kind
+> CHF 1'000, maximal pro Familie CHF 5'000. «Vermögen, welches die im
+> konkreten Fall anwendbare Freibetragsgrenze nicht überschreitet, ist der
+> unterstützten Person also unangetastet zu überlassen.»
+
+Quelle: Sozialhilfehandbuch Kanton Solothurn, Abschnitt «Anrechnung von
+Vermögen und Freibeträge», mit Verweis auf § 93 Abs. 1 Bst. j
+Sozialhilfeverordnung (SV).
+<https://sozialhilfehandbuch.so.ch/praxis-sozialhilfe/anrechnung-einkommen-und-vermoegen/vermoegen/anrechnung-von-vermoegen-und-freibetraege/>
+— abgerufen 16.09.2026, in dieser Sitzung direkt gegengeprüft.
+(Nicht verwechseln: dieselbe Quelle nennt eine andere, höhere Freibetrags-
+Kategorie für Rückerstattungsfälle — 30'000/50'000/+15'000 je Kind, max.
+65'000 — das ist ein anderer Tatbestand, siehe auch die analoge ZH-Regel im
+App-Code.)
+
+### BL — Basel-Landschaft ⚠️ nicht amtlich belegt
+
+Die kantonale Sozialhilfeverordnung (SHV, SGS 850.11) und das kantonale
+Handbuch waren in dieser Recherche technisch nicht auswertbar. Ein Wert von
+2'200/3'400/… kursiert nur als Suchmaschinen-Zusammenfassung eines
+Gemeinde-Merkblatts von 2017/18 — nicht selbst geöffnet, deshalb **nicht**
+als Beleg verwendet. Nicht zu verwechseln mit der Altersregel ab 55 Jahren
+(90'000/180'000 CHF), die ein anderer Freibetrag ist. **Status: nur
+SKOS-Kartenwert (CHF 2'200), kantonal nicht geprüft.**
+
+### SG — St. Gallen ⚠️ nur indirekt belegt
+
+> «Vermögensfreibeträge (max. Fr. 6'250.00 pro Familie): Einzelpersonen
+> Fr. 2'500.00, Ehepaare Fr. 5'000.00, jedes minderjährige Kind Fr. 1'250.00.»
+
+Quelle: «Beiblatt zum KOS-Handbuch Kanton St. Gallen — Anwendung in der Stadt
+Wil für Asylsuchende (N), vorläufig aufgenommene Ausländer (F) und
+Schutzsuchende (S) ab 1. Januar 2026», Stadt Wil.
+<https://www.stadtwil.ch/storage/a2c0535935b95a4362a501465528b04f18638dddcb1f3bbe4c029d6098974f3a>
+— abgerufen 16.09.2026, in dieser Sitzung direkt per PDF-Volltext gegengeprüft.
+
+**Wichtiger Vorbehalt, wörtlich aus dem Dokumenttitel:** Dieses Beiblatt ist
+laut eigener Überschrift für **Asylsozialhilfe** (Personen mit Status N/F/S)
+in der Stadt Wil formuliert, nicht ausdrücklich für die reguläre Sozialhilfe
+im ganzen Kanton St. Gallen. Es gibt einen Hinweis, dass ein
+Gemeinderatsbeschluss der Gemeinde Weesen dieselbe Tabelle auch auf die
+reguläre Sozialhilfe anwendet — dieser Beschluss wurde in dieser Sitzung
+**nicht unabhängig eingesehen**. Die Zahlen decken sich exakt mit dem
+SKOS-Kartenwert (2'500), was für eine kantonsweite KOS-Praxishilfe-Vorlage
+spricht, aber: **keine amtliche kantonale Quelle für die reguläre
+Sozialhilfe gefunden.** Einstufung deshalb «nur indirekt belegt», nicht
+«kantonal belegt».
+
+### NE — Neuchâtel ✅
+
+> «L'aide matérielle est en principe accordée après épuisement de la
+> fortune. Il est toutefois laissé à disposition du bénéficiaire un
+> montant de: a) pour une personne seule 4'000.–; b) pour un couple
+> 8'000.–; c) pour chaque enfant à charge 2'000.–; mais, par famille, au
+> maximum 10'000.–.»
+
+Quelle: Art. 18 «Arrêté fixant les normes pour le calcul de l'aide
+matérielle (ANCAM)», RSN 831.02, état au 1er avril 2026 (Recueil systématique
+de la législation neuchâteloise).
+<https://rsn.ne.ch/DATA/program/books/rsne/pdf/83102.pdf>
+— abgerufen 16.09.2026, in dieser Sitzung per PDF-Volltext direkt
+gegengeprüft, wörtlich bestätigt.
+
+### BE — Bern ✅
+
+> «Der unterstützten Person werden auf das Vermögen Vermögensfreibeträge in
+> nachfolgender [Höhe zugestanden]: für Einzelpersonen Fr. 4'000.–, für
+> Ehepaare Fr. 8'000.–, für jedes minderjährige Kind Fr. 2'000.– → jedoch
+> max. Fr. 10'000.– pro Familie.»
+
+Quelle: Art. 8n Verordnung vom 24.10.2001 über die öffentliche Sozialhilfe
+(Sozialhilfeverordnung, BSG 860.111), zitiert und ausgeführt in den
+Unterstützungsrichtlinien Sozialhilfe der Stadt Bern, Merkblatt «Vermögen».
+<https://www.bern.ch/themen/gesundheit-alter-und-soziales/sozialhilfe/unterstuetzungsrichtlinien-sozialhilfe/downloads-1/downloads/vermogen-17-08-23.pdf>
+— abgerufen 16.09.2026, in dieser Sitzung per PDF-Volltext direkt
+gegengeprüft, wörtlich bestätigt. Direktverweis auf den kantonalen
+Erlasstext (belex.sites.be.ch) steht noch aus — die städtische Publikation
+zitiert Art. 8n SHV jedoch namentlich und wörtlich mit Datum/Nummer, das
+genügt als kantonale Rechtsgrundlage.
 
 ---
 
@@ -124,6 +239,22 @@ ihrer aktuellen Nummerierung läuft.)*
 
 ## Folge für die App
 
-*(wird nach Abschluss der kantonalen Prüfung ergänzt: welche Kantone von den
-aktuell einheitlich verwendeten 6'000/12'000 abweichen, und in welche
-Richtung.)*
+*(Vollständige Zusammenfassung folgt nach Abschluss der kantonalen Prüfung.
+Zwischenstand nach den ersten 7 geprüften Kantonen — App rechnet aktuell
+bundesweit einheitlich mit 6'000 Einzel / 12'000 Paar / +3'000 je Kind /
+Deckel 15'000:)*
+
+| Kanton | App aktuell (Einzel/Paar/Kind/Max) | Kantonal belegt | Richtung der Abweichung |
+|---|---|---|---|
+| AG | 6'000 / 12'000 / +3'000 / 15'000 | 1'500 pro Person / — / — / 4'500 pro Einheit | App **deutlich zu hoch** — andere Struktur (pro Person statt Einzel/Paar) |
+| SH | 6'000 / 12'000 / +3'000 / 15'000 | 2'000 / 4'000 / n.g. / n.g. | App **zu hoch** bei Einzel und Paar |
+| SO | 6'000 / 12'000 / +3'000 / 15'000 | 2'000 / 4'000 / 1'000 / 5'000 | App **zu hoch** bei Einzel, Paar, Kind-Zuschlag und Deckel |
+| BL | 6'000 / 12'000 / +3'000 / 15'000 | nicht belegt (Karte: 2'200) | vermutlich **zu hoch**, aber nicht kantonal geprüft |
+| SG | 6'000 / 12'000 / +3'000 / 15'000 | 2'500 / 5'000 / 1'250 / 6'250 (nur indirekt belegt) | vermutlich **zu hoch**, Quelle nicht sicher generalisierbar |
+| NE | 6'000 / 12'000 / +3'000 / 15'000 | 4'000 / 8'000 / 2'000 / 10'000 | App **zu hoch** bei allen vier Werten |
+| BE | 6'000 / 12'000 / +3'000 / 15'000 | 4'000 / 8'000 / 2'000 / 10'000 | App **zu hoch** bei allen vier Werten |
+
+Für alle bisher geprüften Kantone gilt: nicht nur der Grundbetrag weicht ab
+— auch der pauschale Kinderzuschlag (+3'000) und der Deckel (15'000) der
+App sind für AG/SH/SO/NE/BE kantonal falsch (SO/NE/BE kennen 1'000–2'000 je
+Kind und einen deutlich tieferen Deckel von 4'500–10'000).
