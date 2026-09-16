@@ -1118,6 +1118,11 @@ export default {
     begonnen: 'Commencé',
     grundordnung: 'Vue d\'ensemble en place',
     vertieft: 'Bien documenté',
+    // K18 : libellés courts pour la colonne de statut étroite (lisible à 13px, Bauliste E20).
+    leerShort: 'Ouvert',
+    begonnenShort: 'Commencé',
+    grundordnungShort: 'Aperçu',
+    vertieftShort: 'Détaillé',
   },
   ankunft: {
     basis: { sie: 'Vos données de base sont maintenant visibles.', du: 'Tes données de base sont maintenant visibles.' },
@@ -1229,6 +1234,7 @@ export default {
   chapters: {
     basis: {
       title: 'Données personnelles',
+      short: 'Profil',
       description: 'Votre identité et vos coordonnées',
       intro: 'Vos données personnelles sont la base. Commencez par votre nom et canton — le reste peut attendre.',
       emptyState: { sie: 'Votre canton détermine impôts, réduction de primes et aide sociale — deux indications suffisent.', du: 'Ton canton détermine impôts, réduction de primes et aide sociale — deux indications suffisent.' },
@@ -1291,6 +1297,7 @@ export default {
     },
     wohnen: {
       title: 'Logement',
+      short: 'Logement',
       description: 'Votre domicile, loyer et situation de logement',
       intro: 'Tout sur votre logement. Utile pour la déclaration d\'impôts, les assurances et les demandes de prestations.',
       emptyState: { sie: 'Votre loyer alimente le budget et le calcul d\'aide sociale.', du: 'Ton loyer alimente le budget et le calcul d\'aide sociale.' },
@@ -1319,6 +1326,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      short: 'Finances',
       description: 'Vos revenus, épargne et coordonnées bancaires',
       intro: 'Une vue claire de votre situation financière. Utile pour le budget, les impôts et les demandes de subsides.',
       emptyState: { sie: 'Votre revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.', du: 'Ton revenu active le calculateur d\'impôts, la vérification de réduction de primes et le contrôle du salaire minimum.' },
@@ -1397,6 +1405,7 @@ export default {
     },
     versicherungen: {
       title: 'Assurances',
+      short: 'Assurances',
       description: 'Assurance maladie, prévoyance et couverture',
       intro: 'Vos assurances en un seul endroit. Utile pour changer de caisse ou demander une réduction de primes.',
       emptyState: { sie: 'Votre prime d\'assurance maladie détermine si vous avez droit à une réduction de primes.', du: 'Ta prime d\'assurance maladie détermine si tu as droit à une réduction de primes.' },
@@ -1451,6 +1460,7 @@ export default {
     },
     ausbildung: {
       title: 'Formation et emploi',
+      short: 'Formation',
       description: 'Vos qualifications et votre emploi',
       intro: 'Votre formation et expérience professionnelle. Utile pour le CV, les candidatures et les permis de travail.',
       emptyState: { sie: 'Votre profession et votre taux d\'occupation alimentent l\'aperçu fiscal et prévoyance.', du: 'Ta profession et ton taux d\'occupation alimentent l\'aperçu fiscal et prévoyance.' },
@@ -1478,6 +1488,7 @@ export default {
     },
     behoerden: {
       title: 'Autorités et juridique',
+      short: 'Autorités',
       description: 'Impôts, affaires juridiques et documents officiels',
       intro: 'Vos contacts avec les autorités et affaires juridiques. Gardez les délais importants et contacts ensemble.',
       emptyState: { sie: 'Vos contacts administratifs à portée de main — du temps gagné pour le prochain rendez-vous.', du: 'Tes contacts administratifs à portée de main — du temps gagné pour le prochain rendez-vous.' },
@@ -1505,6 +1516,7 @@ export default {
     },
     notfall: {
       title: 'Urgence',
+      short: 'Urgence',
       description: 'Contacts d\'urgence, informations médicales',
       intro: 'Informations importantes en cas d\'urgence. Avoir cela prêt peut faire une vraie différence pour vous et votre famille.',
       emptyState: { sie: 'Votre carte d\'urgence — prête en 2 minutes, là quand ça compte.', du: 'Ta carte d\'urgence — prête en 2 minutes, là quand ça compte.' },
@@ -2374,7 +2386,8 @@ export default {
     cantonalAndMunicipal: 'Impôt cantonal et communal',
     totalEstimate: 'Charge fiscale totale estimée',
     selectCantonHint: 'Sélectionnez un canton pour voir l\'estimation cantonale.',
-    basedOnHauptort: 'Valeur indicative, basée sur le chef-lieu du canton.',
+    basedOnHauptort: 'Valeur indicative, basée sur le chef-lieu du canton. Le facteur est calibré pour un revenu d\'environ CHF 80 000 (personne seule) et appliqué de façon linéaire à tout revenu — pour un revenu nettement plus élevé ou plus bas, l\'écart peut être plus important que ce qui est affiché ici.',
+    roughEstimateBadge: 'Estimation grossière',
     totalNote: 'Fédéral + cantonal + communal (orientation). La charge réelle dépend de votre commune et situation personnelle.',
     tariff: 'Tarif',
     singleTariff: 'Tarif de base',
@@ -3684,7 +3697,8 @@ export default {
     taxpunkte: 'Points tarifaires sur la facture',
     taxpunktwert: 'Valeur du point',
     berechneterBetrag: 'Montant calculé',
-    tpwNote: 'La valeur du point varie selon le canton.',
+    tpwNote: 'La valeur du point tarifaire varie selon le canton. Les valeurs 2026 sont provisoires presque partout (art. 46 al. 4 LAMal) — elles changent dès qu\'un canton fixe le tarif définitif. Pour AG, BL, SO, AI, GL, SH, JU, NE et VS, aucune valeur 2026 officiellement documentée n\'existe (encore) ; l\'app y indique l\'état 2025.',
+    tpwDataVersion: 'État de la valeur du point',
     disclaimer: 'Aide à l\'orientation basée sur la LAMal/OPAS. Pour des renseignements contraignants : votre assureur.',
     source: 'Source : [[OFSP|bag.admin.ch]], [[LAMal Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/fr]], [[OPAS|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/fr]]',
   },

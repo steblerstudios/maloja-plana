@@ -1121,6 +1121,11 @@ export default {
     begonnen: 'Begonnen',
     grundordnung: 'Überblick steht',
     vertieft: 'Vertieft',
+    // K18: Kurzlabels für die schmale Status-Spalte (mind. 13px lesbar, Baulliste E20).
+    leerShort: 'Offen',
+    begonnenShort: 'Begonnen',
+    grundordnungShort: 'Überblick',
+    vertieftShort: 'Vertieft',
   },
   ankunft: {
     basis: { sie: 'Ihre Grundlagen sind jetzt sichtbar.', du: 'Deine Grundlagen sind jetzt sichtbar.' },
@@ -1232,6 +1237,7 @@ export default {
   chapters: {
     basis: {
       title: 'Persönliche Basis',
+      short: 'Basis',
       description: { sie: 'Ihre Identität und Kontaktdaten', du: 'Deine Identität und Kontaktdaten' },
       intro: { sie: 'Ihre persönlichen Grunddaten sind das Fundament. Beginnen Sie mit Name und Kanton — alles andere hat Zeit.', du: 'Deine persönlichen Grunddaten sind das Fundament. Beginne mit Name und Kanton — alles andere hat Zeit.' },
       emptyState: { sie: 'Ihr Kanton bestimmt Steuer, IPV und Sozialhilfe — zwei Angaben genügen.', du: 'Dein Kanton bestimmt Steuer, IPV und Sozialhilfe — zwei Angaben genügen.' },
@@ -1294,6 +1300,7 @@ export default {
     },
     wohnen: {
       title: 'Wohnen & Leben',
+      short: 'Wohnen',
       description: { sie: 'Ihr Zuhause, Miete und Wohnsituation', du: 'Dein Zuhause, Miete und Wohnsituation' },
       intro: { sie: 'Alles rund um Ihr Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.', du: 'Alles rund um Dein Zuhause. Nützlich für Steuererklärung, Versicherungen und Unterstützungsanträge.' },
       emptyState: { sie: 'Ihre Miete fliesst in Budget und Sozialhilfe-Berechnung ein.', du: 'Deine Miete fliesst in Budget und Sozialhilfe-Berechnung ein.' },
@@ -1322,6 +1329,7 @@ export default {
     },
     finanzen: {
       title: 'Finanzen & Geld',
+      short: 'Finanzen',
       description: { sie: 'Ihr Einkommen, Erspartes und Bankdaten', du: 'Dein Einkommen, Erspartes und Bankdaten' },
       intro: { sie: 'Ein klares Bild Ihrer finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.', du: 'Ein klares Bild Deiner finanziellen Situation. Hilft bei Budget, Steuern und Unterstützungsanträgen.' },
       emptyState: { sie: 'Ihr Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.', du: 'Dein Einkommen schaltet Steuerrechner, IPV-Prüfung und Mindestlohn-Check frei.' },
@@ -1400,6 +1408,7 @@ export default {
     },
     versicherungen: {
       title: 'Versicherungen & Vorsorge',
+      short: 'Versicherung',
       description: 'Krankenkasse, Pensionskasse und Absicherung',
       intro: { sie: 'Ihre Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.', du: 'Deine Versicherungsdetails an einem Ort. Hilfreich beim Wechsel oder bei Anträgen auf Prämienverbilligung.' },
       emptyState: { sie: 'Ihre KK-Prämie bestimmt, ob Sie Anspruch auf Prämienverbilligung haben.', du: 'Deine KK-Prämie bestimmt, ob Du Anspruch auf Prämienverbilligung hast.' },
@@ -1454,6 +1463,7 @@ export default {
     },
     ausbildung: {
       title: 'Ausbildung & Arbeit',
+      short: 'Ausbildung',
       description: { sie: 'Ihre Qualifikationen und Arbeitsstelle', du: 'Deine Qualifikationen und Arbeitsstelle' },
       intro: { sie: 'Ihre Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.', du: 'Deine Ausbildung und Berufserfahrung. Nützlich für Lebenslauf, Bewerbungen und Arbeitsbewilligungen.' },
       emptyState: 'Beruf und Beschäftigungsgrad fliessen in Steuer und Vorsorge-Überblick ein.',
@@ -1481,6 +1491,7 @@ export default {
     },
     behoerden: {
       title: 'Behörden & Rechtliches',
+      short: 'Behörden',
       description: 'Steuern, rechtliche Angelegenheiten und amtliche Dokumente',
       intro: { sie: 'Ihre Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.', du: 'Deine Behördenkontakte und rechtlichen Angelegenheiten. Hält wichtige Fristen und Ansprechpersonen zusammen.' },
       emptyState: 'Behördenkontakte griffbereit — spart Zeit beim nächsten Termin oder Anruf.',
@@ -1508,6 +1519,7 @@ export default {
     },
     notfall: {
       title: 'Notfall',
+      short: 'Notfall',
       description: 'Notfallkontakte und medizinische Informationen',
       intro: { sie: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Sie und Ihre Familie einen echten Unterschied machen.', du: 'Wichtige Informationen für den Notfall. Das hier vorbereitet zu haben, kann für Dich und Deine Familie einen echten Unterschied machen.' },
       emptyState: { sie: 'Ihre Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.', du: 'Deine Notfallkarte — in 2 Minuten bereit, wenn es darauf ankommt.' },
@@ -2394,7 +2406,8 @@ export default {
     cantonalAndMunicipal: 'Kantons- und Gemeindesteuer',
     totalEstimate: 'Geschätzte Gesamtsteuer',
     selectCantonHint: { sie: 'Wählen Sie einen Kanton, um die kantonale Steuerbelastung zu sehen.', du: 'Wähle einen Kanton, um die kantonale Steuerbelastung zu sehen.' },
-    basedOnHauptort: 'Orientierungswert, basierend auf dem Hauptort des Kantons.',
+    basedOnHauptort: 'Orientierungswert, basierend auf dem Hauptort des Kantons. Der Faktor ist bei einem Einkommen von rund CHF 80’000 (ledig) geeicht und wird linear auf jedes Einkommen angewendet — bei deutlich höherem oder tieferem Einkommen kann die Abweichung grösser sein als hier gezeigt.',
+    roughEstimateBadge: 'Grobe Schätzung',
     totalNote: 'Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.',
     tariff: 'Tarif',
     singleTariff: 'Grundtarif',
@@ -3695,7 +3708,8 @@ export default {
     taxpunkte: 'Taxpunkte auf der Rechnung',
     taxpunktwert: 'Taxpunktwert',
     berechneterBetrag: 'Berechneter Betrag',
-    tpwNote: 'Taxpunktwert variiert je nach Kanton.',
+    tpwNote: 'Taxpunktwert variiert je nach Kanton. Die Werte 2026 sind fast überall provisorisch festgesetzt (KVG Art. 46 Abs. 4) — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für AG, BL, SO, AI, GL, SH, JU, NE und VS liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
+    tpwDataVersion: 'Taxpunktwert-Stand',
     disclaimer: { sie: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Ihre Krankenkasse.', du: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Deine Krankenkasse.' },
     source: 'Quelle: [[BAG|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

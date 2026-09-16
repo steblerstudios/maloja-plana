@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TAXPUNKTWERT, berechneArztrechnung } from '../kvgLeistungen.js';
+import { TAXPUNKTWERT, berechneArztrechnung, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, KVG_DATA_VERSION } from '../kvgLeistungen.js';
 import de from '../../i18n/de.js';
 import en from '../../i18n/en.js';
 import fr from '../../i18n/fr.js';
@@ -107,6 +107,41 @@ describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
 // K14: KLV Art. 38a Abs. 1+2 (Fassung seit 1.1.2024; Fedlex Fassung 1.8.2026, abgerufen
 // 15.09.2026): 40 % Selbstbehalt für zu teure Arzneimittel, auch Generika — nicht mehr 20 %.
 // https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/de/html/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-de-html.html
+// K27 (Bauliste §10, E29): der Taxpunktwert-Block trägt einen eigenen Datenstand statt
+// nur der einen KVG_DATA_VERSION für den ganzen KVG-Datensatz.
+describe('TAXPUNKTWERT_DATA_VERSION — eigener Datenstand (K27)', () => {
+  it('ist gesetzt und unterscheidet sich von der allgemeinen KVG_DATA_VERSION', () => {
+    expect(TAXPUNKTWERT_DATA_VERSION).toBeTruthy();
+    expect(TAXPUNKTWERT_DATA_VERSION).not.toBe(KVG_DATA_VERSION);
+  });
+
+  it('TAXPUNKTWERT_UNBELEGT_2026 listet genau die neun Kantone ohne Beleg 2026 (K30)', () => {
+    expect(TAXPUNKTWERT_UNBELEGT_2026.slice().sort()).toEqual(
+      ['AG', 'AI', 'BL', 'GL', 'JU', 'NE', 'SH', 'SO', 'VS']
+    );
+  });
+});
+
+// K26 (Bauliste §10, E28): die Fussnote nennt den provisorischen Charakter (KVG Art. 46
+// Abs. 4) und die neun Kantone ohne Beleg 2026, in allen 5 Sprachen.
+describe('kvg.tpwNote — provisorisch + neun unbelegte Kantone (K26)', () => {
+  const sprachen = { de, en, fr, it: it_, rm };
+  for (const [code, dict] of Object.entries(sprachen)) {
+    it(`${code}: nennt alle neun unbelegten Kantone`, () => {
+      const note = dict.kvg.tpwNote;
+      for (const kanton of TAXPUNKTWERT_UNBELEGT_2026) {
+        expect(note).toContain(kanton);
+      }
+    });
+    it(`${code}: nennt den Stand 2025 der unbelegten Kantone`, () => {
+      expect(dict.kvg.tpwNote).toContain('2025');
+    });
+    it(`${code}: hat ein eigenes Label für den Taxpunktwert-Datenstand`, () => {
+      expect(dict.kvg.tpwDataVersion).toBeTruthy();
+    });
+  }
+});
+
 describe('kvg.generikaNote — Selbstbehalt nach KLV Art. 38a', () => {
   const sprachen = { de, en, fr, it: it_, rm };
   for (const [code, dict] of Object.entries(sprachen)) {

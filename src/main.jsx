@@ -136,7 +136,9 @@ class ViewErrorBoundary extends React.Component {
 // braucht, sobald eine professionell übersetzte Sprachdatei vorliegt.
 // Siehe docs/i18n-sprachausbau.md.
 const LANGUAGE_NATIVE_NAMES = {
-  de: 'Deutsch', en: 'English', fr: 'Français', it: 'Italiano', rm: 'Rumantsch',
+  // O14: Rumantsch als provisorisch kennzeichnen (Bauliste §10, E30) — die Übersetzung
+  // ist noch nicht gegengelesen (rm.js Z. 2).
+  de: 'Deutsch', en: 'English', fr: 'Français', it: 'Italiano', rm: 'Rumantsch (provisoric)',
   // Geplant (noch nicht in SUPPORTED — erst mit verifizierter Übersetzung):
   ti: 'ትግርኛ',          // Tigrinya (Eritrea/Äthiopien)
   sq: 'Shqip',          // Albanisch (Westbalkan)

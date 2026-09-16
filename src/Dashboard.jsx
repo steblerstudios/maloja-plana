@@ -9,6 +9,12 @@ import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, feldErledigt, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
+import { useT } from './i18n/index.js';
+
+// K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
+// silbentrennen statt zu clippen — Kurzlabels lösen die meisten Fälle, das hier
+// fängt den Rest ab (Bauliste E20).
+const hyphenStyle = { hyphens: 'auto', WebkitHyphens: 'auto', overflowWrap: 'break-word' };
 // Lazy: hält die Instrumente (Tacho/Kompass/Tank/Schutzschild + Daten) aus dem
 // eager Index-Bundle heraus — das Dashboard lädt sie erst beim Anzeigen nach.
 const InstrumentePanel = React.lazy(() => import('./components/InstrumentePanel.jsx').then(m => ({ default: m.InstrumentePanel })));
@@ -359,8 +365,9 @@ const BetaFeedback = ({ palette, t }) => {
   );
 };
 
-const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }) => {
-  const statusLabels = { leer: t('chapterStatus.leer'), begonnen: t('chapterStatus.begonnen'), grundordnung: t('chapterStatus.grundordnung'), vertieft: t('chapterStatus.vertieft') };
+const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow, lang }) => {
+  // K18: Kurzlabels statt der ausgeschriebenen Status — die Spalte ist schmal, 13px braucht Platz.
+  const statusLabels = { leer: t('chapterStatus.leerShort'), begonnen: t('chapterStatus.begonnenShort'), grundordnung: t('chapterStatus.grundordnungShort'), vertieft: t('chapterStatus.vertieftShort') };
   const totalPct = chapters.length > 0 ? Math.round(chapterCompletions.reduce((a, b) => a + b, 0) / chapters.length) : 0;
   return React.createElement('div', {
     style: {
@@ -428,7 +435,8 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
             style: { fontSize: text.xs, color: pct === 100 ? palette.sage : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
           }, pct + '%'),
           React.createElement('span', {
-            style: { fontSize: '10px', color: palette.soft, width: '80px', textAlign: 'right', flexShrink: 0, display: pct === 0 ? 'none' : 'block' }
+            lang,
+            style: { fontSize: text.xs, color: palette.soft, width: '92px', textAlign: 'right', flexShrink: 0, display: pct === 0 ? 'none' : 'block', ...hyphenStyle }
           }, statusLabels[status] || '')
         );
       })
@@ -437,7 +445,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile }) => {
+const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile, lang }) => {
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
@@ -590,7 +598,9 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
                 hasAnspruch ? React.createElement('span', { key: 'ring-i', 'aria-hidden': true, style: { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: (fs + 14) + 'px', height: (fs + 14) + 'px', borderRadius: '50%', border: '2px solid ' + b.color, opacity: 0.5, pointerEvents: 'none' } }) : null,
                 React.createElement(FruchtStufe, { fruit: b.fruit, iconName: b.iconName, color: b.color, stage: b.stage, size: fs })
               ),
-              React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, maxWidth: (isMobile ? 58 : 76) + 'px', lineHeight: 1.1, textAlign: 'center' } }, b.short || b.title.split(/[\s–—]/)[0])
+              // Schmal halten (nicht breiter als der Astabstand von ~58px), sonst kollidieren
+              // Nachbar-Labels bei 13px — lieber zweizeilig/getrennt als überlappend.
+              React.createElement('span', { lang, style: { fontSize: text.xs, color: palette.mid, maxWidth: (isMobile ? 38 : 50) + 'px', lineHeight: 1.15, textAlign: 'center', ...hyphenStyle } }, b.short || b.title.split(/[\s–—]/)[0])
             ),
             // Werkzeug-Früchte am selben Ast: kleinere Beeren, die unter der
             // Bereichs-Frucht baumeln. Jede reift nicht (binär aktiv), trägt die
@@ -627,7 +637,7 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
                     },
                   },
                     React.createElement('span', { style: { width: '7px', height: '7px', borderRadius: '50%', background: b.color, opacity: 0.85, flex: '0 0 auto' } }),
-                    React.createElement('span', { style: { fontSize: isMobile ? '7.5px' : '9px', color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
+                    React.createElement('span', { style: { fontSize: text.xs, color: palette.mid, lineHeight: 1.1 } }, tool.short || tool.label)
                   )
                 );
               })
@@ -640,6 +650,7 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
 };
 
 export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, isMobile, simpleView, isDarkMode }) => {
+  const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
   // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
   const mvo = grundordnung(chapters, data);
@@ -710,7 +721,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   const bereichsFruechte = chapters.map((ch, idx) => {
     const b = getBereichForChapter(ch.key);
     if (!b) return null;
-    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title, stage: STATUS_STAGE[getChapterStatus(ch)] || 1 };
+    return { key: ch.key, idx, fruit: b.fruit, iconName: ch.key, color: chapterAccentColor[ch.key], pct: chapterCompletions[idx], title: ch.title, short: ch.short, stage: STATUS_STAGE[getChapterStatus(ch)] || 1 };
   }).filter(Boolean);
 
   // Trail follows exact front range ridge points — like a real hiking path
@@ -1025,7 +1036,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           const iconOp = opacities[maturity];
 
           const chapterTitle = chapters[i] ? chapters[i].title : station.key;
-          const shortLabel = chapterTitle.split(/[\s–—]/)[0];
+          // K18: Kurzlabel aus i18n, sonst wie bisher das erste Wort des Titels.
+          const shortLabel = (chapters[i] && chapters[i].short) || chapterTitle.split(/[\s–—]/)[0];
           return React.createElement('div', {
             key: station.key,
             style: {
@@ -1068,11 +1080,16 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
             ),
             React.createElement('span', {
               className: 'mountain-label',
+              lang,
               style: {
-                fontSize: '9px', color: palette.mid, whiteSpace: 'nowrap',
+                // lineHeight explizit setzen: der Berg-Wrapper (weiter oben, 'data-tour': 'berge')
+                // erzwingt lineHeight:0 gegen den Leerraum unters SVG — das erbt sich sonst auf
+                // dieses Label und liesse zweizeilig getrennte Wörter übereinanderfallen.
+                fontSize: text.xs, lineHeight: 1.15, color: palette.mid, maxWidth: '76px', textAlign: 'center',
                 opacity: maturity === 'sketch' ? 0.5 : 0.75,
                 fontWeight: maturity === 'complete' ? weight.medium : weight.normal,
                 transition: `opacity ${duration.cinematic}ms ease`,
+                ...hyphenStyle,
               }
             }, shortLabel)
           );
@@ -1088,7 +1105,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.medium, color: palette.mid, padding: space.sm + 'px 0', letterSpacing: '0.2px' }
       }, t('dashboard.detailProgress')),
       React.createElement('div', { style: { marginTop: space.md + 'px', display: 'flex', flexDirection: 'column', gap: space.lg + 'px' } },
-        React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow }),
+        React.createElement(FortschrittsKarte, { palette, t, chapters, chapterCompletions, chapterStatuses, chapterAccentColor, onSelectChapter, text, weight, space, radius, shadow, lang }),
     mvo.total > 0 && React.createElement('div', {
       style: {
         marginBottom: '28px', padding: '20px 24px',
@@ -1375,7 +1392,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Lebensbaum als Spiegel — nach unten gewandert (#3): was aus den
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile }),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile, lang }),
 
     // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
     // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via

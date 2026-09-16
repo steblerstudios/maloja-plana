@@ -1118,6 +1118,11 @@ export default {
     begonnen: 'Started',
     grundordnung: 'Overview in place',
     vertieft: 'Well documented',
+    // K18: short labels for the narrow status column (readable at 13px, Bauliste E20).
+    leerShort: 'Open',
+    begonnenShort: 'Started',
+    grundordnungShort: 'Overview',
+    vertieftShort: 'Detailed',
   },
   ankunft: {
     basis: 'Your basics are now visible.',
@@ -1230,6 +1235,7 @@ export default {
   chapters: {
     basis: {
       title: 'Personal basics',
+      short: 'Basics',
       description: 'Your identity and contact information',
       intro: 'Your personal basics are the foundation. Start with your name and canton — everything else can wait.',
       emptyState: 'Your canton determines tax, premium reduction and social assistance — two entries are enough.',
@@ -1292,6 +1298,7 @@ export default {
     },
     wohnen: {
       title: 'Housing',
+      short: 'Housing',
       description: 'Your home, rent, and living situation',
       intro: 'Everything about where you live. Useful for tax returns, insurance, and benefits applications.',
       emptyState: 'Your rent feeds into your budget and social assistance calculation.',
@@ -1320,6 +1327,7 @@ export default {
     },
     finanzen: {
       title: 'Finances',
+      short: 'Finances',
       description: 'Your income, savings, and bank details',
       intro: 'A clear picture of your financial situation. This helps with budgeting, tax, and subsidy applications.',
       emptyState: 'Your income unlocks the tax calculator, premium reduction check and minimum wage check.',
@@ -1398,6 +1406,7 @@ export default {
     },
     versicherungen: {
       title: 'Insurance',
+      short: 'Insurance',
       description: 'Health insurance, pension, and coverage',
       intro: 'Your insurance details in one place. Helpful when switching providers or applying for premium reductions.',
       emptyState: 'Your health insurance premium determines whether you qualify for premium reduction.',
@@ -1452,6 +1461,7 @@ export default {
     },
     ausbildung: {
       title: 'Education and work',
+      short: 'Education',
       description: 'Your qualifications and employment',
       intro: 'Your education and work history. Useful for CV building, job applications, and work permit renewals.',
       emptyState: 'Your occupation and employment level feed into tax and pension overview.',
@@ -1479,6 +1489,7 @@ export default {
     },
     behoerden: {
       title: 'Authorities and legal',
+      short: 'Authorities',
       description: 'Taxes, legal matters, and official documents',
       intro: 'Your dealings with authorities and legal matters. Keeps important deadlines and contacts together.',
       emptyState: 'Authority contacts at your fingertips — saves time at your next appointment or call.',
@@ -1506,6 +1517,7 @@ export default {
     },
     notfall: {
       title: 'Emergency',
+      short: 'Emergency',
       description: 'Emergency contacts, medical information',
       intro: 'Important information for emergencies. Having this ready can make a real difference for you and your family.',
       emptyState: 'Your emergency card — ready in 2 minutes, there when it matters.',
@@ -2375,7 +2387,8 @@ export default {
     cantonalAndMunicipal: 'Cantonal and municipal tax',
     totalEstimate: 'Estimated total tax',
     selectCantonHint: 'Select a canton to see the cantonal tax estimate.',
-    basedOnHauptort: 'Approximate, based on the cantonal capital.',
+    basedOnHauptort: 'Approximate, based on the cantonal capital. The factor is calibrated at an income of roughly CHF 80,000 (single) and applied linearly to every income — at a much higher or lower income, the deviation can be larger than shown here.',
+    roughEstimateBadge: 'Rough estimate',
     totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
     tariff: 'Tariff',
     singleTariff: 'Basic tariff',
@@ -3685,7 +3698,8 @@ export default {
     taxpunkte: 'Tax points on the bill',
     taxpunktwert: 'Tax point value',
     berechneterBetrag: 'Calculated amount',
-    tpwNote: 'Tax point value varies by canton.',
+    tpwNote: 'Tax point value varies by canton. The 2026 values are provisional almost everywhere (KVG Art. 46 para. 4) — they change once a canton sets the definitive tariff. For AG, BL, SO, AI, GL, SH, JU, NE and VS there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
+    tpwDataVersion: 'Tax point value as of',
     disclaimer: 'Guidance based on KVG/KLV. For binding information: your health insurer.',
     source: 'Source: [[FOPH|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

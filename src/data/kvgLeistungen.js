@@ -161,6 +161,16 @@ export const TAXPUNKTWERT = {
   ZG: 0.82, ZH: 0.91,
 };
 
+// K27 (Bauliste §10, E29): der Taxpunktwert-Block bekommt einen eigenen Datenstand statt
+// nur der einen KVG_DATA_VERSION für den ganzen Datensatz — sonst datiert eine Zahl den
+// ganzen Katalog mit. Stand = letzte Prüfrunde der Taxpunktwerte oben (K22, 16.09.2026).
+export const TAXPUNKTWERT_DATA_VERSION = '2026-09-16';
+
+// K26/K30 (Bauliste §9/§10, E28): die neun Kantone ohne belegten Wert 2026 — Stand 2025
+// (TARMED), siehe Kommentar oben "Neun Kantone bleiben UNGEPRÜFT". Für die Fussnote
+// kvg.tpwNote, damit sie die Kantone nennt statt nur allgemein zu warnen.
+export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS'];
+
 export function berechneArztrechnung(taxpunkte, canton) {
   const tpw = TAXPUNKTWERT[canton] || 0.89;
   return {

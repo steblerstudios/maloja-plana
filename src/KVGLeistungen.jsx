@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
@@ -889,7 +889,12 @@ const RechnungTab = ({ palette, t, data }) => {
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
-      }, 'ⓘ ' + t('kvg.tpwNote'))
+      }, 'ⓘ ' + t('kvg.tpwNote')),
+      // K27: der Taxpunktwert trägt seinen eigenen Datenstand, nicht den des ganzen
+      // KVG-Datensatzes (KVG_DATA_VERSION unten im Footer betrifft Franchise/Katalog).
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.soft, marginTop: '2px' }
+      }, 'ⓘ ' + t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION)
     )
   );
 };

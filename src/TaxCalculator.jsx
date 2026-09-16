@@ -289,8 +289,14 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           );
           return React.createElement(React.Fragment, null,
             React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-              React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
-                t('tax.cantonalAndMunicipal') + ' (' + kantonal.hauptort + ')'
+              React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.xs, marginBottom: space.xs, flexWrap: 'wrap' } },
+                React.createElement('span', { style: { fontSize: text.sm, color: palette.mid } },
+                  t('tax.cantonalAndMunicipal') + ' (' + kantonal.hauptort + ')'
+                ),
+                // K13: am Ergebnis sichtbar als grobe Schätzung kennzeichnen (Bauliste §9-E20/K13).
+                React.createElement('span', {
+                  style: { fontSize: text.xs, fontWeight: weight.medium, color: palette.soft, background: palette.up, border: '1px solid ' + palette.border, borderRadius: '999px', padding: '1px 8px' }
+                }, t('tax.roughEstimateBadge'))
               ),
               React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + kantonal.kantonalUndGemeinde),
               React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
