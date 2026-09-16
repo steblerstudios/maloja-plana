@@ -32,7 +32,7 @@ describe('rueckerstattungsFreibetrag — höher als der Bezugs-Freibetrag, ohne 
 
 describe('SKOS_PARAMS', () => {
   it('exports version and key constants', () => {
-    expect(SKOS_DATA_VERSION).toBe('2025-01');
+    expect(SKOS_DATA_VERSION).toBe('2026-01');
     expect(SKOS_PARAMS.gblEinperson).toBe(1061);
     expect(SKOS_PARAMS.efbMax).toBe(700);
     expect(SKOS_PARAMS.izuStandard).toBe(100);

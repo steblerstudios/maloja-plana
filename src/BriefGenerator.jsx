@@ -309,7 +309,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
       ),
       reminderAdded
         ? React.createElement('div', {
-            style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sage, display: 'flex', alignItems: 'center', gap: '6px' }
+            style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sageDeep, display: 'flex', alignItems: 'center', gap: '6px' }
           }, '✓ ' + t('briefe.wageReminder.added'))
         : React.createElement('button', {
             onClick: handleAddReminder,
