@@ -29,6 +29,81 @@ describe('TAXPUNKTWERT — TARDOC 2026, amtlich belegte Kantone', () => {
   });
 });
 
+// K22: TARDOC-Taxpunktwerte 2026 der übrigen Kantone, abgerufen 16.09.2026.
+// Behördliche Quelle:
+//   LU 0.85 — RRB Kanton Luzern Nr. 1487/2025 vom 16.12.2025, Ziff. 1, wörtlich wiedergegeben
+//             im Urteil BVGer C-437/2026 vom 12.03.2026 (Nichteintreten, RRB bleibt in Kraft)
+//             https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf
+//   SG 0.86 — Kanton St. Gallen, «OKP-Tarife Ambulant ärztliche Leistungen 2019-2028»,
+//             Stand 1.9.2026, Zeile «Freipraktizierende Ärztinnen und Ärzte», Spalte 2026
+//             https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf
+//   UR 0.88 — Kanton Uri, Medienmitteilung des Regierungsrats vom 23.12.2025
+//             https://www.ur.ch/mmregierungsrat/132029
+//   ZG 0.82 — Gesundheitsdirektion Kanton Zug, «Ambulante Tarife 2026», Stand 13.1.2026,
+//             Ziff. 2 «Freie Praxis» (AGZG), prov. 0.82 für tarifsuisse, HSK und CSS
+//             https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf
+// Quelle: Tarifpartner, keine behördliche Festsetzung — VZAG / Ärztegesellschaft des
+// Kantons Luzern, «Update Taxpunktwert Kanton Luzern» (SZ 0.85 für tarifsuisse, CSS und HSK
+// 0.86 · OW 0.86 · NW 0.88):
+//   https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html
+// Weitere behördliche Quellen der K22-Runde:
+//   AR 0.86 — Beschluss des Regierungsrates AR vom 12.01.2026, Ziff. 5 (freiberufliche Ärzte)
+//             https://amtsblattportal.ch/api/v1/publications/261ae13b-1a69-475a-bac6-f40c18f7e696/attachments/36e30134-6bd5-4601-a192-c0a62e3ec610
+//   FR 0.91 — Ordonnance du Conseil d'État FR du 13.01.2026, RSF 842.1.24, Art. 2
+//             https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24
+//   GE 0.94 — Conseil d'État GE, communiqué du 24.06.2026 (Arrêté, nur für die CSS belegt)
+//             https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026
+//   GR 0.86 — Gesundheitsamt Graubünden, «TARDOC-Taxpunktwerte 2026», Stand 07.09.2026
+//   TG 0.86 — Amt für Gesundheit Thurgau, «Tarifübersicht Tarife ambulant», Stand 19.08.2026
+//   TI 0.93 — Decreto esecutivo del Consiglio di Stato dell'11.02.2026, Art. 1 (BU 6/2026)
+//             https://www3.ti.ch/CAN/fu/2026/BU_006.pdf
+//   VD 0.94 — Conseil d'État VD, Sitzung vom 20.05.2026 (santéservices SA ↔ SVM)
+//             https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981
+describe('TAXPUNKTWERT — TARDOC 2026, K22-Runde', () => {
+  const behoerdlich = {
+    AR: 0.86, FR: 0.91, GE: 0.94, GR: 0.86, LU: 0.85, SG: 0.86,
+    TG: 0.86, TI: 0.93, UR: 0.88, VD: 0.94, ZG: 0.82,
+  };
+  for (const [kanton, wert] of Object.entries(behoerdlich)) {
+    it(`${kanton} ${wert} (behördliche Quelle 2026)`, () => {
+      expect(TAXPUNKTWERT[kanton]).toBe(wert);
+    });
+  }
+
+  const tarifpartner = { SZ: 0.85, OW: 0.86, NW: 0.88 };
+  for (const [kanton, wert] of Object.entries(tarifpartner)) {
+    it(`${kanton} ${wert} (Tarifpartner-Publikation, provisorischer Arbeitstarif)`, () => {
+      expect(TAXPUNKTWERT[kanton]).toBe(wert);
+    });
+  }
+
+  // Diese neun Kantone bleiben bewusst auf dem Stand 2025 (TARMED): für 2026 wurde weder eine
+  // behördliche Festsetzung noch eine Publikation eines Tarifpartners gefunden. Der Test hält
+  // fest, dass sie ungeprüft sind — er ist kein Beleg für ihre Richtigkeit.
+  it('ungeprüfte Kantone behalten den Stand 2025 (TARMED)', () => {
+    const ungeprueft = {
+      AG: 0.89, AI: 0.89, BL: 0.89, GL: 0.87, JU: 0.88, NE: 0.92,
+      SH: 0.87, SO: 0.89, VS: 0.86,
+    };
+    for (const [kanton, wert] of Object.entries(ungeprueft)) {
+      expect(TAXPUNKTWERT[kanton]).toBe(wert);
+    }
+  });
+
+  it('17 der 26 Kantone sind für 2026 belegt, 9 bleiben ungeprüft', () => {
+    const belegt2026 = [
+      'AR', 'BE', 'BS', 'FR', 'GE', 'GR', 'LU', 'NW', 'OW',
+      'SG', 'SZ', 'TG', 'TI', 'UR', 'VD', 'ZG', 'ZH',
+    ];
+    expect(belegt2026).toHaveLength(17);
+    expect(Object.keys(TAXPUNKTWERT).filter(k => !belegt2026.includes(k))).toHaveLength(9);
+  });
+
+  it('alle 26 Kantone sind erfasst', () => {
+    expect(Object.keys(TAXPUNKTWERT)).toHaveLength(26);
+  });
+});
+
 // K14: KLV Art. 38a Abs. 1+2 (Fassung seit 1.1.2024; Fedlex Fassung 1.8.2026, abgerufen
 // 15.09.2026): 40 % Selbstbehalt für zu teure Arzneimittel, auch Generika — nicht mehr 20 %.
 // https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1995/4964_4964_4964/20260801/de/html/fedlex-data-admin-ch-eli-cc-1995-4964_4964_4964-20260801-de-html.html
