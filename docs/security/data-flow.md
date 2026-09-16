@@ -16,8 +16,8 @@ How data moves through Maloja Plana. All flows are local — no data leaves the 
 | localStorage | string | `or5_last_backup` | Last auto-backup timestamp |
 | localStorage | JSON | `or5_data_premigration` | Safety snapshot before data migration |
 | localStorage | JSON | `or5_data_prerestore` | Safety snapshot before backup restore |
-| IndexedDB | binary/JSON | `ordnung-ruhe-documents` | Uploaded document files |
-| IndexedDB | JSON | `ordnung-ruhe-backups` | Rolling auto-backup snapshots (max 3) |
+| IndexedDB | binary/JSON | `maloja-plana-documents` (formerly `ordnung-ruhe-documents`) | Uploaded document files |
+| IndexedDB | JSON | `maloja-plana-backups` (formerly `ordnung-ruhe-backups`) | Rolling auto-backup snapshots (max 5, at most one per 12 h, unencrypted — see `backup-strategy.md`) |
 
 ## Data Lifecycle
 

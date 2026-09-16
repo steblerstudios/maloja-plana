@@ -11,6 +11,20 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+*Entscheid-Runde 16.09.2026 abends (#172–#175). Gemergt: #172–#174; #175 bereit. Nicht live.*
+
+### Geändert
+- **Sicherung verschlüsselt als Voreinstellung, Passwort mindestens 12 Zeichen (E10, #173):** «Mit Passwort sichern» steht zuerst, «Ohne Verschlüsselung sichern» bleibt wählbar mit ruhigem Hinweis (DSG Art. 7 Abs. 3). Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die automatischen Schnappschüsse bleiben bewusst unverschlüsselt (K34, Begründung in `docs/security/backup-strategy.md`).
+- **«Trifft nicht zu» und gelockerte Grundordnung (E17, #174):** Arbeitgeber, Telefon und E-Mail sind nur noch «empfohlen» (Grundordnung 15 statt 18 Angaben). Bei diesen und den Arbeitsfeldern lässt sich ein Feld als «trifft nicht zu» markieren; es zählt dann als erledigt und wird nicht mehr vorgeschlagen. Gespeichert als `_na` je Kapitel, rein additiv, keine Migration.
+- **Kennzeichnungen (#175):** Kantons-/Gemeindesteuer als «grobe Schätzung» (K13, erster Teil) · Dashboard-Beschriftungen in lesbarer Grösse mit Kurzlabels und Silbentrennung (K18) · Taxpunktwerte als provisorisch gekennzeichnet, neun Kantone mit Stand 2025 genannt (K26), eigener Datenstand je Block (K27) · Rumantsch in der Sprachwahl als provisorisch (O14).
+- **CI auf Node 24 / npm 11 (E27, #172),** Lockfile mit npm 11 erneuert, keine Versionssprünge.
+
+### Hinzugefügt
+- **«Alle Daten auf diesem Gerät löschen» (E18, #174):** in den Einstellungen, mit Erklärung, Angebot «vorher sichern» und zweistufiger Bestätigung. Löscht alle `or5_`-Schlüssel (ausser dem Beta-Zugang) und die IndexedDB-Datenbanken der App; im Beispiel-Modus ausgeschaltet.
+
+### Dokumentation
+- Anzahl der automatischen Schnappschüsse korrigiert (5, nicht 3; höchstens einer je 12 Stunden) und IndexedDB-Namen in `docs/security/data-flow.md` nachgeführt.
+
 ## [0.1.29-beta] — 2026-09-16
 
 *Die Entscheid-Runde vom 16.09.2026 nachmittags (#161–#170). Gemergt, **noch nicht live**: der
