@@ -1063,9 +1063,41 @@ export default {
   },
   mvo: {
     title: { sie: 'Il Suo ordine essenziale', du: 'Il tuo ordine essenziale' },
-    empty: 'I 18 campi più importanti — tutto ciò che serve per autorità, emergenze e vita quotidiana.',
+    empty: 'I 15 campi più importanti — tutto ciò che serve per autorità, emergenze e vita quotidiana.',
     progress: { sie: 'È sulla buona strada. Ogni campo compilato porta ordine.', du: 'Sei sulla buona strada. Ogni campo compilato porta ordine.' },
     complete: { sie: 'Il Suo ordine essenziale è completo. Le basi sono coperte.', du: 'Il tuo ordine essenziale è completo. Le basi sono coperte.' },
+  },
+  // E17 · stato «non pertinente» (lista O9)
+  naZustand: {
+    empfohlen: 'consigliato',
+    markieren: 'Non pertinente',
+    zuruecknehmen: 'Annulla',
+    markiert: 'non pertinente. Vale come completato.',
+  },
+  // E18 · «Eliminare tutti i dati su questo dispositivo» (lista O11)
+  datenLoeschen: {
+    bereich: 'Dati su questo dispositivo',
+    kurz: { sie: 'Maloja salva tutto solo in questo browser. Qui può rimuovere tutto.', du: 'Maloja salva tutto solo in questo browser. Qui puoi rimuovere tutto.' },
+    beispielAus: 'Nell\'esempio l\'eliminazione è disattivata — i dati mostrati sono dati di esempio.',
+    titel: 'Eliminare tutti i dati su questo dispositivo',
+    titelBestaetigen: 'Eliminare davvero tutto?',
+    intro: 'Verrà eliminato tutto ciò che Maloja ha salvato in questo browser:',
+    wasAngaben: { sie: 'le Sue indicazioni in tutti i capitoli, i promemoria, i contatti e la lista di appunti', du: 'le tue indicazioni in tutti i capitoli, i promemoria, i contatti e la lista di appunti' },
+    wasDokumente: 'tutti i documenti archiviati con i relativi file e i backup automatici nel browser',
+    wasEinstellungen: 'le impostazioni come lingua e visualizzazione, compresa una cassaforte configurata',
+    bleibt: { sie: 'Non sono toccati i file di backup che ha scaricato e l\'accesso beta. Sugli altri dispositivi non cambia nulla.', du: 'Non sono toccati i file di backup che hai scaricato e l\'accesso beta. Sugli altri dispositivi non cambia nulla.' },
+    letzteSicherung: 'Ultimo backup scaricato: {datum}',
+    keineSicherung: 'Su questo dispositivo non risulta ancora nessun backup scaricato.',
+    zuerstSichern: 'Creare prima un backup',
+    abbrechen: 'Annulla',
+    weiter: 'Avanti',
+    endgueltig: 'L\'operazione non si può annullare. Senza backup, i dati non ci saranno più. Maloja poi si riavvia come la prima volta.',
+    verstanden: 'Ho capito e voglio eliminare tutti i dati su questo dispositivo.',
+    zurueck: 'Indietro',
+    jetztLoeschen: 'Elimina tutto ora',
+    laeuft: 'Eliminazione dei dati in corso …',
+    fehler: { sie: 'Una parte non è stata eliminata. Può rimuovere i restanti dati del sito nelle impostazioni del browser.', du: 'Una parte non è stata eliminata. Puoi rimuovere i restanti dati del sito nelle impostazioni del browser.' },
+    neuStarten: 'Riavvia',
   },
   synthesis: {
     expenses: 'spese registrate',
@@ -3234,7 +3266,7 @@ export default {
     exportEncrypted: 'Esporta (crittografato)',
     importFile: 'Importa backup',
     passphrase: 'Password',
-    passphraseHint: 'Almeno 4 caratteri — meglio 12 o più, ad esempio più parole. Ricordala, non c\'è recupero.',
+    passphraseHint: 'Almeno {min} caratteri, meglio più parole. Ricordala, non c\'è recupero.',
     passphraseConfirm: 'Conferma password',
     passphraseMismatch: 'Le password non corrispondono.',
     encrypting: 'Crittografia...',
@@ -3257,6 +3289,14 @@ export default {
     structureRejected: 'Il backup non ha potuto essere letto perché la sua struttura non corrisponde al formato previsto. Nulla è stato modificato.',
     fileTooLarge: 'Il file supera {max} e quindi non è stato letto. Nulla è stato modificato.',
     restored: 'Ripristinato',
+  },
+
+  // E10 (16.09.2026): backup cifrato come impostazione predefinita, password di almeno 12 caratteri.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Salvare con password (predefinito)',
+    titelUnverschluesselt: 'Salvare senza crittografia',
+    hinweisUnverschluesselt: 'Chiunque apra questo file può leggerlo. Scegli questa opzione solo se conservi il file in un luogo protetto.',
+    altePasswoerter: 'I backup meno recenti con una password più corta si possono ancora aprire.',
   },
 
   behoerdenDossier: {

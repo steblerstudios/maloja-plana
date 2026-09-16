@@ -13,6 +13,7 @@ import { useVorlesen } from './hooks/useVorlesen.js';
 import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
+import { gesamtVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
@@ -735,11 +736,7 @@ const AppInner = ({ demo }) => {
     });
   };
 
-  const calculateCompletion = () => {
-    let filled = 0, total = 0;
-    chapters.forEach(ch => { ch.fields.forEach(f => { total++; if (activeData[ch.key]?.[f.k]) filled++; }); });
-    return total > 0 ? Math.round((filled / total) * 100) : 0;
-  };
+  const calculateCompletion = () => gesamtVollstaendigkeit(chapters, activeData);
 
   // Blob (dataURL) wandert nach IndexedDB; im State/localStorage bleiben nur Metadaten
   // → kein localStorage-Quota-Risiko. K24: im Beispiel landen Upload, Löschen und
@@ -1400,6 +1397,7 @@ const AppInner = ({ demo }) => {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
           onExport: () => startTransition(() => setView('export')),
+          demoMode,
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),

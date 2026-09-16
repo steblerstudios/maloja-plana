@@ -109,11 +109,18 @@ Da alle Daten lokal auf Deinem Gerät gespeichert sind, hast Du jederzeit **dire
 
 ### 7.2 Recht auf Löschung
 Du kannst Deine Daten jederzeit löschen:
-- **In der App**: Einzelne Einträge (Felder, Dokumente, Erinnerungen, Kontakte) löschen
-- **Im Browser**: Browserdaten (localStorage und IndexedDB) für malojaplana.ch löschen — das ist heute der Weg, um **alle** Daten auf einmal zu entfernen
+- **In der App, einzeln**: Einzelne Einträge (Felder, Dokumente, Erinnerungen, Kontakte) löschen
+- **In der App, alles auf einmal**: Einstellungen → «Daten auf diesem Gerät» → «Alle Daten auf diesem Gerät löschen»
+- **Im Browser**: Browserdaten (localStorage und IndexedDB) für malojaplana.ch löschen
 - Es gibt **keine serverseitigen Kopien**, die gelöscht werden müssten
 
-Eine Funktion «alle Daten zurücksetzen» in der App ist geplant, aber nicht gebaut (Stand 15.09.2026): `storage.clear()` in `src/utils/storage.js` Z. 37–45 ist definiert, hat aber keinen Aufrufer; `src/SettingsView.jsx` enthält keinen Reset. Bis dahin gilt der Weg über die Browser-Einstellungen. Hinweis: Die Sicherheitskopien `or5_*_prerestore` (Abschnitt 3) bleiben nach einem Backup-Import bestehen und werden nur mit den Browserdaten entfernt.
+**Was «Alle Daten auf diesem Gerät löschen» entfernt** (`src/utils/datenLoeschen.js`, aufgerufen aus `src/components/DatenLoeschen.jsx`, eingebunden in `src/SettingsView.jsx` Z. 72):
+- alle localStorage- und sessionStorage-Schlüssel mit dem Präfix `or5_` (Abschnitt 3), ausser `or5_beta_access` (`datenLoeschen.js` Z. 22, 29–37) — damit auch die Sicherheitskopien `or5_*_prerestore`, den Migrations-Schnappschuss und einen eingerichteten Tresor;
+- die IndexedDB-Datenbanken `maloja-plana-documents` und `maloja-plana-backups` samt den Altnamen `ordnung-ruhe-documents` / `ordnung-ruhe-backups` (`datenLoeschen.js` Z. 24), also die Dateiinhalte der Dokumente und die automatischen Backups.
+
+Nicht entfernt werden: der Beta-Zugang `or5_beta_access` (kein persönlicher Inhalt; ohne ihn stünde die Zugangsschranke nach dem Neustart wieder da), der Cache des Service Workers (enthält nur die App-Dateien, keine Angaben) sowie heruntergeladene Export- und Backup-Dateien, die ausserhalb des Browsers liegen. Vor dem Löschen zeigt die App, was gelöscht wird, und bietet den Weg zur bestehenden Sicherung an; gelöscht wird erst nach einer zweiten, ausdrücklichen Bestätigung. Danach startet die App neu, wie beim ersten Aufruf. Im Beispiel-Modus ist der Knopf ausgeschaltet, die eigenen Daten bleiben dort unberührt (`datenLoeschen.js` Z. 57). Die Löschung wirkt nur in dem Browser und auf dem Gerät, auf dem sie ausgelöst wird.
+
+Bis zum 16.09.2026 stand hier, eine Funktion «alle Daten zurücksetzen» sei geplant, aber nicht gebaut, und der Weg über die Browser-Einstellungen sei der einzige, um alle Daten auf einmal zu entfernen. `storage.clear()` in `src/utils/storage.js` Z. 37–45 hat weiterhin keinen Aufrufer; der neue Löschweg nutzt ihn bewusst nicht, weil er nur localStorage leert und die Dokumente in IndexedDB liegen liesse.
 
 ### 7.3 Recht auf Datenherausgabe (Art. 28 nDSG)
 Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Klartext), als CSV oder als verschlüsselte `.maloja`-Datei; dazu gibt es eine Übersicht als `MANIFEST.txt`. Jede davon wird als eigene Datei heruntergeladen, ein ZIP-Archiv entsteht nicht (`src/ZipExport.jsx` Z. 32–57 und 59–108; `src/zipExport.js` Z. 146–161). Bis zum 15.09.2026 stand hier «ZIP-Datei». Die App-Texte `legal.privacy.backup1` und `rights3` sagen seit PR #134 dasselbe.
@@ -136,7 +143,7 @@ Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speiche
 Da alle Daten lokal gespeichert werden, liegt die Sicherheit Deiner Daten in Deiner eigenen Verantwortung:
 - Sichere Dein Gerät mit einem Passwort/PIN
 - Erstelle regelmässig Backups (die App erinnert Dich daran)
-- Lösche Deine Browserdaten, wenn Du ein geteiltes Gerät verwendest
+- Lösche Deine Daten, wenn Du ein geteiltes Gerät verwendest (in der App über «Alle Daten auf diesem Gerät löschen», siehe 7.2, oder über die Browserdaten)
 
 ---
 
@@ -201,3 +208,4 @@ https://www.edoeb.admin.ch
 Stand: 15.09.2026, auf Code-Stand `main` 9e6d9b1 gebracht, nicht juristisch geprüft.
 Abschnitt 7.1 und 7.3 (Benennung des Exports): auf Code-Stand `main` 0274ce9 gebracht, nicht juristisch geprüft.
 Abschnitt 3 (Export-Satz und Speichernamen-Beleg): auf Code-Stand `main` 8399deb gebracht (Bau-Liste K28), nicht juristisch geprüft.
+Abschnitt 7.2 und 8 (Löschweg «Alle Daten auf diesem Gerät löschen», Bau-Liste E18): auf den Stand des Zweigs `feat/e17-e18-trifft-nicht-zu-loeschweg` gebracht, nicht juristisch geprüft.

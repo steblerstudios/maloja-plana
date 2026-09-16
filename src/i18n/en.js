@@ -1063,9 +1063,41 @@ export default {
   },
   mvo: {
     title: 'Your Essential Order',
-    empty: 'The 18 most important fields — everything you need for authorities, emergencies, and daily life.',
+    empty: 'The 15 most important fields — everything you need for authorities, emergencies, and daily life.',
     progress: 'You\'re on your way. Every field brings order.',
     complete: 'Your essential order is in place. The basics are covered.',
+  },
+  // E17 · state "does not apply" (build list O9)
+  naZustand: {
+    empfohlen: 'recommended',
+    markieren: 'Does not apply',
+    zuruecknehmen: 'Undo',
+    markiert: 'does not apply. Counts as done.',
+  },
+  // E18 · "Delete all data on this device" (build list O11)
+  datenLoeschen: {
+    bereich: 'Data on this device',
+    kurz: 'Maloja stores everything in this browser only. Here you can remove all of it.',
+    beispielAus: 'Deleting is switched off in the example — the data shown is sample data.',
+    titel: 'Delete all data on this device',
+    titelBestaetigen: 'Really delete everything?',
+    intro: 'Everything Maloja has stored in this browser will be deleted:',
+    wasAngaben: 'your entries in all chapters, reminders, contacts and the notes list',
+    wasDokumente: 'all stored documents including their files, and the automatic backups in the browser',
+    wasEinstellungen: 'settings such as language and display, including a vault you set up',
+    bleibt: 'Backup files you have downloaded and the beta access are not affected. Nothing changes on other devices.',
+    letzteSicherung: 'Last downloaded backup: {datum}',
+    keineSicherung: 'No downloaded backup is recorded on this device yet.',
+    zuerstSichern: 'Create a backup first',
+    abbrechen: 'Cancel',
+    weiter: 'Continue',
+    endgueltig: 'This cannot be undone. Without a backup, the data will be gone. Maloja then restarts as it did the first time.',
+    verstanden: 'I understand and want to delete all data on this device.',
+    zurueck: 'Back',
+    jetztLoeschen: 'Delete everything now',
+    laeuft: 'Deleting the data …',
+    fehler: 'Some data could not be deleted. You can remove the remaining site data in your browser settings.',
+    neuStarten: 'Restart',
   },
   synthesis: {
     expenses: 'recorded expenses',
@@ -3258,7 +3290,7 @@ export default {
     exportEncrypted: 'Export (encrypted)',
     importFile: 'Import backup',
     passphrase: 'Passphrase',
-    passphraseHint: 'At least 4 characters — 12 or more recommended, e.g. several words. Remember this, there is no recovery.',
+    passphraseHint: 'At least {min} characters, ideally several words. Remember this, there is no recovery.',
     passphraseConfirm: 'Confirm passphrase',
     passphraseMismatch: 'Passphrases do not match.',
     encrypting: 'Encrypting...',
@@ -3281,6 +3313,14 @@ export default {
     structureRejected: 'The backup could not be read because its structure does not match the expected format. Nothing was changed.',
     fileTooLarge: 'The file is larger than {max} and was therefore not read. Nothing was changed.',
     restored: 'Restored',
+  },
+
+  // E10 (16.09.2026): encrypted backup as the default, passphrase at least 12 characters.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Back up with a password (default)',
+    titelUnverschluesselt: 'Back up without encryption',
+    hinweisUnverschluesselt: 'Anyone who opens this file can read it. Choose this option only if you keep the file in a protected place.',
+    altePasswoerter: 'Older backups with a shorter password can still be opened.',
   },
 
   behoerdenDossier: {

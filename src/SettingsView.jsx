@@ -3,6 +3,7 @@ import { Eyebrow, PageTitle } from './components/Heading.jsx';
 import { text, radius, space } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
+import { DatenLoeschen } from './components/DatenLoeschen.jsx';
 
 // Zentraler Einstellungen-Bereich: bündelt die App-Bedienelemente mit
 // beschrifteten Zeilen (zugänglicher als die reinen Icon-Knöpfe in der
@@ -12,7 +13,7 @@ import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 // (Anzeige & Sprache / Barrierefreiheit) via settingsGroups.js, geteilt mit
 // der Einstellungs-Schublade.
 
-export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) => {
+export const SettingsView = ({ palette, t, controls, onEditBasis, onExport, demoMode }) => {
   const card = { background: palette.surface, border: '1px solid ' + palette.border, borderRadius: radius.md, padding: space.lg + 'px' };
   const list = (controls || []).filter(Boolean);
   const actionBtn = {
@@ -65,7 +66,10 @@ export const SettingsView = ({ palette, t, controls, onEditBasis, onExport }) =>
         React.createElement(Icon, { name: 'download', size: 16, color: palette.mid }),
         React.createElement('span', null, t('nav.export'))
       )
-    )
+    ),
+
+    // ── E18 · Alle Daten auf diesem Gerät löschen (eigene Karte, ruhig am Ende) ──
+    React.createElement(DatenLoeschen, { palette, t, demoMode, onExport })
   );
 };
 

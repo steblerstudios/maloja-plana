@@ -8,6 +8,7 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
+import { grundordnung, feldErledigt, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { useT } from './i18n/index.js';
 
 // K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
@@ -651,40 +652,16 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
 export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter, completion, onNavigate, demoMode, onEnterDemo, isMobile, simpleView, isDarkMode }) => {
   const { lang } = useT(); // K18: für hyphens/lang an den Mini-Beschriftungen (Baum/Berg/Status).
 
-  const calculateChapterCompletion = (chapterKey) => {
-    const chapter = chapters.find(ch => ch.key === chapterKey);
-    if (!chapter) return { pct: 0, filled: 0, total: 0 };
-    const chapterData = data[chapterKey] || {};
-    let filled = 0;
-    chapter.fields.forEach(f => { if (chapterData[f.k]) filled++; });
-    const total = chapter.fields.length;
-    return { pct: total > 0 ? Math.round((filled / total) * 100) : 0, filled, total };
-  };
-
-  const calculateMvo = () => {
-    let filled = 0;
-    let total = 0;
-    const fields = [];
-    chapters.forEach((ch, chIdx) => {
-      const chapterData = data[ch.key] || {};
-      ch.fields.filter(f => f.mvo).forEach(f => {
-        const done = Boolean(chapterData[f.k]);
-        total++;
-        if (done) filled++;
-        fields.push({ key: f.k, label: f.label, done, chapterIdx: chIdx, chapterTitle: ch.title, chapterIcon: ch.icon });
-      });
-    });
-    return { filled, total, pct: total > 0 ? Math.round((filled / total) * 100) : 0, fields };
-  };
-  const mvo = calculateMvo();
+  // E17: «trifft nicht zu» zählt als erledigt — eine Quelle (utils/vollstaendigkeit.js).
+  const mvo = grundordnung(chapters, data);
   const [mvoExpanded, setMvoExpanded] = useState(false);
 
   const getChapterStatus = (chapter) => {
-    const chapterData = data[chapter.key] || {};
-    const filled = chapter.fields.filter(f => chapterData[f.k]).length;
+    const chapterData = data[chapter.key];
+    const filled = chapter.fields.filter(f => feldErledigt(chapterData, f.k)).length;
     if (filled === 0) return 'leer';
     const mvoFields = chapter.fields.filter(f => f.mvo);
-    const mvoFilled = mvoFields.filter(f => chapterData[f.k]).length;
+    const mvoFilled = mvoFields.filter(f => feldErledigt(chapterData, f.k)).length;
     if (mvoFields.length > 0 && mvoFilled === mvoFields.length) {
       const total = chapter.fields.length;
       return filled >= Math.ceil(total * 0.75) ? 'vertieft' : 'grundordnung';
@@ -735,7 +712,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     behoerden: 'behoerden', notfall: 'notfall',
   };
 
-  const chapterCompletions = chapters.map(ch => calculateChapterCompletion(ch.key).pct);
+  const chapterCompletions = chapters.map(ch => kapitelVollstaendigkeit(ch, data[ch.key]).pct);
 
   // Bereichs-Früchte für den Lebensbaum: Frucht + Bereichs-Icon (Negativ) + Ast-Farbe.
   // status → Reife-Stufe (Knospe/Blüte/junge Frucht/reife Frucht) — jeder Zustand
@@ -1201,7 +1178,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               },
                 React.createElement('span', {
                   style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
-                }, f.done ? '✓' : '○'),
+                }, f.na ? '–' : f.done ? '✓' : '○'),
                 React.createElement('span', {
                   style: { color: f.done ? palette.mid : palette.text }
                 }, f.label)
@@ -1341,7 +1318,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           ...tier.indices.map((chIdx) => {
             const ch = chapters[chIdx];
             if (!ch) return null;
-            const { pct } = calculateChapterCompletion(ch.key);
+            const { pct } = kapitelVollstaendigkeit(ch, data[ch.key]);
             const statusColor = getStatusColor(pct, ch.key);
             const iconKey = chapterIcons[ch.key];
             const IconFn = iconKey && Icons[iconKey];

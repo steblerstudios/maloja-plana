@@ -1063,9 +1063,41 @@ export default {
   },
   mvo: {
     title: { sie: 'Votre ordre essentiel', du: 'Ton ordre essentiel' },
-    empty: 'Les 18 champs les plus importants — tout ce qu\'il faut pour les autorités, les urgences et le quotidien.',
+    empty: 'Les 15 champs les plus importants — tout ce qu\'il faut pour les autorités, les urgences et le quotidien.',
     progress: { sie: 'Vous êtes en chemin. Chaque champ rempli apporte de l\'ordre.', du: 'Tu es en chemin. Chaque champ rempli apporte de l\'ordre.' },
     complete: { sie: 'Votre ordre essentiel est en place. L\'essentiel est couvert.', du: 'Ton ordre essentiel est en place. L\'essentiel est couvert.' },
+  },
+  // E17 · état « ne s'applique pas » (liste O9)
+  naZustand: {
+    empfohlen: 'recommandé',
+    markieren: 'Ne s\'applique pas',
+    zuruecknehmen: 'Annuler',
+    markiert: 'ne s\'applique pas. Compte comme réglé.',
+  },
+  // E18 · « Supprimer toutes les données de cet appareil » (liste O11)
+  datenLoeschen: {
+    bereich: 'Données sur cet appareil',
+    kurz: { sie: 'Maloja enregistre tout uniquement dans ce navigateur. Ici, vous pouvez tout effacer.', du: 'Maloja enregistre tout uniquement dans ce navigateur. Ici, tu peux tout effacer.' },
+    beispielAus: 'Dans l\'exemple, la suppression est désactivée — les données affichées sont des données d\'exemple.',
+    titel: 'Supprimer toutes les données de cet appareil',
+    titelBestaetigen: 'Vraiment tout supprimer ?',
+    intro: 'Tout ce que Maloja a enregistré dans ce navigateur sera supprimé :',
+    wasAngaben: { sie: 'vos indications dans tous les chapitres, les rappels, les contacts et la liste de notes', du: 'tes indications dans tous les chapitres, les rappels, les contacts et la liste de notes' },
+    wasDokumente: 'tous les documents déposés avec leurs fichiers, ainsi que les sauvegardes automatiques du navigateur',
+    wasEinstellungen: 'les réglages comme la langue et l\'affichage, y compris un coffre-fort configuré',
+    bleibt: { sie: 'Les fichiers de sauvegarde que vous avez téléchargés et l\'accès bêta ne sont pas touchés. Rien ne change sur d\'autres appareils.', du: 'Les fichiers de sauvegarde que tu as téléchargés et l\'accès bêta ne sont pas touchés. Rien ne change sur d\'autres appareils.' },
+    letzteSicherung: 'Dernière sauvegarde téléchargée : {datum}',
+    keineSicherung: 'Aucune sauvegarde téléchargée n\'est encore enregistrée sur cet appareil.',
+    zuerstSichern: 'Créer d\'abord une sauvegarde',
+    abbrechen: 'Annuler',
+    weiter: 'Continuer',
+    endgueltig: 'Cette action est irréversible. Sans sauvegarde, les données ne seront plus disponibles. Maloja redémarre ensuite comme la première fois.',
+    verstanden: 'J\'ai compris et je souhaite supprimer toutes les données de cet appareil.',
+    zurueck: 'Retour',
+    jetztLoeschen: 'Tout supprimer maintenant',
+    laeuft: 'Suppression des données …',
+    fehler: { sie: 'Une partie n\'a pas pu être supprimée. Vous pouvez effacer les autres données du site dans les réglages du navigateur.', du: 'Une partie n\'a pas pu être supprimée. Tu peux effacer les autres données du site dans les réglages du navigateur.' },
+    neuStarten: 'Redémarrer',
   },
   synthesis: {
     expenses: 'dépenses enregistrées',
@@ -3257,7 +3289,7 @@ export default {
     exportEncrypted: 'Export (chiffré)',
     importFile: 'Importer une sauvegarde',
     passphrase: 'Mot de passe',
-    passphraseHint: 'Au moins 4 caractères — 12 ou plus recommandés, par exemple plusieurs mots. Retenez-le, il n\'y a pas de récupération.',
+    passphraseHint: 'Au moins {min} caractères, idéalement plusieurs mots. Retenez-le, il n\'y a pas de récupération.',
     passphraseConfirm: 'Confirmer le mot de passe',
     passphraseMismatch: 'Les mots de passe ne correspondent pas.',
     encrypting: 'Chiffrement...',
@@ -3280,6 +3312,14 @@ export default {
     structureRejected: 'La sauvegarde n\'a pas pu être lue, car sa structure ne correspond pas au format attendu. Rien n\'a été modifié.',
     fileTooLarge: 'Le fichier dépasse {max} et n\'a donc pas été lu. Rien n\'a été modifié.',
     restored: 'Restauré',
+  },
+
+  // E10 (16.09.2026) : sauvegarde chiffrée par défaut, mot de passe d'au moins 12 caractères.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Sauvegarder avec un mot de passe (par défaut)',
+    titelUnverschluesselt: 'Sauvegarder sans chiffrement',
+    hinweisUnverschluesselt: 'Toute personne qui ouvre ce fichier peut le lire. Choisissez cette option uniquement si vous conservez le fichier dans un endroit protégé.',
+    altePasswoerter: 'Les sauvegardes plus anciennes avec un mot de passe plus court peuvent toujours être ouvertes.',
   },
 
   behoerdenDossier: {

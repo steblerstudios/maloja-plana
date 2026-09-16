@@ -1066,9 +1066,41 @@ export default {
   },
   mvo: {
     title: { sie: 'Ihre Grundordnung', du: 'Deine Grundordnung' },
-    empty: { sie: 'Die 18 wichtigsten Angaben — alles, was Sie für Behörden, Notfall und Alltag brauchen.', du: 'Die 18 wichtigsten Angaben — alles, was Du für Behörden, Notfall und Alltag brauchst.' },
+    empty: { sie: 'Die 15 wichtigsten Angaben — alles, was Sie für Behörden, Notfall und Alltag brauchen.', du: 'Die 15 wichtigsten Angaben — alles, was Du für Behörden, Notfall und Alltag brauchst.' },
     progress: { sie: 'Sie sind auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.', du: 'Du bist auf dem Weg. Jedes ausgefüllte Feld bringt Ordnung.' },
     complete: { sie: 'Ihre Grundordnung steht. Das Wichtigste ist an seinem Platz.', du: 'Deine Grundordnung steht. Das Wichtigste ist an seinem Platz.' },
+  },
+  // E17 · Zustand «trifft nicht zu» (Bau-Liste O9)
+  naZustand: {
+    empfohlen: 'empfohlen',
+    markieren: 'Trifft nicht zu',
+    zuruecknehmen: 'Zurücknehmen',
+    markiert: 'trifft nicht zu. Zählt als erledigt.',
+  },
+  // E18 · Löschweg «Alle Daten auf diesem Gerät löschen» (Bau-Liste O11)
+  datenLoeschen: {
+    bereich: 'Daten auf diesem Gerät',
+    kurz: { sie: 'Maloja speichert alles nur in diesem Browser. Hier können Sie alles davon entfernen.', du: 'Maloja speichert alles nur in diesem Browser. Hier kannst Du alles davon entfernen.' },
+    beispielAus: 'Im Beispiel ist das Löschen ausgeschaltet — die angezeigten Daten sind Beispieldaten.',
+    titel: 'Alle Daten auf diesem Gerät löschen',
+    titelBestaetigen: 'Wirklich alles löschen?',
+    intro: 'Gelöscht wird alles, was Maloja in diesem Browser gespeichert hat:',
+    wasAngaben: { sie: 'Ihre Angaben in allen Kapiteln, Erinnerungen, Kontakte und die Merkliste', du: 'Deine Angaben in allen Kapiteln, Erinnerungen, Kontakte und die Merkliste' },
+    wasDokumente: 'alle abgelegten Dokumente samt Dateien und die automatischen Sicherungen im Browser',
+    wasEinstellungen: 'Einstellungen wie Sprache und Darstellung, auch ein eingerichteter Tresor',
+    bleibt: { sie: 'Nicht betroffen sind Sicherungsdateien, die Sie heruntergeladen haben, und der Beta-Zugang. Auf anderen Geräten ändert sich nichts.', du: 'Nicht betroffen sind Sicherungsdateien, die Du heruntergeladen hast, und der Beta-Zugang. Auf anderen Geräten ändert sich nichts.' },
+    letzteSicherung: 'Letzte heruntergeladene Sicherung: {datum}',
+    keineSicherung: 'Auf diesem Gerät ist noch keine heruntergeladene Sicherung vermerkt.',
+    zuerstSichern: 'Zuerst eine Sicherung erstellen',
+    abbrechen: 'Abbrechen',
+    weiter: 'Weiter',
+    endgueltig: 'Das lässt sich nicht rückgängig machen. Ohne Sicherung sind die Daten danach nicht mehr da. Maloja startet anschliessend neu, wie beim ersten Mal.',
+    verstanden: 'Ich habe verstanden und möchte alle Daten auf diesem Gerät löschen.',
+    zurueck: 'Zurück',
+    jetztLoeschen: 'Jetzt alles löschen',
+    laeuft: 'Die Daten werden gelöscht …',
+    fehler: { sie: 'Ein Teil liess sich nicht löschen. Die restlichen Website-Daten können Sie in den Einstellungen des Browsers entfernen.', du: 'Ein Teil liess sich nicht löschen. Die restlichen Website-Daten kannst Du in den Einstellungen des Browsers entfernen.' },
+    neuStarten: 'Neu starten',
   },
   synthesis: {
     expenses: 'erfasste Ausgaben',
@@ -3263,7 +3295,7 @@ export default {
     exportEncrypted: 'Export (verschlüsselt)',
     importFile: 'Sicherung importieren',
     passphrase: 'Passwort',
-    passphraseHint: { sie: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merken Sie es sich, es gibt keine Wiederherstellung.', du: 'Mindestens 4 Zeichen — empfehlenswert sind 12 oder mehr, etwa mehrere Wörter. Merke es dir, es gibt keine Wiederherstellung.' },
+    passphraseHint: { sie: 'Mindestens {min} Zeichen, am besten mehrere Wörter. Merken Sie es sich, es gibt keine Wiederherstellung.', du: 'Mindestens {min} Zeichen, am besten mehrere Wörter. Merke es dir, es gibt keine Wiederherstellung.' },
     passphraseConfirm: 'Passwort bestätigen',
     passphraseMismatch: 'Passwörter stimmen nicht überein.',
     encrypting: 'Verschlüsseln...',
@@ -3286,6 +3318,14 @@ export default {
     structureRejected: 'Die Sicherung konnte nicht gelesen werden, weil ihr Aufbau nicht dem erwarteten Format entspricht. Nichts wurde verändert.',
     fileTooLarge: 'Die Datei ist grösser als {max} und wurde deshalb nicht gelesen. Nichts wurde verändert.',
     restored: 'Wiederhergestellt',
+  },
+
+  // E10 (16.09.2026): verschlüsselte Sicherung als Voreinstellung, Passphrase mind. 12 Zeichen.
+  backupVoreinstellung: {
+    titelVerschluesselt: 'Mit Passwort sichern (Voreinstellung)',
+    titelUnverschluesselt: 'Ohne Verschlüsselung sichern',
+    hinweisUnverschluesselt: { sie: 'Diese Datei kann lesen, wer sie öffnet. Wählen Sie diesen Weg nur, wenn Sie die Datei an einem geschützten Ort aufbewahren.', du: 'Diese Datei kann lesen, wer sie öffnet. Wähle diesen Weg nur, wenn du die Datei an einem geschützten Ort aufbewahrst.' },
+    altePasswoerter: 'Ältere Sicherungen mit kürzerem Passwort lassen sich weiterhin öffnen.',
   },
 
   behoerdenDossier: {
