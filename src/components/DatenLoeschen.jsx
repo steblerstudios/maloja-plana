@@ -9,6 +9,8 @@ import { alleDatenLoeschen } from '../utils/datenLoeschen.js';
 //      Sicherung, nichts Neues).
 //   2. Bestätigung: «Ich habe verstanden» ankreuzen, dann ein zweiter Knopf.
 //   3. Löschen (utils/datenLoeschen.js), danach sauberer Neustart ohne Ansicht im Pfad.
+//      Andere offene Maloja-Tabs werden benachrichtigt (R4); der Dialog bittet trotzdem,
+//      sie vorher zu schliessen.
 // Im Beispiel ist der Knopf ausgeschaltet — dort ist nichts Eigenes zu löschen (B-3).
 // Kein Wort-Eintippen: Umlaute und Tastaturen machen das zur Hürde; zwei bewusste
 // Handlungen tragen die Absicherung.
@@ -112,6 +114,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     }
     return React.createElement(React.Fragment, null,
       p(t('datenLoeschen.endgueltig'), { color: palette.text }),
+      p(t('datenLoeschen.andereFenster')),
       // Die ganze Zeile ist Tippfläche, mind. 44 px hoch — vor dem unumkehrbaren Schritt (Predeploy 16.09.).
       React.createElement('label', { style: { display: 'flex', gap: space.sm + 'px', alignItems: 'flex-start', fontSize: text.sm, color: palette.text, cursor: 'pointer', marginTop: space.sm + 'px', minHeight: '44px', padding: '8px 0', boxSizing: 'border-box' } },
         React.createElement('input', { type: 'checkbox', checked: verstanden, onChange: (e) => setVerstanden(e.target.checked), style: { marginTop: '3px', width: '18px', height: '18px', flexShrink: 0 } }),

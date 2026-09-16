@@ -1,5 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { alleDatenLoeschen, APP_DATENBANKEN, BEHALTEN } from '../utils/datenLoeschen.js';
+import { readFileSync } from 'node:fs';
+import { alleDatenLoeschen, APP_DATENBANKEN, BEHALTEN, LOESCH_SIGNAL } from '../utils/datenLoeschen.js';
 import { speicherAbschirmen } from '../demo/demoSpeicher.js';
 
 // E18 (Bau-Liste O11): «Alle Daten auf diesem Gerät löschen». Beleg, dass der
@@ -15,8 +16,8 @@ class FakeStorage {
   get length() { return this._m.size; }
   key(i) { return [...this._m.keys()][i] ?? null; }
   getItem(k) { return this._m.has(k) ? this._m.get(k) : null; }
-  setItem(k, v) { this._m.set(String(k), String(v)); }
-  removeItem(k) { this._m.delete(String(k)); }
+  setItem(k, v) { (this.log ||= []).push(['set', String(k), String(v)]); this._m.set(String(k), String(v)); }
+  removeItem(k) { (this.log ||= []).push(['remove', String(k)]); this._m.delete(String(k)); }
   clear() { this._m.clear(); }
 }
 const ORIG_SET = FakeStorage.prototype.setItem;
@@ -130,5 +131,40 @@ describe('E18 · Alle Daten auf diesem Gerät löschen', () => {
     const r = await alleDatenLoeschen({ local: null, session: null, idb: null });
     expect(r.geloescht).toBe(true);
     expect(r.fehler).toEqual([]);
+  });
+});
+
+// R4 (Predeploy-Gate 16.09.): zwei offene Tabs. Der andere Tab könnte nach dem Löschen
+// alte Daten zurückschreiben. Signal über das storage-Ereignis: «sperren» vor dem
+// Löschen, «neu» danach; der Schlüssel wird sofort wieder entfernt.
+describe('R4 · andere Maloja-Tabs benachrichtigen', () => {
+  it('setzt LOESCH_SIGNAL «sperren» und «neu» (trotz eigener Schreibsperre) und entfernt ihn wieder', async () => {
+    const { local, session, idb } = neu();
+    await alleDatenLoeschen({ local, session, idb });
+    const signale = (local.log || []).filter((e) => e[1] === LOESCH_SIGNAL);
+    expect(signale).toEqual([
+      ['set', LOESCH_SIGNAL, 'sperren'], ['remove', LOESCH_SIGNAL],
+      ['set', LOESCH_SIGNAL, 'neu'], ['remove', LOESCH_SIGNAL],
+    ]);
+    expect(local.getItem(LOESCH_SIGNAL)).toBe(null);
+    expect(LOESCH_SIGNAL.startsWith('or5_')).toBe(true);
+  });
+
+  it('im Beispiel: kein Signal', async () => {
+    const { local, session, idb } = neu();
+    await alleDatenLoeschen({ demo: true, local, session, idb });
+    expect((local.log || []).some((e) => e[1] === LOESCH_SIGNAL)).toBe(false);
+  });
+
+  it('main.jsx hört auf denselben Schlüssel, sperrt das Schreiben und lädt bei «neu» neu', () => {
+    const main = readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
+    expect(main).toContain("addEventListener('storage'");
+    expect(main).toContain("'" + LOESCH_SIGNAL + "'");
+    expect(main).toMatch(/newValue === 'neu'/);
+  });
+
+  it('der Dialog bittet ruhig, andere Maloja-Fenster vorher zu schliessen', () => {
+    const src = readFileSync(new URL('../components/DatenLoeschen.jsx', import.meta.url), 'utf8');
+    expect(src).toContain("t('datenLoeschen.andereFenster')");
   });
 });

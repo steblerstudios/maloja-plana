@@ -1,8 +1,9 @@
-// Datenstand der kantonalen Werte (SKOS-Grundbedarf, IPV, EL, Mietzinsmaxima).
-// Diese ändern jährlich — bei Aktualisierung hochzählen.
+// Kantonale Werte (SKOS-Grundbedarf, IPV, EL, Mietzinsmaxima) — ändern jährlich.
+// Ein Datei-weiter Datenstand (CANTONAL_DATA_VERSION '2024/2025') wurde am 16.09.2026
+// entfernt: nirgends angezeigt, und ein Stand für die ganze Datei datiert Werte mit
+// unterschiedlichem Prüfstand falsch. Stände je Block, z. B. SKOS_DATA_VERSION in data/sozialhilfeRechner.js.
 import { vermoegensfreibetragKanton } from '../data/sozialhilfeRechner.js';
-
-export const CANTONAL_DATA_VERSION = '2024/2025';
+import { vermoegensfreibetragUnbestaetigt } from '../data/vermoegensfreibetragUnbestaetigt.js';
 
 // PLZ-Bereiche → Kanton Zuordnung (Fallback für PLZ ohne amtlichen Eintrag)
 const PLZ_RANGES = [
@@ -318,6 +319,8 @@ export function calculateSozialhilfe(data) {
     vermoegen,
     vermoegensfreibetrag,
     vermoegenUeberFreibetrag,
+    // Vermögen erfasst UND Freibetrag kantonal nicht bestätigt (R4) — auch unter dem Freibetrag.
+    vfbUnbestaetigt: vermoegen > 0 && vermoegensfreibetragUnbestaetigt(canton, minorChildren),
     householdSize,
     adults: hh.adults,
     childrenCount: hh.childrenCount,

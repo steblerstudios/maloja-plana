@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo, SKOS_GRUNDBEDARF } from './config/cantonalData.js';
 import { rueckerstattungsFreibetrag } from './data/sozialhilfeRechner.js';
-import { vermoegensfreibetragUnbestaetigt } from './data/vermoegensfreibetragUnbestaetigt.js';
 import { SozialhilfeRechner } from './SozialhilfeRechner.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { Icon } from './IconSystem.jsx';
@@ -113,7 +112,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     sozialhilfe.eligible && sozialhilfe.vermoegenUeberFreibetrag > 0 && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('sozialhilfe.assetLimitTitle')),
       React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.text } }, t('sozialhilfe.assetLimitNote', { basis: t('sozialhilfe.assetLimitBasisCanton', { name: getCantonName(canton, t) }), freibetrag: formatCHF(sozialhilfe.vermoegensfreibetrag), ueberschuss: formatCHF(sozialhilfe.vermoegenUeberFreibetrag) })),
-      vermoegensfreibetragUnbestaetigt(canton, minorChildren) && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, marginTop: space.xs } }, t('sozialhilfe.assetLimitUnconfirmed'))
+      sozialhilfe.vfbUnbestaetigt && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, marginTop: space.xs } }, t('sozialhilfe.assetLimitUnconfirmed'))
+    ),
+    // R4: Vermögen erfasst, aber UNTER dem Freibetrag — der Anspruch oben hängt dann am
+    // Freibetrag. Ist er kantonal nicht bestätigt, eine leise Zeile (einmal, nicht doppelt).
+    sozialhilfe.eligible && sozialhilfe.vermoegenUeberFreibetrag === 0 && sozialhilfe.vfbUnbestaetigt && React.createElement('div', { style: { fontSize: text.sm, lineHeight: leading.relaxed, color: palette.mid, margin: '-' + space.xs + 'px 0 ' + space.md + 'px' } },
+      'ⓘ ' + t('sozialhilfe.assetLimitUnconfirmedUnder', { freibetrag: formatCHF(sozialhilfe.vermoegensfreibetrag) })
     ),
 
     // Repayment info

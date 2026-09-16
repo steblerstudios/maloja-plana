@@ -289,3 +289,11 @@ describe('checkELEligibility — Ergänzungsleistungen', () => {
     expect(r.totalIncome).toBe(2000); // (0 + 1000 partner) + 1000 AHV
   });
 });
+
+// R4 (16.09.2026): der verwaiste Datei-Stand '2024/2025' ist weg (nirgends angezeigt).
+describe('cantonalData: kein verwaister Datei-Stand', () => {
+  it('exportiert CANTONAL_DATA_VERSION nicht mehr', async () => {
+    const m = await import('../cantonalData.js');
+    expect('CANTONAL_DATA_VERSION' in m).toBe(false);
+  });
+});

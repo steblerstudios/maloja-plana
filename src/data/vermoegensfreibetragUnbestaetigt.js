@@ -8,9 +8,10 @@
 //   OW  nicht amtlich belegt (kein Vermögensartikel in SHG/SHV)
 //   BL  nicht amtlich belegt (nur SKOS-Karte)
 //   TI  nicht amtlich belegt (nur SKOS-Karte)
-// Eigene Datei, damit die Liste nur im Lazy-Chunk der Sozialhilfe-Ansicht liegt
-// (Hauptbundle-Budget). Die App zeigt dort: «Kantonal nicht bestätigt — bitte beim
-// Sozialdienst der Gemeinde prüfen».
+// Eigene Datei (klein). Seit R4 (16.09.2026) liest auch calculateSozialhilfe die Liste
+// (Flag `vfbUnbestaetigt`), damit Dashboard und Schnellcheck den Hinweis zeigen, wenn der
+// Freibetrag in einen «Anspruch» einfliesst — die Liste liegt damit im Hauptbundle.
+// Die App zeigt: «Kantonal nicht bestätigt — bitte beim Sozialdienst der Gemeinde prüfen».
 export const VFB_UNBESTAETIGT = ['SG', 'FR', 'VD', 'AI', 'OW', 'BL', 'TI'];
 
 // Nur für Haushalte MIT minderjährigen Kindern nicht bestätigt (Einzel/Paar dort belegt,

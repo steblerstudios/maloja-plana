@@ -1644,6 +1644,8 @@ export default {
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
       localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
+      // TODO(rm): communeHint durch Fachperson gegenlesen lassen
+      communeHint: 'La pagina d’internet da la vischnanca {city} n’è betg deponida qua — ella sa lascha chattar sur il portal chantunal u cun ina tschertga.',
       helpTitle: 'Posts da cussegliaziun',
       help1: { name: 'La Maun Dertgida · tel. 143', url: 'tel:143', desc: 'Permanent, gratuit, anonim.', web: 'https://www.143.ch' },
       help2: { name: 'Pro Juventute · tel. 147', url: 'tel:147', desc: 'Cussegliaziun per uffants e giuvenils.', web: 'https://www.projuventute.ch' },
@@ -1785,6 +1787,8 @@ export default {
     abbrechen: 'Interrumper',
     weiter: 'Vinavant',
     endgueltig: "Quai na sa lascha betg revocar. Senza copia da segirezza n'èn las datas suenter betg pli qua. Maloja cumenza silsuenter da nov, sco l'emprima giada.",
+    // TODO(rm): andereFenster durch Fachperson gegenlesen lassen
+    andereFenster: { sie: 'Per plaschair serrar avant las autras fanestras e tabs da Maloja.', du: 'Serra avant las autras fanestras e tabs da Maloja.' },
     verstanden: "Jau hai chapì e vuless stizzar tut las datas sin quest apparat.",
     zurueck: 'Enavos',
     jetztLoeschen: 'Stizzar tut ussa',
@@ -2831,6 +2835,9 @@ export default {
     assetLimitBasisCanton: 'Chantun {name}',
     assetLimitBasisSkos: 'recumandaziun SKOS',
     assetLimitUnconfirmed: { sie: "Betg confermà dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "Betg confermà dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    // TODO(rm): assetLimitUnconfirmedUnder/assetLimitUnconfirmedShort durch Fachperson gegenlesen lassen
+    assetLimitUnconfirmedUnder: { sie: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — per plaschair verifitgar tar il servetsch social da Vossa vischnanca.", du: "La facultad registrada è sut la franchisa da {freibetrag}. Questa franchisa n’è betg confermada dal chantun — verifitgescha tar il servetsch social da Tia vischnanca." },
+    assetLimitUnconfirmedShort: 'Franchisa da facultad betg confermada dal chantun.',
     repaymentTitle: "Rembursament d'agid social",
     repaymentText: { sie: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche Vus arrivais tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda).", du: "Agid social retschavì legitimamain po vegnir pretendì enavos en blers chantuns, sche ti arrivas tar ina gronda facultad — surtut tras ina ierta u in gudogn. Da l'entrada da lavur normala na vegn per regla pretendì nagut enavos (la SKOS al scumonda)." },
     repaymentInheritance: "Mo l'augment effectiv da la facultad conta — tgi che refusa ina ierta na sto rembursar nagut.",
@@ -2904,6 +2911,14 @@ export default {
     federalNotCheckedBrutto: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: la paja è registrada sco paja bruta, e Maloja na enconuscha betg exactamain las deducziuns fin a l\'entrada taxabla. Cun la paja netta u cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import exact.',
     federalNotCheckedPartner: 'Per questa situaziun na mussa Maloja qua nagina taglia federala: tar persunas maridadas vegnan las duas entradas sumadas, cun ina atgna deducziun per pèrs cun duas entradas; tar geniturs betg maridads po la deducziun per uffants vegnir partida tranter els. Cun l\'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l\'AFT quinta l\'import.',
     noTaxFigure: 'nagina stimaziun — calculatur da taglia da l\'AFT',
+    // R4 (16.09.2026): Steuer-Annahmen — Rentner/Selbständige, Partnereinkommen offen, 13. Monatslohn
+    ohneZahlRente: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica la pensiun. Las deducziuns da standard che Maloja dovra èn mesiradas per persunas empleadas e na valan betg uschia per rentas (per exempel naginas expensas professiunalas). Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
+    ohneZahlSelbstaendig: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: il profil indica ina activitad da gudogn independenta. Taxabla è lura l'entrada da l'activitad independenta suenter deducziun dals custs giustifitgads commerzialmain u professiunalmain — betg ina paja netta cun las deducziuns per persunas empleadas che Maloja dovra. Cun l'entrada taxabla da la taxaziun cumpara ina stimaziun. Il calculatur da taglia da l'AFT quinta l'import.", // TODO(rm): provisorisch
+    ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; senza entrada endatar 0).", // TODO(rm): provisorisch
+    annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
+    annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
+    netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
+    annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
@@ -2932,6 +2947,8 @@ export default {
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
       einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, dentant anc betg en vigur — la data resta averta. Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.',
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
+      abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
+      nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
     },
   },
 
@@ -3467,8 +3484,10 @@ export default {
     berechneterBetrag: 'Import calculà',
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per AG, BL, SO, AI, GL, SH, JU, NE e VS n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
     tpwDataVersion: 'Stadi da la valur dal punct',
+    // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
+    tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

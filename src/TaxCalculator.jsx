@@ -4,12 +4,14 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { Icon } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
-import { grenzsteuersatz, vergleicheTarife, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { steuernFuerProfil, steuerEingabenAusDaten, abzuegeAusTaxData, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
-import { KantonssteuerOrientierung, bundOhneZahlText } from './components/KantonssteuerOrientierung.jsx';
+import { KantonssteuerOrientierung, bundOhneZahlText, annahmenTexte, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
+
+const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’');
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
@@ -78,19 +80,33 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   // — dieselbe Zahl, die EO/IPV/Sozialhilfe später bevorzugt nutzen können.
   const [taxableInput, setTaxableInput] = useState(data.finanzen?.taxableIncome ? String(data.finanzen.taxableIncome) : '');
   const enteredTaxable = Number(taxableInput) || 0;
-  const [useEnteredTaxable, setUseEnteredTaxable] = useState(enteredTaxable > 0);
+  // R4: Das Häkchen wird gespeichert (taxData.useEnteredTaxable). Ohne gespeicherten Wert gilt der
+  // eingetragene Wert — dieselbe Rückfall-Regel wie in steuerEingabenAusDaten().
+  const [useEnteredTaxable, setUseEnteredTaxable] = useState(() => (typeof data.taxData?.useEnteredTaxable === 'boolean' ? data.taxData.useEnteredTaxable : enteredTaxable > 0));
+  const useEntered = enteredTaxable > 0 ? useEnteredTaxable : undefined;
 
   // E39: EIN steuerbares Einkommen für Bund und Kanton — dieselbe Regel wie FinanzUebersicht und
-  // BehoerdenDossier (steuernFuerProfil), mit den Live-Eingaben dieser Seite. Nettolohn = Hauptlohn +
-  // Nebenerwerb; das Partnereinkommen zählt nicht dazu (Ehe mit zwei Einkommen → keine Zahl).
-  const steuern = steuernFuerProfil({
-    ...steuerEingabenAusDaten(data),
+  // BehoerdenDossier (steuernFuerProfil). R4: Die Live-Eingaben dieser Seite gehen als Profil in
+  // steuerEingabenAusDaten() — so gelten Häkchen, 13. Monatslohn, Anstellungstyp und Partnerangabe
+  // genau wie auf den anderen zwei Seiten.
+  const liveDaten = {
+    ...data,
+    taxData: { ...taxData, useEnteredTaxable: useEntered },
+    finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined },
+  };
+  const profilEingaben = steuerEingabenAusDaten(liveDaten);
+  const eingaben = {
+    ...profilEingaben,
     kanton: canton,
-    direktSteuerbar: useEnteredTaxable ? enteredTaxable : 0,
     verheiratet, kinder, elterntarif,
-    ...abzuegeAusTaxData(taxData),
-  });
-  const income = steuerEingabenAusDaten(data).nettolohnJahr;
+    // Probiermodus: Wer im Profil nicht verheiratet ist und hier «verheiratet» ankreuzt, rechnet
+    // ein gedachtes Alleinverdiener-Ehepaar (gekennzeichnet). Im Profil verheiratet → Angabe nötig.
+    partnerAngegeben: profilEingaben.partnerAngegeben || data.basis?.maritalStatus !== 'married',
+  };
+  const steuern = steuernFuerProfil(eingaben);
+  const vergleich = tarifvergleichFuerProfil(eingaben);
+  const annahmen = annahmenTexte(t, steuern.annahmen);
+  const income = eingaben.nettolohnJahr;
   const taxResult = steuern.bund;
   const taxableIncome = steuern.steuerbar ?? 0;
   const estimatedTax = taxResult ? taxResult.steuer : 0;
@@ -100,8 +116,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   };
 
   const handleSave = () => {
-    // taxableIncome als geteilten Knoten mitspeichern (oder tilgen, wenn leer).
-    onSave({ ...data, taxData, ...steuerkantonSpeichern(data, canton), finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
+    // taxableIncome als geteilten Knoten mitspeichern (oder tilgen, wenn leer), das Häkchen dazu.
+    onSave({ ...data, taxData: { ...taxData, useEnteredTaxable: useEntered }, ...steuerkantonSpeichern(data, canton), finanzen: { ...data.finanzen, taxableIncome: enteredTaxable > 0 ? enteredTaxable : undefined } });
   };
 
   const inputStyle = {
@@ -194,7 +210,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         React.createElement('label', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
         React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t('tax.netIncomeNote')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t(eingaben.dreizehnter === 'ja' ? 'tax.netIncomeNote13' : 'tax.netIncomeNote')),
 
         React.createElement(LabeledField, { palette, label: t('tax.taxableIncomeDirect'), style: { marginBottom: space.xs } },
           React.createElement('input', {
@@ -223,7 +239,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.useTaxableEntered'))
         ),
 
-        !useEnteredTaxable && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
+        useEntered !== true && deductions.map(ded => React.createElement('div', { key: ded.key, style: { marginBottom: '12px' } },
           React.createElement(LabeledField, { palette, label: ded.label, style: { marginBottom: 0 } },
             React.createElement('input', {
               type: 'number',
@@ -262,6 +278,10 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } }, 'CHF ' + taxableIncome.toFixed(0)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             steuern.quelle === 'estv' ? t('tax.taxableEstimatedHint') : t('tax.taxableEnteredHint')
+          ),
+          // R4: die Annahmen hinter der Zahl, sichtbar am Ergebnis.
+          annahmen.length > 0 && React.createElement('div', { 'data-testid': 'steuer-annahmen', style: { fontSize: text.xs, color: palette.text, marginTop: space.xs } },
+            ...annahmen.map((a) => React.createElement('div', { key: a }, 'ⓘ ' + a))
           )
         ),
 
@@ -275,7 +295,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         // Bruttolohn: dieselbe Begründung steht gleich darunter bei der Kantonssteuer — hier nur kurz.
         !taxResult && React.createElement('div', { 'data-testid': 'bundessteuer-ohne-zahl', style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.federalTax')),
-          React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, (canton && steuern.grund === 'brutto') ? t('tax.noTaxFigure') : bundOhneZahlText(t, steuern.grund))
+          React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, (canton && ERKLAERT_IN_ORIENTIERUNG.includes(steuern.grund)) ? t('tax.noTaxFigure') : bundOhneZahlText(t, steuern.grund))
         ),
 
         taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
@@ -332,12 +352,20 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       )
     ),
 
-    taxResult && React.createElement(SteuerSaeulen, {
+    // R4: je Zivilstand das passende steuerbare Einkommen (tarifvergleichFuerProfil).
+    taxResult && vergleich && React.createElement(SteuerSaeulen, {
       palette, t,
       istVerheiratet: verheiratet,
-      vergleich: vergleicheTarife(taxableIncome, kinder, elterntarif),
+      vergleich,
       onSelect: (v) => setVerheiratet(v),
     }),
+    taxResult && vergleich && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
+      'ⓘ ' + t('tax.saeulen.abzuegeNote', { ledig: chf(vergleich.steuerBaresEinkommen), verheiratet: chf(vergleich.steuerBaresEinkommenVerheiratet) })
+    ),
+    taxResult && !vergleich && React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('tax.saeulen.nurGeschaetzt'))
+    ),
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
 

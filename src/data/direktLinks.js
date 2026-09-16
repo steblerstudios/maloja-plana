@@ -244,8 +244,8 @@ export const CANTONAL_LINKS = {
     ipv: 'https://www.vd.ch/sante-soins-et-handicap/assurance-maladie/subside-a-lassurance-maladie',
   },
   AG: {
-    steuererklaerung: 'https://www.ag.ch/de/verwaltung/dfr/steuern',
-    sozialdienst: 'https://www.ag.ch/de/verwaltung/dgs/gesellschaft/soziales/sozialhilfe',
+    steuererklaerung: 'https://www.ag.ch/de/themen/steuern-finanzen/steuern-startseite',
+    sozialdienst: 'https://www.ag.ch/de/themen/soziales-gesellschaft/soziale-sicherheit/sozialhilfe',
     ipv: 'https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine',
   },
   SG: {

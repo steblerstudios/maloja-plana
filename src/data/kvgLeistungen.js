@@ -168,7 +168,9 @@ export const TAXPUNKTWERT_DATA_VERSION = '2026-09-16';
 
 // K26/K30 (Bauliste §9/§10, E28): die neun Kantone ohne belegten Wert 2026 — Stand 2025
 // (TARMED), siehe Kommentar oben "Neun Kantone bleiben UNGEPRÜFT". Für die Fussnote
-// kvg.tpwNote, damit sie die Kantone nennt statt nur allgemein zu warnen.
+// kvg.tpwNote, damit sie die Kantone nennt statt nur allgemein zu warnen. Seit R4 (16.09.2026)
+// füllt die App den Platzhalter {kantone} in kvg.tpwNote aus dieser Liste und zeigt je
+// gewähltem Kanton «Stand 2025, provisorisch» (kvg.tpwStandUnbelegt).
 export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS'];
 
 export function berechneArztrechnung(taxpunkte, canton) {

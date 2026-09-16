@@ -74,3 +74,17 @@ describe('getAllKategorien', () => {
     }
   });
 });
+
+// R4 (16.09.2026): ag.ch leitet die alten Pfade per 301 um (curl -sIL, Endziel 200;
+// Gegenprobe erfundene Unterseite am Ziel → 404). Direkt auf das Endziel verlinken.
+describe('CANTONAL_LINKS AG — Ziel der Weiterleitung', () => {
+  it('Sozialhilfe und Steuern zeigen auf die neuen ag.ch-Pfade', async () => {
+    const { CANTONAL_LINKS } = await import('../direktLinks.js');
+    expect(CANTONAL_LINKS.AG.sozialdienst).toBe('https://www.ag.ch/de/themen/soziales-gesellschaft/soziale-sicherheit/sozialhilfe');
+    expect(CANTONAL_LINKS.AG.steuererklaerung).toBe('https://www.ag.ch/de/themen/steuern-finanzen/steuern-startseite');
+  });
+  it('keine alten /de/verwaltung/-Pfade mehr in den AG-Links', async () => {
+    const { CANTONAL_LINKS } = await import('../direktLinks.js');
+    for (const url of Object.values(CANTONAL_LINKS.AG)) expect(url).not.toContain('ag.ch/de/verwaltung/');
+  });
+});
