@@ -740,7 +740,7 @@ const AppInner = ({ demo }) => {
   // Blob (dataURL) wandert nach IndexedDB; im State/localStorage bleiben nur Metadaten
   // → kein localStorage-Quota-Risiko. K24: im Beispiel landen Upload, Löschen und
   // Ablaufdatum nur in demoDocs (Arbeitsspeicher), nie in IndexedDB oder or5_docs.
-  const docAktionen = dokumentAktionen({ demoMode, setDocuments, setDemoDocs });
+  const docAktionen = dokumentAktionen({ demoMode, setDocs: demoMode ? setDemoDocs : setDocuments });
 
   // Bei idb-Fehler wird geworfen, damit die Upload-UI ihn ruhig anzeigen kann.
   const handleAddDocument = (doc) =>
@@ -772,9 +772,6 @@ const AppInner = ({ demo }) => {
     }
   };
 
-  const handleUpdateDocExpiry = (docId, newDate) => {
-    docAktionen.ablaufAendern(docId, newDate);
-  };
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
     if (viewName === 'chapter' && chapterIdx !== undefined) {
@@ -1280,7 +1277,7 @@ const AppInner = ({ demo }) => {
           chapters: chapters,
           onDownload: handleDownloadDocument,
           onDelete: handleDeleteDocument,
-          onUpdateExpiry: handleUpdateDocExpiry,
+          onUpdateExpiry: docAktionen.ablaufAendern,
           initialTab: tresorInitialTab,
           isDarkMode
         }),

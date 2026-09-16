@@ -51,6 +51,11 @@ const liste = (start) => {
   return z;
 };
 
+// So wählt main.jsx den Setter: im Beispiel die Beispiel-Liste, sonst die echte.
+// (Die Wahl selbst ist unten in «Verdrahtung» am Quelltext festgehalten.)
+const aktionen = (demoMode, echt, beispiel) =>
+  dokumentAktionen({ demoMode, setDocs: demoMode ? beispiel.set : echt.set });
+
 const PASS = { id: '1', type: 'id', fileName: 'pass.pdf', expiryDate: '2030-01-01', chapter: 'basis' };
 const NEU = { id: '2', type: 'lease', fileName: 'mietvertrag.pdf', expiryDate: '2031-06-30', chapter: 'wohnen', data: 'data:application/pdf;base64,AAAA' };
 
@@ -96,7 +101,7 @@ describe('K24 · Dokumente im Beispiel-Modus', () => {
   it('Upload landet nur in der Beispiel-Liste — echte Liste und IndexedDB bleiben unberührt', async () => {
     const echt = liste([PASS]);
     const beispiel = liste([]);
-    const akt = dokumentAktionen({ demoMode: true, setDocuments: echt.set, setDemoDocs: beispiel.set });
+    const akt = aktionen(true, echt, beispiel);
     await akt.hinzufuegen(NEU);
     expect([...dateien.keys()]).toEqual(['1']);
     expect(echt.docs).toEqual([PASS]);
@@ -107,7 +112,7 @@ describe('K24 · Dokumente im Beispiel-Modus', () => {
   it('Löschen entfernt nur aus der Beispiel-Liste — echtes Dokument und seine Datei bleiben', async () => {
     const echt = liste([PASS]);
     const beispiel = liste([{ ...PASS }]);
-    const akt = dokumentAktionen({ demoMode: true, setDocuments: echt.set, setDemoDocs: beispiel.set });
+    const akt = aktionen(true, echt, beispiel);
     await akt.loeschen('1');
     expect(dateien.get('1')).toBe('data:application/pdf;base64,PASS');
     expect(echt.docs).toEqual([PASS]);
@@ -117,7 +122,7 @@ describe('K24 · Dokumente im Beispiel-Modus', () => {
   it('Ablaufdatum ändern bleibt in der Beispiel-Liste', () => {
     const echt = liste([PASS]);
     const beispiel = liste([{ ...PASS }]);
-    const akt = dokumentAktionen({ demoMode: true, setDocuments: echt.set, setDemoDocs: beispiel.set });
+    const akt = aktionen(true, echt, beispiel);
     akt.ablaufAendern('1', '2040-12-31');
     expect(echt.docs).toEqual([PASS]);
     expect(beispiel.docs[0].expiryDate).toBe('2040-12-31');
@@ -128,7 +133,7 @@ describe('K24 · Kontrolle: ausserhalb des Beispiels gilt der echte Weg', () => 
   it('Upload: Datei nach IndexedDB «maloja-plana-documents», in die Liste nur Metadaten', async () => {
     const echt = liste([PASS]);
     const beispiel = liste([]);
-    const akt = dokumentAktionen({ demoMode: false, setDocuments: echt.set, setDemoDocs: beispiel.set });
+    const akt = aktionen(false, echt, beispiel);
     await akt.hinzufuegen(NEU);
     expect(dbNamen.has(DB)).toBe(true);
     expect(dateien.get('2')).toBe(NEU.data);
@@ -139,7 +144,7 @@ describe('K24 · Kontrolle: ausserhalb des Beispiels gilt der echte Weg', () => 
 
   it('Löschen: aus der Liste und die Datei aus IndexedDB', async () => {
     const echt = liste([PASS]);
-    const akt = dokumentAktionen({ demoMode: false, setDocuments: echt.set, setDemoDocs: liste([]).set });
+    const akt = aktionen(false, echt, liste([]));
     await akt.loeschen('1');
     expect(dateien.has('1')).toBe(false);
     expect(echt.docs).toEqual([]);
@@ -149,8 +154,16 @@ describe('K24 · Kontrolle: ausserhalb des Beispiels gilt der echte Weg', () => 
 describe('K24 · Verdrahtung in main.jsx', () => {
   const quelle = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
 
-  it('die Dokument-Aktionen bekommen den Beispiel-Modus und beide Listen', () => {
-    expect(quelle).toMatch(/dokumentAktionen\(\{\s*demoMode,\s*setDocuments,\s*setDemoDocs\s*\}\)/);
+  it('die Dokument-Aktionen schreiben im Beispiel in die Beispiel-Liste, sonst in die echte', () => {
+    expect(quelle).toMatch(/dokumentAktionen\(\{ demoMode, setDocs: demoMode \? setDemoDocs : setDocuments \}\)/);
+  });
+
+  it('Upload, Löschen und Ablaufdatum gehen alle drei über diese Aktionen', () => {
+    expect(quelle).toMatch(/docAktionen\.hinzufuegen\(/);
+    expect(quelle).toMatch(/docAktionen\.loeschen\(/);
+    expect(quelle).toMatch(/onUpdateExpiry: docAktionen\.ablaufAendern,/);
+    // Kein zweiter, am Beispiel-Modus vorbeiführender Schreibweg auf die echte Liste.
+    expect(quelle).not.toMatch(/setDocuments\(prev => prev\.(map|filter)/);
   });
 
   it('Tresor, Lebensmappe und Export zeigen im Beispiel die Beispiel-Liste', () => {
