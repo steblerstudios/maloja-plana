@@ -3388,7 +3388,10 @@ export default {
     taxpunkte: 'Puncts da taxa sin il quint',
     taxpunktwert: 'Valur dal punct da taxa',
     berechneterBetrag: 'Import calculà',
-    tpwNote: 'La valur dal punct da taxa variescha tenor il chantun.',
+    // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
+    // linguist/a natal/a.
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut (art. 46 al. 4 LAMal) — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per AG, BL, SO, AI, GL, SH, JU, NE e VS n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwDataVersion: 'Stadi da la valur dal punct',
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },
