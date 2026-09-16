@@ -272,9 +272,10 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
         React.createElement('div', { style: { height: '1px', background: palette.border, marginBottom: '12px' } }),
 
+        // Bruttolohn: dieselbe Begründung steht gleich darunter bei der Kantonssteuer — hier nur kurz.
         !taxResult && React.createElement('div', { 'data-testid': 'bundessteuer-ohne-zahl', style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.federalTax')),
-          React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, bundOhneZahlText(t, steuern.grund))
+          React.createElement('p', { style: { margin: 0, fontSize: text.sm, color: palette.text, lineHeight: 1.5 } }, (canton && steuern.grund === 'brutto') ? t('tax.noTaxFigure') : bundOhneZahlText(t, steuern.grund))
         ),
 
         taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },

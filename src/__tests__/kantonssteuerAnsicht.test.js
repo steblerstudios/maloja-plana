@@ -151,7 +151,9 @@ describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
   it('Lohn als Bruttolohn erfasst: weder Bundessteuer noch Kantonszahl', () => {
     const v = zeige(null, { nettolohn: 80000, incomeType: 'brutto' });
     zeigtKeineZahl(v, 'tax.bandNotCheckedBrutto');
-    keineBundessteuer(v, 'tax.federalNotCheckedBrutto');
+    // Die Begründung steht bei der Kantonssteuer; bei der Bundessteuer nur der kurze Hinweis.
+    keineBundessteuer(v, 'tax.noTaxFigure');
+    expect(v.text).not.toContain('tax.federalNotCheckedBrutto');
   });
 
   it('verheiratet mit Partnereinkommen (nicht gemessen): weder Bundessteuer noch Kantonszahl', () => {

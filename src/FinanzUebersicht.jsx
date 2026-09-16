@@ -378,7 +378,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       statusColor: palette.text,
       detail: kantonal
         ? t('tax.federalTax') + ': ' + formatCHF(taxResult.steuer) + ' + ' + t('tax.cantonalAndMunicipal') + ' (' + t('tax.roughEstimateBadge') + '): ' + formatCHF(kantonal.kantonalUndGemeinde) + '. ' + t('tax.basedOnHauptort', { year: KANTONAL_DATA_VERSION })
-        : steuerOhneZahl ? bundOhneZahlText(t, steuerOhneZahl)
+        : steuerOhneZahl ? (steuerkanton && steuerOhneZahl === 'brutto' ? null : bundOhneZahlText(t, steuerOhneZahl))
           : !steuerkanton ? t('finanzUebersicht.selectCanton') : null,
       onClick: () => onNavigate('tax'),
     }),

@@ -87,7 +87,9 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
       expect(fu).toContain('tax.noTaxFigure');
       expect(fu).not.toContain('tax.federalOnly');
       expect(fu).toContain('kantonssteuer-orientierung');
-      expect(fu).toContain(p.finanzen.incomeType === 'brutto' ? 'tax.federalNotCheckedBrutto' : 'tax.federalNotCheckedPartner');
+      // Bruttolohn: die Begründung steht in der Orientierung darunter (nicht doppelt).
+      expect(fu).toContain(p.finanzen.incomeType === 'brutto' ? 'tax.bandNotCheckedBrutto' : 'tax.federalNotCheckedPartner');
+      if (p.finanzen.incomeType === 'brutto') expect(fu).not.toContain('tax.federalNotCheckedBrutto');
       expect(bd).not.toContain('tax.federalTax');
       expect(steuern).toBeUndefined();
       expect(json).toBeUndefined();
