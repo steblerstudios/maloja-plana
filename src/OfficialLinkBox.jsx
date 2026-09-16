@@ -2,7 +2,7 @@ import React from 'react';
 import { getLinkById, getCantonalLinks } from './data/direktLinks.js';
 import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius } from './config/tokens.js';
-import { steuerkantonVorbelegung } from './TaxCalculator.jsx';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 // Reusable "mirror" of an official DirektLinks entry, shown in context next to a
 // calculator or section (e.g. the Sozialhilfe link beside the Sozialhilfe view).

@@ -19,7 +19,7 @@ import { KKLastCard } from './KKLastCard.jsx';
 import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
 import { renderSource } from './utils/renderSource.js';
-import { steuerkantonVorbelegung } from './TaxCalculator.jsx';
+import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 
 function formatCHF(value) {
   const n = Math.round(value);
