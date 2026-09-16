@@ -45,69 +45,7 @@ Datei; dafür hat das Studio einen eigenen Weg.
 
 ## Offen
 
-*Zwei Bugs aus der Crosslink-Prüfung vom 15.09.2026 (Bau-Liste K10). Beide sind am Code
-nachgestellt, beide brauchen vor dem Fix einen Entscheid von Stebler Studios, weil der Fix
-festlegt, welche Zahl bzw. welcher Kanton gilt. Die ganze Prüf-Tabelle je Rechner steht in
-`docs/legal/freigabe-register.md` §2; der Ist-Zustand ist in
-`src/__tests__/crosslinkKanton.test.js` festgehalten.*
-
-### B-1 · Zahlen aus dem Schnellcheck kommen im IPV-Rechner nicht an
-
-> **Fix gemergt (#167, 16.09.2026), noch nicht live** — der Deploy-Versuch um 17:45 wurde vom
-> Backup-Tor gestoppt. Nach dem nächsten erfolgreichen Deploy nach «Zuletzt behoben». Entscheid E22 (16.09.2026): Weg (b). Die Zahlen gehen als Übergabe
-> an den IPV-Rechner (`handleNavigate` → `schnellcheckZahlen`), der Rechner sagt «Gerechnet
-> mit den Zahlen aus dem Schnellcheck» und schreibt erst auf «Ins Profil übernehmen» ins
-> Profil. Festgehalten in `src/__tests__/b1SchnellcheckUebergabe.test.js` (zuerst rot).
-
-- **Versprochen:** Schnellcheck und Anspruch-Check zeigen «Prämienverbilligung» mit Betrag und
-  verlinken in den IPV-Rechner (`Schnellcheck.jsx:159`, `AnspruchCheck.jsx:94`, Ziel `view: 'premium'`).
-- **Hält nicht:** Einkommen, Miete und Prämie, die man im Schnellcheck eintippt, leben nur im lokalen
-  Zustand (`Schnellcheck.jsx:21–23`, im Anspruch-Check als `probe`, `AnspruchCheck.jsx:19`). Sie
-  werden nie ins Profil geschrieben, und `handleNavigate` (`main.jsx:767`) trägt nur den Namen der
-  Ansicht. Der IPV-Rechner rechnet mit dem Profil (`main.jsx:1323` → `PremiumSubsidy.jsx:45`
-  `calculateIPV(data)`).
-- **Nachstellen:**
-  1. Neues Profil, im Onboarding Kanton Bern wählen, kein Einkommen erfassen.
-  2. Schnellcheck öffnen (auch Schritt 1 im Anspruch-Check), Einkommen 3000 eintragen → die Zeile
-     «Prämienverbilligung» erscheint mit Betrag.
-  3. Auf die Zeile tippen → der IPV-Rechner zeigt die Aufforderung «Einkommen eingeben» statt des
-     Betrags.
-  4. Variante: im Profil 5000/Monat erfasst, im Schnellcheck 3000 → der Schnellcheck zeigt eine
-     Verbilligung, der IPV-Rechner «keine Verbilligung» (rechnet mit 5000).
-- **Kanton und Haushalt sind nicht betroffen:** beide liest der IPV-Rechner korrekt aus dem Profil.
-  Die Aussage «der IPV-Rechner übernimmt Eingaben nicht» stimmt also nur für die Eingaben *aus dem
-  Schnellcheck*, nicht fürs Profil.
-- **Warum noch kein Fix:** zwei Wege, beide ändern Verhalten. (a) Der Schnellcheck schreibt ins
-  Profil — widerspricht seinem Versprechen «hier frei anpassbar zum Ausprobieren»
-  (`Schnellcheck.jsx:12–13`). (b) Die Probe-Zahlen gehen als Übergabe an den IPV-Rechner, ohne das
-  Profil zu ändern — neuer Navigations-Parameter in `main.jsx`, und der IPV-Rechner muss sichtbar
-  sagen, dass er mit Schnellcheck-Zahlen rechnet. **Entscheid Stebler Studios.** Der rote Test wird
-  mit dem gewählten Weg geschrieben, weil er genau dessen Verhalten festschreibt.
-
-### B-2 · Steuerrechner: der gewählte Kanton wird gespeichert, aber nie wieder gelesen
-
-- **Versprochen:** der Knopf «Speichern» im Steuerrechner speichert die Eingaben, darunter den Kanton.
-- **Hält nicht:** das Kantonsfeld startet mit `basis.canton` (`TaxCalculator.jsx:26`). Beim Speichern
-  landet der Kanton aber als `canton` auf der obersten Ebene des Datensatzes (`TaxCalculator.jsx:74`
-  → `main.jsx:1309–1313`). Diesen Schlüssel liest kein Code: die zwei Stellen, die `data.canton`
-  lesen (`MirrorCards.jsx:89, :554`), bekommen die Kapitel-Daten (`ChapterView.jsx:1113`), meinen
-  also `basis.canton`.
-- **Nachstellen:**
-  1. Onboarding mit Kanton Zürich.
-  2. Steuerrechner öffnen → Zürich ist vorgewählt (richtig).
-  3. Auf Genf stellen, «Speichern».
-  4. Wegnavigieren und den Steuerrechner wieder öffnen → wieder Zürich.
-- **Warum noch kein Fix:** es ist ein Entscheid, welcher Kanton für die Steuer gilt. Steuerkanton und
-  Wohnkanton können verschieden sein, und das Profil hat dafür schon ein eigenes Feld
-  (`behoerden.cantoneOfTaxation`, gefüllt in `main.jsx:680, :689`), das der Steuerrechner heute
-  nicht liest. Möglich: (a) im Steuerrechner `cantoneOfTaxation` lesen und schreiben, (b) den Kanton
-  in `taxData` speichern und beim Öffnen bevorzugen, (c) nach `basis.canton` schreiben — dann rechnen
-  auch IPV und Sozialhilfe mit dem neuen Kanton. **Entscheid Stebler Studios.**
-- **Entschieden (E23, 16.09.2026):** Weg (a). Dazu fragt der Steuerrechner bei einer Abweichung,
-  ob der Kanton auch als Wohnkanton gelten soll. `basis.canton` ändert sich nur auf «Ja».
-  **Fix gemergt (#165, 16.09.2026), noch nicht live** (roter Test und Fix in
-  `src/__tests__/steuerkanton.test.js`); der Deploy-Versuch um 17:45 wurde vom Backup-Tor
-  gestoppt. Nach dem nächsten erfolgreichen Deploy nach «Zuletzt behoben».
+*Zurzeit kein offener Bug. B-1 und B-2 (Crosslink-Prüfung 15.09.2026) sind behoben und live, siehe unten; ihre ausführliche Beschreibung steht in der Git-Historie dieser Datei und in den PRs.*
 
 ## Geprüft — kein offener Bug (2026-07-08)
 
@@ -122,5 +60,7 @@ Vier Punkte standen kurz hier, aus dem Gedächtnis. Beim Nachstellen zeigte sich
 
 *(Neueste zuoberst. Nur zum Nachschauen — schön, wenn die Liste hier wächst.)*
 
+- 2026-09-16 · **B-2** · Der Steuerrechner speicherte den gewählten Kanton, las ihn aber nie wieder → er liest und schreibt `behoerden.cantoneOfTaxation` (vorbelegt mit dem Wohnkanton) und fragt bei Abweichung, ob der Kanton auch als Wohnkanton gelten soll (Entscheid E23). Test `src/__tests__/steuerkanton.test.js`, Fix PR #165, seit #181 auch in Finanzübersicht und Steuererklärungs-Link; **live seit 17.09.2026, 01:46** (`index-91c30770.js`, 0.1.29-beta, Tag `v0.1.29-beta` = `2fcf409`).
+- 2026-09-16 · **B-1** · Zahlen aus dem Schnellcheck kamen im IPV-Rechner nicht an → sie gehen als Übergabe mit, der Rechner sagt «Gerechnet mit den Zahlen aus dem Schnellcheck» und schreibt erst auf «Ins Profil übernehmen» ins Profil (Entscheid E22). Test `src/__tests__/b1SchnellcheckUebergabe.test.js`, Fix PR #167; **live seit 17.09.2026, 01:46** (`index-91c30770.js`, 0.1.29-beta, Tag `v0.1.29-beta` = `2fcf409`).
 - 2026-09-16 · **B-3** · Im Beispiel-Modus innerhalb der App wirkten Dokument-Upload, -Löschen und Ablaufdatum auf die echten Dokumente samt Datei in IndexedDB (Bau-Liste K24) → im Beispiel laufen alle drei über eine eigene Liste im Arbeitsspeicher, die beim Betreten und Verlassen geleert wird; die Demo von der Code-Wand war nie betroffen. Nachgestellt und festgehalten in `src/__tests__/beispielDokumente.test.js`, Fix PR #156, **live seit 16.09.2026, 12:23** (`index-2301b4b1.js`, 0.1.28-beta). Die ausführliche Beschreibung mit Nachstell-Schritten steht in PR #156 und in der Git-Historie dieser Datei.
 - 2026-07-08 · Zukunft-Graph nannte AHV/BVG-Säulen, auch wenn es sie gar nicht gab → nur vorhandene Säulen werden benannt (`9134b86`).

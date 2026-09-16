@@ -11,36 +11,43 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-*Entscheid-Runden 16.09.2026 abends (#172–#182). Alle gemergt, nicht live.*
+*R4 vom 17.09.2026 (#186–#188). Gemergt, nicht live.*
 
-### Geändert
+### Behoben
+- **Steuer-Annahmen (R4, #187):** 13. Monatslohn wird mitgerechnet (bei «ja»; sonst Hinweis) · keine Schätzung aus dem Nettolohn für Rentner und Selbständige · verheiratet ohne Angabe zum Partnereinkommen → keine Zahl, bei ausdrücklich 0 «Alleinverdiener-Ehepaar» · Steuerrechner, Finanzübersicht und Dossier lesen dieselbe Regel für das eingetragene steuerbare Einkommen · Tarifvergleich mit dem passenden steuerbaren Einkommen je Zivilstand.
+- **Hinweise und Robustheit (R4, #186):** «Kantonal nicht bestätigt» auch bei Vermögen unter dem Freibetrag (Sozialhilfe, Schnellcheck, Dashboard) · Taxpunktwert-Stand je Kanton aus den Daten · Löschweg benachrichtigt andere offene Tabs · Wiederherstellen überschreibt nichts, wenn der Schnappschuss scheitert · Gemeinde ohne geratene Web-Adresse · AG-Links auf die neue Adresse · `CANTONAL_DATA_VERSION` entfernt.
+
+## [0.1.29-beta] — 2026-09-16
+
+*Live seit **17.09.2026, 01:46** (`index-91c30770.js`, Tag `v0.1.29-beta` = `2fcf409`, per `curl` belegt: alle 159 Build-Dateien 200, altes Bundle 404, Backup `20260917-014608` mit 165 Dateien). Umfasst die Entscheid-Runde vom 16.09. nachmittags (#161–#170, der Deploy-Versuch um 17:45 wurde vom Backup-Tor gestoppt) und die Runden vom Abend (#172–#185).*
+
+#### Abend 16.09. (#172–#185)
+##### Geändert
 - **Sicherung verschlüsselt als Voreinstellung, Passwort mindestens 12 Zeichen (E10, #173):** «Mit Passwort sichern» steht zuerst, «Ohne Verschlüsselung sichern» bleibt wählbar mit ruhigem Hinweis (DSG Art. 7 Abs. 3). Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die automatischen Schnappschüsse bleiben bewusst unverschlüsselt (K34, Begründung in `docs/security/backup-strategy.md`).
 - **«Trifft nicht zu» und gelockerte Grundordnung (E17, #174):** Arbeitgeber, Telefon und E-Mail sind nur noch «empfohlen» (Grundordnung 15 statt 18 Angaben). Bei diesen und den Arbeitsfeldern lässt sich ein Feld als «trifft nicht zu» markieren; es zählt dann als erledigt und wird nicht mehr vorgeschlagen. Gespeichert als `_na` je Kapitel, rein additiv, keine Migration.
 - **Kennzeichnungen (#175):** Kantons-/Gemeindesteuer als «grobe Schätzung» (K13, erster Teil) · Dashboard-Beschriftungen in lesbarer Grösse mit Kurzlabels und Silbentrennung (K18) · Taxpunktwerte als provisorisch gekennzeichnet, neun Kantone mit Stand 2025 genannt (K26), eigener Datenstand je Block (K27) · Rumantsch in der Sprachwahl als provisorisch (O14).
 - **CI auf Node 24 / npm 11 (E27, #172),** Lockfile mit npm 11 erneuert, keine Versionssprünge.
 
-### Behoben
+##### Behoben
+- **Bundessteuer mit dem steuerbaren Einkommen nach ESTV (E39, #184):** Sie wurde aus dem Nettolohn ohne die Standardabzüge gerechnet und lag deutlich zu hoch (ZH ledig 1'022 statt 906, alleinerziehend mit 1 Kind 447 statt 114, VD verheiratet mit 2 Kindern 1'670 statt 551). Jetzt dasselbe steuerbare Einkommen wie die Kantonstabelle, an allen 14'144 Messpunkten höchstens CHF 0.50 neben der ESTV; der Steuerrechner zeigt nur noch ein steuerbares Einkommen. Bei als Brutto erfasstem Lohn und bei Verheirateten mit Partnereinkommen keine Zahl.
+- **Befunde aus dem Predeploy-Gate (#185):** `pii-scan.sh` nimmt erlaubte Stellen nur noch selbst aus (vorher ganze Zeilen); Tippflächen mind. 44 px; Kantonsname im Druck escaped; fr «canton de …» und Du-Form; Datenschutzerklärung zur Voreinstellung präzisiert; unbelegte Artikelnummer aus der Taxpunktwert-Fussnote entfernt.
 - **Kantons- und Gemeindesteuer aus amtlichen Messpunkten (E37 #180, E38 #182):** Der eine Faktor je Kanton lag bei CHF 80'000 brutto (ledig) in allen 26 Kantonen 44–70 % unter dem ESTV-Steuerrechner 2026. Jetzt eine Stütztabelle je Kanton, Zivilstand und 0–3 Kindern (14'144 Messpunkte, Hauptort, ohne Kirchensteuer; Abweichung im Median CHF 5, höchstens CHF 391). Das steuerbare Einkommen wird nach den Standardabzügen der ESTV geschätzt. Steuerrechner, Finanzübersicht und Behördendossier nutzen dieselbe Regel und den Steuerkanton; ohne Messung (zwei Einkommen, Lohn als Brutto erfasst, mehr als drei Kinder, ausserhalb der Tabelle) keine Kantonszahl, sondern Links zur ESTV und zur kantonalen Steuerverwaltung. Das Behördendossier rechnet die Bundessteuer jetzt mit den Kindern im Haushalt.
 - **Notfallkontakt «trifft nicht zu» (K38, #179):** mit einer leisen Anregung, eine Person des Vertrauens zu fragen; Notfallkarte, Vorlesekarte und Dossier zeigen «Keine Kontaktperson hinterlegt». Der Hinweis «Kontakt hinterlegt → Notfallkarte» erscheint nur noch mit Kontakt. Die Markierung beim Arbeitgeber (und seiner Adresse) gilt in «Finanzen» und «Ausbildung & Arbeit». Alimente-Felder markierbar. CSV-Export und Export-Vorschau ohne interne `_`-Felder (`_migratedAt` wurde bisher Zeichen für Zeichen zerlegt).
 - **Sie-Form der Export-Notiz (K40, #181)** in de, it, rm · **Kontrast der Berg-Beschriftungen (K41, #181)** von teils 1.6:1 auf 5.9:1 (hell) bzw. 5.5:1 (dunkel), «noch nicht begonnen» jetzt kursiv statt blass · **Steuerkanton (K33, #181)** auch in Finanzübersicht und Steuererklärungs-Link.
 
-### Hinzugefügt
+##### Hinzugefügt
 - **«Alle Daten auf diesem Gerät löschen» (E18, #174):** in den Einstellungen, mit Erklärung, Angebot «vorher sichern» und zweistufiger Bestätigung. Löscht alle `or5_`-Schlüssel (ausser dem Beta-Zugang) und die IndexedDB-Datenbanken der App; im Beispiel-Modus ausgeschaltet.
 
-### Performance
+##### Performance
 - **Hauptbundle 64.94 → 61.00 kB (E36, #177):** Onboarding und Tour wurden trotz `React.lazy` zusätzlich direkt importiert; die Statusabfrage liegt jetzt in `src/utils/einfuehrungStatus.js`. Ein Test verhindert, dass ein nachgeladenes Modul wieder direkt importiert wird.
 
-### Dokumentation
+##### Dokumentation
 - **Rechtstexte (K39, #178):** Datenschutz, FAQ und Nutzungsbedingungen (5 Sprachen) sowie `docs/legal/*` nennen die verschlüsselte Voreinstellung, die unverschlüsselten automatischen Schnappschüsse und den Löschweg. Sieben offene Rechtsfragen stehen in #178.
 - Anzahl der automatischen Schnappschüsse korrigiert (5, nicht 3; höchstens einer je 12 Stunden) und IndexedDB-Namen in `docs/security/data-flow.md` nachgeführt.
 
-## [0.1.29-beta] — 2026-09-16
+#### Nachmittag 16.09. (#161–#170)
 
-*Die Entscheid-Runde vom 16.09.2026 nachmittags (#161–#170). Gemergt, **noch nicht live**: der
-Deploy-Versuch um 17:45 wurde vom Rollback-Backup-Tor gestoppt, die Live-Version blieb
-unberührt. Das Tag `v0.1.29-beta` setzt der nächste erfolgreiche Deploy-Lauf.*
-
-### Behoben
+##### Behoben
 - **Prämienverbilligung ohne Beleg ohne Betrag (E9, #167, #168):** Die kantonalen IPV-Werte der App waren nach einem Muster erzeugt. Die Recherche in #161 zeigt: Die Beträge lagen in jedem belegten Kanton zu tief, die Einkommensgrenzen teils zu hoch, teils zu tief, und kein Kanton rechnet wie das Muster. Solange ein Kanton nicht amtlich belegt ist (heute alle 26), zeigt die App an keiner Stelle einen Betrag, kein «berechtigt» und keine Einschätzung aus der Einkommensgrenze, sondern einen neutralen Hinweis mit dem Link zur kantonalen Stelle. Ins Budget fliesst kein unbelegter Betrag. Der Verfahrens-Hinweis je Kanton ist ausgeblendet (für Glarus war er falsch).
 - **Vermögensfreibetrag je Kanton (#169, #170):** Die App rechnete für alle Kantone mit der SKOS-Empfehlung 6'000 / 12'000 / +3'000 je Kind / höchstens 15'000. Zehn Kantone rechnen tiefer (AG, SH, SO, BL, SG, BE, NE, FR, VD, GE), Basel-Stadt und Tessin höher (Beleg: #166). Jetzt je Kanton; wo kein aktueller kantonaler Beleg vorliegt (BL, AI, OW, TI, SG, FR, VD) oder eine Lücke gedeutet werden musste (SH und AG mit Kindern), steht «Kantonal nicht bestätigt — bitte beim Sozialdienst Ihrer Gemeinde prüfen».
 - **B-1 · Schnellcheck-Zahlen kommen im IPV-Rechner an (E22, #167):** Übergabe beim Klick, sichtbar «Gerechnet mit den Zahlen aus dem Schnellcheck», ins Profil nur auf «Ins Profil übernehmen».
@@ -48,7 +55,7 @@ unberührt. Das Tag `v0.1.29-beta` setzt der nächste erfolgreiche Deploy-Lauf.*
 - **CSV-Export gegen Formel-Injection geschützt (E14, #163):** Zellen mit `= + - @` Tab oder Wagenrücklauf am Anfang bekommen ein `'`; reine Zahlen bleiben Zahlen (OWASP «CSV Injection»).
 - **Voll-Review-Rest (#162):** Ausrufezeichen in fr/it/en/rm entfernt, drei Textfarben auf `sageDeep`, SKOS-Datenstand 2026-01.
 
-### Dokumentation
+##### Dokumentation
 - Prämienverbilligung 2026 je Kanton amtlich belegt, 21 abbildbar, 5 teilweise (#161) · Vermögensfreibetrag je Kanton mit Quellen (#166) · Rechts- und Sicherheits-Doku an den Code angeglichen, u. a. «Sicherung standardmässig unverschlüsselt» ehrlich benannt (#164).
 
 ## [0.1.28-beta] — 2026-09-16
