@@ -27,7 +27,8 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
   // IPV-Fairness (Petitions-Saat): zeigt, was die Prämienverbilligung ausmacht
   // (falls Anrecht) und wie viel nach IPV noch über der 10%-Linie bleibt.
   const ipv = calculateIPV(data);
-  const ipvAmount = ipv.eligible ? Math.min(premium, Math.max(0, ipv.amount || 0)) : 0;
+  // E9: Betrag nur mit amtlich belegtem Kanton; sonst eine Orientierung ohne Zahl.
+  const ipvAmount = ipv.eligible && ipv.belegt ? Math.min(premium, Math.max(0, ipv.amount || 0)) : 0;
   const netPremium = Math.max(0, premium - ipvAmount);
   const netShare = (netPremium / income) * 100;
   const netShareRounded = Math.round(netShare * 10) / 10;
@@ -65,7 +66,7 @@ export const KKLastCard = ({ palette, t, data, onNavigate }) => {
       t('kkLast.ipvRelief', { ipv: ipvAmount, share: netShareRounded })
     ),
     showFairness && ipvAmount === 0 && ipv && !ipv.eligible && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs } },
-      t('kkLast.ipvNoClaim')
+      ipv.belegt === false ? t(ipv.noteKey, ipv.noteParams) : t('kkLast.ipvNoClaim')
     ),
     showFairness && netShare > WHO_THRESHOLD && gapMonthly > 0 && React.createElement('div', { style: { fontSize: text.sm, color: accent, lineHeight: leading.normal, marginBottom: space.xs, fontWeight: weight.medium } },
       t('kkLast.gapToTen', { gap: gapMonthly })

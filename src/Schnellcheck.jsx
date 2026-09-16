@@ -45,9 +45,14 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
   try {
     // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein erfundener Betrag.
     const ipv = (numIncome > 0 && canton) ? calculateIPV(probe) : null;
+    // E9: ohne amtlich belegten Kanton ein Weg ohne Betrag («prüfen»), wie bei der EL.
     if (ipv && ipv.eligible) benefits.push({
       key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep,
       label: t('schnellcheck.ipv'), monthly: ipv.amount, note: t('schnellcheck.ipvNote'),
+    });
+    else if (ipv && ipv.anspruchMoeglich) benefits.push({
+      key: 'ipv', view: 'premium', color: palette.sky, textColor: palette.skyDeep,
+      label: t('schnellcheck.ipv'), qualitative: true, note: t('schnellcheck.ipvOhneBetragNote'),
     });
     // Sozialhilfe: nur mit Mietkontext (sonst Bedarf unvollständig) + ungedecktem
     // Bedarf + Vermögen unter Freibetrag — sonst wäre „Anspruch" unehrlich.

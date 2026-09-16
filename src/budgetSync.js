@@ -96,7 +96,10 @@ const syncBudgetFromChapters = (data) => {
 
   // IPV relief (reduces health insurance cost, not an income)
   const ipv = calculateIPV(data);
-  const ipvRelief = ipv.eligible ? ipv.amount : 0;
+  // E9: nur ein amtlich belegter Kanton liefert einen Betrag fürs Budget. Unbelegt
+  // fliesst nichts ins Budget; es bleibt beim Hinweis ohne Betrag (ipvOrientierung).
+  const ipvRelief = ipv.eligible && ipv.belegt ? (Number(ipv.amount) || 0) : 0;
+  const ipvOrientierung = ipv.belegt === false && !!ipv.anspruchMoeglich;
 
   const budget = {
     income: totalIncome,
@@ -106,6 +109,7 @@ const syncBudgetFromChapters = (data) => {
       alimenteReceived,
     },
     ipvRelief,
+    ipvOrientierung,
     expenses: {}
   };
 
@@ -218,6 +222,12 @@ const getBudgetRecommendations = (budget, t) => {
       level: 'info',
       icon: '○',
       text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'
+    });
+  } else if (budget.ipvOrientierung) {
+    recommendations.push({
+      level: 'info',
+      icon: '○',
+      text: t ? t('budget.ipvHintOhneBetrag') : 'You are probably entitled to a premium reduction (IPV). The canton sets the amount.'
     });
   }
 

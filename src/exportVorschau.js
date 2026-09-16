@@ -151,7 +151,8 @@ function ipvKategorien(dok) {
   if (hatWert(o.canton)) out.push({ id: 'kanton' });
   // Das Ergebnis steht immer in der Datei — auch «kein Anspruch». Darum Vorhandensein
   // statt hatWert: `{ eligible: false, amount: 0 }` ist eine Aussage, keine Leerstelle.
-  if (o.result != null) out.push({ id: 'ipvErgebnis' });
+  // E9: ohne amtlich belegten Kanton steht dort nur eine Einschätzung ohne Betrag.
+  if (o.result != null) out.push({ id: o.result.belegt === false ? 'ipvOrientierung' : 'ipvErgebnis' });
   return out;
 }
 
@@ -166,6 +167,7 @@ function budgetKategorien(report, data) {
   if (hatName(data && data.basis)) out.push({ id: 'name' });
   if (hatWert(b.income) || hatWert(b.incomeDetail)) out.push({ id: 'einkommen' });
   if (hatWert(b.ipvRelief)) out.push({ id: 'ipvErgebnis' });
+  else if (b.ipvOrientierung) out.push({ id: 'ipvOrientierung' });
   if (hatWert(ausgaben) || hatWert(b.reference)) out.push({ id: 'ausgaben' });
   if (hatWert(schulden)) out.push({ id: 'schulden' });
   if (hatWert(b.householdContext)) out.push({ id: 'haushalt' });

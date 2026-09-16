@@ -28,7 +28,7 @@ export function anspruchSignale(data = {}) {
     const rent = Number(data?.wohnen?.rentAmount) || 0;
 
     // IPV: kantonal + einkommensgetrieben. Ohne Kanton kein Signal.
-    if (income > 0 && canton && calculateIPV(data)?.eligible) {
+    if (income > 0 && canton && calculateIPV(data)?.anspruchMoeglich) {
       add('versicherungen', { key: 'ipv', view: 'premium' });
     }
     // Sozialhilfe: nur mit Mietkontext + ungedecktem Bedarf + Vermögen unter

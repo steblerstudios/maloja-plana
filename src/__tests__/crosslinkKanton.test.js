@@ -65,7 +65,8 @@ describe('K10 · Aussage 1 in den Ansichten: kein Rechner fragt den Kanton nochm
     expect(html).toContain('premium.canton(cantons.BE)');
     expect(html).not.toContain('premium.enterCanton');
     expect(html).not.toContain('premium.enterIncome');
-    expect(html).toContain('premium.eligible');
+    // E9: BE ist nicht amtlich belegt → Orientierung statt «Berechtigt» + Betrag.
+    expect(html).toContain('ipv.orientierungWahrscheinlich');
   });
 
   it('Steuerrechner wählt den Profil-Kanton im Kantonsfeld vor', () => {
@@ -94,12 +95,14 @@ describe('K10 · Aussage 2: der IPV-Rechner übernimmt das Profil — aber nicht
     // Profil: 5000/Monat in BE. Im Schnellcheck tippt jemand 3000 ein (Schnellcheck.jsx:21, lokaler Zustand).
     const profilDaten = profil({ canton: 'BE', income: 5000 });
     const schnellcheckProbe = { ...profilDaten, finanzen: { ...profilDaten.finanzen, monthlyIncome: 3000 } };
-    // Der Schnellcheck zeigt eine Verbilligung und verlinkt auf view 'premium' …
-    expect(calculateIPV(schnellcheckProbe).eligible).toBe(true);
+    // Der Schnellcheck zeigt einen möglichen Anspruch und verlinkt auf view 'premium' …
+    // (E9: ohne amtlich belegten Kanton als Orientierung ohne Betrag)
+    expect(calculateIPV(schnellcheckProbe).anspruchMoeglich).toBe(true);
     // … der IPV-Rechner bekommt aber nur `data` (main.jsx:1323) und rechnet mit 5000.
-    expect(calculateIPV(profilDaten).eligible).toBe(false);
+    expect(calculateIPV(profilDaten).anspruchMoeglich).toBe(false);
     const html = render(PremiumSubsidy, { data: profilDaten, onUpdateData: () => {} });
-    expect(html).toContain('premium.notEligible');
+    expect(html).toContain('ipv.orientierungOffen');
+    expect(html).not.toContain('ipv.orientierungWahrscheinlich');
   });
 });
 

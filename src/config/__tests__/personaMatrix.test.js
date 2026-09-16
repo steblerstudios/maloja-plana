@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import {
   CANTON_CODES,
   calculateSozialhilfe,
@@ -7,6 +7,7 @@ import {
   getRentLimit,
   getGrundbedarf,
 } from '../cantonalData.js';
+import { kantoneBelegtSimulieren } from './ipvBelegtSimulieren.js';
 
 // ─────────────────────────────────────────────────────────────
 // Persona-Matrix-QA
@@ -113,7 +114,25 @@ describe('Persona-Matrix: Sozialhilfe-Logik für jede Person plausibel', () => {
   });
 });
 
-describe('Persona-Matrix: IPV (Prämienverbilligung) für jede Person plausibel', () => {
+describe('Persona-Matrix: IPV ohne amtlichen Beleg (E9) zeigt für niemanden einen Betrag', () => {
+  it('jede Person, jeder Kanton: amount null, nie «berechtigt», nie «über der Grenze»', () => {
+    const problems = [];
+    for (const p of MATRIX) {
+      const r = calculateIPV(p.data);
+      if (r.belegt !== false) problems.push(`${p.id}: belegt !== false`);
+      if (r.eligible) problems.push(`${p.id}: eligible trotz unbelegtem Kanton`);
+      if (r.amount !== null) problems.push(`${p.id}: Betrag ${r.amount} trotz unbelegtem Kanton`);
+      if (r.noteKey === 'ipv.incomeAboveLimit') problems.push(`${p.id}: Grenze genannt trotz unbelegtem Kanton`);
+    }
+    expect(problems).toEqual([]);
+  });
+});
+
+describe('Persona-Matrix: IPV (Prämienverbilligung) für jede Person plausibel (alle Kantone belegt, simuliert)', () => {
+  let zuruecksetzen;
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(); });
+  afterAll(() => zuruecksetzen());
+
   it('Betrag/Prozent immer im gültigen Bereich, eligible⇔Betrag>0', () => {
     const problems = [];
     for (const p of MATRIX) {

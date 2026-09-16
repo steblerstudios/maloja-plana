@@ -41,7 +41,8 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       const canton = probe?.basis?.canton || '';
       const income = Number(probe?.finanzen?.monthlyIncome) || 0;
       const rent = Number(probe?.wohnen?.rentAmount) || 0;
-      if (income > 0 && canton && calculateIPV(probe)?.eligible) {
+      // anspruchMoeglich: auch bei unbelegtem Kanton (E9) ein Weg — ohne Betrag.
+      if (income > 0 && canton && calculateIPV(probe)?.anspruchMoeglich) {
         incomeBenefits.push({ key: 'ipv', label: t('anspruch.items.ipv.label'), view: 'premium' });
       }
       if (rent > 0) {
