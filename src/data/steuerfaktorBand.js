@@ -12,7 +12,8 @@ export const STEUERBAND_QUELLE = 'ESTV Steuerrechner (swisstaxcalculator.estv.ad
 export const STEUERBAND_STAND = '2026';
 export const STEUERBAND_GEPRUEFT_AM = '2026-09-16';
 
-const b = (bandMin, bandMax) => ({ bandMin, bandMax });
+// Je Eintrag: bandMin, bandMax, quelle, stand, geprueftAm.
+const b = (bandMin, bandMax) => ({ bandMin, bandMax, quelle: STEUERBAND_QUELLE, stand: STEUERBAND_STAND, geprueftAm: STEUERBAND_GEPRUEFT_AM });
 
 export const STEUERFAKTOR_BAND = {
   AG: { ledig: b(126501, 174339), verheiratet: b(133159, 160519) },
@@ -44,13 +45,17 @@ export const STEUERFAKTOR_BAND = {
 };
 
 /**
- * Liegt die Schätzung im belegten Band? Nur ohne Kinder gemessen — mit Kindern gibt es kein Band.
- * @returns {'innerhalb'|'ausserhalb'|'unbelegt'}
+ * Liegt die Schätzung im belegten Band?
+ *   'innerhalb'  → Zahl zeigen (als grobe Schätzung gekennzeichnet)
+ *   'ausserhalb' → Band existiert, das Einkommen liegt nicht darin → keine Zahl
+ *   'ungeprueft' → kein Band für diese Lage (unbekannter Kanton, kein Band gefunden oder Kinder,
+ *                  denn gemessen wurde nur ohne Kinder) → keine Zahl
+ * @returns {{ lage: string, band: object|null }}
  */
 export function steuerbandLage(kuerzel, steuerbaresEinkommen, { verheiratet = false, kinder = 0 } = {}) {
   const kanton = STEUERFAKTOR_BAND[kuerzel];
-  if (!kanton) return 'unbelegt';
-  const band = kanton[verheiratet ? 'verheiratet' : 'ledig'];
-  if (!band || kinder > 0) return 'ausserhalb';
-  return steuerbaresEinkommen >= band.bandMin && steuerbaresEinkommen <= band.bandMax ? 'innerhalb' : 'ausserhalb';
+  const band = kanton ? kanton[verheiratet ? 'verheiratet' : 'ledig'] : null;
+  if (!band || kinder > 0) return { lage: 'ungeprueft', band: null };
+  const drin = steuerbaresEinkommen >= band.bandMin && steuerbaresEinkommen <= band.bandMax;
+  return { lage: drin ? 'innerhalb' : 'ausserhalb', band };
 }

@@ -2868,8 +2868,16 @@ export default {
     selectCantonHint: { sie: 'Tschernai in chantun per vesair la chargia da taglia chantunalas.', du: 'Tscherna in chantun per vesair la chargia da taglia chantunalas.' },
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    basedOnHauptort: "Valur d'orientaziun, basà sin il lieu principal dal chantun. Il factur è calibrà tar in'entrada da radund CHF 80'000 (persuna singula) ed applitgà linear a mintga entrada — tar in'entrada considerablamain pli auta u pli bassa po la deviaziun esser pli gronda che mussà qua.",
+    // TODO(rm): E37 — provisorisch, von Muttersprachler:in gegenlesen.
+    basedOnHauptort: "Valur d'orientaziun per il lieu principal dal chantun. Controllà cun il calculatur da taglia da l'AFT (onn fiscal {year}): tar in'entrada taxabla tranter CHF {min} e CHF {max} sa deviescha el al pli {tol} % da la valur uffiziala (senza taglia da baselgia). En autras vischnancas po la taglia esser considerablamain autra.",
     roughEstimateBadge: 'Stimaziun aproximativa',
+    // TODO(rm): E37 (K37) — provisorisch, von Muttersprachler:in gegenlesen.
+    bandOutside: { sie: "Per Vossa entrada taxabla na mussa Maloja qua nagin import. La stimaziun è controllada mo tranter CHF {min} e CHF {max} (lieu principal, senza uffants, onn fiscal {year}); ordaifer è ella memia lunsch da la valur uffiziala. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per tia entrada taxabla na mussa Maloja qua nagin import. La stimaziun è controllada mo tranter CHF {min} e CHF {max} (lieu principal, senza uffants, onn fiscal {year}); ordaifer è ella memia lunsch da la valur uffiziala. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    bandNotChecked: { sie: "Per questa situaziun na mussa Maloja qua nagin import: la stimaziun è cumprovada mo per chasadas senza uffants ed en in sectur d'entradas controllà. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca.", du: "Per questa situaziun na mussa Maloja qua nagin import: la stimaziun è cumprovada mo per chasadas senza uffants ed en in sectur d'entradas controllà. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca." },
+    bandLinkEstv: "Calculatur da taglia da l'AFT",
+    bandLinkKanton: 'Administraziun da taglia {canton}',
+    bandChecked: "sectur d'entradas controllà cun il calculatur da taglia da l'AFT, onn fiscal {year}, ils {date} (toleranza ±{tol} %)",
+    netIncomeFederalOnly: 'Mo la taglia federala è deducida — la taglia chantunala e communala manca en questa cifra.',
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
     tariff: 'Tarif',
     singleTariff: 'Tarif da basa',
