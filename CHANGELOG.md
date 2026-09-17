@@ -17,6 +17,8 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Barrierefreiheit
 - **Ansagen und ruhige Rückfälle (K64):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
 - **Quellenangaben Taxpunktwert und Nachhaltigkeit (K65):** Der Taxpunktwert-Hinweis sagt nicht mehr «fast überall provisorisch», sondern «in den meisten Kantonen provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone)» — so weit tragen die kantonalen Quellen in den Daten. Die Infomaniak-Quellen im Abschnitt Nachhaltigkeit sind jetzt anklickbare Links (alle 5 Sprachen).
+### Intern
+- **Aufräumen ohne Verhaltensänderung (K66):** Steuer-Annahmen und `chf` an einer Stelle (`utils/steuerTexte.js`) · Rechtstexte reichen die Übersetzung an Links durch statt über eine Modulvariable · der Build stempelt `sw.js` auch bei `--outDir` · Test für den Löschsignal-Schlüssel in `main.jsx`.
 
 ## [0.1.31-beta] — 2026-09-17
 
