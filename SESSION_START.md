@@ -7,7 +7,18 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 11:10 (`main` = `b20cd0b` nach **PR #198**, dazu dieser Doku-PR · **live `index-98d2d140.js` = 0.1.30-beta seit 17.09. 10:55**, Tag `v0.1.30-beta` = `b20cd0b` · gemergt, nicht live: nichts · 1764 Tests grün, Hauptbundle 61.64 kB von 65)
+**Stand:** 2026-09-17, 11:25 (`main` = `672d8af` nach **PR #201**, dazu dieser Doku-PR · **live `index-c2f8af36.js` = 0.1.31-beta seit 17.09. 11:14**, Tag `v0.1.31-beta` = `672d8af` · gemergt, nicht live: nichts · 1768 Tests grün, Hauptbundle 61.72 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 11:25 (0.1.31-beta live, K59)
+>
+> **K59 gemessen:** Mit 0.1.30-beta blieb die App nach dem ersten Besuch offline leer: Haupt-Skript,
+> CSS und Sprache lagen nie im Cache. Lokal mit `vite preview` belegt (Server gestoppt, Neuladen → `#root` leer).
+> **#200** behebt das (Install legt die Assets der Startseite ab, die Seite meldet schon Geladenes,
+> `ignoreVary`, Startseiten-Ersatz nur für Seitenaufrufe). Danach, ebenfalls lokal: Server gestoppt,
+> Neuladen → Startseite erscheint. Sicherheits-Prüfer: 0 Blocker; unbekannte `/assets/` liefern live 404.
+> **Deploy 11:14** aus `672d8af` (#201 hob die Version), per `curl` belegt: `index-c2f8af36.js`,
+> 159/159, altes Bundle 404, Gegenprobe 404. Live im Browser (Beispiel-Modus): 18 Cache-Einträge inkl. Einstieg.
+> **Merker:** Vor jedem Deploy prüfen, ob die Version in `package.json` schon getaggt ist (heute zweimal gefehlt).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 11:10 (0.1.30-beta live)
 >
