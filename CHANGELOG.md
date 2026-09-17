@@ -16,6 +16,7 @@ kommt der Changelog immer mit, nie doppelt.*
 - **Schnappschuss vor dem Wiederherstellen nie gemischt (K61):** Scheitert der Schnappschuss mittendrin (z. B. Speicher voll), werden die in diesem Lauf geschriebenen Sicherungskopien zurückgesetzt; das Wiederherstellen bricht wie bisher ab, ohne etwas zu überschreiben.
 ### Barrierefreiheit
 - **Ansagen und ruhige Rückfälle (K64):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
+- **Quellenangaben Taxpunktwert und Nachhaltigkeit (K65):** Der Taxpunktwert-Hinweis sagt nicht mehr «fast überall provisorisch», sondern «in den meisten Kantonen provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone)» — so weit tragen die kantonalen Quellen in den Daten. Die Infomaniak-Quellen im Abschnitt Nachhaltigkeit sind jetzt anklickbare Links (alle 5 Sprachen).
 
 ## [0.1.31-beta] — 2026-09-17
 
