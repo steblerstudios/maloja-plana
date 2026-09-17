@@ -7,7 +7,21 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 02:10 (`main` = `da7c5c3` nach **PR #191**, 0 offene PRs · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187, #188, #191 · 1750 Tests grün, Hauptbundle 61.5 kB von 65)
+**Stand:** 2026-09-17, 11:10 (`main` = `b20cd0b` nach **PR #198**, dazu dieser Doku-PR · **live `index-98d2d140.js` = 0.1.30-beta seit 17.09. 10:55**, Tag `v0.1.30-beta` = `b20cd0b` · gemergt, nicht live: nichts · 1764 Tests grün, Hauptbundle 61.64 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 11:10 (0.1.30-beta live)
+>
+> **Deploy 10:55** von `main` = `b20cd0b` (Hand von Stebler Studios), Tag `v0.1.30-beta` vom Lauf
+> gesetzt (auch auf origin). Per `curl` belegt: `index-98d2d140.js` = lokaler Build, **alle 159
+> Build-Dateien live 200**, altes `index-91c30770.js` → 404, erfundener Name → 404, `0.1.30-beta`
+> im Bundle, Sitemap `lastmod` 2026-09-17. Merkmale von #186–#198 im ausgelieferten Code (Gegenprobe 0).
+> Backup `20260917-105542` = 171 Dateien.
+> **Vor dem Deploy:** Prüf-Batterie 9/9 über `2fcf409..0b467da`, ein Blocker (Version nicht angehoben),
+> behoben in #198 zusammen mit der Löschweg-Frist (4 Prüfer). Gate auf `b20cd0b` erneut grün, Marke geschrieben.
+> Die ⚠️/💡 stehen in der Bau-Liste §15.
+> **Live unverändert aus dem Panel:** HSTS `16000000`, `geolocation=()`, kein `cache-control`, kein CSP-Header
+> → Panel-Durchgang (O20 · HSTS · M15 · O8) weiter bei Stebler Studios, danach PageSpeed neu.
+> **Offen:** M4 Postfach `info@` · Bau-Liste §13–§15 (K49–K66).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 02:10 (PageSpeed-Befund, #191 gemergt, nicht live)
 >
