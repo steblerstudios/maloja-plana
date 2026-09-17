@@ -7,7 +7,17 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 12:15 (`main` = `fe29081` nach **PR #209**, dazu dieser Stand-PR · **live `index-297034b6.js` = 0.1.32-beta seit 17.09. 11:46**, Tag `v0.1.32-beta` = `1437feb` · gemergt, nicht live: nur Doku (#209, dieser PR) · 0 offene Code-PRs · 1815 Tests grün, Hauptbundle 62.62 kB von 65)
+**Stand:** 2026-09-17, 12:50 (`main` = `db75d59` nach **PR #212**, dazu dieser Doku-PR · **live `index-606d23bb.js` = 0.1.33-beta seit 17.09. 12:42**, Tag `v0.1.33-beta` = `db75d59` · gemergt, nicht live: nichts · 0 offene Code-PRs · 1845 Tests grün, Hauptbundle 62.11 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 12:50 (0.1.33-beta live)
+>
+> **Deploy 12:42** aus `db75d59` (#211 + #212), per `curl` belegt: `index-606d23bb.js`, 164/164 Dateien 200,
+> altes Bundle 404, zwei Gegenproben 404, `sw.js` mit Cache `maloja-plana-606d23bb`, Tag auch auf origin,
+> Backup 173 Dateien. Merkmale von K46, K55, K56, K74 im Live-Code.
+> **Inhalt:** K46 Sie-Ansicht durchgehend · K58 Rückfall Deutsch · K55 offline-fähig · K56 Lizenzen ·
+> K57 Doku · K67/K68/K71. Vorab-Prüfung für #212: Sprache, Recht, Qualität, je 0 Blocker (#211 ohne Batterie).
+> **M4 erledigt** (Postfach `info@` funktioniert laut Stebler Studios) → alle 12 MUSS erledigt.
+> **Offen:** Panel-Durchgang · E42, E43 · Bau-Liste §17 (K73, K75–K78) · Gegenlesen K69/K70.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 12:00 (0.1.32-beta live)
 >
