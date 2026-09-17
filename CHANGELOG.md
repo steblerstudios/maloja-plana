@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.31-beta] — 2026-09-17
 
-*K59 (#200). Noch nicht live.*
+*Live seit **17.09.2026, 11:14** (`index-c2f8af36.js`, Tag `v0.1.31-beta` = `672d8af`, per `curl` belegt: 159/159 Build-Dateien 200, altes `index-98d2d140.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-c2f8af36`). Umfasst K59 (#200). Auf malojaplana.ch im Browser geprüft: Nach dem ersten Besuch (Beispiel-Modus) liegen 18 Einträge im Offline-Speicher, darunter `index-c2f8af36.js`, das Stylesheet und die Sprachdateien.*
 
 ### Behoben
 - **Offline nach dem ersten Besuch (K59, #200):** Am 17.09. gemessen: nach dem ersten Besuch blieb die App ohne Netz leer, weil Haupt-Skript, Stylesheet und Sprachdatei geladen waren, bevor der Service Worker die Seite kontrollierte, und nie im Offline-Speicher landeten. Jetzt legt der Service Worker beim Installieren die Dateien der Startseite ab, und die Seite meldet ihm, was sie schon geladen hat (nur eigene Dateien unter `/assets/`). Abgelegte Dateien werden auch bei einem `Vary`-Header gefunden, und die Startseite ersetzt offline nur noch Seitenaufrufe, nicht Schriften oder Skripte. Lokal im Browser gemessen: Server aus, Neuladen → Startseite erscheint.
