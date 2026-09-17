@@ -137,6 +137,8 @@ function dl(t, chapterKey, docKey) {
 // (Markierung in `data[kapitel]._na`, siehe utils/vollstaendigkeit.js).
 // K38: `naMit` = Felder, die beim Markieren mitgehen · `naVon` = hängt an einem anderen
 // Feld und bleibt verdeckt, solange jenes markiert ist (siehe utils/naGruppen.js).
+// K45: `required` zeigt nur den Stern — der Notfallkontakt trägt ihn nicht mehr (er ist
+// markierbar); er zählt weiter zur Grundordnung wie `jobTitle`, «trifft nicht zu» erledigt ihn.
 export function getChapters(t) {
   return [
     {
@@ -348,8 +350,8 @@ export function getChapters(t) {
       description: t('chapters.notfall.description'),
       icon: t('chapters.notfall.icon'),
       fields: [
-        { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', required: true, mvo: true, naOk: true, naMit: ['emergencyPhone'], section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
-        { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', required: true, mvo: true, naVon: 'emergencyContact' },
+        { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', mvo: true, naOk: true, naMit: ['emergencyPhone'], section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
+        { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', mvo: true, naVon: 'emergencyContact' },
         { k: 'bloodType', label: fl(t, 'notfall', 'bloodType'), type: 'select', options: opts(t, 'notfall', 'bloodType'), section: t('sections.notfall.medical'), sectionIntro: si(t, 'notfall', 'medical') },
         { k: 'allergies', label: fl(t, 'notfall', 'allergies'), type: 'textarea' },
         { k: 'medications', label: fl(t, 'notfall', 'medications'), type: 'textarea' },

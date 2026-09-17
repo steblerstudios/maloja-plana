@@ -19,6 +19,14 @@ export const naUmschalten = (d, k) => {
   return l.includes(k) ? l.filter((x) => x !== k) : [...l, k];
 };
 
+// K45: Ein eingetragener Wert hebt «trifft nicht zu» auf — für jedes Feld, ruhig und
+// ohne Meldung. Gibt dasselbe Objekt zurück, wenn nichts zu bereinigen ist.
+export const naBereinigen = (d) => {
+  const l = liste(d);
+  const rest = l.filter((k) => !d[k]);
+  return rest.length === l.length ? d : { ...d, [NA_FELD]: rest };
+};
+
 const pct = (a, b) => (b > 0 ? Math.round((a / b) * 100) : 0);
 
 export const kapitelVollstaendigkeit = (chapter, d) => {
