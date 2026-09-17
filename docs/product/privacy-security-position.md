@@ -26,9 +26,13 @@
 - Für die Nutzung selbst ist keine Serververbindung nötig; Links auf Behörden-Seiten brauchen Internet
 
 ### Analytics
-- **Vercel Speed Insights**: Anonyme Performance-Metriken (Web Vitals)
-- Keine personenbezogenen Daten, keine Cookies, kein User-Tracking
-- Kann durch Nutzer nicht deaktiviert werden (eingebettet im Build)
+- **Keine.** Kein Analytics-, Tracking- oder Performance-Messdienst ist eingebunden.
+- Belege (geprüft 17.09.2026, K57): keine Vercel- oder Speed-Insights-Abhängigkeit in `package.json`
+  und `package-lock.json`, kein Treffer für «vercel»/«speed insights» in `src/` und `index.html`;
+  die CSP in `index.html` erlaubt Verbindungen nur zur eigenen Adresse (`connect-src 'self'`).
+- Hosting: Infomaniak (Schweiz) über `deploy.sh`, nicht Vercel.
+- *Korrigiert 17.09.2026: Hier stand bis dahin «Vercel Speed Insights» — veraltet, das Hosting
+  läuft nicht mehr über Vercel und Speed Insights ist nicht im Build.*
 
 ---
 
@@ -79,7 +83,6 @@
 | Verschlüsselung localStorage/IndexedDB | Mittel | P2 — nach Beta |
 | App-Sperre (PIN/Biometrie) | Hoch | P2 — nach Beta |
 | Backup-Verschlüsselung | Mittel | P2 |
-| Vercel Speed Insights opt-out | Klein | P2 |
 | Automatische Regelwerk-Aktualisierung | Hoch | Nicht geplant — widerspricht offline-first |
 
 ---

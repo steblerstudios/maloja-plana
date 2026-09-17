@@ -15,7 +15,16 @@ shasum -a 256 public/vendor/jsQR.js src/vendor/qrcodejs.js
 | File | Library | Version | License | Source |
 |------|---------|---------|---------|--------|
 | `src/vendor/qrcodejs.js` | QRCode.js | **1.0.0** | MIT | https://github.com/davidshimjs/qrcodejs |
-| `public/vendor/jsQR.js` | jsQR | **unverified** (no version banner in file) | Apache-2.0 | https://github.com/cozmo/jsQR |
+| `public/vendor/jsQR.js` | jsQR | 1.4.0 — kein Versions-Banner in der Datei; SHA-256 byte-gleich mit `jsqr@1.4.0/dist/jsQR.js` (npm, geprüft 17.09.2026, Gegenproben 1.3.1/1.2.0 abweichend) | Apache-2.0 | https://github.com/cozmo/jsQR |
+
+## Lizenztexte in der Auslieferung
+
+Beide Bibliotheken werden mit ihrem Lizenztext ausgeliefert (K56), damit er neben dem
+Code im Build landet (`dist/licenses/`):
+
+- `public/licenses/jsQR-LICENSE.txt` — Apache-2.0, vollständiger Text
+- `public/licenses/QRCode.js-LICENSE.txt` — MIT. Nötig, weil der Build den
+  `//`-Kommentar im Kopf von `src/vendor/qrcodejs.js` beim Verkleinern entfernt.
 
 ## SHA-256 integrity pins
 

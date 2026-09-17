@@ -1163,7 +1163,7 @@ export default {
   },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
-    tagline: 'Your personal Swiss life organizer — 100% private, offline, free.',
+    tagline: 'Your personal Swiss life organizer — 100% private, works offline, free.',
     taglineBenefit: 'Tax calculator, premium subsidies, social assistance, emergency card — no sign-up needed.',
     progress: 'Your progress',
     progressComplete: 'Your life folder is in place. Peace of mind.',
@@ -1912,11 +1912,11 @@ export default {
     },
     faq: {
       q1: 'Where is my data stored?',
-      a1: 'All data stays on your device in browser storage (localStorage and IndexedDB). Nothing is sent to a server. If you clear browser storage, the data is gone — so back it up regularly as a file (Tools → Export).',
+      a1: 'All data stays on your device in browser storage (localStorage and IndexedDB). Maloja does not send your entries to a server; when the page loads, only the host processes technical data (see Privacy). If you clear browser storage, the data is gone — so back it up regularly as a file (Tools → Export).',
       q2: 'Is Maloja Plana free?',
       a2: 'Yes, completely and permanently. No subscription, no hidden costs, no ads. The source code is open source (AGPL-3.0).',
       q3: 'Does the app work offline?',
-      a3: 'Yes, after the first load — thanks to the Service Worker, as a rule in the sections that have been opened at least once. No data is ever sent over the network.',
+      a3: 'Yes, after the first load — thanks to the Service Worker, as a rule in the sections that have been opened at least once. Maloja Plana itself does not send your entries over the network; they only reach another device if you export or send them yourself.',
       q4: 'Are the calculations legally binding?',
       a4: 'No. All calculators (taxes, premium subsidy, health insurance, social assistance) are orientation tools based on public data. For binding information, contact the responsible authority or counselling centre.',
       q5: 'Can I export my data?',
@@ -3754,7 +3754,7 @@ export default {
   },
 
   beta: {
-    intro: 'Your calm overview of life in Switzerland — taxes, insurance, documents. 100% private, offline, free.',
+    intro: 'Your calm overview of life in Switzerland — taxes, insurance, documents. 100% private, works offline, free.',
     gateMessage: 'This app is in closed beta. Please enter the access code.',
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
@@ -3883,7 +3883,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — your Swiss life organizer: taxes, social assistance, insurance',
-    description: 'Maloja Plana — your Swiss life organizer. Tax calculator, social assistance, premium reduction, emergency card — 100% private, offline, free.',
+    description: 'Maloja Plana — your Swiss life organizer. Tax calculator, social assistance, premium reduction, emergency card — 100% private, works offline, free.',
   },
   obstgarten: {
     title: 'My orchard',
@@ -4436,13 +4436,13 @@ export default {
     claim: "Understand what you're entitled to. Sort out what's next.",
     lead: "Your calm overview of life in Switzerland.",
     point1: "100% private — everything stays on your device",
-    point2: "Free & offline, no account",
+    point2: "Free & works offline, no account",
     point3: "Available in several languages",
     scan: "Scan & get started:",
     foot: "Local, private, free · by Stebler Studios",
     print: "Print / save as PDF",
     share: "Share link",
-    shareText: "Maloja Plana — your calm overview of life in Switzerland. Private, offline, free.",
+    shareText: "Maloja Plana — your calm overview of life in Switzerland. Private, works offline, free.",
     copied: "Link copied",
     langHint: "The flyer is created in the currently selected language. For another language, switch the language at the top first.",
   },

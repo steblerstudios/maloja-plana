@@ -21,6 +21,8 @@
 | qrcodejs | src/vendor/qrcodejs.js | MIT | QR-Code-Generierung (Organspende, KK-Scanner) |
 | jsQR | public/vendor/jsQR.js | Apache-2.0 | QR-Code-Scanning |
 
+Lizenztexte der beiden Bibliotheken werden mit ausgeliefert: `public/licenses/jsQR-LICENSE.txt` (Apache-2.0) und `public/licenses/QRCode.js-LICENSE.txt` (MIT), im Build unter `/licenses/`.
+
 ## Dev Dependencies
 
 | Paket | Version | Lizenz | Zweck |

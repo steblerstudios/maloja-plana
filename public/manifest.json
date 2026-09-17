@@ -1,7 +1,7 @@
 {
   "name": "Maloja Plana",
   "short_name": "Maloja Plana",
-  "description": "Alles Wichtige an einem Ort. Your Swiss life organizer — 100% private, offline, free.",
+  "description": "Alles Wichtige an einem Ort. Your Swiss life organizer — 100% private, works offline, free.",
   "id": "/",
   "start_url": ".",
   "display": "standalone",

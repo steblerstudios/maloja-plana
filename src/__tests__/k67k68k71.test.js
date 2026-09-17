@@ -73,7 +73,7 @@ describe('K71 · Rückfall aus der geladenen Sprache', () => {
 
   it('Speicher gesperrt: trotzdem ein Übersetzer', () => {
     vi.stubGlobal('localStorage', { getItem: () => { throw new Error('gesperrt'); } });
-    expect(rueckfallT(FIX)('chapter.save')).toBe('Save');
+    expect(rueckfallT(FIX)('chapter.save')).toBe('Speichern');
   });
 
   it('nichts geladen: leerer Text, nie ein Schlüssel', () => {
@@ -87,9 +87,9 @@ describe('K71 · Rückfall aus der geladenen Sprache', () => {
     expect(t('n', { n: 3 })).toBe('in 3 Tagen');
   });
 
-  it('gespeicherte Sprache nicht geladen: Rückfall-Sprache', () => {
+  it('gespeicherte Sprache nicht geladen: Rückfall-Sprache (K58: de)', () => {
     localStorage.setItem('or5_lang', 'fr');
-    expect(rueckfallT(FIX)('chapter.save')).toBe('Save');
+    expect(rueckfallT(FIX)('chapter.save')).toBe('Speichern');
   });
 
   it('Anrede wie gespeichert, Standard Sie', () => {

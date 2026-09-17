@@ -1,6 +1,6 @@
 # Nachhaltigkeits-Statement — Maloja Plana
 
-> Stand: Juni 2026
+> Stand: Juni 2026, nachgeführt 17.09.2026
 
 ## Architektur als Klimaschutz
 
@@ -11,7 +11,7 @@ Maloja Plana ist so gebaut, dass sie möglichst wenig Energie verbraucht:
 | Massnahme | Effekt |
 |---|---|
 | **Kein Backend / kein Server** | Null laufende Serverprozesse, kein Dauerbetrieb |
-| **Statische Auslieferung (CDN)** | Seite wird einmal gebaut, dann nur noch Dateien ausgeliefert |
+| **Statische Auslieferung** | Seite wird einmal gebaut, dann nur noch Dateien ausgeliefert |
 | **Local-first Architektur** | Daten bleiben lokal — keine Datenbank-Abfragen, keine API-Calls |
 | **Keine Tracker / Analytics** | Kein Google Analytics, kein Pixel, kein Hotjar — null externe Requests |
 | **Minimale Dependencies** | Kleine Bundle-Grösse, weniger Code = weniger Übertragung |
@@ -25,7 +25,7 @@ Maloja Plana wird über die Domain malojaplana.ch bei Infomaniak Network SA (Gen
 - ausschliesslich zertifizierter erneuerbarer Strom (Wasserkraft und weitere lokale erneuerbare Quellen)
 - ISO 14001 zertifiziert (Umweltmanagement), nach Angaben des Anbieters seit 2015
 - CO₂-Kompensation über Projekte der Stiftung myclimate
-- Daten bleiben in der Schweiz (nDSG-konform)
+- Die Eingaben in der App bleiben lokal auf dem Gerät der Person (localStorage/IndexedDB); der Hoster liefert nur die statischen Dateien der Website aus (`docs/legal/datenschutzerklaerung-ndsg.md` §5–6)
 
 *Quellen (Angaben von Infomaniak, per `curl` gelesen am 17.09.2026):*
 - <https://www.infomaniak.com/en/about> — «its own data centers in Switzerland»
@@ -34,7 +34,9 @@ Maloja Plana wird über die Domain malojaplana.ch bei Infomaniak Network SA (Gen
 - <https://www.infomaniak.com/en/ecology/certificates-rewards> — Kompensation über myclimate
 
 *Korrigiert 17.09.2026 (K47): «Winterthur» war nicht belegt und ist entfernt; «100 % Schweizer
-Wasserkraft» stand enger als die Quelle, die auch weitere lokale erneuerbare Quellen nennt.*
+Wasserkraft» stand enger als die Quelle, die auch weitere lokale erneuerbare Quellen nennt.
+Korrigiert 17.09.2026 (K57): «Daten bleiben in der Schweiz (nDSG-konform)» war ohne Beleg; eine
+Konformitätsaussage ist eine Rechtsbeurteilung und steht hier nicht mehr.*
 
 ### Digitale Suffizienz
 
@@ -42,14 +44,14 @@ Wir folgen dem Prinzip der **digitalen Suffizienz**: Nur bauen, was gebraucht wi
 
 ### Zahlen
 
-- Bundle-Grösse: ~350 KB (komprimiert)
-- Externe Requests beim Laden: 0 (nach Service Worker Cache)
+- Beim ersten Laden (gzip, gemessen 17.09.2026, Version 0.1.33-beta): Haupt-Skript 62 kB, React 45 kB, Stile 2 kB; alle Teile zusammen rund 1 MB — Sprachen, Prämien- und Gemeindedaten werden nur bei Bedarf geladen
+- Externe Requests beim Laden: 0 (die CSP erlaubt nur die eigene Adresse)
 - Server-Prozesse im Dauerbetrieb: 0
 - Datenbank-Queries pro Nutzung: 0
 
 ## Nächste Schritte
 
-- [ ] Custom Domain über Infomaniak (Schweizer Hosting)
+- [x] Eigene Domain malojaplana.ch bei Infomaniak
 - [ ] Website Carbon Badge einbinden (websitecarbon.com)
 - [ ] Lighthouse Performance Score > 95 halten
-- [ ] Green Web Foundation Verifizierung
+- [ ] Green Web Foundation: Stand klären (die App verlinkt den Green-Web-Check bereits, `src/LegalView.jsx`)

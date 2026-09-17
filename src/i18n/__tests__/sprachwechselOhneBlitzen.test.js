@@ -61,12 +61,13 @@ describe('K43 Sprachwechsel ohne Blitzen', () => {
   });
 
   it('schaltet erst um, wenn auch die Rückfall-Sprache geladen ist', async () => {
-    const s = aufbau({ geladen: ['de'], angezeigt: 'de' });
+    // Rückfall-Sprache ist seit K58 Deutsch.
+    const s = aufbau({ geladen: ['en'], angezeigt: 'en' });
     const laeuft = s.request('fr');
     s.offen.fr.resolve(TEXTE.fr);
     await Promise.resolve();
-    expect(s.zustand.lang).toBe('de');
-    s.offen.en.resolve(TEXTE.en);
+    expect(s.zustand.lang).toBe('en');
+    s.offen.de.resolve(TEXTE.de);
     await laeuft;
     expect(s.zustand.lang).toBe('fr');
   });

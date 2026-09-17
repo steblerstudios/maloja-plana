@@ -209,7 +209,7 @@ Stand: 2026-06-22
 ### 6.2 System
 - Eigene Implementation (kein i18n-Framework)
 - `I18nProvider` → `useT()` → `t(key, params)`
-- Fallback-Kette: Gewählte Sprache → EN → Key
+- Fallback-Kette: Gewählte Sprache → DE → Key (bis 17.09.2026: → EN; Entscheid K58)
 - Auto-Detection via Browser-Locale (de-CH → de)
 - Speicherung: `or5_lang` in localStorage
 
