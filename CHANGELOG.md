@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.30-beta] — 2026-09-17
 
-*R4 vom 17.09.2026 früh (#186–#188), #191 und die fünfte Runde vom Vormittag (#194–#197, dieser PR). Noch nicht live.*
+*Live seit **17.09.2026, 10:55** (`index-98d2d140.js`, Tag `v0.1.30-beta` = `b20cd0b`, per `curl` belegt: alle 159 Build-Dateien 200, altes Bundle `index-91c30770.js` 404, erfundener Name 404, Sitemap `lastmod` 2026-09-17, Backup `20260917-105542` mit 171 Dateien). Umfasst R4 vom 17.09. früh (#186–#188), #191 und die fünfte Runde vom Vormittag (#194–#198).*
 
 ### Sicherheit
 - **Meta-CSP ohne `frame-ancestors` (#191):** die Direktive wirkt nur als HTTP-Header und löste im Meta-Tag einen Konsolenfehler aus (PageSpeed Best Practices 96). Clickjacking-Schutz unverändert über `X-Frame-Options`.
@@ -26,15 +26,15 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ### Behoben
 - **Sprachwechsel ohne rohe Schlüssel (K43, #194):** Die App wechselt die Sprache erst, wenn die neue geladen ist; bis dahin bleibt die bisherige stehen. Bei einem Ladefehler bleibt die bisherige Sprache.
-- **Gesperrte Knöpfe lesbar (K53, #195):** Kontrast der gesperrten Export-, Entschlüsseln- und Format-Knöpfe von 2.4–3.4:1 auf mindestens 4.8:1, dazu ein gestrichelter Rand. Druckfarben des Dossiers an einer Stelle gesammelt (Ausdruck unverändert); die Druckzeile «Annahmen» der Finanzübersicht ist nicht mehr blassgrau, sondern in `#6B6560` gesetzt (dieser PR).
-- **Löschweg bei mehreren offenen Tabs (dieser PR):** Wird der löschende Tab mitten im Löschen geschlossen, lädt ein anderer offener Tab nach 45 Sekunden selbst neu, statt still nichts mehr zu speichern.
+- **Gesperrte Knöpfe lesbar (K53, #195):** Kontrast der gesperrten Export-, Entschlüsseln- und Format-Knöpfe von 2.4–3.4:1 auf mindestens 4.8:1, dazu ein gestrichelter Rand. Druckfarben des Dossiers an einer Stelle gesammelt (Ausdruck unverändert); die Druckzeile «Annahmen» der Finanzübersicht ist nicht mehr blassgrau, sondern in `#6B6560` gesetzt (#198).
+- **Löschweg bei mehreren offenen Tabs (#198):** Wird der löschende Tab mitten im Löschen geschlossen, lädt ein anderer offener Tab nach 45 Sekunden selbst neu, statt still nichts mehr zu speichern.
 - **Steuer-Annahmen (R4, #187):** 13. Monatslohn wird mitgerechnet (bei «ja»; sonst Hinweis) · keine Schätzung aus dem Nettolohn für Rentner und Selbständige · verheiratet ohne Angabe zum Partnereinkommen → keine Zahl, bei ausdrücklich 0 «Alleinverdiener-Ehepaar» · Steuerrechner, Finanzübersicht und Dossier lesen dieselbe Regel für das eingetragene steuerbare Einkommen · Tarifvergleich mit dem passenden steuerbaren Einkommen je Zivilstand.
 - **Hinweise und Robustheit (R4, #186):** «Kantonal nicht bestätigt» auch bei Vermögen unter dem Freibetrag (Sozialhilfe, Schnellcheck, Dashboard) · Taxpunktwert-Stand je Kanton aus den Daten · Löschweg benachrichtigt andere offene Tabs · Wiederherstellen überschreibt nichts, wenn der Schnappschuss scheitert · Gemeinde ohne geratene Web-Adresse · AG-Links auf die neue Adresse · `CANTONAL_DATA_VERSION` entfernt.
 
 ### Dokumentation
 - **Lizenzen und Aussagen (K47, #196):** Lizenzliste um Atkinson Hyperlegible, Capacitor (nur iOS-Hülle) und jsQR ergänzt · «gemeinnützig» gestrichen · Nachhaltigkeitsangaben zu Infomaniak auf deren eigenen Wortlaut gekürzt, mit Quellenzeile · «vollständig offline» präzisiert (5 Sprachen).
 - **Quelle der Berufsauslagen-Pauschale (K53, #195):** SR 642.118.1 Art. 7 im Code vermerkt; die Kürzung bei Teilzeit fehlt noch (K54).
-- **K52 geklärt (#197):** Kein KVG-Artikel regelt provisorisch festgesetzte Taxpunktwerte; auch das Freigabe-Register nennt keinen mehr (dieser PR). Bau-Liste §1 und §14 nachgeführt (#193, #197).
+- **K52 geklärt (#197):** Kein KVG-Artikel regelt provisorisch festgesetzte Taxpunktwerte; auch das Freigabe-Register nennt keinen mehr (#198). Bau-Liste §1 und §14 nachgeführt (#193, #197).
 
 ## [0.1.29-beta] — 2026-09-16
 
