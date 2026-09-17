@@ -1691,7 +1691,7 @@ export default {
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',
-      a1: { sie: 'Tut las datas restan sin Voss apparat en la memoria dal navigatur (localStorage ed IndexedDB). Nagut vegn tramess ad in server. Sche Vus stizzais la memoria dal navigatur, èn las datas idas — segirai perquai regularmain Vossas datas sco datoteca (Utensils → Export).', du: 'Tut las datas restan sin tes apparat en la memoria dal navigatur (localStorage ed IndexedDB). Nagut vegn tramess ad in server. Sche ti stizzas la memoria dal navigatur, èn las datas idas — segirescha perquai regularmain tias datas sco datoteca (Utensils → Export).' },
+      a1: { sie: 'Tut las datas restan sin Voss apparat en la memoria dal navigatur (localStorage ed IndexedDB). Maloja na trametta betg Vossas endataziuns ad in server; cun chargiar la pagina elavura mo il hoster datas tecnicas (vesair protecziun da datas). Sche Vus stizzais la memoria dal navigatur, èn las datas idas — segirai perquai regularmain Vossas datas sco datoteca (Utensils → Export).', du: 'Tut las datas restan sin tes apparat en la memoria dal navigatur (localStorage ed IndexedDB). Maloja na trametta betg tias endataziuns ad in server; cun chargiar la pagina elavura mo il hoster datas tecnicas (vesair protecziun da datas). Sche ti stizzas la memoria dal navigatur, èn las datas idas — segirescha perquai regularmain tias datas sco datoteca (Utensils → Export).' },
       q2: 'È Maloja Plana gratuita?',
       a2: 'Gea, cumplettamain e permanentamain. Nagin abunament, nagins custs zuppads, nagina reclama. Il code font è open source (AGPL-3.0).',
       q3: 'Funcziuna l\'app senza internet?',

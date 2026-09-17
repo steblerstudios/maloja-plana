@@ -604,7 +604,7 @@ export default {
   },
   tresorLock: {
     title: { sie: 'Ihr Tresor ist gesperrt', du: 'Dein Tresor ist gesperrt' },
-    intro: { sie: 'Geben Sie Ihre Passphrase ein, um Ihre Unterlagen zu entsperren. Die Unterlagen werden nur auf diesem Gerät entschlüsselt.', du: 'Gib deine Passphrase ein, um deine Unterlagen zu entsperren. Sie werden nur auf diesem Gerät entschlüsselt.' },
+    intro: { sie: 'Geben Sie Ihre Passphrase ein, um Ihre Unterlagen zu entsperren. Die Unterlagen werden nur auf diesem Gerät entschlüsselt.', du: 'Gib deine Passphrase ein, um deine Unterlagen zu entsperren. Die Unterlagen werden nur auf diesem Gerät entschlüsselt.' },
     passphraseLabel: 'Passphrase',
     passphrasePlaceholder: { sie: 'Ihre Passphrase', du: 'Deine Passphrase' },
     showPassphrase: 'Anzeigen',
@@ -1915,7 +1915,7 @@ export default {
     },
     faq: {
       q1: 'Wo werden meine Daten gespeichert?',
-      a1: { sie: 'Alle Daten bleiben auf Ihrem Gerät im Browser-Speicher (localStorage und IndexedDB). Nichts wird an einen Server gesendet. Wenn Sie den Browser-Speicher löschen, sind die Daten weg — sichern Sie sie deshalb regelmässig als Datei (Werkzeuge → Export).', du: 'Alle Daten bleiben auf Deinem Gerät im Browser-Speicher (localStorage und IndexedDB). Nichts wird an einen Server gesendet. Wenn Du den Browser-Speicher löschst, sind die Daten weg — sichere sie deshalb regelmässig als Datei (Werkzeuge → Export).' },
+      a1: { sie: 'Alle Daten bleiben auf Ihrem Gerät im Browser-Speicher (localStorage und IndexedDB). Maloja sendet Ihre Eingaben nicht an einen Server; beim Laden der Seite verarbeitet nur der Hoster technische Daten (siehe Datenschutz). Wenn Sie den Browser-Speicher löschen, sind die Daten weg — sichern Sie sie deshalb regelmässig als Datei (Werkzeuge → Export).', du: 'Alle Daten bleiben auf deinem Gerät im Browser-Speicher (localStorage und IndexedDB). Maloja sendet deine Eingaben nicht an einen Server; beim Laden der Seite verarbeitet nur der Hoster technische Daten (siehe Datenschutz). Wenn du den Browser-Speicher löschst, sind die Daten weg — sichere sie deshalb regelmässig als Datei (Werkzeuge → Export).' },
       q2: 'Ist Maloja Plana kostenlos?',
       a2: 'Ja, vollständig und dauerhaft. Kein Abo, keine versteckten Kosten, keine Werbung. Der Quellcode ist Open Source (AGPL-3.0).',
       q3: 'Funktioniert die App ohne Internet?',

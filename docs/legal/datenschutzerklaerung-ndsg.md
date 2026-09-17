@@ -130,7 +130,7 @@ Du kannst Deine Daten jederzeit exportieren: als maschinenlesbare JSON-Datei (Kl
 **Verschlüsselung (Bau-Liste E10):** Unter «Sicherung» steht der verschlüsselte Weg zuerst und ist als Voreinstellung benannt (`src/ZipExport.jsx` Z. 339–358); neue verschlüsselte Sicherungen verlangen ein Passwort von mindestens 12 Zeichen (`src/utils/backupCrypto.js` Z. 107 und 316–320). Die Klartext-Sicherung bleibt wählbar, steht darunter und trägt einen Hinweis (`ZipExport.jsx` Z. 360–367). JSON, CSV und `MANIFEST.txt` sind immer unverschlüsselt. Ältere Sicherungen mit kürzerem Passwort lassen sich weiter öffnen. Die App-Texte `legal.privacy.backup1` und `legal.faq.a5`/`a7` sagen seit der Bau-Liste K39 dasselbe; bis dahin stand dort «auf Wunsch verschlüsselt».
 
 ### 7.4 Weitere Rechte
-Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting und zu Performance-Metriken wende Dich an info@malojaplana.ch.
+Da die Betreiberin **keine personenbezogenen Daten** auf eigenen Servern speichert, entfallen die typischen Betroffenenrechte gegenüber der Betreiberin. Für Fragen zum Hosting wende Dich an info@malojaplana.ch.
 
 ---
 

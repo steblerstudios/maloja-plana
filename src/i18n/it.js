@@ -1912,7 +1912,7 @@ export default {
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',
-      a1: { sie: 'Tutti i dati restano sul Suo dispositivo nella memoria del browser (localStorage e IndexedDB). Nulla viene inviato a un server. Se cancella la memoria del browser, i dati vengono persi — li salvi quindi regolarmente in un file (Strumenti → Esportazione).', du: 'Tutti i dati restano sul tuo dispositivo nella memoria del browser (localStorage e IndexedDB). Nulla viene inviato a un server. Se cancelli la memoria del browser, i dati vengono persi — salvali quindi regolarmente in un file (Strumenti → Esportazione).' },
+      a1: { sie: 'Tutti i dati restano sul Suo dispositivo nella memoria del browser (localStorage e IndexedDB). Maloja non invia i Suoi dati inseriti a un server; al caricamento della pagina solo l\'hosting tratta dati tecnici (vedi Protezione dei dati). Se cancella la memoria del browser, i dati vengono persi — li salvi quindi regolarmente in un file (Strumenti → Esportazione).', du: 'Tutti i dati restano sul tuo dispositivo nella memoria del browser (localStorage e IndexedDB). Maloja non invia i tuoi dati inseriti a un server; al caricamento della pagina solo l\'hosting tratta dati tecnici (vedi Protezione dei dati). Se cancelli la memoria del browser, i dati vengono persi — salvali quindi regolarmente in un file (Strumenti → Esportazione).' },
       q2: 'Maloja Plana è gratuito?',
       a2: 'Sì, completamente e permanentemente. Nessun abbonamento, nessun costo nascosto, nessuna pubblicità. Il codice sorgente è open source (AGPL-3.0).',
       q3: 'L\'app funziona offline?',

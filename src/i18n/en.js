@@ -1912,7 +1912,7 @@ export default {
     },
     faq: {
       q1: 'Where is my data stored?',
-      a1: 'All data stays on your device in browser storage (localStorage and IndexedDB). Nothing is sent to a server. If you clear browser storage, the data is gone — so back it up regularly as a file (Tools → Export).',
+      a1: 'All data stays on your device in browser storage (localStorage and IndexedDB). Maloja does not send your entries to a server; when the page loads, only the host processes technical data (see Privacy). If you clear browser storage, the data is gone — so back it up regularly as a file (Tools → Export).',
       q2: 'Is Maloja Plana free?',
       a2: 'Yes, completely and permanently. No subscription, no hidden costs, no ads. The source code is open source (AGPL-3.0).',
       q3: 'Does the app work offline?',

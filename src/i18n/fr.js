@@ -1911,7 +1911,7 @@ export default {
     },
     faq: {
       q1: 'Où sont stockées mes données ?',
-      a1: { sie: "Toutes les données restent sur votre appareil dans le stockage du navigateur (localStorage et IndexedDB). Rien n'est envoyé à un serveur. Si vous videz le stockage, les données sont perdues — sauvegardez-les donc régulièrement dans un fichier (Outils → Export).", du: "Toutes les données restent sur ton appareil dans le stockage du navigateur (localStorage et IndexedDB). Rien n'est envoyé à un serveur. Si tu vides le stockage, les données sont perdues — sauvegarde-les donc régulièrement dans un fichier (Outils → Export)." },
+      a1: { sie: "Toutes les données restent sur votre appareil dans le stockage du navigateur (localStorage et IndexedDB). Maloja n'envoie pas vos saisies à un serveur ; lors du chargement de la page, seul l'hébergeur traite des données techniques (voir Protection des données). Si vous videz le stockage, les données sont perdues — sauvegardez-les donc régulièrement dans un fichier (Outils → Export).", du: "Toutes les données restent sur ton appareil dans le stockage du navigateur (localStorage et IndexedDB). Maloja n'envoie pas tes saisies à un serveur ; lors du chargement de la page, seul l'hébergeur traite des données techniques (voir Protection des données). Si tu vides le stockage, les données sont perdues — sauvegarde-les donc régulièrement dans un fichier (Outils → Export)." },
       q2: 'Maloja Plana est-il gratuit ?',
       a2: 'Oui, entièrement et durablement. Pas d\'abonnement, pas de coûts cachés, pas de publicité. Le code source est open source (AGPL-3.0).',
       q3: 'L\'application fonctionne-t-elle hors ligne ?',

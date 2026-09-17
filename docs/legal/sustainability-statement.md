@@ -1,6 +1,6 @@
 # Nachhaltigkeits-Statement — Maloja Plana
 
-> Stand: Juni 2026
+> Stand: Juni 2026, nachgeführt 17.09.2026
 
 ## Architektur als Klimaschutz
 
@@ -11,7 +11,7 @@ Maloja Plana ist so gebaut, dass sie möglichst wenig Energie verbraucht:
 | Massnahme | Effekt |
 |---|---|
 | **Kein Backend / kein Server** | Null laufende Serverprozesse, kein Dauerbetrieb |
-| **Statische Auslieferung (CDN)** | Seite wird einmal gebaut, dann nur noch Dateien ausgeliefert |
+| **Statische Auslieferung** | Seite wird einmal gebaut, dann nur noch Dateien ausgeliefert |
 | **Local-first Architektur** | Daten bleiben lokal — keine Datenbank-Abfragen, keine API-Calls |
 | **Keine Tracker / Analytics** | Kein Google Analytics, kein Pixel, kein Hotjar — null externe Requests |
 | **Minimale Dependencies** | Kleine Bundle-Grösse, weniger Code = weniger Übertragung |
@@ -44,14 +44,14 @@ Wir folgen dem Prinzip der **digitalen Suffizienz**: Nur bauen, was gebraucht wi
 
 ### Zahlen
 
-- Bundle-Grösse: ~350 KB (komprimiert)
-- Externe Requests beim Laden: 0 (nach Service Worker Cache)
+- Beim ersten Laden (gzip, gemessen 17.09.2026, Version 0.1.33-beta): Haupt-Skript 62 kB, React 45 kB, Stile 2 kB; alle Teile zusammen rund 1 MB — Sprachen, Prämien- und Gemeindedaten werden nur bei Bedarf geladen
+- Externe Requests beim Laden: 0 (die CSP erlaubt nur die eigene Adresse)
 - Server-Prozesse im Dauerbetrieb: 0
 - Datenbank-Queries pro Nutzung: 0
 
 ## Nächste Schritte
 
-- [ ] Custom Domain über Infomaniak (Schweizer Hosting)
+- [x] Eigene Domain malojaplana.ch bei Infomaniak
 - [ ] Website Carbon Badge einbinden (websitecarbon.com)
 - [ ] Lighthouse Performance Score > 95 halten
-- [ ] Green Web Foundation Verifizierung
+- [ ] Green Web Foundation: Stand klären (die App verlinkt den Green-Web-Check bereits, `src/LegalView.jsx`)
