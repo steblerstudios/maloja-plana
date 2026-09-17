@@ -11,7 +11,7 @@ Stand: 2026-06-22
 
 ### 1.1 Name & Herkunft
 - **Produktname:** Maloja Plana (ehemals "Ordnung & Ruhe v5")
-- **Technischer Name:** ordnung-ruhe-neu (package.json, Vercel, Git)
+- **Technischer Name:** ordnung-ruhe-neu (früher in package.json, Vercel, Git; heute `maloja-plana` in `package.json`)
 - **Name Easter Eggs:**
   - Maloja → Malojapass (Alpenpass GR, Verbindung)
   - Pass → Schweizer Pass + Bergpass
@@ -95,7 +95,7 @@ Stand: 2026-06-22
 - **Styling:** 100% Inline-Styles via `palette` Prop-Objekte + CSS Custom Properties (tokens.css)
 - **Routing:** Hash-Router (#/view oder #/chapter/N)
 - **Persistenz:** localStorage (`or5_data`, `or5_docs`, `or5_reminders`) + IndexedDB
-- **Deployment:** Vercel (statisches Hosting)
+- **Deployment:** Infomaniak (statisches Hosting, Upload per `deploy.sh`; früher Vercel)
 
 ### 4.2 Unveränderliche Bezeichner
 | Bezeichner | Typ | Grund |

@@ -367,3 +367,28 @@ describe('K46 · deutsche Texte duzen nur in der du-Fassung', () => {
     expect('Durchschnitt, Dirigent, Direktlink').not.toMatch(DU);
   });
 });
+
+// K73 (17.09.2026): Ist der deutsche Text ein Einheitstext, darf der italienische
+// Einheitstext nicht duzen — er erschiene sonst geduzt in der Sie-Ansicht.
+describe('K73 · italienische Einheitstexte duzen nicht', () => {
+  const TU = /(?<!\p{L})(tu|tuo|tua|tuoi|tue|ti)(?!\p{L})/u;
+  const flach = (o, p = '', out = {}) => {
+    if (typeof o === 'string' || isAnredeObject(o)) { out[p] = o; return out; }
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return out;
+    for (const k of Object.keys(o)) flach(o[k], p ? `${p}.${k}` : k, out);
+    return out;
+  };
+  const D = flach(de);
+  const I = flach(itTranslations);
+
+  it('kein tu/tuo/ti in it, wo de keine Anrede-Varianten hat', () => {
+    const treffer = Object.keys(D).filter((k) => typeof D[k] === 'string' && typeof I[k] === 'string' && TU.test(I[k]));
+    expect(treffer, `it.js duzt in der Sie-Ansicht: ${treffer.slice(0, 20).join(', ')}`).toEqual([]);
+  });
+
+  it('Gegenprobe: das Muster erkennt die Du-Form, nicht die Lei-Form', () => {
+    expect('Riverifica i tuoi diritti').toMatch(TU);
+    expect('I Suoi dati appartengono a Lei.').not.toMatch(TU);
+    expect('Tutti i dati restano sul dispositivo').not.toMatch(TU);
+  });
+});

@@ -852,7 +852,7 @@ export default {
     todesfall: 'Todesfall im Umfeld',
     arztkoffer: 'Gesundheit',
     sub: {
-      arztkoffer: 'Ihre Gesundheits-Werkzeuge im Arztkoffer',
+      arztkoffer: { sie: 'Ihre Gesundheits-Werkzeuge im Arztkoffer', du: 'Deine Gesundheits-Werkzeuge im Arztkoffer' },
       kkerst: 'Neu in der Schweiz versichern',
       pensionierung: 'AHV, Pensionskasse, 3. Säule',
       betreibung: 'Zahlungsbefehl — ruhig reagieren',
@@ -1024,12 +1024,12 @@ export default {
   },
   settingsDrawer: {
     accountTitle: 'Konto & Daten',
-    accountNote: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.',
+    accountNote: { sie: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Ihre Daten gehören Ihnen.', du: 'Alles bleibt lokal auf diesem Gerät — kein Konto, kein Login nötig. Deine Daten gehören dir.' },
     backup: 'Backup & Export',
   },
   arztkoffer: {
     title: 'Arztkoffer',
-    subtitle: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.',
+    subtitle: { sie: 'Ihre Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.', du: 'Deine Gesundheits-Themen an einem Ort — Krankenkasse, Leistungen, Notfall und was noch dazukommt.' },
     back: 'Zurück zur Übersicht',
     inVorbereitung: 'In Vorbereitung',
     inVorbereitungHint: 'Bald im Koffer',

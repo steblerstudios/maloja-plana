@@ -31,7 +31,7 @@ Maloja Plana is **not** an AI chatbot, autonomous agent wrapper, or SaaS growth 
 | Product name | Maloja Plana |
 | Architecture | Modular, bounded, local-first |
 | Runtime model | Deterministic, event-driven, governance-gated |
-| Deployment | Static SPA (Vercel), offline-capable via SW |
+| Deployment | Static SPA (Infomaniak, Upload per `deploy.sh`; früher Vercel), offline-fähig via SW nach dem ersten Besuch |
 | Data model | localStorage + IndexedDB, no server |
 | Dependencies | React 18 + Vite 4, zero runtime deps |
 

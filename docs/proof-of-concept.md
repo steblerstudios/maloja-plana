@@ -28,7 +28,7 @@ ohne Wertung, ohne Druck:
 
 - **Live & offline** nutzbar (PWA), ohne Anmeldung
 - **100 % lokal** — Daten bleiben auf dem Gerät, kein Server, **keine Cookies, kein Tracking**
-- **nDSG-konform**, Open Source (AGPL-3.0), **grün gehostet** (Infomaniak, CH)
+- **local-first** (Eingaben bleiben auf dem Gerät; nDSG-Konformität juristisch nicht geprüft, Bau-Liste K48), Open Source (AGPL-3.0), **grün gehostet** (Infomaniak, CH)
 - **Barrierearm**: Vorlesen, bessere Lesbarkeit, Schwarzweiss-Modus, 5 Sprachen (DE/EN/FR/IT/RM; weitere geplant)
 - Sorgfältige CH-Genauigkeit, durch automatisierte Tests abgesichert
 
