@@ -11,6 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.35-beta] — 2026-09-17
+
+*Noch nicht live. Umfasst #219, #220, #221 (Entscheid-Runde 17.09.2026 nachmittags).*
+
+### Neu
+- **K58 · Hinweis beim Sprachwechsel:** Lädt eine Sprache länger als 300 ms, erscheint leise «Sprache wird geladen …» (angesagt, ohne Layoutverschiebung). Scheitert das Laden, zeigt die App Deutsch und sagt es, mit «Erneut versuchen». Die Meldung hängt nicht an der fehlenden Sprachdatei (de/fr/it/en fest im Hauptbundle, rm fällt auf de zurück). Der Rückfall wird nicht gespeichert.
+- **E41 · Quellen der Taxpunktwerte sichtbar:** Im Tab «Rechnung» der KVG-Leistungen steht je Kanton ein Quellen-Link (17 Kantone mit belegter Quelle; nur Adressen, die schon als Beleg in den Daten standen). Kantone ohne belegten Wert bekommen keinen Link.
+
+### Geändert
+- **E40 · Behörden-Export mit Kennung und Sprache:** Die Erläuterungen zur Steuerschätzung (`taxableIncomeBasis`, `cantonalBasis`, `assumptions`) tragen jetzt eine feste Kennung (`code`) und den Text in der gewählten App-Sprache (`text`); `textLanguage` steht oben. Dateiversion 1.0 → 1.1.
+- **K45 · Formulare ruhiger:** «Arbeitsbeginn» und «Anstellung seit» belegen sich gegenseitig vor (nur leere Felder, nur vollständige Daten); das Pflicht-Sternchen beim Notfallkontakt ist weg; ein eingetragener Wert hebt «trifft nicht zu» auf.
+
+### Behoben
+- **K62.2 · Partnereinkommen 0 sichtbar:** Eine gespeicherte 0 erschien als leeres Feld, zählte aber als Antwort. Jetzt steht «0» da (auch im Vorsorgerechner).
+- **K62.4 · Steuerrechner ohne Widerspruch:** Bei «verheiratet» mit direkt eingetragenem steuerbarem Einkommen und fehlendem Partnereinkommen nennt der Kantonstext nur noch die fehlende Kantonszahl (statt «noch keine Steuerschätzung» unter einer angezeigten Bundessteuer). Weicht im Probiermodus der Zivilstand vom Profil ab, erscheint keine Zahl mehr, dafür ein Hinweis. Gleiche Regel in Steuerrechner, Finanzübersicht und Dossier.
+- **Befunde der Vorab-Prüfung:** Nach «Erneut versuchen» oder «Schliessen» springt der Fokus auf die Sprachwahl (am Handy auf den Hauptbereich) statt verloren zu gehen · Quellen-Links 44 px hoch · der Hinweis zum eingetragenen steuerbaren Einkommen sagt jetzt, dass bei Verheirateten der gemeinsame Wert beider Ehegatten gemeint ist (5 Sprachen).
+
 ## [0.1.34-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 13:25** (`index-e5ece27b.js`, Tag `v0.1.34-beta` = `a414f86`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-606d23bb.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-e5ece27b`, Backup `20260917-132557` mit 177 Dateien). Live im Browser geprüft: «Beispiel verlassen» im Banner führt zurück zur Code-Wand, Konsole ohne Fehler. Umfasst #214, #215, #216.*

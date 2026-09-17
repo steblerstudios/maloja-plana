@@ -305,3 +305,6 @@ html.mp-readable body {
    zusätzlich showPicker(). */
 .mp-date-input { cursor: pointer; }
 .mp-date-input::-webkit-calendar-picker-indicator { opacity: 0; cursor: pointer; }
+
+/* Programmatischer Fokus (Sprach-Ladehinweis) ohne Rahmen um den ganzen Hauptbereich */
+main[tabindex="-1"]:focus { outline: none; }

@@ -2428,7 +2428,7 @@ export default {
     annahmeOhneDreizehnten: { sie: "Calculé sans 13e salaire — si vous en recevez un, l'impôt est plus élevé. Vous pouvez l'indiquer dans le chapitre « Finances ».", du: "Calculé sans 13e salaire — si tu en reçois un, l'impôt est plus élevé. Tu peux l'indiquer dans le chapitre « Finances »." },
     annahmeAlleinverdiener: "Calculé comme couple marié à un seul revenu (sans revenu du ou de la partenaire).",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
-    bandPartnerOffenDirekt: "Maloja n’affiche pas ici de montant pour l’impôt cantonal et communal : il n’a été mesuré que pour les couples mariés à un seul revenu, et le revenu du ou de la partenaire n’est pas indiqué. L’impôt fédéral ci-dessus se base sur le revenu imposable saisi. Sans revenu du ou de la partenaire, indiquer 0 dans le profil (Données personnelles → « Salaire net partenaire »).",
+    bandPartnerOffenDirekt: "Maloja n’affiche pas ici de montant pour l’impôt cantonal et communal : il n’a été mesuré que pour les couples mariés à un seul revenu, et le revenu du ou de la partenaire n’est pas indiqué. L’impôt fédéral ci-dessus se base sur le revenu imposable commun saisi. Sans revenu du ou de la partenaire, indiquer 0 dans le profil (Données personnelles → « Salaire net partenaire »).",
     ohneZahlZivilstandDirekt: "Pour cette situation, Maloja n’affiche pas d’estimation fiscale : le revenu imposable saisi correspond à l’état civil du profil. Maloja ne l’utilise pas pour un autre état civil. Pour faire un essai, décocher « Utiliser cette valeur comme base » — Maloja estime alors à partir du salaire net.",
     netIncomeNote13: { sie: "Projection basée sur votre salaire net : salaire principal × 13 (avec 13e salaire), revenu accessoire × 12. La charge fiscale réelle peut varier.", du: "Projection basée sur ton salaire net : salaire principal × 13 (avec 13e salaire), revenu accessoire × 12. La charge fiscale réelle peut varier." },
     annahmenLabel: "Hypothèses",
@@ -2444,7 +2444,7 @@ export default {
     useImportedTaxable: 'Utiliser le revenu imposable officiel (CHF {value}/an). Les déductions sont alors ignorées.',
     taxableIncomeDirect: 'Revenu imposable (facultatif)',
     taxableIncomeDirectPlaceholder: 'p. ex. 65 000',
-    taxableIncomeDirectHint: 'Connu grâce à la taxation? Le saisir directement — l’aperçu l’utilise alors au lieu d’une estimation basée sur le salaire net. Il s’agit de la valeur pour l’impôt fédéral direct (la taxation indique séparément Confédération et canton).',
+    taxableIncomeDirectHint: 'Connu grâce à la taxation? Le saisir directement — l’aperçu l’utilise alors au lieu d’une estimation basée sur le salaire net. Il s’agit de la valeur pour l’impôt fédéral direct (la taxation indique séparément Confédération et canton). Pour les personnes mariées : la valeur commune des deux conjoints.',
     useTaxableEntered: 'Utiliser cette valeur comme base — les déductions ne s’appliquent plus (elle est déjà imposable).',
     saeulen: {
       title: 'État civil comparé',
