@@ -7,7 +7,16 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 11:25 (`main` = `672d8af` nach **PR #201**, dazu dieser Doku-PR · **live `index-c2f8af36.js` = 0.1.31-beta seit 17.09. 11:14**, Tag `v0.1.31-beta` = `672d8af` · gemergt, nicht live: nichts · 1768 Tests grün, Hauptbundle 61.72 kB von 65)
+**Stand:** 2026-09-17, 12:00 (`main` = `1437feb` nach **PR #208**, dazu dieser Doku-PR · **live `index-297034b6.js` = 0.1.32-beta seit 17.09. 11:46**, Tag `v0.1.32-beta` = `1437feb` · gemergt, nicht live: nichts · 1815 Tests grün, Hauptbundle 62.62 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 12:00 (0.1.32-beta live)
+>
+> **Deploy 11:46** aus `1437feb` (#208 = #204–#207 zusammengeführt + Befund-Fixes), per `curl` belegt:
+> `index-297034b6.js`, 161/161 Dateien 200, altes Bundle 404, Gegenprobe 404, Tag auch auf origin,
+> Backup 171 Dateien. Merkmale von K49, K60, K61, K64, K65 im Live-Code (Gegenprobe 0).
+> **Vorab-Prüfung:** 9 Prüfer, 0 Blocker; K61 in #208 vervollständigt. Bericht in den Studio-Übergaben.
+> **Offen:** Bau-Liste §16 (K67–K72, E40, E41) · M4 Postfach · Panel-Durchgang (jetzt inkl. K72).
+> **Hauptbundle-Reserve nur noch 2.4 kB** (K67).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 11:25 (0.1.31-beta live, K59)
 >
