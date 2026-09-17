@@ -53,7 +53,7 @@ export const radius = {
   md:   10,
   lg:   16,
   xl:   24,
-  full: 9999,
+  full: 9999, // Stand 17.09.2026 nirgends genutzt (K53); bleibt als Stufe der Skala stehen
 };
 
 // ─── Shadows (subtle, premium) ──────────────────────────────

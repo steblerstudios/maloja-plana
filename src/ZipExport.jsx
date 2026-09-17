@@ -281,6 +281,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
     width: '100%'
   });
 
+  // K53: gesperrte Knöpfe. Vorher Schwarz auf mid (hell 3.38:1, von WCAG 1.4.3 zwar
+  // ausgenommen, aber schlecht lesbar). Jetzt die ruhige Fläche up mit Text mid
+  // (hell 5.25:1, dunkel 4.81:1). Dass der Knopf nicht geht, zeigt nicht die Farbe
+  // allein: gestrichelter Rand und Sperr-Cursor tragen das Signal mit.
+  const gesperrtStil = {
+    background: palette.up, color: palette.mid,
+    border: '1px dashed ' + palette.mid, cursor: 'not-allowed',
+  };
+
   const statusColor = backupStatus?.type === 'success' ? palette.sage
     : backupStatus?.type === 'error' ? palette.rose
     : palette.gold;
@@ -314,15 +323,15 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: space.sm } },
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
-              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: exporting ? palette.mid : palette.sage, color: exporting ? '#fff' : '#000', border: 'none', borderRadius: radius.sm, cursor: exporting ? 'not-allowed' : 'pointer', fontWeight: weight.semi, fontSize: text.sm }
+              style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
             }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
@@ -362,7 +371,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         React.createElement('button', {
           onClick: () => { setBackupStatus(null); if (passphraseOk()) setVorschau('sicherungVerschluesselt'); },
           disabled: !passphraseLangGenug(passphrase) || passphrase !== passphraseConfirm,
-          style: btnStyle(passphraseLangGenug(passphrase) && passphrase === passphraseConfirm ? palette.gold : palette.mid, '#000')
+          style: passphraseLangGenug(passphrase) && passphrase === passphraseConfirm ? btnStyle(palette.gold, '#000') : { ...btnStyle(palette.gold, '#000'), ...gesperrtStil }
         }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.exportEncrypted')),
         vorschauPanel('sicherungVerschluesselt'),
 
@@ -402,7 +411,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
           React.createElement('div', { style: { display: 'flex', gap: space.sm } },
             React.createElement('button', {
               onClick: handleDecryptAndImport, disabled: !importPassphrase,
-              style: { ...btnStyle(importPassphrase ? palette.gold : palette.mid, '#000'), flex: 1 }
+              style: { ...btnStyle(palette.gold, '#000'), ...(importPassphrase ? null : gesperrtStil), flex: 1 }
             }, React.createElement(Icon, { name: 'lock', size: 14 }), t('backup.decrypting')),
             React.createElement('button', {
               onClick: cancelImport,

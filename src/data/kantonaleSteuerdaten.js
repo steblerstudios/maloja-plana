@@ -122,6 +122,13 @@ export function schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen, bundesst
 // ESTV-Steuerrechner 2026 ausweist (docs/sources/nettolohn-abzuege-2026.messpunkte.json; das
 // Skript prüft die Formel an allen Messpunkten, docs/sources/kantonssteuer-tabelle-2026.md):
 //   «Übrige Berufsauslagen»: 3 % des Nettolohns, mindestens 2 000, höchstens 4 000
+//      Quelle (gelesen 17.09.2026): Berufskostenverordnung des EFD, SR 642.118.1, Art. 7 Abs. 1
+//      («Übrige Berufskosten») und Anhang Ziff. 1, Fassung in Kraft seit 1. Jan. 2026:
+//      «Übrige Berufskosten (Art. 7 Abs. 1) 3 % des Nettolohns, mindestens im Jahr 2000.—
+//      höchstens im Jahr 4000.—». Fedlex-Datei:
+//      https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1993/1363_1363_1363/20260101/de/html/fedlex-data-admin-ch-eli-cc-1993-1363_1363_1363-20260101-de-html.html
+//      Art. 7 Abs. 2 verlangt eine angemessene Kürzung bei Teilzeit oder Erwerb nur während eines
+//      Teils des Jahres; diese Kürzung rechnet die Funktion unten nicht (K53, offen gemeldet).
 //   «Abzug private Versicherungen / Sparzinsen»: 1 800 (verheiratet 3 700) + 700 je Kind;
 //      ohne BVG-Beitrag der Grundbetrag × 1,5 (ESTV bei Bruttolohn 20 000 und 22 500)
 //   «Abzug verheiratete Steuerpflichtige»: 2 800
