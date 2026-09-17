@@ -7,7 +7,15 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 12:50 (`main` = `db75d59` nach **PR #212**, dazu dieser Doku-PR · **live `index-606d23bb.js` = 0.1.33-beta seit 17.09. 12:42**, Tag `v0.1.33-beta` = `db75d59` · gemergt, nicht live: nichts · 0 offene Code-PRs · 1845 Tests grün, Hauptbundle 62.11 kB von 65)
+**Stand:** 2026-09-17, 13:40 (`main` = `a414f86` nach **PR #216**, dazu dieser Doku-PR · **live `index-e5ece27b.js` = 0.1.34-beta seit 17.09. 13:25**, Tag `v0.1.34-beta` = `a414f86` · gemergt, nicht live: nichts · 0 offene Code-PRs · 1860 Tests grün, Hauptbundle 62.11 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 13:40 (0.1.34-beta live)
+>
+> **Deploy 13:25** aus `a414f86` (#214–#216), per `curl` belegt (164/164, alt 404, Gegenprobe 404,
+> Backup 177). **Demo-Fehler behoben** und live im Browser geprüft. **Header:** M15 (`geolocation=(self)`)
+> und HSTS 31536000 live, aus der Server-`.htaccess` (Stebler Studios; `deploy.sh` lässt sie unberührt).
+> **Offen im Header-Durchgang:** CSP-Header (O8/K72) · Cache (O20) · `http://` leitet nicht auf https
+> weiter, `www.` nicht auf die Hauptadresse (Panel). **Oktober:** E42, E1, E3, Jurist:in (K48 + E43).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 12:50 (0.1.33-beta live)
 >
