@@ -18,24 +18,80 @@
 // bleibt der Platzhalter stehen (harmlos, wird nie deployt).
 const CACHE_NAME = 'maloja-plana-__BUILD_HASH__';
 const OFFLINE_URL = '/';
+// K59: Module und Schriften fragt der Browser mit `Origin` an; ein Server mit
+// `Vary: Origin` (z. B. vite preview) liesse den Cache sonst ins Leere greifen.
+// Unbedenklich: die Dateien sind nach Inhalt benannt bzw. nur von hier.
+const TREFFER = { ignoreVary: true };
+
+// K59 (gemessen 17.09.2026): Beim ersten Besuch lädt der Browser Haupt-Skript,
+// Stylesheet und Sprachdatei, BEVOR dieser Service Worker die Seite kontrolliert —
+// sie landeten nie im Cache, und offline blieb die Seite leer. Darum:
+// (1) beim Install die Dateien mitnehmen, die die Startseite selbst einbindet;
+// (2) die Seite meldet nach der Anmeldung, was sie schon geladen hat (message).
+// Nur eigene Dateien unter /assets/ — nie fremde Adressen.
+const alsEigeneAssetAdresse = (adresse) => {
+  try {
+    const url = new URL(adresse, self.location.origin);
+    if (url.origin !== self.location.origin || !url.pathname.startsWith('/assets/')) return null;
+    return url.pathname;
+  } catch (e) {
+    return null;
+  }
+};
+
+const assetsAusHtml = (html) => {
+  const gefunden = new Set();
+  for (const treffer of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    const pfad = alsEigeneAssetAdresse(treffer[1]);
+    if (pfad) gefunden.add(pfad);
+  }
+  return [...gefunden];
+};
+
+const einzelnAblegen = (cache, adressen) =>
+  // Jede Datei einzeln (allSettled): eine fehlende oder umbenannte Datei darf den
+  // Install nie abbrechen und damit den Offline-Cache verhindern.
+  Promise.allSettled(adressen.map((url) => cache.add(url)));
 
 // ─── Install: cache the app shell ──────────────────────────
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      // Cache each asset individually (allSettled) so one missing/renamed file
-      // can never abort the whole install and break offline caching.
-      return Promise.allSettled([
-        OFFLINE_URL,
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await einzelnAblegen(cache, [
         // Synchron im <head> geladen (K4): offline ohne Cache fiele der Abruf sonst auf
         // OFFLINE_URL zurück — HTML statt Skript.
         '/theme-init.js',
         '/fonts/lexend-latin-400-normal.woff2',
         '/fonts/lexend-latin-600-normal.woff2',
-      ].map((url) => cache.add(url)));
+      ]);
+      try {
+        const antwort = await fetch(OFFLINE_URL, { cache: 'no-store' });
+        if (!antwort.ok) return;
+        const html = await antwort.clone().text();
+        await cache.put(OFFLINE_URL, antwort);
+        await einzelnAblegen(cache, assetsAusHtml(html));
+      } catch (e) {
+        /* ohne Netz beim Install: die Startseite kommt beim nächsten Online-Besuch */
+      }
     })
   );
   self.skipWaiting();
+});
+
+// ─── Message: von der Seite schon geladene Dateien nachtragen (K59) ─
+self.addEventListener('message', (event) => {
+  const daten = event.data;
+  if (!daten || daten.type !== 'assets-ablegen' || !Array.isArray(daten.adressen)) return;
+  const pfade = [...new Set(daten.adressen.map(alsEigeneAssetAdresse).filter(Boolean))].slice(0, 300);
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const fehlend = [];
+      for (const pfad of pfade) {
+        if (!(await cache.match(pfad, TREFFER))) fehlend.push(pfad);
+      }
+      return einzelnAblegen(cache, fehlend);
+    })
+  );
 });
 
 // ─── Activate: clean old caches ────────────────────────────
@@ -63,7 +119,7 @@ self.addEventListener('fetch', (event) => {
 
   if (isHashedAsset) {
     event.respondWith(
-      caches.match(event.request).then((cached) => {
+      caches.match(event.request, TREFFER).then((cached) => {
         if (cached) return cached;
         return fetch(event.request).then((response) => {
           if (response.ok) {
@@ -85,8 +141,11 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          return caches.match(event.request).then((cached) => {
-            return cached || caches.match(OFFLINE_URL);
+          return caches.match(event.request, TREFFER).then((cached) => {
+            if (cached) return cached;
+            // Die Startseite nur als Ersatz für Seitenaufrufe — nie anstelle einer
+            // Schrift oder eines Skripts (sonst: «Failed to decode downloaded font»).
+            return event.request.mode === 'navigate' ? caches.match(OFFLINE_URL, TREFFER) : Response.error();
           });
         })
     );

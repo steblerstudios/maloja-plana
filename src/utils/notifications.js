@@ -24,6 +24,13 @@ export const registerServiceWorker = async () => {
     });
     console.info('[Notifications] SW registered:', registration.scope);
 
+    // K59: Was diese Seite vor der Kontrolle durch den Service Worker geladen hat
+    // (Haupt-Skript, Stylesheet, Sprache), liegt sonst nicht im Offline-Speicher.
+    navigator.serviceWorker.ready.then((bereit) => {
+      const adressen = performance.getEntriesByType('resource').map((e) => e.name);
+      bereit.active?.postMessage({ type: 'assets-ablegen', adressen });
+    }).catch(() => {});
+
     // Auto-Update: sobald ein neuer Service Worker die Kontrolle übernimmt, die
     // Seite einmal neu laden, damit ein Deploy ohne manuelles Hard-Refresh ankommt.
     // Guard: nur, wenn diese Seite schon von einer früheren Version kontrolliert
