@@ -3,14 +3,12 @@ import { text, weight, radius, space } from '../config/tokens.js';
 import { getCantonName } from '../config/cantonalData.js';
 import { getLinkById, getCantonalLinks } from '../data/direktLinks.js';
 import { ExternerLink } from './ExternerLink.jsx';
+import { chf } from '../utils/steuerTexte.js';
 
 // E38: Wenn die Tabelle für die Kantons- und Gemeindesteuer nicht trägt (Einkommen ausserhalb,
 // Lage nicht gemessen), zeigen TaxCalculator und FinanzUebersicht keine Zahl, sondern diesen
 // ruhigen Weg zum amtlichen Rechner und zur kantonalen Steuerverwaltung.
 // schaetzung = Rückgabe von schaetzeKantonaleSteuer() (src/data/kantonaleSteuerdaten.js).
-
-// Tausendertrennung wie in FinanzUebersicht/dossierGenerator — nicht von der Laufzeit-Locale abhängig.
-const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '’');
 
 // R4: Gründe ohne jede Steuerzahl (Bund und Kanton), mit einem gemeinsamen Text.
 const OHNE_ZAHL_TEXT = { rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen' };
@@ -35,12 +33,6 @@ export const bundOhneZahlText = (t, grund) =>
     : grund === 'partner' ? t('tax.federalNotCheckedPartner')
       : OHNE_ZAHL_TEXT[grund] ? t(OHNE_ZAHL_TEXT[grund])
         : t('tax.noTaxFigure');
-
-// R4: die Annahmen hinter einer gezeigten Zahl (annahmen aus steuernFuerProfil), als Sätze.
-export const annahmenTexte = (t, annahmen) => [
-  annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
-  annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
-].filter(Boolean);
 
 export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr, style }) => {
   const kantonsLink = canton ? (getCantonalLinks(canton) || {}).steuererklaerung : null;

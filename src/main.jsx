@@ -1428,6 +1428,8 @@ const App = () => React.createElement(I18nProvider, null,
 // nach einer Frist selbst neu — sonst tippte man hier weiter, ohne dass etwas
 // gespeichert wird. Die Frist liegt über dem längsten Löschen (4 Datenbanken × 8 s),
 // damit ein Neuladen nie alte Angaben liest, während das Löschen noch läuft.
+// K66: Schlüssel bewusst als Text — der Import von LOESCH_SIGNAL zöge das ganze
+// Löschmodul ins Hauptbundle (+0.57 kB gzip); die Gleichheit prüft k66Aufraeumen.test.js.
 const LOESCH_FRIST_MS = 45000;
 window.addEventListener('storage', (e) => {
   if (e.key !== 'or5_loeschsignal' || !e.newValue) return;
