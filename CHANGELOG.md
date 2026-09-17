@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.36-beta] — 2026-09-17
 
-*Noch nicht live. Umfasst #224 (K91–K93) und #226 (K80). Die Live-Zeile folgt nach dem Deploy.*
+*Live seit **17.09.2026, 16:32** (`index-c80eed98.js`, Tag `v0.1.36-beta` = `6546358`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-d179693a.js` 404, erfundener Name 404, `index.html`, `theme-init.js`, `sw.js`, `sitemap.xml` zeichengleich mit dem Build, `sw.js` mit Cache `maloja-plana-c80eed98`). Live im Browser geprüft: Beispiel → Notfall-Dossier, Code mit jsQR zurückgelesen (Version 19, Medizin zuerst, Schlusszeile «Nicht enthalten …»), kein `title`, `aria-label` gesetzt, Hinweis «nicht verschlüsselt», Footer v0.1.36-beta, Konsole leer; Beispiel verlassen → `/`, localStorage leer. Umfasst #224, #226, #227.*
 
 ### Behoben (aus dem Deploy-Gate)
 - **K80 · Notfall-QR nennt, was fehlt:** Passt eine Angabe nicht in den Code, fällt nur sie weg; die folgenden werden weiter gefüllt, und die letzte Zeile im Code nennt die fehlenden Angaben. Im Code steht Medizin zuerst, dann Notfallkontakt, Vorsorge, Person, Betreuung, Versicherung (Entscheid Stebler Studios); das gedruckte Dossier bleibt unverändert.
