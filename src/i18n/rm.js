@@ -1041,7 +1041,7 @@ export default {
 
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
-    tagline: { sie: 'Voss organisatur svizzer persunala — 100% privat, offline, gratuit.', du: 'Tes organisatur svizzer persunala — 100% privat, offline, gratuit.' },
+    tagline: { sie: 'Voss organisatur svizzer persunala — 100% privat, offline-abel, gratuit.', du: 'Tes organisatur svizzer persunala — 100% privat, offline-abel, gratuit.' }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     taglineBenefit: "Calculatur da taglia, IPV, agid social, carta d'urgenza — senza annunzia.",
     progress: { sie: 'Voss progress', du: 'Tes progress' },
     progressComplete: { sie: 'Voss organisatur da vita stat. Quietezza.', du: 'Tes organisatur da vita stat. Quietezza.' },
@@ -1695,7 +1695,7 @@ export default {
       q2: 'È Maloja Plana gratuita?',
       a2: 'Gea, cumplettamain e permanentamain. Nagin abunament, nagins custs zuppads, nagina reclama. Il code font è open source (AGPL-3.0).',
       q3: 'Funcziuna l\'app senza internet?',
-      a3: 'Gea, suenter il prim chargiar — grazia al Service Worker, per regla en ils secturs ch\'èn gia vegnids averts almain ina giada. Naginas datas vegnan mai tramessas sur la rait.', // TODO(rm): Gegenlese Muttersprache
+      a3: 'Gea, suenter il prim chargiar — grazia al Service Worker, per regla en ils secturs ch\'èn gia vegnids averts almain ina giada. Maloja Plana sez na trametta naginas endataziuns sur la rait: las datas bandunan l\'apparat mo tras in export u ina spediziun da la persuna sezza.', // TODO(rm): Gegenlese Muttersprache (K55: Satz neu, vorsichtig übersetzt)
       q4: 'Èn ils calculs giuridicamain vinculants?',
       a4: 'Na. Tuts calculaturs (taglia, subvenziuns, assicuranza da malsogna, agid social) èn instruments d\'orientaziun basads sin datas publicas. Per infurmaziuns vinculantas contactescha l\'autoritad cumpetenta.',
       q5: 'Poss jau exportar mias datas?',
@@ -1720,7 +1720,7 @@ export default {
 
   beta: {
     bannerLabel: 'Beta segira',
-    intro: { sie: "Vossa survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline, gratuit.", du: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline, gratuit." },
+    intro: { sie: "Vossa survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline-abel, gratuit.", du: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline-abel, gratuit." }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     gateMessage: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access.",
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
@@ -4094,7 +4094,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — tes ordinatur da vita svizzer: taglias, agid social, assicuranzas',
-    description: 'Maloja Plana — tes ordinatur da vita svizzer. Quintader da taglias, agid social, reducziun da premias, carta d\'urgenza — 100% privat, offline, gratuit.',
+    description: 'Maloja Plana — tes ordinatur da vita svizzer. Quintader da taglias, agid social, reducziun da premias, carta d\'urgenza — 100% privat, offline-abel, gratuit.', // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
   },
   obstgarten: {
     title: 'Mes iert da fritgs',
@@ -4576,13 +4576,13 @@ export default {
     claim: "Chapir tge che ta tutga. Ordinar tge che vegn.",
     lead: "Tia survista calma da la vita en Svizra.",
     point1: "100% privat — tut resta sin tes apparat",
-    point2: "Gratuit & offline, senza conto",
+    point2: "Gratuit & offline-abel, senza conto", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     point3: "Disponibel en pliras linguas",
     scan: "Scannegiar & cumenzar:",
     foot: "Local, privat, gratuit · da Stebler Studios",
     print: "Stampar / memorisar sco PDF",
     share: "Cundivider il link",
-    shareText: "Maloja Plana — tia survista calma da la vita en Svizra. Privat, offline, gratuit.",
+    shareText: "Maloja Plana — tia survista calma da la vita en Svizra. Privat, offline-abel, gratuit.", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     copied: "Link copià",
     langHint: "Il flyer vegn creà en la lingua tschernida actualmain. Per in'autra lingua, mida l'emprim la lingua sura.",
   },

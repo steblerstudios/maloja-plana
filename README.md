@@ -1,6 +1,6 @@
 # Maloja Plana
 
-**Dein ruhiger Überblick über das Leben in der Schweiz — privat, offline, kostenlos.**
+**Dein ruhiger Überblick über das Leben in der Schweiz — privat, offline-fähig, kostenlos.**
 
 ![Version](https://img.shields.io/badge/version-0.1.0--beta-7E9F8C)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-C4A870)
