@@ -14,6 +14,8 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Behoben
 - **Keine weisse Seite mehr beim Start (K60):** Liess sich beim ersten Start keine Sprachdatei laden (alte zwischengespeicherte Startseite nach einem Deploy, offline), blieb die Seite weiss. Jetzt wird einmal pro Sitzung neu geladen; hilft das nicht, erscheint ein ruhiger Hinweis mit Knopf «Neu laden».
 - **Schnappschuss vor dem Wiederherstellen nie gemischt (K61):** Scheitert der Schnappschuss mittendrin (z. B. Speicher voll), werden die in diesem Lauf geschriebenen Sicherungskopien zurückgesetzt; das Wiederherstellen bricht wie bisher ab, ohne etwas zu überschreiben.
+### Barrierefreiheit
+- **Ansagen und ruhige Rückfälle (K64):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
 
 ## [0.1.31-beta] — 2026-09-17
 
