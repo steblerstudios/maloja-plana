@@ -3608,7 +3608,7 @@ export default {
     mammografieQuelle: 'Quellen: WHO · EU (ECIBC) · Krebsliga Schweiz.',
     mammoGeoTitle: 'Organisiertes Programm — je nach Kanton',
     mammoGeoNote: 'Nicht überall lädt der Kanton per Brief zur Mammografie ein. Im organisierten Programm übernimmt die Grundversicherung die Kosten ohne Franchise — es bleibt nur der Selbstbehalt von 10 %. Wo es kein Programm gibt, organisiert man die Vorsorge selbst (nach ärztlicher Überweisung); dann wird die Franchise erhoben.',
-    mammoGeoYourCantonNo: 'In deinem Kanton ({canton}) gibt es aktuell kein organisiertes Programm.',
+    mammoGeoYourCantonNo: 'Im Kanton {canton} gibt es aktuell kein organisiertes Programm.',
     mammoGeoOhne: 'Ohne organisiertes Programm (Stand {stand}):',
     mammoGeoWandel: 'Der Stand ändert sich laufend — einzelne Kantone führen neue Programme ein.',
     mammoGeoTardoc: 'Mit der Tarifumstellung 2026 (Tardoc) steht die Finanzierung mancher Programme unter Druck.',
