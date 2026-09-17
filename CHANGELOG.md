@@ -11,6 +11,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Quellenangaben Taxpunktwert und Nachhaltigkeit (K65):** Der Taxpunktwert-Hinweis sagt nicht mehr «fast überall provisorisch», sondern «in den meisten Kantonen provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone)» — so weit tragen die kantonalen Quellen in den Daten. Die Infomaniak-Quellen im Abschnitt Nachhaltigkeit sind jetzt anklickbare Links (alle 5 Sprachen).
+
 ## [0.1.31-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 11:14** (`index-c2f8af36.js`, Tag `v0.1.31-beta` = `672d8af`, per `curl` belegt: 159/159 Build-Dateien 200, altes `index-98d2d140.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-c2f8af36`). Umfasst K59 (#200). Auf malojaplana.ch im Browser geprüft: Nach dem ersten Besuch (Beispiel-Modus) liegen 18 Einträge im Offline-Speicher, darunter `index-c2f8af36.js`, das Stylesheet und die Sprachdateien.*
