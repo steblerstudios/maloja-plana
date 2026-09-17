@@ -15,6 +15,12 @@ kommt der Changelog immer mit, nie doppelt.*
 
 *Noch nicht live. Umfasst #224 (K91–K93) und #226 (K80). Die Live-Zeile folgt nach dem Deploy.*
 
+### Behoben (aus dem Deploy-Gate)
+- **K80 · Notfall-QR nennt, was fehlt:** Passt eine Angabe nicht in den Code, fällt nur sie weg; die folgenden werden weiter gefüllt, und die letzte Zeile im Code nennt die fehlenden Angaben. Im Code steht Medizin zuerst, dann Notfallkontakt, Vorsorge, Person, Betreuung, Versicherung (Entscheid Stebler Studios); das gedruckte Dossier bleibt unverändert.
+- **QR ohne Klartext-Tooltip:** Die Bibliothek setzte den ganzen Inhalt als `title` (Tooltip mit Gesundheits- und AHV-Daten). Jetzt entfernt; der Code ist als Bild beschriftet (`role="img"`, `aria-label`).
+- **QR mit Emoji:** Zeichen ausserhalb der BMP werden als ein 4-Byte-Zeichen kodiert.
+- **Kürzungs-Hinweis ohne Live-Region:** Er steht schon beim ersten Laden da; nur die Fehlermeldung bleibt `role="status"`.
+
 ### Behoben
 - **K80 · QR-Codes mit Umlauten:** Die eingebettete QR-Bibliothek kodierte nach dem ersten Umlaut falsch (ein wiederverwendetes Byte-Feld hängte Reste an). Folge: im Notfall-Dossier, bei der Organspende und der Krankenkassen-Karte blieb die Fläche leer oder der Inhalt war verfälscht. Bibliothek korrigiert (Vermerk im Dateikopf), neuer Helfer `utils/qrSicher.js` rechnet in UTF-8-Bytes, kürzt das Notfall-Dossier an Zeilengrenzen auf 600 Bytes (Fehlerkorrektur M) und zeigt statt einer leeren Fläche einen ruhigen Hinweis (5 Sprachen, rm provisorisch). Im Browser geprüft: der gezeichnete Code des Beispiels liest sich mit jsQR zurück, «Zürich» inklusive.
 

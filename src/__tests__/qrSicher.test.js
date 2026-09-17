@@ -1,26 +1,41 @@
 // K80 (17.09.2026): QR im Notfall-Dossier fehlte bei längeren Angaben — und schon ein
 // einziger Umlaut verfälschte die Kodierung. Diese Tests halten beides fest.
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
 // QRCode.js hängt sich beim Import an `window`; die Testumgebung ist Node.
 let QRCode;
 let qrKuerzen;
+let qrNotfallText;
 let qrZeichnen;
+let gesetzt = [];
 let utf8Laenge;
 let QR_MAX_BYTES;
 
 beforeAll(async () => {
-  globalThis.window = globalThis;
+  if (!('window' in globalThis)) { globalThis.window = globalThis; gesetzt.push('window'); }
+  if (!('document' in globalThis)) gesetzt.push('document');
   globalThis.document = globalThis.document || {
     documentElement: { tagName: 'div' },
     getElementById: () => null,
     createElement: () => ({ style: {}, getContext: () => null, appendChild() {}, setAttribute() {} }),
   };
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
-  ({ qrKuerzen, qrZeichnen, utf8Laenge, QR_MAX_BYTES } = await import('../utils/qrSicher.js'));
+  ({ qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES } = await import('../utils/qrSicher.js'));
 });
 
-const element = () => ({ innerHTML: '', style: {}, title: '', childNodes: [], appendChild() {} });
+// Nur abräumen, was dieser Test selbst gesetzt hat (Qualitäts-Prüfer, Deploy-Gate 0.1.36).
+afterAll(() => { for (const k of gesetzt) delete globalThis[k]; gesetzt = []; });
+
+// Attrappe eines DOM-Elements, die Attribute mitschreibt (die Bibliothek setzt `title` direkt).
+const element = () => {
+  const attr = {};
+  return {
+    innerHTML: '', style: {}, childNodes: [], appendChild() {}, attr,
+    get title() { return attr.title ?? ''; }, set title(v) { attr.title = String(v); },
+    setAttribute(k, v) { attr[k] = String(v); },
+    removeAttribute(k) { delete attr[k]; },
+  };
+};
 
 // Kodiert nur (ohne Zeichnen) und gibt die Nutzdaten ohne das vorangestellte BOM zurück.
 function kodierteBytes(text) {
@@ -41,6 +56,7 @@ describe('QRCode.js · UTF-8-Kodierung (Patch K80)', () => {
     ['Zeilenumbrüche und Umlaute', 'Person:\n  Name: Zoë Müller\n  Ort: Genève'],
     ['Grenzzeichen 128 und 2048', 'x' + String.fromCharCode(128) + 'y' + String.fromCharCode(2048) + 'z'],
     ['nur ASCII', 'Blutgruppe: A'],
+    ['Emoji (ausserhalb der BMP)', 'Allergie 🥜 Erdnuss, dann ü'],
   ])('%s: kodiert genau die UTF-8-Bytes', (_name, text) => {
     expect(kodierteBytes(text)).toEqual([...new TextEncoder().encode(text)]);
   });
@@ -69,11 +85,58 @@ describe('qrKuerzen', () => {
     zeilen.slice(0, -1).forEach(z => expect(original.has(z)).toBe(true));
   });
 
+  it('bricht nach einer zu langen Zeile nicht ab, sondern füllt weiter', () => {
+    const text = ['Kurz eins', 'x'.repeat(200), 'Kurz zwei'].join('\n');
+    const r = qrKuerzen(text, 60);
+    expect(r.gekuerzt).toBe(true);
+    expect(r.text.split('\n')).toEqual(['Kurz eins', 'Kurz zwei', '…']);
+  });
+
   it('teilt kein Zeichen, wenn schon die erste Zeile zu lang ist', () => {
     const r = qrKuerzen('ü'.repeat(1000), 101);
     expect(utf8Laenge(r.text)).toBeLessThanOrEqual(101);
     expect(r.text).not.toContain('�');
     expect(r.text.split('\n')[0]).toMatch(/^ü+$/);
+  });
+});
+
+describe('qrNotfallText', () => {
+  const abschnitte = [
+    { key: 'medical', title: 'Medizinische Angaben', rows: [
+      { label: 'Blutgruppe', value: 'A+' },
+      { label: 'Medikamente', value: 'Marcoumar 3 mg, ' + 'Tablette täglich '.repeat(30) },
+      { label: 'Chronische Erkrankungen', value: 'Vorhofflimmern' },
+    ] },
+    { key: 'contact', title: 'Notfallkontakt', rows: [ { label: 'Name', value: 'Zoë Müller' } ] },
+    { key: 'person', title: 'Person', rows: [ { label: 'Adresse', value: 'Weg ' + 'ü'.repeat(300) } ] },
+  ];
+
+  it('lässt ganz, was passt, in der übergebenen Reihenfolge', () => {
+    const r = qrNotfallText([abschnitte[1], { key: 'medical', title: 'Medizin', rows: [abschnitte[0].rows[0]] }]);
+    expect(r).toEqual({ text: 'Notfallkontakt:\n  Name: Zoë Müller\nMedizin:\n  Blutgruppe: A+', gekuerzt: false, fehlt: [] });
+  });
+
+  it('überspringt die zu lange Zeile, behält die folgenden und nennt, was fehlt', () => {
+    const r = qrNotfallText(abschnitte, { fehltTitel: 'Nicht enthalten' });
+    expect(r.gekuerzt).toBe(true);
+    expect(utf8Laenge(r.text)).toBeLessThanOrEqual(QR_MAX_BYTES);
+    expect(r.text).toContain('  Blutgruppe: A+');
+    expect(r.text).toContain('  Chronische Erkrankungen: Vorhofflimmern');
+    expect(r.text).toContain('  Name: Zoë Müller');
+    expect(r.fehlt).toEqual(['Medikamente', 'Adresse']);
+    expect(r.text.split('\n').at(-1)).toBe('Nicht enthalten: Medikamente, Adresse');
+  });
+
+  it('setzt keinen Abschnittstitel ohne Zeile darunter', () => {
+    const r = qrNotfallText(abschnitte, { fehltTitel: 'Nicht enthalten' });
+    expect(r.text).not.toContain('Person:');
+  });
+
+  it('kürzt eine sehr lange Fehlend-Liste und bleibt unter der Grenze', () => {
+    const viele = [{ key: 'x', title: 'X', rows: Array.from({ length: 40 }, (_, i) => ({ label: 'Angabe Nummer ' + i, value: 'ä'.repeat(40) })) }];
+    const r = qrNotfallText(viele, { fehltTitel: 'Nicht enthalten' });
+    expect(utf8Laenge(r.text)).toBeLessThanOrEqual(QR_MAX_BYTES);
+    expect(r.text.split('\n').at(-1)).toMatch(/^Nicht enthalten: .* …$/);
   });
 });
 
@@ -93,6 +156,19 @@ describe('qrZeichnen', () => {
   it('zeichnet den gekürzten langen Umlaut-Text', () => {
     const { text } = qrKuerzen(langerText);
     expect(ohneZeichnen(() => qrZeichnen(element(), text))).toBe(true);
+  });
+
+  it('entfernt den Klartext-Tooltip der Bibliothek und beschriftet den Code als Bild', () => {
+    const el = element();
+    expect(ohneZeichnen(() => qrZeichnen(el, 'AHV: 756.1234.5678.90', { beschriftung: 'Notfall-QR' }))).toBe(true);
+    expect(el.attr).toEqual({ role: 'img', 'aria-label': 'Notfall-QR' });
+  });
+
+  it('räumt Beschriftung und Tooltip weg, wenn nicht gezeichnet wird', () => {
+    const el = element();
+    el.setAttribute('role', 'img'); el.setAttribute('aria-label', 'alt'); el.title = 'alt';
+    expect(ohneZeichnen(() => qrZeichnen(el, langerText, { beschriftung: 'Notfall-QR' }))).toBe(false);
+    expect(el.attr).toEqual({});
   });
 
   it('weist zu langen Text ab, statt zu werfen', () => {
