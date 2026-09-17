@@ -165,7 +165,7 @@ Das muss die UX ruhig und ehrlich kommunizieren, ohne Angst zu machen.
 ## 8. Was heute schon stimmt (nicht anfassen)
 
 - Kein Backend, keine Netzwerkaufrufe → ganze Klassen von Lücken existieren nicht.
-- Strikte CSP (self-only) inkl. `object-src 'none'`, `frame-ancestors 'none'`.
+- Strikte CSP (self-only) inkl. `object-src 'none'`. Clickjacking-Schutz über den HTTP-Header `X-Frame-Options` (`frame-ancestors` wirkt nur als Header, siehe SECURITY.md).
 - Keine hardcodierten Secrets im Client.
 - Print/Export-Templates escapen Nutzereingaben ([helpers.js](../../src/utils/helpers.js) `escapeHtml`).
 - Vendored Libs per SHA-256 gepinnt.
