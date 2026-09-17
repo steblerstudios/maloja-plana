@@ -2928,7 +2928,7 @@ export default {
     annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
-    bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin l'entrada taxabla endatada. Senza entrada dal partenari u da la partenaria endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
+    bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin l'entrada taxabla cuminaivla endatada. Senza entrada dal partenari u da la partenaria endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
     annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
@@ -2944,7 +2944,7 @@ export default {
     useImportedTaxable: 'Utilisar l’entrada taxabla uffiziala (CHF {value}/onn). Las deducziuns vegnan alura ignoradas.',
     taxableIncomeDirect: 'Entrada taxabla (facultativ)',
     taxableIncomeDirectPlaceholder: 'p.ex. 65 000',
-    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net. I sa tracta da la valur per la taglia federala directa (la taxaziun nomna separadamain Confederaziun e chantun).', // TODO(rm): E38-Zusatz provisorisch
+    taxableIncomeDirectHint: 'Enconuschent da vossa taxaziun? El endatar directamain — la survista dovra lura quel enstagl da stimar dal salari net. I sa tracta da la valur per la taglia federala directa (la taxaziun nomna separadamain Confederaziun e chantun). Per persunas maridadas: la valur cuminaivla da omadus conjugals.', // TODO(rm): E38-Zusatz provisorisch
     useTaxableEntered: 'Duvrar quest valur sco basa — deducziuns na valan lura betg pli (el è gia taxabel).',
     saeulen: {
       title: 'Stadi civil en cumparaziun',

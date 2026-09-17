@@ -26,6 +26,7 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Behoben
 - **K62.2 · Partnereinkommen 0 sichtbar:** Eine gespeicherte 0 erschien als leeres Feld, zählte aber als Antwort. Jetzt steht «0» da (auch im Vorsorgerechner).
 - **K62.4 · Steuerrechner ohne Widerspruch:** Bei «verheiratet» mit direkt eingetragenem steuerbarem Einkommen und fehlendem Partnereinkommen nennt der Kantonstext nur noch die fehlende Kantonszahl (statt «noch keine Steuerschätzung» unter einer angezeigten Bundessteuer). Weicht im Probiermodus der Zivilstand vom Profil ab, erscheint keine Zahl mehr, dafür ein Hinweis. Gleiche Regel in Steuerrechner, Finanzübersicht und Dossier.
+- **Befunde der Vorab-Prüfung:** Nach «Erneut versuchen» oder «Schliessen» springt der Fokus auf die Sprachwahl (am Handy auf den Hauptbereich) statt verloren zu gehen · Quellen-Links 44 px hoch · der Hinweis zum eingetragenen steuerbaren Einkommen sagt jetzt, dass bei Verheirateten der gemeinsame Wert beider Ehegatten gemeint ist (5 Sprachen).
 
 ## [0.1.34-beta] — 2026-09-17
 

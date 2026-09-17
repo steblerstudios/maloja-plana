@@ -218,6 +218,21 @@ export function createLadeAnzeige({ onChange, verzoegerung = 300, timer = { set:
   };
 }
 
+// Die Karte verschwindet beim Klick samt fokussiertem Knopf → Fokus vorher
+// zurück auf die sichtbare Sprachwahl, sonst landet er auf <body>.
+function fokusZurSprachwahl() {
+  try {
+    const el = [...document.querySelectorAll('[data-sprachwahl]')].find((e) => e.getClientRects().length > 0);
+    if (el) { el.focus(); return; }
+    // Am Handy liegt die Sprachwahl in der eingeklappten Schublade → Hauptbereich.
+    const main = document.querySelector('main');
+    if (main) {
+      if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+      main.focus({ preventScroll: true });
+    }
+  } catch { /* ohne DOM: nichts zu tun */ }
+}
+
 // Die Live-Region steht immer im DOM (sonst sagen Screenreader den ersten
 // Inhalt nicht an); sie ist fest positioniert → keine Layoutverschiebung.
 export function SprachLadeHinweis({ zustand, onRetry, onClose }) {
@@ -228,8 +243,8 @@ export function SprachLadeHinweis({ zustand, onRetry, onClose }) {
   return h('div', { className: 'mp-sprachlage', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true', lang: zeigen ? tx.lang : undefined },
     zeigen ? h('div', { className: 'mp-sprachlage-karte' },
       h('p', null, fehler ? tx.fehler : tx.laedt),
-      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-knopf', onClick: onRetry }, tx.erneut) : null,
-      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-zu', 'aria-label': tx.schliessen, onClick: onClose }, '×') : null,
+      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-knopf', onClick: () => { fokusZurSprachwahl(); onRetry(); } }, tx.erneut) : null,
+      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-zu', 'aria-label': tx.schliessen, onClick: () => { fokusZurSprachwahl(); onClose(); } }, '×') : null,
     ) : null);
 }
 

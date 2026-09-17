@@ -2429,7 +2429,7 @@ export default {
     annahmeOhneDreizehnten: "Calculated without a 13th monthly salary — if you receive one, the tax is higher. You can state this in the «Finances» chapter.",
     annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
-    bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the taxable income entered. With no partner income, enter 0 in the profile (Personal basics → «Partner net salary»).",
+    bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the joint taxable income entered. With no partner income, enter 0 in the profile (Personal basics → «Partner net salary»).",
     ohneZahlZivilstandDirekt: "Maloja does not show a tax estimate for this situation: the taxable income entered belongs to the marital status in the profile. Maloja does not use it for a different marital status. To try this out, untick «Use this value as the basis» — Maloja then estimates from the net salary.",
     netIncomeNote13: "Projection based on your net salary: main salary × 13 (with 13th monthly salary), side income × 12. Actual tax liability may differ.",
     annahmenLabel: "Assumptions",
@@ -2445,7 +2445,7 @@ export default {
     useImportedTaxable: 'Use official taxable income (CHF {value}/year). Deductions are then ignored.',
     taxableIncomeDirect: 'Taxable income (optional)',
     taxableIncomeDirectPlaceholder: 'e.g. 65 000',
-    taxableIncomeDirectHint: 'Know it from your tax assessment? Enter it directly — the overview then uses it instead of estimating from your net salary. Use the figure for direct federal tax (the assessment lists federal and cantonal figures separately).',
+    taxableIncomeDirectHint: 'Know it from your tax assessment? Enter it directly — the overview then uses it instead of estimating from your net salary. Use the figure for direct federal tax (the assessment lists federal and cantonal figures separately). For married couples: the joint figure for both spouses.',
     useTaxableEntered: 'Use this value as the basis — deductions no longer apply (it is already taxable).',
     saeulen: {
       title: 'Marital status compared',

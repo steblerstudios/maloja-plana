@@ -167,6 +167,7 @@ const LanguageSwitcher = ({ palette }) => {
       value: lang,
       onChange: (e) => setLanguage(e.target.value),
       'aria-label': t('common.selectLanguage'),
+      'data-sprachwahl': '',
       style: {
         appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
         background: palette.up, color: 'transparent',

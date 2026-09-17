@@ -2449,7 +2449,7 @@ export default {
     annahmeOhneDreizehnten: { sie: "Ohne 13. Monatslohn gerechnet — falls Sie einen erhalten, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld».", du: "Ohne 13. Monatslohn gerechnet — falls du einen erhältst, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld»." },
     annahmeAlleinverdiener: "Gerechnet als Alleinverdiener-Ehepaar (ohne Partnereinkommen).",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
-    bandPartnerOffenDirekt: "Für die Kantons- und Gemeindesteuer zeigt Maloja hier keinen Betrag: Gemessen ist sie nur für Ehepaare mit einem Einkommen, und die Angabe zum Partnereinkommen fehlt. Die Bundessteuer oben rechnet mit dem eingetragenen steuerbaren Einkommen. Ohne Partnereinkommen im Profil 0 eintragen (Persönliche Basis → «Nettolohn Partner/in»).",
+    bandPartnerOffenDirekt: "Für die Kantons- und Gemeindesteuer zeigt Maloja hier keinen Betrag: Gemessen ist sie nur für Ehepaare mit einem Einkommen, und die Angabe zum Partnereinkommen fehlt. Die Bundessteuer oben rechnet mit dem eingetragenen gemeinsamen steuerbaren Einkommen. Ohne Partnereinkommen im Profil 0 eintragen (Persönliche Basis → «Nettolohn Partner/in»).",
     ohneZahlZivilstandDirekt: "Für diese Situation zeigt Maloja keine Steuerschätzung: Das eingetragene steuerbare Einkommen gehört zum Zivilstand im Profil. Für einen anderen Zivilstand rechnet Maloja nicht damit. Zum Ausprobieren das Häkchen «Diesen Wert als Basis verwenden» entfernen — dann schätzt Maloja aus dem Nettolohn.",
     netIncomeNote13: { sie: "Hochrechnung aus Ihrem Nettolohn: Hauptlohn × 13 (mit 13. Monatslohn), Nebenerwerb × 12. Die tatsächliche Steuerlast kann abweichen.", du: "Hochrechnung aus deinem Nettolohn: Hauptlohn × 13 (mit 13. Monatslohn), Nebenerwerb × 12. Die tatsächliche Steuerlast kann abweichen." },
     annahmenLabel: "Annahmen",
@@ -2465,7 +2465,7 @@ export default {
     useImportedTaxable: 'Amtliches steuerbares Einkommen verwenden (CHF {value}/Jahr). Abzüge werden dann ignoriert.',
     taxableIncomeDirect: 'Steuerbares Einkommen (optional)',
     taxableIncomeDirectPlaceholder: 'z.B. 65 000',
-    taxableIncomeDirectHint: 'Bekannt aus der Steuerveranlagung? Direkt eintragen — dann rechnet die Übersicht damit statt aus dem Nettolohn. Gemeint ist der Wert für die direkte Bundessteuer (die Veranlagung nennt Bund und Kanton getrennt).',
+    taxableIncomeDirectHint: 'Bekannt aus der Steuerveranlagung? Direkt eintragen — dann rechnet die Übersicht damit statt aus dem Nettolohn. Gemeint ist der Wert für die direkte Bundessteuer (die Veranlagung nennt Bund und Kanton getrennt). Bei Verheirateten: der gemeinsame Wert beider Ehegatten.',
     useTaxableEntered: 'Diesen Wert als Basis verwenden — Abzüge entfallen (er ist bereits steuerbar).',
     saeulen: {
       title: 'Zivilstand im Vergleich',

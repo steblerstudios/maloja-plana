@@ -2387,7 +2387,7 @@ export default {
     annahmeOhneDreizehnten: { sie: "Calcolato senza tredicesima — se la riceve, l’imposta è più alta. Può indicarlo nel capitolo «Finanze».", du: "Calcolato senza tredicesima — se la ricevi, l’imposta è più alta. Puoi indicarlo nel capitolo «Finanze»." },
     annahmeAlleinverdiener: "Calcolato come coppia coniugata con un solo reddito (senza reddito del o della partner).",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
-    bandPartnerOffenDirekt: "Per l’imposta cantonale e comunale Maloja qui non mostra alcun importo: è stata misurata solo per coppie coniugate con un solo reddito, e manca l’indicazione sul reddito del o della partner. L’imposta federale sopra si basa sul reddito imponibile inserito. Senza reddito del o della partner, indicare 0 nel profilo (Dati personali → «Stipendio netto partner»).",
+    bandPartnerOffenDirekt: "Per l’imposta cantonale e comunale Maloja qui non mostra alcun importo: è stata misurata solo per coppie coniugate con un solo reddito, e manca l’indicazione sul reddito del o della partner. L’imposta federale sopra si basa sul reddito imponibile comune inserito. Senza reddito del o della partner, indicare 0 nel profilo (Dati personali → «Stipendio netto partner»).",
     ohneZahlZivilstandDirekt: "Per questa situazione Maloja non mostra alcuna stima fiscale: il reddito imponibile inserito corrisponde allo stato civile del profilo. Maloja non lo usa per un altro stato civile. Per fare una prova, togliere la spunta da «Usare questo valore come base» — Maloja stima allora a partire dal salario netto.",
     netIncomeNote13: { sie: "Proiezione basata sul Suo salario netto: salario principale × 13 (con tredicesima), reddito accessorio × 12. L’onere fiscale effettivo può variare.", du: "Proiezione basata sul tuo salario netto: salario principale × 13 (con tredicesima), reddito accessorio × 12. L’onere fiscale effettivo può variare." },
     annahmenLabel: "Ipotesi",
@@ -2403,7 +2403,7 @@ export default {
     useImportedTaxable: 'Usare il reddito imponibile ufficiale (CHF {value}/anno). Le deduzioni vengono ignorate.',
     taxableIncomeDirect: 'Reddito imponibile (facoltativo)',
     taxableIncomeDirectPlaceholder: 'ad es. 65 000',
-    taxableIncomeDirectHint: 'Noto dalla tassazione? Inserirlo direttamente — il riepilogo lo usa invece di stimarlo dal salario netto. Si intende il valore per l’imposta federale diretta (la tassazione indica separatamente Confederazione e Cantone).',
+    taxableIncomeDirectHint: 'Noto dalla tassazione? Inserirlo direttamente — il riepilogo lo usa invece di stimarlo dal salario netto. Si intende il valore per l’imposta federale diretta (la tassazione indica separatamente Confederazione e Cantone). Per le persone coniugate: il valore comune di entrambi i coniugi.',
     useTaxableEntered: 'Usare questo valore come base — le deduzioni non si applicano più (è già imponibile).',
     saeulen: {
       title: 'Stato civile a confronto',

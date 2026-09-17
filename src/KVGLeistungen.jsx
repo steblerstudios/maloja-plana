@@ -914,13 +914,13 @@ export const TpwQuellen = ({ palette, t }) =>
     style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', lineHeight: leading.normal }
   },
     React.createElement('div', { style: { marginBottom: '4px' } }, t('kvg.tpwQuellenTitel')),
-    React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', gap: '4px 12px' } },
+    React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', gap: '0 6px' } },
       Object.keys(TAXPUNKTWERT_QUELLEN).sort().map((c) => {
         const q = TAXPUNKTWERT_QUELLEN[c];
         return React.createElement('li', { key: c },
           React.createElement(ExternerLink, {
             t, href: q.url,
-            style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-block', padding: '4px 0' }
+            style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 6px' }
           },
             React.createElement('span', { style: visuallyHiddenStyle }, t('kvg.tpwQuelleVor') + ' '),
             c + (q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
