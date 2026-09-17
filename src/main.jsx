@@ -1148,7 +1148,8 @@ const AppInner = ({ demo }) => {
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, t(demo ? 'beta.demoHint' : 'demo.bannerText'))
       ),
       React.createElement('button', {
-        onClick: demo ? demo.onLeave : beispielVerlassen,
+        // Ohne das Klick-Ereignis weiterreichen (onLeave nimmt Orts-Objekte an, Fix 17.09.2026).
+        onClick: demo ? () => demo.onLeave() : () => beispielVerlassen(),
         style: {
           padding: '6px 14px', background: palette.surface, border: '1px solid ' + palette.border,
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.xs, fontWeight: weight.medium,
