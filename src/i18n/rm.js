@@ -2246,6 +2246,15 @@ export default {
     openDossier: 'Avrir il dossier',
     printAction: 'Stampar sco PDF',
     exportJSON: 'Exportar la datoteca dal dossier',
+    // E40: Texte in der Dossier-Datei (neben festen Kennungen); anredefrei, sprache = Sprache dieser Texte
+    jsonTexte: {
+      sprache: "rm", // TODO(rm): provisorisch
+      basisEstv: "Stimà: salari net main las deducziuns standard dal calculatur da taglia da l'AFT {year}", // TODO(rm): provisorisch
+      basisDirekt: "Endatà (entrada taxabla, taglia federala directa)", // TODO(rm): provisorisch
+      kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
+      annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
+      annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
+    },
     generated: 'Creà ils {date}',
     disclaimer: { sie: "Quest dossier serva a l'orientaziun. Las calculaziuns sa basan sin Vossas indicaziuns e na remplazzan nagina examinaziun vinculanta da la post cumpetenta.", du: "Quest dossier serva a l'orientaziun. Las calculaziuns sa basan sin Tias indicaziuns e na remplazzan nagina examinaziun vinculanta da la post cumpetenta." },
     sectionPerson: 'Persuna',
@@ -2918,6 +2927,9 @@ export default {
     ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; senza entrada endatar 0).", // TODO(rm): provisorisch
     annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
+    // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
+    bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin l'entrada taxabla endatada. Senza entrada dal partenari u da la partenaria endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
+    ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
     annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
@@ -3489,6 +3501,10 @@ export default {
     tpwDataVersion: 'Stadi da la valur dal punct',
     // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
     tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',
+    // E41: Quellen-Links je Kanton
+    tpwQuellenTitel: "Funtaunas da las valurs dal punct 2026, tenor chantun:", // TODO(rm): provisorisch
+    tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
+    tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

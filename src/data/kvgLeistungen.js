@@ -173,6 +173,34 @@ export const TAXPUNKTWERT_DATA_VERSION = '2026-09-16';
 // gewähltem Kanton «Stand 2025, provisorisch» (kvg.tpwStandUnbelegt).
 export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', 'JU', 'NE', 'VS'];
 
+// E41 (Entscheid 17.09.2026): die Quelle je Kanton als Daten, damit die App sie verlinken kann.
+// Nur die URLs aus dem Kommentar oben — je Kanton die Quelle, die den geführten Wert trägt:
+//   art 'behoerde'     = Festsetzung oder amtliche Publikation (bei LU der wörtlich wiedergegebene
+//                        RRB im BVGer-Urteil; bei UR die Medienmitteilung des Regierungsrats)
+//   art 'tarifpartner' = Übersicht der Ärztegesellschaften (OW, NW; SZ 0.85 für santéservices —
+//                        das BVGer-Urteil C-718/2026 belegt dort nur den CSS-Wert 0.86)
+// Die neun Kantone aus TAXPUNKTWERT_UNBELEGT_2026 haben bewusst keinen Eintrag.
+const VZAG_LU = 'https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html';
+export const TAXPUNKTWERT_QUELLEN = {
+  AR: { art: 'behoerde', url: 'https://amtsblattportal.ch/api/v1/publications/261ae13b-1a69-475a-bac6-f40c18f7e696/attachments/36e30134-6bd5-4601-a192-c0a62e3ec610' },
+  BE: { art: 'behoerde', url: 'https://www.gsi.be.ch/content/dam/gsi/dokumente-bilder/de/themen/gesundheit/gesundheitsversorger/verfuegung-prov-tpw-tardoc-2026-de.pdf' },
+  BS: { art: 'behoerde', url: 'https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2' },
+  FR: { art: 'behoerde', url: 'https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24' },
+  GE: { art: 'behoerde', url: 'https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026' },
+  GR: { art: 'behoerde', url: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/InstitutionenGesundeitswesens/Spitaeler/Dok%20Spitler/%c3%9cbersicht%20Taxpunktwerte%202017-2026%20%28Stand%2007.09.2026%29.pdf' },
+  LU: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf' },
+  NW: { art: 'tarifpartner', url: VZAG_LU },
+  OW: { art: 'tarifpartner', url: VZAG_LU },
+  SG: { art: 'behoerde', url: 'https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf' },
+  SZ: { art: 'tarifpartner', url: VZAG_LU },
+  TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },
+  TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf' },
+  UR: { art: 'behoerde', url: 'https://www.ur.ch/mmregierungsrat/132029' },
+  VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981' },
+  ZG: { art: 'behoerde', url: 'https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf' },
+  ZH: { art: 'behoerde', url: 'https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/1299/RRB-2025-1299.pdf' },
+};
+
 export function berechneArztrechnung(taxpunkte, canton) {
   const tpw = TAXPUNKTWERT[canton] || 0.89;
   return {

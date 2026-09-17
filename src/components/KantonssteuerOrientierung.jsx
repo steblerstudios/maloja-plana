@@ -11,7 +11,8 @@ import { chf } from '../utils/steuerTexte.js';
 // schaetzung = Rückgabe von schaetzeKantonaleSteuer() (src/data/kantonaleSteuerdaten.js).
 
 // R4: Gründe ohne jede Steuerzahl (Bund und Kanton), mit einem gemeinsamen Text.
-const OHNE_ZAHL_TEXT = { rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen' };
+// K62.4: zivilstandDirekt = eingetragener Wert, Steuerrechner probeweise mit dem anderen Zivilstand.
+const OHNE_ZAHL_TEXT = { rente: 'tax.ohneZahlRente', selbstaendig: 'tax.ohneZahlSelbstaendig', partnerOffen: 'tax.ohneZahlPartnerOffen', zivilstandDirekt: 'tax.ohneZahlZivilstandDirekt' };
 
 // Gründe, die die Orientierung unter der Zahl schon erklärt — dort nicht doppelt nennen.
 export const ERKLAERT_IN_ORIENTIERUNG = ['brutto', ...Object.keys(OHNE_ZAHL_TEXT)];
@@ -23,9 +24,12 @@ export const orientierungsText = (t, schaetzung, jahr) =>
       ? t(OHNE_ZAHL_TEXT[schaetzung.grund])
       : schaetzung.grund === 'partner'
         ? t('tax.bandNotCheckedPartner')
-        : schaetzung.grund === 'brutto'
-          ? t('tax.bandNotCheckedBrutto')
-          : t('tax.bandNotChecked');
+        // K62.4: Bundessteuer steht (eingetragener Wert), nur die Kantonszahl fehlt.
+        : schaetzung.grund === 'partnerOffenDirekt'
+          ? t('tax.bandPartnerOffenDirekt')
+          : schaetzung.grund === 'brutto'
+            ? t('tax.bandNotCheckedBrutto')
+            : t('tax.bandNotChecked');
 
 // E39: warum es keine Bundessteuer-Zahl gibt (grund aus steuerbaresEinkommenFuerProfil).
 export const bundOhneZahlText = (t, grund) =>
