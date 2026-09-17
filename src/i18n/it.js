@@ -837,7 +837,7 @@ export default {
     capFrist: 'Scadenza',
     settings: 'Aspetto e lingua',
     completion: '{value}% completato',
-    privacyNote: { sie: '100% locale. Nessun dato lascia il Suo dispositivo.', du: '100% locale. Nessun dato lascia il tuo dispositivo.' },
+    privacyNote: { sie: 'Salvataggio locale. I dati inseriti non lasciano il Suo dispositivo.', du: 'Salvataggio locale. I dati inseriti non lasciano il tuo dispositivo.' },
     kkerst: 'Cassa malati — prima volta',
     pensionierung: 'Pensionamento',
     betreibung: 'Precetto esecutivo',
@@ -1163,7 +1163,7 @@ export default {
   },
   dashboard: {
     welcome: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
-    tagline: { sie: 'Il Suo organizzatore di vita svizzero — 100% privato, utilizzabile offline, gratuito.', du: 'Il tuo organizzatore di vita svizzero — 100% privato, utilizzabile offline, gratuito.' },
+    tagline: { sie: 'Il Suo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.', du: 'Il tuo organizzatore di vita svizzero — salvataggio locale, utilizzabile offline, gratuito.' },
     taglineBenefit: 'Calcolatore fiscale, riduzione premi, assistenza sociale, scheda d\'emergenza — senza registrazione.',
     progress: { sie: 'Il Suo progresso', du: 'Il tuo progresso' },
     progressComplete: { sie: 'Il Suo fascicolo di vita è al suo posto. Serenità.', du: 'Il tuo fascicolo di vita è al suo posto. Serenità.' },
@@ -1224,7 +1224,7 @@ export default {
     highlightSozialhilfeSub: { sie: 'CHF 1\'061/mese fabbisogno base (1 persona) — dove si trova?', du: 'CHF 1\'061/mese fabbisogno base (1 persona) — dove ti trovi?' },
     highlightNotfall: 'Prepara la scheda d\'emergenza',
     highlightNotfallSub: { sie: 'Pronta in 2 minuti — sul Suo dispositivo.', du: 'Pronta in 2 minuti — sul tuo dispositivo.' },
-    highlightPrivacy: { sie: '100% sul Suo dispositivo', du: '100% sul tuo dispositivo' },
+    highlightPrivacy: { sie: 'Dati inseriti sul Suo dispositivo', du: 'Dati inseriti sul tuo dispositivo' },
     quickCheckTitle: { sie: 'Verifica rapida: a cosa potrebbe avere diritto?', du: 'Verifica rapida: a cosa potresti avere diritto?' },
     quickCheckIpv: 'Riduzione dei premi',
     quickCheckWithIncome: 'Con questo reddito potrebbe sussistere un diritto a:',
@@ -1694,7 +1694,7 @@ export default {
     footer: 'Solo su questo dispositivo · Nessun server',
     emergency: 'Queste informazioni vengono salvate solo localmente.',
     localOnly: { sie: 'I Suoi dati restano su questo dispositivo.', du: 'I tuoi dati restano su questo dispositivo.' },
-    localBadge: { sie: '100% locale — i Suoi dati restano su questo dispositivo', du: '100% locale — i tuoi dati restano su questo dispositivo' },
+    localBadge: { sie: 'Salvataggio locale — i Suoi dati restano su questo dispositivo', du: 'Salvataggio locale — i tuoi dati restano su questo dispositivo' },
     dbBlocked: { sie: 'Maloja è aperto in un\'altra scheda. Chiuda le altre schede per poter salvare i documenti.', du: 'Maloja è aperto in un\'altra scheda. Chiudi le altre schede per poter salvare i documenti.' },
     chapterTrust: { sie: 'I Suoi dati vengono salvati solo localmente. Nessun server, nessun account.', du: 'I tuoi dati vengono salvati solo localmente. Nessun server, nessun account.' },
     detail1: { sie: 'Nessun account, nessun login, nessun server. I Suoi dati esistono solo in questo browser.', du: 'Nessun account, nessun login, nessun server. I tuoi dati esistono solo in questo browser.' },
@@ -3730,7 +3730,7 @@ export default {
   },
 
   beta: {
-    intro: { sie: 'La Sua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. 100% privato, utilizzabile offline, gratuito.', du: 'La tua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. 100% privato, utilizzabile offline, gratuito.' },
+    intro: { sie: 'La Sua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. Salvataggio locale, utilizzabile offline, gratuito.', du: 'La tua panoramica serena della vita in Svizzera — imposte, assicurazioni, documenti. Salvataggio locale, utilizzabile offline, gratuito.' },
     gateMessage: { sie: 'Questa app è in beta chiusa. Inserisca il codice di accesso.', du: 'Questa app è in beta chiusa. Inserisci il codice di accesso.' },
     legalLink: 'Privacy e note legali',
     codePlaceholder: 'Codice di accesso',
@@ -3860,7 +3860,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — raccoglitore di vita svizzero: imposte, aiuto sociale, assicurazioni',
-    description: 'Maloja Plana — raccoglitore di vita svizzero. Calcolatore d\'imposte, aiuto sociale, riduzione dei premi, scheda d\'emergenza — 100% privato, utilizzabile offline, gratuito.',
+    description: 'Maloja Plana — raccoglitore di vita svizzero. Calcolatore d\'imposte, aiuto sociale, riduzione dei premi, scheda d\'emergenza — salvataggio locale, utilizzabile offline, gratuito.',
   },
   obstgarten: {
     title: 'Il mio frutteto',
@@ -4542,7 +4542,7 @@ export default {
     intro: 'Un volantino stampabile con codice QR per Maloja Plana — ideale per consultori, comuni e bacheche.',
     claim: 'Capire ciò che spetta. Mettere in ordine ciò che attende.',
     lead: 'La Sua panoramica serena della vita in Svizzera.',
-    point1: '100% privato — tutto resta sul Suo dispositivo',
+    point1: 'I dati inseriti restano sul Suo dispositivo',
     point2: 'Gratuito e utilizzabile offline, senza account',
     point3: 'Disponibile in più lingue',
     scan: 'Scansionare e iniziare:',

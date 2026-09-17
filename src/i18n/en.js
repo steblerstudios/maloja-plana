@@ -837,7 +837,7 @@ export default {
     capFrist: 'Deadline',
     settings: 'View & language',
     completion: '{value}% complete',
-    privacyNote: '100% local. No data leaves your device.',
+    privacyNote: 'Stored locally. Your entries don’t leave your device.',
     kkerst: 'Health insurance — first time',
     pensionierung: 'Retirement',
     betreibung: 'Debt-collection notice',
@@ -1163,7 +1163,7 @@ export default {
   },
   dashboard: {
     welcome: 'Understand what you’re entitled to. Organize what lies ahead.',
-    tagline: 'Your personal Swiss life organizer — 100% private, works offline, free.',
+    tagline: 'Your personal Swiss life organizer — stored locally, works offline, free.',
     taglineBenefit: 'Tax calculator, premium subsidies, social assistance, emergency card — no sign-up needed.',
     progress: 'Your progress',
     progressComplete: 'Your life folder is in place. Peace of mind.',
@@ -1224,7 +1224,7 @@ export default {
     highlightSozialhilfeSub: 'CHF 1,061/mo. basic needs (1 person) — where do you stand?',
     highlightNotfall: 'Prepare emergency card',
     highlightNotfallSub: 'Ready in 2 minutes — stored on your device.',
-    highlightPrivacy: '100% on your device',
+    highlightPrivacy: 'Entries stay on your device',
     quickCheckTitle: 'Quick check: what might you be entitled to?',
     quickCheckIpv: 'Premium reduction',
     quickCheckWithIncome: 'With this income, you might be entitled to:',
@@ -1694,7 +1694,7 @@ export default {
     footer: 'Only on this device · No server',
     emergency: 'This information is stored locally only.',
     localOnly: 'Your data stays on this device.',
-    localBadge: '100% local — your data stays on this device',
+    localBadge: 'Stored locally — your data stays on this device',
     dbBlocked: 'Maloja is open in another tab. Please close the other tabs so documents can be saved.',
     chapterTrust: 'Your entries are stored locally only. No server, no account.',
     detail1: 'No account, no login, no server. Your data exists only in this browser on this device.',
@@ -3754,7 +3754,7 @@ export default {
   },
 
   beta: {
-    intro: 'Your calm overview of life in Switzerland — taxes, insurance, documents. 100% private, works offline, free.',
+    intro: 'Your calm overview of life in Switzerland — taxes, insurance, documents. Stored locally, works offline, free.',
     gateMessage: 'This app is in closed beta. Please enter the access code.',
     codePlaceholder: 'Access code',
     codeWrong: 'This code is not valid.',
@@ -3883,7 +3883,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — your Swiss life organizer: taxes, social assistance, insurance',
-    description: 'Maloja Plana — your Swiss life organizer. Tax calculator, social assistance, premium reduction, emergency card — 100% private, works offline, free.',
+    description: 'Maloja Plana — your Swiss life organizer. Tax calculator, social assistance, premium reduction, emergency card — stored locally, works offline, free.',
   },
   obstgarten: {
     title: 'My orchard',
@@ -4435,7 +4435,7 @@ export default {
     intro: "A printable flyer with a QR code to Maloja Plana — ideal for advice offices, communities and notice boards.",
     claim: "Understand what you're entitled to. Sort out what's next.",
     lead: "Your calm overview of life in Switzerland.",
-    point1: "100% private — everything stays on your device",
+    point1: "Your entries stay on your device",
     point2: "Free & works offline, no account",
     point3: "Available in several languages",
     scan: "Scan & get started:",
