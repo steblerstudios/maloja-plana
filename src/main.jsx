@@ -1424,6 +1424,11 @@ const App = () => React.createElement(I18nProvider, null,
 
 // R4: Löschweg in einem anderen Maloja-Tab (utils/datenLoeschen.js, LOESCH_SIGNAL) —
 // hier nichts mehr zurückschreiben, nach dem Löschen neu laden (leerer Stand).
+// Kommt «neu» nie an (löschender Tab mitten im Löschen geschlossen), lädt dieser Tab
+// nach einer Frist selbst neu — sonst tippte man hier weiter, ohne dass etwas
+// gespeichert wird. Die Frist liegt über dem längsten Löschen (4 Datenbanken × 8 s),
+// damit ein Neuladen nie alte Angaben liest, während das Löschen noch läuft.
+const LOESCH_FRIST_MS = 45000;
 window.addEventListener('storage', (e) => {
   if (e.key !== 'or5_loeschsignal' || !e.newValue) return;
   try {
@@ -1431,6 +1436,7 @@ window.addEventListener('storage', (e) => {
     Object.getPrototypeOf(indexedDB).open = () => { throw new Error('Daten gelöscht'); };
   } catch { /* ohne Speicher nichts zu sperren */ }
   if (e.newValue === 'neu') location.reload();
+  else setTimeout(() => location.reload(), LOESCH_FRIST_MS);
 });
 
 // Prevent duplicate createRoot calls during Vite HMR

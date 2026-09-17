@@ -82,7 +82,7 @@ export const druckAbschnitte = (t, w) => {
   // R4: die Annahmen hinter der Zahl (13. Monatslohn offen, Alleinverdiener-Ehepaar).
   const annahmen = (w.kantonal || w.taxResult) ? annahmenTexte(t, w.annahmen) : [];
   if (annahmen.length) {
-    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#888">' + annahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
+    zeilen.push({ label: t('tax.annahmenLabel'), html: '<tr><td colspan="2" style="font-size:12px;color:#6B6560">' + annahmen.map(escapeHtml).join('<br>') + '</td></tr>' });
   }
 
   zeilen.push({ label: t('finanzUebersicht.ipv'), html: '<tr><td>' + t('finanzUebersicht.ipv') + '</td><td class="r">' + (w.ipv.eligible ? '✓ ' + fmt(w.ipv.amount) + ' ' + t('common.perMonth') : w.ipv.belegt === false ? t('ipv.statusOffen') : t('finanzUebersicht.notEligible')) + '</td></tr>' });
