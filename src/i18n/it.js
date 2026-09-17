@@ -5,7 +5,7 @@ export default {
     neuerTab: 'si apre in una nuova scheda',
   },
   lebenszustaende: {
-    sectionTitle: 'Una di queste situazioni la riguarda?',
+    sectionTitle: 'Una di queste situazioni è pertinente?',
     sectionIntro: { sie: 'Alcuni aiuti non dipendono da un singolo evento, ma da una situazione che dura nel tempo. Scelga ciò che corrisponde. Resta sul suo dispositivo e serve solo a mostrarle ciò che fa al caso suo — nessun profilo, nessun giudizio.', du: 'Alcuni aiuti non dipendono da un singolo evento, ma da una situazione che dura nel tempo. Scegli ciò che corrisponde. Resta sul tuo dispositivo e serve solo a mostrarti ciò che fa al caso tuo — nessun profilo, nessun giudizio.' },
     selectHint: 'Tocchi una situazione per vedere cosa potrebbe spettarle.',
     quelleLabel: 'Fonte',
@@ -335,7 +335,7 @@ export default {
     stepElTitle: '4 · Rendita per superstiti & prestazioni complementari',
     stepElText: 'I superstiti hanno spesso diritto a una rendita per vedove, vedovi o orfani. Se non copre le spese di vita, le prestazioni complementari (PC) possono integrarla — non un’elemosina, ma un diritto legale.',
     step4Title: '5 · Eredità & successione',
-    step4Text: 'A seconda della situazione la successione richiede un certificato ereditario; un testamento viene aperto dal tribunale. Importante: se la successione è oberata di debiti, l’eredità può essere rifiutata entro tre mesi — altrimenti si ereditano anche i debiti. In caso di dubbio, fatevi consigliare per tempo.',
+    step4Text: 'A seconda della situazione la successione richiede un certificato ereditario; un testamento viene aperto dal tribunale. Importante: se la successione è oberata di debiti, l’eredità può essere rifiutata entro tre mesi — altrimenti si ereditano anche i debiti. In caso di dubbio, è meglio farsi consigliare per tempo.',
     step4Button: 'Ricorda il termine «Verificare/rifiutare l’eredità» ({date})',
     step4Done: 'Termine salvato nel calendario.',
     step4CalendarLink: 'Vedi nel calendario',

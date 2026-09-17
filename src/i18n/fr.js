@@ -3850,7 +3850,7 @@ export default {
     thPremium: 'Prime/mois',
     thInsurer: 'Caisse',
     allInsurersTitle: 'Comparer toutes les caisses',
-    compareFranchiseNote: 'Primes mensuelles avec franchise CHF {franchise} — la moins chère en premier. Touchez une caisse pour les détails.',
+    compareFranchiseNote: 'Primes mensuelles avec franchise CHF {franchise} — la moins chère en premier. Toucher une caisse pour les détails.',
     chooseTarget: 'Caisse souhaitée',
     targetSelected: 'Souhaitée',
     targetChosenHint: 'Caisse souhaitée : {insurer} — elle apparaît dans le processus de changement.',

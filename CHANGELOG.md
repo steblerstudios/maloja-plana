@@ -14,6 +14,7 @@ kommt der Changelog immer mit, nie doppelt.*
 ### Geändert
 - **K73 · Italienisch siezt in der Sie-Ansicht:** 14 italienische Texte duzten, obwohl der deutsche Text keine Anrede hat — sie erschienen so auch in der Sie-Ansicht. Jetzt anredefrei (Titel im Infinitiv) oder mit Sie- und Du-Fassung; ebenso einzelne französische Titel und Hinweise. Ein Test verhindert neue Fälle.
 - **K75 · Schriften in der Lizenzliste:** Lexend, Hanken Grotesk und Atkinson Hyperlegible statt der früheren DM Sans und Cormorant.
+- **K79 · Du-Ansicht ohne feste Sie-Formen:** Rund 57 französische und 6 deutsche Texte siezten fest und erschienen so auch in der Du-Ansicht — jetzt anredefrei oder mit Sie- und Du-Fassung. Dazu 34 italienische Hinweise mit Du-Verbform ohne Pronomen («hai», «Usa …»), jetzt unpersönlich, und zwei deutsche Hinweise im Infinitiv. Briefe an Stellen und der Flyer siezen bewusst weiter. Ein Test prüft fr und de.
 - **E43 · belegbare Privatheits-Aussagen:** «100 % privat» und «100 % lokal» sind ersetzt durch «lokal gespeichert» bzw. «Ihre Eingaben bleiben auf Ihrem Gerät» — in `index.html`, Manifest und App (5 Sprachen; Slogan, Beta-Einstieg, Datenschutz-Hinweis, Vertrauens-Badge, Flyer). Grund: Beim Laden verarbeitet der Hoster technische Daten; die absolute Form war angreifbar. Ein Test verhindert die alte Formulierung (K78).
 - **K77 · Doku ohne unbelegte Aussagen:** «nDSG-konform» als juristisch nicht geprüft gekennzeichnet; Vercel-Angaben auf Infomaniak nachgeführt.
 
