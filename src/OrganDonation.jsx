@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import QRCode from './vendor/qrcodejs.js';
+import { qrZeichnen } from './utils/qrSicher.js';
 import { Icon } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
@@ -15,6 +15,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     pancreas: false, corneas: false, bone: false, tissue: false, other: ''
   });
   const [qrGenerated, setQRGenerated] = useState(false);
+  const [qrFehler, setQrFehler] = useState(false);
   const qrRef = useRef(null);
 
   const organOptions = [
@@ -43,7 +44,8 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
     setTimeout(() => {
       const cont = qrRef.current;
-      if (cont) { cont.innerHTML = ''; new QRCode(cont, { text: qrData, width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface }); }
+      // K80: vorher warf ein Name mit Umlaut hier unabgefangen → leere Fläche.
+      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface }));
     }, 100);
 
     setQRGenerated(true);
@@ -115,7 +117,8 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
 
       qrGenerated && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center', marginBottom: space.md } },
         React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.generateQr')),
-        React.createElement('div', { ref: qrRef, style: { display: 'flex', justifyContent: 'center', marginBottom: space.sm, minHeight: '220px' } })
+        React.createElement('div', { ref: qrRef, style: { display: qrFehler ? 'none' : 'flex', justifyContent: 'center', marginBottom: space.sm, minHeight: '220px' } }),
+        qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, t('common.qrFehler'))
       ),
 
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },

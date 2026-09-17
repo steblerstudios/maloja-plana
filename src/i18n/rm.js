@@ -747,6 +747,8 @@ export default {
     remove: 'Allontanar posiziun',
   },
   common: {
+    // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
+    qrFehler: 'Il code QR n’ha betg pudì vegnir generà per il mument.',
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -2100,6 +2102,9 @@ export default {
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",
     qrTitle: 'QR d’urgenza per ils squadruns da salvament',
     qrHint: 'Scannabel cun mintga smartphone — mussa las infurmaziuns d’urgenza pli impurtantas offline, senza internet. Stampar per purtar cun sai (p.ex. en il portamonnaida).',
+    // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
+    qrGekuerzt: 'Il code QR cuntegna ina versiun scursanida. Tut las indicaziuns èn cumplettas en il dossier sutvart.',
+    qrFehler: 'Il code QR n’ha betg pudì vegnir generà. Tut las indicaziuns èn cumplettas en il dossier sutvart.',
     footerCredit: 'Creà cun Maloja Plana',
     privacyNote: 'Quest dossier cuntegna infurmaziuns persunalas da sanadad.',
     generated: 'Creà ils {date}',

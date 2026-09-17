@@ -720,6 +720,7 @@ export default {
     remove: 'Posten entfernen',
   },
   common: {
+    qrFehler: 'Der QR-Code liess sich gerade nicht erzeugen.',
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -3462,6 +3463,8 @@ export default {
     footerPrivacy: 'Dieses Dossier enthält persönliche Gesundheitsinformationen. Bitte sorgfältig aufbewahren.',
     qrTitle: 'Notfall-QR für Rettungskräfte',
     qrHint: 'Scannbar mit jedem Smartphone — zeigt die wichtigsten Notfall-Infos offline an, ohne Internet. Zum Mitführen ausdrucken (z.B. ins Portemonnaie).',
+    qrGekuerzt: 'Der QR-Code enthält eine Kurzfassung. Alle Angaben stehen vollständig im Dossier unten.',
+    qrFehler: 'Der QR-Code liess sich nicht erzeugen. Alle Angaben stehen vollständig im Dossier unten.',
     footerCredit: 'Erstellt mit Maloja Plana',
     privacyNote: 'Dieses Dossier enthält persönliche Gesundheitsinformationen.',
     generated: 'Erstellt am {date}',

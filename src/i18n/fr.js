@@ -720,6 +720,7 @@ export default {
     remove: 'Supprimer le poste',
   },
   common: {
+    qrFehler: 'Le code QR n’a pas pu être généré pour le moment.',
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -3455,6 +3456,8 @@ export default {
     footerPrivacy: 'Ce dossier contient des informations de santé personnelles. Veuillez le conserver avec soin.',
     qrTitle: 'QR d’urgence pour les secours',
     qrHint: 'Scannable avec n’importe quel smartphone — affiche les informations d’urgence essentielles hors ligne, sans internet. À imprimer pour l’emporter (p.ex. dans le portefeuille).',
+    qrGekuerzt: 'Le code QR contient une version abrégée. Toutes les indications figurent en entier dans le dossier ci-dessous.',
+    qrFehler: 'Le code QR n’a pas pu être généré. Toutes les indications figurent en entier dans le dossier ci-dessous.',
     footerCredit: 'Créé avec Maloja Plana',
     privacyNote: 'Ce dossier contient des informations de santé personnelles.',
     generated: 'Créé le {date}',

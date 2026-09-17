@@ -720,6 +720,7 @@ export default {
     remove: 'Rimuovi voce',
   },
   common: {
+    qrFehler: 'Al momento non è stato possibile generare il codice QR.',
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -3432,6 +3433,8 @@ export default {
     footerPrivacy: 'Questo dossier contiene informazioni sanitarie personali. Conservalo con cura.',
     qrTitle: 'QR d’emergenza per i soccorritori',
     qrHint: 'Scansionabile con qualsiasi smartphone — mostra le informazioni d’emergenza principali offline, senza internet. Da stampare e portare con sé (p.es. nel portafoglio).',
+    qrGekuerzt: 'Il codice QR contiene una versione abbreviata. Tutte le indicazioni figurano per intero nel dossier qui sotto.',
+    qrFehler: 'Non è stato possibile generare il codice QR. Tutte le indicazioni figurano per intero nel dossier qui sotto.',
     footerCredit: 'Creato con Maloja Plana',
     privacyNote: 'Questo dossier contiene informazioni sanitarie personali.',
     generated: 'Creato il {date}',

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import QRCode from './vendor/qrcodejs.js';
+import { qrZeichnen } from './utils/qrSicher.js';
 import { Icon } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
@@ -16,15 +16,11 @@ export const FlyerView = ({ palette, t, lang }) => {
   const url = 'https://malojaplana.ch/?lang=' + (lang || 'de');
 
   useEffect(() => {
-    if (!qrRef.current) return;
-    qrRef.current.innerHTML = '';
-    try {
-      new QRCode(qrRef.current, {
-        text: url, width: 160, height: 160,
-        colorDark: '#1F2421', colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M,
-      });
-    } catch (e) { /* QR generation failed silently */ }
+    // Ohne Code druckt der Flyer ohne Bild (siehe handlePrint), das ist der ruhige Rückfall.
+    qrZeichnen(qrRef.current, url, {
+      width: 160, height: 160,
+      colorDark: '#1F2421', colorLight: '#ffffff',
+    });
   }, [url]);
 
   const handlePrint = () => {
