@@ -31,7 +31,7 @@ Details: [docs/security/](docs/security/)
 ## Security-Header
 
 Im Browser gesetzt (via `index.html`, Meta-Tags):
-- **Content-Security-Policy** — `default-src 'self'`, `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`. Die Direktive `frame-ancestors 'none'` steht ebenfalls im Meta-Tag, wird dort vom Browser aber **ignoriert** — sie wirkt nur als HTTP-Header. Der Clickjacking-Schutz kommt deshalb nicht aus der CSP, sondern aus dem HTTP-Header `X-Frame-Options: SAMEORIGIN` (unten). Bis zum 15.09.2026 stand hier «`frame-ancestors 'none'` (Clickjacking-Schutz)» bei der Meta-CSP; das war nicht zutreffend.
+- **Content-Security-Policy** — `default-src 'self'`, `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`. **Ohne** `frame-ancestors`: die Direktive wirkt nur als HTTP-Header, im Meta-Tag ignoriert der Browser sie und meldet einen Konsolenfehler (Lighthouse «Best Practices», 16.09.2026). Sie stand bis 17.09.2026 wirkungslos im Meta-Tag und ist dort entfernt. Der Clickjacking-Schutz kommt aus dem HTTP-Header `X-Frame-Options: SAMEORIGIN` (unten). Wird die CSP später als Header gesetzt (Bau-Liste O8), gehört `frame-ancestors 'none'` dort hinein. Bis zum 15.09.2026 stand hier «`frame-ancestors 'none'` (Clickjacking-Schutz)» bei der Meta-CSP; das war nicht zutreffend.
 - **Referrer-Policy** — `strict-origin-when-cross-origin` (`<meta name="referrer">`).
 
 Als **echte HTTP-Header** live gemessen (`curl -sI https://malojaplana.ch`, 15.09.2026; gesetzt im Infomaniak-Hosting-Panel, kein `.htaccess` — löst 503 aus):

@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
   <!-- Referrer-Policy wirkt als Meta-Tag; HSTS/nosniff/Permissions-Policy nur als echte HTTP-Header (Infomaniak-Panel, siehe SECURITY.md). -->
+  <!-- Kein frame-ancestors hier: im Meta-Tag ignoriert der Browser die Direktive und meldet einen Konsolenfehler.
+       Clickjacking-Schutz = HTTP-Header X-Frame-Options (Panel); als CSP-Header siehe Bau-Liste O8. -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <!-- Thema vor dem ersten Rendern (Bau-Liste K4): setzt data-theme aus or5_theme, damit der
        Dunkelmodus beim Laden nicht hell aufblitzt. Eigene Datei, weil die CSP nur script-src 'self'

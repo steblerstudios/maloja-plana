@@ -35,8 +35,9 @@ Einzige echte Angriffsfläche im Frontend. `React.createElement` schützt by def
 - 🟡 ErrorBoundary vorhanden. Keine sensiblen `console.log` mit Personendaten einbauen.
 
 ### 9 · HTTPS & Transport-Security
-- ✅ CSP self-only in `index.html` (Meta-Tag). `frame-ancestors 'none'` steht dort ebenfalls,
-  wird als Meta aber vom Browser ignoriert — **kein** Clickjacking-Schutz aus der CSP. Bis
+- ✅ CSP self-only in `index.html` (Meta-Tag). **Ohne** `frame-ancestors` seit 17.09.2026 —
+  als Meta ignoriert der Browser die Direktive (Konsolenfehler), **kein** Clickjacking-Schutz
+  aus der CSP. Bei einem CSP-Header (Bau-Liste O8) dort `frame-ancestors 'none'` ergänzen. Bis
   15.09.2026 stand hier «`frame-ancestors 'none'` = Clickjacking-Schutz»; nicht zutreffend.
 - ✅ Clickjacking-Schutz über den HTTP-Header `X-Frame-Options: SAMEORIGIN` — live gemessen
   15.09.2026 (`curl -sI https://malojaplana.ch`), gesetzt im Infomaniak-Panel.
