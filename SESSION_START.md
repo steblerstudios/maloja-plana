@@ -7,7 +7,27 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, früh (`main` = `6cdcef6` nach **PR #189**, 0 offene PRs · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187, #188 · 1750 Tests grün, Hauptbundle 61.5 kB von 65)
+**Stand:** 2026-09-17, 02:10 (`main` = `da7c5c3` nach **PR #191**, 0 offene PRs · **live `index-91c30770.js` = 0.1.29-beta seit 17.09. 01:46**, Tag `v0.1.29-beta` = `2fcf409` · gemergt, nicht live: #186, #187, #188, #191 · 1750 Tests grün, Hauptbundle 61.5 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 02:10 (PageSpeed-Befund, #191 gemergt, nicht live)
+>
+> **Anlass:** PageSpeed Insights 16.09. 18:30 für `https://malojaplana.ch/` (Mobil): Leistung 98 ·
+> Barrierefreiheit 100 · Best Practices 96 · SEO 100. **#191** (`c7f1282`, Merge `da7c5c3`):
+> `frame-ancestors 'none'` aus der Meta-CSP in `index.html` entfernt (wirkte dort nie, Konsolenfehler);
+> Clickjacking-Schutz bleibt der Panel-Header `X-Frame-Options: SAMEORIGIN`. Doku nachgeführt
+> (SECURITY, Checkliste, DSFA-Kurzfassung, SECURITY_ARCHITECTURE), Bau-Liste O8 ergänzt, **O20 neu**.
+> **Geprüft:** vitest 1750/1750, Build ok, `dist/` lokal ohne Konsolenfehler; Gegenprobe (Direktive per
+> JS eingefügt) erzeugt genau den Lighthouse-Fehler. **Live noch mit Direktive** (`curl` 02:08: 1 Treffer,
+> Bundle `index-91c30770.js`) — kommt mit dem nächsten Deploy.
+> **Befund:** Cache-Control für `/assets/` und `/fonts/` fehlt live (252 KiB). Geht **nicht** über
+> `public/.htaccess`: `deploy.sh` löscht sie (Infomaniak liefert sonst 503). Alle Live-Header kommen
+> aus dem Infomaniak-Panel → daher auch die Abweichung `geolocation=(self)` (Repo) vs `()` (live).
+> **Panel-Durchgang für Stebler Studios:** O20 (Cache `/assets/`+`/fonts/` 1 Jahr `immutable`, nicht
+> für `index.html`/`sw.js`/`theme-init.js`) · HSTS auf `31536000` · M15 `geolocation=(self)` · O8 CSP-Header
+> mit `frame-ancestors 'none'`. Nach dem Deploy PageSpeed neu laufen lassen (Erwartung: Best Practices ↑).
+> **Datenschutz:** Indexierung/Search Console verlangt keine Änderung der Datenschutzerklärung (keine
+> Cookies, CSP self-only, localStorage und Server-Logs sind genannt). Kleine Präzisierung angeboten,
+> nicht umgesetzt: «Eingaben werden nie an einen Server übertragen» statt «keine Daten».
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, früh (0.1.29-beta live, R4 gemergt)
 >
