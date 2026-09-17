@@ -12,6 +12,7 @@
 
 import { getFullName } from './config/constants.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
+import { annahmenTexte } from './utils/steuerTexte.js';
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -778,10 +779,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       }
     }
     // R4: die Annahmen hinter der Zahl (dieselben wie im Steuerrechner und in der Finanzübersicht).
-    const annahmen = [
-      tax.annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
-      tax.annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
-    ].filter(Boolean);
+    const annahmen = annahmenTexte(t, tax.annahmen);
     if (annahmen.length) taxRows.push({ label: t('tax.annahmenLabel'), value: annahmen.join(' ') });
     sections.push({
       key: 'steuern',

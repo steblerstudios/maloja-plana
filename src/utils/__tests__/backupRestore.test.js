@@ -11,7 +11,7 @@ vi.mock('../storage.js', () => ({
   },
 }));
 
-import { restoreBackup, MAX_BACKUP_FILE_BYTES, exceedsBackupFileLimit } from '../backupCrypto.js';
+import { restoreBackup, createPreRestoreSnapshot, MAX_BACKUP_FILE_BYTES, exceedsBackupFileLimit } from '../backupCrypto.js';
 
 // Schlanker localStorage-Mock (Node-Testumgebung hat kein localStorage).
 function installLocalStorageMock() {
@@ -124,6 +124,54 @@ describe('restoreBackup — Schnappschuss scheitert (Speicher voll)', () => {
   });
 });
 
+// K61 — Scheitert der Schnappschuss MITTENDRIN (erster Schlüssel geschrieben,
+// zweiter am vollen Speicher gescheitert), dürfen die *_prerestore-Schlüssel
+// nicht aus zwei Ständen gemischt bleiben: alles aus diesem Lauf zurück.
+describe('restoreBackup — Schnappschuss scheitert mittendrin', () => {
+  let map;
+  const ALT_DATA = JSON.stringify({ basis: { canton: 'LU' } });
+  beforeEach(() => {
+    map = installLocalStorageMock();
+    idbMap.clear();
+    seed();
+    // Stand eines früheren Wiederherstellens: data hatte schon einen Schnappschuss,
+    // docs noch keinen.
+    localStorage.setItem('or5_data_prerestore', ALT_DATA);
+    localStorage.setItem('or5_prerestore_date', '2026-01-01T00:00:00.000Z');
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => {
+      if (k === 'or5_docs_prerestore') { const e = new Error('Speicher voll'); e.name = 'QuotaExceededError'; throw e; }
+      echt(k, v);
+    };
+  });
+
+  it('setzt die in diesem Lauf geschriebenen Schlüssel zurück und überschreibt nichts', async () => {
+    const vorher = JSON.stringify([...map.entries()]);
+    const r = await restoreBackup(gut());
+    expect(r.success).toBe(false);
+    expect(r.blocked).toBe(false);
+    expect(r.error).toBe('Speicher voll');
+    expect(r.restored).toEqual([]);
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(ALT_DATA);
+    expect(localStorage.getItem('or5_docs_prerestore')).toBeNull();
+    expect(localStorage.getItem('or5_prerestore_date')).toBe('2026-01-01T00:00:00.000Z');
+    expect(JSON.stringify([...map.entries()])).toBe(vorher);
+    expect(idbMap.size).toBe(0);
+  });
+
+  it('entfernt einen Schlüssel, der vorher nicht existierte', async () => {
+    localStorage.removeItem('or5_data_prerestore');
+    await restoreBackup(gut());
+    expect(localStorage.getItem('or5_data_prerestore')).toBeNull();
+    expect(map.has('or5_data_prerestore')).toBe(false);
+  });
+
+  it('wirft aus createPreRestoreSnapshot den ursprünglichen Fehler weiter', () => {
+    expect(() => createPreRestoreSnapshot()).toThrow('Speicher voll');
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(ALT_DATA);
+  });
+});
+
 describe('Grössenlimit vor dem Lesen', () => {
   it('Limit ist 50 MB', () => {
     expect(MAX_BACKUP_FILE_BYTES).toBe(50 * 1024 * 1024);
@@ -142,5 +190,40 @@ describe('Grössenlimit vor dem Lesen', () => {
     expect(exceedsBackupFileLimit(undefined)).toBe(false);
     expect(exceedsBackupFileLimit(NaN)).toBe(false);
     expect(exceedsBackupFileLimit(-1)).toBe(false);
+  });
+});
+
+// Vorab-Prüfung 0.1.32 (sechs Prüfer): Ist ein Bereich jetzt leer, blieb seine
+// Kopie aus einem früheren Lauf neben den neuen stehen — ein Schnappschuss aus
+// zwei Ständen. Und die Auto-Sicherung schrieb am Schnappschuss vorbei.
+describe('Schnappschuss: leere Bereiche und Auto-Sicherung (K61)', () => {
+  beforeEach(() => { installLocalStorageMock(); });
+
+  it('entfernt die ältere Kopie eines jetzt leeren Bereichs', () => {
+    localStorage.setItem('or5_contacts_prerestore', 'ALT aus frueherem Lauf');
+    localStorage.setItem('or5_data', JSON.stringify(VORHER));
+    createPreRestoreSnapshot();
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(JSON.stringify(VORHER));
+    expect(localStorage.getItem('or5_contacts_prerestore')).toBeNull();
+    expect(localStorage.getItem('or5_prerestore_date')).not.toBeNull();
+  });
+
+  it('stellt die ältere Kopie wieder her, wenn der Schnappschuss danach scheitert', () => {
+    const map = installLocalStorageMock();
+    localStorage.setItem('or5_contacts_prerestore', 'ALT');
+    localStorage.setItem('or5_data', 'NEU');
+    const set = localStorage.setItem;
+    localStorage.setItem = (k, v) => { if (k === 'or5_prerestore_date') throw new Error('Speicher voll'); set(k, v); };
+    expect(() => createPreRestoreSnapshot()).toThrow('Speicher voll');
+    expect(map.get('or5_contacts_prerestore')).toBe('ALT');
+    expect(map.has('or5_data_prerestore')).toBe(false);
+  });
+
+  it('die Auto-Sicherung nutzt denselben Schnappschuss und bricht ab, wenn er scheitert', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync(new URL('../autoBackup.js', import.meta.url), 'utf8');
+    expect(src).toContain("import { createPreRestoreSnapshot } from './prerestore.js'");
+    expect(src).toMatch(/try \{\s*createPreRestoreSnapshot\(\);\s*\} catch/);
+    expect(src).not.toContain("localStorage.setItem('or5_data_prerestore'");
   });
 });

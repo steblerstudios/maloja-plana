@@ -7,6 +7,7 @@
 // No network. No cloud. Fully local.
 import { hydrateDocs, saveDocBlob, splitDocsForMigration } from './docBlobs.js';
 import { openIDB, openIDBWithStore } from './idbUtils.js';
+import { createPreRestoreSnapshot } from './prerestore.js';
 
 const BACKUP_DB_NAME = 'maloja-plana-backups';
 const OLD_BACKUP_DB_NAME = 'ordnung-ruhe-backups';
@@ -360,10 +361,12 @@ export async function restoreBackup(backupId) {
       return { success: false, error: 'not_found' };
     }
 
-    // Safety: backup current data before restoring
-    const currentData = localStorage.getItem('or5_data');
-    if (currentData) {
-      localStorage.setItem('or5_data_prerestore', currentData);
+    // Safety: vollständiger Schnappschuss vor dem Wiederherstellen (K61). Scheitert
+    // er (z. B. Speicher voll), wird nichts überschrieben.
+    try {
+      createPreRestoreSnapshot();
+    } catch (e) {
+      return { success: false, error: (e && e.message) || String(e) };
     }
 
     // Restore

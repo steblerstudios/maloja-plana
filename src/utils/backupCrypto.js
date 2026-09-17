@@ -209,22 +209,10 @@ export function detectBackupType(arrayBuffer) {
   return 'unknown';
 }
 
-/**
- * Create a pre-restore snapshot of current data.
- * Stored in localStorage as or5_data_prerestore, or5_docs_prerestore, or5_reminders_prerestore.
- */
-export function createPreRestoreSnapshot() {
-  const snapshot = {};
-  for (const key of ['or5_data', 'or5_docs', 'or5_reminders', 'or5_contacts', 'or5_merkliste']) {
-    const val = localStorage.getItem(key);
-    if (val) {
-      localStorage.setItem(key + '_prerestore', val);
-      snapshot[key] = true;
-    }
-  }
-  localStorage.setItem('or5_prerestore_date', new Date().toISOString());
-  return snapshot;
-}
+// K61: der Schnappschuss liegt in ./prerestore.js, damit auch die Auto-Sicherung
+// ihn nutzt, ohne den Krypto-Code zu laden.
+export { createPreRestoreSnapshot } from './prerestore.js';
+import { createPreRestoreSnapshot } from './prerestore.js';
 
 /**
  * Restore from a validated backup object.

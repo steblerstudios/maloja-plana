@@ -109,6 +109,65 @@ function persistLanguage(lang) {
   } catch (e) { /* History API nicht verfügbar */ }
 }
 
+// ─── K60: Startfehler statt weisser Seite ─────────────────────
+// Scheitern beim ersten Start gewählte UND Rückfall-Sprache (Chunk-404 nach
+// einem Deploy mit alter index.html, offline), wird einmal pro Sitzung neu
+// geladen; danach erscheint ein ruhiger Fehlerzustand. Die Sprachdateien sind
+// dann nicht verfügbar — deshalb stehen die Texte hier fest.
+const RELOAD_MARK = 'or5_i18n_reload';
+
+function sessionStore() {
+  try { return window.sessionStorage; } catch (e) { return undefined; }
+}
+
+// Gibt true zurück, wenn neu geladen wird. Ohne nutzbaren Sitzungsspeicher
+// kein Neuladen — eine Endlosschleife liesse sich sonst nicht ausschliessen.
+export function neuLadenEinmal({ storage, reload }) {
+  try {
+    if (!storage || storage.getItem(RELOAD_MARK)) return false;
+    storage.setItem(RELOAD_MARK, '1');
+  } catch (e) { return false; }
+  reload();
+  return true;
+}
+
+export function neuLadenMarkeLoeschen(storage) {
+  try { if (storage) storage.removeItem(RELOAD_MARK); } catch (e) { /* */ }
+}
+
+// Ablauf bei einem Ladefehler vor der ersten angezeigten Sprache.
+export function startLadefehler({ lang, defaultLang, request, reloadOnce, fail }) {
+  if (lang !== defaultLang) request(defaultLang);
+  else if (!reloadOnce()) fail();
+}
+
+const START_FEHLER = {
+  de: ['Maloja konnte nicht vollständig geladen werden. Bitte laden Sie die Seite neu.', 'Neu laden'],
+  fr: ['Maloja n’a pas pu être chargé entièrement. Veuillez recharger la page.', 'Recharger'],
+  it: ['Maloja non è stato caricato completamente. Ricarichi la pagina.', 'Ricarica'],
+  en: ['Maloja could not be loaded completely. Please reload the page.', 'Reload'],
+};
+
+export function startFehlerText(navLang) {
+  const p = String(navLang || '').toLowerCase().split('-')[0];
+  const lang = START_FEHLER[p] ? p : 'de';
+  return { lang, text: START_FEHLER[lang][0], knopf: START_FEHLER[lang][1] };
+}
+
+const START_FEHLER_CSS = '.or5-sf{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;box-sizing:border-box;background:#f7f5f0;color:#2b2a27;font:17px/1.5 system-ui,sans-serif;text-align:center}'
+  + '.or5-sf p{margin:0;max-width:32em}'
+  + '.or5-sf button{min-height:44px;min-width:44px;padding:10px 20px;border:1px solid #2b2a27;border-radius:8px;background:#2b2a27;color:#f7f5f0;font:inherit;cursor:pointer}'
+  + '@media (prefers-color-scheme: dark){.or5-sf{background:#1c1b19;color:#ecebe6}.or5-sf button{background:#ecebe6;color:#1c1b19;border-color:#ecebe6}}';
+
+export function StartFehler({ navLang }) {
+  const { lang, text, knopf } = startFehlerText(navLang);
+  const h = React.createElement;
+  return h('div', { className: 'or5-sf', role: 'alert', lang },
+    h('style', null, START_FEHLER_CSS),
+    h('p', null, text),
+    h('button', { type: 'button', onClick: () => window.location.reload() }, knopf));
+}
+
 export const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
@@ -116,6 +175,7 @@ export function I18nProvider({ children }) {
   const [lang, setLangState] = useState(null);
   const [anrede, setAnredeState] = useState(() => { try { return localStorage.getItem('or5_anrede') || 'sie'; } catch (e) { return 'sie'; } });
   const [translations, setTranslations] = useState({});
+  const [startFehler, setStartFehler] = useState(false);
   const langRef = useRef(null);
   const switchRef = useRef(null);
 
@@ -125,15 +185,23 @@ export function I18nProvider({ children }) {
     const request = createLanguageSwitch({
       load: loadTranslation,
       onReady: (l, opts) => {
+        if (langRef.current === null) neuLadenMarkeLoeschen(sessionStore());
         langRef.current = l;
         setTranslations({ ...cache });
         setLangState(l);
         if (opts && opts.persist) persistLanguage(l);
       },
       onError: (l) => {
-        // Erststart: gewählte Sprache nicht ladbar → Rückfall-Sprache.
-        // Später: bisherige Sprache bleibt einfach stehen.
-        if (langRef.current === null && l !== DEFAULT_LANG) request(DEFAULT_LANG);
+        // Erststart: gewählte Sprache nicht ladbar → Rückfall-Sprache → einmal
+        // neu laden → Fehlerzustand (K60). Später: bisherige Sprache bleibt stehen.
+        if (langRef.current !== null) return;
+        startLadefehler({
+          lang: l,
+          defaultLang: DEFAULT_LANG,
+          request,
+          reloadOnce: () => neuLadenEinmal({ storage: sessionStore(), reload: () => window.location.reload() }),
+          fail: () => setStartFehler(true),
+        });
       },
     });
     switchRef.current = request;
@@ -161,7 +229,11 @@ export function I18nProvider({ children }) {
 
   const value = { t, lang, setLanguage, anrede, setAnrede, supportedLanguages: SUPPORTED };
 
-  if (!lang) return null;
+  if (!lang) {
+    if (!startFehler) return null;
+    // Die gewählte Sprache (?lang=, gespeichert, Browser) — nicht nur der Browser.
+    return React.createElement(StartFehler, { navLang: detectLanguage() });
+  }
 
   return React.createElement(I18nContext.Provider, { value }, children);
 }

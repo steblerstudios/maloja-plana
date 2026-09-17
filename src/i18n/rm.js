@@ -1626,7 +1626,7 @@ export default {
       sustain1: "Maloja Plana consuma uschè pauca energia sco pussaivel: Nagin backend, nagin server en modus permanent, naginas dumondas da banca da datas.",
       sustain2: "Hosting tar Infomaniak Network SA (Genevra, Svizra): centers da datas en Svizra, manads cun electricitad regenerabla certifitgada (forza idraulica ed autras funtaunas regenerablas localas).", // TODO(rm): Gegenlese Muttersprache
       sustain3: "Infomaniak è certifitgà ISO 14001 e cumpensescha tenor atgnas indicaziuns sias emissiuns da CO₂ cun projects da la fundaziun myclimate.", // TODO(rm): Gegenlese Muttersprache
-      sustainSource: "Funtauna da las indicaziuns davart Infomaniak: infomaniak.com/en/about, infomaniak.com/en/ecology, infomaniak.com/en/ecology/certificates-rewards (indicaziuns dal purschider, consultadas ils 17.09.2026).", // TODO(rm): Gegenlese Muttersprache
+      sustainSource: "Funtauna da las indicaziuns davart Infomaniak: https://www.infomaniak.com/en/about, https://www.infomaniak.com/en/ecology, https://www.infomaniak.com/en/ecology/certificates-rewards (indicaziuns dal purschider, consultadas ils 17.09.2026).", // TODO(rm): Gegenlese Muttersprache
       sustain4: "Offline-abel: Suenter il prim chargiar funcziuna l'app vinavant era senza rait — per regla en ils secturs ch'èn gia vegnids averts almain ina giada.", // TODO(rm): Gegenlese Muttersprache
       contactTitle: 'Donaziuns & participar',
       contact1: { sie: "Maloja Plana è in project Open Source. Sche Vus vulais gidar — cun code, translaziuns, feedback u ina donaziun — annunziai Vus gugent.", du: "Maloja Plana è in project Open Source. Sche Ti vuls gidar — cun code, translaziuns, feedback u ina donaziun — annunziescha Tai gugent." },
@@ -3485,7 +3485,7 @@ export default {
     berechneterBetrag: 'Import calculà',
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. Ils valurs 2026 èn provisorics quasi dapertut — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. En la gronda part dals chantuns èn ils valurs 2026 vegnids fixads provisoricamain — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
     tpwDataVersion: 'Stadi da la valur dal punct',
     // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
     tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',

@@ -3,12 +3,6 @@ import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 
-// autoLink() ist ein modulweiter Helfer ohne eigenen Zugriff auf t() (P() reicht
-// ihn nicht durch — würde alle ~90 Aufrufstellen betreffen). Statt t an jede
-// Stelle durchzureichen, hält LegalView beim Rendern die aktuelle Übersetzung
-// hier fest; autoLink liest sie nur für den a11y-Hinweis auf externen Links.
-let _legalViewT = (k) => k;
-
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
     style: { marginBottom: '28px' }
@@ -52,7 +46,9 @@ const LEGAL_LINKS = {
   'nDSG': 'https://www.fedlex.admin.ch/eli/cc/2022/491/de',
 };
 
-const autoLink = (text, _palette) => {
+// K66: t kommt als Parameter (früher eine beim Rendern gesetzte Modulvariable) —
+// autoLink braucht sie nur für den a11y-Hinweis «öffnet in neuem Tab» auf externen Links.
+const autoLink = (text, t) => {
   if (typeof text !== 'string') return text;
   const parts = [];
   let rest = text;
@@ -66,7 +62,7 @@ const autoLink = (text, _palette) => {
       parts.push(React.createElement('a', { key: match.index, href: 'mailto:' + val, style: linkStyle }, val));
     } else {
       const label = val.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
-      parts.push(React.createElement(ExternerLink, { key: match.index, t: _legalViewT, href: val, style: linkStyle }, label));
+      parts.push(React.createElement(ExternerLink, { key: match.index, t, href: val, style: linkStyle }, label));
     }
     lastIdx = match.index + val.length;
   }
@@ -77,7 +73,7 @@ const autoLink = (text, _palette) => {
         const idx = parts[i].indexOf(term);
         const before = parts[i].slice(0, idx);
         const after = parts[i].slice(idx + term.length);
-        const link = React.createElement(ExternerLink, { key: 'law-' + i, t: _legalViewT, href: url, style: linkStyle }, term);
+        const link = React.createElement(ExternerLink, { key: 'law-' + i, t, href: url, style: linkStyle }, term);
         parts.splice(i, 1, before, link, after);
         i += 2;
       }
@@ -86,11 +82,10 @@ const autoLink = (text, _palette) => {
   return parts.length === 1 && typeof parts[0] === 'string' ? parts[0] : parts;
 };
 
-const P = ({ children, palette }) =>
-  React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, palette));
-
 export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
-  _legalViewT = t;
+  // P() ist ein Aufruf, keine Komponente — die Schliessung reicht t an autoLink weiter.
+  const P = ({ children }) =>
+    React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, t));
   const activeSection = section || 'privacy';
 
   const tabs = [
