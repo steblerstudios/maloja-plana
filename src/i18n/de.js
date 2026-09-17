@@ -1166,7 +1166,7 @@ export default {
   },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
-    tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline, kostenlos.' },
+    tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — 100% privat, offline-fähig, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline-fähig, kostenlos.' },
     taglineBenefit: 'Steuerrechner, IPV, Sozialhilfe, Notfallkarte — ohne Anmeldung nutzbar.',
     progress: { sie: 'Ihr Fortschritt', du: 'Dein Fortschritt' },
     progressComplete: { sie: 'Ihr Lebensordner steht. Ruhe.', du: 'Dein Lebensordner steht. Ruhe.' },
@@ -1919,7 +1919,7 @@ export default {
       q2: 'Ist Maloja Plana kostenlos?',
       a2: 'Ja, vollständig und dauerhaft. Kein Abo, keine versteckten Kosten, keine Werbung. Der Quellcode ist Open Source (AGPL-3.0).',
       q3: 'Funktioniert die App ohne Internet?',
-      a3: 'Ja, nach dem ersten Laden — dank Service Worker, in der Regel in den Bereichen, die schon einmal geöffnet wurden. Keine Daten werden je über das Netz gesendet.',
+      a3: 'Ja, nach dem ersten Laden — dank Service Worker, in der Regel in den Bereichen, die schon einmal geöffnet wurden. Maloja Plana selbst sendet keine Eingaben über das Netz; auf ein anderes Gerät gelangen sie nur durch einen eigenen Export oder Versand.',
       q4: 'Sind die Berechnungen rechtsverbindlich?',
       a4: { sie: 'Nein. Alle Rechner (Steuern, IPV, KVG, Sozialhilfe) sind Orientierungshilfen auf Basis öffentlicher Daten. Für verbindliche Auskünfte wenden Sie sich an die zuständige Behörde oder Beratungsstelle.', du: 'Nein. Alle Rechner (Steuern, IPV, KVG, Sozialhilfe) sind Orientierungshilfen auf Basis öffentlicher Daten. Für verbindliche Auskünfte wende Dich an die zuständige Behörde oder Beratungsstelle.' },
       q5: 'Kann ich meine Daten exportieren?',
@@ -3765,7 +3765,7 @@ export default {
   },
 
   beta: {
-    intro: { sie: 'Ihr ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.', du: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline, kostenlos.' },
+    intro: { sie: 'Ihr ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline-fähig, kostenlos.', du: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline-fähig, kostenlos.' },
     gateMessage: { sie: 'Diese App befindet sich in der geschlossenen Beta. Bitte geben Sie den Zugangscode ein.', du: 'Diese App befindet sich in der geschlossenen Beta. Bitte gib den Zugangscode ein.' },
     codePlaceholder: 'Zugangscode',
     legalLink: 'Datenschutz & Rechtliches',
@@ -3899,7 +3899,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — Dein Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
-    description: 'Maloja Plana — Dein Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline, kostenlos.',
+    description: 'Maloja Plana — Dein Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline-fähig, kostenlos.',
   },
   obstgarten: {
     title: 'Mein Obstgarten',
@@ -4584,13 +4584,13 @@ export default {
     claim: 'Verstehen, was zusteht. Ordnen, was ansteht.',
     lead: 'Ihre ruhige Übersicht über das Leben in der Schweiz.',
     point1: '100% privat — alles bleibt auf Ihrem Gerät',
-    point2: 'Kostenlos & offline, ohne Konto',
+    point2: 'Kostenlos & offline-fähig, ohne Konto',
     point3: 'In mehreren Sprachen verfügbar',
     scan: 'Scannen & loslegen:',
     foot: 'Lokal, privat, kostenlos · von Stebler Studios',
     print: 'Drucken / als PDF speichern',
     share: 'Link teilen',
-    shareText: 'Maloja Plana — Ihre ruhige Übersicht über das Leben in der Schweiz. Privat, offline, kostenlos.',
+    shareText: 'Maloja Plana — Ihre ruhige Übersicht über das Leben in der Schweiz. Privat, offline-fähig, kostenlos.',
     copied: 'Link kopiert',
     langHint: 'Der Flyer wird in der aktuell gewählten Sprache erstellt. Für eine andere Sprache zuerst oben die Sprache wechseln.',
   },

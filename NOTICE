@@ -18,3 +18,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Commercial licensing is available for white-label and enterprise use.
 Contact: info@malojaplana.ch
+
+---
+
+Third-party components shipped with the web application:
+
+- jsQR (Apache License 2.0), https://github.com/cozmo/jsQR
+  License text: public/licenses/jsQR-LICENSE.txt (served as /licenses/jsQR-LICENSE.txt)
+- QRCode.js 1.0.0 (MIT License), https://github.com/davidshimjs/qrcodejs
+  License text: public/licenses/QRCode.js-LICENSE.txt (served as /licenses/QRCode.js-LICENSE.txt)
+- Fonts (SIL Open Font License 1.1): public/fonts/OFL.txt

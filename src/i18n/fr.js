@@ -1163,7 +1163,7 @@ export default {
   },
   dashboard: {
     welcome: 'Comprendre vos droits. Organiser ce qui vous attend.',
-    tagline: { sie: 'Votre organisateur de vie suisse — 100% privé, hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — 100% privé, hors ligne, gratuit.' },
+    tagline: { sie: 'Votre organisateur de vie suisse — 100% privé, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — 100% privé, utilisable hors ligne, gratuit.' },
     taglineBenefit: 'Calculateur d\'impôts, réduction de primes, aide sociale, carte d\'urgence — sans inscription.',
     progress: { sie: 'Votre progression', du: 'Ta progression' },
     progressComplete: { sie: 'Votre dossier de vie est en place. Sérénité.', du: 'Ton dossier de vie est en place. Sérénité.' },
@@ -1915,7 +1915,7 @@ export default {
       q2: 'Maloja Plana est-il gratuit ?',
       a2: 'Oui, entièrement et durablement. Pas d\'abonnement, pas de coûts cachés, pas de publicité. Le code source est open source (AGPL-3.0).',
       q3: 'L\'application fonctionne-t-elle hors ligne ?',
-      a3: 'Oui, après le premier chargement — grâce au Service Worker, en général dans les parties déjà ouvertes une fois. Aucune donnée n\'est jamais envoyée sur le réseau.',
+      a3: 'Oui, après le premier chargement — grâce au Service Worker, en général dans les parties déjà ouvertes une fois. Maloja Plana n\'envoie elle-même aucune saisie sur le réseau : les données ne quittent l\'appareil que par un export ou un envoi effectué par la personne elle-même.',
       q4: 'Les calculs sont-ils juridiquement contraignants ?',
       a4: { sie: "Non. Tous les calculateurs (impôts, subsides, assurance maladie, aide sociale) sont des outils d'orientation basés sur des données publiques. Pour des informations contraignantes, contactez l'autorité compétente.", du: "Non. Tous les calculateurs (impôts, subsides, assurance maladie, aide sociale) sont des outils d'orientation basés sur des données publiques. Pour des informations contraignantes, contacte l'autorité compétente." },
       q5: 'Puis-je exporter mes données ?',
@@ -3753,7 +3753,7 @@ export default {
   },
 
   beta: {
-    intro: { sie: 'Votre aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, hors ligne, gratuit.', du: 'Ton aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, hors ligne, gratuit.' },
+    intro: { sie: 'Votre aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, utilisable hors ligne, gratuit.', du: 'Ton aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, utilisable hors ligne, gratuit.' },
     gateMessage: { sie: 'Cette application est en bêta fermée. Veuillez entrer le code d\'accès.', du: 'Cette application est en bêta fermée. Entre le code d\'accès.' },
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
@@ -3882,7 +3882,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — votre classeur de vie suisse : impôts, aide sociale, assurances',
-    description: 'Maloja Plana — votre classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, hors ligne, gratuit.',
+    description: 'Maloja Plana — votre classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, utilisable hors ligne, gratuit.',
   },
   obstgarten: {
     title: 'Mon verger',
@@ -4435,13 +4435,13 @@ export default {
     claim: "Comprendre ce à quoi vous avez droit. Organiser ce qui vous attend.",
     lead: "Votre aperçu serein de la vie en Suisse.",
     point1: "100% privé — tout reste sur votre appareil",
-    point2: "Gratuit & hors ligne, sans compte",
+    point2: "Gratuit & utilisable hors ligne, sans compte",
     point3: "Disponible en plusieurs langues",
     scan: "Scanner & commencer :",
     foot: "Local, privé, gratuit · par Stebler Studios",
     print: "Imprimer / enregistrer en PDF",
     share: "Partager le lien",
-    shareText: "Maloja Plana — votre aperçu serein de la vie en Suisse. Privé, hors ligne, gratuit.",
+    shareText: "Maloja Plana — votre aperçu serein de la vie en Suisse. Privé, utilisable hors ligne, gratuit.",
     copied: "Lien copié",
     langHint: "Le flyer est créé dans la langue actuellement sélectionnée. Pour une autre langue, changez d'abord la langue en haut.",
   },
