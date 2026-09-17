@@ -77,43 +77,72 @@ export function createT(translations, lang, anrede) {
   };
 }
 
+// Sprachwechsel ohne Blitzen (K43): Die angezeigte Sprache wechselt erst, wenn
+// die neue Sprache UND die Rückfall-Sprache geladen sind. Bis dahin bleibt die
+// bisherige sichtbar — rohe Schlüssel erscheinen nie. Nur die zuletzt gewählte
+// Sprache zählt (schneller Doppelwechsel); ältere Ergebnisse und Fehler werden
+// verworfen. Ladefehler → onError, die angezeigte Sprache bleibt.
+// Exportiert für Unit-Tests (kein DOM nötig).
+export function createLanguageSwitch({ load, onReady, onError }) {
+  let latest = 0;
+  let stopped = false;
+  const request = (lang, opts) => {
+    const id = ++latest;
+    const needed = lang === DEFAULT_LANG ? [lang] : [lang, DEFAULT_LANG];
+    const current = () => !stopped && id === latest;
+    return Promise.all(needed.map((l) => load(l))).then(
+      () => { if (current()) onReady(lang, opts); },
+      (err) => { if (current() && onError) onError(lang, err, opts); },
+    );
+  };
+  request.stop = () => { stopped = true; };
+  return request;
+}
+
+function persistLanguage(lang) {
+  try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* */ }
+  // URL ohne Reload aktualisieren, damit Link/SEO der aktiven Sprache entspricht
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', lang);
+    window.history.replaceState({}, '', url);
+  } catch (e) { /* History API nicht verfügbar */ }
+}
+
 export const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
-  const [lang, setLangState] = useState(detectLanguage);
+  // lang = die ANGEZEIGTE Sprache; null, solange noch keine geladen ist.
+  const [lang, setLangState] = useState(null);
   const [anrede, setAnredeState] = useState(() => { try { return localStorage.getItem('or5_anrede') || 'sie'; } catch (e) { return 'sie'; } });
   const [translations, setTranslations] = useState({});
-  const [ready, setReady] = useState(false);
-  const loadingRef = useRef(null);
+  const langRef = useRef(null);
+  const switchRef = useRef(null);
 
+  // Je Mount ein eigener Umschalter (StrictMode mountet doppelt: der erste wird
+  // beim Aushängen gestoppt, der zweite übernimmt).
   useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      const promises = [loadTranslation(lang)];
-      if (lang !== DEFAULT_LANG) promises.push(loadTranslation(DEFAULT_LANG));
-      await Promise.all(promises);
-      if (!cancelled) {
+    const request = createLanguageSwitch({
+      load: loadTranslation,
+      onReady: (l, opts) => {
+        langRef.current = l;
         setTranslations({ ...cache });
-        setReady(true);
-      }
-    };
-    loadingRef.current = lang;
-    load();
-    return () => { cancelled = true; };
-  }, [lang]);
+        setLangState(l);
+        if (opts && opts.persist) persistLanguage(l);
+      },
+      onError: (l) => {
+        // Erststart: gewählte Sprache nicht ladbar → Rückfall-Sprache.
+        // Später: bisherige Sprache bleibt einfach stehen.
+        if (langRef.current === null && l !== DEFAULT_LANG) request(DEFAULT_LANG);
+      },
+    });
+    switchRef.current = request;
+    request(langRef.current || detectLanguage());
+    return () => request.stop();
+  }, []);
 
   const setLanguage = useCallback((newLang) => {
-    if (SUPPORTED.includes(newLang)) {
-      setLangState(newLang);
-      try { localStorage.setItem(STORAGE_KEY, newLang); } catch (e) { /* */ }
-      // URL ohne Reload aktualisieren, damit Link/SEO der aktiven Sprache entspricht
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.set('lang', newLang);
-        window.history.replaceState({}, '', url);
-      } catch (e) { /* History API nicht verfügbar */ }
-      applyHtmlLang(newLang);
-    }
+    if (SUPPORTED.includes(newLang) && switchRef.current) switchRef.current(newLang, { persist: true });
   }, []);
 
   const setAnrede = useCallback((a) => {
@@ -122,18 +151,17 @@ export function I18nProvider({ children }) {
     try { localStorage.setItem('or5_anrede', v); } catch (e) { /* */ }
   }, []);
 
+  // <html lang> folgt der angezeigten Sprache, nicht der gerade ladenden.
   useEffect(() => {
-    applyHtmlLang(lang);
+    if (lang) applyHtmlLang(lang);
   }, [lang]);
 
-  const t = useMemo(() => {
-    if (!translations[lang]) return (key) => key;
-    return createT(translations, lang, anrede);
-  }, [lang, translations, anrede]);
+  // lang ist hier immer geladen (onReady setzt beides zusammen).
+  const t = useMemo(() => createT(translations, lang, anrede), [lang, translations, anrede]);
 
   const value = { t, lang, setLanguage, anrede, setAnrede, supportedLanguages: SUPPORTED };
 
-  if (!ready) return null;
+  if (!lang) return null;
 
   return React.createElement(I18nContext.Provider, { value }, children);
 }
