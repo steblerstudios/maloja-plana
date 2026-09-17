@@ -11,6 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- **K68 · Anrede-Reste:** `kvg.mammoGeoYourCantonNo` (de/fr/it/rm), `legal.resources.localGovDesc` (fr/it/rm) und `legal.privacy.sensitive1` (fr) sind anredefrei formuliert — sie erschienen vorher in der Sie-Ansicht geduzt bzw. umgekehrt. rm mit `TODO(rm)` zum Gegenlesen (K69).
+- **K71 · Rückfall ohne Übersetzer:** Eine Ansicht ohne `t` und ohne Kontext zeigt jetzt die Texte der bereits geladenen Sprache (Anrede wie gespeichert) statt leerer Knöpfe; nur wenn nichts geladen ist, bleibt der Text leer. `createTranslator` (ungenutzt, immer Sie-Form) ist entfernt.
+- **K67 · Hauptbundle:** Der Vermögensfreibetrag je Kanton liegt in `data/vermoegensfreibetragKanton.js`; `config/cantonalData.js` zieht damit nicht mehr den ganzen Sozialhilfe-Rechner ins Hauptbundle (62.71 → 62.09 kB gzip). `sozialhilfeRechner.js` reicht die Funktion weiter.
+
 ## [0.1.32-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 11:46** (`index-297034b6.js`, Tag `v0.1.32-beta` = `1437feb`, per `curl` belegt: 161/161 Build-Dateien 200, altes `index-c2f8af36.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-297034b6`, Backup `20260917-114602` mit 171 Dateien). Umfasst die sechste Runde (#204–#208) und K49 (#203).*

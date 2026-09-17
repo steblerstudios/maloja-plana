@@ -244,10 +244,26 @@ export function useT() {
   return ctx;
 }
 
-export function createTranslator(lang) {
-  const safeLang = SUPPORTED.includes(lang) ? lang : DEFAULT_LANG;
-  if (!cache[safeLang]) return (key) => key;
-  return createT(cache, safeLang);
+// K71 · Übersetzer aus dem bereits Geladenen — für eine Ansicht, die weder t
+// noch Kontext hat (tMitRueckfall). Sprache und Anrede wie der Provider aus dem
+// Speicher; ist die Sprache nicht geladen, die Rückfall-Sprache, sonst irgendeine
+// geladene. Fehlt der Schlüssel oder ist nichts geladen: leerer Text, nie ein
+// Schlüssel. (Ersetzt createTranslator: war ungenutzt und immer Sie-Form.)
+// `geladen` nur für Unit-Tests (Fixture statt Modul-Cache).
+export function rueckfallT(geladen = cache) {
+  let gespeichert = null;
+  let anrede = null;
+  try {
+    gespeichert = localStorage.getItem(STORAGE_KEY);
+    anrede = localStorage.getItem('or5_anrede');
+  } catch (e) { /* Speicher gesperrt */ }
+  const lang = geladen[gespeichert] ? gespeichert : geladen[DEFAULT_LANG] ? DEFAULT_LANG : Object.keys(geladen)[0];
+  if (!lang) return () => '';
+  const t = createT(geladen, lang, anrede === 'du' ? 'du' : 'sie');
+  return (key, params) => {
+    const val = t(key, params);
+    return typeof val === 'string' && val !== key ? val : '';
+  };
 }
 
 export { SUPPORTED as SUPPORTED_LANGUAGES };

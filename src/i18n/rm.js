@@ -1644,7 +1644,7 @@ export default {
       petition2: { name: 'petition.ch', url: 'https://petition.ch', desc: 'Plattafurma svizra da petiziuns' },
       petition3: { sie: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Vossa vischnanca.', du: 'Website da la vischnanca — Per preoccupaziuns localas directamain tar Tia vischnanca.' },
       cantonPortal: 'Chantun {canton} ↗',
-      localGovDesc: 'per fatschentas localas — vossa vischnanca e voss chantun.',
+      localGovDesc: 'per fatschentas localas — directamain tar la vischnanca e tar il chantun.', // TODO(rm): neutral formuliert (K68), gegenlesen
       // TODO(rm): communeHint durch Fachperson gegenlesen lassen
       communeHint: 'La pagina d’internet da la vischnanca {city} n’è betg deponida qua — ella sa lascha chattar sur il portal chantunal u cun ina tschertga.',
       helpTitle: 'Posts da cussegliaziun',
@@ -3341,7 +3341,7 @@ export default {
     mammografieQuelle: 'Funtaunas: OMS · UE (ECIBC) · Lia svizra cunter il cancer.',
     mammoGeoTitle: 'Program organisà — tut tenor il chantun',
     mammoGeoNote: 'Betg dapertut envida il chantun per brev a la mammografia. En in program organisà surpiglia l’assicuranza da basa ils custs senza franchisa — resta mo la participaziun da 10 %. Nua ch’i n’exista nagin program, s’organisescha la prevenziun sez (suenter ina prescripziun medicinala); lura vegn incassada la franchisa.',
-    mammoGeoYourCantonNo: 'En tes chantun ({canton}) n’exista actualmain nagin program organisà.',
+    mammoGeoYourCantonNo: 'En quest chantun ({canton}) n’exista actualmain nagin program organisà.',
     mammoGeoOhne: 'Senza program organisà (stan {stand}):',
     mammoGeoWandel: 'La situaziun sa mida cuntinuadamain — singuls chantuns introduceschan novs programs.',
     mammoGeoTardoc: 'Cun il midament da tariffa 2026 (Tardoc) è il finanziament da tscherts programs sut squetsch.',
