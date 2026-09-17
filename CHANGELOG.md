@@ -11,6 +11,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Barrierefreiheit
+- **Ansagen und ruhige Rückfälle (K64):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
+
 ## [0.1.31-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 11:14** (`index-c2f8af36.js`, Tag `v0.1.31-beta` = `672d8af`, per `curl` belegt: 159/159 Build-Dateien 200, altes `index-98d2d140.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-c2f8af36`). Umfasst K59 (#200). Auf malojaplana.ch im Browser geprüft: Nach dem ersten Besuch (Beispiel-Modus) liegen 18 Einträge im Offline-Speicher, darunter `index-c2f8af36.js`, das Stylesheet und die Sprachdateien.*

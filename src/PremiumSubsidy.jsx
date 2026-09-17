@@ -4,7 +4,7 @@ import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { Icon } from './IconSystem.jsx';
-import { ExternerLink } from './components/ExternerLink.jsx';
+import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
@@ -63,6 +63,14 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   const ohneBetrag = ipvResult.belegt === false;
   const anspruchMoeglich = !!ipvResult.anspruchMoeglich;
   const stelleUrl = (getCantonalLinks(canton) || {}).ipv || null;
+
+  // K64: gesperrte Knöpfe wie in ZipExport (K53) — Text mid auf der ruhigen Fläche up
+  // (hell 5.25:1, dunkel 4.81:1, auch farbenblind ≥ 4.5:1), gestrichelter Rand und
+  // Sperr-Cursor tragen das «geht nicht» mit. Vorher: Fläche mid mit opacity 0.6.
+  const gesperrtStil = {
+    background: palette.up, color: palette.mid,
+    border: '1px dashed ' + palette.mid, cursor: 'not-allowed',
+  };
 
   const handleApplyOnline = () => {
     // noopener,noreferrer: window.open vererbt sonst window.opener an die Zielseite (Reverse
@@ -350,12 +358,17 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('button', {
           onClick: handleApplyOnline,
           disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: anspruchMoeglich ? palette.sand : palette.mid, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: anspruchMoeglich ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: anspruchMoeglich ? 1 : 0.6 }
-        }, '↗ ' + t('premium.applyOnline')),
+          style: { padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
+        },
+          // K64: der Pfeil ist nur Bild; der Tab-Wechsel wird hörbar angesagt (WCAG 3.2.5, wie ExternerLink).
+          React.createElement('span', { 'aria-hidden': 'true' }, '↗ '),
+          t('premium.applyOnline'),
+          React.createElement('span', { style: visuallyHiddenStyle }, ' (' + t('a11y.neuerTab') + ')')
+        ),
         React.createElement('button', {
           onClick: () => setIpvVorschau(true),
           disabled: !anspruchMoeglich,
-          style: { padding: '10px', background: anspruchMoeglich ? palette.skyDeep : palette.mid, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: anspruchMoeglich ? 'pointer' : 'not-allowed', fontWeight: weight.semi, fontSize: text.sm, opacity: anspruchMoeglich ? 1 : 0.6 }
+          style: { padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
         }, '□ ' + t('premium.document')),
         React.createElement('button', {
           onClick: () => setShowCalculation(false),

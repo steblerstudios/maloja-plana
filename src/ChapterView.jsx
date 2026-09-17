@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { I18nContext } from './i18n/index.js';
+import { tMitRueckfall } from './utils/tRueckfall.js';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, getFileExpiryHint, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
@@ -55,7 +57,7 @@ const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
 
-export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
+export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
   const isMobile = useIsMobile();
   const [expandedSection, setExpandedSection] = useState('fields');
@@ -90,9 +92,13 @@ export const ChapterViewComplete = ({ palette, t, chapter, data, allData, onUpda
     try { localStorage.setItem(storageKey, String(next)); } catch {}
   };
 
-  // t() with fallback if not provided (backward compat). useMemo → stabile Referenz,
-  // damit tr sauber als useEffect-Dep dienen kann (t ist bereits memoisiert).
-  const tr = useMemo(() => t || ((k) => k), [t]);
+  // K64: ohne t kein roher Schlüssel mehr — Rückfall auf den I18n-Kontext, sonst
+  // leerer Text (tMitRueckfall). useMemo → stabile Referenz, damit tr sauber als
+  // useEffect-Dep dienen kann (t ist bereits memoisiert).
+  const i18nKontext = useContext(I18nContext);
+  const kontextT = i18nKontext ? i18nKontext.t : null;
+  const tr = useMemo(() => tMitRueckfall(tEingang, kontextT, 'ChapterView'), [tEingang, kontextT]);
+  const t = tr; // auch die direkten t(…)-Aufrufe unten laufen über den Rückfall
   // Export-Vorschau (K20) vor der Notfallkarte: erst zeigen, was im Dokument steht.
   const [kartenVorschau, setKartenVorschau] = useState(false);
 
