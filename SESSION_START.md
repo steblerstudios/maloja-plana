@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 12:00 (`main` = `1437feb` nach **PR #208**, dazu dieser Doku-PR · **live `index-297034b6.js` = 0.1.32-beta seit 17.09. 11:46**, Tag `v0.1.32-beta` = `1437feb` · gemergt, nicht live: nichts · 1815 Tests grün, Hauptbundle 62.62 kB von 65)
+**Stand:** 2026-09-17, 12:15 (`main` = `fe29081` nach **PR #209**, dazu dieser Stand-PR · **live `index-297034b6.js` = 0.1.32-beta seit 17.09. 11:46**, Tag `v0.1.32-beta` = `1437feb` · gemergt, nicht live: nur Doku (#209, dieser PR) · 0 offene Code-PRs · 1815 Tests grün, Hauptbundle 62.62 kB von 65)
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 12:00 (0.1.32-beta live)
 >
@@ -544,6 +544,17 @@
 
 ## Nächste Schritte
 
+> **Stand 2026-09-17, 12:15 (Sitzungsabschluss):** Die Bau-Liste `docs/BAULISTE-2026-09-30.md`
+> ist die Arbeitsliste; §16 ist der neueste Abschnitt. Der Block «Runde 9» darunter ist Historie.
+>
+> **Bei Stebler Studios:**
+> 1. **M4** — Postfach `info@malojaplana.ch` im Infomaniak-Panel prüfen und eine Testmail senden (der letzte offene MUSS-Punkt).
+> 2. **Panel-Durchgang** — O20 Cache `/assets/` + `/fonts/` 1 Jahr `immutable` (nicht `index.html`, `sw.js`, `theme-init.js`) · HSTS `31536000` · M15 `geolocation=(self)` · O8 CSP-Header mit `frame-ancestors 'none'` **und** `style-src 'self' 'unsafe-inline'` (K72). Live gemessen 17.09.: HSTS `16000000`, `geolocation=()`, kein `cache-control`, kein CSP-Header. Danach PageSpeed neu.
+> 3. **Entscheide** — E40 (Behörden-JSON: Kennungen?), E41 (kantonale Taxpunktwert-Quellen in der App zeigen?), K55 («offline-fähig» in Werbetexten), K58 (Rückfall-Sprache en oder de), K62 (Partner-Regeln), K45/K46, E1 und E3 (Oktober), Wallis («warten»).
+> 4. **Gegenlesen** — fr/it (K70), rm (K69), Jurist:in (K48).
+>
+> **Bei Claude, ohne Entscheid möglich:** K68 (vier Anrede-Reste) · K71 (Rückfall-Text, `createTranslator`) · K67 (zuerst nur messen, was im Hauptbundle steckt) · K54 (Kürzung der Berufsauslagen-Pauschale bei Teilzeit — erst ESTV-Beleg) · K56/K57 (Lizenz- und Doku-Reste).
+
 > **Stand 2026-07-18 (Runde 9):** Runde 8 ist LIVE. Der ⭐-Block „Runde-8-Blocker" darunter
 > ist damit **erledigt + deployt** (Historie belassen). Aktuelle offene Schritte:
 
@@ -810,6 +821,16 @@
 - **KI-007:** kein Web-Crypto-Fallback — offen, niedrige Priorität.
 
 ## Merker (Fallen)
+
+- **⭐ Vor jedem Deploy: ist die Version in `package.json` schon getaggt?** (`git tag -l v<version>`).
+  Am 17.09. zweimal nicht angehoben — `deploy.sh` meldet dann nur «Tag existiert bereits», und der
+  neue Live-Stand hätte kein eigenes Tag. Release-PR (Version + Changelog-Block) vor der Marke.
+- **Mehrere parallele PRs mit CHANGELOG-Zeilen** kollidieren nur dort: in einem Release-Zweig
+  zusammenführen (wie #208); GitHub zeigt die Einzel-PRs danach als gemergt.
+- **Service Worker nur hinter dem BetaGate** (`registerServiceWorker` in `AppInner`): Offline-Tests
+  brauchen den Beispiel-Modus oder `or5_beta_access` (nur lokal setzen). Messaufbau lokal:
+  `vite preview`, Server stoppen, neu laden (K59).
+- **JS-`\b` versagt bei Akzenten** (`êtes` → «tes»): für Anrede-Prüfungen `\p{L}`-Grenzen nehmen.
 
 - **⭐ Sitzung IMMER aus `maloja-frontend/` starten, nie aus `~/Projects/maloja plana/`.**
   Claude Code sucht `.claude/` relativ zum Arbeitsverzeichnis. Auf der Container-Ebene gibt es
