@@ -818,7 +818,37 @@ function getBehoerdenSections(data, chapters, t, calculations) {
   return sections;
 }
 
-export function generateBehoerdenJSON(data, calculations) {
+// E40 (Entscheid 17.09.2026): Die Erläuterungen zur Steuerschätzung tragen eine feste,
+// sprachunabhängige Kennung (code) und daneben den Text in der gewählten App-Sprache (text).
+// Programme lesen code, Menschen lesen text; textLanguage sagt, in welcher Sprache text steht.
+// Dateiformat 1.1 (vorher 1.0: dieselben drei Felder als deutscher Klartext):
+//   calculations.tax.taxableIncomeBasis = { code, text, dataVersion? }
+//     code 'estv_standardabzuege'  geschätzt: Nettolohn minus Standardabzüge des ESTV-Steuerrechners
+//     code 'eingetragen_dbst'      eingetragen: steuerbares Einkommen direkte Bundessteuer
+//   calculations.tax.cantonalBasis = { code: 'estv_hauptort_ohne_kirchensteuer', text, dataVersion, hauptort }
+//   calculations.tax.assumptions   = [{ code, text }, …]
+//     code 'ohne_13_monatslohn'      ohne 13. Monatslohn gerechnet
+//     code 'alleinverdiener_ehepaar' Alleinverdiener-Ehepaar (Partnereinkommen 0)
+// Die Kennungen sind Teil des Formats: nie umbenennen, nur neue dazunehmen.
+// Die App liest diese Datei nicht wieder ein (Stand 17.09.2026: kein Import-Pfad). Wer später einen
+// Leser baut: Dateien 1.0 tragen an denselben Stellen Strings statt Objekte.
+export const DOSSIER_JSON_VERSION = '1.1';
+// Schlüssel = Name des Textes unter behoerdenDossier.jsonTexte, Wert = Kennung in der Datei.
+export const STEUER_KENNUNG = Object.freeze({
+  basisEstv: 'estv_standardabzuege',
+  basisDirekt: 'eingetragen_dbst',
+  kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
+  annahmeOhneDreizehnten: 'ohne_13_monatslohn',
+  annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
+});
+
+// t ist die Übersetzungsfunktion der App; ohne t (ältere Aufrufer) steht nur die Kennung in der Datei.
+export function generateBehoerdenJSON(data, calculations, t) {
+  const jt = (k, p) => (t ? t('behoerdenDossier.jsonTexte.' + k, p) : undefined);
+  const erl = (k, p, extra) => {
+    const text = jt(k, p);
+    return { code: STEUER_KENNUNG[k], ...(text !== undefined ? { text } : {}), ...extra };
+  };
   const basis = data.basis || {};
   const finanzen = data.finanzen || {};
   const wohnen = data.wohnen || {};
@@ -827,7 +857,8 @@ export function generateBehoerdenJSON(data, calculations) {
 
   const dossier = {
     schema: 'maloja-plana-dossier',
-    version: '1.0',
+    version: DOSSIER_JSON_VERSION,
+    ...(t ? { textLanguage: t('behoerdenDossier.jsonTexte.sprache') } : {}),
     exportedAt: new Date().toISOString(),
     person: {
       firstName: basis.firstName || '',
@@ -895,16 +926,22 @@ export function generateBehoerdenJSON(data, calculations) {
     dossier.calculations.tax = {
       taxableIncome: tax.taxableIncome || 0,
       // E39: woher das steuerbare Einkommen kommt (für Bund und Kanton dasselbe)
-      ...(tax.taxableQuelle ? { taxableIncomeBasis: tax.taxableQuelle === 'estv' ? 'geschätzt: Nettolohn abzüglich der Standardabzüge des ESTV-Steuerrechners ' + (tax.datenstand || '') : 'eingetragen (steuerbares Einkommen direkte Bundessteuer)' } : {}),
+      ...(tax.taxableQuelle ? {
+        taxableIncomeBasis: tax.taxableQuelle === 'estv'
+          ? erl('basisEstv', { year: tax.datenstand || '' }, tax.datenstand ? { dataVersion: tax.datenstand } : {})
+          : erl('basisDirekt'),
+      } : {}),
       federalTax: tax.total || 0,
       // E38: ohne Tabellenwert null statt 0 — «nicht geschätzt» ist nicht «keine Steuer».
       cantonalAndMunicipal: tax.kantonal ? tax.kantonal.kantonalUndGemeinde : null,
       totalEstimate: tax.kantonal ? tax.kantonal.total : null,
-      ...(tax.kantonal ? { cantonalBasis: 'ESTV-Steuerrechner ' + (tax.datenstand || '') + ', Hauptort ' + tax.kantonal.hauptort + ', ohne Kirchensteuer, grobe Schätzung' } : {}),
+      ...(tax.kantonal ? {
+        cantonalBasis: erl('kantonBasis', { year: tax.datenstand || '', hauptort: tax.kantonal.hauptort }, { ...(tax.datenstand ? { dataVersion: tax.datenstand } : {}), hauptort: tax.kantonal.hauptort }),
+      } : {}),
       // R4: Annahmen der Schätzung
       assumptions: [
-        ...(tax.annahmen?.ohneDreizehnten ? ['ohne 13. Monatslohn gerechnet'] : []),
-        ...(tax.annahmen?.alleinverdiener ? ['Alleinverdiener-Ehepaar (Partnereinkommen 0)'] : []),
+        ...(tax.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
+        ...(tax.annahmen?.alleinverdiener ? [erl('annahmeAlleinverdiener')] : []),
       ],
     };
   }

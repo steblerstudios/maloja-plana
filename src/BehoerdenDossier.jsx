@@ -53,7 +53,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
   };
 
   const handleExportJSON = () => {
-    const dossier = generateBehoerdenJSON(data, calculations);
+    const dossier = generateBehoerdenJSON(data, calculations, t);
     const json = JSON.stringify(dossier, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -171,7 +171,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         palette, t,
         art: vorschau === 'json' ? 'dossierJson' : 'dossier',
         quelle: vorschau === 'json'
-          ? { dossier: generateBehoerdenJSON(data, calculations) }
+          ? { dossier: generateBehoerdenJSON(data, calculations, t) }
           : { abschnitte: preview.sections.map(s => ({ titel: s.title, felder: s.rows.map(r => r.label) })) },
         onWeiter: () => { const art = vorschau; setVorschau(null); if (art === 'json') handleExportJSON(); else handlePrint(); },
         onZurueck: () => setVorschau(null),

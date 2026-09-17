@@ -193,17 +193,22 @@ export function abzuegeAusTaxData(taxData = {}) {
 export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
-  erwerbsart = null, partnerAngegeben = true,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
   let grund = null;
-  if (Number(partnerEinkommen) > 0) grund = 'partner';
+  // K62.4: ein eingetragener Wert gilt nur für den Zivilstand, zu dem er gehört (siehe unten).
+  if (direkt && direktZivilstandAbweichend(verheiratet, direktVerheiratet)) grund = 'zivilstandDirekt';
+  else if (Number(partnerEinkommen) > 0) grund = 'partner';
   else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
   else if (!direkt && ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) grund = ERWERBSART_OHNE_SCHAETZUNG[erwerbsart];
   // R4: Die Reihe «verheiratet» ist als Alleinverdiener-Ehepaar gemessen. Ohne Angabe zum
   // Partnereinkommen ist offen, ob das zutrifft — auch bei direkt eingetragenem Wert.
-  else if (verheiratet && !partnerAngegeben) grund = 'partnerOffen';
+  // K62.4: mit eingetragenem Wert gibt es aber eine Bundessteuer (der Wert aus der gemeinsamen
+  // Veranlagung enthält beide Einkommen) — darum ein eigener Grund, dessen Text nur die
+  // Kantonssteuer betrifft und nicht «keine Steuerschätzung» sagt.
+  else if (verheiratet && !partnerAngegeben) grund = direkt ? 'partnerOffenDirekt' : 'partnerOffen';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
@@ -227,21 +232,33 @@ export function kantonssteuerFuerProfil({
  *     Abzügen nach Art. 27). Ein direkt eingetragener Wert rechnet weiter.
  *   R4: verheiratet und Partnereinkommen nie beantwortet → keine Zahl (grund 'partnerOffen');
  *     bewusst 0 → Alleinverdiener-Ehepaar, so wie gemessen.
+ *   K62.4: direktSteuerbar gehört zum Zivilstand im Profil (direktVerheiratet). Rechnet der
+ *     Steuerrechner probeweise mit dem anderen Zivilstand, gibt es mit diesem Wert keine Zahl
+ *     (grund 'zivilstandDirekt'): ein Wert aus einer gemeinsamen Veranlagung mit dem Grundtarif
+ *     gerechnet (oder umgekehrt) wäre falsch. Ohne direktVerheiratet (undefined) keine Prüfung.
  * @returns {{ steuerbar: number|null, quelle: 'direkt'|'estv'|null,
- *             grund: 'brutto'|'rente'|'selbstaendig'|'partner'|'partnerOffen'|'keinLohn'|null }}
+ *             grund: 'brutto'|'rente'|'selbstaendig'|'partner'|'partnerOffen'|'zivilstandDirekt'|'keinLohn'|null }}
  */
 export function steuerbaresEinkommenFuerProfil({
   nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0,
-  erwerbsart = null, partnerAngegeben = true,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet,
 } = {}) {
-  if (Number(direktSteuerbar) > 0) return { steuerbar: Number(direktSteuerbar), quelle: 'direkt', grund: null };
+  if (Number(direktSteuerbar) > 0) {
+    if (direktZivilstandAbweichend(verheiratet, direktVerheiratet)) return { steuerbar: null, quelle: null, grund: 'zivilstandDirekt' };
+    return { steuerbar: Number(direktSteuerbar), quelle: 'direkt', grund: null };
+  }
   if (einkommensart === 'brutto') return { steuerbar: null, quelle: null, grund: 'brutto' };
   if (ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) return { steuerbar: null, quelle: null, grund: ERWERBSART_OHNE_SCHAETZUNG[erwerbsart] };
   if (Number(partnerEinkommen) > 0 && (verheiratet || kinder > 0)) return { steuerbar: null, quelle: null, grund: 'partner' };
   if (verheiratet && !partnerAngegeben) return { steuerbar: null, quelle: null, grund: 'partnerOffen' };
   if (!(Number(nettolohnJahr) > 0)) return { steuerbar: null, quelle: null, grund: 'keinLohn' };
   return { steuerbar: steuerbarNachEstv({ nettolohnJahr, verheiratet, kinder, berufsauslagen, weitereAbzuege }), quelle: 'estv', grund: null };
+}
+
+// K62.4: weicht der gerechnete Zivilstand von dem ab, zu dem der eingetragene Wert gehört?
+function direktZivilstandAbweichend(verheiratet, direktVerheiratet) {
+  return direktVerheiratet !== undefined && Boolean(direktVerheiratet) !== Boolean(verheiratet);
 }
 
 // R4: Anstellungstyp (Finanzen-Kapitel, Optionen employed/selfEmployed/freelance/retired), für den
@@ -289,6 +306,8 @@ export function steuerEingabenAusDaten(data = {}) {
     partnerEinkommen: hh.partnerIncome,
     partnerAngegeben: partnerEinkommenAngegeben(data),
     verheiratet: data?.basis?.maritalStatus === 'married',
+    // K62.4: der Zivilstand, zu dem ein eingetragenes steuerbares Einkommen gehört (= Profil).
+    direktVerheiratet: data?.basis?.maritalStatus === 'married',
     kinder: hh.childrenCount,
     elterntarif: data?.taxData?.elterntarif === true,
     ...abzuegeAusTaxData(data?.taxData),

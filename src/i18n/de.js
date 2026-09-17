@@ -2448,6 +2448,9 @@ export default {
     ohneZahlPartnerOffen: { sie: "Für diese Situation zeigt Maloja noch keine Steuerschätzung: Sie sind als verheiratet erfasst, und die Angabe zum Partnereinkommen fehlt. Bei Verheirateten werden beide Einkommen zusammengerechnet. Bitte das Partnereinkommen im Profil ergänzen (Persönliche Basis → «Nettolohn Partner/in»; ohne Einkommen 0 eintragen).", du: "Für diese Situation zeigt Maloja noch keine Steuerschätzung: Du bist als verheiratet erfasst, und die Angabe zum Partnereinkommen fehlt. Bei Verheirateten werden beide Einkommen zusammengerechnet. Ergänze bitte das Partnereinkommen im Profil (Persönliche Basis → «Nettolohn Partner/in»; ohne Einkommen 0 eintragen)." },
     annahmeOhneDreizehnten: { sie: "Ohne 13. Monatslohn gerechnet — falls Sie einen erhalten, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld».", du: "Ohne 13. Monatslohn gerechnet — falls du einen erhältst, liegt die Steuer höher. Angeben lässt sich das im Kapitel «Finanzen & Geld»." },
     annahmeAlleinverdiener: "Gerechnet als Alleinverdiener-Ehepaar (ohne Partnereinkommen).",
+    // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
+    bandPartnerOffenDirekt: "Für die Kantons- und Gemeindesteuer zeigt Maloja hier keinen Betrag: Gemessen ist sie nur für Ehepaare mit einem Einkommen, und die Angabe zum Partnereinkommen fehlt. Die Bundessteuer oben rechnet mit dem eingetragenen steuerbaren Einkommen. Ohne Partnereinkommen im Profil 0 eintragen (Persönliche Basis → «Nettolohn Partner/in»).",
+    ohneZahlZivilstandDirekt: "Für diese Situation zeigt Maloja keine Steuerschätzung: Das eingetragene steuerbare Einkommen gehört zum Zivilstand im Profil. Für einen anderen Zivilstand rechnet Maloja nicht damit. Zum Ausprobieren das Häkchen «Diesen Wert als Basis verwenden» entfernen — dann schätzt Maloja aus dem Nettolohn.",
     netIncomeNote13: { sie: "Hochrechnung aus Ihrem Nettolohn: Hauptlohn × 13 (mit 13. Monatslohn), Nebenerwerb × 12. Die tatsächliche Steuerlast kann abweichen.", du: "Hochrechnung aus deinem Nettolohn: Hauptlohn × 13 (mit 13. Monatslohn), Nebenerwerb × 12. Die tatsächliche Steuerlast kann abweichen." },
     annahmenLabel: "Annahmen",
     totalNote: 'Bund + Kanton + Gemeinde (Orientierung). Die tatsächliche Belastung hängt von Wohnort und persönlicher Situation ab.',
@@ -3378,6 +3381,15 @@ export default {
     openDossier: 'Dossier öffnen',
     printAction: 'Als PDF drucken',
     exportJSON: 'Dossier-Datei exportieren',
+    // E40: Texte in der Dossier-Datei (neben festen Kennungen); anredefrei, sprache = Sprache dieser Texte
+    jsonTexte: {
+      sprache: "de",
+      basisEstv: "Geschätzt: Nettolohn abzüglich der Standardabzüge des ESTV-Steuerrechners {year}",
+      basisDirekt: "Eingetragen (steuerbares Einkommen direkte Bundessteuer)",
+      kantonBasis: "ESTV-Steuerrechner {year}, Hauptort {hauptort}, ohne Kirchensteuer, grobe Schätzung",
+      annahmeOhneDreizehnten: "Ohne 13. Monatslohn gerechnet",
+      annahmeAlleinverdiener: "Alleinverdiener-Ehepaar (Partnereinkommen 0)",
+    },
     generated: 'Erstellt am {date}',
     disclaimer: { sie: 'Dieses Dossier dient der Orientierung. Die Berechnungen basieren auf Ihren Angaben und ersetzen keine verbindliche Prüfung durch die zuständige Stelle.', du: 'Dieses Dossier dient der Orientierung. Die Berechnungen basieren auf Deinen Angaben und ersetzen keine verbindliche Prüfung durch die zuständige Stelle.' },
     sectionPerson: 'Person',
@@ -3755,6 +3767,10 @@ export default {
     tpwNote: 'Taxpunktwert variiert je nach Kanton. In den meisten Kantonen sind die Werte 2026 provisorisch festgesetzt — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für {kantone} liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
     tpwDataVersion: 'Taxpunktwert-Stand',
     tpwStandUnbelegt: 'Taxpunktwert {kanton}: Stand 2025, provisorisch — nicht amtlich bestätigt.',
+    // E41: Quellen-Links je Kanton
+    tpwQuellenTitel: "Quellen der Taxpunktwerte 2026, je Kanton:",
+    tpwQuelleVor: "Quelle Taxpunktwert",
+    tpwQuelleTarifpartner: "Ärztegesellschaften",
     disclaimer: { sie: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Ihre Krankenkasse.', du: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Deine Krankenkasse.' },
     source: 'Quelle: [[BAG|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },
