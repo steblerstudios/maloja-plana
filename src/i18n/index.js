@@ -173,6 +173,66 @@ export function StartFehler({ navLang }) {
     h('button', { type: 'button', onClick: () => window.location.reload() }, knopf));
 }
 
+// ─── K58 · Ladehinweis und Ladefehler beim Sprachwechsel ──────
+// Die Zielsprache ist während des Ladens (und nach einem Fehler) nicht
+// verfügbar — deshalb stehen die Texte hier fest, wie beim Startfehler (K60).
+// Rätoromanisch ohne geprüfte Fassung → Deutsch.
+// [lädt, Fehler, erneut versuchen, schliessen]
+const SPRACH_LADEN = {
+  de: ['Sprache wird geladen …', 'Diese Sprache konnte nicht geladen werden. Wir zeigen die Inhalte auf Deutsch.', 'Erneut versuchen', 'Schliessen'],
+  fr: ['Chargement de la langue …', 'Cette langue n’a pas pu être chargée. Nous affichons les contenus en allemand.', 'Réessayer', 'Fermer'],
+  it: ['Caricamento della lingua …', 'Non è stato possibile caricare questa lingua. Mostriamo i contenuti in tedesco.', 'Riprova', 'Chiudi'],
+  en: ['Loading language …', 'This language could not be loaded. We are showing the content in German.', 'Try again', 'Close'],
+};
+
+export function sprachLadenText(lang) {
+  const l = SPRACH_LADEN[lang] ? lang : 'de';
+  const [laedt, fehler, erneut, schliessen] = SPRACH_LADEN[l];
+  return { lang: l, laedt, fehler, erneut, schliessen };
+}
+
+// Zustand der Anzeige: { laedt, hinweis, fehler }. Der Hinweis erscheint erst
+// nach `verzoegerung` ms — bei schnellem Laden blitzt nichts auf. Nur die
+// zuletzt gestartete Sprache zählt. Exportiert für Unit-Tests (kein DOM).
+export function createLadeAnzeige({ onChange, verzoegerung = 300, timer = { set: (f, ms) => setTimeout(f, ms), clear: (h) => clearTimeout(h) } }) {
+  let zustand = { laedt: null, hinweis: false, fehler: null };
+  let uhr = null;
+  const setze = (neu) => { zustand = { ...zustand, ...neu }; onChange(zustand); };
+  const halt = () => { if (uhr !== null) { timer.clear(uhr); uhr = null; } };
+  const ende = (lang, neu) => {
+    if (zustand.laedt !== lang) return;
+    halt();
+    setze({ laedt: null, hinweis: false, ...neu });
+  };
+  return {
+    start(lang) {
+      halt();
+      setze({ laedt: lang, hinweis: false, fehler: null });
+      uhr = timer.set(() => { uhr = null; setze({ hinweis: true }); }, verzoegerung);
+    },
+    fertig: (lang) => ende(lang, {}),
+    fehler: (lang) => ende(lang, { fehler: lang }),
+    schliessen: () => setze({ fehler: null }),
+    stop: halt,
+    get zustand() { return zustand; },
+  };
+}
+
+// Die Live-Region steht immer im DOM (sonst sagen Screenreader den ersten
+// Inhalt nicht an); sie ist fest positioniert → keine Layoutverschiebung.
+export function SprachLadeHinweis({ zustand, onRetry, onClose }) {
+  const h = React.createElement;
+  const fehler = zustand && zustand.fehler;
+  const zeigen = Boolean(fehler || (zustand && zustand.hinweis));
+  const tx = sprachLadenText(fehler || (zustand && zustand.laedt));
+  return h('div', { className: 'mp-sprachlage', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true', lang: zeigen ? tx.lang : undefined },
+    zeigen ? h('div', { className: 'mp-sprachlage-karte' },
+      h('p', null, fehler ? tx.fehler : tx.laedt),
+      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-knopf', onClick: onRetry }, tx.erneut) : null,
+      fehler ? h('button', { type: 'button', className: 'mp-sprachlage-zu', 'aria-label': tx.schliessen, onClick: onClose }, '×') : null,
+    ) : null);
+}
+
 export const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
@@ -181,25 +241,39 @@ export function I18nProvider({ children }) {
   const [anrede, setAnredeState] = useState(() => { try { return localStorage.getItem('or5_anrede') || 'sie'; } catch (e) { return 'sie'; } });
   const [translations, setTranslations] = useState({});
   const [startFehler, setStartFehler] = useState(false);
+  const [ladeZustand, setLadeZustand] = useState(null);
   const langRef = useRef(null);
   const switchRef = useRef(null);
+  const anzeigeRef = useRef(null);
 
   // Je Mount ein eigener Umschalter (StrictMode mountet doppelt: der erste wird
   // beim Aushängen gestoppt, der zweite übernimmt).
   useEffect(() => {
+    const anzeige = createLadeAnzeige({ onChange: setLadeZustand });
+    anzeigeRef.current = anzeige;
+    const zeige = (l, opts) => {
+      langRef.current = l;
+      setTranslations({ ...cache });
+      setLangState(l);
+      if (opts && opts.persist) persistLanguage(l);
+    };
     const request = createLanguageSwitch({
       load: loadTranslation,
       onReady: (l, opts) => {
         if (langRef.current === null) neuLadenMarkeLoeschen(sessionStore());
-        langRef.current = l;
-        setTranslations({ ...cache });
-        setLangState(l);
-        if (opts && opts.persist) persistLanguage(l);
+        zeige(l, opts);
+        anzeige.fertig(l);
       },
       onError: (l) => {
+        // Später (K58): Rückfall auf Deutsch (nicht gespeichert — beim nächsten
+        // Besuch wird die gewählte Sprache wieder versucht) + ruhige Meldung.
+        if (langRef.current !== null) {
+          if (cache[FALLBACK_LANG]) zeige(FALLBACK_LANG);
+          anzeige.fehler(l);
+          return;
+        }
         // Erststart: gewählte Sprache nicht ladbar → Rückfall-Sprache → einmal
-        // neu laden → Fehlerzustand (K60). Später: bisherige Sprache bleibt stehen.
-        if (langRef.current !== null) return;
+        // neu laden → Fehlerzustand (K60).
         startLadefehler({
           lang: l,
           defaultLang: FALLBACK_LANG,
@@ -211,11 +285,22 @@ export function I18nProvider({ children }) {
     });
     switchRef.current = request;
     request(langRef.current || detectLanguage());
-    return () => request.stop();
+    return () => { request.stop(); anzeige.stop(); };
   }, []);
 
   const setLanguage = useCallback((newLang) => {
-    if (SUPPORTED.includes(newLang) && switchRef.current) switchRef.current(newLang, { persist: true });
+    if (!SUPPORTED.includes(newLang) || !switchRef.current) return;
+    if (anzeigeRef.current) anzeigeRef.current.start(newLang);
+    switchRef.current(newLang, { persist: true });
+  }, []);
+
+  const erneutLaden = useCallback(() => {
+    const z = anzeigeRef.current && anzeigeRef.current.zustand;
+    if (z && z.fehler) setLanguage(z.fehler);
+  }, [setLanguage]);
+
+  const hinweisSchliessen = useCallback(() => {
+    if (anzeigeRef.current) anzeigeRef.current.schliessen();
   }, []);
 
   const setAnrede = useCallback((a) => {
@@ -240,7 +325,8 @@ export function I18nProvider({ children }) {
     return React.createElement(StartFehler, { navLang: detectLanguage() });
   }
 
-  return React.createElement(I18nContext.Provider, { value }, children);
+  return React.createElement(I18nContext.Provider, { value }, children,
+    React.createElement(SprachLadeHinweis, { zustand: ladeZustand, onRetry: erneutLaden, onClose: hinweisSchliessen }));
 }
 
 export function useT() {
