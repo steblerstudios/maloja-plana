@@ -7,7 +7,17 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 13:40 (`main` = `a414f86` nach **PR #216**, dazu dieser Doku-PR · **live `index-e5ece27b.js` = 0.1.34-beta seit 17.09. 13:25**, Tag `v0.1.34-beta` = `a414f86` · gemergt, nicht live: nichts · 0 offene Code-PRs · 1860 Tests grün, Hauptbundle 62.11 kB von 65)
+**Stand:** 2026-09-17, 14:45 (`main` = `605b8bd` nach **PR #217**, dazu dieser Abschluss-PR · **live `index-e5ece27b.js` = 0.1.34-beta seit 17.09. 13:25**, Tag `v0.1.34-beta` = `a414f86` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1860 Tests grün, Hauptbundle 62.11 kB von 65)
+
+> ### ⭐ ABSCHLUSS 2026-09-17, 14:45 (Sitzung «Oktober-Fokus: Runden 5–9, Header-Durchgang»)
+>
+> **Heute live gegangen:** 0.1.29 → 0.1.34 (sechs Deploys), zuletzt #211–#216.
+> **Header, alle aus der Server-`.htaccess`:** Standort, HSTS 1 Jahr, http→https, www→Hauptadresse, CSP-Header
+> mit `frame-ancestors` — alle ✅ gemessen; CSP-Prüfbatterie im Browser 0 Verletzungen (Bau-Liste §20).
+> **Nächste Sitzung beginnt mit:** K80 (🔴 QR im Notfall-Dossier fehlt bei langen Angaben) → Release →
+> Deploy; parallel O20 Cache-Control (Server, Stebler Studios) nachmessen.
+> **Oktober:** E42 (Pensum/Teilzeit-Pauschale), E1, E3, Jurist:in (K48 + E43), IDEEN §14 (Speicherorte, Karten).
+> **Gegenlesen offen:** fr/it/rm (K69/K70).
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 13:40 (0.1.34-beta live)
 >
