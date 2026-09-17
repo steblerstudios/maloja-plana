@@ -13,6 +13,28 @@
 import { getFullName } from './config/constants.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
 
+// ─── Druckfarben (K53) ────────────────────────────────────
+// Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
+// openPrintWindow): dort gibt es weder die CSS-Variablen aus tokens.css noch die
+// JS-Paletten der App. Feste Hex-Werte sind darum nötig — aber an EINER Stelle statt
+// verstreut über die drei Vorlagen. Warmes Papier-Schema, auch im Dark Mode hell,
+// weil gedruckt wird. Werte unverändert übernommen. Nur aufSand ist wertgleich mit
+// einem App-Token (palette.onSand); bewusst nicht importiert, weil der Import das
+// Hauptbundle um einen Export vergrössert (gemessen 17.09.2026: +9 Byte roh).
+const DRUCK = {
+  tinte: '#1C1A17',    // Fliesstext
+  papier: '#F5F2EE',   // Seitenhintergrund, getönte Felder
+  blatt: '#fff',       // Karte, Druckseite
+  rand: '#DDD8D0',     // Kartenrand, Kopf- und Fusslinie
+  linie: '#EAE5DD',    // Linie unter Abschnittstiteln
+  zeile: '#F0EDE8',    // Tabellenzeilen
+  grau: '#6B6560',     // Beschriftungen, Sekundärtext, Status «nein»
+  hell: '#A89F94',     // Datum, Fussnoten
+  sand: '#B8956A',     // Druck-Knopf
+  aufSand: '#2A2620',  // Text auf dem Druck-Knopf, = palette.onSand
+  gruen: '#5C7150',    // Status «ja» im Behörden-Dossier
+};
+
 // ─── Helpers ──────────────────────────────────────────────
 
 // Swiss CHF formatting (matches BudgetSync pattern)
@@ -235,15 +257,15 @@ export function generateLebensmappe(data, chapters, t, documents) {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       font-size: 13px;
       line-height: 1.6;
-      color: #1C1A17;
-      background: #F5F2EE;
+      color: ${DRUCK.tinte};
+      background: ${DRUCK.papier};
       padding: 40px 20px;
     }
     .lm-container {
       max-width: 640px;
       margin: 0 auto;
-      background: #fff;
-      border: 1px solid #DDD8D0;
+      background: ${DRUCK.blatt};
+      border: 1px solid ${DRUCK.rand};
       border-radius: 8px;
       padding: 40px 36px;
     }
@@ -251,7 +273,7 @@ export function generateLebensmappe(data, chapters, t, documents) {
       text-align: center;
       margin-bottom: 32px;
       padding-bottom: 20px;
-      border-bottom: 1px solid #DDD8D0;
+      border-bottom: 1px solid ${DRUCK.rand};
     }
     .lm-header h1 {
       font-size: 20px;
@@ -261,12 +283,12 @@ export function generateLebensmappe(data, chapters, t, documents) {
     }
     .lm-header .lm-name {
       font-size: 15px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       margin-bottom: 2px;
     }
     .lm-header .lm-date {
       font-size: 11px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
     }
     .lm-section {
       margin-bottom: 24px;
@@ -274,23 +296,23 @@ export function generateLebensmappe(data, chapters, t, documents) {
     .lm-section h2 {
       font-size: 13px;
       font-weight: 600;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       letter-spacing: 0.3px;
       margin-bottom: 10px;
       padding-bottom: 4px;
-      border-bottom: 1px solid #EAE5DD;
+      border-bottom: 1px solid ${DRUCK.linie};
     }
     table {
       width: 100%;
       border-collapse: collapse;
     }
-    tr { border-bottom: 1px solid #F0EDE8; }
+    tr { border-bottom: 1px solid ${DRUCK.zeile}; }
     tr:last-child { border-bottom: none; }
     td { padding: 5px 0; vertical-align: top; }
     .lm-label {
       width: 45%;
       font-size: 12px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
     }
     .lm-value {
       font-size: 12px;
@@ -303,27 +325,27 @@ export function generateLebensmappe(data, chapters, t, documents) {
     .lm-docs li {
       font-size: 12px;
       padding: 3px 0;
-      color: #6B6560;
+      color: ${DRUCK.grau};
     }
     .lm-docs li::before {
       content: '\\25CB ';
-      color: #A89F94;
+      color: ${DRUCK.hell};
     }
     .lm-footer {
       margin-top: 32px;
       padding-top: 16px;
-      border-top: 1px solid #DDD8D0;
+      border-top: 1px solid ${DRUCK.rand};
       text-align: center;
       font-size: 10px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
       line-height: 1.6;
     }
     .lm-print-btn {
       display: block;
       margin: 24px auto 0;
       padding: 10px 24px;
-      background: #B8956A;
-      color: #2A2620;
+      background: ${DRUCK.sand};
+      color: ${DRUCK.aufSand};
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -334,7 +356,7 @@ export function generateLebensmappe(data, chapters, t, documents) {
 
     /* ─── Print Overrides ─────────────────────────── */
     @media print {
-      body { background: #fff; padding: 0; }
+      body { background: ${DRUCK.blatt}; padding: 0; }
       .lm-container {
         border: none;
         border-radius: 0;
@@ -505,15 +527,15 @@ export function generateNotfallDossier(data, chapters, t) {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       font-size: 13px;
       line-height: 1.6;
-      color: #1C1A17;
-      background: #F5F2EE;
+      color: ${DRUCK.tinte};
+      background: ${DRUCK.papier};
       padding: 40px 20px;
     }
     .nd-container {
       max-width: 640px;
       margin: 0 auto;
-      background: #fff;
-      border: 1px solid #DDD8D0;
+      background: ${DRUCK.blatt};
+      border: 1px solid ${DRUCK.rand};
       border-radius: 8px;
       padding: 40px 36px;
     }
@@ -521,7 +543,7 @@ export function generateNotfallDossier(data, chapters, t) {
       text-align: center;
       margin-bottom: 32px;
       padding-bottom: 20px;
-      border-bottom: 1px solid #DDD8D0;
+      border-bottom: 1px solid ${DRUCK.rand};
     }
     .nd-header h1 {
       font-size: 20px;
@@ -531,20 +553,20 @@ export function generateNotfallDossier(data, chapters, t) {
     }
     .nd-header .nd-name {
       font-size: 15px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       margin-bottom: 2px;
     }
     .nd-header .nd-date {
       font-size: 11px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
     }
     .nd-privacy {
-      background: #F5F2EE;
+      background: ${DRUCK.papier};
       border-radius: 6px;
       padding: 10px 14px;
       margin-bottom: 24px;
       font-size: 11px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       line-height: 1.5;
     }
     .nd-section {
@@ -553,23 +575,23 @@ export function generateNotfallDossier(data, chapters, t) {
     .nd-section h2 {
       font-size: 13px;
       font-weight: 600;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       letter-spacing: 0.3px;
       margin-bottom: 10px;
       padding-bottom: 4px;
-      border-bottom: 1px solid #EAE5DD;
+      border-bottom: 1px solid ${DRUCK.linie};
     }
     table {
       width: 100%;
       border-collapse: collapse;
     }
-    tr { border-bottom: 1px solid #F0EDE8; }
+    tr { border-bottom: 1px solid ${DRUCK.zeile}; }
     tr:last-child { border-bottom: none; }
     td { padding: 5px 0; vertical-align: top; }
     .nd-label {
       width: 45%;
       font-size: 12px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
     }
     .nd-value {
       font-size: 12px;
@@ -578,18 +600,18 @@ export function generateNotfallDossier(data, chapters, t) {
     .nd-footer {
       margin-top: 32px;
       padding-top: 16px;
-      border-top: 1px solid #DDD8D0;
+      border-top: 1px solid ${DRUCK.rand};
       text-align: center;
       font-size: 10px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
       line-height: 1.6;
     }
     .nd-print-btn {
       display: block;
       margin: 24px auto 0;
       padding: 10px 24px;
-      background: #B8956A;
-      color: #2A2620;
+      background: ${DRUCK.sand};
+      color: ${DRUCK.aufSand};
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -599,7 +621,7 @@ export function generateNotfallDossier(data, chapters, t) {
     .nd-print-btn:hover { opacity: 0.9; }
 
     @media print {
-      body { background: #fff; padding: 0; }
+      body { background: ${DRUCK.blatt}; padding: 0; }
       .nd-container {
         border: none;
         border-radius: 0;
@@ -701,7 +723,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionSozialhilfe'),
       rows: sRows,
       status,
-      statusColor: sozialhilfe.eligible ? '#5C7150' : '#6B6560',
+      statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
     });
   }
 
@@ -722,7 +744,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionIPV'),
       rows: iRows,
       status,
-      statusColor: ipv.eligible ? '#5C7150' : '#6B6560',
+      statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
     });
   }
 
@@ -732,7 +754,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       title: t('behoerdenDossier.sectionEL'),
       rows: [],
       status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
-      statusColor: el.eligible ? '#5C7150' : '#6B6560',
+      statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
     });
   }
 
@@ -918,7 +940,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     .map(s => `
       <div class="bd-section">
         <h2>${esc(s.title)}</h2>
-        ${s.status ? `<div class="bd-status" style="color:${s.statusColor || '#6B6560'}">${esc(s.status)}</div>` : ''}
+        ${s.status ? `<div class="bd-status" style="color:${s.statusColor || DRUCK.grau}">${esc(s.status)}</div>` : ''}
         ${s.rows.length > 0 ? `<table>
           ${s.rows.map(r => `
             <tr>
@@ -942,15 +964,15 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       font-size: 13px;
       line-height: 1.6;
-      color: #1C1A17;
-      background: #F5F2EE;
+      color: ${DRUCK.tinte};
+      background: ${DRUCK.papier};
       padding: 40px 20px;
     }
     .bd-container {
       max-width: 640px;
       margin: 0 auto;
-      background: #fff;
-      border: 1px solid #DDD8D0;
+      background: ${DRUCK.blatt};
+      border: 1px solid ${DRUCK.rand};
       border-radius: 8px;
       padding: 40px 36px;
     }
@@ -958,7 +980,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       text-align: center;
       margin-bottom: 32px;
       padding-bottom: 20px;
-      border-bottom: 1px solid #DDD8D0;
+      border-bottom: 1px solid ${DRUCK.rand};
     }
     .bd-header h1 {
       font-size: 20px;
@@ -968,12 +990,12 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     }
     .bd-header .bd-name {
       font-size: 15px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       margin-bottom: 2px;
     }
     .bd-header .bd-date {
       font-size: 11px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
     }
     .bd-section {
       margin-bottom: 24px;
@@ -981,11 +1003,11 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     .bd-section h2 {
       font-size: 13px;
       font-weight: 600;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       letter-spacing: 0.3px;
       margin-bottom: 10px;
       padding-bottom: 4px;
-      border-bottom: 1px solid #EAE5DD;
+      border-bottom: 1px solid ${DRUCK.linie};
     }
     .bd-status {
       font-size: 13px;
@@ -993,36 +1015,36 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
       margin-bottom: 8px;
     }
     table { width: 100%; border-collapse: collapse; }
-    tr { border-bottom: 1px solid #F0EDE8; }
+    tr { border-bottom: 1px solid ${DRUCK.zeile}; }
     tr:last-child { border-bottom: none; }
     td { padding: 5px 0; vertical-align: top; }
-    .bd-label { width: 55%; font-size: 12px; color: #6B6560; }
+    .bd-label { width: 55%; font-size: 12px; color: ${DRUCK.grau}; }
     .bd-value { font-size: 12px; font-weight: 500; text-align: right; }
     .bd-bold { font-weight: 700; }
     .bd-disclaimer {
-      background: #F5F2EE;
+      background: ${DRUCK.papier};
       border-radius: 6px;
       padding: 10px 14px;
       margin-bottom: 24px;
       font-size: 11px;
-      color: #6B6560;
+      color: ${DRUCK.grau};
       line-height: 1.5;
     }
     .bd-footer {
       margin-top: 32px;
       padding-top: 16px;
-      border-top: 1px solid #DDD8D0;
+      border-top: 1px solid ${DRUCK.rand};
       text-align: center;
       font-size: 10px;
-      color: #A89F94;
+      color: ${DRUCK.hell};
       line-height: 1.6;
     }
     .bd-print-btn {
       display: block;
       margin: 24px auto 0;
       padding: 10px 24px;
-      background: #B8956A;
-      color: #2A2620;
+      background: ${DRUCK.sand};
+      color: ${DRUCK.aufSand};
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -1032,7 +1054,7 @@ export function generateBehoerdenDossier(data, chapters, t, calculations) {
     .bd-print-btn:hover { opacity: 0.9; }
 
     @media print {
-      body { background: #fff; padding: 0; }
+      body { background: ${DRUCK.blatt}; padding: 0; }
       .bd-container { border: none; border-radius: 0; padding: 0; max-width: none; }
       .bd-print-btn { display: none; }
       .bd-section { break-inside: avoid; }
