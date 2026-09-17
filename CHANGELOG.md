@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.34-beta] — 2026-09-17
 
-*Noch nicht live. Umfasst #214, #215 und die Demo-Korrektur.*
+*Live seit **17.09.2026, 13:25** (`index-e5ece27b.js`, Tag `v0.1.34-beta` = `a414f86`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-606d23bb.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-e5ece27b`, Backup `20260917-132557` mit 177 Dateien). Live im Browser geprüft: «Beispiel verlassen» im Banner führt zurück zur Code-Wand, Konsole ohne Fehler. Umfasst #214, #215, #216.*
 
 ### Behoben
 - **«Beispiel verlassen» funktioniert wieder:** Wer über «Ohne Code ausprobieren» ins Beispiel kam, konnte es über den Knopf im Banner nicht verlassen — der Knopf reichte das Klick-Ereignis als Adresse weiter, die Adresse wurde zu `/NaN` und das Neuladen scheiterte (`reload is not a function`; nach einem Neuladen von Hand erschien die 404-Seite). Live beobachtet am 17.09.2026 in 0.1.33-beta; der Link in der Fusszeile war nicht betroffen. Jetzt führt der Knopf zurück zur Code-Wand (lokal im Browser geprüft), und `demoVerlassen` nimmt nur echte Orts-Objekte an. Test mit Gegenprobe.

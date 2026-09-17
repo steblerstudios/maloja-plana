@@ -137,6 +137,45 @@ schritt für schritt. Nichts wird ohne dein Ja gebaut. Vollständig durchgegange
 - Inspiration: mobbin.com · awwwards.com · dribbble.com — Marken-`::selection`-Farbe setzen.
 - Prinzipien: **Jakob's Law** (vertraute Muster nutzen) · Better UX → More A11y → Better SEO (ein Hebel, drei Gewinne).
 
+## 14 · Speicherorte & offene Karten (Brain-Dump 17.09.2026)
+
+**Stand: Idee, nichts gebaut — Oktober oder später.** Leitlinie von Stebler Studios: sich an
+Open-Source-Bausteinen, offenen Schnittstellen und Plugins orientieren.
+
+**Was schon gilt** (`docs/ux/feedback-rekonstruktion.md`): «Cloud niemals Pflicht», mögliche
+Speicherorte Gerät · kDrive · WebDAV · externe Festplatte; «SecureSafe — nicht jetzt, später
+optional, nur für Testament, Vorsorgeauftrag, Patientenverfügung, Passkopien». SecureSafe ist
+heute nur verlinkt (Ressourcen), nicht angebunden.
+
+- 🌱 **Dokumente in kDrive oder Proton Drive speichern.** Zwei Wege, sehr verschieden:
+  - **A · über das Betriebssystem (empfohlen als erster Schritt):** Maloja erzeugt die Datei
+    (verschlüsselte Sicherung, Dokument, Dossier) und übergibt sie an «Teilen» / «Sichern unter».
+    Wer die kDrive- oder Proton-Drive-App hat, wählt sie dort als Ziel. Maloja spricht mit keinem
+    Server; CSP (`connect-src 'self'`), Datenschutzerklärung und die Aussage «Maloja sendet keine
+    Eingaben» bleiben wahr. Klein; ein ruhiger Hinweis «So speichern Sie in kDrive / Proton Drive».
+  - **B · direkte Anbindung (Konto verbinden, automatisch ablegen):** braucht die Schnittstelle
+    des Anbieters, eine Anmeldung, gespeicherte Zugangsschlüssel, eine CSP-Ausnahme für deren
+    Adresse und eine neue Datenschutzerklärung (Datenfluss an Dritte, DSFA neu). Ob und wie kDrive
+    (WebDAV?) und Proton Drive das aus dem Browser erlauben, ist **nicht geprüft** — vor jeder
+    Planung an der Quelle belegen. Gross; widerspricht dem heutigen Versprechen und gehört zur
+    Logins-Phase (E2).
+- 🌱 **Tresor-Themen in SecureSafe.** Wie oben: zuerst Weg A (Datei + Hinweis, gezielt für die
+  vier Dokumentarten). Eine direkte Anbindung setzt eine Schnittstelle voraus, deren Existenz
+  **nicht geprüft** ist. Tresor-UI bleibt vertagt (E2).
+- 🌱 **Karten mit offenen Daten statt Google Maps** (z. B. Beratungsstellen, Gemeindeverwaltung,
+  Notfall-Standort). Drei Stufen:
+  1. **Link** «In OpenStreetMap öffnen» / swisstopo — keine Verbindung, bis man tippt (Muster wie
+     `ExternerLink`). Klein.
+  2. **Eingebettete Karte mit fremden Kacheln** (Leaflet/MapLibre + OSM- oder swisstopo-Kacheln) —
+     jede Kachel ist eine Verbindung zu Dritten (IP-Adresse), braucht CSP-Ausnahmen, Hinweis in der
+     Datenschutzerklärung und die Nutzungsbedingungen des Kachel-Dienstes (die freien OSM-Server
+     sind nicht für App-Last gedacht — vorher lesen).
+  3. **Selbst gehostete Karte** (Schweiz als eine Kachel-Datei auf dem eigenen Hosting) — bleibt
+     `'self'`, aber eine grosse Datei und mehr Pflege; Grösse und Aufwand vorher messen.
+  Empfehlung: mit Stufe 1 beginnen; Stufe 3, wenn eine Karte wirklich gebraucht wird.
+- ⭐ Merker: Jede Anbindung nach aussen ändert Aussagen, die heute live stehen («lokal gespeichert»,
+  FAQ `a1`/`a3`, CSP). Solche Bausteine immer zusammen mit Rechts- und Sicherheits-Prüfer planen.
+
 ---
 
 ## Nächste Schritte (gemeinsam gewählt)
