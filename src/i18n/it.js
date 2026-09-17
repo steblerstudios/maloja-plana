@@ -2386,6 +2386,9 @@ export default {
     ohneZahlPartnerOffen: { sie: "Per questa situazione Maloja non mostra ancora alcuna stima fiscale: lo stato civile registrato è «coniugato» e manca l’indicazione sul reddito del o della partner. Per le persone coniugate i due redditi si sommano. Completare questo reddito nel profilo (Dati personali → «Stipendio netto partner»; senza reddito indicare 0).", du: "Per questa situazione Maloja non mostra ancora alcuna stima fiscale: lo stato civile registrato è «coniugato» e manca l’indicazione sul reddito del o della partner. Per le persone coniugate i due redditi si sommano. Completa questo reddito nel profilo (Dati personali → «Stipendio netto partner»; senza reddito indica 0)." },
     annahmeOhneDreizehnten: { sie: "Calcolato senza tredicesima — se la riceve, l’imposta è più alta. Può indicarlo nel capitolo «Finanze».", du: "Calcolato senza tredicesima — se la ricevi, l’imposta è più alta. Puoi indicarlo nel capitolo «Finanze»." },
     annahmeAlleinverdiener: "Calcolato come coppia coniugata con un solo reddito (senza reddito del o della partner).",
+    // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
+    bandPartnerOffenDirekt: "Per l’imposta cantonale e comunale Maloja qui non mostra alcun importo: è stata misurata solo per coppie coniugate con un solo reddito, e manca l’indicazione sul reddito del o della partner. L’imposta federale sopra si basa sul reddito imponibile inserito. Senza reddito del o della partner, indicare 0 nel profilo (Dati personali → «Stipendio netto partner»).",
+    ohneZahlZivilstandDirekt: "Per questa situazione Maloja non mostra alcuna stima fiscale: il reddito imponibile inserito corrisponde allo stato civile del profilo. Maloja non lo usa per un altro stato civile. Per fare una prova, togliere la spunta da «Usare questo valore come base» — Maloja stima allora a partire dal salario netto.",
     netIncomeNote13: { sie: "Proiezione basata sul Suo salario netto: salario principale × 13 (con tredicesima), reddito accessorio × 12. L’onere fiscale effettivo può variare.", du: "Proiezione basata sul tuo salario netto: salario principale × 13 (con tredicesima), reddito accessorio × 12. L’onere fiscale effettivo può variare." },
     annahmenLabel: "Ipotesi",
     totalNote: 'Federale + cantonale + comunale (orientamento). L\'onere effettivo dipende dal comune e dalla situazione personale.',
@@ -3348,6 +3351,15 @@ export default {
     openDossier: 'Apri il dossier',
     printAction: 'Stampa come PDF',
     exportJSON: 'Esporta file dossier',
+    // E40: Texte in der Dossier-Datei (neben festen Kennungen); anredefrei, sprache = Sprache dieser Texte
+    jsonTexte: {
+      sprache: "it",
+      basisEstv: "Stimato: salario netto meno le deduzioni standard del calcolatore d’imposta dell’AFC {year}",
+      basisDirekt: "Inserito (reddito imponibile, imposta federale diretta)",
+      kantonBasis: "Calcolatore d’imposta dell’AFC {year}, capoluogo {hauptort}, senza imposta di culto, stima approssimativa",
+      annahmeOhneDreizehnten: "Calcolato senza tredicesima",
+      annahmeAlleinverdiener: "Coppia coniugata con un solo reddito (reddito del o della partner: 0)",
+    },
     generated: 'Creato il {date}',
     disclaimer: { sie: 'Questo dossier serve come orientamento. I calcoli si basano sui Suoi dati e non sostituiscono una verifica ufficiale da parte dell\'ufficio competente.', du: 'Questo dossier serve come orientamento. I calcoli si basano sui tuoi dati e non sostituiscono una verifica ufficiale da parte dell\'ufficio competente.' },
     sectionPerson: 'Persona',
@@ -3720,6 +3732,10 @@ export default {
     tpwNote: 'Il valore del punto tariffale varia per cantone. Nella maggior parte dei cantoni i valori 2026 sono stati fissati in via provvisoria — cambiano non appena un cantone fissa la tariffa definitiva. Per {kantone} non esiste (ancora) un valore 2026 ufficialmente documentato; l\'app mostra lì lo stato 2025.',
     tpwDataVersion: 'Stato del valore del punto',
     tpwStandUnbelegt: 'Valore del punto {kanton}: stato 2025, provvisorio — non confermato ufficialmente.',
+    // E41: Quellen-Links je Kanton
+    tpwQuellenTitel: "Fonti dei valori del punto 2026, per cantone:",
+    tpwQuelleVor: "Fonte del valore del punto",
+    tpwQuelleTarifpartner: "società mediche",
     disclaimer: { sie: 'Orientamento basato su LAMal/OPre. Per informazioni vincolanti: il Suo assicuratore.', du: 'Orientamento basato su LAMal/OPre. Per informazioni vincolanti: il tuo assicuratore.' },
     source: 'Fonte: [[UFSP|bag.admin.ch]], [[LAMal Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/it]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/it]]',
   },

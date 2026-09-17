@@ -175,7 +175,8 @@ describe('R4-1 · 13. Monatslohn', () => {
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('tax.netIncomeNote13');
     expect(steuerrechner(profil({ monat: 5000, dreizehnter: 'yes' })).text).toContain('CHF 65000');
     const json = generateBehoerdenJSON(p, dossierRechnung(p)).calculations.tax;
-    expect(json.assumptions).toContain('ohne 13. Monatslohn gerechnet');
+    // E40: Kennung statt deutschem Klartext (ohne t nur die Kennung)
+    expect(json.assumptions).toContainEqual({ code: 'ohne_13_monatslohn' });
   });
 });
 
@@ -259,7 +260,8 @@ describe('R4-3 · Verheiratet ohne Angabe zum Partnereinkommen', () => {
     const s = regel(profil({ monat: 6000, verheiratet: true, taxableIncome: 60000 }));
     expect(s.bund).not.toBeNull();
     expect(s.kanton.kantonal).toBeNull();
-    expect(s.kanton.grund).toBe('partnerOffen');
+    // K62.4: eigener Grund — der Text betrifft nur die Kantonssteuer, die Bundessteuer steht.
+    expect(s.kanton.grund).toBe('partnerOffenDirekt');
     expect(s.annahmen.alleinverdiener).toBe(false);
   });
 
@@ -277,8 +279,8 @@ describe('R4-3 · Verheiratet ohne Angabe zum Partnereinkommen', () => {
     expect(statisch(FinanzUebersicht, null0)).toContain('tax.annahmeAlleinverdiener');
     expect(statisch(BehoerdenDossier, null0)).toContain('tax.annahmeAlleinverdiener');
     expect(steuerrechner(null0).text).toContain('tax.annahmeAlleinverdiener');
-    const json = generateBehoerdenJSON(null0, dossierRechnung(null0)).calculations.tax;
-    expect(json.assumptions).toContain('Alleinverdiener-Ehepaar (Partnereinkommen 0)');
+    const json = generateBehoerdenJSON(null0, dossierRechnung(null0), t).calculations.tax;
+    expect(json.assumptions).toContainEqual({ code: 'alleinverdiener_ehepaar', text: 'behoerdenDossier.jsonTexte.annahmeAlleinverdiener' });
   });
 
   it('Steuerrechner-Probiermodus: ledig im Profil, «verheiratet» angekreuzt → gerechnet und gekennzeichnet', () => {
@@ -288,6 +290,109 @@ describe('R4-3 · Verheiratet ohne Angabe zum Partnereinkommen', () => {
     const nach = texte(r.render());
     expect(nach).toContain('tax.marriedTariff');
     expect(nach).toContain('tax.annahmeAlleinverdiener');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// K62.4 · Steuerrechner widersprach sich bei «verheiratet» mit direkt eingetragenem steuerbarem
+// Einkommen:
+//   a) Partnereinkommen offen: oben eine Bundessteuer, darunter «zeigt Maloja noch keine
+//      Steuerschätzung» (tax.ohneZahlPartnerOffen) — ebenso in der Finanzübersicht.
+//   b) Probiermodus: der eingetragene Wert gehört zum Zivilstand im Profil, wurde aber mit dem
+//      anderen Tarif gerechnet (gemeinsam veranlagt, als ledig gerechnet — oder umgekehrt).
+// Regel jetzt: a) Bundessteuer aus dem Wert, Kantonstext nennt nur die fehlende Kantonszahl;
+// b) keine Zahl. Dieselbe Regel auf allen drei Seiten (steuernFuerProfil).
+// ─────────────────────────────────────────────────────────────
+describe('K62.4 · verheiratet mit eingetragenem steuerbarem Einkommen', () => {
+  const marriedBox = (r, checked) => r.alle.find((k) => k.props.type === 'checkbox' && k.props.checked === checked && !k.props.id && typeof k.props.onChange === 'function');
+  const kurz = (s) => s.split('\n').filter((z) => /^~ CHF/.test(z));
+
+  it('Partnereinkommen offen: Bundessteuer auf allen drei Seiten, Kantonstext widerspricht nicht', () => {
+    const p = profil({ monat: 6000, verheiratet: true, taxableIncome: 60000 });
+    const s = regel(p);
+    expect(s.bund).not.toBeNull();
+    expect(s.kanton.grund).toBe('partnerOffenDirekt');
+    // Steuerrechner
+    const r = steuerrechner(p);
+    expect(r.betraege).toEqual([Math.round(s.bund.steuer)]);
+    expect(r.text).toContain('tax.bandPartnerOffenDirekt');
+    expect(r.text).not.toContain('tax.ohneZahlPartnerOffen');
+    // Finanzübersicht
+    const fu = statisch(FinanzUebersicht, p);
+    expect(fu).toContain('tax.bandPartnerOffenDirekt');
+    expect(fu).not.toContain('tax.ohneZahlPartnerOffen');
+    // Dossier: Bundessteuer, «keine Schätzung» nur bei der Kantonssteuer
+    const bd = statisch(BehoerdenDossier, p);
+    expect(bd).toContain('CHF ' + tausender(s.bund.steuer) + 'common.perYear');
+    expect(bd).toContain('tax.noCantonalFigure');
+    expect(bd).not.toContain('tax.ohneZahlPartnerOffen');
+  });
+
+  it('der deutsche Kantonstext sagt nicht «keine Steuerschätzung», der ohne eingetragenen Wert schon', async () => {
+    const de = (await import('../i18n/de.js')).default;
+    expect(de.tax.bandPartnerOffenDirekt).not.toMatch(/keine Steuerschätzung/);
+    expect(de.tax.bandPartnerOffenDirekt).toMatch(/Kantons- und Gemeindesteuer/);
+    expect(de.tax.ohneZahlPartnerOffen.sie).toMatch(/keine Steuerschätzung/);
+  });
+
+  it('ohne eingetragenen Wert bleibt es bei «keine Zahl» (R4-3 unverändert)', () => {
+    const s = regel(profil({ monat: 6000, verheiratet: true }));
+    expect(s.bund).toBeNull();
+    expect(s.kanton.grund).toBe('partnerOffen');
+  });
+
+  it('Probiermodus ledig → verheiratet mit eingetragenem Wert: keine Zahl, Hinweis', () => {
+    const p = profil({ monat: 6000, taxableIncome: 60000 });
+    const r = steuerrechner(p);
+    const vorher = regel(p);
+    // mit dem Zivilstand aus dem Profil: dieselben Zahlen wie Finanzübersicht und Dossier
+    expect(r.betraege).toEqual([Math.round(vorher.bund.steuer), vorher.kanton.kantonal.kantonalUndGemeinde, vorher.kanton.kantonal.total]);
+    expect(statisch(FinanzUebersicht, p)).toContain('tax.federalTax: CHF ' + tausender(vorher.bund.steuer) + ' +');
+    marriedBox(r, false).props.onChange({ target: { checked: true } });
+    const nach = texte(r.render());
+    expect(kurz(nach)).toEqual([]);
+    expect(nach).toContain('tax.ohneZahlZivilstandDirekt');
+    expect(nach).not.toContain('tax.marriedTariff');
+  });
+
+  it('Probiermodus verheiratet → ledig mit eingetragenem Wert: keine Zahl', () => {
+    const p = profil({ monat: 6000, verheiratet: true, partnerIncome: '0', taxableIncome: 60000 });
+    const r = steuerrechner(p);
+    expect(kurz(r.text).length).toBeGreaterThan(0);
+    marriedBox(r, true).props.onChange({ target: { checked: false } });
+    const nach = texte(r.render());
+    expect(kurz(nach)).toEqual([]);
+    expect(nach).toContain('tax.ohneZahlZivilstandDirekt');
+    expect(nach).not.toContain('tax.singleTariff');
+  });
+
+  it('Probiermodus mit entferntem Häkchen (Schätzung aus dem Nettolohn) rechnet weiter', () => {
+    const p = profil({ monat: 6000, taxableIncome: 60000, taxData: { useEnteredTaxable: false } });
+    const r = steuerrechner(p);
+    marriedBox(r, false).props.onChange({ target: { checked: true } });
+    const nach = texte(r.render());
+    expect(nach).toContain('tax.marriedTariff');
+    expect(kurz(nach).length).toBeGreaterThan(0);
+  });
+
+  it('Regel ohne Seite: zivilstandDirekt für Bund und Kanton; ohne Profil-Zivilstand keine Prüfung', () => {
+    const e = { kanton: 'ZH', nettolohnJahr: 72000, direktSteuerbar: 60000, verheiratet: true, partnerAngegeben: true, kinder: 0 };
+    const abweichend = steuernFuerProfil({ ...e, direktVerheiratet: false });
+    expect(abweichend.bund).toBeNull();
+    expect(abweichend.grund).toBe('zivilstandDirekt');
+    expect(abweichend.kanton.kantonal).toBeNull();
+    expect(abweichend.kanton.grund).toBe('zivilstandDirekt');
+    expect(steuernFuerProfil({ ...e, direktVerheiratet: true }).bund).not.toBeNull();
+    expect(steuernFuerProfil(e).bund).not.toBeNull();
+    // Profil liefert den Zivilstand des eingetragenen Werts mit
+    expect(steuerEingabenAusDaten(profil({ monat: 6000, verheiratet: true })).direktVerheiratet).toBe(true);
+    expect(steuerEingabenAusDaten(profil({ monat: 6000 })).direktVerheiratet).toBe(false);
+  });
+
+  it('Orientierung ohne Kanton: der Grund steht direkt bei der Bundessteuer', () => {
+    const r = steuerrechner(profil({ canton: '', monat: 6000, taxableIncome: 60000 }));
+    marriedBox(r, false).props.onChange({ target: { checked: true } });
+    expect(texte(r.render())).toContain('tax.ohneZahlZivilstandDirekt');
   });
 });
 

@@ -66,7 +66,7 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     const bd = render(BehoerdenDossier, { data: p });
     const preview = getBehoerdenDossierPreview(p, [], t, dossierDaten(p));
     const steuern = preview.sections.find((s) => s.key === 'steuern');
-    const json = generateBehoerdenJSON(p, dossierDaten(p)).calculations.tax;
+    const json = generateBehoerdenJSON(p, dossierDaten(p), t).calculations.tax;
 
     if (zahl) {
       const kg = tausender(e.kantonal.kantonalUndGemeinde);
@@ -83,7 +83,8 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
       expect(steuern.rows.map((r) => r.value)).toContain('tax.basedOnHauptort(2026)');
       expect(json.cantonalAndMunicipal).toBe(e.kantonal.kantonalUndGemeinde);
       expect(json.totalEstimate).toBe(e.kantonal.total);
-      expect(json.cantonalBasis).toMatch(/ESTV-Steuerrechner 2026, Hauptort .+, ohne Kirchensteuer, grobe Schätzung/);
+      // E40: feste Kennung + Text in der App-Sprache (hier der Test-Übersetzer: Schlüssel(Parameter)).
+      expect(json.cantonalBasis).toEqual({ code: 'estv_hauptort_ohne_kirchensteuer', text: 'behoerdenDossier.jsonTexte.kantonBasis(2026|' + e.kantonal.hauptort + ')', dataVersion: '2026', hauptort: e.kantonal.hauptort });
     } else if (!bund) {
       // E39: kein steuerbares Einkommen → weder Bundes- noch Kantonszahl; Dossier ohne Steuerteil.
       expect(fu).toContain('tax.noTaxFigure');
@@ -156,9 +157,9 @@ describe('E38 · dieselbe Regel in Finanzübersicht und Behördendossier', () =>
     expect(bd).toContain('CHF ' + tausender(estv) + 'common.perYear');
     expect(bd).toContain('tax.taxableIncomeEstimated');
     expect(bd).toContain('CHF ' + tausender(steuerbar) + '<');
-    const json = generateBehoerdenJSON(p, dossierDaten(p)).calculations.tax;
+    const json = generateBehoerdenJSON(p, dossierDaten(p), t).calculations.tax;
     expect(json).toMatchObject({ taxableIncome: steuerbar, federalTax: estv });
-    expect(json.taxableIncomeBasis).toMatch(/Standardabzüge des ESTV-Steuerrechners 2026/);
+    expect(json.taxableIncomeBasis).toEqual({ code: 'estv_standardabzuege', text: 'behoerdenDossier.jsonTexte.basisEstv(2026)', dataVersion: '2026' });
   });
 
   it('Druck der Finanzübersicht: Kennzeichnung und Hinweis bei geschätzter Kantonssteuer', () => {

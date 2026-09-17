@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
-import { ExternerLink } from './components/ExternerLink.jsx';
+import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026 } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
@@ -900,9 +900,35 @@ const RechnungTab = ({ palette, t, data }) => {
       }, 'ⓘ ' + (TAXPUNKTWERT_UNBELEGT_2026.includes(selCanton)
         ? t('kvg.tpwStandUnbelegt', { kanton: selCanton })
         : t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION))
-    )
+    ),
+
+    // E41: die Quelle je Kanton, verlinkt. Kantone ohne belegten Wert 2026 haben keinen Link
+    // (die Fussnote kvg.tpwNote nennt sie).
+    React.createElement(TpwQuellen, { palette, t })
   );
 };
+
+export const TpwQuellen = ({ palette, t }) =>
+  React.createElement('div', {
+    'data-testid': 'tpw-quellen',
+    style: { fontSize: text.xs, color: palette.mid, marginTop: '12px', lineHeight: leading.normal }
+  },
+    React.createElement('div', { style: { marginBottom: '4px' } }, t('kvg.tpwQuellenTitel')),
+    React.createElement('ul', { style: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', gap: '4px 12px' } },
+      Object.keys(TAXPUNKTWERT_QUELLEN).sort().map((c) => {
+        const q = TAXPUNKTWERT_QUELLEN[c];
+        return React.createElement('li', { key: c },
+          React.createElement(ExternerLink, {
+            t, href: q.url,
+            style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-block', padding: '4px 0' }
+          },
+            React.createElement('span', { style: visuallyHiddenStyle }, t('kvg.tpwQuelleVor') + ' '),
+            c + (q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
+          )
+        );
+      })
+    )
+  );
 
 // ─── Main Component ────────────────────────────────────────
 export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNavigate }) => {

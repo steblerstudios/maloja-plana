@@ -2428,6 +2428,9 @@ export default {
     ohneZahlPartnerOffen: "Maloja does not show a tax estimate yet for this situation: you are recorded as married, and the partner income is missing. For married couples both incomes are added together. Please add the partner income in your profile (Personal basics → «Partner net salary»; enter 0 if there is none).",
     annahmeOhneDreizehnten: "Calculated without a 13th monthly salary — if you receive one, the tax is higher. You can state this in the «Finances» chapter.",
     annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
+    // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
+    bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the taxable income entered. With no partner income, enter 0 in the profile (Personal basics → «Partner net salary»).",
+    ohneZahlZivilstandDirekt: "Maloja does not show a tax estimate for this situation: the taxable income entered belongs to the marital status in the profile. Maloja does not use it for a different marital status. To try this out, untick «Use this value as the basis» — Maloja then estimates from the net salary.",
     netIncomeNote13: "Projection based on your net salary: main salary × 13 (with 13th monthly salary), side income × 12. Actual tax liability may differ.",
     annahmenLabel: "Assumptions",
     totalNote: 'Federal + cantonal + municipal (orientation). Actual burden depends on your municipality and personal situation.',
@@ -3372,6 +3375,15 @@ export default {
     openDossier: 'Open dossier',
     printAction: 'Print as PDF',
     exportJSON: 'Export dossier file',
+    // E40: Texte in der Dossier-Datei (neben festen Kennungen); anredefrei, sprache = Sprache dieser Texte
+    jsonTexte: {
+      sprache: "en",
+      basisEstv: "Estimated: net salary minus the standard deductions of the FTA tax calculator {year}",
+      basisDirekt: "Entered (taxable income, direct federal tax)",
+      kantonBasis: "FTA tax calculator {year}, cantonal capital {hauptort}, excluding church tax, rough estimate",
+      annahmeOhneDreizehnten: "Calculated without a 13th monthly salary",
+      annahmeAlleinverdiener: "Single-earner married couple (partner income 0)",
+    },
     generated: 'Generated on {date}',
     disclaimer: 'This dossier is for orientation purposes. Calculations are based on your entries and do not replace an official assessment by the responsible authority.',
     sectionPerson: 'Person',
@@ -3744,6 +3756,10 @@ export default {
     tpwNote: 'Tax point value varies by canton. In most cantons the 2026 values have been set provisionally — they change once a canton sets the definitive tariff. For {kantone} there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
     tpwDataVersion: 'Tax point value as of',
     tpwStandUnbelegt: 'Tax point value {kanton}: 2025 level, provisional — not officially confirmed.',
+    // E41: Quellen-Links je Kanton
+    tpwQuellenTitel: "Sources of the 2026 tax point values, by canton:",
+    tpwQuelleVor: "Source of the tax point value",
+    tpwQuelleTarifpartner: "medical associations",
     disclaimer: 'Guidance based on KVG/KLV. For binding information: your health insurer.',
     source: 'Source: [[FOPH|bag.admin.ch]], [[KVG Art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[KLV|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },
