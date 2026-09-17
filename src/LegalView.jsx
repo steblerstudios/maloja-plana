@@ -324,6 +324,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.ethics.sustain1') }),
         P({ children: t('legal.ethics.sustain2') }),
         P({ children: t('legal.ethics.sustain3') }),
+        P({ children: t('legal.ethics.sustainSource') }),
         P({ children: t('legal.ethics.sustain4') }),
       ]}),
       Section({ title: t('legal.ethics.contactTitle'), palette, children: [

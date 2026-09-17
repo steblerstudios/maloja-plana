@@ -23,7 +23,7 @@ Maloja Plana ist eine **Local-First-Webanwendung**. Das bedeutet:
 - Alle persönlichen Daten werden **ausschliesslich auf Deinem Gerät** gespeichert (im Browser-localStorage und in der IndexedDB).
 - Es gibt **keinen Server, kein Backend und keine Cloud**, die Deine Daten empfängt oder verarbeitet.
 - Es gibt **kein Benutzerkonto** und keine Registrierung.
-- Die Anwendung funktioniert **vollständig offline**.
+- Nach dem ersten Laden funktioniert die Anwendung **auch offline** — in der Regel in den Bereichen, die schon einmal geöffnet wurden.
 
 **Es findet keine systematische Übermittlung von Personendaten an die Betreiberin oder an Dritte statt.**
 

@@ -21,8 +21,9 @@
 - Sicherung als Klartext-JSON oder, auf Wunsch, verschlüsselt als `.maloja` (AES-256-GCM, `src/utils/backupCrypto.js`)
 
 ### Offline-Fähigkeit
-- Vollständig offline nutzbar nach erstem Laden
-- Keine Funktionalität erfordert Internetverbindung
+- Nach dem ersten Laden auch offline nutzbar — in der Regel in den Bereichen, die schon einmal geöffnet wurden
+  (der Service Worker legt nachgeladene Teile erst beim ersten Öffnen ab, `public/sw.js`)
+- Für die Nutzung selbst ist keine Serververbindung nötig; Links auf Behörden-Seiten brauchen Internet
 
 ### Analytics
 - **Vercel Speed Insights**: Anonyme Performance-Metriken (Web Vitals)

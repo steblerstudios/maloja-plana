@@ -1517,7 +1517,7 @@ export default {
       localTitle: 'Memorisaziun locala da datas',
       local1: { sie: "Maloja Plana è ina applicaziun web Local-First. Tut las datas persunalas vegnan memorisadas exclusivamain sin Voss apparat — en il localStorage e l'IndexedDB da Voss navigatur.", du: "Maloja Plana è ina applicaziun web Local-First. Tut las datas persunalas vegnan memorisadas exclusivamain sin Tes apparat — en il localStorage e l'IndexedDB da Tes navigatur." },
       local2: "Naginas datas vegnan transmessas ad in server, ina cloud u a terzs. I na dat nagin conto dad utilisader e nagina registraziun.",
-      local3: "L'applicaziun funcziuna cumplettamain offline.",
+      local3: "Suenter il prim chargiar funcziuna l'applicaziun er offline — per regla en ils secturs ch'èn gia vegnids averts almain ina giada.", // TODO(rm): Gegenlese Muttersprache
       dataTitle: 'Tge datas vegnan memorisadas localmain?',
       data1: "Indicaziuns persunalas (num, data da naschientscha, adressa, datas da contact) — per l'auto-organisaziun.",
       data2: "Datas dal ménaschi (situaziun d'abitar, tschains, entrada) — per l'orientaziun da budget e d'agid social.",
@@ -1564,7 +1564,7 @@ export default {
       ip1: { sie: 'Maloja Plana è in project open source. Il code fundamental è disponibel sut la licenza AGPL-3.0. Vus pudais al guardar, copiar e sviluppar vinavant.', du: 'Maloja Plana è in project open source. Il code fundamental è disponibel sut la licenza AGPL-3.0. Ti pos al guardar, copiar e sviluppar vinavant.' },
       ip2: "Il num, il logo ed il design da Maloja Plana èn protegids e na dastgan betg vegnir duvrads per auters projects senza permissiun.",
       availabilityTitle: 'Disponibladad',
-      availability1: "Maloja Plana è in'applicaziun offline. Ella funcziuna senza connexiun d'internet uschè prest ch'ella è chargiada. I na dat nagina dependenza da server e nagin SLA.",
+      availability1: "Maloja Plana è in'applicaziun web che funcziuna er offline. Suenter il prim chargiar funcziuna ella er senza connexiun d'internet — per regla en ils secturs ch'èn gia vegnids averts almain ina giada. I na dat nagina dependenza da server e nagin SLA.", // TODO(rm): Gegenlese Muttersprache
       availability2: "Nus ans stentan da mantegnair l'applicaziun stabila e actuala, ma na pudain betg garantir ina disponibladad nuninterrutta.",
       dataLossTitle: 'Memorisaziun & perdita da datas',
       dataLoss1: { sie: 'Tut Vossas datas vegnan memorisadas exclusivamain en Voss navigatur (localStorage ed IndexedDB). Maloja Plana na ha nagin access a Vossas datas.', du: 'Tut Tias datas vegnan memorisadas exclusivamain en Tes navigatur (localStorage ed IndexedDB). Maloja Plana na ha nagin access a Tias datas.' },
@@ -1583,7 +1583,7 @@ export default {
       projectTitle: 'Project',
       project1: "Maloja Plana è in project Open Source independent da Stebler Studios en svilup activ. Il code-source è accessibel publicamain.",
       hostingTitle: 'Hosting & domena',
-      hosting1: "Il hosting e la domena vegnan furnids da Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra, manads cun energia regenerabla.",
+      hosting1: "Il hosting e la domena vegnan furnids da Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra, manads tenor il purschider cun electricitad regenerabla.", // TODO(rm): Gegenlese Muttersprache
       disclaimerTitle: "Exclusiun da responsabladad",
       disclaimer1: "Ils cuntegns da questa applicaziun èn vegnids creads cun la pli gronda premura. Per l'exactezza, cumplettezza ed actualitad na vegn surpigliada nagina garanzia.",
       jurisdictionTitle: 'Dretg applitgabel',
@@ -1604,7 +1604,7 @@ export default {
       sourceTitle: 'Code-source',
       source1: 'Il code-source cumplet è accessibel sut: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Bibliotecas utilisadas',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), Lexend, Hanken Grotesk (OFL). Tut las licenzas èn cumpatiblas cun AGPL-3.0.',
+      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, mo en la tgaltscha iOS, betg en l\'app web). Scrittiras: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Tut las licenzas èn cumpatiblas cun AGPL-3.0.', // TODO(rm): Gegenlese Muttersprache
     },
     ethics: {
       valuesTitle: 'Nossa posiziun',
@@ -1624,11 +1624,12 @@ export default {
       no3: '→ Naginas decisiuns automatisadas davart persunas.',
       sustainTitle: 'Durabladad',
       sustain1: "Maloja Plana consuma uschè pauca energia sco pussaivel: Nagin backend, nagin server en modus permanent, naginas dumondas da banca da datas.",
-      sustain2: "Hosting tar Infomaniak Network SA (Genevra, Svizra): centers da datas en Svizra, manads cun energia regenerabla (forza idraulica).",
-      sustain3: "Infomaniak è certifitgà ISO 14001 e cumpensescha sias emissiuns da CO₂ restantas via myclimate.",
-      sustain4: "Offline-abel: Ina giada chargiada funcziuna l'app vinavant era senza rait.", // TODO(rm): Gegenlese Muttersprache
+      sustain2: "Hosting tar Infomaniak Network SA (Genevra, Svizra): centers da datas en Svizra, manads cun electricitad regenerabla certifitgada (forza idraulica ed autras funtaunas regenerablas localas).", // TODO(rm): Gegenlese Muttersprache
+      sustain3: "Infomaniak è certifitgà ISO 14001 e cumpensescha tenor atgnas indicaziuns sias emissiuns da CO₂ cun projects da la fundaziun myclimate.", // TODO(rm): Gegenlese Muttersprache
+      sustainSource: "Funtauna da las indicaziuns davart Infomaniak: infomaniak.com/en/about, infomaniak.com/en/ecology, infomaniak.com/en/ecology/certificates-rewards (indicaziuns dal purschider, consultadas ils 17.09.2026).", // TODO(rm): Gegenlese Muttersprache
+      sustain4: "Offline-abel: Suenter il prim chargiar funcziuna l'app vinavant era senza rait — per regla en ils secturs ch'èn gia vegnids averts almain ina giada.", // TODO(rm): Gegenlese Muttersprache
       contactTitle: 'Donaziuns & participar',
-      contact1: { sie: "Maloja Plana è in project Open Source d'utilitad publica. Sche Vus vulais gidar — cun code, translaziuns, feedback u ina donaziun — annunziai Vus gugent.", du: "Maloja Plana è in project Open Source d'utilitad publica. Sche Ti vuls gidar — cun code, translaziuns, feedback u ina donaziun — annunziescha Tai gugent." },
+      contact1: { sie: "Maloja Plana è in project Open Source. Sche Vus vulais gidar — cun code, translaziuns, feedback u ina donaziun — annunziai Vus gugent.", du: "Maloja Plana è in project Open Source. Sche Ti vuls gidar — cun code, translaziuns, feedback u ina donaziun — annunziescha Tai gugent." },
       contact2: 'Contact: info@malojaplana.ch · GitHub: https://github.com/steblerstudios/maloja-plana',
     },
     resources: {
@@ -1694,7 +1695,7 @@ export default {
       q2: 'È Maloja Plana gratuita?',
       a2: 'Gea, cumplettamain e permanentamain. Nagin abunament, nagins custs zuppads, nagina reclama. Il code font è open source (AGPL-3.0).',
       q3: 'Funcziuna l\'app senza internet?',
-      a3: 'Gea. Suenter il prim chargiar funcziuna tut offline grazia al Service Worker. Naginas datas vegnan mai tramessas sur la rait.',
+      a3: 'Gea, suenter il prim chargiar — grazia al Service Worker, per regla en ils secturs ch\'èn gia vegnids averts almain ina giada. Naginas datas vegnan mai tramessas sur la rait.', // TODO(rm): Gegenlese Muttersprache
       q4: 'Èn ils calculs giuridicamain vinculants?',
       a4: 'Na. Tuts calculaturs (taglia, subvenziuns, assicuranza da malsogna, agid social) èn instruments d\'orientaziun basads sin datas publicas. Per infurmaziuns vinculantas contactescha l\'autoritad cumpetenta.',
       q5: 'Poss jau exportar mias datas?',
