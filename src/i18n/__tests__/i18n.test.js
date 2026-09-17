@@ -87,12 +87,12 @@ describe('hreflang-Vollständigkeit (index.html)', () => {
   });
 });
 
-// Fängt Übersetzungs-Drift: Wenn ein Feature einen Key in en (DEFAULT_LANG /
-// Fallback) ergänzt, aber eine Sprache nicht nachzieht, sehen deren Nutzer den
-// englischen Fallback. Dieser Test verlangt, dass jede Sprache den en-Kanon
-// vollständig abdeckt. (Zusätzliche, ungenutzte Keys in einer Sprache sind
+// Fängt Übersetzungs-Drift: Wenn ein Feature einen Key in en oder de ergänzt,
+// aber eine Sprache nicht nachzieht, sehen deren Nutzer den deutschen Rückfall
+// (K58) oder den rohen Schlüssel. Dieser Test verlangt, dass jede Sprache den
+// en- und den de-Kanon vollständig abdeckt. (Zusätzliche, ungenutzte Keys in einer Sprache sind
 // erlaubt — sie schaden nicht; nur fehlende sind ein Problem.)
-describe('i18n-Parität (jede Sprache deckt den en-Kanon ab)', () => {
+describe('i18n-Parität (jede Sprache deckt den en- und den de-Kanon ab)', () => {
   const enKeys = flattenKeys(en);
 
   for (const [name, dict] of Object.entries({ de, fr, it: itTranslations, rm })) {
@@ -101,7 +101,21 @@ describe('i18n-Parität (jede Sprache deckt den en-Kanon ab)', () => {
       const missing = enKeys.filter((k) => !have.has(k));
       expect(
         missing,
-        `${name}.js fehlen ${missing.length} Keys (fallen auf EN zurück): ${missing.slice(0, 25).join(', ')}`
+        `${name}.js fehlen ${missing.length} Keys gegenüber en: ${missing.slice(0, 25).join(', ')}`
+      ).toEqual([]);
+    });
+  }
+
+  // K58: Rückfall-Sprache ist Deutsch. Fehlt einer Sprache ein de-Schlüssel, sähen
+  // ihre Leser:innen Deutsch — darum auch gegen den de-Kanon prüfen.
+  const deKeys = flattenKeys(de);
+  for (const [name, dict] of Object.entries({ en, fr, it: itTranslations, rm })) {
+    it(`${name}.js hat keine fehlenden Keys gegenüber de (Rückfall-Sprache)`, () => {
+      const have = new Set(flattenKeys(dict));
+      const missing = deKeys.filter((k) => !have.has(k));
+      expect(
+        missing,
+        `${name}.js fehlen ${missing.length} Keys (fallen auf DE zurück): ${missing.slice(0, 25).join(', ')}`
       ).toEqual([]);
     });
   }
@@ -241,7 +255,7 @@ describe('de-{sie,du}-Schlüssel sind in fr/it ebenfalls { sie, du } (keine stil
 
 // Der Übersetzungs-Kern selbst (Schlüssel-Auflösung, Fallback-Kette, Sie/Du-Wahl,
 // Param-Interpolation) — mit kontrollierten Fixtures statt der echten Sprachdateien.
-// DEFAULT_LANG ist 'en' (Fallback-Sprache).
+// Rückfall-Sprache ist seit K58 'de' (FALLBACK_LANG); Startsprache bleibt 'en'.
 describe('Vorsorge-Szenario: Referenzalter als Platzhalter, nicht fest «65»', () => {
   // AHV 21: Frauen JG 1961–63 haben ein Referenzalter unter 65 (64 J 3/6/9 M). Die
   // Szenariotexte müssen den echten Wert aus dem Rechner zeigen, nicht pauschal 65.
@@ -262,31 +276,38 @@ describe('Vorsorge-Szenario: Referenzalter als Platzhalter, nicht fest «65»', 
 
 describe('createT (Übersetzungs-Kern)', () => {
   const fixtures = {
-    en: {
-      greet: 'Hello',
-      nested: { deep: 'Deep EN' },
-      withParam: 'Hi {name}',
-      count: 'Count: {n}',
-      onlyEn: 'EN only',
-      emptyStr: '',
-    },
     de: {
       greet: { sie: 'Guten Tag', du: 'Hallo' },
       nested: { deep: 'Tief DE' },
       withParam: 'Hallo {name}',
+      count: 'Anzahl: {n}',
+      onlyDe: 'nur DE',
+      emptyStr: '',
+    },
+    en: {
+      greet: 'Hello',
+      nested: { deep: 'Deep EN' },
+      withParam: 'Hi {name}',
+      onlyEn: 'EN only',
     },
   };
 
   it('löst einen einfachen Key in der aktiven Sprache auf', () => {
     expect(createT(fixtures, 'de', 'sie')('nested.deep')).toBe('Tief DE');
+    expect(createT(fixtures, 'en', 'sie')('nested.deep')).toBe('Deep EN');
   });
 
-  it('fällt auf DEFAULT_LANG (en) zurück, wenn der Key in der Sprache fehlt', () => {
-    expect(createT(fixtures, 'de', 'sie')('onlyEn')).toBe('EN only');
+  it('fällt auf FALLBACK_LANG (de) zurück, wenn der Key in der Sprache fehlt (K58)', () => {
+    expect(createT(fixtures, 'en', 'sie')('onlyDe')).toBe('nur DE');
+    expect(createT(fixtures, 'en', 'du')('greet')).toBe('Hello'); // eigene Sprache geht vor
+  });
+
+  it('kein Rückfall auf Englisch mehr', () => {
+    expect(createT(fixtures, 'de', 'sie')('onlyEn')).toBe('onlyEn');
   });
 
   it('gibt den Key-String zurück, wenn nirgends vorhanden', () => {
-    expect(createT(fixtures, 'de', 'sie')('does.not.exist')).toBe('does.not.exist');
+    expect(createT(fixtures, 'en', 'sie')('does.not.exist')).toBe('does.not.exist');
   });
 
   it('{sie,du}: Standard Sie, Du nur bei anrede="du"', () => {
@@ -300,7 +321,7 @@ describe('createT (Übersetzungs-Kern)', () => {
   });
 
   it('interpoliert den Wert 0 korrekt (kein Falsy-Zero-Bug)', () => {
-    expect(createT(fixtures, 'de', 'sie')('count', { n: 0 })).toBe('Count: 0');
+    expect(createT(fixtures, 'en', 'sie')('count', { n: 0 })).toBe('Anzahl: 0');
   });
 
   it('lässt unaufgelöste {param} sichtbar stehen', () => {
@@ -309,12 +330,12 @@ describe('createT (Übersetzungs-Kern)', () => {
   });
 
   it('gibt einen leeren String zurück (nicht Fallback) bei absichtlich leerem Wert', () => {
-    expect(createT(fixtures, 'en', 'sie')('emptyStr')).toBe('');
+    expect(createT(fixtures, 'de', 'sie')('emptyStr')).toBe('');
   });
 
   it('ist robust bei nicht geladener Sprache (translations[lang] undefined)', () => {
-    // de fehlt 'count' → Fallback en; aber wenn die Sprache ganz fehlt:
-    expect(createT(fixtures, 'xx', 'sie')('onlyEn')).toBe('EN only'); // Fallback en greift
-    expect(createT(fixtures, 'xx', 'sie')('greet')).toBe('Hello');    // en-Wert (plain)
+    // Sprache ganz nicht geladen → Rückfall de, Anrede wie gewählt:
+    expect(createT(fixtures, 'xx', 'sie')('onlyDe')).toBe('nur DE');
+    expect(createT(fixtures, 'xx', 'du')('greet')).toBe('Hallo');
   });
 });

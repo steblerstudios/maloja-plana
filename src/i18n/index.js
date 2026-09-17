@@ -6,7 +6,12 @@ import React, { createContext, useContext, useState, useCallback, useMemo, useEf
 
 const STORAGE_KEY = 'or5_lang';
 const SUPPORTED = ['en', 'de', 'fr', 'it', 'rm'];
+// DEFAULT_LANG: Startsprache, wenn weder Link, frühere Wahl noch Browsersprache passen.
+// FALLBACK_LANG (K58, Entscheid 17.09.2026): Rückfall für einzelne fehlende Texte und
+// beim Ladefehler — Deutsch, weil die meisten Nutzer:innen Deutsch lesen und de die
+// vollständigste Fassung ist. Der Paritätstest hält en und de gegenseitig vollständig.
 const DEFAULT_LANG = 'en';
+const FALLBACK_LANG = 'de';
 
 // Sprachen mit Rechts-nach-links-Schrift. Vorbereitet für den Asyl-Sprachausbau
 // (z.B. Arabisch). Setzt <html dir="rtl"> für korrektes Layout.
@@ -62,7 +67,7 @@ function resolve(obj, path) {
 export function createT(translations, lang, anrede) {
   return function t(key, params) {
     let val = resolve(translations[lang], key);
-    if (val === undefined && lang !== DEFAULT_LANG) val = resolve(translations[DEFAULT_LANG], key);
+    if (val === undefined && lang !== FALLBACK_LANG) val = resolve(translations[FALLBACK_LANG], key);
     if (val === undefined) return key;
 
     // Anrede-Varianten: { sie: '…', du: '…' } → passende Form wählen (Standard: Sie)
@@ -88,7 +93,7 @@ export function createLanguageSwitch({ load, onReady, onError }) {
   let stopped = false;
   const request = (lang, opts) => {
     const id = ++latest;
-    const needed = lang === DEFAULT_LANG ? [lang] : [lang, DEFAULT_LANG];
+    const needed = lang === FALLBACK_LANG ? [lang] : [lang, FALLBACK_LANG];
     const current = () => !stopped && id === latest;
     return Promise.all(needed.map((l) => load(l))).then(
       () => { if (current()) onReady(lang, opts); },
@@ -197,7 +202,7 @@ export function I18nProvider({ children }) {
         if (langRef.current !== null) return;
         startLadefehler({
           lang: l,
-          defaultLang: DEFAULT_LANG,
+          defaultLang: FALLBACK_LANG,
           request,
           reloadOnce: () => neuLadenEinmal({ storage: sessionStore(), reload: () => window.location.reload() }),
           fail: () => setStartFehler(true),
@@ -257,7 +262,7 @@ export function rueckfallT(geladen = cache) {
     gespeichert = localStorage.getItem(STORAGE_KEY);
     anrede = localStorage.getItem('or5_anrede');
   } catch (e) { /* Speicher gesperrt */ }
-  const lang = geladen[gespeichert] ? gespeichert : geladen[DEFAULT_LANG] ? DEFAULT_LANG : Object.keys(geladen)[0];
+  const lang = geladen[gespeichert] ? gespeichert : geladen[FALLBACK_LANG] ? FALLBACK_LANG : Object.keys(geladen)[0];
   if (!lang) return () => '';
   const t = createT(geladen, lang, anrede === 'du' ? 'du' : 'sie');
   return (key, params) => {

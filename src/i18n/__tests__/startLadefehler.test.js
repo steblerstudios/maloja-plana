@@ -58,25 +58,25 @@ describe('K60 Ablauf beim Start: Rückfall → Neuladen → Fehlerzustand', () =
     const request = vi.fn();
     const fail = vi.fn();
     const reloadOnce = vi.fn(() => reloadErgebnis);
-    i18n.startLadefehler({ lang, defaultLang: 'en', request, reloadOnce, fail });
+    i18n.startLadefehler({ lang, defaultLang: 'de', request, reloadOnce, fail });
     return { request, fail, reloadOnce };
   };
 
   it('gewählte Sprache scheitert → zuerst die Rückfall-Sprache', () => {
-    const s = ablauf('de', true);
-    expect(s.request).toHaveBeenCalledWith('en');
+    const s = ablauf('fr', true);
+    expect(s.request).toHaveBeenCalledWith('de');
     expect(s.reloadOnce).not.toHaveBeenCalled();
     expect(s.fail).not.toHaveBeenCalled();
   });
 
   it('auch die Rückfall-Sprache scheitert → einmal neu laden, kein Fehlerzustand', () => {
-    const s = ablauf('en', true);
+    const s = ablauf('de', true);
     expect(s.reloadOnce).toHaveBeenCalledTimes(1);
     expect(s.fail).not.toHaveBeenCalled();
   });
 
   it('scheitert es nach dem Neuladen immer noch → Fehlerzustand statt weisser Seite', () => {
-    const s = ablauf('en', false);
+    const s = ablauf('de', false);
     expect(s.request).not.toHaveBeenCalled();
     expect(s.fail).toHaveBeenCalledTimes(1);
   });
