@@ -324,7 +324,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('input', {
           id: 'hh-partner-income',
           type: 'number', inputMode: 'decimal',
-          value: household.partnerIncome || '',
+          // K62: 0 ist eine Antwort (kein Partnereinkommen) und bleibt als «0» sichtbar.
+          value: household.partnerIncome ?? '',
           onChange: (e) => updateHousehold({ partnerIncome: e.target.value }),
           placeholder: '0',
           style: { ...hhSelect, cursor: 'text' }
@@ -474,7 +475,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     if (naVerdeckt(data, field)) return null;
     const el = renderField(field);
     if (!field.naOk || demoMode) return el;
-    const na = trifftNichtZu(data, field.k);
+    // K45: ein eingetragener Wert geht vor — auch bei Altdaten, die noch beides tragen.
+    const na = trifftNichtZu(data, field.k) && !data[field.k];
     if (!na && data[field.k]) return el;
     // K38: gekoppelte Felder (Arbeitgeber) gleich auch im anderen Kapitel umschalten.
     const umschalten = () => {

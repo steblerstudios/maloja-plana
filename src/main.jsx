@@ -14,6 +14,7 @@ import { VorlesenContext } from './hooks/vorlesenContext.js';
 import { registerServiceWorker, checkOverdueReminders } from './utils/notifications.js';
 import { migrateData } from './utils/dataMigration.js';
 import { gesamtVollstaendigkeit } from './utils/vollstaendigkeit.js';
+import { eintragFolgen } from './utils/eintragFolgen.js';
 import { validateData, validateDocs } from './utils/dataValidation.js';
 import { saveDocBlob, getDocBlob, dokumentAktionen, needsMigration, splitDocsForMigration } from './utils/docBlobs.js';
 // createBackup wird lazy geladen (läuft best-effort nach Mount, nicht für den ersten
@@ -731,8 +732,8 @@ const AppInner = ({ demo }) => {
       if (chapter === 'ausbildung' && field === 'employerAddress' && value) {
         next.finanzen = { ...next.finanzen, employerAddress: next.finanzen?.employerAddress || value };
       }
-
-      return next;
+      // K45: Arbeitsbeginn ↔ Anstellung seit vorbelegen; ein Wert hebt «trifft nicht zu» auf.
+      return eintragFolgen(prev, next, chapter, field, value);
     });
   };
 

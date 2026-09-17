@@ -46,7 +46,11 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
   const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
   const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
-  const [einkommenPartner, setEinkommenPartner] = useState(data.basis?.household?.partnerIncome ? String(Math.round(Number(data.basis.household.partnerIncome) * 12)) : '');
+  const [einkommenPartner, setEinkommenPartner] = useState(() => {
+    // K62: 0 ist eine Antwort (kein Partnereinkommen) und wird als «0» übernommen.
+    const p = data.basis?.household?.partnerIncome;
+    return p == null || p === '' ? '' : String(Math.round(Number(p) * 12) || 0);
+  });
   const [bvgGuthaben, setBvgGuthaben] = useState('');
   // Umwandlungssatz der eigenen Pensionskasse (leer = BVG-Mindestsatz 6,8 %).
   const [bvgUmwandlung, setBvgUmwandlung] = useState('');
