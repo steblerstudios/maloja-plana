@@ -2254,6 +2254,7 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
+      disclaimer: "Orientaziun sin basa da las indicaziuns endatadas; na remplazza nagin examen liant tras il post cumpetent.", // TODO(rm): provisorisch
     },
     generated: 'Creà ils {date}',
     disclaimer: { sie: "Quest dossier serva a l'orientaziun. Las calculaziuns sa basan sin Vossas indicaziuns e na remplazzan nagina examinaziun vinculanta da la post cumpetenta.", du: "Quest dossier serva a l'orientaziun. Las calculaziuns sa basan sin Tias indicaziuns e na remplazzan nagina examinaziun vinculanta da la post cumpetenta." },
@@ -3497,7 +3498,7 @@ export default {
     berechneterBetrag: 'Import calculà',
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. En la gronda part dals chantuns èn ils valurs 2026 vegnids fixads provisoricamain — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. En la gronda part dals chantuns èn ils valurs 2026 vegnids fixads provisoricamain — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà; l'app mussa là il stadi 2025.",
     tpwDataVersion: 'Stadi da la valur dal punct',
     // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
     tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',
@@ -3505,6 +3506,7 @@ export default {
     tpwQuellenTitel: "Funtaunas da las valurs dal punct 2026, tenor chantun:", // TODO(rm): provisorisch
     tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
     tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
+    tpwQuelleSZ: "societads medicinalas; 0.85 per tarifsuisse, 0.86 per CSS e HSK", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },

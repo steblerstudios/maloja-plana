@@ -192,7 +192,8 @@ export const TAXPUNKTWERT_QUELLEN = {
   NW: { art: 'tarifpartner', url: VZAG_LU },
   OW: { art: 'tarifpartner', url: VZAG_LU },
   SG: { art: 'behoerde', url: 'https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf' },
-  SZ: { art: 'tarifpartner', url: VZAG_LU },
+  // K92: in SZ gilt 0.85 nur für tarifsuisse (heute santéservices), für CSS und HSK 0.86 — Zusatz im Linktext.
+  SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ' },
   TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },
   TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf' },
   UR: { art: 'behoerde', url: 'https://www.ur.ch/mmregierungsrat/132029' },

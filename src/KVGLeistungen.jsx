@@ -923,7 +923,7 @@ export const TpwQuellen = ({ palette, t }) =>
             style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 6px' }
           },
             React.createElement('span', { style: visuallyHiddenStyle }, t('kvg.tpwQuelleVor') + ' '),
-            c + (q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
+            c + (q.zusatz ? ' (' + t('kvg.tpwQuelle' + q.zusatz) + ')' : q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
           )
         );
       })
