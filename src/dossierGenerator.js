@@ -840,6 +840,8 @@ export const STEUER_KENNUNG = Object.freeze({
   kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
+  // K93: Einordnung der ganzen Datei (wie der Hinweis im PDF-Dossier), anredefrei.
+  disclaimer: 'orientierung',
 });
 
 // t ist die Übersetzungsfunktion der App; ohne t (ältere Aufrufer) steht nur die Kennung in der Datei.
@@ -859,6 +861,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
     schema: 'maloja-plana-dossier',
     version: DOSSIER_JSON_VERSION,
     ...(t ? { textLanguage: t('behoerdenDossier.jsonTexte.sprache') } : {}),
+    disclaimer: erl('disclaimer'),
     exportedAt: new Date().toISOString(),
     person: {
       firstName: basis.firstName || '',

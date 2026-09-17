@@ -166,3 +166,37 @@ describe('E41 · Taxpunktwert-Quellen je Kanton', () => {
     }
   });
 });
+
+// ─────────────────────────────────────────────────────────────
+// K91–K93 · Nachschärfungen aus dem Deploy-Gate 0.1.35 (17.09.2026)
+// ─────────────────────────────────────────────────────────────
+describe('K91–K93 · Fussnote, SZ-Zusatz, Disclaimer im Behörden-JSON', () => {
+  it('K91: die Fussnote behauptet keinen «amtlichen» Beleg', () => {
+    expect(de.kvg.tpwNote).not.toMatch(/amtlich/);
+    expect(fr.kvg.tpwNote).not.toMatch(/officiellement/);
+    expect(it_.kvg.tpwNote).not.toMatch(/ufficialmente/);
+    expect(en.kvg.tpwNote).not.toMatch(/officially/);
+    expect(rm.kvg.tpwNote).not.toMatch(/uffizialmain/);
+  });
+
+  it('K92: SZ nennt beide Werte, die übrigen Tarifpartner-Kantone bleiben kurz', () => {
+    const html = renderToStaticMarkup(React.createElement(TpwQuellen, { palette, t: tKey }));
+    expect(html).toContain('SZ (kvg.tpwQuelleSZ)');
+    expect(html).toContain('NW (kvg.tpwQuelleTarifpartner)');
+    for (const [lang, tr] of Object.entries(SPRACHEN)) {
+      expect(tr.kvg.tpwQuelleSZ, lang).toMatch(/0\.85.*tarifsuisse.*0\.86.*CSS.*HSK/);
+    }
+    // Werte in den Daten passen zum Text
+    expect(TAXPUNKTWERT.SZ).toBe(0.85);
+  });
+
+  it('K93: das Behörden-JSON trägt einen Disclaimer (mit und ohne Übersetzung)', () => {
+    const p = profil();
+    const r = rechnung(p);
+    const d = generateBehoerdenJSON(p, r, tFuer('de'));
+    expect(d.disclaimer).toEqual({ code: 'orientierung', text: de.behoerdenDossier.jsonTexte.disclaimer });
+    expect(d.disclaimer.text).toMatch(/keine verbindliche Prüfung/);
+    expect(generateBehoerdenJSON(p, r, tFuer('fr')).disclaimer.text).toBe(fr.behoerdenDossier.jsonTexte.disclaimer);
+    expect(generateBehoerdenJSON(p, r).disclaimer).toEqual({ code: 'orientierung' });
+  });
+});

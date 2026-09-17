@@ -11,6 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- **K91 · Fussnote der Taxpunktwerte ohne «amtlich»:** Sie sagte, nur den unbelegten Kantonen fehle ein «amtlich belegter» Wert. Das widersprach der Quellen-Beschriftung «Ärztegesellschaften» für OW, NW und SZ. Jetzt «belegter Wert» (5 Sprachen).
+- **K92 · Schwyz nennt beide Werte:** Der Quellen-Link sagt jetzt «0.85 für tarifsuisse, 0.86 für CSS und HSK», wie die Quelle.
+- **K93 · Behörden-JSON mit Einordnung:** Die Datei trägt oben `disclaimer: { code: 'orientierung', text }`: Orientierung auf Grundlage der erfassten Angaben, keine verbindliche Prüfung (anredefrei, 5 Sprachen).
+
 ## [0.1.35-beta] — 2026-09-17
 
 *Noch nicht live. Umfasst #219, #220, #221 (Entscheid-Runde 17.09.2026 nachmittags).*
