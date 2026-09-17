@@ -1,6 +1,6 @@
 # Third-Party-Lizenzen — Maloja Plana
 
-**Stand: Juni 2026**
+**Stand: Juni 2026, nachgeführt 17.09.2026**
 
 ---
 
@@ -37,8 +37,14 @@ Lizenztexte der beiden Bibliotheken werden mit ausgeliefert: `public/licenses/js
 
 | Schrift | Lizenz | Quelle |
 |---|---|---|
-| DM Sans | Open Font License (OFL) | Google Fonts (lokal eingebunden) |
-| Cormorant Garamond | Open Font License (OFL) | Google Fonts (lokal eingebunden) |
+| Lexend | SIL Open Font License 1.1 | https://github.com/googlefonts/lexend (lokal unter `public/fonts/`) |
+| Hanken Grotesk | SIL Open Font License 1.1 | https://github.com/marcologous/hanken-grotesk (lokal unter `public/fonts/`) |
+| Atkinson Hyperlegible | SIL Open Font License 1.1 | https://www.brailleinstitute.org/freefont (lokal unter `public/fonts/`) |
+
+Lizenztext und Copyright-Vermerke liegen bei den Schriften (`public/fonts/OFL.txt`, `LICENSE.txt`,
+`README.md`) und werden mit ausgeliefert. *Korrigiert 17.09.2026 (K75): Hier standen DM Sans und
+Cormorant Garamond; ausgeliefert werden seit dem Schriftwechsel Lexend, Hanken Grotesk und Atkinson
+Hyperlegible (gemessen: `ls public/fonts`).*
 
 ---
 

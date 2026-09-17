@@ -11,6 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Geändert
+- **K73 · Italienisch siezt in der Sie-Ansicht:** 14 italienische Texte duzten, obwohl der deutsche Text keine Anrede hat — sie erschienen so auch in der Sie-Ansicht. Jetzt anredefrei (Titel im Infinitiv) oder mit Sie- und Du-Fassung; ebenso einzelne französische Titel und Hinweise. Ein Test verhindert neue Fälle.
+- **K75 · Schriften in der Lizenzliste:** Lexend, Hanken Grotesk und Atkinson Hyperlegible statt der früheren DM Sans und Cormorant.
+- **K77 · Doku ohne unbelegte Aussagen:** «nDSG-konform» als juristisch nicht geprüft gekennzeichnet; Vercel-Angaben auf Infomaniak nachgeführt.
+
 ## [0.1.33-beta] — 2026-09-17
 
 *Noch nicht live. Umfasst #211 (K67/K68/K71) und die siebte Runde (K46, K55–K58).*

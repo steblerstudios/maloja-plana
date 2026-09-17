@@ -59,7 +59,7 @@ Anforderungen und Status:
 | Kriterium | Status |
 |---|---|
 | Sicherheit | Teilweise (CSP, Encryption, keine Server-Daten) |
-| Datenschutz | Stark (local-first, nDSG-konform) |
+| Datenschutz | Stark (local-first; nDSG-Konformität juristisch nicht geprüft, Bau-Liste K48) |
 | Zuverlässigkeit | Beta-Phase, noch nicht produktionsreif |
 | Faire Interaktion | Umgesetzt (keine Dark Patterns, transparente Rechner) |
 | Kinderschutz | Nicht spezifisch adressiert |
