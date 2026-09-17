@@ -28,7 +28,12 @@ const DEMO_FEHLER = 'Demo: es wird nichts gespeichert';
 // K25 · Verlassen: die Adresse zuerst auf den Einstieg zurücksetzen (ohne die zuletzt
 // gesehene Ansicht, z. B. #/export; die Sprache in ?lang= bleibt), dann neu laden.
 // Sonst landet, wer danach den Code eingibt, in der letzten Demo-Ansicht.
-export function demoVerlassen(loc = location, hist = history) {
+// Fix 17.09.2026: Als Klick-Handler bekam die Funktion das Klick-Ereignis als `loc`
+// → Adresse «/NaN» und «reload is not a function»; die Demo liess sich über den
+// Banner-Knopf nicht verlassen. Darum nur echte Orts-/Verlaufs-Objekte annehmen.
+export function demoVerlassen(ort, verlauf) {
+  const loc = ort && typeof ort.reload === 'function' ? ort : location;
+  const hist = verlauf && typeof verlauf.replaceState === 'function' ? verlauf : history;
   hist.replaceState(null, '', loc.pathname + loc.search);
   loc.reload();
 }

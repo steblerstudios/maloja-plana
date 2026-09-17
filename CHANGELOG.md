@@ -11,6 +11,13 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.34-beta] — 2026-09-17
+
+*Noch nicht live. Umfasst #214, #215 und die Demo-Korrektur.*
+
+### Behoben
+- **«Beispiel verlassen» funktioniert wieder:** Wer über «Ohne Code ausprobieren» ins Beispiel kam, konnte es über den Knopf im Banner nicht verlassen — der Knopf reichte das Klick-Ereignis als Adresse weiter, die Adresse wurde zu `/NaN` und das Neuladen scheiterte (`reload is not a function`; nach einem Neuladen von Hand erschien die 404-Seite). Live beobachtet am 17.09.2026 in 0.1.33-beta; der Link in der Fusszeile war nicht betroffen. Jetzt führt der Knopf zurück zur Code-Wand (lokal im Browser geprüft), und `demoVerlassen` nimmt nur echte Orts-Objekte an. Test mit Gegenprobe.
+
 ### Geändert
 - **K73 · Italienisch siezt in der Sie-Ansicht:** 14 italienische Texte duzten, obwohl der deutsche Text keine Anrede hat — sie erschienen so auch in der Sie-Ansicht. Jetzt anredefrei (Titel im Infinitiv) oder mit Sie- und Du-Fassung; ebenso einzelne französische Titel und Hinweise. Ein Test verhindert neue Fälle.
 - **K75 · Schriften in der Lizenzliste:** Lexend, Hanken Grotesk und Atkinson Hyperlegible statt der früheren DM Sans und Cormorant.

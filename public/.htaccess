@@ -1,7 +1,8 @@
 # Maloja Plana — Apache Security Headers
-# ⚠️ WIRD NICHT DEPLOYT: deploy.sh löscht dist/.htaccess (Infomaniak liefert sonst 503).
-# Die Live-Header kommen aus dem Infomaniak-Panel und weichen hiervon ab
-# (live: geolocation=(), siehe SECURITY.md + Bau-Liste M15). Nur lokaler Stand.
+# ⚠️ WIRD NICHT DEPLOYT: deploy.sh löscht dist/.htaccess und lädt die Wurzel ohne
+# --delete hoch — die .htaccess AUF DEM SERVER bleibt dadurch unberührt. Die Live-Header
+# kommen aus dieser Server-Datei (von Stebler Studios von Hand gepflegt; Stand 17.09.2026:
+# geolocation=(self), gemessen per curl). Diese Datei hier ist nur die Vorlage.
 # CSP is already defined via <meta> in index.html — not duplicated here.
 
 <IfModule mod_headers.c>

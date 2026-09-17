@@ -75,6 +75,25 @@ describe('K25 · Verlassen setzt die Adresse auf den Einstieg zurück', () => {
     expect(schritte).toEqual([['replaceState', '/?lang=fr'], ['reload']]);
   });
 
+  it('als Klick-Handler: das Klick-Ereignis wird nicht als Adresse gelesen (Fix 17.09.2026)', () => {
+    const { loc, hist, schritte } = fakeOrt('#/notfall');
+    vi.stubGlobal('location', loc);
+    vi.stubGlobal('history', hist);
+    try {
+      const klick = { type: 'click', target: {}, preventDefault() {} };
+      demoVerlassen(klick);
+      expect(schritte).toEqual([['replaceState', '/?lang=fr'], ['reload']]);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it('der Banner-Knopf reicht das Klick-Ereignis nicht an onLeave weiter', () => {
+    const main = fs.readFileSync(path.resolve(__dirname, '../main.jsx'), 'utf8');
+    expect(main).not.toMatch(/onClick: demo \? demo\.onLeave\b/);
+    expect(main).toMatch(/onClick: demo \? \(\) => demo\.onLeave\(\)/);
+  });
+
   it('BetaGate reicht genau diese Funktion als onLeave weiter', () => {
     const gate = fs.readFileSync(path.resolve(__dirname, '../BetaGate.jsx'), 'utf8');
     expect(gate).toMatch(/onLeave: s\.demoVerlassen/);
