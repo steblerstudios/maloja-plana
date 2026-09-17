@@ -339,3 +339,31 @@ describe('createT (Übersetzungs-Kern)', () => {
     expect(createT(fixtures, 'xx', 'du')('greet')).toBe('Hallo');
   });
 });
+
+// K46 (17.09.2026): Die App siezt standardmässig. Ein deutscher Text ohne
+// { sie, du } darf darum keine Du-Form enthalten, und die sie-Fassung eines
+// Objekts auch nicht. Wortgrenzen über \p{L} (JS-\b versagt bei Umlauten);
+// ohne Beachtung der Gross-/Kleinschreibung, damit auch «Dein …» am Satzanfang zählt.
+describe('K46 · deutsche Texte duzen nur in der du-Fassung', () => {
+  const DU = /(?<!\p{L})(du|dein\p{L}*|dich|dir)(?!\p{L})/iu;
+  const treffer = [];
+  const walk = (o, p) => {
+    if (typeof o === 'string') { if (DU.test(o)) treffer.push(p); return; }
+    if (Array.isArray(o)) { o.forEach((x, i) => walk(x, `${p}[${i}]`)); return; }
+    if (!o || typeof o !== 'object') return;
+    if (isAnredeObject(o)) { if (DU.test(o.sie)) treffer.push(`${p} (sie)`); return; }
+    for (const k of Object.keys(o)) walk(o[k], p ? `${p}.${k}` : k);
+  };
+  walk(de, '');
+
+  it('keine Du-Form in Einheitstexten oder sie-Fassungen', () => {
+    expect(treffer, `de.js duzt in der Sie-Ansicht: ${treffer.slice(0, 20).join(', ')}`).toEqual([]);
+  });
+
+  it('Gegenprobe: das Muster erkennt Du-Formen, aber nicht Sie-Formen', () => {
+    expect('Deine KK-Last').toMatch(DU);
+    expect('Melde dich beim RAV').toMatch(DU);
+    expect('Ihre KK-Last').not.toMatch(DU);
+    expect('Durchschnitt, Dirigent, Direktlink').not.toMatch(DU);
+  });
+});

@@ -11,7 +11,20 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.33-beta] — 2026-09-17
+
+*Noch nicht live. Umfasst #211 (K67/K68/K71) und die siebte Runde (K46, K55–K58).*
+
 ### Geändert
+- **Sie-Ansicht siezt durchgehend (K46):** Rund 200 deutsche Texte standen nur in der Du-Form und erschienen so auch in der Sie-Ansicht, der Voreinstellung — Lebensereignis-Anleitungen (Umzug, Stelle verloren, Selbständigkeit, Betreibung, Pensionierung, KVG- und Zusatzwechsel u. a.), Lebenslagen, Notfallkarte, Anspruchs-Check, Vorsorge-Zukunft, Tresor. Sie haben jetzt eine Sie- und eine Du-Fassung, in fr (vous/tu) und it (Lei/tu) ebenso; einige Texte in der Ihr-Form («Meldet euch») sind mit umgestellt. Die zwei SEO-Texte sind anredefrei wie in `index.html`. Ein neuer Test verhindert, dass ein deutscher Text in der Sie-Ansicht wieder duzt. Muttersprachliches Gegenlesen fr/it bleibt offen (K70).
+- **Rückfall-Sprache Deutsch (K58):** Fehlt einer Sprache ein Text, erscheint er jetzt auf Deutsch statt Englisch; auch beim Ladefehler wird Deutsch nachgeladen. Die Startsprache für unbekannte Browsersprachen bleibt Englisch. Der Paritätstest prüft zusätzlich gegen den deutschen Bestand.
+- **«offline-fähig» statt «offline» (K55):** Werbetexte in `index.html`, `manifest.json`, README und App (5 Sprachen) sagen jetzt «offline-fähig» — offline geht erst nach dem ersten Besuch. Der FAQ-Satz «Keine Daten werden je über das Netz gesendet» ist präzisiert: Maloja sendet keine Eingaben; auf ein anderes Gerät gelangen sie nur durch eigenen Export oder Versand.
+
+### Rechtliches
+- **Lizenztexte mitgeliefert (K56):** `/licenses/jsQR-LICENSE.txt` (Apache-2.0, Wortlaut des Originalprojekts) und `/licenses/QRCode.js-LICENSE.txt` (MIT, «Copyright (c) 2012 davidshimjs»); der Lizenzkommentar von QRCode.js fiel im Build weg. Verweise in `NOTICE`, `VENDOR.md`, `docs/legal/third-party-licenses.md`.
+- **Doku-Reste (K57):** «Daten bleiben in der Schweiz (nDSG-konform)» ohne Beleg ersetzt; «Vercel Speed Insights» aus der Datenschutz-Position entfernt (kein Vercel mehr im Code).
+
+### Intern
 - **K68 · Anrede-Reste:** `kvg.mammoGeoYourCantonNo` (de/fr/it/rm), `legal.resources.localGovDesc` (fr/it/rm) und `legal.privacy.sensitive1` (fr) sind anredefrei formuliert — sie erschienen vorher in der Sie-Ansicht geduzt bzw. umgekehrt. rm mit `TODO(rm)` zum Gegenlesen (K69).
 - **K71 · Rückfall ohne Übersetzer:** Eine Ansicht ohne `t` und ohne Kontext zeigt jetzt die Texte der bereits geladenen Sprache (Anrede wie gespeichert) statt leerer Knöpfe; nur wenn nichts geladen ist, bleibt der Text leer. `createTranslator` (ungenutzt, immer Sie-Form) ist entfernt.
 - **K67 · Hauptbundle:** Der Vermögensfreibetrag je Kanton liegt in `data/vermoegensfreibetragKanton.js`; `config/cantonalData.js` zieht damit nicht mehr den ganzen Sozialhilfe-Rechner ins Hauptbundle (62.71 → 62.09 kB gzip). `sozialhilfeRechner.js` reicht die Funktion weiter.

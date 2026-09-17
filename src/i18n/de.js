@@ -3086,7 +3086,7 @@ export default {
   },
 
   kkLast: {
-    title: 'Deine KK-Last',
+    title: { sie: 'Ihre KK-Last', du: 'Deine KK-Last' },
     share: 'Die Grundversicherungs-Prämie entspricht {share}% des monatlichen Einkommens.',
     overNote: 'Schon die Prämie allein liegt über dem Richtwert von 10%.',
     underNote: 'Die Prämie allein liegt unter 10% — Franchise, Selbstbehalt und nicht gedeckte Kosten kommen hinzu.',
@@ -3898,8 +3898,8 @@ export default {
   },
 
   seo: {
-    title: 'Maloja Plana — Dein Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
-    description: 'Maloja Plana — Dein Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline-fähig, kostenlos.',
+    title: 'Maloja Plana — Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
+    description: 'Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline-fähig, kostenlos.',
   },
   obstgarten: {
     title: 'Mein Obstgarten',
@@ -3930,7 +3930,7 @@ export default {
     w: { umzug: 'Umzug', neuch: 'Neu in der Schweiz', bewilligung: 'Aufenthalt & Bewilligung', mietzins: 'Mietzins prüfen', job: 'Erste Stelle', stelleweg: 'Stelle verloren', selbst: 'Selbständig werden', stipendien: 'Ausbildung & Stipendien', heirat: 'Heirat', geburt: 'Geburt', trennung: 'Trennung', unfall: 'Krankheit oder Unfall', kkwechsel: 'Krankenkasse wechseln', kkerst: 'Krankenkasse zum ersten Mal', iv: 'Invalidität (IV)', pension: 'Pensionierung', pflege: 'Wenn Pflege nötig wird', todesfall: 'Todesfall', organ: 'Organspende' },
   },
   instrumente: {
-    title: 'Deine Instrumente',
+    title: { sie: 'Ihre Instrumente', du: 'Deine Instrumente' },
     intro: { sie: 'Vier ruhige Selbstchecks auf einen Blick — tippen Sie eines an.', du: 'Vier ruhige Selbstchecks auf einen Blick — tippe eines an.' },
     tacho: 'Franchise-Tacho',
     tachoSub: 'lohnt sich hoch oder tief?',

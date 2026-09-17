@@ -3079,7 +3079,7 @@ export default {
   },
 
   kkLast: {
-    title: 'Charge des primes maladie',
+    title: { sie: 'Charge des primes maladie', du: 'Charge des primes maladie' },
     share: 'La prime d’assurance de base correspond à {share}% du revenu mensuel.',
     overNote: 'À elle seule, la prime dépasse déjà le repère de 10%.',
     underNote: 'À elle seule, la prime est inférieure à 10% — franchise, quote-part et coûts non couverts s’y ajoutent.',
@@ -3881,8 +3881,8 @@ export default {
   },
 
   seo: {
-    title: 'Maloja Plana — votre classeur de vie suisse : impôts, aide sociale, assurances',
-    description: 'Maloja Plana — votre classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, utilisable hors ligne, gratuit.',
+    title: 'Maloja Plana — classeur de vie suisse : impôts, aide sociale, assurances',
+    description: 'Maloja Plana — classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, utilisable hors ligne, gratuit.',
   },
   obstgarten: {
     title: 'Mon verger',
@@ -3913,7 +3913,7 @@ export default {
     w: { umzug: 'Déménagement', neuch: 'Nouveau en Suisse', bewilligung: 'Séjour & permis', mietzins: 'Vérifier le loyer', job: 'Premier emploi', stelleweg: 'Perte d’emploi', selbst: 'Devenir indépendant', stipendien: 'Formation & bourses', heirat: 'Mariage', geburt: 'Naissance', trennung: 'Séparation', unfall: 'Maladie ou accident', kkwechsel: 'Changer de caisse maladie', kkerst: 'Assurance-maladie pour la première fois', iv: 'Invalidité (AI)', pension: 'Retraite', pflege: 'Quand des soins deviennent nécessaires', todesfall: 'Décès', organ: 'Don d’organes' },
   },
   instrumente: {
-    title: 'Vos instruments',
+    title: { sie: 'Vos instruments', du: 'Tes instruments' },
     intro: { sie: 'Quatre auto-vérifications en un coup d\'œil — touchez-en une.', du: 'Quatre auto-vérifications en un coup d\'œil — touches-en une.' },
     tacho: 'Tachymètre de franchise',
     tachoSub: 'élevée ou basse — quoi de mieux ?',

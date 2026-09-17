@@ -10,7 +10,7 @@ Lizenz-Kommentar im Quelltext weg; dieser Hinweis wird deshalb separat mitgelief
   Quelle:     https://github.com/davidshimjs/qrcodejs
   Lizenz:     MIT
 
-Urheberrecht: bei davidshimjs und den Mitwirkenden laut Quelle oben.
+Copyright (c) 2012 davidshimjs (Wortlaut der LICENSE-Datei im Originalprojekt, abgerufen 17.09.2026).
 
 -------------------------------------------------------------------------------
 

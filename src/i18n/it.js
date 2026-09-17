@@ -3056,7 +3056,7 @@ export default {
   },
 
   kkLast: {
-    title: 'Carico dei premi malattia',
+    title: { sie: 'Carico dei premi malattia', du: 'Carico dei premi malattia' },
     share: 'Il premio dell’assicurazione di base corrisponde al {share}% del reddito mensile.',
     overNote: 'Già da solo, il premio supera il valore di riferimento del 10%.',
     underNote: 'Da solo il premio è sotto il 10% — franchigia, aliquota e costi non coperti si aggiungono.',
@@ -3859,8 +3859,8 @@ export default {
   },
 
   seo: {
-    title: 'Maloja Plana — il tuo raccoglitore di vita svizzero: imposte, aiuto sociale, assicurazioni',
-    description: 'Maloja Plana — il tuo raccoglitore di vita svizzero. Calcolatore d\'imposte, aiuto sociale, riduzione dei premi, scheda d\'emergenza — 100% privato, utilizzabile offline, gratuito.',
+    title: 'Maloja Plana — raccoglitore di vita svizzero: imposte, aiuto sociale, assicurazioni',
+    description: 'Maloja Plana — raccoglitore di vita svizzero. Calcolatore d\'imposte, aiuto sociale, riduzione dei premi, scheda d\'emergenza — 100% privato, utilizzabile offline, gratuito.',
   },
   obstgarten: {
     title: 'Il mio frutteto',
@@ -3891,7 +3891,7 @@ export default {
     w: { umzug: 'Trasloco', neuch: 'Nuovo in Svizzera', bewilligung: 'Soggiorno & permesso', mietzins: 'Verificare l’affitto', job: 'Primo impiego', stelleweg: 'Perdita del lavoro', selbst: 'Mettersi in proprio', stipendien: 'Formazione & borse di studio', heirat: 'Matrimonio', geburt: 'Nascita', trennung: 'Separazione', unfall: 'Malattia o infortunio', kkwechsel: 'Cambiare cassa malati', kkerst: 'Cassa malati per la prima volta', iv: 'Invalidità (AI)', pension: 'Pensionamento', pflege: 'Quando servono le cure', todesfall: 'Decesso', organ: 'Donazione di organi' },
   },
   instrumente: {
-    title: 'I tuoi strumenti',
+    title: { sie: 'I Suoi strumenti', du: 'I tuoi strumenti' },
     intro: { sie: 'Quattro controlli tranquilli a colpo d\'occhio — ne tocchi uno.', du: 'Quattro controlli tranquilli a colpo d\'occhio — toccane uno.' },
     tacho: 'Tachimetro della franchigia',
     tachoSub: 'alta o bassa — cosa conviene?',
