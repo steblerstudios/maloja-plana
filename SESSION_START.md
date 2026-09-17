@@ -7,7 +7,17 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 14:45 (`main` = `605b8bd` nach **PR #217**, dazu dieser Abschluss-PR · **live `index-e5ece27b.js` = 0.1.34-beta seit 17.09. 13:25**, Tag `v0.1.34-beta` = `a414f86` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1860 Tests grün, Hauptbundle 62.11 kB von 65)
+**Stand:** 2026-09-17, 14:45 (`main` = `cb29a33` nach **PR #222**, dazu dieser Doku-PR · **live `index-d179693a.js` = 0.1.35-beta seit 17.09. 14:35**, Tag `v0.1.35-beta` = `cb29a33` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1916 Tests grün, size-limit 63.32 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-17, 14:45 (0.1.35-beta live)
+>
+> **Deploy 14:35** aus `cb29a33` (#219–#222: K58-Ladehinweis, E40, E41, K45, K62.2/.4), per `curl` belegt
+> (164/164, alt 404, Gegenprobe 404) und im Browser (Beispiel, KVG-Quellen, Konsole leer). **O20 ✅** Jahres-Cache
+> für `/assets/` + `/fonts/` aus der Server-`.htaccess`. Vorab-Prüfung (Sicherheit ganze App, Qualität, Recht/Copy,
+> Swiss Precision, Links, a11y): 0 Blocker.
+> **Als Nächstes (kleiner PR, 0.1.36):** Fussnote `kvg.tpwNote` ohne «amtlich» für OW/NW/SZ · SZ 0.85 nur
+> tarifsuisse · Disclaimer im Behörden-JSON (Bau-Liste §22). Dann K80, K86–K90.
+> **Entscheide offen:** K81–K83. **Oktober:** E42, E1, E3, K62 Punkte 1/3/5, Jurist:in, Studio-Livegang.
 
 > ### ⭐ ABSCHLUSS 2026-09-17, 14:45 (Sitzung «Oktober-Fokus: Runden 5–9, Header-Durchgang»)
 >

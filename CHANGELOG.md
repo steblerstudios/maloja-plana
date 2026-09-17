@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.35-beta] — 2026-09-17
 
-*Noch nicht live. Umfasst #219, #220, #221 (Entscheid-Runde 17.09.2026 nachmittags).*
+*Live seit **17.09.2026, 14:35** (`index-d179693a.js`, Tag `v0.1.35-beta` = `cb29a33`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-e5ece27b.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-d179693a`). Live im Browser geprüft: Beispiel → KVG «Arztrechnung» zeigt 17 Quellen-Links, Konsole ohne Fehler, Beispiel verlassen → `/`, localStorage leer. Umfasst #219, #220, #221, #222 (Entscheid-Runde 17.09.2026 nachmittags).*
 
 ### Neu
 - **K58 · Hinweis beim Sprachwechsel:** Lädt eine Sprache länger als 300 ms, erscheint leise «Sprache wird geladen …» (angesagt, ohne Layoutverschiebung). Scheitert das Laden, zeigt die App Deutsch und sagt es, mit «Erneut versuchen». Die Meldung hängt nicht an der fehlenden Sprachdatei (de/fr/it/en fest im Hauptbundle, rm fällt auf de zurück). Der Rückfall wird nicht gespeichert.
