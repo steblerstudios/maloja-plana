@@ -17,7 +17,8 @@ In fünf Sprachen, ohne Konto, ohne dass die Daten das Gerät verlassen.
 
 - **Lokal & privat** — alle Daten bleiben auf deinem Gerät (localStorage + IndexedDB). Kein
   Server, kein Konto, kein Tracking.
-- **Offline** — funktioniert nach dem ersten Laden vollständig ohne Internet (PWA + Service Worker).
+- **Offline** — nach dem ersten Laden auch ohne Internet nutzbar, in der Regel in den Bereichen,
+  die schon einmal geöffnet wurden (PWA + Service Worker).
 - **Mehrsprachig** — Deutsch, Französisch, Italienisch, Englisch, Rätoromanisch.
 - **Kostenlos & quelloffen** — AGPL-3.0. Jede und jeder kann nachprüfen, was die App tut.
 - **Orientierung, keine Beratung** — die Rechner und Übersichten sind Orientierungshilfen auf

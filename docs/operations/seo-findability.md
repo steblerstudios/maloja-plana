@@ -28,8 +28,9 @@ werden → Sitemap einreichen. Deckt Bing + DuckDuckGo ab.
 Jeder seriöse Link auf malojaplana.ch stärkt die Marke gegenüber Dorf/Pass/Marke:
 - Stebler-Studios-Seite/Impressum verlinkt malojaplana.ch (sameAs ist im JSON-LD).
 - GitHub-Repo-Beschreibung + Website-Feld auf malojaplana.ch setzen.
-- Einträge in Schweizer Verzeichnissen für gemeinnützige/Social-Tools, sobald
-  passend (z. B. soziale-Hilfe-Portale, die wir ohnehin verlinken).
+- Einträge in Schweizer Verzeichnissen für Social-Tools, sobald passend (z. B.
+  soziale-Hilfe-Portale, die wir ohnehin verlinken). Nur Verzeichnisse, deren
+  Bedingungen Maloja Plana belegbar erfüllt — «gemeinnützig» ist nicht belegt (K47).
 
 ## Kontrolle
 - Roher Crawler-Blick: `curl -s https://malojaplana.ch | grep -i "<title>\|description"`
