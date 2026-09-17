@@ -720,6 +720,7 @@ export default {
     remove: 'Remove item',
   },
   common: {
+    qrFehler: 'The QR code could not be created just now.',
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -3456,6 +3457,8 @@ export default {
     footerPrivacy: 'This dossier contains personal health information. Please store it carefully.',
     qrTitle: 'Emergency QR for first responders',
     qrHint: 'Scannable with any smartphone — shows the key emergency info offline, without internet. Print it to carry along (e.g. in your wallet).',
+    qrGekuerzt: 'The QR code holds a short version. All details are listed in full in the dossier below.',
+    qrFehler: 'The QR code could not be created. All details are listed in full in the dossier below.',
     footerCredit: 'Created with Maloja Plana',
     privacyNote: 'This dossier contains personal health information.',
     generated: 'Created on {date}',

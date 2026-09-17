@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import QRCode from './vendor/qrcodejs.js';
+import { qrKuerzen, qrZeichnen } from './utils/qrSicher.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -13,22 +13,23 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const preview = getNotfallDossierPreview(data, chapters, t);
   const hasSections = preview.sections.length > 0;
 
-  // Compact, offline emergency payload for the QR (first responders scan → read plain text)
-  const qrText = preview.sections
+  // Compact, offline emergency payload for the QR (first responders scan → read plain text).
+  // K80: in UTF-8-Bytes gekürzt (ein Umlaut zählt doppelt), an Zeilengrenzen, mit «…» am Ende.
+  const qrVoll = preview.sections
     .map(s => s.title + ':\n' + s.rows.map(r => '  ' + r.label + ': ' + r.value).join('\n'))
-    .join('\n')
-    .slice(0, 1200);
+    .join('\n');
+  const { text: qrText, gekuerzt: qrGekuerzt } = qrKuerzen(qrVoll);
 
   const qrRef = useRef(null);
+  // 'ok' | 'fehler' — bei 'fehler' bleibt die Fläche weg und ein Hinweis steht da.
+  const [qrStatus, setQrStatus] = useState('ok');
   useEffect(() => {
     if (!hasSections || !qrRef.current) return;
-    qrRef.current.innerHTML = '';
-    try {
-      new QRCode(qrRef.current, {
-        text: qrText, width: 180, height: 180,
-        colorDark: '#1a1a1a', colorLight: '#ffffff',
-      });
-    } catch (e) { /* QR generation failed silently */ }
+    const gezeichnet = qrZeichnen(qrRef.current, qrText, {
+      width: 180, height: 180,
+      colorDark: '#1a1a1a', colorLight: '#ffffff',
+    });
+    setQrStatus(gezeichnet ? 'ok' : 'fehler');
   }, [qrText, hasSections]);
 
   // Export-Vorschau (K3): erst zeigen, was im Dokument steht, dann öffnen.
@@ -151,8 +152,18 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallDossier.qrHint')),
       React.createElement('div', {
         ref: qrRef,
-        style: { display: 'inline-block', padding: '10px', background: '#ffffff', borderRadius: radius.sm },
-      })
+        style: {
+          display: qrStatus === 'fehler' ? 'none' : 'inline-block',
+          padding: '10px', background: '#ffffff', borderRadius: radius.sm,
+        },
+      }),
+      (qrStatus === 'fehler' || qrGekuerzt) && React.createElement('p', {
+        role: 'status',
+        style: {
+          fontSize: text.xs, color: palette.mid, lineHeight: leading.normal,
+          margin: qrStatus === 'fehler' ? '0' : '10px 0 0',
+        }
+      }, t(qrStatus === 'fehler' ? 'notfallDossier.qrFehler' : 'notfallDossier.qrGekuerzt'))
     ),
 
     hasSections && React.createElement('div', {

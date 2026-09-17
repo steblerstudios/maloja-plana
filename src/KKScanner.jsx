@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import QRCode from './vendor/qrcodejs.js';
+import { qrZeichnen } from './utils/qrSicher.js';
 import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
@@ -21,6 +21,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanResult, setScanResult] = useState(null);
   const [scanning, setScanning] = useState(false);
   const [qrCode, setQRCode] = useState(null);
+  const [qrFehler, setQrFehler] = useState(false);
   const [conflicts, setConflicts] = useState(null);
 
   React.useEffect(() => { initBarcodeScanner(); }, []);
@@ -71,7 +72,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     setQRCode(qrData);
     setTimeout(() => {
       const cont = document.getElementById('kk-qr-output');
-      if (cont) { cont.innerHTML = ''; new QRCode(cont, { text: qrData, width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }); }
+      // K80: vorher warf ein Versicherername mit Umlaut (z. B. ÖKK) hier unabgefangen.
+      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }));
     }, 100);
   };
 
@@ -205,7 +207,8 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, 'ⓘ ' + t('kkScanner.qrBarcode')),
 
       qrCode && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center' } },
-        React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: space.sm } }),
+        React.createElement('div', { id: 'kk-qr-output', style: { display: qrFehler ? 'none' : 'flex', justifyContent: 'center', marginBottom: space.sm } }),
+        qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: '0 0 8px' } }, t('common.qrFehler')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('kkScanner.scanForEmergency'))
       )
     )
