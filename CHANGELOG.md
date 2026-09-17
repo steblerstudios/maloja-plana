@@ -11,6 +11,10 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Behoben
+- **Keine weisse Seite mehr beim Start (K60):** Liess sich beim ersten Start keine Sprachdatei laden (alte zwischengespeicherte Startseite nach einem Deploy, offline), blieb die Seite weiss. Jetzt wird einmal pro Sitzung neu geladen; hilft das nicht, erscheint ein ruhiger Hinweis mit Knopf «Neu laden».
+- **Schnappschuss vor dem Wiederherstellen nie gemischt (K61):** Scheitert der Schnappschuss mittendrin (z. B. Speicher voll), werden die in diesem Lauf geschriebenen Sicherungskopien zurückgesetzt; das Wiederherstellen bricht wie bisher ab, ohne etwas zu überschreiben.
+
 ## [0.1.31-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 11:14** (`index-c2f8af36.js`, Tag `v0.1.31-beta` = `672d8af`, per `curl` belegt: 159/159 Build-Dateien 200, altes `index-98d2d140.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-c2f8af36`). Umfasst K59 (#200). Auf malojaplana.ch im Browser geprüft: Nach dem ersten Besuch (Beispiel-Modus) liegen 18 Einträge im Offline-Speicher, darunter `index-c2f8af36.js`, das Stylesheet und die Sprachdateien.*

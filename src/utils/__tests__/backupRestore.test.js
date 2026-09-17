@@ -11,7 +11,7 @@ vi.mock('../storage.js', () => ({
   },
 }));
 
-import { restoreBackup, MAX_BACKUP_FILE_BYTES, exceedsBackupFileLimit } from '../backupCrypto.js';
+import { restoreBackup, createPreRestoreSnapshot, MAX_BACKUP_FILE_BYTES, exceedsBackupFileLimit } from '../backupCrypto.js';
 
 // Schlanker localStorage-Mock (Node-Testumgebung hat kein localStorage).
 function installLocalStorageMock() {
@@ -121,6 +121,54 @@ describe('restoreBackup — Schnappschuss scheitert (Speicher voll)', () => {
     expect((src.match(/await confirmAndRestore\(backup\);/g) || []).length).toBe(2);
     const block = src.slice(src.indexOf('const confirmAndRestore'));
     expect(block).toMatch(/try \{\s*result = await restoreBackup\(backup\);/);
+  });
+});
+
+// K61 — Scheitert der Schnappschuss MITTENDRIN (erster Schlüssel geschrieben,
+// zweiter am vollen Speicher gescheitert), dürfen die *_prerestore-Schlüssel
+// nicht aus zwei Ständen gemischt bleiben: alles aus diesem Lauf zurück.
+describe('restoreBackup — Schnappschuss scheitert mittendrin', () => {
+  let map;
+  const ALT_DATA = JSON.stringify({ basis: { canton: 'LU' } });
+  beforeEach(() => {
+    map = installLocalStorageMock();
+    idbMap.clear();
+    seed();
+    // Stand eines früheren Wiederherstellens: data hatte schon einen Schnappschuss,
+    // docs noch keinen.
+    localStorage.setItem('or5_data_prerestore', ALT_DATA);
+    localStorage.setItem('or5_prerestore_date', '2026-01-01T00:00:00.000Z');
+    const echt = localStorage.setItem;
+    localStorage.setItem = (k, v) => {
+      if (k === 'or5_docs_prerestore') { const e = new Error('Speicher voll'); e.name = 'QuotaExceededError'; throw e; }
+      echt(k, v);
+    };
+  });
+
+  it('setzt die in diesem Lauf geschriebenen Schlüssel zurück und überschreibt nichts', async () => {
+    const vorher = JSON.stringify([...map.entries()]);
+    const r = await restoreBackup(gut());
+    expect(r.success).toBe(false);
+    expect(r.blocked).toBe(false);
+    expect(r.error).toBe('Speicher voll');
+    expect(r.restored).toEqual([]);
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(ALT_DATA);
+    expect(localStorage.getItem('or5_docs_prerestore')).toBeNull();
+    expect(localStorage.getItem('or5_prerestore_date')).toBe('2026-01-01T00:00:00.000Z');
+    expect(JSON.stringify([...map.entries()])).toBe(vorher);
+    expect(idbMap.size).toBe(0);
+  });
+
+  it('entfernt einen Schlüssel, der vorher nicht existierte', async () => {
+    localStorage.removeItem('or5_data_prerestore');
+    await restoreBackup(gut());
+    expect(localStorage.getItem('or5_data_prerestore')).toBeNull();
+    expect(map.has('or5_data_prerestore')).toBe(false);
+  });
+
+  it('wirft aus createPreRestoreSnapshot den ursprünglichen Fehler weiter', () => {
+    expect(() => createPreRestoreSnapshot()).toThrow('Speicher voll');
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(ALT_DATA);
   });
 });
 
