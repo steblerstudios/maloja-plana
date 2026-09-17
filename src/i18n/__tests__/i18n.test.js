@@ -392,3 +392,44 @@ describe('K73 · italienische Einheitstexte duzen nicht', () => {
     expect('Tutti i dati restano sul dispositivo').not.toMatch(TU);
   });
 });
+
+// K79 (17.09.2026): Ist der deutsche Text ein Einheitstext, darf der französische
+// Einheitstext nicht siezen (vous/votre/vos) — er erschiene sonst gesiezt in der
+// Du-Ansicht. Ebenso darf ein deutscher Einheitstext keine feste Sie-Form (Ihr…/Ihnen)
+// tragen. Ausgenommen: briefe.* (Briefe an Behörden, bewusst formell) und flyer.*
+// (wird nach aussen geteilt, Sie-Form bewusst). «rendez-vous» ist ein Nomen, keine Anrede.
+describe('K79 · feste Sie-Formen nur in der sie-Fassung', () => {
+  const VOUS = /(?<!\p{L})(vous|votre|vos)(?!\p{L})/iu;
+  const IHR = /(?<!\p{L})(Ihr|Ihre|Ihren|Ihrem|Ihrer|Ihres|Ihnen)(?!\p{L})/u;
+  const ohneRendezVous = (s) => s.replace(/rendez-vous/giu, '');
+  const ausgenommen = (k) => k.startsWith('briefe.') || k.startsWith('flyer.');
+  const flach = (o, p = '', out = {}) => {
+    if (typeof o === 'string' || isAnredeObject(o)) { out[p] = o; return out; }
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return out;
+    for (const k of Object.keys(o)) flach(o[k], p ? `${p}.${k}` : k, out);
+    return out;
+  };
+  const D = flach(de);
+  const F = flach(fr);
+
+  it('fr: kein vous/votre/vos in Einheitstexten, wo de keine Anrede-Varianten hat', () => {
+    const treffer = Object.keys(D).filter((k) => !ausgenommen(k) && typeof D[k] === 'string'
+      && typeof F[k] === 'string' && VOUS.test(ohneRendezVous(F[k])));
+    expect(treffer, `fr.js siezt in der Du-Ansicht: ${treffer.slice(0, 20).join(', ')}`).toEqual([]);
+  });
+
+  it('de: kein Ihr…/Ihnen in Einheitstexten', () => {
+    const treffer = Object.keys(D).filter((k) => !ausgenommen(k) && typeof D[k] === 'string' && IHR.test(D[k]));
+    expect(treffer, `de.js siezt in der Du-Ansicht: ${treffer.slice(0, 20).join(', ')}`).toEqual([]);
+  });
+
+  it('Gegenprobe: die Muster erkennen die Sie-Form, aber nicht die Du-Form', () => {
+    expect('Protéger votre minimum vital').toMatch(VOUS);
+    expect('Renseignez-vous auprès de la commune').toMatch(VOUS);
+    expect(ohneRendezVous('Délais & rendez-vous')).not.toMatch(VOUS);
+    expect('Ta prime, tes droits, vosges').not.toMatch(VOUS);
+    expect('wie Ihre Franchise wirkt').toMatch(IHR);
+    expect('Testen Sie regelmässig, was ihre Kasse zahlt').not.toMatch(IHR);
+    expect('Ihrerseits').not.toMatch(IHR);
+  });
+});
