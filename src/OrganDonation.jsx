@@ -45,7 +45,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
     setTimeout(() => {
       const cont = qrRef.current;
       // K80: vorher warf ein Name mit Umlaut hier unabgefangen → leere Fläche.
-      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface }));
+      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') }));
     }, 100);
 
     setQRGenerated(true);

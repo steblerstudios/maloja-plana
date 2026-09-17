@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { qrKuerzen, qrZeichnen } from './utils/qrSicher.js';
+import { qrNotfallText, qrZeichnen } from './utils/qrSicher.js';
 import { Icon } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -14,12 +14,17 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const hasSections = preview.sections.length > 0;
 
   // Compact, offline emergency payload for the QR (first responders scan → read plain text).
-  // K80: in UTF-8-Bytes gekürzt (ein Umlaut zählt doppelt), an Zeilengrenzen, mit «…» am Ende.
-  const qrVoll = preview.sections
-    .map(s => s.title + ':\n' + s.rows.map(r => '  ' + r.label + ': ' + r.value).join('\n'))
-    .join('\n');
-  const { text: qrText, gekuerzt: qrGekuerzt } = qrKuerzen(qrVoll);
+  // K80: in UTF-8-Bytes gekürzt (ein Umlaut zählt doppelt). Reihenfolge im Code: Medizin zuerst
+  // (Entscheid Stebler Studios, 17.09.2026) — das gedruckte Dossier bleibt in seiner Reihenfolge.
+  // Was nicht hineinpasst, nennt der Code am Ende selbst.
+  const qrReihenfolge = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
+  const rang = key => { const i = qrReihenfolge.indexOf(key); return i === -1 ? qrReihenfolge.length : i; };
+  const qrAbschnitte = [...preview.sections].sort((a, b) => rang(a.key) - rang(b.key));
+  const { text: qrText, gekuerzt: qrGekuerzt } = qrNotfallText(qrAbschnitte, {
+    fehltTitel: t('notfallDossier.qrNichtEnthalten'),
+  });
 
+  const qrBeschriftung = t('notfallDossier.qrTitle');
   const qrRef = useRef(null);
   // 'ok' | 'fehler' — bei 'fehler' bleibt die Fläche weg und ein Hinweis steht da.
   const [qrStatus, setQrStatus] = useState('ok');
@@ -28,9 +33,10 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
     const gezeichnet = qrZeichnen(qrRef.current, qrText, {
       width: 180, height: 180,
       colorDark: '#1a1a1a', colorLight: '#ffffff',
+      beschriftung: qrBeschriftung,
     });
     setQrStatus(gezeichnet ? 'ok' : 'fehler');
-  }, [qrText, hasSections]);
+  }, [qrText, hasSections, qrBeschriftung]);
 
   // Export-Vorschau (K3): erst zeigen, was im Dokument steht, dann öffnen.
   const [vorschau, setVorschau] = useState(false);
@@ -157,13 +163,15 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
           padding: '10px', background: '#ffffff', borderRadius: radius.sm,
         },
       }),
-      (qrStatus === 'fehler' || qrGekuerzt) && React.createElement('p', {
+      // Fehler entsteht erst nach dem ersten Render → Live-Region. Die Kürzung steht schon beim
+      // ersten Render da und würde nicht angesagt → normaler Absatz (Deploy-Gate 0.1.36, a11y).
+      qrStatus === 'fehler' && React.createElement('p', {
         role: 'status',
-        style: {
-          fontSize: text.xs, color: palette.mid, lineHeight: leading.normal,
-          margin: qrStatus === 'fehler' ? '0' : '10px 0 0',
-        }
-      }, t(qrStatus === 'fehler' ? 'notfallDossier.qrFehler' : 'notfallDossier.qrGekuerzt'))
+        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '0' }
+      }, t('notfallDossier.qrFehler')),
+      qrStatus !== 'fehler' && qrGekuerzt && React.createElement('p', {
+        style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '10px 0 0' }
+      }, t('notfallDossier.qrGekuerzt'))
     ),
 
     hasSections && React.createElement('div', {

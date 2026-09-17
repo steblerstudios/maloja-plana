@@ -73,7 +73,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     setTimeout(() => {
       const cont = document.getElementById('kk-qr-output');
       // K80: vorher warf ein Versicherername mit Umlaut (z. B. ÖKK) hier unabgefangen.
-      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface }));
+      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('kkScanner.scanForEmergency') }));
     }, 100);
   };
 
