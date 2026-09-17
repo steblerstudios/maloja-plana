@@ -14,7 +14,8 @@ import rm from '../i18n/rm.js';
 // rm.js hatten dieselbe Lücke (Conservalo / Conservescha sind je die informelle
 // Form). fr.js nutzt für diese Zeile bereits durchgehend die Vous-Form (auch in
 // den Nachbarzeilen introDatei/verschluesselt kein { sie, du }-Paar) — kein
-// Du-Leck, also unverändert gelassen. en kennt keine Anrede-Unterscheidung.
+// Du-Leck, also unverändert gelassen (seit K49 auch in fr ein { sie, du }-Paar).
+// en kennt keine Anrede-Unterscheidung.
 // ─────────────────────────────────────────────────────────────
 
 const all = { de, en, fr, it: itTranslations, rm };
@@ -58,10 +59,18 @@ describe('K40 · zipExport.securityNote respektiert die Anrede', () => {
     expect(ti).toBe('La datoteca exportada cuntegna datas persunalas. Conservescha ella en segirezza.');
   });
 
-  it('en/fr: unverändert, keine {sie,du}-Aufspaltung nötig bzw. schon Vous-Form', () => {
+  it('en: unverändert, keine {sie,du}-Aufspaltung nötig', () => {
     expect(typeof en.zipExport.securityNote).toBe('string');
     expect(en.zipExport.securityNote).toBe('The exported file contains personal data. Store it safely.');
-    expect(typeof fr.zipExport.securityNote).toBe('string');
-    expect(fr.zipExport.securityNote).toBe('Le fichier exporté contient des données personnelles. Conservez-le en lieu sûr.');
+  });
+
+  // K49 (17.09.2026): fr.js führt die Zeile jetzt ebenfalls als { sie, du }-Paar
+  // (vous-Form unverändert, tu-Form ergänzt), wie de/it/rm.
+  it('fr: vous-Ansicht unverändert, tu-Ansicht mit tu-Imperativ', () => {
+    expect(fr.zipExport.securityNote).toEqual({ sie: expect.any(String), du: expect.any(String) });
+    const vous = createT(all, 'fr', 'sie')('zipExport.securityNote');
+    expect(vous).toBe('Le fichier exporté contient des données personnelles. Conservez-le en lieu sûr.');
+    const tu = createT(all, 'fr', 'du')('zipExport.securityNote');
+    expect(tu).toBe('Le fichier exporté contient des données personnelles. Conserve-le en lieu sûr.');
   });
 });
