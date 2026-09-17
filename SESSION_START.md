@@ -7,7 +7,7 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 16:37 (`main` = `6546358` nach **PR #227**, dazu dieser Doku-PR · **live `index-c80eed98.js` = 0.1.36-beta seit 17.09. 16:32**, Tag `v0.1.36-beta` = `6546358` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1939 Tests grün, size-limit 63.32 kB von 65)
+**Stand:** 2026-09-17, 16:43 (`main` = `1d581fd` nach **PR #228** (Doku), dazu dieser Stand-PR · Code-Stand unverändert `6546358` · **live `index-c80eed98.js` = 0.1.36-beta seit 17.09. 16:32**, Tag `v0.1.36-beta` = `6546358` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1939 Tests grün, size-limit 63.32 kB von 65)
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 16:37 (0.1.36-beta live)
 >
@@ -17,7 +17,7 @@
 > mit sechs Prüfern, 0 Blocker; übernommen: Weiterfüllen + Fehlend-Zeile, Medizin zuerst (Entscheid), kein Klartext-Tooltip,
 > Emoji, ehrlicher QR-Hinweis. Deploy-Wächter in `.claude/settings.json` (lokal, nicht in git) zeigte auf den falschen Ordner → korrigiert.
 > **Als Nächstes:** K86–K98, K31. **Entscheide offen:** K81–K83, K96, K99; neu: «Noch nicht»-Antworten im Notfall-QR weglassen?
-> Hinweis «für alle lesbar» auch bei KK- und Organspende-QR? **Oktober:** E42, E1, E3, K62 Punkte 1/3/5, Jurist:in, Studio-Livegang.
+> Hinweis «für alle lesbar» auch bei KK- und Organspende-QR? Beta-Zugangscode im Klartext in einer Doku-Datei (K105)? **Oktober:** E42, E1, E3, K62 Punkte 1/3/5, Jurist:in, Studio-Livegang.
 
 > ### ⭐ ABSCHLUSS 2026-09-17, 15:10 (Sitzung «Entscheid-Runde bis Oktober, 0.1.35»)
 >
