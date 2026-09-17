@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.32-beta] — 2026-09-17
 
-*Sechste Runde (#204–#207) und K49 (#203). Noch nicht live.*
+*Live seit **17.09.2026, 11:46** (`index-297034b6.js`, Tag `v0.1.32-beta` = `1437feb`, per `curl` belegt: 161/161 Build-Dateien 200, altes `index-c2f8af36.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-297034b6`, Backup `20260917-114602` mit 171 Dateien). Umfasst die sechste Runde (#204–#208) und K49 (#203).*
 
 ### Behoben
 - **Keine weisse Seite mehr beim Start (K60, #204):** Liess sich beim ersten Start keine Sprachdatei laden (alte zwischengespeicherte Startseite nach einem Deploy, offline), blieb die Seite weiss. Jetzt wird einmal pro Sitzung neu geladen; hilft das nicht, erscheint ein ruhiger Hinweis mit Knopf «Neu laden».
