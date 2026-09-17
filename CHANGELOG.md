@@ -20,6 +20,8 @@ kommt der Changelog immer mit, nie doppelt.*
 - **QR ohne Klartext-Tooltip:** Die Bibliothek setzte den ganzen Inhalt als `title` (Tooltip mit Gesundheits- und AHV-Daten). Jetzt entfernt; der Code ist als Bild beschriftet (`role="img"`, `aria-label`).
 - **QR mit Emoji:** Zeichen ausserhalb der BMP werden als ein 4-Byte-Zeichen kodiert.
 - **Kürzungs-Hinweis ohne Live-Region:** Er steht schon beim ersten Laden da; nur die Fehlermeldung bleibt `role="status"`.
+- **Notfall-QR ehrlich beschrieben:** Der Hinweis sagt jetzt, dass der Code nur Text enthält, nicht verschlüsselt ist und von allen gelesen werden kann, die ihn scannen. Statt «ausdrucken» (der Druck-Knopf des Dossiers enthält keinen Code) empfiehlt er ein Bildschirmfoto oder den Druck dieser Seite (5 Sprachen, rm provisorisch).
+- **Englisch einheitlich:** Der Disclaimer im Behörden-JSON sagt «responsible authority» wie der Rest der Datei.
 
 ### Behoben
 - **K80 · QR-Codes mit Umlauten:** Die eingebettete QR-Bibliothek kodierte nach dem ersten Umlaut falsch (ein wiederverwendetes Byte-Feld hängte Reste an). Folge: im Notfall-Dossier, bei der Organspende und der Krankenkassen-Karte blieb die Fläche leer oder der Inhalt war verfälscht. Bibliothek korrigiert (Vermerk im Dateikopf), neuer Helfer `utils/qrSicher.js` rechnet in UTF-8-Bytes, kürzt das Notfall-Dossier an Zeilengrenzen auf 600 Bytes (Fehlerkorrektur M) und zeigt statt einer leeren Fläche einen ruhigen Hinweis (5 Sprachen, rm provisorisch). Im Browser geprüft: der gezeichnete Code des Beispiels liest sich mit jsQR zurück, «Zürich» inklusive.

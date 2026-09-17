@@ -2101,7 +2101,8 @@ export default {
     sectionInsurance: 'Assicuranza',
     footerPrivacy: "Quest dossier cuntegna infurmaziuns persunalas da sanadad. Per plaschair conservar cun attenziun.",
     qrTitle: 'QR d’urgenza per ils squadruns da salvament',
-    qrHint: 'Scannabel cun mintga smartphone — mussa las infurmaziuns d’urgenza pli impurtantas offline, senza internet. Stampar per purtar cun sai (p.ex. en il portamonnaida).',
+    // TODO(rm): Deploy-Gate 0.1.36 provisorisch — von Muttersprachler:in gegenlesen.
+    qrHint: 'Scannabel cun mintga smartphone — il code cuntegna mo text, nagina colliaziun. El n’è betg criptà: tgi che al scanna, po leger tut las indicaziuns en el. Per al purtar cun sai, far in screenshot u stampar questa pagina.',
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
     qrGekuerzt: 'Il code QR cuntegna ina versiun scursanida: betg tut las indicaziuns han plaz, ed il code numna a la fin tge che manca. Cumplettas èn ellas mo en il dossier sutvart.',
     qrNichtEnthalten: 'Betg cuntegnì, guardar il dossier',
