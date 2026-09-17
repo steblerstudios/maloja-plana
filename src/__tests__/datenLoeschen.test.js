@@ -167,4 +167,18 @@ describe('R4 · andere Maloja-Tabs benachrichtigen', () => {
     const src = readFileSync(new URL('../components/DatenLoeschen.jsx', import.meta.url), 'utf8');
     expect(src).toContain("t('datenLoeschen.andereFenster')");
   });
+
+  // Vorab-Prüfung 17.09.: kam «neu» nie an (löschender Tab geschlossen), blieb ein
+  // anderer Tab still ohne Speichern. Jetzt lädt er nach einer Frist selbst neu —
+  // und die Frist muss länger sein als das längste Löschen, sonst liest er alte Angaben.
+  it('ein anderer Tab lädt auch ohne «neu» nach einer Frist neu, die länger ist als das Löschen', () => {
+    const main = readFileSync(new URL('../main.jsx', import.meta.url), 'utf8');
+    const quelle = readFileSync(new URL('../utils/datenLoeschen.js', import.meta.url), 'utf8');
+    const frist = Number((main.match(/LOESCH_FRIST_MS = (\d+)/) || [])[1]);
+    const proDb = Number((quelle.match(/setTimeout\(\(\) => resolve\(false\), (\d+)\)/) || [])[1]);
+    expect(proDb).toBeGreaterThan(0);
+    expect(frist).toBeGreaterThan(APP_DATENBANKEN.length * proDb);
+    expect(main).toMatch(/else setTimeout\(\(\) => location\.reload\(\), LOESCH_FRIST_MS\)/);
+    expect(main).toContain(`'${LOESCH_SIGNAL}'`);
+  });
 });
