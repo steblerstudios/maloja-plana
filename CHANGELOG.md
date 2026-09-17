@@ -11,7 +11,10 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
-*R4 vom 17.09.2026 (#186–#188). Gemergt, nicht live.*
+*R4 vom 17.09.2026 (#186–#188) und #191. Gemergt, nicht live.*
+
+### Sicherheit
+- **Meta-CSP ohne `frame-ancestors` (#191):** die Direktive wirkt nur als HTTP-Header und löste im Meta-Tag einen Konsolenfehler aus (PageSpeed Best Practices 96). Clickjacking-Schutz unverändert über `X-Frame-Options`.
 
 ### Barrierefreiheit
 - **«Öffnet in neuem Tab» hörbar (R4, #188):** 38 externe Links in 21 Dateien über `ExternerLink.jsx`, `rel="noopener noreferrer"` erzwungen; optisch unverändert.
