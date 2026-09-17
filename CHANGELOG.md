@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.33-beta] — 2026-09-17
 
-*Noch nicht live. Umfasst #211 (K67/K68/K71) und die siebte Runde (K46, K55–K58).*
+*Live seit **17.09.2026, 12:42** (`index-606d23bb.js`, Tag `v0.1.33-beta` = `db75d59`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-297034b6.js` 404, erfundene Namen 404, `sw.js` mit Cache `maloja-plana-606d23bb`, Backup `20260917-124213` mit 173 Dateien). Umfasst #211 (K67/K68/K71) und #212 (K46, K55–K58, K74).*
 
 ### Geändert
 - **Sie-Ansicht siezt durchgehend (K46):** Rund 200 deutsche Texte standen nur in der Du-Form und erschienen so auch in der Sie-Ansicht, der Voreinstellung — Lebensereignis-Anleitungen (Umzug, Stelle verloren, Selbständigkeit, Betreibung, Pensionierung, KVG- und Zusatzwechsel u. a.), Lebenslagen, Notfallkarte, Anspruchs-Check, Vorsorge-Zukunft, Tresor. Sie haben jetzt eine Sie- und eine Du-Fassung, in fr (vous/tu) und it (Lei/tu) ebenso; einige Texte in der Ihr-Form («Meldet euch») sind mit umgestellt. Die zwei SEO-Texte sind anredefrei wie in `index.html`. Ein neuer Test verhindert, dass ein deutscher Text in der Sie-Ansicht wieder duzt. Muttersprachliches Gegenlesen fr/it bleibt offen (K70).
