@@ -11,14 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.32-beta] — 2026-09-17
+
+*Sechste Runde (#204–#207) und K49 (#203). Noch nicht live.*
+
 ### Behoben
-- **Keine weisse Seite mehr beim Start (K60):** Liess sich beim ersten Start keine Sprachdatei laden (alte zwischengespeicherte Startseite nach einem Deploy, offline), blieb die Seite weiss. Jetzt wird einmal pro Sitzung neu geladen; hilft das nicht, erscheint ein ruhiger Hinweis mit Knopf «Neu laden».
-- **Schnappschuss vor dem Wiederherstellen nie gemischt (K61):** Scheitert der Schnappschuss mittendrin (z. B. Speicher voll), werden die in diesem Lauf geschriebenen Sicherungskopien zurückgesetzt; das Wiederherstellen bricht wie bisher ab, ohne etwas zu überschreiben.
+- **Keine weisse Seite mehr beim Start (K60, #204):** Liess sich beim ersten Start keine Sprachdatei laden (alte zwischengespeicherte Startseite nach einem Deploy, offline), blieb die Seite weiss. Jetzt wird einmal pro Sitzung neu geladen; hilft das nicht, erscheint ein ruhiger Hinweis mit Knopf «Neu laden».
+- **Schnappschuss vor dem Wiederherstellen nie gemischt (K61, #204):** Scheitert der Schnappschuss mittendrin (z. B. Speicher voll), werden die in diesem Lauf geschriebenen Sicherungskopien zurückgesetzt; das Wiederherstellen bricht wie bisher ab, ohne etwas zu überschreiben.
+- **Quellenangaben Taxpunktwert und Nachhaltigkeit (K65, #205):** Der Taxpunktwert-Hinweis sagt nicht mehr «fast überall provisorisch», sondern «in den meisten Kantonen provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone)» — so weit tragen die kantonalen Quellen in den Daten. Die Infomaniak-Quellen im Abschnitt Nachhaltigkeit sind jetzt anklickbare Links (alle 5 Sprachen).
+
 ### Barrierefreiheit
-- **Ansagen und ruhige Rückfälle (K64):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
-- **Quellenangaben Taxpunktwert und Nachhaltigkeit (K65):** Der Taxpunktwert-Hinweis sagt nicht mehr «fast überall provisorisch», sondern «in den meisten Kantonen provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone)» — so weit tragen die kantonalen Quellen in den Daten. Die Infomaniak-Quellen im Abschnitt Nachhaltigkeit sind jetzt anklickbare Links (alle 5 Sprachen).
+- **Ansagen und ruhige Rückfälle (K64, #206):** «Online beantragen» (Prämienverbilligung) sagt den neuen Tab jetzt hörbar an; gesperrt zeigen beide Knöpfe dort den ruhigen Stil aus K53 (Text mid auf up, hell 5.25:1, dunkel 4.81:1, gestrichelter Rand). Die Kapitelansicht zeigt ohne Übersetzer nie mehr rohe Schlüssel, und Quellen-Links ohne Ansage melden sich im Entwicklungsmodus.
+
+### Sprache
+- **Französisch und Italienisch mit Sie- und Du-Form überall (K49, #203):** 237 fr- und 119 it-Texte hatten nur eine Anredeform; jetzt haben alle beide, die Liste der bekannten Lücken ist leer. Acht it-Texte standen in der «voi»-Form und sind korrigiert. Gegenlesen durch Muttersprachler:innen empfohlen.
+
 ### Intern
-- **Aufräumen ohne Verhaltensänderung (K66):** Steuer-Annahmen und `chf` an einer Stelle (`utils/steuerTexte.js`) · Rechtstexte reichen die Übersetzung an Links durch statt über eine Modulvariable · der Build stempelt `sw.js` auch bei `--outDir` · Test für den Löschsignal-Schlüssel in `main.jsx`.
+- **Aufräumen ohne Verhaltensänderung (K66, #207):** Steuer-Annahmen und `chf` an einer Stelle (`utils/steuerTexte.js`) · Rechtstexte reichen die Übersetzung an Links durch statt über eine Modulvariable · der Build stempelt `sw.js` auch bei `--outDir` · Test für den Löschsignal-Schlüssel in `main.jsx`.
 
 ## [0.1.31-beta] — 2026-09-17
 

@@ -123,8 +123,9 @@ describe('TAXPUNKTWERT_DATA_VERSION — eigener Datenstand (K27)', () => {
   });
 });
 
-// K26 (Bauliste §10, E28): die Fussnote nennt den provisorischen Charakter (KVG Art. 46
-// Abs. 4) und die neun Kantone ohne Beleg 2026, in allen 5 Sprachen.
+// K26 (Bauliste §10, E28): die Fussnote nennt den provisorischen Charakter und die neun
+// Kantone ohne Beleg 2026, in allen 5 Sprachen. Keinen KVG-Artikel nennen: keiner regelt
+// das Provisorische (Bauliste §14, K52).
 // R4 (16.09.): die Kantonsliste kommt als Platzhalter {kantone} aus
 // TAXPUNKTWERT_UNBELEGT_2026 — nicht mehr von Hand in fünf Sprachen.
 describe('kvg.tpwNote — provisorisch + neun unbelegte Kantone (K26)', () => {
