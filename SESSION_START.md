@@ -7,7 +7,19 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 14:45 (`main` = `cb29a33` nach **PR #222**, dazu dieser Doku-PR · **live `index-d179693a.js` = 0.1.35-beta seit 17.09. 14:35**, Tag `v0.1.35-beta` = `cb29a33` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1916 Tests grün, size-limit 63.32 kB von 65)
+**Stand:** 2026-09-17, 15:10 (`main` = `175ddb6` nach **PR #224**, dazu dieser Stand-PR · **live `index-d179693a.js` = 0.1.35-beta seit 17.09. 14:35**, Tag `v0.1.35-beta` = `cb29a33` · **gemergt, nicht live: #224 (K91–K93)** · 0 offene Code-PRs · 1919 Tests grün, size-limit 63.32 kB von 65)
+
+> ### ⭐ ABSCHLUSS 2026-09-17, 15:10 (Sitzung «Entscheid-Runde bis Oktober, 0.1.35»)
+>
+> **Entschieden (Auswahl-Dialog):** E40, E41, K45 (alle drei), K58-Ladehinweis, K62 nur 2+4 (1/3/5 Oktober),
+> E1/E3 Oktober, Studio-Website `noindex` bis Oktober, Morgenlauf-Restregeln «nächste Woche» (Bau-Liste §21).
+> **Live:** 0.1.35-beta (#219–#222). **Header komplett** inkl. O20 (Jahres-Cache `/assets/` + `/fonts/`).
+> **Gemergt, nicht live:** #224 K91–K93 (Fussnote ohne «amtlich», SZ mit beiden Werten, Disclaimer im
+> Behörden-JSON) → mit dem nächsten Paket deployen (vorher Version anheben + Gate + Marke).
+> **Nächste Sitzung beginnt mit:** K80 (🔴 QR im Notfall-Dossier bei langen Angaben) → dann K86–K90, K94.
+> **Entscheide offen:** K81 Notfallkontakt Grundordnung · K82 0 in Währungsfeldern · K83 Bundessteuer bei
+> verheiratet+direkt · K96 Capacitor. **Hand Stebler Studios:** K85 `no-cache` Einstieg (Server-`.htaccess`).
+> **Oktober:** E42, E1, E3, K62 Punkte 1/3/5, K99 Individualbesteuerung, Jurist:in (K48), Gegenlesen fr/it/rm.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 14:45 (0.1.35-beta live)
 >
