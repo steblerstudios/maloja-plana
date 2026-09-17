@@ -837,7 +837,7 @@ export default {
     capFrist: 'Échéance',
     settings: 'Affichage et langue',
     completion: '{value}% complété',
-    privacyNote: { sie: '100% local. Aucune donnée ne quitte votre appareil.', du: '100% local. Aucune donnée ne quitte ton appareil.' },
+    privacyNote: { sie: 'Stockage local. Vos saisies ne quittent pas votre appareil.', du: 'Stockage local. Tes saisies ne quittent pas ton appareil.' },
     kkerst: 'Assurance maladie — première fois',
     pensionierung: 'Retraite',
     betreibung: 'Commandement de payer',
@@ -1163,7 +1163,7 @@ export default {
   },
   dashboard: {
     welcome: 'Comprendre vos droits. Organiser ce qui vous attend.',
-    tagline: { sie: 'Votre organisateur de vie suisse — 100% privé, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — 100% privé, utilisable hors ligne, gratuit.' },
+    tagline: { sie: 'Votre organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.', du: 'Ton organisateur de vie suisse — stockage local, utilisable hors ligne, gratuit.' },
     taglineBenefit: 'Calculateur d\'impôts, réduction de primes, aide sociale, carte d\'urgence — sans inscription.',
     progress: { sie: 'Votre progression', du: 'Ta progression' },
     progressComplete: { sie: 'Votre dossier de vie est en place. Sérénité.', du: 'Ton dossier de vie est en place. Sérénité.' },
@@ -1224,7 +1224,7 @@ export default {
     highlightSozialhilfeSub: { sie: 'CHF 1 061/mois besoins de base (1 personne) — où en êtes-vous ?', du: 'CHF 1 061/mois besoins de base (1 personne) — où en es-tu ?' },
     highlightNotfall: 'Préparer la carte d\'urgence',
     highlightNotfallSub: { sie: 'Prête en 2 minutes — sur votre appareil.', du: 'Prête en 2 minutes — sur ton appareil.' },
-    highlightPrivacy: { sie: '100% sur votre appareil', du: '100% sur ton appareil' },
+    highlightPrivacy: { sie: 'Saisies conservées sur votre appareil', du: 'Saisies conservées sur ton appareil' },
     quickCheckTitle: { sie: 'Vérification rapide : à quoi pourriez-vous avoir droit ?', du: 'Vérification rapide : à quoi pourrais-tu avoir droit ?' },
     quickCheckIpv: 'Réduction de primes',
     quickCheckWithIncome: 'Avec ce revenu, vous pourriez avoir droit à :',
@@ -1693,7 +1693,7 @@ export default {
     footer: 'Uniquement sur cet appareil · Aucun serveur',
     emergency: 'Ces informations sont stockées uniquement localement.',
     localOnly: { sie: 'Vos données restent sur cet appareil.', du: 'Tes données restent sur cet appareil.' },
-    localBadge: { sie: '100% local — vos données restent sur cet appareil', du: '100% local — tes données restent sur cet appareil' },
+    localBadge: { sie: 'Stockage local — vos données restent sur cet appareil', du: 'Stockage local — tes données restent sur cet appareil' },
     dbBlocked: { sie: 'Maloja est ouvert dans un autre onglet. Veuillez fermer les autres onglets pour que les documents puissent être enregistrés.', du: 'Maloja est ouvert dans un autre onglet. Ferme les autres onglets pour que les documents puissent être enregistrés.' },
     chapterTrust: { sie: 'Vos données sont stockées uniquement en local. Aucun serveur, aucun compte.', du: 'Tes données sont stockées uniquement en local. Aucun serveur, aucun compte.' },
     detail1: { sie: 'Pas de compte, pas de connexion, pas de serveur. Vos données existent uniquement dans ce navigateur.', du: 'Pas de compte, pas de connexion, pas de serveur. Tes données existent uniquement dans ce navigateur.' },
@@ -3753,7 +3753,7 @@ export default {
   },
 
   beta: {
-    intro: { sie: 'Votre aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, utilisable hors ligne, gratuit.', du: 'Ton aperçu serein de la vie en Suisse — impôts, assurances, documents. 100% privé, utilisable hors ligne, gratuit.' },
+    intro: { sie: 'Votre aperçu serein de la vie en Suisse — impôts, assurances, documents. Stockage local, utilisable hors ligne, gratuit.', du: 'Ton aperçu serein de la vie en Suisse — impôts, assurances, documents. Stockage local, utilisable hors ligne, gratuit.' },
     gateMessage: { sie: 'Cette application est en bêta fermée. Veuillez entrer le code d\'accès.', du: 'Cette application est en bêta fermée. Entre le code d\'accès.' },
     codePlaceholder: 'Code d\'accès',
     codeWrong: 'Ce code n\'est pas valide.',
@@ -3882,7 +3882,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — classeur de vie suisse : impôts, aide sociale, assurances',
-    description: 'Maloja Plana — classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — 100% privé, utilisable hors ligne, gratuit.',
+    description: 'Maloja Plana — classeur de vie suisse. Calculateur d\'impôts, aide sociale, réduction des primes, carte d\'urgence — stockage local, utilisable hors ligne, gratuit.',
   },
   obstgarten: {
     title: 'Mon verger',
@@ -4434,7 +4434,7 @@ export default {
     intro: "Un flyer imprimable avec un code QR vers Maloja Plana — idéal pour les services de conseil, les communes et les panneaux d'affichage.",
     claim: "Comprendre ce à quoi vous avez droit. Organiser ce qui vous attend.",
     lead: "Votre aperçu serein de la vie en Suisse.",
-    point1: "100% privé — tout reste sur votre appareil",
+    point1: "Vos saisies restent sur votre appareil",
     point2: "Gratuit & utilisable hors ligne, sans compte",
     point3: "Disponible en plusieurs langues",
     scan: "Scanner & commencer :",

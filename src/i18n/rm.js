@@ -1041,7 +1041,7 @@ export default {
 
   dashboard: {
     welcome: 'Chapir ils dretgs. Ordinar quai che spetga.',
-    tagline: { sie: 'Voss organisatur svizzer persunala — 100% privat, offline-abel, gratuit.', du: 'Tes organisatur svizzer persunala — 100% privat, offline-abel, gratuit.' }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
+    tagline: { sie: 'Voss organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.', du: 'Tes organisatur svizzer persunala — memorisà localmain, offline-abel, gratuit.' }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     taglineBenefit: "Calculatur da taglia, IPV, agid social, carta d'urgenza — senza annunzia.",
     progress: { sie: 'Voss progress', du: 'Tes progress' },
     progressComplete: { sie: 'Voss organisatur da vita stat. Quietezza.', du: 'Tes organisatur da vita stat. Quietezza.' },
@@ -1102,7 +1102,7 @@ export default {
     highlightSozialhilfeSub: { sie: "CHF 1'061/mais basegn da basa (1 persuna) — nua stais Vus?", du: "CHF 1'061/mais basegn da basa (1 persuna) — nua stas Ti?" },
     highlightNotfall: "Preparar la carta d'urgenza",
     highlightNotfallSub: { sie: 'Pront en 2 minutas — sin Voss apparat.', du: 'Pront en 2 minutas — sin Tes apparat.' },
-    highlightPrivacy: { sie: '100% sin Voss apparat', du: '100% sin Tes apparat' },
+    highlightPrivacy: { sie: 'Endataziuns restan sin Voss apparat', du: 'Endataziuns restan sin tes apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
     quickCheckTitle: { sie: 'Verifica svelta: A tge pudessas Vus avair dretg?', du: 'Verifica svelta: A tge pudessas Ti avair dretg?' },
     quickCheckIpv: 'Reducziun da premias',
     quickCheckWithIncome: 'Cun questa entrada pudessas ti avair dretg a:',
@@ -1474,7 +1474,7 @@ export default {
   },
 
   trust: {
-    localBadge: { sie: '100% local — Vossas datas restan sin quest apparat', du: '100% local — Tes datas restan sin quest apparat' },
+    localBadge: { sie: 'Memorisà localmain — Vossas datas restan sin quest apparat', du: 'Memorisà localmain — tias datas restan sin quest apparat' }, // TODO(rm): E43 umformuliert, Gegenlese
     dbBlocked: { sie: 'Maloja è avert en in auter tab. Serrai per plaschair ils auters tabs, uschè ch\'ils documents pon vegnir memorisads.', du: 'Maloja è avert en in auter tab. Serra ils auters tabs, uschè ch\'ils documents pon vegnir memorisads.' },
     noCloud: 'Nagin cloud. Nagin tracking. Nagin server.',
     yourData: { sie: 'Vossas datas. Voss apparat. Vossa controlla.', du: 'Tes datas. Tes apparat. Tes controlla.' },
@@ -1720,7 +1720,7 @@ export default {
 
   beta: {
     bannerLabel: 'Beta segira',
-    intro: { sie: "Vossa survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline-abel, gratuit.", du: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. 100% privat, offline-abel, gratuit." }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
+    intro: { sie: "Vossa survista calma da la vita en Svizra — taglias, assicuranzas, documents. Memorisà localmain, offline-abel, gratuit.", du: "Tia survista calma da la vita en Svizra — taglias, assicuranzas, documents. Memorisà localmain, offline-abel, gratuit." }, // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     gateMessage: "Questa app sa chatta en la beta serrada. Endatescha per plaschair il code d'access.",
     codePlaceholder: "Code d'access",
     codeWrong: 'Quest code na funcziunescha per lunsch betg.',
@@ -2185,7 +2185,7 @@ export default {
 
   onboarding: {
     welcome: 'Bainvegni tar Maloja Plana',
-    subtitle: { sie: 'Voss organisatur svizzer persunala — 100% privat e sin Voss apparat.', du: 'Tes organisatur svizzer persunala — 100% privat e sin Tes apparat.' },
+    subtitle: { sie: 'Voss organisatur svizzer persunala — memorisà localmain sin Voss apparat.', du: 'Tes organisatur svizzer persunala — memorisà localmain sin tes apparat.' },
     start: 'Cumenzar',
     privacy: 'Tut las datas restan sin quest apparat. Naginas datas vegnan tramessas.',
     step1: { sie: 'Endatai Vossas datas da basa', du: 'Endatescha Tias datas da basa' },
@@ -4094,7 +4094,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — tes ordinatur da vita svizzer: taglias, agid social, assicuranzas',
-    description: 'Maloja Plana — tes ordinatur da vita svizzer. Quintader da taglias, agid social, reducziun da premias, carta d\'urgenza — 100% privat, offline-abel, gratuit.', // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
+    description: 'Maloja Plana — tes ordinatur da vita svizzer. Quintader da taglias, agid social, reducziun da premias, carta d\'urgenza — memorisà localmain, offline-abel, gratuit.', // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
   },
   obstgarten: {
     title: 'Mes iert da fritgs',
@@ -4575,7 +4575,7 @@ export default {
     intro: "In flyer per stampar cun in code QR a Maloja Plana — ideal per posts da cussegliaziun, vischnancas ed affissaziuns.",
     claim: "Chapir tge che ta tutga. Ordinar tge che vegn.",
     lead: "Tia survista calma da la vita en Svizra.",
-    point1: "100% privat — tut resta sin tes apparat",
+    point1: "Vossas endataziuns restan sin Voss apparat", // TODO(rm): E43 umformuliert, Gegenlese
     point2: "Gratuit & offline-abel, senza conto", // TODO(rm): Gegenlese Muttersprache («offline-abel» wie legal.ethics.sustain4)
     point3: "Disponibel en pliras linguas",
     scan: "Scannegiar & cumenzar:",

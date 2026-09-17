@@ -837,7 +837,7 @@ export default {
     capFrist: 'Frist',
     settings: 'Ansicht & Sprache',
     completion: '{value}% vollständig',
-    privacyNote: { sie: '100% lokal. Keine Daten verlassen Ihr Gerät.', du: '100% lokal. Keine Daten verlassen Dein Gerät.' },
+    privacyNote: { sie: 'Lokal gespeichert. Ihre Eingaben verlassen Ihr Gerät nicht.', du: 'Lokal gespeichert. Deine Eingaben verlassen dein Gerät nicht.' },
     kkerst: 'Krankenkasse zum ersten Mal',
     pensionierung: 'Pensionierung',
     betreibung: 'Betreibung erhalten',
@@ -1166,7 +1166,7 @@ export default {
   },
   dashboard: {
     welcome: 'Verstehen, was zusteht. Ordnen, was ansteht.',
-    tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — 100% privat, offline-fähig, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — 100% privat, offline-fähig, kostenlos.' },
+    tagline: { sie: 'Ihr persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.', du: 'Dein persönlicher Schweizer Lebensordner — lokal gespeichert, offline-fähig, kostenlos.' },
     taglineBenefit: 'Steuerrechner, IPV, Sozialhilfe, Notfallkarte — ohne Anmeldung nutzbar.',
     progress: { sie: 'Ihr Fortschritt', du: 'Dein Fortschritt' },
     progressComplete: { sie: 'Ihr Lebensordner steht. Ruhe.', du: 'Dein Lebensordner steht. Ruhe.' },
@@ -1227,7 +1227,7 @@ export default {
     highlightSozialhilfeSub: { sie: 'CHF 1\'061/Mt. Grundbedarf (1 Person) — wo stehen Sie?', du: 'CHF 1\'061/Mt. Grundbedarf (1 Person) — wo stehst Du?' },
     highlightNotfall: 'Notfallkarte vorbereiten',
     highlightNotfallSub: { sie: 'In 2 Minuten bereit — auf Ihrem Gerät.', du: 'In 2 Minuten bereit — auf Deinem Gerät.' },
-    highlightPrivacy: { sie: '100% auf Ihrem Gerät', du: '100% auf Deinem Gerät' },
+    highlightPrivacy: { sie: 'Eingaben bleiben auf Ihrem Gerät', du: 'Eingaben bleiben auf deinem Gerät' },
     quickCheckTitle: { sie: 'Schnell-Check: Was könnte Ihnen zustehen?', du: 'Schnell-Check: Was könnte dir zustehen?' },
     quickCheckIpv: 'Prämienverbilligung',
     quickCheckWithIncome: 'Mit diesem Einkommen könnte möglich sein:',
@@ -1696,7 +1696,7 @@ export default {
     footer: 'Nur auf diesem Gerät · Kein Server',
     emergency: 'Diese Informationen werden nur lokal gespeichert.',
     localOnly: { sie: 'Ihre Daten bleiben auf diesem Gerät.', du: 'Deine Daten bleiben auf diesem Gerät.' },
-    localBadge: { sie: '100% lokal — Ihre Daten bleiben auf diesem Gerät', du: '100% lokal — Deine Daten bleiben auf diesem Gerät' },
+    localBadge: { sie: 'Lokal gespeichert — Ihre Daten bleiben auf diesem Gerät', du: 'Lokal gespeichert — deine Daten bleiben auf diesem Gerät' },
     dbBlocked: { sie: 'Maloja ist in einem weiteren Tab geöffnet. Bitte schliessen Sie die anderen Tabs, damit Dokumente gespeichert werden können.', du: 'Maloja ist in einem weiteren Tab geöffnet. Bitte schliesse die anderen Tabs, damit Dokumente gespeichert werden können.' },
     chapterTrust: { sie: 'Ihre Angaben werden nur lokal gespeichert. Kein Server, kein Konto.', du: 'Deine Angaben werden nur lokal gespeichert. Kein Server, kein Konto.' },
     detail1: { sie: 'Kein Konto, kein Login, kein Server. Ihre Daten existieren nur im Browser dieses Geräts.', du: 'Kein Konto, kein Login, kein Server. Deine Daten existieren nur im Browser dieses Geräts.' },
@@ -3765,7 +3765,7 @@ export default {
   },
 
   beta: {
-    intro: { sie: 'Ihr ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline-fähig, kostenlos.', du: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. 100% privat, offline-fähig, kostenlos.' },
+    intro: { sie: 'Ihr ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. Lokal gespeichert, offline-fähig, kostenlos.', du: 'Dein ruhiger Überblick über das Leben in der Schweiz — Steuern, Versicherungen, Dokumente. Lokal gespeichert, offline-fähig, kostenlos.' },
     gateMessage: { sie: 'Diese App befindet sich in der geschlossenen Beta. Bitte geben Sie den Zugangscode ein.', du: 'Diese App befindet sich in der geschlossenen Beta. Bitte gib den Zugangscode ein.' },
     codePlaceholder: 'Zugangscode',
     legalLink: 'Datenschutz & Rechtliches',
@@ -3899,7 +3899,7 @@ export default {
 
   seo: {
     title: 'Maloja Plana — Schweizer Lebensordner: Steuern, Sozialhilfe, Versicherungen',
-    description: 'Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — 100% privat, offline-fähig, kostenlos.',
+    description: 'Maloja Plana — Schweizer Lebensordner. Steuerrechner, Sozialhilfe, Prämienverbilligung, Notfallkarte — lokal gespeichert, offline-fähig, kostenlos.',
   },
   obstgarten: {
     title: 'Mein Obstgarten',
@@ -4583,7 +4583,7 @@ export default {
     intro: 'Ein druckbarer Flyer mit QR-Code zu Maloja Plana — ideal für Beratungsstellen, Gemeinden und Anschlagbretter.',
     claim: 'Verstehen, was zusteht. Ordnen, was ansteht.',
     lead: 'Ihre ruhige Übersicht über das Leben in der Schweiz.',
-    point1: '100% privat — alles bleibt auf Ihrem Gerät',
+    point1: 'Ihre Eingaben bleiben auf Ihrem Gerät',
     point2: 'Kostenlos & offline-fähig, ohne Konto',
     point3: 'In mehreren Sprachen verfügbar',
     scan: 'Scannen & loslegen:',
