@@ -11,8 +11,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.31-beta] — 2026-09-17
+
+*K59 (#200). Noch nicht live.*
+
 ### Behoben
-- **Offline nach dem ersten Besuch (K59):** Am 17.09. gemessen: nach dem ersten Besuch blieb die App ohne Netz leer, weil Haupt-Skript, Stylesheet und Sprachdatei geladen waren, bevor der Service Worker die Seite kontrollierte, und nie im Offline-Speicher landeten. Jetzt legt der Service Worker beim Installieren die Dateien der Startseite ab, und die Seite meldet ihm, was sie schon geladen hat (nur eigene Dateien unter `/assets/`). Abgelegte Dateien werden auch bei einem `Vary`-Header gefunden, und die Startseite ersetzt offline nur noch Seitenaufrufe, nicht Schriften oder Skripte. Lokal im Browser gemessen: Server aus, Neuladen → Startseite erscheint.
+- **Offline nach dem ersten Besuch (K59, #200):** Am 17.09. gemessen: nach dem ersten Besuch blieb die App ohne Netz leer, weil Haupt-Skript, Stylesheet und Sprachdatei geladen waren, bevor der Service Worker die Seite kontrollierte, und nie im Offline-Speicher landeten. Jetzt legt der Service Worker beim Installieren die Dateien der Startseite ab, und die Seite meldet ihm, was sie schon geladen hat (nur eigene Dateien unter `/assets/`). Abgelegte Dateien werden auch bei einem `Vary`-Header gefunden, und die Startseite ersetzt offline nur noch Seitenaufrufe, nicht Schriften oder Skripte. Lokal im Browser gemessen: Server aus, Neuladen → Startseite erscheint.
 
 ## [0.1.30-beta] — 2026-09-17
 
