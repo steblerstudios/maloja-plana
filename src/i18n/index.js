@@ -231,9 +231,8 @@ export function I18nProvider({ children }) {
 
   if (!lang) {
     if (!startFehler) return null;
-    let navLang = '';
-    try { navLang = navigator.language || ''; } catch (e) { /* kein navigator */ }
-    return React.createElement(StartFehler, { navLang });
+    // Die gewählte Sprache (?lang=, gespeichert, Browser) — nicht nur der Browser.
+    return React.createElement(StartFehler, { navLang: detectLanguage() });
   }
 
   return React.createElement(I18nContext.Provider, { value }, children);

@@ -192,3 +192,38 @@ describe('Grössenlimit vor dem Lesen', () => {
     expect(exceedsBackupFileLimit(-1)).toBe(false);
   });
 });
+
+// Vorab-Prüfung 0.1.32 (sechs Prüfer): Ist ein Bereich jetzt leer, blieb seine
+// Kopie aus einem früheren Lauf neben den neuen stehen — ein Schnappschuss aus
+// zwei Ständen. Und die Auto-Sicherung schrieb am Schnappschuss vorbei.
+describe('Schnappschuss: leere Bereiche und Auto-Sicherung (K61)', () => {
+  beforeEach(() => { installLocalStorageMock(); });
+
+  it('entfernt die ältere Kopie eines jetzt leeren Bereichs', () => {
+    localStorage.setItem('or5_contacts_prerestore', 'ALT aus frueherem Lauf');
+    localStorage.setItem('or5_data', JSON.stringify(VORHER));
+    createPreRestoreSnapshot();
+    expect(localStorage.getItem('or5_data_prerestore')).toBe(JSON.stringify(VORHER));
+    expect(localStorage.getItem('or5_contacts_prerestore')).toBeNull();
+    expect(localStorage.getItem('or5_prerestore_date')).not.toBeNull();
+  });
+
+  it('stellt die ältere Kopie wieder her, wenn der Schnappschuss danach scheitert', () => {
+    const map = installLocalStorageMock();
+    localStorage.setItem('or5_contacts_prerestore', 'ALT');
+    localStorage.setItem('or5_data', 'NEU');
+    const set = localStorage.setItem;
+    localStorage.setItem = (k, v) => { if (k === 'or5_prerestore_date') throw new Error('Speicher voll'); set(k, v); };
+    expect(() => createPreRestoreSnapshot()).toThrow('Speicher voll');
+    expect(map.get('or5_contacts_prerestore')).toBe('ALT');
+    expect(map.has('or5_data_prerestore')).toBe(false);
+  });
+
+  it('die Auto-Sicherung nutzt denselben Schnappschuss und bricht ab, wenn er scheitert', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync(new URL('../autoBackup.js', import.meta.url), 'utf8');
+    expect(src).toContain("import { createPreRestoreSnapshot } from './prerestore.js'");
+    expect(src).toMatch(/try \{\s*createPreRestoreSnapshot\(\);\s*\} catch/);
+    expect(src).not.toContain("localStorage.setItem('or5_data_prerestore'");
+  });
+});

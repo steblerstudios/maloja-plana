@@ -3740,7 +3740,7 @@ export default {
     taxpunkte: 'Points tarifaires sur la facture',
     taxpunktwert: 'Valeur du point',
     berechneterBetrag: 'Montant calculé',
-    tpwNote: 'La valeur du point tarifaire varie selon le canton. Dans la plupart des cantons, les valeurs 2026 ont été fixées à titre provisoire (arrêtés et décisions cantonaux) — elles changent dès qu\'un canton fixe le tarif définitif. Pour {kantone}, aucune valeur 2026 officiellement documentée n\'existe (encore) ; l\'app y indique l\'état 2025.',
+    tpwNote: 'La valeur du point tarifaire varie selon le canton. Dans la plupart des cantons, les valeurs 2026 ont été fixées à titre provisoire — elles changent dès qu\'un canton fixe le tarif définitif. Pour {kantone}, aucune valeur 2026 officiellement documentée n\'existe (encore) ; l\'app y indique l\'état 2025.',
     tpwDataVersion: 'État de la valeur du point',
     tpwStandUnbelegt: 'Valeur du point {kanton} : état 2025, provisoire — non confirmée officiellement.',
     disclaimer: { sie: 'Aide à l\'orientation basée sur la LAMal/OPAS. Pour des renseignements contraignants : votre assureur.', du: 'Aide à l\'orientation basée sur la LAMal/OPAS. Pour des renseignements contraignants : ton assureur.' },

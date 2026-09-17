@@ -11,8 +11,8 @@ const defaultLinkStyle = { color: 'inherit', textDecoration: 'underline', textUn
 // t ist optional (dritter Parameter) — wo mitgegeben, bekommt der Link den
 // hörbaren "öffnet in neuem Tab"-Hinweis (R4); ohne t bleibt rel/target korrekt,
 // nur der Screenreader-Hinweis entfällt. K64: damit das nicht still passiert,
-// meldet sich der Fehlfall im Entwicklungsmodus; renderSourceAufrufer.test.js
-// hält fest, dass alle Aufrufer in src/ t übergeben.
+// meldet sich der Fehlfall im Entwicklungsmodus; src/__tests__/k64Ansagen.test.js
+// (K64.3) hält fest, dass alle Aufrufer in src/ t übergeben.
 export function renderSource(textValue, linkStyle, t) {
   if (typeof textValue !== 'string') return textValue;
   if (import.meta.env.DEV && typeof t !== 'function' && textValue.includes('[[')) {

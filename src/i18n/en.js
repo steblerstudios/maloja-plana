@@ -3741,7 +3741,7 @@ export default {
     taxpunkte: 'Tax points on the bill',
     taxpunktwert: 'Tax point value',
     berechneterBetrag: 'Calculated amount',
-    tpwNote: 'Tax point value varies by canton. In most cantons the 2026 values have been set provisionally (cantonal decrees and rulings) — they change once a canton sets the definitive tariff. For {kantone} there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
+    tpwNote: 'Tax point value varies by canton. In most cantons the 2026 values have been set provisionally — they change once a canton sets the definitive tariff. For {kantone} there is (still) no officially documented 2026 value; the app shows the 2025 level there.',
     tpwDataVersion: 'Tax point value as of',
     tpwStandUnbelegt: 'Tax point value {kanton}: 2025 level, provisional — not officially confirmed.',
     disclaimer: 'Guidance based on KVG/KLV. For binding information: your health insurer.',

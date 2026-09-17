@@ -3717,7 +3717,7 @@ export default {
     taxpunkte: 'Punti tariffali sulla fattura',
     taxpunktwert: 'Valore del punto',
     berechneterBetrag: 'Importo calcolato',
-    tpwNote: 'Il valore del punto tariffale varia per cantone. Nella maggior parte dei cantoni i valori 2026 sono stati fissati in via provvisoria (decreti e decisioni cantonali) — cambiano non appena un cantone fissa la tariffa definitiva. Per {kantone} non esiste (ancora) un valore 2026 ufficialmente documentato; l\'app mostra lì lo stato 2025.',
+    tpwNote: 'Il valore del punto tariffale varia per cantone. Nella maggior parte dei cantoni i valori 2026 sono stati fissati in via provvisoria — cambiano non appena un cantone fissa la tariffa definitiva. Per {kantone} non esiste (ancora) un valore 2026 ufficialmente documentato; l\'app mostra lì lo stato 2025.',
     tpwDataVersion: 'Stato del valore del punto',
     tpwStandUnbelegt: 'Valore del punto {kanton}: stato 2025, provvisorio — non confermato ufficialmente.',
     disclaimer: { sie: 'Orientamento basato su LAMal/OPre. Per informazioni vincolanti: il Suo assicuratore.', du: 'Orientamento basato su LAMal/OPre. Per informazioni vincolanti: il tuo assicuratore.' },

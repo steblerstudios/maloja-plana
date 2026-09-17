@@ -3752,7 +3752,7 @@ export default {
     taxpunkte: 'Taxpunkte auf der Rechnung',
     taxpunktwert: 'Taxpunktwert',
     berechneterBetrag: 'Berechneter Betrag',
-    tpwNote: 'Taxpunktwert variiert je nach Kanton. In den meisten Kantonen sind die Werte 2026 provisorisch festgesetzt (Beschlüsse und Verfügungen der Kantone) — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für {kantone} liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
+    tpwNote: 'Taxpunktwert variiert je nach Kanton. In den meisten Kantonen sind die Werte 2026 provisorisch festgesetzt — sie ändern sich, sobald ein Kanton den definitiven Tarif festlegt. Für {kantone} liegt (noch) kein amtlich belegter Wert 2026 vor; die App zeigt dort den Stand 2025.',
     tpwDataVersion: 'Taxpunktwert-Stand',
     tpwStandUnbelegt: 'Taxpunktwert {kanton}: Stand 2025, provisorisch — nicht amtlich bestätigt.',
     disclaimer: { sie: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Ihre Krankenkasse.', du: 'Orientierungshilfe basierend auf KVG/KLV. Für verbindliche Auskünfte: Deine Krankenkasse.' },

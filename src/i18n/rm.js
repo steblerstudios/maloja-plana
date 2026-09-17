@@ -3485,7 +3485,7 @@ export default {
     berechneterBetrag: 'Import calculà',
     // TODO(rm): frase supplementara dal DE-original tradüta, betg controlada d'ina/in
     // linguist/a natal/a.
-    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. En la gronda part dals chantuns èn ils valurs 2026 vegnids fixads provisoricamain (conclus e disposiziuns chantunals) — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
+    tpwNote: "La valur dal punct da taxa variescha tenor il chantun. En la gronda part dals chantuns èn ils valurs 2026 vegnids fixads provisoricamain — els müdan uschespert ch'in chantun fixescha la tarifa definitiva. Per {kantone} n'exista (anc) nagin valur 2026 documentà uffizialmain; l'app mussa là il stadi 2025.",
     tpwDataVersion: 'Stadi da la valur dal punct',
     // TODO(rm): tpwStandUnbelegt durch Fachperson gegenlesen lassen
     tpwStandUnbelegt: 'Valur dal punct {kanton}: stadi 2025, provisoric — betg confermà uffizialmain.',
