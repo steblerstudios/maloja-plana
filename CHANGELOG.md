@@ -13,7 +13,7 @@ kommt der Changelog immer mit, nie doppelt.*
 
 ## [0.1.37-beta] — 2026-09-19
 
-*Noch nicht live. Entscheid-Block vom 19.09.2026 (Stebler Studios) und Abbau K86–K103. Umfasst #230, #231, #232 und die Zweige `fix/k86-k87-k98-steuer`, `fix/k82-null-als-antwort`, `fix/k88-k89-k102-k103-kvg`, `fix/k99-k106`.*
+*Live seit **19.09.2026** (`index-fc8ee6ec.js`, Tag `v0.1.37-beta` = `335a557`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-c80eed98.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-fc8ee6ec`; im Browser Footer v0.1.37-beta, Konsole leer). Entscheid-Block vom 19.09.2026 (Stebler Studios) und Abbau K86–K103. Umfasst #230, #231, #232 und die Zweige `fix/k86-k87-k98-steuer`, `fix/k82-null-als-antwort`, `fix/k88-k89-k102-k103-kvg`, `fix/k99-k106`.*
 
 ### Behoben
 - **K106 · CSV-Budget-Import überschreibt kein Einkommen mehr:** Ohne Einkommenszeile in der Datei setzte der Import das Monatseinkommen auf 0 und löschte so ein eingetragenes Einkommen. Jetzt bleibt das Feld unangetastet; nur eine vorhandene Einkommenszeile wird übernommen.
