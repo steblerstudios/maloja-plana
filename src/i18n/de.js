@@ -2480,7 +2480,7 @@ export default {
       similar: 'Bei diesem Einkommen ist der Unterschied gering.',
       twoIncomeNote: 'Bei zwei Einkommen im selben Haushalt kann sich das Bild verschieben.',
       empty: 'Sobald ein steuerbares Einkommen erfasst ist, erscheint hier der Vergleich.',
-      einzelnPending: 'Verheiratet, einzeln (Individualbesteuerung): am 8. März 2026 angenommen, aber noch nicht in Kraft — der Zeitpunkt ist offen. Sobald der neue Tarif gilt, kommt hier eine belegte Zahl.',
+      einzelnPending: 'Verheiratet, einzeln (Individualbesteuerung): am 8. März 2026 angenommen, tritt 2032 in Kraft (Entscheid des Bundesrats vom 19. August 2026). Sobald der neue Tarif gilt, kommt hier eine belegte Zahl.',
       scope: 'Nur direkte Bundessteuer (DBG Art. 36). Kanton und Gemeinde sind hier nicht enthalten.',
       abzuegeNote: "Je Zivilstand mit den passenden Abzügen gerechnet — steuerbares Einkommen ledig CHF {ledig}, verheiratet CHF {verheiratet} (Alleinverdiener-Ehepaar, mit Verheiratetenabzug und höherem Versicherungsabzug).",
       nurGeschaetzt: { sie: "Der Vergleich erscheint, wenn Maloja das steuerbare Einkommen aus dem Nettolohn schätzt. Ein eingetragener Wert aus der Veranlagung gilt nur für Ihren heutigen Zivilstand.", du: "Der Vergleich erscheint, wenn Maloja das steuerbare Einkommen aus dem Nettolohn schätzt. Ein eingetragener Wert aus der Veranlagung gilt nur für deinen heutigen Zivilstand." },

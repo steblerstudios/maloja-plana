@@ -2418,7 +2418,7 @@ export default {
       similar: 'A questo reddito la differenza è minima.',
       twoIncomeNote: 'Con due redditi nello stesso nucleo familiare il quadro può cambiare.',
       empty: 'Non appena viene inserito un reddito imponibile, qui compare il confronto.',
-      einzelnPending: 'Coniugato/a, tassazione individuale: approvata l’8 marzo 2026, ma non ancora in vigore — la data è aperta. Un valore documentato apparirà qui non appena si applicherà la nuova tariffa.',
+      einzelnPending: 'Coniugato/a, tassazione individuale: approvata l’8 marzo 2026, entra in vigore nel 2032 (decisione del Consiglio federale del 19 agosto 2026). Un valore documentato apparirà qui non appena si applicherà la nuova tariffa.',
       scope: 'Solo imposta federale diretta (LIFD art. 36). Le imposte cantonali e comunali non sono incluse qui.',
       abzuegeNote: "Ogni stato civile è calcolato con le proprie deduzioni — reddito imponibile da persona sola CHF {ledig}, da coniugati CHF {verheiratet} (coppia con un solo reddito, con la deduzione per coniugi e la deduzione assicurativa più alta).",
       nurGeschaetzt: { sie: "Il confronto appare quando Maloja stima il reddito imponibile dal salario netto. Un importo inserito dalla tassazione vale solo per il Suo stato civile attuale.", du: "Il confronto appare quando Maloja stima il reddito imponibile dal salario netto. Un importo inserito dalla tassazione vale solo per il tuo stato civile attuale." },

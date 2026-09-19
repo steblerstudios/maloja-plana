@@ -2966,7 +2966,7 @@ export default {
       similar: 'Tar questa entrada è la differenza pitschna.',
       twoIncomeNote: 'Cun duas entradas en la medema chasada po il maletg sa midar.',
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
-      einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, dentant anc betg en vigur — la data resta averta. Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.',
+      einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, entra en vigur il 2032 (decisiun dal Cussegl federal dals 19 d’avust 2026). Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.', // TODO(rm): Übersetzung Inkrafttreten 2032 unsicher
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
       abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
       nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch

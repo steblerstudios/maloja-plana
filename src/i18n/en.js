@@ -2460,7 +2460,7 @@ export default {
       similar: 'At this income the difference is small.',
       twoIncomeNote: 'With two incomes in the same household the picture can shift.',
       empty: 'Once a taxable income is entered, the comparison appears here.',
-      einzelnPending: 'Married, individually (individual taxation): approved on 8 March 2026, but not yet in force — the date is open. A documented figure will appear here once the new tariff applies.',
+      einzelnPending: 'Married, individually (individual taxation): approved on 8 March 2026, enters into force in 2032 (Federal Council decision of 19 August 2026). A documented figure will appear here once the new tariff applies.',
       scope: 'Direct federal tax only (DBG Art. 36). Cantonal and municipal taxes are not included here.',
       abzuegeNote: "Each marital status is calculated with its own deductions — taxable income single CHF {ledig}, married CHF {verheiratet} (single-earner couple, with the married-couple deduction and the higher insurance deduction).",
       nurGeschaetzt: "The comparison appears when Maloja estimates the taxable income from your net salary. A figure entered from your assessment applies only to your current marital status.",
