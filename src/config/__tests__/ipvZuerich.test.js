@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { IPV_ZH, ipvZuerichRechnen, zhRegion } from '../ipvZuerich.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV, CANTON_CODES } from '../cantonalData.js';
 import { getRegion } from '../../data/praemienRegionen.js';
@@ -222,6 +222,32 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ finanzen: { savingsAccount: 150001 } }))).toMatchObject({ belegt: false, amount: null, offen: 'vermoegen' });
   });
 
+  // Eigenanteil und Durchschnittsprämien gelten je Anspruchsjahr (2027: 9,4/11,8 % statt
+  // 8,4/10,5 %). Ab dem 01.01. des Folgejahres darf die App nicht still mit alten Sätzen
+  // weiterrechnen. Ergänzt 20.09.2026 nach der Fachprüfung.
+  describe('Jahres-Riegel', () => {
+    afterEach(() => { vi.useRealTimers(); });
+
+    it('im Anspruchsjahr 2026 rechnet sie', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2026-12-31T12:00:00'));
+      expect(calculateIPV(person({})).annual).toBe(5376);
+    });
+
+    it('ab 2027 keine Zahl mehr, bis die Werte nachgeführt sind', () => {
+      vi.useFakeTimers(); vi.setSystemTime(new Date('2027-01-01T12:00:00'));
+      expect(calculateIPV(person({}))).toMatchObject({ belegt: false, amount: null, offen: 'jahr' });
+    });
+  });
+
+  // § 5 Abs. 1 lit. b EG KVG: Beiträge an die Säule 3a werden hinzugerechnet. Das Feld ist ein
+  // Jahresbetrag, darum ohne × 12. Ergänzt 20.09.2026 nach der Fachprüfung (vorher fehlte 3a,
+  // das machte das massgebende Einkommen zu tief und den Betrag zu hoch).
+  it('Säule-3a-Einzahlung zählt zum massgebenden Einkommen (Jahresbetrag)', () => {
+    // 7 258 Jahreseinzahlung → 5 376 − 8.4 % × 7 258 = 4 766.33 → 4 766
+    expect(calculateIPV(person({ finanzen: { pension3a: 7258 } })).annual).toBe(4766);
+    expect(calculateIPV(person({ finanzen: { pension3a: 0 } })).annual).toBe(5376);
+  });
+
   it('Renten zählen zum massgebenden Einkommen', () => {
     expect(calculateIPV(person({ finanzen: { ahvRente: 2500 } })).annual).toBe(2856); // 5 376 − 8.4 % × 30 000
   });
@@ -247,8 +273,35 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(r.cantonData).toBeUndefined();
   });
 
-  it('Jahrgang 2000 (26 im Jahr 2026) rechnet als Erwachsene/r', () => {
-    expect(calculateIPV(person({ dob: '2000-12-31' })).annual).toBe(5376);
+  // § 8 EG KVG: massgebend ist das Alter am Ende des Vorjahres, für 2026 also am 31.12.2025.
+  // Jahrgang 2000 ist dann 25 → junge erwachsene Person, eigene Grenzen (45 900), die die App
+  // nicht rechnet (Einkommen der Eltern unbekannt) → Orientierung statt Betrag.
+  // Korrigiert 20.09.2026 nach der Fachprüfung; vorher stand hier 5376.
+  it('Jahrgang 2000 ist am Stichtag 31.12.2025 erst 25 → kein Betrag', () => {
+    const r = calculateIPV(person({ dob: '2000-12-31' }));
+    expect(r).toMatchObject({ belegt: false, amount: null, offen: 'alter' });
+  });
+
+  it('Jahrgang 1999 ist am Stichtag 26 → rechnet als Erwachsene/r', () => {
+    expect(calculateIPV(person({ dob: '1999-12-31' })).annual).toBe(5376);
+  });
+
+  // Ein Kind ohne Geburtsdatum kommt in der App mit `age: 0` an (Vorbelegung, Alt-Daten-Migration).
+  // Das heisst «nicht erfasst» und darf keinen Betrag erzeugen — sonst zahlt eine Annahme mit.
+  it.each([
+    ['Kind ohne jede Altersangabe', { children: [{}] }],
+    ['Kind mit age 0 (Vorbelegung)', { children: [{ age: 0 }] }],
+  ])('%s: Orientierung statt Betrag', (_, opts) => {
+    const r = calculateIPV(person(opts));
+    expect(r).toMatchObject({ belegt: false, amount: null, offen: 'alter' });
+  });
+
+  // § 3 Abs. 1 EG KVG: höchstens die Referenzprämie. Ein negativ erfasstes Einkommen darf
+  // die Verbilligung nicht darüber hinaus wachsen lassen.
+  it('negatives Einkommen sprengt die Obergrenze nicht', () => {
+    const r = calculateIPV(person({ dob: '1980-01-01', monthlyIncome: -1000 }));
+    expect(r.annual).toBeLessThanOrEqual(r.maxAnnual);
+    expect(r.annual).toBe(5376);
   });
 
   it('Betrag sinkt nie mit steigendem Einkommen (Orientierungs-Fälle ausgenommen)', () => {

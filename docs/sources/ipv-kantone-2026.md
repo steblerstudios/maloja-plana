@@ -261,6 +261,40 @@ Neu gefunden (schliesst die Lücken unter «Offen»):
   Kinder 160/146/136 CHF/Monat [3]; Einkommensgrenzen 2027 (z. B. Einzelperson >25, Region 1:
   59'420) [8]; Familiengrenze 2027 laut Tabelle 71 200 [8].
 
+### Fachprüfung 20.09.2026 (swiss-precision-pruefer, alle Quellen erneut abgerufen)
+
+Bestätigt: Modell, Sätze, Durchschnittsprämien, alle 36 Grenzen, Verteilung, Deckel,
+Kinder-Mindestanspruch, Vermögensregel und die 37 Gemeinden der Region 2. Neu belegt und in
+den Code übernommen:
+
+- **Altersstichtag** — EG KVG § 8 [7]: «Richten sich die Prämienverbilligungsbeiträge nach dem
+  Alter der anspruchsberechtigten Person, ist für das ganze Jahr das **Alter am Ende des
+  Vorjahres** massgebend.» Für 2026 zählt also das Alter am 31.12.2025. Der Code rechnete
+  zuerst das Alter *im* Anspruchsjahr — ein Jahr zu viel, wodurch 25-Jährige als Erwachsene
+  galten und einen Betrag sahen. Korrigiert.
+- **Säule 3a** — EG KVG § 5 Abs. 1 lit. b [7]: Beiträge an die gebundene Selbstvorsorge werden
+  dem massgebenden Einkommen **hinzugerechnet**. Das Feld `finanzen.pension3a` fehlte in der
+  Näherung; ohne es war das Einkommen zu tief und der Betrag zu hoch. Korrigiert.
+- **Die beiden Eigenanteilssätze stützen sich gegenseitig** — EG KVG § 3 Abs. 3 [7]: «Der
+  Eigenanteil für Einzelpersonen und Alleinerziehende beträgt 80% des Eigenanteils für
+  Verheiratete» (8,4 = 0,8 × 10,5; 2027: 9,4 ≈ 0,8 × 11,8).
+- **Abzugsquote über der Familiengrenze** — RRB 297/2025 [6], S. 4: «Ist die Einkommensgrenze
+  erreicht, wird 60% des zusätzlichen Einkommens **vom Mindestanspruch** abgezogen.» Singular
+  und eine Grenze je Familie sprechen für die Familien-Lesart; die App rechnet in dieser Zone
+  weiterhin bewusst nicht.
+- **Das Rechenbeispiel auf [2] ist ein Zahlendreher**, unabhängig bestätigt: 0,7 × 640 × 12 =
+  5'376, und nur 5'376 erklärt die publizierte Grenze 64'000 (× 8,4 %). Ebenso 459 → 45'900 und
+  2 × 5'376 → 102'400. Drei Tabellenwerte stützen 5'376, keiner 5'776. **Der SVA melden.**
+- **Hinweis für den 2027-Einbau:** Die publizierten Grenzen 2027 sind *nicht* exakt
+  «Summe ÷ Satz» (R1 Erw. 59'420 statt 59'425.53; R2 54'235 statt 54'242.55; R3 50'570 statt
+  50'578.72). Der Exaktheits-Test müsste dafür angepasst werden.
+
+Offen geblieben (nicht im Code): Das massgebende Vermögen ist amtlich das **steuerbare
+Gesamtvermögen** (inkl. Liegenschafts-Steuerwert, abzüglich Schulden); die App summiert nur
+Wertschriften, Sparkonto und übrige Vermögenswerte. Ebenso fehlen die amtlichen Abzüge
+(Berufsauslagen, Versicherungsabzug, Sozialabzüge für Kinder). Beides ist in der Bau-Liste
+vermerkt.
+
 6. RRB Nr. 297/2025, Krankenversicherung (IPV 2026; Eckwerte erste Phase), Kanton Zürich. https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/297/RRB-2025-0297.pdf — abgerufen 19.09.2026
 7. Einführungsgesetz zum Krankenversicherungsgesetz (EG KVG), LS 832.01, Fassung «1. 10. 23 - 122». https://www.notes.zh.ch/appl/zhlex_r.nsf/WebView/B1FF7F0CFD47699AC12589F20029EC6C/$File/832.01_29.4.19_122.pdf — abgerufen 19.09.2026
 8. Prämienverbilligung 2027: Einkommensgrenzen 2027, SVA Zürich. https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html — abgerufen 19.09.2026
