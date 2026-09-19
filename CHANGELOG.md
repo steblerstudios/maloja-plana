@@ -11,6 +11,30 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.37-beta] — 2026-09-19
+
+*Noch nicht live. Entscheid-Block vom 19.09.2026 (Stebler Studios) und Abbau K86–K103. Umfasst #230, #231, #232 und die Zweige `fix/k86-k87-k98-steuer`, `fix/k82-null-als-antwort`, `fix/k88-k89-k102-k103-kvg`, `fix/k99-k106`.*
+
+### Behoben
+- **K106 · CSV-Budget-Import überschreibt kein Einkommen mehr:** Ohne Einkommenszeile in der Datei setzte der Import das Monatseinkommen auf 0 und löschte so ein eingetragenes Einkommen. Jetzt bleibt das Feld unangetastet; nur eine vorhandene Einkommenszeile wird übernommen.
+- **K86 · Kein falscher Steuersatz beim gemeinsamen Wert:** Bei «verheiratet» mit direkt eingetragenem gemeinsamem steuerbarem Einkommen bezog sich der «effektive Satz» (und die Box «Nettoeinkommen») auf den eigenen Nettolohn, die Steuer aber auf das gemeinsame Einkommen. Beide entfallen in diesem Fall, mit Hinweis. Die Zeile heisst jetzt «Ihr eigener Nettolohn pro Jahr».
+- **K87 · Probiermodus mit anderer Kinderzahl:** Weicht die Kinderzahl vom direkt eingetragenen Wert ab, zeigt der Steuerrechner keine Zahl mehr (bisher z. B. 400.80 ohne Hinweis), sondern sagt, warum — gleiches Muster wie K62.4.
+- **K103 · Kein stiller Rückfall auf Taxpunktwert 0.89:** Ohne Kanton oder bei unbekanntem Kanton rechnet die Arztrechnung nicht mehr still mit 0.89, sondern zeigt einen ruhigen Hinweis.
+- **K94 · Speicher gesperrt oder voll:** Erinnerungen, Lebenssituationen, Backup-Metadaten und das Datum der letzten Sicherung fangen Speicherfehler ab. Beim Export erschien bei vollem Speicher eine Fehlermeldung, obwohl die Datei schon heruntergeladen war.
+- **K97 · Escape:** `0` erscheint in Dossier, Brief und Flyer als «0» statt leer; `'` wird maskiert. Dossier, Brief und Flyer nutzen dieselbe Funktion.
+- **K90 · Tab-Reihenfolge:** Die Karte beim Sprach-Ladefehler steht im Seitenaufbau dort, wo sie sichtbar ist (oben).
+
+### Geändert
+- **K82 · 0 ist eine Antwort:** Eine gespeicherte 0 in einem Betragsfeld zählt für die Vollständigkeit und steht als «0» im Feld (34 Betragsfelder). Leere Felder bleiben leer und zählen nicht. Rechner unverändert.
+- **K101 · QR-Hinweis überall:** Auch der Krankenkassen- und der Organspende-QR sagen, dass der Code nicht verschlüsselt und für alle lesbar ist, die ihn scannen.
+- **K99 · Individualbesteuerung:** Der Text nennt jetzt das Inkrafttreten 2032 (Entscheid des Bundesrats vom 19.08.2026, ESTV-Medienmitteilung) statt «Zeitpunkt offen».
+- **K88 · Versicherergruppe bei den Quellen:** GE (CSS), VD und LU (santéservices), UR (HSK, Link jetzt auf das BVGer-Urteil C-409/2026); Stand-Datum bei GR und ZG.
+- **K102 · santéservices:** «tarifsuisse» heisst seit 1.7.2026 santéservices — Linktexte «santéservices, vormals tarifsuisse».
+- **K89 · Tessin:** Der Quellen-Link springt im Amtsblatt auf den Beschluss (S. 64–65); die Freiburger Quelle ist bestätigt.
+- **K98 · Texte:** «0 eintragen» eindeutig, «gemeinsam» nur als Annahme, it einheitlich «salario netto».
+- **K96 · Capacitor als Entwicklungs-Abhängigkeit:** Zur Laufzeit hängt die App nur noch an React.
+- **K95 · npm audit:** Entwicklungs-Pakete aktualisiert (12 → 2 Meldungen, Laufzeit weiterhin 0). Offen: esbuild im Dev-Server, nur mit Vite-Major-Update (Oktober). Build byte-gleich.
+
 ## [0.1.36-beta] — 2026-09-17
 
 *Live seit **17.09.2026, 16:32** (`index-c80eed98.js`, Tag `v0.1.36-beta` = `6546358`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-d179693a.js` 404, erfundener Name 404, `index.html`, `theme-init.js`, `sw.js`, `sitemap.xml` zeichengleich mit dem Build, `sw.js` mit Cache `maloja-plana-c80eed98`). Live im Browser geprüft: Beispiel → Notfall-Dossier, Code mit jsQR zurückgelesen (Version 19, Medizin zuerst, Schlusszeile «Nicht enthalten …»), kein `title`, `aria-label` gesetzt, Hinweis «nicht verschlüsselt», Footer v0.1.36-beta, Konsole leer; Beispiel verlassen → `/`, localStorage leer. Umfasst #224, #226, #227.*
