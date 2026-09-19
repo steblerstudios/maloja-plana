@@ -125,10 +125,14 @@ export const importBudgetFromFile = async (file) => {
 export const processBudgetEntries = (entries, currentBudget) => {
   let updated = { ...currentBudget };
   let income = 0;
+  // K106: nur schreiben, was die Datei enthält — ohne Einkommenszeile bleibt
+  // ein bestehendes Einkommen stehen (vorher wurde es auf 0 überschrieben).
+  let hasIncomeRow = false;
   let expenses = { rent: 0, utils: 0, health: 0, other: 0 };
 
   for (const entry of entries) {
     if (entry.type === 'income') {
+      hasIncomeRow = true;
       income += entry.amount;
     } else {
       const category = (entry.category || '').toLowerCase();
@@ -144,7 +148,7 @@ export const processBudgetEntries = (entries, currentBudget) => {
     }
   }
 
-  updated.monthlyIncome = income;
+  if (hasIncomeRow) updated.monthlyIncome = income;
   if (expenses.rent > 0) updated.rentAmount = expenses.rent;
   if (expenses.utils > 0) updated.utilities = expenses.utils;
   if (expenses.health > 0) updated.healthPremium = expenses.health;
