@@ -5,7 +5,7 @@ import { Icon } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
-import { text, weight, radius , space } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
 
 export const OrganDonation = ({ palette, t, data, onSave }) => {
@@ -116,7 +116,11 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       ),
 
       qrGenerated && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center', marginBottom: space.md } },
-        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '12px' } }, t('organ.generateQr')),
+        React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '4px' } }, t('organ.generateQr')),
+        // K101: derselbe ehrliche Hinweis wie am Notfall-QR (nicht verschlüsselt, für alle lesbar).
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+        }, t('notfallDossier.qrHint')),
         React.createElement('div', { ref: qrRef, style: { display: qrFehler ? 'none' : 'flex', justifyContent: 'center', marginBottom: space.sm, minHeight: '220px' } }),
         qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: 0 } }, t('common.qrFehler'))
       ),

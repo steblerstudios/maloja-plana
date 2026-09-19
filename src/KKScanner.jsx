@@ -5,7 +5,7 @@ import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRC
 import { Icon } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
-import { text, weight, radius, space } from './config/tokens.js';
+import { text, weight, radius, leading, space } from './config/tokens.js';
 
 export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
@@ -207,6 +207,10 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, 'ⓘ ' + t('kkScanner.qrBarcode')),
 
       qrCode && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center' } },
+        // K101: derselbe ehrliche Hinweis wie am Notfall-QR (nicht verschlüsselt, für alle lesbar).
+        React.createElement('div', {
+          style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+        }, t('notfallDossier.qrHint')),
         React.createElement('div', { id: 'kk-qr-output', style: { display: qrFehler ? 'none' : 'flex', justifyContent: 'center', marginBottom: space.sm } }),
         qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: '0 0 8px' } }, t('common.qrFehler')),
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('kkScanner.scanForEmergency'))
