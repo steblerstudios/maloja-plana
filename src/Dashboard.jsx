@@ -8,7 +8,7 @@ import { text, weight, leading, space, radius, shadow, ease, duration } from './
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
 import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cantonalData.js';
 import { loadReminders } from './utils/reminders.js';
-import { grundordnung, feldErledigt, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
+import { grundordnung, feldErledigt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { useT } from './i18n/index.js';
 
 // K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
@@ -1691,7 +1691,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     (() => {
       const hasData = chapters.some(ch => {
         const d = data[ch.key] || {};
-        return ch.fields.some(f => d[f.k]);
+        return ch.fields.some(f => feldHatWert(d, f.k));
       });
       if (!hasData) return null;
       const lastBackupMs = lastBackupRaw ? new Date(lastBackupRaw).getTime() : 0;

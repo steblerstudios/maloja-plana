@@ -142,7 +142,7 @@ describe('K45c · ein Wert hebt «trifft nicht zu» auf', () => {
   });
 
   it('die Anzeige zeigt bei Altdaten mit Wert und Markierung den Wert, nicht den Hinweis', () => {
-    expect(src('ChapterView.jsx')).toContain('const na = trifftNichtZu(data, field.k) && !data[field.k];');
+    expect(src('ChapterView.jsx')).toContain('const na = trifftNichtZu(data, field.k) && !feldHatWert(data, field.k);');
   });
 
   it('keine Meldung: eintragFolgen kennt keinen Text', () => {

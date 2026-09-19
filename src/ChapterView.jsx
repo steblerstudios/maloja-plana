@@ -24,7 +24,7 @@ import { PLZAutocomplete } from './PLZAutocomplete.jsx';
 import { ItemizedAmount } from './ItemizedAmount.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
-import { trifftNichtZu, NA_FELD } from './utils/vollstaendigkeit.js';
+import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
@@ -80,7 +80,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const sectionTabs = [...primarySections, ...secondarySections];
 
   const hasSecondaryFields = chapter.fields.some(f => f.secondary);
-  const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => data[f.k]);
+  const secondaryHasData = chapter.fields.filter(f => f.secondary).some(f => feldHatWert(data, f.k));
   const storageKey = 'or5_disclosure_' + chapter.key;
   const [showSecondary, setShowSecondary] = useState(() => {
     if (secondaryHasData) return true;
@@ -476,8 +476,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     const el = renderField(field);
     if (!field.naOk || demoMode) return el;
     // K45: ein eingetragener Wert geht vor — auch bei Altdaten, die noch beides tragen.
-    const na = trifftNichtZu(data, field.k) && !data[field.k];
-    if (!na && data[field.k]) return el;
+    // K82: eine 0 ist ein eingetragener Wert.
+    const na = trifftNichtZu(data, field.k) && !feldHatWert(data, field.k);
+    if (!na && feldHatWert(data, field.k)) return el;
     // K38: gekoppelte Felder (Arbeitgeber) gleich auch im anderen Kapitel umschalten.
     const umschalten = () => {
       const neu = naGruppeUmschalten(data, field);
@@ -523,7 +524,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
   const renderField = (field) => {
     if (field.type === 'household') return renderHouseholdFields();
-    const value = data[field.k] || '';
+    // K82: eine gespeicherte 0 ist eine Antwort und bleibt als «0» sichtbar; Leeres bleibt ''.
+    const value = feldHatWert(data, field.k) ? data[field.k] : '';
     const error = errors[field.k];
 
     const baseStyle = { marginBottom: space.lg + 'px' };
@@ -580,7 +582,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const itemsKey = field.k + 'Items';
       const stored = Array.isArray(data[itemsKey]) ? data[itemsKey] : [];
       // Alt-Einzelbetrag verlustfrei als erster Posten übernehmen (ohne Bezeichnung).
-      const seed = stored.length ? stored : (data[field.k] ? [{ label: '', amount: data[field.k] }] : []);
+      const seed = stored.length ? stored : (feldHatWert(data, field.k) ? [{ label: '', amount: data[field.k] }] : []);
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(fieldId, field.label, field.hint),
@@ -589,7 +591,8 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           palette, t: tr, items: seed,
           onChange: (list) => {
             onUpdate(itemsKey, list);
-            onUpdate(field.k, list.reduce((a, r) => a + (Number(r.amount) || 0), 0));
+            // K82: ohne Betrag in einem Posten bleibt das Feld leer (keine 0 als Scheinantwort).
+            onUpdate(field.k, postenSumme(list));
           },
         }),
         renderOrientation(field)
@@ -1005,7 +1008,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     return null;
   };
 
-  const filledCount = chapter.fields.filter(f => data[f.k]).length;
+  const filledCount = chapter.fields.filter(f => feldHatWert(data, f.k)).length;
 
   const ankunftKey = 'or5_ankunft_' + chapter.key;
   const [showAnkunft, setShowAnkunft] = useState(false);
@@ -2357,7 +2360,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
     // Chapter arrival — quiet rest moment when enough data is present
     (() => {
       const primaryFields = chapter.fields.filter(f => !f.secondary);
-      const primaryFilled = primaryFields.filter(f => data[f.k]).length;
+      const primaryFilled = primaryFields.filter(f => feldHatWert(data, f.k)).length;
       const threshold = Math.ceil(primaryFields.length * 0.6);
       if (primaryFilled < threshold) return null;
       const allPrimaryFilled = primaryFilled === primaryFields.length;

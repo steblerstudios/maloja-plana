@@ -1,4 +1,5 @@
 import { LEBENSBEREICHE } from './lebensbereiche.js';
+import { feldHatWert } from '../utils/vollstaendigkeit.js';
 
 // Reine Logik für den Lebens-Obstgarten — kein React, damit testbar.
 // Jeder Lebensbereich ist ein eigenes Bäumchen, das mit dem Ausfüllstand seines
@@ -37,7 +38,7 @@ export function gardenTrees(data = {}, chapters = []) {
     if (entry) {
       const cd = data[entry.chapter.key] || {};
       const total = entry.chapter.fields.length;
-      const filled = entry.chapter.fields.filter((f) => cd[f.k]).length;
+      const filled = entry.chapter.fields.filter((f) => feldHatWert(cd, f.k)).length; // K82: 0 zählt
       const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
       return {
         key: b.key, fruit: b.fruit, chapterKey: entry.chapter.key, chapterIdx: entry.idx,
