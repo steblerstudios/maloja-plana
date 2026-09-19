@@ -12,6 +12,12 @@ const present = (v) => typeof v === 'string'
 const tStub = (k) => k;
 
 describe('flyerGenerator', () => {
+  it('K97: maskiert auch Apostroph (gleiche Escape-Funktion wie Dossier/Brief)', () => {
+    const html = buildFlyerHtml({ t: () => "l'aide <b>", qrDataUrl: 'data:image/png;base64,AAAA' });
+    expect(html).toContain('l&#39;aide &lt;b&gt;');
+    expect(html).not.toContain("l'aide");
+  });
+
   it('erzeugt vollständiges HTML mit QR-Bild und URL', () => {
     const html = buildFlyerHtml({ t: tStub, qrDataUrl: 'data:image/png;base64,AAAA' });
     expect(html).toContain('<!DOCTYPE html>');
