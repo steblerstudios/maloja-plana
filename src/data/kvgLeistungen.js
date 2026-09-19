@@ -174,7 +174,8 @@ export const TAXPUNKTWERT = {
 // K27 (Bauliste §10, E29): der Taxpunktwert-Block bekommt einen eigenen Datenstand statt
 // nur der einen KVG_DATA_VERSION für den ganzen Datensatz — sonst datiert eine Zahl den
 // ganzen Katalog mit. Stand = letzte Prüfrunde der Taxpunktwerte oben (K22, 16.09.2026).
-export const TAXPUNKTWERT_DATA_VERSION = '2026-09-16';
+// Deploy-Gate 0.1.37 (19.09.2026): alle Quellen nachgeprüft, Werte unverändert.
+export const TAXPUNKTWERT_DATA_VERSION = '2026-09-19';
 
 // K26/K30 (Bauliste §9/§10, E28): die neun Kantone ohne belegten Wert 2026 — Stand 2025
 // (TARMED), siehe Kommentar oben "Neun Kantone bleiben UNGEPRÜFT". Für die Fussnote
@@ -199,28 +200,35 @@ export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', '
 //   Einkaufsgemeinschaft HSK AG»). Entscheid Stebler Studios 19.09.2026: der UR-Link zeigt auf dieses
 //   Urteil (Entscheid-Datenbank entscheidsuche.ch, wie bei LU; Gegenprobe 404), nicht mehr auf die
 //   Medienmitteilung — die nennt keine Gruppe. Eine stabile Einzel-Adresse auf bvger.ch gibt es nicht.
+// gruppe = die Versicherergruppe aus dem Beleg (Name, sprachneutral), für die Zeile direkt beim
+//   berechneten Ergebnis (kvg.tpwErgebnisGruppe; SZ mit eigenem Satz kvg.tpwErgebnisGruppeSZ, weil dort
+//   der Wert für CSS und HSK ebenfalls belegt ist). Muss im Linktext kvg.tpwQuelle<zusatz> stehen (Test).
 // stand = Stand-Datum, das die Übersicht selbst trägt (GR «Stand: 07.09.2026», ZG «Stand 13. Januar
-// 2026»); seiten = gedruckte Seiten im Amtsblatt (TI, K89).
-// K102: tarifsuisse ag tritt seit 1.7.2026 als santéservices auf — https://www.santeservices.ch/santeservices/
-// (abgerufen 19.09.2026): «… santéservices (vormals tarifsuisse ag) unter der Marke santéservices».
+// 2026»); seiten = gedruckte Seiten im «Bollettino ufficiale delle leggi» (amtliche Gesetzessammlung
+// des Kantons, nicht das Amtsblatt «Foglio ufficiale»; TI, K89 — Nr. 6 vom 13.02.2026, S. 64–65).
+// K102: Seit 1.7.2026 treten die Gesellschaften unter der MARKE santéservices auf —
+// https://www.santeservices.ch/santeservices/ (abgerufen 19.09.2026): «… santéservices (vormals
+// tarifsuisse ag) unter der Marke santéservices». Die Firma «santéservices SA» steht schon im
+// Waadtländer Beschluss vom 20.05.2026 (Séance 1032981: «entre santéservices SA et la Société
+// vaudoise de médecine»).
 const VZAG_LU = 'https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html';
 export const TAXPUNKTWERT_QUELLEN = {
   AR: { art: 'behoerde', url: 'https://amtsblattportal.ch/api/v1/publications/261ae13b-1a69-475a-bac6-f40c18f7e696/attachments/36e30134-6bd5-4601-a192-c0a62e3ec610' },
   BE: { art: 'behoerde', url: 'https://www.gsi.be.ch/content/dam/gsi/dokumente-bilder/de/themen/gesundheit/gesundheitsversorger/verfuegung-prov-tpw-tardoc-2026-de.pdf' },
   BS: { art: 'behoerde', url: 'https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2' },
   FR: { art: 'behoerde', url: 'https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24' },
-  GE: { art: 'behoerde', url: 'https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026', zusatz: 'GE' },
+  GE: { art: 'behoerde', url: 'https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026', zusatz: 'GE', gruppe: 'CSS' },
   GR: { art: 'behoerde', url: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/InstitutionenGesundeitswesens/Spitaeler/Dok%20Spitler/%c3%9cbersicht%20Taxpunktwerte%202017-2026%20%28Stand%2007.09.2026%29.pdf', stand: '07.09.2026' },
-  LU: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf', zusatz: 'LU' },
+  LU: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf', zusatz: 'LU', gruppe: 'santéservices' },
   NW: { art: 'tarifpartner', url: VZAG_LU },
   OW: { art: 'tarifpartner', url: VZAG_LU },
   SG: { art: 'behoerde', url: 'https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf' },
   // K92: in SZ gilt 0.85 nur für santéservices (vormals tarifsuisse), für CSS und HSK 0.86 — Zusatz im Linktext.
-  SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ' },
+  SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ', gruppe: 'santéservices' },
   TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },
   TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf#pagemode=bookmarks&page=20', seiten: '64–65' },
-  UR: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf', zusatz: 'UR' },
-  VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981', zusatz: 'VD' },
+  UR: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf', zusatz: 'UR', gruppe: 'HSK' },
+  VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981', zusatz: 'VD', gruppe: 'santéservices' },
   ZG: { art: 'behoerde', url: 'https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf', stand: '13.01.2026' },
   ZH: { art: 'behoerde', url: 'https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/1299/RRB-2025-1299.pdf' },
 };

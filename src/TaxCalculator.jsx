@@ -12,6 +12,7 @@ import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { chf, annahmenTexte } from './utils/steuerTexte.js';
+import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
 // docs/sources/kantonssteuer-tabelle-2026.md) — dieselbe Regel wie FinanzUebersicht und
@@ -49,6 +50,22 @@ export const WohnkantonFrage = ({ palette, t, canton, onJa, onNein }) => {
     )
   );
 };
+
+// Deploy-Gate 0.1.37 (a11y): welche Teile des Ergebnisses gerade einen Hinweis statt einer Zahl
+// zeigen — Bundessteuer (E39/R4), Kantons- und Gemeindesteuer (E38/K87/K98), Satz und
+// Nettoeinkommen (K86). Ohne Kanton steht «Kanton wählen», das ist kein Wechsel Zahl → Hinweis.
+export const hinweisTeile = ({ taxResult, canton, kantonal, gemeinsamDirekt }) => [
+  !taxResult && 'bund',
+  canton && !kantonal && 'kanton',
+  taxResult && gemeinsamDirekt && 'netto',
+].filter(Boolean);
+
+const TEIL_TEXT = { bund: 'tax.federalTax', kanton: 'tax.cantonalAndMunicipal', netto: 'tax.netIncome' };
+
+// Was die kleine Live-Region sagt, wenn sich hinweisTeile ändert (nicht bei jeder neuen Zahl).
+export const steuerAnsageText = (t, teile) => teile.length
+  ? t('tax.ansageHinweis', { teile: teile.map((k) => t(TEIL_TEXT[k])).join(', ') })
+  : t('tax.ansageZahlen');
 
 export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const isMobile = useIsMobile();
@@ -134,6 +151,17 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   // Die Kantonstabelle wird mit demselben steuerbaren Einkommen gelesen.
   const schaetzung = steuern.kanton;
   const kantonal = schaetzung.kantonal;
+
+  // a11y: Ansage nur beim Wechsel zwischen Zahl und Hinweis. Die Boxen selbst sind keine
+  // Live-Region, sonst würde jede Eingabe vorgelesen (Muster: WohnkantonFrage, aria-live polite).
+  // Zustand beim Rendern nachführen statt im Effekt (React: «Adjusting state when a prop changes»).
+  const teileJetzt = hinweisTeile({ taxResult, canton, kantonal, gemeinsamDirekt: steuern.gemeinsamDirekt }).join('|');
+  const [teileVorher, setTeileVorher] = useState(teileJetzt);
+  const [ansage, setAnsage] = useState('');
+  if (teileVorher !== teileJetzt) {
+    setTeileVorher(teileJetzt);
+    setAnsage(steuerAnsageText(t, teileJetzt ? teileJetzt.split('|') : []));
+  }
 
   const buttonStyle = {
     padding: '10px 16px',
@@ -256,6 +284,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       // Right side: Result
       React.createElement('div', { style: { background: palette.up, padding: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
         React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, '◇ ' + t('tax.calculation')),
+        React.createElement('div', { 'data-testid': 'steuer-ansage', role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, ansage),
 
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.grossIncome')),

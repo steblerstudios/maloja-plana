@@ -575,6 +575,11 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           }
         }, t('kvg.belegTpApply'))
       ),
+      // Deploy-Gate 0.1.37 (1+2): Versicherergruppe bzw. «Stand 2025» sichtbar, bevor der Betrag
+      // als Beleg übernommen wird.
+      tpOpen && tpw !== null && React.createElement('div', { style: { marginTop: '-6px', marginBottom: '10px' } },
+        React.createElement(TpwErgebnisHinweise, { palette, t, canton })
+      ),
       tpOpen && tpw === null && React.createElement('div', {
         'data-testid': 'tpw-ohne-kanton-profil',
         style: { fontSize: text.xs, color: palette.soft, marginTop: '-4px', marginBottom: '10px', lineHeight: leading.normal }
@@ -903,20 +908,35 @@ const RechnungTab = ({ palette, t, data }) => {
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
       }, 'ⓘ ' + t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') })),
-      // K27: der Taxpunktwert trägt seinen eigenen Datenstand, nicht den des ganzen
-      // KVG-Datensatzes (KVG_DATA_VERSION unten im Footer betrifft Franchise/Katalog).
-      // R4: je gewähltem Kanton — die neun ohne Beleg 2026 zeigen «Stand 2025, provisorisch»
-      // statt des Prüfdatums der belegten Werte.
-      React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: '2px' }
-      }, 'ⓘ ' + (TAXPUNKTWERT_UNBELEGT_2026.includes(selCanton)
-        ? t('kvg.tpwStandUnbelegt', { kanton: selCanton })
-        : t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION))
+      // Versicherergruppe, Stand 2025 bzw. Datenstand — dieselben Zeilen wie im Franchise-Tab.
+      React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })
     ),
 
     // E41: die Quelle je Kanton, verlinkt. Kantone ohne belegten Wert 2026 haben keinen Link
     // (die Fussnote kvg.tpwNote nennt sie).
     React.createElement(TpwQuellen, { palette, t })
+  );
+};
+
+// Deploy-Gate 0.1.37 (1+2): ruhige Zeilen direkt beim berechneten Taxpunkt-Ergebnis — im Tab
+// «Arztrechnung» und in der Umrechnung im Franchise-Tab (dort vor dem Übernehmen als Beleg).
+//   · Gilt der Beleg nur für eine Versicherergruppe (TAXPUNKTWERT_QUELLEN.gruppe), steht sie hier,
+//     nicht erst im Linktext der Quellenliste. SZ: auch der Wert für CSS und HSK ist belegt.
+//   · K27/R4: die neun Kantone ohne Beleg 2026 zeigen «Stand 2025, provisorisch»; sonst — nur im
+//     Tab «Arztrechnung» (mitDatenstand) — das Prüfdatum der belegten Werte.
+export const TpwErgebnisHinweise = ({ palette, t, canton, mitDatenstand = false }) => {
+  const q = Object.prototype.hasOwnProperty.call(TAXPUNKTWERT_QUELLEN, canton) ? TAXPUNKTWERT_QUELLEN[canton] : null;
+  const gruppe = q && q.gruppe
+    ? (q.zusatz === 'SZ' ? t('kvg.tpwErgebnisGruppeSZ') : t('kvg.tpwErgebnisGruppe', { gruppe: q.gruppe }))
+    : null;
+  const unbelegt = TAXPUNKTWERT_UNBELEGT_2026.includes(canton);
+  const stand = unbelegt
+    ? t('kvg.tpwStandUnbelegt', { kanton: canton })
+    : mitDatenstand ? t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION : null;
+  const zeile = { fontSize: text.xs, color: palette.soft, marginTop: '2px', lineHeight: leading.normal };
+  return React.createElement(React.Fragment, null,
+    gruppe && React.createElement('div', { 'data-testid': 'tpw-gruppe', style: zeile }, 'ⓘ ' + gruppe),
+    stand && React.createElement('div', { style: zeile }, 'ⓘ ' + stand)
   );
 };
 

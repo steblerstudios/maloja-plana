@@ -6,6 +6,7 @@ import { Icon } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
+import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 
 export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
@@ -22,6 +23,7 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanning, setScanning] = useState(false);
   const [qrCode, setQRCode] = useState(null);
   const [qrFehler, setQrFehler] = useState(false);
+  const [qrAnsage, setQrAnsage] = useState('');
   const [conflicts, setConflicts] = useState(null);
 
   React.useEffect(() => { initBarcodeScanner(); }, []);
@@ -70,10 +72,14 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     if (!validation.valid) return;
     const qrData = generateKKQRCode(kkData);
     setQRCode(qrData);
+    setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
       const cont = document.getElementById('kk-qr-output');
       // K80: vorher warf ein Versicherername mit Umlaut (z. B. ÖKK) hier unabgefangen.
-      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('kkScanner.scanForEmergency') }));
+      if (!cont) return;
+      const ok = qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('kkScanner.scanForEmergency') });
+      setQrFehler(!ok);
+      if (ok) setQrAnsage(t('common.qrErstellt'));
     }, 100);
   };
 
@@ -205,6 +211,9 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
       ),
 
       React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', marginBottom: '12px' } }, 'ⓘ ' + t('kkScanner.qrBarcode')),
+      // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
+      // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
+      React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage),
 
       qrCode && React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, textAlign: 'center' } },
         // K101: derselbe ehrliche Hinweis wie am Notfall-QR (nicht verschlüsselt, für alle lesbar).

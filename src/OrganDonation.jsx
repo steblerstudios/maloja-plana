@@ -6,7 +6,7 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
-import { ExternerLink } from './components/ExternerLink.jsx';
+import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 
 export const OrganDonation = ({ palette, t, data, onSave }) => {
   const [status, setStatus] = useState(data.organStatus || 'registered');
@@ -16,6 +16,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   });
   const [qrGenerated, setQRGenerated] = useState(false);
   const [qrFehler, setQrFehler] = useState(false);
+  const [qrAnsage, setQrAnsage] = useState('');
   const qrRef = useRef(null);
 
   const organOptions = [
@@ -42,10 +43,14 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       ahv: data.basis?.ahv || ''
     });
 
+    setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
       const cont = qrRef.current;
       // K80: vorher warf ein Name mit Umlaut hier unabgefangen → leere Fläche.
-      if (cont) setQrFehler(!qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') }));
+      if (!cont) return;
+      const ok = qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') });
+      setQrFehler(!ok);
+      if (ok) setQrAnsage(t('common.qrErstellt'));
     }, 100);
 
     setQRGenerated(true);
@@ -103,7 +108,10 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         })),
 
       React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, 'ⓘ ' + t('organ.generateQr'))
+      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, 'ⓘ ' + t('organ.generateQr')),
+      // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
+      // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
+      React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage)
     ),
 
     // Right: Info & QR

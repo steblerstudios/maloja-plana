@@ -749,6 +749,7 @@ export default {
   common: {
     // TODO(rm): K80 provisorisch — von Muttersprachler:in gegenlesen.
     qrFehler: 'Il code QR n’ha betg pudì vegnir generà per il mument.',
+    qrErstellt: "Code QR generà.", // TODO(rm): provisorisch
     appName: 'Maloja Plana',
     percent: '{value}%',
     chf: 'CHF {value}',
@@ -2940,6 +2941,8 @@ export default {
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     ohneZahlKinderDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al dumber d'uffants en il profil. Per in auter dumber d'uffants na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch (K87)
     gemeinsamDirektHinweis: "Maloja suppona che la valur endatada saja l'entrada taxabla cuminaivla dal pèr tenor la taxaziun. La lingia dal salari net cuntegna mo l'atgna entrada — perquai na mussa Maloja qua nagina quota da taglia e nagina entrada netta suenter las taglias.", // TODO(rm): provisorisch (K86)
+    ansageHinweis: "Empè d’ina cifra stat ussa ina indicaziun tar: {teile}.", // TODO(rm): provisorisch
+    ansageZahlen: "La stimaziun mussa puspè cifras.", // TODO(rm): provisorisch
     netIncomeNote13: { sie: "Projecziun da Voss salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar.", du: "Projecziun da Tes salari net: paja principala × 13 (cun 13avla paja), gudogn accessoric × 12. La chargia da taglia effectiva po divergiar." }, // TODO(rm): provisorisch
     annahmenLabel: "Supposiziuns", // TODO(rm): provisorisch
     totalNote: "Confederaziun + chantun + vischnanca (orientaziun). La chargia effectiva dependa dal lieu da domicil e da la situaziun persunala.",
@@ -2968,7 +2971,7 @@ export default {
       similar: 'Tar questa entrada è la differenza pitschna.',
       twoIncomeNote: 'Cun duas entradas en la medema chasada po il maletg sa midar.',
       empty: 'Uschespert ch’ina entrada taxabla è endatada, cumpara qua la cumparaziun.',
-      einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, entra en vigur il 2032 (decisiun dal Cussegl federal dals 19 d’avust 2026). Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.', // TODO(rm): Übersetzung Inkrafttreten 2032 unsicher
+      einzelnPending: 'Maridà, taxaziun individuala: acceptada ils 8 da mars 2026, duai entrar en vigur il 2032 (decisiun dal Cussegl federal dals 19 d’avust 2026). Ina cifra documentada cumpara qua uschespert ch’il nov tarif vala.', // TODO(rm): Übersetzung «soll 2032 in Kraft treten» unsicher
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
       abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
       nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
@@ -3521,7 +3524,9 @@ export default {
     tpwQuelleLU: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
     tpwQuelleUR: "vala per HSK", // TODO(rm): provisorisch
     tpwQuelleStand: "stadi {datum}", // TODO(rm): provisorisch
-    tpwQuelleSeiten: "Fegl uffizial p. {seiten}", // TODO(rm): provisorisch
+    tpwQuelleSeiten: "Bulletin uffizial da las leschas p. {seiten}", // TODO(rm): provisorisch — TI: amtliche Gesetzessammlung, nicht Amtsblatt
+    tpwErgebnisGruppe: "Documentà per persunas assicuradas tar {gruppe}; tar autras cassas po la valur esser differenta.", // TODO(rm): provisorisch
+    tpwErgebnisGruppeSZ: "Documentà per persunas assicuradas tar santéservices; per CSS e HSK vala en il chantun SZ 0.86.", // TODO(rm): provisorisch
     tpwOhneKanton: "Senza chantun na quinta l'app betg — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     tpwOhneKantonProfil: "Senza chantun da domicil en il profil na quinta l'app betg qua — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },

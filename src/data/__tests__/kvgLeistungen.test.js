@@ -165,8 +165,11 @@ describe('kvg.generikaNote — Selbstbehalt nach KLV Art. 38a', () => {
 describe('KVGLeistungen: Taxpunktwert-Stand je Kanton (R4)', () => {
   const src = readFileSync(new URL('../../KVGLeistungen.jsx', import.meta.url), 'utf8');
   it('liest TAXPUNKTWERT_UNBELEGT_2026 und füllt {kantone}/{kanton}', () => {
-    expect(src).toContain('TAXPUNKTWERT_UNBELEGT_2026.includes(selCanton)');
+    // Seit Deploy-Gate 0.1.37 in TpwErgebnisHinweise (auch im Franchise-Tab); der Tab «Arztrechnung»
+    // reicht den gewählten Kanton durch.
+    expect(src).toContain('TAXPUNKTWERT_UNBELEGT_2026.includes(canton)');
     expect(src).toMatch(/t\('kvg\.tpwNote', \{ kantone: TAXPUNKTWERT_UNBELEGT_2026\.join/);
-    expect(src).toContain("t('kvg.tpwStandUnbelegt', { kanton: selCanton })");
+    expect(src).toContain("t('kvg.tpwStandUnbelegt', { kanton: canton })");
+    expect(src).toContain('React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })');
   });
 });
