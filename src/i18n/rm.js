@@ -3513,7 +3513,15 @@ export default {
     tpwQuellenTitel: "Funtaunas da las valurs dal punct 2026, tenor chantun:", // TODO(rm): provisorisch
     tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
     tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
-    tpwQuelleSZ: "societads medicinalas; 0.85 per tarifsuisse, 0.86 per CSS e HSK", // TODO(rm): provisorisch
+    tpwQuelleSZ: "societads medicinalas; 0.85 per santéservices (pli baud tarifsuisse), 0.86 per CSS e HSK", // TODO(rm): provisorisch
+    tpwQuelleGE: "vala per CSS", // TODO(rm): provisorisch
+    tpwQuelleVD: "vala per santéservices (pli baud tarifsuisse)", // TODO(rm): provisorisch
+    tpwQuelleLU: "vala per santéservices (pli baud tarifsuisse)", // TODO(rm): provisorisch
+    tpwQuelleUR: "vala per HSK", // TODO(rm): provisorisch
+    tpwQuelleStand: "stadi {datum}", // TODO(rm): provisorisch
+    tpwQuelleSeiten: "Fegl uffizial p. {seiten}", // TODO(rm): provisorisch
+    tpwOhneKanton: "Senza chantun na quinta l'app betg — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
+    tpwOhneKantonProfil: "Senza chantun da domicil en il profil na quinta l'app betg qua — la valur dal punct da taxa variescha tenor il chantun.", // TODO(rm): provisorisch
     disclaimer: { sie: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Vossa cassa da malsauns.", du: "Agid d'orientaziun basond sin LAMal/OPre. Per infurmaziuns vinculantas: Tia cassa da malsauns." },
     source: 'Funtauna: [[UFSP|bag.admin.ch]], [[LAMal art. 25–31|https://www.fedlex.admin.ch/eli/cc/1995/1328_1328_1328/de]], [[OPre|https://www.fedlex.admin.ch/eli/cc/1995/4964_4964_4964/de]]',
   },
