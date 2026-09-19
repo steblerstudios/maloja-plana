@@ -13,6 +13,7 @@
 import { getFullName } from './config/constants.js';
 import { keineKontaktperson } from './utils/naGruppen.js';
 import { annahmenTexte } from './utils/steuerTexte.js';
+import { escapeHtml as esc } from './utils/helpers.js';
 
 // ─── Druckfarben (K53) ────────────────────────────────────
 // Die drei Dossiers laufen als eigenes Dokument in einem Druckfenster (document.write,
@@ -80,16 +81,6 @@ function fieldLabel(chapters, chapterKey, fieldKey) {
   if (!chapter) return fieldKey;
   const field = chapter.fields.find(f => f.k === fieldKey);
   return field ? field.label : fieldKey;
-}
-
-// Escape HTML entities
-function esc(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 // ─── Lebensmappe Section Definitions ──────────────────────

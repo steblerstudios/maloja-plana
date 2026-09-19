@@ -60,10 +60,12 @@ export function collectBackupData() {
   try { backup.contacts = JSON.parse(localStorage.getItem('or5_contacts') || '[]'); } catch { backup.contacts = []; }
   try { backup.merkliste = JSON.parse(localStorage.getItem('or5_merkliste') || '[]'); } catch { backup.merkliste = []; }
 
+  // K94: wie die Zeilen darüber — gesperrter Speicher → Meta ohne Werte statt Absturz.
+  const lies = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
   backup.meta = {
-    theme: localStorage.getItem('or5_theme'),
-    lang: localStorage.getItem('or5_lang'),
-    onboardingDone: localStorage.getItem('or5_onboarding_done'),
+    theme: lies('or5_theme'),
+    lang: lies('or5_lang'),
+    onboardingDone: lies('or5_onboarding_done'),
   };
 
   return backup;

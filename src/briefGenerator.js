@@ -14,6 +14,7 @@ import { getFullName } from './config/constants.js';
 import { getCantonName } from './config/cantonalData.js';
 import { pruefeStundenlohn, kantonHatMindestlohn, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+import { escapeHtml as esc } from './utils/helpers.js';
 
 // ─── Fristen (Tage) ───────────────────────────────────────
 // (a) wageClaim/Mindestlohn: 30 Tage — keine gesetzliche Antwortfrist, Lohnkorrektur
@@ -98,15 +99,6 @@ function wageClaimRefs(kanton, t) {
   const gesetz = (e.gesetz && !e.verify) ? e.gesetz : neutralGesetz;
   const stelle = e.verify ? neutralStelle : (e.stelle || e.fallback || neutralStelle);
   return { gesetz, stelle };
-}
-
-function esc(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 function today() {
