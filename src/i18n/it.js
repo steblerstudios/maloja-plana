@@ -1910,6 +1910,7 @@ export default {
       heartfelt23: 'Aiuta a superare le emergenze finanziarie affinché le persone abbiano l\'essenziale e non perdano la casa.',
       heartfelt24: 'Accompagna le persone con disagio psichico verso una vita autodeterminata — consulenza, alloggio, struttura diurna.',
       heartfelt25: 'Piattaforma di prestito senza scopo di lucro a Basilea — « prendere in prestito invece di comprare » : oltre 1’300 oggetti da prendere in prestito, gestita da volontari.',
+      heartfelt26: 'Sementi di fiori selvatici che trasformano un prato in un prato fiorito — nutrimento per api selvatiche e altri insetti. Spedisce anche in Svizzera.',
     },
     faq: {
       q1: 'Dove sono salvati i miei dati?',

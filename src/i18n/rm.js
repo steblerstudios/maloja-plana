@@ -1690,6 +1690,7 @@ export default {
       heartfelt23: 'Überbrückt finanzielle Notlagen, damit Menschen das Nötigste haben und ihre Wohnung nicht verlieren.',
       heartfelt24: 'Begleitet Menschen mit psychischer Belastung zu einem selbstbestimmten Leben — Beratung, Wohnen, Tagesstruktur.',
       heartfelt25: 'Gemeinnützige Leihplattform in Basel — „Leihen statt kaufen“: über 1’300 Gegenstände zum Ausleihen, ehrenamtlich betrieben.',
+      heartfelt26: 'Wildblumen-Saatgut, das Rasen in eine Blühwiese verwandelt — Nahrung für Wildbienen und andere Insekten. Liefert auch in die Schweiz.', // TODO(rm): Übersetzung
     },
     faq: {
       q1: 'Nua vegnan memorisadas mias datas?',

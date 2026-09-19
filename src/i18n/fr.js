@@ -1909,6 +1909,7 @@ export default {
       heartfelt23: 'Aide à surmonter les situations de détresse financière pour que les personnes aient l\'essentiel et ne perdent pas leur logement.',
       heartfelt24: 'Accompagne les personnes en souffrance psychique vers une vie autodéterminée — conseil, logement, structure de jour.',
       heartfelt25: 'Plateforme de prêt à but non lucratif à Bâle — « emprunter plutôt qu’acheter » : plus de 1’300 objets à emprunter, gérée par des bénévoles.',
+      heartfelt26: 'Semences de fleurs sauvages qui transforment une pelouse en prairie fleurie — de quoi nourrir les abeilles sauvages et autres insectes. Livre aussi en Suisse.',
     },
     faq: {
       q1: 'Où sont stockées mes données ?',

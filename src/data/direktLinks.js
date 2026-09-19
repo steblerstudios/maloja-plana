@@ -207,6 +207,7 @@ export const HEARTFELT = [
   { key: 'heartfelt23', name: 'Winterhilfe Schweiz', url: 'https://www.winterhilfe.ch', group: 'soziales' },
   { key: 'heartfelt24', name: 'Stiftung Rheinleben', url: 'https://www.rheinleben.ch', group: 'soziales' },
   { key: 'heartfelt25', name: 'Leihlager', url: 'https://www.leihlager.ch/', group: 'gemeinschaft' }, // gemeinnützige Leihplattform Basel («Leihen statt kaufen»), ehrenamtlich
+  { key: 'heartfelt26', name: 'utopi', url: 'https://utopi.one/', group: 'tiere' }, // Wildblumen-Saatgut für Wildbienen (Shop, PRTGNST GmbH/MONTY., DE; liefert in die CH) – kein Affiliate, geprüft 19.09.2026
 ];
 
 // Reihenfolge der Gruppen in der Anzeige.
