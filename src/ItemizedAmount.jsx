@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
+import { anzeigeWert, hatWert } from './utils/vollstaendigkeit.js';
 
 // Wiederverwendbare Mehrfach-Betrags-Liste: mehrere benannte Posten {label, amount},
 // die sich zu einer Summe addieren (z.B. Internet + Telefon + Streaming, oder
@@ -12,7 +13,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
   const commit = (next) => {
     setRows(next);
     // Nach aussen nur die ausgefüllten Posten (leere Zeilen sind nur Eingabehilfe).
-    onChange(next.filter(r => r.label || r.amount));
+    onChange(next.filter(r => r.label || hatWert(r.amount)));
   };
   const update = (i, patch) => commit(rows.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
   const add = () => setRows([...rows, { label: '', amount: '' }]);
@@ -42,7 +43,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
         style: { ...inputBase, flex: '1 1 auto', minWidth: '0' },
       }),
       React.createElement('input', {
-        type: 'number', inputMode: 'decimal', min: 0, value: r.amount || '',
+        type: 'number', inputMode: 'decimal', min: 0, value: anzeigeWert(r.amount), // K82: 0 bleibt «0»
         placeholder: 'CHF', 'aria-label': t('itemized.amountLabel'),
         onChange: (e) => update(i, { amount: e.target.value }),
         style: { ...inputBase, width: '92px', flex: '0 0 auto' },
