@@ -239,8 +239,10 @@ export function berechneBundessteuer({
  * @param {boolean} [p.verheiratet=false]
  * @param {number} [p.kinder=0]
  * @param {boolean} [p.elterntarif=false]
- * @param {number} [p.einkommen=0] Jahres-Nettolohn als Bezugsgrösse für Anzeige und effektiven
+ * @param {number|null} [p.einkommen=0] Jahres-Nettolohn als Bezugsgrösse für Anzeige und effektiven
  *   Satz; 0 → Bezug ist das steuerbare Einkommen selbst.
+ *   K86: null → es gibt keine passende Bezugsgrösse (das steuerbare Einkommen ist der gemeinsame
+ *   Wert eines Ehepaars, der Nettolohn nur der eigene) → effektiverSatz null, keine Abzüge.
  */
 export function bundessteuerAusSteuerbarem({
   steuerbaresEinkommen,
@@ -250,6 +252,7 @@ export function bundessteuerAusSteuerbarem({
   einkommen = 0,
 }) {
   const r = berechneBundessteuer({ bruttoEinkommen: Number(steuerbaresEinkommen) || 0, verheiratet, kinder, elterntarif, abzuege: 0 });
+  if (einkommen === null) return { ...r, effektiverSatz: null };
   const bezug = Number(einkommen) > 0 ? Number(einkommen) : r.steuerBaresEinkommen;
   return {
     ...r,

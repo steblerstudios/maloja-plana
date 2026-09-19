@@ -193,13 +193,15 @@ export function abzuegeAusTaxData(taxData = {}) {
 export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
-  erwerbsart = null, partnerAngegeben = true, direktVerheiratet,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
   let grund = null;
   // K62.4: ein eingetragener Wert gilt nur für den Zivilstand, zu dem er gehört (siehe unten).
   if (direkt && direktZivilstandAbweichend(verheiratet, direktVerheiratet)) grund = 'zivilstandDirekt';
+  // K87: ebenso nur für die Kinderzahl, zu der er gehört.
+  else if (direkt && direktKinderAbweichend(kinder, direktKinder)) grund = 'kinderDirekt';
   else if (Number(partnerEinkommen) > 0) grund = 'partner';
   else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
   else if (!direkt && ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) grund = ERWERBSART_OHNE_SCHAETZUNG[erwerbsart];
@@ -236,16 +238,21 @@ export function kantonssteuerFuerProfil({
  *     Steuerrechner probeweise mit dem anderen Zivilstand, gibt es mit diesem Wert keine Zahl
  *     (grund 'zivilstandDirekt'): ein Wert aus einer gemeinsamen Veranlagung mit dem Grundtarif
  *     gerechnet (oder umgekehrt) wäre falsch. Ohne direktVerheiratet (undefined) keine Prüfung.
+ *   K87: dasselbe für die Kinderzahl (direktKinder = Kinderzahl im Profil). Das steuerbare Einkommen
+ *     aus der Veranlagung ist nach den Abzügen für die Kinder, die dort zählten (DBG Art. 35 Abs. 1
+ *     lit. a); mit einer anderen Kinderzahl gerechnet wäre es falsch (grund 'kinderDirekt').
+ *     Weichen Zivilstand und Kinderzahl ab, gilt 'zivilstandDirekt'. Ohne direktKinder keine Prüfung.
  * @returns {{ steuerbar: number|null, quelle: 'direkt'|'estv'|null,
- *             grund: 'brutto'|'rente'|'selbstaendig'|'partner'|'partnerOffen'|'zivilstandDirekt'|'keinLohn'|null }}
+ *             grund: 'brutto'|'rente'|'selbstaendig'|'partner'|'partnerOffen'|'zivilstandDirekt'|'kinderDirekt'|'keinLohn'|null }}
  */
 export function steuerbaresEinkommenFuerProfil({
   nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, berufsauslagen = 0, weitereAbzuege = 0,
-  erwerbsart = null, partnerAngegeben = true, direktVerheiratet,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder,
 } = {}) {
   if (Number(direktSteuerbar) > 0) {
     if (direktZivilstandAbweichend(verheiratet, direktVerheiratet)) return { steuerbar: null, quelle: null, grund: 'zivilstandDirekt' };
+    if (direktKinderAbweichend(kinder, direktKinder)) return { steuerbar: null, quelle: null, grund: 'kinderDirekt' };
     return { steuerbar: Number(direktSteuerbar), quelle: 'direkt', grund: null };
   }
   if (einkommensart === 'brutto') return { steuerbar: null, quelle: null, grund: 'brutto' };
@@ -259,6 +266,11 @@ export function steuerbaresEinkommenFuerProfil({
 // K62.4: weicht der gerechnete Zivilstand von dem ab, zu dem der eingetragene Wert gehört?
 function direktZivilstandAbweichend(verheiratet, direktVerheiratet) {
   return direktVerheiratet !== undefined && Boolean(direktVerheiratet) !== Boolean(verheiratet);
+}
+
+// K87: weicht die gerechnete Kinderzahl von der ab, zu der der eingetragene Wert gehört?
+function direktKinderAbweichend(kinder, direktKinder) {
+  return direktKinder !== undefined && (Number(kinder) || 0) !== (Number(direktKinder) || 0);
 }
 
 // R4: Anstellungstyp (Finanzen-Kapitel, Optionen employed/selfEmployed/freelance/retired), für den
@@ -309,6 +321,8 @@ export function steuerEingabenAusDaten(data = {}) {
     // K62.4: der Zivilstand, zu dem ein eingetragenes steuerbares Einkommen gehört (= Profil).
     direktVerheiratet: data?.basis?.maritalStatus === 'married',
     kinder: hh.childrenCount,
+    // K87: die Kinderzahl, zu der ein eingetragenes steuerbares Einkommen gehört (= Profil).
+    direktKinder: hh.childrenCount,
     elterntarif: data?.taxData?.elterntarif === true,
     ...abzuegeAusTaxData(data?.taxData),
   };
@@ -316,26 +330,30 @@ export function steuerEingabenAusDaten(data = {}) {
 
 /**
  * E39: Bundessteuer und Kantons-/Gemeindesteuer aus demselben steuerbaren Einkommen.
- * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object,
+ * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object, gemeinsamDirekt: boolean,
  *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean } }}
  *   bund = null, wenn es kein steuerbares Einkommen gibt (grund sagt warum).
+ *   gemeinsamDirekt (K86) = verheiratet und direkt eingetragener Wert: Maloja nimmt an, dass es der
+ *     gemeinsame Wert aus der Veranlagung ist. Der Nettolohn im Profil ist nur der eigene — darum
+ *     kein effektiver Satz (bund.effektiverSatz = null) und kein «Nettoeinkommen» daraus.
  *   annahmen (R4) = was die Seiten zur Zahl dazuschreiben:
  *     ohneDreizehnten — aus dem Nettolohn geschätzt, Frage nach dem 13. Monatslohn offen
  *     alleinverdiener — verheiratet und gerechnet wie gemessen (Partnereinkommen 0)
  */
 export function steuernFuerProfil(p = {}) {
   const basis = steuerbaresEinkommenFuerProfil(p);
+  const gemeinsamDirekt = basis.quelle === 'direkt' && p.verheiratet === true;
   const bund = basis.steuerbar == null ? null : bundessteuerAusSteuerbarem({
     steuerbaresEinkommen: basis.steuerbar,
     verheiratet: p.verheiratet, kinder: p.kinder, elterntarif: p.elterntarif,
-    einkommen: p.nettolohnJahr,
+    einkommen: gemeinsamDirekt ? null : p.nettolohnJahr,
   });
   const kanton = kantonssteuerFuerProfil({ ...p, bundessteuer: bund ? bund.steuer : 0 });
   const annahmen = {
     ohneDreizehnten: basis.quelle === 'estv' && p.dreizehnter === 'offen',
     alleinverdiener: p.verheiratet === true && (basis.quelle === 'estv' || Boolean(kanton.kantonal)),
   };
-  return { ...basis, bund, kanton, annahmen };
+  return { ...basis, bund, kanton, annahmen, gemeinsamDirekt };
 }
 
 /**
