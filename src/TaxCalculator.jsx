@@ -300,13 +300,16 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
         taxResult && React.createElement('div', { style: { marginBottom: '12px', padding: '12px', background: palette.surface, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } },
             t('tax.federalTax'),
-            taxResult ? ' ~' + taxResult.effektiverSatz + '%' : ''
+            // K86: kein Satz, wenn das steuerbare Einkommen der gemeinsame Wert ist (effektiverSatz null).
+            taxResult.effektiverSatz != null ? ' ~' + taxResult.effektiverSatz + '%' : ''
           ),
           React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text } }, '~ CHF ' + estimatedTax.toFixed(0)),
           React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('tax.tariff') + ': ' + (taxResult?.tarif === 'eltern' ? t('tax.parentTariff') : verheiratet ? t('tax.marriedTariff') : t('tax.singleTariff')),
             ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet || taxResult?.tarif === 'eltern').toFixed(2) + '%'
-          )
+          ),
+          // K86: warum hier kein Satz und unten kein Nettoeinkommen steht.
+          steuern.gemeinsamDirekt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.gemeinsamDirektHinweis'))
         ),
 
         (() => {
@@ -341,7 +344,8 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           );
         })(),
 
-        taxResult && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
+        // K86: eigener Nettolohn minus Steuer auf das gemeinsame Einkommen ergibt keine Aussage.
+        taxResult && !steuern.gemeinsamDirekt && React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.xs } }, t('tax.netIncome')),
           React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text } },
             'CHF ' + (income - (kantonal ? kantonal.total : estimatedTax)).toFixed(0)

@@ -211,6 +211,10 @@ describe('E38 · mit Kindern', () => {
   });
 
   it('vier Kinder (nicht gemessen): keine Kantonszahl', () => {
-    zeigtKeineZahl(zeige(120000, { verheiratet: true, kinder: 4 }), 'tax.bandNotChecked');
+    // K86: verheiratet mit eingetragenem (gemeinsamem) Wert → kein «Nettoeinkommen», dafür der Hinweis.
+    const v = zeige(120000, { verheiratet: true, kinder: 4 });
+    zeigtKeineZahl(v, 'tax.bandNotChecked', 'gemeinsamDirekt');
+    expect(v.text).toContain('tax.gemeinsamDirektHinweis');
+    expect(v.text).not.toContain('tax.netIncomeFederalOnly');
   });
 });
