@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
@@ -356,8 +356,9 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   };
 
   const canton = data.basis?.canton || '';
-  const tpw = TAXPUNKTWERT[canton] || 0.89;
-  const tpBetrag = newTp ? Math.round(Number(newTp) * tpw * 100) / 100 : 0;
+  // K103: ohne bekannten Wohnkanton keine Zahl (früher stiller Rückfall auf 0.89).
+  const tpw = taxpunktwertFuer(canton);
+  const tpBetrag = newTp && tpw !== null ? Math.round(Number(newTp) * tpw * 100) / 100 : 0;
 
   const addBeleg = () => {
     const betrag = Number(newBetrag);
@@ -559,7 +560,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
         }),
-        React.createElement('span', {
+        tpw !== null && React.createElement('span', {
           style: { fontSize: text.sm, color: palette.mid, whiteSpace: 'nowrap' }
         }, t('kvg.belegTpResult', { betrag: tpBetrag })),
         React.createElement('button', {
@@ -574,6 +575,15 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           }
         }, t('kvg.belegTpApply'))
       ),
+      // Deploy-Gate 0.1.37 (1+2): Versicherergruppe bzw. «Stand 2025» sichtbar, bevor der Betrag
+      // als Beleg übernommen wird.
+      tpOpen && tpw !== null && React.createElement('div', { style: { marginTop: '-6px', marginBottom: '10px' } },
+        React.createElement(TpwErgebnisHinweise, { palette, t, canton })
+      ),
+      tpOpen && tpw === null && React.createElement('div', {
+        'data-testid': 'tpw-ohne-kanton-profil',
+        style: { fontSize: text.xs, color: palette.soft, marginTop: '-4px', marginBottom: '10px', lineHeight: leading.normal }
+      }, 'ⓘ ' + t('kvg.tpwOhneKantonProfil')),
 
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
@@ -808,7 +818,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
 const RechnungTab = ({ palette, t, data }) => {
   const canton = data.basis?.canton || '';
   const [tp, setTp] = useState('');
-  const [selCanton, setSelCanton] = useState(canton);
+  // K103: unbekannter Profil-Kanton → Auswahl leer statt eines Werts, den die Liste nicht kennt.
+  const [selCanton, setSelCanton] = useState(taxpunktwertFuer(canton) !== null ? canton : '');
 
   const cantons = Object.keys(TAXPUNKTWERT).sort();
   const result = tp ? berechneArztrechnung(Number(tp), selCanton) : null;
@@ -864,6 +875,12 @@ const RechnungTab = ({ palette, t, data }) => {
       )
     ),
 
+    // K103: Taxpunkte eingetragen, aber kein Kanton gewählt → keine Zahl, ein ruhiger Hinweis.
+    tp && !result && React.createElement('div', {
+      'data-testid': 'tpw-ohne-kanton',
+      style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+    }, 'ⓘ ' + t('kvg.tpwOhneKanton')),
+
     result && React.createElement('div', {
       style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
     },
@@ -891,21 +908,47 @@ const RechnungTab = ({ palette, t, data }) => {
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
       }, 'ⓘ ' + t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') })),
-      // K27: der Taxpunktwert trägt seinen eigenen Datenstand, nicht den des ganzen
-      // KVG-Datensatzes (KVG_DATA_VERSION unten im Footer betrifft Franchise/Katalog).
-      // R4: je gewähltem Kanton — die neun ohne Beleg 2026 zeigen «Stand 2025, provisorisch»
-      // statt des Prüfdatums der belegten Werte.
-      React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft, marginTop: '2px' }
-      }, 'ⓘ ' + (TAXPUNKTWERT_UNBELEGT_2026.includes(selCanton)
-        ? t('kvg.tpwStandUnbelegt', { kanton: selCanton })
-        : t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION))
+      // Versicherergruppe, Stand 2025 bzw. Datenstand — dieselben Zeilen wie im Franchise-Tab.
+      React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })
     ),
 
     // E41: die Quelle je Kanton, verlinkt. Kantone ohne belegten Wert 2026 haben keinen Link
     // (die Fussnote kvg.tpwNote nennt sie).
     React.createElement(TpwQuellen, { palette, t })
   );
+};
+
+// Deploy-Gate 0.1.37 (1+2): ruhige Zeilen direkt beim berechneten Taxpunkt-Ergebnis — im Tab
+// «Arztrechnung» und in der Umrechnung im Franchise-Tab (dort vor dem Übernehmen als Beleg).
+//   · Gilt der Beleg nur für eine Versicherergruppe (TAXPUNKTWERT_QUELLEN.gruppe), steht sie hier,
+//     nicht erst im Linktext der Quellenliste. SZ: auch der Wert für CSS und HSK ist belegt.
+//   · K27/R4: die neun Kantone ohne Beleg 2026 zeigen «Stand 2025, provisorisch»; sonst — nur im
+//     Tab «Arztrechnung» (mitDatenstand) — das Prüfdatum der belegten Werte.
+export const TpwErgebnisHinweise = ({ palette, t, canton, mitDatenstand = false }) => {
+  const q = Object.prototype.hasOwnProperty.call(TAXPUNKTWERT_QUELLEN, canton) ? TAXPUNKTWERT_QUELLEN[canton] : null;
+  const gruppe = q && q.gruppe
+    ? (q.zusatz === 'SZ' ? t('kvg.tpwErgebnisGruppeSZ') : t('kvg.tpwErgebnisGruppe', { gruppe: q.gruppe }))
+    : null;
+  const unbelegt = TAXPUNKTWERT_UNBELEGT_2026.includes(canton);
+  const stand = unbelegt
+    ? t('kvg.tpwStandUnbelegt', { kanton: canton })
+    : mitDatenstand ? t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION : null;
+  const zeile = { fontSize: text.xs, color: palette.soft, marginTop: '2px', lineHeight: leading.normal };
+  return React.createElement(React.Fragment, null,
+    gruppe && React.createElement('div', { 'data-testid': 'tpw-gruppe', style: zeile }, 'ⓘ ' + gruppe),
+    stand && React.createElement('div', { style: zeile }, 'ⓘ ' + stand)
+  );
+};
+
+// K88/K89: Zusatz im Linktext — Versicherergruppe (zusatz, Muster K92) bzw. «Ärztegesellschaften»,
+// dazu Stand-Datum der Übersicht (stand) und Seiten im Amtsblatt (seiten).
+const quelleZusatz = (q, t) => {
+  const teile = [];
+  if (q.zusatz) teile.push(t('kvg.tpwQuelle' + q.zusatz));
+  else if (q.art === 'tarifpartner') teile.push(t('kvg.tpwQuelleTarifpartner'));
+  if (q.stand) teile.push(t('kvg.tpwQuelleStand', { datum: q.stand }));
+  if (q.seiten) teile.push(t('kvg.tpwQuelleSeiten', { seiten: q.seiten }));
+  return teile.length ? ' (' + teile.join('; ') + ')' : '';
 };
 
 export const TpwQuellen = ({ palette, t }) =>
@@ -923,7 +966,7 @@ export const TpwQuellen = ({ palette, t }) =>
             style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 6px' }
           },
             React.createElement('span', { style: visuallyHiddenStyle }, t('kvg.tpwQuelleVor') + ' '),
-            c + (q.zusatz ? ' (' + t('kvg.tpwQuelle' + q.zusatz) + ')' : q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
+            c + quelleZusatz(q, t)
           )
         );
       })

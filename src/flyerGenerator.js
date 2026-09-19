@@ -2,9 +2,8 @@
 // Reines HTML für openPrintWindow → Nutzer:in druckt oder speichert als PDF.
 // Keine neue Dependency: QR kommt als data-URL aus dem vorhandenen QRCode-Vendor.
 
-const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => (
-  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]
-));
+// K97-Nachtrag: dieselbe Escape-Funktion wie Dossier/Brief (maskiert auch ').
+import { escapeHtml as esc } from './utils/helpers.js';
 
 export function buildFlyerHtml({ t, qrDataUrl }) {
   const claim = esc(t('flyer.claim'));

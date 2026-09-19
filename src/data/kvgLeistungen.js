@@ -89,6 +89,11 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             tarifaire TARDOC et forfaits ambulatoires est de Fr. 0.91 pour les médecins selon
 //             l'article 35 al. 2 let. a LAMal». Gilt für alle Versicherer; spitalambulant 0.90
 //             https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24
+//             K89 (19.09.2026): die Adresse ist eine JS-Anwendung (jede Adresse 200). Bestätigt über
+//             die Daten-Schnittstelle derselben Anwendung, bdlf.fr.ch/api/fr/texts_of_law/842.1.24
+//             → 200, Titel wie oben, Art. 2 «Fr. 0.91»; Gegenprobe …/999.9.99 → 404. Im Browser
+//             zeigt die Adresse «RSF 842.1.24 … Ordonnance fixant le tarif provisoire TARDOC»,
+//             die erfundene Adresse nur die leere Suchmaske
 //   GE 0.94 — Conseil d'État GE, «Communiqué hebdomadaire du Conseil d'État du 24 juin 2026»,
 //             S. 7: «Le Conseil d'Etat a adopté un arrêté fixant à 0,94 francs la valeur de point
 //             TARDOC provisoire applicable en 2026 … de CSS Assurance-maladie SA. Cette décision
@@ -115,6 +120,11 @@ export function berechneFranchise(franchise, kosten, selbstbehaltMax = SELBSTBEH
 //             delle prestazioni ambulatoriali dei medici liberi professionisti». Ein Wert für
 //             alle Versicherer. Bollettino ufficiale delle leggi Nr. 6 vom 13.02.2026, S. 64–65
 //             https://www3.ti.ch/CAN/fu/2026/BU_006.pdf
+//             K89 (19.09.2026): gedruckte S. 64–65 = PDF-Seite 20–21 (pdftotext). Sprungmarke aus dem
+//             Index der Raccolta delle leggi des Kantons (m3.ti.ch/CAN/RLeggi/public/index.php/
+//             raccolta-leggi/entrataVigore/anno/2026, Eintrag «Decreto esecutivo … medici liberi
+//             professionisti … 11 febbraio 2026»); eine eigene Einzel-Fundstelle gibt es dort nicht:
+//             https://www3.ti.ch/CAN/fu/2026/BU_006.pdf#pagemode=bookmarks&page=20
 //   VD 0.94 — Conseil d'État VD, Sitzung vom 20.05.2026: «Le Conseil d'État a approuvé un arrêté
 //             fixant de manière provisoire la valeur du point TARDOC entre santéservices SA et la
 //             Société vaudoise de médecine dès le 1er janvier 2026 à 0.94 franc.» santéservices
@@ -164,7 +174,8 @@ export const TAXPUNKTWERT = {
 // K27 (Bauliste §10, E29): der Taxpunktwert-Block bekommt einen eigenen Datenstand statt
 // nur der einen KVG_DATA_VERSION für den ganzen Datensatz — sonst datiert eine Zahl den
 // ganzen Katalog mit. Stand = letzte Prüfrunde der Taxpunktwerte oben (K22, 16.09.2026).
-export const TAXPUNKTWERT_DATA_VERSION = '2026-09-16';
+// Deploy-Gate 0.1.37 (19.09.2026): alle Quellen nachgeprüft, Werte unverändert.
+export const TAXPUNKTWERT_DATA_VERSION = '2026-09-19';
 
 // K26/K30 (Bauliste §9/§10, E28): die neun Kantone ohne belegten Wert 2026 — Stand 2025
 // (TARMED), siehe Kommentar oben "Neun Kantone bleiben UNGEPRÜFT". Für die Fussnote
@@ -175,35 +186,64 @@ export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', '
 
 // E41 (Entscheid 17.09.2026): die Quelle je Kanton als Daten, damit die App sie verlinken kann.
 // Nur die URLs aus dem Kommentar oben — je Kanton die Quelle, die den geführten Wert trägt:
-//   art 'behoerde'     = Festsetzung oder amtliche Publikation (bei LU der wörtlich wiedergegebene
-//                        RRB im BVGer-Urteil; bei UR die Medienmitteilung des Regierungsrats)
+//   art 'behoerde'     = Festsetzung oder amtliche Publikation (bei LU und UR der wiedergegebene
+//                        RRB im BVGer-Urteil)
 //   art 'tarifpartner' = Übersicht der Ärztegesellschaften (OW, NW; SZ 0.85 für santéservices —
 //                        das BVGer-Urteil C-718/2026 belegt dort nur den CSS-Wert 0.86)
 // Die neun Kantone aus TAXPUNKTWERT_UNBELEGT_2026 haben bewusst keinen Eintrag.
+//
+// K88 (19.09.2026): wo der verlinkte Beleg nur für eine Versicherergruppe gilt, nennt der Linktext
+// sie (Muster K92: zusatz → kvg.tpwQuelle<zusatz>). Nachgeprüft 19.09.2026, je Gegenprobe 404:
+//   GE → CSS (Communiqué: «… de CSS Assurance-maladie SA») · VD → santéservices (Séance:
+//   «entre santéservices SA et la Société vaudoise de médecine») · LU → santéservices, im RRB noch
+//   «tarifsuisse ag» (BVGer C-437/2026) · UR → HSK (BVGer C-409/2026: «für die Versicherten der
+//   Einkaufsgemeinschaft HSK AG»). Entscheid Stebler Studios 19.09.2026: der UR-Link zeigt auf dieses
+//   Urteil (Entscheid-Datenbank entscheidsuche.ch, wie bei LU; Gegenprobe 404), nicht mehr auf die
+//   Medienmitteilung — die nennt keine Gruppe. Eine stabile Einzel-Adresse auf bvger.ch gibt es nicht.
+// gruppe = die Versicherergruppe aus dem Beleg (Name, sprachneutral), für die Zeile direkt beim
+//   berechneten Ergebnis (kvg.tpwErgebnisGruppe; SZ mit eigenem Satz kvg.tpwErgebnisGruppeSZ, weil dort
+//   der Wert für CSS und HSK ebenfalls belegt ist). Muss im Linktext kvg.tpwQuelle<zusatz> stehen (Test).
+// stand = Stand-Datum, das die Übersicht selbst trägt (GR «Stand: 07.09.2026», ZG «Stand 13. Januar
+// 2026»); seiten = gedruckte Seiten im «Bollettino ufficiale delle leggi» (amtliche Gesetzessammlung
+// des Kantons, nicht das Amtsblatt «Foglio ufficiale»; TI, K89 — Nr. 6 vom 13.02.2026, S. 64–65).
+// K102: Seit 1.7.2026 treten die Gesellschaften unter der MARKE santéservices auf —
+// https://www.santeservices.ch/santeservices/ (abgerufen 19.09.2026): «… santéservices (vormals
+// tarifsuisse ag) unter der Marke santéservices». Die Firma «santéservices SA» steht schon im
+// Waadtländer Beschluss vom 20.05.2026 (Séance 1032981: «entre santéservices SA et la Société
+// vaudoise de médecine»).
 const VZAG_LU = 'https://aerzte-zs.ch/luzern/news-events/news/596-update-taxpunktwert-luzern.html';
 export const TAXPUNKTWERT_QUELLEN = {
   AR: { art: 'behoerde', url: 'https://amtsblattportal.ch/api/v1/publications/261ae13b-1a69-475a-bac6-f40c18f7e696/attachments/36e30134-6bd5-4601-a192-c0a62e3ec610' },
   BE: { art: 'behoerde', url: 'https://www.gsi.be.ch/content/dam/gsi/dokumente-bilder/de/themen/gesundheit/gesundheitsversorger/verfuegung-prov-tpw-tardoc-2026-de.pdf' },
   BS: { art: 'behoerde', url: 'https://www.bs.ch/medienmitteilungen/2026-kurzmitteilungen-aus-der-regierungsrats-sitzung-bulletin-2' },
   FR: { art: 'behoerde', url: 'https://bdlf.fr.ch/app/fr/texts_of_law/842.1.24' },
-  GE: { art: 'behoerde', url: 'https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026' },
-  GR: { art: 'behoerde', url: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/InstitutionenGesundeitswesens/Spitaeler/Dok%20Spitler/%c3%9cbersicht%20Taxpunktwerte%202017-2026%20%28Stand%2007.09.2026%29.pdf' },
-  LU: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf' },
+  GE: { art: 'behoerde', url: 'https://www.ge.ch/document/communique-hebdomadaire-du-conseil-etat-du-24-juin-2026', zusatz: 'GE', gruppe: 'CSS' },
+  GR: { art: 'behoerde', url: 'https://www.gr.ch/DE/institutionen/verwaltung/djsg/ga/InstitutionenGesundeitswesens/Spitaeler/Dok%20Spitler/%c3%9cbersicht%20Taxpunktwerte%202017-2026%20%28Stand%2007.09.2026%29.pdf', stand: '07.09.2026' },
+  LU: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-437-2026_2026-03-12.pdf', zusatz: 'LU', gruppe: 'santéservices' },
   NW: { art: 'tarifpartner', url: VZAG_LU },
   OW: { art: 'tarifpartner', url: VZAG_LU },
   SG: { art: 'behoerde', url: 'https://www.sg.ch/gesundheit-soziales/gesundheit/gesundheitsversorgung--spitaeler/tarife/_jcr_content/Par/sgch_accordion_list/AccordionListPar/sgch_accordion/AccordionPar/sgch_downloadlist/DownloadListPar/sgch_download_288047036.ocFile/Homepage%20OKP-Tariflisten%20ambulant%20aerztliche%20Leistungen%202019-2028%20(1).pdf' },
-  // K92: in SZ gilt 0.85 nur für tarifsuisse (heute santéservices), für CSS und HSK 0.86 — Zusatz im Linktext.
-  SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ' },
+  // K92: in SZ gilt 0.85 nur für santéservices (vormals tarifsuisse), für CSS und HSK 0.86 — Zusatz im Linktext.
+  SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ', gruppe: 'santéservices' },
   TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },
-  TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf' },
-  UR: { art: 'behoerde', url: 'https://www.ur.ch/mmregierungsrat/132029' },
-  VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981' },
-  ZG: { art: 'behoerde', url: 'https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf' },
+  TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf#pagemode=bookmarks&page=20', seiten: '64–65' },
+  UR: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf', zusatz: 'UR', gruppe: 'HSK' },
+  VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981', zusatz: 'VD', gruppe: 'santéservices' },
+  ZG: { art: 'behoerde', url: 'https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf', stand: '13.01.2026' },
   ZH: { art: 'behoerde', url: 'https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/1299/RRB-2025-1299.pdf' },
 };
 
+// K103: kein stiller Rückfall mehr (bis 19.09.2026 rechnete die App ohne oder mit unbekanntem
+// Kanton mit 0.89). Ohne bekannten Kanton gibt es keine Zahl — die Anzeige nennt den Grund.
+export function taxpunktwertFuer(canton) {
+  return typeof canton === 'string' && Object.prototype.hasOwnProperty.call(TAXPUNKTWERT, canton)
+    ? TAXPUNKTWERT[canton]
+    : null;
+}
+
 export function berechneArztrechnung(taxpunkte, canton) {
-  const tpw = TAXPUNKTWERT[canton] || 0.89;
+  const tpw = taxpunktwertFuer(canton);
+  if (tpw === null) return null;
   return {
     taxpunkte,
     taxpunktwert: tpw,

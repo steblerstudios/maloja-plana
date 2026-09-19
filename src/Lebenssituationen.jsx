@@ -48,8 +48,9 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
     const el = panelRefs.current[scrollTarget];
     setScrollTarget(null);
     if (!el || window.innerWidth > 700) return;
-    const reduce = localStorage.getItem('or5_reducemotion') === '1'
-      || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let gespeichert = false;
+    try { gespeichert = localStorage.getItem('or5_reducemotion') === '1'; } catch { /* Speicher gesperrt → Systemeinstellung */ }
+    const reduce = gespeichert || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   }, [scrollTarget]);
   const toggle = (key) => {

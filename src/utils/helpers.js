@@ -47,14 +47,16 @@ export function formatDE(iso) {
 // 'self', no inline scripts) — so escape every value that can come from data or an
 // imported backup, not only free text. A name or medication that contains <, > or &
 // would otherwise also break the printed layout. Escape at the point of
-// interpolation. Mirrors the local esc() in briefGenerator.js/dossierGenerator.js.
+// interpolation. Also used as esc() by briefGenerator.js/dossierGenerator.js (K97).
+// K97: only null/undefined/false/'' become empty — 0 stays «0»; ' is escaped too.
 export function escapeHtml(str) {
-  if (!str) return '';
+  if (str == null || str === false) return '';
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 export function openPrintWindow(html) {
