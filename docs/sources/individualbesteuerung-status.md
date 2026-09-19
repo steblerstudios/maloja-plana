@@ -7,6 +7,29 @@ Zweck: festhalten, ob die dritte Säule eine **belegte Zahl** tragen darf, oder
 weiterhin zahllos bleiben muss — mit Quellen, nach Wahrheits-Disziplin (siehe
 Wurzel-`CLAUDE.md`: falsche Fakten = Haftung).
 
+## Nachtrag 2026-09-19: Inkrafttreten belegt (2032)
+
+Der Bundesrat hat an seiner Sitzung vom **19. August 2026** beschlossen, dass
+die Individualbesteuerung **2032** in Kraft tritt. Das ist der spätestmögliche
+Termin; er wurde gewählt, damit die Kantone Zeit für die Umsetzung haben.
+
+- ESTV, Medienmitteilung vom 19.08.2026 «Individualbesteuerung tritt 2032 in
+  Kraft»: https://www.estv.admin.ch/de/newnsb/khPH1Sn08Zr6iGZYe4tsB
+  (belegt 2026-09-19)
+- EFD, Abstimmung: https://www.efd.admin.ch/de/abstimmung-individualbesteurung —
+  «Das Bundesgesetz tritt bei einer Annahme spätestens 2032 in Kraft.»
+  (belegt 2026-09-19)
+
+Nur das **Jahr** 2032 ist belegt. Ein genauer Stichtag (etwa der 1. Januar) ist
+nicht aus erster Hand gelesen und wird darum nirgends genannt.
+
+Folge: `tax.saeulen.einzelnPending` (alle fünf Sprachen) und der Kommentar in
+`SteuerSaeulen.jsx` nennen jetzt «tritt 2032 in Kraft (Entscheid des Bundesrats
+vom 19. August 2026)». Die Säule bleibt **weiter zahllos**: die Reform ist
+weiterhin noch nicht in Kraft, der neue Tarif liegt nicht als belegte Ziffern
+vor, und der Rechner kennt keine Einzeleinkommen (Gründe 1–3 unten gelten
+unverändert).
+
 ## Ergebnis (kurz)
 
 **Die Platzhalter-Säule bleibt vorerst korrekt zahllos.** Die Reform ist zwar
@@ -33,6 +56,9 @@ Direkt gelesen auf der amtlichen ESTV-Seite
   als **Tendenz** formuliert, keine garantierten Ergebnisse.
 
 ## Noch NICHT primär belegt (vor einer Zahl zwingend zu bestätigen)
+
+> **Überholt am 2026-09-19** — das Inkrafttreten ist jetzt primär belegt
+> (2032, siehe Nachtrag oben). Der Abschnitt bleibt als Historie stehen.
 
 - **Inkrafttreten:** Der genaue Zeitpunkt ist offen. swissinfo (8.3.2026):
   «Wann genau die Individualbesteuerung eingeführt wird, ist angesichts des
@@ -72,7 +98,13 @@ von «laufende Reform» auf «am 8. März 2026 angenommen, aber noch nicht in Kr
 Zeitpunkt offen». Wahrheits-Disziplin: die Reform ist entschieden, nur der
 Zeitpunkt und der verwendbare Tarif fehlen.
 
+Am 2026-09-19 erneut nachgeführt: «Zeitpunkt offen» ersetzt durch «tritt 2032
+in Kraft (Entscheid des Bundesrats vom 19. August 2026)». Offen bleibt nur der
+verwendbare Tarif (und das Einzeleinkommen-Modell).
+
 ## Quellen
+
+- ESTV, Medienmitteilung 19.08.2026 «Individualbesteuerung tritt 2032 in Kraft»: https://www.estv.admin.ch/de/newnsb/khPH1Sn08Zr6iGZYe4tsB (belegt 2026-09-19)
 
 - ESTV, «Individualbesteuerung»: https://www.estv.admin.ch/de/individualbesteuerung (direkt gelesen 2026-07-29)
 - ESTV, «Auswirkungen Individualbesteuerung»: https://www.estv.admin.ch/de/auswirkungen-individualbesteuerung

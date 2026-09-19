@@ -2461,7 +2461,7 @@ export default {
       similar: 'À ce revenu, la différence est faible.',
       twoIncomeNote: 'Avec deux revenus dans le même ménage, la situation peut changer.',
       empty: 'Dès qu’un revenu imposable est saisi, la comparaison apparaît ici.',
-      einzelnPending: 'Marié·e, imposition individuelle : acceptée le 8 mars 2026, mais pas encore en vigueur — la date reste ouverte. Un montant documenté apparaîtra ici dès que le nouveau barème s’appliquera.',
+      einzelnPending: 'Marié·e, imposition individuelle : acceptée le 8 mars 2026, entre en vigueur en 2032 (décision du Conseil fédéral du 19 août 2026). Un montant documenté apparaîtra ici dès que le nouveau barème s’appliquera.',
       scope: 'Impôt fédéral direct uniquement (LIFD art. 36). Les impôts cantonal et communal ne sont pas inclus ici.',
       abzuegeNote: "Chaque état civil est calculé avec ses propres déductions — revenu imposable célibataire CHF {ledig}, marié CHF {verheiratet} (couple à un seul revenu, avec la déduction pour personnes mariées et la déduction d'assurance plus élevée).",
       nurGeschaetzt: { sie: "La comparaison apparaît lorsque Maloja estime le revenu imposable à partir du salaire net. Un montant saisi à partir de la taxation ne vaut que pour votre état civil actuel.", du: "La comparaison apparaît lorsque Maloja estime le revenu imposable à partir du salaire net. Un montant saisi à partir de la taxation ne vaut que pour ton état civil actuel." },
