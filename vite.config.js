@@ -21,7 +21,10 @@ function stampServiceWorkerCacheVersion() {
     },
     generateBundle(_options, bundle) {
       const entry = Object.values(bundle).find((c) => c.type === 'chunk' && c.isEntry);
-      const match = entry?.fileName.match(/-([a-z0-9]+)\.js$/i);
+      // Seit Vite 5 ist der Hash base64url (A–Z, a–z, 0–9, _ und -), immer 8 Zeichen.
+      // Vorher nur [a-z0-9] — das träfe ein «-» im Hash nicht und fiele still auf den
+      // Zeitstempel zurück. Darum: genau die letzten 8 Zeichen vor «.js».
+      const match = entry?.fileName.match(/-([A-Za-z0-9_-]{8})\.js$/);
       // Fallback: falls kein Hash im Namen (unerwartet), Zeitstempel — nie leer lassen.
       buildHash = match ? match[1] : Date.now().toString(36);
     },
