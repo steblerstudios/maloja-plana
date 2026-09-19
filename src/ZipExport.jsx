@@ -63,7 +63,8 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.json', json, 'application/json');
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
-      localStorage.setItem('or5_lastBackup', new Date().toISOString());
+      // K94: Die Datei ist schon heruntergeladen — ein voller Speicher darf daraus keinen Fehler machen.
+      try { localStorage.setItem('or5_lastBackup', new Date().toISOString()); } catch { /* nur das Datum fehlt */ }
       runtimeEventBus.publish({
         id: crypto.randomUUID(),
         eventType: 'BACKUP_EXPORTED',
@@ -98,7 +99,7 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
       const encrypted = await exportEncrypted(passphrase);
       const date = new Date().toISOString().split('T')[0];
       downloadFile('maloja-plana-backup-' + date + '.maloja', encrypted, 'application/octet-stream');
-      localStorage.setItem('or5_lastBackup', new Date().toISOString());
+      try { localStorage.setItem('or5_lastBackup', new Date().toISOString()); } catch { /* K94, wie oben */ }
       setBackupStatus({ type: 'success', msg: t('backup.exportSuccess') });
       setPassphrase('');
       setPassphraseConfirm('');

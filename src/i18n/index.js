@@ -340,8 +340,18 @@ export function I18nProvider({ children }) {
     return React.createElement(StartFehler, { navLang: detectLanguage() });
   }
 
-  return React.createElement(I18nContext.Provider, { value }, children,
-    React.createElement(SprachLadeHinweis, { zustand: ladeZustand, onRetry: erneutLaden, onClose: hinweisSchliessen }));
+  return sprachRahmen({ value, children, zustand: ladeZustand, onRetry: erneutLaden, onClose: hinweisSchliessen });
+}
+
+// Provider samt Sprach-Hinweis. K90: Der Hinweis steht VOR dem App-Inhalt — die
+// Karte ist fest oben positioniert, also soll sie auch die erste Tab-Station
+// sein (vorher am Ende des DOM: Tab-Reihenfolge ≠ Sichtposition). Der Fokus nach
+// «erneut versuchen»/«schliessen» geht weiter an die Sprachwahl (fokusZurSprachwahl).
+// Exportiert für Unit-Tests (renderToString).
+export function sprachRahmen({ value, children, zustand, onRetry, onClose }) {
+  return React.createElement(I18nContext.Provider, { value },
+    React.createElement(SprachLadeHinweis, { zustand, onRetry, onClose }),
+    children);
 }
 
 export function useT() {

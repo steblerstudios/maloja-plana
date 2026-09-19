@@ -11,8 +11,10 @@ const loadReminders = () => {
   catch { return []; }
 };
 
+// K94: Speicher voll/gesperrt → Misserfolg melden statt den Abgleich (App-Start) abbrechen.
 const saveReminders = (reminders) => {
-  localStorage.setItem(REMINDERS_KEY, JSON.stringify(reminders));
+  try { localStorage.setItem(REMINDERS_KEY, JSON.stringify(reminders)); return true; }
+  catch { return false; }
 };
 
 const todayISO = () => new Date().toISOString().split('T')[0];
@@ -28,7 +30,7 @@ const docReminderId = (docId) => DOC_REMINDER_PREFIX + docId;
  *
  * @param {Array} documents - Array of document objects from or5_docs
  * @param {Function} t - Translation function (optional)
- * @returns {Object} { created: number, updated: number, removed: number }
+ * @returns {Object} { created: number, updated: number, removed: number, saved: boolean }
  */
 export const syncDocumentReminders = (documents, t) => {
   const reminders = loadReminders();
@@ -92,10 +94,11 @@ export const syncDocumentReminders = (documents, t) => {
     }
   }
 
+  let saved = true;
   if (created > 0 || updated > 0 || removed > 0) {
-    saveReminders(updatedReminders);
+    saved = saveReminders(updatedReminders);
   }
 
-  return { created, updated, removed };
+  return { created, updated, removed, saved };
 };
 
