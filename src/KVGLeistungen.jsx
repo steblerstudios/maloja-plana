@@ -3,7 +3,7 @@ import { PageTitle } from './components/Heading.jsx';
 import { Icon } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
-import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN } from './data/kvgLeistungen.js';
+import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
 import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
@@ -356,8 +356,9 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   };
 
   const canton = data.basis?.canton || '';
-  const tpw = TAXPUNKTWERT[canton] || 0.89;
-  const tpBetrag = newTp ? Math.round(Number(newTp) * tpw * 100) / 100 : 0;
+  // K103: ohne bekannten Wohnkanton keine Zahl (früher stiller Rückfall auf 0.89).
+  const tpw = taxpunktwertFuer(canton);
+  const tpBetrag = newTp && tpw !== null ? Math.round(Number(newTp) * tpw * 100) / 100 : 0;
 
   const addBeleg = () => {
     const betrag = Number(newBetrag);
@@ -559,7 +560,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
             color: palette.text, fontSize: text.sm, boxSizing: 'border-box',
           }
         }),
-        React.createElement('span', {
+        tpw !== null && React.createElement('span', {
           style: { fontSize: text.sm, color: palette.mid, whiteSpace: 'nowrap' }
         }, t('kvg.belegTpResult', { betrag: tpBetrag })),
         React.createElement('button', {
@@ -574,6 +575,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           }
         }, t('kvg.belegTpApply'))
       ),
+      tpOpen && tpw === null && React.createElement('div', {
+        'data-testid': 'tpw-ohne-kanton-profil',
+        style: { fontSize: text.xs, color: palette.soft, marginTop: '-4px', marginBottom: '10px', lineHeight: leading.normal }
+      }, 'ⓘ ' + t('kvg.tpwOhneKantonProfil')),
 
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
@@ -808,7 +813,8 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
 const RechnungTab = ({ palette, t, data }) => {
   const canton = data.basis?.canton || '';
   const [tp, setTp] = useState('');
-  const [selCanton, setSelCanton] = useState(canton);
+  // K103: unbekannter Profil-Kanton → Auswahl leer statt eines Werts, den die Liste nicht kennt.
+  const [selCanton, setSelCanton] = useState(taxpunktwertFuer(canton) !== null ? canton : '');
 
   const cantons = Object.keys(TAXPUNKTWERT).sort();
   const result = tp ? berechneArztrechnung(Number(tp), selCanton) : null;
@@ -864,6 +870,12 @@ const RechnungTab = ({ palette, t, data }) => {
       )
     ),
 
+    // K103: Taxpunkte eingetragen, aber kein Kanton gewählt → keine Zahl, ein ruhiger Hinweis.
+    tp && !result && React.createElement('div', {
+      'data-testid': 'tpw-ohne-kanton',
+      style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
+    }, 'ⓘ ' + t('kvg.tpwOhneKanton')),
+
     result && React.createElement('div', {
       style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
     },
@@ -908,6 +920,17 @@ const RechnungTab = ({ palette, t, data }) => {
   );
 };
 
+// K88/K89: Zusatz im Linktext — Versicherergruppe (zusatz, Muster K92) bzw. «Ärztegesellschaften»,
+// dazu Stand-Datum der Übersicht (stand) und Seiten im Amtsblatt (seiten).
+const quelleZusatz = (q, t) => {
+  const teile = [];
+  if (q.zusatz) teile.push(t('kvg.tpwQuelle' + q.zusatz));
+  else if (q.art === 'tarifpartner') teile.push(t('kvg.tpwQuelleTarifpartner'));
+  if (q.stand) teile.push(t('kvg.tpwQuelleStand', { datum: q.stand }));
+  if (q.seiten) teile.push(t('kvg.tpwQuelleSeiten', { seiten: q.seiten }));
+  return teile.length ? ' (' + teile.join('; ') + ')' : '';
+};
+
 export const TpwQuellen = ({ palette, t }) =>
   React.createElement('div', {
     'data-testid': 'tpw-quellen',
@@ -923,7 +946,7 @@ export const TpwQuellen = ({ palette, t }) =>
             style: { color: palette.sandDeep, textDecoration: 'underline', display: 'inline-flex', alignItems: 'center', minHeight: '44px', padding: '0 6px' }
           },
             React.createElement('span', { style: visuallyHiddenStyle }, t('kvg.tpwQuelleVor') + ' '),
-            c + (q.zusatz ? ' (' + t('kvg.tpwQuelle' + q.zusatz) + ')' : q.art === 'tarifpartner' ? ' (' + t('kvg.tpwQuelleTarifpartner') + ')' : '')
+            c + quelleZusatz(q, t)
           )
         );
       })
