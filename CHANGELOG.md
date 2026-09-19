@@ -24,13 +24,22 @@ kommt der Changelog immer mit, nie doppelt.*
 - **K97 · Escape:** `0` erscheint in Dossier, Brief und Flyer als «0» statt leer; `'` wird maskiert. Dossier, Brief und Flyer nutzen dieselbe Funktion.
 - **K90 · Tab-Reihenfolge:** Die Karte beim Sprach-Ladefehler steht im Seitenaufbau dort, wo sie sichtbar ist (oben).
 
+### Neu
+- **Herzensempfehlung utopi:** Wildblumen-Saatgut für Wildbienen und Insekten, im Buch «Tiere» (kein Affiliate; Entscheid Stebler Studios).
+
+### Behoben (aus dem Deploy-Gate)
+- **Versicherergruppe am Ergebnis:** In GE, VD, LU, UR und SZ ist der Taxpunktwert nur für bestimmte Versicherergruppen belegt. Das steht jetzt direkt beim berechneten Betrag — im Tab «Arztrechnung» und im Franchise-Tab vor dem Übernehmen als Beleg.
+- **«Stand 2025» auch im Franchise-Tab:** Kantone ohne belegten Wert 2026 tragen den Hinweis jetzt auch dort.
+- **Ansagen für Screenreader:** Wechselt der Steuerrechner zwischen Zahl und Hinweis, wird das einmal angesagt; beim Erstellen eines QR-Codes «QR-Code erstellt.» (ohne den Inhalt vorzulesen).
+- Taxpunktwerte-Datenstand 19.09.2026 (Quellen nachgeprüft, Werte unverändert) · fr-Apostroph vereinheitlicht.
+
 ### Geändert
 - **K82 · 0 ist eine Antwort:** Eine gespeicherte 0 in einem Betragsfeld zählt für die Vollständigkeit und steht als «0» im Feld (34 Betragsfelder). Leere Felder bleiben leer und zählen nicht. Rechner unverändert.
 - **K101 · QR-Hinweis überall:** Auch der Krankenkassen- und der Organspende-QR sagen, dass der Code nicht verschlüsselt und für alle lesbar ist, die ihn scannen.
-- **K99 · Individualbesteuerung:** Der Text nennt jetzt das Inkrafttreten 2032 (Entscheid des Bundesrats vom 19.08.2026, ESTV-Medienmitteilung) statt «Zeitpunkt offen».
+- **K99 · Individualbesteuerung:** Der Text sagt jetzt, dass sie 2032 in Kraft treten soll (Entscheid des Bundesrats vom 19.08.2026, ESTV-Medienmitteilung), statt «Zeitpunkt offen». «Soll», weil die ESTV zwei Vorbehalte nennt (Volksinitiative, Abstimmung 29.11.2026; mögliche Gesetzesänderung).
 - **K88 · Versicherergruppe bei den Quellen:** GE (CSS), VD und LU (santéservices), UR (HSK, Link jetzt auf das BVGer-Urteil C-409/2026); Stand-Datum bei GR und ZG.
-- **K102 · santéservices:** «tarifsuisse» heisst seit 1.7.2026 santéservices — Linktexte «santéservices, vormals tarifsuisse».
-- **K89 · Tessin:** Der Quellen-Link springt im Amtsblatt auf den Beschluss (S. 64–65); die Freiburger Quelle ist bestätigt.
+- **K102 · santéservices:** tarifsuisse ag heisst jetzt santéservices (seit 1.7.2026 gemeinsame Marke santéservices) — Linktexte «santéservices, vormals tarifsuisse».
+- **K89 · Tessin:** Der Quellen-Link springt in der amtlichen Gesetzessammlung (Bollettino ufficiale delle leggi) auf den Beschluss (S. 64–65); die Freiburger Quelle ist bestätigt.
 - **K98 · Texte:** «0 eintragen» eindeutig, «gemeinsam» nur als Annahme, it einheitlich «salario netto».
 - **K96 · Capacitor als Entwicklungs-Abhängigkeit:** Zur Laufzeit hängt die App nur noch an React.
 - **K95 · npm audit:** Entwicklungs-Pakete aktualisiert (12 → 2 Meldungen, Laufzeit weiterhin 0). Offen: esbuild im Dev-Server, nur mit Vite-Major-Update (Oktober). Build byte-gleich.
