@@ -55,6 +55,18 @@ describe('K88 · Quellen-Links nennen Versicherergruppe und Stand', () => {
     for (const a of links) expect(a).toContain('min-height:44px');
   });
 
+  it('UR verlinkt das BVGer-Urteil C-409/2026 (Beleg für HSK), nicht die Medienmitteilung', () => {
+    expect(TAXPUNKTWERT_QUELLEN.UR.url).toBe('https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf');
+  });
+
+  it('keine Klammer in der Klammer im Linktext (Entscheid 19.09.2026)', () => {
+    for (const [lang, tr] of Object.entries(SPRACHEN)) {
+      for (const [k, v] of Object.entries(tr.kvg)) {
+        if (k.startsWith('tpwQuelle') && typeof v === 'string') expect(v, lang + ' ' + k).not.toMatch(/[()]/);
+      }
+    }
+  });
+
   it('Texte in allen fünf Sprachen, mit der richtigen Gruppe', () => {
     for (const [lang, tr] of Object.entries(SPRACHEN)) {
       expect(tr.kvg.tpwQuelleGE, lang).toMatch(/CSS/);
@@ -62,7 +74,7 @@ describe('K88 · Quellen-Links nennen Versicherergruppe und Stand', () => {
       expect(tr.kvg.tpwQuelleUR, lang).toMatch(/HSK/);
       expect(tr.kvg.tpwQuelleUR, lang).not.toMatch(/CSS|santéservices/);
       for (const k of ['tpwQuelleVD', 'tpwQuelleLU']) {
-        expect(tr.kvg[k], lang + ' ' + k).toMatch(/santéservices \(.*tarifsuisse\)/);
+        expect(tr.kvg[k], lang + ' ' + k).toMatch(/santéservices, [^;()]*tarifsuisse/);
         expect(tr.kvg[k], lang + ' ' + k).not.toMatch(/CSS|HSK/);
       }
       expect(tr.kvg.tpwQuelleStand, lang).toContain('{datum}');
@@ -79,9 +91,9 @@ describe('K88 · Quellen-Links nennen Versicherergruppe und Stand', () => {
 // per 301 auf santeservices.ch weiter.
 // ─────────────────────────────────────────────────────────────
 describe('K102 · santéservices (vormals tarifsuisse)', () => {
-  it('SZ nennt santéservices mit dem alten Namen in Klammern, Werte unverändert', () => {
+  it('SZ nennt santéservices mit dem alten Namen, Werte unverändert', () => {
     for (const [lang, tr] of Object.entries(SPRACHEN)) {
-      expect(tr.kvg.tpwQuelleSZ, lang).toMatch(/0\.85.*santéservices \(.*tarifsuisse\).*0\.86.*CSS.*HSK/);
+      expect(tr.kvg.tpwQuelleSZ, lang).toMatch(/0\.85.*santéservices, [^;()]*tarifsuisse ?; 0\.86.*CSS.*HSK/);
     }
     expect(TAXPUNKTWERT.SZ).toBe(0.85);
   });
@@ -90,7 +102,7 @@ describe('K102 · santéservices (vormals tarifsuisse)', () => {
     for (const [lang, tr] of Object.entries(SPRACHEN)) {
       for (const [k, v] of Object.entries(tr.kvg)) {
         if (!k.startsWith('tpw') || typeof v !== 'string' || !v.includes('tarifsuisse')) continue;
-        expect(v, lang + ' ' + k).toMatch(/santéservices \([^)]*tarifsuisse\)/);
+        expect(v, lang + ' ' + k).toMatch(/santéservices, [^;()]*tarifsuisse/);
       }
     }
   });

@@ -185,8 +185,8 @@ export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', '
 
 // E41 (Entscheid 17.09.2026): die Quelle je Kanton als Daten, damit die App sie verlinken kann.
 // Nur die URLs aus dem Kommentar oben — je Kanton die Quelle, die den geführten Wert trägt:
-//   art 'behoerde'     = Festsetzung oder amtliche Publikation (bei LU der wörtlich wiedergegebene
-//                        RRB im BVGer-Urteil; bei UR die Medienmitteilung des Regierungsrats)
+//   art 'behoerde'     = Festsetzung oder amtliche Publikation (bei LU und UR der wiedergegebene
+//                        RRB im BVGer-Urteil)
 //   art 'tarifpartner' = Übersicht der Ärztegesellschaften (OW, NW; SZ 0.85 für santéservices —
 //                        das BVGer-Urteil C-718/2026 belegt dort nur den CSS-Wert 0.86)
 // Die neun Kantone aus TAXPUNKTWERT_UNBELEGT_2026 haben bewusst keinen Eintrag.
@@ -196,7 +196,9 @@ export const TAXPUNKTWERT_UNBELEGT_2026 = ['AG', 'BL', 'SO', 'AI', 'GL', 'SH', '
 //   GE → CSS (Communiqué: «… de CSS Assurance-maladie SA») · VD → santéservices (Séance:
 //   «entre santéservices SA et la Société vaudoise de médecine») · LU → santéservices, im RRB noch
 //   «tarifsuisse ag» (BVGer C-437/2026) · UR → HSK (BVGer C-409/2026: «für die Versicherten der
-//   Einkaufsgemeinschaft HSK AG»; die verlinkte Medienmitteilung nennt keine Gruppe).
+//   Einkaufsgemeinschaft HSK AG»). Entscheid Stebler Studios 19.09.2026: der UR-Link zeigt auf dieses
+//   Urteil (Entscheid-Datenbank entscheidsuche.ch, wie bei LU; Gegenprobe 404), nicht mehr auf die
+//   Medienmitteilung — die nennt keine Gruppe. Eine stabile Einzel-Adresse auf bvger.ch gibt es nicht.
 // stand = Stand-Datum, das die Übersicht selbst trägt (GR «Stand: 07.09.2026», ZG «Stand 13. Januar
 // 2026»); seiten = gedruckte Seiten im Amtsblatt (TI, K89).
 // K102: tarifsuisse ag tritt seit 1.7.2026 als santéservices auf — https://www.santeservices.ch/santeservices/
@@ -217,7 +219,7 @@ export const TAXPUNKTWERT_QUELLEN = {
   SZ: { art: 'tarifpartner', url: VZAG_LU, zusatz: 'SZ' },
   TG: { art: 'behoerde', url: 'https://gesundheit.tg.ch/public/upload/assets/185106/Tarif%C3%BCbersicht%20Ambulante%20Tarife%20OKP%202020%20bis%202026.pdf' },
   TI: { art: 'behoerde', url: 'https://www3.ti.ch/CAN/fu/2026/BU_006.pdf#pagemode=bookmarks&page=20', seiten: '64–65' },
-  UR: { art: 'behoerde', url: 'https://www.ur.ch/mmregierungsrat/132029', zusatz: 'UR' },
+  UR: { art: 'behoerde', url: 'https://entscheidsuche.ch/docs/CH_BVGer/CH_BVGE_001_C-409-2026_2026-03-12.pdf', zusatz: 'UR' },
   VD: { art: 'behoerde', url: 'https://www.vd.ch/actualites/decisions-du-conseil-detat/seance-du-conseil-detat/seance/1032981', zusatz: 'VD' },
   ZG: { art: 'behoerde', url: 'https://cdn.zg.ch/dam/jcr:faa702d4-e5ed-41ab-a2c2-343c249c3798/Ambulante%20Tarife%202026%20(Stand%2013.%20Januar%202026).pdf', stand: '13.01.2026' },
   ZH: { art: 'behoerde', url: 'https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/1299/RRB-2025-1299.pdf' },

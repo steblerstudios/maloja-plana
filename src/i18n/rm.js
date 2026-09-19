@@ -3513,10 +3513,10 @@ export default {
     tpwQuellenTitel: "Funtaunas da las valurs dal punct 2026, tenor chantun:", // TODO(rm): provisorisch
     tpwQuelleVor: "Funtauna da la valur dal punct", // TODO(rm): provisorisch
     tpwQuelleTarifpartner: "societads medicinalas", // TODO(rm): provisorisch
-    tpwQuelleSZ: "societads medicinalas; 0.85 per santéservices (pli baud tarifsuisse), 0.86 per CSS e HSK", // TODO(rm): provisorisch
+    tpwQuelleSZ: "societads medicinalas; 0.85 per santéservices, pli baud tarifsuisse; 0.86 per CSS e HSK", // TODO(rm): provisorisch
     tpwQuelleGE: "vala per CSS", // TODO(rm): provisorisch
-    tpwQuelleVD: "vala per santéservices (pli baud tarifsuisse)", // TODO(rm): provisorisch
-    tpwQuelleLU: "vala per santéservices (pli baud tarifsuisse)", // TODO(rm): provisorisch
+    tpwQuelleVD: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
+    tpwQuelleLU: "vala per santéservices, pli baud tarifsuisse", // TODO(rm): provisorisch
     tpwQuelleUR: "vala per HSK", // TODO(rm): provisorisch
     tpwQuelleStand: "stadi {datum}", // TODO(rm): provisorisch
     tpwQuelleSeiten: "Fegl uffizial p. {seiten}", // TODO(rm): provisorisch
