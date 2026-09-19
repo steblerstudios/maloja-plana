@@ -228,6 +228,43 @@ Der heutige App-Wert (maxIncome/subsidySingle ZH) lag dem Unteragenten nicht vor
 4. Prämienverbilligung 2026: Einkommensgrenzen 2026, SVA Zürich, Stand ohne Datum. https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2026/einkommensgrenzen-2026.html — abgerufen 16.09.2026
 5. Kundeninformation: Prämienverbilligung 2026, SVA Zürich, V 05.2025 (PDF). https://svazurich.ch/dam/sva-dokumente/4000_ipv/4000_vl3_ipv_kundeninformation_2026.pdf — abgerufen 16.09.2026
 
+### Nachprüfung 19.09.2026 (K31, Einbau in die App)
+Alle Quellen [1]–[5] erneut abgerufen. **Werte 2026 unverändert** (Eigenanteil 8,4 % / 10,5 %,
+Referenzprämie 70 %, Durchschnittsprämien, alle 36 Einkommensgrenzen). Das Beispiel [1] nennt
+weiterhin «CHF 5'776». Der Hinweis «Die Berechnungs­grundlagen können vom Regierungsrat bis zum
+Herbst 2026 noch angepasst werden» steht weiter auf [4]; eine Anpassung 2026 wurde nicht gefunden.
+
+Neu gefunden (schliesst die Lücken unter «Offen»):
+
+- **Kinder-Mindestanspruch** — RRB Nr. 297/2025 vom 19.03.2025, Dispositiv II–IV [6]: «Die
+  massgebenden Prämien zur Berechnung des Mindestanspruchs von Kindern und jungen Erwachsenen in
+  Ausbildung nach Art. 65 Abs. 1bis KVG werden auf 84% der regionalen Durchschnittsprämien 2026
+  festgesetzt.» · Familiengrenze 70 500 (nur minderjährige Kinder) bzw. 94 000 · «Zur Verminderung
+  der Fehlanreize bei Einkommen über den […] Einkommensgrenzen wird für 2026 eine Abzugsquote von
+  60% auf der Differenz zwischen Einkommen und Einkommensgrenze festgesetzt.»
+- **Verteilung und Erhöhung** — EG KVG (LS 832.01) [7] § 6 Abs. 3/4: «Die Referenzprämien werden
+  zusammengezählt.» «Die Prämienverbilligung wird entsprechend der Höhe der Referenzprämien auf
+  die Personen der Gruppe aufgeteilt.» § 7 Abs. 1: «Wird mit einem gemäss § 6 Abs. 4 bestimmten
+  Prämienverbilligungsanteil der Mindestanspruch einer Person gemäss Art. 65 Abs. 1bis KVG nicht
+  eingehalten, wird die Prämienverbilligung dieser Person entsprechend erhöht.»
+- **Deckel** — EG KVG § 4 Abs. 3: «Ist die Bruttoprämie einer anspruchsberechtigten Person tiefer
+  als die Referenzprämie, erhält sie höchstens die Bruttoprämie als Prämienverbilligung.»
+- **Gegenprobe**: alle 36 Einkommensgrenzen 2026 aus [4] ergeben sich exakt als Nullpunkt
+  «Summe der Referenzprämien ÷ Eigenanteilssatz», mit minderjährigen Kindern mindestens 70 500
+  (Test `src/config/__tests__/ipvZuerich.test.js`).
+- **Nicht eindeutig**: ob die Abzugsquote 60 % über 70 500 je Kind oder je Familie abgezogen
+  wird; die Tabelle [4] nennt in diesen Fällen 70 500 als Grenze, ohne Abbau-Zone. Die App rechnet
+  in dieser Zone bewusst keinen Betrag. Die Erheblichkeitsgrenze (§ 22 EG KVG) ist in der
+  geprüften Fassung der VEG KVG nicht beziffert.
+- **2027 ist bereits amtlich publiziert** (nur Hinweis, nicht eingebaut): Eigenanteil 11,8 % /
+  9,4 % [1]; Durchschnittsprämien 2027 Region 1/2/3 Erw. 665/607/566, junge Erw. 477/437/405,
+  Kinder 160/146/136 CHF/Monat [3]; Einkommensgrenzen 2027 (z. B. Einzelperson >25, Region 1:
+  59'420) [8]; Familiengrenze 2027 laut Tabelle 71 200 [8].
+
+6. RRB Nr. 297/2025, Krankenversicherung (IPV 2026; Eckwerte erste Phase), Kanton Zürich. https://www.zh.ch/bin/zhweb/publish/regierungsratsbeschluss-unterlagen./2025/297/RRB-2025-0297.pdf — abgerufen 19.09.2026
+7. Einführungsgesetz zum Krankenversicherungsgesetz (EG KVG), LS 832.01, Fassung «1. 10. 23 - 122». https://www.notes.zh.ch/appl/zhlex_r.nsf/WebView/B1FF7F0CFD47699AC12589F20029EC6C/$File/832.01_29.4.19_122.pdf — abgerufen 19.09.2026
+8. Prämienverbilligung 2027: Einkommensgrenzen 2027, SVA Zürich. https://svazurich.ch/ihr-anliegen/privatpersonen/praemienverbilligung/praemienverbilligung_2027/einkommensgrenzen-2027.html — abgerufen 19.09.2026
+
 ---
 
 ## BE — Bern

@@ -91,7 +91,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   };
 
   const hasIncome = !!(data.finanzen && data.finanzen.monthlyIncome);
-  const belegteKantone = Object.entries(CANTONAL_IPV).filter(([, v]) => !!(v.beleg && v.beleg.quelle));
+  // Nur Kantone mit einem Einzelwert: ZH (K31) rechnet nach Region und Haushalt, hat keinen.
+  const belegteKantone = Object.entries(CANTONAL_IPV).filter(([, v]) => !!(v.beleg && v.beleg.quelle) && v.subsidySingle != null);
 
   // --- IPV-Lebenslinie (Phase 2) -------------------------------------------
   // Statefull Beleg — Übergänge schreiben additiv nach data.anspruch.ipv
