@@ -148,8 +148,14 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // lieber keine Zahl als eine aus veralteten Sätzen: Die SVA weist für 2027 bereits 6'070 /
   // 4'440 / 1'450 und 19,25 % aus, die Rechtssammlung trägt aber noch den Anhang 2026.
   if (new Date().getFullYear() > jahr) return orientierung('jahr');
-  // § 9 Abs. 2 KVGG: Konkubinat wird «bei einem gemeinsamen Haushalt angenommen» — strenger
-  // als in BE, wo es ein gemeinsames Kind braucht. `hh.adults !== 1` fängt das mit ab.
+  // § 9 Abs. 2 KVGG: Konkubinat wird «bei einem gemeinsamen Haushalt angenommen». Die
+  // Verordnung führt das aus — vermutet wird die Lebensgemeinschaft erst, wenn «a) seit
+  // mindestens 2 Jahren ein gemeinsamer Haushalt geführt wird, b) 2 Personen mit einem
+  // gemeinsamen Kind … zusammenleben, oder c) auf Grund anderer konkreter Umstände …»
+  // (V KVGG § 7a Abs. 2). ⟨korrigiert 20.09.2026 nach der Fachprüfung⟩ Hier stand «strenger
+  // als in BE, wo es ein gemeinsames Kind braucht» — das war eine eigene Auslegung des
+  // Gesetzeswortlauts ohne die Verordnung. Für die Ausgabe ändert es nichts: jeder
+  // Mehrpersonenhaushalt geht ohnehin in die Orientierung, weil das zweite Einkommen fehlt.
   if (hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting') return orientierung('haushalt');
   // Kinder und junge Erwachsene: siehe der Block oben — ohne deren effektive Prämien lässt
   // sich der Mindestanspruch nach § 7 Abs. 2 KVGG nicht rechnen. Eigener Grund, damit in der
@@ -168,6 +174,11 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
 
   // Nur eine Person im Haushalt, darum ist die erfasste Prämie ihre eigene (§ 7 Abs. 3 KVGG).
   const praemieJahr = Number(data.versicherungen?.kkPremium) * 12;
+  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
+  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
+  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
+  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
+  if (!(praemieJahr > 0)) return orientierung('praemie');
   const praemien = praemieJahr > 0 ? [praemieJahr] : null;
   const annual = Math.round(ipvAargauRechnen({ personen: ['e'], me, praemien }).total);
   // Vergleichsgrösse «höchstens möglich»: dieselbe Rechnung bei massgebendem Einkommen 0.

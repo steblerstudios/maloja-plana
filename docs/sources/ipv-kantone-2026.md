@@ -1641,9 +1641,50 @@ Betrag. Die App baut für AG darum keine Gemeinde- und keine Regionenlogik (Test
   zeigen. Die reine Rechenfunktion kann ihn (getestet), die App zeigt bis auf Weiteres eine
   Orientierung mit Grund.
 - Ebenfalls nicht gerechnet: Paare — [1] § 9 Abs. 2 stellt eingetragene Partnerschaft **und**
-  Konkubinat den Ehepaaren gleich und nimmt das Konkubinat schon «bei einem gemeinsamen
-  Haushalt» an (strenger als BE). Junge Erwachsene 19–25 ([1] § 9 Abs. 3: Einstufung mit den
+  Konkubinat den Ehepaaren gleich und nimmt das Konkubinat «bei einem gemeinsamen Haushalt» an.
+  ⟨korrigiert 20.09.2026, Fachprüfung⟩ Hier stand «strenger als BE» — das war eine eigene
+  Auslegung. [2] § 7a Abs. 2 führt aus, wann die Lebensgemeinschaft vermutet wird: «a) seit
+  mindestens 2 Jahren ein gemeinsamer Haushalt geführt wird, b) 2 Personen mit einem gemeinsamen
+  Kind … zusammenleben, oder c) auf Grund anderer konkreter Umstände …». Junge Erwachsene 19–25 ([1] § 9 Abs. 3: Einstufung mit den
   Eltern unter Fr. 24'000). Quellenbesteuerte ([2] § 2).
+
+### Fachprüfung 20.09.2026 (swiss-precision-pruefer, Quellen selbst nachgemessen)
+
+Bestätigt, Zeichen für Zeichen gegen Anhang 1 V KVGG und KVGG: Richtprämien 5'830 / 4'260 /
+1'380 · Einkommenssatz 17,5 % · alle vier Einkommensabzüge und der Kinderabzug · die
+1/5-Vermögensregel · Verteilung im Verhältnis der Richtprämien · Deckel je Person ·
+Kinder-Mindestanspruch nur bei bestehendem Anspruch · Basisjahr drei Jahre zurück (2023 für
+2026, von der SVA-Mechanik für 2027 gegengeprüft) · Altersschnitt · keine Regionen · keine
+publizierte Einkommensgrenze. Der Widerspruch vom 16.09. ist auch in der unabhängigen
+Nachmessung verschwunden, und für 2027 ist **keine** Fassung in Kraft (`future_versions: 0`).
+
+Drei Befunde eingearbeitet:
+
+- **Die unterdrückte Einkommensgrenze kam in der Finanzübersicht zurück** — als «Einkommen über
+  Grenze (CHF )», eine Grenze ohne Zahl. Die Kachel zeigt jetzt denselben Grund wie die
+  Detailseite. *Die Datenzeile war sauber, die zweite Anzeigestelle nicht — genau die Sorte
+  Fehler, die nur auffällt, wenn jemand den ganzen Weg bis zur Ausgabe geht.*
+- **Der Fristhinweis war zu absolut.** Er sagte, für das laufende Jahr lasse sich nichts mehr
+  beantragen. [1] §§ 11–16 KVGG kennen aber das **ausserordentliche Verfahren**: «Personen, die
+  von einer wesentlichen Verschlechterung der wirtschaftlichen Verhältnisse betroffen sind,
+  können Antrag stellen» (§ 13 Abs. 1), konkretisiert in § 11 Abs. 2 («mindestens sechs Monate
+  … mindestens 20 %»). Wer gerade die Stelle verloren hat, las bei uns, die Tür sei zu. Der
+  Satz steht jetzt in allen fünf Sprachen dabei.
+- **Ohne erfasste Prämie fiel der Deckel still weg** ([1] § 7 Abs. 3). Gemessen: Einkommen 0,
+  keine Prämie erfasst → Fr. 5'830 im Jahr, also die volle Richtprämie statt des Anspruchs.
+  Dasselbe Muster steckte in BE ([5] Art. 10 Abs. 1) und ZH (§ 4 Abs. 3 EG KVG). **Alle drei
+  zeigen jetzt keine Zahl, bis die Prämie dasteht** — mit eigenem Grund in der Anzeige.
+
+Kleinere Korrekturen: die Zusage «Sozialhilfe und EL erhalten ohne Antrag» ist für die EL-Hälfte
+durch die SVA-Seite [4] belegt, nicht durch § 17 Abs. 1 KVGG (der nur die Sozialhilfe regelt) ·
+die Rundungsregel des amtlichen Rechenbeispiels (5'851.45 statt exakt 5'851.4225) ist ungeklärt
+und für die App ohne Folge · [2] § 5 Abs. 3 publiziert zwar Zahlen (Tarif A Fr. 44'000, Tarif B
+Fr. 140'000), das sind aber die Schwellen für den Datenzugriff der SVA, nicht die
+Einkommensgrenze nach § 5 Abs. 5.
+
+**Nicht nachgemessen:** die zwei Zitate aus dem Informationsblatt (Anmeldefenster, Code sechs
+Wochen gültig) — die Seite liefert heute HTML statt PDF. Tragend sind sie nicht; die Frist steht
+wörtlich in § 10 Abs. 4 KVGG.
 
 ---
 

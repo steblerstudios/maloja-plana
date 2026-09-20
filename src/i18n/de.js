@@ -3059,7 +3059,7 @@ export default {
     // AG rechnet mit der Veranlagung von vor DREI Jahren (§ 7 Abs. 1 KVGG) — der BE-Satz wäre hier falsch.
     vorbehaltAG: 'Im Kanton Aargau ist die rechtskräftige Steuerveranlagung {basisjahr} die Grundlage — drei Jahre vor dem Anspruchsjahr, nicht das heutige Einkommen. Wer seither deutlich weniger verdient, kann bei der SVA Aargau eine Neuberechnung verlangen. Zu Unrecht bezogene Beträge werden zurückgefordert.',
     // § 10 Abs. 4 KVGG: ohne Antrag bis 31.12. des Vorjahres ist der Anspruch verwirkt.
-    agFristAbgelaufen: 'Achtung Frist: Für {jahr} lässt sich die Prämienverbilligung im Kanton Aargau nicht mehr beantragen — der Antrag hätte bis zum 31. Dezember {vorjahr} gestellt sein müssen. Der Betrag hier zeigt, worum es geht. Für {folgejahr} läuft die Frist bis zum 31. Dezember {jahr}, und sie gilt jedes Jahr neu. Wer Sozialhilfe oder Ergänzungsleistungen bezieht, erhält die Verbilligung ohne Antrag.',
+    agFristAbgelaufen: 'Achtung Frist: Für {jahr} lässt sich die Prämienverbilligung im Kanton Aargau nicht mehr beantragen — der Antrag hätte bis zum 31. Dezember {vorjahr} gestellt sein müssen. Der Betrag hier zeigt, worum es geht. Für {folgejahr} läuft die Frist bis zum 31. Dezember {jahr}, und sie gilt jedes Jahr neu. Wer Sozialhilfe oder Ergänzungsleistungen bezieht, erhält die Verbilligung ohne Antrag. Eine Ausnahme gibt es: Wer seit der massgebenden Veranlagung deutlich weniger verdient (mindestens 20 Prozent während mindestens sechs Monaten), neu zugezogen ist oder dessen persönliche Verhältnisse sich verändert haben, kann auch während des Jahres einen Antrag stellen (ausserordentliches Verfahren, §§ 11–16 KVGG).',
     agFristLaeuft: 'Achtung Frist: Die Prämienverbilligung muss im Kanton Aargau jedes Jahr neu beantragt werden — für {jahr} spätestens am 31. Dezember {vorjahr}. Danach ist der Anspruch für dieses Jahr verwirkt. Wer Sozialhilfe oder Ergänzungsleistungen bezieht, erhält die Verbilligung ohne Antrag.',
     // AG publiziert keine Einkommensgrenze als Zahl (§ 5 Abs. 5 KVGG) — darum ohne Betrag.
     agKeinAnspruch: 'Nach dieser Rechnung besteht kein Anspruch: Die Richtprämie liegt nicht über 17,5 Prozent des massgebenden Einkommens. Der Kanton Aargau veröffentlicht dazu keine Einkommensgrenze als Zahl.',
@@ -3076,6 +3076,7 @@ export default {
       mindestanspruch: 'In diesem Einkommensbereich ist die kantonale Regel nicht eindeutig. Lieber keine Zahl als eine, die um mehrere hundert Franken danebenliegt.',
       agKinder: 'Für Haushalte mit Kindern rechnet die App im Kanton Aargau noch nicht: Kinder erhalten dort mindestens die Hälfte ihrer eigenen Krankenkassenprämie, und diese Prämien sind hier nicht erfasst.',
       jahr: 'Die hinterlegten Werte gelten für ein früheres Anspruchsjahr. Sobald die neuen amtlichen Werte eingearbeitet sind, rechnet die App wieder.',
+      praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },

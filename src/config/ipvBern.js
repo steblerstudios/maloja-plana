@@ -179,6 +179,11 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // auch nur deren Anteil gedeckelt — der Kinderanteil bleibt ungedeckelt, statt wie bisher den
   // Deckel mit Kindern ganz entfallen zu lassen (Befund Fachprüfung 20.09.2026).
   const praemie = Number(data.versicherungen?.kkPremium) * 12;
+  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
+  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
+  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
+  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
+  if (!(praemie > 0)) return orientierung('praemie');
   const deckeln = (gesamt, erwachsenenTeil) => (praemie > 0
     ? Math.round(Math.min(erwachsenenTeil, praemie) + (gesamt - erwachsenenTeil))
     : Math.round(gesamt));

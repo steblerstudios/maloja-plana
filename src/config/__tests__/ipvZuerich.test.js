@@ -180,7 +180,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'ZH', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
@@ -262,6 +262,10 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ plz: '8041', city: 'Adliswil' })).region).toBe(2);
     expect(calculateIPV(person({ plz: '8041' }))).toMatchObject({ belegt: false, offen: 'region' });
     expect(calculateIPV(person({ plz: '8127' })).region).toBe(2); // mehrere Gemeinden, alle Region 2
+  });
+
+  it('ohne erfasste Prämie keine Zahl (§ 4 Abs. 3 EG KVG)', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
   });
 
   it.each([

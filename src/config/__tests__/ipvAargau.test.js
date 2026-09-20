@@ -192,11 +192,15 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'AG', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: '5000', city: 'Aarau' },
     versicherungen: kkPremium != null ? { kkPremium } : {},
+  });
+
+  it('ohne erfasste Prämie keine Zahl: der Deckel nach § 7 Abs. 3 KVGG liesse sich sonst nicht anwenden', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
   });
 
   it('Einzelperson ohne Einkommen: CHF 5 830 im Jahr, 486 im Monat', () => {
