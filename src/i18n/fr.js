@@ -1706,6 +1706,7 @@ export default {
   datenWirken: {
     title: { sie: 'Vos données sont déjà actives :', du: 'Tes données sont déjà actives :' },
     treeCaption: { sie: 'Ce qui pousse de vos données', du: 'Ce qui pousse de tes données' },
+    drehHinweis: 'Les flèches gauche et droite font tourner l’arbre. Chaque branche est aussi sélectionnable séparément.',
     ansichtRaeumlich: 'Vue en trois dimensions',
     ansichtFlach: 'Vue plane',
     baumLaedt: 'L’arbre se charge …',

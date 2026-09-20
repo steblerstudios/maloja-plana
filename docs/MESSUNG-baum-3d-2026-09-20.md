@@ -490,3 +490,38 @@ zwei Ringe in Versicherungs-Blau (#86A6C2) am richtigen Ast.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.
+
+
+---
+
+# Elfte Runde, 20.09. — die Prüfung vor dem Merge
+
+Zwei Prüfer über den fertigen Zweig. Die Qualitätsprüfung fand **keinen Blocker**, die
+Barrierefreiheits-Prüfung **zwei** — beide berechtigt, beide behoben:
+
+1. **Kein garantierter Kontrast bei den Werkzeug-Pillen.** Ihr Grund war zu 8 % deckend,
+   dahinter lag die bewegte 3D-Szene: der Untergrund änderte sich beim Drehen, 10-px-Text
+   landete rechnerisch bei ~3,8:1. Jetzt deckender Grund, Textfarbe aus der Palette, 11 px.
+2. **Klickflächen von 18 px (Marke) und 14 px (Werkzeug).** Jetzt 44 px hohe Knöpfe mit
+   klein bleibender Pille — derselbe Kniff, den der flache Baum längst benutzt.
+
+Dazu fünf kleinere Punkte: Prozentzahl über geprüfte Farbe statt `opacity`, `role="group"`
+mit unsichtbarem Tastatur-Hinweis statt `role="img"`, Tab-Reihenfolge nach Bildposition,
+Umschalter auf 44 px, Rückfall bei verlorenem Grafik-Kontext.
+
+**Der wichtigste Fund kam aus der Qualitätsprüfung:** Nur der Renderer-Aufbau stand in einem
+Schutz, die restlichen ~900 Zeilen Szenenaufbau nicht. Da die räumliche Ansicht jetzt Standard
+ist, hätte ein Fehler dort **das ganze Dashboard leergefegt**, nicht nur den Baum. Jetzt führt
+jeder Fehler im Aufbau auf den flachen Baum zurück.
+
+🛑 **Zwei eigene Fehler in dieser Runde:**
+- Meine Changelog-Zeile behauptete, `size-limit` prüfe zwei Startdateien. Der zweite Chunk
+  existierte im aktuellen Build **gar nicht mehr** — die Zeile war ein wirkungsloser
+  Platzhalter, der grün zeigte, ohne etwas zu messen. Entfernt und richtiggestellt.
+- Beim Verschieben der Texte in das nachgeladene Bauteil habe ich `useT()` wie eine
+  Übersetzungsfunktion benutzt; es liefert aber den ganzen Kontext. Ergebnis: «t is not a
+  function» und der Fehler-Schirm über dem ganzen Dashboard. Im Browser gesehen, behoben,
+  danach mit Zähler gegengeprüft (keine neuen Fehler).
+
+Gemessen nach allen Korrekturen: **64,95 KB gzip** Startdatei (Grenze 65), 2345 Tests grün,
+Marken 44×114 px, Werkzeug-Pillen 44×54 px, `role="group"` mit Beschreibung verknüpft.

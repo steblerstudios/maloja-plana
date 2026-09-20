@@ -5,6 +5,7 @@ import { flushSync } from 'react-dom';
 import FruchtMitIcon from './FruchtMitIcon.jsx';
 import Icons from './IconSystem.jsx';
 import { fruchtKoerper } from './baumFruechte3d.js';
+import { useT } from './i18n/index.js';
 
 // Welches Icon steht für welches Werkzeug — dieselben Namen wie im IconSystem.
 const WERKZEUG_ICON = {
@@ -60,24 +61,11 @@ const PHI = (1 + Math.sqrt(5)) / 2;          // 1,618 — Goldener Schnitt
 const FIBONACCI = [1, 2, 3, 5, 8, 13, 21, 34];
 
 // ─── Die Wuchsphasen ────────────────────────────────────────────────────────
-// Ein Baum hat sechs erkennbare Zustände. Sie hängen am Ausfüllstand, nicht an
-// der Uhr: jeder Ast durchläuft sie mit dem Stand SEINES Lebensbereichs, der
-// ganze Baum mit dem Durchschnitt. Deshalb kann ein Ast blühen, während der
-// nächste noch kahl ist — wie im echten Garten.
-export const PHASEN = [
-  { ab: 0, schluessel: 'keimling', name: 'Keimling' },
-  { ab: 12, schluessel: 'stamm', name: 'Stamm und Äste' },
-  { ab: 32, schluessel: 'knospen', name: 'Knospen' },
-  { ab: 46, schluessel: 'blaetter', name: 'Blätter und Blüte' },
-  { ab: 66, schluessel: 'fruechte', name: 'Früchte' },
-  { ab: 96, schluessel: 'ausgewachsen', name: 'Ausgewachsen' },
-];
-export function wuchsphase(pct) {
-  let treffer = PHASEN[0];
-  PHASEN.forEach((p) => { if (pct >= p.ab) treffer = p; });
-  return treffer;
-}
-
+// Sechs erkennbare Zustände, alle am Ausfüllstand aufgehängt statt an der Uhr:
+// Keimling (ab 0) · Stamm und Äste (12) · Knospen (32) · Blüte und Blätter (44)
+// · Früchte (66) · ausgewachsen (96). Jeder Ast durchläuft sie mit dem Stand
+// SEINES Lebensbereichs — deshalb kann einer blühen, während der nächste noch
+// kahl ist. Die Zahlen stehen genau einmal, hier:
 // Zeitplan je Bauteil, in Prozent des Ausfüllstands. Alles an einer Stelle,
 // damit die Phasen oben und das Bild unten nie auseinanderlaufen.
 const PLAN = {
@@ -242,7 +230,7 @@ function aeussersterPunkt(punkte) {
   return treffer ? treffer.position.clone() : new THREE.Vector3();
 }
 
-export function baumAufbauen(bereiche, farben, seed = 7412) {
+function baumAufbauen(bereiche, farben, seed = 7412) {
   const zufall = rng(seed);
   const wurzel = new THREE.Group();
   const teile = [];      // einzelne Formen: { mesh, ab, bis, weg?, bereich? }
@@ -502,7 +490,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
 // Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Lebensbereich.
 const hilfsObjekt = new THREE.Object3D();
 const reifeFarbe = new THREE.Color();
-export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
+function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   const stand = (schluessel) => (schluessel != null && proBereich[schluessel] != null ? proBereich[schluessel] : gesamtPct);
   const wuchs = (pct, tl) => {
     let g = ramp(pct, tl.ab, tl.bis);
@@ -558,8 +546,16 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
 // Sprachdateien stammen und hier keine deutsche Zeichenkette festklebt.
 export default function Baum3D({
   bereiche: rohBereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel,
-  onBereichWaehlen, werkzeuge: rohWerkzeuge, onWerkzeugWaehlen, astBeschriftung, onKeinWebGL,
+  onBereichWaehlen, werkzeuge: rohWerkzeuge, onWerkzeugWaehlen, onKeinWebGL,
 }) {
+  // Die Texte holt sich dieses Bauteil selbst. Sie werden nur hier gebraucht,
+  // und so trägt die Hauptdatei sie nicht mit.
+  // `useT()` liefert den ganzen Kontext, nicht die Funktion — das `t` muss
+  // herausgenommen werden (sonst: «t is not a function», im Browser gesehen).
+  const { t } = useT();
+  const drehHinweis = t('datenWirken.drehHinweis');
+  const astBeschriftung = (name, pct) =>
+    t('datenWirken.astAria').replace('{name}', name).replace('{pct}', pct);
   // Aufbereiten und stabil halten. Beides gehört hierher: die Hauptdatei bleibt
   // frei davon, und ohne die Stabilisierung würde der Baum bei jedem
   // Neuzeichnen von Grund auf neu aufgebaut und wüchse wieder von vorn ein.
@@ -581,6 +577,7 @@ export default function Baum3D({
   );
   const halter = React.useRef(null);
   const [keinWebGL, setKeinWebGL] = React.useState(false);
+  const hinweisId = React.useId();
   // Wo hängt welcher Ast gerade auf dem Bildschirm? Daran kleben die
   // Beschriftungen — echte Knöpfe über der Leinwand, nicht ins Bild gemalt.
   // So bleiben Name, Prozent und der Weg ins Kapitel erhalten, die der flache
@@ -590,15 +587,24 @@ export default function Baum3D({
   React.useEffect(() => {
     const el = halter.current;
     if (!el) return undefined;
+    // Ein Rückfall für ALLES, was hier schiefgehen kann — nicht nur für
+    // «kein WebGL». Der räumliche Baum ist seit 20.09. die Standardansicht;
+    // ein Fehler im Szenenaufbau würde sonst bis zur Fehlergrenze durchschlagen
+    // und das ganze Dashboard leerfegen statt nur den Baum.
+    const aufgeben = (grund) => {
+      setKeinWebGL(true);
+      if (typeof onKeinWebGL === 'function') onKeinWebGL();
+      if (grund) console.warn('[Lebensbaum] räumliche Ansicht nicht möglich:', grund && grund.message ? grund.message : grund);
+    };
+
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     } catch (e) {
-      // Kein 3D auf diesem Gerät: der Aufrufer zeigt den flachen Baum.
-      setKeinWebGL(true);
-      if (typeof onKeinWebGL === 'function') onKeinWebGL();
+      aufgeben(e);
       return undefined;
     }
+    try {
     const wenigerBewegung = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -786,6 +792,14 @@ export default function Baum3D({
       gier += s;
       anfordern();
     };
+    // Verliert die Grafikkarte den Kontext (Treiberabsturz, GPU-Wechsel),
+    // bliebe sonst eine schwarze Fläche stehen. Gleicher Rückfall wie «kein 3D».
+    const kontextVerloren = (e) => {
+      e.preventDefault();
+      setKeinWebGL(true);
+      if (typeof onKeinWebGL === 'function') onKeinWebGL();
+    };
+    renderer.domElement.addEventListener('webglcontextlost', kontextVerloren);
     renderer.domElement.addEventListener('pointerdown', runter);
     renderer.domElement.addEventListener('pointermove', bewegen);
     renderer.domElement.addEventListener('pointerup', hoch);
@@ -795,6 +809,7 @@ export default function Baum3D({
       stop = true;
       beobachter.disconnect();
       el.removeEventListener('keydown', taste);
+      renderer.domElement.removeEventListener('webglcontextlost', kontextVerloren);
       szene.traverse((o) => {
         if (o.geometry) o.geometry.dispose();
         if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => m.dispose());
@@ -802,6 +817,16 @@ export default function Baum3D({
       renderer.dispose();
       if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
     };
+    } catch (fehler) {
+      // Aufbau gescheitert: aufräumen, was schon steht, und flach weitermachen.
+      try {
+        renderer.dispose();
+        if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+      } catch { /* beim Aufräumen nach einem Fehler darf nichts mehr werfen */ }
+      aufgeben(fehler);
+      return undefined;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette]);
 
   if (keinWebGL) return null; // Aufrufer zeigt dann den flachen Baum.
@@ -810,11 +835,22 @@ export default function Baum3D({
   (bereiche || []).forEach((b) => { nachSchluessel[b.key] = b; });
 
   return React.createElement('div', { style: { position: 'relative', width: '100%' } },
+    // Unsichtbar, aber vorgelesen: erklärt die Pfeiltasten-Bedienung.
+    drehHinweis ? React.createElement('span', {
+      id: hinweisId,
+      style: {
+        position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px',
+        overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0,
+      },
+    }, drehHinweis) : null,
     React.createElement('div', {
       ref: halter,
       tabIndex: 0,
-      role: 'img',
+      // `group` statt `img`: ein Bild ist nicht bedienbar, dieser Bereich schon
+      // (Pfeiltasten drehen). Der Hinweis dazu steht unsichtbar daneben.
+      role: 'group',
       'aria-label': ariaLabel,
+      'aria-describedby': hinweisId,
       style: {
         width: '100%', height: hoehe + 'px', borderRadius: '12px', overflow: 'hidden',
         // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
@@ -824,7 +860,10 @@ export default function Baum3D({
           : (isDarkMode ? 'linear-gradient(#2a3338,#37423a)' : 'linear-gradient(#dfeaf0,#eef3e8)'),
       },
     }),
-    ...marken.filter((m) => m.sichtbar).map((m) => {
+    // Nach Bildposition sortiert: sonst springt die Tab-Reihenfolge, sobald
+    // der Baum gedreht wurde — die Knöpfe stünden dann optisch woanders als
+    // in der Reihenfolge, in der man sie durchtabbt.
+    ...marken.filter((m) => m.sichtbar).slice().sort((a, c) => a.x - c.x).map((m) => {
       const b = nachSchluessel[m.key];
       if (!b) return null;
       const anklickbar = typeof onBereichWaehlen === 'function';
@@ -841,6 +880,9 @@ export default function Baum3D({
           pointerEvents: m.vorne ? 'auto' : 'none',
         },
       },
+        // Der Knopf ist 44 px hoch — die sichtbare Pille bleibt klein. Ohne die
+        // unsichtbare Tippfläche lägen die Ziele bei 18 px und damit unter
+        // jedem Mindestmass; derselbe Kniff wie am flachen Baum.
         React.createElement('button', {
           type: 'button',
           onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
@@ -849,30 +891,40 @@ export default function Baum3D({
             ? astBeschriftung(b.name || m.key, b.pct)
             : (b.name || m.key) + ' — ' + b.pct + '%',
           style: {
-            display: 'inline-flex', alignItems: 'center', gap: '5px',
-            padding: '2px 8px 2px 4px', borderRadius: '999px',
-            fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
-            color: palette ? palette.text : '#222',
-            background: (palette ? palette.surface : '#fff') + 'e6',
-            border: '1px solid ' + b.farbe + '55',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            minHeight: '44px', minWidth: '44px', padding: '0 6px',
+            background: 'none', border: 'none',
             cursor: anklickbar ? 'pointer' : 'default',
           },
         },
-          // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
-          // statt als Bild, damit es auch klein lesbar bleibt.
           React.createElement('span', {
             style: {
-              position: 'relative', width: '13px', height: '13px', color: b.farbe,
-              flex: '0 0 auto', display: 'inline-flex',
+              display: 'inline-flex', alignItems: 'center', gap: '5px',
+              padding: '3px 9px 3px 5px', borderRadius: '999px',
+              fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
+              color: palette ? palette.text : '#222',
+              background: (palette ? palette.surface : '#fff') + 'f2',
+              border: '1px solid ' + b.farbe + '55',
             },
-            'aria-hidden': 'true',
           },
-            IconFn ? IconFn() : null
-          ),
-          React.createElement('span', null, b.name || m.key),
-          React.createElement('span', {
-            style: { opacity: 0.6, fontVariantNumeric: 'tabular-nums' },
-          }, b.pct + '%')
+            // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
+            // statt als Bild, damit es auch klein lesbar bleibt.
+            React.createElement('span', {
+              style: {
+                position: 'relative', width: '13px', height: '13px', color: b.farbe,
+                flex: '0 0 auto', display: 'inline-flex',
+              },
+              'aria-hidden': 'true',
+            },
+              IconFn ? IconFn() : null
+            ),
+            React.createElement('span', null, b.name || m.key),
+            // Feste Farbe statt opacity: Deckkraft auf Text senkt den Kontrast
+            // unkontrolliert, eine geprüfte Farbe nicht.
+            React.createElement('span', {
+              style: { color: palette ? palette.mid : '#555', fontVariantNumeric: 'tabular-nums' },
+            }, b.pct + '%')
+          )
         ),
         // Werkzeug-Früchte: am Baum hängen sie als kleine Früchte, hier stehen
         // sie als anklickbare Pillen darunter — wie am flachen Baum.
@@ -884,19 +936,29 @@ export default function Baum3D({
           onClick: onWerkzeugWaehlen ? () => onWerkzeugWaehlen(w) : undefined,
           'aria-label': w.label || w.short,
           style: {
-            display: 'inline-flex', alignItems: 'center', gap: '3px',
-            padding: '1px 7px 1px 3px', borderRadius: '999px',
-            fontFamily: 'inherit', fontSize: '10px', lineHeight: 1.25, whiteSpace: 'nowrap',
-            color: palette ? palette.mid : '#555',
-            background: b.farbe + '14',
-            border: '1px solid ' + b.farbe + '33',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            minHeight: '44px', minWidth: '44px', padding: '0 3px',
+            background: 'none', border: 'none',
             cursor: onWerkzeugWaehlen ? 'pointer' : 'default',
           },
         },
           React.createElement('span', {
-            style: { width: '7px', height: '7px', borderRadius: '50%', background: b.farbe, opacity: 0.85, flex: '0 0 auto' },
-          }),
-          w.short || w.label
+            style: {
+              display: 'inline-flex', alignItems: 'center', gap: '3px',
+              padding: '2px 8px 2px 4px', borderRadius: '999px',
+              fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.25, whiteSpace: 'nowrap',
+              // Deckender Grund statt 8 % Farbschleier: dahinter liegt die
+              // bewegte 3D-Szene, gegen die kein Kontrast garantiert wäre.
+              color: palette ? palette.text : '#222',
+              background: (palette ? palette.surface : '#fff') + 'f2',
+              border: '1px solid ' + b.farbe + '55',
+            },
+          },
+            React.createElement('span', {
+              style: { width: '7px', height: '7px', borderRadius: '50%', background: b.farbe, flex: '0 0 auto' },
+            }),
+            w.short || w.label
+          )
         ))) : null
       );
     })

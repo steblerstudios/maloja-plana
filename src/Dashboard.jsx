@@ -530,12 +530,13 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
           fontSize: text.xs, fontFamily: 'inherit', cursor: 'pointer',
           color: palette.mid, background: 'none',
           border: '1px solid ' + palette.sage + '40', borderRadius: '999px',
-          padding: '3px 10px', minHeight: '28px',
+          padding: '3px 12px', minHeight: '44px',
         },
       }, zeigeRaeumlich ? t('datenWirken.ansichtFlach') : t('datenWirken.ansichtRaeumlich')),
     ),
     zeigeRaeumlich ? React.createElement(React.Suspense, {
       fallback: React.createElement('div', {
+        role: 'status', 'aria-live': 'polite',
         style: { height: '340px', display: 'grid', placeItems: 'center', fontSize: text.xs, color: palette.soft },
       }, t('datenWirken.baumLaedt')),
     }, React.createElement(Baum3D, {
@@ -545,7 +546,6 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
       onWerkzeugWaehlen: onNavigate ? (w) => { const ziel = navMap[w.key]; if (ziel) onNavigate(ziel); } : undefined,
       // Anspruchs-Ringe kommen später (Entscheid Oktober) — bis dahin trägt
       // nur der flache Baum sie.
-      astBeschriftung: (name, pct) => t('datenWirken.astAria').replace('{name}', name).replace('{pct}', pct),
       onKeinWebGL: () => setKein3D(true),
       // Der Weg ins Kapitel bleibt erhalten — das kann der flache Baum, und ohne
       // ihn wäre der räumliche hübscher, aber ärmer.

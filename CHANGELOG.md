@@ -31,9 +31,20 @@ kommt der Changelog immer mit, nie doppelt.*
 - ⚠️ **Der Baum lädt beim Öffnen des Dashboards rund 145 KB (gzip) nach**, weil die
   räumliche Ansicht der Standard ist. Wer auf flach stellt, lädt ihn nicht mehr.
 - Ohne 3D-fähiges Gerät erscheint automatisch der bisherige flache Baum.
-- `size-limit` prüft neu **beide** Startdateien (`index-*` und den geteilten
-  `FruchtMitIcon-*`-Chunk) — sonst hätte eine Aufteilung eine Verbesserung vorgetäuscht,
-  die keine ist.
+- ⚠️ Die Startdatei liegt damit bei **64,95 KB gzip gegen die Grenze von 65 KB** — rund
+  50 Byte Reserve. Die nächste Änderung an Code, der beim Start geladen wird, reisst das
+  Gate; die Grenze gehört bewusst neu gesetzt, nicht beiläufig.
+
+### Barrierefreiheit
+- Die Beschriftungen am Baum sind **44 px hohe Ziele** mit klein bleibender Pille — vorher
+  waren es 18 bzw. 14 px und damit unter jedem Mindestmass.
+- Die Werkzeug-Pillen haben einen **deckenden Grund** statt eines 8-%-Farbschleiers: dahinter
+  liegt die bewegte 3D-Szene, gegen die kein Kontrast garantiert werden kann.
+- Prozentzahlen werden über eine geprüfte Farbe gedämpft, nicht über `opacity`.
+- Die Zeichenfläche ist `role="group"` (nicht `img`) und erklärt per unsichtbarem Hinweis,
+  dass die Pfeiltasten drehen; die Tab-Reihenfolge folgt der Bildreihenfolge.
+- Verliert die Grafikkarte den Kontext, erscheint der flache Baum statt einer schwarzen
+  Fläche; **jeder** Fehler im Szenenaufbau führt dorthin statt ins leere Dashboard.
 
 ## [0.1.38-beta] — 2026-09-20
 

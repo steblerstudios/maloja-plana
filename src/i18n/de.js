@@ -1709,6 +1709,7 @@ export default {
   datenWirken: {
     title: { sie: 'Ihre Daten wirken bereits:', du: 'Deine Daten wirken bereits:' },
     treeCaption: { sie: 'Was aus Ihren Angaben wächst', du: 'Was aus Deinen Angaben wächst' },
+    drehHinweis: 'Mit den Pfeiltasten links und rechts lässt sich der Baum drehen. Jeder Ast ist auch einzeln anwählbar.',
     ansichtRaeumlich: 'Räumliche Ansicht',
     ansichtFlach: 'Flache Ansicht',
     baumLaedt: 'Der Baum wird geladen …',

@@ -1707,6 +1707,7 @@ export default {
   datenWirken: {
     title: 'Your data is already working:',
     treeCaption: 'What grows from your entries',
+    drehHinweis: 'The left and right arrow keys turn the tree. Each branch can also be selected on its own.',
     ansichtRaeumlich: 'Three-dimensional view',
     ansichtFlach: 'Flat view',
     baumLaedt: 'Loading the tree …',
