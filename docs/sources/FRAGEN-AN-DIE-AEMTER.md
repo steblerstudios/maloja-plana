@@ -62,6 +62,38 @@ Rechenbeispiel, bei dem das massgebende Einkommen zwischen C und A liegt?
 
 ---
 
+## 4 · SVA Aargau — die Werte 2027 stehen auf der Website, nicht im Erlass
+
+**Wo:** Seite «Allgemeine Informationen» und Informationsblatt gegen Anhang 1 V KVGG
+(SAR 837.211).
+
+Die SVA weist heute (20.09.2026) für das **Bezugsjahr 2027** Richtprämien von 6'070 / 4'440 /
+1'450 Franken und einen Einkommenssatz von 19.25 Prozent aus. Die Gesetzessammlung führt zu
+SAR 837.211 aber weiterhin die Fassung vom 27.08.2025 als aktuelle Version — mit dem Anhang 1
+«Berechnungselemente für die Verteilung der Prämienverbilligung **2026**» (5'830 / 4'260 /
+1'380, 17,5 %), ohne künftige Fassung und ohne Änderungsdokument aus 2026. Auch das Einzel-PDF
+des Handbuchs Soziales gibt es nur für 2026.
+
+*Zur Vorgeschichte: Am 16.09.2026 standen dieselben Zahlen auf der SVA-Seite unter der
+Jahresangabe «2026» — dieser Widerspruch besteht nicht mehr, die Seite ist heute in sich
+stimmig. Übrig bleibt die Frage nach der Rechtsgrundlage.*
+
+**Frage:** Wo ist der Regierungsratsbeschluss beziehungsweise der Anhang 1 für das Bezugsjahr
+2027 publiziert, und wann wird er in die Systematische Sammlung aufgenommen?
+
+**Zwei Punkte, die sich mit derselben Antwort klären lassen:**
+- Gibt es zur Einkommensgrenze nach § 5 Abs. 5 KVGG («das höchste massgebende Einkommen, bis zu
+  welchem Prämienverbilligung bezogen werden kann») eine publizierte Zahl je Haushaltstyp? Wir
+  finden keine und nennen darum in der App bewusst keine Grenze.
+- Gilt der Mindestanspruch nach § 7 Abs. 2 KVGG («mindestens 50 % der effektiven Prämie») je
+  Kind und dessen eigener Prämie — so lesen wir § 4 Abs. 3/4 V KVGG — oder bezogen auf den
+  Haushalt? Solange das offen ist, zeigen wir für Haushalte mit Kindern keinen Betrag.
+
+**Stand:** AG ist für 2026 gebaut; die Werte 2027 sind bewusst **nicht** eingebaut, weil sie
+nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betrag mehr.
+
+---
+
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

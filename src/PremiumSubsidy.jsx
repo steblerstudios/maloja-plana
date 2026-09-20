@@ -91,7 +91,8 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   };
 
   const hasIncome = !!(data.finanzen && data.finanzen.monthlyIncome);
-  // Nur Kantone mit einem Einzelwert: ZH und BE (K31) rechnen nach Region und Haushalt, haben keinen.
+  // Nur Kantone mit einem Einzelwert: ZH, BE und AG (K31) rechnen nach ihrem eigenen Modell
+  // und haben keinen einzelnen Vergleichswert (AG publiziert nicht einmal eine Einkommensgrenze).
   const belegteKantone = Object.entries(CANTONAL_IPV).filter(([, v]) => !!(v.beleg && v.beleg.quelle) && v.subsidySingle != null);
 
   // --- IPV-Lebenslinie (Phase 2) -------------------------------------------
@@ -230,7 +231,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, 'ⓘ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
         React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
-        React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
+        // Nicht jeder Kanton publiziert eine Einkommensgrenze als Zahl: der Aargau definiert
+        // sie in § 5 Abs. 5 KVGG, veröffentlicht sie aber nicht. Eine abgeleitete Zahl wäre
+        // unsere eigene Rechnung — dann lieber keine Zeile (K31, 20.09.2026).
+        ipvResult.cantonData.maxIncome != null && React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
         React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
       // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
@@ -297,16 +301,20 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ),
 
     // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
-    // nach seinem eigenen Modell gerechnet wurde (heute ZH und BE). Eine konkrete Zahl ohne ihr Jahr
+    // nach seinem eigenen Modell gerechnet wurde (heute ZH, BE und AG). Eine konkrete Zahl ohne ihr Jahr
     // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
-      React.createElement('div', null, t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })),
+      // Prämienregion nur, wo es eine gibt: Im Aargau hängt die Richtprämie nicht an der
+      // Region (V KVGG § 4 Abs. 1), darum dort ein eigener Satz statt «Prämienregion undefined».
+      React.createElement('div', null, ipvResult.region
+        ? t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })
+        : t('ipv.jahrOhneRegion', { jahr: ipvResult.jahr })),
       React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
       // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
-      // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres. Ein Satz für beide wäre für
-      // einen der zwei Kantone schlicht falsch (Befund Fachprüfung 20.09.2026).
+      // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres, AG mit denen von vor DREI
+      // Jahren (§ 7 Abs. 1 KVGG). Ein Satz für alle wäre für zwei der drei Kantone falsch.
       React.createElement('div', { style: { marginTop: space.xs } },
-        t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.jahr - 2 })),
+        t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.basisjahr ?? ipvResult.jahr - 2 })),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
       // der Anspruch beantragt werden muss.
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗')
