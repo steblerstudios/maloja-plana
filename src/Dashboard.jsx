@@ -488,7 +488,8 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
       border: '1px solid ' + palette.sage + '15',
     }
   },
-    React.createElement('div', {
+    React.createElement(PanelTitle, {
+      palette,
       style: { fontSize: text.xs, color: palette.mid, margin: '0 0 6px 0', fontWeight: weight.medium }
     }, t('datenWirken.treeCaption')),
     // Bereichs-Früchte am Baum — jede Frucht trägt das Bereichs-Icon als Negativ
@@ -790,8 +791,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         borderRadius: radius.md,
       },
     },
-      React.createElement('div', {
-        style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' },
+      React.createElement(PanelTitle, {
+        palette,
+        style: { fontSize: text.xs, fontWeight: weight.normal, color: palette.soft, marginBottom: space.sm + 'px' },
       }, t('dashboard.nextUpTitle')),
       (() => {
         const nextField = mvo.fields.find((f) => !f.done);
@@ -1216,7 +1218,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('div', {
         style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: space.md }
       },
-        React.createElement('div', {
+        React.createElement(PanelTitle, {
+          palette,
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
         }, t('dashboard.highlightTitle')),
         React.createElement('div', {
@@ -1320,7 +1323,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           key: 'tier-' + tierIdx,
           style: { marginTop: tierIdx === 0 ? '0' : space.xl + 'px' }
         },
-          React.createElement('div', {
+          // Die Kapitel-Sektion hat keinen eigenen Titel — die drei Tier-Labels
+          // («Ihr Alltag» …) sind ihre einzige Gliederung. Als h3 werden sie zur
+          // Sprungmarke, statt nur fett auszusehen.
+          React.createElement(PanelTitle, {
+            palette,
             style: {
               fontSize: text.xs, fontWeight: weight.medium, color: palette.mid,
               letterSpacing: '0.4px', padding: '0 4px 12px 4px',
@@ -1574,7 +1581,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     // ─── Tools — calm grid ─────────────────────────────────
     React.createElement('div', { style: { marginBottom: '36px' } },
       React.createElement(Eyebrow, {
-        palette,
+        palette, as: 'h3',
         style: { marginBottom: space.xs }
       }, t('dashboard.toolsAndFeatures')),
       React.createElement('p', {
@@ -1635,9 +1642,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           { label: t('dashboard.toolGroups.gesundheit'), items: [
             { label: t('nav.arztkoffer'), sub: t('nav.sub.arztkoffer'), view: 'gesundheit', icon: 'health' },
           ] },
+          // «Asyl & Migration» stand hier ein zweites Mal — dasselbe Ziel wie in
+          // «Lebensereignisse». Dort bleibt es: die Gruppe ist standardmässig offen
+          // (gi === 0) und «Bewilligung & Fristen» ist der richtige Nachbar.
           { label: t('dashboard.toolGroups.support'), items: [
             { label: t('lebenszustaende.pageTitle'), sub: t('lebenszustaende.pageSub'), view: 'situationen', icon: 'health' },
-            { label: t('nav.asyl'), sub: t('nav.sub.asyl'), view: 'asyl', icon: 'behoerden' },
           ] },
           { label: t('dashboard.toolGroups.money'), items: [
             { label: t('nav.taxes'), sub: t('nav.sub.taxes'), view: 'tax', icon: 'money' },
@@ -1726,7 +1735,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       style: { padding: '0 2px', marginBottom: space.lg, borderTop: '1px solid ' + palette.border, paddingTop: '20px' }
     },
       React.createElement(Eyebrow, {
-        palette,
+        palette, as: 'h3',
         style: { color: palette.soft, fontWeight: weight.medium, marginBottom: space.sm + 4 }
       }, t('dashboard.tipsTitle')),
       React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.sm } },
