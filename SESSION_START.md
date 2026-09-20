@@ -7,7 +7,58 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-20, abends (`main` = `d37ddfe` nach **#244** 3a-Doppelzählung · **#245** h1 · **#246** räumlicher Lebensbaum · **#247** Release 0.1.39-beta · **#248** Deploy-Gate-Doku · **live `index-nd0WhuaA.js` = 0.1.39-beta** · 1 offener PR (#249, a11y-Labels, fremde Sitzung) · **2345 Tests grün, size-limit 64,96 kB von 65**)
+**Stand:** 2026-09-21, nachts (`main` = `1d9127d` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen sechs PRs** · keine offenen PRs · **2488 Tests grün, size-limit 64,96 kB von 65**)
+
+> ### 🔎 SEO: der Gate-Entscheid ist gefallen — sechs PRs gemergt, **nichts davon live** (2026-09-21, nachts)
+>
+> **Gemessen, nicht angenommen:** `main` = `1d9127d`. Live antwortet weiterhin
+> `index-nd0WhuaA.js` mit **18 Wörtern** im Body, und alle fünf neuen Pfade liefern
+> **HTTP 404** — Gegenprobe mit erfundenem Pfad ebenfalls 404, die Messung unterscheidet
+> also. **Der Deploy steht aus und ist Stebler Studios' Schritt.**
+>
+> **Der Befund, der die Sitzung ausgelöst hat:** Das Beta-Gate sperrte **jeden** Crawler
+> aus, auch Googlebot — `BetaGate` umschliesst die ganze App, und Google hat weder Code
+> noch `localStorage`. Ein JS-loser Crawler sah **18 Wörter, und die waren eine
+> Fehlermeldung**. Die sprachabhängige Kopf-SEO in `main.jsx` läuft nie, weil sie in
+> `AppInner` sitzt, einem Kind von `BetaGate`; alle fünf `?lang=`-URLs lieferten
+> byte-identisches Deutsch. Voller Befund mit Messprotokoll:
+> `docs/audits/seo-audit-2026-09-20.md`.
+>
+> **Sophies Entscheid:** öffentliche Erklärseiten **vor** dem Gate, die App dahinter.
+> Das Gate bleibt — es steht nur nicht mehr vor allem.
+>
+> 🛑 **Sechs Dinge, die die nächste Sitzung wissen muss:**
+> 1. **Die fünf Seiten sind erzeugt, nicht von Hand geschrieben.** Quelle
+>    `scripts/seiten-inhalt.mjs`, Generator `scripts/build-seiten.mjs` (`npm run seiten`,
+>    `--pruefen`). Das Ergebnis ist **committet** — wer `public/<pfad>/index.html` von
+>    Hand ändert, bricht den Test. **Auch `public/sitemap.xml` kommt von dort**; sie kann
+>    nicht mehr von der Seitenliste abdriften (die Drift war dreimal passiert).
+> 2. **Auf diesen Seiten stehen keine Zahlen** — keine Beträge, Fristen,
+>    Einkommensgrenzen, Prozentsätze. Nicht aus Vorsicht: sie sind kantonal verschieden
+>    und ändern jährlich, auf einer statischen Seite veralten sie unbemerkt. Ein Test
+>    setzt das durch; das sichtbare Prüfdatum hat **eine benannte Ausnahme**, keine
+>    weichere Regel.
+> 3. **`check-seo.sh` prüft die fünf Seiten mit** und bricht den Deploy ab, wenn eine
+>    fehlt oder nicht in der Sitemap steht. Erprobt, indem eine aus `dist/` entfernt wurde.
+> 4. **Zwei Prüfer fanden zwei echte Sachfehler**, beide nicht auf den neuen Seiten,
+>    sondern in der ausgelieferten App: «Wer EL bezieht, ist von den Prämien befreit»
+>    (falsch — ELG Art. 10 Abs. 3 lit. d: Pauschalbetrag in Höhe der Durchschnittsprämie,
+>    höchstens die tatsächliche) und «Die SKOS-Richtlinien **bestimmen** die Höhe»
+>    (sie empfehlen). Behoben in allen fünf Sprachen, PR #254.
+>    **Die Prüfer sind keine Formsache.**
+> 5. **Drei Schritte hängen an Stebler Studios' Konto, nicht am Code:** das
+>    GitHub-Website-Feld dieses Repos zeigt auf `ordnung-ruhe-neu.vercel.app` statt auf
+>    malojaplana.ch (der stärkste Backlink der Marke, und er zeigt woandershin) · diese
+>    Vercel-Adresse ist noch live (HTTP 200, älterer Build) · **Search Console ist nicht
+>    eingerichtet** — ohne sie ist nicht messbar, ob Google die Seiten aufnimmt.
+> 6. 🛑 **Offen, Entscheid:** Art. 3 Abs. 1 lit. s UWG verlangt eine **Kontaktadresse**.
+>    Auf `/rechtliches/` stehen Name, Stadt und E-Mail, **keine Strasse** —
+>    `docs/legal/impressum.md` hat dieselbe Lücke, neu ist nur, dass sie ab dem Deploy
+>    öffentlich und indexierbar dasteht.
+>
+> **Nach dem Deploy zu prüfen** (sonst gilt es nicht): die fünf Pfade müssen 200 liefern,
+> ein erfundener 404, die Startseite ~320 Wörter statt 18, und das Bundle darf nicht mehr
+> `index-nd0WhuaA.js` heissen. Danach `bash scripts/indexnow-ping.sh`.
 
 > ### 🌳 Der Lebensbaum ist räumlich — und live gegengeprüft (2026-09-20 abends)
 >
