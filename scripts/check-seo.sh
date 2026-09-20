@@ -47,6 +47,36 @@ need "JSON-LD (structured data)"    'application/ld\+json'
 if [ -f "$DIR/robots.txt" ]; then echo "  ✓ robots.txt vorhanden"; else echo "  ✗ robots.txt fehlt"; fail=$((fail + 1)); fi
 if [ -f "$DIR/sitemap.xml" ]; then echo "  ✓ sitemap.xml vorhanden"; else echo "  ✗ sitemap.xml fehlt"; fail=$((fail + 1)); fi
 
+# ── Öffentliche Erklärseiten (seit 20.09.2026) ──────────────────────────────
+# Sie liegen VOR dem Beta-Gate und sind der einzige indexierbare Inhalt, den
+# Maloja Plana hat — alles andere sieht auch Googlebot nicht. Fehlt eine im
+# Build, geht ein Deploy raus, der die Startseite wieder allein lässt, und
+# die Sitemap meldet dann vier URLs, die 404 liefern.
+# Der ausführliche Wächter ist src/__tests__/oeffentlicheSeiten.test.js; hier
+# nur die harte Mindestprüfung, weil deploy.sh keine Tests laufen lässt.
+# Erzeugt von scripts/build-seiten.mjs, Inhalt in scripts/seiten-inhalt.mjs.
+for seite in was-steht-mir-zu praemienverbilligung sozialhilfe steuern rechtliches; do
+  datei="$DIR/$seite/index.html"
+  if [ ! -f "$datei" ]; then
+    echo "  ✗ Erklärseite /$seite/ fehlt im Build"; fail=$((fail + 1)); continue
+  fi
+  s_html=$(cat "$datei")
+  if ! printf '%s' "$s_html" | grep -q "<title>"; then
+    echo "  ✗ /$seite/ ohne <title>"; fail=$((fail + 1)); continue
+  fi
+  if ! printf '%s' "$s_html" | grep -q "rel=\"canonical\" href=\"https://malojaplana.ch/$seite/\""; then
+    echo "  ✗ /$seite/ ohne eigenen canonical"; fail=$((fail + 1)); continue
+  fi
+  if ! printf '%s' "$s_html" | grep -q 'application/ld+json'; then
+    echo "  ✗ /$seite/ ohne JSON-LD"; fail=$((fail + 1)); continue
+  fi
+  # Die Seite muss in der Sitemap stehen, sonst findet sie niemand.
+  if ! grep -q "<loc>https://malojaplana.ch/$seite/</loc>" "$DIR/sitemap.xml" 2>/dev/null; then
+    echo "  ✗ /$seite/ fehlt in der sitemap.xml"; fail=$((fail + 1)); continue
+  fi
+  echo "  ✓ Erklärseite /$seite/ (title, canonical, JSON-LD, in Sitemap)"
+done
+
 # ── Weich: Warnung, kein Abbruch (Feinschliff / mehrsprachige App) ──
 soft() { # soft "<beschreibung>" "<grep-muster>"
   if printf '%s' "$html" | grep -qE "$2"; then

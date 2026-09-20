@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Eine URL, und zwar die kanonische.
+  ERZEUGT — nicht von Hand bearbeiten.
+  Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
+  Neu bauen: node scripts/build-seiten.mjs
 
-  Bis 20.09.2026 standen hier fünf Einträge (?lang=de … ?lang=rm). Gemessen am
-  Live-Stand liefern alle fünf BYTE-IDENTISCHES deutsches HTML mit
-  <html lang="de"> und <link rel="canonical" href="https://malojaplana.ch/">.
-  Grund: die sprachabhängige Kopf-SEO (src/main.jsx, useEffect auf `lang`) sitzt
-  in AppInner — einem Kind von BetaGate. Hinter geschlossenem Gate mountet sie
-  nie, also bleibt der statische deutsche Kopf stehen.
-
-  Eine Sitemap, die nicht-kanonische URLs meldet, liefert Google genau einen
-  Befund: «Alternative Seite mit richtigem kanonischem Tag» — keine davon wird
-  indexiert. Deshalb steht hier nur noch die URL, die auch canonical ist.
-
-  Die ?lang=-Einträge und ihre hreflang-Auszeichnung kommen zurück, sobald die
-  Sprachvarianten eigenen Inhalt ausliefern (Bau-Liste: Kopf-Logik vor das Gate
-  ziehen, danach echte Pfade /fr/ /it/ /en/ /rm/ statt ?lang=).
-  Befund und Messprotokoll: docs/audits/seo-audit-2026-09-20.md
-
-  lastmod wird beim Deploy gesetzt (deploy.sh), nicht von Hand — der Wert hier
-  ist nur der Stand im Repo.
+  Nur kanonische URLs. Die ?lang=-Adressen standen bis zum 20.09.2026 hier und
+  sind raus: sie liefern gemessen byte-identisches deutsches HTML und zeigen
+  canonical auf «/», Google hätte alle als «Alternative Seite mit richtigem
+  kanonischem Tag» verworfen. Sie kommen zurück, sobald die Sprachvarianten
+  eigenen Inhalt ausliefern.
+  Befund: docs/audits/seo-audit-2026-09-20.md
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -27,5 +17,35 @@
     <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/was-steht-mir-zu/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/praemienverbilligung/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/sozialhilfe/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/steuern/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/rechtliches/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

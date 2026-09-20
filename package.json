@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "seiten": "node scripts/build-seiten.mjs",
     "preview": "vite preview",
     "lint": "eslint src",
     "test": "vitest",

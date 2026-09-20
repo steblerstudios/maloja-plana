@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+  <!-- ERZEUGT — nicht von Hand bearbeiten.
+       Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
+       Neu bauen:  node scripts/build-seiten.mjs
+       Prüfen:     node scripts/build-seiten.mjs --pruefen -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Stebler Studios">
+  <meta name="theme-color" content="#F2F2F0">
+  <title>Sozialhilfe in der Schweiz — eine Orientierung — Maloja Plana</title>
+  <meta name="description" content="Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.">
+  <link rel="canonical" href="https://malojaplana.ch/sozialhilfe/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sozialhilfe in der Schweiz — eine Orientierung">
+  <meta property="og:description" content="Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.">
+  <meta property="og:url" content="https://malojaplana.ch/sozialhilfe/">
+  <meta property="og:image" content="https://malojaplana.ch/og-image.png">
+  <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Maloja Plana">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sozialhilfe in der Schweiz — eine Orientierung">
+  <meta name="twitter:description" content="Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.">
+  <meta name="twitter:image" content="https://malojaplana.ch/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://malojaplana.ch/sozialhilfe/#webpage",
+        "url": "https://malojaplana.ch/sozialhilfe/",
+        "name": "Sozialhilfe in der Schweiz — eine Orientierung",
+        "description": "Wer über Sozialhilfe entscheidet, woraus sie sich zusammensetzt und warum die SKOS-Richtlinien nicht automatisch Gesetz sind. Eine Einordnung ohne Zahlen.",
+        "inLanguage": "de-CH",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/#website"
+        },
+        "publisher": {
+          "@id": "https://malojaplana.ch/#org"
+        },
+        "about": {
+          "@id": "https://malojaplana.ch/#app"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://malojaplana.ch/sozialhilfe/#krume",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Maloja Plana",
+            "item": "https://malojaplana.ch/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Sozialhilfe",
+            "item": "https://malojaplana.ch/sozialhilfe/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://malojaplana.ch/sozialhilfe/#faq",
+        "isPartOf": {
+          "@id": "https://malojaplana.ch/sozialhilfe/#webpage"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Wie viel Sozialhilfe steht mir zu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Das bemisst sich nach Wohnort, Haushaltsgrösse, Einkommen, Vermögen und den tatsächlichen Wohn- und Gesundheitskosten — und es richtet sich nach kantonalem Recht. Eine allgemein gültige Zahl gibt es nicht. Eine provisorische Orientierung geben Sozialhilferechner; verbindlich ist die Verfügung der zuständigen Stelle."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Sind die SKOS-Richtlinien Gesetz?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nein. Es sind Empfehlungen der Schweizerischen Konferenz für Sozialhilfe. Verbindlich sind sie nur, soweit ein Kanton sie in sein eigenes Recht übernommen hat. Deshalb kann dieselbe Situation kantonal unterschiedlich beurteilt werden."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Muss ich zuerst mein Vermögen aufbrauchen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vermögen wird angerechnet, aber nicht vollständig: die Kantone kennen einen Freibetrag, der nicht angetastet wird. Wie hoch er ist, unterscheidet sich je nach Kanton und Haushalt. Die zuständige Stelle rechnet das im Einzelfall."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was ist der Unterschied zu Ergänzungsleistungen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen in der Regel dann in Frage, wenn eine Leistung der AHV oder IV den Existenzbedarf nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Ein Anspruch auf EL geht der Sozialhilfe vor."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-400-normal.woff2') format('woff2');
+      font-weight:400; font-display:swap }
+    @font-face{ font-family:'Lexend'; src:url('/fonts/lexend-latin-600-normal.woff2') format('woff2');
+      font-weight:600; font-display:swap }
+    :root{ --bg:#F2F2F0; --flaeche:#FBFBFA; --text:#24262A; --leise:#6A6E74;
+           --rand:#E0DDD8; --gold:#C4A870; --salbei:#7E9F8C }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#22211F; --flaeche:#2A2927; --text:#E8E6E1; --leise:#A8A5A0;
+             --rand:#3A3936; --gold:#C4A870; --salbei:#8FB09C }
+      html{ color-scheme:dark }
+    }
+    body{ background:var(--bg); color:var(--text); line-height:1.65;
+      font-family:'Lexend',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; font-kerning:normal }
+    .rahmen{ max-width:680px; margin:0 auto; padding:0 24px }
+    a{ color:inherit; text-decoration:underline; text-underline-offset:2px }
+    a:hover{ color:var(--salbei) }
+    header{ padding:28px 0 0 }
+    .marke{ display:inline-block; font-weight:600; text-decoration:none; font-size:15px }
+    nav.krume{ font-size:13px; color:var(--leise); margin-top:20px }
+    main{ padding:8px 0 16px }
+    h1{ font-size:32px; line-height:1.25; font-weight:600; margin:16px 0 12px; letter-spacing:-0.01em }
+    .vorspann{ font-size:18px; color:var(--text); margin-bottom:8px }
+    h2{ font-size:20px; font-weight:600; margin:40px 0 12px; letter-spacing:-0.005em }
+    h3{ font-size:16px; font-weight:600; margin:24px 0 6px }
+    p{ margin-bottom:14px }
+    ul{ margin:0 0 14px 22px } li{ margin-bottom:8px }
+    .karte{ background:var(--flaeche); border:1px solid var(--rand); border-radius:10px;
+      padding:20px 22px; margin:28px 0 }
+    .karte p:last-child{ margin-bottom:0 }
+    .weiter{ list-style:none; margin:16px 0 0; padding:0 }
+    .weiter li{ margin-bottom:10px }
+    .weiter a{ font-weight:600; text-decoration:none }
+    .weiter a:hover{ text-decoration:underline }
+    .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
+    .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
+      padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
+    .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
+      padding-left:14px; margin:32px 0 }
+    footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
+      font-size:13px; color:var(--leise) }
+    footer a{ color:var(--leise) }
+    footer p{ margin-bottom:6px }
+    @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
+  </style>
+</head>
+<body>
+  <div class="rahmen">
+    <header>
+      <a class="marke" href="/">Maloja&nbsp;Plana</a>
+      <nav class="krume" aria-label="Sie sind hier">
+        <a href="/">Start</a> › Sozialhilfe
+      </nav>
+    </header>
+
+    <main>
+      <h1>Sozialhilfe in der Schweiz — eine Orientierung</h1>
+      <p class="vorspann">Sozialhilfe ist die unterste Stufe im schweizerischen Netz — sie greift dort, wo alles andere nicht oder nicht mehr reicht. Zuständig sind nicht der Bund, sondern die Kantone und, in vielen von ihnen, die Gemeinden.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
+      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
+
+        <h2>Subsidiär heisst: zuerst alles andere</h2>
+        <p>Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.</p>
+        <p>Das ist der Grund, warum eine Anmeldung oft mit vielen Fragen zu ganz anderen Leistungen beginnt. Es geht nicht um Misstrauen, sondern um die gesetzliche Reihenfolge.</p>
+
+        <h2>Die SKOS-Richtlinien sind Empfehlungen, nicht Gesetz</h2>
+        <p>Das ist der meistübersehene Punkt. Die Richtlinien der Schweizerischen Konferenz für Sozialhilfe (SKOS) sind <strong>Empfehlungen</strong>. Verbindlich werden sie erst, soweit ein Kanton sie in sein eigenes Recht übernimmt — und das tun die Kantone in unterschiedlichem Umfang.</p>
+        <p>Praktisch bedeutet das: Ein SKOS-Rechner gibt eine gute erste Orientierung, aber er ist keine Zusage. Was in Ihrem Fall gilt, steht im kantonalen Sozialhilfegesetz und in der Verfügung der zuständigen Stelle.</p>
+
+        <h2>Woraus sich die Unterstützung typischerweise zusammensetzt</h2>
+        <p>In den meisten Kantonen sind es drei Bausteine: ein <strong>Grundbedarf</strong> für den Lebensunterhalt, die <strong>Wohnkosten</strong> im ortsüblichen Rahmen, und die <strong>medizinische Grundversorgung</strong>. Dazu können situationsbedingte Leistungen kommen.</p>
+        <p>Die Beträge nennen wir hier bewusst nicht: sie unterscheiden sich je nach Kanton und Haushaltsgrösse und werden regelmässig angepasst. Eine Zahl auf einer Seite wie dieser wäre nach kurzer Zeit falsch.</p>
+
+        <h2>Das Recht, das niemand verlieren kann</h2>
+        <p>Unabhängig von allem oben steht in der <strong>Bundesverfassung, Artikel 12</strong>, das Recht auf Hilfe in Notlagen: Wer in Not gerät und nicht in der Lage ist, für sich zu sorgen, hat Anspruch auf Hilfe und Betreuung und auf die Mittel, die für ein menschenwürdiges Dasein unerlässlich sind.</p>
+        <p>Dieses Recht steht allen Menschen in der Schweiz zu. Es ist nicht dasselbe wie Sozialhilfe und deckt weniger ab — aber es ist die Untergrenze, die nicht unterschritten werden darf.</p>
+
+      <h2>Häufige Fragen</h2>
+        <h3>Wie viel Sozialhilfe steht mir zu?</h3>
+        <p>Das bemisst sich nach Wohnort, Haushaltsgrösse, Einkommen, Vermögen und den tatsächlichen Wohn- und Gesundheitskosten — und es richtet sich nach kantonalem Recht. Eine allgemein gültige Zahl gibt es nicht. Eine provisorische Orientierung geben Sozialhilferechner; verbindlich ist die Verfügung der zuständigen Stelle.</p>
+
+        <h3>Sind die SKOS-Richtlinien Gesetz?</h3>
+        <p>Nein. Es sind Empfehlungen der Schweizerischen Konferenz für Sozialhilfe. Verbindlich sind sie nur, soweit ein Kanton sie in sein eigenes Recht übernommen hat. Deshalb kann dieselbe Situation kantonal unterschiedlich beurteilt werden.</p>
+
+        <h3>Muss ich zuerst mein Vermögen aufbrauchen?</h3>
+        <p>Vermögen wird angerechnet, aber nicht vollständig: die Kantone kennen einen Freibetrag, der nicht angetastet wird. Wie hoch er ist, unterscheidet sich je nach Kanton und Haushalt. Die zuständige Stelle rechnet das im Einzelfall.</p>
+
+        <h3>Was ist der Unterschied zu Ergänzungsleistungen?</h3>
+        <p>Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen in der Regel dann in Frage, wenn eine Leistung der AHV oder IV den Existenzbedarf nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Ein Anspruch auf EL geht der Sozialhilfe vor.</p>
+
+
+      <div class="karte">
+        <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
+        Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
+        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
+        Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
+        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
+        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
+      </div>
+
+      <h2>Quellen und Rechner</h2>
+      <ul>
+          <li><a href="https://skos.ch/dienstleistungen/hilfsmittel/sozialhilferechner" rel="noopener">Sozialhilferechner der SKOS</a></li>
+          <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
+          <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen</a></li>
+      </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
+      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
+      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
+      Empfehlungen.</p>
+
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
+      öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
+      bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
+      verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
+      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: September 2026.</strong></p>
+
+      <h2>Weiterlesen</h2>
+      <ul>
+          <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
+          <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
+          <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
+      </ul>
+    </main>
+
+    <footer>
+      <p>Maloja Plana ist ein Projekt von Stebler Studios, Basel ·
+      <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a></p>
+      <p>Quelloffen unter
+      <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
+      <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
+    </footer>
+  </div>
+</body>
+</html>
