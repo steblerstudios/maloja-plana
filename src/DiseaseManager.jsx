@@ -126,14 +126,14 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
 
     // Name with autocomplete
     React.createElement('div', { style: { marginBottom: space.sm, position: 'relative' } },
-      React.createElement('label', { style: labelStyle }, t('diseases.name')),
+      React.createElement('label', { htmlFor: 'diagnose-name-' + idx, style: labelStyle }, t('diseases.name')),
       React.createElement('input', {
+        id: 'diagnose-name-' + idx,
         ref: nameRef, type: 'text', value: item.name || '',
         onChange: (e) => handleNameChange(e.target.value),
         onFocus: () => { if (suggestions.length > 0) setShowSuggestions(true); },
         onKeyDown: handleKeyDown,
         placeholder: t('diseases.namePlaceholder'),
-        'aria-label': t('diseases.name'),
         style: inputStyle, autoComplete: 'off',
         role: 'combobox',
         'aria-expanded': showSuggestions,
@@ -176,24 +176,24 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
 
     // ICD Code (auto-filled or manual)
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('diseases.code')),
+      React.createElement('label', { htmlFor: 'diagnose-icd-' + idx, style: labelStyle }, t('diseases.code')),
       React.createElement('input', {
+        id: 'diagnose-icd-' + idx,
         type: 'text', value: item.code || '',
         onChange: (e) => onUpdate({ code: e.target.value }),
         placeholder: 'z.B. E11',
-        'aria-label': t('diseases.code'),
         style: { ...inputStyle, maxWidth: '120px' },
       })
     ),
 
     // Notes
     React.createElement('div', null,
-      React.createElement('label', { style: labelStyle }, t('diseases.notes')),
+      React.createElement('label', { htmlFor: 'diagnose-notiz-' + idx, style: labelStyle }, t('diseases.notes')),
       React.createElement('input', {
+        id: 'diagnose-notiz-' + idx,
         type: 'text', value: item.notes || '',
         onChange: (e) => onUpdate({ notes: e.target.value }),
         placeholder: t('diseases.notesPlaceholder'),
-        'aria-label': t('diseases.notes'),
         style: inputStyle,
       })
     )

@@ -37,43 +37,43 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
           }, '✕')
         ),
         React.createElement('div', { style: { marginBottom: space.sm } },
-          React.createElement('label', { style: labelStyle }, t('jobs.employer')),
+          React.createElement('label', { htmlFor: 'stelle-firma-' + idx, style: labelStyle }, t('jobs.employer')),
           React.createElement('input', {
+            id: 'stelle-firma-' + idx,
             type: 'text', value: job.employer || '',
             onChange: (e) => updateJob(idx, { employer: e.target.value }),
             placeholder: t('jobs.employerPlaceholder'),
-            'aria-label': t('jobs.employer'),
             style: inputStyle,
           })
         ),
         React.createElement('div', { style: { marginBottom: space.sm } },
-          React.createElement('label', { style: labelStyle }, t('jobs.jobTitle')),
+          React.createElement('label', { htmlFor: 'stelle-titel-' + idx, style: labelStyle }, t('jobs.jobTitle')),
           React.createElement('input', {
+            id: 'stelle-titel-' + idx,
             type: 'text', value: job.jobTitle || '',
             onChange: (e) => updateJob(idx, { jobTitle: e.target.value }),
             placeholder: t('jobs.jobTitlePlaceholder'),
-            'aria-label': t('jobs.jobTitle'),
             style: inputStyle,
           })
         ),
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '110px 1fr', gap: space.sm } },
           React.createElement('div', null,
-            React.createElement('label', { style: labelStyle }, t('jobs.pensum')),
+            React.createElement('label', { htmlFor: 'stelle-pensum-' + idx, style: labelStyle }, t('jobs.pensum')),
             React.createElement('input', {
+            id: 'stelle-pensum-' + idx,
               type: 'text', inputMode: 'numeric', value: job.pensum || '',
               onChange: (e) => updateJob(idx, { pensum: e.target.value }),
               placeholder: '80%',
-              'aria-label': t('jobs.pensum'),
               style: inputStyle,
             })
           ),
           React.createElement('div', null,
-            React.createElement('label', { style: labelStyle }, t('jobs.period')),
+            React.createElement('label', { htmlFor: 'stelle-zeitraum-' + idx, style: labelStyle }, t('jobs.period')),
             React.createElement('input', {
+            id: 'stelle-zeitraum-' + idx,
               type: 'text', value: job.period || '',
               onChange: (e) => updateJob(idx, { period: e.target.value }),
               placeholder: t('jobs.periodPlaceholder'),
-              'aria-label': t('jobs.period'),
               style: inputStyle,
             })
           )

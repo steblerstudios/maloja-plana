@@ -23,12 +23,6 @@ const AUSNAHMEN = {
   // die Felder der Zeilen 2..n haben gar kein sichtbares Label und hängen
   // korrekt am aria-label. Ein htmlFor würde nur die erste Zeile verbinden.
   'LanguageManager.jsx': 'Spaltenüberschrift-Muster (Label nur bei idx === 0)',
-  // Listen-Zeilen: brauchen je Zeile eine eigene id (idx-Suffix). Eigener Batch,
-  // weil eine feste id in einer .map() mehrfach im Dokument landet.
-  'DoctorManager.jsx': 'Listen-Zeilen, id-Suffix je Zeile — offener Batch',
-  'JobManager.jsx': 'Listen-Zeilen, id-Suffix je Zeile — offener Batch',
-  'MedicationManager.jsx': 'Listen-Zeilen, id-Suffix je Zeile — offener Batch',
-  'DiseaseManager.jsx': 'Listen-Zeilen, id-Suffix je Zeile — offener Batch',
 };
 
 const jsxDateien = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -92,6 +86,24 @@ describe('Labels sind mit ihren Feldern verbunden', () => {
     // Verhindert, dass die Liste zur Legende wird: wer aufräumt, muss hier löschen.
     const nochNoetig = Object.keys(AUSNAHMEN).filter((d) => alle.some((b) => b.datei === d));
     expect(nochNoetig.sort()).toEqual(Object.keys(AUSNAHMEN).sort());
+  });
+
+  it('Listen-Zeilen tragen ihre id je Zeile, nicht fest', () => {
+    // Eine feste id in einer .map() landet mehrfach im Dokument; htmlFor trifft
+    // dann immer die erste Zeile. Deshalb hängt jede id am Zeilen-Index.
+    const paare = [
+      ['DoctorManager.jsx', ['arzt-fach-', 'arzt-name-', 'arzt-tel-', 'arzt-notiz-']],
+      ['JobManager.jsx', ['stelle-firma-', 'stelle-titel-', 'stelle-pensum-', 'stelle-zeitraum-']],
+      ['MedicationManager.jsx', ['medi-name-', 'medi-wirkstoff-', 'medi-dosis-', 'medi-einheit-', 'medi-notiz-']],
+      ['DiseaseManager.jsx', ['diagnose-name-', 'diagnose-icd-', 'diagnose-notiz-']],
+    ];
+    for (const [datei, basen] of paare) {
+      const src = fs.readFileSync(path.join(SRC, datei), 'utf8');
+      for (const b of basen) {
+        expect(src, `${datei} · ${b}`).toContain(`htmlFor: '${b}' + idx`);
+        expect(src, `${datei} · ${b}`).toContain(`id: '${b}' + idx`);
+      }
+    }
   });
 
   it('die beiden früher unbenannten KVG-Felder sind verbunden', () => {
