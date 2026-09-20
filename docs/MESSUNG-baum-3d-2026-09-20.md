@@ -393,6 +393,40 @@ Stamm ist beides jetzt deutlich zu sehen — vorher verschwand es an einem 60 cm
 Schneller trotz mehr Dreiecken: die Blätter brauchen bei 11 cm Grösse keine 6×4-Kugel, 5×3
 reicht — das spart rund 40 % der Kronen-Dreiecke, ohne dass man es sieht.
 
+---
+
+# Neunte Runde, 20.09. — rosa Blüte, Schnittkante im Stamm
+
+## «Wieso ist bei der Versicherung die Blüte noch pink?»
+
+Weil **alle** Blüten am ganzen Baum dieselbe Farbe hatten — ein fest eingebautes Rosa, aus
+dem Obstgarten übernommen. An einem blauen Versicherungs-Ast sass damit eine rosa Blüte, die
+zu nichts gehörte.
+
+Jetzt trägt jede Blüte den Ton **ihres** Bereichs, hell aufgelockert (55 % Richtung Weiss):
+die Versicherungs-Blüte blüht bläulich, die Notfall-Blüte rötlich, die Wohnen-Blüte grünlich.
+Technisch derselbe Weg wie bei den Früchten — eine Farbe je Blüte, ein Zeichenaufruf für alle.
+
+## «Der Stamm hat einen Cut drin»
+
+Stimmte, und es war ein echter Baufehler: Wurzelanlauf und Stamm waren **zwei getrennte
+Körper**, die aufeinandergesetzt wurden. Zwei Rohre stossen aber nie exakt gleich dick
+aneinander — der Sprung von 14,8 cm auf 12,4 cm Radius war die sichtbare Kante.
+
+Der Anlauf ist jetzt **in den Stamm hineingerechnet** (eine abklingende Verbreiterung am Fuss)
+statt aufgesetzt: **ein** Körper, keine Naht. Nebeneffekt: ein Mesh weniger, die Zeichenaufrufe
+fielen von 495 auf **266**.
+
+Dazu tauchen die Wurzeln jetzt ins Erdreich ein, statt als Spitzen aus dem Boden zu ragen.
+
+| | vorher | nachher |
+|---|---|---|
+| Zeichenaufrufe | 495 | **266** |
+| Dreiecke | 413 980 | 402 668 |
+| Zeichendauer | 0,64 ms | **0,59 ms** je Bild |
+| Start-Download | 63,41 KB | **63,42 KB** gzip |
+| Tests | 2327 grün | **2327 grün** |
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.

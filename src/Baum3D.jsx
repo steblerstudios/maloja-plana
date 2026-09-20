@@ -91,7 +91,7 @@ const ramp = (v, a, b) => smooth(Math.max(0, Math.min(1, (v - a) / (b - a))));
 // schrumpft ein wachsender Ast zur Bildmitte und schwebt unterwegs in der Luft
 // (erster Messlauf 20.09., im Bild gesehen). So wächst jeder Ast aus seinem
 // Elternast heraus — nichts schwebt, in keiner Wuchsstufe.
-function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenTiefe = 0) {
+function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenTiefe = 0, fussVerbreiterung = 0) {
   const g = new THREE.TubeGeometry(kurve, laengsSegmente, r0, rundSegmente, false);
   const pos = g.attributes.position;
   const tonwerte = [];
@@ -101,6 +101,11 @@ function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenT
     const t = ring / laengsSegmente;
     const p = kurve.getPoint(t);
     let f = THREE.MathUtils.lerp(1, r1 / r0, t);
+    // Wurzelanlauf direkt in den Stamm gerechnet: der Fuss verbreitert sich
+    // und läuft weich aus. Vorher war das ein eigener Kegel obendrauf — und
+    // genau dort sass die sichtbare Schnittkante, weil zwei Teile nie exakt
+    // gleich dick aneinanderstossen. Ein Körper, keine Naht.
+    if (fussVerbreiterung > 0) f *= 1 + fussVerbreiterung * Math.exp(-t / 0.075);
     // Rindenstruktur: Längsrippen, die sich beim Hochwachsen leicht drehen,
     // plus eine feinere zweite Welle. Ohne das wirkt der Stamm wie ein
     // lackiertes Rohr — mit dem Aufwand von null zusätzlichen Dreiecken.
@@ -223,7 +228,9 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   const stammKurve = new THREE.CatmullRomCurve3(stammPunkte);
   // Mehr Umfangspunkte und spürbare Rindentiefe — der Stamm ist das Stück,
   // das man am längsten ansieht.
-  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.145, 0.022, 34, 22, 0.115), borke);
+  // 0,9 Fussverbreiterung: unten rund 55 cm Durchmesser, oben 29 cm — der
+  // Übergang läuft weich aus, ohne Kante.
+  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.145, 0.022, 40, 22, 0.115, 0.9), borke);
   stamm.castShadow = true;
   stamm.receiveShadow = true;
   wurzel.add(stamm);
@@ -241,9 +248,11 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     const laenge = (kraeftig ? 1.9 : 1.2) + zufall() * 0.6;
     const dicke = kraeftig ? 0.105 : 0.06;
     // Flach auslaufend statt steil abtauchend — so bleibt der Wurzelanlauf sichtbar.
-    const dir = new THREE.Vector3(Math.cos(w), -0.08 - zufall() * 0.07, Math.sin(w)).normalize();
+    // Erst flach über den Boden, dann eintauchen: die Biegung unten sorgt
+    // dafür, dass die Wurzel im Erdreich endet statt als Spitze herauszustehen.
+    const dir = new THREE.Vector3(Math.cos(w), -0.1 - zufall() * 0.06, Math.sin(w)).normalize();
     const start = new THREE.Vector3(Math.cos(w) * 0.09, 0.19, Math.sin(w) * 0.09);
-    const { geometrie, ende } = astGeometrie(dir, laenge, dicke, 0.012, new THREE.Vector3(0, -0.12, 0), 0.07);
+    const { geometrie, ende } = astGeometrie(dir, laenge, dicke, 0.012, new THREE.Vector3(0, -0.4, 0), 0.07);
     const mesh = new THREE.Mesh(geometrie, borke);
     mesh.position.copy(start);
     mesh.castShadow = true;
@@ -264,18 +273,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     }
   }
 
-  // Wurzelanlauf: der Fuss verbreitert sich kegelig zum Boden.
-  const anlauf = new THREE.Mesh(
-    rohrMitVerjuengung(
-      new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0.02, 0), new THREE.Vector3(0, 0.3, 0), new THREE.Vector3(0, 0.75, 0)]),
-      0.27, 0.148, 10, 22, 0.13
-    ),
-    borke
-  );
-  anlauf.castShadow = true;
-  anlauf.receiveShadow = true;
-  wurzel.add(anlauf);
-  teile.push({ mesh: anlauf, ...PLAN.stamm, achse: 'y' });
+  // (Der Wurzelanlauf steckt jetzt im Stamm selbst — siehe fussVerbreiterung.)
 
   // ─── Äste: einer je Lebensbereich, jeder mit seinem eigenen Stand ─────────
   const blattPlaetze = [];
@@ -335,12 +333,17 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
       knospenPlaetze.push({ position: punkt.clone().addScaledVector(dir, 0.09), groesse: 1, bereich: bereich.key });
       // Drei Blüten je Spitze, leicht nach aussen gesetzt — sonst sitzen sie
       // später im Laub und die Blütephase bleibt unsichtbar.
+      //
+      // Die Blüte trägt den Farbton IHRES Bereichs, hell aufgelockert. Vorher
+      // war jede Blüte am ganzen Baum dasselbe Rosa — an einem blauen
+      // Versicherungs-Ast sass dann eine rosa Blüte, die zu nichts gehörte.
       for (let t = 0; t < 3; t++) {
         const w = t * GOLDEN;
         bluetenPlaetze.push({
           position: punkt.clone().addScaledVector(dir, 0.12).add(new THREE.Vector3(Math.cos(w) * 0.13, 0.04, Math.sin(w) * 0.13)),
           groesse: 1 + zufall() * 0.35,
           bereich: bereich.key,
+          farbe: new THREE.Color(bereich.farbe).lerp(new THREE.Color(0xfff6f2), 0.55),
         });
       }
       // Deutlich unter dem Blattschopf: die Frucht trägt die Bedeutung
@@ -427,7 +430,8 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     amStamm: true,
   })), PLAN.keimblatt);
   sammelForm(knospeGeo, new THREE.MeshStandardMaterial({ color: farben.knospe, roughness: 0.7 }), knospenPlaetze, PLAN.knospe);
-  sammelForm(blueteGeo, new THREE.MeshStandardMaterial({ color: farben.bluete, roughness: 0.7, side: THREE.DoubleSide }), bluetenPlaetze, PLAN.bluete);
+  // Weiss als Grundton, die Farbe kommt je Blüte aus ihrem Bereich.
+  sammelForm(blueteGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.7, side: THREE.DoubleSide }), bluetenPlaetze, PLAN.bluete);
   bereiche.forEach((b) => {
     // Reif = die Bereichsfarbe (dieselbe wie am flachen Baum). Unreif = dieselbe
     // Farbe, weit ins Blattgrün gezogen. Dazwischen wandert jede Frucht einzeln.
@@ -491,6 +495,9 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
       if (s.reifung) {
         reifeFarbe.copy(s.reifung.unreif).lerp(s.reifung.reif, reifeGrad);
         s.mesh.setColorAt(i, reifeFarbe);
+      } else if (p.farbe) {
+        // Feste eigene Farbe je Platz (Blüten tragen den Ton ihres Bereichs).
+        s.mesh.setColorAt(i, p.farbe);
       }
       if (p.amStamm) {
         hilfsObjekt.position.set(p.position.x * (0.5 + 0.5 * stammG), p.position.y * stammG, p.position.z);
@@ -504,7 +511,7 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
       s.mesh.setMatrixAt(i, hilfsObjekt.matrix);
     });
     s.mesh.instanceMatrix.needsUpdate = true;
-    if (s.reifung && s.mesh.instanceColor) s.mesh.instanceColor.needsUpdate = true;
+    if (s.mesh.instanceColor) s.mesh.instanceColor.needsUpdate = true;
     s.mesh.visible = sichtbar;
   });
 }
