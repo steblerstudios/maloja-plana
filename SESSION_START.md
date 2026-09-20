@@ -7,7 +7,55 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-19 (`main` = `335a557` nach **PR #233** Release 0.1.37-beta, dazu dieser Doku-PR · **live `index-fc8ee6ec.js` = 0.1.37-beta seit 19.09.**, Tag `v0.1.37-beta` = `335a557` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 2027 Tests grün, size-limit 63.5 kB von 65)
+**Stand:** 2026-09-20, 16:35 (`main` = `9aa4aa7` nach **PR #241** Release 0.1.38-beta · **live weiterhin `index-fc8ee6ec.js` = 0.1.37-beta**, Tag `v0.1.37-beta` = `335a557` · **gemergt, aber NICHT live: die ganze K31-Runde** · **1 offener Code-PR: #242** · 2324 Tests grün, size-limit 64,44 kB von 65)
+
+> ### 🛑 VOR DEM NÄCHSTEN DEPLOY LESEN (20.09.2026)
+>
+> **`main` trägt 0.1.38-beta, ist aber nicht ausgeliefert — und in diesem Stand steckt ein
+> Rechenfehler, den PR #242 behebt.** Zürich liess den Deckel nach § 4 Abs. 3 EG KVG mit
+> Kindern ganz entfallen: `const deckel = !gruppe ? praemie : Infinity;`. Nachgerechnet
+> (Region 1, Einkommen 0, Prämie 300/Mt., ein Kind): der erwachsenen Person werden **5'428**
+> angerechnet, obwohl ihre Prämie **3'600** beträgt — **rund 1'776 Franken zu viel im Jahr.**
+> Die Zeile kam mit `c08fa4f` (19.09.) und ist **nicht** im Tag `v0.1.37-beta`; live ist sie
+> also nie gewesen. **Ein Deploy von 0.1.38 ohne #242 würde sie ausliefern.**
+>
+> Empfehlung: **#242 zuerst mergen**, dann deployen — die Versionsnummer 0.1.38-beta bleibt,
+> es ist derselbe unveröffentlichte Stand.
+
+> ### ⭐ AKTUALISIERUNG 2026-09-20 (K31: fünf Kantone + gemeinsamer Rahmen, 0.1.38-beta bereit)
+>
+> **Gemergt (7 PRs):** #234 Doku 0.1.37 · #235 Vite 4.5 → 7.3.6 · #236 ZH · #239 BE + AG
+> (Nachtrag, siehe unten) · #240 Rahmen + SG · #241 Release 0.1.38-beta.
+> **Nicht deployt.** `deploy.sh` von `main` ist Stebler Studios' Schritt.
+>
+> **K31 — fünf Kantone rechnen nach ihrem eigenen amtlichen Modell:**
+> ZH (Eigenanteil 8,4/10,5 %) · BE (Stufentabelle) · AG (Richtprämie − 17,5 %) · SG
+> (Belastungsgrenze, steigt mit dem Einkommen) auf `main`; **VD fertig auf
+> `feat/k31-ipv-vd`, bewusst ohne PR**, bis das OVAM die Formeln bestätigt.
+> Neu `src/config/kantonsModell.js` — der gemeinsame Rahmen: fünf Regeln, die bei 26 Kantonen
+> 130 Kopien geworden wären, liegen an einer Stelle. Neu `scripts/ipv-abdruck.mjs`: zeichnet
+> das Rechen-Verhalten über 78'995 Eingabe-Kombinationen auf, als Beleg für
+> verhaltensgleiche Umbauten.
+>
+> **Der Fehler, der die Runde prägte:** Ohne erfasste Krankenkassenprämie fiel der gesetzliche
+> Deckel still weg — die App zeigte die Obergrenze statt des Anspruchs (in AG gemessen bis
+> 40 % zu viel). Betraf **alle vier** Kantone mit Deckel; VD fiel zuerst durchs Raster, weil
+> sein Zweig in keinem PR lag. 🛑 **SG ist der Gegenfall: dort gibt es gar keinen Deckel**
+> (weder sGS 331.538 noch 331.111 kennen einen) — darum die benannte Konstante
+> `KEIN_PRAEMIENDECKEL`, damit das Auslassen als Entscheid lesbar ist.
+>
+> **Offene Fragen an vier Ämter:** `docs/sources/FRAGEN-AN-DIE-AEMTER.md`, fünf Punkte
+> (SVA ZH · ASV BE · OVAM VD · SVA AG · SVA SG).
+>
+> 🛑 **Zwei Merge-Fallen, die diesen Tag gekostet haben:**
+> 1. **Gestapelte PRs hängen nicht von selbst um.** #237 und #238 landeten in ihren
+>    Basis-Zweigen statt auf `main`; nur ZH war da. GitHub hängt erst um, wenn der Basis-Zweig
+>    **beim Mergen gelöscht** wird. Repariert mit #239. Seither: **flache PRs auf `main`**,
+>    und nach jedem Merge an der Quelle nachmessen (`git cat-file -e origin/main:<datei>`),
+>    nicht dem «merged»-Häkchen glauben.
+> 2. **Ein verhaltensgleicher Umbau beweist nicht, dass das Verhalten richtig war.** Der
+>    Abdruck belegte, dass #240 nichts änderte — der ZH-Deckelfehler war da längst drin und
+>    bekam beim Umbau sogar einen erklärenden Kommentar. Siehe #242.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-19 (0.1.37-beta live)
 >
