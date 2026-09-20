@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import FruchtMitIcon from './FruchtMitIcon.jsx';
 import Icons from './IconSystem.jsx';
+import { fruchtKoerper } from './baumFruechte3d.js';
 
 // MESSPROTOTYP — nur im Arbeitsbaum mess/baum-3d, nicht für main gedacht.
 // Portiert die Wuchs-Logik der 3D-Vorlage (wachsender-baum-3d.html) auf unsere
@@ -58,57 +59,6 @@ function rng(seed) {
 }
 const smooth = (t) => t * t * (3 - 2 * t);
 const ramp = (v, a, b) => smooth(Math.max(0, Math.min(1, (v - a) / (b - a))));
-
-// Vier Grundformen decken unsere elf Früchte ab (wie FRUIT_FORM, nur räumlich).
-function fruchtGeometrie(form) {
-  if (form === 'laenglich') {
-    const punkte = [];
-    for (let i = 0; i <= 10; i++) {
-      const t = i / 10;
-      punkte.push(new THREE.Vector2(Math.sin(t * Math.PI) * (0.055 + t * 0.075) + 0.004, t * 0.34 - 0.17));
-    }
-    return new THREE.LatheGeometry(punkte, 9);
-  }
-  if (form === 'beere') return new THREE.SphereGeometry(0.075, 8, 6);
-  if (form === 'buschel') {
-    // Traube: ein kleines Büschel aus einer Form, damit es ein Zeichenaufruf bleibt.
-    const teile = [];
-    [[0, 0, 0], [-0.06, -0.07, 0.02], [0.06, -0.07, -0.02], [0, -0.14, 0.03], [0.02, -0.2, -0.01]].forEach((p) => {
-      const k = new THREE.SphereGeometry(0.05, 7, 5);
-      k.translate(p[0], p[1], p[2]);
-      teile.push(k);
-    });
-    return teile.reduce((a, b) => mergeGeometrien(a, b));
-  }
-  const g = new THREE.SphereGeometry(0.11, 10, 8);
-  g.scale(1, 0.92, 1);
-  return g;
-}
-
-// Kleiner eigener Zusammenführer statt BufferGeometryUtils — spart Gewicht und
-// reicht für unsere Fälle (gleiche Attribute, keine Gruppen).
-function mergeGeometrien(a, b) {
-  const g = new THREE.BufferGeometry();
-  ['position', 'normal', 'uv'].forEach((name) => {
-    const aa = a.getAttribute(name);
-    const bb = b.getAttribute(name);
-    if (!aa || !bb) return;
-    const zusammen = new Float32Array(aa.array.length + bb.array.length);
-    zusammen.set(aa.array, 0);
-    zusammen.set(bb.array, aa.array.length);
-    g.setAttribute(name, new THREE.BufferAttribute(zusammen, aa.itemSize));
-  });
-  const ai = a.getIndex();
-  const bi = b.getIndex();
-  if (ai && bi) {
-    const versatz = a.getAttribute('position').count;
-    const idx = [];
-    for (let i = 0; i < ai.count; i++) idx.push(ai.getX(i));
-    for (let i = 0; i < bi.count; i++) idx.push(bi.getX(i) + versatz);
-    g.setIndex(idx);
-  }
-  return g;
-}
 
 // Ein Ast: Rohr entlang einer leicht gebogenen Linie, unten dicker als oben.
 //
@@ -376,7 +326,9 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   sammelForm(blueteGeo, new THREE.MeshStandardMaterial({ color: farben.bluete, roughness: 0.7, side: THREE.DoubleSide }), bluetenPlaetze, PLAN.bluete);
   bereiche.forEach((b) => {
     sammelForm(
-      fruchtGeometrie(b.form),
+      // Die echte Sorte, nicht bloss eine Grobform: Basis trägt Äpfel,
+      // Behörden Zwetschgen, Wohnen Birnen — wie am flachen Baum.
+      fruchtKoerper(b.fruit),
       new THREE.MeshStandardMaterial({ color: b.farbe, roughness: 0.5 }),
       fruchtPlaetze[b.key].map((p) => ({ ...p, bereich: b.key })),
       PLAN.frucht

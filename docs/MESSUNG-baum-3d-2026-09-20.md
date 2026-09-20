@@ -233,12 +233,47 @@ beiden Bäumen buchstäblich dieselbe, nicht bloss ähnlich.
    zusammen. Derselbe Fehlertyp wie die umbenannte Hauptdatei eine Runde zuvor: **das
    Messgerät zeigte eine Verbesserung, die keine war.**
 
+---
+
+# Sechste Runde, 20.09. — jede Sorte ihre eigene Frucht
+
+Auftrag: «die Basis-Früchte sollen alle Äpfel sein, die Behörden-Früchte Pflaumen usw.»
+
+**Das war ein echter Mangel, kein Geschmacksthema.** Der räumliche Baum kannte nur vier
+Grobformen (rundlich · länglich · Beere · Büschel). Damit sahen Apfel und Aprikose gleich aus,
+Birne und Zwetschge auch — und dem Baum fehlte genau das, was ihn trägt: dass jeder
+Lebensbereich SEINE Schweizer Frucht hat.
+
+**Neu `src/baumFruechte3d.js`:** elf Früchte als Drehkörper aus je einer Silhouette —
+dieselbe Denkweise wie die flachen Silhouetten des Dashboards, nur um die eigene Achse
+gedreht. Apfel mit Delle oben und unten · Birne mit schmalem Hals · Zwetschge länglich ·
+Aprikose rund mit Naht · Baumnuss fast kugelig · Haselnuss mit Fruchtbecher · Hagebutte mit
+Kelchzipfel · Heidelbeere mit Krönchen · Kirsche am langen Stiel · Traube und Vogelbeere als
+Büschel aus vielen kleinen Kugeln. Die **Zuordnung Frucht → Bereich bleibt, wo sie hingehört**:
+in `data/lebensbereiche.js`. Diese Datei kennt nur Körper.
+
+Jede Frucht ist **ein** Zeichenaufruf (Fruchtfleisch und Stiel in einer Form), und die Form
+bleibt in Graustufen erkennbar — das ist unser dritter Barrierefreiheits-Kanal neben Farbe
+und Wort.
+
+| | vorher | nachher |
+|---|---|---|
+| Fruchtformen | 4 Grobformen | **11 echte Sorten** |
+| Dreiecke | 236 472 | 248 316 |
+| Zeichendauer | 1,27 ms | **1,22 ms** je Bild |
+| Start-Download | 63,42 KB | **63,41 KB** gzip |
+| Baum-Stück | 143,0 KB | 144,2 KB gzip |
+| Tests | grün | **2327 grün** |
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
 - Die **Anspruchs-Ringe** um eine Frucht (wenn ein Anspruch gedeckt ist) fehlen im räumlichen
   Baum noch.
 - Bei voller Krone drängeln sich die Marken oben links; eine ruhigere Verteilung wäre möglich.
+- Die vier Bereiche **ohne** eigenes Kapitel (Gesundheit, Arbeit, Familie, Vorsorge) hängen
+  noch nicht am Dashboard-Baum — dort gibt es sieben Äste, nicht elf. Ihre Früchte
+  (Hagebutte, Haselnuss, Kirsche, Traube) sind aber schon gebaut.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.
