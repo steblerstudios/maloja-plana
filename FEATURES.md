@@ -19,6 +19,7 @@
 
 | Feature | Status | Tag/Commit | Belegt durch / offen |
 |---|---|---|---|
+| **Lebensbaum räumlich** (Dashboard `DatenWirken`): ein Ast je Kapitel mit seiner Schweizer Frucht, Reife je Frucht nach Ausfüllstand, Umschalter flach↔räumlich mit gemerkter Wahl (`or5_baumAnsicht`), **räumlich als Standard**; Marken/Werkzeug-Pillen als echte Knöpfe über der Leinwand (Tastatur + Screenreader) | `verified-live` | PR #246 (`07a54fb`), ausgeliefert mit 0.1.39-beta | Live `index-nd0WhuaA.js` verweist auf **`Baum3D-KpQjzqKK.js`** → **HTTP 200 / 144 490 Bytes**, **Gegenprobe erfundener Name → 404**; `or5_baumAnsicht` im Live-Bundle. 2345 Tests grün, size-limit 64,96 kB. **Offen:** Anspruchs-Ringe (Oktober), Messung auf einem echten Telefon. Herleitung: `docs/MESSUNG-baum-3d-2026-09-20.md` |
 | a11y-Pass 3 (PR #19): Tresor-Labels, goldDeep-Token, Onboarding Zurück/Skip/Fortschritt, Arztkoffer-Kontrast, Rechner-Reiter-Scroll, roseDeep-Fix, Torten-SVG aria-hidden | `verified-live` | `0ebb865` (Merge PR #19) | Live-Hash `index-1fb26e10.js` == main-Build (2026-07-10) |
 | Release `0.1.24-beta` (Gepäck-Kür, a11y-Review, Linkshänder-Modus u.a.) | `verified-live` | `v0.1.24-beta` | in `main`/live enthalten, Hash bestätigt |
 | Kapitalbezugssteuer (Bund Art.38 DBG ÷5 + Kanton) | `verified-live` | `e4fe262` | in `main` (Vorfahr von `0ebb865`) = Teil des Live-Builds `index-1fb26e10.js`; 535 Tests grün, browserverif |
