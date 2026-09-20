@@ -117,8 +117,8 @@ describe('Persona-Matrix: Sozialhilfe-Logik für jede Person plausibel', () => {
 describe('Persona-Matrix: IPV ohne amtlichen Beleg (E9) zeigt für niemanden einen Betrag', () => {
   it('jede Person, jeder unbelegte Kanton: amount null, nie «berechtigt», nie «über der Grenze»', () => {
     const problems = [];
-    // K31: ZH ist belegt (eigenes Modell) und hier ausgenommen.
-    for (const p of MATRIX.filter((m) => m.canton !== 'ZH')) {
+    // K31: ZH und BE sind belegt (je ein eigenes Modell) und hier ausgenommen.
+    for (const p of MATRIX.filter((m) => !['ZH', 'BE'].includes(m.canton))) {
       const r = calculateIPV(p.data);
       if (r.belegt !== false) problems.push(`${p.id}: belegt !== false`);
       if (r.eligible) problems.push(`${p.id}: eligible trotz unbelegtem Kanton`);
@@ -138,7 +138,7 @@ describe('Persona-Matrix: IPV (Prämienverbilligung) für jede Person plausibel 
     const problems = [];
     for (const p of MATRIX) {
       const r = calculateIPV(p.data);
-      // K31: ZH rechnet nur mit genügend Angaben (Geburtsdatum, PLZ …), sonst Orientierung ohne Betrag.
+      // K31: ZH und BE rechnen nur mit genügend Angaben (Geburtsdatum, PLZ …), sonst Orientierung ohne Betrag.
       if (r.belegt === false) { if (r.amount !== null || r.eligible) problems.push(`${p.id}: Orientierung mit Betrag`); continue; }
       if (!finite(r.amount)) { problems.push(`${p.id}: amount nicht finit`); continue; }
       if (r.amount < 0) problems.push(`${p.id}: amount < 0`);

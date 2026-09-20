@@ -100,6 +100,7 @@ const PLZ_RANGES = [
 
 let _plzModule = null;
 let _zhModule = null;
+let _beModule = null;
 
 export function cantonFromPLZ(plz) {
   const num = parseInt(plz, 10);
@@ -121,9 +122,10 @@ export function cantonFromPLZ(plz) {
 // ersten PLZ-Eintrag.
 export function preloadPLZ() {
   if (!_plzModule) import('../data/plzGemeinde.js').then(m => { _plzModule = m; }).catch(() => {});
-  // K31: das ZH-Modell der Prämienverbilligung braucht die Gemeinde und liegt darum im selben
-  // Moment nach (eigener Chunk, hält das Hauptbundle klein).
+  // K31: die Kantonsmodelle der Prämienverbilligung brauchen die Gemeinde und liegen darum im
+  // selben Moment nach (je ein eigener Chunk, hält das Hauptbundle klein).
   if (!_zhModule) import('./ipvZuerich.js').then(m => { _zhModule = m; }).catch(() => {});
+  if (!_beModule) import('./ipvBern.js').then(m => { _beModule = m; }).catch(() => {});
 }
 
 // Primäre Gemeinde aus PLZ (lokal). Braucht das geladene PLZ-Modul; vorher null
@@ -191,7 +193,7 @@ export function getHouseholdInfo(data) {
 // Solange ein Kanton `belegt: false` trägt, zeigt die App dort keinen Betrag, kein
 // «Berechtigt» und keine Grenze, sondern nur eine Orientierung (calculateIPV unten).
 // Das Feld `beleg` je Kanton ist Flag und Quellen-Feld zugleich:
-//   beleg: null                                  → nicht amtlich belegt (heute 25 von 26; ZH belegt seit K31)
+//   beleg: null                                  → nicht amtlich belegt (heute 24 von 26; ZH und BE belegt seit K31)
 //   beleg: { quelle: 'Amt + Erlass/Seite bzw. URL, aufs Wort genau',
 //            stand: 'Datum der Prüfung bzw. Gültigkeitsjahr, z. B. 2026' }
 //                                                → belegt; zeigt wieder einen Betrag
@@ -202,7 +204,10 @@ export const CANTONAL_IPV = {
   // Prämienregion und Haushalt ab, darum hier keine Einzelwerte (die Musterwerte sind entfernt).
   ZH: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'ZH' },
     beleg: { quelle: 'EG KVG ZH (LS 832.01) §§ 3–7; RRB Nr. 297/2025 und 947/2025; SVA Zürich, Prämienverbilligung: Leistung, Einkommensgrenzen 2026, Regionale Durchschnittsprämien 2026 (svazurich.ch)', stand: 'Jahr 2026, geprüft 2026-09-19' } },
-  BE: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
+  // BE (K31): eigenes Modell in config/ipvBern.js (Stufentabelle); Grenze und Höchstbetrag
+  // hängen von Prämienregion und Haushalt ab, darum hier keine Einzelwerte.
+  BE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
+    beleg: { quelle: 'KKVV BE (BSG 842.111.1, Stand 01.12.2025) Art. 9, 10, 10a, 10d; Amt für Sozialversicherungen, Berechnungsschema und Informationen zur Prämienverbilligung, gültig ab 1. Januar 2026 (asv.dij.be.ch)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   LU: { maxIncome: 54000, subsidySingle: 2700, subsidyFamily: 5400, subsidyChild: 1350, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch', beleg: null },
   UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
@@ -373,11 +378,16 @@ export function calculateIPV(data) {
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
-  // K31: ZH rechnet nach dem amtlichen Modell (config/ipvZuerich.js). Solange PLZ-Daten und
-  // ZH-Modul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
+  // K31: ZH und BE rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js bzw.
+  // config/ipvBern.js). Solange PLZ-Daten und Kantonsmodul noch laden: Orientierung wie ohne
+  // Beleg, nie ein geratener Betrag.
   if (canton === 'ZH') {
     if (!_zhModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
     return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
+  }
+  if (canton === 'BE') {
+    if (!_beModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
+    return _beModule.ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
   }
 
   let maxAnnualSubsidy;

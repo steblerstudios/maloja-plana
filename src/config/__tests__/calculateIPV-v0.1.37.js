@@ -1,5 +1,5 @@
 // Kopie von calculateIPV aus v0.1.37-beta (Commit 335a557), umbenannt, ohne Kommentare, Logik unverändert.
-// Referenz für den K31-Regressionstest: alle Kantone ausser ZH müssen exakt so rechnen.
+// Referenz für den K31-Regressionstest: alle Kantone ausser ZH und BE müssen exakt so rechnen.
 // Kein Produktionscode liest diese Datei.
 import { CANTONAL_IPV, getHouseholdInfo } from '../cantonalData.js';
 

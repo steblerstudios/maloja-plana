@@ -114,14 +114,18 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
   });
 });
 
-describe('K31 Regression: alle Kantone ausser ZH rechnen exakt wie v0.1.37-beta', () => {
+// Erweitert 20.09.2026 um BE (zweiter Kanton mit eigenem Modell): belegt sind jetzt 24 der
+// 26 Kantone unverändert, nicht mehr 25.
+const EIGENES_MODELL = ['ZH', 'BE'];
+
+describe('K31 Regression: alle Kantone ausser ZH und BE rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
     { adults: 1, children: [{ age: 2 }, { age: 7 }, { age: 12 }] },
   ];
   const faelle = [];
-  for (const canton of [...CANTON_CODES.filter((k) => k !== 'ZH'), 'XX', '']) {
+  for (const canton of [...CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)), 'XX', '']) {
     for (const household of haushalte) {
       for (const monthlyIncome of [0, 800, 2500, 4000, 6000, 12000]) {
         for (const kkPremium of [undefined, 0, 380]) {
@@ -136,12 +140,13 @@ describe('K31 Regression: alle Kantone ausser ZH rechnen exakt wie v0.1.37-beta'
     }
   }
 
-  it(`unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+  it(`24 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(24);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
   it('belegt (simuliert, linearer Abbau): identisch', () => {
-    const zurueck = kantoneBelegtSimulieren(CANTON_CODES.filter((k) => k !== 'ZH'));
+    const zurueck = kantoneBelegtSimulieren(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)));
     try {
       for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
     } finally {

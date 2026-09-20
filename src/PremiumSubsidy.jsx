@@ -91,7 +91,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
   };
 
   const hasIncome = !!(data.finanzen && data.finanzen.monthlyIncome);
-  // Nur Kantone mit einem Einzelwert: ZH (K31) rechnet nach Region und Haushalt, hat keinen.
+  // Nur Kantone mit einem Einzelwert: ZH und BE (K31) rechnen nach Region und Haushalt, haben keinen.
   const belegteKantone = Object.entries(CANTONAL_IPV).filter(([, v]) => !!(v.beleg && v.beleg.quelle) && v.subsidySingle != null);
 
   // --- IPV-Lebenslinie (Phase 2) -------------------------------------------
@@ -297,7 +297,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ),
 
     // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
-    // nach seinem eigenen Modell gerechnet wurde (heute ZH). Eine konkrete Zahl ohne ihr Jahr
+    // nach seinem eigenen Modell gerechnet wurde (heute ZH und BE). Eine konkrete Zahl ohne ihr Jahr
     // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
       React.createElement('div', null, t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })),

@@ -356,6 +356,89 @@ Der heutige App-Wert (maxIncome/subsidySingle BE) lag dem Unteragenten nicht vor
 2. Prämienverbilligung beantragen, Amt für Sozialversicherungen Kanton Bern, Stand ohne Datum. https://www.asv.dij.be.ch/de/start/themen/pv/pv_anrecht-auf-pv-beantragen.html — abgerufen 16.09.2026
 3. Publikationen (Informationsblatt 2026, Berechnungsschema 2026), Amt für Sozialversicherungen Kanton Bern. https://www.asv.dij.be.ch/de/start/themen/pv/formulare---publikationen.html — abgerufen 16.09.2026
 
+### Nachprüfung 20.09.2026 (K31, Einbau in die App)
+
+Quelle [1] erneut abgerufen und Seite für Seite gegen die Erhebung vom 16.09. gehalten:
+**alle Werte 2026 unverändert** — Grenzen 35'000 / 45'000, die fünf Einkommensstufen, alle
+42 Monatsbeträge der beiden Tabellen (3 Regionen × 7 Zeilen je Tabelle), Vermögensfreibetrag 17'000 je Familienmitglied, die
+5 % Vermögenszuschlag und die sechs Sozialabzüge. **Keine Abweichung zur Recherche vom
+16.09.** Neu gelesen wurden Quelle [3] (Publikationsseite), das Informationsblatt 2026 [4]
+und der Rechtstext [5], den die Erhebung unter «Offen» offengelassen hatte.
+
+Damit schliessen sich drei der vier offenen Punkte:
+
+- **Rechtstext** — KKVV (BSG 842.111.1, Stand 01.12.2025) [5] trägt dieselben Zahlen wie das
+  Berechnungsschema: Art. 9 Abs. 1 «Vom Reinvermögen sind für jedes Mitglied der Familie
+  17'000 Franken abzuziehen», Art. 9 Abs. 2 «fünf Prozent des nach Absatz 1 reduzierten
+  Reinvermögens» und die Abzüge a–f (13'000 Paar · 13'000 unverheiratetes Paar nach Art. 19
+  Abs. 2 EG KUMV · 9'750 alleinstehender Elternteil · 2'200 alleinstehende Person · 15'000 /
+  12'500 / 10'000 je Kind), Art. 10a Abs. 1/3 die Erwachsenenbeträge.
+  **Die Abzüge a/a1, b und c schliessen sich gegenseitig aus**: b gilt dem «alleinstehenden
+  Elternteil, der gemeinsam mit Personen nach Artikel 5 eine Familie bildet», c der
+  «alleinstehende[n] Person, die nach Artikel 5 **nicht** zur Familie zählt». Eine
+  alleinerziehende Person erhält also 9'750, nicht zusätzlich 2'200.
+- **KVG-Mindestquoten** — belegt: Art. 10d Abs. 1 «Kinder erhalten 80 Prozent der Prämie
+  verbilligt, wenn das massgebende jährliche Familieneinkommen 45'000 Franken nicht
+  übersteigt»; Art. 10b Abs. 3/4 und Art. 10c Abs. 1 «50 Prozent der Prämie» für junge
+  Erwachsene in Ausbildung. Massgebende Prämie ist jeweils «die durchschnittliche
+  Vorjahresprämie … der 20 günstigsten Krankenversicherer der Region». Die festen
+  Monatsbeträge im Berechnungsschema sind das Ergebnis dieser Quoten.
+- **Untergrenze der ersten Stufe** — der Rechtstext schreibt «unter 9000 Franken» und dann
+  «zwischen 9001 und 17'000 Franken»; das Berechnungsschema schreibt «bis 9'000». Damit
+  bleibt genau der Wert 9'000 (und alles zwischen 9'000 und 9'001) im Erlass ungeregelt. Die
+  App folgt der Tabelle des Amts, das die Verfügung erlässt: bis und mit 9'000 gilt die
+  oberste Stufe. Nach unten ist nichts begrenzt — ein massgebendes Einkommen von 0 liegt in
+  der obersten Stufe.
+- **Informationsblatt 2026** [4] gelesen; drei Punkte, die die App braucht: Konkubinatspaare
+  mit gemeinsamem Kind rechnen «wie bei einem verheirateten Paar» · ab einem ausgewiesenen
+  **Bruttovermögen über Fr. 750'000** wird das Anrecht nicht mehr automatisch geprüft,
+  sondern nur auf Antrag · junge Erwachsene zählen zur Familie der Eltern, wenn ihr
+  korrigiertes Reineinkommen unter Fr. 14'000 liegt (KKVV Art. 5 Abs. 1).
+
+**Prämienregionen — vollständige Liste jetzt belegt.** Das Berechnungsschema druckt die
+Gemeinden von Region 1 (15) und Region 2 (212) vollständig ab, Region 3 ist «Alle übrigen».
+Rechtlich massgebend ist die BAG-Zuteilung: KKVV Art. 10 Abs. 5 «Die Gemeinden werden den
+Prämienregionen zugeteilt, die vom Bundesamt für Gesundheit gestützt auf Artikel 61 Absatz 2
+KVG festgelegt werden.» Die App bestimmt die Region deshalb über `src/data/praemienRegionen.js`
+(BAG, Stand 2026) und hält die Liste des Schemas als Gegenprobe dagegen (Test
+`src/config/__tests__/ipvBern.test.js`). Beide Quellen decken sich bei 333 der 334 Berner
+Gemeinden:
+
+- ⚠️ **Reutigen (BFS 767)**: beim BAG Region 2, in der R2-Liste des Schemas nicht enthalten
+  (dort also «alle übrigen» = Region 3). Unterschied: bis zu CHF 156 im Jahr je erwachsene
+  Person (13.— im Monat auf der obersten Stufe) und CHF 79.80 je Kind. **Die App zeigt
+  für diese Gemeinde keinen Betrag**, bis geklärt ist, welche Lesart gilt. Beim ASV nachfragen.
+- **Schlosswil** steht in der R2-Liste des Schemas, hat aber weder im
+  Ortschaftenverzeichnis (swisstopo 2025) noch in der BAG-Tabelle 2026 eine eigene
+  BFS-Nummer. Ohne Folge für die Rechnung — über eine Postleitzahl erreicht die App diesen
+  Namen nicht —, aber ein zweiter Hinweis darauf, dass die abgedruckte Liste nicht
+  vollständig nachgeführt ist.
+
+**2027 ist noch nicht publiziert** (geprüft 20.09.2026): die Publikationsseite [3] führt nur
+Informationsblatt und Berechnungsschema 2025 und 2026; `Berechnungsschema 2027_de.pdf` und
+`Informationsblatt 2027_de.pdf` antworten mit HTTP 404 — ebenso wie ein erfundener Dateiname
+als Kontrollprobe, der 404 allein belegt also nichts, wohl aber zusammen mit [3]. Darum liegt
+in der App derselbe Jahres-Riegel wie bei ZH: ab dem 01.01.2027 rechnet sie nicht weiter.
+
+**Was die App mit BE rechnet und was nicht** (`src/config/ipvBern.js`): gerechnet wird nur die
+alleinstehende Person über 25 mit Kindern bis 18. Keine Zahl — mit Grund in der Anzeige — bei
+Paaren und Verheirateten, bei unbekanntem oder nicht eindeutigem Alter (die Tabelle kennt
+«älter als 25» und «älter als 18 und noch nicht 25»; wer im Anspruchsjahr genau 25 wird, steht
+in keiner Zeile), bei Kindern ohne Alter oder über 18, bei Bruttovermögen über 750'000, bei
+nicht eindeutiger Gemeinde und ab 2027.
+
+**Offen geblieben (nicht im Code):** wie in ZH ist das massgebende Einkommen in der App eine
+Näherung — amtlich zählt das Reineinkommen aus den Steuerdaten mit den Aufrechnungen des
+Schemas, die App summiert die erfassten Einkommen plus Säule 3a; das Vermögen ist die Summe
+der erfassten Posten, nicht das Reinvermögen inkl. Liegenschaft und abzüglich Schulden. **In
+einer Stufentabelle wiegt das schwerer als in einem linearen Modell**: eine Stufe ist in
+Region 1 bis zu CHF 888 im Jahr wert. Ebenfalls nicht gerechnet: Quellenbesteuerte (75 % des
+Bruttoeinkommens als korrigiertes Reineinkommen), junge Erwachsene (Ausbildungsstatus und
+eigenes Einkommen nicht erfasst), Sozialhilfe- und EL-Beziehende (eigener Weg).
+
+4. Informationen zur Prämienverbilligung, «Gültig ab 1. Januar 2026», Direktion für Inneres und Justiz, Amt für Sozialversicherungen (PDF, 5 S.). https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Informationsblatt%202026_de.pdf — abgerufen 20.09.2026
+5. Kantonale Krankenversicherungsverordnung (KKVV), BSG 842.111.1, vom 25.10.2000, Stand 01.12.2025 (Beschlussdatum 22.10.2025). https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1 — abgerufen 20.09.2026
+
 ---
 
 ## LU — Luzern
