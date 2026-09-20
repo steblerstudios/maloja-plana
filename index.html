@@ -104,6 +104,31 @@
   <link rel="apple-touch-icon" href="/icon-192.png">
   <link rel="preload" href="/fonts/lexend-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/lexend-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Alles, was NUR ohne JavaScript gilt. Mit JavaScript ignoriert der Browser
+       diesen Block vollständig; ein Inline-Script wäre nicht erlaubt, inline
+       *styles* schon (CSP: style-src 'unsafe-inline').
+
+       1. #root darf keinen Platz belegen. Gemessen am 20.09.2026: #root ist per
+          CSS height:100% = volle Bildschirmhöhe und bleibt leer, wenn React nie
+          startet — der Kern-Text dahinter begann dadurch exakt eine
+          Bildschirmhöhe unter der Kante (y=768 bei 768 px Höhe). Wer ohne
+          JavaScript kam, sah eine LEERE Seite. Das galt auch für den alten
+          Kurzhinweis, war also nie bloss ein neues Problem.
+
+       2. Die Farben. Sie stehen hier und nicht bei .kern-text, weil theme-init.js
+          selbst ein Script ist: ohne JavaScript läuft es nie, also wird
+          data-theme nie gesetzt und jede :root[data-theme=…]-Regel bliebe tot.
+          prefers-color-scheme funktioniert dagegen ohne JavaScript. -->
+  <noscript><style>
+    #root { display: none; }
+    body { background: #F2F2F0; color: #24262A; }
+    .kern-text .leise { color: #6A6E74; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #22211F; color: #E8E6E1; color-scheme: dark; }
+      .kern-text .leise { color: #A8A5A0; }
+      .kern-text a { color: #C4A870; }
+    }
+  </style></noscript>
   <title>Maloja Plana — Schweizer Lebensordner: Steuern & Sozialhilfe</title>
   <style>
     * {
@@ -131,15 +156,84 @@
     @media (max-width: 480px) {
       .mountain-label { display: none; }
     }
+    /* Kern-Text ohne JavaScript (SEO-Audit 20.09.2026, Massnahme B).
+       Hier nur Satz und Rhythmus — die FARBEN stehen im <noscript>-Stilblock im
+       <head>, weil sie nur ohne JavaScript überhaupt eine Rolle spielen.
+       Eigene Klasse statt Inline-Stil, weil Inline kein @media kennt. */
+    .kern-text {
+      max-width: 640px; margin: 0 auto; padding: 48px 24px 64px;
+      font-family: 'Lexend', sans-serif; text-align: left; line-height: 1.6;
+    }
+    .kern-text h1 { font-size: 28px; margin-bottom: 8px; }
+    .kern-text h2 { font-size: 17px; margin: 28px 0 8px; font-weight: 600; }
+    .kern-text p  { margin-bottom: 12px; }
+    .kern-text ul { margin: 0 0 12px 20px; }
+    .kern-text li { margin-bottom: 6px; }
+    .kern-text .leise { font-size: 14px; }
   </style>
 </head>
 <body>
   <div id="root"></div>
+  <!-- Kern-Text ohne JavaScript — SEO-Audit 20.09.2026, Massnahme B.
+       Vorher standen hier 18 Wörter, und die waren eine Fehlermeldung («Diese App
+       benötigt JavaScript»). Das war der einzige Fliesstext der ganzen Domain und
+       damit die Grundlage, aus der KI-Crawler ohne JS-Ausführung (GPTBot,
+       PerplexityBot, ClaudeBot) ihr Bild von Maloja Plana bauen.
+       Für Menschen mit JavaScript ändert sich nichts: <noscript> wird dann nie
+       gerendert, es gibt also kein Aufblitzen (vgl. K4).
+       Kein Cloaking: der Text beschreibt wahrheitsgemäss, was die App ist — samt
+       geschlossener Beta und samt Orientierungs-Vorbehalt. Wortlaut absichtlich
+       aus README.md und den i18n-Sätzen der App übernommen, nicht neu erfunden,
+       damit er nicht davon abweicht. Bei Änderungen an den Fakten der App muss
+       dieser Block mit. Wächter: src/__tests__/kernTextOhneJs.test.js -->
   <noscript>
-    <div style="max-width:480px;margin:60px auto;padding:24px;font-family:'Lexend',sans-serif;text-align:center;color:#24262A">
-      <h1 style="font-size:24px;margin-bottom:12px">Maloja Plana</h1>
-      <p>Diese App benötigt JavaScript. Bitte aktiviere JavaScript in deinen Browser-Einstellungen.</p>
-      <p style="margin-top:8px;color:#6A6E74;font-size:14px">This app requires JavaScript to run.</p>
+    <div class="kern-text">
+      <h1>Maloja Plana</h1>
+      <p><strong>Ein ruhiger Überblick über das Leben in der Schweiz — lokal gespeichert,
+      offline-fähig, kostenlos.</strong></p>
+
+      <p>Maloja Plana ist ein <strong>Schweizer Lebensordner</strong>. Er hilft Menschen in
+      der Schweiz zu verstehen, was ihnen zusteht und was als Nächstes ansteht — von Steuern
+      über Prämienverbilligung und Sozialhilfe bis zur Notfallkarte. In fünf Sprachen
+      (Deutsch, Français, Italiano, Rumantsch — provisorisch, English), ohne Konto.</p>
+
+      <h2>Was darin steckt</h2>
+      <ul>
+        <li><strong>Steuern</strong> — Bundes- und Kantonssteuer als Orientierung, auf Basis
+        der Tarife der Eidgenössischen Steuerverwaltung.</li>
+        <li><strong>Prämienverbilligung (IPV)</strong> — eine Orientierung, ob sich ein Antrag
+        lohnt. Jeder Kanton rechnet anders; die App rechnet kantonal.</li>
+        <li><strong>Sozialhilfe und Ergänzungsleistungen</strong> — eine Orientierung nach den
+        SKOS-Richtlinien, inklusive kantonaler Vermögensfreibeträge.</li>
+        <li><strong>Mindestlohn</strong> — ob der eigene Stundenlohn den kantonalen Mindestlohn
+        erreicht, mit Verweis auf die zuständige Rechtsstelle.</li>
+        <li><strong>Vorsorge</strong> — AHV-Referenzalter und ein ruhiger Blick auf später.</li>
+        <li><strong>Notfallkarte</strong> — die wichtigsten Angaben zum Ausdrucken, als QR-Code
+        auch ohne Internet lesbar.</li>
+        <li><strong>Dokumente und Budget</strong> — an einem Ort, nach Lebensbereichen geordnet.</li>
+      </ul>
+
+      <h2>Warum es keinen Server gibt</h2>
+      <p>Alle Angaben bleiben auf dem Gerät (localStorage und IndexedDB). Kein Konto, kein
+      Tracking, keine Werbung, keine Weitergabe an Dritte. Nach dem ersten Laden funktioniert
+      die Anwendung auch offline — in der Regel in den Bereichen, die schon einmal geöffnet
+      wurden. Der Quellcode ist offen
+      (<a href="https://github.com/steblerstudios/maloja-plana">AGPL-3.0</a>).</p>
+
+      <h2>Was es nicht ist</h2>
+      <p>Die Rechner und Übersichten sind <strong>Orientierungshilfen auf Basis öffentlicher
+      Daten — keine Rechts- oder Finanzberatung</strong>. Der tatsächliche Anspruch wird von
+      der zuständigen Stelle geprüft; verbindlich ist immer deren Verfügung.</p>
+
+      <p class="leise">Maloja Plana ist in einer geschlossenen Beta und braucht zurzeit einen
+      Zugangscode. Die Anwendung selbst benötigt JavaScript — bitte aktivieren Sie JavaScript
+      in den Browser-Einstellungen.</p>
+      <p class="leise">Stebler Studios · Basel · info@malojaplana.ch</p>
+
+      <p class="leise" lang="en">This page needs JavaScript to run the app. Maloja Plana is a
+      Swiss life organiser — taxes, health-insurance premium subsidies, social assistance,
+      minimum wage, pension, emergency card. All data stays on your device: no account, no
+      server, no tracking. Free and open source. Currently in closed beta.</p>
     </div>
   </noscript>
   <script type="module" src="/src/main.jsx"></script>
