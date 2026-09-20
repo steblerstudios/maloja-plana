@@ -72,7 +72,7 @@ export default {
         iv: { titel: 'Prestazioni AI', text: 'Reintegrazione prima della rendita: provvedimenti professionali, mezzi ausiliari e, se necessario, una rendita. Annunciarsi presto conta di più.' },
         hilflosenentschaedigung: { titel: 'Assegno per grandi invalidi', text: { sie: 'Un importo mensile se ha bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito, spesso trascurato.', du: 'Un importo mensile se hai bisogno di aiuto regolare nella vita quotidiana — indipendente dal reddito, spesso trascurato.' } },
         el: { titel: 'Prestazioni complementari (PC)', text: 'Se una rendita o un reddito non copre le spese di vita, le PC integrano. È un diritto, non assistenza.' },
-        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Chi riceve PC è esentato dai premi; con un reddito basso si ha comunque spesso diritto a un aiuto.' },
+        ipv: { titel: 'Riduzione dei premi (RIP)', text: 'Per chi riceve PC il premio è riconosciuto come importo forfettario — al massimo il premio medio cantonale. Non è un esonero. Con un reddito basso senza PC si ha comunque spesso diritto a un aiuto.' },
         steuern: { titel: 'Deduzioni fiscali legate alla disabilità', text: 'Le spese di malattia e disabilità — cure, mezzi ausiliari, trasporti — sono deducibili dal reddito imponibile.' },
         serafe: { titel: 'Esenzione dal canone radio/TV', text: 'Chi riceve prestazioni complementari (PC) è esentato dal canone SERAFE su richiesta — recuperabile retroattivamente.' },
         sbbBegleitabo: { titel: 'Abbonamento per accompagnatori FFS', text: 'Un abbonamento per accompagnatori gratuito sul SwissPass permette a una persona accompagnatrice (o a un cane d\'assistenza) di viaggiare gratis sui trasporti pubblici — in caso di menomazione duratura, fisica, psichica o cognitiva. Domanda con conferma medica. La vecchia carta verde di carta non è più valida.' },
@@ -1009,7 +1009,7 @@ export default {
 
   glossar: {
     ipv: { sie: 'IPV/RIP — riduzione individuale dei premi: un contributo cantonale sul premio della cassa malati se il reddito è basso.', du: 'IPV/RIP — riduzione individuale dei premi: un contributo cantonale sul premio della cassa malati se il reddito è basso.' },
-    skos: 'COSAS — Conferenza svizzera dell’azione sociale: definisce le norme dell’aiuto sociale.',
+    skos: 'COSAS — Conferenza svizzera dell’azione sociale: raccomanda le norme dell’aiuto sociale. Sono vincolanti solo se un cantone le recepisce.',
     el: 'PC — prestazioni complementari: integrano AVS o AI quando la rendita non basta.',
     mietbeitraege: 'Contributi d’affitto — contributi cantonali all’affitto per famiglie a basso reddito.',
     ahv: 'AVS — assicurazione vecchiaia e superstiti: la rendita di base statale in età avanzata o alla morte di un genitore.',
@@ -2141,7 +2141,7 @@ export default {
     el: { sie: 'Le prestazioni complementari aiutano quando la rendita AVS o AI non basta per vivere. Il Suo comune può dirLe se ne ha diritto.', du: 'Le prestazioni complementari aiutano quando la rendita AVS o AI non basta per vivere. Il tuo comune può dirti se ne hai diritto.' },
     alv: { sie: 'L\'assicurazione contro la disoccupazione La protegge in caso di perdita del lavoro. I contributi vengono detratti direttamente dallo stipendio.', du: 'L\'assicurazione contro la disoccupazione ti protegge in caso di perdita del lavoro. I contributi vengono detratti direttamente dallo stipendio.' },
     rav: { sie: 'L\'URC (ufficio regionale di collocamento) è il Suo punto di contatto in caso di disoccupazione. Si iscriva dal primo giorno.', du: 'L\'URC (ufficio regionale di collocamento) è il tuo punto di contatto in caso di disoccupazione. Iscriviti dal primo giorno.' },
-    skos: 'Le direttive COSAS determinano il livello dell\'aiuto sociale. Ogni cantone le applica in modo leggermente diverso.',
+    skos: 'Le direttive COSAS raccomandano il livello dell\'aiuto sociale. Sono vincolanti solo nella misura in cui un cantone le recepisce nel proprio diritto.',
     iv: 'L\'assicurazione invalidità (AI) sostiene le persone durevolmente colpite da malattia o infortunio.',
     // ─── P2: Riferimento, per dopo ────────────────────────
     selbstbehalt: { sie: 'Oltre alla franchigia, paga il 10% delle spese mediche di tasca Sua — si chiama partecipazione ai costi. Massimo CHF 700 all\'anno.', du: 'Oltre alla franchigia, paghi il 10% delle spese mediche di tasca tua — si chiama partecipazione ai costi. Massimo CHF 700 all\'anno.' },

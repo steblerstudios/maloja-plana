@@ -72,7 +72,7 @@ export default {
         iv: { titel: 'Disability insurance (IV)', text: 'Reintegration before pension: vocational measures, aids and, if needed, a pension. Registering early matters most.' },
         hilflosenentschaedigung: { titel: 'Helplessness allowance', text: 'A monthly amount if you need regular help with everyday acts — independent of income, often overlooked.' },
         el: { titel: 'Supplementary benefits (EL)', text: 'If a pension or income doesn’t cover living costs, EL tops it up. It is a right, not assistance.' },
-        ipv: { titel: 'Premium reduction (IPV)', text: 'Those on supplementary benefits are exempt from premiums; others on a low income still often qualify for help.' },
+        ipv: { titel: 'Premium reduction (IPV)', text: 'With supplementary benefits the premium is counted as a flat amount — at most the cantonal average premium. That is not an exemption. On a low income without supplementary benefits, you often still qualify.' },
         steuern: { titel: 'Disability-related tax deductions', text: 'Illness and disability costs — care, aids, transport — can be deducted from taxable income.' },
         serafe: { titel: 'Radio/TV fee exemption', text: 'Households receiving supplementary benefits (EL) are exempt from the SERAFE radio/TV fee on request — and can claim it back retroactively.' },
         sbbBegleitabo: { titel: 'SBB companion pass', text: 'A free companion pass on the SwissPass lets one companion (or an assistance dog) travel free on public transport — for a lasting impairment, whether physical, psychological or cognitive. Apply with a medical confirmation. The old green paper card is no longer valid.' },
@@ -1009,7 +1009,7 @@ export default {
 
   glossar: {
     ipv: 'IPV — individual premium reduction: a cantonal subsidy toward your health-insurance premium when your income is low enough.',
-    skos: 'SKOS — Swiss Conference for Social Assistance: sets the guidelines for how much social assistance you are entitled to.',
+    skos: 'SKOS — Swiss Conference for Social Assistance: recommends guidelines for social assistance. They are binding only where a canton adopts them.',
     el: 'EL — supplementary benefits: a top-up to AHV or IV pensions when they do not cover living costs.',
     mietbeitraege: 'Rent subsidies — cantonal contributions toward housing rent for low-income households.',
     ahv: 'AHV — old-age and survivors’ insurance: the state basic pension in old age or when a parent dies.',
@@ -2141,7 +2141,7 @@ export default {
     el: 'Supplementary benefits help when your AHV or IV pension is not enough to live on. Your municipality can tell you if you are eligible.',
     alv: 'Unemployment insurance protects you in case of job loss. Contributions are deducted directly from your salary.',
     rav: 'The RAV (regional employment office) is your contact point when unemployed. Register there on your first day.',
-    skos: 'SKOS guidelines determine social assistance levels. Each canton applies them slightly differently.',
+    skos: 'SKOS guidelines recommend social assistance levels. They are binding only to the extent that a canton adopts them into its own law.',
     iv: 'Disability insurance (IV) supports people permanently affected by illness or accident.',
     // ─── P2: Reference, later ──────────────────────────────
     selbstbehalt: 'On top of the franchise, you pay 10% of medical costs yourself — this is called the co-payment. Maximum CHF 700 per year.',
