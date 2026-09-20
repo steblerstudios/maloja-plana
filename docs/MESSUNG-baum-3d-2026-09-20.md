@@ -184,12 +184,61 @@ Die Marken kosten rund **1 ms je Bild**, weil bei jeder Drehung sieben Knöpfe n
 werden. Das ist tragbar; falls es je knapp wird, liessen sie sich direkt verschieben,
 statt sie neu zu zeichnen.
 
+---
+
+# Fünfte Runde, 20.09. — Werkzeug-Früchte und das Icon in der Frucht
+
+Auftrag: Werkzeug-Früchte dazu, und das Bereichs-Icon in die Frucht eingebaut — «sweet spot
+für beides».
+
+**Nicht neu erfunden:** Die Frucht mit ausgestanztem Icon ist **dieselbe Zeichnung, die der
+flache Baum schon benutzt** (`FruchtMitIcon`). Sie wird einmal in ein Bild gerendert und im
+Raum als Schildchen aufgehängt, das sich immer zur Kamera dreht. Damit ist die Bildsprache in
+beiden Bäumen buchstäblich dieselbe, nicht bloss ähnlich.
+
+- **Je Ast eine Leitfrucht** in Ast-Farbe mit dem Bereichs-Icon als Negativ (0,55 Einheiten
+  bei rund 5 Einheiten Baumhöhe).
+- **Werkzeug-Früchte** am selben Ast, kleiner (0,33) und später reifend — Zuordnung wie am
+  flachen Baum: Steuer und Budget an Finanzen, IPV an Versicherungen, Sozialhilfe an
+  Behörden, Lohn an Ausbildung, Notfall an Notfall.
+- **Die Marke am Ast trägt dasselbe Icon**, dort scharf gezeichnet statt als Bild, und
+  darunter die **Werkzeug-Pillen** — anklickbar, jede führt in ihr Werkzeug.
+
+## Zahlen
+
+| | Wert |
+|---|---|
+| Start-Download (Hauptdatei + geteilter Frucht-Chunk) | **63,42 KB gzip**, Grenze 65 |
+| Baum-Stück | 143 KB gzip |
+| Zeichendauer | **1,27 ms** je Bild, schlechtestes 8,9 |
+| Schildchen mit Bild | **13 von 13** (nachgezählt, nicht geschaut) |
+| Tests | 2327 grün |
+
+## Drei Funde in dieser Runde
+
+1. 🛑 **Ein SVG ohne `xmlns` lädt als Datenbild überhaupt nicht.** Alle 13 Schildchen blieben
+   leer. Im Bild war das kaum zu sehen (die Früchte aus Geometrie hängen ja trotzdem am Baum) —
+   **erst das Nachzählen** «wie viele Texturen haben Bildinhalt?» brachte die 0 zutage.
+   Gegenprobe im Browser: mit Attribut lädt das Bild (64×64), ohne Attribut Fehler. React
+   schreibt das Attribut nicht mit, jetzt wird es ergänzt.
+2. 🛑 **Eine zweite React-Wurzel darf nicht im Lauf der ersten entstehen.** Das Rendern der
+   Frucht lief aus einem `useEffect` heraus, also mitten in Reacts Durchlauf: zwei Warnungen
+   im Dauerlauf («flushSync … while React was already rendering», «synchronously unmount a
+   root»). Ein Schritt später (`setTimeout 0`) ist alles sauber. Gegenprobe: Szene zweimal neu
+   ausgelöst, Fehlerzahl blieb bei 33 — die 33 stammen aus der Fassung davor.
+3. 🛑 **Die Grössen-Grenze mass plötzlich zu wenig.** Weil beide Bäume dieselbe Frucht
+   benutzen, hat der Build sie in einen **eigenen, geteilten Chunk** ausgelagert
+   (`FruchtMitIcon-*.js`, 10,3 KB). Die Hauptdatei sank dadurch scheinbar von 64 auf 53 KB —
+   **heruntergeladen wird beim Start aber beides**. `size-limit` prüft jetzt beide Dateien
+   zusammen. Derselbe Fehlertyp wie die umbenannte Hauptdatei eine Runde zuvor: **das
+   Messgerät zeigte eine Verbesserung, die keine war.**
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
-- Die **Werkzeug-Früchte** des flachen Baums (Steuer, Budget, IPV, Lohn, Sozialhilfe,
-  Notfall) hängen noch nicht am räumlichen. Sie wären der nächste Schritt derselben Idee.
-- Ebenso die **Anspruchs-Ringe** um eine Frucht, wenn ein Anspruch gedeckt ist.
+- Die **Anspruchs-Ringe** um eine Frucht (wenn ein Anspruch gedeckt ist) fehlen im räumlichen
+  Baum noch.
+- Bei voller Krone drängeln sich die Marken oben links; eine ruhigere Verteilung wäre möglich.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.

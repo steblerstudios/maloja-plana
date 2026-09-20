@@ -1,5 +1,9 @@
 import React from 'react';
 import * as THREE from 'three';
+import { createRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
+import FruchtMitIcon from './FruchtMitIcon.jsx';
+import Icons from './IconSystem.jsx';
 
 // MESSPROTOTYP — nur im Arbeitsbaum mess/baum-3d, nicht für main gedacht.
 // Portiert die Wuchs-Logik der 3D-Vorlage (wachsender-baum-3d.html) auf unsere
@@ -130,6 +134,54 @@ function astGeometrie(richtung, laenge, r0, r1, biegung) {
   const ende = richtung.clone().multiplyScalar(laenge).add(biegung.clone().multiplyScalar(2));
   const kurve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), mitte, ende]);
   return { geometrie: rohrMitVerjuengung(kurve, r0, r1, 5, 6), ende };
+}
+
+// ─── Die Frucht mit dem ausgestanzten Bereichs-Icon, im Raum ────────────────
+//
+// Nicht neu erfunden: es ist DIESELBE Zeichnung, die der flache Baum schon
+// benutzt (FruchtMitIcon — Fruchtsilhouette in Ast-Farbe, Icon als echtes
+// Negativ). Sie wird einmal in ein Bild gerendert und im Raum als Schildchen
+// aufgehängt, das sich immer zur Kamera dreht. So bleibt das Icon aus jeder
+// Blickrichtung lesbar, und die Bildsprache ist in beiden Bäumen dieselbe.
+function fruchtSchildchen(fruit, iconName, farbe, kantePx = 128) {
+  const leinwand = document.createElement('canvas');
+  leinwand.width = kantePx * 2;
+  leinwand.height = kantePx * 2;
+  const textur = new THREE.CanvasTexture(leinwand);
+  textur.colorSpace = THREE.SRGBColorSpace;
+
+  // 🛑 Nicht sofort zeichnen: diese Funktion läuft aus einem useEffect, also
+  // mitten in Reacts eigenem Durchlauf. Dort eine zweite React-Wurzel zu
+  // rendern und wieder abzuräumen, gibt genau die zwei Warnungen, die die
+  // Konsole gemeldet hat («flushSync … while React was already rendering»,
+  // «synchronously unmount a root»). Ein Schritt später ist der Durchlauf
+  // vorbei und beides ist sauber.
+  setTimeout(() => {
+    const behaelter = document.createElement('div');
+    const root = createRoot(behaelter);
+    flushSync(() => {
+      root.render(React.createElement(FruchtMitIcon, { fruit, iconName, color: farbe, size: kantePx }));
+    });
+    let svg = behaelter.innerHTML;
+    root.unmount();
+    if (!svg) return;
+    // 🛑 Ohne xmlns lädt ein SVG als Datenbild NICHT — gemessen: mit Attribut
+    // 64×64 geladen, ohne Attribut Fehler. React schreibt es nicht mit, also
+    // ergänzen wir es hier. Ohne diese Zeile blieben alle Schildchen leer.
+    if (!svg.includes('xmlns=')) svg = svg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+
+    const bild = new Image();
+    bild.onload = () => {
+      leinwand.getContext('2d').drawImage(bild, 0, 0, leinwand.width, leinwand.height);
+      textur.needsUpdate = true;
+      if (typeof textur.__fertig === 'function') textur.__fertig();
+    };
+    // data: ist in unserer CSP für Bilder erlaubt (img-src 'self' data: blob:) —
+    // es geht nichts nach aussen, das Bild entsteht hier im Browser.
+    bild.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }, 0);
+
+  return textur;
 }
 
 // Ankerpunkt je Lebensbereich: der äusserste Fruchtplatz seines Astes. Daran
@@ -341,7 +393,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     };
   });
 
-  return { wurzel, teile, streu, anker };
+  return { wurzel, teile, streu, anker, fruchtPlaetze };
 }
 
 // Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Lebensbereich.
@@ -359,7 +411,9 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
     tl.mesh.visible = g > 0.004;
     // Der Stamm wächst nach oben, nicht aus dem Nichts in die Breite.
     if (tl.achse === 'y') tl.mesh.scale.set(0.5 + 0.5 * g, Math.max(0.001, g), 0.5 + 0.5 * g);
-    else tl.mesh.scale.setScalar(Math.max(0.001, g));
+    // `basis` ist die Endgrösse eines Schildchens — ohne sie schrumpfte jede
+    // Frucht-mit-Icon auf eine Welteinheit zusammen.
+    else tl.mesh.scale.setScalar(Math.max(0.001, g) * (tl.basis || 1));
   });
 
   // Wie weit ist der Stamm? Nur dafür da, dass die Keimblätter mit ihm steigen.
@@ -386,7 +440,7 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   });
 }
 
-export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen }) {
+export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen, werkzeuge, onWerkzeugWaehlen }) {
   const halter = React.useRef(null);
   const [keinWebGL, setKeinWebGL] = React.useState(false);
   // Wo hängt welcher Ast gerade auf dem Bildschirm? Daran kleben die
@@ -443,8 +497,49 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       knospe: isDarkMode ? 0x8c7a52 : 0xa89055,
       bluete: isDarkMode ? 0xc9a8b0 : 0xe6cbd3,
     };
-    const { wurzel, teile, streu, anker } = baumAufbauen(bereiche, farben);
+    const { wurzel, teile, streu, anker, fruchtPlaetze } = baumAufbauen(bereiche, farben);
     szene.add(wurzel);
+
+    // ─── Leitfrucht + Werkzeug-Früchte ───────────────────────────────────────
+    // Je Ast eine grosse Frucht mit dem Bereichs-Icon als Negativ, und daran die
+    // kleineren Werkzeug-Früchte — dieselbe Zuordnung wie am flachen Baum
+    // (Steuer und Budget an Finanzen, IPV an Versicherungen, und so fort).
+    const schildchen = [];
+    // Die Bilder laden asynchron — wenn eines fertig ist, einmal neu zeichnen.
+    const textureFertig = () => anfordern();
+    bereiche.forEach((b) => {
+      const plaetze = fruchtPlaetze[b.key] || [];
+      if (plaetze.length === 0) return;
+
+      const leit = anker.find((a) => a.key === b.key);
+      const leitTextur = b.fruit ? fruchtSchildchen(b.fruit, b.iconName || b.key, b.farbe, 128) : null;
+      if (leitTextur && leit) {
+        leitTextur.__fertig = textureFertig;
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: leitTextur, transparent: true, depthWrite: false }));
+        sprite.position.copy(leit.punkt).add(new THREE.Vector3(0, -0.5, 0));
+        wurzel.add(sprite);
+        // 0,55 Welteinheiten bei rund 5 Einheiten Baumhöhe: gut erkennbar, ohne
+        // dass die Frucht den Baum erschlägt (0,95 tat genau das — im Bild gesehen).
+        teile.push({ mesh: sprite, ...PLAN.frucht, basis: 0.55, bereich: b.key });
+        schildchen.push(leitTextur);
+      }
+
+      // Werkzeuge an denselben Ast, etwas tiefer und deutlich kleiner — sie sind
+      // Beiwerk, nicht der Bereich selbst.
+      const werkzeugeHier = (werkzeuge || []).filter((w) => w.area === b.key);
+      werkzeugeHier.forEach((w, i) => {
+        const platz = plaetze[Math.min(plaetze.length - 1, 4 + i * 5)];
+        if (!platz) return;
+        const textur = b.fruit ? fruchtSchildchen(b.fruit, w.iconName || b.iconName || b.key, b.farbe, 96) : null;
+        if (!textur) return;
+        textur.__fertig = textureFertig;
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: textur, transparent: true, depthWrite: false, opacity: 0.92 }));
+        sprite.position.copy(platz.position).add(new THREE.Vector3(0, -0.24, 0));
+        wurzel.add(sprite);
+        teile.push({ mesh: sprite, ab: 70, bis: 94, basis: 0.33, bereich: b.key });
+        schildchen.push(textur);
+      });
+    });
 
     const proBereich = {};
     bereiche.forEach((b) => { proBereich[b.key] = b.pct; });
@@ -620,7 +715,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       renderer.dispose();
       if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
     };
-  }, [bereiche, isDarkMode, gesamtPct]);
+  }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette]);
 
   if (keinWebGL) return null; // Aufrufer zeigt dann den flachen Baum.
 
@@ -646,33 +741,68 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       const b = nachSchluessel[m.key];
       if (!b) return null;
       const anklickbar = typeof onBereichWaehlen === 'function';
-      return React.createElement('button', {
+      const IconFn = Icons[b.iconName] || Icons[m.key];
+      const meineWerkzeuge = (werkzeuge || []).filter((w) => w.area === m.key);
+      return React.createElement('div', {
         key: m.key,
-        type: 'button',
-        onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
-        'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent',
         style: {
           position: 'absolute', left: m.x + '%', top: m.y + '%',
           transform: 'translate(-50%, -50%)',
-          display: 'inline-flex', alignItems: 'center', gap: '5px',
-          padding: '2px 8px 2px 4px', borderRadius: '999px',
-          fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
           // Hinten liegende Äste treten zurück, statt vorne mitzudrängeln.
-          opacity: m.vorne ? 1 : 0.38,
-          color: palette ? palette.text : '#222',
-          background: (palette ? palette.surface : '#fff') + 'e6',
-          border: '1px solid ' + b.farbe + '55',
-          cursor: anklickbar ? 'pointer' : 'default',
+          opacity: m.vorne ? 1 : 0.34,
           pointerEvents: m.vorne ? 'auto' : 'none',
         },
       },
-        React.createElement('span', {
-          style: { width: '8px', height: '8px', borderRadius: '50%', background: b.farbe, flex: '0 0 auto' },
-        }),
-        React.createElement('span', null, b.name || m.key),
-        React.createElement('span', {
-          style: { opacity: 0.6, fontVariantNumeric: 'tabular-nums' },
-        }, b.pct + '%')
+        React.createElement('button', {
+          type: 'button',
+          onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
+          'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent',
+          style: {
+            display: 'inline-flex', alignItems: 'center', gap: '5px',
+            padding: '2px 8px 2px 4px', borderRadius: '999px',
+            fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
+            color: palette ? palette.text : '#222',
+            background: (palette ? palette.surface : '#fff') + 'e6',
+            border: '1px solid ' + b.farbe + '55',
+            cursor: anklickbar ? 'pointer' : 'default',
+          },
+        },
+          // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
+          // statt als Bild, damit es auch klein lesbar bleibt.
+          React.createElement('span', {
+            style: { width: '13px', height: '13px', color: b.farbe, flex: '0 0 auto', display: 'inline-flex' },
+            'aria-hidden': 'true',
+          }, IconFn ? IconFn() : null),
+          React.createElement('span', null, b.name || m.key),
+          React.createElement('span', {
+            style: { opacity: 0.6, fontVariantNumeric: 'tabular-nums' },
+          }, b.pct + '%')
+        ),
+        // Werkzeug-Früchte: am Baum hängen sie als kleine Früchte, hier stehen
+        // sie als anklickbare Pillen darunter — wie am flachen Baum.
+        meineWerkzeuge.length ? React.createElement('div', {
+          style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2px' },
+        }, ...meineWerkzeuge.map((w) => React.createElement('button', {
+          key: w.key,
+          type: 'button',
+          onClick: onWerkzeugWaehlen ? () => onWerkzeugWaehlen(w) : undefined,
+          'aria-label': w.label || w.short,
+          style: {
+            display: 'inline-flex', alignItems: 'center', gap: '3px',
+            padding: '1px 7px 1px 3px', borderRadius: '999px',
+            fontFamily: 'inherit', fontSize: '10px', lineHeight: 1.25, whiteSpace: 'nowrap',
+            color: palette ? palette.mid : '#555',
+            background: b.farbe + '14',
+            border: '1px solid ' + b.farbe + '33',
+            cursor: onWerkzeugWaehlen ? 'pointer' : 'default',
+          },
+        },
+          React.createElement('span', {
+            style: { width: '7px', height: '7px', borderRadius: '50%', background: b.farbe, opacity: 0.85, flex: '0 0 auto' },
+          }),
+          w.short || w.label
+        ))) : null
       );
     })
   );

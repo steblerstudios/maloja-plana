@@ -17,6 +17,12 @@ import { formFuerFrucht } from './data/baumFormen.js';
 // von three.js mit, auch wer den Baum nie umschaltet.
 const Baum3D = React.lazy(() => import('./Baum3D.jsx'));
 
+// Welches Icon steht für welches Werkzeug — dieselben Namen wie im IconSystem.
+const WERKZEUG_ICON = {
+  tax: 'steuern', budget: 'budgetWallet', lohn: 'work',
+  ipv: 'praemienverbilligung', sozial: 'sozialhilfe', notfall: 'emergency',
+};
+
 // K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
 // silbentrennen statt zu clippen — Kurzlabels lösen die meisten Fälle, das hier
 // fängt den Rest ab (Bauliste E20).
@@ -524,7 +530,18 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
       bereiche: (bereiche || []).map((b) => ({
         key: b.key, farbe: b.color, form: formFuerFrucht(b.fruit), pct: b.pct,
         name: b.short || b.title, idx: b.idx,
+        // fruit + iconName: daraus entsteht im Raum dieselbe Frucht mit
+        // ausgestanztem Icon, die auch am flachen Baum hängt.
+        fruit: b.fruit, iconName: b.iconName,
       })),
+      // Werkzeug-Früchte am selben Ast wie am flachen Baum — nur die aktiven,
+      // sonst hängt Beiwerk am Baum, das nirgends hinführt.
+      werkzeuge: active.map((c) => ({
+        key: c.key, area: c.area, label: c.label, short: c.short,
+        iconName: WERKZEUG_ICON[c.key],
+        ziel: navMap[c.key],
+      })),
+      onWerkzeugWaehlen: onNavigate ? (w) => { if (w.ziel) onNavigate(w.ziel); } : undefined,
       // Der Weg ins Kapitel bleibt erhalten — das kann der flache Baum, und ohne
       // ihn wäre der räumliche hübscher, aber ärmer.
       onBereichWaehlen: onSelectChapter ? (b) => onSelectChapter(b.idx) : undefined,
