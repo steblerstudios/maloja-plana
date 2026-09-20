@@ -227,14 +227,18 @@ export function ipvVaud(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // die vorsichtige Lesart, und er greift ohnehin nur, wenn die Prämie tiefer ist als der Subside.
   const praemieMonat = Number(data.versicherungen?.kkPremium) || 0;
   const praemie = praemieMonat * 12;
-  const deckeln = (gesamt, erwachsenenTeil) => (praemie > 0
-    ? Math.round(Math.min(erwachsenenTeil, praemie) + (gesamt - erwachsenenTeil))
-    : Math.round(gesamt));
+  // Ohne erfasste Prämie greift dieser Deckel nicht, und eine Zahl ohne ihn wäre die
+  // Obergrenze, nicht der Anspruch. Derselbe Befund der Fachprüfung vom 20.09.2026, der in
+  // ZH, BE und AG schon behoben ist — in VD gefunden, als `main` in den Zweig nachgezogen
+  // wurde. Darum Orientierung, bis die Prämie dasteht.
+  if (!(praemie > 0)) return orientierung('praemie');
+  const deckeln = (gesamt, erwachsenenTeil) =>
+    Math.round(Math.min(erwachsenenTeil, praemie) + (gesamt - erwachsenenTeil));
   const annual = deckeln(r.annual, r.erwachseneAnnual);
   const maxAnnual = deckeln(r.maximal, r.erwachseneMaximal);
   const spezifisch = spezifischerSubsideMoeglich({
     praemieMonat, region, rdu, mehrere: kinderZahl > 0,
-    erwachseneAnnual: Math.min(r.erwachseneAnnual, praemie > 0 ? praemie : Infinity),
+    erwachseneAnnual: Math.min(r.erwachseneAnnual, praemie),
   });
   const gemeinsam = {
     canton: 'VD', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehaltVD',

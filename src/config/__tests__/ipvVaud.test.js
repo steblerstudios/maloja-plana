@@ -245,11 +245,24 @@ describe('K31 calculateIPV für VD (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, plz = '1003', city = 'Lausanne', children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  // Die Prämie ist vorbelegt, weil die App ohne sie bewusst keine Zahl zeigt: der Deckel nach
+  // LVLAMal art. 16 al. 1bis liesse sich sonst nicht anwenden (Befund 20.09.2026, siehe den
+  // eigenen Fall weiter unten). 700/Monat ist so hoch, dass der Deckel in den übrigen Fällen
+  // nicht bindet — sie prüfen damit weiter das Modell, nicht den Deckel.
+  const person = ({ monthlyIncome = 0, plz = '1003', city = 'Lausanne', children = [], dob = '1980-05-01', kkPremium = 700, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'VD', dateOfBirth: dob, maritalStatus: 'single', household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
     versicherungen: kkPremium != null ? { kkPremium } : {},
+  });
+
+  it('ohne erfasste Prämie keine Zahl: der Deckel nach LVLAMal art. 16 al. 1bis liesse sich sonst nicht anwenden', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
+  });
+
+  it('eine tiefe Prämie deckelt den Betrag — der Riegel nimmt dem Deckel nichts weg', () => {
+    // 200/Monat = 2 400/Jahr liegt unter dem ordentlichen Subside von 3 972 → der Deckel greift.
+    expect(calculateIPV(person({ kkPremium: 200 }))).toMatchObject({ belegt: true, annual: 2400 });
   });
 
   it('Einzelperson, Einkommen 0, Lausanne: 331/Monat, 3 972/Jahr, Grenze 50 000', () => {
