@@ -411,7 +411,14 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear')
         : ipv.belegt === false
           ? t(ipv.noteKey, ipv.noteParams)
-          : ipv.canton ? t('ipv.incomeAboveLimit', { value: ipv.cantonData?.maxIncome || '' }) : t('finanzUebersicht.selectCanton'),
+          // Ohne amtlich publizierte Grenze (AG) darf hier keine behauptet werden — sonst steht
+          // in der Kachel «Einkommen über Grenze (CHF )», eine Grenze ohne Zahl. Dann sagt der
+          // Kanton selbst, warum es keinen Anspruch gibt (Befund Fachprüfung 20.09.2026).
+          : ipv.canton
+            ? (ipv.cantonData?.maxIncome != null
+              ? t('ipv.incomeAboveLimit', { value: ipv.cantonData.maxIncome })
+              : t(ipv.noteKey, ipv.noteParams))
+            : t('finanzUebersicht.selectCanton'),
       onClick: () => onNavigate('premium'),
     }),
 

@@ -202,11 +202,15 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, plz = '3011', city = '', children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '3011', city = '', children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'BE', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
     versicherungen: kkPremium != null ? { kkPremium } : {},
+  });
+
+  it('ohne erfasste Prämie keine Zahl (KKVV Art. 10 Abs. 1)', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
   });
 
   it('Einzelperson, Einkommen 0, Stadt Bern (Region 1): 221/Monat, 2 652/Jahr, Grenze 35 000', () => {

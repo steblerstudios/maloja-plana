@@ -135,6 +135,11 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   if (r.unklar) return orientierung('mindestanspruch');
   // § 4 Abs. 3 EG KVG: höchstens die Bruttoprämie — nur bei einer Person ist die erfasste Prämie ihre eigene.
   const praemie = Number(data.versicherungen?.kkPremium) * 12;
+  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
+  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
+  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
+  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
+  if (!(praemie > 0)) return orientierung('praemie');
   const deckel = !gruppe && praemie > 0 ? praemie : Infinity;
   const annual = Math.round(Math.min(r.total, deckel));
   const maxAnnual = Math.round(Math.min(r.maximal, deckel));

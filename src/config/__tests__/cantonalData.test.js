@@ -140,16 +140,16 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
   });
 });
 
-// K31: ZH ist seit 19.09.2026 belegt, BE und VD seit 20.09.2026 — alle drei mit eigenem
-// Modell (Tests in ipvZuerich.test.js, ipvBern.test.js bzw. ipvVaud.test.js).
-const EIGENES_MODELL = ['ZH', 'BE', 'VD'];
+// K31: ZH ist seit 19.09.2026 belegt, BE, AG und VD seit 20.09.2026 — alle vier mit eigenem
+// Modell (Tests in ipvZuerich.test.js, ipvBern.test.js, ipvAargau.test.js bzw. ipvVaud.test.js).
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'VD'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 23 null, ZH, BE und VD mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 22 null, ZH, BE, AG und VD mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(23);
+    expect(UNBELEGT).toHaveLength(22);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
   });
@@ -197,7 +197,7 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
   // so they verify the model — not a snapshot of yearly-updated figures.
   // E9: das Modell rechnet nur für amtlich belegte Kantone; hier simuliert.
   // K31: bis 19.09.2026 lief dieser Block mit ZH, danach mit BE; ZH, BE und VD haben jetzt ein
-  // eigenes Modell. Der lineare Abbau gilt weiter für die übrigen 23 Kantone — darum hier LU.
+  // eigenes Modell. Der lineare Abbau gilt weiter für die übrigen 22 Kantone — darum hier LU.
   let zuruecksetzen;
   beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['LU']); });
   afterAll(() => zuruecksetzen());

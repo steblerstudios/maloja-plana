@@ -27,7 +27,7 @@ command -v lftp >/dev/null 2>&1 || { echo "✗ lftp fehlt — installieren mit: 
 [ -d dist/assets ] && [ -f dist/index.html ] || { echo "✗ dist/ fehlt oder unvollständig — erst:  npm run build"; exit 1; }
 
 LOKAL_ANZAHL="$(find dist/assets -type f | wc -l | tr -d ' ')"
-LOKAL_BUNDLE="$(grep -oE 'assets/index-[a-z0-9]+\.js' dist/index.html | head -1)"
+LOKAL_BUNDLE="$(grep -oE 'assets/index-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
 echo "→ Lokaler Build: ${LOKAL_ANZAHL} Dateien in dist/assets/, Bundle ${LOKAL_BUNDLE:-?}"
 
 if [ -z "${SFTP_PASSWORD:-}" ]; then
