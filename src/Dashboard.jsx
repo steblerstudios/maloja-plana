@@ -10,6 +10,12 @@ import { getCantonName, calculateIPV, calculateSozialhilfe } from './config/cant
 import { loadReminders } from './utils/reminders.js';
 import { grundordnung, feldErledigt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { useT } from './i18n/index.js';
+import { formFuerFrucht } from './data/baumFormen.js';
+
+// MESSPROTOTYP (Arbeitsbaum mess/baum-3d): der räumliche Lebensbaum wird NUR
+// nachgeladen, wenn jemand ihn ansieht — sonst trüge jede Sitzung die 139 KB
+// von three.js mit, auch wer den Baum nie umschaltet.
+const Baum3D = React.lazy(() => import('./Baum3D.jsx'));
 
 // K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
 // silbentrennen statt zu clippen — Kurzlabels lösen die meisten Fälle, das hier
@@ -446,7 +452,11 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
 };
 
 // Merged status surface: progress sentence + last backup + active "Daten wirken" chips
-const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile, lang }) => {
+const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate, bereiche, onSelectChapter, isMobile, lang, isDarkMode }) => {
+  // MESSPROTOTYP: Umschalter flach ↔ räumlich. Standard bleibt flach — der
+  // heutige Baum wird nicht still ersetzt, und wer nicht umschaltet, lädt auch
+  // nichts nach.
+  const [raeumlich, setRaeumlich] = useState(false);
   // Each living leaf links to the view it stands for (was decorative-only before).
   const navMap = {
     tax: 'tax', ipv: 'premium', sozial: 'sozialhilfe',
@@ -489,15 +499,42 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
     }
   },
     React.createElement('div', {
-      style: { fontSize: text.xs, color: palette.mid, margin: '0 0 6px 0', fontWeight: weight.medium }
-    }, t('datenWirken.treeCaption')),
+      style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', margin: '0 0 6px 0' },
+    },
+      React.createElement('div', {
+        style: { fontSize: text.xs, color: palette.mid, fontWeight: weight.medium }
+      }, t('datenWirken.treeCaption')),
+      React.createElement('button', {
+        type: 'button',
+        onClick: () => setRaeumlich((v) => !v),
+        'aria-pressed': raeumlich,
+        style: {
+          fontSize: text.xs, fontFamily: 'inherit', cursor: 'pointer',
+          color: palette.mid, background: 'none',
+          border: '1px solid ' + palette.sage + '40', borderRadius: '999px',
+          padding: '3px 10px', minHeight: '28px',
+        },
+      }, raeumlich ? 'Flache Ansicht' : 'Räumliche Ansicht'),
+    ),
+    raeumlich ? React.createElement(React.Suspense, {
+      fallback: React.createElement('div', {
+        style: { height: '340px', display: 'grid', placeItems: 'center', fontSize: text.xs, color: palette.soft },
+      }, 'Der Baum wird geladen …'),
+    }, React.createElement(Baum3D, {
+      bereiche: (bereiche || []).map((b) => ({ key: b.key, farbe: b.color, form: formFuerFrucht(b.fruit), pct: b.pct })),
+      palette, isDarkMode,
+      gesamtPct: bereiche && bereiche.length
+        ? Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / bereiche.length) : 0,
+      hoehe: isMobile ? 300 : 380,
+      ariaLabel: t('datenWirken.title'),
+    })) : null,
     // Bereichs-Früchte am Baum — jede Frucht trägt das Bereichs-Icon als Negativ
     // in Ast-Farbe; sie reift mit dem Ausfüllstand (Deckkraft). Klick → Kapitel.
     // ── Lebensbaum v2 — die Bereichs-Früchte hängen an echten Ästen ──────────
     // Jede Frucht reift einzeln mit ihrem Ausfüllstand (Grösse + Deckkraft);
     // die Krone (Laubmasse) wächst mit dem Gesamtfortschritt (4 Wuchsstufen).
     // Frucht trägt weiterhin das Bereichs-Icon als Negativ. Klick → Kapitel.
-    (bereiche && bereiche.length) ? (() => {
+    (!raeumlich && bereiche && bereiche.length) ? (() => {
       const n = bereiche.length;
       const VB_W = 360, VB_H = 268;
       // Kurzer Stamm, damit der Baum gewachsen statt schirmartig wirkt.
@@ -1405,7 +1442,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
 
     // ─── Lebensbaum als Spiegel — nach unten gewandert (#3): was aus den
     // Angaben gewachsen ist, als ruhige Rückschau nach den Kapiteln. ──
-    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile, lang }),
+    React.createElement(DatenWirken, { palette, t, data, completion, lastBackup, text, weight, space, radius, onNavigate, bereiche: bereichsFruechte, onSelectChapter, isMobile, lang, isDarkMode }),
 
     // Zugang zum Lebens-Obstgarten — ruhige, sichtbare Einladung direkt unter dem
     // Einzelbaum (beide bleiben nebeneinander). Kontrast: Vordergrund-Akzent via

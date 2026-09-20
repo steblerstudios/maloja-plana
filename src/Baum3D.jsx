@@ -381,7 +381,9 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     const wenigerBewegung = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // PCFSoftShadowMap gibt es in three 0.186 nicht mehr — die Konsole meldete
+    // still einen Rückfall auf PCF. Dann schreiben wir gleich hin, was gilt.
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     el.appendChild(renderer.domElement);
     Object.assign(renderer.domElement.style, { width: '100%', height: '100%', display: 'block', cursor: 'grab', touchAction: 'none' });
 
@@ -396,9 +398,13 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     sonne.shadow.camera.top = 10; sonne.shadow.camera.bottom = -2;
     szene.add(sonne);
 
+    // Boden aus UNSERER Palette statt aus einer erfundenen Wiesenfarbe — sonst
+    // sitzt ein fremdes Grün mitten im Maloja-Panel.
+    const wiese = new THREE.Color(palette && palette.sage ? palette.sage : '#7d9a62')
+      .multiplyScalar(isDarkMode ? 0.42 : 0.92);
     const boden = new THREE.Mesh(
       new THREE.CircleGeometry(14, 60),
-      new THREE.MeshStandardMaterial({ color: isDarkMode ? 0x3c4a35 : 0x7d9a62, roughness: 1 })
+      new THREE.MeshStandardMaterial({ color: wiese, roughness: 1 })
     );
     boden.rotation.x = -Math.PI / 2;
     boden.receiveShadow = true;
@@ -562,7 +568,11 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     'aria-label': ariaLabel,
     style: {
       width: '100%', height: hoehe + 'px', borderRadius: '12px', overflow: 'hidden',
-      background: isDarkMode ? 'linear-gradient(#2a3338,#37423a)' : 'linear-gradient(#dfeaf0,#eef3e8)',
+      // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
+      // wie ein Teil der Seite wirken, nicht wie ein eingeklebtes Fenster.
+      background: palette
+        ? 'linear-gradient(' + palette.up + ', ' + palette.sage + '1f)'
+        : (isDarkMode ? 'linear-gradient(#2a3338,#37423a)' : 'linear-gradient(#dfeaf0,#eef3e8)'),
     },
   });
 }

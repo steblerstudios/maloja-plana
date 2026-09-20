@@ -60,7 +60,11 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       // MESSUNG: zweite Seite baum3d.html nur in diesem Arbeitsbaum.
-      input: { main: 'index.html', baum3d: 'baum3d.html' },
+      // 🛑 Der Schlüssel MUSS 'index' heissen. Mit 'main' hiess die Hauptdatei
+      // main-*.js — und `size-limit` sucht dist/assets/index-*.js, fand nichts
+      // und meldete keinen Fehler über die Grösse, sondern über sich selbst.
+      // Ein zweiter Eingang darf den ersten nicht umbenennen.
+      input: { index: 'index.html', baum3d: 'baum3d.html' },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) return 'vendor';

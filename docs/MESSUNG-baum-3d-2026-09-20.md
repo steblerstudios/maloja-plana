@@ -110,9 +110,51 @@ Blick auf die echten Zahlen (Position, Grösse, Sichtbarkeit je Platz) hat den W
 zwischen Datensatz und Bild gezeigt. **Weder das Bild allein noch die Zahl allein reichte;
 gefunden hat es erst der Widerspruch zwischen beiden.**
 
+---
+
+# Dritte Runde, 20.09. — im echten Maloja
+
+Auftrag: «den Baum mal in Maloja sehen». Eingebaut im Dashboard unter **«Was aus Ihren
+Angaben wächst»** (`DatenWirken`), als **Umschalter** neben dem heutigen Baum:
+
+- Standard bleibt **flach**. Der heutige Baum wird nicht still ersetzt, und wer nicht
+  umschaltet, lädt three.js gar nicht erst herunter (`React.lazy` + `Suspense`).
+- Der Baum bekommt die **sieben Kapitel** als Äste (nicht elf Bereiche) — dieselbe Quelle,
+  aus der auch der flache Baum seine Früchte zieht, inklusive Farbe und Ausfüllstand.
+- Wuchsform je Frucht neu in `src/data/baumFormen.js` — eine kleine Datei **ohne** three.js,
+  damit Dashboard und nachgeladener Baum dieselbe Wahrheit lesen, ohne dass three.js in die
+  Hauptdatei rutscht.
+- Farben aus der **Palette** statt aus erfundenen Wiesen- und Himmelfarben.
+
+## Gemessen in der laufenden App (Beispiel-Modus, 63 % ausgefüllt)
+
+| | Wert |
+|---|---|
+| Hauptdatei mit Umschalter | **63,57 KB gzip**, `size-limit` grün (Grenze 65) |
+| Baum-Stück, nur beim Umschalten geladen | 139,7 KB gzip |
+| Zeichendauer im Dashboard (Telefonbreite 375 px) | **0,92 ms** je Bild, schlechtestes 3,1 |
+| Dreiecke / Zeichenaufrufe dort | 236 456 / 464 |
+| Tests | **2327 grün** (129 Dateien) |
+| Hell- und Dunkelmodus | beide geprüft, Farben aus der Palette |
+
+⚠️ 375 px breit ist eine **Telefon-Breite auf einem Mac**, kein Telefon. Die Aussage über
+echte Telefone steht weiterhin aus.
+
+## Zwei Funde in dieser Runde
+
+1. **`PCFSoftShadowMap` gibt es in three 0.186 nicht mehr.** Die Konsole meldete einen
+   stillen Rückfall auf `PCFShadowMap`. Jetzt steht im Code, was tatsächlich gilt.
+2. 🛑 **Ein zweiter Eingang im Build benennt den ersten um.** Mit `input: { main: … }` hiess
+   die Hauptdatei `main-*.js`; `size-limit` sucht aber `dist/assets/index-*.js`, fand nichts
+   und meldete daraufhin **einen Fehler über sich selbst statt über die Grösse** — das Gate
+   hätte ab da nichts mehr gemessen. Schlüssel heisst jetzt `index`. Derselbe Stolperstein
+   trifft den Service-Worker-Hash, der sich am Eingangs-Bundle orientiert.
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
+- Im räumlichen Baum sind die Äste noch **nicht anklickbar**; im flachen führt jede Frucht
+  in ihr Kapitel. Das müsste vor einer echten Übernahme nachgezogen werden.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.

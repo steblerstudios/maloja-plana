@@ -15,12 +15,7 @@ const PHASEN_FALLBACK = [
 ];
 const phaseVon = (pct) => PHASEN_FALLBACK.reduce((t, p) => (pct >= p.ab ? p : t), PHASEN_FALLBACK[0]).name;
 
-const FORM = {
-  apfel: 'rundlich', aprikose: 'rundlich',
-  birne: 'laenglich', zwetschge: 'laenglich', vogelbeere: 'laenglich',
-  kirsche: 'beere', heidelbeere: 'beere', hagebutte: 'beere', haselnuss: 'beere',
-  baumnuss: 'rundlich', traube: 'buschel',
-};
+import { formFuerFrucht } from './data/baumFormen.js';
 
 function Demo() {
   const [pct, setPct] = React.useState(55);
@@ -28,7 +23,7 @@ function Demo() {
   const bereiche = React.useMemo(() => LEBENSBEREICHE.map((b, i) => ({
     key: b.key,
     farbe: dunkel ? b.dark : b.light,
-    form: FORM[b.fruit] || 'rundlich',
+    form: formFuerFrucht(b.fruit),
     // Damit man das ungleiche Reifen sieht: die Bereiche liegen um den
     // eingestellten Gesamtstand herum gestreut, wie im echten Leben.
     pct: Math.max(0, Math.min(100, pct + ((i % 5) - 2) * 14)),
