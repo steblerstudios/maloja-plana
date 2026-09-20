@@ -100,6 +100,17 @@ describe('K31 SG: Minimalgarantie für Kinder, Art. 19 Abs. 2 [2] und Obergrenze
     expect(IPV_SG.obergrenzeGarantieAllein).toEqual([41700, 65700, 65700, 70700, 75700, 80700]);
   });
 
+  it('🛑 die Obergrenze misst das Einkommen VOR dem Kinderabzug (Art. 6: Ziff. 1 bis 5septies)', () => {
+    // Art. 6 [1] nennt ausdrücklich «Ziff. 1 bis 5septies» — der Kinderabzug ist Ziff. 6 und
+    // gehört nicht dazu. Befund der Fachprüfung 20.09.2026: vorher wurde das Einkommen NACH
+    // Kinderabzug verglichen, die Garantie griff dadurch bis 4'000 je Kind zu weit oben.
+    // Ein Kind, Reineinkommen 69'700 → me 65'700. Die Obergrenze ist 65'700.
+    const nachAbzug = { region: 1, personen: ['e', 'k'], me: 65700, meVorKinderabzug: 69700 };
+    expect(ipvStGallenRechnen(nachAbzug).garantieGilt).toBe(false);
+    // Ohne den Unterschied (also wenn beide Grössen gleich sind) griffe sie:
+    expect(ipvStGallenRechnen({ region: 1, personen: ['e', 'k'], me: 65700, meVorKinderabzug: 65700 }).garantieGilt).toBe(true);
+  });
+
   it('🛑 die Werte aus Art. 6 sind NICHT die allgemeine Einkommensgrenze', () => {
     // Alleinstehende ohne Kinder: Art. 6 nennt 41 700 — die Verbilligung fällt aber schon
     // weit darunter auf null. Wer 41 700 als Grenze läse, zeigte einen Anspruch, der nicht
@@ -221,6 +232,23 @@ describe('K31 SG durch die App (calculateIPV)', () => {
     const r = calculateIPV(person({ monthlyIncome: 5000 }));
     expect(r).toMatchObject({ belegt: true, eligible: false, amount: 0, noteKey: 'ipv.sgKeinAnspruch' });
     expect(r.cantonData.maxIncome).toBe(null);
+  });
+
+  it('🛑 «kein Anspruch» und «unter dem Mindestbetrag» sind zwei verschiedene Gründe', () => {
+    // Befund der Fachprüfung 20.09.2026: im Band zwischen dem Mindestbetrag und der echten
+    // Grenze bestand sehr wohl ein Anspruch — der Satz behauptete aber, die Referenzprämie
+    // liege nicht über der Belastungsgrenze. Kein Geld, aber ein falscher Satz.
+    // Region 1: roher Anspruch fällt bei me ≈ 38'833 auf 0, unter Fr. 100 ab ≈ 38'414.
+    const imBand = ipvStGallenRechnen({ region: 1, personen: ['e'], me: 38500 });
+    expect(imBand.total).toBe(0);
+    expect(imBand.grund).toBe('mindestbetrag');
+
+    const darueber = ipvStGallenRechnen({ region: 1, personen: ['e'], me: 40000 });
+    expect(darueber.total).toBe(0);
+    expect(darueber.grund).toBe('ueberGrenze');
+
+    // und bei Anspruch gar kein Grund
+    expect(ipvStGallenRechnen({ region: 1, personen: ['e'], me: 10000 }).grund).toBe(null);
   });
 
   it('der Vorbehalt nennt das Bezugsjahr und die Referenzprämie', () => {

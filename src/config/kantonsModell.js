@@ -63,21 +63,47 @@ export function praemieFehlt(praemie) {
   return !(praemie > 0);
 }
 
+// 🛑 UND DER GEGENFALL, damit ein Fehlen nicht wie ein Vergessen aussieht.
+// Nicht jeder Kanton kennt diesen Deckel: St.Gallen begrenzt die Verbilligung NICHT auf die
+// fakturierte Prämie (weder sGS 331.538 noch sGS 331.111 enthalten eine solche Bestimmung;
+// gemessen am vollen Verordnungstext mit Gegenprobe, 20.09.2026). Dort geht die Prämie in
+// die Rechnung gar nicht ein, und `praemieFehlt` wäre falsch.
+// Ein Kantonsmodul, das den Riegel weglässt, setzt stattdessen diese Konstante und nennt den
+// Grund — so liest sich das Auslassen als Entscheid, nicht als Lücke, und der nächste Kanton
+// kopiert kein stilles Fehlen. (Befund Fachprüfung 20.09.2026.)
+export const KEIN_PRAEMIENDECKEL = Object.freeze({
+  SG: 'sGS 331.538 und sGS 331.111 kennen keine Begrenzung auf die fakturierte Prämie — '
+    + 'die Verbilligung bemisst sich allein an der kantonalen Referenzprämie. '
+    + 'Offene Frage an die SVA St.Gallen: was gilt, wenn die eigene Prämie tiefer ist?',
+});
+
 // ─── Regeln, die kantonal VERSCHIEDEN sind — benannt statt vereinheitlicht ─────
 
-// Ab wann gilt eine Person als erwachsen? Zwei belegte Lesarten, nicht drei Schreibweisen:
+// Ab wann gilt eine Person als erwachsen? Zwei Regeln, nicht vier Schreibweisen — aber
+// DREI Wissensstände, und der Unterschied zwischen ihnen zählt:
 //
-//   abEndeVorjahr    ZH, BE, VD — ZH ausdrücklich (§ 8 EG KVG: «für das ganze Jahr das Alter
-//                    am Ende des Vorjahres massgebend»), BE und VD mangels Stichtag im Erlass:
-//                    gerechnet wird nur, wenn die Alterszeile das ganze Jahr dieselbe ist.
-//   imAnspruchsjahr  AG — die SVA führt für 2027 die Jahrgänge 2002–2008 als junge
-//                    Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
+//   abEndeVorjahr       ZH — ausdrücklich im Erlass: § 8 EG KVG, «für das ganze Jahr das
+//                       Alter am Ende des Vorjahres massgebend». BELEGT.
+//   mangelsStichtag     BE, VD, SG — rechnerisch dasselbe wie oben, aber aus einem anderen
+//                       Grund: die Erlasse nennen für das Alter KEINEN Stichtag. Darum
+//                       rechnet die App nur, wenn die Alterszeile das ganze Jahr dieselbe
+//                       ist. GEWÄHLT, nicht belegt — und jederzeit zu überdenken, wenn eine
+//                       Quelle auftaucht.
+//   imAnspruchsjahr     AG — die SVA führt für 2027 die Jahrgänge 2002–2008 als junge
+//                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
 //
-// ⚠️ Der Unterschied ist echt und beträgt einen Jahrgang: für das Anspruchsjahr 2026 rechnet
-// AG für den Jahrgang 2000, ZH/BE/VD nicht. Gemessen am aufgezeichneten Verhalten, nicht aus
-// dem Quelltext gelesen. Ob das in AG richtig ist, steht auf der Frageliste an die Ämter.
+// ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
+// Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am
+// aufgezeichneten Verhalten, nicht aus dem Quelltext gelesen.
+//
+// 🛑 `abEndeVorjahr` und `mangelsStichtag` sind absichtlich zwei Namen für dieselbe Rechnung.
+// Sonst schreibt der nächste Kanton «belegt», wo «vorsichtig gewählt» gemeint war — und ein
+// gewählter Wert, den niemand mehr als Wahl erkennt, wird beim nächsten Zweifel verteidigt
+// statt geprüft. (Befund Fachprüfung 20.09.2026.)
+const ALTER_AM_ENDE_DES_VORJAHRES = (jahr, geburt) => (jahr - 1) - geburt >= 26;
 export const ERWACHSEN = {
-  abEndeVorjahr: (jahr, geburt) => (jahr - 1) - geburt >= 26,
+  abEndeVorjahr: ALTER_AM_ENDE_DES_VORJAHRES,
+  mangelsStichtag: ALTER_AM_ENDE_DES_VORJAHRES,
   imAnspruchsjahr: (jahr, geburt) => (jahr - geburt) >= 26,
 };
 

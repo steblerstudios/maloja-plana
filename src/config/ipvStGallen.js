@@ -44,9 +44,18 @@
 //     den die App nicht erfasst; ebenso die Sockel- und Zuwachs-Zuschläge «je weitere
 //     erwachsene Person bis zum vollendeten 25. Altersjahr»
 //   · quellenbesteuerte Personen (Art. 7 [1], eigene Obergrenzen, Anrechnung zu 75 %)
+//   · vom massgebenden Einkommen: Art. 12 Abs. 2 Ziff. 3 (Leistungen und Einkaufsbeiträge
+//     an die berufliche Vorsorge), Ziff. 4 (Liegenschaftsaufwand über dem Pauschalabzug),
+//     Ziff. 5 (Vorjahresverluste), Ziff. 5bis (75 % Bruttolohn im vereinfachten Verfahren)
+//     und Ziff. 5ter/5quinquies–5septies. Die App erfasst diese Posten nicht. Jede Auslassung
+//     senkt das massgebende Einkommen und ERHÖHT damit den Betrag — am deutlichsten Ziff. 3:
+//     ein Pensionskassen-Einkauf im Bezugsjahr verschiebt ihn um mehrere hundert Franken.
+//     (Befund Fachprüfung 20.09.2026.)
+//   · die Bedingung des Kinderabzugs: Art. 14 [2] gewährt ihn nur, wo eine Familienzulage
+//     bezogen wird. Die App zieht ihn für jedes erfasste Kind ab — auch das wirkt nach oben.
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr,
-  jahrVorbei, mehrereErwachsene, ERWACHSEN,
+  jahrVorbei, mehrereErwachsene, ERWACHSEN, KEIN_PRAEMIENDECKEL,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -97,9 +106,13 @@ export const IPV_SG = {
 };
 
 // Art. 1 [1]: «regionale Referenzprämien nach Massgabe der vom Bundesamt für Gesundheit
-// festgelegten Prämienregionen» — darum die BAG-Daten der App, nicht die SVA-Liste
-// `form_4050` (Stand 01.23). ⚠️ Beide weichen bei Altstätten ab (BAG Region 2, SVA-Liste
-// Region 3); offener Punkt bei der SVA. Der Beschluss erklärt die BAG-Regionen für massgebend.
+// festgelegten Prämienregionen» — darum die BAG-Daten der App.
+// Gegen die SVA-Liste `form_4050` (Stand 01.23) stichprobenweise geprüft (20.09.2026,
+// 12 Gemeinden über alle drei Regionen): keine Abweichung.
+// ⟨korrigiert 20.09.2026: hier stand, Altstätten weiche ab (BAG 2 gegen SVA 3). Das war ein
+// Messfehler — die verwendete BFS-Nummer 3231 gehört zu Au (SG), nicht zu Altstätten (3251).
+// Altstätten steht in beiden Quellen auf Region 3. Ein Negativbefund aus geratener Eingabe
+// misst die eigene Vermutung.⟩
 export function sgRegion(bfsNr) {
   return getRegion(bfsNr);
 }
@@ -123,7 +136,14 @@ export function sgBelastungsgrenze({ me, kinderZahl = 0, jungeErwachsene = 0 }) 
 
 // Die Rechnung selbst — ohne App-Daten, damit die Tests sie gegen die amtlichen Artikel
 // prüfen können. `personen`: 'e' für die erwachsene Person, 'k' je Kind.
-export function ipvStGallenRechnen({ region, personen, me }) {
+//
+// `meVorKinderabzug` ist die Grösse, an der Art. 6 [1] die Obergrenze für die Minimalgarantie
+// misst: «die massgebende Obergrenze des nach Art. 12 Abs. 2 Ziff. 1 bis 5septies … ermittelten
+// Reineinkommens». Ziff. 6 — der Kinderabzug — ist darin ausdrücklich NICHT enthalten.
+// ⟨korrigiert 20.09.2026 nach der Fachprüfung: vorher wurde `me` verglichen, also das
+// Einkommen NACH Kinderabzug. Die Garantie griff dadurch bis 4'000 je Kind zu weit oben —
+// und das wirkte nach oben, auf CHF 1'170 je Kind an der Kante.⟩
+export function ipvStGallenRechnen({ region, personen, me, meVorKinderabzug = me }) {
   const kinderZahl = personen.filter((p) => p === 'k').length;
   const referenzErwachsen = IPV_SG.referenz.erwachsen[region];
   const referenzKind = IPV_SG.referenz.kind[region];
@@ -145,7 +165,7 @@ export function ipvStGallenRechnen({ region, personen, me }) {
   const obergrenze = IPV_SG.obergrenzeGarantieAllein[
     Math.min(kinderZahl, IPV_SG.obergrenzeGarantieAllein.length - 1)
   ];
-  const garantieGilt = kinderZahl > 0 && me <= obergrenze;
+  const garantieGilt = kinderZahl > 0 && meVorKinderabzug <= obergrenze;
   const garantieKind = IPV_SG.minimalgarantie.kind * referenzKind;
   const kindBetrag = garantieGilt ? Math.max(anteilKind, garantieKind) : anteilKind;
 
@@ -157,8 +177,17 @@ export function ipvStGallenRechnen({ region, personen, me }) {
   // Vergleichsgrösse «höchstens möglich»: dieselbe Rechnung bei massgebendem Einkommen 0.
   const maximal = referenzSumme;
 
+  // Zwei verschiedene Gründe für «kein Betrag», die sich sonst verwechseln lassen:
+  // Über der Grenze rechnet die Formel selbst null; im Band knapp darunter besteht sehr
+  // wohl ein Anspruch, er wird nur nach Art. 20 [2] nicht ausgerichtet. In Region 1 liegt
+  // dieses Band zwischen rund 38'414 und 38'833 massgebendem Einkommen.
+  // ⟨ergänzt 20.09.2026 nach der Fachprüfung: vorher stand in beiden Fällen «die
+  // Referenzprämie liegt nicht über der Belastungsgrenze» — im zweiten Fall falsch.⟩
+  const rohSumme = anteilErwachsen + kinderZahl * kindBetrag;
+  const grund = total > 0 ? null : (rohSumme > 0 ? 'mindestbetrag' : 'ueberGrenze');
+
   return {
-    total, maximal, referenzSumme, grenzeProzent, eigenanteil,
+    total, maximal, referenzSumme, grenzeProzent, eigenanteil, grund,
     anteilErwachsen: proPerson(anteilErwachsen),
     kindBetrag: proPerson(kindBetrag),
     garantieGilt,
@@ -177,11 +206,13 @@ export function ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, l
   // Folgejahres darum lieber keine Zahl als eine aus veralteten Sätzen.
   if (jahrVorbei(jahr)) return orientierung('jahr');
   if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
-  // Dieselbe Lesart wie ZH, BE und VD: erwachsen ist, wer das ganze Anspruchsjahr über in
-  // derselben Zeile steht. Der Beschluss nennt keinen Stichtag fürs Alter — nur für die
-  // Prämienregion (Art. 2 Abs. 1 [1]: Wohnsitz am 1. Januar).
+  // Der Beschluss nennt einen Stichtag nur für die Prämienregion (Art. 2 Abs. 1 [1]:
+  // «Die Zugehörigkeit zur Prämienregion richtet sich nach dem zivilrechtlichen Wohnsitz
+  // am 1. Januar des Jahres der Prämienverbilligung»), nicht fürs Alter. Darum gewählt,
+  // nicht belegt — Name und Begründung in config/kantonsModell.js. Gehört auf die
+  // Frageliste an die Ämter, wie der gleichgelagerte ZH-Punkt.
   const geburt = geburtsjahr(b);
-  if (!geburt || !ERWACHSEN.abEndeVorjahr(jahr, geburt)) return orientierung('alter');
+  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
   // Bezugsjahr ist das Anspruchsjahr, darum beim eingetippten Alter ein Jahr dazu — wie in BE.
   const kinderJahre = kinderAlter(hh.children, jahr, 1);
   if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
@@ -204,11 +235,16 @@ export function ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, l
   // (einkommenJahr rechnet sie mit) − Kinderabzug Fr. 4000 je Kind (Art. 14).
   // 🛑 Die App kennt nicht das steuerbare Gesamtvermögen, sondern die Summe der erfassten
   // Posten — derselbe Vorbehalt wie in den anderen Kantonen, er steht in der Anzeige.
-  const me = Math.max(0, einkommenJahr(f)
-    + IPV_SG.vermoegenAnteil * vermoegen
-    - IPV_SG.kinderabzug * kinderZahl);
+  const meVorKinderabzug = einkommenJahr(f) + IPV_SG.vermoegenAnteil * vermoegen;
+  const me = Math.max(0, meVorKinderabzug - IPV_SG.kinderabzug * kinderZahl);
 
-  const r = ipvStGallenRechnen({ region, personen: ['e', ...kinderJahre.map(() => 'k')], me });
+  // 🛑 Hier ruft jeder andere Kanton `praemieFehlt`. St.Gallen nicht — und zwar begründet:
+  // siehe KEIN_PRAEMIENDECKEL.SG. Die Zeile steht da, damit das Auslassen sichtbar ist.
+  void KEIN_PRAEMIENDECKEL.SG;
+
+  const r = ipvStGallenRechnen({
+    region, personen: ['e', ...kinderJahre.map(() => 'k')], me, meVorKinderabzug,
+  });
   const annual = Math.round(r.total);
   const maxAnnual = Math.round(r.maximal);
   // Keine publizierte Einkommensgrenze (siehe Kopf) — `maxIncome` bleibt bewusst null.
@@ -219,7 +255,10 @@ export function ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, l
     extra: { region, basisjahr },
   };
   if (annual <= 0) {
-    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.sgKeinAnspruch' });
+    return ergebnisOhneAnspruch({
+      ...gemeinsam,
+      noteKey: r.grund === 'mindestbetrag' ? 'ipv.sgUnterMindestbetrag' : 'ipv.sgKeinAnspruch',
+    });
   }
   // Die Frist läuft jedes Jahr neu: für ein Anspruchsjahr vom 1. September des Vorjahres bis
   // zum 31. März des Anspruchsjahres [3]. Ist sie fürs gebaute Jahr vorbei, zeigt die App den

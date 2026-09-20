@@ -232,7 +232,7 @@ export const CANTONAL_IPV = {
   // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
   SG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' },
-    beleg: { quelle: 'Regierungsbeschluss über die Prämienverbilligung 2026 (sGS 331.538, nGS 2025-071, vom 9. Dezember 2025, in Vollzug ab 1. Januar 2026) Art. 1–7; Verordnung zum EG zur Krankenversicherung (sGS 331.111) Art. 12, 14, 19–21; SVA St.Gallen, Merkblatt IPV 2026 (Form. 4100 01.26)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
+    beleg: { quelle: 'Regierungsbeschluss über die Prämienverbilligung 2026 (sGS 331.538, nGS 2025-071, vom 9. Dezember 2025, in Vollzug ab 1. Januar 2026) Art. 1–7; Verordnung zum EG zur Krankenversicherung (sGS 331.111, abgerufene Fassung in Vollzug seit 01.08.2026) Art. 12, 14, 19-21; SVA St.Gallen, Merkblatt IPV 2026 (Form. 4100 01.26)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' }, beleg: null },
   // AG (K31): eigenes Modell in config/ipvAargau.js (Richtprämie minus 17,5 % des massgebenden
   // Einkommens). Keine Prämienregionen; die Einkommensgrenze nach § 5 Abs. 5 KVGG publiziert

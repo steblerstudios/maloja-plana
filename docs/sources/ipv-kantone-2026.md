@@ -1414,6 +1414,102 @@ Für 2026 = Reineinkommen (Code 248) Steuerperiode 2024 [3]. Quellenbesteuerte: 
 ### Abweichung zur App
 Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einzelperson erhält bei Einkommen 0 die regionale Referenzprämie (Fr. 5'681.40–6'285.60) und der Abbau ist nicht linear, sondern quadratisch (Satz steigt mit dem Einkommen); Nullpunkt Alleinstehend rechnerisch ca. Fr. 36'000–39'000 MGE je Region. Die Werte 41'700 usw. sind **keine** allgemeine Einkommensgrenze, sondern nur die Obergrenze für die Minimalgarantie Kinder/JE.
 
+### Wortlaute, die der Code zitiert — nachgetragen 20.09.2026
+
+Beim Bau von `src/config/ipvStGallen.js` wurden sechs Bestimmungen zitiert, die in dieser
+Datei noch nicht standen. Die Fachprüfung vom 20.09. hat das gefunden: ein Zitat, das nur im
+Code steht, ist aus dem Repo heraus nicht prüfbar — und genau so überlebt ein falsches Zitat.
+Alle Texte unten aus den PDF der Gesetzessammlung, abgerufen 20.09.2026.
+
+> «Für die Prämienverbilligung werden regionale Referenzprämien nach Massgabe der vom
+> Bundesamt für Gesundheit festgelegten Prämienregionen angewendet.» — [1] Art. 1 Abs. 1
+
+> «Die Zugehörigkeit zur Prämienregion richtet sich nach dem zivilrechtlichen Wohnsitz am
+> 1. Januar des Jahres der Prämienverbilligung.» — [1] Art. 2 Abs. 1
+
+> «Die Regierung legt jährlich bis 15. Dezember für das Folgejahr fest: a) die
+> Referenzprämien; b) die Belastungsgrenze; c) die Obergrenze des Einkommens zur Verbilligung
+> der Referenzprämien nach Art. 65 Abs. 1bis des Bundesgesetzes über die Krankenversicherung
+> …; d) den Selbstbehalt für die Krankenpflege-Grundversicherung.» — [2] Art. 19 Abs. 1
+
+> «Die Verbilligung der Referenzprämien nach Art. 65 Abs. 1bis des Bundesgesetzes über die
+> Krankenversicherung vom 18. März 1994 beträgt 80 Prozent für Kinder und 50 Prozent für
+> junge Erwachsene in Ausbildung. Vorbehalten bleibt eine weiter gehende Verbilligung nach
+> Art. 65 Abs. 1 des Bundesgesetzes über die Krankenversicherung vom 18. März 1994.»
+> — [2] Art. 19 Abs. 2
+
+⚠️ Der zweite Satz trägt das ganze Garantie-Modell: **80 Prozent ist ein Boden, keine Decke.**
+Die beiden Nennungen sind zwei verschiedene Bundesnormen — Abs. 1bis ist die
+Mindestverbilligung für Kinder und junge Erwachsene, Abs. 1 die allgemeine kantonale
+Verbilligung, die darüber hinausgehen darf. Ohne diesen zweiten Satz liest sich «beträgt
+80 Prozent» wie eine Obergrenze; mit ihm ist die Lesart des Codes belegt.
+
+> «Erhalten mehrere Personen eines Haushalts Prämienverbilligung, entspricht der Anteil einer
+> Person dem Prozentsatz der Verbilligung der Referenzprämien.» — [2] Art. 21 Abs. 1
+
+> «Für jedes in der Schweiz wohnhafte Kind bis zum vollendeten 18. Altersjahr oder für jede in
+> der Schweiz wohnhafte junge erwachsene Person bis zum vollendeten 25. Altersjahr, für das
+> oder für die eine Familienzulage … bezogen wird, vermindert sich das massgebende Einkommen
+> um Fr. 4000.–.» — [2] Art. 14 Abs. 1
+
+⚠️ **«für das eine Familienzulage bezogen wird»** ist eine Bedingung, die die App nicht prüft —
+sie zieht den Abzug für jedes erfasste Kind ab. Das senkt das massgebende Einkommen und wirkt
+damit nach oben. Im Modulkopf als bewusste Auslassung benannt.
+
+> «Die massgebende Obergrenze des nach Art. 12 Abs. 2 Ziff. 1 bis 5septies der Verordnung …
+> ermittelten Reineinkommens zur Verbilligung der Referenzprämien nach Art. 65 Abs. 1bis des
+> Bundesgesetzes über die Krankenversicherung vom 18. März 1994 beträgt bei ordentlich
+> besteuerten Personen: …» — [1] Art. 6 Abs. 1
+
+⚠️ **«Ziff. 1 bis 5septies»** — der Kinderabzug ist Ziff. 6 und gehört ausdrücklich NICHT dazu.
+Die Obergrenze misst also das Einkommen **vor** dem Kinderabzug. Der Code verglich zuerst das
+Einkommen danach; korrigiert am 20.09.2026 nach der Fachprüfung.
+
+### Deckel auf die effektive Prämie: Negativbefund mit Methode
+
+ZH (§ 4 Abs. 3 EG KVG), BE (KKVV Art. 10 Abs. 1), AG (§ 7 Abs. 3 KVGG) und VD (LVLAMal
+art. 16 al. 1bis) begrenzen die Verbilligung auf die tatsächlich fakturierte Prämie.
+**Für St. Gallen wurde keine solche Bestimmung gefunden.**
+
+Damit dieser Negativbefund nachvollziehbar ist — und nicht bloss eine Behauptung im Code —
+hier die Methode (20.09.2026):
+
+- Geprüfter Text: sGS 331.111, vollständiges PDF der Gesetzessammlung, 1524 Zeilen aus
+  `pdftotext -layout`; dazu sGS 331.538 vollständig (6 Seiten).
+- Suchbegriffe ohne Treffer: «effektiv», «tatsächlich», «nicht mehr als», «begrenzt»,
+  «geschuldete Prämie», «Bruttoprämie».
+- «höchstens» trifft **einmal** — die Vermögensobergrenze in Art. 12 Abs. 3 («höchstens
+  jedoch bis zum Betrag von Fr. 150 000.–»). «übersteigt» trifft zweimal, beide Male im
+  Liegenschaftsaufwand bzw. in einer Übergangsbestimmung von 1994.
+- **Gegenprobe:** dieselbe Suche findet «Referenzprämie» (7×), «Belastungsgrenze» (7×),
+  «Mindestbetrag» (1×) und «Kinderabzug» (4×) — und ein erfundenes Wort 0×. Die Suche
+  funktioniert also; das Fehlen ist ein Befund, kein Messfehler.
+
+🛑 **Was das NICHT beweist:** dass es die Regel nirgends gibt. Sie könnte in einer
+Weisung, einem Kreisschreiben oder in der Praxis der SVA stehen. Das Risiko ist beträchtlich:
+Wer in Region 1 eine günstige Prämie von 280/Monat zahlt, sähe 6'286 statt höchstens 3'360.
+Darum steht die Frage auf der Liste an die Ämter, und der Vorbehalt in der App sagt
+ausdrücklich, dass sich die Verbilligung an der Referenzprämie bemisst.
+
+### Prämienregionen: gegen die SVA-Liste geprüft
+
+Die Recherche vom 16.09. hielt fest, die Gemeinde-Zuordnung (Formular 4050) sei nicht erfasst.
+Nachgeholt am 20.09.2026: `form_4050` (Stand 01.23) gegen die BAG-Daten der App
+(`src/data/praemienRegionen.js`, Stand 2026), zwölf Gemeinden über alle drei Regionen —
+Altstätten, Oberriet, Wattwil, St.Gallen, Wil, Gossau, Rapperswil-Jona, Bad Ragaz, Widnau,
+Buchs (SG), Flawil, Mels. **Keine Abweichung.**
+
+🛑 Zwei eigene Messfehler auf dem Weg dorthin, beide derselbe Typ:
+1. Eine geratene BFS-Nummer (3231) wurde für Altstätten gehalten — sie gehört zu **Au (SG)**.
+   Daraus entstand kurzzeitig der Befund «Altstätten weicht ab». Altstätten ist 3251.
+2. Ein Prüfskript fiel bei unbekanntem Gemeindenamen auf den ersten Treffer der PLZ zurück.
+   Weil die Gemeinde in den Daten «Buchs (SG)» heisst und nicht «Buchs», mass es **Grabs**.
+   Daraus entstand kurzzeitig der Befund «Buchs weicht ab».
+
+Beide Male: **ein Negativbefund aus geratener Eingabe misst die eigene Vermutung.**
+Richtig ist, die Prüf-Eingabe aus der Quelle zu ziehen und den Rückfall laut scheitern zu
+lassen, statt still etwas anderes zu messen.
+
 ### Offen / nicht gefunden
 - Online-Rechner SVA (svasg.ch/ipv-berechnung) für eine Gegenprobe der abgeleiteten Nullpunkte per GET abgefragt: HTTP 500 — Gegenprobe nicht möglich.
 - Wörtliche Auslegung «0,0002 Prozentpunkte für jeden Franken» als Anteil 0,000002 ist meine Umrechnung; amtliches Beispiel nur für Einkommen unter dem Sockel (12,16 % von 10'000) vorhanden.

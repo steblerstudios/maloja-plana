@@ -141,10 +141,10 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // Ein Kind, das im Jahr 19 wird, rechnet die App ganzjährig als Kind — das wirkt zu tief,
   // nie zu hoch, und bleibt darum vorerst so.
   const geburt = geburtsjahr(b);
-  // Dieselbe Lesart wie ZH und VD (`abEndeVorjahr`): erwachsen ist, wer das ganze Anspruchs-
-  // jahr über in derselben Zeile steht. In ZH steht sie im Erlass (§ 8 EG KVG), hier folgt
-  // sie aus dem fehlenden Stichtag. Einzig AG rechnet anders — siehe config/kantonsModell.js.
-  if (!geburt || !ERWACHSEN.abEndeVorjahr(jahr, geburt)) return orientierung('alter');
+  // Rechnerisch dasselbe wie ZH, aber aus einem anderen Grund: dort steht es im Erlass
+  // (§ 8 EG KVG), hier fehlt ein Stichtag fürs Alter. Darum der Name `mangelsStichtag` —
+  // gewählt, nicht belegt. Einzig AG rechnet anders; siehe config/kantonsModell.js.
+  if (!geburt || !ERWACHSEN.mangelsStichtag(jahr, geburt)) return orientierung('alter');
   // Bezugsjahr ist hier das Anspruchsjahr, darum kommt beim eingetippten Alter ein Jahr dazu:
   // es ist nicht datiert, die Person kann im Anspruchsjahr Geburtstag haben. So bleibt die
   // Zuordnung «Kind bis 18» auf der sicheren Seite, statt eine junge erwachsene Person als
