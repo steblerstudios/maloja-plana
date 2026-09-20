@@ -323,6 +323,76 @@ Birne und Hagebutte.
 | Start-Download | 63,41 KB | **63,41 KB** gzip |
 | Tests | 2327 grün | **2327 grün** |
 
+---
+
+# Achte Runde, 20.09. — Proportionen nach Naturgesetz
+
+Frage von Stebler Studios: «Stehen alle Grössen in Relation zueinander und machen Sinn —
+z. B. die Äpfel gegen die Pflaumen?»
+
+## Die Antwort war Nein, und zwar nachgerechnet
+
+Eine Welteinheit = ein Meter (Baum 4,3 m). Gemessen gegen echte Masse:
+
+| Frucht | angezeigt (Ø) | echt (Ø) | Faktor |
+|---|---|---|---|
+| Apfel | 23,0 cm | 8 cm | 2,9× |
+| Zwetschge | 16,0 cm | 4 cm | 4,0× |
+| Kirsche | 12,0 cm | 2,2 cm | 5,5× |
+| Hagebutte | 13,6 cm | 2 cm | 6,8× |
+| Haselnuss | 14,8 cm | 1,8 cm | 8,2× |
+| Heidelbeere | 11,4 cm | 1,2 cm | **9,5×** |
+
+**Der Fehler war nicht die Übertreibung, sondern ihre Ungleichheit.** Eine Heidelbeere war
+fast so gross wie ein Apfel, obwohl sie in Wirklichkeit ein Siebtel misst. Dazu: Stamm
+60 cm Durchmesser (echt 20–35 cm bei dieser Höhe), Blätter 23 cm (echtes Apfelblatt 7–10 cm).
+
+## Die Regeln, nach denen es jetzt gebaut ist
+
+1. **Potenzgesetz statt fester Faktor** (aus dem Spieldesign): angezeigt = 3,16 · echt^0,6.
+   Eine 1,2-cm-Heidelbeere wäre naturgetreu ein unsichtbarer Punkt; das Potenzgesetz staucht
+   die Spanne, **ohne die Reihenfolge anzutasten**. Verwandt mit Stevens' Potenzgesetz — wir
+   nehmen Grössen ohnehin gestaucht wahr, nicht linear.
+2. **Da-Vinci-Regel** (Leonardo, heute «pipe model»): die Querschnittsflächen der Kinderäste
+   summieren sich zur Fläche des Elternastes → r_Kind = r_Eltern / √Anzahl. Vorher stand für
+   zwei **und** drei Kinder derselbe Faktor 0,58; bei zweifacher Teilung verlor der Baum
+   dadurch unterwegs Substanz. Jetzt 0,577 bzw. 0,707.
+3. **Goldener Schnitt** für die Längen: jeder Kindast misst 1/φ = 0,618 des Elternastes.
+4. **Elastische Ähnlichkeit** (McMahon 1973): Durchmesser ∝ Höhe^1,5, sonst knickt ein Baum
+   unter dem eigenen Gewicht. Für 4,3 m ergibt das rund 28 cm Stammdurchmesser.
+5. **Phyllotaxis 137,5°** jetzt auch zwischen Geschwisterästen (vorher sternförmig verteilt).
+6. **Fibonacci** für die Anzahlen: 3 Kinderäste, dann 2; **34 Blätter** je Zweigspitze.
+
+## Nachgemessen am fertigen Baum
+
+| | Ziel | gemessen |
+|---|---|---|
+| Stamm am Fuss | ~28 cm | **28,9 cm** |
+| Wurzelanlauf | breiter als Stamm | **53,9 cm** |
+| Apfel / Birne | – | 10,8 cm |
+| Aprikose | – | 7,3 cm |
+| Baumnuss | – | 7,1 cm |
+| Zwetschge | – | 6,1 cm |
+| Heidelbeere | – | 3,5 cm |
+| Verhältnis Apfel : Heidelbeere | echt 6,7 : 1 | **3,1 : 1** (bewusst gestaucht, Reihenfolge stimmt) |
+
+## Wurzeln und Borke — der berechtigte Einwand
+
+«Die Wurzeln und die Rinde sehen nicht gross anders aus» stimmte. Nachgebessert: Wurzeln
+**1,9 m statt 1,35 m**, flacher auslaufend statt steil abtauchend (dadurch über dem Boden
+sichtbar), und der Hell-Dunkel-Kontrast der Borke von 0,34 auf **0,52** erhöht. Am schlanken
+Stamm ist beides jetzt deutlich zu sehen — vorher verschwand es an einem 60 cm dicken Rohr.
+
+| | vorher | nachher |
+|---|---|---|
+| Dreiecke | 365 178 | 413 980 |
+| Zeichendauer | 1,23 ms | **0,64 ms** je Bild (schlechtestes 0,8) |
+| Start-Download | 63,41 KB | **63,41 KB** gzip |
+| Tests | 2327 grün | **2327 grün** |
+
+Schneller trotz mehr Dreiecken: die Blätter brauchen bei 11 cm Grösse keine 6×4-Kugel, 5×3
+reicht — das spart rund 40 % der Kronen-Dreiecke, ohne dass man es sieht.
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.

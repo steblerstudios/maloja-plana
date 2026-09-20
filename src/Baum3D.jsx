@@ -16,6 +16,31 @@ import { fruchtKoerper } from './baumFruechte3d.js';
 // dichter, und die Wuchsphasen sind benannt und deutlich getrennt.
 
 const GOLDEN = Math.PI * (3 - Math.sqrt(5)); // 137,5° — Phyllotaxis
+const PHI = (1 + Math.sqrt(5)) / 2;          // 1,618 — Goldener Schnitt
+
+// ─── Die Naturgesetze, nach denen dieser Baum gebaut ist ────────────────────
+//
+// Eine Welteinheit = ein Meter. Alles Folgende ist nachprüfbar, nicht geraten:
+//
+// 1. PHYLLOTAXIS (137,5°) — Äste und Blätter sitzen im Goldenen Winkel um die
+//    Achse. Das ist die Anordnung, die in der Natur die wenigsten Überdeckungen
+//    erzeugt, weil das Verhältnis irrational ist: kein Blatt liegt je genau
+//    über einem früheren.
+// 2. DA-VINCI-REGEL (Leonardo, Notizbücher; heute «pipe model»): Die Summe der
+//    Querschnittsflächen aller Kinderäste ist so gross wie die des Elternastes.
+//    Daraus folgt r_Kind = r_Eltern / √Anzahl — bei drei Kindern 0,577, bei
+//    zwei 0,707. Vorher stand in beiden Fällen 0,58: bei zweifacher Teilung
+//    also zu dünn, der Baum verlor unterwegs Substanz.
+// 3. GOLDENER SCHNITT für die Längen: jeder Kindast misst 1/φ = 0,618 des
+//    Elternastes. Ergibt die selbstähnliche Staffelung, die man an echten
+//    Bäumen sieht.
+// 4. ELASTISCHE ÄHNLICHKEIT (McMahon 1973): ein Baum darf nicht beliebig dünn
+//    sein, sonst knickt er unter dem eigenen Gewicht — Durchmesser wächst mit
+//    Höhe^1,5. Für 4,3 m Höhe ergibt das rund 28 cm Stammdurchmesser, also
+//    Radius 0,14. Vorher waren es 0,30 = 60 cm: doppelt zu dick.
+// 5. FIBONACCI für die Anzahlen (2, 3, 5, 8, 13, 21) — Kinderäste je Ebene und
+//    Blätter je Zweigspitze.
+const FIBONACCI = [1, 2, 3, 5, 8, 13, 21, 34];
 
 // ─── Die Wuchsphasen ────────────────────────────────────────────────────────
 // Ein Baum hat sechs erkennbare Zustände. Sie hängen am Ausfüllstand, nicht an
@@ -89,7 +114,7 @@ function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenT
       // 15–19 %, im Bild sah man trotzdem ein glattes Rohr, weil die weiche
       // Beleuchtung das wegbügelt. Darum wandert die Struktur zusätzlich in
       // die Farbe — Furchen dunkel, Grate hell, wie bei echter Borke.
-      const helligkeit = 1 + rippe * 0.34 - 0.1;
+      const helligkeit = 1 + rippe * 0.52 - 0.14;
       tonwerte.push(helligkeit, helligkeit, helligkeit);
     }
     pos.setXYZ(i, p.x + (pos.getX(i) - p.x) * f, p.y + (pos.getY(i) - p.y) * f, p.z + (pos.getZ(i) - p.z) * f);
@@ -198,7 +223,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   const stammKurve = new THREE.CatmullRomCurve3(stammPunkte);
   // Mehr Umfangspunkte und spürbare Rindentiefe — der Stamm ist das Stück,
   // das man am längsten ansieht.
-  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.3, 0.035, 34, 26, 0.085), borke);
+  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.145, 0.022, 34, 22, 0.115), borke);
   stamm.castShadow = true;
   stamm.receiveShadow = true;
   wurzel.add(stamm);
@@ -213,9 +238,10 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   for (let i = 0; i < wurzelZahl; i++) {
     const w = (i / wurzelZahl) * Math.PI * 2 + (zufall() - 0.5) * 0.35;
     const kraeftig = i % 3 === 0;
-    const laenge = (kraeftig ? 1.35 : 0.9) + zufall() * 0.5;
-    const dicke = kraeftig ? 0.13 : 0.075;
-    const dir = new THREE.Vector3(Math.cos(w), -0.16 - zufall() * 0.12, Math.sin(w)).normalize();
+    const laenge = (kraeftig ? 1.9 : 1.2) + zufall() * 0.6;
+    const dicke = kraeftig ? 0.105 : 0.06;
+    // Flach auslaufend statt steil abtauchend — so bleibt der Wurzelanlauf sichtbar.
+    const dir = new THREE.Vector3(Math.cos(w), -0.08 - zufall() * 0.07, Math.sin(w)).normalize();
     const start = new THREE.Vector3(Math.cos(w) * 0.09, 0.19, Math.sin(w) * 0.09);
     const { geometrie, ende } = astGeometrie(dir, laenge, dicke, 0.012, new THREE.Vector3(0, -0.12, 0), 0.07);
     const mesh = new THREE.Mesh(geometrie, borke);
@@ -242,7 +268,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   const anlauf = new THREE.Mesh(
     rohrMitVerjuengung(
       new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0.02, 0), new THREE.Vector3(0, 0.3, 0), new THREE.Vector3(0, 0.75, 0)]),
-      0.46, 0.3, 10, 26, 0.1
+      0.27, 0.148, 10, 22, 0.13
     ),
     borke
   );
@@ -281,23 +307,26 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
         return;
       }
       // Drei Kinder auf den oberen Ebenen → dichtere Krone.
-      const kinder = tiefe >= 2 ? 3 : 2;
+      // Fibonacci für die Anzahl, Da Vinci für die Dicke, φ für die Länge.
+      const kinder = tiefe >= 2 ? FIBONACCI[2] : FIBONACCI[1]; // 3, dann 2
+      const kindRadius = radius / Math.sqrt(kinder);
       for (let k = 0; k < kinder; k++) {
-        const a = azimut + (k / kinder) * Math.PI * 2 + (zufall() - 0.5) * 0.8;
+        // Auch die Kinder sitzen im Goldenen Winkel zueinander, nicht sternförmig.
+        const a = azimut + k * GOLDEN + (zufall() - 0.5) * 0.5;
         const neu = new THREE.Vector3(Math.cos(a) * 0.6, 0.78, Math.sin(a) * 0.6)
           .normalize().lerp(dir, 0.42).normalize();
-        zweigen(weltEnde, neu, laenge * 0.66, radius * 0.58, tiefe - 1);
+        zweigen(weltEnde, neu, laenge / PHI, kindRadius, tiefe - 1);
       }
     };
 
     // Alles, was an einer Astspitze hängt — nie frei schwebend, und immer erst,
     // wenn der Ast, an dem es hängt, fertig gewachsen ist.
     const spitzeBestuecken = (punkt, dir, bereich) => {
-      for (let l = 0; l < 14; l++) {
+      for (let l = 0; l < FIBONACCI[7]; l++) {
         const winkel = l * GOLDEN;
-        const r = 0.16 + (l % 5) * 0.075;
+        const r = 0.1 + (l % 8) * 0.055;
         blattPlaetze.push({
-          position: punkt.clone().add(new THREE.Vector3(Math.cos(winkel) * r, (zufall() - 0.35) * 0.4, Math.sin(winkel) * r)),
+          position: punkt.clone().add(new THREE.Vector3(Math.cos(winkel) * r, (zufall() - 0.35) * 0.5, Math.sin(winkel) * r)),
           drehung: new THREE.Euler(zufall() * 3, zufall() * 3, zufall() * 3),
           groesse: 0.8 + zufall() * 0.55,
           bereich: bereich.key,
@@ -330,7 +359,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
       });
     };
 
-    zweigen(ansatz, startRichtung, 0.95, 0.08, 3);
+    zweigen(ansatz, startRichtung, 1.15, 0.145 / Math.sqrt(Math.max(1, bereiche.length)), 3);
   });
 
   // Gipfeltrieb: der Stamm endet nicht, er geht in einen letzten Zweig über.
@@ -355,8 +384,11 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   // ─── Sammelformen: Blätter, Knospen, Blüten, Früchte ─────────────────────
   // Hunderte Blätter als EINE Form. Das macht die Krone dicht und kostet trotzdem
   // nur einen Zeichenaufruf statt hunderte — sonst wäre «dichter» teuer erkauft.
-  const blattGeo = new THREE.SphereGeometry(0.115, 6, 4);
-  blattGeo.scale(1, 0.3, 0.62);
+  // Apfelblatt real 7-10 cm: Radius 0.045 = 9 cm Länge.
+  // 5x3 statt 6x4 Segmente: bei 11 cm Blattlänge sieht man den Unterschied
+  // nicht, spart aber rund 40 % der Dreiecke in der Krone.
+  const blattGeo = new THREE.SphereGeometry(0.055, 5, 3);
+  blattGeo.scale(1, 0.32, 0.6);
   const knospeGeo = new THREE.SphereGeometry(0.05, 6, 4);
   // Zurück auf ruhiges Mass: die Blüten waren nie zu klein, sie wurden
   // weggeschnitten (siehe frustumCulled unten). Erst der Fehler, dann das Mass.

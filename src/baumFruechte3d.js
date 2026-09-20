@@ -13,6 +13,37 @@ import * as THREE from 'three';
 // Punkte je Frucht, darum billig — und die Form bleibt in Graustufen erkennbar,
 // was unser dritter Barrierefreiheits-Kanal ist (Form, nicht nur Farbe).
 
+// ─── Massstab: echte Früchte, lesbar verdichtet ─────────────────────────────
+//
+// Eine Welteinheit = ein Meter (der Baum ist 4,3 Einheiten hoch, also 4,3 m).
+// Nachgemessen am 20.09. war die alte Bestückung schief: der Apfel war 2,9-fach
+// zu gross, die Heidelbeere aber 9,5-fach — dadurch sah eine Beere fast aus wie
+// ein Apfel, obwohl sie in Wirklichkeit ein Siebtel misst.
+//
+// Reine Naturtreue hilft nicht: eine 1,2-cm-Heidelbeere wäre an einem 4-m-Baum
+// ein unsichtbarer Punkt. Darum die Regel aus dem Spieldesign — **Potenzgesetz
+// statt fester Faktor**: angezeigt = k · echt^0.6. Das staucht die Spanne, ohne
+// die Reihenfolge anzutasten. Klein bleibt klein, gross bleibt gross, und alles
+// bleibt sichtbar. (Dieselbe Familie von Kurven wie Stevens' Potenzgesetz zur
+// Grössenwahrnehmung — wir sehen Grössen ohnehin gestaucht, nicht linear.)
+export const ECHT_CM = {
+  apfel: 8, birne: 8, aprikose: 5, zwetschge: 4, baumnuss: 4,
+  kirsche: 2.2, hagebutte: 2, haselnuss: 1.8, traube: 1.6,
+  heidelbeere: 1.2, vogelbeere: 0.8,
+};
+const STAUCHUNG = 0.6;
+const MASSSTAB = 3.16; // so gewählt, dass der Apfel bei rund 11 cm landet
+
+// Bei Traube und Vogelbeere hängt nicht die einzelne Beere am Ast, sondern die
+// ganze Dolde — sie ist das, was man sieht, und sie ist deutlich grösser.
+export const ECHT_CM_DOLDE = { traube: 14, vogelbeere: 8 };
+
+/** Angezeigter Durchmesser in Welteinheiten (= Meter). */
+export function fruchtDurchmesser(name) {
+  const echt = ECHT_CM_DOLDE[name] || ECHT_CM[name] || 5;
+  return (MASSSTAB * Math.pow(echt, STAUCHUNG)) / 100;
+}
+
 // Silhouette = Punkte [radius, höhe] von unten nach oben. Radius 0 heisst Spitze.
 const PROFILE = {
   // Apfel: unten und oben eingedellt, breiteste Stelle knapp unter der Mitte.
@@ -104,6 +135,8 @@ function zusammenfuegen(teile) {
  */
 export function fruchtKoerper(name) {
   const teile = [];
+  // Jede Silhouette ist in sich gezeichnet; hier bekommt sie ihr echtes Mass.
+  const zielBreite = fruchtDurchmesser(name);
 
   if (BUESCHEL[name]) {
     const { radius, punkte } = BUESCHEL[name];
@@ -139,6 +172,17 @@ export function fruchtKoerper(name) {
   teile.push(stiel);
 
   const g = zusammenfuegen(teile);
+
+  // Auf das gemessene Zielmass bringen: die Silhouetten sind frei gezeichnet,
+  // erst hier bekommen sie ihre Grösse — so steht die Regel an einer Stelle
+  // und nicht in elf Zahlenreihen verstreut.
+  g.computeBoundingBox();
+  const breite = Math.max(
+    g.boundingBox.max.x - g.boundingBox.min.x,
+    g.boundingBox.max.z - g.boundingBox.min.z
+  );
+  if (breite > 0) g.scale(zielBreite / breite, zielBreite / breite, zielBreite / breite);
+
   g.computeVertexNormals();
   return g;
 }
