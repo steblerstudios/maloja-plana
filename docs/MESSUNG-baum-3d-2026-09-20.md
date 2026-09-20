@@ -427,11 +427,60 @@ Dazu tauchen die Wurzeln jetzt ins Erdreich ein, statt als Spitzen aus dem Boden
 | Start-Download | 63,41 KB | **63,42 KB** gzip |
 | Tests | 2327 grün | **2327 grün** |
 
+---
+
+# Zehnte Runde, 20.09. — schlängelnde Wurzeln, Anspruchs-Ringe, und ein Fund im Produkt
+
+## Wurzeln
+
+Sie liefen bisher gerade vom Stamm weg wie Speichen. Jetzt folgt jede Wurzel einer Kurve aus
+mehreren Punkten: sie pendelt seitlich (nach aussen zunehmend), taucht mit wachsender
+Steigung ab und endet im Erdreich. Die Nebenwurzeln folgen derselben Da-Vinci-Regel wie die
+Äste — bei zwei Strängen r/√2.
+
+## Anspruchs-Ringe
+
+Zwei Ringe um die Leitfrucht, wenn für diesen Ast ein Anspruch **tatsächlich gedeckt** ist —
+dieselbe Quelle (`data/anspruchSignale.js`), dieselbe Farbe, dieselben Deckkräfte wie am
+flachen Baum (0,22 aussen / 0,50 innen). Dazu trägt die Marke am Ast denselben Ring um ihr
+Icon, ihr Klick führt dann **zur Leistung statt ins Kapitel**, und die Vorlesehilfe nennt sie.
+
+## 🛑 Der Fund: der Ring blitzt auf, ohne dass ein Anspruch gedeckt ist
+
+Beim Prüfen zeigte weder der räumliche **noch der flache** Baum einen Ring — obwohl dieselbe
+Funktion mit denselben Beispieldaten im Test sauber **IPV** meldet. Die Ursache steht wörtlich
+in `config/cantonalData.js`:
+
+> Für ZH (und BE/AG/SG) rechnet ein **nachgeladenes** Kantonsmodul. Solange es lädt, gibt
+> `calculateIPV` die Orientierung zurück — mit `anspruchMoeglich: kkPremium > 0`.
+
+Das heisst: **während der Ladezeit ist `anspruchMoeglich` wahr**, der Ring erscheint; sobald
+das echte ZH-Modell da ist, sagt es für dieses Profil «kein Anspruch», und der Ring
+verschwindet wieder. Genau das, was der Guardrail in `anspruchSignale.js` ausschliessen will:
+*«Nie ein Ring ohne gedeckten Anspruch.»*
+
+⚠️ **Das betrifft `main`, nicht diesen Prototyp** — der flache Baum verhält sich heute live
+genauso. Vorschlag: `anspruchSignale` soll beim Zustand `offen: 'laden'` **kein** Signal
+liefern. Zwei Zeilen, aber ein Entscheid über Ehrlichkeit — darum nicht nebenbei gemacht.
+
+Auch der Unit-Test täuscht hier: er lädt die Kantonsmodule nie und misst deshalb immer den
+Lade-Zweig. **Ein grüner Test über eine Funktion, deren Ergebnis vom Nachladen abhängt, sagt
+wenig.**
+
+Dass die Ringe zeichnen, ist trotzdem belegt — über eine Messsonde (`__baum3dRingProbe`):
+zwei Ringe in Versicherungs-Blau (#86A6C2) am richtigen Ast.
+
+| | vorher | nachher |
+|---|---|---|
+| Dreiecke | 402 668 | 415 596 |
+| Zeichendauer | 0,59 ms | 0,81 ms je Bild |
+| Start-Download | 63,42 KB | **63,50 KB** gzip |
+| Tests | 2327 grün | **2327 grün** |
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
-- Die **Anspruchs-Ringe** um eine Frucht (wenn ein Anspruch gedeckt ist) fehlen im räumlichen
-  Baum noch.
+- **Entscheid für `main`:** soll `anspruchSignale` während des Nachladens schweigen?
 - Bei voller Krone drängeln sich die Marken oben links; eine ruhigere Verteilung wäre möglich.
 - Die vier Bereiche **ohne** eigenes Kapitel (Gesundheit, Arbeit, Familie, Vorsorge) hängen
   noch nicht am Dashboard-Baum — dort gibt es sieben Äste, nicht elf. Ihre Früchte

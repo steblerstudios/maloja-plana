@@ -129,6 +129,29 @@ function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenT
   return g;
 }
 
+// Eine Wurzel schlängelt. Sie läuft nicht gerade vom Stamm weg wie eine
+// Speiche, sondern weicht aus, taucht ab, kommt wieder näher an die Oberfläche
+// und verschwindet dann im Erdreich. Darum eine Kurve aus mehreren Punkten
+// statt einer geraden Richtung.
+function wurzelGeometrie(richtungXZ, laenge, r0, r1, zufall) {
+  const quer = new THREE.Vector3(-richtungXZ.z, 0, richtungXZ.x); // seitlich
+  const punkte = [new THREE.Vector3(0, 0, 0)];
+  const schritte = 4;
+  for (let i = 1; i <= schritte; i++) {
+    const t = i / schritte;
+    // Seitliches Pendeln nimmt nach aussen zu, das Abtauchen beschleunigt sich.
+    const seite = Math.sin(t * Math.PI * 1.4 + zufall() * 0.6) * laenge * 0.17 * t;
+    const tiefe = -Math.pow(t, 1.8) * laenge * 0.42 - t * 0.05;
+    punkte.push(
+      richtungXZ.clone().multiplyScalar(laenge * t)
+        .addScaledVector(quer, seite)
+        .add(new THREE.Vector3(0, tiefe, 0))
+    );
+  }
+  const kurve = new THREE.CatmullRomCurve3(punkte, false, 'centripetal');
+  return { geometrie: rohrMitVerjuengung(kurve, r0, r1, 10, 9, 0.06), ende: punkte[punkte.length - 1] };
+}
+
 function astGeometrie(richtung, laenge, r0, r1, biegung, rindenTiefe = 0) {
   const mitte = richtung.clone().multiplyScalar(laenge * 0.5).add(biegung);
   const ende = richtung.clone().multiplyScalar(laenge).add(biegung.clone().multiplyScalar(2));
@@ -190,6 +213,33 @@ function fruchtSchildchen(fruit, iconName, farbe, kantePx = 128) {
   return textur;
 }
 
+// ─── Anspruchs-Ring ─────────────────────────────────────────────────────────
+// Zwei ruhige Ringe um die Leitfrucht, wenn für diesen Ast ein Anspruch
+// tatsächlich gedeckt ist. Dieselbe Bedeutung, Farbe und Deckkraft wie am
+// flachen Baum (0,22 aussen / 0,50 innen) — und dieselbe Quelle:
+// data/anspruchSignale.js. Nie ein Ring ohne gedeckten Anspruch.
+function ringTextur(farbe, kantePx = 128) {
+  const leinwand = document.createElement('canvas');
+  leinwand.width = kantePx;
+  leinwand.height = kantePx;
+  const ctx = leinwand.getContext('2d');
+  const m = kantePx / 2;
+  ctx.strokeStyle = farbe;
+  ctx.globalAlpha = 0.22;
+  ctx.lineWidth = kantePx * 0.016;
+  ctx.beginPath();
+  ctx.arc(m, m, kantePx * 0.46, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.globalAlpha = 0.5;
+  ctx.lineWidth = kantePx * 0.022;
+  ctx.beginPath();
+  ctx.arc(m, m, kantePx * 0.36, 0, Math.PI * 2);
+  ctx.stroke();
+  const textur = new THREE.CanvasTexture(leinwand);
+  textur.colorSpace = THREE.SRGBColorSpace;
+  return textur;
+}
+
 // Ankerpunkt je Lebensbereich: der äusserste Fruchtplatz seines Astes. Daran
 // hängt später die Beschriftung — sie folgt dem Ast, auch wenn man dreht.
 function aeussersterPunkt(punkte) {
@@ -247,12 +297,9 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     const kraeftig = i % 3 === 0;
     const laenge = (kraeftig ? 1.9 : 1.2) + zufall() * 0.6;
     const dicke = kraeftig ? 0.105 : 0.06;
-    // Flach auslaufend statt steil abtauchend — so bleibt der Wurzelanlauf sichtbar.
-    // Erst flach über den Boden, dann eintauchen: die Biegung unten sorgt
-    // dafür, dass die Wurzel im Erdreich endet statt als Spitze herauszustehen.
-    const dir = new THREE.Vector3(Math.cos(w), -0.1 - zufall() * 0.06, Math.sin(w)).normalize();
+    const dir = new THREE.Vector3(Math.cos(w), 0, Math.sin(w)).normalize();
     const start = new THREE.Vector3(Math.cos(w) * 0.09, 0.19, Math.sin(w) * 0.09);
-    const { geometrie, ende } = astGeometrie(dir, laenge, dicke, 0.012, new THREE.Vector3(0, -0.4, 0), 0.07);
+    const { geometrie, ende } = wurzelGeometrie(dir, laenge, dicke, 0.012, zufall);
     const mesh = new THREE.Mesh(geometrie, borke);
     mesh.position.copy(start);
     mesh.castShadow = true;
@@ -263,10 +310,11 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     // Nebenwurzel: jede kräftige Wurzel teilt sich einmal.
     if (kraeftig) {
       const w2 = w + (zufall() - 0.5) * 1.1;
-      const dir2 = new THREE.Vector3(Math.cos(w2), -0.3, Math.sin(w2)).normalize();
-      const { geometrie: g2 } = astGeometrie(dir2, laenge * 0.55, dicke * 0.45, 0.01, new THREE.Vector3(0, -0.06, 0));
-      const m2 = new THREE.Mesh(g2, rinde);
-      m2.position.copy(start).add(ende.clone().multiplyScalar(0.55));
+      const dir2 = new THREE.Vector3(Math.cos(w2), 0, Math.sin(w2)).normalize();
+      // Da Vinci gilt auch unter dem Boden: zwei Stränge, also r/√2.
+      const { geometrie: g2 } = wurzelGeometrie(dir2, laenge * 0.55, dicke / Math.sqrt(2), 0.01, zufall);
+      const m2 = new THREE.Mesh(g2, borke);
+      m2.position.copy(start).add(ende.clone().multiplyScalar(0.5));
       m2.receiveShadow = true;
       wurzel.add(m2);
       teile.push({ mesh: m2, ab: 2, bis: 13 });
@@ -516,7 +564,7 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   });
 }
 
-export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen, werkzeuge, onWerkzeugWaehlen }) {
+export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen, werkzeuge, onWerkzeugWaehlen, ansprueche, onAnspruchWaehlen }) {
   const halter = React.useRef(null);
   const [keinWebGL, setKeinWebGL] = React.useState(false);
   // Wo hängt welcher Ast gerade auf dem Bildschirm? Daran kleben die
@@ -598,6 +646,17 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
         // dass die Frucht den Baum erschlägt (0,95 tat genau das — im Bild gesehen).
         teile.push({ mesh: sprite, ...PLAN.frucht, basis: 0.55, bereich: b.key });
         schildchen.push(leitTextur);
+
+        // Anspruchs-Ring: nur wenn für diesen Ast wirklich ein Anspruch
+        // gedeckt ist. Er liegt hinter der Leitfrucht und reift mit ihr.
+        if (ansprueche && ansprueche[b.key]) {
+          const ringT = ringTextur(b.farbe, 160);
+          const ring = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringT, transparent: true, depthWrite: false }));
+          ring.position.copy(sprite.position);
+          wurzel.add(ring);
+          teile.push({ mesh: ring, ...PLAN.frucht, basis: 0.95, bereich: b.key });
+          schildchen.push(ringT);
+        }
       }
 
       // Werkzeuge an denselben Ast, etwas tiefer und deutlich kleiner — sie sind
@@ -750,6 +809,21 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       zeichnen();
       return { abstand, zielHoehe };
     };
+    // NUR MESSUNG: hängt testweise einen Anspruchs-Ring an einen Ast. Nötig,
+    // weil im Beispiel-Profil gerade kein Anspruch gedeckt ist (das ZH-Modul
+    // sagt nach dem Laden «nein») — ohne Sonde liesse sich das Zeichnen des
+    // Rings nicht prüfen.
+    window.__baum3dRingProbe = (bereichKey) => {
+      const a = anker.find((x) => x.key === bereichKey) || anker[0];
+      const b = bereiche.find((x) => x.key === a.key);
+      const ringT = ringTextur(b.farbe, 160);
+      const ring = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringT, transparent: true, depthWrite: false }));
+      ring.position.copy(a.punkt).add(new THREE.Vector3(0, -0.5, 0));
+      ring.scale.setScalar(0.95);
+      wurzel.add(ring);
+      zeichnen();
+      return { ast: a.key, farbe: b.farbe };
+    };
     window.__baum3dStand = (pct) => {
       const proT = {};
       Object.keys(proBereich).forEach((k) => { proT[k] = pct; });
@@ -791,7 +865,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       renderer.dispose();
       if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
     };
-  }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette]);
+  }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette, ansprueche]);
 
   if (keinWebGL) return null; // Aufrufer zeigt dann den flachen Baum.
 
@@ -819,6 +893,9 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       const anklickbar = typeof onBereichWaehlen === 'function';
       const IconFn = Icons[b.iconName] || Icons[m.key];
       const meineWerkzeuge = (werkzeuge || []).filter((w) => w.area === m.key);
+      // Ist für diesen Ast ein Anspruch gedeckt, führt der Klick dorthin —
+      // genau wie am flachen Baum, wo die Frucht dann zur Leistung führt.
+      const anspruch = ansprueche ? ansprueche[m.key] : null;
       return React.createElement('div', {
         key: m.key,
         style: {
@@ -832,8 +909,13 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       },
         React.createElement('button', {
           type: 'button',
-          onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
-          'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent',
+          onClick: anspruch && onAnspruchWaehlen
+            ? () => onAnspruchWaehlen(anspruch)
+            : (anklickbar ? () => onBereichWaehlen(b) : undefined),
+          title: anspruch && anspruch.label ? anspruch.label : (b.name || m.key),
+          'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent'
+            + (anspruch ? ' · ' + (anspruch.aria || 'Anspruch gedeckt')
+              + (anspruch.label ? ': ' + anspruch.label : '') : ''),
           style: {
             display: 'inline-flex', alignItems: 'center', gap: '5px',
             padding: '2px 8px 2px 4px', borderRadius: '999px',
@@ -841,15 +923,35 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
             color: palette ? palette.text : '#222',
             background: (palette ? palette.surface : '#fff') + 'e6',
             border: '1px solid ' + b.farbe + '55',
-            cursor: anklickbar ? 'pointer' : 'default',
+            cursor: (anspruch && onAnspruchWaehlen) || anklickbar ? 'pointer' : 'default',
           },
         },
           // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
-          // statt als Bild, damit es auch klein lesbar bleibt.
+          // statt als Bild, damit es auch klein lesbar bleibt. Bei gedecktem
+          // Anspruch legen sich die zwei Ringe darum, wie am flachen Baum.
           React.createElement('span', {
-            style: { width: '13px', height: '13px', color: b.farbe, flex: '0 0 auto', display: 'inline-flex' },
+            style: {
+              position: 'relative', width: '13px', height: '13px', color: b.farbe,
+              flex: '0 0 auto', display: 'inline-flex',
+            },
             'aria-hidden': 'true',
-          }, IconFn ? IconFn() : null),
+          },
+            IconFn ? IconFn() : null,
+            anspruch ? React.createElement('span', {
+              style: {
+                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+                width: '21px', height: '21px', borderRadius: '50%',
+                border: '1.5px solid ' + b.farbe, opacity: 0.22, pointerEvents: 'none',
+              },
+            }) : null,
+            anspruch ? React.createElement('span', {
+              style: {
+                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+                width: '17px', height: '17px', borderRadius: '50%',
+                border: '2px solid ' + b.farbe, opacity: 0.5, pointerEvents: 'none',
+              },
+            }) : null
+          ),
           React.createElement('span', null, b.name || m.key),
           React.createElement('span', {
             style: { opacity: 0.6, fontVariantNumeric: 'tabular-nums' },

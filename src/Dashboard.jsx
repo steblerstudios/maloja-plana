@@ -542,6 +542,17 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
         ziel: navMap[c.key],
       })),
       onWerkzeugWaehlen: onNavigate ? (w) => { if (w.ziel) onNavigate(w.ziel); } : undefined,
+      // Anspruchs-Ringe aus derselben Quelle wie am flachen Baum
+      // (data/anspruchSignale.js) — nie ein Ring ohne gedeckten Anspruch.
+      ansprueche: Object.fromEntries(Object.entries(signale)
+        .filter(([, liste]) => liste && liste.length)
+        .map(([key, liste]) => [key, {
+          key: liste[0].key,
+          view: liste[0].view,
+          label: t('anspruch.items.' + liste[0].key + '.label'),
+          aria: t('datenWirken.anspruchAria'),
+        }])),
+      onAnspruchWaehlen: onNavigate ? (a) => { if (a.view) onNavigate(a.view); } : undefined,
       // Der Weg ins Kapitel bleibt erhalten — das kann der flache Baum, und ohne
       // ihn wäre der räumliche hübscher, aber ärmer.
       onBereichWaehlen: onSelectChapter ? (b) => onSelectChapter(b.idx) : undefined,
