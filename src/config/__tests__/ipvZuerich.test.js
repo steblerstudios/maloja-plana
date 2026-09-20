@@ -116,7 +116,7 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
 
 // Erweitert 20.09.2026 um BE und AG (zweiter und vierter Kanton mit eigenem Modell): unver-
 // ändert bleiben jetzt 23 der 26 Kantone, nicht mehr 25.
-const EIGENES_MODELL = ['ZH', 'BE', 'AG'];
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG'];
 
 describe('K31 Regression: alle Kantone ausser ZH, BE und AG rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
@@ -140,8 +140,8 @@ describe('K31 Regression: alle Kantone ausser ZH, BE und AG rechnen exakt wie v0
     }
   }
 
-  it(`23 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
-    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(23);
+  it(`22 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(22);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 

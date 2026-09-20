@@ -102,6 +102,7 @@ let _plzModule = null;
 let _zhModule = null;
 let _beModule = null;
 let _agModule = null;
+let _sgModule = null;
 
 export function cantonFromPLZ(plz) {
   const num = parseInt(plz, 10);
@@ -130,6 +131,7 @@ export function preloadPLZ() {
   // AG braucht die Gemeinde NICHT (kein Prämienregionen-Modell, V KVGG § 4 Abs. 1), lädt aber
   // im selben Moment mit — ein Chunk, damit das Hauptbundle klein bleibt.
   if (!_agModule) import('./ipvAargau.js').then(m => { _agModule = m; }).catch(() => {});
+  if (!_sgModule) import('./ipvStGallen.js').then(m => { _sgModule = m; }).catch(() => {});
 }
 
 // Primäre Gemeinde aus PLZ (lokal). Braucht das geladene PLZ-Modul; vorher null
@@ -197,7 +199,7 @@ export function getHouseholdInfo(data) {
 // Solange ein Kanton `belegt: false` trägt, zeigt die App dort keinen Betrag, kein
 // «Berechtigt» und keine Grenze, sondern nur eine Orientierung (calculateIPV unten).
 // Das Feld `beleg` je Kanton ist Flag und Quellen-Feld zugleich:
-//   beleg: null                                  → nicht amtlich belegt (heute 23 von 26; ZH, BE und AG belegt seit K31)
+//   beleg: null                                  → nicht amtlich belegt (heute 22 von 26; ZH, BE, AG und SG belegt seit K31)
 //   beleg: { quelle: 'Amt + Erlass/Seite bzw. URL, aufs Wort genau',
 //            stand: 'Datum der Prüfung bzw. Gültigkeitsjahr, z. B. 2026' }
 //                                                → belegt; zeigt wieder einen Betrag
@@ -226,7 +228,11 @@ export const CANTONAL_IPV = {
   SH: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyAhvBranchShort', beleg: null },
   AR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AR' }, beleg: null },
   AI: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
-  SG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' }, beleg: null },
+  // SG (K31): eigenes Modell in config/ipvStGallen.js (Referenzprämie minus Belastungsgrenze,
+  // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als
+  // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
+  SG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' },
+    beleg: { quelle: 'Regierungsbeschluss über die Prämienverbilligung 2026 (sGS 331.538, nGS 2025-071, vom 9. Dezember 2025, in Vollzug ab 1. Januar 2026) Art. 1–7; Verordnung zum EG zur Krankenversicherung (sGS 331.111) Art. 12, 14, 19–21; SVA St.Gallen, Merkblatt IPV 2026 (Form. 4100 01.26)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' }, beleg: null },
   // AG (K31): eigenes Modell in config/ipvAargau.js (Richtprämie minus 17,5 % des massgebenden
   // Einkommens). Keine Prämienregionen; die Einkommensgrenze nach § 5 Abs. 5 KVGG publiziert
@@ -386,9 +392,9 @@ export function calculateIPV(data) {
     anspruchMoeglich: Number(data.versicherungen?.kkPremium) > 0, youngAdultsCount, canton, ...(offen && { offen }),
   });
   if (!(ipvData.beleg && ipvData.beleg.quelle)) return orientierung();
-  // K31: ZH, BE und AG rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js,
-  // config/ipvBern.js bzw. config/ipvAargau.js). Solange PLZ-Daten und Kantonsmodul noch
-  // laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
+  // K31: ZH, BE, AG und SG rechnen nach ihrem eigenen amtlichen Modell (config/ipvZuerich.js,
+  // config/ipvBern.js, config/ipvAargau.js bzw. config/ipvStGallen.js). Solange PLZ-Daten und
+  // Kantonsmodul noch laden: Orientierung wie ohne Beleg, nie ein geratener Betrag.
   if (canton === 'ZH') {
     if (!_zhModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
     return _zhModule.ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
@@ -402,6 +408,10 @@ export function calculateIPV(data) {
   if (canton === 'AG') {
     if (!_agModule) { preloadPLZ(); return orientierung('laden'); }
     return _agModule.ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung);
+  }
+  if (canton === 'SG') {
+    if (!_sgModule || !_plzModule) { preloadPLZ(); return orientierung('laden'); }
+    return _sgModule.ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, _plzModule.lookupPLZ);
   }
 
   let maxAnnualSubsidy;
