@@ -238,11 +238,28 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
     });
   });
 
-  it('Stufengrenze durch die App: 3a-Einzahlung 11 200 → massgebend 9 000 → noch oberste Stufe', () => {
-    // Die Säule-3a-Einzahlung wird dem Einkommen hinzugerechnet ([A], Ziffer 1.1) und ist ein
-    // Jahresbetrag — darum ohne × 12. 11 200 − 2 200 Sozialabzug = 9 000.
-    expect(calculateIPV(person({ finanzen: { pension3a: 11200 } }))).toMatchObject({ amount: 221 });
-    expect(calculateIPV(person({ finanzen: { pension3a: 11201 } }))).toMatchObject({ amount: 147 });
+  // ⟨geändert 20.09.2026, zweite Fachprüfungsrunde⟩ Vorher setzte dieser Test das Einkommen
+  // über `pension3a: 11200` — das ging nur, solange die 3a fälschlich aufgerechnet wurde.
+  // Jetzt über das Einkommensfeld: die Stufengrenze 9 000 liegt bei (9 000 + 2 200) / 12 =
+  // 933.33/Monat, also zwischen 933 und 934.
+  it('Stufengrenze durch die App: 933/Monat noch oberste Stufe, 934 die nächste', () => {
+    // 933 × 12 = 11 196 − 2 200 Sozialabzug = 8 996 → Stufe «bis 9 000»
+    expect(calculateIPV(person({ monthlyIncome: 933 }))).toMatchObject({ amount: 221 });
+    // 934 × 12 = 11 208 − 2 200 = 9 008 → nächste Stufe
+    expect(calculateIPV(person({ monthlyIncome: 934 }))).toMatchObject({ amount: 147 });
+  });
+
+  // 🛑 RÜCKFALL-WÄCHTER (Befund Fachprüfung 20.09.2026, zweite Runde).
+  // Die 3a wurde doppelt gezählt. In einer Stufentabelle ist das besonders scharf: ein
+  // einziger Franken Differenz kippt eine ganze Stufe, im Jahr bis zu CHF 888.
+  // Zusätzlich zitierte ipvBern.js dafür KKVV Art. 9 Abs. 2 statt Art. 6 Abs. 4 lit. i —
+  // und verlor dabei den Deckel aufs bundesrechtliche Maximum ganz.
+  it('Säule 3a zählt NICHT zusätzlich — und kippt damit keine Stufe mehr', () => {
+    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } }))).toMatchObject({ amount: 221 });
+    // der alte Weg hätte hier 11 196 + 7 056 = 18 252 − 2 200 = 16 052 ergeben, also zwei
+    // Stufen tiefer statt derselben
+    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } })).amount)
+      .toBe(calculateIPV(person({ monthlyIncome: 933 })).amount);
   });
 
   it('Renten zählen zum Einkommen', () => {
@@ -272,10 +289,11 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
   });
 
   it('Vermögen über dem Freibetrag hebt die Stufe (5 % zählen als Einkommen)', () => {
-    // ohne Vermögen: 11 000 − 2 200 = 8 800 → oberste Stufe
-    expect(calculateIPV(person({ finanzen: { pension3a: 11000 } })).amount).toBe(221);
-    // mit 57 000 Vermögen: (57 000 − 17 000) × 5 % = 2 000 → 10 800 → nächste Stufe
-    expect(calculateIPV(person({ finanzen: { pension3a: 11000, savingsAccount: 57000 } })).amount).toBe(147);
+    // ⟨geändert 20.09.2026: Einkommen vorher über `pension3a` gesetzt, siehe oben⟩
+    // ohne Vermögen: 900 × 12 = 10 800 − 2 200 = 8 600 → oberste Stufe
+    expect(calculateIPV(person({ monthlyIncome: 900 })).amount).toBe(221);
+    // mit 57 000 Vermögen: (57 000 − 17 000) × 5 % = 2 000 → 10 600 → nächste Stufe
+    expect(calculateIPV(person({ monthlyIncome: 900, finanzen: { savingsAccount: 57000 } })).amount).toBe(147);
   });
 
   // 750'000 ist in BE kein Ausschluss, sondern der Punkt, ab dem nicht automatisch geprüft wird.

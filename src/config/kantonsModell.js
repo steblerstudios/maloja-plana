@@ -22,11 +22,98 @@ export function vermoegenSumme(f) {
   return Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
 }
 
-// Jahreseinkommen aus den Monatsfeldern, plus Säule 3a als bereits jährlicher Betrag
-// (Feldbeschriftung «3. Säule A eingezahlt CHF/Jahr» — darum ohne × 12).
-export function einkommenJahr(f) {
-  return ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
-    .reduce((s, k) => s + Number(f[k] || 0), 0) * 12 + Number(f.pension3a || 0);
+// Die drei Zurechnungsregeln — benannt und belegt, NICHT vereinheitlicht.
+//
+// Nachdem die Doppelzählung weg ist (siehe unten), trägt das rohe Nettoeinkommen die volle
+// Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
+// im massgebenden Einkommen NICHT stehen bleiben darf.
+//
+//   voll                 ZH, SG — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
+//                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
+//                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
+//   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
+//                        KKVV Art. 6 Abs. 4 lit. i
+//   schwelleOhneSaeule2  AG — nur der Teil ÜBER 10 % des Nettoerwerbseinkommens, und nur
+//                        bei Personen OHNE Säule 2.
+//                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
+//
+// 🛑 ZWEI DIESER DREI WIRKEN HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
+// wird beim nächsten Kanton nicht kopiert. Beide geben `0` zurück wie `voll`, aber aus
+// einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
+export const SAEULE_3A = Object.freeze({
+  voll: Object.freeze({
+    name: 'voll',
+    kantone: 'ZH, SG',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)',
+    nichtAufgerechnet: () => 0,
+  }),
+
+  bisBundesMaximum: Object.freeze({
+    name: 'bisBundesMaximum',
+    kantone: 'BE',
+    beleg: 'KKVV Art. 6 Abs. 4 lit. i',
+    // 🛑 Die Norm steht, die ZAHL fehlt. Der Frankenwert des bundesrechtlichen 3a-Maximums
+    // 2026 ist NICHT belegt: Fedlex lieferte am 20.09.2026 für eine ERFUNDENE ELI eine
+    // byte-identische Antwort — das Messgerät war unbrauchbar, also gilt kein Ergebnis
+    // daraus. Eine geratene Zahl wäre hier schlimmer als keine: sie würde bei jedem
+    // Selbständigen mit hoher Einzahlung still danebenliegen und sähe belegt aus.
+    offen: 'Frankenwert des bundesrechtlichen 3a-Maximums 2026 für Unselbständige — nicht '
+      + 'belegt (Fedlex antwortete auf eine erfundene ELI byte-identisch). Bis dahin wirkt '
+      + 'der Deckel nicht; betroffen sind nur Einzahlungen ÜBER dem Maximum.',
+    nichtAufgerechnet: () => 0,
+  }),
+
+  schwelleOhneSaeule2: Object.freeze({
+    name: 'schwelleOhneSaeule2',
+    kantone: 'AG',
+    beleg: '§ 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (SAR 837.211)',
+    // 🛑 Die Regel ist belegt und rechenbar — was fehlt, ist die ANGABE, ob eine Säule 2
+    // besteht. Die App führt `bvgInsurer`, `bvgContribution` und `bvgBalance`, aber leere
+    // Felder heissen «nicht erfasst», nicht «keine Säule 2». Aus einem Nichtwissen in die
+    // eine oder andere Richtung zu rechnen, wäre beides geraten.
+    // Bis das entschieden ist, bleibt es beim bisherigen Verhalten (volle Zurechnung) —
+    // ausdrücklich, nicht aus Versehen. Wirkung: bei Personen ohne Säule 2 fällt der
+    // Anspruch bis zu 34 % zu tief aus (nachgerechnet 20.09.2026: Nettoerwerb 30'000,
+    // 3a 6'000 → 1'017.50 statt 1'542.50).
+    offen: 'Ob eine Säule 2 besteht, weiss die App nicht SICHER — leere BVG-Felder heissen '
+      + '«nicht erfasst». Entscheid nötig: fragen, oder in AG eine Orientierung statt einer '
+      + 'Zahl zeigen. Bis dahin volle Zurechnung wie bisher.',
+    // Die Rechnung steht bereit, damit sie beim Entscheid nicht neu erfunden wird.
+    schwelle: (f) => 0.1 * Number(f.monthlyIncome || 0) * 12,
+    nichtAufgerechnet: () => 0,
+  }),
+});
+
+// 🛑 SÄULE 3A — WARUM HIER NICHTS MEHR AUFGERECHNET WIRD (Befund Fachprüfung 20.09.2026)
+//
+// Bis zum 20.09.2026 stand hier `+ Number(f.pension3a || 0)`, mit dem Beleg, alle vier
+// Erlasse rechneten die Säule 3a dem massgebenden Einkommen hinzu. Das stimmt — aber die
+// Erlasse rechnen sie auf eine STEUERGRÖSSE auf, in der sie bereits abgezogen ist
+// (ZH: Einkünfte − Abzüge · BE/SG: Reineinkommen · AG: steuerbares Einkommen). Die
+// Aufrechnung macht dort nur den 3a-Abzug rückgängig.
+//
+// Die App hat diesen Abzug NIE gemacht. `monthlyIncome` ist laut eigener Feldhilfe
+// «Netto ist was auf Ihrem Konto ankommt» (src/i18n/de.js) — das Geld, AUS dem die 3a
+// überwiesen wird. Sie steckt also schon drin. Die App hatte damit bereits das Ergebnis
+// der Aufrechnung und addierte sie ein ZWEITES Mal.
+//
+// Wirkung in allen vier Kantonen gleich: Einkommen zu hoch ⇒ Verbilligung ZU TIEF.
+// Nachgerechnet am 20.09.2026 gegen die Rechenkerne, Alleinstehende ohne Kinder:
+//   ZH Region 1, Basis 48'000:  3a  3'000 → 252.–/Jahr zu wenig · 12'000 → 1'008.–
+//   AG,           Basis 30'000:  3a  3'000 → 525.–/Jahr zu wenig · 12'000 → Anspruch auf 0
+//   SG Region 1,  Basis 30'000:  3a  3'000 → 630.60/Jahr zu wenig · 12'000 → Anspruch auf 0
+//   BE ist eine Stufentabelle: ein Franken Differenz kostet dort eine ganze Stufe, bis 888.–
+//
+// 🛑 Eine zu tiefe Zahl ist NICHT die vorsichtige Seite. Sie hält Berechtigte vom Antrag ab —
+// dieselbe Klasse Schaden wie eine zu hohe.
+export function einkommenJahr(f, regel = SAEULE_3A.voll) {
+  const roh = ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
+    .reduce((s, k) => s + Number(f[k] || 0), 0) * 12;
+  // Die kantonale Regel wirkt jetzt als ABZUG, nicht als Zuschlag: im rohen Nettoeinkommen
+  // ist die volle 3a enthalten, also muss weg, was der Kanton NICHT aufrechnen würde.
+  return roh - regel.nichtAufgerechnet(f);
 }
 
 export function geburtsjahr(b) {

@@ -128,6 +128,35 @@ Regierung legt sie nach Art. 19 Abs. 1 der Verordnung jährlich bis 15. Dezember
 
 ---
 
+## 6 · Säule 3a — zwei Punkte, die wir nicht aus dem Erlass lesen können
+
+*Aufgenommen 20.09.2026 nach der zweiten Fachprüfungsrunde. Betrifft AG und BE.*
+
+**Frage 1 (SVA Aargau):** § 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG rechnet Beiträge an die
+Säule 3a nur auf, soweit sie **10 % des Nettoerwerbseinkommens übersteigen**, und nur bei
+Personen **ohne Säule 2**. Unsere App erfasst zwar BVG-Felder, aber ein leeres Feld heisst
+«nicht erfasst», nicht «keine zweite Säule». Wie handhaben Sie das in der Praxis, wenn die
+Steuerdaten dazu nichts hergeben? Und: gilt die Schwelle auch bei Personen, die nur einen
+Teil des Jahres einer Vorsorgeeinrichtung angehörten?
+
+> Warum das zählt: rechnen wir die 3a voll auf, fällt der Anspruch bei Personen ohne Säule 2
+> bis zu **34 %** zu tief aus (Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50). Eine
+> zu tiefe Zahl hält Berechtigte vom Antrag ab — für uns derselbe Schaden wie eine zu hohe.
+> Solange das offen ist, rechnen wir voll auf und sagen es im Code ausdrücklich.
+
+**Frage 2 (ASV Bern):** KKVV Art. 6 Abs. 4 lit. i begrenzt die Aufrechnung auf das
+**bundesrechtliche Maximum für Unselbständigerwerbende**. Welcher Frankenbetrag gilt dafür im
+Bezugsjahr 2026, und richtet er sich nach dem Steuerjahr oder dem Bezugsjahr?
+
+> 🛑 Wir haben diese Zahl **nicht** eingesetzt, weil wir sie nicht belegen konnten: Fedlex
+> lieferte am 20.09.2026 auf eine **erfundene** ELI eine byte-identische Antwort — damit war
+> das Messgerät unbrauchbar und kein Ergebnis daraus gültig. Eine geratene Zahl sähe belegt
+> aus und läge bei jeder Einzahlung über dem Maximum still daneben.
+
+**Stand:** Die Doppelzählung der 3a (sie steckte schon im erfassten Nettoeinkommen und wurde
+ein zweites Mal aufgerechnet) ist behoben. Die beiden kantonalen Sonderregeln sind benannt und
+belegt hinterlegt, **wirken aber noch nicht** — sie hängen an diesen zwei Antworten.
+
 ---
 
 ## Warum überhaupt fragen

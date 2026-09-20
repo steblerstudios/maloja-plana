@@ -244,13 +244,31 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     });
   });
 
-  // § 5 Abs. 1 lit. b EG KVG: Beiträge an die Säule 3a werden hinzugerechnet. Das Feld ist ein
-  // Jahresbetrag, darum ohne × 12. Ergänzt 20.09.2026 nach der Fachprüfung (vorher fehlte 3a,
-  // das machte das massgebende Einkommen zu tief und den Betrag zu hoch).
-  it('Säule-3a-Einzahlung zählt zum massgebenden Einkommen (Jahresbetrag)', () => {
-    // 7 258 Jahreseinzahlung → 5 376 − 8.4 % × 7 258 = 4 766.33 → 4 766
-    expect(calculateIPV(person({ finanzen: { pension3a: 7258 } })).annual).toBe(4766);
-    expect(calculateIPV(person({ finanzen: { pension3a: 0 } })).annual).toBe(5376);
+  // § 5 Abs. 1 lit. b EG KVG rechnet die Säule 3a dem massgebenden Einkommen zu — aber einer
+  // Steuergrösse, in der sie abgezogen ist. Das Nettoeinkommen der App trägt sie schon.
+  //
+  // 🛑 RÜCKFALL-WÄCHTER (Befund Fachprüfung 20.09.2026, zweite Runde).
+  // Hier stand bis zum 20.09. `pension3a: 7258 → 4766`, also die volle Aufrechnung ON TOP.
+  // Das war eine Doppelzählung und kostete bei 48 000 Basiseinkommen 610.–/Jahr.
+  // Nachgerechnet gegen den Rechenkern: Referenzprämie 0,7 × 640 × 12 = 5 376, Eigenanteil
+  // 8,4 %. Bei 48 000 also 5 376 − 4 032 = 1 344 — mit der alten Doppelzählung nur 734.33.
+  it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen', () => {
+    const mitDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 7258 } })).annual;
+    const ohneDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 0 } })).annual;
+    // 48 000 × 8,4 % = 4 032 → 5 376 − 4 032 = 1 344, in beiden Fällen
+    expect(mitDreiA).toBe(1344);
+    expect(ohneDreiA).toBe(1344);
+    // und der alte, zu tiefe Wert kommt nicht zurück (1 344 − 8,4 % × 7 258 = 734.33 → 734)
+    expect(mitDreiA).not.toBe(734);
+  });
+
+  // ⚠️ GRENZFALL, bewusst festgehalten statt stillschweigend in Kauf genommen.
+  // Die Annahme «die 3a steckt schon im Nettoeinkommen» gilt nur, wenn es ein Einkommen gibt.
+  // Wer 0 Einkommen erfasst und trotzdem einzahlt, bezahlt aus Vermögen oder einer Quelle,
+  // die die App nicht kennt — dann fehlt dieser Betrag im massgebenden Einkommen.
+  // Das Verhalten ist hier NICHT entschieden, nur belegt: offener Punkt im PR.
+  it('Grenzfall: 3a ohne erfasstes Einkommen bleibt unberücksichtigt', () => {
+    expect(calculateIPV(person({ monthlyIncome: 0, finanzen: { pension3a: 7258 } })).annual).toBe(5376);
   });
 
   it('Renten zählen zum massgebenden Einkommen', () => {

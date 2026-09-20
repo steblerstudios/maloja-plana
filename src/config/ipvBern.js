@@ -19,7 +19,7 @@
 import { getRegion } from '../data/praemienRegionen.js';
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -168,7 +168,15 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // automatisch prüft (Informationsblatt 2026, S. 2 — dieselbe Liste wie beim kleinen
   // Einkommen). Darum ein eigener Grund statt «über der kantonalen Grenze».
   if (vermoegen > IPV_BE.vermoegen.bruttoGrenze) return orientierung('vermoegenAntrag');
-  const reineinkommen = einkommenJahr(f);
+  // KKVV Art. 6 Abs. 4 lit. i rechnet die Säule 3a dem Reineinkommen zu — aber nur BIS ZUM
+  // bundesrechtlichen Maximum für Unselbständige. Das Nettoeinkommen der App trägt sie
+  // bereits voll, die Regel wäre also ein Abzug des Überschusses. Ihr Frankenwert ist
+  // NICHT belegt (siehe SAEULE_3A.bisBundesMaximum.offen) — bis dahin wirkt der Deckel
+  // nicht, betroffen sind nur Einzahlungen über dem Maximum.
+  // (Befund Fachprüfung 20.09.2026: hier stand Art. 9 Abs. 2 — die falsche Norm, und der
+  // Deckel ging dabei ganz verloren. Zusätzlich wurde die 3a doppelt gezählt; in einer
+  // Stufentabelle kostet ein Franken Differenz eine ganze Stufe, bis CHF 888 im Jahr.)
+  const reineinkommen = einkommenJahr(f, SAEULE_3A.bisBundesMaximum);
   const me = beMassgebendesEinkommen({ reineinkommen, vermoegen, mitglieder: 1 + kinderZahl, kinderZahl });
 
   const r = ipvBernRechnen({ region, personen: ['e', ...kinderJahre.map(() => 'k')], me });
