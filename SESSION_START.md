@@ -7,7 +7,33 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-20, 16:50 (`main` = `1d7d7a1` nach **PR #241** Release 0.1.38-beta und **PR #242** ZH-Deckel · **live weiterhin `index-fc8ee6ec.js` = 0.1.37-beta**, Tag `v0.1.37-beta` = `335a557` · **gemergt, aber NICHT live: die ganze K31-Runde** · 0 offene Code-PRs · 2324 Tests grün, size-limit 64,44 kB von 65)
+**Stand:** 2026-09-20, abends (`main` = `d37ddfe` nach **#244** 3a-Doppelzählung · **#245** h1 · **#246** räumlicher Lebensbaum · **#247** Release 0.1.39-beta · **#248** Deploy-Gate-Doku · **live `index-nd0WhuaA.js` = 0.1.39-beta** · 1 offener PR (#249, a11y-Labels, fremde Sitzung) · **2345 Tests grün, size-limit 64,96 kB von 65**)
+
+> ### 🌳 Der Lebensbaum ist räumlich — und live gegengeprüft (2026-09-20 abends)
+>
+> Auf dem Dashboard steht der Baum unter «Was aus Ihren Angaben wächst» jetzt dreidimensional:
+> ein Ast je Kapitel, jede Frucht die Schweizer Sorte ihres Lebensbereichs, und jeder Ast reift
+> mit dem Ausfüllstand **seines** Kapitels. **Räumlich ist der Standard**; wer auf flach stellt,
+> bekommt die Wahl gemerkt (`or5_baumAnsicht`) und lädt three.js gar nicht erst. Ohne
+> 3D-fähiges Gerät — und bei jedem Fehler im Szenenaufbau — erscheint der bisherige flache Baum.
+>
+> **Live belegt, nicht angenommen:** `index-nd0WhuaA.js` verweist auf **`Baum3D-KpQjzqKK.js`**,
+> das mit **HTTP 200 / 144 490 Bytes** ausgeliefert wird; **Gegenprobe mit erfundenem
+> Dateinamen → 404**. Der Schlüssel `or5_baumAnsicht` steht im Live-Bundle.
+>
+> 🛑 **Drei Dinge, die die nächste Sitzung wissen muss:**
+> 1. **three.js ist die dritte Abhängigkeit überhaupt** (nach react/react-dom) und wird beim
+>    Öffnen des Dashboards nachgeladen — rund 141 KB gzip, weil räumlich Standard ist.
+> 2. **Die Startdatei hat kaum noch Luft:** 64,96 kB gegen die 65-kB-Grenze. Die nächste
+>    Änderung an Code, der beim Start lädt, reisst `npm run size` in der CI. Die Grenze gehört
+>    bewusst neu gesetzt, nicht beiläufig, wenn sie rot wird.
+> 3. **Anspruchs-Ringe sind bewusst vertagt** (Oktober). Dabei gefunden und **noch offen**:
+>    für ZH/BE/AG/SG rechnet ein nachgeladenes Kantonsmodul; solange es lädt, liefert
+>    `calculateIPV` `anspruchMoeglich: kkPremium > 0` — der Ring am **flachen** Baum blitzt also
+>    heute auf, ohne dass ein Anspruch gedeckt ist. Das widerspricht dem Guardrail in
+>    `data/anspruchSignale.js` («Nie ein Ring ohne gedeckten Anspruch»). Eigener PR nötig.
+>
+> Herleitung, Messwerte und elf Runden Messfehler: `docs/MESSUNG-baum-3d-2026-09-20.md`.
 
 > ### ✅ DER DEPLOY-RIEGEL IST WEG (20.09.2026, 16:33)
 >
