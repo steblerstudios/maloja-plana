@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
@@ -81,7 +85,7 @@
             "name": "Habe ich Anspruch auf Prämienverbilligung?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die kantonale Stelle, meist die Sozialversicherungsanstalt oder die Ausgleichskasse."
+              "text": "Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die zuständige Stelle: meist die kantonale Sozialversicherungsanstalt oder die Ausgleichskasse, in einzelnen Kantonen die Steuerverwaltung oder die Wohngemeinde."
             }
           },
           {
@@ -152,6 +156,8 @@
     .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
     .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
       padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
     .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
       padding-left:14px; margin:32px 0 }
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
@@ -173,15 +179,18 @@
     <main>
       <h1>Prämienverbilligung: wer Anspruch hat</h1>
       <p class="vorspann">Die individuelle Prämienverbilligung — meist kurz IPV — ist ein Beitrag der öffentlichen Hand an die Krankenkassenprämie. Sie ist im Krankenversicherungsgesetz (KVG) angelegt, aber der Bund führt sie nicht aus: das tun die Kantone, jeder nach eigenen Regeln.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
+      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
         <h2>Was der Bund vorgibt und was der Kanton entscheidet</h2>
         <p>Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, und beteiligt sich an der Finanzierung. Wer sie bekommt und wie viel, entscheidet der Kanton.</p>
-        <p>Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, die Fristen, und ob das Geld an die versicherte Person oder direkt an die Krankenkasse geht.</p>
+        <p>Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.</p>
+        <p>Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.</p>
         <p>Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.</p>
 
         <h2>Welche Zahlen zählen</h2>
-        <p>Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das nicht automatisch in der Prämienverbilligung.</p>
-        <p>Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der kantonalen Stelle — in den meisten Kantonen ist das die Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse.</p>
+        <p>Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.</p>
+        <p>Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der zuständigen Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.</p>
 
         <h2>Der häufigste Irrtum</h2>
         <p>Viele gehen davon aus, dass man mit einem Erwerbseinkommen grundsätzlich nichts bekommt. Das trifft nicht zu: Prämienverbilligung ist keine Leistung nur für Menschen ohne Arbeit. Familien mit Kindern, Personen in Ausbildung und Haushalte mit mittlerem Einkommen fallen in vielen Kantonen darunter.</p>
@@ -189,7 +198,7 @@
 
       <h2>Häufige Fragen</h2>
         <h3>Habe ich Anspruch auf Prämienverbilligung?</h3>
-        <p>Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die kantonale Stelle, meist die Sozialversicherungsanstalt oder die Ausgleichskasse.</p>
+        <p>Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die zuständige Stelle: meist die kantonale Sozialversicherungsanstalt oder die Ausgleichskasse, in einzelnen Kantonen die Steuerverwaltung oder die Wohngemeinde.</p>
 
         <h3>Muss ich einen Antrag stellen?</h3>
         <p>In manchen Kantonen werden Berechtigte von sich aus angeschrieben, in anderen muss der Antrag selbst eingereicht werden. Weil das kantonal geregelt ist und sich ändern kann, lohnt sich die Nachfrage bei der eigenen kantonalen Stelle — auch dann, wenn man in einem früheren Jahr schon einmal etwas erhalten hat.</p>
@@ -200,32 +209,41 @@
         <h3>Was, wenn mein Einkommen stark gesunken ist?</h3>
         <p>Dann lohnt sich die Nachfrage besonders. Mehrere Kantone berücksichtigen eine wesentliche Änderung der wirtschaftlichen Verhältnisse auf Gesuch hin, auch wenn die zugrunde liegende Veranlagung noch ein höheres Einkommen ausweist.</p>
 
+
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
         Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
-        auf Ihrem Gerät: kein Konto, kein Server, kein Tracking. Kostenlos und
-        quelloffen. Die App ist zurzeit in einer geschlossenen Beta.</p>
-        <p><a class="knopf" href="/">Maloja Plana öffnen</a></p>
+        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
+        Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
+        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
+        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
-      <h2>Amtliche Quellen</h2>
+      <h2>Quellen und Rechner</h2>
       <ul>
           <li><a href="https://www.priminfo.admin.ch/de/praemien" rel="noopener">Prämienrechner des Bundesamts für Gesundheit (Priminfo)</a></li>
-          <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen</a></li>
       </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
+      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
+      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
+      Empfehlungen.</p>
 
       <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
       öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
       bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
       verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
-      beziehungsweise die Verfügung der zuständigen Stelle.</p>
+      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: September 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
       <ul>
           <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
           <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
       </ul>
     </main>
 
@@ -235,8 +253,8 @@
       <p>Quelloffen unter
       <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Datenschutz und Rechtliches stehen in der App — sie sind auch ohne
-      Zugangscode lesbar.</p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
     </footer>
   </div>
 </body>

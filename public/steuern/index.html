@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
@@ -81,7 +85,7 @@
             "name": "Warum zahle ich anders als jemand im Nachbarkanton?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Weil Kanton und Gemeinde eigene Tarife und eigene Steuerfüsse festlegen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen."
+              "text": "Weil der Kanton den Tarif festlegt und Kanton und Gemeinde je ihren eigenen Steuerfuss beschliessen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen."
             }
           },
           {
@@ -89,7 +93,7 @@
             "name": "Was ist der Steuerfuss?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Ein Vielfaches der einfachen Steuer, das Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer."
+              "text": "Ein Faktor auf die einfache Steuer, meist in Prozent angegeben, den Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer."
             }
           },
           {
@@ -152,6 +156,8 @@
     .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
     .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
       padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
     .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
       padding-left:14px; margin:32px 0 }
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
@@ -172,15 +178,18 @@
 
     <main>
       <h1>Steuern in der Schweiz: Bund, Kanton, Gemeinde</h1>
-      <p class="vorspann">Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn in zwei Gemeinden zu spürbar verschiedenen Rechnungen führt.</p>
+      <p class="vorspann">Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie in der Regel an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn an zwei Wohnorten zu spürbar verschiedenen Rechnungen führt.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
+      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
         <h2>Die direkte Bundessteuer ist überall dieselbe</h2>
         <p>Die direkte Bundessteuer richtet sich nach dem Bundesgesetz über die direkte Bundessteuer (DBG) und kennt für die ganze Schweiz denselben Tarif. Sie unterscheidet nach Zivilstand und Haushalt, aber nicht nach Wohnort.</p>
         <p>Erhoben wird sie trotzdem vom Kanton — die Steuererklärung ist dieselbe.</p>
 
         <h2>Kanton und Gemeinde: Tarif mal Steuerfuss</h2>
-        <p>Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Vielfaches davon, das Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.</p>
-        <p>Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber verschiedene Steuerfüsse. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen.</p>
+        <p>Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Faktor darauf, meist in Prozent angegeben, den Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.</p>
+        <p>Auf der Rechnung stehen je nach Kanton und Konfession noch weitere Posten, etwa die Kirchensteuer oder eine Personalsteuer. Sie sind meist klein, aber sie erklären, warum die Summe nicht genau dem entspricht, was ein reiner Einkommensrechner ausgibt.</p>
+        <p>Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber je ihren eigenen Steuerfuss — der sich unterscheiden kann. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen. In einzelnen Kantonen gibt es daneben Besonderheiten, etwa Gemeinden ohne eigene Gemeindesteuer.</p>
 
         <h2>Was vom Einkommen abgezogen wird</h2>
         <p>Besteuert wird nicht der Lohn, sondern das <strong>steuerbare Einkommen</strong> — also das, was nach den zulässigen Abzügen bleibt. Dazu gehören je nach Situation Berufsauslagen, Beiträge an die Säule 3a, Krankheitskosten über einer Schwelle, Kinder- und Betreuungsabzüge und weitere.</p>
@@ -188,10 +197,10 @@
 
       <h2>Häufige Fragen</h2>
         <h3>Warum zahle ich anders als jemand im Nachbarkanton?</h3>
-        <p>Weil Kanton und Gemeinde eigene Tarife und eigene Steuerfüsse festlegen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen.</p>
+        <p>Weil der Kanton den Tarif festlegt und Kanton und Gemeinde je ihren eigenen Steuerfuss beschliessen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen.</p>
 
         <h3>Was ist der Steuerfuss?</h3>
-        <p>Ein Vielfaches der einfachen Steuer, das Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer.</p>
+        <p>Ein Faktor auf die einfache Steuer, meist in Prozent angegeben, den Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer.</p>
 
         <h3>Welche Abzüge kann ich machen?</h3>
         <p>Das hängt von der Situation und vom Kanton ab — häufig sind Berufsauslagen, Beiträge an die Säule 3a, Krankheits- und Unfallkosten über einer Schwelle sowie Kinder- und Betreuungsabzüge. Höhe und Voraussetzungen unterscheiden sich zwischen Bund und Kanton; verbindlich ist die Wegleitung des eigenen Kantons.</p>
@@ -199,31 +208,41 @@
         <h3>Wo rechne ich verbindlich?</h3>
         <p>Verbindlich ist am Ende die Veranlagung der kantonalen Steuerverwaltung. Für eine belastbare Vorausberechnung stellt die Eidgenössische Steuerverwaltung einen Rechner bereit, der Bund, Kanton und Gemeinde berücksichtigt.</p>
 
+
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
         Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
-        auf Ihrem Gerät: kein Konto, kein Server, kein Tracking. Kostenlos und
-        quelloffen. Die App ist zurzeit in einer geschlossenen Beta.</p>
-        <p><a class="knopf" href="/">Maloja Plana öffnen</a></p>
+        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
+        Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
+        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
+        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
-      <h2>Amtliche Quellen</h2>
+      <h2>Quellen und Rechner</h2>
       <ul>
           <li><a href="https://www.estv.admin.ch/de/steuerrechner-steuern-berechnen" rel="noopener">Steuerrechner der Eidgenössischen Steuerverwaltung</a></li>
       </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
+      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
+      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
+      Empfehlungen.</p>
 
       <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
       öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
       bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
       verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
-      beziehungsweise die Verfügung der zuständigen Stelle.</p>
+      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: September 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
       <ul>
           <li><a href="/was-steht-mir-zu/">Was steht mir zu?</a></li>
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
       </ul>
     </main>
 
@@ -233,8 +252,8 @@
       <p>Quelloffen unter
       <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Datenschutz und Rechtliches stehen in der App — sie sind auch ohne
-      Zugangscode lesbar.</p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
     </footer>
   </div>
 </body>

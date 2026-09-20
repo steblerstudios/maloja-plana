@@ -55,7 +55,7 @@ if [ -f "$DIR/sitemap.xml" ]; then echo "  ✓ sitemap.xml vorhanden"; else echo
 # Der ausführliche Wächter ist src/__tests__/oeffentlicheSeiten.test.js; hier
 # nur die harte Mindestprüfung, weil deploy.sh keine Tests laufen lässt.
 # Erzeugt von scripts/build-seiten.mjs, Inhalt in scripts/seiten-inhalt.mjs.
-for seite in was-steht-mir-zu praemienverbilligung sozialhilfe steuern; do
+for seite in was-steht-mir-zu praemienverbilligung sozialhilfe steuern rechtliches; do
   datei="$DIR/$seite/index.html"
   if [ ! -f "$datei" ]; then
     echo "  ✗ Erklärseite /$seite/ fehlt im Build"; fail=$((fail + 1)); continue

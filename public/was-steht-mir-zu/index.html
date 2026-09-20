@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
@@ -152,6 +156,8 @@
     .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
     .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
       padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
     .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
       padding-left:14px; margin:32px 0 }
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
@@ -173,6 +179,8 @@
     <main>
       <h1>Was steht mir zu? Überblick für die Schweiz</h1>
       <p class="vorspann">Es gibt in der Schweiz nicht einen Topf, aus dem Unterstützung kommt, sondern viele kleine — verteilt auf Bund, Kantone und Gemeinden. Wer worauf Anspruch hat, hängt deshalb stark vom Wohnort ab. Der häufigste Grund, warum Leistungen nicht bezogen werden, ist nicht ein fehlender Anspruch. Es ist fehlendes Wissen, dass es sie gibt.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
+      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
         <h2>Drei Ebenen, die sich nicht abstimmen</h2>
         <p>Der <strong>Bund</strong> setzt bei vielen Leistungen nur den Rahmen: er schreibt vor, dass es etwas geben muss, und überlässt die Ausgestaltung den Kantonen. Das gilt zum Beispiel für die Prämienverbilligung.</p>
@@ -205,33 +213,43 @@
         <h3>Was kostet Maloja Plana?</h3>
         <p>Nichts. Maloja Plana ist kostenlos und quelloffen. Es gibt kein Konto, keine Werbung und kein Tracking; alle Angaben bleiben auf dem eigenen Gerät.</p>
 
+
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
         Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
-        auf Ihrem Gerät: kein Konto, kein Server, kein Tracking. Kostenlos und
-        quelloffen. Die App ist zurzeit in einer geschlossenen Beta.</p>
-        <p><a class="knopf" href="/">Maloja Plana öffnen</a></p>
+        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
+        Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
+        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
+        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
-      <h2>Amtliche Quellen</h2>
+      <h2>Quellen und Rechner</h2>
       <ul>
           <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen</a></li>
           <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
           <li><a href="https://www.ahv-iv.ch/p/3.01.d" rel="noopener">Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»</a></li>
       </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
+      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
+      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
+      Empfehlungen.</p>
 
       <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
       öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
       bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
       verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
-      beziehungsweise die Verfügung der zuständigen Stelle.</p>
+      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: September 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
       <ul>
           <li><a href="/praemienverbilligung/">Prämienverbilligung</a></li>
           <li><a href="/sozialhilfe/">Sozialhilfe</a></li>
           <li><a href="/steuern/">Steuern</a></li>
+          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>
       </ul>
     </main>
 
@@ -241,8 +259,8 @@
       <p>Quelloffen unter
       <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Datenschutz und Rechtliches stehen in der App — sie sind auch ohne
-      Zugangscode lesbar.</p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
     </footer>
   </div>
 </body>

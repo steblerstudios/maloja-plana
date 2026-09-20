@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { SEITEN, QUELLEN, BASIS } from '../../scripts/seiten-inhalt.mjs';
+import { SEITEN, SONDERSEITEN, QUELLEN, BASIS, GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Öffentliche Erklärseiten · Entscheid Stebler Studios 20.09.2026
@@ -84,6 +84,16 @@ describe('Öffentliche Erklärseiten', () => {
     it('nennt KEINE Beträge, Prozentsätze oder Einkommensgrenzen', () => {
       // Die Kernregel. Solche Angaben sind kantonal verschieden und ändern
       // jährlich — auf einer statischen Seite veralten sie unbemerkt.
+      //
+      // EINE benannte Ausnahme: das sichtbare Prüfdatum («Inhaltlich geprüft:
+      // September 2026»). Es kam auf Empfehlung der Rechtsprüfung dazu, weil die
+      // Seiten Recht erklären, das jährlich ändert. Die Ausnahme ist der exakte
+      // String, nicht ein aufgeweichtes Muster — sonst wäre die Regel offen für
+      // jede Jahreszahl.
+      const ausnahme = `Inhaltlich geprüft: ${GEPRUEFT}.`;
+      expect(text, 'Prüfdatum fehlt — dann darf auch die Ausnahme nicht gelten')
+        .toContain(ausnahme);
+      const zuPruefen = text.split(ausnahme).join(' ');
       const verboten = [
         /\bCHF\b/i,
         /\bFr\.\s*\d/,
@@ -94,13 +104,26 @@ describe('Öffentliche Erklärseiten', () => {
         /\b\d{1,3}['’]\d{3}\b/, // Schweizer Tausendertrennung: 50'000
       ];
       for (const muster of verboten) {
-        expect(text, `Muster ${muster} im sichtbaren Text von /${pfad}/`).not.toMatch(muster);
+        expect(zuPruefen, `Muster ${muster} im sichtbaren Text von /${pfad}/`).not.toMatch(muster);
       }
+    });
+
+    it('verlinkt Impressum und Datenschutz — echter Link, nicht nur ein Satz', () => {
+      // Blocker der Rechtsprüfung vom 20.09.2026: vorher stand dort nur «steht in
+      // der App». Das war wahr, aber nicht adressierbar — BetaGate läuft vor dem
+      // Hash-Router, /#/legal zeigt die Code-Wand. Art. 19 DSG verlangt, dass bei
+      // der Beschaffung angemessen informiert wird; ein Satz ohne Link reicht nicht.
+      expect(html).toContain('href="/rechtliches/"');
     });
 
     it('trägt den Orientierungs-Vorbehalt', () => {
       expect(text).toContain('keine Rechts- oder Finanzberatung');
       expect(text).toContain('zuständigen Stelle');
+      // Und zwar auch WEIT OBEN: der ausführliche Vorbehalt steht nach dem FAQ und
+      // der Werbekarte. Die Rechtsprüfung wollte eine kurze Zeile direkt unter dem
+      // Vorspann — sonst liest ihn kaum jemand.
+      const oben = text.slice(0, 700);
+      expect(oben).toContain('keine Rechts- oder Finanzberatung');
     });
 
     it('sagt, dass die App in einer geschlossenen Beta ist', () => {
@@ -126,7 +149,7 @@ describe('Öffentliche Erklärseiten', () => {
 
     it('verlinkt intern nur auf Seiten, die es gibt', () => {
       const intern = [...html.matchAll(/href="\/([a-z0-9-]+)\/"/g)].map((m) => m[1]);
-      const pfade = SEITEN.map((s) => s.pfad);
+      const pfade = [...SEITEN, ...SONDERSEITEN].map((s) => s.pfad);
       for (const ziel of intern) expect(pfade).toContain(ziel);
       // Jede Seite führt zurück in die App und weiter zu den anderen.
       expect(html).toContain('href="/"');
@@ -166,6 +189,53 @@ describe('Öffentliche Erklärseiten', () => {
     });
   });
 
+  // ─── Die Rechtliches-Seite ───────────────────────────────────────────────
+  // Sie ist keine Erklärseite: kein FAQ, keine Werbekarte, kein Quellen-Block.
+  // Sie ist die Antwort auf den Blocker der Rechtsprüfung — eine öffentlich
+  // erreichbare, adressierbare Stelle mit Impressum und Datenschutz.
+  describe('/rechtliches/', () => {
+    const html = lies('rechtliches');
+    const text = sichtbar(html);
+
+    it('nennt die Anbieterin, eine Kontaktadresse und das anwendbare Recht', () => {
+      expect(text).toContain('Stebler Studios');
+      expect(text).toContain('Basel');
+      expect(html).toContain('mailto:info@malojaplana.ch');
+      expect(text).toContain('Gerichtsstand ist Basel-Stadt');
+      expect(text).toContain('Art. 3 Abs. 1 lit. s UWG');
+    });
+
+    it('sagt, welche Daten beim blossen Aufruf anfallen', () => {
+      // Art. 19 DSG: bei der Beschaffung angemessen informieren. Beim Abruf fallen
+      // Server-Logs beim Hoster an — das muss dastehen, sonst ist die Seite zwar
+      // vorhanden, aber inhaltlich leer an genau der Stelle, für die es sie gibt.
+      expect(text).toContain('Infomaniak');
+      expect(text).toContain('IP-Adresse');
+      expect(text).toContain('Server-Logs');
+    });
+
+    it('trägt den Haftungsausschluss im Volltext', () => {
+      expect(text).toContain('ersetzt keine Rechts-, Steuer-, Versicherungs- oder Finanzberatung');
+    });
+
+    it('ist keine Erklärseite — kein FAQ-Schema, keine Werbekarte', () => {
+      const typen = jsonLd(html)['@graph'].map((k) => k['@type']);
+      expect(typen).not.toContain('FAQPage'); // leeres Schema wäre eine Behauptung
+      expect(typen).toContain('WebPage');
+      expect(html).not.toContain('class="karte"');
+    });
+
+    it('kommt ohne JavaScript aus und hat genau eine h1', () => {
+      const skripte = [...html.matchAll(/<script([^>]*)>/g)].map((m) => m[1]);
+      for (const attr of skripte) expect(attr).toContain('application/ld+json');
+      expect((html.match(/<h1[\s>]/g) || []).length).toBe(1);
+    });
+
+    it('führt zurück zu den Erklärseiten', () => {
+      for (const s of SEITEN) expect(html).toContain(`href="/${s.pfad}/"`);
+    });
+  });
+
   describe('sitemap.xml', () => {
     const xml = fs.readFileSync(path.resolve(WURZEL, 'public', 'sitemap.xml'), 'utf8');
     // Ohne den erklaerenden Kommentar: der nennt '?lang=' selbst, um zu sagen,
@@ -174,7 +244,7 @@ describe('Öffentliche Erklärseiten', () => {
 
     it('führt die Startseite und jede Erklärseite', () => {
       expect(xml).toContain(`<loc>${BASIS}/</loc>`);
-      for (const s of SEITEN) expect(xml).toContain(`<loc>${BASIS}/${s.pfad}/</loc>`);
+      for (const s of [...SEITEN, ...SONDERSEITEN]) expect(xml).toContain(`<loc>${BASIS}/${s.pfad}/</loc>`);
     });
 
     it('führt keine nicht-kanonischen URLs mehr', () => {
@@ -182,7 +252,7 @@ describe('Öffentliche Erklärseiten', () => {
     });
 
     it('enthält genau so viele Einträge wie es Seiten gibt, plus die Startseite', () => {
-      expect((xml.match(/<loc>/g) || []).length).toBe(SEITEN.length + 1);
+      expect((xml.match(/<loc>/g) || []).length).toBe(SEITEN.length + SONDERSEITEN.length + 1);
     });
   });
 

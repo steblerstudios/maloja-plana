@@ -33,6 +33,12 @@
 
 export const BASIS = 'https://malojaplana.ch';
 
+// Sichtbares Stand-Datum. <lastmod> in der Sitemap ist für Leser:innen unsichtbar
+// und wird beim Deploy ohnehin neu gesetzt — auch wenn inhaltlich nichts geprüft
+// wurde. Dieses Datum ändert nur von Hand, wenn jemand den Inhalt wirklich
+// gegengelesen hat. Zuletzt: Fachprüfung + Rechtsprüfung am 20.09.2026.
+export const GEPRUEFT = 'September 2026';
+
 // Geprüfte amtliche Quellen. Beim Ergänzen: erst Gegenprobe, dann eintragen.
 export const QUELLEN = {
   estvRechner: {
@@ -137,15 +143,16 @@ export const SEITEN = [
         titel: 'Was der Bund vorgibt und was der Kanton entscheidet',
         absaetze: [
           'Der Bund schreibt vor, <em>dass</em> es eine Prämienverbilligung geben muss, und beteiligt sich an der Finanzierung. Wer sie bekommt und wie viel, entscheidet der Kanton.',
-          'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, die Fristen, und ob das Geld an die versicherte Person oder direkt an die Krankenkasse geht.',
+          'Konkret unterscheiden sich von Kanton zu Kanton: die Einkommens- und Vermögensgrenzen, wie das massgebende Einkommen überhaupt berechnet wird, ob man einen Antrag stellen muss oder angeschrieben wird, und die Fristen.',
+          'Gleich ist dagegen überall, <strong>wohin das Geld fliesst</strong>: der Kanton zahlt den Beitrag direkt an die Krankenkasse, nicht an die versicherte Person. Das steht im KVG und ist nicht kantonaler Spielraum.',
           'Deshalb führt der Satz «bei uns bekommt man das ab Einkommen X» selten weiter. Er stimmt höchstens für einen Kanton, und dort auch nur für ein Jahr.',
         ],
       },
       {
         titel: 'Welche Zahlen zählen',
         absaetze: [
-          'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das nicht automatisch in der Prämienverbilligung.',
-          'Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der kantonalen Stelle — in den meisten Kantonen ist das die Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse.',
+          'Die Kantone stützen sich in der Regel auf die Steuerdaten — und oft nicht auf die des laufenden Jahres, sondern auf eine frühere, bereits rechtskräftige Veranlagung. Das hat eine Folge, die überrascht: Wer dieses Jahr deutlich weniger verdient, sieht das in vielen Kantonen nicht von selbst — andere rechnen es erst mit der späteren definitiven Abrechnung nach.',
+          'Mehrere Kantone kennen für solche Fälle ein eigenes Verfahren, bei dem eine wesentliche Änderung der Verhältnisse nachträglich berücksichtigt wird. Ob und wie, steht bei der zuständigen Stelle — meist die kantonale Sozialversicherungsanstalt (SVA) oder die Ausgleichskasse, in einzelnen Kantonen aber die Steuerverwaltung oder die Wohngemeinde.',
         ],
       },
       {
@@ -160,7 +167,7 @@ export const SEITEN = [
       {
         frage: 'Habe ich Anspruch auf Prämienverbilligung?',
         antwort:
-          'Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die kantonale Stelle, meist die Sozialversicherungsanstalt oder die Ausgleichskasse.',
+          'Das hängt vom Wohnkanton, vom massgebenden Einkommen und Vermögen und von der Haushaltsgrösse ab — alle drei werden kantonal unterschiedlich gewichtet. Eine allgemein gültige Grenze gibt es nicht. Verbindlich entscheidet die zuständige Stelle: meist die kantonale Sozialversicherungsanstalt oder die Ausgleichskasse, in einzelnen Kantonen die Steuerverwaltung oder die Wohngemeinde.',
       },
       {
         frage: 'Muss ich einen Antrag stellen?',
@@ -178,7 +185,7 @@ export const SEITEN = [
           'Dann lohnt sich die Nachfrage besonders. Mehrere Kantone berücksichtigen eine wesentliche Änderung der wirtschaftlichen Verhältnisse auf Gesuch hin, auch wenn die zugrunde liegende Veranlagung noch ein höheres Einkommen ausweist.',
       },
     ],
-    quellen: ['priminfo', 'bwoKantone'],
+    quellen: ['priminfo'],
   },
 
   // ─── Sozialhilfe ──────────────────────────────────────────────────────────
@@ -239,7 +246,7 @@ export const SEITEN = [
       {
         frage: 'Was ist der Unterschied zu Ergänzungsleistungen?',
         antwort:
-          'Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen dann in Frage, wenn eine AHV- oder IV-Rente den Existenzbedarf nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Wer Anspruch auf EL hat, geht ihr vor.',
+          'Ergänzungsleistungen (EL) gehören zur ersten Säule und kommen in der Regel dann in Frage, wenn eine Leistung der AHV oder IV den Existenzbedarf nicht deckt. Sie sind bundesrechtlich geregelt und keine Sozialhilfe. Ein Anspruch auf EL geht der Sozialhilfe vor.',
       },
     ],
     quellen: ['skosRechner', 'bsvEL', 'bwoKantone'],
@@ -253,7 +260,7 @@ export const SEITEN = [
       'Warum dieselbe Lohnsumme je nach Wohnort sehr unterschiedlich besteuert wird — die drei Ebenen, der Steuerfuss und was das praktisch bedeutet.',
     brotkrume: 'Steuern',
     vorspann:
-      'Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn in zwei Gemeinden zu spürbar verschiedenen Rechnungen führt.',
+      'Wer in der Schweiz Einkommenssteuer zahlt, zahlt sie in der Regel an drei Stellen gleichzeitig: an den Bund, an den Kanton und an die Gemeinde. Nur die erste ist überall gleich. Die anderen beiden sind der Grund, warum derselbe Lohn an zwei Wohnorten zu spürbar verschiedenen Rechnungen führt.',
     abschnitte: [
       {
         titel: 'Die direkte Bundessteuer ist überall dieselbe',
@@ -265,8 +272,9 @@ export const SEITEN = [
       {
         titel: 'Kanton und Gemeinde: Tarif mal Steuerfuss',
         absaetze: [
-          'Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Vielfaches davon, das Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.',
-          'Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber verschiedene Steuerfüsse. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen.',
+          'Auf kantonaler und kommunaler Ebene kommen zwei Grössen zusammen. Der <strong>Tarif</strong> legt fest, wie viel Steuer ein bestimmtes steuerbares Einkommen auslöst — das ergibt die sogenannte einfache Steuer. Der <strong>Steuerfuss</strong> ist ein Faktor darauf, meist in Prozent angegeben, den Kanton und Gemeinde je für sich festlegen und jährlich anpassen können.',
+          'Auf der Rechnung stehen je nach Kanton und Konfession noch weitere Posten, etwa die Kirchensteuer oder eine Personalsteuer. Sie sind meist klein, aber sie erklären, warum die Summe nicht genau dem entspricht, was ein reiner Einkommensrechner ausgibt.',
+          'Zwei Gemeinden im selben Kanton haben deshalb denselben Tarif, aber je ihren eigenen Steuerfuss — der sich unterscheiden kann. Zwei Kantone haben beides verschieden. Das ist der eigentliche Hebel hinter den bekannten Kantonsvergleichen. In einzelnen Kantonen gibt es daneben Besonderheiten, etwa Gemeinden ohne eigene Gemeindesteuer.',
         ],
       },
       {
@@ -281,12 +289,12 @@ export const SEITEN = [
       {
         frage: 'Warum zahle ich anders als jemand im Nachbarkanton?',
         antwort:
-          'Weil Kanton und Gemeinde eigene Tarife und eigene Steuerfüsse festlegen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen.',
+          'Weil der Kanton den Tarif festlegt und Kanton und Gemeinde je ihren eigenen Steuerfuss beschliessen. Nur die direkte Bundessteuer ist überall gleich. Derselbe Lohn kann dadurch je nach Wohnort zu deutlich verschiedenen Rechnungen führen.',
       },
       {
         frage: 'Was ist der Steuerfuss?',
         antwort:
-          'Ein Vielfaches der einfachen Steuer, das Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer.',
+          'Ein Faktor auf die einfache Steuer, meist in Prozent angegeben, den Kanton und Gemeinde je für sich beschliessen. Der Tarif sagt, wie hoch die einfache Steuer ausfällt; der Steuerfuss sagt, mit welchem Faktor sie erhoben wird. Beide zusammen ergeben die kantonale und kommunale Steuer.',
       },
       {
         frage: 'Welche Abzüge kann ich machen?',
@@ -305,3 +313,85 @@ export const SEITEN = [
 
 export const seiteNachPfad = (pfad) => SEITEN.find((s) => s.pfad === pfad);
 export const quelle = q;
+
+// ─── Sonderseite: Rechtliches ────────────────────────────────────────────────
+//
+// Rechtsprüfung 20.09.2026, Blocker: Der Fussbereich sagte bis dahin nur
+// «Datenschutz und Rechtliches stehen in der App». Das war wahr, aber nicht
+// verlinkt — und der Weg dorthin nicht adressierbar, weil BetaGate vor dem
+// Hash-Router läuft: /#/legal zeigt die Code-Wand, nicht die Rechtsansicht.
+//
+// Seit die vier Erklärseiten öffentlich sind, löst ihr Abruf beim Hoster eine
+// Bearbeitung von Personendaten aus (IP in den Server-Logs). Art. 19 DSG
+// verlangt, dass bei der Beschaffung angemessen informiert wird. Ein Satz ohne
+// Link erfüllt das nicht. Also: eine eigene, statische, öffentliche Seite.
+//
+// Der Text ist KEINE Neuschöpfung. Er ist aus den bestehenden, bereits
+// redigierten Dokumenten zusammengezogen:
+//   docs/legal/impressum.md
+//   docs/legal/datenschutzerklaerung-ndsg.md  (Abschnitte 1, 2, 5, 7, 11, 15)
+// Bei Änderungen dort muss diese Seite mit — der Wächter prüft das nicht
+// inhaltlich, das bleibt Handarbeit.
+//
+// 🛑 OFFEN, Entscheid Stebler Studios: Art. 3 Abs. 1 lit. s UWG verlangt
+// «Kontaktadresse». Genannt sind Name, Stadt und E-Mail, aber keine Strasse.
+// docs/legal/impressum.md hat dieselbe Lücke — sie steht jetzt nur öffentlich.
+// Ob die Privatadresse hier stehen soll oder eine Geschäfts-/c-o-Adresse, ist
+// keine technische Frage. Bis dahin bleibt es beim Stand des Impressums.
+export const SONDERSEITEN = [
+  {
+    pfad: 'rechtliches',
+    titel: 'Impressum, Datenschutz und Haftungsausschluss',
+    beschreibung:
+      'Wer hinter Maloja Plana steht, welche Daten beim Aufruf dieser Seiten anfallen und wofür die Rechner ausdrücklich nicht einstehen.',
+    brotkrume: 'Rechtliches',
+    vorspann:
+      'Diese Seite gilt für malojaplana.ch und die öffentlichen Erklärseiten. Für die Anwendung selbst gilt zusätzlich die ausführliche Datenschutzerklärung, die in der App unter «Datenschutz & Rechtliches» steht — auch sie ohne Zugangscode.',
+    abschnitte: [
+      {
+        titel: 'Anbieterin',
+        absaetze: [
+          'Sophie Stebler / Stebler Studios, Basel, Schweiz.<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Angaben gemäss Art. 3 Abs. 1 lit. s UWG.',
+        ],
+      },
+      {
+        titel: 'Haftungsausschluss',
+        absaetze: [
+          'Maloja Plana ist ein <strong>Orientierungswerkzeug</strong>. Die Rechner und Übersichten stützen sich auf öffentlich zugängliche Rechtsgrundlagen und dienen ausschliesslich der persönlichen Information.',
+          '<strong>Maloja Plana ersetzt keine Rechts-, Steuer-, Versicherungs- oder Finanzberatung.</strong>',
+          'Die Anbieterin übernimmt keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Berechnungen, für die Eignung der Ergebnisse für individuelle Entscheidungen, und für Schäden, die aus deren Nutzung entstehen. Massgebend sind ausschliesslich die geltenden Gesetze und die zuständigen Behörden.',
+        ],
+      },
+      {
+        titel: 'Datenschutz auf diesen Seiten',
+        absaetze: [
+          'Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Es gibt kein Tracking, keine Analyse und keine Werbung.',
+          'Beim Abruf fallen dennoch technische Daten beim Hoster an — <strong>Infomaniak Network SA, Genf</strong>, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung technisch notwendig. Die Aufbewahrungsdauer dieser Logs richtet sich nach dem Standard des Hosters und ist uns nicht belegt.',
+          'Weitere Empfänger gibt es nicht: keine Analyse-Dienste, keine Social-Media-Einbindungen, keine Weitergabe und kein Verkauf von Daten.',
+        ],
+      },
+      {
+        titel: 'Daten in der Anwendung',
+        absaetze: [
+          'Was Sie in Maloja Plana erfassen, bleibt <strong>auf Ihrem Gerät</strong> (localStorage und IndexedDB im Browser). Es gibt kein Konto, keine Anmeldung und keine Übermittlung an die Anbieterin oder an Dritte. Wer die Daten löschen will, löscht sie im Gerät — es gibt keine zweite Kopie anderswo.',
+          'Weil nichts übermittelt wird, kann die Anbieterin zu Ihren Eingaben auch keine Auskunft erteilen: sie hat sie nie gesehen. Die ausführliche Fassung mit allen Rechten nach DSG steht in der App unter «Datenschutz & Rechtliches».',
+        ],
+      },
+      {
+        titel: 'Geistiges Eigentum',
+        absaetze: [
+          'Der Code steht unter <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a>, einsehbar auf <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">GitHub</a>. «Maloja Plana» ist eine Projektbezeichnung von Sophie Stebler. Für kommerzielle Nutzung gibt es Dual Licensing — Anfragen an die oben genannte Adresse.',
+        ],
+      },
+      {
+        titel: 'Anwendbares Recht',
+        absaetze: [
+          'Es gilt Schweizer Recht. Gerichtsstand ist Basel-Stadt, Schweiz.',
+        ],
+      },
+    ],
+    faq: [],
+    quellen: [],
+  },
+];

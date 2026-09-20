@@ -24,7 +24,12 @@
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BASIS, SEITEN, QUELLEN } from './seiten-inhalt.mjs';
+import { BASIS, SEITEN, SONDERSEITEN, QUELLEN, GEPRUEFT } from './seiten-inhalt.mjs';
+
+// Alle erzeugten Seiten. SEITEN sind die Erklärseiten (mit FAQ, Werbekarte,
+// Quellen, Querverweisen), SONDERSEITEN die Rechtliches-Seite — sie hat nichts
+// davon und soll auch nichts davon haben.
+const ALLE = [...SEITEN, ...SONDERSEITEN];
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const NUR_PRUEFEN = process.argv.includes('--pruefen');
@@ -79,6 +84,8 @@ const stil = `
     .weiter span{ display:block; font-size:14px; color:var(--leise); font-weight:400 }
     .knopf{ display:inline-block; background:var(--gold); color:#24262A; text-decoration:none;
       padding:11px 20px; border-radius:6px; font-weight:600; font-size:15px; margin-top:4px }
+    .hinweis{ font-size:14px; color:var(--leise); margin:0 0 4px }
+    .leise{ font-size:14px; color:var(--leise) }
     .vorbehalt{ font-size:14px; color:var(--leise); border-left:2px solid var(--rand);
       padding-left:14px; margin:32px 0 }
     footer{ border-top:1px solid var(--rand); margin-top:48px; padding:22px 0 56px;
@@ -89,6 +96,7 @@ const stil = `
 
 function seiteBauen(seite) {
   const url = `${BASIS}/${seite.pfad}/`;
+  const istErklaerseite = SEITEN.includes(seite);
   const andere = SEITEN.filter((s) => s.pfad !== seite.pfad);
 
   const abschnitte = seite.abschnitte.map((a) => {
@@ -113,7 +121,7 @@ function seiteBauen(seite) {
     return `          <li><a href="${esc(s.url)}" rel="noopener">${esc(s.text)}</a></li>`;
   }).join('\n');
 
-  const weiterlesen = andere.map((s) =>
+  const weiterlesen = (istErklaerseite ? andere : SEITEN).map((s) =>
     `          <li><a href="/${s.pfad}/">${esc(s.brotkrume)}</a></li>`).join('\n');
 
   // JSON-LD. FAQPage ist hier zulässig, WEIL die Fragen und Antworten auf der
@@ -141,7 +149,7 @@ function seiteBauen(seite) {
           { '@type': 'ListItem', position: 2, name: seite.brotkrume, item: url },
         ],
       },
-      {
+      ...(seite.faq.length ? [{
         '@type': 'FAQPage',
         '@id': `${url}#faq`,
         isPartOf: { '@id': `${url}#webpage` },
@@ -150,7 +158,7 @@ function seiteBauen(seite) {
           name: nurText(f.frage),
           acceptedAnswer: { '@type': 'Answer', text: nurText(f.antwort) },
         })),
-      },
+      }] : []),
     ],
   };
 
@@ -159,6 +167,10 @@ function seiteBauen(seite) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strenger als die App-CSP: hier läuft gar kein Skript, und es gibt keine
+       Fremdressourcen. JSON-LD ist kein ausführbares Skript und braucht kein
+       script-src. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
        Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
@@ -204,35 +216,47 @@ ${JSON.stringify(ld, null, 2).split('\n').map((l) => '  ' + l).join('\n')}
     <main>
       <h1>${esc(seite.titel)}</h1>
       <p class="vorspann">${seite.vorspann}</p>
+${istErklaerseite ? `      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
+      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>` : ''}
 
 ${abschnitte}
 
-      <h2>Häufige Fragen</h2>
+${seite.faq.length ? `      <h2>Häufige Fragen</h2>
 ${faq}
+` : ''}
 
-      <div class="karte">
+${istErklaerseite ? `      <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
         <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
         Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
-        auf Ihrem Gerät: kein Konto, kein Server, kein Tracking. Kostenlos und
-        quelloffen. Die App ist zurzeit in einer geschlossenen Beta.</p>
-        <p><a class="knopf" href="/">Maloja Plana öffnen</a></p>
+        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
+        Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
+        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
+        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
-      <h2>Amtliche Quellen</h2>
+      <h2>Quellen und Rechner</h2>
       <ul>
 ${quellen}
       </ul>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
+      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
+      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
+      Empfehlungen.</p>` : ''}
 
-      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
+${istErklaerseite ? `      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
       öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
       bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
       verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
-      beziehungsweise die Verfügung der zuständigen Stelle.</p>
+      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <strong>Inhaltlich geprüft: ${esc(GEPRUEFT)}.</strong></p>` : ''}
 
       <h2>Weiterlesen</h2>
       <ul>
 ${weiterlesen}
+${istErklaerseite ? '          <li><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a></li>' : ''}
       </ul>
     </main>
 
@@ -242,8 +266,8 @@ ${weiterlesen}
       <p>Quelloffen unter
       <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener">AGPL-3.0</a> ·
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
-      <p>Datenschutz und Rechtliches stehen in der App — sie sind auch ohne
-      Zugangscode lesbar.</p>
+      <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
+      ohne Zugangscode lesbar.</p>
     </footer>
   </div>
 </body>
@@ -265,6 +289,7 @@ function sitemapBauen() {
   const zeilen = [
     eintrag(`${BASIS}/`, '1.0'),
     ...SEITEN.map((s) => eintrag(`${BASIS}/${s.pfad}/`, '0.8')),
+    ...SONDERSEITEN.map((s) => eintrag(`${BASIS}/${s.pfad}/`, '0.3')),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!--
@@ -287,7 +312,7 @@ ${zeilen.join('\n')}
 
 let abweichungen = 0;
 const ausgaben = [
-  ...SEITEN.map((s) => ({ ziel: resolve(WURZEL, 'public', s.pfad, 'index.html'), inhalt: seiteBauen(s), name: `${s.pfad}/index.html` })),
+  ...ALLE.map((s) => ({ ziel: resolve(WURZEL, 'public', s.pfad, 'index.html'), inhalt: seiteBauen(s), name: `${s.pfad}/index.html` })),
   { ziel: resolve(WURZEL, 'public', 'sitemap.xml'), inhalt: sitemapBauen(), name: 'sitemap.xml' },
 ];
 
@@ -317,7 +342,7 @@ if (NUR_PRUEFEN) {
     console.error(`\n✗ ${abweichungen} Seite(n) veraltet — neu bauen:  node scripts/build-seiten.mjs`);
     process.exit(1);
   }
-  console.log(`\n✓ Alle ${SEITEN.length} Seiten und die Sitemap stimmen mit der Quelle überein.`);
+  console.log(`\n✓ Alle ${ALLE.length} Seiten und die Sitemap stimmen mit der Quelle überein.`);
 } else {
-  console.log(`\n✓ ${SEITEN.length} Seiten + sitemap.xml erzeugt.`);
+  console.log(`\n✓ ${ALLE.length} Seiten + sitemap.xml erzeugt.`);
 }
