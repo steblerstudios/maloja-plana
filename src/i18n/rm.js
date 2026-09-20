@@ -1998,9 +1998,16 @@ export default {
     zurStelle: 'Al post chantunal per la reducziun da premias',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).
     jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
+    jahrOhneRegion: 'Quint per l’onn da dretg {jahr}. En il chantun Argovia vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
+    vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
+    agFristAbgelaufen: 'Attenziun, termin: Per {jahr} na sa lascha la reducziun da premias betg pli dumandar en il chantun Argovia — la dumonda stuess esser vegnida inoltrada enfin ils 31 da december {vorjahr}. L’import qua mussa da tge ch’i va. Per {folgejahr} cuorra il termin enfin ils 31 da december {jahr}, ed el vala da nov mintg’onn. Tgi che retscheiva agid social u prestaziuns cumplementaras obtegna la reducziun senza dumonda. I dat ina excepziun: tgi che gudogna dapi la taxaziun decisiva notablamain pli pauc (almain 20 pertschient durant almain sis mais), è nizzà novamain en il chantun u tge situaziun persunala è sa midada, po inoltrar ina dumonda era durant l’onn (procedura extraordinaria, §§ 11–16 KVGG).',
+    agFristLaeuft: 'Attenziun, termin: En il chantun Argovia sto la reducziun da premias vegnir dumandada da nov mintg’onn — per {jahr} il pli tard ils 31 da december {vorjahr}. Suenter croda il dretg per quest onn. Tgi che retscheiva agid social u prestaziuns cumplementaras obtegna la reducziun senza dumonda.',
+    agKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg 17,5 pertschient da l’entrada decisiva. Il chantun Argovia na publitgescha nagina limita d’entrada sco cifra.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -2008,9 +2015,12 @@ export default {
       region: 'La vischnanca na sa lascha betg determinar univocamain cun il numer postal. Ella decida davart la regiun da premias e uschia davart l’import.',
       vermoegen: 'La facultad registrada surpassa la limita chantunala. Decisiva è la facultad imposabla totala, che n’è betg registrada cumplettamain qua.',
       vermoegenAntrag: 'Sur ina facultad bruta da 750 000 francs n’examinescha il chantun Berna betg automaticamain. Quai n’è nagina exclusiun: il dretg sto vegnir dumandà enfin ils 31 da december.',
+      // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
+      agKinder: 'Per chasadas cun uffants na quinta l’applicaziun anc betg en il chantun Argovia: là retschaivan ils uffants almain la mesadad da lur atgna premia da la cassa da malsauns, e questas premias n’èn betg registradas qua.',
       regionStrittig: 'La vischnanca è univoca, sia regiun da premias betg: la glista da la Confederaziun e quella dal chantun sa cuntradin. Fin che quai n’è betg sclerì, na vegn mussà nagin import qua; la differenza fiss fin 156 francs l’onn.',
       mindestanspruch: 'En quest sectur d’entrada n’è la regla chantunala betg univoca. Meglier nagina cifra che ina che sbaglia per pliras tschientinas da francs.',
       jahr: 'Ils valurs memorisads valan per in onn da dretg pli vegl. Uschespert che ils nums valurs uffizials èn integrads, quinta l’applicaziun puspè.',
+      praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },

@@ -114,11 +114,11 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
   });
 });
 
-// Erweitert 20.09.2026 um BE (zweiter Kanton mit eigenem Modell): belegt sind jetzt 24 der
-// 26 Kantone unverändert, nicht mehr 25.
-const EIGENES_MODELL = ['ZH', 'BE'];
+// Erweitert 20.09.2026 um BE und AG (zweiter und vierter Kanton mit eigenem Modell): unver-
+// ändert bleiben jetzt 23 der 26 Kantone, nicht mehr 25.
+const EIGENES_MODELL = ['ZH', 'BE', 'AG'];
 
-describe('K31 Regression: alle Kantone ausser ZH und BE rechnen exakt wie v0.1.37-beta', () => {
+describe('K31 Regression: alle Kantone ausser ZH, BE und AG rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
@@ -140,8 +140,8 @@ describe('K31 Regression: alle Kantone ausser ZH und BE rechnen exakt wie v0.1.3
     }
   }
 
-  it(`24 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
-    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(24);
+  it(`23 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(23);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
@@ -180,7 +180,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'ZH', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
@@ -262,6 +262,10 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ plz: '8041', city: 'Adliswil' })).region).toBe(2);
     expect(calculateIPV(person({ plz: '8041' }))).toMatchObject({ belegt: false, offen: 'region' });
     expect(calculateIPV(person({ plz: '8127' })).region).toBe(2); // mehrere Gemeinden, alle Region 2
+  });
+
+  it('ohne erfasste Prämie keine Zahl (§ 4 Abs. 3 EG KVG)', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
   });
 
   it.each([
