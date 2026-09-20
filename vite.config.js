@@ -59,6 +59,8 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     rollupOptions: {
+      // MESSUNG: zweite Seite baum3d.html nur in diesem Arbeitsbaum.
+      input: { main: 'index.html', baum3d: 'baum3d.html' },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) return 'vendor';
