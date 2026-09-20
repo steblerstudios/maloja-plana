@@ -6,14 +6,31 @@ import FruchtMitIcon from './FruchtMitIcon.jsx';
 import Icons from './IconSystem.jsx';
 import { fruchtKoerper } from './baumFruechte3d.js';
 
-// MESSPROTOTYP — nur im Arbeitsbaum mess/baum-3d, nicht für main gedacht.
-// Portiert die Wuchs-Logik der 3D-Vorlage (wachsender-baum-3d.html) auf unsere
-// Regeln: kein fremder Server (three liegt als eigene Abhängigkeit bei), kein
-// Dauerlauf der Zeichenschleife, Farben aus der Palette, eine Frucht je
-// Lebensbereich. Gewachsen wird nach Ausfüllstand, nicht nach der Uhr.
+// Welches Icon steht für welches Werkzeug — dieselben Namen wie im IconSystem.
+const WERKZEUG_ICON = {
+  tax: 'steuern', budget: 'budgetWallet', lohn: 'work',
+  ipv: 'praemienverbilligung', sozial: 'sozialhilfe', notfall: 'emergency',
+};
+
+// ─── Der Lebensbaum im Raum ─────────────────────────────────────────────────
 //
-// Zweite Runde (20.09.): Stamm läuft oben spitz aus statt stumpf, die Krone ist
-// dichter, und die Wuchsphasen sind benannt und deutlich getrennt.
+// Ein Ast je Kapitel, jeder mit der Schweizer Frucht seines Lebensbereichs. Der
+// Baum wächst mit dem AUSFÜLLSTAND, nicht mit der Uhr: jeder Ast folgt dem Stand
+// SEINES Kapitels, deshalb kann einer blühen, während der nächste noch kahl ist.
+//
+// Vier Regeln, die dieses Bauteil einhält:
+//   • Nichts von aussen — three.js liegt als eigene Abhängigkeit bei, die CSP
+//     `script-src 'self'` bleibt unangetastet.
+//   • Keine Dauerschleife — gezeichnet wird nur, wenn sich etwas ändert.
+//     Beim Öffnen wächst der Baum einmal ruhig ein; bei «weniger Bewegung»
+//     (prefers-reduced-motion) steht er sofort.
+//   • Nichts schwebt — was an einer Astspitze hängt, erscheint erst, wenn der
+//     Ast gewachsen ist, und jeder Ast wächst aus seinem Elternast heraus.
+//   • Bedienbar ohne Maus und ohne Augen — Name, Prozent und der Weg ins Kapitel
+//     liegen als echte Knöpfe über der Zeichenfläche, nicht im Bild.
+//
+// Wer kein 3D kann, bekommt vom Aufrufer den flachen Baum (siehe onKeinWebGL).
+// Die Messungen hinter den Bauentscheiden: docs/MESSUNG-baum-3d-2026-09-20.md.
 
 const GOLDEN = Math.PI * (3 - Math.sqrt(5)); // 137,5° — Phyllotaxis
 const PHI = (1 + Math.sqrt(5)) / 2;          // 1,618 — Goldener Schnitt
@@ -210,33 +227,6 @@ function fruchtSchildchen(fruit, iconName, farbe, kantePx = 128) {
     bild.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }, 0);
 
-  return textur;
-}
-
-// ─── Anspruchs-Ring ─────────────────────────────────────────────────────────
-// Zwei ruhige Ringe um die Leitfrucht, wenn für diesen Ast ein Anspruch
-// tatsächlich gedeckt ist. Dieselbe Bedeutung, Farbe und Deckkraft wie am
-// flachen Baum (0,22 aussen / 0,50 innen) — und dieselbe Quelle:
-// data/anspruchSignale.js. Nie ein Ring ohne gedeckten Anspruch.
-function ringTextur(farbe, kantePx = 128) {
-  const leinwand = document.createElement('canvas');
-  leinwand.width = kantePx;
-  leinwand.height = kantePx;
-  const ctx = leinwand.getContext('2d');
-  const m = kantePx / 2;
-  ctx.strokeStyle = farbe;
-  ctx.globalAlpha = 0.22;
-  ctx.lineWidth = kantePx * 0.016;
-  ctx.beginPath();
-  ctx.arc(m, m, kantePx * 0.46, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.globalAlpha = 0.5;
-  ctx.lineWidth = kantePx * 0.022;
-  ctx.beginPath();
-  ctx.arc(m, m, kantePx * 0.36, 0, Math.PI * 2);
-  ctx.stroke();
-  const textur = new THREE.CanvasTexture(leinwand);
-  textur.colorSpace = THREE.SRGBColorSpace;
   return textur;
 }
 
@@ -564,7 +554,31 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   });
 }
 
-export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen, werkzeuge, onWerkzeugWaehlen, ansprueche, onAnspruchWaehlen }) {
+// `astBeschriftung` kommt als Funktion von aussen, damit alle Texte aus den
+// Sprachdateien stammen und hier keine deutsche Zeichenkette festklebt.
+export default function Baum3D({
+  bereiche: rohBereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel,
+  onBereichWaehlen, werkzeuge: rohWerkzeuge, onWerkzeugWaehlen, astBeschriftung, onKeinWebGL,
+}) {
+  // Aufbereiten und stabil halten. Beides gehört hierher: die Hauptdatei bleibt
+  // frei davon, und ohne die Stabilisierung würde der Baum bei jedem
+  // Neuzeichnen von Grund auf neu aufgebaut und wüchse wieder von vorn ein.
+  const bereiche = React.useMemo(
+    () => (rohBereiche || []).map((b) => ({
+      key: b.key, farbe: b.color, pct: b.pct, idx: b.idx,
+      name: b.short || b.title, fruit: b.fruit, iconName: b.iconName,
+    })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify((rohBereiche || []).map((b) => [b.key, b.color, b.fruit, b.pct, b.short || b.title]))]
+  );
+  const werkzeuge = React.useMemo(
+    () => (rohWerkzeuge || []).map((w) => ({
+      key: w.key, area: w.area, label: w.label, short: w.short,
+      iconName: WERKZEUG_ICON[w.key],
+    })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify((rohWerkzeuge || []).map((w) => [w.key, w.area, w.short]))]
+  );
   const halter = React.useRef(null);
   const [keinWebGL, setKeinWebGL] = React.useState(false);
   // Wo hängt welcher Ast gerade auf dem Bildschirm? Daran kleben die
@@ -580,7 +594,9 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     } catch (e) {
+      // Kein 3D auf diesem Gerät: der Aufrufer zeigt den flachen Baum.
       setKeinWebGL(true);
+      if (typeof onKeinWebGL === 'function') onKeinWebGL();
       return undefined;
     }
     const wenigerBewegung = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -647,16 +663,6 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
         teile.push({ mesh: sprite, ...PLAN.frucht, basis: 0.55, bereich: b.key });
         schildchen.push(leitTextur);
 
-        // Anspruchs-Ring: nur wenn für diesen Ast wirklich ein Anspruch
-        // gedeckt ist. Er liegt hinter der Leitfrucht und reift mit ihr.
-        if (ansprueche && ansprueche[b.key]) {
-          const ringT = ringTextur(b.farbe, 160);
-          const ring = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringT, transparent: true, depthWrite: false }));
-          ring.position.copy(sprite.position);
-          wurzel.add(ring);
-          teile.push({ mesh: ring, ...PLAN.frucht, basis: 0.95, bereich: b.key });
-          schildchen.push(ringT);
-        }
       }
 
       // Werkzeuge an denselben Ast, etwas tiefer und deutlich kleiner — sie sind
@@ -763,75 +769,6 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       requestAnimationFrame(schritt);
     }
 
-    // ─── Nur Messung (Arbeitsbaum) ───────────────────────────────────────────
-    // Direkt gezeichnet statt über die Bildschleife: im Hintergrund-Tab bremst
-    // der Browser requestAnimationFrame aus — die Bildrate misst dann den Tab,
-    // nicht den Baum. Die Zeichendauer je Bild misst wirklich die Last.
-    window.__baum3dMessung = (n = 40) => {
-      zeichnen();
-      const zeiten = [];
-      for (let i = 0; i < n; i++) {
-        gier += 0.01;
-        const t0 = performance.now();
-        kamera.position.set(
-          ziel.x + Math.sin(gier) * Math.cos(neigung) * abstand,
-          ziel.y + Math.sin(neigung) * abstand,
-          ziel.z + Math.cos(gier) * Math.cos(neigung) * abstand
-        );
-        kamera.lookAt(ziel);
-        renderer.render(szene, kamera);
-        zeiten.push(performance.now() - t0);
-      }
-      zeiten.sort((a, b) => a - b);
-      return {
-        msJeBildMittel: +(zeiten.reduce((s, v) => s + v, 0) / n).toFixed(2),
-        msJeBildSchlechtestes: +zeiten[n - 1].toFixed(2),
-        reichtFuer60Hz: zeiten[Math.floor(n * 0.95)] < 16.7,
-        dreiecke: renderer.info.render.triangles,
-        zeichenaufrufe: renderer.info.render.calls,
-        geometrien: renderer.info.memory.geometries,
-      };
-    };
-    window.__baum3dGarten = (n = 11) => {
-      for (let i = 1; i < n; i++) {
-        const kopie = wurzel.clone();
-        kopie.position.set((i % 4) * 4 - 6, 0, Math.floor(i / 4) * 4 - 4);
-        kopie.scale.setScalar(0.7);
-        szene.add(kopie);
-      }
-      abstand = 26;
-      return window.__baum3dMessung(40);
-    };
-    window.__baum3dSzene = { szene, teile, streu, wurzel };
-    window.__baum3dNah = (neuerAbstand = 5, zielHoehe = 1.6) => {
-      abstand = neuerAbstand;
-      ziel.y = zielHoehe;
-      zeichnen();
-      return { abstand, zielHoehe };
-    };
-    // NUR MESSUNG: hängt testweise einen Anspruchs-Ring an einen Ast. Nötig,
-    // weil im Beispiel-Profil gerade kein Anspruch gedeckt ist (das ZH-Modul
-    // sagt nach dem Laden «nein») — ohne Sonde liesse sich das Zeichnen des
-    // Rings nicht prüfen.
-    window.__baum3dRingProbe = (bereichKey) => {
-      const a = anker.find((x) => x.key === bereichKey) || anker[0];
-      const b = bereiche.find((x) => x.key === a.key);
-      const ringT = ringTextur(b.farbe, 160);
-      const ring = new THREE.Sprite(new THREE.SpriteMaterial({ map: ringT, transparent: true, depthWrite: false }));
-      ring.position.copy(a.punkt).add(new THREE.Vector3(0, -0.5, 0));
-      ring.scale.setScalar(0.95);
-      wurzel.add(ring);
-      zeichnen();
-      return { ast: a.key, farbe: b.farbe };
-    };
-    window.__baum3dStand = (pct) => {
-      const proT = {};
-      Object.keys(proBereich).forEach((k) => { proT[k] = pct; });
-      wachstumAnwenden(teile, streu, pct, proT);
-      zeichnen();
-      return wuchsphase(pct).name;
-    };
-
     let zieht = false, lx = 0, ly = 0;
     const runter = (e) => { zieht = true; lx = e.clientX; ly = e.clientY; renderer.domElement.setPointerCapture(e.pointerId); };
     const bewegen = (e) => {
@@ -865,7 +802,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       renderer.dispose();
       if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
     };
-  }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette, ansprueche]);
+  }, [bereiche, isDarkMode, gesamtPct, werkzeuge, palette]);
 
   if (keinWebGL) return null; // Aufrufer zeigt dann den flachen Baum.
 
@@ -893,9 +830,6 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       const anklickbar = typeof onBereichWaehlen === 'function';
       const IconFn = Icons[b.iconName] || Icons[m.key];
       const meineWerkzeuge = (werkzeuge || []).filter((w) => w.area === m.key);
-      // Ist für diesen Ast ein Anspruch gedeckt, führt der Klick dorthin —
-      // genau wie am flachen Baum, wo die Frucht dann zur Leistung führt.
-      const anspruch = ansprueche ? ansprueche[m.key] : null;
       return React.createElement('div', {
         key: m.key,
         style: {
@@ -909,13 +843,11 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       },
         React.createElement('button', {
           type: 'button',
-          onClick: anspruch && onAnspruchWaehlen
-            ? () => onAnspruchWaehlen(anspruch)
-            : (anklickbar ? () => onBereichWaehlen(b) : undefined),
-          title: anspruch && anspruch.label ? anspruch.label : (b.name || m.key),
-          'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent'
-            + (anspruch ? ' · ' + (anspruch.aria || 'Anspruch gedeckt')
-              + (anspruch.label ? ': ' + anspruch.label : '') : ''),
+          onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
+          title: b.name || m.key,
+          'aria-label': astBeschriftung
+            ? astBeschriftung(b.name || m.key, b.pct)
+            : (b.name || m.key) + ' — ' + b.pct + '%',
           style: {
             display: 'inline-flex', alignItems: 'center', gap: '5px',
             padding: '2px 8px 2px 4px', borderRadius: '999px',
@@ -923,12 +855,11 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
             color: palette ? palette.text : '#222',
             background: (palette ? palette.surface : '#fff') + 'e6',
             border: '1px solid ' + b.farbe + '55',
-            cursor: (anspruch && onAnspruchWaehlen) || anklickbar ? 'pointer' : 'default',
+            cursor: anklickbar ? 'pointer' : 'default',
           },
         },
           // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
-          // statt als Bild, damit es auch klein lesbar bleibt. Bei gedecktem
-          // Anspruch legen sich die zwei Ringe darum, wie am flachen Baum.
+          // statt als Bild, damit es auch klein lesbar bleibt.
           React.createElement('span', {
             style: {
               position: 'relative', width: '13px', height: '13px', color: b.farbe,
@@ -936,21 +867,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
             },
             'aria-hidden': 'true',
           },
-            IconFn ? IconFn() : null,
-            anspruch ? React.createElement('span', {
-              style: {
-                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-                width: '21px', height: '21px', borderRadius: '50%',
-                border: '1.5px solid ' + b.farbe, opacity: 0.22, pointerEvents: 'none',
-              },
-            }) : null,
-            anspruch ? React.createElement('span', {
-              style: {
-                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-                width: '17px', height: '17px', borderRadius: '50%',
-                border: '2px solid ' + b.farbe, opacity: 0.5, pointerEvents: 'none',
-              },
-            }) : null
+            IconFn ? IconFn() : null
           ),
           React.createElement('span', null, b.name || m.key),
           React.createElement('span', {

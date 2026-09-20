@@ -1709,6 +1709,10 @@ export default {
   datenWirken: {
     title: { sie: 'Ihre Daten wirken bereits:', du: 'Deine Daten wirken bereits:' },
     treeCaption: { sie: 'Was aus Ihren Angaben wächst', du: 'Was aus Deinen Angaben wächst' },
+    ansichtRaeumlich: 'Räumliche Ansicht',
+    ansichtFlach: 'Flache Ansicht',
+    baumLaedt: 'Der Baum wird geladen …',
+    astAria: { sie: '{name} — {pct} Prozent ausgefüllt', du: '{name} — {pct} Prozent ausgefüllt' },
     anspruchAria: 'möglicher Anspruch',
     tax: 'Steuerrechner personalisiert',
     ipv: 'IPV-Prüfung aktiv',

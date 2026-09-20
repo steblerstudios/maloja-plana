@@ -11,6 +11,30 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Der Lebensbaum wächst jetzt räumlich.** Unter «Was aus Ihren Angaben wächst» steht
+  der Baum dreidimensional: ein Ast je Kapitel, jeder mit seiner Schweizer Frucht, die
+  mit dem Ausfüllstand **dieses** Kapitels reift. Drehen mit Maus, Finger oder
+  Pfeiltasten. Name, Prozent und der Weg ins Kapitel bleiben erhalten — sie liegen als
+  echte Knöpfe über dem Bild, damit Tastatur und Screenreader weiter funktionieren.
+- **Umschalter flach ↔ räumlich**, die Wahl wird gemerkt. Standard ist räumlich.
+- Gebaut nach nachprüfbaren Naturgesetzen statt nach Gefühl: Phyllotaxis (137,5°),
+  Da-Vinci-Regel für die Astdicken, Goldener Schnitt für die Astlängen, elastische
+  Ähnlichkeit für die Stammdicke, Fibonacci für die Anzahlen. Fruchtgrössen nach echten
+  Massen, mit einem Potenzgesetz gestaucht, damit eine Heidelbeere sichtbar bleibt,
+  ohne so gross zu wirken wie ein Apfel.
+
+### Geändert
+- Neue Abhängigkeit **three.js** (die dritte überhaupt, nach react und react-dom).
+  Sie liegt bei uns und wird von unserem Server geliefert — kein fremder Server, die
+  CSP `script-src 'self'` bleibt unangetastet.
+- ⚠️ **Der Baum lädt beim Öffnen des Dashboards rund 145 KB (gzip) nach**, weil die
+  räumliche Ansicht der Standard ist. Wer auf flach stellt, lädt ihn nicht mehr.
+- Ohne 3D-fähiges Gerät erscheint automatisch der bisherige flache Baum.
+- `size-limit` prüft neu **beide** Startdateien (`index-*` und den geteilten
+  `FruchtMitIcon-*`-Chunk) — sonst hätte eine Aufteilung eine Verbesserung vorgetäuscht,
+  die keine ist.
+
 ## [0.1.38-beta] — 2026-09-20
 
 **K31 — fünf Kantone rechnen jetzt nach ihrem eigenen amtlichen Modell**, statt nach der
