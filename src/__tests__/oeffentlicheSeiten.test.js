@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { SEITEN, SONDERSEITEN, QUELLEN, BASIS, GEPRUEFT } from '../../scripts/seiten-inhalt.mjs';
+import { SPRACHEN } from '../../scripts/seiten-sprachen.mjs';
 
 // ─────────────────────────────────────────────────────────────
 // Öffentliche Erklärseiten · Entscheid Stebler Studios 20.09.2026
@@ -252,7 +253,14 @@ describe('Öffentliche Erklärseiten', () => {
     });
 
     it('enthält genau so viele Einträge wie es Seiten gibt, plus die Startseite', () => {
-      expect((xml.match(/<loc>/g) || []).length).toBe(SEITEN.length + SONDERSEITEN.length + 1);
+      // Seit 21.09.2026 mal die FREIGEGEBENEN Sprachen. Die Zahl stand hier
+      // fest auf «Seiten + 1»; sie wäre gebrochen, sobald eine zweite Sprache
+      // freigegeben wird — und zwar aus dem falschen Grund. Dass nur
+      // freigegebene Sprachen drinstehen dürfen, prüft
+      // src/__tests__/erklaerseitenSprachen.test.js.
+      const freie = SPRACHEN.filter((s) => s.freigegeben).length;
+      expect((xml.match(/<loc>/g) || []).length)
+        .toBe((SEITEN.length + SONDERSEITEN.length) * freie + 1);
     });
   });
 
