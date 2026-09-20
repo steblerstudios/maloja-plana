@@ -17,6 +17,12 @@
 //   ASV, «Informationen zur Prämienverbilligung 2026»: Bruttovermögen über 750'000 →
 //     keine automatische Prüfung; Konkubinat mit gemeinsamem Kind rechnet wie ein Ehepaar.
 import { getRegion } from '../data/praemienRegionen.js';
+import {
+  vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
+  ergebnisOhneAnspruch, ergebnisMitAnspruch,
+} from './kantonsModell.js';
 
 export const IPV_BE = {
   jahr: 2026,
@@ -114,14 +120,14 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // Die App rechnet nur für das Jahr, dessen Werte belegt sind. Ab dem 01.01. des Folgejahres
   // lieber keine Zahl als eine aus veralteten Stufen (die KKVV wird jährlich angepasst; das
   // Berechnungsschema 2027 war am 20.09.2026 noch nicht publiziert).
-  if (new Date().getFullYear() > jahr) return orientierung('jahr');
+  if (jahrVorbei(jahr)) return orientierung('jahr');
   // Konkubinat: «Leben Sie unverheiratet mit Ihrem Partner/Ihrer Partnerin im gleichen Haushalt
   // und haben mindestens ein gemeinsames Kind, dann wird die Berechnung der Prämienverbilligung
   // wie bei einem verheirateten Paar vorgenommen» (Informationsblatt 2026, S. 1). Das Einkommen
   // der zweiten Person kennt die App nicht — ohne sie wäre der Betrag beliebig zu hoch. Darum
-  // dasselbe Nein wie bei Verheirateten. (Befund Fachprüfung 20.09.2026: der Guard prüfte nur
-  // `married`, `cohabiting` lief durch und rechnete.)
-  if (hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting') return orientierung('haushalt');
+  // dasselbe Nein wie bei Verheirateten. (Befund Fachprüfung 20.09.2026: der Riegel prüfte nur
+  // `married`, `cohabiting` lief durch und rechnete. Steht seither im gemeinsamen Rahmen.)
+  if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
 
   // Weder KKVV noch Berechnungsschema nennen einen Stichtag für das Alter (nur für die
   // Gemeinde, Art. 10 Abs. 2). Darum rechnet die App nur, wenn die Alterszeile das ganze
@@ -134,26 +140,20 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // Stichtag, nicht auf einer Lücke im Erlass. Dasselbe gilt für Kinder (Art. 4 Abs. 1/2):
   // Ein Kind, das im Jahr 19 wird, rechnet die App ganzjährig als Kind — das wirkt zu tief,
   // nie zu hoch, und bleibt darum vorerst so.
-  const geburt = /^\d{4}-/.test(b.dateOfBirth || '') ? Number(b.dateOfBirth.slice(0, 4)) : null;
-  if (!geburt || jahr - geburt - 1 <= 25) return orientierung('alter');
-  // Kind ohne Geburtsdatum: `age` ist in der App mit 0 vorbelegt (ChapterView legt neue Kinder
-  // so an, dataMigration setzt es bei Alt-Daten ebenso). Eine 0 heisst «nicht erfasst», nicht
-  // «Säugling» — und ein nicht erfasstes Alter erhöht sonst still den Betrag.
-  const kinderAlter = hh.children.map((c) => (/^\d{4}-/.test(c.birthDate || '')
-    ? jahr - Number(c.birthDate.slice(0, 4))
-    // Beim eingetippten Alter kommt ein Jahr dazu: es ist nicht datiert, die Person kann im
-    // Anspruchsjahr Geburtstag haben. So bleibt die Zuordnung «Kind bis 18» auf der sicheren
-    // Seite, statt eine junge erwachsene Person als Kind zu rechnen.
-    : (Number(c.age) > 0 ? Number(c.age) + 1 : null)));
-  if (kinderAlter.some((a) => a === null)) return orientierung('alter');
-  if (kinderAlter.some((a) => a > 18)) return orientierung('haushalt');
+  const geburt = geburtsjahr(b);
+  // Dieselbe Lesart wie ZH und VD (`abEndeVorjahr`): erwachsen ist, wer das ganze Anspruchs-
+  // jahr über in derselben Zeile steht. In ZH steht sie im Erlass (§ 8 EG KVG), hier folgt
+  // sie aus dem fehlenden Stichtag. Einzig AG rechnet anders — siehe config/kantonsModell.js.
+  if (!geburt || !ERWACHSEN.abEndeVorjahr(jahr, geburt)) return orientierung('alter');
+  // Bezugsjahr ist hier das Anspruchsjahr, darum kommt beim eingetippten Alter ein Jahr dazu:
+  // es ist nicht datiert, die Person kann im Anspruchsjahr Geburtstag haben. So bleibt die
+  // Zuordnung «Kind bis 18» auf der sicheren Seite, statt eine junge erwachsene Person als
+  // Kind zu rechnen. Kind ohne erfasstes Alter ⇒ keine Zahl (Rahmen, Befund 20.09.2026).
+  const kinderJahre = kinderAlter(hh.children, jahr, 1);
+  if (ALTER_UNERFASST(kinderJahre)) return orientierung('alter');
+  if (UEBER_18(kinderJahre)) return orientierung('haushalt');
 
-  const plz = String(data.wohnen?.postalCode || '').trim();
-  const orte = plz ? lookupPLZ(plz).filter((g) => g.kanton === 'BE') : [];
-  const stadt = String(data.wohnen?.city || '').trim().toLowerCase();
-  const ort = orte.length === 1 ? orte[0] : orte.find((g) => g.gemeinde.toLowerCase() === stadt);
-  const regionen = new Set(orte.map((g) => beRegion(g.bfsNr)));
-  const region = ort ? beRegion(ort.bfsNr) : regionen.size === 1 ? [...regionen][0] : null;
+  const { region, orte, ort } = regionAusPLZ({ data, kanton: 'BE', lookupPLZ, regionFn: beRegion });
   if (!region) {
     // Zwei verschiedene Gründe, zwei verschiedene Sätze: bei Reutigen ist die Gemeinde
     // eindeutig, strittig ist ihre Prämienregion (Fachprüfung 20.09.2026).
@@ -162,47 +162,37 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
     return orientierung(strittig ? 'regionStrittig' : 'region');
   }
 
-  const kinderZahl = kinderAlter.length;
-  const vermoegen = Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
+  const kinderZahl = kinderJahre.length;
+  const vermoegen = vermoegenSumme(f);
   // 750'000 ist in BE KEIN Ausschluss, sondern der Punkt, ab dem der Kanton nicht mehr
   // automatisch prüft (Informationsblatt 2026, S. 2 — dieselbe Liste wie beim kleinen
   // Einkommen). Darum ein eigener Grund statt «über der kantonalen Grenze».
   if (vermoegen > IPV_BE.vermoegen.bruttoGrenze) return orientierung('vermoegenAntrag');
-  const reineinkommen = ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
-    .reduce((s, k) => s + Number(f[k] || 0), 0) * 12 + Number(f.pension3a || 0);
+  const reineinkommen = einkommenJahr(f);
   const me = beMassgebendesEinkommen({ reineinkommen, vermoegen, mitglieder: 1 + kinderZahl, kinderZahl });
 
-  const r = ipvBernRechnen({ region, personen: ['e', ...kinderAlter.map(() => 'k')], me });
+  const r = ipvBernRechnen({ region, personen: ['e', ...kinderJahre.map(() => 'k')], me });
   const cantonData = { ...ipvData, maxIncome: r.grenze };
   // KKVV Art. 10 Abs. 1: «Die Prämie wird höchstens bis zu ihrem effektiven Umfang verbilligt.»
   // Der Deckel gilt PRO PERSON. Die App kennt nur die Prämie der erwachsenen Person, also wird
   // auch nur deren Anteil gedeckelt — der Kinderanteil bleibt ungedeckelt, statt wie bisher den
   // Deckel mit Kindern ganz entfallen zu lassen (Befund Fachprüfung 20.09.2026).
-  const praemie = Number(data.versicherungen?.kkPremium) * 12;
-  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
-  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
-  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
-  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
-  if (!(praemie > 0)) return orientierung('praemie');
-  const deckeln = (gesamt, erwachsenenTeil) => (praemie > 0
-    ? Math.round(Math.min(erwachsenenTeil, praemie) + (gesamt - erwachsenenTeil))
-    : Math.round(gesamt));
-  const annual = deckeln(r.annual, r.erwachseneAnnual);
-  const maxAnnual = deckeln(r.maximal, r.erwachseneMaximal);
+  const praemie = praemieJahr(data);
+  if (praemieFehlt(praemie)) return orientierung('praemie');
+  const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
+  const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
+  const gemeinsam = { canton: 'BE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltBE', extra: { region } };
   if (annual <= 0) {
-    return { belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze }, canton: 'BE', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehaltBE' };
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
   }
   // «Automatisch via Steuerdaten» stimmt nicht für alle: Wer mindestens 25 ist, keine zur Familie
   // zählenden Kinder hat und ein korrigiertes Reineinkommen unter 14'000 ausweist, muss die
   // Überprüfung bis 31.12. selbst beantragen (Informationsblatt 2026, S. 2). Genau die ärmste
   // Gruppe — wer sich hier auf «automatisch» verlässt, verliert den ganzen Anspruch.
   const antragNoetig = !kinderZahl && reineinkommen < IPV_BE.antragUnterEinkommen;
-  return {
-    eligible: true, belegt: true, anspruchMoeglich: true,
-    amount: Math.round(annual / 12), annual, maxAnnual,
-    reductionPercent: Math.round((annual / maxAnnual) * 100),
+  return ergebnisMitAnspruch({
+    ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     noteKey: antragNoetig ? 'ipv.beAntragNoetig' : ipvData.noteKey,
     noteParams: antragNoetig ? {} : (ipvData.noteParams || {}),
-    youngAdultsCount, canton: 'BE', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehaltBE',
-  };
+  });
 }

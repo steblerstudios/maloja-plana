@@ -43,6 +43,12 @@
 // führt zu SAR 837.211 keine künftige Version und kein Änderungsdokument aus 2026.
 // Darum bleibt 2026 gebaut und 2027 ungebaut; offener Punkt in docs/sources/FRAGEN-AN-DIE-AEMTER.md.
 
+import {
+  vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  ergebnisOhneAnspruch, ergebnisMitAnspruch,
+} from './kantonsModell.js';
+
 // Werte 2026 aus Anhang 1 V KVGG, wörtlich. Alle Beträge sind Jahresbeträge in CHF.
 export const IPV_AG = {
   jahr: 2026,
@@ -147,7 +153,7 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Die App rechnet nur für das Jahr, dessen Werte belegt sind. Ab dem 01.01. des Folgejahres
   // lieber keine Zahl als eine aus veralteten Sätzen: Die SVA weist für 2027 bereits 6'070 /
   // 4'440 / 1'450 und 19,25 % aus, die Rechtssammlung trägt aber noch den Anhang 2026.
-  if (new Date().getFullYear() > jahr) return orientierung('jahr');
+  if (jahrVorbei(jahr)) return orientierung('jahr');
   // § 9 Abs. 2 KVGG: Konkubinat wird «bei einem gemeinsamen Haushalt angenommen». Die
   // Verordnung führt das aus — vermutet wird die Lebensgemeinschaft erst, wenn «a) seit
   // mindestens 2 Jahren ein gemeinsamer Haushalt geführt wird, b) 2 Personen mit einem
@@ -156,7 +162,7 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // als in BE, wo es ein gemeinsames Kind braucht» — das war eine eigene Auslegung des
   // Gesetzeswortlauts ohne die Verordnung. Für die Ausgabe ändert es nichts: jeder
   // Mehrpersonenhaushalt geht ohnehin in die Orientierung, weil das zweite Einkommen fehlt.
-  if (hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting') return orientierung('haushalt');
+  if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
   // Kinder und junge Erwachsene: siehe der Block oben — ohne deren effektive Prämien lässt
   // sich der Mindestanspruch nach § 7 Abs. 2 KVGG nicht rechnen. Eigener Grund, damit in der
   // Anzeige nicht «Paare» steht, wo es um Kinder geht.
@@ -164,22 +170,21 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // Alterskategorie nach Jahrgang: Die SVA führt für das Anspruchsjahr 2027 die Jahrgänge
   // 2002–2008 als junge Erwachsene, also alle, die im Anspruchsjahr zwischen 19 und 25 alt
   // werden. Erwachsen ist danach, wer im Anspruchsjahr 26 oder älter wird.
-  const geburt = /^\d{4}-/.test(b.dateOfBirth || '') ? Number(b.dateOfBirth.slice(0, 4)) : null;
-  if (!geburt || jahr - geburt < 26) return orientierung('alter');
+  // ⚠️ Das ist die eine Stelle, an der AG von ZH, BE und VD abweicht: dort zählt das Alter am
+  // Ende des Vorjahres, hier im Anspruchsjahr — ein Jahrgang Unterschied. Am 20.09.2026 am
+  // aufgezeichneten Verhalten gemessen und in config/kantonsModell.js benannt. Ob die
+  // SVA-Jahrgangstabelle dafür der richtige Beleg ist, steht auf der Frageliste an die Ämter.
+  const geburt = geburtsjahr(b);
+  if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
 
-  const vermoegen = Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
-  const bereinigtesEinkommen = ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
-    .reduce((s, k) => s + Number(f[k] || 0), 0) * 12 + Number(f.pension3a || 0);
+  const vermoegen = vermoegenSumme(f);
+  const bereinigtesEinkommen = einkommenJahr(f);
   const me = agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen, verheiratet: false, kinderZahl: 0 });
 
   // Nur eine Person im Haushalt, darum ist die erfasste Prämie ihre eigene (§ 7 Abs. 3 KVGG).
-  const praemieJahr = Number(data.versicherungen?.kkPremium) * 12;
-  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
-  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
-  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
-  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
-  if (!(praemieJahr > 0)) return orientierung('praemie');
-  const praemien = praemieJahr > 0 ? [praemieJahr] : null;
+  const praemie = praemieJahr(data);
+  if (praemieFehlt(praemie)) return orientierung('praemie');
+  const praemien = [praemie];
   const annual = Math.round(ipvAargauRechnen({ personen: ['e'], me, praemien }).total);
   // Vergleichsgrösse «höchstens möglich»: dieselbe Rechnung bei massgebendem Einkommen 0.
   const maxAnnual = Math.round(ipvAargauRechnen({ personen: ['e'], me: 0, praemien }).total);
@@ -194,19 +199,13 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   // irreführend. Die Frist des laufenden Kalenderjahres läuft für das FOLGEJAHR.
   const fristAbgelaufen = new Date().getFullYear() >= jahr;
   const basisjahr = jahr - IPV_AG.basisjahrAbstand;
+  const gemeinsam = { canton: 'AG', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltAG', extra: { basisjahr } };
   if (annual <= 0) {
-    return {
-      belegt: true, eligible: false, amount: 0,
-      noteKey: 'ipv.agKeinAnspruch', noteParams: {},
-      canton: 'AG', cantonData, jahr, basisjahr, vorbehaltKey: 'ipv.vorbehaltAG',
-    };
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.agKeinAnspruch' });
   }
-  return {
-    eligible: true, belegt: true, anspruchMoeglich: true,
-    amount: Math.round(annual / 12), annual, maxAnnual,
-    reductionPercent: Math.round((annual / maxAnnual) * 100),
+  return ergebnisMitAnspruch({
+    ...gemeinsam, annual, maxAnnual, youngAdultsCount,
     noteKey: fristAbgelaufen ? 'ipv.agFristAbgelaufen' : 'ipv.agFristLaeuft',
     noteParams: { jahr, vorjahr: jahr - 1, folgejahr: jahr + 1 },
-    youngAdultsCount, canton: 'AG', cantonData, jahr, basisjahr, vorbehaltKey: 'ipv.vorbehaltAG',
-  };
+  });
 }
