@@ -140,14 +140,18 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
   });
 });
 
-describe('calculateIPV — E9: heute ist kein Kanton amtlich belegt', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand), heute überall null', () => {
+// K31: ZH ist seit 19.09.2026 belegt (eigenes Modell, Tests in ipvZuerich.test.js).
+const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => k !== 'ZH');
+
+describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 25 null, ZH mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    for (const [, v] of zeilen) expect(v).toHaveProperty('beleg', null);
+    for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
+    expect(CANTONAL_IPV.ZH.beleg.quelle).toBeTruthy();
   });
 
-  it.each(Object.keys(CANTONAL_IPV))('%s: kein Betrag, kein «berechtigt», keine Grenze — tief und hoch dieselbe Ausgabe', (canton) => {
+  it.each(UNBELEGT)('%s: kein Betrag, kein «berechtigt», keine Grenze — tief und hoch dieselbe Ausgabe', (canton) => {
     const ausgabe = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } });
     for (const kkPremium of [0, 400]) {
       const tief = ausgabe(500, kkPremium);
@@ -168,18 +172,19 @@ describe('calculateIPV — E9: heute ist kein Kanton amtlich belegt', () => {
   });
 
   it('prüfenswert hängt nur an der erfassten Prämie, nie an der (unbelegten) Grenze', () => {
-    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
+    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'BE' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
     expect(r(1000, 300)).toBe(true);
     expect(r(50000, 300)).toBe(true);
     expect(r(1000, 0)).toBe(false);
   });
 
   it('ein beleg ohne quelle zählt nicht als belegt', () => {
-    CANTONAL_IPV.ZH.beleg = { quelle: '', stand: '2026' };
+    const vorher = CANTONAL_IPV.BE.beleg;
+    CANTONAL_IPV.BE.beleg = { quelle: '', stand: '2026' };
     try {
-      expect(calculateIPV({ basis: { canton: 'ZH' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
+      expect(calculateIPV({ basis: { canton: 'BE' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
     } finally {
-      CANTONAL_IPV.ZH.beleg = null;
+      CANTONAL_IPV.BE.beleg = vorher;
     }
   });
 });
@@ -188,12 +193,14 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
   // Tests reference the canonical CANTONAL_IPV table (no duplicated magic numbers),
   // so they verify the model — not a snapshot of yearly-updated figures.
   // E9: das Modell rechnet nur für amtlich belegte Kantone; hier simuliert.
+  // K31: bis 19.09.2026 lief dieser Block mit ZH; ZH hat jetzt ein eigenes Modell,
+  // der lineare Abbau gilt weiter für die übrigen Kantone — darum hier BE.
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['ZH']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BE']); });
   afterAll(() => zuruecksetzen());
-  const zh = CANTONAL_IPV.ZH;
+  const zh = CANTONAL_IPV.BE;
   const ipv = (overrides = {}) => calculateIPV({
-    basis: { canton: 'ZH' },
+    basis: { canton: 'BE' },
     finanzen: {},
     ...overrides,
   });
@@ -218,7 +225,7 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('uses the family subsidy plus per-child amount when children are present', () => {
     const r = ipv({
-      basis: { canton: 'ZH', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
+      basis: { canton: 'BE', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
       finanzen: { monthlyIncome: 0 },
     });
     expect(r.maxAnnual).toBe(zh.subsidyFamily + 2 * zh.subsidyChild);
@@ -242,8 +249,8 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('counts partner income towards the income limit', () => {
     // single monthly income alone is well within the limit, partner income pushes it over
-    const r = ipv({ basis: { canton: 'ZH', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
-    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 > 54900
+    const r = ipv({ basis: { canton: 'BE', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
+    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 > 45000 (BE-Musterwert)
   });
 });
 
