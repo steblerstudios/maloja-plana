@@ -1,6 +1,7 @@
-import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useCallback, useRef } from 'react';
 import { text, weight, radius, leading, space, fontFamily, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { useFocusTrap } from './hooks/useFocusTrap.js';
 
 // ─── Tour ──────────────────────────────────────────────────
 // Kleine, ruhige Tour nach dem Onboarding. Zwei Stationstypen:
@@ -47,32 +48,11 @@ export const Tour = ({ palette, t, steps, onFinish, onLater }) => {
     return () => { clearTimeout(t1); clearTimeout(t2); window.removeEventListener('resize', measure); window.removeEventListener('scroll', measure, true); };
   }, [measure, step]);
 
-  // Fokus-Management (WCAG 2.4.3 / 2.1.2): Escape verschiebt die Tour,
-  // Fokus wandert in den Dialog und bleibt gefangen; beim Schliessen zurück.
-  useEffect(() => {
-    const node = dialogRef.current;
-    if (!node) return;
-    const prevFocus = document.activeElement;
-    const focusables = () => Array.from(node.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )).filter(el => !el.disabled && el.offsetParent !== null);
-    const firstEl = focusables()[0];
-    if (firstEl) firstEl.focus();
-    const onKey = (e) => {
-      if (e.key === 'Escape') { e.preventDefault(); onLater && onLater(); return; }
-      if (e.key !== 'Tab') return;
-      const els = focusables();
-      if (els.length === 0) return;
-      const a = els[0], z = els[els.length - 1];
-      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
-      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
-    };
-    node.addEventListener('keydown', onKey);
-    return () => {
-      node.removeEventListener('keydown', onKey);
-      if (prevFocus && prevFocus.focus) prevFocus.focus();
-    };
-  }, [i, onLater]);
+  // Fokus-Management (WCAG 2.4.3 / 2.1.2): Escape verschiebt die Tour, der Fokus
+  // wandert in den Dialog und bleibt gefangen, beim Schliessen kehrt er zurück.
+  // Seit O17 der gemeinsame Baustein — `i` richtet neu aus, weil jede Station
+  // ihre eigenen Knöpfe mitbringt.
+  useFocusTrap(true, { ref: dialogRef, onEscape: onLater, neuAusrichten: [i] });
 
   const finish = () => { markTourDone(); onFinish && onFinish(); }; // erledigt → kommt nicht wieder
   const later = () => { onLater && onLater(); };                    // verschoben → beim nächsten Start wieder

@@ -106,6 +106,37 @@ describe('Labels sind mit ihren Feldern verbunden', () => {
     }
   });
 
+  it('ChapterView: Felder ohne eigenes Control bekommen einen Gruppentitel, kein totes htmlFor', () => {
+    // Diese Zweige rendern KEIN <control id={fieldId}>, sondern eine Gruppe
+    // (Options-Pillen, Listen-Manager, Betrags-Posten, 3a-Tracker). Vorher trug
+    // das Label trotzdem ein htmlFor auf eine id, die niemand hält: der Klick
+    // aufs Label tat nichts, und das Dokument enthielt einen Verweis ins Leere.
+    // Gemessen im DOM über alle sieben Kapitel: 18 solche Labels, jetzt 0.
+    const src = fs.readFileSync(path.join(SRC, 'ChapterView.jsx'), 'utf8');
+
+    // renderLabel kann den Gruppen-Fall überhaupt (Signatur + <div> statt <label>)
+    expect(src).toMatch(/renderLabel = \(fieldId, labelText, hint, alsGruppenTitel\)/);
+    expect(src).toContain("alsGruppenTitel ? 'div' : 'label'");
+    // die -label-id bleibt in BEIDEN Fällen — aria-labelledby hängt daran
+    expect(src).toContain("id: fieldId + '-label'");
+
+    // Sechs Zweige sind IMMER eine Gruppe: 3 Listen-Manager · Betrags-Posten ·
+    // 3a-Tracker · Sprachen. Sie reichen die Kennzeichnung fest durch …
+    const mitFlagge = src.match(/renderLabel\([^)]*, true\)/g) || [];
+    expect(mitFlagge.length).toBe(6);
+    // Nur die Gruppen zählen, die auf einen FELD-Titel zeigen. ChapterView hat
+    // ausserdem zwei ältere Gruppen für die Haushalts-Abschnitte
+    // (hh-adults-heading / hh-children-heading) — die gehören nicht hierher.
+    const gruppen = src.match(/role: 'group', 'aria-labelledby': [^,]*'-label'/g) || [];
+    expect(gruppen.length).toBe(6);
+
+    // … der siebte hängt davon ab, OB Pillen gerendert werden: bei ≤6 Optionen
+    // gibt es kein <select id={fieldId}>, darüber schon. Deshalb `usePills`
+    // durchreichen und nicht `true` — sonst verlöre die Select-Variante ihr Label.
+    expect(src).toContain('renderLabel(fieldId, field.label, field.hint, usePills)');
+    expect(src).toContain("role: 'radiogroup'");
+  });
+
   it('die beiden früher unbenannten KVG-Felder sind verbunden', () => {
     const src = fs.readFileSync(path.join(SRC, 'KVGLeistungen.jsx'), 'utf8');
     // je Leistung eine eigene id — eine feste id wäre mehrfach im Dokument

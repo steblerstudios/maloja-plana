@@ -540,7 +540,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       marginBottom: space.sm - 2
     };
 
-    const renderLabel = (fieldId, labelText, hint) => React.createElement('label', { id: fieldId + '-label', htmlFor: fieldId, style: labelStyle },
+    // `alsGruppenTitel`: für Felder, die KEIN einzelnes Control rendern, sondern
+    // eine Gruppe (Options-Pillen, Listen-Manager). Dort gab es bisher trotzdem
+    // ein `htmlFor` auf eine id, die niemand trägt — ein totes Versprechen: der
+    // Klick aufs Label tut nichts, und das Dokument enthält einen Verweis ins
+    // Leere. Der Bezug läuft in diesen Fällen über `aria-labelledby` auf die
+    // `-label`-id, die hier in beiden Fällen gesetzt bleibt. Ohne Control ist
+    // <label> ausserdem das falsche Element, deshalb <div>.
+    const renderLabel = (fieldId, labelText, hint, alsGruppenTitel) => React.createElement(alsGruppenTitel ? 'div' : 'label', { id: fieldId + '-label', htmlFor: alsGruppenTitel ? undefined : fieldId, style: labelStyle },
       labelText,
       // E17: empfohlen statt Pflicht — leise, ohne Stern.
       field.recommended && React.createElement('span', { style: { fontSize: text.xs, color: palette.soft, fontWeight: weight.normal } }, '· ' + tr('naZustand.empfohlen')),
@@ -585,16 +592,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const seed = stored.length ? stored : (feldHatWert(data, field.k) ? [{ label: '', amount: data[field.k] }] : []);
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(fieldId, field.label, field.hint),
+        renderLabel(fieldId, field.label, field.hint, true),
         field.hint && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, 'ⓘ ' + field.hint),
-        React.createElement(ItemizedAmount, {
-          palette, t: tr, items: seed,
-          onChange: (list) => {
-            onUpdate(itemsKey, list);
-            // K82: ohne Betrag in einem Posten bleibt das Feld leer (keine 0 als Scheinantwort).
-            onUpdate(field.k, postenSumme(list));
-          },
-        }),
+        React.createElement('div', { role: 'group', 'aria-labelledby': fieldId + '-label' },
+          React.createElement(ItemizedAmount, {
+            palette, t: tr, items: seed,
+            onChange: (list) => {
+              onUpdate(itemsKey, list);
+              // K82: ohne Betrag in einem Posten bleibt das Feld leer (keine 0 als Scheinantwort).
+              onUpdate(field.k, postenSumme(list));
+            },
+          })
+        ),
         renderOrientation(field)
       );
     }
@@ -605,13 +614,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const oldDoctor = typeof data.doctor === 'string' ? data.doctor : '';
       const oldPhone = typeof data.doctorPhone === 'string' ? data.doctorPhone : '';
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('doctors.hint')),
-        React.createElement(React.Suspense, { fallback: null },
+        React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
+          React.createElement(React.Suspense, { fallback: null },
           React.createElement(DoctorManager, {
             palette, t: tr, doctors: docList,
             onChange: (list) => onUpdate('doctorsList', list),
           })
+        )
         ),
         oldDoctor && !docList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
@@ -808,13 +819,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         onUpdate('pension3a', sum ? String(sum) : '');
       };
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(fieldId, field.label, field.hint),
+        renderLabel(fieldId, field.label, field.hint, true),
         renderOrientation(field),
-        React.createElement(React.Suspense, { fallback: null },
-          React.createElement(Saeule3aTracker, {
-            palette, t: tr, deposits: rawDeposits,
-            onChange: handleDeposits,
-          })
+        React.createElement('div', { role: 'group', 'aria-labelledby': fieldId + '-label' },
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(Saeule3aTracker, {
+              palette, t: tr, deposits: rawDeposits,
+              onChange: handleDeposits,
+            })
+          )
         )
       );
     }
@@ -853,7 +866,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const usePills = options.length > 0 && options.length <= 6;
 
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(fieldId, field.label, field.hint),
+        // Bei Pillen gibt es kein <select id={fieldId}> — der Bezug läuft über
+        // die radiogroup und ihr aria-labelledby. Ohne Pillen bleibt es ein
+        // echtes Label am echten Feld.
+        renderLabel(fieldId, field.label, field.hint, usePills),
         usePills
           ? React.createElement('div', {
               role: 'radiogroup',
@@ -921,13 +937,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const medList = Array.isArray(data.medicationsList) ? data.medicationsList : [];
       const oldText = typeof data.medications === 'string' ? data.medications : '';
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('medications.hint')),
-        React.createElement(React.Suspense, { fallback: null },
+        React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
+          React.createElement(React.Suspense, { fallback: null },
           React.createElement(MedicationManager, {
             palette, t: tr, medications: medList,
             onChange: (list) => onUpdate('medicationsList', list),
           })
+        )
         ),
         oldText && !medList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
@@ -951,13 +969,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         onUpdate('languages', joined);
       };
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('langSkill.hint')),
-        React.createElement(React.Suspense, { fallback: null },
-          React.createElement(LanguageManager, {
-            palette, t: tr, languages: langList,
-            onChange: handleLangs,
-          })
+        React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
+          React.createElement(React.Suspense, { fallback: null },
+            React.createElement(LanguageManager, {
+              palette, t: tr, languages: langList,
+              onChange: handleLangs,
+            })
+          )
         ),
         oldText && !langList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }
@@ -973,13 +993,15 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const dList = Array.isArray(data.chronicDiseasesList) ? data.chronicDiseasesList : [];
       const oldText = typeof data.chronicDiseases === 'string' ? data.chronicDiseases : '';
       return React.createElement('div', { key: field.k, style: baseStyle },
-        renderLabel(chapter.key + '-' + field.k, field.label, field.hint),
+        renderLabel(chapter.key + '-' + field.k, field.label, field.hint, true),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, tr('diseases.hint')),
-        React.createElement(React.Suspense, { fallback: null },
+        React.createElement('div', { role: 'group', 'aria-labelledby': chapter.key + '-' + field.k + '-label' },
+          React.createElement(React.Suspense, { fallback: null },
           React.createElement(DiseaseManager, {
             palette, t: tr, diseases: dList,
             onChange: (list) => onUpdate('chronicDiseasesList', list),
           })
+        )
         ),
         oldText && !dList.length && React.createElement('div', {
           style: { marginTop: space.sm, padding: space.sm + 'px', background: palette.gold + '0A', borderRadius: radius.sm, border: '1px solid ' + palette.border, fontSize: text.xs, color: palette.mid }

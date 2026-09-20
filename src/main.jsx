@@ -353,6 +353,10 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
             onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
+            // O17 · Der Fächer ist KEIN Dialog, sondern eine Auswahl an diesem Knopf:
+            // er bleibt sichtbar, der Fokus bleibt auf ihm, eine Fokus-Falle wäre hier
+            // falsch. Was ihm fehlte, ist der Rückweg ohne Maus — Escape schliesst.
+            onKeyDown: (e) => { if (e.key === 'Escape' && fanOpen) { e.preventDefault(); setFanOpen(false); } },
             style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sageBtn, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
