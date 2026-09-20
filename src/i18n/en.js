@@ -1707,6 +1707,10 @@ export default {
   datenWirken: {
     title: 'Your data is already working:',
     treeCaption: 'What grows from your entries',
+    ansichtRaeumlich: 'Three-dimensional view',
+    ansichtFlach: 'Flat view',
+    baumLaedt: 'Loading the tree …',
+    astAria: '{name} — {pct} per cent filled in',
     anspruchAria: 'possible entitlement',
     tax: 'Tax calculator personalised',
     ipv: 'Premium reduction check active',

@@ -15,14 +15,18 @@
   },
   "size-limit": [
     {
-      "path": "dist/assets/index-*.js",
+      "path": [
+        "dist/assets/index-*.js",
+        "dist/assets/FruchtMitIcon-*.js"
+      ],
       "limit": "65 KB",
       "gzip": true
     }
   ],
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.4.1",
