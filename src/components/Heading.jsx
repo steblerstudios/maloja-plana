@@ -24,12 +24,17 @@ export const PanelTitle = ({ palette, children, icon, style, ...rest }) =>
     }, ...rest,
   }, icon || null, children);
 
-// Kleines Kicker-Label — bewusst KEINE Überschrift (kein h*), damit die
+// Kleines Kicker-Label — standardmässig KEINE Überschrift (kein h*), damit die
 // Screenreader-Struktur sauber bleibt (13px uppercase).
-export const Eyebrow = ({ palette, children, style, ...rest }) =>
-  React.createElement('div', {
+// `as` nur dort setzen, wo das Label tatsächlich einen Abschnitt betitelt und
+// nicht bloss darüber steht (z. B. «Werkzeuge & Features»). Das Aussehen bleibt
+// identisch — es ändert sich allein das Tag und damit die Sprungmarke.
+export const Eyebrow = ({ palette, children, as = 'div', style, ...rest }) =>
+  React.createElement(as, {
     style: {
+      // `margin: 0` ist für das <div> ein Nulleffekt und hält das Aussehen
+      // gleich, sobald `as` ein h* ist (h3 brächte sonst den Browser-Rand mit).
       fontSize: text.xs, fontWeight: weight.semi, textTransform: 'uppercase',
-      letterSpacing: '0.5px', color: palette.mid, ...style,
+      letterSpacing: '0.5px', color: palette.mid, margin: 0, ...style,
     }, ...rest,
   }, children);
