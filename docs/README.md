@@ -206,6 +206,20 @@ Contains:
 Important:
 Language accessibility is part of calmness.
 
+## Archiv
+
+Location:
+`docs/_archiv/`
+
+Contains:
+- documents that no longer apply, moved here instead of deleted
+- each with an archive header naming what replaced it
+
+Important:
+Never copy into this folder, always `git mv` — two files with the same name drift apart
+silently. Read [`_archiv/_WAS-IST-DAS.md`](_archiv/_WAS-IST-DAS.md) before moving anything:
+four documents are under an explicit lock and may only be archived on request.
+
 ---
 
 # Cross-Project Principles

@@ -11,6 +11,53 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.38-beta] — 2026-09-20
+
+**K31 — fünf Kantone rechnen jetzt nach ihrem eigenen amtlichen Modell**, statt nach der
+Näherungsformel, die für keinen Kanton gilt. Dazu ein gemeinsamer Rahmen, damit ein Befund
+künftig an einer Stelle behoben wird und kein Kanton ihn auslassen kann.
+
+### Neu
+- **Kanton Zürich** (#236): Referenzprämie minus Eigenanteil 8,4 % bzw. 10,5 %, drei
+  Prämienregionen, Mindestanspruch für Kinder nach § 7 Abs. 1 EG KVG.
+- **Kanton Bern** (#239): amtliche Stufentabelle der KKVV mit festen Monatsbeträgen,
+  Bezugsjahr −2, eigener Hinweis für Einkommen unter Fr. 14'000 (dort ist der Antrag nötig,
+  nicht automatisch).
+- **Kanton Aargau** (#239): Richtprämie minus 17,5 % des massgebenden Einkommens, Bezugsjahr
+  −3, ohne Prämienregionen. Mit Fristhinweis, weil der Anspruch ohne Antrag verwirkt.
+- **Kanton St.Gallen** (#240): Referenzprämie minus Belastungsgrenze, deren Satz mit dem
+  Einkommen steigt. Minimalgarantie 80 % für Kinder, Mindestbetrag Fr. 100 je Person.
+- **Gemeinsamer Rahmen** `config/kantonsModell.js` (#240) für alle Kantonsmodelle.
+- **`scripts/ipv-abdruck.mjs`** (#240): zeichnet das Rechen-Verhalten über 78'995
+  Eingabe-Kombinationen auf — das Beweismittel für verhaltensgleiche Umbauten.
+
+### Behoben
+- **Ohne erfasste Krankenkassenprämie fiel der gesetzliche Deckel still weg.** Die App zeigte
+  dann die Obergrenze statt des Anspruchs — in Aargau gemessen bis 40 % zu viel. Betraf alle
+  vier Kantone mit eigenem Modell; jetzt steht dort keine Zahl, bis die Prämie erfasst ist.
+- **Konkubinat rechnete durch**, obwohl das Einkommen der zweiten Person fehlt. Jetzt dieselbe
+  Orientierung wie bei Verheirateten.
+- **Ein Kind ohne erfasstes Alter** galt als Säugling (`age` ist mit 0 vorbelegt) und erhöhte
+  still Referenzprämie und Mindestanspruch. Jetzt keine Zahl, bis das Alter dasteht.
+- Zürich: Altersstichtag nach § 8 EG KVG (Alter am Ende des Vorjahres), Säule 3a wird dem
+  massgebenden Einkommen hinzugerechnet, negatives Einkommen sprengt die Obergrenze nicht mehr.
+- Bern: falsches Basisjahr im Vorbehalt; «automatisch via Steuerdaten» stimmte für kleine
+  Einkommen nicht; Reutigen zeigt keinen Betrag, solange zwei amtliche Listen sich widersprechen.
+- Aargau: die Finanzübersicht behauptete eine Einkommensgrenze, die der Kanton nicht publiziert.
+
+### Geändert
+- **Vite 4.5 → 7.3.6** (#235). Schliesst zwei Sicherheitslücken im Entwicklungs-Server;
+  `npm audit` meldet 0. Die erzeugten Dateinamen tragen jetzt base64url-Hashes.
+- Die Dokumentation der Kantonsquellen (`docs/sources/ipv-kantone-2026.md`) trägt zu jedem
+  gebauten Kanton die Wortlaute, auf die sich der Code beruft.
+- Neu `docs/sources/FRAGEN-AN-DIE-AEMTER.md` mit fünf offenen Punkten bei vier Ämtern.
+
+### Nicht gebaut, bewusst
+Paare und Konkubinat, junge Erwachsene 19–25, quellenbesteuerte Personen; in Aargau zusätzlich
+Haushalte mit Kindern. In allen Fällen zeigt die App eine Orientierung mit Grund statt einer
+Zahl, für die ihr die Angaben fehlen. Waadt ist gebaut, aber zurückgehalten, bis das OVAM
+die Formeln bestätigt.
+
 ## [0.1.37-beta] — 2026-09-19
 
 *Live seit **19.09.2026** (`index-fc8ee6ec.js`, Tag `v0.1.37-beta` = `335a557`, per `curl` belegt: 164/164 Build-Dateien 200, altes `index-c80eed98.js` 404, erfundener Name 404, `sw.js` mit Cache `maloja-plana-fc8ee6ec`; im Browser Footer v0.1.37-beta, Konsole leer). Entscheid-Block vom 19.09.2026 (Stebler Studios) und Abbau K86–K103. Umfasst #230, #231, #232 und die Zweige `fix/k86-k87-k98-steuer`, `fix/k82-null-als-antwort`, `fix/k88-k89-k102-k103-kvg`, `fix/k99-k106`.*
