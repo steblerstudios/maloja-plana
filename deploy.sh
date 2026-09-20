@@ -165,8 +165,10 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   # hätte es beim nächsten ECHTEN Fehler wertlos gemacht. Stattdessen verschwindet die eine
   # Ursache, die nachweislich nichts über die Brauchbarkeit des Backups aussagt — die Datei
   # gehört dem Hoster, nicht der Website, und fehlt in keinem Rücksprung.
-  # ⚠️ Nicht am Server erprobt (kein Zugang beim Schreiben). Meldet lftp weiterhin einen
-  # Fehler, ist es eine ANDERE Ursache — dann greift das Gate zu Recht.
+  # ✅ ERPROBT am 20.09.2026, 20:29 beim Deploy von 0.1.39-beta: das Backup spiegelte
+  # 177 Dateien ohne Abbruch, wo derselbe Lauf am Morgen noch scheiterte.
+  # Meldet lftp weiterhin einen Fehler, ist es eine ANDERE Ursache — dann greift das Gate
+  # zu Recht, und die Zeile unten sagt, wie viele Dateien schon da waren.
   BACKUP_FEHLER=""
   if ! LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
       -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose --exclude-glob .ftpquota \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye"; then
