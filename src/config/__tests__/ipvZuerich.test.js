@@ -268,6 +268,45 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
   });
 
+  // § 4 Abs. 3 EG KVG bindet PRO PERSON. Bis 20.09.2026 liess ZH den Deckel mit Kindern ganz
+  // entfallen (`!gruppe ? praemie : Infinity`) — der Anteil der erwachsenen Person war damit
+  // durch nichts mehr begrenzt. BE und VD waren am selben Tag auf `deckelnProPerson`
+  // umgestellt worden, ZH blieb stehen. Diese drei Fälle halten die Grenze fest.
+  describe('Deckel pro Person § 4 Abs. 3 EG KVG', () => {
+    // Aus [C]/[D] hergeleitet, nicht vom Code abgelesen: massgebende Prämie 70 % der
+    // regionalen Durchschnittsprämie, Region 1 → Erwachsene 640, Kind 154 (je Monat).
+    const refErwachsen = IPV_ZH.referenz * IPV_ZH.rdp[1].e * 12;   // 5 376
+    const refKind = IPV_ZH.referenz * IPV_ZH.rdp[1].k * 12;        // 1 293.60
+
+    it('mit Kind wird NUR der Anteil der erwachsenen Person gedeckelt, der Kinderanteil nicht', () => {
+      // Einkommen 0 → volle Verbilligung: Anteil Erwachsene 5 376, Anteil Kind 1 293.60.
+      // Prämie 300/Monat = 3 600/Jahr. Gedeckelt wird auf die EIGENE Prämie:
+      //   min(5 376, 3 600) + 1 293.60 = 4 893.60 → 4 894
+      const erwartet = Math.round(Math.min(refErwachsen, 3600) + refKind);
+      const r = calculateIPV(person({ kkPremium: 300, children: [{ age: 5 }] }));
+      expect(r.annual).toBe(erwartet);
+      expect(erwartet).toBe(4894);
+      // 🛑 Der Regressionsfall: ohne Deckel käme 6 670 heraus — 1 776 Franken im Jahr zu viel
+      // für einen Haushalt, der jeden davon braucht.
+      expect(r.annual).toBeLessThan(Math.round(refErwachsen + refKind));
+    });
+
+    it('der Kinderanteil bleibt ungedeckelt — sonst würde er an einer fremden Prämie gemessen', () => {
+      // Die App kennt nur die Prämie der erwachsenen Person. Würde der Deckel auf die
+      // Gesamtsumme wirken, verlöre der Haushalt den Kinderanteil, obwohl das Kind eine
+      // eigene Prämie hat, die hier gar nicht erfasst ist.
+      const r = calculateIPV(person({ kkPremium: 300, children: [{ age: 5 }] }));
+      expect(r.annual - Math.min(refErwachsen, 3600)).toBeCloseTo(refKind, 0);
+    });
+
+    it('ohne Kind bleibt alles wie bisher — die Umstellung ändert diesen Fall nicht', () => {
+      // Ohne Kinder ist der Anteil der erwachsenen Person die ganze Summe; `deckelnProPerson`
+      // ergibt dann dasselbe wie das frühere Math.min(total, praemie).
+      expect(calculateIPV(person({ kkPremium: 300 })).annual).toBe(3600);  // Deckel greift
+      expect(calculateIPV(person({ kkPremium: 600 })).annual).toBe(5376);  // Deckel greift nicht
+    });
+  });
+
   it.each([
     ['ohne PLZ', { plz: '' }, 'region'],
     ['ohne Geburtsdatum', { dob: '' }, 'alter'],
