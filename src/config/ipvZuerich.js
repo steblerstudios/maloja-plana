@@ -17,7 +17,7 @@
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
-  kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ,
+  kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 
@@ -62,13 +62,23 @@ export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
   const mindest = p.mindestKind * p.massgebend * rdp.k * 12;
   const bindet = personen.some((c, i) => c === 'k' && basis * refs[i] / summe < mindest);
   let total = 0;
+  // Der Anteil der erwachsenen Person getrennt mitgeführt: nur IHRE Prämie kennt die App,
+  // also darf auch nur ihr Anteil gedeckelt werden (§ 4 Abs. 3 EG KVG bindet pro Person).
+  // Ohne diese Trennung bliebe nur die Wahl zwischen «alles deckeln» (zu wenig, weil die
+  // Kinderanteile an einer fremden Prämie gemessen würden) und «gar nicht deckeln».
+  let erwachseneTotal = 0;
   personen.forEach((c, i) => {
     const anteil = basis * refs[i] / summe;
-    total += c === 'k' && me0 <= p.familienGrenze ? Math.max(anteil, mindest) : anteil;
+    const wert = c === 'k' && me0 <= p.familienGrenze ? Math.max(anteil, mindest) : anteil;
+    total += wert;
+    if (c === 'e') erwachseneTotal += wert;
   });
   return {
     total,
+    erwachseneTotal,
     maximal: summe,
+    // Obergrenze desselben Anteils — die Referenzprämien der erwachsenen Personen.
+    erwachseneMaximal: personen.reduce((s, c, i) => (c === 'e' ? s + refs[i] : s), 0),
     grenze: Math.round(Math.max(summe / satz, kinder ? p.familienGrenze : 0)),
     unklar: kinder > 0 && bindet && me0 > p.familienGrenze && me0 < p.familienGrenze + (kinder * mindest) / p.abzugsquote,
   };
@@ -128,11 +138,18 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   // § 4 Abs. 3 EG KVG: höchstens die Bruttoprämie — nur bei einer Person ist die erfasste Prämie ihre eigene.
   const praemie = praemieJahr(data);
   if (praemieFehlt(praemie)) return orientierung('praemie');
-  // Anders als BE und VD deckelt ZH nur den kinderlosen Fall auf die Prämie: mit Kindern
-  // verteilt § 6 Abs. 4 die Verbilligung über die Gruppe, und die Prämien der Kinder fehlen.
-  const deckel = !gruppe ? praemie : Infinity;
-  const annual = Math.round(Math.min(r.total, deckel));
-  const maxAnnual = Math.round(Math.min(r.maximal, deckel));
+  // 🛑 Hier stand bis 20.09.2026: `const deckel = !gruppe ? praemie : Infinity;` — mit Kindern
+  // fiel der Deckel GANZ weg, also auch für den Anteil der erwachsenen Person. Der Kommentar
+  // daneben begründete das mit «anders als BE und VD»; genau dieser Kontrast stimmte da schon
+  // nicht mehr: BE und VD waren am selben Tag auf `deckelnProPerson` umgestellt worden, ZH
+  // wurde dabei übersehen. Eine Begründung, die sich auf einen überholten Vergleich stützt,
+  // liest sich wie ein Entscheid und war doch nur ein Rückstand.
+  // Richtig ist die Trennung: der Anteil der erwachsenen Person wird auf ihre eigene
+  // Bruttoprämie gedeckelt (§ 4 Abs. 3 EG KVG bindet pro Person), der Kinderanteil bleibt
+  // ungedeckelt, weil die App die Kinderprämien nicht kennt.
+  // Ohne Kinder ist `erwachseneTotal === total`, das Ergebnis bleibt also unverändert.
+  const annual = deckelnProPerson(r.total, r.erwachseneTotal, praemie);
+  const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
   const gemeinsam = {
     canton: 'ZH', cantonData: { ...ipvData, maxIncome: r.grenze }, jahr,
     vorbehaltKey: 'ipv.vorbehalt', extra: { region },
