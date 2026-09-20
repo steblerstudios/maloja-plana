@@ -1999,12 +1999,16 @@ export default {
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).
     jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
+    vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
+    beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
       alter: 'Manca ina data da naschientscha — era tar ils uffants. Giuvenils en furmaziun vegnan ultra da quai quintads cun l’entrada dals geniturs, che n’è betg registrada qua.',
       region: 'La vischnanca na sa lascha betg determinar univocamain cun il numer postal. Ella decida davart la regiun da premias e uschia davart l’import.',
       vermoegen: 'La facultad registrada surpassa la limita chantunala. Decisiva è la facultad imposabla totala, che n’è betg registrada cumplettamain qua.',
+      vermoegenAntrag: 'Sur ina facultad bruta da 750 000 francs n’examinescha il chantun Berna betg automaticamain. Quai n’è nagina exclusiun: il dretg sto vegnir dumandà enfin ils 31 da december.',
+      regionStrittig: 'La vischnanca è univoca, sia regiun da premias betg: la glista da la Confederaziun e quella dal chantun sa cuntradin. Fin che quai n’è betg sclerì, na vegn mussà nagin import qua; la differenza fiss fin 156 francs l’onn.',
       mindestanspruch: 'En quest sectur d’entrada n’è la regla chantunala betg univoca. Meglier nagina cifra che ina che sbaglia per pliras tschientinas da francs.',
       jahr: 'Ils valurs memorisads valan per in onn da dretg pli vegl. Uschespert che ils nums valurs uffizials èn integrads, quinta l’applicaziun puspè.',
       laden: 'Las basas vegnan anc chargiadas.',

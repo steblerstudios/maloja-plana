@@ -46,7 +46,7 @@ describe('K31 IPV-Rechner, Kanton Bern', () => {
     const html = render(profil(1500));
     expect(html).toContain('ipv.jahrRegion(2026|1)');
     expect(html).toContain('ipv.naeherung');
-    expect(html).toContain('ipv.vorbehalt(2026)');
+    expect(html).toContain('ipv.vorbehaltBE(2026|2024)');
   });
 
   // Ohne Betrag: der Grund gehört sichtbar dazu. «Kein Betrag» heisst hier «eine Angabe fehlt»,

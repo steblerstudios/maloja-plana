@@ -213,7 +213,10 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
     const r = calculateIPV(person());
     expect(r).toMatchObject({ belegt: true, eligible: true, amount: 221, annual: 2652, maxAnnual: 2652, reductionPercent: 100, region: 1, jahr: 2026 });
     expect(r.cantonData.maxIncome).toBe(35000);
-    expect(r.noteKey).toBe('ipv.noteAutoTaxData');
+    // Einkommen 0 → unter 14'000: der Kanton prüft NICHT automatisch, es braucht einen Antrag
+    // bis 31.12. (Informationsblatt 2026, S. 2). Korrigiert 20.09.2026 nach der Fachprüfung;
+    // vorher stand hier 'ipv.noteAutoTaxData' — für genau die ärmste Gruppe falsch.
+    expect(r.noteKey).toBe('ipv.beAntragNoetig');
   });
 
   it('Einzelperson Burgdorf (Region 2), 2 000/Monat: 24 000 − 2 200 = 21 800 → Stufe bis 25 000 → 96/Monat', () => {
@@ -271,8 +274,38 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ finanzen: { pension3a: 11000, savingsAccount: 57000 } })).amount).toBe(147);
   });
 
-  it('Bruttovermögen über 750 000: kein Betrag, Grund «vermoegen» [C]', () => {
-    expect(calculateIPV(person({ finanzen: { savingsAccount: 750001 } }))).toMatchObject({ belegt: false, amount: null, offen: 'vermoegen' });
+  // 750'000 ist in BE kein Ausschluss, sondern der Punkt, ab dem nicht automatisch geprüft wird.
+  // Informationsblatt 2026, S. 1: «Leben Sie unverheiratet mit Ihrem Partner/Ihrer Partnerin im
+  // gleichen Haushalt und haben mindestens ein gemeinsames Kind, dann wird die Berechnung … wie
+  // bei einem verheirateten Paar vorgenommen.» Das Einkommen der zweiten Person fehlt der App.
+  // Ergänzt 20.09.2026 nach der Fachprüfung — vorher rechnete dieser Fall durch.
+  it.each([
+    ['Konkubinat mit Kind', { children: [{ age: 5 }] }],
+    ['Konkubinat ohne Kind', {}],
+  ])('%s: Orientierung statt Betrag', (_, opts) => {
+    const r = calculateIPV(person({ ...opts, basis: { maritalStatus: 'cohabiting' } }));
+    expect(r).toMatchObject({ belegt: false, amount: null, offen: 'haushalt' });
+  });
+
+  // Informationsblatt 2026, S. 2: unter 14'000 korrigiertem Reineinkommen (ohne Kinder) prüft
+  // der Kanton nicht automatisch — wer nicht bis 31.12. beantragt, verliert den ganzen Anspruch.
+  it('Einkommen knapp unter/über 14 000: Antrags-Hinweis oder automatische Prüfung', () => {
+    expect(calculateIPV(person({ monthlyIncome: 13999 / 12 })).noteKey).toBe('ipv.beAntragNoetig');
+    expect(calculateIPV(person({ monthlyIncome: 14000 / 12 })).noteKey).toBe('ipv.noteAutoTaxData');
+  });
+
+  // KKVV Art. 10 Abs. 1: «Die Prämie wird höchstens bis zu ihrem effektiven Umfang verbilligt.»
+  // Der Deckel gilt pro Person: mit Kindern wird nur der Anteil der erwachsenen Person gedeckelt,
+  // deren Prämie die App kennt. Vorher entfiel der Deckel mit Kindern ganz.
+  it('Prämien-Deckel wirkt auch mit Kindern, aber nur auf den Erwachsenen-Anteil', () => {
+    // Region 1, Einkommen 0, ein Kind: 221 + 119.30 = 340.30/Monat = 4083.60 → 4084/Jahr.
+    // Mit einer Prämie von 100/Monat (1 200/Jahr) bleibt: 1 200 + 1 431.60 = 2 631.60 → 2632.
+    expect(calculateIPV(person({ children: [{ age: 5 }], kkPremium: 100 })).annual).toBe(2632);
+    expect(calculateIPV(person({ children: [{ age: 5 }] })).annual).toBe(4084);
+  });
+
+  it('Bruttovermögen über 750 000: kein Betrag, Grund «vermoegenAntrag» [C]', () => {
+    expect(calculateIPV(person({ finanzen: { savingsAccount: 750001 } }))).toMatchObject({ belegt: false, amount: null, offen: 'vermoegenAntrag' });
     expect(calculateIPV(person({ finanzen: { savingsAccount: 750000 } })).belegt).toBe(true);
   });
 
@@ -288,7 +321,8 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
   });
 
   it('Gemeinde, bei der die amtlichen Quellen auseinandergehen: kein Betrag', () => {
-    expect(calculateIPV(person({ plz: '3647' }))).toMatchObject({ belegt: false, offen: 'region' });
+    // Eigener Grund: die Gemeinde ist eindeutig, strittig ist ihre Prämienregion.
+    expect(calculateIPV(person({ plz: '3647' }))).toMatchObject({ belegt: false, offen: 'regionStrittig' });
   });
 
   it.each([

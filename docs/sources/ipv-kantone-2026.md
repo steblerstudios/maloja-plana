@@ -436,6 +436,48 @@ Region 1 bis zu CHF 888 im Jahr wert. Ebenfalls nicht gerechnet: Quellenbesteuer
 Bruttoeinkommens als korrigiertes Reineinkommen), junge Erwachsene (Ausbildungsstatus und
 eigenes Einkommen nicht erfasst), Sozialhilfe- und EL-Beziehende (eigener Weg).
 
+### Fachprüfung 20.09.2026 (swiss-precision-pruefer, alle Quellen erneut abgerufen)
+
+Bestätigt: **alle 42 Monatsbeträge** beider Tabellen (Schema **und** KKVV Art. 10a/10b, doppelt
+gegengeprüft), die fünf Stufen, die Grenzen 35'000/45'000, der Vermögensfreibetrag mit den 5 %,
+alle sechs Sozialabzüge samt ihrem gegenseitigen Ausschluss (Art. 9 Abs. 2 lit. c: «alleinstehende
+Person, die nach Artikel 5 **nicht** zur Familie zählt»), die R1-/R2-Listen zeichengenau (15/212),
+der stufenunabhängige Kinderbetrag (Art. 10d Abs. 1) und dass kein anderer Kanton verändert wird.
+
+Drei Befunde eingearbeitet — alle drei betrafen **Aussagen**, nicht die Zahlenbasis:
+
+- **Falsches Basisjahr in der Anzeige.** Der Vorbehalt stammte aus ZH und nannte die Steuerfaktoren
+  des Anspruchsjahres. In BE gilt KKVV Art. 7 Abs. 1: «bestimmen sich das Reineinkommen und das
+  Reinvermögen aufgrund der definitiven Veranlagung des **vorletzten Steuerjahres**»; das
+  Informationsblatt 2026 zeigt dazu «01.01.2026 – 31.12.2026 → Grundlage: Steuerdaten 2024».
+  Neu ein eigener BE-Vorbehalt, der das Basisjahr und die Neubeurteilung nennt.
+- **Konkubinat rechnete durch.** Informationsblatt 2026, S. 1: «Leben Sie unverheiratet mit Ihrem
+  Partner/Ihrer Partnerin im gleichen Haushalt und haben mindestens ein gemeinsames Kind, dann wird
+  die Berechnung der Prämienverbilligung **wie bei einem verheirateten Paar** vorgenommen.» Der
+  Guard prüfte nur `married`. Gemessen: CHF 340/Monat ohne das Einkommen der zweiten Person.
+  Jetzt Orientierung statt Betrag — **auch in ZH**, wo derselbe Guard stand.
+- **«Automatisch via Steuerdaten» ist für die ärmste Gruppe falsch.** Informationsblatt 2026, S. 2:
+  Wer «mindestens 25 Jahre alt» ist, keine zur Familie zählenden Kinder hat und ein korrigiertes
+  Reineinkommen **unter Fr. 14'000** ausweist, muss die Überprüfung bis 31.12. selbst beantragen.
+  Neu ein eigener Hinweis samt Link zur Stelle; ohne ihn verliert diese Gruppe bis CHF 2'652 im Jahr.
+
+Dazu übernommen: Der **Prämien-Deckel** (Art. 10 Abs. 1) gilt pro Person — mit Kindern wird jetzt
+der Anteil der erwachsenen Person gedeckelt, statt den Deckel ganz entfallen zu lassen. Die
+750'000 sind **kein Ausschluss**, sondern Antragspflicht; eigener Text. Bei **Reutigen** nennt die
+App neu den richtigen Grund (Region strittig, nicht Gemeinde unklar).
+
+**Stufengrenzen geprüft** (die gefährlichste Stelle): Der Code nimmt bei genau 9'000 / 17'000 /
+25'000 / 35'000 / 45'000 die **günstigere** Stufe, wie das Schema des verfügenden Amts schreibt
+(«bis 9'000 … bis 45'000 Franken»). Die KKVV deckt 17'000 aufwärts wörtlich; offen bleibt allein
+der Wert 9'000, weil Art. 10a Abs. 1 von «unter 9000» auf «zwischen 9001 und 17'000» springt.
+
+**Nicht eingearbeitet, bewusst:** Das massgebende Einkommen bleibt eine Näherung (erfasste
+Einkommen + Säule 3a statt Reineinkommen nach StG; Vermögen ohne Liegenschaft und Schulden). In
+einer Stufentabelle wiegt das schwerer als in ZHs linearem Modell — ein Schritt ist in Region 1
+CHF 888 im Jahr wert, und `monthlyIncome` ist als Nettolohn erfasst, liegt also tendenziell zu
+hoch. In der Anzeige benannt, nicht gerechnet. Ebenso offen: EL- und Sozialhilfe-Beziehende haben
+einen eigenen Weg (Informationsblatt S. 3), die App rechnet ihre Renten heute als Einkommen mit.
+
 4. Informationen zur Prämienverbilligung, «Gültig ab 1. Januar 2026», Direktion für Inneres und Justiz, Amt für Sozialversicherungen (PDF, 5 S.). https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Informationsblatt%202026_de.pdf — abgerufen 20.09.2026
 5. Kantonale Krankenversicherungsverordnung (KKVV), BSG 842.111.1, vom 25.10.2000, Stand 01.12.2025 (Beschlussdatum 22.10.2025). https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1 — abgerufen 20.09.2026
 

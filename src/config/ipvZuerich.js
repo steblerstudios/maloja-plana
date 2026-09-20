@@ -95,7 +95,9 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   // ändern jährlich; 2027 sind es 9,4/11,8 % statt 8,4/10,5 %).
   if (new Date().getFullYear() > jahr) return orientierung('jahr');
   const geburt = /^\d{4}-/.test(b.dateOfBirth || '') ? Number(b.dateOfBirth.slice(0, 4)) : null;
-  if (hh.adults !== 1 || b.maritalStatus === 'married') return orientierung('haushalt');
+  // `cohabiting` gehört dazu: Konkubinat rechnet je nach Kanton wie ein Paar, und das Einkommen
+  // der zweiten Person kennt die App nicht (Befund Fachprüfung 20.09.2026, bei BE aufgefallen).
+  if (hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting') return orientierung('haushalt');
   if (!geburt || stichjahr - geburt < 26) return orientierung('alter');
   // Kind ohne Geburtsdatum: `age` ist in der App mit 0 vorbelegt (ChapterView legt neue Kinder
   // so an, dataMigration setzt es bei Alt-Daten ebenso). Eine 0 heisst darum «nicht erfasst»,
@@ -138,13 +140,13 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   const maxAnnual = Math.round(Math.min(r.maximal, deckel));
   const cantonData = { ...ipvData, maxIncome: r.grenze };
   if (annual <= 0) {
-    return { belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze }, canton: 'ZH', cantonData, region, jahr };
+    return { belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze }, canton: 'ZH', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehalt' };
   }
   return {
     eligible: true, belegt: true, anspruchMoeglich: true,
     amount: Math.round(annual / 12), annual, maxAnnual,
     reductionPercent: Math.round((annual / maxAnnual) * 100),
     noteKey: ipvData.noteKey, noteParams: ipvData.noteParams || {},
-    youngAdultsCount, canton: 'ZH', cantonData, region, jahr,
+    youngAdultsCount, canton: 'ZH', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehalt',
   };
 }

@@ -48,13 +48,13 @@ describe('K31 IPV-Rechner, Kanton Zürich', () => {
     const html = render(profil(2000));
     expect(html).toContain('ipv.jahrRegion(2026|1)');
     expect(html).toContain('ipv.naeherung');
-    expect(html).toContain('ipv.vorbehalt(2026)');
+    expect(html).toContain('ipv.vorbehalt(2026|2024)');
   });
 
   it('auch über der Grenze bleiben Jahr und Vorbehalt sichtbar', () => {
     const html = render(profil(6000));
     expect(html).toContain('ipv.jahrRegion(2026|1)');
-    expect(html).toContain('ipv.vorbehalt(2026)');
+    expect(html).toContain('ipv.vorbehalt(2026|2024)');
   });
 
   // Ohne Betrag: der Grund gehört sichtbar dazu. «Kein Betrag» heisst hier «eine Angabe fehlt»,

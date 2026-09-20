@@ -3051,6 +3051,9 @@ export default {
     // konkret gerechneten Zahl (Fachprüfung 20.09.2026).
     jahrRegion: 'Gerechnet für das Anspruchsjahr {jahr}, Prämienregion {region}.',
     vorbehalt: 'Der Kanton kann die Berechnungsgrundlagen im Laufe des Jahres noch anpassen. Verbindlich wird der Anspruch erst mit den definitiven Steuerfaktoren {jahr}; zu viel bezogene Beträge sind zurückzuzahlen.',
+    // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
+    vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
+    beAntragNoetig: 'Achtung: Bei einem Einkommen unter 14 000 Franken prüft der Kanton Bern den Anspruch nicht automatisch. Die Überprüfung muss bis zum 31. Dezember selbst beantragt werden, sonst verfällt der Anspruch für dieses Jahr.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.
@@ -3059,6 +3062,8 @@ export default {
       alter: 'Für die Rechnung fehlt ein Geburtsdatum — auch bei den Kindern. Junge Erwachsene in Ausbildung werden zudem mit dem Einkommen der Eltern gerechnet, das hier nicht erfasst ist.',
       region: 'Die Gemeinde lässt sich aus der Postleitzahl nicht eindeutig bestimmen. Sie entscheidet über die Prämienregion und damit über den Betrag.',
       vermoegen: 'Das erfasste Vermögen liegt über der kantonalen Grenze. Massgebend ist das steuerbare Gesamtvermögen, das hier nicht vollständig erfasst ist.',
+      vermoegenAntrag: 'Über einem Bruttovermögen von 750 000 Franken prüft der Kanton Bern nicht automatisch. Das ist kein Ausschluss — der Anspruch muss bis zum 31. Dezember beantragt werden.',
+      regionStrittig: 'Die Gemeinde ist eindeutig, ihre Prämienregion nicht: Die Liste des Bundesamts und die des Kantons widersprechen sich. Bis das geklärt ist, steht hier lieber keine Zahl; der Unterschied wäre bis zu 156 Franken im Jahr.',
       mindestanspruch: 'In diesem Einkommensbereich ist die kantonale Regel nicht eindeutig. Lieber keine Zahl als eine, die um mehrere hundert Franken danebenliegt.',
       jahr: 'Die hinterlegten Werte gelten für ein früheres Anspruchsjahr. Sobald die neuen amtlichen Werte eingearbeitet sind, rechnet die App wieder.',
       laden: 'Die Grundlagen werden noch geladen.',

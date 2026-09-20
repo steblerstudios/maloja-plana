@@ -301,6 +301,14 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(r).toMatchObject({ belegt: false, amount: null, offen: 'alter' });
   });
 
+  // Konkubinat: auch hier fehlt das Einkommen der zweiten Person. Ergänzt 20.09.2026, nachdem
+  // die Fachprüfung bei BE gezeigt hat, dass der Guard `cohabiting` durchliess.
+  it('Konkubinat: Orientierung statt Betrag', () => {
+    const p = person({});
+    const r = calculateIPV({ ...p, basis: { ...p.basis, maritalStatus: 'cohabiting' } });
+    expect(r).toMatchObject({ belegt: false, amount: null, offen: 'haushalt' });
+  });
+
   // § 3 Abs. 1 EG KVG: höchstens die Referenzprämie. Ein negativ erfasstes Einkommen darf
   // die Verbilligung nicht darüber hinaus wachsen lassen.
   it('negatives Einkommen sprengt die Obergrenze nicht', () => {

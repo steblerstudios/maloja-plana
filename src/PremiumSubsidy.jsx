@@ -302,7 +302,14 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
       React.createElement('div', null, t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })),
       React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
-      React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.vorbehalt', { jahr: ipvResult.jahr }))
+      // Der Vorbehalt ist kantonsspezifisch: BE rechnet mit den Steuerdaten des Vorvorjahres
+      // (KKVV Art. 7 Abs. 1), ZH mit denen des Anspruchsjahres. Ein Satz für beide wäre für
+      // einen der zwei Kantone schlicht falsch (Befund Fachprüfung 20.09.2026).
+      React.createElement('div', { style: { marginTop: space.xs } },
+        t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.jahr - 2 })),
+      // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
+      // der Anspruch beantragt werden muss.
+      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗')
     ),
 
     // IPV-Lebenslinie — der Beleg als Gesicht seines Ablaufs (Phase 2)
