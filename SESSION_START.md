@@ -7,20 +7,25 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-20, 16:35 (`main` = `9aa4aa7` nach **PR #241** Release 0.1.38-beta · **live weiterhin `index-fc8ee6ec.js` = 0.1.37-beta**, Tag `v0.1.37-beta` = `335a557` · **gemergt, aber NICHT live: die ganze K31-Runde** · **1 offener Code-PR: #242** · 2324 Tests grün, size-limit 64,44 kB von 65)
+**Stand:** 2026-09-20, 16:50 (`main` = `1d7d7a1` nach **PR #241** Release 0.1.38-beta und **PR #242** ZH-Deckel · **live weiterhin `index-fc8ee6ec.js` = 0.1.37-beta**, Tag `v0.1.37-beta` = `335a557` · **gemergt, aber NICHT live: die ganze K31-Runde** · 0 offene Code-PRs · 2324 Tests grün, size-limit 64,44 kB von 65)
 
-> ### 🛑 VOR DEM NÄCHSTEN DEPLOY LESEN (20.09.2026)
+> ### ✅ DER DEPLOY-RIEGEL IST WEG (20.09.2026, 16:33)
 >
-> **`main` trägt 0.1.38-beta, ist aber nicht ausgeliefert — und in diesem Stand steckt ein
-> Rechenfehler, den PR #242 behebt.** Zürich liess den Deckel nach § 4 Abs. 3 EG KVG mit
-> Kindern ganz entfallen: `const deckel = !gruppe ? praemie : Infinity;`. Nachgerechnet
-> (Region 1, Einkommen 0, Prämie 300/Mt., ein Kind): der erwachsenen Person werden **5'428**
-> angerechnet, obwohl ihre Prämie **3'600** beträgt — **rund 1'776 Franken zu viel im Jahr.**
-> Die Zeile kam mit `c08fa4f` (19.09.) und ist **nicht** im Tag `v0.1.37-beta`; live ist sie
-> also nie gewesen. **Ein Deploy von 0.1.38 ohne #242 würde sie ausliefern.**
+> Kurzzeitig stand hier eine Warnung: `main` trug 0.1.38-beta **mit** einem Rechenfehler in
+> Zürich — der Deckel nach § 4 Abs. 3 EG KVG entfiel mit Kindern ganz
+> (`const deckel = !gruppe ? praemie : Infinity;`). Nachgerechnet (Region 1, Einkommen 0,
+> Prämie 300/Mt., ein Kind): der erwachsenen Person wurden **5'428** angerechnet, obwohl ihre
+> Prämie **3'600** beträgt — rund **1'776 Franken zu viel im Jahr**.
 >
-> Empfehlung: **#242 zuerst mergen**, dann deployen — die Versionsnummer 0.1.38-beta bleibt,
-> es ist derselbe unveröffentlichte Stand.
+> **PR #242 hat das behoben**, gegen `main` nachgerechnet: **4'894** statt 6'670, ohne Kind
+> unverändert 3'600. Die fehlerhafte Zeile kam mit `c08fa4f` (19.09.), war **nie live** und
+> ist jetzt weg. **0.1.38-beta ist damit deploybar.**
+>
+> 🛑 **Die Lehre, die bleibt:** Der Fehler überlebte einen Umbau, der sein Nicht-Verändern
+> über 78'995 Eingabe-Kombinationen **belegte** — und bekam dabei einen Kommentar, der ihn
+> begründete, als wäre er ein Entscheid. *Zeichengleich heisst «nichts verändert», nie
+> «geprüft».* Beim nächsten Umbau: den Fachprüfer auf **alle berührten** Kantone ansetzen,
+> nicht nur auf den neuen.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-20 (K31: fünf Kantone + gemeinsamer Rahmen, 0.1.38-beta bereit)
 >
