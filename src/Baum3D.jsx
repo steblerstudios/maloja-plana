@@ -5,9 +5,46 @@ import * as THREE from 'three';
 // Portiert die Wuchs-Logik der 3D-Vorlage (wachsender-baum-3d.html) auf unsere
 // Regeln: kein fremder Server (three liegt als eigene Abhängigkeit bei), kein
 // Dauerlauf der Zeichenschleife, Farben aus der Palette, eine Frucht je
-// Lebensbereich. Wächst mit dem Ausfüllstand, nicht mit der Uhr.
+// Lebensbereich. Gewachsen wird nach Ausfüllstand, nicht nach der Uhr.
+//
+// Zweite Runde (20.09.): Stamm läuft oben spitz aus statt stumpf, die Krone ist
+// dichter, und die Wuchsphasen sind benannt und deutlich getrennt.
 
-const GOLDEN = Math.PI * (3 - Math.sqrt(5)); // 137.5° — Phyllotaxis
+const GOLDEN = Math.PI * (3 - Math.sqrt(5)); // 137,5° — Phyllotaxis
+
+// ─── Die Wuchsphasen ────────────────────────────────────────────────────────
+// Ein Baum hat sechs erkennbare Zustände. Sie hängen am Ausfüllstand, nicht an
+// der Uhr: jeder Ast durchläuft sie mit dem Stand SEINES Lebensbereichs, der
+// ganze Baum mit dem Durchschnitt. Deshalb kann ein Ast blühen, während der
+// nächste noch kahl ist — wie im echten Garten.
+export const PHASEN = [
+  { ab: 0, schluessel: 'keimling', name: 'Keimling' },
+  { ab: 12, schluessel: 'stamm', name: 'Stamm und Äste' },
+  { ab: 32, schluessel: 'knospen', name: 'Knospen' },
+  { ab: 46, schluessel: 'blaetter', name: 'Blätter und Blüte' },
+  { ab: 66, schluessel: 'fruechte', name: 'Früchte' },
+  { ab: 96, schluessel: 'ausgewachsen', name: 'Ausgewachsen' },
+];
+export function wuchsphase(pct) {
+  let treffer = PHASEN[0];
+  PHASEN.forEach((p) => { if (pct >= p.ab) treffer = p; });
+  return treffer;
+}
+
+// Zeitplan je Bauteil, in Prozent des Ausfüllstands. Alles an einer Stelle,
+// damit die Phasen oben und das Bild unten nie auseinanderlaufen.
+const PLAN = {
+  wurzeln: { ab: 0, bis: 10 },
+  stamm: { ab: 0, bis: 14 },
+  ast: [{ ab: 12, bis: 26 }, { ab: 20, bis: 34 }, { ab: 26, bis: 40 }, { ab: 32, bis: 45 }],
+  knospe: { ab: 33, bis: 43, weg: 45 },
+  // Blüte VOR dem Laub — wie beim Obstbaum. Vorher lag sie mitten im Grün und
+  // war schlicht nicht zu sehen; die Phase «Blüte» gab es dann nur auf dem Papier.
+  bluete: { ab: 44, bis: 54, weg: 62 },
+  blatt: { ab: 52, bis: 70 },
+  frucht: { ab: 66, bis: 92 },
+  keimblatt: { ab: 3, bis: 9, weg: 16 },
+};
 
 // Fester Zufall je Baum: gleiche Angaben → gleicher Baum, über alle Besuche.
 function rng(seed) {
@@ -24,158 +61,306 @@ function fruchtGeometrie(form) {
     const punkte = [];
     for (let i = 0; i <= 10; i++) {
       const t = i / 10;
-      punkte.push(new THREE.Vector2(Math.sin(t * Math.PI) * (0.055 + t * 0.075), t * 0.34 - 0.17));
+      punkte.push(new THREE.Vector2(Math.sin(t * Math.PI) * (0.055 + t * 0.075) + 0.004, t * 0.34 - 0.17));
     }
     return new THREE.LatheGeometry(punkte, 9);
   }
-  if (form === 'beere') return new THREE.SphereGeometry(0.07, 8, 6);
-  if (form === 'rundlich') {
-    const g = new THREE.SphereGeometry(0.12, 10, 8);
-    g.scale(1, 0.92, 1);
-    return g;
+  if (form === 'beere') return new THREE.SphereGeometry(0.075, 8, 6);
+  if (form === 'buschel') {
+    // Traube: ein kleines Büschel aus einer Form, damit es ein Zeichenaufruf bleibt.
+    const teile = [];
+    [[0, 0, 0], [-0.06, -0.07, 0.02], [0.06, -0.07, -0.02], [0, -0.14, 0.03], [0.02, -0.2, -0.01]].forEach((p) => {
+      const k = new THREE.SphereGeometry(0.05, 7, 5);
+      k.translate(p[0], p[1], p[2]);
+      teile.push(k);
+    });
+    return teile.reduce((a, b) => mergeGeometrien(a, b));
   }
-  return new THREE.SphereGeometry(0.1, 8, 6); // Büschel-Einzelbeere (Traube)
+  const g = new THREE.SphereGeometry(0.11, 10, 8);
+  g.scale(1, 0.92, 1);
+  return g;
+}
+
+// Kleiner eigener Zusammenführer statt BufferGeometryUtils — spart Gewicht und
+// reicht für unsere Fälle (gleiche Attribute, keine Gruppen).
+function mergeGeometrien(a, b) {
+  const g = new THREE.BufferGeometry();
+  ['position', 'normal', 'uv'].forEach((name) => {
+    const aa = a.getAttribute(name);
+    const bb = b.getAttribute(name);
+    if (!aa || !bb) return;
+    const zusammen = new Float32Array(aa.array.length + bb.array.length);
+    zusammen.set(aa.array, 0);
+    zusammen.set(bb.array, aa.array.length);
+    g.setAttribute(name, new THREE.BufferAttribute(zusammen, aa.itemSize));
+  });
+  const ai = a.getIndex();
+  const bi = b.getIndex();
+  if (ai && bi) {
+    const versatz = a.getAttribute('position').count;
+    const idx = [];
+    for (let i = 0; i < ai.count; i++) idx.push(ai.getX(i));
+    for (let i = 0; i < bi.count; i++) idx.push(bi.getX(i) + versatz);
+    g.setIndex(idx);
+  }
+  return g;
 }
 
 // Ein Ast: Rohr entlang einer leicht gebogenen Linie, unten dicker als oben.
 //
-// WICHTIG — der Nullpunkt liegt am ANSATZ des Astes, nicht im Ursprung der Szene.
-// Sonst schrumpft ein wachsender Ast zur Bildmitte und schwebt unterwegs in der
-// Luft (erster Messlauf 20.09., im Bild gesehen). Der Ast wächst aus seinem
-// eigenen Ansatz heraus — nichts schwebt, in keiner Wuchsstufe.
-function astGeometrie(richtung, laenge, r0, r1, biegung) {
-  const p0 = new THREE.Vector3(0, 0, 0);
-  const mitte = richtung.clone().multiplyScalar(laenge * 0.5).add(biegung);
-  const ende = richtung.clone().multiplyScalar(laenge).add(biegung.clone().multiplyScalar(2));
-  const kurve = new THREE.CatmullRomCurve3([p0, mitte, ende]);
-  const ringe = 6;
-  const g = new THREE.TubeGeometry(kurve, 5, r0, ringe, false);
-  // Verjüngung: obere Ringe enger um die Mittellinie ziehen.
+// WICHTIG — der Nullpunkt liegt am ANSATZ, nicht im Ursprung der Szene. Sonst
+// schrumpft ein wachsender Ast zur Bildmitte und schwebt unterwegs in der Luft
+// (erster Messlauf 20.09., im Bild gesehen). So wächst jeder Ast aus seinem
+// Elternast heraus — nichts schwebt, in keiner Wuchsstufe.
+function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente) {
+  const g = new THREE.TubeGeometry(kurve, laengsSegmente, r0, rundSegmente, false);
   const pos = g.attributes.position;
   for (let i = 0; i < pos.count; i++) {
-    const t = Math.floor(i / (ringe + 1)) / 5;
+    const t = Math.floor(i / (rundSegmente + 1)) / laengsSegmente;
     const p = kurve.getPoint(t);
     const f = THREE.MathUtils.lerp(1, r1 / r0, t);
     pos.setXYZ(i, p.x + (pos.getX(i) - p.x) * f, p.y + (pos.getY(i) - p.y) * f, p.z + (pos.getZ(i) - p.z) * f);
   }
   g.computeVertexNormals();
-  return { geometrie: g, ende };
+  return g;
+}
+
+function astGeometrie(richtung, laenge, r0, r1, biegung) {
+  const mitte = richtung.clone().multiplyScalar(laenge * 0.5).add(biegung);
+  const ende = richtung.clone().multiplyScalar(laenge).add(biegung.clone().multiplyScalar(2));
+  const kurve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), mitte, ende]);
+  return { geometrie: rohrMitVerjuengung(kurve, r0, r1, 5, 6), ende };
 }
 
 export function baumAufbauen(bereiche, farben, seed = 7412) {
   const zufall = rng(seed);
   const wurzel = new THREE.Group();
-  const teile = []; // { mesh, ab, bis } — ab/bis in Prozent des Ausfüllstands
+  const teile = [];      // einzelne Formen: { mesh, ab, bis, weg?, bereich? }
+  const streu = [];      // Blätter/Knospen/Blüten/Früchte als Sammelformen
   const rinde = new THREE.MeshStandardMaterial({ color: farben.rinde, roughness: 0.95 });
-  const blatt = new THREE.MeshStandardMaterial({ color: farben.blatt, roughness: 0.8, side: THREE.DoubleSide });
-  const bluete = new THREE.MeshStandardMaterial({ color: farben.bluete, roughness: 0.7, side: THREE.DoubleSide });
 
-  // Stamm: eine durchgehende, leicht gebogene Linie statt gestapelter Zylinder.
+  // ─── Stamm ────────────────────────────────────────────────────────────────
+  // Er läuft oben SPITZ aus und geht in einen Gipfeltrieb über. Vorher endete
+  // er stumpf wie ein abgesägter Pfahl — der erste Messlauf zeigte es deutlich.
   const stammPunkte = [];
-  const stammRadien = [];
-  let p = new THREE.Vector3(0, 0, 0);
-  let richtung = new THREE.Vector3(0.02, 1, 0.01).normalize();
-  for (let i = 0; i <= 6; i++) {
-    stammPunkte.push(p.clone());
-    stammRadien.push(0.3 - i * 0.03);
-    p = p.clone().addScaledVector(richtung, 0.62);
-    richtung.add(new THREE.Vector3((zufall() - 0.5) * 0.06, 0, (zufall() - 0.5) * 0.06)).normalize();
+  const hoehe = 4.3;
+  for (let i = 0; i <= 12; i++) {
+    const t = i / 12;
+    stammPunkte.push(new THREE.Vector3(
+      Math.sin(t * 2.1) * 0.12 + t * 0.05,
+      t * hoehe,
+      Math.cos(t * 1.7) * 0.09 - 0.09
+    ));
   }
   const stammKurve = new THREE.CatmullRomCurve3(stammPunkte);
-  const stamm = new THREE.Mesh(new THREE.TubeGeometry(stammKurve, 24, 0.22, 10, false), rinde);
+  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.3, 0.035, 26, 10), rinde);
   stamm.castShadow = true;
   stamm.receiveShadow = true;
   wurzel.add(stamm);
-  teile.push({ mesh: stamm, ab: 0, bis: 12, achse: 'y' });
+  teile.push({ mesh: stamm, ...PLAN.stamm, achse: 'y' });
 
-  // Wurzeln — sie machen den Übergang zum Boden glaubwürdig.
+  // Wurzelanlauf: der Fuss verbreitert sich zum Boden, sonst steht der Stamm
+  // wie ein eingesteckter Stab.
   for (let i = 0; i < 9; i++) {
     const w = (i / 9) * Math.PI * 2 + zufall() * 0.3;
-    const start = new THREE.Vector3(Math.cos(w) * 0.06, 0.08, Math.sin(w) * 0.06);
-    const dir = new THREE.Vector3(Math.cos(w), -0.22, Math.sin(w)).normalize();
-    const { geometrie } = astGeometrie(dir, 0.75 + zufall() * 0.4, 0.075, 0.015, new THREE.Vector3(0, -0.05, 0));
+    const dir = new THREE.Vector3(Math.cos(w), -0.3, Math.sin(w)).normalize();
+    const { geometrie } = astGeometrie(dir, 0.7 + zufall() * 0.45, 0.085, 0.014, new THREE.Vector3(0, -0.06, 0));
     const mesh = new THREE.Mesh(geometrie, rinde);
-    mesh.position.copy(start);
+    mesh.position.set(Math.cos(w) * 0.07, 0.16, Math.sin(w) * 0.07);
     mesh.receiveShadow = true;
     wurzel.add(mesh);
-    teile.push({ mesh, ab: 0, bis: 8 });
+    teile.push({ mesh, ...PLAN.wurzeln });
   }
 
-  // Ein Hauptast je Lebensbereich — er wächst mit SEINEM Ausfüllstand.
-  bereiche.forEach((b, i) => {
-    const hoehe = 0.42 + (i / bereiche.length) * 0.5; // von unten nach oben verteilt
-    const ansatz = stammKurve.getPoint(hoehe);
-    const azimut = i * GOLDEN; // Goldener Winkel: natürliche Verteilung rundum
-    const dir = new THREE.Vector3(Math.cos(azimut), 0.85 - hoehe * 0.35, Math.sin(azimut)).normalize();
-    const astGruppe = new THREE.Group();
-    wurzel.add(astGruppe);
+  // ─── Äste: einer je Lebensbereich, jeder mit seinem eigenen Stand ─────────
+  const blattPlaetze = [];
+  const knospenPlaetze = [];
+  const bluetenPlaetze = [];
+  const fruchtPlaetze = {}; // je Bereich, damit die Farbe stimmt
 
-    const stufe = (pct, von, bis) => ({ ab: von, bis: bis });
-    const zweigen = (start, dir, laenge, radius, tiefe, verzug) => {
-      const biegung = new THREE.Vector3((zufall() - 0.5) * 0.1, 0.06, (zufall() - 0.5) * 0.1);
-      const { geometrie, ende } = astGeometrie(dir, laenge, radius, radius * 0.6, biegung);
+  bereiche.forEach((b, i) => {
+    fruchtPlaetze[b.key] = [];
+    const anteil = i / bereiche.length;
+    const ansatzT = 0.3 + anteil * 0.52;
+    const ansatz = stammKurve.getPoint(ansatzT);
+    const azimut = i * GOLDEN;
+    const startRichtung = new THREE.Vector3(Math.cos(azimut), 0.95 - ansatzT * 0.5, Math.sin(azimut)).normalize();
+
+    const zweigen = (start, dir, laenge, radius, tiefe) => {
+      const plan = PLAN.ast[Math.min(PLAN.ast.length - 1, 3 - tiefe)];
+      const biegung = new THREE.Vector3((zufall() - 0.5) * 0.12, 0.07, (zufall() - 0.5) * 0.12);
+      const { geometrie, ende } = astGeometrie(dir, laenge, radius, radius * 0.55, biegung);
       const mesh = new THREE.Mesh(geometrie, rinde);
-      mesh.position.copy(start); // Ansatz = Nullpunkt: der Ast wächst aus dem Elternast.
+      mesh.position.copy(start); // Ansatz = Nullpunkt: wächst aus dem Elternast.
       mesh.castShadow = true;
-      astGruppe.add(mesh);
-      teile.push({ mesh, ab: verzug, bis: verzug + 14, bereich: b.key });
+      wurzel.add(mesh);
+      teile.push({ mesh, ...plan, bereich: b.key });
+
       const weltEnde = start.clone().add(ende);
       if (tiefe === 0) {
-        // Erst wenn der Ast fertig ist, kommt etwas daran — sonst hinge es im Leeren.
-        spitzeBestuecken(weltEnde, dir, verzug + 14, b);
+        spitzeBestuecken(weltEnde, dir, b);
         return;
       }
-      for (let k = 0; k < 2; k++) {
-        const a = azimut + k * Math.PI + (zufall() - 0.5) * 0.9;
-        const neu = new THREE.Vector3(Math.cos(a) * 0.55, 0.8, Math.sin(a) * 0.55).normalize().lerp(dir, 0.45).normalize();
-        zweigen(weltEnde, neu, laenge * 0.68, radius * 0.6, tiefe - 1, verzug + 12);
+      // Drei Kinder auf den oberen Ebenen → dichtere Krone.
+      const kinder = tiefe >= 2 ? 3 : 2;
+      for (let k = 0; k < kinder; k++) {
+        const a = azimut + (k / kinder) * Math.PI * 2 + (zufall() - 0.5) * 0.8;
+        const neu = new THREE.Vector3(Math.cos(a) * 0.6, 0.78, Math.sin(a) * 0.6)
+          .normalize().lerp(dir, 0.42).normalize();
+        zweigen(weltEnde, neu, laenge * 0.66, radius * 0.58, tiefe - 1);
       }
     };
 
-    // Alles, was an einer Astspitze hängt — nie frei schwebend.
-    const spitzeBestuecken = (punkt, dir, verzug, bereich) => {
-      for (let l = 0; l < 7; l++) {
-        const m = new THREE.Mesh(blattGeo, blatt);
-        m.position.copy(punkt).add(new THREE.Vector3((zufall() - 0.5) * 0.42, (zufall() - 0.3) * 0.32, (zufall() - 0.5) * 0.42));
-        m.rotation.set(zufall() * 3, zufall() * 3, zufall() * 3);
-        m.castShadow = true;
-        astGruppe.add(m);
-        teile.push({ mesh: m, ab: verzug + 4, bis: verzug + 20, bereich: bereich.key });
+    // Alles, was an einer Astspitze hängt — nie frei schwebend, und immer erst,
+    // wenn der Ast, an dem es hängt, fertig gewachsen ist.
+    const spitzeBestuecken = (punkt, dir, bereich) => {
+      for (let l = 0; l < 14; l++) {
+        const winkel = l * GOLDEN;
+        const r = 0.16 + (l % 5) * 0.075;
+        blattPlaetze.push({
+          position: punkt.clone().add(new THREE.Vector3(Math.cos(winkel) * r, (zufall() - 0.35) * 0.4, Math.sin(winkel) * r)),
+          drehung: new THREE.Euler(zufall() * 3, zufall() * 3, zufall() * 3),
+          groesse: 0.8 + zufall() * 0.55,
+          bereich: bereich.key,
+        });
       }
-      const bl = new THREE.Mesh(blueteGeo, bluete);
-      bl.position.copy(punkt).addScaledVector(dir, 0.1);
-      astGruppe.add(bl);
-      // Blüte erst, wenn der Ast steht; sie verblüht, wenn die Frucht kommt.
-      teile.push({ mesh: bl, ab: Math.max(verzug, 18), bis: Math.max(verzug, 18) + 16, weg: 58, bereich: bereich.key });
-
-      const f = new THREE.Mesh(fruchtGeometrie(bereich.form), new THREE.MeshStandardMaterial({ color: bereich.farbe, roughness: 0.5 }));
-      f.position.copy(punkt).add(new THREE.Vector3((zufall() - 0.5) * 0.22, -0.16, (zufall() - 0.5) * 0.22));
-      f.castShadow = true;
-      astGruppe.add(f);
-      teile.push({ mesh: f, ab: Math.max(verzug + 20, 48), bis: 92, bereich: bereich.key });
+      knospenPlaetze.push({ position: punkt.clone().addScaledVector(dir, 0.09), groesse: 1, bereich: bereich.key });
+      // Drei Blüten je Spitze, leicht nach aussen gesetzt — sonst sitzen sie
+      // später im Laub und die Blütephase bleibt unsichtbar.
+      for (let t = 0; t < 3; t++) {
+        const w = t * GOLDEN;
+        bluetenPlaetze.push({
+          position: punkt.clone().addScaledVector(dir, 0.12).add(new THREE.Vector3(Math.cos(w) * 0.13, 0.04, Math.sin(w) * 0.13)),
+          groesse: 1 + zufall() * 0.35,
+          bereich: bereich.key,
+        });
+      }
+      // Deutlich unter dem Blattschopf: die Frucht trägt die Bedeutung
+      // (ein Lebensbereich), sie darf nicht im Grün verschwinden. Sie hängt
+      // trotzdem an der Spitze — sie schwebt nicht.
+      fruchtPlaetze[bereich.key].push({
+        position: punkt.clone().add(new THREE.Vector3((zufall() - 0.5) * 0.16, -0.32, (zufall() - 0.5) * 0.16)),
+        groesse: 1 + zufall() * 0.25,
+      });
     };
 
-    const blattGeo = new THREE.SphereGeometry(0.12, 6, 4);
-    blattGeo.scale(1, 0.32, 0.6);
-    const blueteGeo = new THREE.SphereGeometry(0.06, 6, 4);
-
-    zweigen(ansatz, dir, 0.9, 0.075, 2, 12 + i * 0.6);
+    zweigen(ansatz, startRichtung, 0.95, 0.08, 3);
   });
 
-  return { wurzel, teile };
+  // Gipfeltrieb: der Stamm endet nicht, er geht in einen letzten Zweig über.
+  const gipfel = stammKurve.getPoint(1);
+  const { geometrie: gipfelGeo, ende: gipfelEnde } = astGeometrie(
+    new THREE.Vector3(0.12, 1, 0.06).normalize(), 0.75, 0.035, 0.01, new THREE.Vector3(0.03, 0, 0.02)
+  );
+  const gipfelAst = new THREE.Mesh(gipfelGeo, rinde);
+  gipfelAst.position.copy(gipfel);
+  gipfelAst.castShadow = true;
+  wurzel.add(gipfelAst);
+  teile.push({ mesh: gipfelAst, ab: 26, bis: 40 });
+  for (let l = 0; l < 10; l++) {
+    const winkel = l * GOLDEN;
+    blattPlaetze.push({
+      position: gipfel.clone().add(gipfelEnde).add(new THREE.Vector3(Math.cos(winkel) * 0.18, (zufall() - 0.4) * 0.3, Math.sin(winkel) * 0.18)),
+      drehung: new THREE.Euler(zufall() * 3, zufall() * 3, zufall() * 3),
+      groesse: 0.7 + zufall() * 0.4,
+    });
+  }
+
+  // ─── Sammelformen: Blätter, Knospen, Blüten, Früchte ─────────────────────
+  // Hunderte Blätter als EINE Form. Das macht die Krone dicht und kostet trotzdem
+  // nur einen Zeichenaufruf statt hunderte — sonst wäre «dichter» teuer erkauft.
+  const blattGeo = new THREE.SphereGeometry(0.115, 6, 4);
+  blattGeo.scale(1, 0.3, 0.62);
+  const knospeGeo = new THREE.SphereGeometry(0.05, 6, 4);
+  // Zurück auf ruhiges Mass: die Blüten waren nie zu klein, sie wurden
+  // weggeschnitten (siehe frustumCulled unten). Erst der Fehler, dann das Mass.
+  const blueteGeo = new THREE.SphereGeometry(0.07, 7, 5);
+  blueteGeo.scale(1, 0.5, 1);
+
+  const sammelForm = (geo, material, plaetze, plan) => {
+    if (plaetze.length === 0) return;
+    const mesh = new THREE.InstancedMesh(geo, material, plaetze.length);
+    mesh.castShadow = true;
+    // Ohne das verschwindet die ganze Sammelform, sobald der Nullpunkt der
+    // Szene aus dem Bild fällt: die Sichtbarkeitsprüfung rechnet mit der
+    // Hüllkugel der EINEN Form, nicht mit den hunderten Plätzen darin.
+    // Genau das passierte beim Heranzoomen — Blüten und Blätter waren weg,
+    // obwohl die Zahlen «sichtbar» meldeten.
+    mesh.frustumCulled = false;
+    mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    wurzel.add(mesh);
+    streu.push({ mesh, plaetze, ...plan });
+  };
+
+  const blattMaterial = new THREE.MeshStandardMaterial({ color: farben.blatt, roughness: 0.82, side: THREE.DoubleSide });
+  sammelForm(blattGeo, blattMaterial, blattPlaetze, PLAN.blatt);
+
+  // Keimblätter: die allerersten zwei Blättchen am jungen Trieb. Ohne sie ist
+  // der Keimling nur ein Stift im Boden. `amStamm` heisst: sie sitzen an der
+  // Spitze des WACHSENDEN Stamms und steigen mit ihm — sonst hängen sie im
+  // ersten Moment über dem Trieb in der Luft (im Bild gesehen, 20.09.).
+  // Gekippt und deutlich grösser als ein Kronenblatt: ein flaches Blatt, das
+  // hochkant zur Kamera steht, ist praktisch unsichtbar (nachgemessen, nicht
+  // geschätzt — die Blätter lagen richtig, man sah sie bloss nicht).
+  sammelForm(blattGeo, blattMaterial, [-1, 1].map((s) => ({
+    position: new THREE.Vector3(s * 0.46, 3.85, 0),
+    drehung: new THREE.Euler(1.0, 0, s * 0.6),
+    groesse: 1.6,
+    amStamm: true,
+  })), PLAN.keimblatt);
+  sammelForm(knospeGeo, new THREE.MeshStandardMaterial({ color: farben.knospe, roughness: 0.7 }), knospenPlaetze, PLAN.knospe);
+  sammelForm(blueteGeo, new THREE.MeshStandardMaterial({ color: farben.bluete, roughness: 0.7, side: THREE.DoubleSide }), bluetenPlaetze, PLAN.bluete);
+  bereiche.forEach((b) => {
+    sammelForm(
+      fruchtGeometrie(b.form),
+      new THREE.MeshStandardMaterial({ color: b.farbe, roughness: 0.5 }),
+      fruchtPlaetze[b.key].map((p) => ({ ...p, bereich: b.key })),
+      PLAN.frucht
+    );
+  });
+
+  return { wurzel, teile, streu };
 }
 
-// Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Bereich.
-export function wachstumAnwenden(teile, gesamtPct, proBereich) {
-  teile.forEach((tl) => {
-    const pct = tl.bereich != null && proBereich[tl.bereich] != null ? proBereich[tl.bereich] : gesamtPct;
+// Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Lebensbereich.
+const hilfsObjekt = new THREE.Object3D();
+export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
+  const stand = (schluessel) => (schluessel != null && proBereich[schluessel] != null ? proBereich[schluessel] : gesamtPct);
+  const wuchs = (pct, tl) => {
     let g = ramp(pct, tl.ab, tl.bis);
-    if (tl.weg != null) g *= 1 - ramp(pct, tl.weg, tl.weg + 12);
+    if (tl.weg != null) g *= 1 - ramp(pct, tl.weg, tl.weg + 10);
+    return g;
+  };
+
+  teile.forEach((tl) => {
+    const g = wuchs(stand(tl.bereich), tl);
     tl.mesh.visible = g > 0.004;
-    const s = Math.max(0.001, g);
     // Der Stamm wächst nach oben, nicht aus dem Nichts in die Breite.
-    if (tl.achse === 'y') tl.mesh.scale.set(0.55 + 0.45 * g, s, 0.55 + 0.45 * g);
-    else tl.mesh.scale.setScalar(s);
+    if (tl.achse === 'y') tl.mesh.scale.set(0.5 + 0.5 * g, Math.max(0.001, g), 0.5 + 0.5 * g);
+    else tl.mesh.scale.setScalar(Math.max(0.001, g));
+  });
+
+  // Wie weit ist der Stamm? Nur dafür da, dass die Keimblätter mit ihm steigen.
+  const stammG = ramp(gesamtPct, 0, 14);
+
+  streu.forEach((s) => {
+    let sichtbar = false;
+    s.plaetze.forEach((p, i) => {
+      const g = wuchs(stand(p.bereich), s) * (p.groesse || 1);
+      if (g > 0.004) sichtbar = true;
+      if (p.amStamm) {
+        hilfsObjekt.position.set(p.position.x * (0.5 + 0.5 * stammG), p.position.y * stammG, p.position.z);
+      } else {
+        hilfsObjekt.position.copy(p.position);
+      }
+      if (p.drehung) hilfsObjekt.rotation.copy(p.drehung);
+      else hilfsObjekt.rotation.set(0, 0, 0);
+      hilfsObjekt.scale.setScalar(Math.max(0.0001, g));
+      hilfsObjekt.updateMatrix();
+      s.mesh.setMatrixAt(i, hilfsObjekt.matrix);
+    });
+    s.mesh.instanceMatrix.needsUpdate = true;
+    s.mesh.visible = sichtbar;
   });
 }
 
@@ -198,11 +383,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     el.appendChild(renderer.domElement);
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    renderer.domElement.style.display = 'block';
-    renderer.domElement.style.cursor = 'grab';
-    renderer.domElement.style.touchAction = 'none';
+    Object.assign(renderer.domElement.style, { width: '100%', height: '100%', display: 'block', cursor: 'grab', touchAction: 'none' });
 
     const szene = new THREE.Scene();
     const kamera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
@@ -226,16 +407,17 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     const farben = {
       rinde: isDarkMode ? 0x6b563c : 0x7a5f42,
       blatt: isDarkMode ? 0x5e7a54 : 0x6e8b5a,
+      knospe: isDarkMode ? 0x8c7a52 : 0xa89055,
       bluete: isDarkMode ? 0xc9a8b0 : 0xe6cbd3,
     };
-    const { wurzel, teile } = baumAufbauen(bereiche, farben);
+    const { wurzel, teile, streu } = baumAufbauen(bereiche, farben);
     szene.add(wurzel);
 
     const proBereich = {};
     bereiche.forEach((b) => { proBereich[b.key] = b.pct; });
 
-    let gier = 0.4, neigung = 0.14, abstand = 11;
-    const ziel = new THREE.Vector3(0, 2.6, 0);
+    let gier = 0.4, neigung = 0.14, abstand = 12;
+    const ziel = new THREE.Vector3(0, 2.7, 0);
     let angefordert = false;
     const zeichnen = () => {
       angefordert = false;
@@ -264,30 +446,30 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
     // Einmaliges, ruhiges Einwachsen auf den echten Stand — nicht im Kreis.
     let stop = false;
     if (wenigerBewegung) {
-      wachstumAnwenden(teile, gesamtPct, proBereich);
+      wachstumAnwenden(teile, streu, gesamtPct, proBereich);
       anfordern();
     } else {
       const start = performance.now();
-      const dauer = 1600;
+      const dauer = 1800;
       const schritt = (jetzt) => {
         if (stop) return;
         const t = Math.min(1, (jetzt - start) / dauer);
         const eased = 1 - Math.pow(1 - t, 3);
         const proT = {};
         Object.keys(proBereich).forEach((k) => { proT[k] = proBereich[k] * eased; });
-        wachstumAnwenden(teile, gesamtPct * eased, proT);
+        wachstumAnwenden(teile, streu, gesamtPct * eased, proT);
         zeichnen();
         if (t < 1) requestAnimationFrame(schritt);
       };
       requestAnimationFrame(schritt);
     }
 
-    // NUR MESSUNG (Arbeitsbaum): Dreiecke, Zeichenaufrufe, Bilder pro Sekunde.
+    // ─── Nur Messung (Arbeitsbaum) ───────────────────────────────────────────
     // Direkt gezeichnet statt über die Bildschleife: im Hintergrund-Tab bremst
     // der Browser requestAnimationFrame aus — die Bildrate misst dann den Tab,
     // nicht den Baum. Die Zeichendauer je Bild misst wirklich die Last.
     window.__baum3dMessung = (n = 40) => {
-      zeichnen(); // einmal warmlaufen (Shader übersetzen)
+      zeichnen();
       const zeiten = [];
       for (let i = 0; i < n; i++) {
         gier += 0.01;
@@ -311,8 +493,6 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
         geometrien: renderer.info.memory.geometries,
       };
     };
-
-    // Gegenprobe: was kostet ein ganzer Obstgarten in EINER Zeichenfläche?
     window.__baum3dGarten = (n = 11) => {
       for (let i = 1; i < n; i++) {
         const kopie = wurzel.clone();
@@ -322,6 +502,20 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       }
       abstand = 26;
       return window.__baum3dMessung(40);
+    };
+    window.__baum3dSzene = { szene, teile, streu, wurzel };
+    window.__baum3dNah = (neuerAbstand = 5, zielHoehe = 1.6) => {
+      abstand = neuerAbstand;
+      ziel.y = zielHoehe;
+      zeichnen();
+      return { abstand, zielHoehe };
+    };
+    window.__baum3dStand = (pct) => {
+      const proT = {};
+      Object.keys(proBereich).forEach((k) => { proT[k] = pct; });
+      wachstumAnwenden(teile, streu, pct, proT);
+      zeichnen();
+      return wuchsphase(pct).name;
     };
 
     let zieht = false, lx = 0, ly = 0;

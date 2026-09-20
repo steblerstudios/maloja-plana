@@ -59,3 +59,60 @@ Luft, die für elf Bäume hat keine. Auf einem Telefon fällt beides tiefer aus 
   Der Obstgarten bleibt vorerst flach; er ist die Übersicht, nicht die Nahaufnahme.
 - Offen, falls es weitergeht: Stamm oben sauber auslaufen lassen (endet heute stumpf),
   Krone dichter, Früchte etwas früher reif, und ein Blick auf ein echtes Telefon.
+
+---
+
+# Zweite Runde, 20.09. — Stamm, Krone, Wuchsphasen
+
+Auftrag von Stebler Studios nach der ersten Runde: **Stamm fertig machen, Krone dichter,
+die Wuchsphasen sichtbar.**
+
+## Was sich geändert hat
+
+- **Stamm.** Läuft jetzt über seine ganze Länge verjüngt aus (0,30 → 0,035) und geht oben in
+  einen **Gipfeltrieb** über, statt stumpf abgeschnitten zu enden. Unten ein **Wurzelanlauf**
+  aus neun Strängen, damit er nicht wie ein eingesteckter Stab wirkt.
+- **Krone dichter — und zugleich billiger.** Drei Kindäste auf den oberen Ebenen, vier
+  Verzweigungs-Ebenen, 14 Blätter je Astspitze: **2782 Blätter** statt vorher rund 600.
+  Sie werden als **eine Sammelform** gezeichnet (`InstancedMesh`), ebenso Knospen, Blüten und
+  die Früchte je Lebensbereich.
+- **Sechs benannte Wuchsphasen**, alle an einer Stelle im Code (`PLAN`), damit Name und Bild
+  nie auseinanderlaufen: Keimling (mit zwei Keimblättern) · Stamm und Äste · Knospen ·
+  **Blüte vor dem Laub**, wie beim Obstbaum · Früchte · Ausgewachsen. Jeder Ast durchläuft
+  sie mit dem Stand **seines** Lebensbereichs.
+- Früchte hängen tiefer als der Blattschopf — sie tragen die Bedeutung und dürfen nicht
+  im Grün verschwinden. Sie hängen trotzdem an der Spitze, nichts schwebt.
+
+## Zahlen nach dem Umbau
+
+| | vorher | nachher |
+|---|---|---|
+| Baum-Stück, nachgeladen | 137,2 KB gzip | **139,7 KB gzip** |
+| Hauptdatei | 63,6 KB gzip | **63,6 KB gzip** (unverändert, Grenze 65 hält) |
+| Dreiecke | 19 600 | **299 144** |
+| Zeichenaufrufe | 390 | **720** |
+| Zeichendauer je Bild | 1,95 ms | **1,29 ms** (schlechtestes 2,8 ms) |
+
+Die Krone hat **15-mal mehr Dreiecke** und zeichnet trotzdem **schneller** — weil hunderte
+Einzelformen zu wenigen Sammelformen geworden sind. Nicht die Menge kostet, die Zahl der
+Aufrufe kostet.
+
+## Dritter Fund: «sichtbar» im Datensatz, unsichtbar im Bild
+
+Beim Heranzoomen verschwanden Blüten und Blätter vollständig — während die Zahlen sauber
+`sichtbar: true` und eine gültige Grösse meldeten. Ursache: eine Sammelform wird für die
+Sichtbarkeitsprüfung wie **ein** Objekt am Szenen-Nullpunkt behandelt. Fällt der Nullpunkt
+aus dem Bild, fällt die ganze Form weg — mit allen hunderten Plätzen darin.
+
+🛑 **Die Lehre ist teurer als der Fehler:** Ich hatte die Blüten zwischendurch **vergrössert**,
+weil ich sie für zu klein hielt — sie waren nie zu klein, sie wurden weggeschnitten. Erst der
+Blick auf die echten Zahlen (Position, Grösse, Sichtbarkeit je Platz) hat den Widerspruch
+zwischen Datensatz und Bild gezeigt. **Weder das Bild allein noch die Zahl allein reichte;
+gefunden hat es erst der Widerspruch zwischen beiden.**
+
+## Weiterhin offen
+
+- Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
+- 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
+  einer Form zusammenfassen, wenn es nötig wird.
+- Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.

@@ -7,6 +7,14 @@ import { LEBENSBEREICHE } from './data/lebensbereiche.js';
 // Chunk-Grösse, und wir sehen zugleich, wie es aussieht.
 const Baum3D = React.lazy(() => import('./Baum3D.jsx'));
 
+// Die Phasen doppelt gepflegt wäre eine Drift-Quelle — die Messseite fragt die
+// Wahrheit beim Bauteil ab, sobald es geladen ist.
+const PHASEN_FALLBACK = [
+  { ab: 0, name: 'Keimling' }, { ab: 12, name: 'Stamm und Äste' }, { ab: 32, name: 'Knospen' },
+  { ab: 46, name: 'Blätter und Blüte' }, { ab: 66, name: 'Früchte' }, { ab: 96, name: 'Ausgewachsen' },
+];
+const phaseVon = (pct) => PHASEN_FALLBACK.reduce((t, p) => (pct >= p.ab ? p : t), PHASEN_FALLBACK[0]).name;
+
 const FORM = {
   apfel: 'rundlich', aprikose: 'rundlich',
   birne: 'laenglich', zwetschge: 'laenglich', vogelbeere: 'laenglich',
@@ -31,7 +39,7 @@ function Demo() {
     React.createElement('p', { style: { color: '#666', fontSize: 14 } },
       'Elf Äste, einer je Lebensbereich. Jeder reift mit seinem eigenen Ausfüllstand. Ziehen zum Drehen, Pfeiltasten gehen auch.'),
     React.createElement('label', { style: { display: 'block', margin: '12px 0', fontSize: 14 } },
-      'Ausfüllstand ' + pct + '% ',
+      'Ausfüllstand ' + pct + '% · Phase: ' + phaseVon(pct) + ' ',
       React.createElement('input', {
         type: 'range', min: 0, max: 100, value: pct, style: { width: '100%' },
         onChange: (e) => setPct(+e.target.value),
