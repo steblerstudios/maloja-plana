@@ -155,9 +155,21 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   # Befehlstext — so können Sonderzeichen (Komma, ", \, $ …) nichts zerbrechen.
   # net:max-retries begrenzt: bei Verbindungsproblemen gibt das Backup auf,
   # statt endlos „Verbinde…" zu schleifen — und läuft dann ins Gate unten.
+  #
+  # 🛑 --exclude-glob .ftpquota (20.09.2026). Der Infomaniak-Server FÜHRT diese Datei auf,
+  # gibt sie aber nicht heraus. lftp beendet das Spiegeln deshalb mit Fehlercode — und das
+  # Gate unten warf daraufhin einen VOLLSTÄNDIGEN Rückfallpunkt (39 Dateien) weg und brach
+  # den Deploy ab. Der Fehler war echt, die Folgerung falsch.
+  #
+  # Bewusst hier und nicht am Gate: das Gate weich zu machen («ein paar Fehler sind ok»)
+  # hätte es beim nächsten ECHTEN Fehler wertlos gemacht. Stattdessen verschwindet die eine
+  # Ursache, die nachweislich nichts über die Brauchbarkeit des Backups aussagt — die Datei
+  # gehört dem Hoster, nicht der Website, und fehlt in keinem Rücksprung.
+  # ⚠️ Nicht am Server erprobt (kein Zugang beim Schreiben). Meldet lftp weiterhin einen
+  # Fehler, ist es eine ANDERE Ursache — dann greift das Gate zu Recht.
   BACKUP_FEHLER=""
   if ! LFTP_PASSWORD="${SFTP_PASSWORD}" lftp -u "${SFTP_USER}" --env-password "sftp://${SFTP_HOST}" \
-      -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye"; then
+      -e "set sftp:auto-confirm yes; set net:timeout 15; set net:max-retries 2; set net:reconnect-interval-base 5; mirror --verbose --exclude-glob .ftpquota \"${REMOTE_DIR}\" \"${BACKUP_DIR}\"; bye"; then
     BACKUP_FEHLER="lftp hat das Spiegeln mit Fehler beendet (Login? Netz? Timeout? REMOTE_DIR?)"
   elif [ -z "$(find "$BACKUP_DIR" -type f -print -quit 2>/dev/null)" ]; then
     # Exit 0 von lftp heisst nur „Befehl lief durch" — nicht „es kam etwas an".
@@ -167,6 +179,15 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
   if [ -n "$BACKUP_FEHLER" ]; then
     # Unvollständige/leere Sicherung nicht als Rückfallpunkt liegen lassen.
     # Gefahrlos: die Live-Version selbst ist unberührt (der Upload kam noch nicht).
+    #
+    # 🛑 Vorher sagen, WAS weggeworfen wird. Am 20.09.2026 verschwanden hier wortlos
+    # 39 fertig gespiegelte Dateien — sichtbar war nur «Backup fehlgeschlagen». Wer nicht
+    # weiss, dass etwas Brauchbares dastand, sucht die Ursache an der falschen Stelle.
+    BACKUP_DATEIEN="$(find "$BACKUP_DIR" -type f 2>/dev/null | wc -l | tr -d ' ')"
+    if [ "$BACKUP_DATEIEN" -gt 0 ]; then
+      echo "  ℹ️ ${BACKUP_DATEIEN} Datei(en) waren bereits gespiegelt — sie werden verworfen,"
+      echo "     weil ein unvollständiger Rückfallpunkt schlimmer ist als gar keiner."
+    fi
     rm -rf "$BACKUP_DIR"
     if [ "${DEPLOY_OHNE_BACKUP:-0}" = "1" ]; then
       echo "  ⚠️ Backup fehlgeschlagen: ${BACKUP_FEHLER}"
@@ -177,8 +198,12 @@ if [ "${SKIP_BACKUP:-0}" != "1" ] && [ "$STAGE" != "1" ]; then
       echo "  ${BACKUP_FEHLER}"
       echo
       echo "  Die Live-Version wurde NICHT angefasst. Ohne Backup gäbe es keinen Weg zurück."
-      echo "  Ursache beheben (Zugangsdaten in .deploy.local · Netz · REMOTE_DIR) und neu starten."
+      echo "  Ursache beheben (Zugangsdaten · Netz · REMOTE_DIR) und neu starten."
+      echo
       echo "  Nur im Notfall, bewusst ohne Rückfallpunkt:  DEPLOY_OHNE_BACKUP=1 bash deploy.sh"
+      echo "  🛑 Dieser Ausweg gilt NICHT, wenn oben «0 Datei(en) waren bereits gespiegelt»"
+      echo "     steht oder der Grund «Login» lautet: dann kommt die Verbindung gar nicht"
+      echo "     zustande, und der Upload danach scheitert genauso — nur ohne Rücksprung."
       exit 1
     fi
   fi

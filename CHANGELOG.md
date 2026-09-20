@@ -11,6 +11,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+## [0.1.39-beta] — 2026-09-20
+
+*Enthält alles aus `0.1.38-beta` (siehe unten) — **jene Version wurde nie ausgeliefert**.
+Live war bis hierher durchgehend `0.1.37-beta`. Zwei nie ausgelieferte Versionen
+hintereinander sind kein Makel, sondern der ehrliche Verlauf: gemergt ist nicht live.*
+
 ### Neu
 - **Der Lebensbaum wächst jetzt räumlich.** Unter «Was aus Ihren Angaben wächst» steht
   der Baum dreidimensional: ein Ast je Kapitel, jeder mit seiner Schweizer Frucht, die
@@ -45,8 +51,17 @@ kommt der Changelog immer mit, nie doppelt.*
   dass die Pfeiltasten drehen; die Tab-Reihenfolge folgt der Bildreihenfolge.
 - Verliert die Grafikkarte den Kontext, erscheint der flache Baum statt einer schwarzen
   Fläche; **jeder** Fehler im Szenenaufbau führt dorthin statt ins leere Dashboard.
+- **Das Dashboard hatte keine `h1`** (#245). Wer mit einem Screenreader ankam, fand keine
+  Seitenüberschrift, von der aus sich die Seite erschliesst; die Abschnittstitel sprangen
+  ausserdem eine Ebene. Jetzt eine echte `h1`, Abschnitte als `h3`.
+- Ein **Asyl-Eintrag stand doppelt** in der Instrumenten-Liste (#245).
 
-## [0.1.38-beta] — 2026-09-20
+### Behoben
+- **Die Säule 3a wurde doppelt gezählt — in allen vier Kantonen** (#244). Ausführlich unter
+  `0.1.38-beta`; hier nur der Hinweis, dass die Korrektur erst mit dieser Version nach
+  draussen kommt.
+
+## [0.1.38-beta] — 2026-09-20 · *nie ausgeliefert, enthalten in 0.1.39-beta*
 
 **K31 — fünf Kantone rechnen jetzt nach ihrem eigenen amtlichen Modell**, statt nach der
 Näherungsformel, die für keinen Kanton gilt. Dazu ein gemeinsamer Rahmen, damit ein Befund
