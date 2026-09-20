@@ -16,7 +16,7 @@
 // (src/config/__tests__/ipvZuerich.test.js).
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -91,8 +91,10 @@ export function ipvZuerichRechnen({ region, verheiratet, personen, me }) {
 //   verheiratet ohne Partner im Haushalt, eigenes Alter unbekannt oder unter 26
 //   (junge Erwachsene in Ausbildung rechnen mit den Eltern), Kinder ab 19, Vermögen über
 //   der Grenze, Gemeinde nicht eindeutig, Anspruchsjahr vorbei.
-//   Näherung: massgebendes Einkommen = Erwerbs-, Neben- und Renteneinkommen × 12 plus die
-//   Säule-3a-Einzahlung (§ 5 Abs. 1 lit. b EG KVG). Amtlich zählen die Steuerfaktoren; es
+//   Näherung: massgebendes Einkommen = Erwerbs-, Neben- und Renteneinkommen × 12. Die
+//   Säule-3a-Einzahlung ist darin bereits enthalten (das Nettoeinkommen ist das Geld, aus
+//   dem sie überwiesen wird) — genau das verlangt § 5 Abs. 1 lit. b EG KVG, der sie einer
+//   Steuergrösse zurechnet, in der sie abgezogen wäre. Amtlich zählen die Steuerfaktoren; es
 //   fehlen also die amtlichen Abzüge (Berufsauslagen, Versicherungs- und Sozialabzüge), und
 //   das Vermögen ist hier nur die Summe der erfassten Werte, nicht das steuerbare
 //   Gesamtvermögen inkl. Liegenschaft und abzüglich Schulden (Fachprüfung 20.09.2026).
@@ -128,9 +130,12 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   const vermoegen = vermoegenSumme(f);
   if (vermoegen > IPV_ZH.vermoegen.grenze[gruppe]) return orientierung('vermoegen');
   // § 5 Abs. 1 lit. b EG KVG: Beiträge an die gebundene Selbstvorsorge (Säule 3a) werden dem
-  // massgebenden Einkommen HINZUGERECHNET — `einkommenJahr` rechnet sie darum mit ein.
-  // (Befund Fachprüfung 20.09.2026.)
-  const me = einkommenJahr(f)
+  // massgebenden Einkommen HINZUGERECHNET — unbedingt, ohne Schwelle und ohne Deckel.
+  // Die Zurechnung erfolgt auf «Einkünfte − Abzüge», wo die 3a bereits abgezogen ist; das
+  // Nettoeinkommen der App trägt sie schon, darum Regel `voll` = kein weiterer Zuschlag.
+  // (Befund Fachprüfung 20.09.2026, korrigiert am selben Tag: vorher wurde sie ein zweites
+  // Mal addiert — 252.–/Jahr zu wenig bei 3'000 Einzahlung, 1'008.– bei 12'000.)
+  const me = einkommenJahr(f, SAEULE_3A.voll)
     + IPV_ZH.vermoegen.anteil * Math.max(0, vermoegen - IPV_ZH.vermoegen.freibetrag[gruppe]);
 
   const r = ipvZuerichRechnen({ region, verheiratet: false, personen: ['e', ...kinder.map(() => 'k')], me });

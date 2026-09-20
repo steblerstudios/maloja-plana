@@ -45,7 +45,7 @@
 
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
 
@@ -178,7 +178,16 @@ export function ipvAargau(data, hh, ipvData, youngAdultsCount, orientierung) {
   if (!geburt || !ERWACHSEN.imAnspruchsjahr(jahr, geburt)) return orientierung('alter');
 
   const vermoegen = vermoegenSumme(f);
-  const bereinigtesEinkommen = einkommenJahr(f);
+  // § 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG rechnet die Säule 3a nur ÜBER 10 % des
+  // Nettoerwerbseinkommens auf, und nur bei Personen OHNE Säule 2. Ob eine Säule 2 besteht,
+  // weiss die App nicht sicher (leere BVG-Felder heissen «nicht erfasst») — darum bleibt es
+  // vorerst bei der vollen Zurechnung, ausdrücklich und benannt:
+  // siehe SAEULE_3A.schwelleOhneSaeule2.offen.
+  // 🛑 Wirkung, solange das so ist: bei Personen ohne Säule 2 fällt der Anspruch bis zu 34 %
+  // zu tief aus (Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50, nachgerechnet
+  // 20.09.2026). Das ist NICHT die vorsichtige Seite — eine zu tiefe Zahl hält Berechtigte
+  // vom Antrag ab. (Hier stand vorher genau diese Begründung; sie war falsch.)
+  const bereinigtesEinkommen = einkommenJahr(f, SAEULE_3A.schwelleOhneSaeule2);
   const me = agMassgebendesEinkommen({ bereinigtesEinkommen, vermoegen, verheiratet: false, kinderZahl: 0 });
 
   // Nur eine Person im Haushalt, darum ist die erfasste Prämie ihre eigene (§ 7 Abs. 3 KVGG).

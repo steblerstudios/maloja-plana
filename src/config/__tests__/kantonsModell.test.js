@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
-  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from '../kantonsModell.js';
@@ -49,11 +49,49 @@ describe('Eingaben lesen', () => {
     expect(vermoegenSumme({ savingsAccount: '3000' })).toBe(3000);
   });
 
-  it('einkommenJahr: Monatsfelder × 12, Säule 3a ist bereits jährlich', () => {
+  it('einkommenJahr: Monatsfelder × 12', () => {
     expect(einkommenJahr({ monthlyIncome: 1000 })).toBe(12000);
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 })).toBe(19056);
     expect(einkommenJahr({ monthlyIncome: 500, sideIncome: 200, ahvRente: 300 })).toBe(12000);
     expect(einkommenJahr({})).toBe(0);
+  });
+
+  // 🛑 DER RÜCKFALL-WÄCHTER (Befund Fachprüfung 20.09.2026).
+  // Bis zum 20.09. stand hier `pension3a: 7056` → 19056, mit dem Beleg, die Erlasse rechneten
+  // die 3a hinzu. Sie tun das — aber auf eine Steuergrösse, in der sie abgezogen IST. Das
+  // Nettoeinkommen der App («was auf Ihrem Konto ankommt») trägt sie bereits, also war es
+  // eine Doppelzählung: Einkommen zu hoch ⇒ Verbilligung zu tief, in allen vier Kantonen.
+  // Dieser Test hält genau das fest. Fällt er um, ist der Fehler zurück.
+  it('einkommenJahr: Säule 3a wird NICHT ein zweites Mal aufgerechnet', () => {
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 })).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 0 })).toBe(12000);
+    // und die Regel ändert daran nichts, solange zwei von dreien noch nicht wirken
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.voll)).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.bisBundesMaximum)).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.schwelleOhneSaeule2)).toBe(12000);
+  });
+
+  // Die drei Regeln sind absichtlich EINZELN benannt, auch wo sie heute dasselbe rechnen —
+  // sonst schreibt der nächste Kanton «belegt», wo «Zahl fehlt noch» gemeint war.
+  describe('SAEULE_3A: die drei Zurechnungsregeln', () => {
+    it('jede Regel nennt ihre Kantone und ihren Beleg', () => {
+      expect(SAEULE_3A.voll.kantone).toBe('ZH, SG');
+      expect(SAEULE_3A.bisBundesMaximum.kantone).toBe('BE');
+      expect(SAEULE_3A.schwelleOhneSaeule2.kantone).toBe('AG');
+      for (const r of Object.values(SAEULE_3A)) expect(r.beleg).toMatch(/Art\.|§/);
+    });
+
+    it('nur `voll` ist fertig — die anderen zwei sagen, was ihnen fehlt', () => {
+      expect(SAEULE_3A.voll.offen).toBeUndefined();
+      expect(SAEULE_3A.bisBundesMaximum.offen).toMatch(/nicht belegt/);
+      expect(SAEULE_3A.schwelleOhneSaeule2.offen).toMatch(/nicht SICHER/);
+    });
+
+    // Die AG-Rechnung liegt bereit, damit sie beim Entscheid nicht neu erfunden wird —
+    // 10 % des Nettoerwerbseinkommens, § 5 Abs. 1 V KVGG.
+    it('die AG-Schwelle rechnet, auch wenn sie noch nicht angewendet wird', () => {
+      expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({ monthlyIncome: 2500 })).toBe(3000);
+      expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({})).toBe(0);
+    });
   });
 
   it('geburtsjahr nimmt nur ein datiertes Feld', () => {

@@ -176,6 +176,26 @@ describe('K31 SG durch die App (calculateIPV)', () => {
     expect(r.amount).toBe(Math.round(3113 / 12));
   });
 
+  // 🛑 DIESEN TEST GAB ES NIE (Befund Fachprüfung 20.09.2026, zweite Runde).
+  // `ipvStGallen.test.js` enthielt weder `pension3a` noch «3a» — gemessen mit Gegenprobe auf
+  // ein erfundenes Token. Der Kanton mit der schärfsten Wirkung war damit der einzige ohne
+  // einen einzigen 3a-Fall: durch den quadratisch steigenden Eigenanteil kostete die
+  // Doppelzählung hier am meisten (bei 3 000 Einzahlung 630.60/Jahr — mehr als in ZH),
+  // und ab 12 000 fiel der Anspruch ganz auf null.
+  //
+  // Art. 12 Abs. 2 Ziff. 2 [2] rechnet die 3a dem Reineinkommen zu — unbedingt, ohne
+  // Schwelle und ohne Deckel. Das Nettoeinkommen der App trägt sie bereits.
+  it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen (Art. 12 Abs. 2 Ziff. 2)', () => {
+    const ohne = calculateIPV(person({ monthlyIncome: 2500 })).annual;
+    // 30 000 − 18 700 = 11 300 → 12,16 + 2,26 = 14,42 % → 6 285.60 − 4 326 = 1 959.60
+    expect(ohne).toBe(1960);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 } })).annual).toBe(ohne);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).annual).toBe(ohne);
+    // der alte Weg: bei 3 000 nur noch 1 329 (14,42 → 15,02 % auf 33 000), bei 12 000 null
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 } })).annual).not.toBe(1329);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).eligible).toBe(true);
+  });
+
   it('Kinderabzug Fr. 4 000 je Kind, Art. 14 [2]', () => {
     const ohne = calculateIPV(person({ monthlyIncome: 2000 }));
     const mit = calculateIPV(person({ monthlyIncome: 2000, children: [{ age: 5 }] }));

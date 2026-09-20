@@ -55,7 +55,7 @@
 //     bezogen wird. Die App zieht ihn für jedes erfasste Kind ab — auch das wirkt nach oben.
 import {
   vermoegenSumme, einkommenJahr, geburtsjahr,
-  jahrVorbei, mehrereErwachsene, ERWACHSEN, KEIN_PRAEMIENDECKEL,
+  jahrVorbei, mehrereErwachsene, ERWACHSEN, KEIN_PRAEMIENDECKEL, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
 } from './kantonsModell.js';
@@ -232,10 +232,15 @@ export function ipvStGallen(data, hh, ipvData, youngAdultsCount, orientierung, l
   if (vermoegen > vermoegensgrenze) return orientierung('vermoegen');
 
   // Art. 12 Abs. 2 [2]: Reineinkommen + 20 % des steuerbaren Vermögens + Säule 3a
-  // (einkommenJahr rechnet sie mit) − Kinderabzug Fr. 4000 je Kind (Art. 14).
+  // − Kinderabzug Fr. 4000 je Kind (Art. 14).
+  // Die Zurechnung der 3a ist hier unbedingt (Ziff. 2, keine Schwelle, kein Deckel) und
+  // setzt auf dem Reineinkommen auf, in dem sie abgezogen wäre. Das Nettoeinkommen der App
+  // trägt sie schon — Regel `voll`, also kein weiterer Zuschlag.
+  // (Befund Fachprüfung 20.09.2026: vorher wurde sie ein zweites Mal addiert — 630.60/Jahr
+  // zu wenig bei 3'000 Einzahlung; bei 12'000 fiel der Anspruch auf null.)
   // 🛑 Die App kennt nicht das steuerbare Gesamtvermögen, sondern die Summe der erfassten
   // Posten — derselbe Vorbehalt wie in den anderen Kantonen, er steht in der Anzeige.
-  const meVorKinderabzug = einkommenJahr(f) + IPV_SG.vermoegenAnteil * vermoegen;
+  const meVorKinderabzug = einkommenJahr(f, SAEULE_3A.voll) + IPV_SG.vermoegenAnteil * vermoegen;
   const me = Math.max(0, meVorKinderabzug - IPV_SG.kinderabzug * kinderZahl);
 
   // 🛑 Hier ruft jeder andere Kanton `praemieFehlt`. St.Gallen nicht — und zwar begründet:

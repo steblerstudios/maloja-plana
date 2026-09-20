@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { IPV_AG, ipvAargauRechnen, agMassgebendesEinkommen, ipvAargau } from '../ipvAargau.js';
+import { SAEULE_3A } from '../kantonsModell.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 
 // K31 — Prämienverbilligung Kanton Aargau 2026, viertes Kantonsmodell.
@@ -212,10 +213,36 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
     expect(r.amount).toBe(Math.round(5830 / 12));
   });
 
-  it('Rechenbeispiel der Recherche durch die App: bereinigtes Einkommen 20 000 → 3 818', () => {
-    // pension3a ist ein Jahresbetrag und wird nach [1] § 6 Abs. 3 lit. b aufgerechnet — damit
-    // lässt sich das bereinigte Einkommen im Test exakt setzen.
-    expect(calculateIPV(person({ finanzen: { pension3a: 20000 } })).annual).toBe(3818);
+  // ⟨geändert 20.09.2026, zweite Fachprüfungsrunde⟩ Vorher setzte dieser Test das Einkommen
+  // über `pension3a: 20000` — das ging nur, solange die 3a fälschlich aufgerechnet wurde.
+  // Jetzt über das Einkommensfeld selbst; die reine Rechnung für 20 000 prüft weiterhin der
+  // Testfall «Rechenbeispiel der Recherche» oben, direkt an `agMassgebendesEinkommen`.
+  it('Rechenbeispiel durch die App: 2 500/Monat → 30 000 − 8 500 = 21 500 → 2 068', () => {
+    // 5 830 − 17,5 % × 21 500 = 5 830 − 3 762.50 = 2 067.50 → 2 068
+    expect(calculateIPV(person({ monthlyIncome: 2500 })).annual).toBe(2068);
+  });
+
+  // 🛑 RÜCKFALL-WÄCHTER (Befund Fachprüfung 20.09.2026, zweite Runde).
+  // Die 3a wurde doppelt gezählt: einmal im Nettoeinkommen, einmal aufgerechnet. In AG
+  // kostete das 17,5 % der Einzahlung — bei 3 000 also 525.–/Jahr, bei 12 000 fiel der
+  // Anspruch auf null. Eine zu tiefe Zahl hält Berechtigte vom Antrag ab.
+  it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen', () => {
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 3000 } })).annual).toBe(2068);
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).annual).toBe(2068);
+    // der alte Weg hätte bei 12 000 null ergeben (30 000 + 12 000 − 8 500 = 33 500 > Nullpunkt)
+    expect(calculateIPV(person({ monthlyIncome: 2500, finanzen: { pension3a: 12000 } })).eligible).toBe(true);
+  });
+
+  // ⚠️ NOCH NICHT UMGESETZT, und darum hier festgehalten statt vergessen:
+  // § 6 Abs. 5 KVGG i. V. m. § 5 Abs. 1 V KVGG rechnet die 3a bei Personen OHNE Säule 2 nur
+  // über 10 % des Nettoerwerbseinkommens auf. Die App weiss nicht sicher, ob eine Säule 2
+  // besteht (leere BVG-Felder heissen «nicht erfasst»), darum bleibt es bei der vollen
+  // Zurechnung. Wirkung: bei Personen ohne Säule 2 bis zu 34 % zu tief.
+  it('die 10-%-Schwelle ist benannt und belegt, wirkt aber noch nicht', () => {
+    expect(SAEULE_3A.schwelleOhneSaeule2.beleg).toMatch(/§ 6 Abs\. 5 KVGG/);
+    expect(SAEULE_3A.schwelleOhneSaeule2.offen).toMatch(/nicht SICHER/);
+    // 10 % von 30 000 = 3 000 — die Rechnung steht bereit
+    expect(SAEULE_3A.schwelleOhneSaeule2.schwelle({ monthlyIncome: 2500 })).toBe(3000);
   });
 
   it('Monatseinkommen und Renten zählen mit × 12', () => {
@@ -245,8 +272,11 @@ describe('K31 calculateIPV für AG (App-Angaben → Modell)', () => {
     // der Kanton publiziert die Grenze nicht, und eine abgeleitete Zahl wäre keine Auskunft.
     expect(r.noteParams).toEqual({});
     expect(r.cantonData.maxIncome).toBeNull();
-    // knapp darunter besteht noch ein Anspruch
-    expect(calculateIPV(person({ finanzen: { pension3a: 41000 } })).annual).toBe(143);
+    // knapp darunter besteht noch ein Anspruch: 3 450/Monat = 41 400 − 8 500 = 32 900
+    // → 5 830 − 17,5 % × 32 900 = 5 830 − 5 757.50 = 72.50 → 73
+    // ⟨geändert 20.09.2026: vorher über `pension3a: 41000` gesetzt — das ging nur, solange
+    // die 3a fälschlich aufgerechnet wurde.⟩
+    expect(calculateIPV(person({ monthlyIncome: 3450 })).annual).toBe(73);
   });
 
   it('Prämien-Deckel [1] § 7 Abs. 3 wirkt auf Betrag UND Vergleichswert', () => {
