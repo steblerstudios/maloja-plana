@@ -2,7 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
-import { text, weight, radius , leading , space } from './config/tokens.js';
+import { text, weight, radius , leading , space, visuallyHiddenStyle } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
@@ -119,6 +119,10 @@ export const BetaGate = ({ children }) => {
           React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
           React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
         ),
+        // Das «M» ist der Gipfel im SVG — als Text fehlt es. Ohne dieses versteckte
+        // «M» liest jede Text-Extraktion (Suchmaschine, KI-Crawler) «aloja Plana».
+        // aria-label oben deckt nur Screenreader ab, nicht den Textknoten.
+        React.createElement('span', { style: visuallyHiddenStyle }, 'M'),
         'aloja Plana'
       ),
       React.createElement('p', {
