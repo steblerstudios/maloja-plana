@@ -408,12 +408,12 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
       React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: space.sm, marginBottom: '12px' } },
         React.createElement('div', null,
-          React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('chapterView.expiryDate')),
-          React.createElement('input', { type: 'date', value: newDate, onChange: (e) => setNewDate(e.target.value), 'aria-label': t('chapterView.expiryDate'), style: { ...inputStyle, marginBottom: 0 } })
+          React.createElement('label', { htmlFor: 'cal-neu-datum', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('chapterView.expiryDate')),
+          React.createElement('input', { id: 'cal-neu-datum', type: 'date', value: newDate, onChange: (e) => setNewDate(e.target.value), style: { ...inputStyle, marginBottom: 0 } })
         ),
         React.createElement('div', null,
-          React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.category')),
-          React.createElement('select', { value: newCategory, onChange: (e) => setNewCategory(e.target.value), 'aria-label': t('calendar.category'), style: { ...inputStyle, marginBottom: 0 } },
+          React.createElement('label', { htmlFor: 'cal-neu-kategorie', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.category')),
+          React.createElement('select', { id: 'cal-neu-kategorie', value: newCategory, onChange: (e) => setNewCategory(e.target.value), style: { ...inputStyle, marginBottom: 0 } },
             categories.map(cat => React.createElement('option', { key: cat, value: cat }, t('calendar.categories.' + cat)))
           )
         )
@@ -421,11 +421,11 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
       // Optional, nur bei Gesundheit: letzter Besuch → berechnet den nächsten Termin
       newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
-        React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.lastVisit.label')),
+        React.createElement('label', { htmlFor: 'cal-neu-letzterbesuch', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.lastVisit.label')),
         React.createElement('input', {
+          id: 'cal-neu-letzterbesuch',
           type: 'date',
           value: newLastVisit,
-          'aria-label': t('calendar.lastVisit.label'),
           onChange: (e) => { const v = e.target.value; setNewLastVisit(v); if (v) setNewDate(nextDueFrom(v, newRecurrence)); },
           style: { ...inputStyle, marginBottom: '4px' }
         }),
@@ -434,7 +434,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
       // Optional, nur bei Gesundheit: Deckung dieses Jahr (gedeckt/selbst/unsicher; erneut klicken = leer)
       newCategory === 'health' && React.createElement('div', { style: { marginBottom: '12px' } },
-        React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.coverageThisYear.label')),
         React.createElement('div', { role: 'group', 'aria-label': t('calendar.coverageThisYear.label'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           ['covered', 'selfpay', 'unsure'].map(opt =>
             React.createElement('button', {
@@ -455,7 +455,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
       ),
 
       React.createElement('div', { style: { marginBottom: '12px' } },
-        React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.recurring')),
+        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: space.xs } }, t('calendar.recurring')),
         React.createElement('div', { role: 'group', 'aria-label': t('calendar.recurring'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
           ['once', 'daily', 'weekly', 'monthly', 'quarterly', 'halfYearly', 'yearly'].map(freq =>
             React.createElement('button', {
