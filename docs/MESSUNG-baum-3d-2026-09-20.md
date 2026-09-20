@@ -265,6 +265,64 @@ und Wort.
 | Baum-Stück | 143,0 KB | 144,2 KB gzip |
 | Tests | grün | **2327 grün** |
 
+---
+
+# Siebte Runde, 20.09. — Reife je Frucht, Farbprüfung, Wurzeln, Borke
+
+## 1. Jede Frucht reift einzeln
+
+Vorher reiften alle Früchte eines Astes gleichzeitig und gleich weit. Jetzt hat **jede Frucht
+ihren eigenen Reifepunkt**, gestreut über den Ausfüllstand ihres Bereichs (gemessen:
+Reifebeginn zwischen **58 % und 84 %**). Und sie **wechselt dabei die Farbe**: von einem
+grünen Unreif-Ton in die Bereichsfarbe.
+
+Bei 70 % hängen also reife neben halbreifen und grünen Früchten am selben Ast — was ehrlicher
+ist als «alles gleich weit» und nebenbei zeigt, dass da noch etwas kommt.
+Technisch je Frucht eine eigene Farbe (`instanceColor`), ohne einen einzigen zusätzlichen
+Zeichenaufruf.
+
+## 2. Stimmen die Farben überein? — Ja, nachgesehen
+
+`chapterAccentColor` im Dashboard ist `isDarkMode ? b.dark : b.light` aus
+`data/lebensbereiche.js` — **dieselbe Quelle**, aus der auch die flachen Früchte ihre Farbe
+nehmen. Der räumliche Baum bekommt genau diesen Wert durchgereicht. Hell und Dunkel getrennt.
+
+⚠️ **Eine Abweichung, die schon vorher bestand und nicht von dieser Arbeit kommt:** Der flache
+Dashboard-Baum zeichnet Stamm und Äste in `palette.sage` (grün), der Obstgarten und jetzt auch
+der räumliche Baum in einem Braunton. Zwei Bildsprachen fürs Holz — das ist ein offener
+Entscheid, kein Fehler.
+
+## 3. Wurzelwerk
+
+Von 9 kurzen Stummeln auf **12 Wurzeln**, davon jede dritte kräftig und einmal verzweigt,
+dazu ein kegeliger **Wurzelanlauf**, der den Stamm unten verbreitert. Der Baum steht jetzt im
+Boden, statt hineingesteckt zu sein.
+
+## 4. Borke
+
+Längsrippen mit zwei Oberwellen, die sich beim Hochwachsen drehen. **Gemessen: 15–19 %
+Radiusschwankung** — und trotzdem sah man im Bild ein glattes Rohr, weil die weiche
+Beleuchtung so etwas wegbügelt. Erst als die Struktur **zusätzlich in die Farbe** wanderte
+(Furchen dunkel, Grate hell, direkt in die Geometrie gebacken), wurde sie sichtbar.
+
+🛑 **Messfehler dabei, der Erwähnung verdient:** Mein erster Messwert sagte «64 % Schwankung»
+— ich hatte den Radius **zum Weltnullpunkt** gemessen statt zur Stammachse und damit die
+Neigung des Stamms mitgemessen, nicht die Rinde. Die Zahl war dreimal zu gross und hätte
+die Arbeit an der Borke beendet, bevor sie anfing.
+
+## 5. Früchte feiner
+
+Aus 8 Stützpunkten wird über eine Spline-Kurve eine weiche Silhouette (22 Punkte, 18 Seiten),
+dazu **Bauchnaht** bei Zwetschge, Aprikose und Kirsche und ein **Blütenrest** unten bei Apfel,
+Birne und Hagebutte.
+
+| | vorher | nachher |
+|---|---|---|
+| Dreiecke | 248 316 | **365 178** |
+| Zeichendauer | 1,22 ms | **1,23 ms** je Bild |
+| Start-Download | 63,41 KB | **63,41 KB** gzip |
+| Tests | 2327 grün | **2327 grün** |
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
@@ -274,6 +332,8 @@ und Wort.
 - Die vier Bereiche **ohne** eigenes Kapitel (Gesundheit, Arbeit, Familie, Vorsorge) hängen
   noch nicht am Dashboard-Baum — dort gibt es sieben Äste, nicht elf. Ihre Früchte
   (Hagebutte, Haselnuss, Kirsche, Traube) sind aber schon gebaut.
+- **Holzfarbe:** grün (flacher Dashboard-Baum) gegen braun (Obstgarten und räumlicher Baum) —
+  Entscheid steht aus.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.

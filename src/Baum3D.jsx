@@ -66,24 +66,50 @@ const ramp = (v, a, b) => smooth(Math.max(0, Math.min(1, (v - a) / (b - a))));
 // schrumpft ein wachsender Ast zur Bildmitte und schwebt unterwegs in der Luft
 // (erster Messlauf 20.09., im Bild gesehen). So wächst jeder Ast aus seinem
 // Elternast heraus — nichts schwebt, in keiner Wuchsstufe.
-function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente) {
+function rohrMitVerjuengung(kurve, r0, r1, laengsSegmente, rundSegmente, rindenTiefe = 0) {
   const g = new THREE.TubeGeometry(kurve, laengsSegmente, r0, rundSegmente, false);
   const pos = g.attributes.position;
+  const tonwerte = [];
   for (let i = 0; i < pos.count; i++) {
-    const t = Math.floor(i / (rundSegmente + 1)) / laengsSegmente;
+    const ring = Math.floor(i / (rundSegmente + 1));
+    const seite = i % (rundSegmente + 1);
+    const t = ring / laengsSegmente;
     const p = kurve.getPoint(t);
-    const f = THREE.MathUtils.lerp(1, r1 / r0, t);
+    let f = THREE.MathUtils.lerp(1, r1 / r0, t);
+    // Rindenstruktur: Längsrippen, die sich beim Hochwachsen leicht drehen,
+    // plus eine feinere zweite Welle. Ohne das wirkt der Stamm wie ein
+    // lackiertes Rohr — mit dem Aufwand von null zusätzlichen Dreiecken.
+    if (rindenTiefe > 0) {
+      const winkel = (seite / rundSegmente) * Math.PI * 2;
+      const rippe = Math.sin(winkel * 5 + t * 5.5) * 0.62
+        + Math.sin(winkel * 11 - t * 3.1) * 0.26
+        + Math.sin(winkel * 23 + t * 9) * 0.12;
+      f *= 1 + rindenTiefe * rippe;
+      // Die Rippen allein reichen nicht: gemessen schwankt der Radius um
+      // 15–19 %, im Bild sah man trotzdem ein glattes Rohr, weil die weiche
+      // Beleuchtung das wegbügelt. Darum wandert die Struktur zusätzlich in
+      // die Farbe — Furchen dunkel, Grate hell, wie bei echter Borke.
+      const helligkeit = 1 + rippe * 0.34 - 0.1;
+      tonwerte.push(helligkeit, helligkeit, helligkeit);
+    }
     pos.setXYZ(i, p.x + (pos.getX(i) - p.x) * f, p.y + (pos.getY(i) - p.y) * f, p.z + (pos.getZ(i) - p.z) * f);
   }
+  if (rindenTiefe > 0) g.setAttribute('color', new THREE.Float32BufferAttribute(tonwerte, 3));
   g.computeVertexNormals();
   return g;
 }
 
-function astGeometrie(richtung, laenge, r0, r1, biegung) {
+function astGeometrie(richtung, laenge, r0, r1, biegung, rindenTiefe = 0) {
   const mitte = richtung.clone().multiplyScalar(laenge * 0.5).add(biegung);
   const ende = richtung.clone().multiplyScalar(laenge).add(biegung.clone().multiplyScalar(2));
   const kurve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), mitte, ende]);
-  return { geometrie: rohrMitVerjuengung(kurve, r0, r1, 5, 6), ende };
+  // Dicke Äste tragen Struktur, dünne Zweige bleiben glatt — das spart Punkte
+  // dort, wo man ohnehin nichts sähe.
+  const dick = r0 > 0.05;
+  return {
+    geometrie: rohrMitVerjuengung(kurve, r0, r1, dick ? 6 : 4, dick ? 10 : 6, rindenTiefe),
+    ende,
+  };
 }
 
 // ─── Die Frucht mit dem ausgestanzten Bereichs-Icon, im Raum ────────────────
@@ -152,6 +178,9 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   const teile = [];      // einzelne Formen: { mesh, ab, bis, weg?, bereich? }
   const streu = [];      // Blätter/Knospen/Blüten/Früchte als Sammelformen
   const rinde = new THREE.MeshStandardMaterial({ color: farben.rinde, roughness: 0.95 });
+  // Eigenes Material für alles mit Borke — nur hier wird die eingebackene
+  // Hell-Dunkel-Zeichnung ausgewertet.
+  const borke = new THREE.MeshStandardMaterial({ color: farben.rinde, roughness: 0.97, vertexColors: true });
 
   // ─── Stamm ────────────────────────────────────────────────────────────────
   // Er läuft oben SPITZ aus und geht in einen Gipfeltrieb über. Vorher endete
@@ -167,24 +196,60 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     ));
   }
   const stammKurve = new THREE.CatmullRomCurve3(stammPunkte);
-  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.3, 0.035, 26, 10), rinde);
+  // Mehr Umfangspunkte und spürbare Rindentiefe — der Stamm ist das Stück,
+  // das man am längsten ansieht.
+  const stamm = new THREE.Mesh(rohrMitVerjuengung(stammKurve, 0.3, 0.035, 34, 26, 0.085), borke);
   stamm.castShadow = true;
   stamm.receiveShadow = true;
   wurzel.add(stamm);
   teile.push({ mesh: stamm, ...PLAN.stamm, achse: 'y' });
 
-  // Wurzelanlauf: der Fuss verbreitert sich zum Boden, sonst steht der Stamm
-  // wie ein eingesteckter Stab.
-  for (let i = 0; i < 9; i++) {
-    const w = (i / 9) * Math.PI * 2 + zufall() * 0.3;
-    const dir = new THREE.Vector3(Math.cos(w), -0.3, Math.sin(w)).normalize();
-    const { geometrie } = astGeometrie(dir, 0.7 + zufall() * 0.45, 0.085, 0.014, new THREE.Vector3(0, -0.06, 0));
-    const mesh = new THREE.Mesh(geometrie, rinde);
-    mesh.position.set(Math.cos(w) * 0.07, 0.16, Math.sin(w) * 0.07);
+  // ─── Wurzelwerk ──────────────────────────────────────────────────────────
+  // Ein Baum steht nicht im Boden, er greift hinein. Vorher waren es neun
+  // kurze Stummel; jetzt kräftige Hauptwurzeln, die sich verzweigen und flach
+  // über den Boden laufen, bevor sie eintauchen — dazu ein Wurzelanlauf, der
+  // den Stamm unten verbreitert.
+  const wurzelZahl = 12;
+  for (let i = 0; i < wurzelZahl; i++) {
+    const w = (i / wurzelZahl) * Math.PI * 2 + (zufall() - 0.5) * 0.35;
+    const kraeftig = i % 3 === 0;
+    const laenge = (kraeftig ? 1.35 : 0.9) + zufall() * 0.5;
+    const dicke = kraeftig ? 0.13 : 0.075;
+    const dir = new THREE.Vector3(Math.cos(w), -0.16 - zufall() * 0.12, Math.sin(w)).normalize();
+    const start = new THREE.Vector3(Math.cos(w) * 0.09, 0.19, Math.sin(w) * 0.09);
+    const { geometrie, ende } = astGeometrie(dir, laenge, dicke, 0.012, new THREE.Vector3(0, -0.12, 0), 0.07);
+    const mesh = new THREE.Mesh(geometrie, borke);
+    mesh.position.copy(start);
+    mesh.castShadow = true;
     mesh.receiveShadow = true;
     wurzel.add(mesh);
     teile.push({ mesh, ...PLAN.wurzeln });
+
+    // Nebenwurzel: jede kräftige Wurzel teilt sich einmal.
+    if (kraeftig) {
+      const w2 = w + (zufall() - 0.5) * 1.1;
+      const dir2 = new THREE.Vector3(Math.cos(w2), -0.3, Math.sin(w2)).normalize();
+      const { geometrie: g2 } = astGeometrie(dir2, laenge * 0.55, dicke * 0.45, 0.01, new THREE.Vector3(0, -0.06, 0));
+      const m2 = new THREE.Mesh(g2, rinde);
+      m2.position.copy(start).add(ende.clone().multiplyScalar(0.55));
+      m2.receiveShadow = true;
+      wurzel.add(m2);
+      teile.push({ mesh: m2, ab: 2, bis: 13 });
+    }
   }
+
+  // Wurzelanlauf: der Fuss verbreitert sich kegelig zum Boden.
+  const anlauf = new THREE.Mesh(
+    rohrMitVerjuengung(
+      new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0.02, 0), new THREE.Vector3(0, 0.3, 0), new THREE.Vector3(0, 0.75, 0)]),
+      0.46, 0.3, 10, 26, 0.1
+    ),
+    borke
+  );
+  anlauf.castShadow = true;
+  anlauf.receiveShadow = true;
+  wurzel.add(anlauf);
+  teile.push({ mesh: anlauf, ...PLAN.stamm, achse: 'y' });
 
   // ─── Äste: einer je Lebensbereich, jeder mit seinem eigenen Stand ─────────
   const blattPlaetze = [];
@@ -252,9 +317,16 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
       // Deutlich unter dem Blattschopf: die Frucht trägt die Bedeutung
       // (ein Lebensbereich), sie darf nicht im Grün verschwinden. Sie hängt
       // trotzdem an der Spitze — sie schwebt nicht.
+      // Jede Frucht reift für sich: eigener Startpunkt, eigene Dauer. Bei 70 %
+      // hängen deshalb ein paar reife neben halbreifen und ein paar grünen —
+      // wie an einem echten Baum, und ehrlicher als «alles gleich weit».
+      const versatz = zufall();
+      const reifeStart = 58 + versatz * 26;
       fruchtPlaetze[bereich.key].push({
         position: punkt.clone().add(new THREE.Vector3((zufall() - 0.5) * 0.16, -0.32, (zufall() - 0.5) * 0.16)),
-        groesse: 1 + zufall() * 0.25,
+        groesse: 0.9 + zufall() * 0.35,
+        ab: reifeStart,
+        bis: Math.min(98, reifeStart + 16),
       });
     };
 
@@ -325,13 +397,18 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
   sammelForm(knospeGeo, new THREE.MeshStandardMaterial({ color: farben.knospe, roughness: 0.7 }), knospenPlaetze, PLAN.knospe);
   sammelForm(blueteGeo, new THREE.MeshStandardMaterial({ color: farben.bluete, roughness: 0.7, side: THREE.DoubleSide }), bluetenPlaetze, PLAN.bluete);
   bereiche.forEach((b) => {
+    // Reif = die Bereichsfarbe (dieselbe wie am flachen Baum). Unreif = dieselbe
+    // Farbe, weit ins Blattgrün gezogen. Dazwischen wandert jede Frucht einzeln.
+    const reif = new THREE.Color(b.farbe);
+    const unreif = reif.clone().lerp(new THREE.Color(0x7d8f5f), 0.72);
     sammelForm(
       // Die echte Sorte, nicht bloss eine Grobform: Basis trägt Äpfel,
       // Behörden Zwetschgen, Wohnen Birnen — wie am flachen Baum.
       fruchtKoerper(b.fruit),
-      new THREE.MeshStandardMaterial({ color: b.farbe, roughness: 0.5 }),
+      // Weiss, weil die Farbe je Frucht einzeln obendrauf kommt.
+      new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.46 }),
       fruchtPlaetze[b.key].map((p) => ({ ...p, bereich: b.key })),
-      PLAN.frucht
+      { ...PLAN.frucht, reifung: { reif, unreif } }
     );
   });
 
@@ -350,6 +427,7 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
 
 // Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Lebensbereich.
 const hilfsObjekt = new THREE.Object3D();
+const reifeFarbe = new THREE.Color();
 export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   const stand = (schluessel) => (schluessel != null && proBereich[schluessel] != null ? proBereich[schluessel] : gesamtPct);
   const wuchs = (pct, tl) => {
@@ -374,8 +452,14 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   streu.forEach((s) => {
     let sichtbar = false;
     s.plaetze.forEach((p, i) => {
-      const g = wuchs(stand(p.bereich), s) * (p.groesse || 1);
+      // Trägt der Platz einen eigenen Zeitplan (Früchte), gilt seiner.
+      const reifeGrad = wuchs(stand(p.bereich), p.ab != null ? p : s);
+      const g = reifeGrad * (p.groesse || 1);
       if (g > 0.004) sichtbar = true;
+      if (s.reifung) {
+        reifeFarbe.copy(s.reifung.unreif).lerp(s.reifung.reif, reifeGrad);
+        s.mesh.setColorAt(i, reifeFarbe);
+      }
       if (p.amStamm) {
         hilfsObjekt.position.set(p.position.x * (0.5 + 0.5 * stammG), p.position.y * stammG, p.position.z);
       } else {
@@ -388,6 +472,7 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
       s.mesh.setMatrixAt(i, hilfsObjekt.matrix);
     });
     s.mesh.instanceMatrix.needsUpdate = true;
+    if (s.reifung && s.mesh.instanceColor) s.mesh.instanceColor.needsUpdate = true;
     s.mesh.visible = sichtbar;
   });
 }

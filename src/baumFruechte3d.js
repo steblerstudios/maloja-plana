@@ -44,6 +44,31 @@ const BUESCHEL = {
 // Langer Stiel: Kirsche und Vogelbeere hängen daran, das ist ihr Erkennungszeichen.
 const LANGER_STIEL = new Set(['kirsche', 'vogelbeere', 'traube']);
 
+// Bauchnaht — die Furche, an der man Zwetschge und Aprikose sofort erkennt.
+const NAHT = { zwetschge: 0.16, aprikose: 0.12, kirsche: 0.08 };
+
+// Blütenrest unten (Apfel, Birne, Hagebutte tragen ihn sichtbar).
+const KELCH = { apfel: 0.030, birne: 0.026, hagebutte: 0.034 };
+
+// Zieht eine senkrechte Furche in einen Drehkörper. LatheGeometry kann das
+// nicht selbst — die Punkte werden nachträglich zur Achse hin gezogen, am
+// stärksten auf einer Meridian-Linie.
+function nahtZiehen(geometrie, tiefe) {
+  const pos = geometrie.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const z = pos.getZ(i);
+    const winkel = Math.atan2(z, x);
+    // Zwei Furchen gegenüber (vorne und hinten) — wie bei der echten Frucht.
+    const naehe = Math.abs(Math.cos(winkel));
+    const faktor = 1 - tiefe * Math.pow(naehe, 8);
+    pos.setX(i, x * faktor);
+    pos.setZ(i, z * faktor);
+  }
+  geometrie.computeVertexNormals();
+  return geometrie;
+}
+
 function zusammenfuegen(teile) {
   const g = new THREE.BufferGeometry();
   const felder = ['position', 'normal', 'uv'];
@@ -89,8 +114,22 @@ export function fruchtKoerper(name) {
     });
   } else {
     const profil = PROFILE[name] || PROFILE.apfel;
-    const punkte = profil.map(([r, h]) => new THREE.Vector2(Math.max(r, 0.0015), h));
-    teile.push(new THREE.LatheGeometry(punkte, 12));
+    // Zwischenpunkte: aus 8 Stützpunkten wird eine weiche Kurve statt eines
+    // Kantenzugs — die Frucht wirkt gewachsen, nicht gefaltet.
+    const kurve = new THREE.SplineCurve(profil.map(([r, h]) => new THREE.Vector2(Math.max(r, 0.0015), h)));
+    const punkte = kurve.getPoints(22).map((p) => new THREE.Vector2(Math.max(p.x, 0.0015), p.y));
+    const koerper = new THREE.LatheGeometry(punkte, 18);
+    teile.push(NAHT[name] ? nahtZiehen(koerper, NAHT[name]) : koerper);
+
+    // Blütenrest am unteren Ende — kleines Detail, das man erst nah sieht,
+    // das aber den Unterschied zwischen «Kugel» und «Apfel» ausmacht.
+    if (KELCH[name]) {
+      const unten = profil[0][1];
+      const kelch = new THREE.ConeGeometry(KELCH[name], KELCH[name] * 1.6, 6);
+      kelch.rotateX(Math.PI);
+      kelch.translate(0, unten + KELCH[name] * 0.5, 0);
+      teile.push(kelch);
+    }
   }
 
   const oben = BUESCHEL[name] ? 0.11 : (PROFILE[name] || PROFILE.apfel).slice(-1)[0][1];
