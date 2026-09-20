@@ -164,10 +164,15 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
             recMonths && React.createElement('div', {
               style: { marginTop: '8px', paddingTop: '8px', borderTop: '1px solid ' + palette.border }
             },
+              // Das Feld war unbenannt: sichtbares Label ohne Verbindung, kein
+              // aria-label. Die id traegt item.key, weil dieser Block je Leistung
+              // einmal gerendert wird — eine feste id waere mehrfach da.
               React.createElement('label', {
+                htmlFor: 'kvg-lastvisit-' + item.key,
                 style: { display: 'block', color: palette.mid, marginBottom: '3px' }
               }, t('kvg.lastVisitLabel')),
               React.createElement('input', {
+                id: 'kvg-lastvisit-' + item.key,
                 type: 'date',
                 value: lastVisit || '',
                 max: new Date().toISOString().slice(0, 10),
@@ -427,12 +432,13 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       }, t('kvg.franchiseExplain')),
 
       React.createElement('label', {
+        htmlFor: 'kvg-franchise',
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
       }, t('kvg.franchiseLabel')),
       React.createElement('div', { style: { position: 'relative', marginBottom: '12px' } },
         React.createElement('select', {
+          id: 'kvg-franchise',
           value: franchise,
-          'aria-label': t('kvg.franchiseLabel'),
           onChange: (e) => setFranchise(Number(e.target.value)),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.sm,
@@ -466,7 +472,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       React.createElement('div', {
         style: { height: '1px', background: palette.border, margin: '14px 0' }
       }),
-      React.createElement('label', {
+      // War ein <label> ohne Feld — das beschriftet nichts, ist nicht anklickbar
+      // und wird von Screenreadern nicht als Bezug gelesen. Es ist eine
+      // Abschnitts-Beschriftung, also ein div.
+      React.createElement('div', {
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
       }, t('kvg.belegSection')),
       React.createElement('div', {
@@ -833,9 +842,11 @@ const RechnungTab = ({ palette, t, data }) => {
       }, t('kvg.rechnungExplain')),
 
       React.createElement('label', {
+        htmlFor: 'kvg-taxpunkte',
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
       }, t('kvg.taxpunkte')),
       React.createElement('input', {
+        id: 'kvg-taxpunkte',
         type: 'number',
         inputMode: 'decimal',
         value: tp,
@@ -850,12 +861,13 @@ const RechnungTab = ({ palette, t, data }) => {
       }),
 
       React.createElement('label', {
+        htmlFor: 'kvg-kanton',
         style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium }
       }, t('finanzUebersicht.canton')),
       React.createElement('div', { style: { position: 'relative' } },
         React.createElement('select', {
+          id: 'kvg-kanton',
           value: selCanton,
-          'aria-label': t('finanzUebersicht.canton'),
           onChange: (e) => setSelCanton(e.target.value),
           style: {
             width: '100%', padding: space.sm, borderRadius: radius.sm,

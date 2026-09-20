@@ -146,14 +146,14 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Name with autocomplete
     React.createElement('div', { style: { marginBottom: space.sm, position: 'relative' } },
-      React.createElement('label', { style: labelStyle }, t('medications.name')),
+      React.createElement('label', { htmlFor: 'medi-name-' + idx, style: labelStyle }, t('medications.name')),
       React.createElement('input', {
+        id: 'medi-name-' + idx,
         ref: nameRef, type: 'text', value: med.name || '',
         onChange: (e) => handleNameChange(e.target.value),
         onFocus: () => { if (suggestions.length > 0) setShowSuggestions(true); },
         onKeyDown: handleKeyDown,
         placeholder: t('medications.namePlaceholder'),
-        'aria-label': t('medications.name'),
         style: inputStyle,
         autoComplete: 'off',
         role: 'combobox',
@@ -199,12 +199,12 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Substance (auto-filled or manual)
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('medications.substance')),
+      React.createElement('label', { htmlFor: 'medi-wirkstoff-' + idx, style: labelStyle }, t('medications.substance')),
       React.createElement('input', {
+        id: 'medi-wirkstoff-' + idx,
         type: 'text', value: med.substance || '',
         onChange: (e) => onUpdate({ substance: e.target.value }),
         placeholder: t('medications.substancePlaceholder'),
-        'aria-label': t('medications.substance'),
         style: inputStyle,
       })
     ),
@@ -214,21 +214,21 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
       style: { display: 'grid', gridTemplateColumns: '1fr auto', gap: space.sm, marginBottom: space.sm }
     },
       React.createElement('div', null,
-        React.createElement('label', { style: labelStyle }, t('medications.dose')),
+        React.createElement('label', { htmlFor: 'medi-dosis-' + idx, style: labelStyle }, t('medications.dose')),
         React.createElement('input', {
+        id: 'medi-dosis-' + idx,
           type: 'text', value: med.dose || '',
           onChange: (e) => onUpdate({ dose: e.target.value }),
           placeholder: '500',
-          'aria-label': t('medications.dose'),
           style: inputStyle,
         })
       ),
       React.createElement('div', { style: { minWidth: '80px' } },
-        React.createElement('label', { style: labelStyle }, t('medications.unit')),
+        React.createElement('label', { htmlFor: 'medi-einheit-' + idx, style: labelStyle }, t('medications.unit')),
         React.createElement('select', {
+        id: 'medi-einheit-' + idx,
           value: med.unit || 'mg',
           onChange: (e) => onUpdate({ unit: e.target.value }),
-          'aria-label': t('medications.unit'),
           style: { ...inputStyle, cursor: 'pointer' },
         },
           ['mg', 'µg', 'g', 'ml', 'IE', 'Tropfen', 'Hübe'].map(u =>
@@ -240,8 +240,8 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Frequency pills
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('medications.frequency')),
-      React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+      React.createElement('div', { style: labelStyle }, t('medications.frequency')),
+      React.createElement('div', { role: 'group', 'aria-label': t('medications.frequency'), style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
         FREQ_OPTIONS.map(freq => {
           const active = (med.frequency || []).includes(freq);
           return React.createElement('button', {
@@ -261,12 +261,12 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Notes
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('medications.notes')),
+      React.createElement('label', { htmlFor: 'medi-notiz-' + idx, style: labelStyle }, t('medications.notes')),
       React.createElement('input', {
+        id: 'medi-notiz-' + idx,
         type: 'text', value: med.notes || '',
         onChange: (e) => onUpdate({ notes: e.target.value }),
         placeholder: t('medications.notesPlaceholder'),
-        'aria-label': t('medications.notes'),
         style: inputStyle,
       })
     ),

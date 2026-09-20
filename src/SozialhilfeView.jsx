@@ -134,11 +134,12 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
         React.createElement('div', { style: { paddingTop: space.md, borderTop: '1px solid ' + palette.border } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs } }, praefix('rechner', 16), t('sozialhilfe.repaymentRechnerTitle')),
           React.createElement('div', { style: { color: palette.mid, marginBottom: space.sm } }, t('sozialhilfe.repaymentRechnerIntro')),
-          React.createElement('label', { style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('sozialhilfe.repaymentAnfallLabel')),
+          React.createElement('label', { htmlFor: 'sh-erbschaft', style: { display: 'block', fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, t('sozialhilfe.repaymentAnfallLabel')),
           React.createElement('input', {
+            id: 'sh-erbschaft',
             type: 'number', inputMode: 'numeric', min: '0', value: erbschaft,
             onChange: (e) => setErbschaft(e.target.value),
-            'aria-label': t('sozialhilfe.repaymentAnfallLabel'), placeholder: '0',
+            placeholder: '0',
             style: { width: '160px', padding: '9px 10px', minHeight: '44px', fontSize: text.sm, border: '1px solid ' + palette.border, borderRadius: radius.sm, background: palette.surface, color: palette.text, fontFamily: 'inherit', boxSizing: 'border-box' },
           }),
           (Number(erbschaft) || 0) > 0 && React.createElement('div', {

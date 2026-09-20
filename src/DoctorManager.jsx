@@ -84,11 +84,11 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Specialty
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('doctors.specialty')),
+      React.createElement('label', { htmlFor: 'arzt-fach-' + idx, style: labelStyle }, t('doctors.specialty')),
       React.createElement('select', {
+        id: 'arzt-fach-' + idx,
         value: doc.specialty || 'hausarzt',
         onChange: (e) => onUpdate({ specialty: e.target.value }),
-        'aria-label': t('doctors.specialty'),
         style: { ...inputStyle, cursor: 'pointer' },
       },
         SPECIALTIES.map(s =>
@@ -99,36 +99,36 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
 
     // Name
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('doctors.name')),
+      React.createElement('label', { htmlFor: 'arzt-name-' + idx, style: labelStyle }, t('doctors.name')),
       React.createElement('input', {
+        id: 'arzt-name-' + idx,
         type: 'text', value: doc.name || '',
         onChange: (e) => onUpdate({ name: e.target.value }),
         placeholder: t('doctors.namePlaceholder'),
-        'aria-label': t('doctors.name'),
         style: inputStyle,
       })
     ),
 
     // Phone
     React.createElement('div', { style: { marginBottom: space.sm } },
-      React.createElement('label', { style: labelStyle }, t('doctors.phone')),
+      React.createElement('label', { htmlFor: 'arzt-tel-' + idx, style: labelStyle }, t('doctors.phone')),
       React.createElement('input', {
+        id: 'arzt-tel-' + idx,
         type: 'tel', value: doc.phone || '',
         onChange: (e) => onUpdate({ phone: e.target.value }),
         placeholder: '+41 44 123 45 67',
-        'aria-label': t('doctors.phone'),
         style: inputStyle,
       })
     ),
 
     // Notes (compact, single line)
     React.createElement('div', null,
-      React.createElement('label', { style: labelStyle }, t('doctors.notes')),
+      React.createElement('label', { htmlFor: 'arzt-notiz-' + idx, style: labelStyle }, t('doctors.notes')),
       React.createElement('input', {
+        id: 'arzt-notiz-' + idx,
         type: 'text', value: doc.notes || '',
         onChange: (e) => onUpdate({ notes: e.target.value }),
         placeholder: t('doctors.notesPlaceholder'),
-        'aria-label': t('doctors.notes'),
         style: inputStyle,
       })
     )

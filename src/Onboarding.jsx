@@ -231,32 +231,32 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
 
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: space.md } },
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
+            React.createElement('label', { htmlFor: 'onb-firstname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.firstName')),
             React.createElement('input', {
+              id: 'onb-firstname',
               type: 'text', value: firstName,
               onChange: (e) => setFirstName(e.target.value),
               placeholder: t('onboarding.firstNamePlaceholder'),
-              'aria-label': t('onboarding.firstName'),
               style: inputStyle,
             })
           ),
           React.createElement('div', null,
-            React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
+            React.createElement('label', { htmlFor: 'onb-lastname', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.lastName')),
             React.createElement('input', {
+              id: 'onb-lastname',
               type: 'text', value: lastName,
               onChange: (e) => setLastName(e.target.value),
               placeholder: t('onboarding.lastNamePlaceholder'),
-              'aria-label': t('onboarding.lastName'),
               style: inputStyle,
             })
           )
         ),
 
         React.createElement('div', { style: { marginBottom: space.sm } },
-          React.createElement('label', { style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
+          React.createElement('label', { htmlFor: 'onb-canton', style: { fontSize: text.sm, color: palette.mid, display: 'block', marginBottom: '6px' } }, t('onboarding.yourCanton')),
           React.createElement('select', {
+            id: 'onb-canton',
             value: canton, onChange: (e) => setCanton(e.target.value),
-            'aria-label': t('onboarding.yourCanton'),
             style: { ...inputStyle, appearance: 'auto' },
           },
             React.createElement('option', { value: '' }, t('common.select')),
