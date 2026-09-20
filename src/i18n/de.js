@@ -3039,6 +3039,8 @@ export default {
     noteApplyIas: 'Antrag beim Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Antrag beim Service de l\'action sociale',
     noteAutoTaxData: 'Automatische Prüfung via Steuerdaten',
+    // VD: der erste Subside muss beantragt werden, erst die Erneuerung läuft von selbst.
+    noteApplyOvam: 'Antrag beim OVAM oder bei der Agence d’assurances sociales; die Erneuerung läuft danach automatisch',
     noteAutoSam: 'Automatisch via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Kanton nicht erkannt',
     youngAdultsNote: 'Junge Erwachsene (19–25) in Ausbildung haben oft eine eigene, höhere Verbilligung. Bitte separat prüfen.',
@@ -3054,6 +3056,12 @@ export default {
     // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
     vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
     beAntragNoetig: 'Achtung: Bei einem Einkommen unter 14 000 Franken prüft der Kanton Bern den Anspruch nicht automatisch. Die Überprüfung muss bis zum 31. Dezember selbst beantragt werden, sonst verfällt der Anspruch für dieses Jahr.',
+    // VD rechnet mit der letzten rechtskräftigen Veranlagung, und der Anspruch beginnt erst
+    // zwei Monate nach dem Antrag — beides wäre mit dem ZH- oder BE-Satz falsch beschrieben.
+    vorbehaltVD: 'Im Kanton Waadt zählt die letzte rechtskräftige Steuerveranlagung, nicht das heutige Einkommen. Der Anspruch beginnt am 1. Tag des zweiten Monats nach dem Antrag — wer spät einreicht, verliert die Monate davor. Zu viel bezogene Beträge sind zurückzuzahlen.',
+    // Kein Betrag, nur der Hinweis: der spezifische Subside braucht die Prämien aller Personen
+    // im Haushalt und den genauen RDU — beides hat die App nicht.
+    vdSpezifischerSubside: 'Die erfasste Prämie ist hoch im Verhältnis zum Einkommen. Der Kanton Waadt kennt zusätzlich einen spezifischen Subside, wenn die Prämien mehr als 10 Prozent des massgebenden Einkommens ausmachen. Wie hoch er ausfällt, rechnet die App nicht — dafür braucht es die Prämien aller Personen im Haushalt. Beim OVAM nachfragen.',
     naeherung: 'Gerechnet mit den erfassten Einkommens- und Vermögensangaben, nicht mit dem steuerbaren Einkommen. Die kantonale Stelle rechnet mit den Steuerfaktoren und kommt deshalb auf einen etwas anderen Betrag.',
     // Warum hier bewusst keine Zahl steht. Ohne das liest sich «kein Betrag» wie
     // «der Kanton ist ungeprüft» — das ist etwas ganz anderes.

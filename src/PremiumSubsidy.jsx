@@ -307,6 +307,10 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // einen der zwei Kantone schlicht falsch (Befund Fachprüfung 20.09.2026).
       React.createElement('div', { style: { marginTop: space.xs } },
         t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.jahr - 2 })),
+      // Ein zusätzliches kantonales Instrument, das die App bewusst nicht beziffert (heute nur
+      // der «subside spécifique» in VD). Der Hinweis steht nur, wenn er auf den Haushalt passt —
+      // und nie mit einem Betrag, weil dafür die Prämien aller Personen fehlen (K31, 20.09.2026).
+      ipvResult.zusatzHinweisKey && React.createElement('div', { style: { marginTop: space.xs, color: palette.text } }, 'ⓘ ' + t(ipvResult.zusatzHinweisKey)),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
       // der Anspruch beantragt werden muss.
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗')

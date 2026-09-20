@@ -3009,6 +3009,7 @@ export default {
     noteApplyIas: 'Apply at Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Apply at Service de l\'action sociale',
     noteAutoTaxData: 'Automatic verification via tax data',
+    noteApplyOvam: 'Apply to the OVAM or the Agence d’assurances sociales; the yearly renewal is automatic',
     noteAutoSam: 'Automatic via SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton not recognized',
     youngAdultsNote: 'Young adults (19–25) in education often have their own, higher subsidy. Please check separately.',
@@ -3021,6 +3022,8 @@ export default {
     vorbehalt: 'The canton may still adjust the calculation basis during the year. The entitlement only becomes binding once the final {jahr} tax factors are available; amounts received in excess must be repaid.',
     vorbehaltBE: 'In the canton of Bern the basis is the final {basisjahr} tax assessment, not today’s income. Anyone earning considerably less today has to apply for a reassessment. Amounts received in excess must be repaid.',
     beAntragNoetig: 'Note: with an income below CHF 14,000 the canton of Bern does not check the entitlement automatically. The review has to be requested by 31 December, otherwise the entitlement for this year lapses.',
+    vorbehaltVD: 'In the canton of Vaud the basis is the most recent final tax assessment, not today’s income. The entitlement starts on the first day of the second month after the application — applying late costs the months before that. Amounts received in excess must be repaid.',
+    vdSpezifischerSubside: 'The premium recorded here is high in relation to the income. The canton of Vaud also grants a specific subsidy where premiums exceed 10 per cent of the determining income. This app does not calculate its amount — that would require the premiums of everyone in the household. Please ask the OVAM.',
     naeherung: 'Calculated from the income and assets recorded here, not from taxable income. The cantonal office uses the tax factors and will therefore arrive at a somewhat different amount.',
     offenGrund: {
       haushalt: 'For couples and households with several adults the app does not calculate yet: the age and income of the second person are missing.',

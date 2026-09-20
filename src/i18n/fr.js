@@ -3008,6 +3008,7 @@ export default {
     noteApplyIas: 'Demande auprès de l\'Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Demande auprès du Service de l\'action sociale',
     noteAutoTaxData: 'Vérification automatique via les données fiscales',
+    noteApplyOvam: 'Demande auprès de l’OVAM ou de l’agence d’assurances sociales; le renouvellement annuel est automatique',
     noteAutoSam: 'Automatique via le SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Canton non reconnu',
     youngAdultsNote: 'Les jeunes adultes (19–25) en formation ont souvent une réduction propre, plus élevée. À vérifier séparément.',
@@ -3020,6 +3021,8 @@ export default {
     vorbehalt: 'Le canton peut encore adapter les bases de calcul en cours d’année. Le droit ne devient définitif qu’avec les facteurs fiscaux {jahr} définitifs; les montants perçus en trop doivent être remboursés.',
     vorbehaltBE: 'Dans le canton de Berne, la base est la taxation définitive {basisjahr}, et non le revenu actuel. Qui gagne nettement moins aujourd’hui doit demander une nouvelle appréciation. Les montants perçus en trop doivent être remboursés.',
     beAntragNoetig: 'Attention: avec un revenu inférieur à 14 000 francs, le canton de Berne ne vérifie pas le droit automatiquement. La vérification doit être demandée d’ici au 31 décembre, sinon le droit pour cette année est perdu.',
+    vorbehaltVD: 'Dans le canton de Vaud, c’est la dernière décision de taxation définitive qui compte, et non le revenu actuel. Le droit débute le 1er jour du 2e mois suivant la demande: déposer tard fait perdre les mois précédents. Les montants perçus en trop doivent être remboursés.',
+    vdSpezifischerSubside: 'La prime saisie ici est élevée par rapport au revenu. Le canton de Vaud accorde en plus un subside spécifique lorsque les primes dépassent 10 pour cent du revenu déterminant. L’application n’en calcule pas le montant: cela demanderait les primes de toutes les personnes du ménage. À demander à l’OVAM.',
     naeherung: 'Calcul basé sur les revenus et la fortune saisis ici, et non sur le revenu imposable. Le service cantonal se fonde sur les facteurs fiscaux et arrive donc à un montant quelque peu différent.',
     offenGrund: {
       haushalt: 'Pour les couples et les ménages de plusieurs adultes, l’application ne calcule pas encore: l’âge et les revenus de la deuxième personne manquent.',

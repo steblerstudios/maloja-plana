@@ -1987,6 +1987,8 @@ export default {
     noteApplyIas: "Dumonda tar l'Istituto delle assicurazioni sociali (IAS)",
     noteApplySocialAction: "Dumonda tar il Service de l'action sociale",
     noteAutoTaxData: 'Examinaziun automatica via datas da taglia',
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    noteApplyOvam: 'Dumonda tar l’OVAM u tar l’agentura d’assicuranzas socialas; il renovament annual va automaticamain',
     noteAutoSam: "Automaticamain via SAM (Service de l'assurance-maladie)",
     cantonUnknown: 'Chantun betg enconuschent',
     youngAdultsNote: 'Giuvenils (19–25) en furmaziun han savens ina reducziun atgna e pli auta. Per plaschair controllar separadamain.',
@@ -2001,6 +2003,10 @@ export default {
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    vorbehaltVD: 'En il chantun Vad vala l’ultima taxaziun definitiva entrada en vigur, betg l’entrada dad oz. Il dretg cumenza il emprim di dal segund mais suenter la dumonda — tgi che inoltrescha tard perda ils mais avant. Imports retschavids memia bler ston vegnir restituids.',
+    // TODO(rm): provisorisch, von Muttersprachler:in gegenlesen.
+    vdSpezifischerSubside: 'La premia registrada qua è auta en relaziun cun l’entrada. Il chantun Vad enconuscha ultra da quai in subsidi specific, sche las premias surpassan 10 pertschient da l’entrada decisiva. L’applicaziun na quinta betg l’import — per quai dovria las premias da tut las persunas da la chasada. Dumandar tar l’OVAM.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',

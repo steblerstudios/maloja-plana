@@ -3009,6 +3009,7 @@ export default {
     noteApplyIas: 'Richiesta presso l\'Istituto delle assicurazioni sociali (IAS)',
     noteApplySocialAction: 'Richiesta presso il Service de l\'action sociale',
     noteAutoTaxData: 'Verifica automatica tramite i dati fiscali',
+    noteApplyOvam: 'Richiesta all’OVAM o all’agenzia di assicurazioni sociali; il rinnovo annuale è automatico',
     noteAutoSam: 'Automatico tramite il SAM (Service de l\'assurance-maladie)',
     cantonUnknown: 'Cantone non riconosciuto',
     youngAdultsNote: 'I giovani adulti (19–25) in formazione hanno spesso una riduzione propria, più alta. Da verificare a parte.',
@@ -3021,6 +3022,8 @@ export default {
     vorbehalt: 'Il Cantone può ancora adeguare le basi di calcolo nel corso dell’anno. Il diritto diventa vincolante solo con i fattori fiscali definitivi {jahr}; gli importi percepiti in eccesso vanno restituiti.',
     vorbehaltBE: 'Nel Cantone di Berna la base è la tassazione definitiva {basisjahr}, non il reddito attuale. Chi oggi guadagna nettamente meno deve chiedere un nuovo esame. Gli importi percepiti in eccesso vanno restituiti.',
     beAntragNoetig: 'Attenzione: con un reddito inferiore a 14 000 franchi il Cantone di Berna non verifica il diritto automaticamente. La verifica va chiesta entro il 31 dicembre, altrimenti il diritto per quest’anno decade.',
+    vorbehaltVD: 'Nel Cantone di Vaud conta l’ultima tassazione definitiva cresciuta in giudicato, non il reddito attuale. Il diritto inizia il primo giorno del secondo mese successivo alla domanda: chi la presenta tardi perde i mesi precedenti. Gli importi percepiti in eccesso vanno restituiti.',
+    vdSpezifischerSubside: 'Il premio registrato qui è alto rispetto al reddito. Il Cantone di Vaud prevede inoltre un sussidio specifico quando i premi superano il 10 per cento del reddito determinante. L’app non ne calcola l’importo: servirebbero i premi di tutte le persone dell’economia domestica. Da chiedere all’OVAM.',
     naeherung: 'Calcolo basato sui redditi e sulla sostanza registrati qui, non sul reddito imponibile. Il servizio cantonale si basa sui fattori fiscali e arriva quindi a un importo un po’ diverso.',
     offenGrund: {
       haushalt: 'Per le coppie e le economie domestiche con più adulti l’app non calcola ancora: mancano l’età e i redditi della seconda persona.',
