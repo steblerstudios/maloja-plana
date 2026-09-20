@@ -92,6 +92,42 @@ stimmig. Übrig bleibt die Frage nach der Rechtsgrundlage.*
 **Stand:** AG ist für 2026 gebaut; die Werte 2027 sind bewusst **nicht** eingebaut, weil sie
 nur auf der Website belegt sind. Ab 01.01.2027 zeigt die App für AG keinen Betrag mehr.
 
+## 5 · SVA St.Gallen — Deckel auf die effektive Prämie, und zwei kleinere Punkte
+
+**Worum es geht:** Vier Kantone begrenzen die Prämienverbilligung ausdrücklich auf die
+tatsächlich fakturierte Prämie — Zürich (§ 4 Abs. 3 EG KVG), Bern (KKVV Art. 10 Abs. 1),
+Aargau (§ 7 Abs. 3 KVGG) und Waadt (LVLAMal art. 16 al. 1bis). Im St. Galler
+Regierungsbeschluss sGS 331.538 und in der Verordnung sGS 331.111 finden wir keine solche
+Bestimmung. Wir haben beide Erlasse vollständig danach durchsucht; die Methode und die
+Gegenprobe stehen in `docs/sources/ipv-kantone-2026.md`, Abschnitt SG.
+
+**Warum es zählt:** Ohne Deckel bemisst sich die Verbilligung allein an der kantonalen
+Referenzprämie. Wer in Region 1 eine günstige Prämie von CHF 280 im Monat zahlt, bekäme nach
+unserer Rechnung bis CHF 6'285.60 im Jahr angezeigt — mehr als die Prämie selbst. Wir rechnen
+heute ohne Deckel und sagen im Vorbehalt, dass die Referenzprämie die Bemessungsgrundlage ist
+und der ausbezahlte Betrag tiefer ausfallen kann.
+
+**Frage 1:** Wird die Prämienverbilligung im Kanton St.Gallen auf die tatsächlich fakturierte
+Prämie begrenzt? Wenn ja: wo ist das geregelt — in einer Weisung, einem Kreisschreiben oder
+der Vollzugspraxis?
+
+**Frage 2:** Die Anmeldefrist. Publiziert ist «Einreichfrist bis 31. März» für einen
+ganzjährigen Anspruch. Offen ist für uns: Was gilt für eine Anmeldung **nach** dem 31. März —
+besteht ab dem Monat der Anmeldung ein anteiliger Anspruch? Und ab welchem Datum kann man sich
+für das **folgende** Bezugsjahr anmelden?
+
+**Frage 3:** Das Alter. Der Beschluss nennt einen Stichtag nur für die Prämienregion (Art. 2
+Abs. 1, zivilrechtlicher Wohnsitz am 1. Januar), nicht für das Alter. Art. 3 unterscheidet
+aber «ab dem 26. Altersjahr» und «bis zum vollendeten 25. Altersjahr». Welcher Zeitpunkt
+entscheidet für eine Person, die im Bezugsjahr 26 wird? Wir zeigen für diesen Jahrgang
+derzeit keinen Betrag.
+
+**Stand:** SG ist für 2026 gebaut. Die Werte 2027 sind bewusst **nicht** eingebaut — die
+Regierung legt sie nach Art. 19 Abs. 1 der Verordnung jährlich bis 15. Dezember fest, und am
+20.09.2026 lag kein Beschluss vor. Ab 01.01.2027 zeigt die App für SG keinen Betrag mehr.
+
+---
+
 ---
 
 ## Warum überhaupt fragen

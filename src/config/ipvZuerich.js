@@ -14,6 +14,13 @@
 //     Familiengrenze 70 500 (nur minderjährige Kinder), Abzugsquote 60 % darüber.
 // Gegenprobe: alle 36 Einkommensgrenzen 2026 der SVA ergeben sich exakt aus diesen Werten
 // (src/config/__tests__/ipvZuerich.test.js).
+import {
+  vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
+  jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN,
+  kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ,
+  ergebnisOhneAnspruch, ergebnisMitAnspruch,
+} from './kantonsModell.js';
+
 export const IPV_ZH = {
   jahr: 2026,
   referenz: 0.7,
@@ -90,68 +97,51 @@ export function ipvZuerich(data, hh, ipvData, youngAdultsCount, orientierung, lo
   // gerechnet, ein Jahr zu viel. Das machte aus 25-Jährigen Erwachsene und zeigte einen
   // Betrag, wo nach den Grenzen für junge Erwachsene keiner besteht.)
   const stichjahr = jahr - 1;
-  // Die App rechnet nur für das Jahr, dessen Werte belegt sind. Ab dem 01.01. des Folgejahres
-  // lieber keine Zahl als eine aus veralteten Sätzen (Eigenanteil und Durchschnittsprämien
-  // ändern jährlich; 2027 sind es 9,4/11,8 % statt 8,4/10,5 %).
-  if (new Date().getFullYear() > jahr) return orientierung('jahr');
-  const geburt = /^\d{4}-/.test(b.dateOfBirth || '') ? Number(b.dateOfBirth.slice(0, 4)) : null;
-  // `cohabiting` gehört dazu: Konkubinat rechnet je nach Kanton wie ein Paar, und das Einkommen
-  // der zweiten Person kennt die App nicht (Befund Fachprüfung 20.09.2026, bei BE aufgefallen).
-  if (hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting') return orientierung('haushalt');
-  if (!geburt || stichjahr - geburt < 26) return orientierung('alter');
-  // Kind ohne Geburtsdatum: `age` ist in der App mit 0 vorbelegt (ChapterView legt neue Kinder
-  // so an, dataMigration setzt es bei Alt-Daten ebenso). Eine 0 heisst darum «nicht erfasst»,
-  // nicht «Säugling» — und ein nicht erfasstes Alter erhöht sonst still Referenzprämie und
-  // Mindestanspruch (Befund Fachprüfung 20.09.2026). Wie beim Alter der erwachsenen Person:
-  // keine Zahl, bis das Alter dasteht.
-  const kinder = hh.children.map((c) => (/^\d{4}-/.test(c.birthDate || '')
-    ? stichjahr - Number(c.birthDate.slice(0, 4))
-    // Beim eingetippten Alter KEIN `- 1`: es ist nicht datiert, und für Kinder wirkt das Alter
-    // nur an der Grenze 18. Das eingetippte Alter unverändert zu nehmen, hält an dieser Grenze
-    // die vorsichtigere Seite (eine 19-jährige Person bleibt aussen vor).
-    : (Number(c.age) > 0 ? Number(c.age) : null)));
-  if (kinder.some((a) => a === null)) return orientierung('alter');
-  if (kinder.some((a) => a > 18)) return orientierung('haushalt');
+  // Die Riegel bis zur Prämie stehen im gemeinsamen Rahmen (config/kantonsModell.js) —
+  // Reihenfolge und Gründe bleiben hier sichtbar, die Regeln selbst sind dort einmal belegt.
+  // Eigenanteil und Durchschnittsprämien ändern jährlich (2027: 9,4/11,8 % statt 8,4/10,5 %).
+  if (jahrVorbei(jahr)) return orientierung('jahr');
+  const geburt = geburtsjahr(b);
+  if (mehrereErwachsene(hh, b)) return orientierung('haushalt');
+  if (!geburt || !ERWACHSEN.abEndeVorjahr(jahr, geburt)) return orientierung('alter');
+  // Bezugsjahr ist das Vorjahr, darum beim eingetippten Alter KEIN Zuschlag: es ist nicht
+  // datiert, und für Kinder wirkt das Alter nur an der Grenze 18. Unverändert genommen hält
+  // es dort die vorsichtigere Seite (eine 19-jährige Person bleibt aussen vor).
+  const kinder = kinderAlter(hh.children, stichjahr, 0);
+  if (ALTER_UNERFASST(kinder)) return orientierung('alter');
+  if (UEBER_18(kinder)) return orientierung('haushalt');
 
-  const plz = String(data.wohnen?.postalCode || '').trim();
-  const orte = plz ? lookupPLZ(plz).filter((g) => g.kanton === 'ZH') : [];
-  const stadt = String(data.wohnen?.city || '').trim().toLowerCase();
-  const ort = orte.length === 1 ? orte[0] : orte.find((g) => g.gemeinde.toLowerCase() === stadt);
-  const regionen = new Set(orte.map((g) => zhRegion(g.bfsNr)));
-  const region = ort ? zhRegion(ort.bfsNr) : regionen.size === 1 ? [...regionen][0] : null;
+  const { region } = regionAusPLZ({ data, kanton: 'ZH', lookupPLZ, regionFn: zhRegion });
   if (!region) return orientierung('region');
 
   const gruppe = kinder.length > 0 ? 1 : 0;
-  const vermoegen = Number(f.securitiesValue || 0) + Number(f.otherAssets || 0) + Number(f.savingsAccount || 0);
+  const vermoegen = vermoegenSumme(f);
   if (vermoegen > IPV_ZH.vermoegen.grenze[gruppe]) return orientierung('vermoegen');
   // § 5 Abs. 1 lit. b EG KVG: Beiträge an die gebundene Selbstvorsorge (Säule 3a) werden dem
-  // massgebenden Einkommen HINZUGERECHNET. `pension3a` ist ein Jahresbetrag (Feldbeschriftung
-  // «3. Säule A eingezahlt CHF/Jahr»), darum ohne × 12. (Befund Fachprüfung 20.09.2026.)
-  const me = ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente'].reduce((s, k) => s + Number(f[k] || 0), 0) * 12
-    + Number(f.pension3a || 0)
+  // massgebenden Einkommen HINZUGERECHNET — `einkommenJahr` rechnet sie darum mit ein.
+  // (Befund Fachprüfung 20.09.2026.)
+  const me = einkommenJahr(f)
     + IPV_ZH.vermoegen.anteil * Math.max(0, vermoegen - IPV_ZH.vermoegen.freibetrag[gruppe]);
 
   const r = ipvZuerichRechnen({ region, verheiratet: false, personen: ['e', ...kinder.map(() => 'k')], me });
   if (r.unklar) return orientierung('mindestanspruch');
   // § 4 Abs. 3 EG KVG: höchstens die Bruttoprämie — nur bei einer Person ist die erfasste Prämie ihre eigene.
-  const praemie = Number(data.versicherungen?.kkPremium) * 12;
-  // Ohne erfasste Prämie greift der gesetzliche Deckel nicht (die Verbilligung ist höchstens
-  // so hoch wie die tatsächliche Prämie). Eine Zahl ohne ihn wäre die Obergrenze, nicht der
-  // Anspruch — in AG gemessen bis 40 % zu viel. Darum Orientierung, bis die Prämie dasteht
-  // (Befund Fachprüfung 20.09.2026; betrifft alle drei Kantone mit eigenem Modell).
-  if (!(praemie > 0)) return orientierung('praemie');
-  const deckel = !gruppe && praemie > 0 ? praemie : Infinity;
+  const praemie = praemieJahr(data);
+  if (praemieFehlt(praemie)) return orientierung('praemie');
+  // Anders als BE und VD deckelt ZH nur den kinderlosen Fall auf die Prämie: mit Kindern
+  // verteilt § 6 Abs. 4 die Verbilligung über die Gruppe, und die Prämien der Kinder fehlen.
+  const deckel = !gruppe ? praemie : Infinity;
   const annual = Math.round(Math.min(r.total, deckel));
   const maxAnnual = Math.round(Math.min(r.maximal, deckel));
-  const cantonData = { ...ipvData, maxIncome: r.grenze };
-  if (annual <= 0) {
-    return { belegt: true, eligible: false, amount: 0, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze }, canton: 'ZH', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehalt' };
-  }
-  return {
-    eligible: true, belegt: true, anspruchMoeglich: true,
-    amount: Math.round(annual / 12), annual, maxAnnual,
-    reductionPercent: Math.round((annual / maxAnnual) * 100),
-    noteKey: ipvData.noteKey, noteParams: ipvData.noteParams || {},
-    youngAdultsCount, canton: 'ZH', cantonData, region, jahr, vorbehaltKey: 'ipv.vorbehalt',
+  const gemeinsam = {
+    canton: 'ZH', cantonData: { ...ipvData, maxIncome: r.grenze }, jahr,
+    vorbehaltKey: 'ipv.vorbehalt', extra: { region },
   };
+  if (annual <= 0) {
+    return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
+  }
+  return ergebnisMitAnspruch({
+    ...gemeinsam, annual, maxAnnual, youngAdultsCount,
+    noteKey: ipvData.noteKey, noteParams: ipvData.noteParams || {},
+  });
 }
