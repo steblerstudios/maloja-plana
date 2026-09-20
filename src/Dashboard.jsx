@@ -521,7 +521,13 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
         style: { height: '340px', display: 'grid', placeItems: 'center', fontSize: text.xs, color: palette.soft },
       }, 'Der Baum wird geladen …'),
     }, React.createElement(Baum3D, {
-      bereiche: (bereiche || []).map((b) => ({ key: b.key, farbe: b.color, form: formFuerFrucht(b.fruit), pct: b.pct })),
+      bereiche: (bereiche || []).map((b) => ({
+        key: b.key, farbe: b.color, form: formFuerFrucht(b.fruit), pct: b.pct,
+        name: b.short || b.title, idx: b.idx,
+      })),
+      // Der Weg ins Kapitel bleibt erhalten — das kann der flache Baum, und ohne
+      // ihn wäre der räumliche hübscher, aber ärmer.
+      onBereichWaehlen: onSelectChapter ? (b) => onSelectChapter(b.idx) : undefined,
       palette, isDarkMode,
       gesamtPct: bereiche && bereiche.length
         ? Math.round(bereiche.reduce((s, b) => s + b.pct, 0) / bereiche.length) : 0,

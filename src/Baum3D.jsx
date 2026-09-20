@@ -132,6 +132,18 @@ function astGeometrie(richtung, laenge, r0, r1, biegung) {
   return { geometrie: rohrMitVerjuengung(kurve, r0, r1, 5, 6), ende };
 }
 
+// Ankerpunkt je Lebensbereich: der äusserste Fruchtplatz seines Astes. Daran
+// hängt später die Beschriftung — sie folgt dem Ast, auch wenn man dreht.
+function aeussersterPunkt(punkte) {
+  let treffer = punkte[0];
+  let weiteste = -Infinity;
+  punkte.forEach((p) => {
+    const d = Math.hypot(p.position.x, p.position.z) + p.position.y * 0.35;
+    if (d > weiteste) { weiteste = d; treffer = p; }
+  });
+  return treffer ? treffer.position.clone() : new THREE.Vector3();
+}
+
 export function baumAufbauen(bereiche, farben, seed = 7412) {
   const zufall = rng(seed);
   const wurzel = new THREE.Group();
@@ -319,7 +331,17 @@ export function baumAufbauen(bereiche, farben, seed = 7412) {
     );
   });
 
-  return { wurzel, teile, streu };
+  // Nach aussen versetzt: die Marke soll neben der Krone stehen, nicht mitten
+  // im Laub. Sie zeigt weiterhin genau auf ihren Ast.
+  const anker = bereiche.map((b) => {
+    const p = aeussersterPunkt(fruchtPlaetze[b.key]);
+    return {
+      key: b.key,
+      punkt: new THREE.Vector3(p.x * 1.42, p.y + 0.35, p.z * 1.42),
+    };
+  });
+
+  return { wurzel, teile, streu, anker };
 }
 
 // Ausfüllstand → Sichtbarkeit. Jeder Ast folgt seinem eigenen Lebensbereich.
@@ -364,9 +386,14 @@ export function wachstumAnwenden(teile, streu, gesamtPct, proBereich) {
   });
 }
 
-export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel }) {
+export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe = 420, ariaLabel, onBereichWaehlen }) {
   const halter = React.useRef(null);
   const [keinWebGL, setKeinWebGL] = React.useState(false);
+  // Wo hängt welcher Ast gerade auf dem Bildschirm? Daran kleben die
+  // Beschriftungen — echte Knöpfe über der Leinwand, nicht ins Bild gemalt.
+  // So bleiben Name, Prozent und der Weg ins Kapitel erhalten, die der flache
+  // Baum kann und der räumliche bisher nicht hatte.
+  const [marken, setMarken] = React.useState([]);
 
   React.useEffect(() => {
     const el = halter.current;
@@ -416,7 +443,7 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       knospe: isDarkMode ? 0x8c7a52 : 0xa89055,
       bluete: isDarkMode ? 0xc9a8b0 : 0xe6cbd3,
     };
-    const { wurzel, teile, streu } = baumAufbauen(bereiche, farben);
+    const { wurzel, teile, streu, anker } = baumAufbauen(bereiche, farben);
     szene.add(wurzel);
 
     const proBereich = {};
@@ -434,7 +461,43 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
       );
       kamera.lookAt(ziel);
       renderer.render(szene, kamera);
+      markenNachfuehren();
     };
+
+    // Die Ankerpunkte vom Raum auf die Fläche rechnen. Ein Ast auf der
+    // Rückseite bekommt eine blassere Marke, damit vorne und hinten
+    // unterscheidbar bleiben — statt dass sich alles überlagert.
+    const hilfsVektor = new THREE.Vector3();
+    let letzte = '';
+    const markenNachfuehren = () => {
+      const neu = anker.map((a) => {
+        hilfsVektor.copy(a.punkt).project(kamera);
+        const blickrichtung = kamera.position.clone().sub(ziel).normalize();
+        const nachAussen = a.punkt.clone().setY(0).normalize();
+        const vorne = nachAussen.dot(blickrichtung) > -0.15;
+        return {
+          key: a.key,
+          x: (hilfsVektor.x * 0.5 + 0.5) * 100,
+          y: (-hilfsVektor.y * 0.5 + 0.5) * 100,
+          vorne,
+          sichtbar: hilfsVektor.z < 1,
+        };
+      });
+      // Entzerren: zwei Marken, die sich überlagern, schieben sich sanft
+      // auseinander. Sonst liest man zwei Namen übereinander und keinen davon.
+      const vorneListe = neu.filter((m) => m.vorne).sort((a, c) => a.y - c.y);
+      for (let i = 1; i < vorneListe.length; i++) {
+        const oben = vorneListe[i - 1];
+        const unten = vorneListe[i];
+        if (Math.abs(unten.x - oben.x) < 26 && unten.y - oben.y < 8) {
+          unten.y = oben.y + 8;
+        }
+      }
+
+      const abdruck = neu.map((m) => m.key + Math.round(m.x) + ',' + Math.round(m.y) + (m.vorne ? 'v' : 'h')).join('|');
+      if (abdruck !== letzte) { letzte = abdruck; setMarken(neu); }
+    };
+
     // Nur zeichnen, wenn sich etwas ändert — keine Dauerschleife, kein Akkufresser.
     const anfordern = () => { if (!angefordert) { angefordert = true; requestAnimationFrame(zeichnen); } };
 
@@ -561,18 +624,56 @@ export default function Baum3D({ bereiche, palette, isDarkMode, gesamtPct, hoehe
 
   if (keinWebGL) return null; // Aufrufer zeigt dann den flachen Baum.
 
-  return React.createElement('div', {
-    ref: halter,
-    tabIndex: 0,
-    role: 'img',
-    'aria-label': ariaLabel,
-    style: {
-      width: '100%', height: hoehe + 'px', borderRadius: '12px', overflow: 'hidden',
-      // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
-      // wie ein Teil der Seite wirken, nicht wie ein eingeklebtes Fenster.
-      background: palette
-        ? 'linear-gradient(' + palette.up + ', ' + palette.sage + '1f)'
-        : (isDarkMode ? 'linear-gradient(#2a3338,#37423a)' : 'linear-gradient(#dfeaf0,#eef3e8)'),
-    },
-  });
+  const nachSchluessel = {};
+  (bereiche || []).forEach((b) => { nachSchluessel[b.key] = b; });
+
+  return React.createElement('div', { style: { position: 'relative', width: '100%' } },
+    React.createElement('div', {
+      ref: halter,
+      tabIndex: 0,
+      role: 'img',
+      'aria-label': ariaLabel,
+      style: {
+        width: '100%', height: hoehe + 'px', borderRadius: '12px', overflow: 'hidden',
+        // Himmel aus der Palette, nicht aus einem Fantasie-Blau: der Kasten soll
+        // wie ein Teil der Seite wirken, nicht wie ein eingeklebtes Fenster.
+        background: palette
+          ? 'linear-gradient(' + palette.up + ', ' + palette.sage + '1f)'
+          : (isDarkMode ? 'linear-gradient(#2a3338,#37423a)' : 'linear-gradient(#dfeaf0,#eef3e8)'),
+      },
+    }),
+    ...marken.filter((m) => m.sichtbar).map((m) => {
+      const b = nachSchluessel[m.key];
+      if (!b) return null;
+      const anklickbar = typeof onBereichWaehlen === 'function';
+      return React.createElement('button', {
+        key: m.key,
+        type: 'button',
+        onClick: anklickbar ? () => onBereichWaehlen(b) : undefined,
+        'aria-label': (b.name || m.key) + ' — ' + b.pct + ' Prozent',
+        style: {
+          position: 'absolute', left: m.x + '%', top: m.y + '%',
+          transform: 'translate(-50%, -50%)',
+          display: 'inline-flex', alignItems: 'center', gap: '5px',
+          padding: '2px 8px 2px 4px', borderRadius: '999px',
+          fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
+          // Hinten liegende Äste treten zurück, statt vorne mitzudrängeln.
+          opacity: m.vorne ? 1 : 0.38,
+          color: palette ? palette.text : '#222',
+          background: (palette ? palette.surface : '#fff') + 'e6',
+          border: '1px solid ' + b.farbe + '55',
+          cursor: anklickbar ? 'pointer' : 'default',
+          pointerEvents: m.vorne ? 'auto' : 'none',
+        },
+      },
+        React.createElement('span', {
+          style: { width: '8px', height: '8px', borderRadius: '50%', background: b.farbe, flex: '0 0 auto' },
+        }),
+        React.createElement('span', null, b.name || m.key),
+        React.createElement('span', {
+          style: { opacity: 0.6, fontVariantNumeric: 'tabular-nums' },
+        }, b.pct + '%')
+      );
+    })
+  );
 }

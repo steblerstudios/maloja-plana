@@ -150,11 +150,46 @@ echte Telefone steht weiterhin aus.
    hätte ab da nichts mehr gemessen. Schlüssel heisst jetzt `index`. Derselbe Stolperstein
    trifft den Service-Worker-Hash, der sich am Eingangs-Bundle orientiert.
 
+---
+
+# Vierte Runde, 20.09. — die Kombination beider Bäume
+
+Auftrag: «kriegen wir die ideale Kombination der beiden Bäume hin?» Der flache Baum kann
+etwas, das der räumliche nicht hatte: **Namen, Prozente, Klick ins Kapitel**. Genau das ist
+jetzt beides zusammen.
+
+**Wie:** Jeder Ast hat einen Ankerpunkt im Raum. Nach jedem Zeichnen wird er auf die Fläche
+gerechnet; darüber liegen **echte Knöpfe** — keine ins Bild gemalte Schrift. Das heisst:
+
+- **Name + Prozent an jedem Ast**, so wie am flachen Baum.
+- **Klick führt ins Kapitel** — geprüft: Klick auf «Wohnen 75 %» öffnet `#/chapter/1`.
+- Die Marken **folgen beim Drehen** ihrem Ast.
+- Äste auf der **Rückseite treten zurück** (blasser, nicht anklickbar) — sonst drängeln
+  sich Vorder- und Rückseite übereinander.
+- Marken, die sich überlagern würden, **schieben sich sanft auseinander**.
+- Weil es Knöpfe sind und keine Pixel, funktionieren **Tastatur und Screenreader** —
+  in einer reinen Leinwand wäre beides verloren.
+
+## Preis, gemessen
+
+| | Wert |
+|---|---|
+| Zeichendauer ruhend | 0,92 ms je Bild |
+| Zeichendauer **beim Drehen mit Marken** | **2,03 ms** im Mittel, 12,5 ms schlechtestes |
+| Hauptdatei | **63,61 KB gzip**, `size-limit` grün |
+| Baum-Stück | 140,5 KB gzip |
+| Tests | 2327 grün |
+
+Die Marken kosten rund **1 ms je Bild**, weil bei jeder Drehung sieben Knöpfe neu gesetzt
+werden. Das ist tragbar; falls es je knapp wird, liessen sie sich direkt verschieben,
+statt sie neu zu zeichnen.
+
 ## Weiterhin offen
 
 - Messung auf einem **echten Telefon** — bis dahin gilt keine Aussage über Telefone.
-- Im räumlichen Baum sind die Äste noch **nicht anklickbar**; im flachen führt jede Frucht
-  in ihr Kapitel. Das müsste vor einer echten Übernahme nachgezogen werden.
+- Die **Werkzeug-Früchte** des flachen Baums (Steuer, Budget, IPV, Lohn, Sozialhilfe,
+  Notfall) hängen noch nicht am räumlichen. Sie wären der nächste Schritt derselben Idee.
+- Ebenso die **Anspruchs-Ringe** um eine Frucht, wenn ein Anspruch gedeckt ist.
 - 720 Zeichenaufrufe kommen fast nur von den Ästen; die liessen sich je Lebensbereich zu
   einer Form zusammenfassen, wenn es nötig wird.
 - Der Entscheid selbst: räumlicher Dashboard-Baum ja oder nein.
