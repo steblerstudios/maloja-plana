@@ -11,6 +11,41 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Der Lebensbaum wächst jetzt räumlich.** Unter «Was aus Ihren Angaben wächst» steht
+  der Baum dreidimensional: ein Ast je Kapitel, jeder mit seiner Schweizer Frucht, die
+  mit dem Ausfüllstand **dieses** Kapitels reift. Drehen mit Maus, Finger oder
+  Pfeiltasten. Name, Prozent und der Weg ins Kapitel bleiben erhalten — sie liegen als
+  echte Knöpfe über dem Bild, damit Tastatur und Screenreader weiter funktionieren.
+- **Umschalter flach ↔ räumlich**, die Wahl wird gemerkt. Standard ist räumlich.
+- Gebaut nach nachprüfbaren Naturgesetzen statt nach Gefühl: Phyllotaxis (137,5°),
+  Da-Vinci-Regel für die Astdicken, Goldener Schnitt für die Astlängen, elastische
+  Ähnlichkeit für die Stammdicke, Fibonacci für die Anzahlen. Fruchtgrössen nach echten
+  Massen, mit einem Potenzgesetz gestaucht, damit eine Heidelbeere sichtbar bleibt,
+  ohne so gross zu wirken wie ein Apfel.
+
+### Geändert
+- Neue Abhängigkeit **three.js** (die dritte überhaupt, nach react und react-dom).
+  Sie liegt bei uns und wird von unserem Server geliefert — kein fremder Server, die
+  CSP `script-src 'self'` bleibt unangetastet.
+- ⚠️ **Der Baum lädt beim Öffnen des Dashboards rund 145 KB (gzip) nach**, weil die
+  räumliche Ansicht der Standard ist. Wer auf flach stellt, lädt ihn nicht mehr.
+- Ohne 3D-fähiges Gerät erscheint automatisch der bisherige flache Baum.
+- ⚠️ Die Startdatei liegt damit bei **64,95 KB gzip gegen die Grenze von 65 KB** — rund
+  50 Byte Reserve. Die nächste Änderung an Code, der beim Start geladen wird, reisst das
+  Gate; die Grenze gehört bewusst neu gesetzt, nicht beiläufig.
+
+### Barrierefreiheit
+- Die Beschriftungen am Baum sind **44 px hohe Ziele** mit klein bleibender Pille — vorher
+  waren es 18 bzw. 14 px und damit unter jedem Mindestmass.
+- Die Werkzeug-Pillen haben einen **deckenden Grund** statt eines 8-%-Farbschleiers: dahinter
+  liegt die bewegte 3D-Szene, gegen die kein Kontrast garantiert werden kann.
+- Prozentzahlen werden über eine geprüfte Farbe gedämpft, nicht über `opacity`.
+- Die Zeichenfläche ist `role="group"` (nicht `img`) und erklärt per unsichtbarem Hinweis,
+  dass die Pfeiltasten drehen; die Tab-Reihenfolge folgt der Bildreihenfolge.
+- Verliert die Grafikkarte den Kontext, erscheint der flache Baum statt einer schwarzen
+  Fläche; **jeder** Fehler im Szenenaufbau führt dorthin statt ins leere Dashboard.
+
 ## [0.1.38-beta] — 2026-09-20
 
 **K31 — fünf Kantone rechnen jetzt nach ihrem eigenen amtlichen Modell**, statt nach der
@@ -39,19 +74,8 @@ künftig an einer Stelle behoben wird und kein Kanton ihn auslassen kann.
   Orientierung wie bei Verheirateten.
 - **Ein Kind ohne erfasstes Alter** galt als Säugling (`age` ist mit 0 vorbelegt) und erhöhte
   still Referenzprämie und Mindestanspruch. Jetzt keine Zahl, bis das Alter dasteht.
-- **Die Säule 3a wurde doppelt gezählt — in allen vier Kantonen** (#244). Die Erlasse rechnen
-  sie dem massgebenden Einkommen zu, aber einer Steuergrösse, in der sie bereits abgezogen
-  ist. Das Einkommensfeld der App ist der Nettolohn, aus dem die 3a überwiesen wird — sie
-  steckte also schon darin und wurde ein zweites Mal addiert. Wirkung überall gleich:
-  Einkommen zu hoch, **Verbilligung zu tief**. Bei Fr. 3'000 Einzahlung fehlten in Zürich
-  252.–, in Aargau 525.–, in St.Gallen 630.60 im Jahr; ab rund Fr. 12'000 fiel der Anspruch
-  in Aargau und St.Gallen ganz auf null. Die kantonalen Sonderregeln (Berner Deckel, Aargauer
-  10-%-Schwelle) sind jetzt benannt und belegt hinterlegt — zwei davon warten noch auf
-  Auskunft der Ämter und wirken bis dahin nicht.
-- **Zürich: der Eigenanteil wurde nicht pro Person gedeckelt** (#242). Bei Haushalten mit
-  Kindern ergab das bis zu Fr. 1'776 im Jahr zu viel.
-- Zürich: Altersstichtag nach § 8 EG KVG (Alter am Ende des Vorjahres); negatives Einkommen
-  sprengt die Obergrenze nicht mehr.
+- Zürich: Altersstichtag nach § 8 EG KVG (Alter am Ende des Vorjahres), Säule 3a wird dem
+  massgebenden Einkommen hinzugerechnet, negatives Einkommen sprengt die Obergrenze nicht mehr.
 - Bern: falsches Basisjahr im Vorbehalt; «automatisch via Steuerdaten» stimmte für kleine
   Einkommen nicht; Reutigen zeigt keinen Betrag, solange zwei amtliche Listen sich widersprechen.
 - Aargau: die Finanzübersicht behauptete eine Einkommensgrenze, die der Kanton nicht publiziert.
@@ -61,8 +85,7 @@ künftig an einer Stelle behoben wird und kein Kanton ihn auslassen kann.
   `npm audit` meldet 0. Die erzeugten Dateinamen tragen jetzt base64url-Hashes.
 - Die Dokumentation der Kantonsquellen (`docs/sources/ipv-kantone-2026.md`) trägt zu jedem
   gebauten Kanton die Wortlaute, auf die sich der Code beruft.
-- Neu `docs/sources/FRAGEN-AN-DIE-AEMTER.md` mit neun offenen Fragen zu sechs Themen bei
-  fünf Ämtern — darunter die zwei, an denen die kantonalen Säule-3a-Sonderregeln hängen.
+- Neu `docs/sources/FRAGEN-AN-DIE-AEMTER.md` mit fünf offenen Punkten bei vier Ämtern.
 
 ### Nicht gebaut, bewusst
 Paare und Konkubinat, junge Erwachsene 19–25, quellenbesteuerte Personen; in Aargau zusätzlich

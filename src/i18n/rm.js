@@ -1032,6 +1032,11 @@ export default {
   datenWirken: {
     title: { sie: 'Vossas datas funcziunan gia:', du: 'Tes datas funcziunan gia:' },
     treeCaption: { sie: 'Quai che crescha da Vossas datas', du: 'Quai che crescha da Tes datas' },
+    drehHinweis: 'Las tastas da frizza a sanestra e a dretga volvan l’arber. Mintga branca è er tscherniblia separadamain.',
+    ansichtRaeumlich: 'Vista spaziala',
+    ansichtFlach: 'Vista plauna',
+    baumLaedt: 'L’arber vegn chargià …',
+    astAria: { sie: '{name} — {pct} pertschient emplenì', du: '{name} — {pct} pertschient emplenì' },
     anspruchAria: 'dretg pussaivel',
     tax: 'Calculatur da taglia persunalisà',
     ipv: 'Controlla da reducziun da premias activa',
