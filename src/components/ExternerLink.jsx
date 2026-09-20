@@ -1,18 +1,10 @@
 import React from 'react';
+import { visuallyHiddenStyle } from '../config/tokens.js';
 
-// Visuell verstecktes Element — nur für Screenreader hörbar, im Layout ohne
-// Wirkung (kein Sprung, keine Lücke). Klassisches "sr-only"-Muster.
-export const visuallyHiddenStyle = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: 0,
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-};
+// Visuell verstecktes Element — wohnt jetzt in config/tokens.js, damit auch der
+// Start-Pfad (BetaGate, Onboarding) es ohne zusätzliche Import-Kante bekommt.
+// Hier nur weitergereicht, damit die bestehenden Importe unverändert gelten.
+export { visuallyHiddenStyle };
 
 // Externer Link, der in einem neuen Tab öffnet (target="_blank") — WCAG 3.2.5 /
 // G201: ein Wechsel des Kontexts muss angekündigt sein, nicht nur optisch (Pfeil)

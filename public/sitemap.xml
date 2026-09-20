@@ -1,63 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!--
+  Eine URL, und zwar die kanonische.
+
+  Bis 20.09.2026 standen hier fünf Einträge (?lang=de … ?lang=rm). Gemessen am
+  Live-Stand liefern alle fünf BYTE-IDENTISCHES deutsches HTML mit
+  <html lang="de"> und <link rel="canonical" href="https://malojaplana.ch/">.
+  Grund: die sprachabhängige Kopf-SEO (src/main.jsx, useEffect auf `lang`) sitzt
+  in AppInner — einem Kind von BetaGate. Hinter geschlossenem Gate mountet sie
+  nie, also bleibt der statische deutsche Kopf stehen.
+
+  Eine Sitemap, die nicht-kanonische URLs meldet, liefert Google genau einen
+  Befund: «Alternative Seite mit richtigem kanonischem Tag» — keine davon wird
+  indexiert. Deshalb steht hier nur noch die URL, die auch canonical ist.
+
+  Die ?lang=-Einträge und ihre hreflang-Auszeichnung kommen zurück, sobald die
+  Sprachvarianten eigenen Inhalt ausliefern (Bau-Liste: Kopf-Logik vor das Gate
+  ziehen, danach echte Pfade /fr/ /it/ /en/ /rm/ statt ?lang=).
+  Befund und Messprotokoll: docs/audits/seo-audit-2026-09-20.md
+
+  lastmod wird beim Deploy gesetzt (deploy.sh), nicht von Hand — der Wert hier
+  ist nur der Stand im Repo.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://malojaplana.ch/?lang=de</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://malojaplana.ch/?lang=fr</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://malojaplana.ch/?lang=it</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://malojaplana.ch/?lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://malojaplana.ch/?lang=rm</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

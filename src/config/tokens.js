@@ -77,3 +77,21 @@ export const duration = {
 // ─── Font stack ─────────────────────────────────────────────
 export const fontFamily = "'Lexend', sans-serif";
 export const fontFamilyDisplay = "'Hanken Grotesk', sans-serif";
+
+// ─── Visuell versteckt ──────────────────────────────────────
+// Nur für Screenreader hörbar und für Text-Extraktion lesbar, im Layout ohne
+// Wirkung (kein Sprung, keine Lücke). Klassisches "sr-only"-Muster.
+// Liegt hier statt in ExternerLink.jsx, weil auch der Start-Pfad (BetaGate,
+// Onboarding) es braucht und tokens.js dort ohnehin schon geladen ist.
+// ExternerLink.jsx reicht es weiter, damit die bisherigen Importe gelten.
+export const visuallyHiddenStyle = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};

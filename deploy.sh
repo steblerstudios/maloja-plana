@@ -125,6 +125,25 @@ npm run build
 echo "→ .htaccess aus dem Build entfernen…"
 rm -f dist/.htaccess
 
+# ─── sitemap.xml: lastmod auf den Tag des Deploys ────────────────────────────
+# Von Hand gepflegt ist der Wert dreimal abgedriftet (zuletzt 20.09.2026: Sitemap
+# sagte 17.09., ausgeliefert war der 20.09.). Ein falsches lastmod ist schlimmer
+# als keines — Google lernt, dem Datum nicht zu trauen, und kommt seltener.
+# Nur dist/ wird angefasst; public/sitemap.xml im Repo bleibt unberührt.
+# Zurich, nicht UTC: ein Deploy um 00:30 MESZ soll den 20. tragen, nicht den 19.
+if [ -f dist/sitemap.xml ]; then
+  HEUTE=$(TZ=Europe/Zurich date +%F)
+  # Ohne sed -i: dessen Syntax unterscheidet sich zwischen macOS und Linux.
+  sed "s#<lastmod>[^<]*</lastmod>#<lastmod>${HEUTE}</lastmod>#g" \
+    dist/sitemap.xml > dist/sitemap.xml.tmp && mv dist/sitemap.xml.tmp dist/sitemap.xml
+  if grep -q "<lastmod>${HEUTE}</lastmod>" dist/sitemap.xml; then
+    echo "→ sitemap lastmod → ${HEUTE}"
+  else
+    echo "✗ sitemap lastmod nicht gesetzt — <lastmod> fehlt in dist/sitemap.xml?" >&2
+    exit 1
+  fi
+fi
+
 # ─── SEO/GEO-Fundament-Gate ──────────────────────────────────────────────────
 # Deterministischer Check über dist/ (analog /seo-geo Modus C, Stebler Studios):
 # title/description/canonical/OG/JSON-LD + robots.txt/sitemap.xml müssen da sein.

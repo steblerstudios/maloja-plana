@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { text, weight, radius , leading , space, fontFamily, ease, duration } from './config/tokens.js';
+import { text, weight, radius , leading , space, fontFamily, ease, duration, visuallyHiddenStyle } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 
@@ -156,6 +156,9 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
               React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
               React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
             ),
+            // Siehe BetaGate.jsx: das «M» steckt nur im SVG. Ohne dieses versteckte
+            // «M» liest jede Text-Extraktion «aloja Plana» statt «Maloja Plana».
+            React.createElement('span', { style: visuallyHiddenStyle }, 'M'),
             'aloja Plana'
           ),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
