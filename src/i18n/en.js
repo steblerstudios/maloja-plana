@@ -3017,6 +3017,18 @@ export default {
     orientierungOffen: 'Whether you are entitled, and to how much, is decided by the canton. Especially on a tight budget, it is worth checking with the cantonal office.',
     statusOffen: 'Check with the canton',
     zurStelle: 'To the cantonal office for premium reductions',
+    jahrRegion: 'Calculated for the {jahr} entitlement year, premium region {region}.',
+    vorbehalt: 'The canton may still adjust the calculation basis during the year. The entitlement only becomes binding once the final {jahr} tax factors are available; amounts received in excess must be repaid.',
+    naeherung: 'Calculated from the income and assets recorded here, not from taxable income. The cantonal office uses the tax factors and will therefore arrive at a somewhat different amount.',
+    offenGrund: {
+      haushalt: 'For couples and households with several adults the app does not calculate yet: the age and income of the second person are missing.',
+      alter: 'A date of birth is missing — for the children as well. Young adults in education are also assessed on their parents’ income, which is not recorded here.',
+      region: 'The municipality cannot be determined unambiguously from the postcode. It decides the premium region and therefore the amount.',
+      vermoegen: 'The recorded assets exceed the cantonal limit. What counts is total taxable assets, which are not fully recorded here.',
+      mindestanspruch: 'In this income range the cantonal rule is not unambiguous. Better no figure than one that is off by several hundred francs.',
+      jahr: 'The stored values apply to an earlier entitlement year. The app will calculate again once the new official values are in.',
+      laden: 'The basis is still loading.',
+    },
   },
 
   sozialhilfeCalc: {

@@ -3017,6 +3017,18 @@ export default {
     orientierungOffen: { sie: 'Se ha diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.', du: 'Se hai diritto a una riduzione e di quale importo lo stabilisce il Cantone. Soprattutto con un budget limitato vale la pena verificarlo presso il servizio cantonale.' },
     statusOffen: 'Da verificare presso il Cantone',
     zurStelle: 'Al servizio cantonale per la riduzione dei premi',
+    jahrRegion: 'Calcolo per l’anno di diritto {jahr}, regione di premio {region}.',
+    vorbehalt: 'Il Cantone può ancora adeguare le basi di calcolo nel corso dell’anno. Il diritto diventa vincolante solo con i fattori fiscali definitivi {jahr}; gli importi percepiti in eccesso vanno restituiti.',
+    naeherung: 'Calcolo basato sui redditi e sulla sostanza registrati qui, non sul reddito imponibile. Il servizio cantonale si basa sui fattori fiscali e arriva quindi a un importo un po’ diverso.',
+    offenGrund: {
+      haushalt: 'Per le coppie e le economie domestiche con più adulti l’app non calcola ancora: mancano l’età e i redditi della seconda persona.',
+      alter: 'Manca una data di nascita — anche per i figli. I giovani adulti in formazione vengono inoltre calcolati con il reddito dei genitori, che qui non è registrato.',
+      region: 'Il Comune non può essere determinato in modo univoco dal numero postale. È il Comune a stabilire la regione di premio e quindi l’importo.',
+      vermoegen: 'La sostanza registrata supera il limite cantonale. Determinante è la sostanza imponibile complessiva, che qui non è registrata per intero.',
+      mindestanspruch: 'In questa fascia di reddito la regola cantonale non è univoca. Meglio nessuna cifra che una sbagliata di diverse centinaia di franchi.',
+      jahr: 'I valori registrati riguardano un anno di diritto precedente. L’app calcolerà di nuovo non appena saranno inseriti i nuovi valori ufficiali.',
+      laden: 'Le basi si stanno ancora caricando.',
+    },
   },
 
   sozialhilfeCalc: {

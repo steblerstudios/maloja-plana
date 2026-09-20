@@ -282,6 +282,9 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ) : ohneBetrag ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       // Orientierung ohne Betrag (E9): ruhig, kein Verdikt in beide Richtungen.
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, 'ⓘ ' + t(ipvResult.noteKey, ipvResult.noteParams)),
+      // Warum hier keine Zahl steht (K31, Fachprüfung 20.09.2026). Ohne diesen Satz liest sich
+      // «kein Betrag» wie «der Kanton ist ungeprüft» — es heisst aber oft nur, dass eine Angabe fehlt.
+      ipvResult.offen && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, t('ipv.offenGrund.' + ipvResult.offen)),
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗'),
       ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('ipv.youngAdultsNote'))
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
@@ -291,6 +294,15 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
+    ),
+
+    // Anspruchsjahr, Prämienregion und die amtlichen Vorbehalte — nur dort, wo ein Kanton
+    // nach seinem eigenen Modell gerechnet wurde (heute ZH). Eine konkrete Zahl ohne ihr Jahr
+    // und ohne den Rückzahlungs-Vorbehalt wäre zu selbstsicher (Fachprüfung 20.09.2026).
+    ipvResult.jahr && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, lineHeight: '1.5', marginBottom: '12px' } },
+      React.createElement('div', null, t('ipv.jahrRegion', { jahr: ipvResult.jahr, region: ipvResult.region })),
+      React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.naeherung')),
+      React.createElement('div', { style: { marginTop: space.xs } }, t('ipv.vorbehalt', { jahr: ipvResult.jahr }))
     ),
 
     // IPV-Lebenslinie — der Beleg als Gesicht seines Ablaufs (Phase 2)

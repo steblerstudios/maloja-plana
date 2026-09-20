@@ -1996,6 +1996,19 @@ export default {
     orientierungOffen: 'Sch’igl exista in dretg ed en tge autezza, decida il chantun. Cunzunt cun in budget stretg vala la paina da examinar quai tar il post chantunal.',
     statusOffen: 'Examinar tar il chantun',
     zurStelle: 'Al post chantunal per la reducziun da premias',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K69/K84).
+    jahrRegion: 'Quint per l’onn da dretg {jahr}, regiun da premias {region}.',
+    vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
+    naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
+    offenGrund: {
+      haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
+      alter: 'Manca ina data da naschientscha — era tar ils uffants. Giuvenils en furmaziun vegnan ultra da quai quintads cun l’entrada dals geniturs, che n’è betg registrada qua.',
+      region: 'La vischnanca na sa lascha betg determinar univocamain cun il numer postal. Ella decida davart la regiun da premias e uschia davart l’import.',
+      vermoegen: 'La facultad registrada surpassa la limita chantunala. Decisiva è la facultad imposabla totala, che n’è betg registrada cumplettamain qua.',
+      mindestanspruch: 'En quest sectur d’entrada n’è la regla chantunala betg univoca. Meglier nagina cifra che ina che sbaglia per pliras tschientinas da francs.',
+      jahr: 'Ils valurs memorisads valan per in onn da dretg pli vegl. Uschespert che ils nums valurs uffizials èn integrads, quinta l’applicaziun puspè.',
+      laden: 'Las basas vegnan anc chargiadas.',
+    },
   },
 
   notifications: {

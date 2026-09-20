@@ -3016,6 +3016,18 @@ export default {
     orientierungOffen: { sie: 'C’est le canton qui décide si vous avez droit à une réduction et de son montant. Surtout avec un budget serré, il vaut la peine de vérifier auprès du service cantonal.', du: 'C’est le canton qui décide si tu as droit à une réduction et de son montant. Surtout avec un budget serré, cela vaut la peine de vérifier auprès du service cantonal.' },
     statusOffen: 'À vérifier auprès du canton',
     zurStelle: 'Vers le service cantonal de la réduction des primes',
+    jahrRegion: 'Calcul pour l’année de droit {jahr}, région de primes {region}.',
+    vorbehalt: 'Le canton peut encore adapter les bases de calcul en cours d’année. Le droit ne devient définitif qu’avec les facteurs fiscaux {jahr} définitifs; les montants perçus en trop doivent être remboursés.',
+    naeherung: 'Calcul basé sur les revenus et la fortune saisis ici, et non sur le revenu imposable. Le service cantonal se fonde sur les facteurs fiscaux et arrive donc à un montant quelque peu différent.',
+    offenGrund: {
+      haushalt: 'Pour les couples et les ménages de plusieurs adultes, l’application ne calcule pas encore: l’âge et les revenus de la deuxième personne manquent.',
+      alter: 'Une date de naissance manque — également pour les enfants. Les jeunes adultes en formation sont en outre évalués sur le revenu de leurs parents, qui n’est pas saisi ici.',
+      region: 'La commune ne peut pas être déterminée de manière univoque à partir du code postal. Elle détermine la région de primes et donc le montant.',
+      vermoegen: 'La fortune saisie dépasse la limite cantonale. C’est la fortune imposable totale qui compte; elle n’est pas saisie intégralement ici.',
+      mindestanspruch: 'Dans cette tranche de revenu, la règle cantonale n’est pas univoque. Mieux vaut aucun chiffre qu’un chiffre faux de plusieurs centaines de francs.',
+      jahr: 'Les valeurs enregistrées concernent une année de droit antérieure. L’application calculera de nouveau dès que les nouvelles valeurs officielles seront intégrées.',
+      laden: 'Les bases sont encore en cours de chargement.',
+    },
   },
 
   sozialhilfeCalc: {

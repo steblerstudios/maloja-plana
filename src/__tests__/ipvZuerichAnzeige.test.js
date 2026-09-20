@@ -42,6 +42,37 @@ describe('K31 IPV-Rechner, Kanton Zürich', () => {
     expect(html).not.toContain('premium.eligible');
   });
 
+  // Fachprüfung 20.09.2026: eine konkret gerechnete Zahl braucht ihr Anspruchsjahr, die
+  // Prämienregion und die amtlichen Vorbehalte — sonst wirkt sie verbindlicher, als sie ist.
+  it('zeigt Anspruchsjahr, Prämienregion, Näherung und Rückzahlungs-Vorbehalt', () => {
+    const html = render(profil(2000));
+    expect(html).toContain('ipv.jahrRegion(2026|1)');
+    expect(html).toContain('ipv.naeherung');
+    expect(html).toContain('ipv.vorbehalt(2026)');
+  });
+
+  it('auch über der Grenze bleiben Jahr und Vorbehalt sichtbar', () => {
+    const html = render(profil(6000));
+    expect(html).toContain('ipv.jahrRegion(2026|1)');
+    expect(html).toContain('ipv.vorbehalt(2026)');
+  });
+
+  // Ohne Betrag: der Grund gehört sichtbar dazu. «Kein Betrag» heisst hier «eine Angabe fehlt»,
+  // nicht «der Kanton ist ungeprüft».
+  it.each([
+    ['Paar', { household: { adults: 2, children: [] } }, 'ipv.offenGrund.haushalt'],
+    ['ohne Geburtsdatum', { dateOfBirth: '' }, 'ipv.offenGrund.alter'],
+  ])('%s: nennt den Grund, kein Jahr, kein Betrag', (_, basisPatch, grundKey) => {
+    const p = profil(2000);
+    const html = renderToStaticMarkup(React.createElement(PremiumSubsidy, {
+      palette, t, data: { ...p, basis: { ...p.basis, ...basisPatch } }, onUpdateData: () => {},
+    }));
+    expect(html).toContain('ipv.orientierungOffen');
+    expect(html).toContain(grundKey);
+    expect(html).not.toContain('ipv.jahrRegion');
+    expect(html).not.toContain('premium.eligible');
+  });
+
   it('Kantonsvergleich zeigt ZH nicht mit Einzelwerten (hat keine)', () => {
     const html = render(profil(2000));
     expect(html).not.toContain('Single: CHF');
