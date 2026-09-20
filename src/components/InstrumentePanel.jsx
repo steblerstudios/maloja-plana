@@ -5,6 +5,7 @@ import { kompassBearing } from '../data/leistungsKompass.js';
 import { monthlyExpenses } from '../data/haushaltskosten.js';
 import { calculateIPV, calculateSozialhilfe, checkELEligibility } from '../config/cantonalData.js';
 import { shieldPath } from './shieldShape.js';
+import { PanelTitle } from './Heading.jsx';
 import { text, weight, space, radius, leading, duration, ease } from '../config/tokens.js';
 
 // Dashboard-Spiegel der vier „Instrumente": eine kompakte Reihe, die jedes
@@ -118,7 +119,7 @@ export const InstrumentePanel = ({ palette, t, data, onNavigate }) => {
   ];
 
   return h('div', { style: { marginBottom: space.xl + 'px' } },
-    h('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: palette.text, margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
+    h(PanelTitle, { palette, style: { margin: '0 0 ' + space.xs + 'px 0' } }, t('instrumente.title')),
     h('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 ' + space.md + 'px 0', lineHeight: leading.relaxed } }, t('instrumente.intro')),
     // Festes 2-Spalten-Raster: bei genau vier Instrumenten ergibt das ein ruhiges
     // 2×2 statt eines verwaisten 3+1 (auto-fit liess bei ~570 px drei Kacheln zu).

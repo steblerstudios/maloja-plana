@@ -1033,19 +1033,32 @@ const AppInner = ({ demo }) => {
       })
     ),
     React.createElement('header', { role: 'banner', style: { background: palette.surface + 'F2', borderBottom: '1px solid ' + palette.border + '88', boxShadow: shadow.sm, padding: '14px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: space.sm, flexWrap: 'wrap', position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } },
+      // Das h1 bleibt eine ECHTE Überschrift. Vorher trug es `role="link"` — eine
+      // ARIA-Rolle ersetzt die native Semantik, damit hatte die Seite für
+      // Screenreader gar kein h1 mehr (WCAG 1.3.1). Das Anklickbare ist jetzt ein
+      // <button> IM h1: Überschrift und Bedienelement sind zwei Dinge, nicht eines.
+      // `aria-label` bleibt am h1, weil das «M» der Wortmarke ein SVG ist — sonst
+      // hiesse die Überschrift «aloja Plana».
       React.createElement('h1', {
-        onClick: () => setView('dashboard'),
-        role: 'link', tabIndex: 0,
         'aria-label': t('common.appName'),
-        onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setView('dashboard'); } },
-        style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, cursor: 'pointer', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '2px' }
+        style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, letterSpacing: '0.3px', display: 'flex' }
       },
-        // Wortmarke — das «M» von Maloja IST der Gipfel (Maloja-Pass)
-        React.createElement('svg', { width: '17', height: '19', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
-          React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.4', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-          React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.7', fill: palette.gold })
-        ),
-        'aloja Plana'
+        React.createElement('button', {
+          onClick: () => setView('dashboard'),
+          'aria-label': t('common.appName'),
+          style: {
+            font: 'inherit', color: 'inherit', letterSpacing: 'inherit',
+            background: 'none', border: 'none', padding: 0, margin: 0,
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px',
+          }
+        },
+          // Wortmarke — das «M» von Maloja IST der Gipfel (Maloja-Pass)
+          React.createElement('svg', { width: '17', height: '19', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
+            React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.4', strokeLinejoin: 'round', strokeLinecap: 'round' }),
+            React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.7', fill: palette.gold })
+          ),
+          'aloja Plana'
+        )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
         // Handy: oben rechts = Einstellungen/Konto (Zahnrad); Navigation liegt am Boden-Anker.
