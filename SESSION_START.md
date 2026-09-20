@@ -7,7 +7,13 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-17, 16:43 (`main` = `1d581fd` nach **PR #228** (Doku), dazu dieser Stand-PR · Code-Stand unverändert `6546358` · **live `index-c80eed98.js` = 0.1.36-beta seit 17.09. 16:32**, Tag `v0.1.36-beta` = `6546358` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 1939 Tests grün, size-limit 63.32 kB von 65)
+**Stand:** 2026-09-19 (`main` = `335a557` nach **PR #233** Release 0.1.37-beta, dazu dieser Doku-PR · **live `index-fc8ee6ec.js` = 0.1.37-beta seit 19.09.**, Tag `v0.1.37-beta` = `335a557` · gemergt, nicht live: nur Doku · 0 offene Code-PRs · 2027 Tests grün, size-limit 63.5 kB von 65)
+
+> ### ⭐ AKTUALISIERUNG 2026-09-19 (0.1.37-beta live)
+>
+> **Deploy 19.09.** aus `335a557` (#230–#233), per `curl` belegt: 164/164 Build-Dateien 200, altes `index-c80eed98.js` 404, erfundener Name 404, `index.html`/`sw.js`/`theme-init.js` zeichengleich mit dem Build, `sw.js` Cache `maloja-plana-fc8ee6ec`, Header HSTS/CSP/Permissions unverändert. Live im Browser (Beispiel): Footer v0.1.37-beta, UR «gilt für HSK», TI «Gesetzessammlung», Konsole leer; Beispiel verlassen → `/`, localStorage leer.
+> **Inhalt:** Entscheid-Block 19.09. (K81/K83/K100/K105 → Oktober, K82/K96/K99/K101/K106 gebaut) + K86–K98, K102, K103 + Herzensempfehlung utopi. Deploy-Gate 6 Prüfer je 0 🔴. Details: CHANGELOG `[0.1.37-beta]`, Bau-Liste §24.
+> **Offen:** K107–K115 (Bau-Liste §24), Oktober-Kasten im Studio-Fahrplan. Push-Regel bis 30.09.: Claude darf Arbeitszweige + Entwurfs-PRs pushen; Merge/Deploy = Stebler Studios.
 
 > ### ⭐ AKTUALISIERUNG 2026-09-17, 16:37 (0.1.36-beta live)
 >
