@@ -356,6 +356,131 @@ Der heutige App-Wert (maxIncome/subsidySingle BE) lag dem Unteragenten nicht vor
 2. Prämienverbilligung beantragen, Amt für Sozialversicherungen Kanton Bern, Stand ohne Datum. https://www.asv.dij.be.ch/de/start/themen/pv/pv_anrecht-auf-pv-beantragen.html — abgerufen 16.09.2026
 3. Publikationen (Informationsblatt 2026, Berechnungsschema 2026), Amt für Sozialversicherungen Kanton Bern. https://www.asv.dij.be.ch/de/start/themen/pv/formulare---publikationen.html — abgerufen 16.09.2026
 
+### Nachprüfung 20.09.2026 (K31, Einbau in die App)
+
+Quelle [1] erneut abgerufen und Seite für Seite gegen die Erhebung vom 16.09. gehalten:
+**alle Werte 2026 unverändert** — Grenzen 35'000 / 45'000, die fünf Einkommensstufen, alle
+42 Monatsbeträge der beiden Tabellen (3 Regionen × 7 Zeilen je Tabelle), Vermögensfreibetrag 17'000 je Familienmitglied, die
+5 % Vermögenszuschlag und die sechs Sozialabzüge. **Keine Abweichung zur Recherche vom
+16.09.** Neu gelesen wurden Quelle [3] (Publikationsseite), das Informationsblatt 2026 [4]
+und der Rechtstext [5], den die Erhebung unter «Offen» offengelassen hatte.
+
+Damit schliessen sich drei der vier offenen Punkte:
+
+- **Rechtstext** — KKVV (BSG 842.111.1, Stand 01.12.2025) [5] trägt dieselben Zahlen wie das
+  Berechnungsschema: Art. 9 Abs. 1 «Vom Reinvermögen sind für jedes Mitglied der Familie
+  17'000 Franken abzuziehen», Art. 9 Abs. 2 «fünf Prozent des nach Absatz 1 reduzierten
+  Reinvermögens» und die Abzüge a–f (13'000 Paar · 13'000 unverheiratetes Paar nach Art. 19
+  Abs. 2 EG KUMV · 9'750 alleinstehender Elternteil · 2'200 alleinstehende Person · 15'000 /
+  12'500 / 10'000 je Kind), Art. 10a Abs. 1/3 die Erwachsenenbeträge.
+  **Die Abzüge a/a1, b und c schliessen sich gegenseitig aus**: b gilt dem «alleinstehenden
+  Elternteil, der gemeinsam mit Personen nach Artikel 5 eine Familie bildet», c der
+  «alleinstehende[n] Person, die nach Artikel 5 **nicht** zur Familie zählt». Eine
+  alleinerziehende Person erhält also 9'750, nicht zusätzlich 2'200.
+- **KVG-Mindestquoten** — belegt: Art. 10d Abs. 1 «Kinder erhalten 80 Prozent der Prämie
+  verbilligt, wenn das massgebende jährliche Familieneinkommen 45'000 Franken nicht
+  übersteigt»; Art. 10b Abs. 3/4 und Art. 10c Abs. 1 «50 Prozent der Prämie» für junge
+  Erwachsene in Ausbildung. Massgebende Prämie ist jeweils «die durchschnittliche
+  Vorjahresprämie … der 20 günstigsten Krankenversicherer der Region». Die festen
+  Monatsbeträge im Berechnungsschema sind das Ergebnis dieser Quoten.
+- **Untergrenze der ersten Stufe** — der Rechtstext schreibt «unter 9000 Franken» und dann
+  «zwischen 9001 und 17'000 Franken»; das Berechnungsschema schreibt «bis 9'000». Damit
+  bleibt genau der Wert 9'000 (und alles zwischen 9'000 und 9'001) im Erlass ungeregelt. Die
+  App folgt der Tabelle des Amts, das die Verfügung erlässt: bis und mit 9'000 gilt die
+  oberste Stufe. Nach unten ist nichts begrenzt — ein massgebendes Einkommen von 0 liegt in
+  der obersten Stufe.
+- **Informationsblatt 2026** [4] gelesen; drei Punkte, die die App braucht: Konkubinatspaare
+  mit gemeinsamem Kind rechnen «wie bei einem verheirateten Paar» · ab einem ausgewiesenen
+  **Bruttovermögen über Fr. 750'000** wird das Anrecht nicht mehr automatisch geprüft,
+  sondern nur auf Antrag · junge Erwachsene zählen zur Familie der Eltern, wenn ihr
+  korrigiertes Reineinkommen unter Fr. 14'000 liegt (KKVV Art. 5 Abs. 1).
+
+**Prämienregionen — vollständige Liste jetzt belegt.** Das Berechnungsschema druckt die
+Gemeinden von Region 1 (15) und Region 2 (212) vollständig ab, Region 3 ist «Alle übrigen».
+Rechtlich massgebend ist die BAG-Zuteilung: KKVV Art. 10 Abs. 5 «Die Gemeinden werden den
+Prämienregionen zugeteilt, die vom Bundesamt für Gesundheit gestützt auf Artikel 61 Absatz 2
+KVG festgelegt werden.» Die App bestimmt die Region deshalb über `src/data/praemienRegionen.js`
+(BAG, Stand 2026) und hält die Liste des Schemas als Gegenprobe dagegen (Test
+`src/config/__tests__/ipvBern.test.js`). Beide Quellen decken sich bei 333 der 334 Berner
+Gemeinden:
+
+- ⚠️ **Reutigen (BFS 767)**: beim BAG Region 2, in der R2-Liste des Schemas nicht enthalten
+  (dort also «alle übrigen» = Region 3). Unterschied: bis zu CHF 156 im Jahr je erwachsene
+  Person (13.— im Monat auf der obersten Stufe) und CHF 79.80 je Kind. **Die App zeigt
+  für diese Gemeinde keinen Betrag**, bis geklärt ist, welche Lesart gilt. Beim ASV nachfragen.
+- **Schlosswil** steht in der R2-Liste des Schemas, hat aber weder im
+  Ortschaftenverzeichnis (swisstopo 2025) noch in der BAG-Tabelle 2026 eine eigene
+  BFS-Nummer. Ohne Folge für die Rechnung — über eine Postleitzahl erreicht die App diesen
+  Namen nicht —, aber ein zweiter Hinweis darauf, dass die abgedruckte Liste nicht
+  vollständig nachgeführt ist.
+
+**2027 ist noch nicht publiziert** (geprüft 20.09.2026): die Publikationsseite [3] führt nur
+Informationsblatt und Berechnungsschema 2025 und 2026; `Berechnungsschema 2027_de.pdf` und
+`Informationsblatt 2027_de.pdf` antworten mit HTTP 404 — ebenso wie ein erfundener Dateiname
+als Kontrollprobe, der 404 allein belegt also nichts, wohl aber zusammen mit [3]. Darum liegt
+in der App derselbe Jahres-Riegel wie bei ZH: ab dem 01.01.2027 rechnet sie nicht weiter.
+
+**Was die App mit BE rechnet und was nicht** (`src/config/ipvBern.js`): gerechnet wird nur die
+alleinstehende Person über 25 mit Kindern bis 18. Keine Zahl — mit Grund in der Anzeige — bei
+Paaren und Verheirateten, bei unbekanntem oder nicht eindeutigem Alter (die Tabelle kennt
+«älter als 25» und «älter als 18 und noch nicht 25»; wer im Anspruchsjahr genau 25 wird, steht
+in keiner Zeile), bei Kindern ohne Alter oder über 18, bei Bruttovermögen über 750'000, bei
+nicht eindeutiger Gemeinde und ab 2027.
+
+**Offen geblieben (nicht im Code):** wie in ZH ist das massgebende Einkommen in der App eine
+Näherung — amtlich zählt das Reineinkommen aus den Steuerdaten mit den Aufrechnungen des
+Schemas, die App summiert die erfassten Einkommen plus Säule 3a; das Vermögen ist die Summe
+der erfassten Posten, nicht das Reinvermögen inkl. Liegenschaft und abzüglich Schulden. **In
+einer Stufentabelle wiegt das schwerer als in einem linearen Modell**: eine Stufe ist in
+Region 1 bis zu CHF 888 im Jahr wert. Ebenfalls nicht gerechnet: Quellenbesteuerte (75 % des
+Bruttoeinkommens als korrigiertes Reineinkommen), junge Erwachsene (Ausbildungsstatus und
+eigenes Einkommen nicht erfasst), Sozialhilfe- und EL-Beziehende (eigener Weg).
+
+### Fachprüfung 20.09.2026 (swiss-precision-pruefer, alle Quellen erneut abgerufen)
+
+Bestätigt: **alle 42 Monatsbeträge** beider Tabellen (Schema **und** KKVV Art. 10a/10b, doppelt
+gegengeprüft), die fünf Stufen, die Grenzen 35'000/45'000, der Vermögensfreibetrag mit den 5 %,
+alle sechs Sozialabzüge samt ihrem gegenseitigen Ausschluss (Art. 9 Abs. 2 lit. c: «alleinstehende
+Person, die nach Artikel 5 **nicht** zur Familie zählt»), die R1-/R2-Listen zeichengenau (15/212),
+der stufenunabhängige Kinderbetrag (Art. 10d Abs. 1) und dass kein anderer Kanton verändert wird.
+
+Drei Befunde eingearbeitet — alle drei betrafen **Aussagen**, nicht die Zahlenbasis:
+
+- **Falsches Basisjahr in der Anzeige.** Der Vorbehalt stammte aus ZH und nannte die Steuerfaktoren
+  des Anspruchsjahres. In BE gilt KKVV Art. 7 Abs. 1: «bestimmen sich das Reineinkommen und das
+  Reinvermögen aufgrund der definitiven Veranlagung des **vorletzten Steuerjahres**»; das
+  Informationsblatt 2026 zeigt dazu «01.01.2026 – 31.12.2026 → Grundlage: Steuerdaten 2024».
+  Neu ein eigener BE-Vorbehalt, der das Basisjahr und die Neubeurteilung nennt.
+- **Konkubinat rechnete durch.** Informationsblatt 2026, S. 1: «Leben Sie unverheiratet mit Ihrem
+  Partner/Ihrer Partnerin im gleichen Haushalt und haben mindestens ein gemeinsames Kind, dann wird
+  die Berechnung der Prämienverbilligung **wie bei einem verheirateten Paar** vorgenommen.» Der
+  Guard prüfte nur `married`. Gemessen: CHF 340/Monat ohne das Einkommen der zweiten Person.
+  Jetzt Orientierung statt Betrag — **auch in ZH**, wo derselbe Guard stand.
+- **«Automatisch via Steuerdaten» ist für die ärmste Gruppe falsch.** Informationsblatt 2026, S. 2:
+  Wer «mindestens 25 Jahre alt» ist, keine zur Familie zählenden Kinder hat und ein korrigiertes
+  Reineinkommen **unter Fr. 14'000** ausweist, muss die Überprüfung bis 31.12. selbst beantragen.
+  Neu ein eigener Hinweis samt Link zur Stelle; ohne ihn verliert diese Gruppe bis CHF 2'652 im Jahr.
+
+Dazu übernommen: Der **Prämien-Deckel** (Art. 10 Abs. 1) gilt pro Person — mit Kindern wird jetzt
+der Anteil der erwachsenen Person gedeckelt, statt den Deckel ganz entfallen zu lassen. Die
+750'000 sind **kein Ausschluss**, sondern Antragspflicht; eigener Text. Bei **Reutigen** nennt die
+App neu den richtigen Grund (Region strittig, nicht Gemeinde unklar).
+
+**Stufengrenzen geprüft** (die gefährlichste Stelle): Der Code nimmt bei genau 9'000 / 17'000 /
+25'000 / 35'000 / 45'000 die **günstigere** Stufe, wie das Schema des verfügenden Amts schreibt
+(«bis 9'000 … bis 45'000 Franken»). Die KKVV deckt 17'000 aufwärts wörtlich; offen bleibt allein
+der Wert 9'000, weil Art. 10a Abs. 1 von «unter 9000» auf «zwischen 9001 und 17'000» springt.
+
+**Nicht eingearbeitet, bewusst:** Das massgebende Einkommen bleibt eine Näherung (erfasste
+Einkommen + Säule 3a statt Reineinkommen nach StG; Vermögen ohne Liegenschaft und Schulden). In
+einer Stufentabelle wiegt das schwerer als in ZHs linearem Modell — ein Schritt ist in Region 1
+CHF 888 im Jahr wert, und `monthlyIncome` ist als Nettolohn erfasst, liegt also tendenziell zu
+hoch. In der Anzeige benannt, nicht gerechnet. Ebenso offen: EL- und Sozialhilfe-Beziehende haben
+einen eigenen Weg (Informationsblatt S. 3), die App rechnet ihre Renten heute als Einkommen mit.
+
+4. Informationen zur Prämienverbilligung, «Gültig ab 1. Januar 2026», Direktion für Inneres und Justiz, Amt für Sozialversicherungen (PDF, 5 S.). https://www.asv.dij.be.ch/content/dam/asv_dij/dokumente/de/pr%C3%A4mienverbilligung--informationen/Informationsblatt%202026_de.pdf — abgerufen 20.09.2026
+5. Kantonale Krankenversicherungsverordnung (KKVV), BSG 842.111.1, vom 25.10.2000, Stand 01.12.2025 (Beschlussdatum 22.10.2025). https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1 — abgerufen 20.09.2026
+
 ---
 
 ## LU — Luzern
@@ -1369,7 +1494,7 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 **Beurteilung:** abbildbar
 **Modell (kurz):** Summe Richtprämien Haushalt minus Einkommenssatz 17,5 % × massgebendes Einkommen (bereinigtes steuerbares Einkommen + 1/5 steuerbares Vermögen − Einkommensabzug je Haushaltstyp − Fr. 2'500 je Kind/JE in Ausbildung); Kinder/JE in Ausbildung bei Anspruch mind. 50 % der effektiven Prämie
 **Zuständig / Weg:** SVA Aargau; SVA ermittelt Berechtigte aus Steuerdaten und schreibt sie an, Antrag innert sechs Wochen; spätestens 31. Dezember im Vorjahr (für 2026: 31.12.2025, abgelaufen), sonst verwirkt
-**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».
+**Gültigkeit:** 2026 definitiv (Anhang 1 V KVGG «Berechnungselemente für die Verteilung der Prämienverbilligung 2026», Stand 1.9.2025). ~~⚠️ Widerspruch auf der SVA-Seite, siehe «Offen».~~ **Am 20.09.2026 aufgelöst: die SVA-Seite schreibt heute durchgehend «Bezugsjahr 2027», siehe «Nachprüfung 20.09.2026».** In der App gebaut ist 2026.
 
 ### Rechenmodell
 > «Anspruch auf Prämienverbilligung besteht, wenn die Richtprämie einen prozentualen Anteil des massgebenden Einkommens übersteigt. Bei Mehrpersonenhaushalten werden die Richtprämien der einzelnen Haushaltsmitglieder zusammengezählt.» — Quelle [1], § 6 Abs. 1
@@ -1424,6 +1549,142 @@ Der App-Wert (maxIncome/subsidySingle) wurde mir nicht übergeben. Belegt: Einze
 3. Anhang 1 Berechnungselemente für die Verteilung der Prämienverbilligung 2026 (AGS 2025/…), Kanton Aargau, Handbuch Soziales, PDF geändert 05.11.2025. https://www.ag.ch/media/kanton-aargau/dgs/dokumente/gesellschaft/soziales/handbuch-soziales/kapitel-7/richtpr-mien-2026.pdf — abgerufen 16.09.2026
 4. Allgemeine Informationen (Prämienverbilligung), SVA Aargau (widersprüchliche Jahresangabe, s. oben). https://www.sva-aargau.ch/private/ihre-private-situation/finanzielle-unterstuetzung/praemienverbilligung/allgemeine — abgerufen 16.09.2026
 5. Informationsblatt Prämienverbilligung 2027, SVA Aargau (enthält keine Zahlen). https://www.sva-aargau.ch/informationsblattpv — abgerufen 16.09.2026
+
+### Nachprüfung 20.09.2026 (K31, Einbau in die App)
+
+Alle fünf Quellen an diesem Tag erneut abgerufen, bevor eine Zeile Code entstand.
+
+**Der Zahlen-Widerspruch vom 16.09. besteht nicht mehr.** Die SVA-Seite [4] schreibt heute
+durchgehend 2027:
+
+> «Berechnungsbasis für die Prämienverbilligung 2027 ist das steuerbare Einkommen der
+> rechtskräftigen Steuerveranlagung 2024.»
+
+> «Die Richtprämien sind im Krankenversicherungsgesetz sowie in der dazugehörenden Verordnung
+> geregelt. Sie betragen für das Bezugsjahr 2027: für Erwachsene: 6'070 Franken jährlich /
+> 505.85 Franken pro Monat …» · «Der Einkommenssatz beträgt 19.25 Prozent.»
+
+Die am 16.09. notierte Jahresangabe «2026» bei denselben Zahlen steht dort nicht mehr.
+6'070 / 4'440 / 1'450 und 19,25 % sind die Werte **2027**. Damit ist keine Frage an die SVA
+nötig — die Beschriftung war der Fehler, und er ist behoben.
+
+**Für 2026 gilt unverändert die Rechtssammlung**, wörtlich nachgelesen in [2] und [3]:
+
+> «Berechnungselemente für die Verteilung der Prämienverbilligung 2026 · Richtprämien · … a) für
+> Erwachsene: Fr. 5'830.–, b) für junge Erwachsene: Fr. 4'260.–, c) für Kinder: Fr. 1'380.–.»
+> · «Der Einkommenssatz gemäss § 5 KVGG beträgt 17,5 %.»
+
+**Kein Regierungsratsbeschluss für 2027 in der Gesetzessammlung.** Die API zu SAR 837.211
+(20.09.2026) meldet als aktuelle Fassung weiterhin Version 3870, «in Kraft seit: 01.09.2025
+(Beschlussdatum: 27.08.2025)», dazu `future_versions: 0` und kein Änderungsdokument aus 2026
+(jüngstes: Publikation 20.10.2025). Dasselbe Bild bei SAR 837.200 (Version 3878, in Kraft seit
+01.12.2025, keine künftige Fassung). Ein PDF «richtpr-mien-2027.pdf» an der Stelle von [3] gibt
+es nicht (404). **Die Werte 2027 sind damit nur auf der SVA-Seite belegt, nicht im Erlass** —
+darum in der App gebaut: 2026. Offener Punkt → `FRAGEN-AN-DIE-AEMTER.md`, Frage 4.
+
+**Frist bestätigt — und für 2026 abgelaufen.** [1] § 10 Abs. 4:
+
+> «Anträge auf Ausrichtung der Prämienverbilligung sind in jedem Fall bis spätestens
+> 31. Dezember im Vorjahr des Anspruchsjahres zu stellen, andernfalls der Anspruch auf
+> Prämienverbilligung für das betreffende Anspruchsjahr verwirkt ist.»
+
+Das Informationsblatt [5] sagt dasselbe in Alltagssprache und nennt das laufende Verfahren:
+
+> «Mit dem Anmeldecode können Sie sich ab September 2026 bis am 31. Dezember 2026 online für
+> die Prämienverbilligung 2027 anmelden – vorher sind noch keine Anmeldungen möglich.»
+
+> «Der Code ist 6 Wochen gültig. Bitte reichen Sie Ihren Antrag spätestens bis am 31. Dezember
+> 2026 ein – danach können Sie die Prämienverbilligung 2027 nicht mehr beantragen.»
+
+Für das Anspruchsjahr **2026** war die Frist der 31.12.2025 — sie ist abgelaufen. Ausnahmen
+nennt der Erlass nur für besondere Lagen: Sozialhilfe- und EL-Beziehende erhalten die
+Verbilligung ohne Antrag ([1] § 17 Abs. 1 «Der Eintritt in die Sozialhilfe gilt als Antrag auf
+Prämienverbilligung», Informationsblatt [5] ausdrücklich auch für EL), und das ausserordentliche
+Verfahren ([1] §§ 11–16) steht bei wesentlicher Verschlechterung, veränderten persönlichen
+Verhältnissen oder Zuzug offen. Die App sagt das an jedem AG-Betrag (`ipv.agFristAbgelaufen`).
+
+**Massgebendes Steuerjahr: drei Jahre zurück.** [1] § 7 Abs. 1 «Das massgebende Steuerjahr ist
+dasjenige Jahr, das drei Jahre vor dem Anspruchsjahr begonnen hat» — für 2026 also 2023. Die
+SVA-Seite bestätigt die Mechanik am Jahr 2027 (Veranlagung 2024). Eigener Anzeige-Vorbehalt
+`ipv.vorbehaltAG`, weil BE mit zwei Jahren rechnet und der BE-Satz hier falsch wäre.
+
+**Keine Prämienregionen — bestätigt, und bewusst nicht gebaut.** [1] § 5 Abs. 2 kennt nur die
+drei Alterskategorien, [2] § 4 Abs. 1 definiert die Richtprämie als «Durchschnittswert der
+jeweils zehn günstigsten Prämien **im Kanton Aargau**», und Anhang 1 nennt je einen einzigen
+Betrag. Die App baut für AG darum keine Gemeinde- und keine Regionenlogik (Test hält es fest).
+
+**Zwei Lücken der Erhebung geschlossen:**
+- Die Formel für Haushalte mit Kindern ist jetzt amtlich belegt: Das Rechenbeispiel der SVA [4]
+  (verheiratetes Paar, 2 Kinder, 1 junger Erwachsener in Ausbildung) rechnet «Einkommensabzug
+  für Haushalt mit Kindern − 8'000» **plus** «Kinderabzüge total − 7'500» (= 3 × 2'500, also
+  auch für den gemeinsam eingestuften jungen Erwachsenen) und anschliessend «Total Richtprämien
+  19'480 − Einkommenssatz 19.25 Prozent von 30'397 Franken = 13'628.55». Struktur bestätigt.
+- Die Verteilung im Haushalt steht in [2] § 4 Abs. 4: «Die Verteilung des Haushaltsanspruchs auf
+  die Haushaltsmitglieder erfolgt anteilmässig im Verhältnis der Richtprämien.» Die effektive
+  Prämie ist dabei personenbezogen ([2] § 4 Abs. 3: «die effektive KVG-Prämie am 1. Januar des
+  Anspruchsjahres»), Deckel und Mindestanspruch gelten also je Person.
+
+**Weiterhin offen:**
+- **Einkommensgrenze nach § 5 Abs. 5 KVGG**: an keiner der fünf Quellen als Zahl gefunden
+  (auch nicht bei der SVA, die stattdessen die Regel nennt: Anspruch, «sofern die
+  durchschnittlichen Krankenkassenprämien mehr als 19.25 Prozent Ihres Haushaltseinkommens
+  ausmachen»). Die abgeleitete Grenze (5'830 ÷ 17,5 % = Fr. 33'314 massgebendes Einkommen)
+  bleibt **unsere Rechnung**. Die App nennt darum für AG **keine Grenze als Zahl**; bei
+  fehlendem Anspruch steht der Grund statt eines Betrags (`ipv.agKeinAnspruch`).
+- Online-Rechner der SVA steht auf 2027 — für 2026 nach wie vor keine Gegenprobe möglich.
+- Mindestbetrag (Bagatellgrenze) weiterhin nicht gefunden.
+- **Bewusst nicht gerechnet: Haushalte mit Kindern.** [1] § 7 Abs. 2 gibt Kindern und jungen
+  Erwachsenen in Ausbildung «mindestens 50 % der **effektiven Prämie**» — anders als in ZH, wo
+  der Mindestanspruch an der Richtprämie hängt. Die App erfasst nur eine einzige
+  Krankenkassenprämie, nicht die der Kinder; der Mindestanspruch bindet ab rund Fr. 20'000
+  massgebendem Einkommen und würde den Betrag ohne ihn um mehrere hundert Franken zu tief
+  zeigen. Die reine Rechenfunktion kann ihn (getestet), die App zeigt bis auf Weiteres eine
+  Orientierung mit Grund.
+- Ebenfalls nicht gerechnet: Paare — [1] § 9 Abs. 2 stellt eingetragene Partnerschaft **und**
+  Konkubinat den Ehepaaren gleich und nimmt das Konkubinat «bei einem gemeinsamen Haushalt» an.
+  ⟨korrigiert 20.09.2026, Fachprüfung⟩ Hier stand «strenger als BE» — das war eine eigene
+  Auslegung. [2] § 7a Abs. 2 führt aus, wann die Lebensgemeinschaft vermutet wird: «a) seit
+  mindestens 2 Jahren ein gemeinsamer Haushalt geführt wird, b) 2 Personen mit einem gemeinsamen
+  Kind … zusammenleben, oder c) auf Grund anderer konkreter Umstände …». Junge Erwachsene 19–25 ([1] § 9 Abs. 3: Einstufung mit den
+  Eltern unter Fr. 24'000). Quellenbesteuerte ([2] § 2).
+
+### Fachprüfung 20.09.2026 (swiss-precision-pruefer, Quellen selbst nachgemessen)
+
+Bestätigt, Zeichen für Zeichen gegen Anhang 1 V KVGG und KVGG: Richtprämien 5'830 / 4'260 /
+1'380 · Einkommenssatz 17,5 % · alle vier Einkommensabzüge und der Kinderabzug · die
+1/5-Vermögensregel · Verteilung im Verhältnis der Richtprämien · Deckel je Person ·
+Kinder-Mindestanspruch nur bei bestehendem Anspruch · Basisjahr drei Jahre zurück (2023 für
+2026, von der SVA-Mechanik für 2027 gegengeprüft) · Altersschnitt · keine Regionen · keine
+publizierte Einkommensgrenze. Der Widerspruch vom 16.09. ist auch in der unabhängigen
+Nachmessung verschwunden, und für 2027 ist **keine** Fassung in Kraft (`future_versions: 0`).
+
+Drei Befunde eingearbeitet:
+
+- **Die unterdrückte Einkommensgrenze kam in der Finanzübersicht zurück** — als «Einkommen über
+  Grenze (CHF )», eine Grenze ohne Zahl. Die Kachel zeigt jetzt denselben Grund wie die
+  Detailseite. *Die Datenzeile war sauber, die zweite Anzeigestelle nicht — genau die Sorte
+  Fehler, die nur auffällt, wenn jemand den ganzen Weg bis zur Ausgabe geht.*
+- **Der Fristhinweis war zu absolut.** Er sagte, für das laufende Jahr lasse sich nichts mehr
+  beantragen. [1] §§ 11–16 KVGG kennen aber das **ausserordentliche Verfahren**: «Personen, die
+  von einer wesentlichen Verschlechterung der wirtschaftlichen Verhältnisse betroffen sind,
+  können Antrag stellen» (§ 13 Abs. 1), konkretisiert in § 11 Abs. 2 («mindestens sechs Monate
+  … mindestens 20 %»). Wer gerade die Stelle verloren hat, las bei uns, die Tür sei zu. Der
+  Satz steht jetzt in allen fünf Sprachen dabei.
+- **Ohne erfasste Prämie fiel der Deckel still weg** ([1] § 7 Abs. 3). Gemessen: Einkommen 0,
+  keine Prämie erfasst → Fr. 5'830 im Jahr, also die volle Richtprämie statt des Anspruchs.
+  Dasselbe Muster steckte in BE ([5] Art. 10 Abs. 1) und ZH (§ 4 Abs. 3 EG KVG). **Alle drei
+  zeigen jetzt keine Zahl, bis die Prämie dasteht** — mit eigenem Grund in der Anzeige.
+
+Kleinere Korrekturen: die Zusage «Sozialhilfe und EL erhalten ohne Antrag» ist für die EL-Hälfte
+durch die SVA-Seite [4] belegt, nicht durch § 17 Abs. 1 KVGG (der nur die Sozialhilfe regelt) ·
+die Rundungsregel des amtlichen Rechenbeispiels (5'851.45 statt exakt 5'851.4225) ist ungeklärt
+und für die App ohne Folge · [2] § 5 Abs. 3 publiziert zwar Zahlen (Tarif A Fr. 44'000, Tarif B
+Fr. 140'000), das sind aber die Schwellen für den Datenzugriff der SVA, nicht die
+Einkommensgrenze nach § 5 Abs. 5.
+
+**Nicht nachgemessen:** die zwei Zitate aus dem Informationsblatt (Anmeldefenster, Code sechs
+Wochen gültig) — die Seite liefert heute HTML statt PDF. Tragend sind sie nicht; die Frist steht
+wörtlich in § 10 Abs. 4 KVGG.
 
 ---
 

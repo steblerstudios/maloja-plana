@@ -114,14 +114,18 @@ describe('K31 ZH-Modell: Beträge aus Formel und amtlichen Zahlen hergeleitet', 
   });
 });
 
-describe('K31 Regression: alle Kantone ausser ZH rechnen exakt wie v0.1.37-beta', () => {
+// Erweitert 20.09.2026 um BE und AG (zweiter und vierter Kanton mit eigenem Modell): unver-
+// ändert bleiben jetzt 23 der 26 Kantone, nicht mehr 25.
+const EIGENES_MODELL = ['ZH', 'BE', 'AG'];
+
+describe('K31 Regression: alle Kantone ausser ZH, BE und AG rechnen exakt wie v0.1.37-beta', () => {
   const haushalte = [
     { adults: 1, children: [] }, { adults: 2, children: [], partnerIncome: 1500 },
     { adults: 1, children: [{ age: 5 }] }, { adults: 2, children: [{ age: 3 }, { age: 20 }] },
     { adults: 1, children: [{ age: 2 }, { age: 7 }, { age: 12 }] },
   ];
   const faelle = [];
-  for (const canton of [...CANTON_CODES.filter((k) => k !== 'ZH'), 'XX', '']) {
+  for (const canton of [...CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)), 'XX', '']) {
     for (const household of haushalte) {
       for (const monthlyIncome of [0, 800, 2500, 4000, 6000, 12000]) {
         for (const kkPremium of [undefined, 0, 380]) {
@@ -136,12 +140,13 @@ describe('K31 Regression: alle Kantone ausser ZH rechnen exakt wie v0.1.37-beta'
     }
   }
 
-  it(`unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+  it(`23 Kantone ohne eigenes Modell, unbelegt (heutiger Stand): ${faelle.length} Fälle identisch`, () => {
+    expect(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k))).toHaveLength(23);
     for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
   });
 
   it('belegt (simuliert, linearer Abbau): identisch', () => {
-    const zurueck = kantoneBelegtSimulieren(CANTON_CODES.filter((k) => k !== 'ZH'));
+    const zurueck = kantoneBelegtSimulieren(CANTON_CODES.filter((k) => !EIGENES_MODELL.includes(k)));
     try {
       for (const d of faelle) expect(calculateIPV(d)).toStrictEqual(calculateIPVAlt(d));
     } finally {
@@ -175,7 +180,7 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     await new Promise((r) => setTimeout(r, 0));
   });
 
-  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium, finanzen = {}, basis = {} } = {}) => ({
+  const person = ({ monthlyIncome = 0, plz = '8004', city = '', children = [], dob = '1980-05-01', kkPremium = 600, finanzen = {}, basis = {} } = {}) => ({
     basis: { canton: 'ZH', dateOfBirth: dob, household: { adults: 1, children }, ...basis },
     finanzen: { monthlyIncome, ...finanzen },
     wohnen: { postalCode: plz, city },
@@ -259,6 +264,10 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
     expect(calculateIPV(person({ plz: '8127' })).region).toBe(2); // mehrere Gemeinden, alle Region 2
   });
 
+  it('ohne erfasste Prämie keine Zahl (§ 4 Abs. 3 EG KVG)', () => {
+    expect(calculateIPV(person({ kkPremium: null }))).toMatchObject({ belegt: false, amount: null, offen: 'praemie' });
+  });
+
   it.each([
     ['ohne PLZ', { plz: '' }, 'region'],
     ['ohne Geburtsdatum', { dob: '' }, 'alter'],
@@ -294,6 +303,14 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
   ])('%s: Orientierung statt Betrag', (_, opts) => {
     const r = calculateIPV(person(opts));
     expect(r).toMatchObject({ belegt: false, amount: null, offen: 'alter' });
+  });
+
+  // Konkubinat: auch hier fehlt das Einkommen der zweiten Person. Ergänzt 20.09.2026, nachdem
+  // die Fachprüfung bei BE gezeigt hat, dass der Guard `cohabiting` durchliess.
+  it('Konkubinat: Orientierung statt Betrag', () => {
+    const p = person({});
+    const r = calculateIPV({ ...p, basis: { ...p.basis, maritalStatus: 'cohabiting' } });
+    expect(r).toMatchObject({ belegt: false, amount: null, offen: 'haushalt' });
   });
 
   // § 3 Abs. 1 EG KVG: höchstens die Referenzprämie. Ein negativ erfasstes Einkommen darf
