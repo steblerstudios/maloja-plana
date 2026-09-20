@@ -72,7 +72,7 @@ export default {
         iv: { titel: 'Prestations AI', text: 'Réadaptation avant la rente : mesures professionnelles, moyens auxiliaires et, si nécessaire, une rente. S’annoncer tôt compte le plus.' },
         hilflosenentschaedigung: { titel: 'Allocation pour impotent', text: { sie: 'Un montant mensuel si vous avez besoin d’aide régulière au quotidien — indépendant du revenu, souvent oublié.', du: 'Un montant mensuel si tu as besoin d’aide régulière au quotidien — indépendant du revenu, souvent oublié.' } },
         el: { titel: 'Prestations complémentaires (PC)', text: 'Si une rente ou un revenu ne couvre pas les frais de vie, les PC complètent. C’est un droit, pas de l’assistance.' },
-        ipv: { titel: 'Réduction des primes (RIP)', text: 'Les bénéficiaires de PC sont exonérés des primes ; avec un faible revenu, on a souvent droit à une aide malgré tout.' },
+        ipv: { titel: 'Réduction des primes (RIP)', text: 'Pour les bénéficiaires de PC, la prime est prise en compte sous forme de forfait — au plus la prime moyenne cantonale. Ce n’est pas une exonération. Avec un faible revenu sans PC, on a souvent droit à une aide malgré tout.' },
         steuern: { titel: 'Déductions fiscales liées au handicap', text: 'Les frais de maladie et de handicap — soins, moyens auxiliaires, déplacements — sont déductibles du revenu imposable.' },
         serafe: { titel: 'Exonération de la redevance radio/TV', text: 'Les bénéficiaires de prestations complémentaires (PC) sont exonérés de la redevance SERAFE sur demande — récupérable rétroactivement.' },
         sbbBegleitabo: { titel: 'Abonnement pour accompagnateur CFF', text: 'Un abonnement pour accompagnateur gratuit sur le SwissPass permet à une personne accompagnante (ou à un chien d\'assistance) de voyager gratuitement dans les transports publics — en cas d\'atteinte durable, qu\'elle soit physique, psychique ou cognitive. Demande avec attestation médicale. L\'ancienne carte verte en papier n\'est plus valable.' },
@@ -1009,7 +1009,7 @@ export default {
 
   glossar: {
     ipv: { sie: 'IPV/RIP — réduction individuelle des primes : une aide cantonale sur votre prime d’assurance-maladie si le revenu est assez bas.', du: 'IPV/RIP — réduction individuelle des primes : une aide cantonale sur ta prime d’assurance-maladie si le revenu est assez bas.' },
-    skos: 'CSIAS — Conférence suisse des institutions d’action sociale : fixe les normes de l’aide sociale.',
+    skos: 'CSIAS — Conférence suisse des institutions d’action sociale : recommande des normes pour l’aide sociale. Elles ne lient qu’un canton qui les reprend.',
     el: 'PC — prestations complémentaires : complètent l’AVS ou l’AI quand la rente ne suffit pas.',
     mietbeitraege: 'Aides au loyer — contributions cantonales au loyer pour les ménages à faible revenu.',
     ahv: 'AVS — assurance-vieillesse et survivants : la rente de base de l’État à la retraite ou au décès d’un parent.',
@@ -2140,7 +2140,7 @@ export default {
     el: { sie: 'Les prestations complémentaires aident quand la rente AVS ou AI ne suffit pas pour vivre. Votre commune peut vous dire si vous y avez droit.', du: 'Les prestations complémentaires aident quand la rente AVS ou AI ne suffit pas pour vivre. Ta commune peut te dire si tu y as droit.' },
     alv: { sie: 'L\'assurance chômage vous protège en cas de perte d\'emploi. Les cotisations sont directement déduites de votre salaire.', du: 'L\'assurance chômage te protège en cas de perte d\'emploi. Les cotisations sont directement déduites de ton salaire.' },
     rav: { sie: 'L\'ORP (office régional de placement) est votre interlocuteur en cas de chômage. Inscrivez-vous dès le premier jour.', du: 'L\'ORP (office régional de placement) est ton interlocuteur en cas de chômage. Inscris-toi dès le premier jour.' },
-    skos: 'Les directives CSIAS déterminent le niveau de l\'aide sociale. Chaque canton les applique un peu différemment.',
+    skos: 'Les directives CSIAS recommandent le niveau de l\'aide sociale. Elles ne sont contraignantes que dans la mesure où un canton les reprend dans son droit.',
     iv: 'L\'assurance invalidité (AI) soutient les personnes durablement atteintes par la maladie ou un accident.',
     // ─── P2 : Référence, pour plus tard ────────────────────
     selbstbehalt: { sie: 'En plus de la franchise, vous payez 10% des frais médicaux vous-même — c\'est la quote-part. Maximum CHF 700 par an.', du: 'En plus de la franchise, tu paies 10% des frais médicaux toi-même — c\'est la quote-part. Maximum CHF 700 par an.' },

@@ -72,7 +72,7 @@ export default {
         iv: { titel: 'IV-Leistungen', text: 'Eingliederung vor Rente: berufliche Massnahmen, Hilfsmittel und bei Bedarf eine Rente. Früh anmelden zählt am meisten.' },
         hilflosenentschaedigung: { titel: 'Hilflosenentschädigung', text: { sie: 'Ein monatlicher Betrag, wenn Sie im Alltag regelmässig Hilfe brauchen — unabhängig vom Einkommen, oft übersehen.', du: 'Ein monatlicher Betrag, wenn du im Alltag regelmässig Hilfe brauchst — unabhängig vom Einkommen, oft übersehen.' } },
         el: { titel: 'Ergänzungsleistungen (EL)', text: 'Wenn Rente oder Einkommen die Lebenskosten nicht decken, stocken EL auf. Das ist ein Recht, keine Fürsorge.' },
-        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, ist von den Prämien befreit; bei tiefem Einkommen besteht sonst oft trotzdem Anspruch auf Hilfe.' },
+        ipv: { titel: 'Prämienverbilligung (IPV)', text: 'Wer EL bezieht, bekommt die Prämie als Pauschale angerechnet — höchstens die kantonale Durchschnittsprämie. Eine Befreiung ist es nicht. Bei tiefem Einkommen ohne EL besteht oft trotzdem Anspruch.' },
         steuern: { titel: 'Behinderungsbedingte Steuerabzüge', text: 'Krankheits- und Behinderungskosten — Betreuung, Hilfsmittel, Fahrten — lassen sich vom steuerbaren Einkommen abziehen.' },
         serafe: { titel: 'Befreiung von der Radio-/TV-Abgabe', text: 'Wer Ergänzungsleistungen (EL) bezieht, ist auf Antrag von der SERAFE-Abgabe befreit — rückwirkend nachforderbar.' },
         sbbBegleitabo: { titel: 'SBB-Begleitabo', text: 'Ein kostenloses Begleitabo auf dem SwissPass lässt eine Begleitperson (oder einen Assistenzhund) gratis im öV mitreisen — bei einer bleibenden Beeinträchtigung, ob körperlich, psychisch oder kognitiv. Antrag mit ärztlicher Bestätigung. Die alte grüne Papierkarte gilt nicht mehr.' },
@@ -1012,7 +1012,7 @@ export default {
 
   glossar: {
     ipv: { sie: 'IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an Ihre Krankenkassenprämie, wenn das Einkommen tief genug ist.', du: 'IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an deine Krankenkassenprämie, wenn das Einkommen tief genug ist.' },
-    skos: 'SKOS — Schweizerische Konferenz für Sozialhilfe: legt die Richtlinien fest, wie viel Sozialhilfe zusteht.',
+    skos: 'SKOS — Schweizerische Konferenz für Sozialhilfe: empfiehlt Richtlinien zur Sozialhilfe. Verbindlich sind sie erst, soweit ein Kanton sie übernimmt.',
     el: 'EL — Ergänzungsleistungen: Zuschuss zu AHV oder IV, wenn die Rente den Lebensbedarf nicht deckt.',
     mietbeitraege: 'Mietbeiträge — kantonale Zuschüsse an die Wohnungsmiete für Haushalte mit tiefem Einkommen.',
     ahv: 'AHV — Alters- und Hinterlassenenversicherung: die staatliche Grundrente im Alter oder beim Tod eines Elternteils.',
@@ -2145,7 +2145,7 @@ export default {
     el: { sie: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Ihre Gemeinde kann Ihnen sagen, ob Sie Anspruch haben.', du: 'Ergänzungsleistungen helfen, wenn die AHV- oder IV-Rente nicht zum Leben reicht. Deine Gemeinde kann Dir sagen, ob Du Anspruch hast.' },
     alv: { sie: 'Die Arbeitslosenversicherung sichert Sie bei Jobverlust ab. Die Beiträge werden direkt vom Lohn abgezogen.', du: 'Die Arbeitslosenversicherung sichert Dich bei Jobverlust ab. Die Beiträge werden direkt vom Lohn abgezogen.' },
     rav: { sie: 'Das RAV (Regionale Arbeitsvermittlung) ist Ihre Anlaufstelle bei Arbeitslosigkeit. Melden Sie sich dort am ersten Tag.', du: 'Das RAV (Regionale Arbeitsvermittlung) ist Deine Anlaufstelle bei Arbeitslosigkeit. Melde Dich dort am ersten Tag.' },
-    skos: 'Die SKOS-Richtlinien bestimmen die Höhe der Sozialhilfe. Jeder Kanton wendet sie etwas anders an.',
+    skos: 'Die SKOS-Richtlinien empfehlen, wie hoch die Sozialhilfe sein soll. Verbindlich sind sie nur, soweit ein Kanton sie in sein Recht übernimmt.',
     iv: 'Die Invalidenversicherung (IV) unterstützt Menschen, die wegen Krankheit oder Unfall dauerhaft eingeschränkt sind.',
     // ─── P2: Referenz, erst später ─────────────────────────
     selbstbehalt: { sie: 'Zusätzlich zur Franchise zahlen Sie 10% der Arztkosten selbst — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.', du: 'Zusätzlich zur Franchise zahlst Du 10% der Arztkosten selbst — das nennt sich Selbstbehalt. Maximal CHF 700 pro Jahr.' },

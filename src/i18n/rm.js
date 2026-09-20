@@ -73,7 +73,7 @@ export default {
         iv: { titel: 'Prestaziuns da l’AI', text: 'Reintegraziun avant la renta: mesiras professiunalas, meds auxiliars e sche necessari ina renta. S’annunziar baud quinta il pli.' },
         hilflosenentschaedigung: { titel: 'Indemnisaziun per persunas impotentas', text: 'In import mensil sche Vus avais regularmain basegn d’agid en la vita da mintgadi — independent dal retgav, savens survis.' },
         el: { titel: 'Prestaziuns cumplementaras (PC)', text: 'Sche ina renta u in retgav na cuvran betg las custas da viver, cumpletteschan las PC. Quai è in dretg, betg cura.' },
-        ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC è exonerà da las premias; cun in bass retgav ha ins savens tuttina dretg sin in agid.' },
+        ipv: { titel: 'Reducziun da las premias (RIP)', text: 'Tgi che survegn PC survegn la premia quintada sco import forfetar — il pli aut la premia media chantunala. Quai n’è betg ina exoneraziun. Cun in bass retgav senza PC ha ins savens tuttina dretg sin in agid.' },
         steuern: { titel: 'Deducziuns fiscalas pervia da l’impediment', text: 'Las custas da malsogna ed impediment — chüra, meds auxiliars, viadis — pon vegnir deducidas dal retgav imponibel.' },
         serafe: { titel: 'Exoneraziun da la taxa da radio/televisiun', text: 'Tgi che survegn prestaziuns cumplementaras (PC) è exonerà da la taxa SERAFE sin dumonda — recuperabel retroactivamain.' },
         sbbBegleitabo: { titel: 'Abunament d’accumpagnament dlas VFF', text: 'In abunament d’accumpagnament gratuit sin il SwissPass lascha viagiar gratuitamain ina persuna d’accumpagnament (u in chaun d’assistenza) en il traffic public — en cas d’in impediment permanent, corporal, psichic u cognitiv. Dumonda cun conferma medicinala. La veglia carta verda da palpiri n’è betg pli valaivla.' },
@@ -2553,7 +2553,7 @@ export default {
 
   glossar: {
     ipv: 'IPV — reducziun individuala da premias: in agid chantunal a tia premia da la cassa da malsauns sche l’entrada è bassa avunda.',
-    skos: 'SKOS — Conferenza svizra per l’agid social: fixescha las directivas per l’agid social.',
+    skos: 'SKOS — Conferenza svizra per l’agid social: recumonda directivas per l’agid social. Ellas èn liantas mo sche in chantun las surpiglia.',
     el: 'PC — prestaziuns cumplementaras: cumpleteschan l’AVS u l’AI sche la renta na basta betg.',
     mietbeitraege: 'Contribuziuns da fittanza — contribuziuns chantunalas a la fittanza per chasadas cun bassa entrada.',
     ahv: 'AVS — assicuranza per vegls e survivents: la renta da basa statala en la vegliadetgna u tar la mort d’in genitur.',
@@ -2802,7 +2802,7 @@ export default {
     el: { sie: "Prestaziuns cumplementaras gidan, sch'la renta AVS u AI na basta betg per viver. Vossa vischnanca po dir a Vus sche Vus avais dretg.", du: "Prestaziuns cumplementaras gidan, sch'la renta AVS u AI na basta betg per viver. Tia vischnanca po dir a Tai sche Ti has dretg." },
     alv: { sie: "L'assicuranza da dischoccupaziun As assicurescha en cas da perdita dal plaz da lavur. Las contribuziuns vegnan deducidas directamain dal salari.", du: "L'assicuranza da dischoccupaziun T'assicurescha en cas da perdita dal plaz da lavur. Las contribuziuns vegnan deducidas directamain dal salari." },
     rav: { sie: "Il RAV (Mediaziun regiunala da lavur) è Vossa post d'infurmaziun en cas da dischoccupaziun. Annunziai Vus là l'emprim di.", du: "Il RAV (Mediaziun regiunala da lavur) è Tia post d'infurmaziun en cas da dischoccupaziun. Annunzia Tai là l'emprim di." },
-    skos: 'Las directivas COSAS determineschan la summa da la sozialhilfe. Mintga chantun las applitgescha in zic differentamain.',
+    skos: 'Las directivas SKOS recumondan quant auta che l’agid social duess esser. Ellas èn liantas mo uschè lunsch sco in chantun las surpiglia en ses dretg.',
     iv: "L'assicuranza d'invaliditad (AI) sustegna persunas che èn limitadas durablamain pervia da malsogna u accident.",
     selbstbehalt: { sie: "Sper la franschischa pajais Vus 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF 700 per onn.", du: "Sper la franschischa pajas Ti 10% dals custs da medi sez — quai è il parteniment. Maximalmain CHF 700 per onn." },
     verlustschein: 'In attestat da deficit munta: Ina scussiun è terminada, ma il debit resta — 20 onns ditg.',
