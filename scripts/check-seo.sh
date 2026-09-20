@@ -105,8 +105,32 @@ soft() { # soft "<beschreibung>" "<grep-muster>"
     warn=$((warn + 1))
   fi
 }
-soft "hreflang (mehrsprachig)"      'hreflang='
 soft "twitter:card"                 'name="twitter:card"'
+
+# hreflang wird NICHT mehr auf der Startseite gesucht. Seit 21.09.2026 steht es
+# dort bewusst nicht mehr: der canonical der Startseite ist statisch «/», also
+# hätte jede ?lang=-Alternative sich selbst wegkanonisiert — dieselbe Falle, die
+# am 20.09. die Sitemap gekostet hat. Begründung im Kopf von index.html.
+#
+# Gesucht wird es dort, wo es WAHR ist: auf den Erklärseiten, und nur für
+# freigegebene Sprachen. Ein Ring aus einem Glied zählt nicht als Ring — solange
+# nur Deutsch frei ist, gibt es ihn zu Recht nicht, und das ist kein Mangel.
+freie_sprachen=0
+for s in "" fr/ it/ en/ rm/; do
+  d="$DIR/${s}sozialhilfe/index.html"
+  [ -f "$d" ] || continue
+  grep -q 'content="noindex' "$d" || freie_sprachen=$((freie_sprachen + 1))
+done
+if [ "$freie_sprachen" -ge 2 ]; then
+  if grep -q 'hreflang=' "$DIR/sozialhilfe/index.html" 2>/dev/null; then
+    echo "  ✓ hreflang auf den Erklärseiten ($freie_sprachen freigegebene Sprachen)"
+  else
+    echo "  ⚠ $freie_sprachen freigegebene Sprachen, aber kein hreflang auf den Erklärseiten"
+    warn=$((warn + 1))
+  fi
+else
+  echo "  ✓ hreflang: noch nicht nötig (nur $freie_sprachen freigegebene Sprache)"
+fi
 
 # og:image-Datei wirklich vorhanden? (Pfad aus dem Tag, führenden / strippen)
 ogimg="$(printf '%s' "$html" | sed -n 's/.*property="og:image" content="[^"]*\/\([^"/]*\)".*/\1/p' | head -1)"

@@ -83,6 +83,14 @@ export const SPRACHEN = [
     praefix: 'rm/',
     freigegeben: false,
     geprueft: null,
+    // 🛑 Entscheid Stebler Studios, 21.09.2026: «rumantsch im oktober».
+    // Damit ist rm NICHT dasselbe wie fr/it/en. Die drei warten auf eine
+    // Gegenlesung, die im September noch kommen kann. Rumantsch wartet
+    // bewusst auf den Oktober — dort kann im Studio niemand gegenlesen, und
+    // auch kein Prüf-Agent hat eine belastbare Grundlage.
+    // Nicht als Rückstand lesen: das ist ein Entscheid, keine offene Aufgabe.
+    // Vgl. feedback_luecke_ist_kein_rueckstand.
+    vertagtAuf: 'Oktober 2026',
   },
 ];
 
