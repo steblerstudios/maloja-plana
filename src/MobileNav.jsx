@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
-import { useFocusTrap } from './hooks/useFocusTrap.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -10,15 +9,6 @@ import { useFocusTrap } from './hooks/useFocusTrap.js';
 export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false, leftHand = false }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // O17 · Die Schublade ist modal: solange sie offen ist, liegt der Rest der Seite
-  // dahinter. Vorher hing der Escape-Griff am Hintergrund — der Fokus stand aber
-  // beim auslösenden Knopf AUSSERHALB davon, also erreichte ihn kein Tastendruck
-  // und Escape tat schlicht nichts. Der Griff gehört auf die Schublade selbst,
-  // dorthin, wo der Fokus nach dem Öffnen auch wirklich steht.
-  const schublade = useRef(null);
-  useFocusTrap(isOpen, { ref: schublade, onEscape: onClose });
-
   if (!isOpen) return null;
 
   // Seite, von der die Schublade einfährt — folgt der gewählten Hand (Standard rechts,
@@ -38,12 +28,11 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   // damit der Boden-Anker „Menü" reine Navigation bleibt (keine Doppelung).
   if (mode === 'settings') {
     return React.createElement('div', {
-      role: 'dialog', 'aria-modal': 'true', 'aria-label': settingsLabel || t('nav.settings'),
       style: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998, animation: 'fadeIn 0.2s' },
       onClick: onClose,
+      onKeyDown: (e) => { if (e.key === 'Escape') onClose(); },
     },
       React.createElement('nav', {
-        ref: schublade,
         role: 'navigation', 'aria-label': settingsLabel || t('nav.settings'),
         style: {
           position: 'fixed', top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
@@ -137,17 +126,20 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       label
     );
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') onClose();
+  };
+
   return React.createElement('div', {
-    role: 'dialog', 'aria-modal': 'true', 'aria-label': t('nav.menu'),
     style: {
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
       background: 'rgba(0,0,0,0.45)', zIndex: 998,
       animation: 'fadeIn 0.2s',
     },
     onClick: onClose,
+    onKeyDown: handleKeyDown,
   },
     React.createElement('nav', {
-      ref: schublade,
       role: 'navigation',
       'aria-label': t('nav.menu'),
       style: {
