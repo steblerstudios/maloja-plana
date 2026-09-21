@@ -8,10 +8,13 @@
        script-src. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
-       Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
+       Quelle: scripts/seiten-inhalt.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
        Prüfen:     node scripts/build-seiten.mjs --pruefen -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden. -->
   <meta name="robots" content="index, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
@@ -164,6 +167,14 @@
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
     footer p{ margin-bottom:6px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:14px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
+    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
+      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
   </style>
 </head>
@@ -179,8 +190,7 @@
     <main>
       <h1>Sozialhilfe in der Schweiz — eine Orientierung</h1>
       <p class="vorspann">Sozialhilfe ist die unterste Stufe im schweizerischen Netz — sie greift dort, wo alles andere nicht oder nicht mehr reicht. Zuständig sind nicht der Bund, sondern die Kantone und, in vielen von ihnen, die Gemeinden.</p>
-      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend
-      ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
+      <p class="hinweis">Orientierung, keine Rechts- oder Finanzberatung — massgebend ist die zuständige Stelle. Diese Seite nennt bewusst keine Beträge und Fristen.</p>
 
         <h2>Subsidiär heisst: zuerst alles andere</h2>
         <p>Sozialhilfe ist <strong>subsidiär</strong>. Bevor sie in Frage kommt, werden andere Ansprüche geprüft: Lohn, Arbeitslosenentschädigung, Renten, Ergänzungsleistungen, Prämienverbilligung, Unterhaltsbeiträge, Stipendien. Auch eigenes Vermögen wird berücksichtigt, wobei die Kantone einen Freibetrag kennen, dessen Höhe sich unterscheidet.</p>
@@ -214,13 +224,8 @@
 
       <div class="karte">
         <p><strong>Maloja Plana rechnet das für Ihre Situation durch.</strong></p>
-        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe,
-        Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben
-        auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein
-        Tracking. Kostenlos und quelloffen.</p>
-        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht
-        einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> —
-        mit erfundenen Daten, es wird nichts gespeichert.</p>
+        <p>Ein Schweizer Lebensordner — Steuern, Prämienverbilligung, Sozialhilfe, Mindestlohn, Vorsorge und Notfallkarte an einem Ort. Alle Angaben bleiben auf Ihrem Gerät: kein Konto, keine Übermittlung an einen Server, kein Tracking. Kostenlos und quelloffen.</p>
+        <p>Die App ist zurzeit in einer <strong>geschlossenen Beta</strong> und braucht einen Zugangscode. <strong>Ohne Code lässt sich ein Beispiel ansehen</strong> — mit erfundenen Daten, es wird nichts gespeichert.</p>
         <p><a class="knopf" href="/">Beispiel ansehen — ohne Zugangscode</a></p>
       </div>
 
@@ -230,16 +235,9 @@
           <li><a href="https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html" rel="noopener">Ergänzungsleistungen, Bundesamt für Sozialversicherungen</a></li>
           <li><a href="https://www.bwo.admin.ch/de/kantonale-hilfen" rel="noopener">Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen</a></li>
       </ul>
-      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung.
-      Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle
-      davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind
-      Empfehlungen.</p>
+      <p class="leise">Maloja Plana steht mit diesen Stellen in keiner Verbindung. Die Verlinkung bedeutet keine Zusammenarbeit und keine Billigung. Nicht alle davon sind Behörden — die SKOS etwa ist ein Fachverband, ihre Richtlinien sind Empfehlungen.</p>
 
-      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis
-      öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt
-      bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal
-      verschieden und ändern regelmässig. Massgebend ist immer die Auskunft
-      beziehungsweise die Verfügung der zuständigen Stelle.<br>
+      <p class="vorbehalt">Diese Seite ist eine <strong>Orientierungshilfe auf Basis öffentlicher Informationen — keine Rechts- oder Finanzberatung</strong>. Sie nennt bewusst keine Beträge, Fristen oder Einkommensgrenzen: die sind kantonal verschieden und ändern regelmässig. Massgebend ist immer die Auskunft beziehungsweise die Verfügung der zuständigen Stelle.<br>
       <strong>Inhaltlich geprüft: September 2026.</strong></p>
 
       <h2>Weiterlesen</h2>
@@ -259,6 +257,7 @@
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
       <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
       ohne Zugangscode lesbar.</p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/sozialhilfe/" hreflang="fr">Français</a> · <a href="/it/sozialhilfe/" hreflang="it">Italiano</a> · <a href="/en/sozialhilfe/" hreflang="en">English</a> · <a href="/rm/sozialhilfe/" hreflang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>

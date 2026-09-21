@@ -70,20 +70,49 @@ describe('resolveInitialLang (Sprachauswahl-Vorrang)', () => {
   });
 });
 
-// Schützt die Aktivierungs-Checkliste: jede SUPPORTED-Sprache braucht ein
-// hreflang-Tag in index.html. Fängt "Sprache hinzugefügt, hreflang vergessen".
-describe('hreflang-Vollständigkeit (index.html)', () => {
+// ─── hreflang auf der Startseite — umgedreht am 21.09.2026 ──────────────────
+//
+// Hier stand: «jede SUPPORTED-Sprache braucht ein hreflang-Tag in index.html»,
+// und «x-default ist gesetzt». Die Annahme war vernünftig und ist gemessen
+// widerlegt worden (SEO-Audit 20.09., docs/audits/seo-audit-2026-09-20.md):
+//
+//   Der canonical in index.html steht STATISCH auf «/». Er gilt damit auch für
+//   ?lang=fr. Google folgt der Alternative, findet dort canonical «/» und
+//   verwirft sie. Die fünf Zeilen haben nie ein Signal gesendet — sie haben
+//   fünf URLs benannt, die sich selbst wegkanonisieren. Dieselbe Falle hat am
+//   20.09. die ?lang=-Adressen aus der Sitemap gekostet.
+//
+// 🛑 Der Test wird NICHT gelöscht, weil er im Weg stand. Er wird umgedreht und
+// an die Ursache gebunden: solange der canonical statisch ist, darf in
+// index.html KEIN hreflang stehen. Wird der canonical eines Tages dynamisch
+// (Kopf-Logik vor das Gate gezogen), schlägt dieser Test an und sagt, dass
+// hreflang dann wieder hingehört. Ein Test, der nur «ist weg» prüft, hätte
+// diese Bedingung verschwiegen.
+//
+// Wo hreflang wahr ist, steht es: auf den Erklärseiten, geprüft in
+// src/__tests__/erklaerseitenSprachen.test.js.
+describe('hreflang auf der Startseite (index.html)', () => {
   const html = readFileSync(new URL('../../../index.html', import.meta.url), 'utf8');
-  const hreflangs = [...html.matchAll(/hreflang="([^"]+)"/g)].map(m => m[1]);
+  const hreflangs = [...html.matchAll(/<link[^>]*hreflang="([^"]+)"/g)].map(m => m[1]);
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
 
-  it('für jede unterstützte Sprache existiert ein hreflang', () => {
-    for (const l of SUPPORTED_LANGUAGES) {
-      expect(hreflangs, `hreflang für ${l} fehlt in index.html`).toContain(l);
-    }
+  it('der canonical der Startseite ist statisch und sprachlos', () => {
+    // Die Bedingung, aus der alles andere folgt.
+    expect(canonical).toBe('https://malojaplana.ch/');
+    expect(canonical).not.toContain('lang=');
   });
 
-  it('x-default ist gesetzt', () => {
-    expect(hreflangs).toContain('x-default');
+  it('solange der canonical statisch ist, steht dort kein hreflang', () => {
+    expect(hreflangs, 'hreflang zurück in index.html — dann muss auch der '
+      + 'canonical je Sprache stimmen, sonst kanonisieren sich die Alternativen weg')
+      .toEqual([]);
+  });
+
+  it('die Sprachen selbst sind unverändert fünf', () => {
+    // Der alte Test hat nebenbei bewacht, dass niemand eine Sprache ergänzt,
+    // ohne den Kopf nachzuziehen. Dieser Teil bleibt nützlich und bleibt.
+    expect(SUPPORTED_LANGUAGES).toHaveLength(5);
+    for (const l of SUPPORTED_LANGUAGES) expect(l).toMatch(/^[a-z]{2}$/);
   });
 });
 

@@ -7,14 +7,20 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-21, ~01:30 (`main` = `728187d` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** Stand-Doku · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen sieben PRs** · **ein offener PR: #256, Entwurf** · **2488 Tests grün auf `main`**, size-limit 64,96 kB von 65)
+**Stand:** 2026-09-21 (`main` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** die Erklärseiten in fünf Sprachen ← *dieser PR* · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen neun PRs** · **2648 Tests grün**, size-limit 64,96 kB von 65)
 
 > *Korrigiert am 21.09. ~01:30: hier stand `1d9127d`, «sieben» hiess «sechs», und «keine
 > offenen PRs». Beides war beim Schreiben wahr und ist es seit dem Merge von #255 und dem
 > Öffnen von #256 nicht mehr. Der alte Wortlaut ist nicht erhaltenswert, die Lehre schon:
 > **eine Stand-Zeile, die am Merge vorbeigeschrieben wird, ist ab dem Merge falsch.***
 
-> ### 🌍 Die Erklärseiten in fünf Sprachen — PR #256, **Entwurf, nicht gemergt** (2026-09-21)
+> ### 🌍 Die Erklärseiten in fünf Sprachen — PR #256 (2026-09-21)
+>
+> 🛑 **Gemergt heisst hier NICHT sichtbar.** Öffentlich ist weiterhin nur Deutsch. Die vier
+> Übersetzungen gehen mit, sind unter ihrer Adresse lesbar und bleiben für Suchmaschinen
+> unsichtbar, bis ein Mensch sie gelesen und `freigegeben: true` gesetzt hat. Das ist der
+> Zweck der Sperre unten — nicht ein Zwischenstand, sondern der gewollte Dauerzustand,
+> solange niemand gegengelesen hat.
 >
 > Die fünf Seiten gab es nur auf Deutsch. **#256** ergänzt echte Sprachpfade:
 > `/fr/…` `/it/…` `/en/…` `/rm/…`; Deutsch bleibt ohne Präfix, weil diese Adressen seit

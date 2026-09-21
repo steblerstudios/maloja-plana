@@ -92,13 +92,37 @@
   <meta name="apple-mobile-web-app-title" content="Maloja Plana">
   <link rel="canonical" href="https://malojaplana.ch/">
 
-  <!-- hreflang: Sprach-URLs (?lang=) — die App liest den Parameter beim Laden -->
-  <link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de">
-  <link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr">
-  <link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it">
-  <link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en">
-  <link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm">
-  <link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/">
+  <!-- ─── Kein hreflang auf der Startseite. Das ist Absicht, seit 21.09.2026. ───
+       Hier standen fünf Zeilen auf ?lang=de/fr/it/en/rm. Sie waren inert und
+       zugleich falsch, und zwar gemessen:
+
+         • Der canonical zwei Zeilen höher steht STATISCH auf «/». Er gilt damit
+           auch für ?lang=fr — Google folgt der Alternative, findet dort
+           canonical «/» und verwirft sie. Genau der Fall, wegen dem dieselben
+           fünf URLs am 20.09. aus der Sitemap geflogen sind.
+         • Die Kopf-Logik, die den canonical je Sprache umschreiben würde, sitzt
+           in AppInner (src/main.jsx:624–647) — einem Kind von BetaGate. Sie
+           läuft nie. Die fünf URLs liefern byte-identisches HTML (mit cmp
+           gemessen, Audit vom 20.09.).
+
+       Es gibt für die Startseite keine zweite Sprachfassung unter eigener
+       Adresse, also gibt es nichts, worauf hreflang zeigen könnte. Ein
+       hreflang-Ring, der auf sich selbst zeigt, ist kein Signal, sondern Lärm.
+
+       Wo hreflang WAHR ist, steht es: auf den öffentlichen Erklärseiten
+       (/fr/… /it/… /en/… /rm/…), erzeugt von scripts/build-seiten.mjs — und
+       dort nur für Sprachen, die freigegeben sind.
+
+       🛑 NICHT mit erledigt: src/main.jsx:631 setzt canonUrl weiterhin auf
+       ?lang=. Der Code läuft heute nicht (siehe oben), würde den Widerspruch
+       aber am Tag zurückbringen, an dem das Gate fällt. Das zu ändern ist ein
+       Canonical-Entscheid und gehört Stebler Studios, nicht dem Aufräumen.
+
+       Auch das alleinstehende x-default ist raus: es ist Teil einer
+       hreflang-Gruppe und ohne Geschwister wirkungslos. Eine Zeile behalten,
+       nur damit ein weicher Check grün bleibt, wäre das Gegenteil von
+       Messen. -->
+
 
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">

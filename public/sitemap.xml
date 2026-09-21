@@ -7,11 +7,17 @@
   Nur kanonische URLs. Die ?lang=-Adressen standen bis zum 20.09.2026 hier und
   sind raus: sie liefern gemessen byte-identisches deutsches HTML und zeigen
   canonical auf «/», Google hätte alle als «Alternative Seite mit richtigem
-  kanonischem Tag» verworfen. Sie kommen zurück, sobald die Sprachvarianten
-  eigenen Inhalt ausliefern.
+  kanonischem Tag» verworfen.
+
+  Seit 21.09.2026 gibt es echte Sprachpfade (/fr/…, /it/…, /en/…, /rm/…).
+  Hier stehen nur FREIGEGEBENE Sprachen.
+  Nicht in dieser Sitemap, weil noch nicht gegengelesen: fr, it, en, rm.
+  Diese Seiten existieren und tragen «noindex, follow». Freigabe:
+  scripts/seiten-sprachen.mjs, Feld `freigegeben`.
   Befund: docs/audits/seo-audit-2026-09-20.md
 -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://malojaplana.ch/</loc>
     <lastmod>2026-09-20</lastmod>

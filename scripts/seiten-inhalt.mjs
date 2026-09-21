@@ -31,6 +31,15 @@
 // für erfundene Pfade HTTP 200, die Prüfung wäre dort wertlos gewesen.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Die vier übersetzten Fassungen. Diese Datei bleibt das deutsche Original und
+// zugleich die Sammelstelle — ein Ort, an dem alle fünf Sprachen zu sehen sind.
+// Die Übersetzungen liegen daneben, damit ein Sprach-Durchgang nicht durch
+// 1600 Zeilen scrollen muss: scripts/seiten/<sprache>.mjs
+import { SEITEN as SEITEN_FR, SONDERSEITEN as SONDERSEITEN_FR } from './seiten/fr.mjs';
+import { SEITEN as SEITEN_IT, SONDERSEITEN as SONDERSEITEN_IT } from './seiten/it.mjs';
+import { SEITEN as SEITEN_EN, SONDERSEITEN as SONDERSEITEN_EN } from './seiten/en.mjs';
+import { SEITEN as SEITEN_RM, SONDERSEITEN as SONDERSEITEN_RM } from './seiten/rm.mjs';
+
 export const BASIS = 'https://malojaplana.ch';
 
 // Sichtbares Stand-Datum. <lastmod> in der Sitemap ist für Leser:innen unsichtbar
@@ -40,31 +49,123 @@ export const BASIS = 'https://malojaplana.ch';
 export const GEPRUEFT = 'September 2026';
 
 // Geprüfte amtliche Quellen. Beim Ergänzen: erst Gegenprobe, dann eintragen.
+//
+// ─── SPRACHEN DER QUELLEN, gemessen 21.09.2026 ──────────────────────────────
+// `url` und `text` sind die deutsche Fassung und zugleich der Rückfall.
+// `sprachen` enthält AUSSCHLIESSLICH Adressen, die einzeln mit `curl` geprüft
+// wurden — HTTP 200 auf die echte, 404 auf eine erfundene Adresse desselben
+// Hosts. Was dort fehlt, fehlt nicht aus Nachlässigkeit: es gibt die Quelle in
+// jener Sprache nicht, und die Seite sagt das dann sichtbar an.
+//
+// 🛑 Geraten wird hier nichts. Beim ersten Versuch hatte ich die Slugs aus dem
+// deutschen Pfad abgeleitet (`/fr/primes`, `/fr/steuerrechner-…`): alle 404.
+// Das misst die eigene Vermutung, nicht den Bestand. Die Adressen unten
+// stammen aus dem Sprachumschalter der Quellseiten selbst.
+//
+//   priminfo      de ✓ fr ✓ it ✓ en ✓   — gleicher Slug in allen Sprachen
+//   ahvMerkblatt  de ✓ fr ✓ it ✓ en ✓   — Endung .d/.f/.i/.e
+//   skosRechner   de ✓ fr ✓             — der Umschalter bietet NUR DE und FR
+//   estvRechner   de ✓                  — kein Sprachumschalter auffindbar
+//   bwoKantone    de ✓                  — dito
+//   bsvEL         de ✓                  — dito
+//   rm            keine einzige          — der Bund publiziert das nicht auf
+//                                          Rumantsch. Tatsache, kein Mangel.
+//
+// Wer hier eine Sprache ergänzt, prüft sie vorher einzeln mit Gegenprobe.
+// `src/__tests__/oeffentlicheSeiten.test.js` prüft die Form, nicht die
+// Erreichbarkeit — ein Test, der ins Netz greift, ist kein Test.
 export const QUELLEN = {
   estvRechner: {
     url: 'https://www.estv.admin.ch/de/steuerrechner-steuern-berechnen',
     text: 'Steuerrechner der Eidgenössischen Steuerverwaltung',
+    sprachen: {},
+    texte: {
+      fr: 'Calculateur d’impôts de l’Administration fédérale des contributions',
+      it: 'Calcolatore d’imposta dell’Amministrazione federale delle contribuzioni',
+      en: 'Tax calculator of the Federal Tax Administration',
+      rm: 'Calculatur da taglia da l’Administraziun federala da taglias',
+    },
   },
   priminfo: {
     url: 'https://www.priminfo.admin.ch/de/praemien',
     text: 'Prämienrechner des Bundesamts für Gesundheit (Priminfo)',
+    sprachen: {
+      fr: 'https://www.priminfo.admin.ch/fr/praemien',
+      it: 'https://www.priminfo.admin.ch/it/praemien',
+      en: 'https://www.priminfo.admin.ch/en/praemien',
+    },
+    texte: {
+      fr: 'Calculateur de primes de l’Office fédéral de la santé publique (Priminfo)',
+      it: 'Calcolatore dei premi dell’Ufficio federale della sanità pubblica (Priminfo)',
+      en: 'Premium calculator of the Federal Office of Public Health (Priminfo)',
+      rm: 'Calculatur da premis da l’Uffizi federal da sanadad publica (Priminfo)',
+    },
   },
   skosRechner: {
     url: 'https://skos.ch/dienstleistungen/hilfsmittel/sozialhilferechner',
     text: 'Sozialhilferechner der SKOS',
+    sprachen: {
+      fr: 'https://skos.ch/fr/services/outils/calculateur-daide-sociale',
+    },
+    texte: {
+      fr: 'Calculateur d’aide sociale de la CSIAS',
+      it: 'Calcolatore di aiuto sociale della COSAS',
+      en: 'Social assistance calculator of SKOS',
+      rm: 'Calculatur d’agid social da la SKOS',
+    },
   },
   bwoKantone: {
     url: 'https://www.bwo.admin.ch/de/kantonale-hilfen',
     text: 'Kantonale Hilfen, Übersicht des Bundesamts für Wohnungswesen',
+    sprachen: {},
+    texte: {
+      fr: 'Aides cantonales, aperçu de l’Office fédéral du logement',
+      it: 'Aiuti cantonali, panoramica dell’Ufficio federale delle abitazioni',
+      en: 'Cantonal assistance, overview of the Federal Housing Office',
+      rm: 'Agids chantunals, survista da l’Uffizi federal d’abitaziun',
+    },
   },
   bsvEL: {
     url: 'https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ergaenzungsleistungen.html',
     text: 'Ergänzungsleistungen, Bundesamt für Sozialversicherungen',
+    sprachen: {},
+    texte: {
+      fr: 'Prestations complémentaires, Office fédéral des assurances sociales',
+      it: 'Prestazioni complementari, Ufficio federale delle assicurazioni sociali',
+      en: 'Supplementary benefits, Federal Social Insurance Office',
+      rm: 'Prestaziuns cumplementaras, Uffizi federal d’assicuranzas socialas',
+    },
   },
   ahvMerkblatt: {
     url: 'https://www.ahv-iv.ch/p/3.01.d',
     text: 'Merkblatt 3.01 «Altersrenten und Hilflosenentschädigungen der AHV»',
+    sprachen: {
+      fr: 'https://www.ahv-iv.ch/p/3.01.f',
+      it: 'https://www.ahv-iv.ch/p/3.01.i',
+      en: 'https://www.ahv-iv.ch/p/3.01.e',
+    },
+    texte: {
+      fr: 'Mémento 3.01 « Rentes de vieillesse et allocations pour impotent de l’AVS »',
+      it: 'Promemoria 3.01 «Rendite di vecchiaia e assegni per grandi invalidi dell’AVS»',
+      en: 'Leaflet 3.01 “Old-age pensions and helplessness allowances of the AHV”',
+      rm: 'Fegl d’infurmaziun 3.01 «Rentas da vegliadetgna ed indemnisaziuns d’impotenza da l’AVS»',
+    },
   },
+};
+
+// Eine Quelle in einer Sprache. Gibt es die Adresse dort nicht, kommt die
+// deutsche zurück — zusammen mit `nurDeutsch: true`, damit der Generator es
+// sichtbar hinschreiben kann statt es zu verschweigen.
+export const quelleFuer = (schluessel, sprache = 'de') => {
+  const s = QUELLEN[schluessel];
+  if (!s) throw new Error(`Unbekannte Quelle: ${schluessel}`);
+  if (sprache === 'de') return { url: s.url, text: s.text, nurDeutsch: false };
+  const url = (s.sprachen || {})[sprache];
+  return {
+    url: url || s.url,
+    text: (s.texte || {})[sprache] || s.text,
+    nurDeutsch: !url,
+  };
 };
 
 const q = (schluessel) => QUELLEN[schluessel];
@@ -395,3 +496,28 @@ export const SONDERSEITEN = [
     quellen: [],
   },
 ];
+
+// ─── Alle Sprachen an einem Ort ──────────────────────────────────────────────
+//
+// `SEITEN` und `SONDERSEITEN` oben bleiben unverändert das Deutsche — jeder
+// bestehende Aufruf trifft weiter dasselbe. Neu ist nur der Zugriff je Sprache.
+export const INHALT = {
+  de: { seiten: SEITEN, sonderseiten: SONDERSEITEN },
+  fr: { seiten: SEITEN_FR, sonderseiten: SONDERSEITEN_FR },
+  it: { seiten: SEITEN_IT, sonderseiten: SONDERSEITEN_IT },
+  en: { seiten: SEITEN_EN, sonderseiten: SONDERSEITEN_EN },
+  rm: { seiten: SEITEN_RM, sonderseiten: SONDERSEITEN_RM },
+};
+
+export const inhaltFuer = (code) => {
+  const i = INHALT[code];
+  if (!i) throw new Error(`Keine Inhalte für Sprache: ${code}`);
+  return i;
+};
+
+// Alle Seiten einer Sprache in Reihenfolge — Erklärseiten zuerst, dann die
+// Sonderseite. Dieselbe Reihenfolge wie vor dem Sprachumbau.
+export const alleSeiten = (code) => {
+  const i = inhaltFuer(code);
+  return [...i.seiten, ...i.sonderseiten];
+};
