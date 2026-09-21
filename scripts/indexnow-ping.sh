@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # IndexNow-Ping (Bing, Yandex, Naver, Seznam teilen sich den Index).
-# Meldet die fünf Sprach-URLs als "geändert". Nur NACH einem Deploy ausführen —
+# Meldet die kanonische URL als "geändert". Nur NACH einem Deploy ausführen —
 # die Schlüsseldatei public/<key>.txt muss live erreichbar sein, sonst 403/422.
 #
 #   bash scripts/indexnow-ping.sh
@@ -9,6 +9,11 @@
 # 403 = Schlüsseldatei nicht gefunden, 422 = URLs passen nicht zum Host, 429 = zu oft.
 set -euo pipefail
 
+# Nur die kanonische URL. Bis 20.09.2026 standen hier zusätzlich die fünf
+# ?lang=-Adressen — sie liefern gemessen byte-identisches HTML und zeigen
+# canonical auf "/", eine Meldung darüber ist also eine Meldung über "/".
+# Zurück kommen sie, wenn die Sprachvarianten eigenen Inhalt ausliefern.
+# Siehe public/sitemap.xml und docs/audits/seo-audit-2026-09-20.md
 HOST="malojaplana.ch"
 KEY="0c31c72b57ddb2ec70030591f84ee0f9"
 KEY_URL="https://${HOST}/${KEY}.txt"
@@ -29,12 +34,7 @@ code=$(curl -sS -o /dev/null -w "%{http_code}" \
   "key": "${KEY}",
   "keyLocation": "${KEY_URL}",
   "urlList": [
-    "https://${HOST}/",
-    "https://${HOST}/?lang=de",
-    "https://${HOST}/?lang=fr",
-    "https://${HOST}/?lang=it",
-    "https://${HOST}/?lang=en",
-    "https://${HOST}/?lang=rm"
+    "https://${HOST}/"
   ]
 }
 JSON

@@ -1,64 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!--
+  ERZEUGT — nicht von Hand bearbeiten.
+  Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
+  Neu bauen: node scripts/build-seiten.mjs
+
+  Nur kanonische URLs. Die ?lang=-Adressen standen bis zum 20.09.2026 hier und
+  sind raus: sie liefern gemessen byte-identisches deutsches HTML und zeigen
+  canonical auf «/», Google hätte alle als «Alternative Seite mit richtigem
+  kanonischem Tag» verworfen. Sie kommen zurück, sobald die Sprachvarianten
+  eigenen Inhalt ausliefern.
+  Befund: docs/audits/seo-audit-2026-09-20.md
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://malojaplana.ch/?lang=de</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://malojaplana.ch/?lang=fr</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/was-steht-mir-zu/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://malojaplana.ch/?lang=it</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/praemienverbilligung/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://malojaplana.ch/?lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/sozialhilfe/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://malojaplana.ch/?lang=rm</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://malojaplana.ch/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://malojaplana.ch/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://malojaplana.ch/?lang=it"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://malojaplana.ch/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="rm" href="https://malojaplana.ch/?lang=rm"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://malojaplana.ch/"/>
-    <lastmod>2026-09-17</lastmod>
+    <loc>https://malojaplana.ch/steuern/</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://malojaplana.ch/rechtliches/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
