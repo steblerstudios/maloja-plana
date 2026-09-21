@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Icons from './IconSystem.jsx';
 import { text, weight, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
+import { useFocusTrap } from './hooks/useFocusTrap.js';
+import { aufklappZeichen } from './IconSystem.jsx';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 
 // ─── Mobile Navigation ────────────────────────────────────
 // Slide-in drawer with SVG pictograms and calmer visual hierarchy.
@@ -9,6 +12,15 @@ import { CONTROL_LABELS, groupSettingsControls } from './settingsGroups.js';
 export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapter, activeView, chapters, completion, settingsControls, settingsLabel, onStartTour, mode = 'nav', hasBottomAnchor = false, leftHand = false }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // O17 · Die Schublade ist modal: solange sie offen ist, liegt der Rest der Seite
+  // dahinter. Vorher hing der Escape-Griff am Hintergrund — der Fokus stand aber
+  // beim auslösenden Knopf AUSSERHALB davon, also erreichte ihn kein Tastendruck
+  // und Escape tat schlicht nichts. Der Griff gehört auf die Schublade selbst,
+  // dorthin, wo der Fokus nach dem Öffnen auch wirklich steht.
+  const schublade = useRef(null);
+  useFocusTrap(isOpen, { ref: schublade, onEscape: onClose });
+
   if (!isOpen) return null;
 
   // Seite, von der die Schublade einfährt — folgt der gewählten Hand (Standard rechts,
@@ -28,11 +40,12 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
   // damit der Boden-Anker „Menü" reine Navigation bleibt (keine Doppelung).
   if (mode === 'settings') {
     return React.createElement('div', {
+      role: 'dialog', 'aria-modal': 'true', 'aria-label': settingsLabel || t('nav.settings'),
       style: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998, animation: 'fadeIn 0.2s' },
       onClick: onClose,
-      onKeyDown: (e) => { if (e.key === 'Escape') onClose(); },
     },
       React.createElement('nav', {
+        ref: schublade,
         role: 'navigation', 'aria-label': settingsLabel || t('nav.settings'),
         style: {
           position: 'fixed', top: 0, bottom: 0, width: '288px', maxWidth: '86vw',
@@ -126,20 +139,17 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       label
     );
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') onClose();
-  };
-
   return React.createElement('div', {
+    role: 'dialog', 'aria-modal': 'true', 'aria-label': t('nav.menu'),
     style: {
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
       background: 'rgba(0,0,0,0.45)', zIndex: 998,
       animation: 'fadeIn 0.2s',
     },
     onClick: onClose,
-    onKeyDown: handleKeyDown,
   },
     React.createElement('nav', {
+      ref: schublade,
       role: 'navigation',
       'aria-label': t('nav.menu'),
       style: {
@@ -225,25 +235,34 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
       ...(() => {
         const q = searchQuery.toLowerCase().trim();
 
+        // Reihenfolge und Auswahl bleiben hier (die ersten neun stehen offen,
+
+
+        // der Rest hinter «weitere»). Das PIKTOGRAMM kommt aus dem gemeinsamen
+
+
+        // Register — vorher wich es bei fünf Werkzeugen von der Suche ab.
+
+
         const allTools = [
-          { key: 'settings', label: t('common.settingsTitle'), icon: 'settings' },
-          { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: 'budget' },
-          { key: 'situationen', label: t('lebenszustaende.pageTitle'), icon: 'health' },
-          { key: 'unterlagen', label: t('nav.unterlagen'), icon: 'documents' },
-          { key: 'tresor', label: t('nav.tresor'), icon: 'document' },
-          { key: 'kk', label: t('nav.kkScanner'), icon: 'barcode' },
-          { key: 'budget', label: t('nav.budget'), icon: 'csv' },
-          { key: 'schulden', label: t('nav.debts'), icon: 'debt' },
-          { key: 'tax', label: t('nav.taxes'), icon: 'money' },
-          { key: 'sozialhilfe', label: t('nav.sozialhilfe'), icon: 'document' },
-          { key: 'organ', label: t('nav.organDonation'), icon: 'health' },
-          { key: 'calendar', label: t('nav.calendar'), icon: 'calendar' },
-          { key: 'sync', label: t('nav.budgetSync'), icon: 'money' },
-          { key: 'premium', label: t('nav.kvgIpv'), icon: 'health' },
-          { key: 'cv', label: t('nav.cv'), icon: 'document' },
-          { key: 'charts', label: t('nav.charts'), icon: 'chartsSchoko' },
-          { key: 'export', label: t('nav.export'), icon: 'download' },
-          { key: 'notifications', label: t('nav.notifications'), icon: 'cowbell' },
+          { key: 'settings', label: t('common.settingsTitle'), icon: ansichtIkon('settings', 'settings') },
+          { key: 'finanzuebersicht', label: t('nav.finanzUebersicht'), icon: ansichtIkon('finanzuebersicht', 'budget') },
+          { key: 'situationen', label: t('lebenszustaende.pageTitle'), icon: ansichtIkon('situationen', 'health') },
+          { key: 'unterlagen', label: t('nav.unterlagen'), icon: ansichtIkon('unterlagen', 'documents') },
+          { key: 'tresor', label: t('nav.tresor'), icon: ansichtIkon('tresor', 'document') },
+          { key: 'kk', label: t('nav.kkScanner'), icon: ansichtIkon('kk', 'barcode') },
+          { key: 'budget', label: t('nav.budget'), icon: ansichtIkon('budget', 'csv') },
+          { key: 'schulden', label: t('nav.debts'), icon: ansichtIkon('schulden', 'debt') },
+          { key: 'tax', label: t('nav.taxes'), icon: ansichtIkon('tax', 'money') },
+          { key: 'sozialhilfe', label: t('nav.sozialhilfe'), icon: ansichtIkon('sozialhilfe', 'document') },
+          { key: 'organ', label: t('nav.organDonation'), icon: ansichtIkon('organ', 'health') },
+          { key: 'calendar', label: t('nav.calendar'), icon: ansichtIkon('calendar', 'calendar') },
+          { key: 'sync', label: t('nav.budgetSync'), icon: ansichtIkon('sync', 'money') },
+          { key: 'premium', label: t('nav.kvgIpv'), icon: ansichtIkon('premium', 'health') },
+          { key: 'cv', label: t('nav.cv'), icon: ansichtIkon('cv', 'document') },
+          { key: 'charts', label: t('nav.charts'), icon: ansichtIkon('charts', 'chartsSchoko') },
+          { key: 'export', label: t('nav.export'), icon: ansichtIkon('export', 'download') },
+          { key: 'notifications', label: t('nav.notifications'), icon: ansichtIkon('notifications', 'cowbell') },
         ];
 
         // Search mode — flat filtered list
@@ -358,7 +377,7 @@ export const MobileNav = ({ palette, t, isOpen, onClose, onNavigate, activeChapt
               display: 'flex', alignItems: 'center', gap: space.sm,
             }
           },
-            React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, '▸'),
+            React.createElement('span', { style: { fontSize: '9px', transition: `transform ${duration.normal}ms ${ease}`, transform: showAdvanced ? 'rotate(90deg)' : 'none' } }, aufklappZeichen(false)),
             t('nav.moreTools')
           ),
 

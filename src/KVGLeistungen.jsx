@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { text, weight, space, radius, leading, duration, ease } from './config/tokens.js';
 import { KVG_KATALOG, KVG_CATEGORIES, VORSORGE_EMPFEHLUNGEN, KVG_DETAILS, VORSORGE_INTERVAL_MONATE, MAMMO_KANTONE_OHNE_PROGRAMM, MAMMO_GEO_STAND, MAMMO_GEO_URL, FRANCHISE_STUFEN, berechneFranchise, berechneArztrechnung, TAXPUNKTWERT, KVG_DATA_VERSION, TAXPUNKTWERT_DATA_VERSION, TAXPUNKTWERT_UNBELEGT_2026, TAXPUNKTWERT_QUELLEN, taxpunktwertFuer } from './data/kvgLeistungen.js';
@@ -8,6 +8,7 @@ import { addReminder, loadReminders } from './utils/reminders.js';
 import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
 import { getCantonName } from './config/cantonalData.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -115,7 +116,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
         }, t('kvg.' + item.key + 'Note')),
         item.intervalKey && React.createElement('div', {
           style: { fontSize: text.xs, color: palette.sandDeep, marginTop: '4px', fontWeight: weight.medium }
-        }, 'ⓘ ' + t('kvg.' + item.intervalKey)),
+        }, hinweisZeichen(), t('kvg.' + item.intervalKey)),
         // Faden 3-II: einklappbarer Detail-Block — entweder die WHO/EU-Empfehlung
         // (Screenings) oder „Was genau gedeckt ist" (z. B. Schwangerschaft, Impfungen).
         expandable && React.createElement('div', {
@@ -130,7 +131,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
               fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
               textAlign: 'left',
             }
-          }, React.createElement('span', { 'aria-hidden': 'true' }, open ? '▾ ' : '▸ '), (emp
+          }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(open)), (emp
             ? (open ? t('kvg.empfehlungHide') : t('kvg.empfehlungShow', { sources }))
             : (open ? t('kvg.detailHide') : t('kvg.detailShow')))),
           // Screening-Empfehlung (WHO/EU)
@@ -192,7 +193,7 @@ const KatalogRow = ({ palette, t, item, isLast, canton }) => {
                   React.createElement('div', { style: { color: palette.mid } }, t('kvg.nextRecommended', { date: nextStr })),
                   overdue && React.createElement('div', { style: { color: palette.mid, marginTop: '3px' } }, t('kvg.overdueHint')),
                   overdue && (reminderSaved
-                    ? React.createElement('div', { style: { color: palette.sageDeep || '#4A6657', marginTop: '4px' } }, '✓ ' + t('kvg.reminderSaved'))
+                    ? React.createElement('div', { style: { color: palette.sageDeep || '#4A6657', marginTop: '4px' } }, hinweisZeichen('check'), t('kvg.reminderSaved'))
                     : React.createElement('button', {
                         type: 'button',
                         onClick: () => {
@@ -281,7 +282,7 @@ const KatalogTab = ({ palette, t, filterCat, canton }) => {
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0', fontWeight: weight.medium,
           textAlign: 'left',
         }
-      }, React.createElement('span', { 'aria-hidden': 'true' }, evidenceOpen ? '▾ ' : '▸ '), t('kvg.evidenceToggle')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(evidenceOpen)), t('kvg.evidenceToggle')),
       evidenceOpen && React.createElement('div', {
         style: { fontSize: text.xs, color: palette.mid, marginTop: '4px', lineHeight: leading.normal }
       },
@@ -402,10 +403,10 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
   // Ein ruhiger Standort-Satz: wo stehe ich dieses Jahr? (drei Zonen)
   const statusMsg = !hasInput ? null
     : result.selbstbehaltAusgeschoepft
-      ? { text: t('kvg.selbstbehaltDone'), color: palette.sageDeep || '#4A6657', icon: '✓' }
+      ? { text: t('kvg.selbstbehaltDone'), color: palette.sageDeep || '#4A6657', icon: 'check' }
     : result.franchiseOffen > 0
-      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'ⓘ' }
-      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'ⓘ' };
+      ? { text: t('kvg.statusInFranchise', { offen: result.franchiseOffen }), color: palette.sandDeep, icon: 'info' }
+      : { text: t('kvg.statusInSelbstbehalt', { sbOffen: Math.round(result.selbstbehaltMax - result.selbstbehalt) }), color: palette.goldDeep || '#c47a20', icon: 'info' };
 
   const barStyle = (_value, _max, _color) => ({
     height: '8px',
@@ -455,7 +456,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
         React.createElement('div', {
           'aria-hidden': 'true', // Deko-Pfeil des Auswahlfelds — nicht vorlesen
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
-        }, '▾')
+        }, aufklappZeichen(true))
       ),
 
       // Brücke zum Franchise-Optimierer (Prämien-Orientierung): dort steht die
@@ -467,7 +468,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           border: 'none', padding: '2px 0 4px 0', cursor: 'pointer', fontFamily: 'inherit',
           fontSize: text.sm, color: palette.sandDeep, fontWeight: weight.medium,
         }
-      }, t('kvg.franchiseOptimizerLink') + ' →'),
+      }, t('kvg.franchiseOptimizerLink')),
 
       React.createElement('div', {
         style: { height: '1px', background: palette.border, margin: '14px 0' }
@@ -547,7 +548,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: tpOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
-      }, React.createElement('span', { 'aria-hidden': 'true' }, tpOpen ? '▾ ' : '▸ '), t('kvg.belegFromTp')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(tpOpen)), t('kvg.belegFromTp')),
 
       tpOpen && React.createElement('div', {
         style: {
@@ -592,7 +593,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
       tpOpen && tpw === null && React.createElement('div', {
         'data-testid': 'tpw-ohne-kanton-profil',
         style: { fontSize: text.xs, color: palette.soft, marginTop: '-4px', marginBottom: '10px', lineHeight: leading.normal }
-      }, 'ⓘ ' + t('kvg.tpwOhneKantonProfil')),
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKantonProfil'))),
 
       React.createElement('button', {
         onClick: () => setNgOpen(!ngOpen),
@@ -602,7 +603,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           fontSize: text.xs, fontFamily: 'inherit', padding: '2px 0',
           marginBottom: ngOpen ? '8px' : '10px', fontWeight: weight.medium,
         }
-      }, React.createElement('span', { 'aria-hidden': 'true' }, ngOpen ? '▾ ' : '▸ '), t('kvg.belegNichtGedeckt')),
+      }, React.createElement('span', { 'aria-hidden': 'true' }, aufklappZeichen(ngOpen)), t('kvg.belegNichtGedeckt')),
 
       ngOpen && React.createElement('div', {
         style: {
@@ -637,7 +638,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           color: newEingereicht ? (palette.sageDeep || '#4A6657') : palette.mid, // Text: sageDeep statt sage (AA)
           fontWeight: newEingereicht ? weight.medium : weight.normal,
         }
-      }, (newEingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted')),
+      }, erledigtZeichen(newEingereicht, t('kvg.belegSubmitted'), 'kaestchen')),
 
       React.createElement('button', {
         onClick: addBeleg,
@@ -728,7 +729,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                       color: remindedIds.has(b.id) ? (palette.sageDeep || '#4A6657') : palette.sandDeep,
                       cursor: remindedIds.has(b.id) ? 'default' : 'pointer',
                     }
-                  }, remindedIds.has(b.id) ? '✓ ' + t('kvg.belegReminded') : t('kvg.belegRemind'))
+                  }, erledigtZeichen(remindedIds.has(b.id), remindedIds.has(b.id) ? t('kvg.belegReminded') : t('kvg.belegRemind')))
                 ),
                 b.nichtGedeckt > 0 && React.createElement('div', {
                   style: { fontSize: text.xs, color: palette.soft, marginTop: '4px' }
@@ -742,7 +743,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
                     color: b.eingereicht ? (palette.sageDeep || '#4A6657') : palette.soft,
                     fontWeight: b.eingereicht ? weight.medium : weight.normal,
                   }
-                }, (b.eingereicht ? '✓ ' : '○ ') + t('kvg.belegSubmitted'))
+                }, erledigtZeichen(b.eingereicht, t('kvg.belegSubmitted'), 'kaestchen'))
               );
             }),
             React.createElement('div', {
@@ -754,7 +755,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, lineHeight: leading.normal, marginTop: '12px', paddingTop: '10px', borderTop: '1px solid ' + palette.border }
-      }, 'ⓘ ' + t('kvg.belegRueckwirkend'))
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.belegRueckwirkend')))
     ),
 
     hasInput && React.createElement('div', {
@@ -767,7 +768,7 @@ const FranchiseTab = ({ palette, t, data, onUpdateData, onNavigate }) => {
           fontSize: text.sm, color: statusMsg.color, marginBottom: '14px',
           lineHeight: leading.normal,
         }
-      }, statusMsg.icon + ' ' + statusMsg.text),
+      }, hinweisZeichen(statusMsg.icon), statusMsg.text),
 
       React.createElement('div', { style: { marginBottom: '14px' } },
         React.createElement('div', {
@@ -883,7 +884,7 @@ const RechnungTab = ({ palette, t, data }) => {
         React.createElement('div', {
           'aria-hidden': 'true', // Deko-Pfeil des Auswahlfelds — nicht vorlesen
           style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
-        }, '▾')
+        }, aufklappZeichen(true))
       )
     ),
 
@@ -891,7 +892,7 @@ const RechnungTab = ({ palette, t, data }) => {
     tp && !result && React.createElement('div', {
       'data-testid': 'tpw-ohne-kanton',
       style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
-    }, 'ⓘ ' + t('kvg.tpwOhneKanton')),
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwOhneKanton'))),
 
     result && React.createElement('div', {
       style: { padding: '14px', background: palette.sand + '10', borderRadius: radius.sm, border: '1px solid ' + palette.sand + '25' }
@@ -919,7 +920,7 @@ const RechnungTab = ({ palette, t, data }) => {
       ),
       React.createElement('div', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: '6px' }
-      }, 'ⓘ ' + t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') })),
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.tpwNote', { kantone: TAXPUNKTWERT_UNBELEGT_2026.join(', ') }))),
       // Versicherergruppe, Stand 2025 bzw. Datenstand — dieselben Zeilen wie im Franchise-Tab.
       React.createElement(TpwErgebnisHinweise, { palette, t, canton: selCanton, mitDatenstand: true })
     ),
@@ -947,8 +948,8 @@ export const TpwErgebnisHinweise = ({ palette, t, canton, mitDatenstand = false 
     : mitDatenstand ? t('kvg.tpwDataVersion') + ': ' + TAXPUNKTWERT_DATA_VERSION : null;
   const zeile = { fontSize: text.xs, color: palette.soft, marginTop: '2px', lineHeight: leading.normal };
   return React.createElement(React.Fragment, null,
-    gruppe && React.createElement('div', { 'data-testid': 'tpw-gruppe', style: zeile }, 'ⓘ ' + gruppe),
-    stand && React.createElement('div', { style: zeile }, 'ⓘ ' + stand)
+    gruppe && React.createElement('div', { 'data-testid': 'tpw-gruppe', style: zeile }, hinweisZeichen(), gruppe),
+    stand && React.createElement('div', { style: zeile }, hinweisZeichen(), stand)
   );
 };
 
@@ -1047,9 +1048,9 @@ export const KVGLeistungen = ({ palette, t, data, onUpdateData, initialTab, onNa
     React.createElement('div', {
       style: { marginTop: '16px', padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid, lineHeight: leading.normal }
     },
-      'ⓘ ' + t('kvg.disclaimer'),
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvg.disclaimer')),
       React.createElement('br'),
-      'ⓘ ', renderSource(t('kvg.source'), null, t), ' · v' + KVG_DATA_VERSION
+      hinweisZeichen(), renderSource(t('kvg.source'), null, t), ' · v' + KVG_DATA_VERSION
     )
   );
 };

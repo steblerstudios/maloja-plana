@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { EmptyState } from './components/EmptyState.jsx';
 import { berechneAltersrente, vergleicheVorbezugAufschub, berechneBVGGuthaben, projiziereVorsorge, berechneIKAuszug, vorbelegeIKAuszug, IK_TYP, referenzalterMonate, AHV_PARAMS, BVG_PARAMS, SAEULE3A_ZINSSCHWELLE } from './data/ahvRechner.js';
-import { Icon, Icons } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen, Icons } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { text, weight, space, radius, ease } from './config/tokens.js';
@@ -11,6 +11,7 @@ import { TwoRingsIcon } from './components/TwoRingsIcon.jsx';
 import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -316,7 +317,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               onClick: () => setIkExpanded(isOpen ? null : ph.von),
               style: { width: '100%', textAlign: 'left', display: 'flex', justifyContent: 'space-between', gap: space.sm + 'px', alignItems: 'center', padding: space.sm + 'px ' + space.md + 'px', background: palette.up, border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text }
             },
-              React.createElement('span', null, (isOpen ? '▾ ' : '▸ ') + ikTypLabel(ph.typ)),
+              React.createElement('span', null, aufklappZeichen(isOpen), ikTypLabel(ph.typ)),
               React.createElement('span', { style: { color: palette.mid, fontSize: text.xs, textAlign: 'right' } }, meta)
             ),
             isOpen && React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
@@ -534,7 +535,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         React.createElement('div', { style: s.label }, t('vr.zukunftIkTitle')),
         (ikActive && ikResult)
           ? React.createElement('div', { style: { display: 'flex', alignItems: 'baseline', gap: space.xs + 'px', flexWrap: 'wrap' } },
-              React.createElement('span', { style: { color: palette.sage } }, '●'),
+              React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 10)),
               React.createElement('span', { style: { fontSize: text.sm, color: palette.text, lineHeight: 1.5 } },
                 t('vr.zukunftIkAktiv', { jahre: ikResult.beitragsjahre, eink: fmt(ikResult.durchschnittlichesJahreseinkommen) }))
             )
@@ -689,7 +690,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               React.createElement('text', { x: xA(a), y: yB + 16, fill: palette.mid, fontSize: 9, fontFamily: 'inherit', textAnchor: 'middle' }, String(a)))),
             // Achsentitel (Bedeutung!)
             React.createElement('text', { x: x0 - 44, y: y0 - 10, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit' }, 'CHF'),
-            React.createElement('text', { x: x1, y: yB + 30, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit', textAnchor: 'end' }, t('vr.achseAlter') + ' →'),
+            React.createElement('text', { x: x1, y: yB + 30, fill: palette.text, fontSize: 11, fontWeight: weight.semi, fontFamily: 'inherit', textAnchor: 'end' }, t('vr.achseAlter')),
             // Lebensphasen-Beschriftung
             React.createElement('text', { x: (x0 + xret) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phaseErwerb')),
             React.createElement('text', { x: (xret + x1) / 2, y: yB + 30, fill: palette.mid, fontSize: 10, fontFamily: 'inherit', textAnchor: 'middle' }, t('vr.phasePension')),
@@ -802,7 +803,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('pflege'),
           style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.xs + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
-        }, '→ ' + t('gepaeck.w.pflege'))
+        }, t('gepaeck.w.pflege'))
       ),
 
       // Vergünstigungen im Alter (Braindump-32 #1): bei tiefer Rente steht oft mehr zu,
@@ -819,7 +820,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         onNavigate && React.createElement('button', {
           onClick: () => onNavigate('schnellcheck'),
           style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginTop: space.sm + 'px', fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
-        }, '→ ' + t('vr.altersHilfenCheck'))
+        }, t('vr.altersHilfenCheck'))
       ),
 
       // 3a-Zinsschwelle: ruhiger Strategie-Hinweis, sobald das voraussichtliche
@@ -891,7 +892,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
 
         // Disclaimer + amtlicher Rechner
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.sm + 'px', lineHeight: 1.5 } }, t('vr.kbDisclaimer')),
-        React.createElement(ExternerLink, { t, href: 'https://swisstaxcalculator.estv.admin.ch/', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink') + ' →'),
+        React.createElement(ExternerLink, { t, href: 'https://swisstaxcalculator.estv.admin.ch/', style: { ...s.intlLink, display: 'inline-block', marginTop: space.xs + 'px' } }, t('vr.kbOfficialLink')),
         React.createElement('div', { style: s.source }, renderSource(t('vr.kbSource'), null, t))
       )
     ),
@@ -937,7 +938,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
         const yearsLeft = alter ? Math.max(0, parsedBezugAlter - alter) : 0;
         const projected3a = saeule3aBalance + (saeule3aAnnual * yearsLeft);
         if (!has3a) return React.createElement('div', { style: { ...s.section, color: palette.mid, marginTop: space.md + 'px' } },
-          'ⓘ ' + t('vr.saeule3aHint')
+          hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('vr.saeule3aHint'))
         );
         return React.createElement('div', { style: { ...s.section, marginTop: space.md + 'px', background: palette.sky + '0A', border: '1px solid ' + palette.sky + '25' } },
           React.createElement('div', { style: s.label }, t('vr.saeule3a')),
@@ -995,7 +996,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
               t,
               href: link.url,
               style: { fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none' }
-            }, t('vr.fzLink' + link.key) + ' →')
+            }, t('vr.fzLink' + link.key))
           )
         )
       )
@@ -1012,7 +1013,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
       style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
-    }, '→ ' + t('nav.finanzUebersicht'))
+    }, t('nav.finanzUebersicht'))
   );
 };
 

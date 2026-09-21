@@ -78,7 +78,7 @@ export const Pensionierung = ({ palette, t, data, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t('pensionierung.step5Text')),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5Link'), onClick: () => onNavigate('vorsorge') }),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('pensionierung.step5LinkSituation'), onClick: () => onNavigate('situationen') }),
-      React.createElement(ExternerLink, { t, href: 'https://www.prosenectute.ch/', style: { ...s.link, textDecoration: 'none' } }, '→ ' + t('pensionierung.step5LinkProSenectute') + ' ↗')
+      React.createElement(ExternerLink, { t, href: 'https://www.prosenectute.ch/', style: { ...s.link, textDecoration: 'none' } }, t('pensionierung.step5LinkProSenectute'))
     ),
 
     React.createElement(AblaufFooter, { palette, notes: [t('pensionierung.footerEarly'), t('trust.localOnly')] })

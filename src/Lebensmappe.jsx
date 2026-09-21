@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
 import { getLebensMappePreview, generateLebensmappe } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -81,7 +81,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
-    }, '← ' + t('lebensmappe.back')),
+    }, zurueckZeichen(), t('lebensmappe.back')),
 
     // ─── Header ─────────────────────────────────────────
     React.createElement('div', {
@@ -145,7 +145,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
         React.createElement('div', {
           key: i,
           style: { fontSize: text.sm, color: palette.mid, padding: '2px 0' }
-        }, 'ⓘ ' + doc.name)
+        }, hinweisZeichen(), doc.name)
       )
     ),
 
@@ -154,7 +154,7 @@ export const Lebensmappe = ({ palette, t, data, chapters, documents, onNavigate 
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, 'ⓘ ' + t('lebensmappe.footerPrivacy'))
+    }, hinweisZeichen(), t('lebensmappe.footerPrivacy'))
   );
 };
 

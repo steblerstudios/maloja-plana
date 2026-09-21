@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility, getCantonName, getHouseholdInfo } from './config/cantonalData.js';
@@ -21,6 +21,7 @@ import { ReserveTank } from './components/ReserveTank.jsx';
 import { monthlyExpenses } from './data/haushaltskosten.js';
 import { renderSource } from './utils/renderSource.js';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 function formatCHF(value) {
   const n = Math.round(value);
@@ -49,9 +50,6 @@ const StatusCard = ({ palette, icon, title, status, statusColor, detail, onClick
     },
       React.createElement(Icon, { name: icon, size: 16 }),
       React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, title),
-      onClick && React.createElement('span', {
-        style: { marginLeft: 'auto', color: palette.soft, fontSize: text.sm }
-      }, '→')
     ),
     React.createElement('div', {
       style: { fontSize: text.body, fontWeight: weight.semi, color: statusColor || palette.text, marginBottom: detail ? '4px' : 0 }
@@ -402,7 +400,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
       title: t('finanzUebersicht.ipv'),
       // E9: ohne amtlich belegten Kanton weder Betrag noch Grenze, nur die Orientierung.
       status: ipv.eligible
-        ? '✓ ' + formatCHF(ipv.amount) + ' ' + t('common.perMonth')
+        ? erledigtZeichen(true, formatCHF(ipv.amount) + ' ' + t('common.perMonth'))
         : ipv.belegt === false
           ? t('ipv.statusOffen')
           : t('finanzUebersicht.notEligible'),
@@ -555,7 +553,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
 
     React.createElement('div', {
       style: { marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4' }
-    }, 'ⓘ ' + t('finanzUebersicht.disclaimer'))
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('finanzUebersicht.disclaimer')))
   );
 };
 

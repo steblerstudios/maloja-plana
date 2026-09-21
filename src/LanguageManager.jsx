@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 const LEVELS = ['native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1'];
 
@@ -54,7 +55,7 @@ export const LanguageManager = ({ palette, t, languages, onChange }) => {
           onClick: () => removeLang(idx),
           'aria-label': t('common.delete') || 'Entfernen',
           style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '8px 6px' }
-        }, '✕')
+        }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
       )
     ),
     React.createElement('button', {

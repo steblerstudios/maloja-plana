@@ -12,7 +12,7 @@ export const MietzinsHinweis = ({ palette, t, canton }) => {
 
   const linkStyle = { color: palette.skyDeep, textDecoration: 'none', fontWeight: weight.medium };
   const link = (label) => info.url && React.createElement(ExternerLink,
-    { t, href: info.url, style: linkStyle }, label + ' →');
+    { t, href: info.url, style: linkStyle }, label);
 
   // Farbe/Ton je Zustand: has = sage (positiv), none = soft (ausgegraut), check = mid (neutral)
   const body = info.state === 'has'

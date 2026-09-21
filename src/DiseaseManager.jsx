@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 let _searchDiseases = null;
 const getSearch = async () => {
@@ -121,7 +122,7 @@ const DiseaseCard = ({ palette, t, item, idx, inputStyle, labelStyle, onUpdate, 
         onClick: onRemove,
         'aria-label': t('common.delete') || 'Entfernen',
         style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
-      }, '✕')
+      }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     ),
 
     // Name with autocomplete

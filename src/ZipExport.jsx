@@ -3,11 +3,12 @@ import { PanelTitle } from './components/Heading.jsx';
 import { prepareDownloadFiles, initiateBrowserDownload } from './zipExport.js';
 import { exportPlaintext, exportEncrypted, decryptBackup, parsePlaintextBackup, detectBackupType, restoreBackup, exceedsBackupFileLimit, downloadFile, MIN_PASSPHRASE_LENGTH, passphraseLangGenug } from './utils/backupCrypto.js';
 import { validateBackupPayload } from './utils/dataValidation.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, radius, space } from './config/tokens.js';
 import { getFullName } from './config/constants.js';
 import { runtimeEventBus } from './runtime/singleton.ts';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -325,26 +326,26 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
             React.createElement('button', {
               onClick: () => setVorschau('json'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'JSON'),
+            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'JSON'),
             React.createElement('button', {
               onClick: () => setVorschau('csv'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'CSV'),
+            }, !exporting && React.createElement(Icon, { name: 'rechner', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'CSV'),
             React.createElement('button', {
               onClick: () => setVorschau('manifest'), disabled: exporting,
               style: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', background: palette.sage, color: '#000', border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(exporting ? gesperrtStil : null) }
-            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting ? 'ⓘ ' + t('zipExport.exporting') : 'Manifest')
+            }, !exporting && React.createElement(Icon, { name: 'kaestchen', size: 14 }), exporting && React.createElement(Icon, { name: 'info', size: 14 }), exporting ? t('zipExport.exporting') : 'Manifest')
           ),
           vorschauPanel('json', 'csv', 'manifest')
         ),
 
         // Info
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm } },
-          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, 'ⓘ ' + t('zipExport.whatIsExported')),
+          React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('zipExport.whatIsExported'))),
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },
-            React.createElement('div', null, '✓ ' + t('zipExport.allChapterData')),
-            React.createElement('div', null, '✓ ' + t('zipExport.documentMetadata')),
-            React.createElement('div', null, '✓ ' + t('zipExport.settingsAndPreferences'))
+            React.createElement('div', null, hinweisZeichen('check'), t('zipExport.allChapterData')),
+            React.createElement('div', null, hinweisZeichen('check'), t('zipExport.documentMetadata')),
+            React.createElement('div', null, hinweisZeichen('check'), t('zipExport.settingsAndPreferences'))
           )
         )
       ),
@@ -439,15 +440,16 @@ export const ZipExport = ({ palette, t, data, documents, demoMode }) => {
         // Validation warnings
         validationWarnings.length > 0 && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, marginBottom: '12px', border: '1px solid ' + palette.gold, fontSize: text.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('backup.validationErrors')),
-          validationWarnings.map((w, i) => React.createElement('div', { key: i, style: { color: palette.mid } }, '• ' + w))
+          React.createElement('ul', { style: { margin: 0, paddingInlineStart: '18px', color: palette.mid } },
+            validationWarnings.map((w, i) => React.createElement('li', { key: i }, w)))
         ),
 
         // Safety note
         React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: '12px' } },
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.6' } },
-            React.createElement('div', null, '✓ ' + t('backup.preRestoreNote')),
-            React.createElement('div', null, '✓ ' + t('backup.encryptionInfo')),
-            React.createElement('div', null, '✓ ' + t('backupVoreinstellung.altePasswoerter'))
+            React.createElement('div', null, hinweisZeichen('check'), t('backup.preRestoreNote')),
+            React.createElement('div', null, hinweisZeichen('check'), t('backup.encryptionInfo')),
+            React.createElement('div', null, hinweisZeichen('check'), t('backupVoreinstellung.altePasswoerter'))
           )
         ),
 

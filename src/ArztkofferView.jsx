@@ -3,6 +3,7 @@ import FruchtSilhouette from './FruchtSilhouette.jsx';
 import { getBereich } from './data/lebensbereiche.js';
 import { text, weight, leading, space, radius, ease, duration } from './config/tokens.js';
 import { PageTitle } from './components/Heading.jsx';
+import { zurueckZeichen } from './IconSystem.jsx';
 
 // ─── Arztkoffer — das Zuhause für Gesundheit ────────────────────────────────
 //
@@ -84,9 +85,6 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
           style: { display: 'block', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: '3px' },
         }, t('arztkoffer.faecher.' + f.key + '.desc')),
       ),
-      isReady && React.createElement('span', {
-        style: { color: accent, fontSize: text.body, flexShrink: 0, alignSelf: 'center' },
-      }, '→'),
     );
   };
 
@@ -144,7 +142,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
             cursor: 'pointer', padding: '8px 14px', minHeight: '44px', boxSizing: 'border-box',
             display: 'inline-flex', alignItems: 'center', fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
           },
-        }, '→ ' + t('arztkoffer.wege.' + w.key))),
+        }, t('arztkoffer.wege.' + w.key))),
       ),
     ),
 
@@ -155,7 +153,7 @@ export const ArztkofferView = ({ palette, t, onNavigate, isDarkMode }) => {
         fontSize: text.sm, color: palette.mid, fontFamily: 'inherit',
         padding: space.sm + 'px 0', marginTop: space.md + 'px',
       },
-    }, '← ' + t('arztkoffer.back')),
+    }, zurueckZeichen(), t('arztkoffer.back')),
   );
 };
 

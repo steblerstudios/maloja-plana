@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, radius, space, leading } from './config/tokens.js';
 import { getMietzinsbeitraege, mietzinsIncomeLimit } from './data/mietzinsbeitraege.js';
@@ -8,6 +8,7 @@ import { getCantonName, getRentLimit, getHouseholdInfo } from './config/cantonal
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { MietVergleich } from './components/MietVergleich.jsx';
 import { renderSource } from './utils/renderSource.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Mietzinsbeiträge-Orientierung — parallel zur Prämienorientierung (PraemienOrientierung)
 // und mit Schnellcheck wie die IPV (PremiumSubsidy). Rechnet — wo möglich — mit den BEREITS
@@ -55,14 +56,14 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
     React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md + 'px', lineHeight: leading.relaxed } }, t('mietzinsView.intro')),
 
     !canton ? React.createElement('div', { style: card() },
-      React.createElement('div', { style: { color: palette.mid } }, 'ⓘ ' + t('mietzinsView.enterCanton')),
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('praemien') }, '→ ' + t('mietzinsView.enterCantonLink'))
+      React.createElement('div', { style: { color: palette.mid } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('mietzinsView.enterCanton'))),
+      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('praemien') }, t('mietzinsView.enterCantonLink'))
     ) : React.createElement(React.Fragment, null,
       // Kanton-Verfügbarkeit + kantonsspezifische Besonderheit (belegte Quelle).
       React.createElement('div', { style: card() },
         React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('mietzinsView.cantonLabel', { name: getCantonName(canton, t) || canton })),
         React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t('mietzins.' + info.state)),
-        hasProgram && info.noteKey && React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } }, 'ⓘ ' + t(info.noteKey)),
+        hasProgram && info.noteKey && React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal, marginTop: space.xs + 'px' } }, hinweisZeichen(), t(info.noteKey)),
         info.url && React.createElement(ExternerLink, {
           t, href: info.url,
           style: { ...linkBtn, display: 'inline-block', textDecoration: 'underline', textUnderlineOffset: '2px' },
@@ -82,11 +83,11 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
         // Ergebnis (mit Zahlen, sofern vorhanden).
         assessment && React.createElement('div', {
           style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
-        }, (assessment.tone === 'good' ? '✓ ' : 'ⓘ ') + t('mietzinsView.result_' + assessment.key, assessment.params || {})),
+        }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
         rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? palette.gold : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
-          'ⓘ ' + t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: rentLimit.toLocaleString(), size: householdSize })),
-        assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, '→ ' + t('mietzinsView.enterIncomeLink'))
+          hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: rentLimit.toLocaleString(), size: householdSize })),
+        assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('mietzinsView.enterIncomeLink'))
       ),
 
       // Wo steht deine Miete? — jetzt aus dem gemeinsamen Bauteil, damit die Finanz-Übersicht
@@ -106,11 +107,11 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
 
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginBottom: space.sm + 'px' } }, renderSource(t('mietzinsView.source'), null, t)),
 
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('sync') }, '→ ' + t('mietzinsView.linkBudget')),
-      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, '→ ' + t('nav.finanzUebersicht'))
+      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('sync') }, t('mietzinsView.linkBudget')),
+      onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('nav.finanzUebersicht'))
     ),
 
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px' } }, 'ⓘ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.md + 'px' } }, hinweisZeichen(), t('trust.localOnly'))
   );
 };
 

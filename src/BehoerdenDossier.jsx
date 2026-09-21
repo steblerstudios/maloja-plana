@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
 import { getBehoerdenDossierPreview, generateBehoerdenDossier, generateBehoerdenJSON } from './dossierGenerator.js';
 import { calculateSozialhilfe, calculateIPV, checkELEligibility } from './config/cantonalData.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from './data/kantonaleSteuerdaten.js';
@@ -130,7 +130,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
-    }, '← ' + t('lebensmappe.back')),
+    }, zurueckZeichen(), t('lebensmappe.back')),
 
     React.createElement('div', {
       style: {
@@ -190,7 +190,7 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, 'ⓘ ' + t('behoerdenDossier.footerPrivacy'))
+    }, hinweisZeichen(), t('behoerdenDossier.footerPrivacy'))
   );
 };
 

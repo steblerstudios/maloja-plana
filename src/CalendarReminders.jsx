@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Eyebrow, PageTitle, PanelTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { buildICS, downloadICS } from './utils/icsExport.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { text, weight, space, radius, fontFamily, ease, duration, leading } from './config/tokens.js';
 import { loadReminders, saveReminders } from './utils/reminders.js';
 import { EmptyState } from './components/EmptyState.jsx';
 import { anspruchSignaleListe } from './data/anspruchSignale.js';
+import { GlossarText } from './GlossarBegriff.jsx';
+import { ZielHinweis } from './components/ExternerLink.jsx';
 
 // ─── Helpers ────────────────────────────────────────────────
 const daysBetween = (a, b) => {
@@ -209,7 +211,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
     },
       isJustDone && React.createElement('div', {
         style: { textAlign: 'center', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, marginBottom: '6px', animation: 'mp-check-pop 0.4s ease-out forwards' }
-      }, '✓ ' + (t('calendar.nicelyDone') || 'Erledigt')),
+      }, hinweisZeichen('check'), (t('calendar.nicelyDone') || 'Erledigt')),
       React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' } },
         React.createElement('div', { style: { flex: 1 } },
           React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.xs } },
@@ -217,10 +219,10 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
             React.createElement('span', { style: { fontWeight: weight.semi, fontSize: text.sm, textDecoration: r.done ? 'line-through' : 'none' } }, r.title)
           ),
           React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', fontSize: text.sm, color: palette.mid, marginTop: space.xs } },
-            React.createElement('span', { style: { color: dueColor, fontWeight: weight.semi } }, r.done ? '✓ ' + t('calendar.completed') : getDueLabel(r.dueDate)),
+            React.createElement('span', { style: { color: dueColor, fontWeight: weight.semi } }, r.done ? erledigtZeichen(true, t('calendar.completed')) : getDueLabel(r.dueDate)),
             React.createElement('span', null, '|'),
             React.createElement('span', null, catLabel),
-            r.recurrence !== 'once' && React.createElement('span', null, '| ↻ ' + t('calendar.' + r.recurrence))
+            r.recurrence !== 'once' && React.createElement('span', null, '| ', hinweisZeichen('recurring', 12), t('calendar.' + r.recurrence))
           ),
           r.coverageThisYear && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', fontStyle: 'italic' } }, t('calendar.coverageThisYear.cardPrefix') + ': ' + t('calendar.coverageThisYear.' + r.coverageThisYear)),
           r.notes && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '6px', fontStyle: 'italic' } }, r.notes)
@@ -234,7 +236,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               color: r.done ? palette.onSand : '#fff', border: 'none', borderRadius: '4px',
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
-          }, r.done ? '↩' : '✓'),
+          }, hinweisZeichen(r.done ? 'recurring' : 'check', 12)),
           React.createElement('button', {
             'aria-label': t('common.delete'),
             onClick: () => deleteReminder(r.id),
@@ -243,7 +245,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               color: '#fff', border: 'none', borderRadius: '4px',
               cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi
             }
-          }, '✕')
+          }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         )
       )
     );
@@ -273,8 +275,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           },
         },
           React.createElement('span', { 'aria-hidden': 'true', style: { width: '8px', height: '8px', borderRadius: '50%', background: palette.sage, flexShrink: 0 } }),
-          React.createElement('span', { style: { flex: 1, minWidth: 0 } }, t('anspruch.items.' + sig.key + '.label')),
-          React.createElement('span', { 'aria-hidden': 'true', style: { color: palette.sage, flexShrink: 0 } }, '→')
+          React.createElement('span', { style: { flex: 1, minWidth: 0 } }, t('anspruch.items.' + sig.key + '.label'))
         ))
       );
     })(),
@@ -363,7 +364,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           padding: space.xs + 'px ' + space.md + 'px', fontSize: text.xs, color: palette.mid,
           cursor: 'pointer', fontFamily: 'inherit',
         }
-      }, '↧ ' + t('calendar.exportIcs')),
+      }, React.createElement(ZielHinweis, { t, art: 'download' }), t('calendar.exportIcs')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.xs } }, t('calendar.exportIcsHint')),
 
       // Export-Vorschau (K20) direkt unter dem Knopf, der sie geöffnet hat.
@@ -498,7 +499,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
           'aria-expanded': showTemplates,
           onClick: () => setShowTemplates(!showTemplates),
           style: { width: '100%', padding: space.sm, background: 'transparent', color: palette.mid, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi }
-        }, (showTemplates ? '▼' : '▶') + ' ' + t('calendar.templates.title')),
+        }, aufklappZeichen(showTemplates), t('calendar.templates.title')),
 
         showTemplates && React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '6px', marginTop: space.sm } },
           TEMPLATES(t).map((tmpl, idx) =>
@@ -514,9 +515,9 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
               onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border; }
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } }, React.createElement(Icon, { name: CATEGORY_ICON_KEYS[tmpl.category] || 'basis', size: 14 }), tmpl.title),
-              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, '↻ ' + t('calendar.' + tmpl.recurrence)),
+              React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, hinweisZeichen('recurring', 12), t('calendar.' + tmpl.recurrence)),
               // Ruhige Deckungs-Orientierung (KVG-faktisch, keine medizinische Empfehlung)
-              tmpl.coverage && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', lineHeight: leading.normal, fontStyle: 'italic' } }, 'ⓘ ' + tmpl.coverage)
+              tmpl.coverage && React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: '4px', lineHeight: leading.normal, fontStyle: 'italic' } }, hinweisZeichen(), tmpl.coverage)
             )
           )
         )
@@ -568,7 +569,7 @@ export const CalendarReminders = ({ palette, t, data, onNavigate, isMobile }) =>
 
     // Disclaimer
     React.createElement('div', { style: { marginTop: space.md, padding: '10px', background: palette.up, borderRadius: radius.sm, fontSize: text.xs, color: palette.mid } },
-      'ⓘ ' + t('calendar.disclaimer')
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('calendar.disclaimer'))
     )
   );
 };

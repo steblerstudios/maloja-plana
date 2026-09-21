@@ -52,7 +52,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
 
     links.map((link, i) =>
       React.createElement('div', { key: link.id, style: { marginBottom: i < links.length - 1 ? space.sm + 'px' : 0 } },
-        React.createElement(ExternerLink, { t, href: link.url, style: nameLinkStyle }, l(link.name) + ' ↗'),
+        React.createElement(ExternerLink, { t, href: link.url, style: nameLinkStyle }, l(link.name)),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, l(link.beschreibung)),
         React.createElement('div', { style: urlHintStyle }, link.url),
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '4px' } }, t('dl.antragsstelle') + ': ' + l(link.antragsstelle))
@@ -63,7 +63,7 @@ export const OfficialLinkBox = ({ palette, t, data, ids, cantonalKey }) => {
       style: { marginTop: space.sm + 'px', paddingTop: space.sm + 'px', borderTop: '1px solid ' + palette.border }
     },
       React.createElement(ExternerLink, { t, href: cantonalUrl, style: linkStyle },
-        '↗ ' + t('dl.cantonalTitle', { canton: getCantonName(canton, t) }) + ' — ' + t('dl.cantonal.' + cantonalKey)
+        t('dl.cantonalTitle', { canton: getCantonName(canton, t) }) + ' — ' + t('dl.cantonal.' + cantonalKey)
       )
     )
   );

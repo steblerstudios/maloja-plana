@@ -75,7 +75,7 @@ export const MerklisteView = ({ palette, t, onNavigate }) => {
   const renderItem = (i) => React.createElement('div', { key: i.id, style: s.row },
     React.createElement('input', { type: 'checkbox', checked: i.done, onChange: () => toggle(i.id), style: s.cb, 'aria-label': i.done ? t('merkliste.undo') : t('merkliste.markDone') }),
     React.createElement('span', { style: s.txt(i.done) }, i.text),
-    i.link && onNavigate && React.createElement('button', { style: s.openLink, onClick: () => onNavigate(i.link) }, '→ ' + labelFor(i.link)),
+    i.link && onNavigate && React.createElement('button', { style: s.openLink, onClick: () => onNavigate(i.link) }, labelFor(i.link)),
     React.createElement('button', { style: s.del, 'aria-label': t('common.delete'), onClick: () => remove(i.id) }, React.createElement(Icon, { name: 'kreuz', size: 16 }))
   );
 

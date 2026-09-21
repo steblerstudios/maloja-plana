@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addTodo } from './utils/merkliste.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // KVG-Wechsel — der erste geführte Ablauf ("Faden"), jetzt auf der wiederverwendbaren
 // Ablauf-Schale. Verkettet die vorhandenen Bausteine zu einem ruhigen Weg: Vergleich →
@@ -60,7 +62,7 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' } }, title),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal } }, body),
       footer,
-      isChosen && React.createElement('div', { style: s.chosenBadge }, '✓ ' + t('kvgWechsel.chosen'))
+      isChosen && React.createElement('div', { style: s.chosenBadge }, hinweisZeichen('check'), t('kvgWechsel.chosen'))
     );
   };
 
@@ -102,15 +104,15 @@ export const KVGWechsel = ({ palette, t, data, onNavigate }) => {
       ),
       React.createElement('div', { style: s.pathWrap },
         pathCard('3a', t('kvgWechsel.path3aTitle'), t('kvgWechsel.path3aText'),
-          React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3aWarn'))),
+          React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3aWarn'))),
         pathCard('3b', t('kvgWechsel.path3bTitle'), t('kvgWechsel.path3bText'),
           React.createElement(React.Fragment, null,
-            React.createElement('div', { style: s.reassure }, '✓ ' + t('kvgWechsel.path3bReassure')),
-            React.createElement('div', { style: s.warn }, '⚠ ' + t('kvgWechsel.path3bCaveat'))
+            React.createElement('div', { style: s.reassure }, hinweisZeichen('check'), t('kvgWechsel.path3bReassure')),
+            React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('kvgWechsel.path3bCaveat'))
           ))
       ),
-      React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.uptakeReassure')),
-      React.createElement('div', { style: s.note }, 'ⓘ ' + t('kvgWechsel.debtNote'))
+      React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvgWechsel.uptakeReassure'))),
+      React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('kvgWechsel.debtNote')))
     ),
 
     // ── Schritt 3 — Kündigung (passt sich dem gewählten Weg an) ──

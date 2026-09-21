@@ -227,7 +227,13 @@ describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
   });
 
   it('Finanzübersicht und Dashboard zeigen den Betrag', () => {
-    expect(render(FinanzUebersicht, { data: profil() })).toContain('✓ ');
+    // Geprüft wird der BETRAG, nicht das Zeichen davor. Die erste Fassung
+    // verlangte `'✓ '` als Stellvertreter für «berechtigt» — sie wurde rot, als
+    // der Haken am 20.09.2026 ein Piktogramm wurde, obwohl die Zahl unverändert
+    // dastand. Ein Test soll die Aussage halten, nicht ihre Schreibweise.
+    const fu = render(FinanzUebersicht, { data: profil() });
+    expect(fu).toContain(fmt(calculateIPV(profil()).amount));
+    expect(fu).not.toContain('✓');   // keine rohe Glyphe mehr
     const html = render(QuickCheck, { data: profil() });
     expect(html).toContain('dashboard.quickCheckResult');
     expect(html).toContain('≈ CHF');

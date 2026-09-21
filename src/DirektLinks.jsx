@@ -241,7 +241,7 @@ export const DirektLinks = ({ palette, t, data }) => {
       Object.entries(getCantonalLinks(data.basis.canton)).map(([key, url]) =>
         React.createElement('div', { key, style: { marginBottom: space.xs + 'px' } },
           React.createElement(ExternerLink, { t, href: url, style: { fontSize: text.xs, color: palette.sageDeep, textDecoration: 'none' } },
-            t('dl.cantonal.' + key) + ' →'
+            t('dl.cantonal.' + key)
           )
         )
       )

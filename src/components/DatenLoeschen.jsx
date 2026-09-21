@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Eyebrow } from './Heading.jsx';
 import { text, weight, radius, space, shadow } from '../config/tokens.js';
 import { alleDatenLoeschen } from '../utils/datenLoeschen.js';
+import { useFocusTrap } from '../hooks/useFocusTrap.js';
 
 // ─── E18 · Löschweg «Alle Daten auf diesem Gerät löschen» ─────────────────────
 // Ruhig und auffindbar unter Einstellungen → Daten & Sicherung. Ablauf:
@@ -20,7 +21,6 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
   const [schritt, setSchritt] = useState(1);
   const [verstanden, setVerstanden] = useState(false);
   const [status, setStatus] = useState(null); // null | 'laeuft' | 'fehler'
-  const ausloeser = useRef(null);
   const karte = useRef(null);
 
   const schliessen = () => {
@@ -28,30 +28,11 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     setOffen(false); setSchritt(1); setVerstanden(false); setStatus(null);
   };
 
-  // Fokus in den Dialog (Titel) bei jedem Schritt; nach dem Schliessen zurück auf den
-  // Auslöser. Escape schliesst; Tab bleibt im Dialog.
-  const warOffen = useRef(false);
-  useEffect(() => {
-    if (!offen) {
-      if (warOffen.current && ausloeser.current) ausloeser.current.focus();
-      warOffen.current = false;
-      return;
-    }
-    warOffen.current = true;
-    const k = karte.current;
-    const titel = k && k.querySelector('[data-dialog-titel]');
-    if (titel) titel.focus();
-  }, [offen, schritt, status]);
-
-  const tasten = (e) => {
-    if (e.key === 'Escape') { e.stopPropagation(); schliessen(); return; }
-    if (e.key !== 'Tab' || !karte.current) return;
-    const f = [...karte.current.querySelectorAll('button:not([disabled]), input:not([disabled])')];
-    if (!f.length) return;
-    const erstes = f[0], letztes = f[f.length - 1];
-    if (e.shiftKey && (document.activeElement === erstes || document.activeElement === karte.current.querySelector('[data-dialog-titel]'))) { e.preventDefault(); letztes.focus(); }
-    else if (!e.shiftKey && document.activeElement === letztes) { e.preventDefault(); erstes.focus(); }
-  };
+  // Fokus, Tab-Kreis, Escape und die Rückkehr auf den Auslöser: der gemeinsame
+  // Baustein (O17). `schritt`/`status` richten neu aus, weil der Dialog bei jedem
+  // Schritt seine Überschrift austauscht — der alte Fokus-Knoten ist dann weg.
+  // Während des Löschens fängt `schliessen()` das Escape selbst ab.
+  useFocusTrap(offen, { ref: karte, onEscape: schliessen, neuAusrichten: [schritt, status] });
 
   const loeschen = async () => {
     setStatus('laeuft');
@@ -137,7 +118,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     React.createElement(Eyebrow, { palette, style: { color: palette.mid, margin: '0 0 ' + space.xs + 'px 0' } }, t('datenLoeschen.bereich')),
     p(t(demoMode ? 'datenLoeschen.beispielAus' : 'datenLoeschen.kurz')),
     React.createElement('button', {
-      ref: ausloeser, type: 'button', disabled: demoMode, onClick: () => setOffen(true),
+      type: 'button', disabled: demoMode, onClick: () => setOffen(true),
       'aria-haspopup': 'dialog',
       style: knopf({ color: demoMode ? palette.soft : ernst, cursor: demoMode ? 'not-allowed' : 'pointer' }),
     }, t('datenLoeschen.titel')),
@@ -148,7 +129,7 @@ export const DatenLoeschen = ({ palette, t, demoMode, onExport }) => {
     },
       React.createElement('div', {
         ref: karte, role: 'dialog', 'aria-modal': 'true',
-        'aria-labelledby': 'daten-loeschen-titel', onKeyDown: tasten,
+        'aria-labelledby': 'daten-loeschen-titel',
         onClick: (e) => e.stopPropagation(),
         style: { background: palette.surface, color: palette.text, borderRadius: radius.md, boxShadow: shadow.lg, padding: space.lg + 'px', width: '100%', maxWidth: '480px', maxHeight: '90vh', overflowY: 'auto', boxSizing: 'border-box' },
       },

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { qrZeichnen } from './utils/qrSicher.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
@@ -20,12 +20,12 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   const qrRef = useRef(null);
 
   const organOptions = [
-    { key: 'heart', label: '◉ ' + t('organ.heart') },
-    { key: 'lungs', label: '◉ ' + t('organ.lungs') },
-    { key: 'liver', label: '◉ ' + t('organ.liver') },
-    { key: 'kidneys', label: '◉ ' + t('organ.kidneys') },
-    { key: 'corneas', label: '◉ ' + t('organ.cornea') },
-    { key: 'bone', label: '◉ ' + t('organ.boneMarrow') }
+    { key: 'heart', label: t('organ.heart') },
+    { key: 'lungs', label: t('organ.lungs') },
+    { key: 'liver', label: t('organ.liver') },
+    { key: 'kidneys', label: t('organ.kidneys') },
+    { key: 'corneas', label: t('organ.cornea') },
+    { key: 'bone', label: t('organ.boneMarrow') }
   ];
 
   const handleOrganToggle = (organ) => {
@@ -81,15 +81,15 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('button', {
           onClick: () => setStatus('registered'),
           style: { ...statusButtonStyle, background: status === 'registered' ? palette.sageBtn : palette.up, color: status === 'registered' ? '#fff' : palette.text }
-        }, '✓ ' + t('organ.registered')),
+        }, hinweisZeichen('check'), t('organ.registered')),
         React.createElement('button', {
           onClick: () => setStatus('not_registered'),
           style: { ...statusButtonStyle, background: status === 'not_registered' ? palette.up : palette.up }
-        }, 'ⓘ ' + t('organ.notRegistered')),
+        }, hinweisZeichen(), t('organ.notRegistered')),
         React.createElement('button', {
           onClick: () => setStatus('declined'),
           style: { ...statusButtonStyle, background: status === 'declined' ? palette.rose : palette.up, color: status === 'declined' ? '#fff' : palette.text }
-        }, '✕ ' + t('organ.declined'))
+        }, hinweisZeichen('kreuz'), t('organ.declined'))
       ),
 
       React.createElement(PanelTitle, { palette, style: { marginBottom: '12px' } }, t('organ.organsAndTissue')),
@@ -107,8 +107,8 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
           style: { width: '100%', padding: space.sm, marginBottom: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm }
         })),
 
-      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, '□ ' + t('organ.save')),
-      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, 'ⓘ ' + t('organ.generateQr')),
+      React.createElement(PrimaryButton, { palette, onClick: handleSave, style: { width: '100%', marginBottom: '12px' } }, hinweisZeichen('kaestchen'), t('organ.save')),
+      React.createElement('button', { onClick: handleGenerateQR, style: { ...buttonStyle, width: '100%', background: palette.sageBtn, color: '#fff' } }, hinweisZeichen(), t('organ.generateQr')),
       // a11y (Deploy-Gate 0.1.37): höfliche Ansage «QR-Code erstellt» — ohne den Inhalt vorzulesen.
       // Eigene, immer vorhandene Region; der Hinweis über dem QR bleibt ohne Live-Region (0.1.36).
       React.createElement('div', { role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, qrAnsage)
@@ -119,7 +119,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'info', size: 22 }), style: { marginBottom: space.md } }, t('organ.info')),
 
       React.createElement('div', { style: { background: palette.up, padding: '12px', borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
-        React.createElement('strong', null, '✓ ' + t('organ.status') + ': '),
+        React.createElement('strong', null, hinweisZeichen('check'), t('organ.status') + ': '),
         status === 'registered' ? t('organ.registered') : status === 'not_registered' ? t('organ.notRegistered') : t('organ.declined')
       ),
 
@@ -137,13 +137,13 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
         React.createElement('div', { style: { marginBottom: '12px' } },
           React.createElement('strong', { style: { color: palette.text } }, t('organ.swissOrganDonation')),
           React.createElement('div', { style: { marginTop: '6px' } },
-            React.createElement(ExternerLink, { t, href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, '↗ swisstransplant.org')
+            React.createElement(ExternerLink, { t, href: 'https://www.swisstransplant.org/de/organ-gewebespende/organspender-werden/organspende-karte-bestellen', style: { color: palette.sandDeep, textDecoration: 'none', fontWeight: weight.semi } }, 'swisstransplant.org')
           )
         )
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
   ));
 };
 

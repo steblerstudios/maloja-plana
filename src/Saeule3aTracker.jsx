@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 // 3a-Maximum 2026 mit Pensionskasse (BSV). Selbständige ohne PK: 20% des Einkommens, max. 36'288.
 export const SAEULE3A_MAX_2026 = 7258;
@@ -71,7 +72,7 @@ export const Saeule3aTracker = ({ palette, t, deposits, max, onChange }) => {
             onClick: () => removeDeposit(idx),
             'aria-label': t('common.delete') || 'Entfernen',
             style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
-          }, '✕')
+          }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         )
       )
     ),
