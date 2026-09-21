@@ -8,6 +8,8 @@ import { steuernFuerProfil, steuerEingabenAusDaten, KANTONAL_DATA_VERSION } from
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { annahmenTexte } from './utils/steuerTexte.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
+import { Lebensbaum } from './Lebensbaum.jsx';
+import { astFarben, bereichsFruechte } from './utils/lebensbereichFruechte.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { BRANCHENLOHN, getBranchenvergleich } from './data/branchenLohn.js';
@@ -138,7 +140,7 @@ const generatePrintHTML = (t, data, w) => {
     + '</body></html>';
 };
 
-export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) => {
+export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, chapters = [], onSelectChapter, isMobile, lang = 'de' }) => {
   // Angetippte Branche → ihr Median als neutrale Marke auf dem Lohn-Barometer. `null` = keine.
   const [selBranche, setSelBranche] = React.useState(null);
   // Export-Vorschau (K20): erst zeigen, was auf dem Ausdruck steht, dann drucken.
@@ -205,7 +207,23 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode }) =
     openPrintWindow(generatePrintHTML(t, data, druckWerte));
   };
 
+  // Fruechte des Lebensbaums — dieselbe Ableitung wie im Dashboard, geteilt ueber
+  // utils/lebensbereichFruechte.js. `chapters` und `lang` kommen aus main.jsx.
+  // KEIN useT() hier: mehrere Tests rendern diese Ansicht bewusst ohne
+  // I18nProvider, und der Hook wirft dort — deshalb kommt lang als Prop.
+  const fruechte = chapters.length
+    ? bereichsFruechte(chapters, data, astFarben(chapters, palette, isDarkMode))
+    : [];
+
   return React.createElement('div', { style: { maxWidth: '520px' } },
+
+    // Der Lebensbaum steht vor den Zahlen (Entscheid 20.09.): zuerst, was aus den
+    // eigenen Angaben gewachsen ist — dann die Rechnung. Aus einer Tabelle wird
+    // ein Ort. Ohne Kapitel (z. B. im Aufruf ohne Profil) faellt er still weg.
+    fruechte.length > 0 && React.createElement(Lebensbaum, {
+      palette, t, data, text, weight, space, radius,
+      onNavigate, bereiche: fruechte, onSelectChapter, isMobile, lang, isDarkMode,
+    }),
 
     React.createElement('div', {
       style: {

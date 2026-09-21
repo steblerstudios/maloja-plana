@@ -1419,7 +1419,9 @@ const AppInner = ({ demo }) => {
         view === 'situationen' && React.createElement(Lebenssituationen, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'cv' && React.createElement(CVGenerator, { palette, t, data: activeData }),
         view === 'charts' && React.createElement(ChartsAdvanced, { palette, t, data: activeData }),
-        view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode }),
+        // chapters/onSelectChapter/isMobile seit 21.09.: der Lebensbaum steht jetzt
+        // hier statt auf dem Dashboard und braucht die Kapitel für seine Äste.
+        view === 'finanzuebersicht' && React.createElement(FinanzUebersicht, { palette, t, data: activeData, onNavigate: handleNavigate, isDarkMode, chapters, onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }), isMobile, lang }),
         view === 'sozialhilfe' && React.createElement(SozialhilfeView, { palette, t, data: activeData, onNavigate: handleNavigate }),
         view === 'direktlinks' && React.createElement(DirektLinks, { palette, t, data: activeData }),
         view === 'kvg' && React.createElement(KVGLeistungen, { palette, t, data: activeData, onUpdateData: updateData, initialTab: kvgInitialTab, onNavigate: handleNavigate }),
