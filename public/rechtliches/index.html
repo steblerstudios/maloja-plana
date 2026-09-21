@@ -8,10 +8,13 @@
        script-src. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
   <!-- ERZEUGT — nicht von Hand bearbeiten.
-       Quelle: scripts/seiten-inhalt.mjs · Generator: scripts/build-seiten.mjs
+       Quelle: scripts/seiten-inhalt.mjs
+       Sprachen + Freigabe: scripts/seiten-sprachen.mjs
+       Generator: scripts/build-seiten.mjs
        Neu bauen:  node scripts/build-seiten.mjs
        Prüfen:     node scripts/build-seiten.mjs --pruefen -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Freigegeben: diese Sprache ist gegengelesen und darf indexiert werden. -->
   <meta name="robots" content="index, follow">
   <meta name="author" content="Stebler Studios">
   <meta name="theme-color" content="#F2F2F0">
@@ -123,6 +126,14 @@
       font-size:13px; color:var(--leise) }
     footer a{ color:var(--leise) }
     footer p{ margin-bottom:6px }
+    /* Sprachumschalter — leise, am Ende, nie als Hauptnavigation. */
+    footer .sprachen{ margin-top:14px }
+    footer .sprachen a{ text-decoration:underline }
+    footer .sprachen span[aria-current]{ color:var(--text); font-weight:600 }
+    /* Nur sichtbar, solange eine Sprache nicht gegengelesen ist. Ruhig, aber
+       nicht übersehbar: wer hier liest, soll wissen, woran er ist. */
+    .entwurf{ border:1px solid var(--gold); border-radius:6px; padding:12px 14px;
+      margin-bottom:24px; font-size:14px; color:var(--leise); background:var(--flaeche) }
     @media (max-width:600px){ h1{ font-size:26px } .vorspann{ font-size:17px } }
   </style>
 </head>
@@ -188,6 +199,7 @@
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">Quellcode auf GitHub</a></p>
       <p><a href="/rechtliches/">Impressum, Datenschutz und Haftungsausschluss</a> —
       ohne Zugangscode lesbar.</p>
+      <p class="sprachen">Sprache: <span aria-current="true">Deutsch</span> · <a href="/fr/rechtliches/" hreflang="fr">Français</a> · <a href="/it/rechtliches/" hreflang="it">Italiano</a> · <a href="/en/rechtliches/" hreflang="en">English</a> · <a href="/rm/rechtliches/" hreflang="rm">Rumantsch</a></p>
     </footer>
   </div>
 </body>
