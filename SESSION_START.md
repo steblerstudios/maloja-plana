@@ -7,7 +7,64 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-21, nachts (`main` = `1d9127d` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen sechs PRs** · keine offenen PRs · **2488 Tests grün, size-limit 64,96 kB von 65**)
+**Stand:** 2026-09-21, ~01:30 (`main` = `728187d` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** Stand-Doku · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen sieben PRs** · **ein offener PR: #256, Entwurf** · **2488 Tests grün auf `main`**, size-limit 64,96 kB von 65)
+
+> *Korrigiert am 21.09. ~01:30: hier stand `1d9127d`, «sieben» hiess «sechs», und «keine
+> offenen PRs». Beides war beim Schreiben wahr und ist es seit dem Merge von #255 und dem
+> Öffnen von #256 nicht mehr. Der alte Wortlaut ist nicht erhaltenswert, die Lehre schon:
+> **eine Stand-Zeile, die am Merge vorbeigeschrieben wird, ist ab dem Merge falsch.***
+
+> ### 🌍 Die Erklärseiten in fünf Sprachen — PR #256, **Entwurf, nicht gemergt** (2026-09-21)
+>
+> Die fünf Seiten gab es nur auf Deutsch. **#256** ergänzt echte Sprachpfade:
+> `/fr/…` `/it/…` `/en/…` `/rm/…`; Deutsch bleibt ohne Präfix, weil diese Adressen seit
+> dem 20.09. in der Sitemap stehen und nicht wandern dürfen.
+>
+> 🛑 **Der Kern des PR ist nicht die Übersetzung, sondern eine Sperre.** Die vier neuen
+> Sprachen sind rund 2900 Wörter über Schweizer Sozial- und Steuerrecht, **die kein Mensch
+> gegengelesen hat**. Jede Sprache trägt darum ein Feld `freigegeben` in
+> `scripts/seiten-sprachen.mjs`. `false` bedeutet **dreierlei zugleich**: die Seite trägt
+> `noindex, follow` · sie steht **nicht** in der Sitemap · sie erscheint in **keinem**
+> hreflang-Ring. Dazu ein sichtbarer Hinweis auf der Seite und **kein**
+> «Inhaltlich geprüft»-Datum — das wäre die Behauptung einer Prüfung, die es nicht gab.
+>
+> **Freigeben ist eine Zeile** (`freigegeben: true` + `geprueft`), dann
+> `node scripts/build-seiten.mjs`. Einen zweiten Ort gibt es bewusst nicht:
+> `scripts/check-seo.sh` liest die Freigabe **aus der erzeugten Seite selbst**
+> (`noindex` ja/nein), damit nichts auseinanderlaufen kann.
+>
+> **Entscheid Stebler Studios, 21.09.: «rumantsch im oktober».** `rm` ist damit nicht
+> dasselbe wie `fr`/`it`/`en` — die drei warten auf eine Gegenlesung, die im September noch
+> kommen kann, Rumantsch wartet bewusst. Festgehalten als Feld `vertagtAuf` in
+> `seiten-sprachen.mjs`. 🛑 **Kein Rückstand, ein Entscheid.**
+>
+> **Quellen je Sprache, einzeln mit Gegenprobe geprüft:** Priminfo de/fr/it/en (gleicher
+> Slug) · AHV-Merkblatt `.d/.f/.i/.e` · SKOS nur de/fr (mehr bietet der Umschalter dort
+> nicht) · ESTV/BWO/BSV nur de · **Rumantsch: keine einzige**, der Bund publiziert das nicht
+> auf Rumantsch. Fehlt die Sprachadresse, steht die deutsche **mit sichtbarem Vermerk**.
+> 🛑 Der erste Versuch hatte die Slugs aus dem deutschen Pfad abgeleitet (`/fr/primes`): alle
+> 404. Das misst die eigene Vermutung. **Eine fremde URL holt man aus der fremden Seite.**
+>
+> **Zweiter Commit in #256: die Startseite trug fünf tote hreflang-Zeilen** auf `?lang=…`.
+> Der `canonical` in `index.html` steht **statisch** auf `/` und gilt auch für `?lang=fr` —
+> Google folgt der Alternative, findet dort `canonical: /` und verwirft sie. Dieselbe Falle,
+> die am 20.09. die Sitemap gekostet hat. Raus, samt alleinstehendem `x-default`.
+> Der Wächter in `src/i18n/__tests__/i18n.test.js` wurde **nicht gelöscht, sondern
+> umgedreht und an die Ursache gebunden**: solange der canonical statisch ist, darf dort
+> kein hreflang stehen — wird er dynamisch, schlägt der Test an.
+>
+> 🛑 **Offener Entscheid, bewusst nicht mitgemacht:** `src/main.jsx:631` setzt `canonUrl`
+> weiterhin auf `?lang=`. Der Code läuft heute nicht (er sitzt hinter dem Gate), bringt den
+> Widerspruch aber zurück, sobald das Gate fällt. Gehört mit **K105** auf denselben Tisch.
+>
+> **Belegt auf dem Zweig:** 2648 Tests grün (137 Dateien) · lint sauber · `check-seo.sh`
+> 0 Fehler / 0 Warnungen über alle 25 Seiten · **Bundle 64,96 kB von 65 — unverändert**,
+> statische Seiten kosten am Startpfad null Bytes · der gegengelesene **deutsche Text ist
+> unberührt**, `<main>` aller fünf Seiten zeichengleich gegen `origin/main` gemessen.
+>
+> ⚠️ **Der Vorschau-Server täuscht.** `vite preview` hat einen SPA-Rückfall: `/fr/…` gibt
+> 200, ein erfundenes `/xy/…` **auch**. Dort ist ein Statuscode wertlos. Der echte Apache
+> hat den Rückfall nicht (belegt: `wartung.html` 200 gegen erfundenen Pfad 404).
 
 > ### 🔎 SEO: der Gate-Entscheid ist gefallen — sechs PRs gemergt, **nichts davon live** (2026-09-21, nachts)
 >
