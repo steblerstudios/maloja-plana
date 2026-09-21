@@ -87,7 +87,7 @@
 > byte-identisches Deutsch. Voller Befund mit Messprotokoll:
 > `docs/audits/seo-audit-2026-09-20.md`.
 >
-> **Sophies Entscheid:** öffentliche Erklärseiten **vor** dem Gate, die App dahinter.
+> **Entscheid von Stebler Studios:** öffentliche Erklärseiten **vor** dem Gate, die App dahinter.
 > Das Gate bleibt — es steht nur nicht mehr vor allem.
 >
 > 🛑 **Sechs Dinge, die die nächste Sitzung wissen muss:**
