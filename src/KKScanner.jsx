@@ -111,19 +111,19 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
       // K80: vorher warf ein Versicherername mit Umlaut (z. B. ÖKK) hier unabgefangen.
-      const stil = { colorDark: palette.text, colorLight: palette.surface };
+      // Farben bewusst NICHT aus der Palette: qrZeichnen zeichnet immer dunkel auf hell.
       // Der lesbare Code zuerst — er ist der, den im Ernstfall jemand Fremdes braucht.
       const lesbar = document.getElementById('kk-qr-lesbar');
       const okLesbar = lesbar
         ? qrZeichnen(lesbar, kkNotfallVcard({ t, kkData }), {
-            maxBytes: QR_MAX_BYTES_VCARD, width: 180, height: 180, ...stil,
+            maxBytes: QR_MAX_BYTES_VCARD, width: 180, height: 180,
             beschriftung: t('kkScanner.qrNotfallLesbar'),
           })
         : false;
       const cont = document.getElementById('kk-qr-output');
       const okUebernahme = cont
         ? qrZeichnen(cont, qrData, {
-            width: 180, height: 180, ...stil, beschriftung: t('kkScanner.qrUebernahme'),
+            width: 180, height: 180, beschriftung: t('kkScanner.qrUebernahme'),
           })
         : false;
       if (!lesbar && !cont) return;

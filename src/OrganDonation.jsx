@@ -82,7 +82,7 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
       const cont = qrRef.current;
       // K80: vorher warf ein Name mit Umlaut hier unabgefangen → leere Fläche.
       if (!cont) return;
-      const ok = qrZeichnen(cont, qrData, { maxBytes: QR_MAX_BYTES_VCARD, width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') });
+      const ok = qrZeichnen(cont, qrData, { maxBytes: QR_MAX_BYTES_VCARD, width: 200, height: 200, beschriftung: t('organ.generateQr') });
       setQrFehler(!ok);
       if (ok) setQrAnsage(t('common.qrErstellt'));
     }, 100);

@@ -1,6 +1,8 @@
 // K80 (17.09.2026): QR im Notfall-Dossier fehlte bei längeren Angaben — und schon ein
 // einziger Umlaut verfälschte die Kodierung. Diese Tests halten beides fest.
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // QRCode.js hängt sich beim Import an `window`; die Testumgebung ist Node.
 let QRCode;
@@ -14,6 +16,8 @@ let vcardMaskieren;
 let vcardBauen;
 let qrNotfallVcard;
 let QR_MAX_BYTES_VCARD;
+let QR_DUNKEL;
+let QR_HELL;
 
 beforeAll(async () => {
   if (!('window' in globalThis)) { globalThis.window = globalThis; gesetzt.push('window'); }
@@ -26,7 +30,7 @@ beforeAll(async () => {
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
   ({
     qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES,
-    vcardMaskieren, vcardBauen, qrNotfallVcard, QR_MAX_BYTES_VCARD,
+    vcardMaskieren, vcardBauen, qrNotfallVcard, QR_MAX_BYTES_VCARD, QR_DUNKEL, QR_HELL,
   } = await import('../utils/qrSicher.js'));
 });
 
@@ -247,6 +251,33 @@ describe('vCard als Nutzlast', () => {
       );
       expect(r.text).toBe('');
     });
+  });
+});
+
+// Am 22.09.2026 im Dark Mode gefunden: KKScanner und OrganDonation übergaben
+// `colorDark: palette.text`. Im dunklen Thema ist das HELL — die dunklen Module wurden hell
+// gezeichnet, der Code war invertiert, und viele Lesegeräte scheitern daran.
+describe('QR-Farben kommen nie aus dem Thema', () => {
+  const helligkeit = (hex) => {
+    const n = parseInt(hex.replace('#', ''), 16);
+    return (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+  };
+
+  it('zeichnet dunkel auf hell — als Eigenschaft, nicht als Farbwert', () => {
+    // Geprüft wird das Verhältnis, nicht die konkrete Farbe: sie darf sich ändern.
+    expect(helligkeit(QR_DUNKEL)).toBeLessThan(0.3);
+    expect(helligkeit(QR_HELL)).toBeGreaterThan(0.8);
+  });
+
+  it('keine Aufrufstelle nimmt die Farben aus der Palette', () => {
+    const wurzel = path.resolve(__dirname, '..');
+    const dateien = fs.readdirSync(wurzel).filter(f => f.endsWith('.jsx'));
+    const treffer = [];
+    for (const datei of dateien) {
+      const src = fs.readFileSync(path.join(wurzel, datei), 'utf8');
+      if (/color(Dark|Light):\s*palette\./.test(src)) treffer.push(datei);
+    }
+    expect(treffer).toEqual([]);
   });
 });
 

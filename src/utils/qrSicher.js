@@ -32,6 +32,19 @@ export const QR_MAX_BYTES = 600;
 // Ein Gerät ist keine Gattung — wer sie anhebt, muss neu messen, nicht schätzen.
 export const QR_MAX_BYTES_VCARD = 640;
 
+// Ein QR-Code wird dunkel auf hell gezeichnet — immer, unabhängig vom Thema.
+//
+// 🛑 Gefunden am 22.09.2026 beim Nachsehen im Dark Mode: `KKScanner` und `OrganDonation`
+// übergaben `colorDark: palette.text` und `colorLight: palette.surface`. Im dunklen Thema
+// ist `palette.text` HELL — die dunklen Module wurden also hell gezeichnet und die hellen
+// dunkel. Der Code war invertiert, und viele Lesegeräte scheitern daran.
+// (Das Notfall-Dossier war nie betroffen: es setzte diese zwei Werte von Hand fest.)
+//
+// Die Farbwahl gehört deshalb nicht an die Aufrufstelle, sondern hierher. Ein Notfall-Code
+// ist kein Gestaltungselement: er muss lesbar sein, auch wenn er im dunklen Thema laut wirkt.
+export const QR_DUNKEL = '#1a1a1a';
+export const QR_HELL = '#ffffff';
+
 const KUERZUNGS_ZEILE = '…';
 // Höchstlänge der Zeile «Nicht enthalten: …» im Code.
 const FEHLT_ZEILE_MAX = 160;
@@ -201,7 +214,12 @@ export function qrZeichnen(el, text, optionen = {}) {
   const inhalt = String(text ?? '');
   if (!inhalt || utf8Laenge(inhalt) > maxBytes) return false;
   try {
-    new QRCode(el, { correctLevel: QRCode.CorrectLevel.M, ...rest, text: inhalt });
+    new QRCode(el, {
+      correctLevel: QRCode.CorrectLevel.M,
+      colorDark: QR_DUNKEL, colorLight: QR_HELL,
+      ...rest,
+      text: inhalt,
+    });
   } catch {
     el.innerHTML = '';
     attributeAufraeumen(el);
