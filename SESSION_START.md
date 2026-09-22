@@ -7,12 +7,16 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-22, 09:55 (`main` = `0e57926` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen elf PRs** · **2680 Tests grün**, Startdatei 63,39 kB von 65)
+**Stand:** 2026-09-22, 10:10 (`main` = `849042b` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen zwölf PRs** · **2680 Tests grün auf `main` gemessen**, Startdatei 63,39 kB von 65 · **keine offenen PRs**)
 
-> *Diese Zeile nennt `0e57926` — den Stand **vor** dem Merge dieses PR. Der eigene
-> Merge-Commit lässt sich nicht vorwegnehmen; sobald **#260** auf `main` liegt, ist `main`
-> einen Commit weiter. **Das ist der einzige zulässige Rückstand dieser Zeile.** Alles
-> andere gehört nachgeführt, bevor gemergt wird.*
+> *Nach dem Merge von **#260** nachgezogen: die Zeile nannte `0e57926`, `main` stand auf
+> `849042b`. **Eine Stand-Doku, die an einem Merge endet, zeigt sonst den Vor-Merge-Stand.**
+>
+> Die Zeile kann ihren **eigenen** Merge-Commit nie enthalten — das ist ein unendlicher
+> Regress, kein Versäumnis. **Ein Commit Rückstand ist zulässig, mehr nicht.** Wer die Zeile
+> anfasst: `git log -1 origin/main` messen, auch wenn man den Stand zu kennen glaubt. Am
+> 21./22.09. wurde sie **dreimal** durch einen Merge falsch, einmal in genau dem Block,
+> der davor warnt.*
 
 > *Zweimal nachgeführt am 21.09. Erst stand #256 hier als «← dieser PR», war aber um
 > 15:32 UTC gemergt. Dann nannte die Zeile `47866b5`, während #259 um 16:26 UTC schon
