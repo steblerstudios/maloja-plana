@@ -3,6 +3,8 @@ import { text, weight, space, radius, leading } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
 import { getNotfallDossierPreview } from './dossierGenerator.js';
 import { getFullName } from './config/constants.js';
+import { hinweisZeichen } from './IconSystem.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Notruf-Vorlesekarte — für den Ernstfall: du musst dir nichts merken.
 // Die Karte nennt die Nummer, sagt Satz für Satz, was du am Telefon sagst,
@@ -93,7 +95,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
       return React.createElement('div', { style: s.locResult },
         React.createElement('div', { style: s.locCoords }, loc.lat.toFixed(5) + ', ' + loc.lng.toFixed(5)),
         React.createElement('div', { style: s.locAcc }, t('notfallkarte.locAccuracy', { m: loc.acc })),
-        React.createElement('a', { href: 'geo:' + loc.lat + ',' + loc.lng, style: s.locMap }, t('notfallkarte.locMapLink') + ' →'),
+        React.createElement('a', { href: 'geo:' + loc.lat + ',' + loc.lng, style: s.locMap }, t('notfallkarte.locMapLink')),
         React.createElement('div', { style: s.locNote }, t('notfallkarte.locNotStored'))
       );
     }
@@ -127,7 +129,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
           key: e.key, href: 'tel:' + e.num, style: s.tel,
         }, e.num + ' · ' + t('notfallkarte.num_' + e.key)))
       ),
-      React.createElement('div', { style: s.note }, 'ⓘ ' + t('notfallkarte.step1Note'))
+      React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('notfallkarte.step1Note')))
     ),
 
     // Schritt 2 — Was du sagst (der Reihe nach, mit deinen Angaben schon eingesetzt)
@@ -141,7 +143,7 @@ export const NotfallVorlesekarte = ({ palette, t, data, chapters, onNavigate }) 
       ),
       // Opt-in Standort — beantwortet „Wo bist du?", falls die Adresse gerade nicht reicht.
       locationBlock(),
-      React.createElement('div', { style: s.note }, '✓ ' + t('notfallkarte.step2Stay'))
+      React.createElement('div', { style: s.note }, hinweisZeichen('check'), t('notfallkarte.step2Stay'))
     ),
 
     // Schritt 3 — Deine Angaben zum Ablesen (wiederverwendete Notfall-Abschnitte)

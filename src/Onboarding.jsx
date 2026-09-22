@@ -21,6 +21,7 @@ const STORAGE_KEY = 'or5_onboarding_done';
 export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
+import { zurueckZeichen, hinweisZeichen } from './IconSystem.jsx';
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
   const [step, setStep] = useState(0);
@@ -53,7 +54,6 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
   // O14: Rumantsch ist provisorisch (rm.js Z. 2) — die Sprachwahl sagt das, statt es
   // als fertige Sprache anzubieten (Bauliste §10, E30).
   const langLabels = { en: 'English', de: 'Deutsch', fr: 'Français', it: 'Italiano', rm: 'Rumantsch (provisoric)' };
-
 
   const finish = () => {
     if (firstName.trim()) onUpdateData('basis', 'firstName', firstName.trim());
@@ -100,7 +100,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
       cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily: fontFamily,
       padding: '4px 6px 4px 0', marginBottom: space.sm,
     },
-  }, '← ' + t('common.back'));
+  }, zurueckZeichen(), t('common.back'));
 
   // Fortschritt (Mischung: Punkte-Marker A + füllende Spur C + Textzeile B) — ruhig,
   // gibt Orientierung ohne Behörden-Ton. Screenreader liest die Textzeile.
@@ -270,7 +270,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         React.createElement('button', {
           onClick: () => setStep(2),
           style: btnPrimary,
-        }, t('common.next') + ' →'),
+        }, t('common.next')),
 
         React.createElement('button', {
           onClick: finish,
@@ -322,7 +322,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         React.createElement('button', {
           onClick: () => setStep(3),
           style: btnPrimary,
-        }, t('common.next') + ' →'),
+        }, t('common.next')),
 
         React.createElement('button', {
           onClick: finish,
@@ -343,7 +343,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
         background: 'linear-gradient(135deg, ' + palette.sand + ', ' + palette.sage + ')',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         margin: '0 auto 20px auto', fontSize: '32px',
-      } }, '✓'),
+      } }, hinweisZeichen('check', 12)),
 
       React.createElement(PageTitle, { palette, style: { marginBottom: space.sm } }, firstName.trim()
           ? t('onboarding.readyTitle', { name: firstName.trim() })
@@ -359,7 +359,7 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
           t('onboarding.tip2'),
           t('onboarding.tip3'),
         ].map((tip, i) => React.createElement('div', { key: i, style: { fontSize: text.sm, color: palette.mid, display: 'flex', gap: space.sm } },
-          React.createElement('span', { style: { color: palette.sage } }, '✓'),
+          React.createElement('span', { style: { color: palette.sage } }, hinweisZeichen('check', 12)),
           tip
         ))
       ),

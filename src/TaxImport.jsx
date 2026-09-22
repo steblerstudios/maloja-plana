@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { importTaxFromFile, applyTaxToFinanzen } from './taxImport.js';
 import { text, weight, radius, space, leading } from './config/tokens.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 
 // Steuerdatei-Import — ruhige Übernahme der Eckwerte aus einer Steuererklärung.
@@ -71,8 +71,8 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
           React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('taxImport.fileTypes'))
         ),
 
-        importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, 'ⓘ ' + t('taxImport.importing')),
-        importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, '✕ ' + importError),
+        importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('taxImport.importing')),
+        importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, hinweisZeichen('kreuz'), importError),
 
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, padding: '12px', background: palette.up, borderRadius: radius.sm, marginTop: space.sm } },
           React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, t('taxImport.formatExample') + ':'),
@@ -100,7 +100,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
                   preview.kept.map(f => fieldRow(f, 'keep'))
                 ),
                 React.createElement('div', { style: { display: 'flex', gap: space.sm, marginTop: space.sm } },
-                  preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, '✓ ' + t('common.save')),
+                  preview.applied.length > 0 && React.createElement(PrimaryButton, { palette, onClick: handleConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
                   React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
                 )
               )
@@ -111,7 +111,7 @@ export const TaxImport = ({ palette, t, currentFinanzen = {}, onImport, onNaviga
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '16px' } }, 'ⓘ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '16px' } }, hinweisZeichen(), t('trust.localOnly'))
   );
 };
 

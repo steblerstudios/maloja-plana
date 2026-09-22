@@ -6,7 +6,7 @@ import {
   getNotificationPrefs,
   saveNotificationPrefs,
 } from './utils/notifications.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius, space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 
@@ -145,12 +145,12 @@ export const NotificationSettings = ({ palette, t }) => {
     React.createElement('div', {
       style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid }
     },
-      'ⓘ ' + t('notifications.privacyNote')
+      hinweisZeichen(), t('notifications.privacyNote')
     ),
 
     saved && React.createElement('div', {
       style: { marginTop: '12px', padding: space.sm, background: palette.sage + '22', borderRadius: radius.sm, fontSize: text.sm, color: palette.sageDeep, textAlign: 'center' }
-    }, '✓ ' + t('common.saved'))
+    }, hinweisZeichen('check'), t('common.saved'))
   );
 };
 

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { getLetterTemplates, generateLetter, getFristInfo, getJobOptions, briefCanRender } from './briefGenerator.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
 import { text as textTokens, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { openPrintWindow } from './utils/helpers.js';
 import { addReminder } from './utils/reminders.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Brieftypen mit einer Frist, die in den Kalender gelegt werden kann.
 const FRIST_TEMPLATES = ['wageClaim', 'unpaidWage'];
@@ -103,7 +104,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
         fontSize: textTokens.sm, cursor: 'pointer', padding: '8px 0',
         marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px',
       }
-    }, '← ' + t('briefe.backToUnterlagen')),
+    }, zurueckZeichen(), t('briefe.backToUnterlagen')),
 
     // Title
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'document', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('briefe.title')),
@@ -260,7 +261,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
         marginBottom: space.md,
       }
     },
-      React.createElement('div', null, 'ⓘ ' + t('briefe.dataNote')),
+      React.createElement('div', null, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('briefe.dataNote'))),
       React.createElement('div', { style: { marginTop: space.xs } }, t('briefe.disclaimer'))
     ),
 
@@ -310,7 +311,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
       reminderAdded
         ? React.createElement('div', {
             style: { alignSelf: 'flex-start', fontSize: textTokens.sm, fontWeight: weight.medium, color: palette.sageDeep, display: 'flex', alignItems: 'center', gap: '6px' }
-          }, '✓ ' + t('briefe.wageReminder.added'))
+          }, hinweisZeichen('check'), t('briefe.wageReminder.added'))
         : React.createElement('button', {
             onClick: handleAddReminder,
             style: {
@@ -351,7 +352,7 @@ const BriefGenerator = ({ palette, t, data, onNavigate, initialTemplate }) => {
           cursor: 'pointer', fontSize: textTokens.sm, fontWeight: weight.medium,
           color: palette.text,
         }
-      }, t('briefe.afterPrint.toTresor') + ' →')
+      }, t('briefe.afterPrint.toTresor'))
     ),
 
     // Preview

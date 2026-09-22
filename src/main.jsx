@@ -32,8 +32,12 @@ const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour 
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
-import MobileNav from './MobileNav.jsx';
-import { Icon } from './IconSystem.jsx';
+// Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
+// deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
+// Luft unter dem 65-KB-Deckel. Damit das erste Antippen trotzdem nicht stockt, wird
+// das Stück nach dem ersten Bild im Leerlauf vorgeladen (siehe `vorladen` unten).
+const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
+import { Icon, zurueckZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
@@ -191,7 +195,7 @@ const LanguageSwitcher = ({ palette }) => {
     React.createElement('span', {
       'aria-hidden': 'true',
       style: { position: 'absolute', insetInlineEnd: '9px', pointerEvents: 'none', color: palette.mid, fontSize: '10px' }
-    }, '▾')
+    }, aufklappZeichen(true))
   );
 };
 
@@ -353,6 +357,10 @@ const BottomAnchor = ({ palette, t, view, onNavigate, onMenu, leftHand }) => {
         const center = React.createElement('div', { key: 'fab', style: { flex: 1, display: 'flex', justifyContent: 'center' } },
           React.createElement('button', {
             onClick: () => setFanOpen((o) => !o), 'aria-label': t('nav.erfassen'), 'aria-expanded': fanOpen,
+            // O17 · Der Fächer ist KEIN Dialog, sondern eine Auswahl an diesem Knopf:
+            // er bleibt sichtbar, der Fokus bleibt auf ihm, eine Fokus-Falle wäre hier
+            // falsch. Was ihm fehlte, ist der Rückweg ohne Maus — Escape schliesst.
+            onKeyDown: (e) => { if (e.key === 'Escape' && fanOpen) { e.preventDefault(); setFanOpen(false); } },
             style: { width: '52px', height: '52px', borderRadius: '50%', background: palette.sageBtn, color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginTop: '-18px', boxShadow: '0 2px 9px rgba(0,0,0,0.16)' },
           },
             React.createElement('span', { style: { display: 'inline-flex', transition: `transform ${duration.normal}ms ${ease}`, transform: fanOpen ? 'rotate(45deg)' : 'none' } }, bottomIcon('plus', '#fff', 26))
@@ -577,6 +585,17 @@ const AppInner = ({ demo }) => {
     checkOverdueReminders(t);
     // PLZ->Gemeinde-Daten vorladen, damit Kanton/City-Autofill schon beim ersten PLZ-Eintrag greift
     preloadPLZ();
+    // Die Menü-Schubladen liegen seit dem Deckel-Durchgang ausserhalb der Startdatei.
+    // Im Leerlauf nach dem ersten Bild nachholen: dann ist das Stück da, bevor jemand
+    // das Menü antippt — die Ersparnis bleibt, das Stocken kommt gar nicht erst.
+    const vorladen = () => { import('./MobileNav.jsx'); };
+    const leerlauf = window.requestIdleCallback
+      ? window.requestIdleCallback(vorladen, { timeout: 2000 })
+      : setTimeout(vorladen, 1200);
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(leerlauf);
+      clearTimeout(leerlauf);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Nur beim Mount: SW-Registrierung/Preload dürfen bei Sprachwechsel NICHT neu laufen; `t` wird hier einmalig durchgereicht.
   }, []);
 
@@ -774,7 +793,6 @@ const AppInner = ({ demo }) => {
       console.warn('[app] Kein Dokument-Inhalt gefunden für', doc.id);
     }
   };
-
 
   const handleNavigate = (viewName, chapterIdx, extra) => {
     // B-1/E22: Schnellcheck-Zahlen nur für den direkten Weg in den IPV-Rechner (nie ins Profil).
@@ -992,6 +1010,10 @@ const AppInner = ({ demo }) => {
   React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
+    // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
+    // und der Gewinn wäre keiner. `fallback: null` statt Ladeanzeige: die Schublade
+    // soll auftauchen, wenn sie da ist, nicht erst ein Warte-Rechteck zeigen.
+    mobileNavOpen && React.createElement(React.Suspense, { fallback: null, key: 'nav' },
     React.createElement(MobileNav, {
       palette, t,
       isOpen: mobileNavOpen,
@@ -1011,8 +1033,9 @@ const AppInner = ({ demo }) => {
       settingsLabel: t('nav.settings'),
       // Rundgang nur EINMAL: am Handy in den Einstellungen, am Desktop hier im Menü.
       onStartTour: isMobile ? null : () => { setView('dashboard'); setTourOpen(true); },
-    }),
+    })),
     // Einstellungen & Konto — eigene Schublade (oben-rechts-Eingang, entdoppelt das Menü).
+    settingsOpen && React.createElement(React.Suspense, { fallback: null, key: 'einstellungen' },
     React.createElement(MobileNav, {
       palette, t,
       mode: 'settings',
@@ -1023,7 +1046,7 @@ const AppInner = ({ demo }) => {
       settingsControls,
       settingsLabel: t('nav.settings'),
       onStartTour: () => { setSettingsOpen(false); setView('dashboard'); setTourOpen(true); },
-    }),
+    })),
     // Kleine Tour (Overlay) — nur auf dem Dashboard, wo ihre Ziele liegen.
     (tourOpen && view === 'dashboard') && React.createElement(React.Suspense, { fallback: null, key: 'tour' },
       React.createElement(Tour, {
@@ -1193,7 +1216,7 @@ const AppInner = ({ demo }) => {
             fontSize: text.xs, fontWeight: weight.medium, color: palette.sageDeep, fontFamily: 'inherit',
             textDecoration: 'underline', textUnderlineOffset: '2px',
           },
-        }, '△ ' + t('sandbox.startBlank'))
+        }, t('sandbox.startBlank'))
       ),
       React.createElement('div', { style: { display: 'flex', gap: '8px', flexShrink: 0 } },
         React.createElement('button', {
@@ -1224,7 +1247,7 @@ const AppInner = ({ demo }) => {
           color: palette.mid, fontFamily: 'inherit',
           display: 'flex', alignItems: 'center', gap: '6px',
         },
-      }, '← ', t('nav.backToDashboard')),
+      }, zurueckZeichen(), t('nav.backToDashboard')),
       !demoMode && !sandboxActive && SANDBOX_VIEWS.includes(view) && React.createElement('button', {
         onClick: enterSandbox,
         style: {
@@ -1235,7 +1258,7 @@ const AppInner = ({ demo }) => {
           // sageDeep statt sage: sage (#5A7868) trägt als 13px-Text nur 4.34:1 auf bg → AA-Fail.
           color: palette.sageDeep, fontFamily: 'inherit',
         },
-      }, '△ ' + t('sandbox.footerLink')),
+      }, t('sandbox.footerLink')),
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),

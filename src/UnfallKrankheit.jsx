@@ -1,6 +1,8 @@
 import React from 'react';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { AblaufContainer, AblaufStep, AblaufLink, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Unfall oder Krankheit — was tun? Der 4. geführte Ablauf auf der Schale.
 // Ruhige Orientierung: zuerst der Notfall (Nummern), dann der zentrale Schweizer
@@ -41,7 +43,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
           key: e.key, href: 'tel:' + e.num, style: s.tel,
         }, e.num + ' · ' + t('unfallKrankheit.num_' + e.key)))
       ),
-      React.createElement('div', { style: s.note }, 'ⓘ ' + t('unfallKrankheit.step1Note')),
+      React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('unfallKrankheit.step1Note'))),
       onNavigate && React.createElement(AblaufLink, { palette, label: t('unfallKrankheit.step1Link'), onClick: () => onNavigate('notfalleinstieg') })
     ),
 
@@ -58,7 +60,7 @@ export const UnfallKrankheit = ({ palette, t, chapters, onNavigate }) => {
           React.createElement('div', { style: s.cardText }, t('unfallKrankheit.step2KrankheitText'))
         )
       ),
-      React.createElement('div', { style: s.note }, 'ⓘ ' + t('unfallKrankheit.step2Note'))
+      React.createElement('div', { style: s.note }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('unfallKrankheit.step2Note')))
     ),
 
     // ── Schritt 3 — Wenn du nicht arbeiten kannst ──

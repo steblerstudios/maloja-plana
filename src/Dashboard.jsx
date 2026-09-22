@@ -11,13 +11,13 @@ import { loadReminders } from './utils/reminders.js';
 import { grundordnung, feldErledigt, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { useT } from './i18n/index.js';
 import { baumAnsichtLesen, baumAnsichtSchreiben } from './utils/baumAnsicht.js';
+import { aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
 // Standard ist seit 20.09.2026 die räumliche Ansicht — dort fällt das Nachladen
 // also beim Öffnen des Dashboards an.
 const Baum3D = React.lazy(() => import('./Baum3D.jsx'));
-
 
 // K18: Mini-Beschriftungen (Baum, Berg, Status-Spalte) dürfen bei langen Wörtern
 // silbentrennen statt zu clippen — Kurzlabels lösen die meisten Fälle, das hier
@@ -167,8 +167,7 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('div', { style: { minWidth: 0, flex: 1 } },
       React.createElement('div', { style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage } }, b.label),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: '2px' } }, b.detail)
-    ),
-    React.createElement('span', { style: { color: palette.sageDeep, flexShrink: 0, fontSize: text.body }, 'aria-hidden': true }, '→')
+    )
   );
 
   return React.createElement('div', {
@@ -297,7 +296,7 @@ const BetaFeedback = ({ palette, t }) => {
           padding: space.sm + 'px ' + space.lg + 'px', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily: 'inherit',
         }
-      }, t('beta.feedback.title') + ' →')
+      }, t('beta.feedback.title'))
     );
   }
 
@@ -463,8 +462,6 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
   const [kein3D, setKein3D] = useState(false);
   const zeigeRaeumlich = raeumlich && !kein3D;
 
-
-
   const umschalten = () => setRaeumlich((v) => {
     baumAnsichtSchreiben(!v);
     return !v;
@@ -495,8 +492,6 @@ const DatenWirken = ({ palette, t, data, text, weight, space, radius, onNavigate
     { key: 'notfall', area: 'notfall', label: t('datenWirken.notfall'), short: t('datenWirken.short.notfall'), active: !!(data.notfall?.emergencyContact) },
   ];
   const active = connections.filter(c => c.active);
-
-
 
   // Aktive Werkzeuge nach Bereichs-Ast gruppieren (Schlüssel = Kapitel-Schlüssel
   // der Bereichs-Frucht, damit die Zuordnung Ast ↔ Werkzeug-Frucht stimmt).
@@ -817,7 +812,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
     { label: t('guidedStart.emergency'), action: () => onNavigate('notfalleinstieg') },
   ];
 
-
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
     // ─── Welcome area ──────────────────────────────────────
@@ -883,7 +877,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
                 React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, nextField.chapterTitle),
               ),
             ),
-            React.createElement('span', { style: { color: palette.sageDeep, fontSize: text.lg, flexShrink: 0 } }, '→'),
           );
         }
         return React.createElement('p', {
@@ -1176,8 +1169,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       )
     ),
 
-
-
     // ─── Berg-Detail — Fortschritt & Grundordnung (Schicht 1) ──
     React.createElement('details', { style: { margin: '0 0 ' + space.xl + 'px 0' } },
       React.createElement('summary', {
@@ -1213,7 +1204,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           }, mvo.filled + '/' + mvo.total),
           React.createElement('span', {
             style: { fontSize: '10px', color: palette.mid, transition: `transform ${duration.fast}ms ${ease}`, transform: mvoExpanded ? 'rotate(180deg)' : 'rotate(0)' }
-          }, '▾')
+          }, aufklappZeichen(true))
         )
       ),
       React.createElement('div', {
@@ -1257,7 +1248,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               },
                 React.createElement('span', {
                   style: { width: '16px', textAlign: 'center', color: f.done ? palette.sage : palette.soft, fontSize: '13px' }
-                }, f.na ? '–' : f.done ? '✓' : '○'),
+                }, f.na ? '–' : hinweisZeichen(f.done ? 'check' : 'kaestchen', 12)),
                 React.createElement('span', {
                   style: { color: f.done ? palette.mid : palette.text }
                 }, f.label)
@@ -1366,7 +1357,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               onMouseEnter: (e) => { e.currentTarget.style.opacity = '0.7'; },
               onMouseLeave: (e) => { e.currentTarget.style.opacity = '1'; },
             },
-              React.createElement('span', { style: { fontSize: text.xs } }, '→'),
               item.label
             )
           )
@@ -1508,10 +1498,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
         }, t('obstgarten.ctaSub')),
       ),
-      React.createElement('span', {
-        'aria-hidden': 'true',
-        style: { fontSize: text.body, color: palette.sandDeep, fontWeight: weight.medium, flexShrink: 0 },
-      }, '→'),
     ),
 
     // Zugang zum Gepäck — Lebensereignisse als Ausrüstung, neben Baum und Obstgarten.
@@ -1545,10 +1531,6 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { display: 'block', fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginTop: '1px' },
         }, t('gepaeck.ctaSub')),
       ),
-      React.createElement('span', {
-        'aria-hidden': 'true',
-        style: { fontSize: text.body, color: palette.sandDeep, fontWeight: weight.medium, flexShrink: 0 },
-      }, '→'),
     ),
 
     // ─── Was steht mir zu? — Schicht 4 (Orientierung, kein Verdikt) ──
@@ -1747,7 +1729,7 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
               style: { cursor: 'pointer', padding: space.sm + 'px 2px', fontSize: text.sm, fontWeight: weight.medium, color: palette.text, display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
             },
               React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px' } },
-                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, '▸'),
+                React.createElement('span', { style: { fontSize: '10px', color: palette.soft } }, aufklappZeichen(false)),
                 g.label
               ),
               React.createElement('span', { style: { fontSize: text.xs, color: palette.soft } }, g.items.length)

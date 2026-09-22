@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { getBereichForChapter } from './data/lebensbereiche.js';
 import { text, weight, space, radius, shadow } from './config/tokens.js';
 import { EmptyState } from './components/EmptyState.jsx';
@@ -18,7 +18,7 @@ const getExpiryStatus = (expiryDate, palette, t) => {
   // Kontrast auf hellen Karten AA erfüllt (gold 2.19:1 / rose 3.59:1 / sage 4.11:1 auf up).
   if (days < 0) return { status: 'expired', color: palette.roseDeep, label: t('tresor.expired') };
   if (days < 90) return { status: 'warning', color: palette.goldDeep, label: days + 'd' };
-  return { status: 'ok', color: palette.sageDeep, label: '✓' };
+  return { status: 'ok', color: palette.sageDeep, label: t('tresor.gueltig') };
 };
 
 const OrdnerIcon = ({ palette, fillLevel }) => {
@@ -156,7 +156,7 @@ export const DocumentTresor = ({
         React.createElement('div', {
           style: { fontWeight: weight.semi, marginBottom: '3px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: text.sm }
         },
-          React.createElement('span', null, chapter?.icon || '□'),
+          React.createElement(Icon, { name: chapter?.key || 'document', size: 14 }),
           doc.type
         ),
         React.createElement('div', {
@@ -178,7 +178,7 @@ export const DocumentTresor = ({
                 React.createElement('button', {
                   onClick: () => handleUpdateExpiry(doc.id, editingExpiry),
                   style: { flex: 1, padding: '4px 8px', background: palette.sageBtn, color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs, fontWeight: weight.semi },
-                }, '✓ OK'),
+                }, hinweisZeichen('check', 12), 'OK'),
                 React.createElement('button', {
                   onClick: () => setEditingDocId(null),
                   style: { flex: 1, padding: '4px 8px', background: palette.border, color: palette.text, border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: text.xs },
@@ -194,16 +194,16 @@ export const DocumentTresor = ({
         React.createElement('button', {
           'aria-label': t('common.download'), onClick: () => onDownload(doc),
           style: { padding: '10px 12px', background: palette.sand, color: palette.onSand, border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
-        }, '↙'),
+        }, React.createElement(Icon, { name: 'download', size: 12 })),
         React.createElement('button', {
           'aria-label': t('common.edit'),
           onClick: () => { setEditingDocId(doc.id); setEditingExpiry(doc.expiryDate); },
           style: { padding: '10px 12px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky lag bei 4.496:1 (unter AA), surface/skyDeep 5.42 hell · 5.94 dunkel (Voll-Review 15.09.2026) */ border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
-        }, '○'),
+        }, React.createElement(Icon, { name: 'edit', size: 12 })),
         React.createElement('button', {
           'aria-label': t('common.delete'), onClick: () => onDelete(doc.id),
           style: { padding: '10px 12px', background: palette.roseBtn, color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: text.xs, fontWeight: weight.semi, minWidth: '36px', minHeight: '36px' },
-        }, '✕'),
+        }, React.createElement(Icon, { name: 'kreuz', size: 12 })),
       ),
     );
   };
@@ -344,7 +344,7 @@ export const DocumentTresor = ({
                   accent
                     ? React.createElement('span', { style: { color: accent, display: 'inline-flex' } },
                         React.createElement(Icon, { name: chKey, size: 15 }))
-                    : React.createElement('span', null, chapter?.icon || '□'),
+                    : React.createElement(Icon, { name: chapter?.key || 'document', size: 14 }),
                   chapter?.title || chKey,
                   React.createElement('span', {
                     style: { fontWeight: weight.normal, color: palette.soft }
@@ -365,7 +365,7 @@ export const DocumentTresor = ({
     // Local-only note
     React.createElement('div', {
       style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' }
-    }, 'ⓘ ' + t('trust.localOnly')),
+    }, hinweisZeichen(), t('trust.localOnly')),
   );
 };
 

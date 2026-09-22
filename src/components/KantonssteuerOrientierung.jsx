@@ -51,8 +51,8 @@ export const KantonssteuerOrientierung = ({ palette, t, canton, schaetzung, jahr
       orientierungsText(t, schaetzung, jahr)
     ),
     React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: space.xs } },
-      estvLink && React.createElement(ExternerLink, { t, href: estvLink.url, style: linkStyle }, '→ ' + t('tax.bandLinkEstv')),
-      kantonsLink && React.createElement(ExternerLink, { t, href: kantonsLink, style: linkStyle }, '→ ' + t('tax.bandLinkKanton', { canton: getCantonName(canton, t) }))
+      estvLink && React.createElement(ExternerLink, { t, href: estvLink.url, style: linkStyle }, t('tax.bandLinkEstv')),
+      kantonsLink && React.createElement(ExternerLink, { t, href: kantonsLink, style: linkStyle }, t('tax.bandLinkKanton', { canton: getCantonName(canton, t) }))
     )
   );
 };

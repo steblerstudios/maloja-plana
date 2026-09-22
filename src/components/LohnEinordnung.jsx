@@ -167,7 +167,7 @@ export const LohnEinordnung = ({ palette, t, data, isDarkMode, embedded, branchM
           },
             t(hinweis),
             // Der Pfeil ist Dekoration — sonst liest der Screenreader „… eintragen. Rechtspfeil".
-            React.createElement('span', { 'aria-hidden': true }, ' →')
+            
           )
         : React.createElement('div', { style: { color: palette.mid, lineHeight: leading.normal } }, t(hinweis))
     );

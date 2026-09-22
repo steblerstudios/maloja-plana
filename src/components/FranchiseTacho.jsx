@@ -52,7 +52,7 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
     st.mode === 'orientation' && onNavigate && h('button', {
       onClick: () => onNavigate('kvg', null, 'franchise'),
       style: { display: 'block', margin: space.xs + 'px auto 0', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium },
-    }, '→ ' + t('po.tachoTrackLink'))
+    }, t('po.tachoTrackLink'))
   );
 };
 

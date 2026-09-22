@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getStorageStatus } from './utils/storageMonitor.js';
 import { space, text, radius, leading, weight } from './config/tokens.js';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 
 // ─── Storage Warning Banner ─────────────────────────────────
 // Shows a calm, non-intrusive banner when localStorage usage
@@ -49,7 +50,7 @@ export const StorageWarning = ({ palette, t }) => {
   },
     React.createElement('span', {
       style: { fontSize: text.sm + 1, flexShrink: 0, marginTop: '1px' }
-    }, isCritical ? '◈' : '○'),
+    }, hinweisZeichen(isCritical ? 'warning' : 'info', 12)),
 
     React.createElement('div', { style: { flex: 1 } },
       React.createElement('div', {
@@ -82,7 +83,7 @@ export const StorageWarning = ({ palette, t }) => {
         padding: '0 ' + space.xs + 'px',
         flexShrink: 0,
       }
-    }, '✕')
+    }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
   );
 };
 

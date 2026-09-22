@@ -2,6 +2,7 @@ import React from 'react';
 import { text, weight, space, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { AblaufContainer, AblaufStep, AblaufLink, FristButton, AblaufFooter, ablaufStyles } from './AblaufSchale.jsx';
+import { hinweisZeichen } from './IconSystem.jsx';
 
 // Zusatzversicherung (VVG) kündigen — der 2. geführte Ablauf, gebaut auf der Ablauf-Schale.
 // Wichtige VVG-Eigenheiten gegenüber der KVG-Grundversicherung: KEINE Aufnahmepflicht
@@ -56,7 +57,7 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
     // Schritt 2 — Wichtig: keine Aufnahmepflicht
     React.createElement(AblaufStep, { palette, title: t('zusatzWechsel.step2Title') },
       React.createElement('p', { style: s.stepText }, t('zusatzWechsel.step2Text')),
-      React.createElement('div', { style: s.warn }, '⚠ ' + t('zusatzWechsel.step2Warn'))
+      React.createElement('div', { style: s.warn }, hinweisZeichen('warning'), t('zusatzWechsel.step2Warn'))
     ),
 
     // Schritt 3 — Kündigung schreiben

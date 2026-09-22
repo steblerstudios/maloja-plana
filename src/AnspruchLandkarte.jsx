@@ -33,7 +33,7 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
       React.createElement('div', {
         key: 't',
         style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text }
-      }, titel + (isExternal ? ' ↗' : ' →')),
+      }, titel),
       React.createElement('div', {
         key: 's',
         style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }
@@ -65,7 +65,7 @@ export const AnspruchLandkarte = ({ palette, t, onNavigate }) => {
         padding: 0, cursor: 'pointer', fontFamily: 'inherit',
         fontSize: text.sm, fontWeight: weight.medium, color: palette.sageDeep || palette.sage,
       },
-    }, '→ ' + t('anspruch.gefuehrtLink')),
+    }, t('anspruch.gefuehrtLink')),
 
     ANSPRUCH_GRUPPEN.map((gruppe) =>
       React.createElement('div', { key: gruppe.key, style: { marginBottom: space.xl + 'px' } },

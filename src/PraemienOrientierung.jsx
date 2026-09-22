@@ -4,7 +4,7 @@ import { lookupPLZ } from './data/plzGemeinde.js';
 import { getRegionInfo, getRegionalComparison } from './data/praemienRegionen.js';
 import { RegionalBarometer } from './components/RegionalBarometer.jsx';
 import { getInsurerPremium, getInsurerAllFranchises, insurerNrFromName, insurerNameFromNr, allInsurerNrs, ERW_FRA, KIN_FRA } from './data/praemienDetail.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, erledigtZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { KKLastCard } from './KKLastCard.jsx';
@@ -233,14 +233,14 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
 
     regionInfo && !insurer && React.createElement('div', { style: s.warn },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
-        'ⓘ ' + t('po.noInsurer')
+        hinweisZeichen(), t('po.noInsurer')
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.noInsurerHint'))
     ),
 
     regionInfo && insurer && !insurerNr && React.createElement('div', { style: s.warn },
       React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs + 'px' } },
-        'ⓘ ' + t('po.insurerNotFound', { name: insurer })
+        hinweisZeichen(), t('po.insurerNotFound', { name: insurer })
       ),
       React.createElement('div', { style: { fontSize: text.sm } }, t('po.insurerNotFoundHint'))
     ),
@@ -322,7 +322,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                           color: isActive ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
                         },
-                      }, (isActive ? '✓ ' : '') + 'CHF ' + amount.toFixed(2))
+                      }, erledigtZeichen(isActive, 'CHF ' + amount.toFixed(2)))
                 );
               };
               return React.createElement('tr', { key: f.franchise },
@@ -372,7 +372,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
           style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: '4px' },
           onClick: () => onNavigate('finanzuebersicht'),
-        }, '→ ' + t('po.reserveCheckLink'))
+        }, t('po.reserveCheckLink'))
       ),
       // (j) Wechsel-Häufigkeit: einmal pro Jahr, auf den 1. Januar, Frist Ende November
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } }, renderSource(t('po.franchiseChangeWhen'), null, t)),
@@ -426,7 +426,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                       color: chosenVariant === variant ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
                     },
-                  }, (chosenVariant === variant ? '✓ ' : '') + 'CHF ' + amount.toFixed(2))
+                  }, erledigtZeichen(chosenVariant === variant, 'CHF ' + amount.toFixed(2)))
                 : 'CHF ' + amount.toFixed(2)
             );
             const out = [
@@ -435,7 +435,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                   React.createElement('button', {
                     style: { ...s.nameBtn, color: isCurrent ? palette.sage : palette.text },
                     onClick: () => setDetailNr(isOpen ? null : ins.nr)
-                  }, (isOpen ? '▾ ' : '▸ ') + ins.name + (isCurrent ? ' •' : ''))
+                  }, aufklappZeichen(isOpen), ins.name, isCurrent ? hinweisZeichen('check', 10) : null)
                 ),
                 priceCell('mit', ins.premium),
                 ageClass !== 'kind' && priceCell('ohne', ins.premiumOhne)
@@ -486,7 +486,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('kvgwechsel'),
       style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md + 'px' }
-    }, '→ ' + t('kvgWechsel.title'))
+    }, t('kvgWechsel.title'))
   );
 };
 

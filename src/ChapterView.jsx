@@ -4,7 +4,7 @@ import { tMitRueckfall } from './utils/tRueckfall.js';
 import {
   validatePhone, validateAHV, validateEmail, validatePostalCode, getFileExpiryHint, formatAHVOnInput, normalizeEmail, formatPhoneOnBlur
 } from './validationUtils.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, leading, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
@@ -26,6 +26,7 @@ import { GlossarText } from './GlossarBegriff.jsx';
 import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
+import { ansichtIkon } from './config/ansichtenRegister.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -427,13 +428,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   const renderOrientation = (field) => {
     const parts = [];
     if (field.orientation) {
-      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + field.orientation));
+      parts.push(React.createElement('div', { key: 'or', style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), field.orientation));
     }
     if (field.link) {
       parts.push(React.createElement(ExternerLink, {
         key: 'lk', t: tr, href: field.link.url,
         style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.xs + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
-      }, '→ ' + field.link.label));
+      }, field.link.label));
     }
     return parts.length > 0 ? parts : null;
   };
@@ -455,14 +456,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   },
     React.createElement('div', {
       style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text, marginBottom: space.xs + 'px' }
-    }, 'ⓘ ' + tr('beistand.wegweiserTitle')),
+    }, hinweisZeichen(), tr('beistand.wegweiserTitle')),
     React.createElement('div', {
       style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
     }, React.createElement(GlossarText, { t: tr, palette }, tr('beistand.wegweiserBody'))),
     React.createElement(ExternerLink, {
       t: tr, href: 'https://kesb-kurz-erklaert.ch/erwachsene/',
       style: { display: 'inline-block', fontSize: text.xs, color: palette.skyDeep, marginTop: space.sm + 'px', textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
-    }, '→ ' + tr('beistand.wegweiserLink'))
+    }, tr('beistand.wegweiserLink'))
   );
 
   // E17 · «trifft nicht zu»: ein kleiner, ruhiger Schalter unter Feldern, die für manche
@@ -593,7 +594,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const fieldId = chapter.key + '-' + field.k;
       return React.createElement('div', { key: field.k, style: baseStyle },
         renderLabel(fieldId, field.label, field.hint, true),
-        field.hint && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, 'ⓘ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm, fontStyle: 'italic' } }, hinweisZeichen(), field.hint),
         React.createElement('div', { role: 'group', 'aria-labelledby': fieldId + '-label' },
           React.createElement(ItemizedAmount, {
             palette, t: tr, items: seed,
@@ -650,7 +651,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           onBlur: (v) => handleFieldBlur('postalCode', v),
           onPick: (s) => { handleFieldChange('postalCode', s.plz); onUpdate('city', s.gemeinde); }
         }),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         renderOrientation(field),
         renderError(fieldId)
       );
@@ -671,7 +672,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           ...errAria(fieldId),
           style: inputStyle
         }),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         renderOrientation(field),
         renderError(fieldId)
       );
@@ -781,7 +782,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               background: 'none', border: 'none', cursor: 'pointer',
               color: palette.mid, fontSize: text.body, padding: space.xs, lineHeight: 1,
             }
-          }, '✕'),
+          }, React.createElement(Icon, { name: 'kreuz', size: 12 })),
           // Eigenes, immer sichtbares Kalender-Symbol → öffnet den Datepicker
           !demoMode && React.createElement('button', {
             type: 'button',
@@ -850,7 +851,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             style: { ...inputStyle, flex: 1 }
           })
         ),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         renderOrientation(field)
       );
     }
@@ -921,13 +922,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                   position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
                   pointerEvents: 'none', color: palette.mid, fontSize: '10px',
                 }
-              }, '▾')
+              }, aufklappZeichen(true))
             ),
-        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + field.hint),
+        field.hint && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), field.hint),
         // UVG: bei Angestellten transparent vorschlagen, dass die Unfalldeckung über
         // den Arbeitgeber läuft (kein verstecktes Auto-Ausfüllen — nur ein Hinweis).
         field.k === 'uvg' && chapter.key === 'versicherungen' && allData && allData.finanzen && allData.finanzen.employmentType === 'employed' &&
-          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, 'ⓘ ' + tr('uvgHint.fieldSuggest')),
+          React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, marginTop: space.xs + 'px', lineHeight: leading.relaxed } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('uvgHint.fieldSuggest'))),
         renderOrientation(field)
       );
     }
@@ -1202,7 +1203,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               borderRadius: radius.sm,
               whiteSpace: 'nowrap',
             }
-          }, '→ ' + b)
+          }, b)
         )
       );
     })(),
@@ -1296,7 +1297,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           borderBottom: '1px solid ' + palette.border,
           paddingBottom: '1px',
         }
-      }, '□ ' + tr('notfallSummary.printCard')),
+      }, hinweisZeichen('kaestchen'), tr('notfallSummary.printCard')),
 
       // Export-Vorschau (K20) direkt unter dem Link, der sie geöffnet hat: die
       // Abschnitte der Karte mit Feldnamen, nie mit Werten.
@@ -1438,7 +1439,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       },
         React.createElement('summary', {
           style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' }
-        }, '□ ' + tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
+        }, hinweisZeichen('kaestchen'), tr('checklist.title') + (done > 0 ? ' (' + done + '/' + items.length + ')' : '')),
         React.createElement('div', {
           style: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm, marginTop: space.xs + 'px' }
         },
@@ -1524,7 +1525,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           borderLeft: '3px solid ' + palette.sage + '50',
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
-      }, 'ⓘ ' + tr('orientation.contextIpv')),
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextIpv'))),
     chapter.key === 'finanzen' && allData && allData.finanzen?.monthlyIncome && onNavigate &&
       React.createElement('button', {
         onClick: () => onNavigate('finanzuebersicht'),
@@ -1565,7 +1566,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
           borderLeft: '3px solid ' + palette.sage + '50',
           fontSize: text.sm, color: palette.sageDeep || palette.sage, lineHeight: leading.relaxed,
         }
-      }, 'ⓘ ' + tr('orientation.contextFamilienzulagen')),
+      }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('orientation.contextFamilienzulagen'))),
 
     // Tabs
     // marginBottom klein halten: der Sektions-Reiter darunter soll als Unter-Ebene
@@ -1709,6 +1710,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             }
           }
           elements.push(renderFeldMitNa(field));
+          // Das Piktogramm des ZIELS, aus dem Register der Suche — keine zweite Liste
+          // (21.09.2026). Ein Querverweis ohne Zeichen sah aus wie jeder andere; mit
+          // dem Zeichen seines Ziels sagt er auf einen Blick, wohin er führt.
+          const zielIkon = (view) => ansichtIkon(view, 'external');
           const crosslinkBtn = (key, view, textKey) => onNavigate && elements.push(
             React.createElement('button', {
               key: 'crosslink-' + key,
@@ -1726,10 +1731,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 fontFamily: 'inherit',
                 marginBottom: space.sm + 'px',
               }
-            }, t(textKey))
+            }, hinweisZeichen(zielIkon(view), 14), t(textKey))
           );
           // Mehrere verwandte Links zu einem Feld → eine ruhige Box statt gestapelter Buttons
-          const crosslinkBundle = (items) => onNavigate && elements.push(
+          const crosslinkBundle = (items, dach) => onNavigate && elements.push(
             React.createElement('div', {
               key: 'crosslink-bundle-' + field.k,
               style: {
@@ -1747,13 +1752,31 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 key: 'crosslink-' + key,
                 onClick: () => onNavigate(view),
                 style: {
-                  display: 'block', width: '100%',
+                  display: 'flex', alignItems: 'center', gap: space.xs + 'px', width: '100%',
                   background: 'transparent', border: 'none',
                   padding: space.xs + 'px 0',
                   fontSize: text.sm, color: palette.sageDeep || palette.mid,
                   cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
                 }
-              }, t(textKey)))
+              }, hinweisZeichen(zielIkon(view), 14), t(textKey))),
+              // Der letzte Eintrag kann ein «Dach» sein — eine Übersicht, die die
+              // Werkzeuge darüber zusammenfasst. Er ist kein Geschwister, also steht
+              // er abgesetzt: feine Linie, etwas Luft. Hierarchie durch Raum, nicht
+              // durch Gewicht (21.09.2026).
+              dach && React.createElement('button', {
+                key: 'crosslink-dach',
+                onClick: () => onNavigate(dach[1]),
+                style: {
+                  display: 'flex', alignItems: 'center', gap: space.xs + 'px', width: '100%',
+                  background: 'transparent', border: 'none',
+                  borderTop: '1px solid ' + (palette.sage || palette.border) + '33',
+                  marginTop: space.xs + 'px', paddingTop: space.sm + 'px',
+                  padding: space.sm + 'px 0 ' + space.xs + 'px 0',
+                  fontSize: text.sm, fontWeight: weight.medium,
+                  color: palette.sageDeep || palette.mid,
+                  cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                }
+              }, hinweisZeichen(zielIkon(dach[1]), 14), t(dach[2]))
             )
           );
           if (field.k === 'kkPremium' && chapter.key === 'versicherungen') {
@@ -1776,14 +1799,14 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 key: 'edu-paths',
                 style: { gridColumn: '1 / -1', background: palette.sageMist || palette.up, borderRadius: radius.sm, padding: space.md + 'px', marginBottom: space.sm + 'px' }
               },
-                React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, 'ⓘ ' + tr('edu.pathsTitle')),
+                React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep || palette.text } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t: tr }, tr('edu.pathsTitle'))),
                 React.createElement('div', { style: { marginTop: space.md + 'px' } },
                   React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: space.md + 'px' } }, tr('edu.pathsIntro')),
                   pathItem('path1Title', 'path1'),
                   pathItem('path2Title', 'path2'),
                   pathItem('path3Title', 'path3'),
                   React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginTop: space.sm + 'px' } }, tr('edu.pathsHow')),
-                  React.createElement(ExternerLink, { t: tr, href: 'https://www.berufsbildung.ch/de/lexikon/berufsabschluss-fuer-erwachsene', style: eduLink }, '→ ' + tr('edu.pathsLink'))
+                  React.createElement(ExternerLink, { t: tr, href: 'https://www.berufsbildung.ch/de/lexikon/berufsabschluss-fuer-erwachsene', style: eduLink }, tr('edu.pathsLink'))
                 )
               )
             );
@@ -1838,7 +1861,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                       key: 'hours-minwage-nextstep',
                       onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
                       style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
-                    }, tr('lohnCheck.nextStepLink') + ' →')
+                    }, tr('lohnCheck.nextStepLink'))
                   );
                 }
               }
@@ -1888,7 +1911,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                     lineHeight: leading.relaxed,
                     marginBottom: space.sm + 'px',
                   }
-                }, 'ⓘ ' + t('wohnen.nkEstimate', { monthly: Math.round(monthlyNK), annual: Math.round(monthlyNK * 12) }))
+                }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('wohnen.nkEstimate', { monthly: Math.round(monthlyNK), annual: Math.round(monthlyNK * 12) })))
               );
             }
           }
@@ -1896,6 +1919,13 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
               onNavigate && elements.push(
+                React.createElement('div', {
+                  key: 'crosslink-mindestlohn-news',
+                  style: {
+                    gridColumn: '1 / -1', marginBottom: space.xs + 'px',
+                    fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed,
+                  },
+                }, hinweisZeichen(), tr('nav.crosslink.mindestlohnNews')),
                 React.createElement('button', {
                   key: 'crosslink-mindestlohn',
                   onClick: () => onNavigate('chapter', 2),
@@ -1941,7 +1971,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               },
                 React.createElement('summary', {
                   style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: notApplicable ? palette.mid : (palette.sageDeep || palette.text) }
-                }, 'ⓘ ' + tr('alimentInfo.title') + ' — ' + tr(notApplicable ? 'alimentInfo.summaryNA' : 'alimentInfo.summaryActive')),
+                }, hinweisZeichen(), tr('alimentInfo.title') + ' — ' + tr(notApplicable ? 'alimentInfo.summaryNA' : 'alimentInfo.summaryActive')),
                 React.createElement('div', { style: { marginTop: space.sm + 'px', fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed } },
                   React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.noFormula')),
                   React.createElement('p', { style: { margin: '0 0 ' + space.sm + 'px 0' } }, tr('alimentInfo.magnitude')),
@@ -1950,7 +1980,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                     t: tr,
                     href: 'https://www.gerichte-zh.ch/themen/partnerschaft/hilfen/unterhaltsberechnung.html',
                     style: { display: 'inline-block', marginTop: space.sm + 'px', fontSize: text.sm, color: palette.skyDeep, textDecoration: 'none', borderBottom: '1px solid ' + palette.sky + '40' }
-                  }, '→ ' + tr('alimentInfo.linkLabel'))
+                  }, tr('alimentInfo.linkLabel'))
                 )
               )
             );
@@ -1960,8 +1990,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               ['tax', 'tax', 'nav.crosslink.taxHint'],
               ['ipvIncome', 'premium', 'nav.crosslink.ipvFromIncome'],
               ['sozialhilfe', 'sozialhilfe', 'nav.crosslink.sozialhilfeHint'],
-              ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint'],
-            ]);
+            ], ['finanzuebersicht', 'finanzuebersicht', 'nav.crosslink.finanzuebersichtHint']);
             const kanton = allData && allData.basis && allData.basis.canton;
             if (kanton && kantonHatMindestlohn(kanton)) {
               const lohn = parseFloat(data[field.k]) || 0;
@@ -1994,7 +2023,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         fontFamily: 'inherit',
                         marginBottom: space.sm + 'px',
                       }
-                    }, tr('lohnCheck.hoursMissing') + ' →')
+                    }, tr('lohnCheck.hoursMissing'))
                   );
                 }
                 // Basis unbekannt → ruhige Einladung, wie bei den fehlenden Stunden.
@@ -2080,7 +2109,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                         key: 'mindestlohn-nextstep',
                         onClick: () => onNavigate('briefe', undefined, 'wageClaim'),
                         style: { gridColumn: '1 / -1', justifySelf: 'start', background: 'none', border: '1px solid ' + palette.rose + '55', borderRadius: radius.sm, padding: space.xs + 'px ' + space.sm + 'px', fontSize: text.sm, fontWeight: weight.medium, color: palette.roseDeep, cursor: 'pointer', marginBottom: space.sm + 'px' }
-                      }, t('lohnCheck.nextStepLink') + ' →')
+                      }, t('lohnCheck.nextStepLink'))
                     );
                   }
                 }
@@ -2103,9 +2132,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 }
               },
                 React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: space.xs + 'px' } }, t('wohnen.umzugTitle')),
-                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugGemeinde')),
-                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugKK')),
-                React.createElement('div', null, 'ⓘ ' + t('wohnen.umzugPost')),
+                React.createElement('div', null, hinweisZeichen(), t('wohnen.umzugGemeinde')),
+                React.createElement('div', null, hinweisZeichen(), t('wohnen.umzugKK')),
+                React.createElement('div', null, hinweisZeichen(), t('wohnen.umzugPost')),
               )
             );
           }
@@ -2245,7 +2274,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
     // Documents Tab
     expandedSection === 'documents' && chapter.docs && React.createElement('div', null,
-      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, '↗ ' + tr('chapterView.upload')),
+      React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, hinweisZeichen('upload'), tr('chapterView.upload')),
 
       // Upload Form
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm, marginBottom: space.md, border: '2px dashed ' + palette.border } },
@@ -2271,12 +2300,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
               onChange: (e) => setUploadExpiry(e.target.value),
               style: { width: '100%', padding: '10px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box' }
             }),
-            uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, 'ⓘ ' + getFileExpiryHint(uploadType, tr))
+            uploadType && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs + 'px' } }, hinweisZeichen(), getFileExpiryHint(uploadType, tr))
           )
         ),
 
         React.createElement('label', { style: { display: 'block', padding: '20px', background: palette.surface, border: '2px dashed ' + palette.border, borderRadius: radius.sm, textAlign: 'center', cursor: 'pointer', marginBottom: '12px' } },
-          '□ ' + tr('chapterView.selectFile'),
+          hinweisZeichen('kaestchen'), tr('chapterView.selectFile'),
           React.createElement('input', {
             type: 'file',
             onChange: (e) => setUploadFile(e.target.files?.[0]),
@@ -2286,7 +2315,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
 
         uploadError && React.createElement('div', { style: { padding: space.sm + 2, background: palette.rose + '22', border: '1px solid ' + palette.rose, borderRadius: radius.sm, color: palette.roseDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, uploadError),
 
-        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, '✓ ' + uploadSuccess),
+        uploadSuccess && React.createElement('div', { style: { padding: space.sm + 2, background: palette.sage + '22', border: '1px solid ' + palette.sage, borderRadius: radius.sm, color: palette.sageDeep, fontSize: text.sm, marginBottom: space.sm + 4 } }, hinweisZeichen('check'), uploadSuccess),
 
         React.createElement('button', {
           onClick: () => {
@@ -2342,12 +2371,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
             fontWeight: weight.semi,
             fontSize: text.sm
           }
-        }, '↗ ' + tr('chapterView.upload'))
+        }, hinweisZeichen('upload'), tr('chapterView.upload'))
       ),
 
       // Required documents list
       React.createElement('div', { style: { padding: space.sm + 4, background: palette.up, borderRadius: radius.sm } },
-        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 2 } }, '□ ' + tr('chapterView.requiredDocs')),
+        React.createElement('h4', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: space.sm + 2 } }, hinweisZeichen('kaestchen'), tr('chapterView.requiredDocs')),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           chapter.docs.map((doc, idx) => React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc.label))
         )
@@ -2376,7 +2405,6 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, tr('chapterView.nextTopic')),
         React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi } }, nextChapter.title),
       ),
-      React.createElement('span', { style: { color: palette.sandDeep, fontSize: text.lg, flexShrink: 0 } }, '→'),
     ) : null,
 
     // Chapter arrival — quiet rest moment when enough data is present

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { Icon } from './IconSystem.jsx';
 
 let _searchMedications = null;
 const getSearch = async () => {
@@ -141,7 +142,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',
         }
-      }, '✕')
+      }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     ),
 
     // Name with autocomplete
@@ -279,7 +280,7 @@ const MedCard = ({ palette, t, med, idx, inputStyle, labelStyle, onUpdate, onRem
         fontSize: text.xs, color: palette.mid, textDecoration: 'underline',
         textUnderlineOffset: '2px',
       }
-    }, '↗ ' + t('medications.compendiumLink'))
+    }, t('medications.compendiumLink'))
   );
 };
 

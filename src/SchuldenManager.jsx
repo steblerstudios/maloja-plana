@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { EmptyState } from './components/EmptyState.jsx';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { calculateDebtStatus, createDebtPlan, prioritizeDebts, calculateBetreibungsRegisterImpact, formatVerlustschein } from './schuldenCalc.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { LegendenMarke } from './components/LegendenMarke.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
@@ -325,7 +325,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     // Privacy note
-    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md, padding: 0 } }, 'ⓘ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.md, padding: 0 } }, hinweisZeichen(), t('trust.localOnly')),
 
     // Orientierungs-Disclaimer (keine Rechts-/Finanzberatung)
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm, lineHeight: 1.5, fontStyle: 'italic' } }, t('alpha.noAdviceHint')),

@@ -4,7 +4,7 @@ import { importBudgetFromFile, processBudgetEntries } from './csvImport.js';
 import { text, weight, radius, space } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 
 // Inline-Präfix-Icon vor Fliesstext (statt roher Glyphe, docs/TODO.md §G3 P1): sitzt in
 // der Textzeile, Farbe erbt vom Elternelement, `aria-hidden` über `Icon` (Muster PR #135).
@@ -41,7 +41,6 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
     setPreview(null);
   };
 
-
   const inputStyle = {
     width: '100%', padding: space.sm, borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, color: palette.text, boxSizing: 'border-box', fontSize: text.sm
   };
@@ -67,7 +66,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, t('budgetImport.orDragHere'))
       ),
 
-      importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, 'ⓘ ' + t('budgetImport.importing')),
+      importing && React.createElement('div', { style: { padding: '12px', background: palette.gold + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.goldDeep, fontWeight: weight.semi } }, hinweisZeichen(), t('budgetImport.importing')),
 
       importError && React.createElement('div', { style: { padding: '12px', background: palette.rose + '22', borderRadius: radius.sm, textAlign: 'center', color: palette.roseDeep, fontWeight: weight.semi, marginTop: space.sm } }, praefix('kreuz', 14), importError),
 
@@ -104,7 +103,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
         ),
 
         React.createElement('div', { style: { display: 'flex', gap: space.sm } },
-          React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, '✓ ' + t('common.save')),
+          React.createElement(PrimaryButton, { palette, onClick: handleImportConfirm, style: { flex: 1 } }, hinweisZeichen('check'), t('common.save')),
           React.createElement('button', { onClick: () => setPreview(null), style: { flex: 1, padding: '10px 16px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, color: palette.text } }, t('common.cancel'))
         )
       ) : React.createElement('div', { style: { color: palette.mid, textAlign: 'center', padding: '40px 20px' } },
@@ -114,7 +113,7 @@ export const BudgetImport = ({ palette, t, currentBudget, onImport }) => {
       )
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly'))
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly'))
   ));
 };
 

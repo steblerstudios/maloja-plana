@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getCantonName } from './config/cantonalData.js';
@@ -8,6 +8,7 @@ import { text, weight, leading, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Ergebnis-Marker des Berechtigungs-Checks: eigenes Zeichen je Ton, damit sich
 // „Ja / Nein / Vielleicht" auch OHNE Farbe (Schwarzweiss-Modus) unterscheiden —
@@ -104,7 +105,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     // Wer kann beantragen?
     React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.eligibilityTitle')),
     STIPENDIEN_ELIGIBILITY.whoKeys.map(k => li(t('stip.who.' + k), 'who-' + k)),
-    React.createElement('div', { style: { ...intro, fontStyle: 'italic', marginTop: space.xs + 'px' } }, 'ⓘ ' + t('stip.notEligible')),
+    React.createElement('div', { style: { ...intro, fontStyle: 'italic', marginTop: space.xs + 'px' } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('stip.notEligible'))),
 
     // Was wird unterstützt?
     React.createElement(PanelTitle, { palette, style: panelMargin }, t('stip.scopeTitle')),
@@ -120,7 +121,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
         t('stip.yourCanton', { canton: getCantonName(canton, t) })
       ),
       React.createElement(ExternerLink, { t, href: STIPENDIEN_OFFICIAL.edkCantonalOffices, style: linkStyle },
-        '↗ ' + t('stip.cantonalLink')
+        t('stip.cantonalLink')
       )
     ),
 
@@ -133,7 +134,7 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     React.createElement('p', { style: { ...intro, marginBottom: space.sm + 'px' } }, t('stip.privateIntro')),
     STIPENDIEN_PRIVATE.map(p =>
       React.createElement('div', { key: p.id, style: { ...item, justifyContent: 'space-between' } },
-        React.createElement(ExternerLink, { t, href: p.url, style: linkStyle }, '↗ ' + t('stip.private.' + p.id)),
+        React.createElement(ExternerLink, { t, href: p.url, style: linkStyle }, t('stip.private.' + p.id)),
         React.createElement('span', { style: costStyle(p.cost) }, t('stip.cost.' + p.cost))
       )
     ),
@@ -146,10 +147,10 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('direktlinks'),
       style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sageDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.lg + 'px' }
-    }, '→ ' + t('nav.direktlinks')),
+    }, t('nav.direktlinks')),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.soft, marginTop: space.lg + 'px', lineHeight: leading.normal } },
-      'ⓘ ', renderSource(t('stip.source'), null, t)
+      hinweisZeichen(), renderSource(t('stip.source'), null, t)
     )
   );
 };

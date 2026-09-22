@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 const SPECIALTIES = [
   'hausarzt', 'zahnarzt', 'gynaekologe', 'kinderarzt', 'psychiater', 'other'
@@ -79,7 +80,7 @@ const DocCard = ({ palette, t, doc, idx, inputStyle, labelStyle, onUpdate, onRem
           background: 'none', border: 'none', cursor: 'pointer',
           color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px',
         }
-      }, '✕')
+      }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     ),
 
     // Specialty

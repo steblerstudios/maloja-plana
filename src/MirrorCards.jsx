@@ -9,6 +9,7 @@
 import React from 'react';
 import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius, leading, shadow } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -342,9 +343,14 @@ function buildNotfallSentence(data, t) {
 
 function vorsorgeStatus(value, t) {
   if (!value) return null;
-  if (value === 'yes') return t('mirror.notfall.statusYes');
-  if (value === 'declined') return t('mirror.notfall.statusDeclined');
-  return t('mirror.notfall.statusNo');
+  // Zeichen + Text statt einer Zeichenkette mit Glyphe davor: der Wert landet als
+  // Kind in MirrorRow, also darf er ein Element sein.
+  const zeile = (ikon, schluessel) => React.createElement(React.Fragment, null,
+    React.createElement(Icon, { name: ikon, size: 14, style: { verticalAlign: '-2px', marginRight: '5px' } }),
+    t(schluessel));
+  if (value === 'yes') return zeile('check', 'mirror.notfall.statusYes');
+  if (value === 'declined') return zeile('kaestchen', 'mirror.notfall.statusDeclined');
+  return zeile('kaestchen', 'mirror.notfall.statusNo');
 }
 
 function buildNotfallSections(data, t) {
@@ -385,9 +391,9 @@ function buildNotfallSections(data, t) {
   if (data.bloodType && data.bloodType !== 'unknown' && data.bloodType !== '') {
     healthRows.push({ label: t('mirror.notfall.bloodType'), value: data.bloodType });
   }
-  if (data.allergies) healthRows.push({ label: t('mirror.notfall.allergiesRecorded'), value: '✓' });
-  if (data.medications) healthRows.push({ label: t('mirror.notfall.medicationsRecorded'), value: '✓' });
-  if (data.chronicDiseases) healthRows.push({ label: t('mirror.notfall.healthInfoRecorded'), value: '✓' });
+  if (data.allergies) healthRows.push({ label: t('mirror.notfall.allergiesRecorded'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.medications) healthRows.push({ label: t('mirror.notfall.medicationsRecorded'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.chronicDiseases) healthRows.push({ label: t('mirror.notfall.healthInfoRecorded'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
 
   if (healthRows.length > 0) {
     sections.push({ title: t('mirror.notfall.healthData'), rows: healthRows });
@@ -450,14 +456,14 @@ function buildVersicherungenSections(data, t) {
 
   // Section: Weitere Versicherungen (only if any are "yes" or have amounts)
   const addRows = [];
-  if (data.liabilityInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.liability'), value: data.liabilityAmount ? formatCHF(data.liabilityAmount) : '✓' });
-  if (data.householdInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.household'), value: data.householdInsuranceAmount ? formatCHF(data.householdInsuranceAmount) + yr : '✓' });
-  if (data.travelInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.travel'), value: '✓' });
-  if (data.cyberInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.cyber'), value: '✓' });
+  if (data.liabilityInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.liability'), value: data.liabilityAmount ? formatCHF(data.liabilityAmount) : React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.householdInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.household'), value: data.householdInsuranceAmount ? formatCHF(data.householdInsuranceAmount) + yr : React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.travelInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.travel'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.cyberInsurance === 'yes') addRows.push({ label: t('mirror.versicherungen.cyber'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
   if (data.autoInsurance && data.autoInsurance !== 'no') addRows.push({ label: t('mirror.versicherungen.auto'), value: selectLabel(t, 'versicherungen', 'autoInsurance', data.autoInsurance) });
-  if (data.lifeInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'lifeInsurance'), value: '✓' });
-  if (data.legalInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'legalInsurance'), value: '✓' });
-  if (data.childInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'childInsurance'), value: '✓' });
+  if (data.lifeInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'lifeInsurance'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.legalInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'legalInsurance'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.childInsurance === 'yes') addRows.push({ label: fieldLabel(t, 'versicherungen', 'childInsurance'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
   if (data.ktg && data.ktg !== 'none') addRows.push({ label: fieldLabel(t, 'versicherungen', 'ktg'), value: selectLabel(t, 'versicherungen', 'ktg', data.ktg) });
 
   if (addRows.length > 0) {
@@ -663,8 +669,8 @@ function buildFinanzenSections(data, allData, t) {
   const savingsRows = [];
   if (data.savingsGoal) savingsRows.push({ label: t('mirror.finanzen.savingsGoal'), value: formatCHF(data.savingsGoal) + '/Mt.' });
   if (data.pension3a) savingsRows.push({ label: t('mirror.finanzen.pension3a'), value: formatCHF(data.pension3a) + '/J.' });
-  if (data.pension3b === 'yes') savingsRows.push({ label: fieldLabel(t, 'finanzen', 'pension3b'), value: '✓' });
-  if (data.investmentFunds === 'yes') savingsRows.push({ label: t('mirror.finanzen.investmentFunds'), value: '✓' });
+  if (data.pension3b === 'yes') savingsRows.push({ label: fieldLabel(t, 'finanzen', 'pension3b'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
+  if (data.investmentFunds === 'yes') savingsRows.push({ label: t('mirror.finanzen.investmentFunds'), value: React.createElement(Icon, { name: 'check', size: 14 }) });
 
   if (savingsRows.length > 0) {
     sections.push({ title: t('mirror.finanzen.savingsTitle'), rows: savingsRows });

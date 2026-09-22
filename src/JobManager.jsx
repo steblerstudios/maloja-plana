@@ -1,5 +1,6 @@
 import React from 'react';
 import { text, weight, space, radius, fontFamily } from './config/tokens.js';
+import { Icon } from './IconSystem.jsx';
 
 export const JobManager = ({ palette, t, jobs, onChange }) => {
   const list = Array.isArray(jobs) ? jobs : [];
@@ -34,7 +35,7 @@ export const JobManager = ({ palette, t, jobs, onChange }) => {
             onClick: () => removeJob(idx),
             'aria-label': t('common.delete') || 'Entfernen',
             style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.sm, fontFamily, padding: '6px 8px', minHeight: '24px' }
-          }, '✕')
+          }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
         ),
         React.createElement('div', { style: { marginBottom: space.sm } },
           React.createElement('label', { htmlFor: 'stelle-firma-' + idx, style: labelStyle }, t('jobs.employer')),

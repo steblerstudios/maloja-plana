@@ -187,15 +187,14 @@ export const Schnellcheck = ({ palette, t, data, onNavigate, onProbeChange }) =>
         : b.qualitative
           ? React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.medium, color: b.textColor } }, t('schnellcheck.pruefen'))
           : React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.bold, color: b.textColor, whiteSpace: 'nowrap' } }, fmt(b.monthly) + ' / ' + t('schnellcheck.monat'))
-    ),
-    React.createElement('span', { style: { color: b.color, flexShrink: 0 }, 'aria-hidden': true }, '→')
+    )
     );
   };
 
   const wegeItem = (view, label) => React.createElement('button', {
     key: view, onClick: () => onNavigate && onNavigate(view),
     style: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.skyDeep, textAlign: 'left' },
-  }, label + ' →');
+  }, label);
 
   return React.createElement('div', { style: s.card },
     React.createElement(PageTitle, { palette, icon: React.createElement(Icon, { name: 'insurance', size: 22 }), style: { marginBottom: space.md + 'px' } }, t('schnellcheck.title')),

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, zurueckZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { feldErledigt } from './utils/vollstaendigkeit.js';
 
@@ -97,10 +97,10 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
     },
       React.createElement('div', {
         style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
-      }, '☎ ' + t('notfallEinstieg.vorlesekarteTitle')),
+      }, hinweisZeichen('phone'), t('notfallEinstieg.vorlesekarteTitle')),
       React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-      }, t('notfallEinstieg.vorlesekarteSub') + ' →')
+      }, t('notfallEinstieg.vorlesekarteSub'))
     ),
 
     SCENARIOS.map(scenario => {
@@ -170,7 +170,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
             },
               React.createElement('span', {
                 style: { fontSize: text.xs, flexShrink: 0, width: '16px', textAlign: 'center' }
-              }, done ? '✓' : '○'),
+              }, hinweisZeichen(done ? 'check' : 'kaestchen', 12)),
               getFieldLabel(f.chapter, f.k)
             );
           })
@@ -192,7 +192,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
                   cursor: 'pointer', padding: '6px 12px',
                   fontSize: text.sm, color: palette.text, fontFamily: 'inherit',
                 },
-              }, '→ ' + (ch ? ch.title : chKey));
+              }, (ch ? ch.title : chKey));
             })
           )
         ),
@@ -210,7 +210,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         fontSize: text.sm, color: palette.mid, fontFamily: 'inherit',
         padding: space.sm + 'px 0', marginTop: space.md + 'px',
       }
-    }, '← ' + t('notfallEinstieg.back'))
+    }, zurueckZeichen(), t('notfallEinstieg.back'))
   );
 };
 

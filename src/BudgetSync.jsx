@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { calculateMonthlyBudget, createBudgetReport, BUDGET_GROUPS, BUDGET_BENCHMARKS, BUDGET_PRICE_TREND, resolveHouseholdType, benchmarkFor } from './budgetSync.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { calculateSozialhilfe } from './config/cantonalData.js';
 import { getRegionalComparison } from './data/praemienRegionen.js';
 import { getRentComparison } from './data/mietpreise.js';
@@ -11,6 +11,7 @@ import { bereichFillColor } from './data/lebensbereiche.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { text, weight, shadow, radius , leading , space } from './config/tokens.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Format CHF amount — Swiss style with apostrophe thousands separator
 const formatCHF = (amount) => {
@@ -47,7 +48,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
     return getRegionalComparison(gem[0].bfsNr, data.basis?.dateOfBirth);
   }, [data.wohnen?.postalCode, data.basis?.dateOfBirth]);
 
-  if (!budget) return React.createElement('div', null, 'ⓘ ' + t('common.loading'));
+  if (!budget) return React.createElement('div', null, hinweisZeichen(), t('common.loading'));
 
   const handleExportReport = () => {
     const report = createBudgetReport(data, t);
@@ -142,7 +143,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
     const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n;
   });
   const toggleAllInfo = () => setOpenInfo(anyInfoOpen ? new Set() : new Set(allInfoKeys));
-  // Clickable category label with a quiet ▸/▾ affordance
+  // Clickable category label with a quiet chevron affordance
   const infoLabel = (key, label) => React.createElement('button', {
     type: 'button', onClick: () => toggleInfo(key), 'aria-expanded': openInfo.has(key),
     style: {
@@ -151,7 +152,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
     }
   },
     React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
-      openInfo.has(key) ? '▾' : '▸'),
+      aufklappZeichen(openInfo.has(key))),
     label
   );
 
@@ -319,7 +320,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           color: palette.soft, fontSize: text.xs, display: 'inline-flex', alignItems: 'center', gap: '5px'
         }
       },
-        React.createElement('span', { 'aria-hidden': true }, anyInfoOpen ? '▾' : '▸'),
+        React.createElement('span', { 'aria-hidden': true }, aufklappZeichen(anyInfoOpen)),
         t('budgetSync.infoToggle')
       )
     ),
@@ -347,7 +348,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         marginTop: space.sm, padding: '8px 12px', background: palette.up,
         borderRadius: '4px', fontSize: text.sm, color: palette.mid, lineHeight: leading.normal
       }
-    }, 'ⓘ ' + t('budgetSync.bvgReferenceNote') + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote')) + ' (' + formatCHF(bvgAhvTotal * mult) + ')'),
 
     // Separator before total
     React.createElement('div', { style: { ...separatorStyle, borderTopWidth: '2px' } }),
@@ -388,7 +389,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
         }
       },
         React.createElement('span', { 'aria-hidden': true, style: { color: palette.soft, fontSize: text.xs } },
-          openInfo.has('skos') ? '▾' : '▸'),
+          aufklappZeichen(openInfo.has('skos'))),
         t('budgetSync.skosTitle')
       ),
       openInfo.has('skos') && React.createElement('div', { style: { marginTop: space.xs } },
@@ -457,7 +458,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           borderRadius: radius.sm, cursor: 'pointer', fontSize: text.sm,
           fontWeight: showAnnual ? '600' : '400'
         }
-      }, showAnnual ? 'ⓘ ' + t('budgetSync.title') : 'ⓘ ' + t('budgetSync.annualView')),
+      }, hinweisZeichen(), showAnnual ? t('budgetSync.title') : t('budgetSync.annualView')),
       React.createElement('button', {
         onClick: () => setBerichtVorschau(true),
         style: {
@@ -481,7 +482,7 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
       style: {
         marginTop: '10px', fontSize: text.xs, color: palette.soft, lineHeight: '1.4'
       }
-    }, 'ⓘ ' + t('budgetSync.autoUpdateNote')),
+    }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.autoUpdateNote'))),
 
     // === Orientierungs-Disclaimer (keine Rechts-/Finanzberatung) ===
     React.createElement('div', {

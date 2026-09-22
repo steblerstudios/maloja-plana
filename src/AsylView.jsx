@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ASYL_STATUS, ASYL_ORGS, ASYL_PROCESS, ASYL_RIGHTS, ASYL_ALLTAG_DIMS, counselingForCanton } from './data/asylData.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
@@ -100,7 +100,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', null,
       ASYL_RIGHTS.map((r) =>
         React.createElement('div', { key: r, style: s.rightItem },
-          React.createElement('span', { style: s.rightDot }, '•'),
+          
           React.createElement('span', null, t('asyl.rights.' + r))
         )
       )
@@ -110,12 +110,12 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
     // Beschwerdefristen sind fallabhängig (Datum aus dem Entscheid), darum kein
     // vorbefüllter Frist-Knopf, sondern ein ruhiger Weg, die eigene Frist zu notieren.
     React.createElement('div', { style: s.fristen },
-      React.createElement('div', { style: s.fristenTitle }, '⚠ ' + t('asyl.fristenTitle')),
+      React.createElement('div', { style: s.fristenTitle }, hinweisZeichen('warning'), t('asyl.fristenTitle')),
       React.createElement('div', { style: s.fristenBody }, t('asyl.fristenBody')),
       onNavigate && React.createElement('button', {
         style: { ...s.crosslink, marginTop: space.sm + 'px', background: 'transparent', color: palette.goldDeep, fontWeight: weight.medium, padding: space.xs + 'px 0' },
         onClick: () => onNavigate('calendar'),
-      }, t('asyl.fristenKalender') + ' →')
+      }, t('asyl.fristenKalender'))
     ),
 
     // ── Wo Hilfe holen ──
@@ -128,7 +128,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
           style: { ...s.orgRow, ...(i === ASYL_ORGS.length - 1 ? { borderBottom: 'none' } : {}) },
         },
           React.createElement('div', { style: s.orgName },
-            org.name + ' →',
+            org.name,
             org.official && React.createElement('span', { style: s.officialTag }, t('asyl.official'))
           ),
           React.createElement('div', { style: s.orgDesc }, t('asyl.org.' + org.id)),
@@ -145,7 +145,7 @@ export const AsylView = ({ palette, t, data, onNavigate }) => {
         React.createElement(ExternerLink, {
           t, href: cantonOffice.url,
           style: s.cantonOfficeLink,
-        }, cantonOffice.name + ' →'),
+        }, cantonOffice.name),
         cantonOffice.phone && React.createElement('div', { style: s.cantonOfficePhone },
           t('asyl.phone') + ' ' + cantonOffice.phone),
         React.createElement('div', { style: s.cantonDesc }, t('asyl.counseling.desc'))

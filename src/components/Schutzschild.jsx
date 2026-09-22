@@ -2,6 +2,7 @@ import React from 'react';
 import { schildState } from '../data/schutzschild.js';
 import { shieldPath } from './shieldShape.js';
 import { text, weight, space, radius, leading } from '../config/tokens.js';
+import { hinweisZeichen } from '../IconSystem.jsx';
 
 // Versicherungs-Schutzschild: zwei Wappen nebeneinander — „Pflicht" (gesetzlich)
 // und „Empfohlen" (freiwillig). Jedes füllt sich nach seinem Deckungsgrad, mit
@@ -40,7 +41,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
     key: p.key,
     style: { display: 'flex', alignItems: 'center', gap: space.sm + 'px', fontSize: text.sm, color: p.covered ? palette.text : palette.mid, padding: '3px 0' },
   },
-    h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', textAlign: 'center' } }, p.covered ? '✓' : '○'),
+    h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
     h('span', null, t('schutzschild.' + p.key)),
     h('span', { style: { marginLeft: 'auto', fontSize: text.xs, color: p.covered ? palette.sage : palette.mid } }, p.covered ? t('schutzschild.covered') : t('schutzschild.open'))
   );

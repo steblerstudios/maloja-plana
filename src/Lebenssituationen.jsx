@@ -78,7 +78,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
       onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '44'; },
     },
-      React.createElement('div', { key: 't', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel + ' ↗'),
+      React.createElement('div', { key: 't', style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, titel),
       React.createElement('div', { key: 'x', style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed } }, textStr)
     );
 
@@ -183,7 +183,7 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
             React.createElement('div', {
               key: 'titel',
               style: { fontSize: text.sm, fontWeight: weight.medium, color: palette.text }
-            }, t(baseKey + '.titel') + (isExternal ? ' ↗' : '')),
+            }, t(baseKey + '.titel')),
             React.createElement('div', {
               key: 'text',
               style: { fontSize: text.xs, color: palette.mid, marginTop: '2px', lineHeight: leading.relaxed }

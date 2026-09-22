@@ -66,11 +66,7 @@ export const OverdueBanner = ({ palette, t, onNavigate }) => {
       dueToday.length > 0 && React.createElement('div', {
         style: { fontSize: text.sm, color: palette.mid }
       }, t ? t('overdue.dueTodayCount', { count: dueToday.length }) : dueToday.length + ' due today')
-    ),
-
-    React.createElement('span', {
-      style: { fontSize: text.sm, color: palette.mid, flexShrink: 0 }
-    }, '→')
+    )
   );
 };
 

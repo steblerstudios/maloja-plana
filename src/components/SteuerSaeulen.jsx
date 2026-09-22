@@ -1,6 +1,8 @@
 import React from 'react';
 import { PanelTitle } from './Heading.jsx';
 import { text, weight, radius, space } from '../config/tokens.js';
+import { hinweisZeichen } from '../IconSystem.jsx';
+import { GlossarText } from '../GlossarBegriff.jsx';
 
 // Ruhige Zivilstand-Säulen (Probier-Modus) — zeigt dieselbe Steuerbasis unter
 // verschiedenen Zivilständen als drei schlanke Säulen nebeneinander.
@@ -101,9 +103,9 @@ export const SteuerSaeulen = ({ palette, t, istVerheiratet, vergleich, onSelect 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm } }, t('tax.saeulen.twoIncomeNote')),
 
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, fontStyle: 'italic', paddingTop: space.sm, borderTop: '1px solid ' + palette.border } },
-      'ⓘ ' + t('tax.saeulen.einzelnPending')),
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.saeulen.einzelnPending'))),
     React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-      'ⓘ ' + t('tax.saeulen.scope'))
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.saeulen.scope')))
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle } from './components/Heading.jsx';
 import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
 
@@ -107,7 +107,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
                 React.createElement('option', { key: n, value: n }, n)
               )
             ),
-            React.createElement('div', { style: s.selectChevron }, '▾')
+            React.createElement('div', { style: s.selectChevron }, aufklappZeichen(true))
           )
         ),
         React.createElement('div', { style: s.inputGroup },
@@ -122,7 +122,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
                 React.createElement('option', { key: n, value: n }, n)
               )
             ),
-            React.createElement('div', { style: s.selectChevron }, '▾')
+            React.createElement('div', { style: s.selectChevron }, aufklappZeichen(true))
           )
         ),
         field('sh.miete', miete, setMiete, '1200'),
