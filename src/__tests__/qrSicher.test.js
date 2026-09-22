@@ -10,6 +10,10 @@ let qrZeichnen;
 let gesetzt = [];
 let utf8Laenge;
 let QR_MAX_BYTES;
+let vcardMaskieren;
+let vcardBauen;
+let qrNotfallVcard;
+let QR_MAX_BYTES_VCARD;
 
 beforeAll(async () => {
   if (!('window' in globalThis)) { globalThis.window = globalThis; gesetzt.push('window'); }
@@ -20,7 +24,10 @@ beforeAll(async () => {
     createElement: () => ({ style: {}, getContext: () => null, appendChild() {}, setAttribute() {} }),
   };
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
-  ({ qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES } = await import('../utils/qrSicher.js'));
+  ({
+    qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES,
+    vcardMaskieren, vcardBauen, qrNotfallVcard, QR_MAX_BYTES_VCARD,
+  } = await import('../utils/qrSicher.js'));
 });
 
 // Nur abräumen, was dieser Test selbst gesetzt hat (Qualitäts-Prüfer, Deploy-Gate 0.1.36).
@@ -137,6 +144,109 @@ describe('qrNotfallText', () => {
     const r = qrNotfallText(viele, { fehltTitel: 'Nicht enthalten' });
     expect(utf8Laenge(r.text)).toBeLessThanOrEqual(QR_MAX_BYTES);
     expect(r.text.split('\n').at(-1)).toMatch(/^Nicht enthalten: .* …$/);
+  });
+});
+
+// Gemessen am 22.09.2026: die normale iPhone-Kamera zeigt eine Klartext-Nutzlast nicht an
+// («no usable data found»), eine vCard schon. Diese Tests halten die ZUSAGE fest — die Angaben
+// kommen an und die Notfallnummer ist wählbar —, nicht die heutige Schreibweise der vCard.
+describe('vCard als Nutzlast', () => {
+  // Minimaler Leser: trennt die Felder so, wie ein Kontaktprogramm es täte.
+  const felderVon = (vcard) => {
+    const aus = {};
+    for (const zeile of vcard.split('\r\n')) {
+      const i = zeile.indexOf(':');
+      if (i === -1) continue;
+      aus[zeile.slice(0, i)] = zeile.slice(i + 1);
+    }
+    return aus;
+  };
+  const entmaskieren = (wert) =>
+    wert.replace(/\\([\\;,n])/g, (_, z) => (z === 'n' ? '\n' : z));
+
+  it('hält Komma und Semikolon im Wert, statt daraus neue Felder zu machen', () => {
+    const wert = 'Penicillin, Jod; Erdnuss\\Nuss';
+    const vcard = vcardBauen({ name: 'Notfall', notiz: wert });
+    // Genau eine NOTE-Zeile — kein Komma hat ein zweites Feld erzeugt.
+    expect(vcard.split('\r\n').filter(z => z.startsWith('NOTE:')).length).toBe(1);
+    expect(entmaskieren(felderVon(vcard).NOTE)).toBe(wert);
+  });
+
+  it('überlebt einen mehrzeiligen Text als EINE Notiz', () => {
+    const vcard = vcardBauen({ name: 'N', notiz: 'Zeile eins\nZeile zwei' });
+    expect(vcard.split('\r\n').filter(z => z.startsWith('NOTE:')).length).toBe(1);
+    expect(entmaskieren(felderVon(vcard).NOTE)).toBe('Zeile eins\nZeile zwei');
+  });
+
+  it('führt die Notfallnummer als eigenes Feld — damit sie wählbar ist, nicht abgetippt', () => {
+    const vcard = vcardBauen({ name: 'N', tel: '079 123 45 67', notiz: 'x' });
+    const felder = felderVon(vcard);
+    expect(felder['TEL;TYPE=CELL']).toBe('079 123 45 67');
+    expect(felder.NOTE).not.toContain('079 123 45 67');
+  });
+
+  it('lässt leere Felder weg, statt leere Zeilen zu schreiben', () => {
+    const vcard = vcardBauen({ name: 'Nur Name' });
+    expect(vcard).not.toContain('TEL');
+    expect(vcard).not.toContain('NOTE');
+    expect(vcard.startsWith('BEGIN:VCARD')).toBe(true);
+    expect(vcard.trimEnd().endsWith('END:VCARD')).toBe(true);
+  });
+
+  describe('qrNotfallVcard', () => {
+    // Werte voller Kommas: die Maskierung lässt die Nutzlast wachsen, während gekürzt wird.
+    const vieleKommas = [{
+      key: 'medical', title: 'Medizinisches', rows: Array.from({ length: 30 }, (_, i) => ({
+        label: 'Angabe ' + i, value: 'ein, zwei, drei, vier, fünf, sechs, sieben',
+      })),
+    }];
+
+    it('bleibt unter der Grenze — gemessen wird die FERTIGE vCard, nicht der Inhalt', () => {
+      const r = qrNotfallVcard(vieleKommas, { fehltTitel: 'Nicht enthalten', name: 'Notfall', tel: '079 123 45 67' });
+      expect(utf8Laenge(r.text)).toBeLessThanOrEqual(QR_MAX_BYTES_VCARD);
+      expect(r.bytes).toBe(utf8Laenge(r.text));
+      expect(r.gekuerzt).toBe(true);
+    });
+
+    it('kürzt den Inhalt und NICHT den Rahmen — die Nummer bleibt wählbar, auch wenn viel wegfällt', () => {
+      const r = qrNotfallVcard(vieleKommas, { fehltTitel: 'Nicht enthalten', name: 'Notfall', tel: '079 123 45 67' });
+      expect(r.text).toContain('BEGIN:VCARD');
+      expect(r.text).toContain('END:VCARD');
+      expect(felderVon(r.text)['TEL;TYPE=CELL']).toBe('079 123 45 67');
+      expect(r.fehlt.length).toBeGreaterThan(0);
+    });
+
+    it('trägt die Angaben, die passen, bis zur Kontaktkarte durch', () => {
+      const r = qrNotfallVcard(
+        [{ key: 'medical', title: 'Medizinisches', rows: [{ label: 'Blutgruppe', value: 'A positiv' }] }],
+        { name: 'Notfall', tel: '079 123 45 67' },
+      );
+      expect(r.gekuerzt).toBe(false);
+      expect(entmaskieren(felderVon(r.text).NOTE)).toContain('Blutgruppe: A positiv');
+    });
+
+    it('nutzt den Platz aus: dieselben Angaben passen als vCard wie als Klartext', () => {
+      // Die Regression, vor der die Umstellung sonst stünde: wenn der Rahmen vom Inhalt
+      // abginge, fielen Angaben weg, die heute passen.
+      const abschnitte = [{
+        key: 'medical', title: 'Medizinisches', rows: Array.from({ length: 12 }, (_, i) => ({
+          label: 'Angabe ' + i, value: 'Wert ' + i,
+        })),
+      }];
+      const klartext = qrNotfallText(abschnitte);
+      const vcard = qrNotfallVcard(abschnitte, { name: 'Notfall', tel: '079 123 45 67' });
+      expect(klartext.gekuerzt).toBe(false);
+      expect(vcard.gekuerzt).toBe(false);
+      expect(vcard.inhalt).toBe(klartext.text);
+    });
+
+    it('zeichnet lieber nichts als einen halben Ausweis, wenn nicht einmal der Rahmen passt', () => {
+      const r = qrNotfallVcard(
+        [{ key: 'x', title: 'X', rows: [{ label: 'A', value: 'B' }] }],
+        { maxBytes: 10, name: 'Notfall', tel: '079 123 45 67' },
+      );
+      expect(r.text).toBe('');
+    });
   });
 });
 

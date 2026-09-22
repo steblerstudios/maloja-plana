@@ -21,6 +21,17 @@ import QRCode from '../vendor/qrcodejs.js';
 // 93 × 93 Module, rund 2 px je Modul bei 180 px; die Bibliothek fasst dort 624 Bytes inkl. BOM).
 export const QR_MAX_BYTES = 600;
 
+// Obergrenze für eine fertige vCard-Nutzlast. Höher als QR_MAX_BYTES, weil der vCard-Rahmen
+// (~95 Bytes) plus die Maskierung sonst vom INHALT abgingen: dieselben Angaben, die heute als
+// Klartext passen, fielen sonst beim Umstieg hinten heraus.
+//
+// 🛑 Diese Zahl ist GEMESSEN, aber an genau einem Gerät (22.09.2026, Versuch 2,
+// `qr-versuch-2-vcard.html`): 639 Bytes → 97 × 97 Module → 1,9 px je Modul auf 180 px,
+// von der normalen iPhone-Kamera gelesen und mit allen Angaben angezeigt. Das ist FEINER als
+// der bisherige Notfall-QR (2,0 px je Modul) und trotzdem gegangen.
+// Ein Gerät ist keine Gattung — wer sie anhebt, muss neu messen, nicht schätzen.
+export const QR_MAX_BYTES_VCARD = 640;
+
 const KUERZUNGS_ZEILE = '…';
 // Höchstlänge der Zeile «Nicht enthalten: …» im Code.
 const FEHLT_ZEILE_MAX = 160;
@@ -96,6 +107,87 @@ export function qrNotfallText(abschnitte, { maxBytes = QR_MAX_BYTES, fehltTitel 
   ({ teile, fehlt } = baue(maxBytes - FEHLT_ZEILE_MAX - 1));
   const text = teile.concat(fehltZeile(fehlt)).join('\n');
   return { text, gekuerzt: true, fehlt };
+}
+
+// ── vCard ────────────────────────────────────────────────────────────────────────────────
+//
+// Warum überhaupt: gemessen am 22.09.2026 an zwei Versuchsreihen zeigt die normale
+// iPhone-Kamera eine KLARTEXT-Nutzlast nicht an — sie liest den Code und meldet
+// «no usable data found». Drei Klartext-Codes scheiterten, zwei Adress-Codes gingen; Dichte
+// und Fläche sind ausgeschieden (ein Code mit 51 Bytes bei 5,4 px je Modul scheiterte ebenso,
+// derselbe Inhalt auf doppelter Fläche auch). Die Ursache ist der TYP der Nutzlast.
+//
+// Ein Notfall-Code, den die normale Kamera nicht anzeigt, verfehlt genau den Fall, für den er
+// da ist: eine fremde Person, die im Notfall mit ihrem eigenen Telefon draufhält — ohne
+// Scanner-App, unter Zeitdruck. vCard ist ein Typ, den die Kamera kennt, und sie braucht
+// dafür weder Netz noch Server: die Daten bleiben auf dem Gerät.
+
+// Maskiert einen Wert für ein vCard-Feld (RFC 6350 §3.4): Backslash zuerst, sonst würden die
+// danach eingefügten Fluchtzeichen selbst wieder maskiert.
+export function vcardMaskieren(wert) {
+  return String(wert ?? '')
+    .replace(/\r\n?/g, '\n')
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\n/g, '\\n');
+}
+
+// Baut eine vCard 3.0. Zeilen werden mit CRLF getrennt, wie die Norm es verlangt.
+// `tel` wird als eigenes Feld geführt — nicht als Text in der Notiz —, damit die Nummer auf
+// der Kontaktkarte WÄHLBAR ist statt abgetippt werden zu müssen. Das ist der eigentliche
+// Gewinn gegenüber dem Klartext und im Notfall der Unterschied, auf den es ankommt.
+//
+// 🛑 Zeilenfaltung (Norm: Zeilen < 75 Oktette umbrechen) ist NICHT eingebaut. Im Versuch vom
+// 22.09. hat eine lange NOTE-Zeile funktioniert — an einem Gerät. Bleibt als bekannte Lücke
+// stehen, statt sie stillschweigend für erledigt zu halten.
+export function vcardBauen({ name = '', tel = '', notiz = '' } = {}) {
+  const anzeige = String(name ?? '').trim();
+  const nummer = String(tel ?? '').trim();
+  const zeilen = ['BEGIN:VCARD', 'VERSION:3.0'];
+  if (anzeige) {
+    zeilen.push('N:' + vcardMaskieren(anzeige) + ';;;;');
+    zeilen.push('FN:' + vcardMaskieren(anzeige));
+  }
+  if (nummer) zeilen.push('TEL;TYPE=CELL:' + vcardMaskieren(nummer));
+  if (notiz) zeilen.push('NOTE:' + vcardMaskieren(notiz));
+  zeilen.push('END:VCARD');
+  return zeilen.join('\r\n') + '\r\n';
+}
+
+// Baut die Notfall-Angaben als vCard und hält dabei die FERTIGE Nutzlast unter `maxBytes`.
+//
+// 🛑 Der Punkt, an dem eine naive Umstellung falsch würde: gekürzt wird der INHALT, gemessen
+// wird die fertige vCard. Rahmen und Maskierung wiegen mit — und die Maskierung hängt vom
+// Inhalt ab (jedes Komma, Semikolon und jeder Zeilenumbruch wird zwei Zeichen), lässt sich
+// also nicht als feste Zahl abziehen. Darum wird gebaut, gewogen und bei Überhang genau um
+// diesen Überhang nachgekürzt, bis es passt. Ohne das kürzt die App am falschen Ende und
+// wirft Angaben weg, die problemlos gepasst hätten.
+//
+// Rückgabe wie qrNotfallText, plus `inhalt` (der Text in der Notiz) und `bytes`.
+export function qrNotfallVcard(abschnitte, {
+  maxBytes = QR_MAX_BYTES_VCARD, fehltTitel = '', name = '', tel = '',
+} = {}) {
+  const rahmen = utf8Laenge(vcardBauen({ name, tel, notiz: '' }));
+  let budget = Math.max(0, maxBytes - rahmen);
+  let letzte = null;
+
+  // Höchstens sechs Runden: jede Runde kürzt um mindestens den gemessenen Überhang, das
+  // konvergiert. Die Schranke verhindert eine Endlosschleife, falls es das nicht tut.
+  for (let runde = 0; runde < 6 && budget > 0; runde++) {
+    const inhalt = qrNotfallText(abschnitte, { maxBytes: budget, fehltTitel });
+    const vcard = vcardBauen({ name, tel, notiz: inhalt.text });
+    const gewicht = utf8Laenge(vcard);
+    letzte = { text: vcard, inhalt: inhalt.text, gekuerzt: inhalt.gekuerzt, fehlt: inhalt.fehlt, bytes: gewicht };
+    if (gewicht <= maxBytes) return letzte;
+    budget -= (gewicht - maxBytes);
+  }
+
+  // Passt selbst der Rahmen nicht mehr: lieber nichts zeichnen als einen halben Ausweis.
+  if (!letzte || letzte.bytes > maxBytes) {
+    return { text: '', inhalt: '', gekuerzt: true, fehlt: abschnitte.flatMap(a => a.rows.map(r => r.label)), bytes: 0 };
+  }
+  return letzte;
 }
 
 // Zeichnet `text` als QR in `el`. Gibt true zurück, wenn gezeichnet wurde, sonst false
