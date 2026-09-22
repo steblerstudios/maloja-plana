@@ -1,12 +1,61 @@
 import React, { useState, useRef } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { qrZeichnen } from './utils/qrSicher.js';
+import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
 import { getFullName } from './config/constants.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
+
+export const organOptionen = (t) => [
+  { key: 'heart', label: t('organ.heart') },
+  { key: 'lungs', label: t('organ.lungs') },
+  { key: 'liver', label: t('organ.liver') },
+  { key: 'kidneys', label: t('organ.kidneys') },
+  { key: 'corneas', label: t('organ.cornea') },
+  { key: 'bone', label: t('organ.boneMarrow') },
+];
+
+// Baut die Nutzlast des Organspende-QR als vCard — rein, ohne DOM, damit sie prüfbar ist.
+//
+// Gemessen 22.09.2026: die normale Kamera zeigt weder Klartext noch JSON an — sie liest den
+// Code und meldet «no usable data found». Beim Nachmessen kam ein zweiter Befund dazu: das
+// frühere JSON hatte NIRGENDS im Code einen Leser. Der Ausweis war von beiden Seiten
+// unlesbar — von der Kamera einer Retterin und von Maloja selbst.
+//
+// Zwei stille Fehler von damals sind hier mitbehoben: die Organe standen als rohe Schlüssel
+// im Code ('heart', 'kidneys') statt als Wörter, und das Freitextfeld erschien als das Wort
+// «other» statt mit seinem Inhalt.
+export function organSpendeVcard({ t, data = {}, status, organs = {} }) {
+  const statusText = status === 'registered' ? t('organ.registered')
+    : status === 'not_registered' ? t('organ.notRegistered')
+    : t('organ.declined');
+
+  // Etiketten aus der Oberfläche; für Schlüssel ohne Etikett (aus älteren Daten) bleibt der
+  // Schlüssel stehen — eine Angabe auf einem Notfall-Ausweis wird nicht stillschweigend
+  // weggelassen, nur weil ihr Wort fehlt.
+  const etikett = Object.fromEntries(organOptionen(t).map(o => [o.key, o.label]));
+  const gewaehlt = Object.keys(organs)
+    .filter(k => k !== 'other' && organs[k])
+    .map(k => etikett[k] || k);
+  const freitext = String(organs.other ?? '').trim();
+  if (freitext) gewaehlt.push(freitext);
+
+  const blutgruppe = String(data.notfall?.bloodType ?? '').trim();
+  const ahv = String(data.basis?.ahv ?? '').trim();
+
+  const zeilen = [t('organ.title') + ':', '  ' + t('organ.status') + ': ' + statusText];
+  if (gewaehlt.length) zeilen.push('  ' + t('organ.organsAndTissue') + ': ' + gewaehlt.join(', '));
+  if (blutgruppe) zeilen.push('  ' + t('notfallSummary.bloodType') + ': ' + blutgruppe);
+  if (ahv) zeilen.push('  ' + t('chapters.basis.fields.ahv') + ': ' + ahv);
+
+  return vcardBauen({
+    name: getFullName(data.basis) || t('organ.title'),
+    tel: data.basis?.phone || '',
+    notiz: zeilen.join('\n'),
+  });
+}
 
 export const OrganDonation = ({ palette, t, data, onSave }) => {
   const [status, setStatus] = useState(data.organStatus || 'registered');
@@ -19,36 +68,21 @@ export const OrganDonation = ({ palette, t, data, onSave }) => {
   const [qrAnsage, setQrAnsage] = useState('');
   const qrRef = useRef(null);
 
-  const organOptions = [
-    { key: 'heart', label: t('organ.heart') },
-    { key: 'lungs', label: t('organ.lungs') },
-    { key: 'liver', label: t('organ.liver') },
-    { key: 'kidneys', label: t('organ.kidneys') },
-    { key: 'corneas', label: t('organ.cornea') },
-    { key: 'bone', label: t('organ.boneMarrow') }
-  ];
+  const organOptions = organOptionen(t);
 
   const handleOrganToggle = (organ) => {
     setOrgans(prev => ({ ...prev, [organ]: !prev[organ] }));
   };
 
   const handleGenerateQR = () => {
-    const qrData = JSON.stringify({
-      type: 'ORGAN_DONATION',
-      name: getFullName(data.basis) || '',
-      phone: data.basis?.phone || '',
-      bloodType: data.notfall?.bloodType || '',
-      organStatus: status,
-      donatedOrgans: Object.keys(organs).filter(k => organs[k]),
-      ahv: data.basis?.ahv || ''
-    });
+    const qrData = organSpendeVcard({ t, data, status, organs });
 
     setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
       const cont = qrRef.current;
       // K80: vorher warf ein Name mit Umlaut hier unabgefangen → leere Fläche.
       if (!cont) return;
-      const ok = qrZeichnen(cont, qrData, { width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') });
+      const ok = qrZeichnen(cont, qrData, { maxBytes: QR_MAX_BYTES_VCARD, width: 200, height: 200, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('organ.generateQr') });
       setQrFehler(!ok);
       if (ok) setQrAnsage(t('common.qrErstellt'));
     }, 100);
