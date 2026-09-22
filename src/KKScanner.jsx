@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { qrZeichnen } from './utils/qrSicher.js';
+import { qrZeichnen, vcardBauen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
 import { initBarcodeScanner, scanBarcodeFromImage, validateKKData, generateKKQRCode, parseKKQRCode } from './kkScanner.js';
 import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
@@ -8,6 +8,41 @@ import { getFullName } from './config/constants.js';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+
+// Die Kassenkarte ist der Sonderfall unter den drei QR-Codes, und deshalb bekommt sie ZWEI.
+//
+// Gemessen 22.09.2026: die normale Kamera zeigt eine JSON-Nutzlast nicht an — sie liest den
+// Code und meldet «no usable data found». Anders als beim Organspende-Code hat das JSON hier
+// aber einen echten Leser: `parseKKQRCode` weiter unten in dieser Datei holt die Karte wieder
+// in Maloja herein. Das JSON ersatzlos zu ersetzen hätte diesen Weg zerschnitten.
+//
+// Der Widerspruch lag woanders: der Code trug die Beschriftung «Zum Notfall-Pass scannen» und
+// versprach damit etwas, das er nicht konnte. Jetzt gibt es beide — jeder mit der Aufgabe,
+// die er wirklich erfüllt, und jeder so beschriftet.
+//
+// Steht hier und nicht in kkScanner.js, damit jene Datei frei von der QR-Bibliothek bleibt:
+// die hängt sich beim Import an `window` und zöge eine Browser-Abhängigkeit in reine Logik.
+export function kkNotfallVcard({ t, kkData = {} }) {
+  const zeile = (schluessel, wert) => {
+    const w = String(wert ?? '').trim();
+    return w ? '  ' + t('kkScanner.' + schluessel) + ': ' + w : null;
+  };
+  const zeilen = [
+    // Eigene Überschrift statt `kkScanner.title`: das ist «KK-Karte scannen», eine
+    // Handlungsaufforderung an die Nutzerin — auf einer Notfallkarte stünde dort Unsinn.
+    t('kkScanner.qrKarteTitel') + ':',
+    zeile('insurer', kkData.insurer),
+    zeile('cardNumber', kkData.cardNumber),
+    zeile('ahv', kkData.ahv),
+    zeile('franchise', kkData.franchise),
+    zeile('model', kkData.model),
+  ].filter(Boolean);
+
+  return vcardBauen({
+    name: String(kkData.holder ?? '').trim() || t('kkScanner.qrKarteTitel'),
+    notiz: zeilen.join('\n'),
+  });
+}
 
 export const KKScanner = ({ palette, t, data, onSave }) => {
   const [scanMode, setScanMode] = useState('upload');
@@ -75,12 +110,26 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
     setQRCode(qrData);
     setQrAnsage(''); // leeren, damit ein erneutes Erzeugen wieder angesagt wird
     setTimeout(() => {
-      const cont = document.getElementById('kk-qr-output');
       // K80: vorher warf ein Versicherername mit Umlaut (z. B. ÖKK) hier unabgefangen.
-      if (!cont) return;
-      const ok = qrZeichnen(cont, qrData, { width: 180, height: 180, colorDark: palette.text, colorLight: palette.surface, beschriftung: t('kkScanner.scanForEmergency') });
-      setQrFehler(!ok);
-      if (ok) setQrAnsage(t('common.qrErstellt'));
+      const stil = { colorDark: palette.text, colorLight: palette.surface };
+      // Der lesbare Code zuerst — er ist der, den im Ernstfall jemand Fremdes braucht.
+      const lesbar = document.getElementById('kk-qr-lesbar');
+      const okLesbar = lesbar
+        ? qrZeichnen(lesbar, kkNotfallVcard({ t, kkData }), {
+            maxBytes: QR_MAX_BYTES_VCARD, width: 180, height: 180, ...stil,
+            beschriftung: t('kkScanner.qrNotfallLesbar'),
+          })
+        : false;
+      const cont = document.getElementById('kk-qr-output');
+      const okUebernahme = cont
+        ? qrZeichnen(cont, qrData, {
+            width: 180, height: 180, ...stil, beschriftung: t('kkScanner.qrUebernahme'),
+          })
+        : false;
+      if (!lesbar && !cont) return;
+      // Fehler heisst hier: KEINER der beiden ging. Solange einer steht, ist die Karte nutzbar.
+      setQrFehler(!okLesbar && !okUebernahme);
+      if (okLesbar || okUebernahme) setQrAnsage(t('common.qrErstellt'));
     }, 100);
   };
 
@@ -221,9 +270,27 @@ export const KKScanner = ({ palette, t, data, onSave }) => {
         React.createElement('div', {
           style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, marginBottom: '12px' }
         }, t('notfallDossier.qrHint')),
-        React.createElement('div', { id: 'kk-qr-output', style: { display: qrFehler ? 'none' : 'flex', justifyContent: 'center', marginBottom: space.sm } }),
-        qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: '0 0 8px' } }, t('common.qrFehler')),
-        React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('kkScanner.scanForEmergency'))
+        // Zwei Codes, weil sie zwei verschiedene Aufgaben haben: der obere ist der, den im
+        // Ernstfall jemand Fremdes mit der normalen Kamera liest; der untere holt die Karte
+        // in Maloja zurück und wird nur von dieser App gelesen. Bis zum 22.09.2026 gab es
+        // nur den unteren — mit der Beschriftung des oberen.
+        React.createElement('div', {
+          style: { display: qrFehler ? 'none' : 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: space.md, justifyItems: 'center' }
+        },
+          React.createElement('div', null,
+            React.createElement('div', { id: 'kk-qr-lesbar', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', {
+              style: { fontSize: text.sm, color: palette.text, fontWeight: weight.semi, textAlign: 'center' }
+            }, t('kkScanner.qrNotfallLesbar'))
+          ),
+          React.createElement('div', null,
+            React.createElement('div', { id: 'kk-qr-output', style: { display: 'flex', justifyContent: 'center', marginBottom: '6px' } }),
+            React.createElement('div', {
+              style: { fontSize: text.sm, color: palette.mid, textAlign: 'center' }
+            }, t('kkScanner.qrUebernahme'))
+          )
+        ),
+        qrFehler && React.createElement('p', { role: 'status', style: { fontSize: text.sm, color: palette.mid, margin: '0 0 8px' } }, t('common.qrFehler'))
       )
     )
   ));
