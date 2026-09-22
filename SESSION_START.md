@@ -31,6 +31,25 @@
 > ist die Ursache, Dichte und Fläche sind widerlegt.** Drei Codes auf vCard; dabei gefunden,
 > dass zwei Codes im **Dark Mode invertiert** gezeichnet wurden. Details im PR.
 
+> ✅ **Nachtrag 22.09., 14:05 — #264 ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Der Block darüber nennt #264 als *offenen Entwurf*; das stimmte, bis der Merge lief. Diese
+> Zeilen sind **vor** dem Merge von #265 geschrieben und unmittelbar davor gemessen:
+>
+> | | gemessen 22.09., 14:05 |
+> |---|---|
+> | `main` | **`dd8b670`** — «Merge pull request #264», 12:04 UTC, Zweig `fix/qr-nutzlast-vcard` gelöscht |
+> | Tests | **2723 grün, 142 Dateien** (`vitest run`, 5,8 s) — die Zahl aus dem PR, jetzt auf dem gemergten Baum bestätigt |
+> | offene PRs | **nur #265** — dieser hier |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** (200; altes `index-nd0WhuaA.js` 404, erfundener Name 404) |
+>
+> 🛑 **Gemergt ist nicht live.** `main` steht jetzt **vor** dem ausgelieferten Stand: die
+> vCard-Codes sind im Repo, aber **nicht auf dem Server**. Tor (4) der Fertig-Definition ist
+> damit gebaut und gemergt, **nicht geschlossen** — dafür fehlt `bash deploy.sh` von `main`,
+> und das bleibt die Hand von Stebler Studios. Der Notfall-QR auf einem heute gedruckten Blatt trägt weiter
+> den alten, unlesbaren Klartext.
+>
+> Der Merge von **#265 selbst** rückt `main` nochmals um einen Commit weiter — das ist der
+> zulässige eine Commit Rückstand, der unten beschrieben wird, kein Versäumnis.
 
 > *Nach dem Merge von **#260** nachgezogen: die Zeile nannte `0e57926`, `main` stand auf
 > `849042b`. **Eine Stand-Doku, die an einem Merge endet, zeigt sonst den Vor-Merge-Stand.**
