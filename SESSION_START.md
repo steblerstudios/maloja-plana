@@ -9,6 +9,48 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> 🔴 **Korrektur 22.09., 13:51 — die Stand-Zeile darüber war an drei Stellen überholt.**
+> Sie wurde um **10:25** geschrieben; der Deploy lief um **10:31**, sechs Minuten später.
+> Unmittelbar vor dem Schreiben dieser Zeilen erhoben:
+>
+> | | stand oben | gemessen |
+> |---|---|---|
+> | `main` | `28006b5` | **`d253245`** (nach #263), lokal = `origin/main` |
+> | live ausgeliefert | `index-nd0WhuaA.js` | **`index-8FolD38L.js`** — das alte Bundle gibt **404**, ein erfundener Name ebenfalls 404 (die Methode unterscheidet) |
+> | offene PRs | «keine» | **#264** (Entwurf) |
+> | Tests auf `main` | 2696 | **2696 grün** (140 Dateien) — unverändert, hier nur bestätigt |
+>
+> 🛑 **Das ist zum fünften Mal in drei Tagen dieselbe Stelle** ([[feedback_standzeile_altert_am_merge]]).
+> Diesmal war es nicht ein Merge, sondern ein **Deploy** sechs Minuten nach dem Schreiben.
+> Die Lehre erweitert sich: nicht nur `gh pr list` unmittelbar vor den Merge — auch der
+> **Live-Hash** gehört unmittelbar vor das Schreiben der Stand-Zeile, nicht an den Anfang.
+>
+> **#264 «Notfall-QR lesbar machen»** (Entwurf, Zweig `fix/qr-nutzlast-vcard`, 4 Commits,
+> **2723 grün** = 2696 + 27 neue): der Notfall-QR trug Klartext, den die normale Kamera nicht
+> anzeigt («no usable data found»). An zwei Versuchsreihen am Gerät gemessen: **der Nutzlast-Typ
+> ist die Ursache, Dichte und Fläche sind widerlegt.** Drei Codes auf vCard; dabei gefunden,
+> dass zwei Codes im **Dark Mode invertiert** gezeichnet wurden. Details im PR.
+
+> ✅ **Nachtrag 22.09., 14:05 — #264 ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Der Block darüber nennt #264 als *offenen Entwurf*; das stimmte, bis der Merge lief. Diese
+> Zeilen sind **vor** dem Merge von #265 geschrieben und unmittelbar davor gemessen:
+>
+> | | gemessen 22.09., 14:05 |
+> |---|---|
+> | `main` | **`dd8b670`** — «Merge pull request #264», 12:04 UTC, Zweig `fix/qr-nutzlast-vcard` gelöscht |
+> | Tests | **2723 grün, 142 Dateien** (`vitest run`, 5,8 s) — die Zahl aus dem PR, jetzt auf dem gemergten Baum bestätigt |
+> | offene PRs | **nur #265** — dieser hier |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** (200; altes `index-nd0WhuaA.js` 404, erfundener Name 404) |
+>
+> 🛑 **Gemergt ist nicht live.** `main` steht jetzt **vor** dem ausgelieferten Stand: die
+> vCard-Codes sind im Repo, aber **nicht auf dem Server**. Tor (4) der Fertig-Definition ist
+> damit gebaut und gemergt, **nicht geschlossen** — dafür fehlt `bash deploy.sh` von `main`,
+> und das bleibt die Hand von Stebler Studios. Der Notfall-QR auf einem heute gedruckten Blatt trägt weiter
+> den alten, unlesbaren Klartext.
+>
+> Der Merge von **#265 selbst** rückt `main` nochmals um einen Commit weiter — das ist der
+> zulässige eine Commit Rückstand, der unten beschrieben wird, kein Versäumnis.
+
 > *Nach dem Merge von **#260** nachgezogen: die Zeile nannte `0e57926`, `main` stand auf
 > `849042b`. **Eine Stand-Doku, die an einem Merge endet, zeigt sonst den Vor-Merge-Stand.**
 >
