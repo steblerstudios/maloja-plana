@@ -56,12 +56,18 @@ function knopf(html, label) {
 describe('K64.1 · PremiumSubsidy «Online beantragen»', () => {
   afterEach(() => vi.restoreAllMocks());
 
-  it('sagt den neuen Tab hörbar an, der Pfeil ist nur Bild', () => {
+  // Geprüft wird die ZUSAGE, nicht ihre Umsetzung: das Zeichen ist stumm, der
+  // Tab-Wechsel ist hörbar. Die erste Fassung verlangte wörtlich
+  // `<span aria-hidden="true">↗ </span>` — sie wurde rot, als das rohe ↗ am
+  // 20.09.2026 einem Piktogramm wich, obwohl die Zusage unverändert galt. Ein
+  // Test, der die Bauweise festschreibt, verbietet jede Verbesserung.
+  it('sagt den neuen Tab hörbar an, das Zeichen ist nur Bild', () => {
     const b = knopf(render(profil(450)), t('premium.applyOnline'));
-    expect(b).toContain('<span aria-hidden="true">↗ </span>');
-    expect(b).toContain(' (' + t('a11y.neuerTab') + ')</span>');
+    expect(b).toContain('aria-hidden="true"');            // das Zeichen wird nicht vorgelesen
+    expect(b).toContain(' (' + t('a11y.neuerTab') + ')</span>');   // der Wechsel schon
     expect(t('a11y.neuerTab')).toBe('öffnet in neuem Tab');
-    expect(b).toContain('position:absolute');
+    expect(b).toContain('position:absolute');             // Ansage visuell versteckt
+    expect(b).not.toContain('↗');                         // keine rohe Glyphe mehr
     expect(b).not.toContain('disabled');
   });
 

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { qrZeichnen } from './utils/qrSicher.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { buildFlyerHtml } from './flyerGenerator.js';
@@ -71,7 +71,7 @@ export const FlyerView = ({ palette, t, lang }) => {
     React.createElement('div', { style: s.actions },
       React.createElement('button', { style: s.button, onClick: handlePrint }, t('flyer.print')),
       React.createElement('button', { style: s.shareButton, onClick: handleShare }, t('flyer.share')),
-      shared && React.createElement('span', { style: s.copied, role: 'status' }, '✓ ' + t('flyer.copied'))
+      shared && React.createElement('span', { style: s.copied, role: 'status' }, hinweisZeichen('check'), t('flyer.copied'))
     ),
     React.createElement('p', { style: s.hint }, t('flyer.langHint'))
   );

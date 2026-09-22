@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, radius , leading , space, ease, duration } from './config/tokens.js';
 
 // Dossier card — a calm folder-like entry, not a button grid
@@ -44,9 +44,6 @@ const DossierCard = ({ palette, title, description, status, icon, onClick }) => 
         }, status)
       ),
       // Arrow indicator for clickable cards
-      isClickable && React.createElement('div', {
-        style: { color: palette.soft, fontSize: text.body, alignSelf: 'center', flexShrink: 0 }
-      }, '→')
     )
   );
 };
@@ -162,7 +159,7 @@ export const MeineUnterlagen = ({ palette, t, onNavigate }) => {
       style: {
         marginTop: space.sm, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, 'ⓘ ' + t('unterlagen.note'))
+    }, hinweisZeichen(), t('unterlagen.note'))
   );
 };
 

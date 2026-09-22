@@ -6,6 +6,7 @@ import { calculateIPV, calculateSozialhilfe, checkELEligibility } from './config
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { uebergabeAusProbe } from './data/schnellcheckUebergabe.js';
 import { text, weight, leading, space, radius, duration, ease } from './config/tokens.js';
+import { zurueckZeichen } from './IconSystem.jsx';
 
 // Anspruch-Check, geführt (#4.4.2 „Brücke"): webt die zwei bestehenden Checks zu
 // EINEM Fluss — Schritt 1 = Zahlen (Schnellcheck), Schritt 2 = Lebenslage
@@ -74,7 +75,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
       },
       onMouseEnter: (e) => { e.currentTarget.style.borderColor = palette.sage + '55'; },
       onMouseLeave: (e) => { e.currentTarget.style.borderColor = palette.border + '44'; },
-    }, label + ' →');
+    }, label);
 
     const emptyLine = (txt) => React.createElement('p', {
       style: { fontSize: text.xs, color: palette.soft, fontStyle: 'italic', lineHeight: leading.relaxed, margin: '0 0 ' + space.sm + 'px 0' }
@@ -109,7 +110,7 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.medium,
           color: palette.sageDeep || palette.sage,
         }
-      }, '→ ' + t('anspruchCheck.resultToLandkarte'))
+      }, t('anspruchCheck.resultToLandkarte'))
     );
   };
 
@@ -174,14 +175,14 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
         marginTop: space.xl + 'px', paddingTop: space.lg + 'px', borderTop: '1px solid ' + palette.border + '33',
       }
     },
-      step === 1 && React.createElement(PrimaryButton, { palette, onClick: () => setStep(2) }, t('anspruchCheck.weiter') + ' →'),
+      step === 1 && React.createElement(PrimaryButton, { palette, onClick: () => setStep(2) }, t('anspruchCheck.weiter')),
       step === 2 && React.createElement(React.Fragment, null,
-        secondaryBtn('← ' + t('anspruchCheck.zurueck'), () => setStep(1)),
-        React.createElement(PrimaryButton, { palette, onClick: () => setStep(3) }, t('anspruchCheck.weiterOverview') + ' →')
+        secondaryBtn(zurueckZeichen(), t('anspruchCheck.zurueck'), () => setStep(1)),
+        React.createElement(PrimaryButton, { palette, onClick: () => setStep(3) }, t('anspruchCheck.weiterOverview'))
       ),
       step === 3 && React.createElement(React.Fragment, null,
-        secondaryBtn('← ' + t('anspruchCheck.zurueck'), () => setStep(2)),
-        React.createElement(PrimaryButton, { palette, onClick: () => onNavigate('ansprueche') }, t('anspruchCheck.fertig') + ' →')
+        secondaryBtn(zurueckZeichen(), t('anspruchCheck.zurueck'), () => setStep(2)),
+        React.createElement(PrimaryButton, { palette, onClick: () => onNavigate('ansprueche') }, t('anspruchCheck.fertig'))
       )
     )
   );

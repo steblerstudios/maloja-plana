@@ -2,6 +2,7 @@ import React from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { ExternerLink } from './components/ExternerLink.jsx';
+import { zurueckZeichen } from './IconSystem.jsx';
 
 const Section = ({ title, children, palette }) =>
   React.createElement('div', {
@@ -86,6 +87,13 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
   // P() ist ein Aufruf, keine Komponente — die Schliessung reicht t an autoLink weiter.
   const P = ({ children }) =>
     React.createElement('p', { style: { margin: '0 0 8px 0' } }, autoLink(children, t));
+  // Aufzählung als echte Liste statt als Absätze mit einem Pfeil davor: ein
+  // Screenreader sagt dann «Liste mit 3 Einträgen» und zählt mit, statt bei
+  // jedem Punkt «Pfeil nach rechts» vorzulesen. Der Marker kommt aus der
+  // Liste selbst — das Zeichen im Text war nur ein Ersatz dafür (20.09.2026).
+  const Punkte = ({ items }) =>
+    React.createElement('ul', { style: { margin: '0 0 8px 0', paddingInlineStart: '18px' } },
+      items.map((x, i) => React.createElement('li', { key: i, style: { margin: '0 0 6px 0' } }, autoLink(x, t))));
   const activeSection = section || 'privacy';
 
   const tabs = [
@@ -110,7 +118,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
-    }, '← ' + t('common.back')),
+    }, zurueckZeichen(), t('common.back')),
 
     // Title
     React.createElement(PageTitle, {
@@ -276,9 +284,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
     activeSection === 'license' && React.createElement('div', null,
       Section({ title: t('legal.license.agplTitle'), palette, children: [
         P({ children: t('legal.license.agpl1') }),
-        P({ children: t('legal.license.agpl2') }),
-        P({ children: t('legal.license.agpl3') }),
-        P({ children: t('legal.license.agpl4') }),
+        Punkte({ items: [t('legal.license.agpl2'), t('legal.license.agpl3'), t('legal.license.agpl4')] }),
       ]}),
       Section({ title: t('legal.license.dualTitle'), palette, children: [
         P({ children: t('legal.license.dual1') }),
@@ -299,9 +305,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
     activeSection === 'ethics' && React.createElement('div', null,
       Section({ title: t('legal.ethics.valuesTitle'), palette, children: [
         P({ children: t('legal.ethics.values1') }),
-        P({ children: t('legal.ethics.values2') }),
-        P({ children: t('legal.ethics.values3') }),
-        P({ children: t('legal.ethics.values4') }),
+        Punkte({ items: [t('legal.ethics.values2'), t('legal.ethics.values3'), t('legal.ethics.values4')] }),
       ]}),
       Section({ title: t('legal.ethics.principlesTitle'), palette, children: [
         P({ children: t('legal.ethics.principles1') }),
@@ -311,9 +315,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.ethics.principles5') }),
       ]}),
       Section({ title: t('legal.ethics.noTitle'), palette, children: [
-        P({ children: t('legal.ethics.no1') }),
-        P({ children: t('legal.ethics.no2') }),
-        P({ children: t('legal.ethics.no3') }),
+        Punkte({ items: [t('legal.ethics.no1'), t('legal.ethics.no2'), t('legal.ethics.no3')] }),
       ]}),
       Section({ title: t('legal.ethics.sustainTitle'), palette, children: [
         P({ children: t('legal.ethics.sustain1') }),
@@ -334,9 +336,9 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.support.intro2') }),
       ]}),
       Section({ title: t('legal.support.scaleTitle'), palette, children: [
-        P({ children: '→ ' + t('legal.support.tierLow') }),
-        P({ children: '→ ' + t('legal.support.tierMid') }),
-        P({ children: '→ ' + t('legal.support.tierHigh') }),
+        P({ children: t('legal.support.tierLow') }),
+        P({ children: t('legal.support.tierMid') }),
+        P({ children: t('legal.support.tierHigh') }),
         P({ children: t('legal.support.medianNote') }),
       ]}),
       Section({ title: t('legal.support.howTitle'), palette, children: [

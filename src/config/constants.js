@@ -146,7 +146,6 @@ export function getChapters(t) {
       title: t('chapters.basis.title'),
       short: t('chapters.basis.short'),
       description: t('chapters.basis.description'),
-      icon: t('chapters.basis.icon'),
       fields: [
         { k: 'firstName', label: fl(t, 'basis', 'firstName'), type: 'text', required: true, mvo: true, autoComplete: 'given-name', section: t('sections.basis.person'), sectionIntro: si(t, 'basis', 'person') },
         { k: 'middleName', label: fl(t, 'basis', 'middleName'), type: 'text', autoComplete: 'additional-name' },
@@ -173,7 +172,6 @@ export function getChapters(t) {
       title: t('chapters.wohnen.title'),
       short: t('chapters.wohnen.short'),
       description: t('chapters.wohnen.description'),
-      icon: t('chapters.wohnen.icon'),
       fields: [
         { k: 'address', label: fl(t, 'wohnen', 'address'), type: 'text', mvo: true, autoComplete: 'street-address', section: t('sections.wohnen.address'), sectionIntro: si(t, 'wohnen', 'address') },
         { k: 'postalCode', label: fl(t, 'wohnen', 'postalCode'), type: 'text', mvo: true, autoComplete: 'postal-code' },
@@ -199,7 +197,6 @@ export function getChapters(t) {
       title: t('chapters.finanzen.title'),
       short: t('chapters.finanzen.short'),
       description: t('chapters.finanzen.description'),
-      icon: t('chapters.finanzen.icon'),
       fields: [
         { k: 'monthlyIncome', label: fl(t, 'finanzen', 'monthlyIncome'), type: 'currency', hint: hn(t, 'finanzen', 'monthlyIncome'), mvo: true, section: t('sections.finanzen.income'), sectionIntro: si(t, 'finanzen', 'income'), orientation: or(t, 'einkommen') },
         { k: 'sideIncome', label: fl(t, 'finanzen', 'sideIncome'), type: 'currency', hint: hn(t, 'finanzen', 'sideIncome') },
@@ -255,7 +252,6 @@ export function getChapters(t) {
       title: t('chapters.versicherungen.title'),
       short: t('chapters.versicherungen.short'),
       description: t('chapters.versicherungen.description'),
-      icon: t('chapters.versicherungen.icon'),
       fields: [
         { k: 'kkInsurer', label: fl(t, 'versicherungen', 'kkInsurer'), type: 'text', placeholder: ph(t, 'versicherungen', 'kkInsurer'), mvo: true, section: t('sections.versicherungen.basic'), sectionIntro: si(t, 'versicherungen', 'basic'), orientation: or(t, 'kvg'), link: lk(t, 'kkWechsel') },
         { k: 'kkModel', label: fl(t, 'versicherungen', 'kkModel'), type: 'select', options: opts(t, 'versicherungen', 'kkModel') },
@@ -296,7 +292,6 @@ export function getChapters(t) {
       title: t('chapters.ausbildung.title'),
       short: t('chapters.ausbildung.short'),
       description: t('chapters.ausbildung.description'),
-      icon: t('chapters.ausbildung.icon'),
       fields: [
         { k: 'schoolName', label: fl(t, 'ausbildung', 'schoolName'), type: 'text', section: t('sections.ausbildung.education'), sectionIntro: si(t, 'ausbildung', 'education') },
         { k: 'educationLevel', label: fl(t, 'ausbildung', 'educationLevel'), type: 'select', options: opts(t, 'ausbildung', 'educationLevel') },
@@ -323,7 +318,6 @@ export function getChapters(t) {
       title: t('chapters.behoerden.title'),
       short: t('chapters.behoerden.short'),
       description: t('chapters.behoerden.description'),
-      icon: t('chapters.behoerden.icon'),
       fields: [
         { k: 'cantoneOfTaxation', label: fl(t, 'behoerden', 'cantoneOfTaxation'), type: 'select', options: cantonOptions(t), mvo: true, section: t('sections.behoerden.taxes'), sectionIntro: si(t, 'behoerden', 'taxes'), orientation: or(t, 'steuerverwaltung') },
         { k: 'taxId', label: fl(t, 'behoerden', 'taxId'), type: 'text' },
@@ -348,7 +342,6 @@ export function getChapters(t) {
       title: t('chapters.notfall.title'),
       short: t('chapters.notfall.short'),
       description: t('chapters.notfall.description'),
-      icon: t('chapters.notfall.icon'),
       fields: [
         { k: 'emergencyContact', label: fl(t, 'notfall', 'emergencyContact'), type: 'text', mvo: true, naOk: true, naMit: ['emergencyPhone'], section: t('sections.notfall.contact'), sectionIntro: si(t, 'notfall', 'contact') },
         { k: 'emergencyPhone', label: fl(t, 'notfall', 'emergencyPhone'), type: 'tel', mvo: true, naVon: 'emergencyContact' },

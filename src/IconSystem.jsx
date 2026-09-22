@@ -24,7 +24,6 @@ import React from 'react';
 //   3. Keep paths simple — aim for < 3 elements per icon
 //   4. Test in both light and dark palette
 
-
 // ═══════════════════════════════════════════════════════════════
 // Chapter Icons (24x24 default)
 // ═══════════════════════════════════════════════════════════════
@@ -383,7 +382,6 @@ const _notfall = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('rect', { x: '8', y: '10', width: '8', height: '3', rx: '0.8', fill: 'white' }),
 );
 
-
 // ═══════════════════════════════════════════════════════════════
 // Chapter Icons — extended set (Verwaltung & Organisation)
 // ═══════════════════════════════════════════════════════════════
@@ -599,7 +597,6 @@ const _lebenslauf = () => React.createElement('svg', { viewBox: '0 0 24 24', fil
   React.createElement('line', { x1: '6', y1: '20.5', x2: '16', y2: '20.5', stroke: 'currentColor', strokeWidth: '1.2', strokeLinecap: 'round', opacity: '0.4' }),
 );
 
-
 const _vorsorge = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'currentColor' },
   React.createElement('path', { d: 'M 12 3 L 12 7', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
   React.createElement('path', { d: 'M 9.5 5 L 14.5 5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round' }),
@@ -607,7 +604,6 @@ const _vorsorge = () => React.createElement('svg', { viewBox: '0 0 24 24', fill:
   React.createElement('circle', { cx: '12', cy: '14', r: '3.5', fill: 'none', stroke: 'currentColor', strokeWidth: '1.3' }),
   React.createElement('text', { x: '12', y: '16', textAnchor: 'middle', fontSize: '5', fontWeight: '700', fill: 'currentColor' }, 'Fr')
 );
-
 
 // ═══════════════════════════════════════════════════════════════
 // Feature Icons (20x20 default)
@@ -771,7 +767,6 @@ const _qr = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'curr
   React.createElement('rect', { x: '14', y: '19', width: '3', height: '3', rx: '0.5' })
 );
 
-
 // ═══════════════════════════════════════════════════════════════
 // Semantic Icons — domain-specific pictograms
 // ═══════════════════════════════════════════════════════════════
@@ -900,6 +895,15 @@ const _info = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'cu
   React.createElement('rect', { x: '10.5', y: '11', width: '3', height: '6', rx: '0.5', fill: 'white' })
 );
 
+const _chevron = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2.2', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 9 5 L 17 12 L 9 19' })
+);
+
+const _pfeil = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  React.createElement('path', { d: 'M 4 12 L 19 12' }),
+  React.createElement('path', { d: 'M 13 6 L 19 12 L 13 18' })
+);
+
 const _external = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('path', { d: 'M 18 13 L 18 20 Q 18 21 17 21 L 5 21 Q 4 21 4 20 L 4 8 Q 4 7 5 7 L 11 7' }),
   React.createElement('path', { d: 'M 15 3 L 21 3 L 21 9' }),
@@ -912,7 +916,6 @@ const _recurring = () => React.createElement('svg', { viewBox: '0 0 24 24', fill
   React.createElement('path', { d: 'M 20 12 Q 20 18 12 18 Q 6 18 5 14' }),
   React.createElement('polyline', { points: '8,18 4,14 4,18' })
 );
-
 
 const _lock = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '1.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   React.createElement('rect', { x: '5', y: '11', width: '14', height: '10', rx: '2' }),
@@ -969,7 +972,6 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
   React.createElement('circle', { cx: '14.6', cy: '8.6', r: '1', fill: 'currentColor' }),
   React.createElement('circle', { cx: '7.6', cy: '14.6', r: '1', fill: 'currentColor' }),
 );
-
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
@@ -1047,6 +1049,8 @@ const _iconFactories = {
   phone: _phone,
   info: _info,
   external: _external,
+  pfeil: _pfeil,
+  chevron: _chevron,
   recurring: _recurring,
   lock: _lock,
   cowbell: _cowbell,
@@ -1067,7 +1071,6 @@ export const Icons = Object.fromEntries(
     () => React.cloneElement(fn(), { width: '100%', height: '100%' }),
   ])
 );
-
 
 // ═══════════════════════════════════════════════════════════════
 // Icon Component — the preferred way to render icons
@@ -1095,6 +1098,64 @@ export const Icon = ({ name, size = 16, color, style = {} }) => {
   }, IconFn());
 };
 
+// ═══════════════════════════════════════════════════════════════
+// Hinweis-Zeichen — der Ersatz für rohe Glyphen vor einem Text
+// ═══════════════════════════════════════════════════════════════
+// Vorher stand vor Hinweisen eine rohe Glyphe, per `+` an den Text geklebt:
+//
+//     React.createElement('p', { … }, 'ⓘ ' + t('trust.localOnly'))
+//
+// Das hat zwei Nachteile, und beide sind echt:
+//   1. Geklebt heisst UNABSCHIRMBAR. Ein Zeichen in einem eigenen Knoten kann
+//      `aria-hidden` tragen; eines mitten im Text nicht. Ein Screenreader liest
+//      deshalb bei jedem Hinweis den Zeichennamen mit — auf einer Kapitelseite
+//      bis zu 28 Mal.
+//   2. `ⓘ` rendert auf jedem System anders (Schriftfamilie, Gewicht, Grundlinie).
+//      Die Piktogramme tun das nicht — sie sind unsere eigenen Pfade.
+//
+// `HinweisZeichen` ersetzt die Glyphe durch ein Piktogramm, das `Icon` bereits
+// mit `aria-hidden` liefert. Die Masse stammen aus dem Muster, das in
+// `SozialhilfeView.jsx` schon vorher so gebaut war (`praefix`).
+//
+// Aufruf als eigenes Kind, NICHT in den Text konkateniert — sonst ist der
+// Gewinn wieder weg:
+//
+//     React.createElement('p', { … }, hinweisZeichen(), t('trust.localOnly'))
+//
+export const HinweisZeichen = ({ name = 'info', size = 14 }) =>
+  React.createElement(Icon, { name, size, style: { verticalAlign: '-3px', marginRight: '5px' } });
+
+// Text mit Haken davor, wenn etwas erledigt ist — sonst nur der Text. Bündelt
+// ein Muster, das an sechs Stellen als `(erledigt ? '✓ ' : '') + text` stand.
+export const erledigtZeichen = (erledigt, text, offenIkon) => React.createElement(
+  React.Fragment, null,
+  erledigt ? hinweisZeichen('check') : (offenIkon ? hinweisZeichen(offenIkon) : null),
+  text,
+);
+
+// Aufklapp-Zeichen: ein Chevron, liegend oder stehend. `▸` und `▾` waren an
+// 29 Stellen zwei rohe Dreiecke für EINE Sache — offen oder zu. Ein Zeichen plus
+// eine Drehung hält beide Zustände sichtbar zusammen, und die Drehung kostet nichts.
+//
+// Bewusst ein CHEVRON und nicht der gedrehte `pfeil`: ein Pfeil hat einen Schaft
+// und liest sich gedreht als «↓ herunterladen», nicht als «aufklappen». Im Test
+// stand neben der Sprachwahl «DE↓». Ein Chevron ist nur die Spitze und meint
+// genau die Richtung, in die es weitergeht.
+export const aufklappZeichen = (offen, size = 12) => React.createElement(Icon, {
+  name: 'chevron', size,
+  style: { verticalAlign: '-1px', marginRight: '5px', transform: offen ? 'rotate(90deg)' : 'none' },
+});
+
+// Zurück-Zeichen: derselbe Pfeil, gespiegelt. Ein zweites Icon wäre ~50 Byte für
+// dieselbe Form in die andere Richtung — `scaleX(-1)` kostet nichts und hält die
+// beiden Richtungen sichtbar als EIN Zeichen zusammen.
+export const zurueckZeichen = (size = 14) => React.createElement(Icon, {
+  name: 'pfeil', size, style: { verticalAlign: '-3px', marginRight: '5px', transform: 'scaleX(-1)' },
+});
+
+// Kurzform für die Aufrufstellen — spart an 100+ Stellen je ein `React.createElement`.
+export const hinweisZeichen = (name, size, key) =>
+  React.createElement(HinweisZeichen, { name, size, key });
 
 // ═══════════════════════════════════════════════════════════════
 export default Icons;

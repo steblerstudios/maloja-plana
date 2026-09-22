@@ -5,6 +5,7 @@ import { inDays, formatDE } from './utils/helpers.js';
 import { MietzinsHinweis } from './components/MietzinsHinweis.jsx';
 import { lookupPLZ } from './data/plzGemeinde.js';
 import { addTodo } from './utils/merkliste.js';
+import { hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
 
 // Umzug — der 3. geführte Ablauf, gebaut auf der Ablauf-Schale. Bewusst ruhige
 // Orientierung statt Rechner: An-/Abmeldung bei der Gemeinde (CH: innert 14 Tagen),
@@ -47,7 +48,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
         border: '1.5px solid ' + (isChosen ? palette.sand : palette.border),
         opacity: isDimmed ? 0.55 : 1, transition: 'opacity 120ms, border-color 120ms',
       },
-    }, (isChosen ? '✓ ' : '') + label);
+    }, erledigtZeichen(isChosen, label));
   };
 
   // Adress-Checkliste: jede Stelle lässt sich als offener Punkt in die Merkliste legen
@@ -89,7 +90,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
       React.createElement('p', { style: s.stepText }, t(umzugType ? 'umzug.step2Text_' + umzugType : 'umzug.step2Text')),
       // „Das ändert sich" — ruhiger Hinweis je Typ, mit Crosslinks zu Prämie/Steuern wo relevant.
       umzugType && React.createElement('div', { style: { ...s.note, marginTop: space.sm + 'px' } },
-        'ⓘ ' + t('umzug.changes_' + umzugType)),
+        hinweisZeichen(), t('umzug.changes_' + umzugType)),
       umzugType !== 'gemeinde' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.changesLinkPraemien'), onClick: () => onNavigate('praemien') }),
       umzugType === 'extra' && onNavigate && React.createElement(AblaufLink, { palette, label: t('umzug.changesLinkTax'), onClick: () => onNavigate('tax') }),
       // Neue Gemeinde/Kanton kann einen Mietzinsbeitrags-Anspruch bedeuten — Hinweis genau hier,
@@ -137,7 +138,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
                 borderRadius: radius.sm, padding: '2px 10px', fontSize: text.xs,
                 color: isAdded ? palette.sage : palette.mid,
               },
-            }, isAdded ? '✓ ' + t('umzug.step3Added') : t('umzug.step3Add'))
+            }, erledigtZeichen(isAdded, isAdded ? t('umzug.step3Added') : t('umzug.step3Add')))
           );
         })
       ),

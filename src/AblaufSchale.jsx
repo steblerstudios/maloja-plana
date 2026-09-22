@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius, leading } from './config/tokens.js';
 import { addReminder } from './utils/reminders.js';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -48,7 +48,7 @@ export const AblaufStep = ({ palette, title, icon, children }) => {
 // Crosslink-Knopf „→ Label" → onNavigate-Ziel.
 export const AblaufLink = ({ palette, label, onClick }) => {
   const s = styles(palette);
-  return React.createElement('button', { style: s.link, onClick }, '→ ' + label);
+  return React.createElement('button', { style: s.link, onClick }, label);
 };
 
 // Frist-in-Kalender-Knopf: legt beim Klick eine Erinnerung an, zeigt danach Bestätigung.
@@ -60,22 +60,22 @@ export const FristButton = ({ palette, buttonLabel, doneLabel, calendarLabel, re
   const handle = () => { if (addReminder(reminder)) { if (onSaved) onSaved(); setDone(true); } }; // nur bestätigen, wenn gespeichert
   if (done) {
     return React.createElement('div', null,
-      React.createElement('div', { style: s.done }, '✓ ' + doneLabel),
+      React.createElement('div', { style: s.done }, hinweisZeichen('check'), doneLabel),
       onNavigate && calendarLabel
-        ? React.createElement('button', { style: s.link, onClick: () => onNavigate('calendar') }, '→ ' + calendarLabel)
+        ? React.createElement('button', { style: s.link, onClick: () => onNavigate('calendar') }, calendarLabel)
         : null
     );
   }
   return React.createElement('button', { style: s.primaryBtn, onClick: handle }, buttonLabel);
 };
 
-// Fuss-Hinweise (ⓘ je Zeile).
+// Fuss-Hinweise (Hinweis-Piktogramm je Zeile).
 export const AblaufFooter = ({ palette, notes }) => {
   const s = styles(palette);
   return React.createElement('div', { style: s.footer },
     (notes || []).flatMap((n, i) => [
       i > 0 ? React.createElement('br', { key: 'br' + i }) : null,
-      'ⓘ ' + n,
+      hinweisZeichen(undefined, undefined, 'z' + i), n,
     ])
   );
 };

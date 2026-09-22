@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
 import { qrNotfallText, qrZeichnen } from './utils/qrSicher.js';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
 import { openPrintWindow } from './utils/helpers.js';
@@ -101,7 +101,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         color: palette.mid, fontSize: text.sm, padding: '0 0 16px 0',
         fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: space.xs,
       }
-    }, '← ' + t('notfallDossier.back')),
+    }, zurueckZeichen(), t('notfallDossier.back')),
 
     React.createElement('div', {
       style: {
@@ -129,7 +129,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
         background: palette.up, borderRadius: radius.sm,
         fontSize: text.sm, color: palette.mid, lineHeight: leading.normal,
       }
-    }, 'ⓘ ' + t('notfallDossier.privacyNote')),
+    }, hinweisZeichen(), t('notfallDossier.privacyNote')),
 
     hasSections && React.createElement(PrimaryButton, {
       palette, onClick: () => setVorschau(true),
@@ -186,7 +186,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       style: {
         marginTop: space.md, fontSize: text.xs, color: palette.soft, lineHeight: '1.4',
       }
-    }, 'ⓘ ' + t('notfallDossier.footerPrivacy'))
+    }, hinweisZeichen(), t('notfallDossier.footerPrivacy'))
   );
 };
 

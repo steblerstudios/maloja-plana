@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { text, weight, space, radius } from './config/tokens.js';
 import { anzeigeWert, hatWert } from './utils/vollstaendigkeit.js';
+import { Icon } from './IconSystem.jsx';
 
 // Wiederverwendbare Mehrfach-Betrags-Liste: mehrere benannte Posten {label, amount},
 // die sich zu einer Summe addieren (z.B. Internet + Telefon + Streaming, oder
@@ -51,7 +52,7 @@ export const ItemizedAmount = ({ palette, t, items, onChange, placeholder }) => 
       React.createElement('button', {
         type: 'button', onClick: () => remove(i), 'aria-label': t('itemized.remove'),
         style: { background: 'none', border: 'none', cursor: 'pointer', color: palette.mid, fontSize: text.body, padding: '4px 8px', flex: '0 0 auto' },
-      }, '✕')
+      }, React.createElement(Icon, { name: 'kreuz', size: 12 }))
     )),
     React.createElement('div', {
       style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: space.xs + 'px' },

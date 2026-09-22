@@ -3,8 +3,8 @@ import { PageTitle } from './components/Heading.jsx';
 import { calculateIPV, CANTONAL_IPV, getCantonName } from './config/cantonalData.js';
 import { getKVGApplicationLink, buildIpvDokument } from './premiumCalc.js';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { Icon } from './IconSystem.jsx';
-import { ExternerLink, visuallyHiddenStyle } from './components/ExternerLink.jsx';
+import { Icon, hinweisZeichen, erledigtZeichen } from './IconSystem.jsx';
+import { ExternerLink, ZielHinweis } from './components/ExternerLink.jsx';
 import { useVorlesenContext } from './hooks/vorlesenContext.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { getFullName } from './config/constants.js';
@@ -15,6 +15,7 @@ import { addReminder } from './utils/reminders.js';
 import { readIpvStatus, nextIpvStatus, IPV_STATUS } from './data/ipvStatus.js';
 import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
 import { text, weight, radius , space } from './config/tokens.js';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
 const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
@@ -51,7 +52,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
       color: permitAdded ? palette.sage : palette.mid,
     },
-  }, permitAdded ? '✓ ' + t('premium.permitTodoAdded') : t('premium.permitTodoAdd'));
+  }, erledigtZeichen(permitAdded, permitAdded ? t('premium.permitTodoAdded') : t('premium.permitTodoAdd')));
 
   const canton = data.basis?.canton || '';
   const ipvResult = calculateIPV(data);
@@ -159,7 +160,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         ),
         lead(t('ipvStatus.renewLead')),
         h('div', { style: { display: 'flex', gap: space.sm, flexWrap: 'wrap' } },
-          lineBtn(renewAdded ? '✓ ' + t('ipvStatus.renewAdded') : t('ipvStatus.renewAdd'), () => {
+          lineBtn(erledigtZeichen(renewAdded, renewAdded ? t('ipvStatus.renewAdded') : t('ipvStatus.renewAdd')), () => {
             if (renewAdded) return;
             const ok = addReminder({ title: t('ipvStatus.reminderTitle'), dueDate: dueNext, category: 'insurance', recurrence: 'yearly' });
             if (ok) setRenewAdded(true);
@@ -204,12 +205,12 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: '1.5' } }, t('premium.subtitle'), vorlesen?.enabled && React.createElement(VorlesenButton, { text: t('premium.subtitle'), speak: vorlesen.speak, color: palette.mid, label: t('vorlesen.label') })),
       // Anspruch & Bewilligung — gerade für Neuzuzüger:innen ohne gesetzten Kanton relevant.
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
-        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
+        React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, hinweisZeichen(), t('premium.permitTitle')),
         React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
         permitTodoButton()
       ),
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-        'ⓘ ' + t('premium.enterCanton')
+        hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterCanton'))
       )
     );
   }
@@ -221,14 +222,14 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
     // Anspruch & Aufenthaltsbewilligung — ruhige Orientierung für Neuzuzüger:innen, kein Verdikt
     // (Quellen: SVA Zürich „Wer hat Anspruch", Kanton Basel-Stadt Prämienverbilligung).
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm, lineHeight: '1.5' } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, 'ⓘ ' + t('premium.permitTitle')),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '4px' } }, hinweisZeichen(), t('premium.permitTitle')),
       React.createElement('div', { style: { color: palette.mid } }, t('premium.permitText')),
       permitTodoButton()
     ),
 
     // Canton info
     React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, 'ⓘ ' + t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
+      React.createElement('div', { style: { fontWeight: weight.semi, marginBottom: '6px' } }, hinweisZeichen(), t('premium.canton', { name: getCantonName(canton, t) || t('premium.cantonUnknown') })),
       ipvResult.cantonData && React.createElement('div', { style: { color: palette.mid } },
         React.createElement('div', null, t('premium.model', { value: t(ipvResult.cantonData.modelKey) })),
         // Nicht jeder Kanton publiziert eine Einkommensgrenze als Zahl: der Aargau definiert
@@ -256,18 +257,18 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         onClick: () => { offeneZahlen.forEach(([kapitel, feld, wert]) => onUpdateData(kapitel, feld, wert)); setUebernommen(true); },
         style: { cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, fontWeight: weight.semi, padding: '8px 14px', minHeight: '44px', borderRadius: radius.sm, background: 'none', color: palette.sandDeep, border: '1px solid ' + palette.border },
       }, t('premium.schnellcheckUebernehmen'))
-    ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, '✓ ' + t('premium.schnellcheckUebernommen')),
+    ) : uebernommen && React.createElement('div', { role: 'status', style: { fontSize: text.sm, color: palette.sageDeep, marginBottom: space.md } }, hinweisZeichen('check'), t('premium.schnellcheckUebernommen')),
 
     // Residence type warning
     residenceKey === 'wochenaufenthalt' && React.createElement('div', { style: { padding: '10px', background: palette.gold + '22', borderRadius: radius.sm, border: '1px solid ' + palette.gold, marginBottom: space.md, fontSize: text.sm } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, 'ⓘ ' + t('premium.weeklyResidence')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.goldDeep, marginBottom: space.xs } }, hinweisZeichen(), t('premium.weeklyResidence')),
       React.createElement('div', null, t('premium.weeklyIpvNote')),
       React.createElement('div', null, t('premium.weeklyKkNote'))
     ),
 
     // Eligibility Status — only once income is present; otherwise prompt for income
     !hasIncome ? React.createElement('div', { style: { padding: '12px', background: palette.sky + '15', borderRadius: radius.sm, border: '1px solid ' + palette.sky + '40', marginBottom: space.md } },
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: onUpdateData ? space.sm : 0 } }, 'ⓘ ' + t('premium.enterIncome')),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5', marginBottom: onUpdateData ? space.sm : 0 } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('premium.enterIncome'))),
       // Inline income field — entering it here triggers the calculation immediately
       // (writes to data.finanzen.monthlyIncome, the same field used everywhere else).
       onUpdateData && React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: space.sm } },
@@ -285,18 +286,18 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       )
     ) : ohneBetrag ? React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
       // Orientierung ohne Betrag (E9): ruhig, kein Verdikt in beide Richtungen.
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, 'ⓘ ' + t(ipvResult.noteKey, ipvResult.noteParams)),
+      React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: '1.5' } }, hinweisZeichen(), t(ipvResult.noteKey, ipvResult.noteParams)),
       // Warum hier keine Zahl steht (K31, Fachprüfung 20.09.2026). Ohne diesen Satz liest sich
       // «kein Betrag» wie «der Kanton ist ungeprüft» — es heisst aber oft nur, dass eine Angabe fehlt.
       ipvResult.offen && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: '1.5', marginTop: space.xs } }, t('ipv.offenGrund.' + ipvResult.offen)),
-      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗'),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('ipv.youngAdultsNote'))
+      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.sm, fontSize: text.sm, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle')),
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : ipvResult.eligible ? React.createElement('div', { style: { padding: '12px', background: palette.sage + '22', borderRadius: radius.sm, border: '1px solid ' + palette.sage, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } }, '✓ ' + t('premium.eligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.sageDeep, marginBottom: space.xs } }, hinweisZeichen('check'), t('premium.eligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text } }, t(ipvResult.noteKey, ipvResult.noteParams)),
-      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('ipv.youngAdultsNote'))
+      ipvResult.youngAdultsCount > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('ipv.youngAdultsNote')))
     ) : React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border, marginBottom: space.md } },
-      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('premium.notEligible')),
+      React.createElement('div', { style: { fontWeight: weight.semi, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), t('premium.notEligible')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t(ipvResult.noteKey, ipvResult.noteParams))
     ),
 
@@ -317,7 +318,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.basisjahr ?? ipvResult.jahr - 2 })),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
       // der Anspruch beantragt werden muss.
-      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle') + ' ↗')
+      stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle'))
     ),
 
     // IPV-Lebenslinie — der Beleg als Gesicht seines Ablaufs (Phase 2)
@@ -350,7 +351,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
 
       // All cantons overview — nur amtlich belegte Kantone (E9); ohne einen belegten entfällt der Vergleich
       belegteKantone.length > 0 && React.createElement('details', { style: { marginBottom: space.md } },
-        React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, '◰ ' + t('premium.compareCantons')),
+        React.createElement('summary', { style: { cursor: 'pointer', fontSize: text.sm, fontWeight: weight.semi, color: palette.mid, padding: '8px 0' } }, t('premium.compareCantons')),
         React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: space.sm, marginTop: space.sm } },
           belegteKantone.map(([key, val]) =>
             React.createElement('div', {
@@ -373,7 +374,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Checklist
       React.createElement('div', { style: { padding: '12px', background: palette.up, borderRadius: radius.sm, marginBottom: space.md } },
         // h3, nicht h4: die Checkliste ist eine eigene Sektion unter dem h2-Ergebnis, kein Unterpunkt (WCAG 1.3.1, Voll-Review 15.09.2026)
-        React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, '□ ' + t('premium.requiredDocs') + ':'),
+        React.createElement('h3', { style: { fontSize: text.sm, fontWeight: weight.semi, marginBottom: '10px' } }, hinweisZeichen('kaestchen'), t('premium.requiredDocs') + ':'),
         React.createElement('ul', { style: { fontSize: text.sm, paddingLeft: '20px', margin: 0 } },
           [t('premium.doc1'), t('premium.doc2'), t('premium.doc3'), t('premium.doc4')].map((doc, idx) =>
             React.createElement('li', { key: idx, style: { marginBottom: space.xs } }, doc)
@@ -388,20 +389,20 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
           disabled: !anspruchMoeglich,
           style: { padding: '10px', background: palette.sand, color: palette.onSand, border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
         },
-          // K64: der Pfeil ist nur Bild; der Tab-Wechsel wird hörbar angesagt (WCAG 3.2.5, wie ExternerLink).
-          React.createElement('span', { 'aria-hidden': 'true' }, '↗ '),
-          t('premium.applyOnline'),
-          React.createElement('span', { style: visuallyHiddenStyle }, ' (' + t('a11y.neuerTab') + ')')
+          // K64: Zeichen und Ansage kommen aus ZielHinweis — derselbe Baustein wie in
+          // ExternerLink, damit das Versprechen nicht an zwei Orten gepflegt wird.
+          React.createElement(ZielHinweis, { t }),
+          t('premium.applyOnline')
         ),
         React.createElement('button', {
           onClick: () => setIpvVorschau(true),
           disabled: !anspruchMoeglich,
           style: { padding: '10px', background: palette.skyDeep, color: palette.surface, /* Kontrast: onSand/sky 4.496:1 < AA → surface/skyDeep (Voll-Review 15.09.2026) */ border: 'none', borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm, ...(anspruchMoeglich ? null : gesperrtStil) }
-        }, '□ ' + t('premium.document')),
+        }, hinweisZeichen('kaestchen'), t('premium.document')),
         React.createElement('button', {
           onClick: () => setShowCalculation(false),
           style: { padding: '10px', background: palette.up, color: palette.text, border: '1px solid ' + palette.border, borderRadius: radius.sm, cursor: 'pointer', fontWeight: weight.semi, fontSize: text.sm }
-        }, '✕ ' + t('common.close'))
+        }, hinweisZeichen('kreuz'), t('common.close'))
       ),
 
       // Export-Vorschau (K20) direkt unter den Knöpfen, die sie geöffnet haben.
@@ -415,18 +416,18 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
 
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'praemienverbilligung', cantonalKey: 'ipv' }),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, 'ⓘ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: '12px' } }, hinweisZeichen(), t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
       style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
-    }, '→ ' + t('nav.finanzUebersicht')),
+    }, t('nav.finanzUebersicht')),
 
     // Crosslink: IPV wird kantonal beantragt → zu den offiziellen Behörden-Links
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('direktlinks'),
       style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
-    }, '→ ' + t('nav.direktlinks'))
+    }, t('nav.direktlinks'))
   );
 };
 

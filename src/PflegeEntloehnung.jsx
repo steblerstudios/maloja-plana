@@ -49,7 +49,7 @@ export const PflegeEntloehnung = ({ palette, t }) => {
     ),
     React.createElement('div', { style: s.note }, t('pflege.entl.zuschlaege')),
     React.createElement('div', { style: s.note }, t('pflege.entl.disclaimer')),
-    React.createElement(ExternerLink, { t, style: s.extLink, href: 'https://www.spitex.ch' }, t('pflege.entl.extLink') + ' ↗')
+    React.createElement(ExternerLink, { t, style: s.extLink, href: 'https://www.spitex.ch' }, t('pflege.entl.extLink'))
   );
 };
 

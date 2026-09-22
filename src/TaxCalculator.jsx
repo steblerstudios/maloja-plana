@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { LabeledField } from './components/LabeledField.jsx';
-import { Icon } from './IconSystem.jsx';
+import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
@@ -13,6 +13,7 @@ import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG }
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
 import { chf, annahmenTexte } from './utils/steuerTexte.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
+import { GlossarText } from './GlossarBegriff.jsx';
 
 // E38: Kantons-/Gemeindesteuer aus der ESTV-Stütztabelle (src/data/kantonaleSteuerdaten.js,
 // docs/sources/kantonssteuer-tabelle-2026.md) — dieselbe Regel wie FinanzUebersicht und
@@ -190,7 +191,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
               React.createElement('option', { value: '' }, t('common.select')),
               ['AG', 'AI', 'AR', 'BE', 'BL', 'BS', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SG', 'SH', 'SO', 'SZ', 'TG', 'TI', 'UR', 'VD', 'VS', 'ZG', 'ZH'].map(c => React.createElement('option', { key: c, value: c }, c))
             ),
-            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, aufklappZeichen(true))
           )
         ),
         frage && React.createElement(WohnkantonFrage, {
@@ -199,7 +200,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           onJa: () => { onSave(steuerkantonSpeichern(data, canton, true)); setFrage(false); setUebernommen(true); },
           onNein: () => setFrage(false),
         }),
-        uebernommen && React.createElement('div', { role: 'status', style: { marginBottom: space.md, fontSize: text.xs, color: palette.mid } }, '✓ ' + t('tax.wohnkantonUebernommen', { canton: getCantonName(canton, t) })),
+        uebernommen && React.createElement('div', { role: 'status', style: { marginBottom: space.md, fontSize: text.xs, color: palette.mid } }, hinweisZeichen('check'), t('tax.wohnkantonUebernommen', { canton: getCantonName(canton, t) })),
 
         React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
@@ -216,7 +217,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
             React.createElement('select', { id, value: kinder, onChange: (e) => setKinder(Number(e.target.value)), style: { ...inputStyle, marginBottom: 0, cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none', paddingRight: '36px' } },
               [0, 1, 2, 3, 4, 5, 6].map(n => React.createElement('option', { key: n, value: n }, n))
             ),
-            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, '▾')
+            React.createElement('div', { style: { position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: palette.mid, fontSize: '10px' } }, aufklappZeichen(true))
           )
         ),
 
@@ -231,13 +232,13 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('tax.elterntarifConfirm'))
         ),
         !verheiratet && kinder > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } },
-          'ⓘ ' + t('tax.elterntarifHint', { value: STEUER_PARAMS.kinderabzugProKind })
+          hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.elterntarifHint', { value: STEUER_PARAMS.kinderabzugProKind }))
         ),
 
         React.createElement('div', { style: { display: 'block', fontSize: text.sm, color: palette.mid, marginBottom: space.xs, fontWeight: weight.medium } }, t('tax.grossIncome')),
         React.createElement('div', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.sandDeep, padding: space.sm, background: palette.up, borderRadius: radius.sm, marginBottom: space.xs } }, 'CHF ' + income.toFixed(0)),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, 'ⓘ ' + t('budgetSync.bvgReferenceNote')),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, 'ⓘ ' + t(eingaben.dreizehnter === 'ja' ? 'tax.netIncomeNote13' : 'tax.netIncomeNote')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('budgetSync.bvgReferenceNote'))),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md, fontStyle: 'italic' } }, hinweisZeichen(), t(eingaben.dreizehnter === 'ja' ? 'tax.netIncomeNote13' : 'tax.netIncomeNote')),
 
         React.createElement(LabeledField, { palette, label: t('tax.taxableIncomeDirect'), style: { marginBottom: space.xs } },
           React.createElement('input', {
@@ -253,7 +254,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
             style: inputStyle
           })
         ),
-        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } }, 'ⓘ ' + t('tax.taxableIncomeDirectHint')),
+        React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.md } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.taxableIncomeDirectHint'))),
 
         enteredTaxable > 0 && React.createElement('label', { htmlFor: 'tax-use-entered', style: { display: 'flex', alignItems: 'flex-start', gap: space.sm, marginBottom: space.md, cursor: 'pointer', ...(isMobile ? { minHeight: '44px' } : {}) } },
           React.createElement('input', {
@@ -283,7 +284,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
 
       // Right side: Result
       React.createElement('div', { style: { background: palette.up, padding: space.md, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
-        React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, '◇ ' + t('tax.calculation')),
+        React.createElement(PanelTitle, { palette, style: { marginBottom: space.md } }, t('tax.calculation')),
         React.createElement('div', { 'data-testid': 'steuer-ansage', role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle }, ansage),
 
         React.createElement('div', { style: { marginBottom: '12px' } },
@@ -309,7 +310,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
           ),
           // R4: die Annahmen hinter der Zahl, sichtbar am Ergebnis.
           annahmen.length > 0 && React.createElement('div', { 'data-testid': 'steuer-annahmen', style: { fontSize: text.xs, color: palette.text, marginTop: space.xs } },
-            ...annahmen.map((a) => React.createElement('div', { key: a }, 'ⓘ ' + a))
+            ...annahmen.map((a) => React.createElement('div', { key: a }, hinweisZeichen(), a))
           )
         ),
 
@@ -338,7 +339,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
             ' · ' + t('tax.marginalRate') + ': ' + grenzsteuersatz(taxableIncome, verheiratet || taxResult?.tarif === 'eltern').toFixed(2) + '%'
           ),
           // K86: warum hier kein Satz und unten kein Nettoeinkommen steht.
-          steuern.gemeinsamDirekt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.gemeinsamDirektHinweis'))
+          steuern.gemeinsamDirekt && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.gemeinsamDirektHinweis')))
         ),
 
         (() => {
@@ -392,35 +393,35 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
       onSelect: (v) => setVerheiratet(v),
     }),
     taxResult && vergleich && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
-      'ⓘ ' + t('tax.saeulen.abzuegeNote', { ledig: chf(vergleich.steuerBaresEinkommen), verheiratet: chf(vergleich.steuerBaresEinkommenVerheiratet) })
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.saeulen.abzuegeNote', { ledig: chf(vergleich.steuerBaresEinkommen), verheiratet: chf(vergleich.steuerBaresEinkommenVerheiratet) }))
     ),
     taxResult && !vergleich && React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('tax.saeulen.nurGeschaetzt'))
     ),
 
-    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, '□ ' + t('tax.saveData')),
+    React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
 
     React.createElement('div', { style: { marginTop: space.md, padding: '12px', background: palette.up, borderRadius: radius.sm, fontSize: text.sm, color: palette.mid } },
-      'ⓘ ' + t('tax.disclaimer')
+      hinweisZeichen(), React.createElement(GlossarText, { palette, t }, t('tax.disclaimer'))
     ),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, 'ⓘ ' + t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
-    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(KANTONAL_DATA_ABGERUFEN) })),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, hinweisZeichen(), t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(KANTONAL_DATA_ABGERUFEN) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
 
-    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, 'ⓘ ' + t('trust.localOnly')),
+    React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('trust.localOnly')),
 
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('finanzuebersicht'),
       style: { background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.md }
-    }, '→ ' + t('nav.finanzUebersicht')),
+    }, t('nav.finanzUebersicht')),
 
     // Crosslink: Frist nicht zu schaffen? → Fristverlängerungs-Brief (Vorlage existiert)
     onNavigate && React.createElement('button', {
       onClick: () => onNavigate('briefe'),
       style: { display: 'block', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium, marginTop: space.sm }
-    }, '→ ' + t('briefe.taxExtension.title'))
+    }, t('briefe.taxExtension.title'))
   );
 };
 

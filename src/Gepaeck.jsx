@@ -128,7 +128,6 @@ export const Gepaeck = ({ palette, t, data, onNavigate, isDarkMode }) => {
     }, h('svg', { viewBox: '0 0 24 24', width: 15, height: 15, fill: 'none', stroke: '#3a2c14', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
       w.g.map((d, i) => h('path', { key: i, d })))),
     h('span', { style: { flex: 1, minWidth: 0, fontSize: text.sm, fontWeight: weight.medium, color: palette.text } }, t('gepaeck.w.' + w.key)),
-    h('span', { 'aria-hidden': 'true', style: { color: palette.sandDeep, fontWeight: weight.medium, flexShrink: 0 } }, '→'),
   );
 
   // ── Ein Gegenstand (Karte, aufklappbar) ─────────────────────────────────────
