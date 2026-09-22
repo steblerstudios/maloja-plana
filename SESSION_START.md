@@ -7,7 +7,12 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-21, 18:30 (`main` = `cfa39d6` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 15:32 UTC** · **#259** Vorname raus aus dieser Datei und dem Audit-Blatt, **gemergt 16:26 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen zehn PRs** · **2680 Tests grün auf dem Zweig von #258**, Startdatei 63,39 kB von 65 · **zwei offene PRs: #258 und #260, beide Entwurf**)
+**Stand:** 2026-09-22, 09:55 (`main` = `0e57926` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen elf PRs** · **2680 Tests grün**, Startdatei 63,39 kB von 65)
+
+> *Diese Zeile nennt `0e57926` — den Stand **vor** dem Merge dieses PR. Der eigene
+> Merge-Commit lässt sich nicht vorwegnehmen; sobald **#260** auf `main` liegt, ist `main`
+> einen Commit weiter. **Das ist der einzige zulässige Rückstand dieser Zeile.** Alles
+> andere gehört nachgeführt, bevor gemergt wird.*
 
 > *Zweimal nachgeführt am 21.09. Erst stand #256 hier als «← dieser PR», war aber um
 > 15:32 UTC gemergt. Dann nannte die Zeile `47866b5`, während #259 um 16:26 UTC schon
@@ -18,7 +23,7 @@
 > falsch — und wer sie schreibt, ist dagegen nicht immun.** Wer sie anfasst, misst
 > vorher `git log -1 origin/main`, auch wenn er glaubt, den Stand zu kennen.
 
-> ### 🔣 Zeichenschicht, Fokus-Falle, Glossar — PR #258, **Entwurf, nicht gemergt** (2026-09-21)
+> ### 🔣 Zeichenschicht, Fokus-Falle, Glossar — PR #258, **gemergt 22.09. 07:54 UTC**, nicht deployt
 >
 > Rohe Zeichen im Produkt von **1'079 auf 173**. Code geklebt 289 → 2, Code allein 97 → 4,
 > Sprachdateien 592 → 167. Der Rest ist Typografie für «ergibt» und bleibt bewusst stehen.
