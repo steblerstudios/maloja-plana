@@ -7,7 +7,70 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-21 (`main` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** die Erklärseiten in fünf Sprachen ← *dieser PR* · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen neun PRs** · **2648 Tests grün**, size-limit 64,96 kB von 65)
+**Stand:** 2026-09-22, 09:55 (`main` = `0e57926` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen elf PRs** · **2680 Tests grün**, Startdatei 63,39 kB von 65)
+
+> *Diese Zeile nennt `0e57926` — den Stand **vor** dem Merge dieses PR. Der eigene
+> Merge-Commit lässt sich nicht vorwegnehmen; sobald **#260** auf `main` liegt, ist `main`
+> einen Commit weiter. **Das ist der einzige zulässige Rückstand dieser Zeile.** Alles
+> andere gehört nachgeführt, bevor gemergt wird.*
+
+> *Zweimal nachgeführt am 21.09. Erst stand #256 hier als «← dieser PR», war aber um
+> 15:32 UTC gemergt. Dann nannte die Zeile `47866b5`, während #259 um 16:26 UTC schon
+> auf `main` lag — **in genau dem Block, der vor dieser Falle warnt.** Gefunden hat es
+> eine Peer-Sitzung, nicht ich.*
+>
+> **Eine Stand-Zeile altert nicht langsam, sie wird mit einem Merge auf einen Schlag
+> falsch — und wer sie schreibt, ist dagegen nicht immun.** Wer sie anfasst, misst
+> vorher `git log -1 origin/main`, auch wenn er glaubt, den Stand zu kennen.
+
+> ### 🔣 Zeichenschicht, Fokus-Falle, Glossar — PR #258, **gemergt 22.09. 07:54 UTC**, nicht deployt
+>
+> Rohe Zeichen im Produkt von **1'079 auf 173**. Code geklebt 289 → 2, Code allein 97 → 4,
+> Sprachdateien 592 → 167. Der Rest ist Typografie für «ergibt» und bleibt bewusst stehen.
+>
+> **Die Fokus-Falle (O17)** liegt jetzt als ein Baustein in `src/hooks/useFocusTrap.js` und
+> trägt `Tour`, `DatenLoeschen` und `MobileNav`. 🛑 **Beide Schubladen hatten vorher gar
+> keine**: der Escape-Griff lag auf dem Hintergrund, der Fokus stand aussen, Escape tat
+> schlicht nichts. Die Erfassen-Fächer in `main.jsx` bekommen nur Escape und **keine**
+> Falle — das ist eine Auswahl am Knopf, kein Dialog.
+>
+> 🛑 **React setzt `autoFocus` VOR dem ersten Effekt.** Der Auslöser wird deshalb *während
+> des Renderns* gemerkt, sonst kehrt der Fokus nie dorthin zurück.
+>
+> **Drei Doppelungen aufgelöst**, alle nach demselben Muster: eine Zusage, die von Hand
+> wiederholt wird, wird an der siebten Stelle vergessen. Kapitel-Piktogramme lagen als
+> Glyphen in `i18n` · `SEARCH_VIEWS` stand neben `allTools` (5 von 16 uneinig) · das
+> Ziel-Zeichen klebte an sechs Stellen neben einem `ExternerLink`, der den Kontextwechsel
+> längst selbst ankündigte. Neu: `src/config/ansichtenRegister.js` als **eine** Zuordnung
+> Ansicht → Beschriftung → Piktogramm für Suche, Menü und Querverweise.
+>
+> 🛑 **Aufklappen ist ein Chevron, kein gedrehter Pfeil.** Ein Pfeil hat einen Schaft und
+> liest sich gedreht als «herunterladen» — im Test stand neben der Sprachwahl «DE↓».
+>
+> **Glossar 12 → 16** (Nettolohn · Taxpunktwert · Bundessteuer · Veranlagung, fünf Sprachen,
+> Quelle wo rechtlich: KVG Art. 43 ff., DBG Art. 36). Markierungen auf der Steuerseite 1 → 8.
+> Nebenbefund: `GlossarText` warf ohne Sprach-Kontext, auch wenn `t` als Eigenschaft kam —
+> lag seit jeher drin, riss beim Anschluss 41 Tests, behoben.
+>
+> **65-kB-Deckel:** `MobileNav` auf `React.lazy` mit Vorladen im Leerlauf, **−2,88 kB**.
+> Der Deckel stand bei 64,96 von 65.
+>
+> **Belegt:** 2680 Tests grün (139 Dateien) · lint sauber · `check-seo.sh` 0 Fehler ·
+> Build grün · Startdatei 63,39 von 65 kB · 18 Ansichten im Browser ohne React-Fehler.
+> Jeder neue Wächter mit **Gegenprobe** belegt (eingeschmuggeltes ★ → rot).
+>
+> 🛑 **Vier Entscheide offen**, keiner davon in #258 gelöst: (1) `stipResultMarker`
+> (`StipendienView.jsx:17`) trägt ✓ / ○ / ⓘ — für ○ «kein Anspruch» gibt es kein Piktogramm
+> ohne Bedeutungswechsel, ✕ liest sich härter, **Ton-Entscheid**. (2) Toter
+> Übersetzungs-Bestand `premiumCalc.check1..6` (6 × 5 Sprachen) und
+> `firstChapterDone`/`firstFieldDone` (nur `rm`) — mit zwei Messgeräten als unbenutzt
+> belegt, hier sind **nur die Glyphen** entfernt. (3) **Das Glossar ist faktisch
+> deutschsprachig:** `GLOSSAR` führt deutsche Wortformen als Schlüssel, `GlossarText` sucht
+> sie im *übersetzten* Text — über 40 Sätze gemessen: de 19 · en 6 · rm 2 · fr 0 · it 0.
+> (4) Rätoromanisch gegenlesen lassen.
+>
+> 🛑 **Nicht belegt:** nichts davon ist deployt. Rätoromanisch ist durchweg ungeprüfte
+> Übersetzung (`TODO(rm)`). Der `DatenLoeschen`-Dialog ist nicht live prüfbar.
 
 > *Korrigiert am 21.09. ~01:30: hier stand `1d9127d`, «sieben» hiess «sechs», und «keine
 > offenen PRs». Beides war beim Schreiben wahr und ist es seit dem Merge von #255 und dem
