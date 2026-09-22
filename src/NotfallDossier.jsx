@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
 import { ExportVorschau } from './components/ExportVorschau.jsx';
-import { qrNotfallText, qrZeichnen } from './utils/qrSicher.js';
+import { qrNotfallVcard, qrZeichnen, QR_MAX_BYTES_VCARD } from './utils/qrSicher.js';
+import { getFullName } from './config/constants.js';
 import { Icon, hinweisZeichen, zurueckZeichen } from './IconSystem.jsx';
 import { getNotfallDossierPreview, generateNotfallDossier } from './dossierGenerator.js';
 import { text, weight, radius , leading , space } from './config/tokens.js';
@@ -13,15 +14,36 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   const preview = getNotfallDossierPreview(data, chapters, t);
   const hasSections = preview.sections.length > 0;
 
-  // Compact, offline emergency payload for the QR (first responders scan → read plain text).
+  // Offline-Nutzlast für den QR — als vCard, nicht als Klartext.
+  //
+  // Gemessen am 22.09.2026 an zwei Versuchsreihen: die normale iPhone-Kamera LIEST den
+  // Klartext-Code und meldet «no usable data found» — sie kann mit einer Nutzlast ohne
+  // Handlung nichts anfangen. Drei Klartext-Codes scheiterten, zwei Adress-Codes gingen;
+  // Dichte und Fläche sind als Ursache ausgeschieden. Eine vCard zeigt dieselbe Kamera mit
+  // allen Angaben an — ohne Netz, ohne Server, die Daten bleiben auf dem Gerät.
+  //
   // K80: in UTF-8-Bytes gekürzt (ein Umlaut zählt doppelt). Reihenfolge im Code: Medizin zuerst
   // (Entscheid Stebler Studios, 17.09.2026) — das gedruckte Dossier bleibt in seiner Reihenfolge.
   // Was nicht hineinpasst, nennt der Code am Ende selbst.
   const qrReihenfolge = ['medical', 'contact', 'provision', 'person', 'care', 'insurance'];
   const rang = key => { const i = qrReihenfolge.indexOf(key); return i === -1 ? qrReihenfolge.length : i; };
   const qrAbschnitte = [...preview.sections].sort((a, b) => rang(a.key) - rang(b.key));
-  const { text: qrText, gekuerzt: qrGekuerzt } = qrNotfallText(qrAbschnitte, {
+
+  // Die Notfallnummer wandert aus der Notiz in ein eigenes TEL-Feld: auf der Kontaktkarte ist
+  // sie damit WÄHLBAR statt abzutippen. Die Zeile fällt dafür aus der Notiz weg — sie stünde
+  // sonst zweimal im Code und kostete Platz, den die medizinischen Angaben brauchen.
+  // Verglichen wird der Wert, nicht das Etikett: die Etiketten gibt es in fünf Sprachen.
+  const notfallNummer = String(data?.notfall?.emergencyPhone ?? '').trim();
+  const qrAbschnitteOhneNummer = notfallNummer
+    ? qrAbschnitte
+        .map(a => ({ ...a, rows: a.rows.filter(r => String(r.value ?? '').trim() !== notfallNummer) }))
+        .filter(a => a.rows.length > 0)
+    : qrAbschnitte;
+
+  const { text: qrText, gekuerzt: qrGekuerzt } = qrNotfallVcard(qrAbschnitteOhneNummer, {
     fehltTitel: t('notfallDossier.qrNichtEnthalten'),
+    name: getFullName(data?.basis) || t('notfallDossier.qrTitle'),
+    tel: notfallNummer,
   });
 
   const qrBeschriftung = t('notfallDossier.qrTitle');
@@ -31,6 +53,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
   useEffect(() => {
     if (!hasSections || !qrRef.current) return;
     const gezeichnet = qrZeichnen(qrRef.current, qrText, {
+      maxBytes: QR_MAX_BYTES_VCARD,
       width: 180, height: 180,
       colorDark: '#1a1a1a', colorLight: '#ffffff',
       beschriftung: qrBeschriftung,
