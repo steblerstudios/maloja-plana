@@ -7,11 +7,16 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
-**Stand:** 2026-09-21, 17:40 (`main` = `47866b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 15:32 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen neun PRs** · **2680 Tests grün auf dem Zweig von #258**, Startdatei 63,39 kB von 65 · **ein offener PR: #258, Entwurf**)
+**Stand:** 2026-09-21, 18:30 (`main` = `cfa39d6` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 15:32 UTC** · **#259** Vorname raus aus dieser Datei und dem Audit-Blatt, **gemergt 16:26 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen zehn PRs** · **2680 Tests grün auf dem Zweig von #258**, Startdatei 63,39 kB von 65 · **zwei offene PRs: #258 und #260, beide Entwurf**)
 
-> *Nachgeführt am 21.09. abends: #256 stand hier noch als «← dieser PR», war aber um
-> 15:32 UTC gemergt. Dieselbe Falle wie am Morgen, eine Ebene höher — **eine Stand-Zeile
-> altert nicht langsam, sie wird mit einem Merge auf einen Schlag falsch.***
+> *Zweimal nachgeführt am 21.09. Erst stand #256 hier als «← dieser PR», war aber um
+> 15:32 UTC gemergt. Dann nannte die Zeile `47866b5`, während #259 um 16:26 UTC schon
+> auf `main` lag — **in genau dem Block, der vor dieser Falle warnt.** Gefunden hat es
+> eine Peer-Sitzung, nicht ich.*
+>
+> **Eine Stand-Zeile altert nicht langsam, sie wird mit einem Merge auf einen Schlag
+> falsch — und wer sie schreibt, ist dagegen nicht immun.** Wer sie anfasst, misst
+> vorher `git log -1 origin/main`, auch wenn er glaubt, den Stand zu kennen.
 
 > ### 🔣 Zeichenschicht, Fokus-Falle, Glossar — PR #258, **Entwurf, nicht gemergt** (2026-09-21)
 >
