@@ -60,11 +60,20 @@ testbar), `src/utils/` (Schreib-APIs), `src/components/`, `src/hooks/`, `src/con
 
 ```
 src/data/vorgaenge.js      Registry + Regeln  ← wie src/data/gepaeck.js
-src/utils/vorgaenge.js     Schreib-API        ← wie src/utils/merkliste.js
+src/utils/vorgaenge.js     Schreibweg
 ```
 
 Ein zweiter Satz Konventionen neben dem bestehenden läuft still auseinander. Das ist dieselbe
 Falle wie „zwei Quellen für eine Wahrheit", nur eine Ebene höher.
+
+> **Nachtrag beim Bauen, 22.09.:** der Schreibweg darf **nicht** dem Muster von
+> `utils/merkliste.js` folgen. Die Merkliste hat einen eigenen Schlüssel und schreibt direkt;
+> `or5_data` dagegen wird per Autosave aus dem React-Zustand geschrieben
+> (`main.jsx:679`, Intervall). Ein direkter Schreibzugriff von aussen würde bei der nächsten
+> Runde **still überschrieben** und erst beim Neuladen als Verlust sichtbar.
+> Deshalb sind alle Funktionen in `utils/vorgaenge.js` **rein**: `data` hinein, neues `data`
+> hinaus, die Oberfläche reicht es an `setData` weiter — wie jedes Kapitel-Feld.
+> Nebenwirkung: **null** neue direkte `localStorage`-Zugriffe (O5).
 
 ### K2 — Kein neuer `or5_`-Schlüssel. Die Vorgänge gehören **in `or5_data`**.
 
@@ -194,11 +203,11 @@ kantonal verschieden und hat im Repo keine Quelle.
 
 ## 6 · Bau-Reihenfolge
 
-| | Schritt | Grösse |
-|---|---|---|
-| V1 | `src/data/vorgaenge.js` (Registry + Umzugs-Regeln) + Tests — **ohne UI** | S |
-| V2 | `src/utils/vorgaenge.js` (Lesen/Anlegen/Ändern/Abschliessen) in `or5_data` | S |
-| V3 | Migration **v4 → v5**: `vorgaenge: []`, sonst nichts | S |
+| | Schritt | Grösse | Stand |
+|---|---|---|---|
+| V1 | `src/data/vorgaenge.js` (Registry + Umzugs-Regeln) + Tests — **ohne UI** | S | ✅ 22.09. |
+| V2 | `src/utils/vorgaenge.js` — reine Funktionen auf `data` (s. Nachtrag K1) | S | ✅ 22.09. |
+| V3 | Migration **v4 → v5**: `vorgaenge: []`, sonst nichts | S | ✅ 22.09. |
 | V4 | Startbild „Umzug starten" (Datum + Typ) | M |
 | V5 | `UmzugAblauf` an den Vorgang hängen (`useState` → Vorgang) | M |
 | V6 | Aufgaben verweisen auf Merkliste/Kalender (§4) | M |

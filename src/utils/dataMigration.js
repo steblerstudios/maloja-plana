@@ -9,7 +9,7 @@
 //   3. Unknown versions are left untouched (no silent corruption)
 //   4. Failures leave original data intact
 
-export const CURRENT_DATA_VERSION = 4;
+export const CURRENT_DATA_VERSION = 5;
 
 // ─── Migration functions ────────────────────────────────────
 // Each takes a data object at version N and returns version N+1.
@@ -71,6 +71,23 @@ const migrations = {
       delete behoerden.taxFillingDeadline;
     }
     return { ...data, behoerden, _version: 4, _migratedAt: new Date().toISOString() };
+  },
+
+  // v4 → v5: Leeres Feld für Vorgänge (O12). Bewusst langweilig.
+  //
+  // Es wird NICHTS aus Altdaten gedeutet: kein früher geöffneter Umzug wird
+  // nachträglich zu einem Vorgang gemacht, keine Merkpunkte werden einem Vorgang
+  // zugeordnet. Ein Vorgang beginnt erst, wenn die Person ihn bewusst startet.
+  //
+  // Ein vorhandenes (gültiges) Feld wird nicht angefasst — z.B. aus einer
+  // Sicherung, die in einer neueren Fassung entstanden ist.
+  4: (data) => {
+    return {
+      ...data,
+      vorgaenge: Array.isArray(data.vorgaenge) ? data.vorgaenge : [],
+      _version: 5,
+      _migratedAt: new Date().toISOString(),
+    };
   },
 };
 

@@ -44,16 +44,22 @@ function migrateV1toV2(data) {
 
 ## Current State
 
-| Data Version | App Version | Changes |
-|-------------|-------------|---------|
-| 1 | 0.1.0–0.5.0 | Initial schema |
+*Nachgetragen 22.09.2026: diese Tabelle stand bei `1`, während der Code bereits bei `4` war —
+die beiden Zeilen unter „Future Migrations" (v2, v3) waren längst gebaut. Gegen
+`src/utils/dataMigration.js` gelegt und berichtigt.*
+
+| Data Version | Changes |
+|-------------|---------|
+| 1 | Legacy-Daten mit `_version` + Metadaten umhüllt |
+| 2 | `basis.fullName` → `firstName` + `lastName` |
+| 3 | `basis.household` (adults, children, isRetired) aus `dependents` abgeleitet |
+| 4 | `behoerden.taxFillingDeadline` → `taxFilingDeadline` (Tippfehler) |
+| 5 | `vorgaenge: []` — leeres Feld für Vorgänge (O12). Deutet nichts aus Altdaten |
 
 ## Future Migrations (Planned)
 
-| Data Version | Trigger | Changes |
-|-------------|---------|---------|
-| 2 | Phase 9 | `basis.dependents` → `basis.household[]` array |
-| 3 | Phase 9 | Per-profile PIN hash storage |
+*Keine geplanten. Eine neue Fassung entsteht, wenn ein echter Feldwechsel sie verlangt —
+nicht auf Vorrat.*
 
 ## Recovery Procedures
 
