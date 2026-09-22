@@ -164,7 +164,14 @@ describe('6 · QR: höfliche Ansage «erstellt», ohne Inhalt, Hinweis bleibt oh
       expect(src).toMatch(/role: 'status', 'aria-live': 'polite', style: visuallyHiddenStyle \}, qrAnsage\)/);
       // gesetzt erst nach erfolgreichem Zeichnen, vorher geleert (damit ein zweites Erzeugen wieder angesagt wird)
       expect(src).toMatch(/setQrAnsage\(''\)/);
-      expect(src).toMatch(/if \(ok\) setQrAnsage\(t\('common\.qrErstellt'\)\)/);
+      // 🛑 Geprüft wird die ZUSAGE — die Ansage steht hinter einer Bedingung, nie nackt —,
+      // nicht ihre Schreibweise. Bis zum 22.09.2026 stand hier `if \(ok\)` wörtlich; als der
+      // KKScanner einen zweiten Code bekam, wurde daraus `if (okLesbar || okUebernahme)` und
+      // der Test rot, obwohl die Zusage unverändert galt. Ein Test, der die Bauweise
+      // festschreibt, meldet Umbauten statt Fehler.
+      const ansagen = [...src.matchAll(/setQrAnsage\(t\('common\.qrErstellt'\)\)/g)];
+      expect(ansagen.length).toBe(1);
+      expect(src.slice(0, ansagen[0].index).slice(-120)).toMatch(/\bif \([^)]*\)\s*$/);
       // der Hinweis selbst bleibt ohne Live-Region (Vorgabe 0.1.36)
       const i = src.indexOf("t('notfallDossier.qrHint')");
       const element = src.slice(src.lastIndexOf('React.createElement', i), i);
