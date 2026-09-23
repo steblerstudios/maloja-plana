@@ -12,7 +12,7 @@
   "categories": ["lifestyle", "productivity", "utilities"],
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/app-icon.svg",
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any"
@@ -24,7 +24,7 @@
       "purpose": "any"
     },
     {
-      "src": "/icon-192.png",
+      "src": "/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
@@ -36,7 +36,7 @@
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -47,25 +47,25 @@
       "name": "Steuerrechner",
       "short_name": "Steuern",
       "url": "./#/tax",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any" }]
     },
     {
       "name": "IPV-Rechner",
       "short_name": "IPV",
       "url": "./#/premium",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any" }]
     },
     {
       "name": "Notfallkarte",
       "short_name": "Notfall",
       "url": "./#/notfalleinstieg",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any" }]
     },
     {
       "name": "Dokument-Tresor",
       "short_name": "Tresor",
       "url": "./#/tresor",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+      "icons": [{ "src": "/app-icon.svg", "sizes": "any" }]
     }
   ],
   "prefer_related_applications": false

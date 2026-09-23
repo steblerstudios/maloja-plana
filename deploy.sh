@@ -144,6 +144,34 @@ if [ -f dist/sitemap.xml ]; then
   fi
 fi
 
+# ─── version.json: welcher Commit ist live? ──────────────────────────────────
+# Bis 23.09.2026 stand der ausgelieferte Commit nur in dieser Konsolen-Ausgabe. Alles,
+# was danach «wie weit ist live hinter main» messen wollte, nahm den Release-Tag als
+# Ersatz — und der wandert nur, wenn sich die Versionsnummer ändert. Folge: ein
+# «Deploy-Rückstand» von 133 Commits, wo 4 waren, der während eines Deploys WUCHS.
+# Jetzt liegt die Antwort an der Quelle: https://malojaplana.ch/version.json.
+# `sauber: false` heisst: gebaut aus einem Arbeitsbaum mit ungespeicherten Änderungen —
+# dann ist der Commit nur eine Annäherung, und das soll man sehen, nicht raten.
+# Enthält nichts Persönliches: Commit-Hash und Version stehen ohnehin im öffentlichen Repo.
+VOLL_COMMIT="$(git rev-parse HEAD 2>/dev/null || echo '')"
+if [ -z "$(git status --porcelain 2>/dev/null)" ]; then SAUBER=true; else SAUBER=false; fi
+cat > dist/version.json <<JSON
+{
+  "commit": "${VOLL_COMMIT}",
+  "version": "$(node -p "require('./package.json').version" 2>/dev/null || echo '')",
+  "branch": "${BRANCH}",
+  "gebaut": "$(TZ=Europe/Zurich date +%Y-%m-%dT%H:%M:%S%z)",
+  "sauber": ${SAUBER},
+  "ziel": "${ENV_NAME}"
+}
+JSON
+if node -e "const v=require('./dist/version.json'); if(!/^[0-9a-f]{40}\$/.test(v.commit)) process.exit(1)"; then
+  echo "→ version.json → ${COMMIT} (sauber: ${SAUBER})"
+else
+  echo "✗ dist/version.json ungültig — kein Commit-Hash darin?" >&2
+  exit 1
+fi
+
 # ─── SEO/GEO-Fundament-Gate ──────────────────────────────────────────────────
 # Deterministischer Check über dist/ (analog /seo-geo Modus C, Stebler Studios):
 # title/description/canonical/OG/JSON-LD + robots.txt/sitemap.xml müssen da sein.

@@ -143,16 +143,18 @@ describe('Allein stehende Piktogramme · Höchststand, der nur sinken darf', () 
   // 23.09.2026: 6 → 5. Gezählt ab jetzt auch in `.js`: acht `○` aus
   // `budgetSync.js` sind weg (sie standen ohne aria-hidden auf dem Schirm),
   // dazu kommt das `✓` in der Druck-Tabelle des Dossiers (`dossierGenerator.js`).
-  // In `.jsx` bleiben 4: `stipResultMarker` (✓ ○ ⓘ, Ton-Entscheid offen) und
-  // die antippbare Glossar-Markierung ⓘ.
-  const HOECHSTSTAND = 5;
+  // Später am 23.09.2026: 5 → 2. `stipResultMarker` (✓ ○ ⓘ) ist eine Form
+  // geworden (`StatusForm`, wie in der KVG-Statuslogik). Es bleiben die
+  // antippbare Glossar-Markierung ⓘ und das ✓ im Druck-Dossier. Damit gibt es
+  // kein allein stehendes ○ mehr — es steht auch nicht mehr in der Liste.
+  const HOECHSTSTAND = 2;
 
   it(`höchstens ${HOECHSTSTAND} allein stehende Piktogramme`, () => {
     expect(alleinStehende().length).toBeLessThanOrEqual(HOECHSTSTAND);
   });
 
   it('kein Zeichen ausserhalb der bekannten Liste', () => {
-    const BEKANNT = new Set([...'✓○ⓘ']);
+    const BEKANNT = new Set([...'✓ⓘ']);
     const neue = [...new Set(alleinStehende().map((g) => g.ch))].filter((c) => !BEKANNT.has(c));
     expect(neue).toEqual([]);
   });
@@ -166,5 +168,51 @@ describe('Typografie bleibt, wo sie ist', () => {
     const typo = geklebte().filter((g) => TYPOGRAFIE.has(g.ch));
     expect(typo.length).toBeGreaterThan(0);
     expect(piktogramme().some((g) => TYPOGRAFIE.has(g.ch))).toBe(false);
+  });
+});
+
+describe('Template-Strings · die Schicht, die die beiden Zählungen oben nicht sehen', () => {
+  // Stand 24.09.2026. Die Zählungen oben lesen nur '…' und "…". Zeichen in
+  // `…` blieben unsichtbar — so standen drei ○ vor Telefon, E-Mail und Adresse
+  // im gedruckten Lebenslauf (`cvGenerator.js`). Die sind weg; was hier bleibt,
+  // steht in der Erlaubnisliste mit Datei UND Zeichen.
+  // 🛑 Grenze: die Paarung `…` ist einfach und kennt keine VERSCHACHTELTEN
+  // Vorlagen (`${a.map(x => `• ${x}`)}`). Das • im Manifest-Listenpunkt von
+  // zipExport.js fällt so durch die Lücke — gewollt ist es trotzdem.
+  const ERLAUBT = new Set([
+    // Text-Manifest der Datensicherung: eine .txt-Datei, die Linien sind dort
+    // die Gestaltung selbst.
+    'zipExport.js:─', 'zipExport.js:═',
+    // Fusszeile des Lebenslaufs: «Erstellt mit … • Datum», ein Trenner.
+    'cvGenerator.js:•',
+  ]);
+
+  const inVorlagen = () => {
+    const gefunden = [];
+    for (const datei of jsxDateien(SRC)) {
+      // Kommentare und Konsolen-Meldungen sind nicht die Oberfläche — und ein
+      // Backtick in einem Kommentar würde die Paarung sonst verschieben.
+      const text = fs.readFileSync(datei, 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .split('\n')
+        .filter((z) => !z.trimStart().startsWith('//') && !/console\.\w+\(/.test(z))
+        .join('\n');
+      for (const m of text.matchAll(/`(?:[^`\\]|\\.)*`/g)) {
+        for (const ch of m[0]) {
+          if (!istJenseitsAscii(ch) || !IST_SYMBOL.test(ch) || TYPOGRAFIE.has(ch)) continue;
+          gefunden.push(`${path.basename(datei)}:${ch}`);
+        }
+      }
+    }
+    return gefunden;
+  };
+
+  it('kein Piktogramm ausserhalb der Erlaubnisliste', () => {
+    expect([...new Set(inVorlagen())].filter((k) => !ERLAUBT.has(k))).toEqual([]);
+  });
+
+  it('jede Erlaubnis wird noch gebraucht (sonst sieht der Test nichts mehr)', () => {
+    const da = new Set(inVorlagen());
+    expect([...ERLAUBT].filter((k) => !da.has(k))).toEqual([]);
   });
 });

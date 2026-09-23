@@ -304,6 +304,11 @@ ${istErklaerseite ? `          <li><a href="${pfadIntern('rechtliches', sprache)
       <a href="https://github.com/steblerstudios/maloja-plana" rel="noopener">${esc(R.fussQuellcode)}</a></p>
       <p><a href="${pfadIntern('rechtliches', sprache)}">${esc(R.rechtlichesLink)}</a> —
       ${esc(R.fussOhneCode)}</p>
+      <!-- Melde-Weg VOR dem Beta-Gate. Die Adresse steht schon oben als Kontakt; hier
+           mit Betreff, damit eine Meldung im Postfach als solche erkennbar ist und nicht
+           zwischen allgemeinen Anfragen untergeht. Kein Formular: das waere ein
+           Datenabfluss und widerspricht local-first / CSP self-only. -->
+      <p><a href="mailto:info@malojaplana.ch?subject=${encodeURIComponent('Maloja Plana: ' + R.meldenLink)}">${esc(R.meldenLink)}</a></p>
       <p class="sprachen">${esc(R.spracheLabel)}: ${sprachWaehler(seite.pfad, sprache)}</p>
     </footer>
   </div>
