@@ -198,6 +198,21 @@ export const BetaGate = ({ children }) => {
           textDecoration: 'underline', padding: '4px',
         }
       }, t('beta.legalLink')),
+      // Melde-Weg VOR dem Gate. Bis 23.09.2026 führte von hier aus nur der
+      // Rechtliches-Link zur Adresse im Impressum — wer ohne Code kam und einen Fehler
+      // sah, hatte keinen benannten Weg. Bewusst derselbe Schlüssel wie im Fehlerschirm
+      // (`error.report`): eine Zusage, ein Wortlaut. Kein Formular (Datenabfluss,
+      // widerspricht local-first / CSP self-only) — ein Entwurf im Mailprogramm.
+      React.createElement('a', {
+        href: 'mailto:info@malojaplana.ch?subject=' + encodeURIComponent('Maloja Plana: ' + t('error.report'))
+          + '&body=' + encodeURIComponent('\n\n\n— — —\nAnsicht: Code-Wand'),
+        style: {
+          display: 'inline-block', minHeight: '44px', lineHeight: '44px',
+          marginTop: space.xs, padding: '0 4px',
+          color: palette.mid, fontSize: text.xs, fontFamily: 'inherit',
+          textDecoration: 'underline', textUnderlineOffset: '2px',
+        }
+      }, t('error.report')),
       React.createElement('p', {
         style: { fontSize: text.xs, color: palette.soft, marginTop: space.sm }
       }, 'Stebler Studios · Basel')
