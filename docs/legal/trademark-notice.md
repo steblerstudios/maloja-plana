@@ -37,4 +37,22 @@ Status: Noch nicht beim IGE (Eidgenössisches Institut für Geistiges Eigentum) 
 
 **Empfehlung:** Vor kommerziellem Launch eine Schweizer Markenanmeldung beim IGE prüfen (Klasse 9: Software, Klasse 42: SaaS). Kosten: ca. CHF 550 für 3 Klassen, Schutzdauer 10 Jahre.
 
+### Registerrecherche vom 23.09.2026 (Swissreg, Suchwort «maloja»)
+
+7 Treffer, **davon genau einer aktiv**: die IR-Marke **«maloja» Nr. 1786104** der
+Maloja Clothing GmbH (Rimsting, DE) für die Klassen **18** (Leder/Taschen), **25**
+(Bekleidung) und **35** (Werbung/Handel). Die übrigen vier «Maloja»-Marken (MALOJA
+16746/2019 · Maloja Bergrennen 58947/2006 · maloja fig. 526678 · Maloja-Bitter
+16297/2021) sind **gelöscht**; zwei weitere Treffer hängen an Engadiner Adressen.
+
+**Klassen 9 und 42 sind in der Schweiz frei.** «Maloja Plana» selbst ist nirgends
+eingetragen.
+
+Was die Recherche **nicht** klärt: ob das IGE den Ortsnamen «Maloja» als
+Herkunftsangabe oder Gemeingut beanstandet (MSchG Art. 2); nicht eingetragene
+Kennzeichen, Handelsregister-Firmen und Domains waren nicht Teil der Suche; und es
+war eine Wortlaut-, keine Ähnlichkeitsrecherche.
+
+Einordnung im Zusammenhang: `docs/security/compliance-overview.md`, Abschnitt 11.
+
 Infos: https://www.ige.ch/de/etwas-schuetzen/marken

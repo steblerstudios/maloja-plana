@@ -37,8 +37,16 @@ Registereintrag nötig ist.
 | **KAG** (kollektive Kapitalanlagen) | Nein | Kein Fonds, kein Vertrieb | — | — |
 | **GwG** (Geldwäscherei) | Nein | Keine Finanzintermediation, kein Geldfluss über Maloja | — | — |
 | **FIDLEG** (Finanzdienstleistungen) | Nein | Keine persönliche Empfehlung zu **Finanzinstrumenten**. `Saeule3aTracker.jsx` und `VorsorgeRechner.jsx` erfassen und rechnen, sie empfehlen kein Produkt. 3a-Konten und Freizügigkeitskonten sind keine Finanzinstrumente | `src/Saeule3aTracker.jsx`, `src/VorsorgeRechner.jsx` — kein Produktname, keine Empfehlung | **Sobald ein 3a-**Fonds** oder ETF empfohlen wird**, ist das Anlageberatung: Kundenberater-Register, Ombudsstellen-Anschluss, Verhaltensregeln |
-| **VAG** (Versicherungsvermittlung) | Nein | Kein Vertrag wird vermittelt, keine Provision von einem Versicherer. Die Wechselpfade führen auf **amtliche** Vergleiche, nicht auf Anbieter | `src/KVGWechsel.jsx`, `src/ZusatzWechsel.jsx`; Test C: kein Versicherername in den Wechseltexten (5 Sprachen) | **Sobald für einen abgeschlossenen Vertrag Geld von einem Versicherer fliesst** — auch als Affiliate-Provision: FINMA-Register, Berufshaftpflicht, Weiterbildung |
+| **VAG Art. 41** (Versicherungsvermittlung) | Nein | Kein Vertrag wird vermittelt, keine Provision von einem Versicherer. Die Wechselpfade führen auf **amtliche** Vergleiche, nicht auf Anbieter | `src/KVGWechsel.jsx`, `src/ZusatzWechsel.jsx`; Test C: kein Versicherername in den Wechseltexten (5 Sprachen) | **Sobald für einen abgeschlossenen Vertrag Geld von einem Versicherer fliesst** — auch als Affiliate-Provision |
 | **KVG/KVAG + Branchenvereinbarung** | Nein | Dasselbe: keine Vermittlung in der Grundversicherung | wie oben | wie oben; in der Grundversicherung zusätzlich die Vorgaben der Branchenvereinbarung |
+
+**VAG Art. 41 im Wortlaut** (Fedlex, geprüft 23.09.2026): «Ungebundene
+Versicherungsvermittlerinnen und -vermittler dürfen nur tätig werden, wenn sie im
+Register nach Artikel 42 eingetragen sind.» Eingetragen wird, wer Sitz oder Wohnsitz
+in der Schweiz hat, guten Ruf geniesst, die Fähigkeiten nach Art. 43 nachweist **und
+eine Berufshaftpflichtversicherung abgeschlossen hat**. Diese Fassung ist seit dem
+**1. Januar 2024** in Kraft (BG vom 18. März 2022, AS 2023 355) — das Datum ist am
+Gesetzestext geprüft, nicht erinnert.
 
 ### Der Affiliate-Entscheid ist der eine Hebel
 
@@ -79,8 +87,11 @@ Versicherungsanbieter (Test B).
 ## 3. nDSG-Compliance
 
 Das ist das eigentliche Regime von Maloja Plana: verarbeitet werden **besonders
-schützenswerte Personendaten** (Gesundheit, Sozialhilfe, Betreibungen — DSG Art. 5
-lit. c). Dass sie das Gerät nicht verlassen, ist die tragende Schutzmassnahme.
+schützenswerte Personendaten**. DSG Art. 5 lit. c nennt ausdrücklich «Daten über die
+Gesundheit» (Ziff. 2) und «Daten über Massnahmen der sozialen Hilfe» (Ziff. 6) —
+beides Kernstoff dieser App (Fedlex, geprüft 23.09.2026). Dass diese Daten das Gerät
+nicht verlassen, ist die tragende Schutzmassnahme, nicht ein Nebeneffekt der
+Architektur.
 
 | Anforderung | Artikel | Umsetzung | Dokument |
 |---|---|---|---|
@@ -122,8 +133,21 @@ Act (siehe 8.).
 | Pflicht | Umsetzung |
 |---|---|
 | Impressum (Art. 3 Abs. 1 lit. s) | `docs/legal/impressum.md` + Tab «Impressum» in der App: Anbieterin, Ort, E-Mail |
+| Bestellablauf (Art. 3 Abs. 1 lit. s Ziff. 2–4) | **Noch nicht anwendbar** — siehe unten |
 | Keine irreführenden Angaben (Art. 3 Abs. 1 lit. b) | Absolute Privatheits-Werbung («100 % privat/lokal») ist seit 17.09.2026 untersagt und mit `src/__tests__/e43Werbeaussagen.test.js` in sieben Dateien gesichert |
 | Transparenz bezahlter Empfehlungen | Affiliate-Marker + Hinweistext in fünf Sprachen, bevor der erste bezahlte Link existiert |
+
+**Wortlaut geprüft (Fedlex, 23.09.2026):** Art. 3 Abs. 1 lit. s richtet sich an
+Anbietende von «Waren, Werken oder Leistungen **im elektronischen
+Geschäftsverkehr**» und verlangt vier Dinge: (1) klare und vollständige Angaben zu
+Identität und Kontaktadresse inkl. E-Mail, (2) Hinweis auf die technischen Schritte
+zum Vertragsschluss, (3) technische Mittel, um Eingabefehler vor der Bestellung zu
+erkennen und zu korrigieren, (4) unverzügliche elektronische Bestellbestätigung.
+
+Heute erfüllt Maloja Punkt 1 — die Punkte 2–4 setzen einen Bestellvorgang voraus,
+den es nicht gibt. **Mit der Paywall im Oktober werden sie Pflicht**, und zwar als
+Bauarbeit, nicht als Textarbeit (Bestellstrecke, Korrekturmöglichkeit,
+Bestätigungsmail).
 
 ---
 
@@ -131,20 +155,32 @@ Act (siehe 8.).
 
 `docs/legal/nutzungsbedingungen.md`, in der App unter «Nutzung».
 
-**Grenze:** Ein pauschales «keine Haftung» trägt nur begrenzt — nach Art. 100 OR
-lässt sich die Haftung für **Absicht und grobe Fahrlässigkeit** nicht wegbedingen.
-Der Haftungsausschluss schützt also gegen Rechenungenauigkeiten im Orientierungs-
-werkzeug, nicht gegen jede Nachlässigkeit. Frage an K48.
+**Grenze, im Wortlaut geprüft** (Fedlex, 23.09.2026): «Eine zum voraus getroffene
+Verabredung, wonach die Haftung für rechtswidrige Absicht oder grobe Fahrlässigkeit
+ausgeschlossen sein würde, ist nichtig» (OR Art. 100 Abs. 1). Ein pauschales «keine
+Haftung» trägt also nur begrenzt: gegen Rechenungenauigkeiten im
+Orientierungswerkzeug ja, gegen jede Nachlässigkeit nein. Frage an K48.
 
 ---
 
 ## 6. URG — Quellen
 
+**URG Art. 5 im Wortlaut** (Fedlex, geprüft 23.09.2026): nicht geschützt sind
+«Gesetze, Verordnungen, völkerrechtliche Verträge und andere amtliche Erlasse»
+(lit. a) sowie «Entscheidungen, Protokolle und Berichte von Behörden und öffentlichen
+Verwaltungen» (lit. c).
+
 | Quelle | Geschützt? | Folge für Maloja |
 |---|---|---|
 | Gesetze, Verordnungen, Entscheide, amtliche Tarife (Art. 5 URG) | Nein — amtliche Werke | Frei nutzbar; Fedlex-Verweise erwünscht |
 | Kantonale Handbücher, Merkblätter | Je nach Herausgeber | Zahlen übernehmen, Formulierungen nicht |
-| **SKOS-Richtlinien** | **Ja** — Werk eines privaten Vereins, kein amtliches Werk | **Beträge und Logik dürfen nachgebaut werden (Fakten sind frei), Wortlaut und Aufbau nicht** |
+| **SKOS-Richtlinien** | **Vermutlich ja** — Werk eines privaten Vereins, kein amtlicher Erlass | **Beträge und Logik dürfen nachgebaut werden (Fakten sind frei), Wortlaut und Aufbau nicht** |
+
+> **Offene Rechtsfrage für K48:** Mehrere Kantone erklären die SKOS-Richtlinien in
+> ihrem Sozialhilferecht für verbindlich. Ob sie dadurch für diesen Kanton zum
+> «amtlichen Erlass» im Sinn von Art. 5 lit. a werden, ist eine Auslegungsfrage —
+> hier **nicht** entschieden. Die sichere Linie gilt unabhängig davon: Werte
+> nachbauen, Wortlaut nicht übernehmen.
 
 Heutiger Stand: `src/data/sozialhilfeRechner.js` nennt die Quelle (SKOS-RL Kapitel
 C.3–C.6, D.3.1) und bildet **Werte** ab, keinen übernommenen Text. Das ist die
@@ -185,6 +221,8 @@ beiden Verwaltungs-Ansichten.
 Noch nicht anwendbar (Paywall-Entscheid steht auf Oktober, `docs/BAULISTE-2026-09-30.md` E4).
 Dann gilt:
 
+- **UWG Art. 3 Abs. 1 lit. s Ziff. 2–4**: Bestellstrecke, Korrektur von Eingabefehlern,
+  elektronische Bestellbestätigung — siehe Abschnitt 4
 - **PBV**: Preise inkl. MWST, klar und vollständig angeschrieben
 - **MWST**: Steuerpflicht ab CHF 100 000 Jahresumsatz
 - **Abo**: kein allgemeines Widerrufsrecht im Schweizer Online-Handel, aber Laufzeit,
@@ -210,15 +248,37 @@ Dann gilt:
 
 Status: **nicht beim IGE eingetragen** (`docs/legal/trademark-notice.md`).
 
-Zwei Dinge gehören **vor** die Anmeldung, nicht danach:
+### Registerrecherche, 23.09.2026 (Swissreg, Suchwort «maloja»)
 
-1. «Maloja» ist ein Ortsname **und** eine eingetragene Bekleidungsmarke. Klasse 9
-   (Software) und 42 (SaaS) sind andere Klassen als 25 (Bekleidung) — vermutlich
-   haltbar, aber das ist eine Recherche, keine Annahme.
-2. Der Name wird in Dokumenten schon wie eine Marke behandelt (White-Label-Passus in
-   `trademark-notice.md`). Das trägt erst mit Eintragung.
+7 Treffer, davon **genau einer aktiv**:
 
-Kosten: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
+| Marke | Nr. | Klassen | Status | Inhaberin |
+|---|---|---|---|---|
+| **maloja** | 1786104 (IR) | **18, 25, 35** | **Aktiv, eingetragen** | Maloja Clothing GmbH, Rimsting (DE) |
+| MALOJA | 16746/2019 | 12, 39 | Gelöscht | SUEBI LTD |
+| Maloja Bergrennen Maloja Hillclimb | 58947/2006 | 18, 20, 25, 28, 32 … | Gelöscht | Automobile Culture AG |
+| maloja (fig.) | 526678 | 25, 28 | Gelöscht | Privatperson |
+| Maloja-Bitter | 16297/2021 | 25, 33 | Gelöscht | Privatperson |
+
+Zwei weitere Treffer («Segantini», «od open doors») hängen an Engadiner Adressen,
+nicht am Namen.
+
+**Ergebnis: In den Klassen 9 (Software) und 42 (SaaS) ist «maloja» in der Schweiz
+frei.** Die aktive Marke deckt Leder/Taschen (18), Bekleidung (25) und Werbung/Handel
+(35) — andere Waren und Dienstleistungen. «Maloja Plana» selbst ist nirgends
+eingetragen.
+
+### Was die Recherche **nicht** klärt
+
+- **Ortsnamen-Frage:** «Maloja» ist ein Ort in Graubünden. Eine Marke kann als
+  Herkunftsangabe oder als Gemeingut zurückgewiesen werden (MSchG Art. 2) — die
+  Zusammensetzung «Maloja Plana» und der Schweizer Sitz helfen, aber das entscheidet
+  das IGE, nicht diese Tabelle.
+- Nicht eingetragene Kennzeichen, Firmennamen im Handelsregister und Domains sind
+  nicht mitgesucht.
+- Die Suche war ein Wortlaut-Treffer auf «maloja», keine Ähnlichkeitsrecherche.
+
+Kosten der Anmeldung: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 
 ---
 
@@ -274,13 +334,35 @@ Kosten: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 
 ---
 
-## 15. Was hier **nicht** belegt ist
+## 15. Was **geprüft** ist und was nicht
+
+### Am Gesetzestext gegengelesen, 23.09.2026 (Fedlex)
+
+| Bestimmung | Was geprüft wurde |
+|---|---|
+| **DSG Art. 5 lit. c** (SR 235.1) | Gesundheit (Ziff. 2) und Massnahmen der sozialen Hilfe (Ziff. 6) sind ausdrücklich genannt |
+| **DSG Art. 21** | Informationspflicht bei automatisierter Einzelentscheidung — greift nur bei Rechtsfolge oder erheblicher Beeinträchtigung |
+| **URG Art. 5** (SR 231.1) | Wortlaut der nicht geschützten Werke, lit. a und lit. c |
+| **OR Art. 100 Abs. 1** (SR 220) | Wegbedingung für Absicht/grobe Fahrlässigkeit ist nichtig |
+| **UWG Art. 3 Abs. 1 lit. s** (SR 241) | Alle vier Ziffern; gilt für Angebote «im elektronischen Geschäftsverkehr» |
+| **VAG Art. 41** (SR 961.01) | Registrierungspflicht, Voraussetzungen, Inkraftsetzung 1.1.2024 |
+
+### Am Register gegengelesen
+
+| Quelle | Ergebnis |
+|---|---|
+| **Swissreg** (IGE), Suchwort «maloja», 23.09.2026 | 7 Treffer, 1 aktiv (Klassen 18/25/35) — Abschnitt 11 |
+
+### Was hier **nicht** belegt ist
 
 - **Nichts davon ist juristisch geprüft.** Die Einordnungen stammen aus dem Code und
-  aus den Gesetzestexten, nicht von einer Jurist:in (K48).
-- Datumsangaben zu laufenden Gesetzgebungsverfahren (KI-Vorlage Schweiz,
-  VAG-Revision, European Accessibility Act) sind hier bewusst knapp gehalten und
-  gehören vor jedem Entscheid auf Fedlex bzw. EUR-Lex gegengelesen.
+  aus den Gesetzestexten, nicht von einer Jurist:in (K48). Einen Artikel gelesen zu
+  haben ist nicht dasselbe, wie seine Anwendung auf diesen Fall zu beurteilen.
+- Zum **KI-Recht der Schweiz** und zum **European Accessibility Act** steht hier
+  bewusst kein Datum: beide wurden nicht am Erlass gegengelesen, anders als die
+  sechs Bestimmungen oben. Vor einem Entscheid auf Fedlex bzw. EUR-Lex nachsehen.
+- Ob die SKOS-Richtlinien in einem Kanton durch Verbindlicherklärung zum amtlichen
+  Erlass werden — offene Auslegungsfrage, Abschnitt 6.
 - Ob die Formulierungen der Haftungsausschlüsse tragen, ist eine Rechtsfrage, keine
   Code-Frage (siehe `docs/legal/non-legal-advice-boundary.md`).
 - Die Tests in `src/__tests__/regulierungsgrenzen.test.js` sichern die **Zusagen**,
