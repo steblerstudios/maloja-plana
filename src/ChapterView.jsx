@@ -29,6 +29,7 @@ import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { giltAlsVerheiratet } from './utils/zivilstand.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -59,6 +60,12 @@ const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
+
+// K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
+// «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
+// im Haushalt erst eine Person erfasst ist. Eingetragene Partnerschaft zählt wie verheiratet.
+export const zeigtPartnereinkommen = (adultCount, maritalStatus) =>
+  adultCount >= 2 || giltAlsVerheiratet(maritalStatus) || maritalStatus === 'cohabiting';
 
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
@@ -113,12 +120,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   useEffect(() => {
     setActiveSection(null);
     if (sectionTabs.length < 2) return;
-    const root = document.getElementById('mp-main');
-    if (!root) return;
+    // Das Dokument scrollt, nicht mehr #mp-main — die Linie misst deshalb ab dem
+    // Fensterrand. Sie liegt knapp unter der klebenden Kopfzeile plus dem klebenden
+    // Reiter darunter; die Kopfhöhe kommt aus --mp-kopf-h (main.jsx misst sie).
+    const kopfHoehe = () => {
+      const roh = getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h');
+      const zahl = parseFloat(roh);
+      return Number.isFinite(zahl) ? zahl : 73;
+    };
     const compute = () => {
       const anchors = document.querySelectorAll('[data-section-k]');
       if (!anchors.length) return;
-      const line = root.getBoundingClientRect().top + 120;
+      const line = kopfHoehe() + 120;
       let current = anchors[0].getAttribute('data-section-k');
       for (const el of anchors) {
         if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
@@ -127,9 +140,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       setActiveSection(current);
     };
     compute();
-    root.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('scroll', compute, { passive: true });
     window.addEventListener('resize', compute);
-    return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
+    return () => { window.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
   }, [chapter.key, expandedSection, showSecondary, sectionTabs.length]);
 
   // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
@@ -258,7 +271,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 border: '1px solid ' + (selected ? palette.sage : palette.border),
                 borderRadius: radius.sm + 'px',
                 background: selected ? palette.sage + '18' : palette.surface,
-                color: selected ? palette.sage : palette.text,
+                color: selected ? (palette.sageDeep || palette.sage) : palette.text,
                 cursor: 'pointer', transition: 'all ' + duration.fast + 'ms ' + ease,
               }
             }, opt.label);
@@ -321,8 +334,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         }, '+ ' + tr('chapters.basis.fields.household.addAdult'))
       ),
 
-      // Partner income — only when 2+ adults
-      adultCount >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
+      // Partnereinkommen: bei 2+ Erwachsenen — K62.3 auch, wenn der Zivilstand «verheiratet» oder
+      // «Konkubinat» ist und noch keine zweite Person erfasst wurde (die Steuerschätzung fragt danach).
+      // Nur sichtbar machen, nichts vorbelegen und die Erwachsenen-Liste nicht ändern.
+      zeigtPartnereinkommen(adultCount, data.maritalStatus) && React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { htmlFor: 'hh-partner-income', style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
         React.createElement('input', {
           id: 'hh-partner-income',
@@ -1619,10 +1634,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
         containerStyle: {
-          // top: -24px gleicht das padding-top:24px des Scroll-Containers (#mp-main) aus,
-          // damit der Reiter beim Kleben bündig unter dem „100% lokal"-Streifen sitzt.
-          // Sonst bleibt ein 24px-Spalt, durch den der scrollende Text durchscheint.
-          position: 'sticky', top: '-24px', zIndex: 5,
+          // Seit das Dokument scrollt (statt #mp-main), ist der Bezugspunkt fürs Kleben
+          // der Fensterrand — und dort klebt bereits die Kopfzeile. Der Reiter hängt sich
+          // deshalb unter deren gemessene Höhe (--mp-kopf-h, gesetzt in main.jsx), sonst
+          // verschwände er dahinter. Vorher stand hier -24px als Ausgleich für das
+          // padding-top des alten Scroll-Containers; das gibt es nicht mehr.
+          position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5,
           marginBottom: space.md + 'px',
           background: palette.surface,
           borderBottom: '1px solid ' + palette.border + '55',
@@ -1667,7 +1684,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
         ),
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep, opacity: 0.8 } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep } },  // kein opacity: 0.8 ergab 3.85:1 hell
           React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )
@@ -1686,7 +1703,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  scrollMarginTop: '52px',
+                  // Eine Quelle für den Sprungabstand (tokens.css) — vorher 52 px,
+                  // gerechnet auf den alten Scroll-Container #mp-main.
+                  scrollMarginTop: 'var(--mp-sprungabstand)',
                   marginTop: isFirst ? 0 : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
@@ -2238,8 +2257,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
-                  // scroll-margin, damit der klebende Reiter das Ziel nicht verdeckt
-                  scrollMarginTop: '64px',
+                  // scroll-margin, damit Kopfzeile und klebender Reiter das Ziel nicht
+                  // verdecken — eine Quelle (tokens.css), vorher 64 px inline.
+                  scrollMarginTop: 'var(--mp-sprungabstand)',
                   gridColumn: '1 / -1',
                   marginTop: isFirst ? '8px' : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',

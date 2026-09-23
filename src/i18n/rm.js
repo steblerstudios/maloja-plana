@@ -980,8 +980,6 @@ export default {
     subtitle: { sie: "Cumenzai cun il pli impurtant — il rest po spetgar.", du: "Cumenza cun il pli impurtant — il rest po spetgar." },
     firstChapter: 'Avrir "Basa persunala"',
     firstField: 'Endatar il prenum',
-    firstChapterDone: 'Chapitel avert',
-    firstFieldDone: 'Prenum endatà',
     text: { sie: 'Trais pitschens pass — suenter lavura Maloja Plana per Vus.', du: 'Trais pitschens pass — suenter lavura Maloja Plana per Tai.' },
     basicInfo: { sie: 'Deponar Voss chantun — per taglia e IPV', du: 'Deponar Tes chantun — per taglia e IPV' },
     documents: 'Memorisar in document segir — dura 30 secundas',
@@ -1151,7 +1149,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
@@ -2128,6 +2126,55 @@ export default {
     dossierLink: 'Dossier d’urgenza cumplet (per stampar)',
     footerCalm: 'Questa carta resta mo sin tes apparat — nagin auter la vesa.',
   },
+  notfallpass: {
+    title: 'Preparar il pass d’urgenza',
+    intro: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.',
+    datenschutz: 'Quai che stat en il pass d’urgenza po leger tgi che tegna tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che ti endatas.',
+    angabenTitel: 'Tias indicaziuns, champ per champ',
+    angabenText: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che ti vuls.',
+    leer: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che ti endatas insatge là, è quai pront qua.',
+    leerLink: 'Al chapitel Urgenza',
+    gruppe_profil: 'En las infurmaziuns da sanadad',
+    gruppe_pass: 'En il pass d’urgenza',
+    profilHinweis: 'Num e data da naschientscha endatas ti en l’app «Health»: tutgar sin tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).',
+    feld_name: 'Num',
+    feld_geburtsdatum: 'Data da naschientscha',
+    feld_erkrankungen: 'Malsognas',
+    feld_medikamente: 'Medicaments',
+    feld_allergien: 'Allergias',
+    feld_blutgruppe: 'Gruppa da sang',
+    feld_kontaktName: 'Contact d’urgenza: num',
+    feld_kontaktTelefon: 'Contact d’urgenza: telefon',
+    nichtErfasst: 'anc betg endatà',
+    kopieren: 'Copiar',
+    kopiertKurz: 'Copià',
+    kopierenAria: 'Copiar: {feld}',
+    kopiert: '{feld}: copià.',
+    kopierenFehler: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.',
+    iphoneTitel: 'Sin l’iPhone',
+    iphone1: 'Avra l’app «Health», tutga sin tes maletg e lura sin «Notfallpass».',
+    iphone2: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.',
+    iphone3: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord tes contacts — endatescha l’emprim la persuna là, sch’ella manca.',
+    iphone4: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».',
+    iphoneSperr: 'Uschia chattan agidantas ed agidants il pass: sin il visur bloccà stritgar ensi u smatgar la tasta Home, tutgar «Notfall», lura «Notfallpass».',
+    iphoneNotruf: 'L’opziun «Notruf» parta il pass automaticamain durant ina clamada d’urgenza — tenor Apple mo en ils Stadis Unids ed en il Canada.',
+    iphoneLink: 'Agid dad Apple: Notfallpass einrichten und anzeigen (tudestg)',
+    iphoneUrl: 'https://support.apple.com/de-ch/guide/iphone/iph08022b192/ios',
+    androidTitel: 'Sin Android',
+    androidText: 'Betg mintga telefonin Android ha questa app. Nua ch’ella exista (a partir dad Android 12), sa numna ella «Persönliche Sicherheit», en la glista da las apps curt «Sicherheit».',
+    android1: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun tes conto da Google e tutga sin «Meine Infos».',
+    android2: 'Sut «Medizinische Daten» endatar gruppa da sang, allergias e medicaments.',
+    android3: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord tes contacts.',
+    android4: 'Sut «Zugriff auf Notfallinformationen» tscherner «Anzeigen, wenn gesperrt».',
+    androidLink: 'Agid dad Android: Im Notfall Hilfe anfordern (tudestg)',
+    androidUrl: 'https://support.google.com/android/answer/9319337?hl=de',
+    dossierLink: 'Dossier d’urgenza cun code QR (per stampar)',
+    dossierVerweis: 'Preparar las medemas indicaziuns per il pass d’urgenza en il telefonin',
+    zurueck: 'Enavos a l’urgenza',
+    einstiegTitel: 'Preparar il pass d’urgenza en il telefonin',
+    einstiegSub: 'Per il visur bloccà: tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.',
+    fussNichtsUebertragen: 'Questa pagina na trametta nagut. Copià vegn mo, sche ti tutgas sin «Copiar».',
+  },
   notfallDossier: {
     title: "Dossier d'urgenza",
     subtitle: "Infurmaziuns impurtantas, sch'insatgi auter sto gidar.",
@@ -2307,6 +2354,7 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
+      annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       disclaimer: "Orientaziun sin basa da las indicaziuns endatadas; na remplazza nagin examen liant tras il post cumpetent.", // TODO(rm): provisorisch
     },
     generated: 'Creà ils {date}',
@@ -2987,8 +3035,11 @@ export default {
     ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0).", // TODO(rm): provisorisch
     annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
+    // K62.1: Konkubinat, Einzelbesteuerung
+    annahmeEinzeln: { sie: "Quintà mo per Vus: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9).", du: "Quintà mo per tai: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9)." }, // TODO(rm): provisorisch
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin la valur endatada — Maloja suppona ch'i saja l'entrada taxabla cuminaivla tenor la taxaziun. Sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
+    bandKonkubinat: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca (stadi civil «concubinat»).", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca (stadi civil «concubinat»)." }, // TODO(rm): provisorisch
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     ohneZahlKinderDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al dumber d'uffants en il profil. Per in auter dumber d'uffants na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch (K87)
     gemeinsamDirektHinweis: "Maloja suppona che la valur endatada saja l'entrada taxabla cuminaivla dal pèr tenor la taxaziun. La lingia dal salari net cuntegna mo l'atgna entrada — perquai na mussa Maloja qua nagina quota da taglia e nagina entrada netta suenter las taglias.", // TODO(rm): provisorisch (K86)
@@ -3026,6 +3077,9 @@ export default {
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
       abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
       nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
+      // K62.5: im Konkubinat kein Vergleich mit einem gedachten Alleinverdiener-Ehepaar
+      konkubinatPartner: "En il concubinat na mussa Maloja qua nagina cumparegliaziun: suenter ina maridaglia vegnissan las duas entradas sumadas (LTFD art. 9), cun ina atgna deducziun per pèrs cun duas entradas. Mesirà è mo il pèr maridà cun ina suletta entrada. Il calculatur da taglia da l'AFT quinta la cumparegliaziun cun duas entradas.", // TODO(rm): provisorisch
+      konkubinatPartnerOffen: { sie: "En il concubinat dependa la cumparegliaziun da l'entrada dal partenari u da la partenaria: suenter ina maridaglia vegnissan las duas entradas sumadas. L'indicaziun manca anc (Basa persunala → «Salari net dal partenari/da la partenaria»; senza atgna entrada: endatar 0).", du: "En il concubinat dependa la cumparegliaziun da l'entrada dal partenari u da la partenaria: suenter ina maridaglia vegnissan las duas entradas sumadas. L'indicaziun manca anc (Basa persunala → «Salari net dal partenari/da la partenaria»; senza atgna entrada: endatescha 0)." }, // TODO(rm): provisorisch
     },
   },
 
@@ -3975,25 +4029,6 @@ export default {
       csvField: 'Champ',
       csvValue: 'Valur',
     },
-  },
-
-  premiumCalc: {
-    coupleChildren: 'Pèr + uffants',
-    singleChildren: 'Singul + uffants',
-    single: 'Singul',
-    incomeToHigh: 'Entrada memia auta (sur CHF {value})',
-    eligible: 'Dretg a la reducziun da premias',
-    doc1: 'Decleraziun da taglia (ultims 2 onns)',
-    doc2: 'Quints da paja',
-    doc3: 'Attestat da famiglia',
-    doc4: 'Conferma da las premias da la cassa da malsauns',
-    docTitle: 'LAMal §67 datas da dumonda',
-    check1: "Agiunta la decleraziun da taglia da l'onn precedent",
-    check2: 'Quint actual da las premias da la CM',
-    check3: "Quint da paja / conferma d'entrada",
-    check4: 'Contract da locaziun (sche avant maun)',
-    check5: 'Attestat da famiglia (sche relevant)',
-    check6: 'Conferma da pajaments da mantegniment (sche applitgabel)',
   },
 
   search: {

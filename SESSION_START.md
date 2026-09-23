@@ -7,7 +7,63 @@
 > Boot: `npm run dev` (Port 5174, via `.claude/launch.json`). Deploy: `bash deploy.sh`
 > von `main` (nur Stebler Studios). Verifizieren live: Footer-Version + Bundle-Hash greppen.
 
+> 🧭 **Der aktuelle Stand steht nicht mehr in dieser Datei — er wird gemessen:**
+> `bash scripts/stand-jetzt.sh` → eine Zeile mit `main`, dem **live ausgelieferten Commit**
+> (aus `/version.json`, die `deploy.sh` seit 23.09.2026 schreibt), dem Abstand dazwischen
+> und den offenen PRs. Die Zeile war zwischen 21. und 23.09. **sechsmal** falsch — am eigenen
+> Merge, an fremder Arbeit, an einem Deploy sechs Minuten nach dem Schreiben. Eine von Hand
+> geschriebene Zeile in einer committeten Datei kann ihren eigenen Merge nie enthalten.
+> Bis zum ersten Deploy mit `version.json` meldet das Skript «Commit unbekannt» — ehrlich,
+> statt den Release-Tag als Ersatz zu nehmen. Die Zeile darunter und die Nachträge bleiben
+> als **Beleg** stehen; sie beschreiben, was zu ihrer Uhrzeit galt.
+
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
+
+> ✅ **Nachtrag 24.09., 00:54 — die UI/UX-Runde ist gemergt: #272 (Teil 1) und #296 (Teil 2), beide auf ausdrückliches Wort von Stebler Studios.**
+> Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben, nicht am Sitzungsanfang:
+>
+> **Stand, gemessen 24.09.2026 00:54:** `main` = `ede09c9` (00:53) · live = `index-8FolD38L.js`,
+> Commit unbekannt (ausgeliefert vor Einführung der `version.json`) · Abstand nicht messbar ·
+> offene PRs: #294 · #293 · #290 · #286 · #284 · #282 (alle Entwürfe, alle aus fremden Sitzungen).
+>
+> 🛑 **`main` rückte zwischen dem Merge von #296 (`79e26a3`, 00:47) und dieser Zeile dreimal
+> weiter** — `d90b047` 00:50, `ede09c9` 00:53. Genau dafür gibt es das Skript; eine von Hand
+> geschriebene Zeile wäre in sechs Minuten dreimal falsch geworden.
+>
+> ### Was die beiden PRs gebracht haben — alles im Browser gemessen, nicht behauptet
+>
+> | Eingriff | vorher | nachher |
+> |---|---|---|
+> | Fünf Text-Aktionen am Handy (WCAG 2.2 AA 2.5.8 verlangt 24) | 17–19 px | 33–35 px |
+> | «Was ist jetzt dran?» am Falz (390×844, Falz bei 619 px) | 502 px | 384 px |
+> | Berg mit Fortschritt | 657 px (unter dem Falz) | 539 px (sichtbar) |
+> | Statuszeile Behörden-Dossier, Dunkelmodus | **2,20:1** | 4,81:1 |
+> | Fusszeile (`mid` @ opacity 0,7), auf **jeder** Seite | **3,10:1** | 5,54:1 |
+> | Baum3D, hintere Beschriftung | **1,64:1** | 5,91:1 |
+> | Flächenfarbe als Text, hell, über 10 Ansichten | 9 Durchfaller | **0** |
+>
+> Dazu strukturell: **`#mp-main` ist kein Scroll-Container mehr** — das Dokument scrollt.
+> `--mp-kopf-h` (per ResizeObserver gemessen) und `--mp-sprungabstand` in `tokens.css` sind die
+> neuen Einzelquellen für Sticky-Offsets und Sprungziele; vorher standen dafür drei Inline-Werte
+> (52/64/72 px), alle auf den alten Kasten gerechnet. Der **Fehlerschirm** hat `minHeight: 100dvh`
+> plus `overflowY: auto` und zentriert über `margin: auto`, weil Auto-Ränder nie negativ werden.
+>
+> **Sechs neue Tests**, jeder mit bestandener Mutationsprobe. Die zwei wichtigsten halten eine
+> **Regel mit ihrer Begründung** statt einer Fundstelle: `flaechenfarbeIstKeineTextfarbe` und
+> `deckkraftFrisstKontrast`.
+>
+> ### 🛑 Was offen bleibt — Entscheide, keine Rückstände
+> 1. **Getönte Flächen im Dunkelmodus, zehn Stellen bei 4,06–4,43:1.** Dort stehen bereits die
+>    *richtigen* Textfarben; die Tönung hellt den dunklen Grund auf. Die Farbtafel verspricht ihre
+>    ≥4,5:1 ausdrücklich nur für die **ungetönten** Flächen. Zwei Wege — Tönungen schwächen oder
+>    eine eigene Textstufe —, beide greifen in die ruhige Bildsprache.
+> 2. **Reihenfolge Hinweis ↔ Orientierung** und **`alphaDismissed` nicht gespeichert**: beides am
+>    **Haftungstext**, also `rechts-pruefer` plus Entscheid von Stebler Studios.
+> 3. **Der iOS-Gewinn des Scroll-Umbaus ist unbelegt** — Adressleiste und Statusleisten-Tipp
+>    brauchen ein **echtes iPhone**. Alles andere ist in beiden Breiten und Themen nachgemessen.
+>
+> 🛑 **Nicht deployt.** Live läuft unverändert der Stand vom 22.09.
+> Alle Einzelheiten in `docs/TODO.md`, Abschnitt **C1**.
 
 > ✅ **Nachtrag 23.09., 23:10 — #277 «Rechtstexte nach Tester-Durchsicht» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
 > Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:

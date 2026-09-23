@@ -875,8 +875,17 @@ export default function Baum3D({
           position: 'absolute', left: m.x + '%', top: m.y + '%',
           transform: 'translate(-50%, -50%)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
-          // Hinten liegende Äste treten zurück, statt vorne mitzudrängeln.
-          opacity: m.vorne ? 1 : 0.34,
+          // Hinten liegende Äste treten zurück, statt vorne mitzudrängeln — aber
+          // über eine geprüfte Farbe, nicht über Deckkraft. Hier stand
+          // `opacity: m.vorne ? 1 : 0.34`; das multiplizierte jede sorgfältig
+          // gewählte Textfarbe mit 0.34 und hob damit genau die Regel auf, die
+          // 40 Zeilen weiter unten an der Prozentzahl steht. Gemessen ergab es
+          // 2.03:1 für den Namen und 1.64:1 für die Prozentzahl (hell) — unter
+          // den 3:1, die selbst für nicht-textliche Grafik gelten, und das bei
+          // rund der Hälfte der acht Äste zu jedem Zeitpunkt.
+          // Das Zurücktreten macht jetzt die Schriftfarbe (text → mid, siehe
+          // unten): vorne 14.5:1, hinten 5.94:1 — ein deutlicher Sprung, aber
+          // einer, den man noch lesen kann.
           pointerEvents: m.vorne ? 'auto' : 'none',
         },
       },
@@ -902,9 +911,15 @@ export default function Baum3D({
               display: 'inline-flex', alignItems: 'center', gap: '5px',
               padding: '3px 9px 3px 5px', borderRadius: '999px',
               fontFamily: 'inherit', fontSize: '11px', lineHeight: 1.3, whiteSpace: 'nowrap',
-              color: palette ? palette.text : '#222',
+              // Hier entsteht die Tiefe: vorne der volle Text-Ton, hinten der
+              // Sekundär-Ton. Beide sind in constants.js gegen `surface` geprüft
+              // (≥4.5:1), der Unterschied bleibt trotzdem deutlich sichtbar.
+              color: palette ? (m.vorne ? palette.text : palette.mid) : (m.vorne ? '#222' : '#555'),
+              // Die Pille bleibt fast deckend, damit der Grund unter dem Text
+              // berechenbar ist — auf der Baum-Grafik wäre er es sonst nicht.
               background: (palette ? palette.surface : '#fff') + 'f2',
-              border: '1px solid ' + b.farbe + '55',
+              // Die Umrandung ist Dekoration: sie darf hinten schwächer werden.
+              border: '1px solid ' + b.farbe + (m.vorne ? '55' : '2A'),
             },
           },
             // Dasselbe Bereichs-Icon wie an der Frucht — nur hier scharf gezeichnet
@@ -913,6 +928,10 @@ export default function Baum3D({
               style: {
                 position: 'relative', width: '13px', height: '13px', color: b.farbe,
                 flex: '0 0 auto', display: 'inline-flex',
+                // Das Symbol darf hinten blasser werden: es ist aria-hidden und
+                // trägt nichts, was nicht der Name daneben schon sagt. Deckkraft
+                // auf reiner Dekoration kostet keine Lesbarkeit.
+                opacity: m.vorne ? 1 : 0.45,
               },
               'aria-hidden': 'true',
             },

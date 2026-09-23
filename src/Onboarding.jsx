@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PageTitle } from './components/Heading.jsx';
-import { text, weight, radius , leading , space, fontFamily, ease, duration, visuallyHiddenStyle } from './config/tokens.js';
+import { text, weight, radius , leading , space, fontFamily, ease, duration } from './config/tokens.js';
 import { LEBENSZUSTAENDE } from './data/lebenszustaende.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 
@@ -22,6 +22,7 @@ export { isOnboardingDone } from './utils/einfuehrungStatus.js';
 
 import { CANTON_CODES, getCantonName } from './config/cantonalData.js';
 import { zurueckZeichen, hinweisZeichen } from './IconSystem.jsx';
+import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComplete, onUpdateData }) => {
   const [step, setStep] = useState(0);
@@ -151,15 +152,8 @@ export const Onboarding = ({ palette, t, setLanguage, supportedLanguages, onComp
             'aria-label': 'Maloja Plana',
             style: { fontSize: text.xl, fontWeight: weight.bold, color: palette.text, marginBottom: space.xs, letterSpacing: '0.5px', display: 'inline-flex', alignItems: 'center', gap: '2px' }
           },
-            // Das «M» von Maloja ist der Gipfel (Maloja-Pass)
-            React.createElement('svg', { width: '20', height: '23', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
-              React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-              React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
-            ),
-            // Siehe BetaGate.jsx: das «M» steckt nur im SVG. Ohne dieses versteckte
-            // «M» liest jede Text-Extraktion «aloja Plana» statt «Maloja Plana».
-            React.createElement('span', { style: visuallyHiddenStyle }, 'M'),
-            'aloja Plana'
+            // Logo aus EINER Quelle (MarkenLogo.jsx), Name als versteckter Text — siehe BetaGate.jsx
+            React.createElement(MarkenLogo, { palette, breite: 220 })
           ),
           React.createElement('p', { style: { fontSize: text.sm, color: palette.mid } }, t('onboarding.chooseLanguage'))
         ),
