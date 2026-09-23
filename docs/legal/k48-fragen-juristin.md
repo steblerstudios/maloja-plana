@@ -29,7 +29,10 @@ Das spart Zeit — diese Punkte sind am Code bzw. am Bild belegt, Stand 23.09.20
 - Keine Cookies, keine externen Netzwerkaufrufe, CSP `connect-src 'self'`, Schriften
   lokal. Es fliessen keine Nutzerdaten ab.
 - **15 von 15** gerechneten Ansichten zeigen einen Hinweis («Orientierung»,
-  «Unverbindlich», «Keine rechtsverbindliche Auskunft») im gerenderten Bild.
+  «Unverbindlich», «Keine rechtsverbindliche Auskunft») im gerenderten Bild. Das ist
+  keine Handmessung mehr, sondern ein Test, der alle 15 Ansichten rendert
+  (`src/__tests__/hinweisImBild.test.js`); dass er auf ein Entfernen reagiert, ist
+  mit einer Mutationsprobe belegt.
 - Alle 10 Lebenssituationen tragen in **allen fünf** Sprachen einen
   Keine-Beratung-Hinweis. Ein Test hält das fest.
 - Es gibt **keinen** bezahlten Link (0 von 26 Empfehlungen), **keinen** Versicherer-

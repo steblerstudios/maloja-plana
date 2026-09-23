@@ -20,9 +20,15 @@ bewilligungs- oder registerpflichtigen Bereich liegt — **juristisch bestätigt
 nicht** (K48). Jeder Abschnitt unten prüft einen Teil davon. Wo ein Teil kippen
 könnte, steht ein **Stolperdraht**.
 
-Festgehalten im Code: `src/__tests__/regulierungsgrenzen.test.js` — 21 Prüfungen, davon
-**vier Gegenproben**. (Hier stand «20 Prüfungen, jede mit Gegenprobe»; das war zu
-grosszügig gezählt, Befund der Rechts-Prüfung 23.09.2026.)
+Festgehalten im Code, in zwei Dateien:
+
+- `src/__tests__/regulierungsgrenzen.test.js` — 21 Prüfungen, davon **vier
+  Gegenproben**. (Hier stand «20 Prüfungen, jede mit Gegenprobe»; das war zu grosszügig
+  gezählt, Befund der Rechts-Prüfung 23.09.2026.)
+- `src/__tests__/hinweisImBild.test.js` — rendert **alle 15 gerechneten Ansichten** mit
+  den echten Texten und prüft, dass die Aussage «Orientierung / unverbindlich / keine
+  rechtsverbindliche Auskunft» im Bild steht. Mit Mutationsprobe belegt: Hinweis
+  entfernt → rot, zurückgebaut → grün.
 
 ---
 

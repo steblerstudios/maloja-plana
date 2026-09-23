@@ -71,6 +71,13 @@ jetzt gezählt — und seither hält ein Test das Ergebnis fest
   Beim Vorsorge-Rechner wurden alle fünf Reiter einzeln angeklickt.
   *Erste Messung sagte «Vorsorge-Rechner: fehlt» — sie war falsch: das Suchmuster
   kannte «Keine rechtsverbindliche Auskunft» nicht. Gemessen wurde das Messgerät.*
+- **Seit 23.09.2026 hält ein Test diese Zusage**, nicht mehr die Handmessung:
+  `src/__tests__/hinweisImBild.test.js` rendert alle 15 Ansichten mit den echten
+  deutschen Texten und prüft, ob die Aussage «Orientierung / unverbindlich / keine
+  rechtsverbindliche Auskunft» im Bild steht. Dass er beisst, ist mit einer
+  Mutationsprobe belegt: den Hinweis im KVG-Wechselpfad entfernt → rot, zurückgebaut
+  → grün. Er rendert den Anfangszustand; eine Ansicht, die ihren Hinweis erst nach
+  einer Eingabe zeigte, fiele durch.
 - `budget` (CSV-Import) trägt keinen solchen Hinweis und braucht keinen — dort wird
   nichts gerechnet, nur eine Datei eingelesen.
 

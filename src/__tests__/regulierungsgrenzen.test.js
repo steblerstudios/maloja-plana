@@ -122,6 +122,10 @@ describe('Regulierungsgrenzen', () => {
     // «assurance» an und misst die eigene Ungenauigkeit statt der Texte.
     const VERSICHERER = /(helsana|swica|sanitas|\bassura\b|concordia|visana|atupri|sympany|groupe mutuel|\bkpt\b|\bcss\b|agrisano|\bsupra\b)/i;
 
+    // Einschränkung, damit sie nicht für Abdeckung gehalten wird: der rm-Block
+    // `kvgWechsel` ist noch auf Deutsch (bekannter Gegenlese-Rückstand,
+    // RUMANTSCH_GAP_NOTE.md). Die rm-Prüfung misst dort faktisch ein zweites Mal
+    // Deutsch. Sie bleibt trotzdem stehen — sie wird echt, sobald übersetzt wird.
     for (const block of ['kvgWechsel', 'zusatzWechsel']) {
       for (const [lang, texte] of Object.entries(SPRACHEN)) {
         it(`${block} (${lang}): kein Versicherername in den Texten`, () => {
