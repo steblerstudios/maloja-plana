@@ -53,6 +53,10 @@ kommt der Changelog immer mit, nie doppelt.*
   volle Register, bevor sie zeichnet — kein Icon kommt verspätet. Ein Wächter
   (`iconNamen.test.js`) prüft, dass fest geladene Dateien nur Kern-Namen zeigen.
   Startdatei 64,71 → 62,00 kB gzip.
+  Dazu der Inhalt des zugeklappten Abschnitts «Fortschritt im Detail» (Kapitel-Fortschritt
+  und Grundordnung) als eigenes Stück `src/BergDetail.jsx`: beim ersten Bild ist er zu,
+  also unsichtbar; das Dashboard hängt ihn sofort ein und er lädt gleich danach.
+  62,00 → 60,91 kB gzip.
 
 ### Behoben
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
