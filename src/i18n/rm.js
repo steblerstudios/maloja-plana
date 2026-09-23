@@ -1842,6 +1842,7 @@ export default {
     message: { sie: 'Vossas datas èn segiras — ellas vegnan memorisadas mo localmain sin Voss apparat. Empruvai per plaschair anc ina giada.', du: 'Tes datas èn segiras — ellas vegnan memorisadas mo localmain sin Tes apparat. Emprova per plaschair anc ina giada.' },
     tryAgain: 'Empruvar anc ina giada',
     reload: 'Chargiar la pagina da nov',
+    report: 'Annunziar in problem',
     privacy: { sie: 'Naginas datas èn vegnidas tramessas. Tut resta sin Voss apparat.', du: 'Naginas datas èn vegnidas tramessas. Tut resta sin Tes apparat.' },
     viewCrash: { sie: 'Questa secziun ha gì in sbagl. Vossas datas èn segiras.', du: 'Questa secziun ha gì in sbagl. Tias datas èn segiras.' },
   },

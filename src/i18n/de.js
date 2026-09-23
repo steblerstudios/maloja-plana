@@ -3135,6 +3135,7 @@ export default {
     message: { sie: 'Ihre Daten sind sicher — sie werden nur lokal auf Ihrem Gerät gespeichert. Bitte versuchen Sie es erneut.', du: 'Deine Daten sind sicher — sie werden nur lokal auf deinem Gerät gespeichert. Bitte versuche es erneut.' },
     tryAgain: 'Erneut versuchen',
     reload: 'Seite neu laden',
+    report: 'Problem melden',
     privacy: { sie: 'Es wurden keine Daten gesendet. Alles bleibt auf Ihrem Gerät.', du: 'Es wurden keine Daten gesendet. Alles bleibt auf deinem Gerät.' },
     viewCrash: { sie: 'Dieser Bereich hat einen Fehler. Ihre Daten sind sicher.', du: 'Dieser Bereich hat einen Fehler. Deine Daten sind sicher.' },
   },

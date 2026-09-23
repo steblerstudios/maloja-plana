@@ -3158,6 +3158,7 @@ export default {
     message: 'Your data is safe — it is stored locally on your device. Please try again.',
     tryAgain: 'Try again',
     reload: 'Reload page',
+    report: 'Report a problem',
     privacy: 'No data was sent anywhere. Everything stays on your device.',
     viewCrash: 'This section encountered an error. Your data is safe.',
   },
