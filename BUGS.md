@@ -25,10 +25,18 @@ Und die wichtigste Vorregel: **erst nachstellen, dann eintragen.** Kein Bug wand
 
 Zwei Türen, beide führen in dieselbe Liste:
 
-1. **Aus der App:** der Feedback-Knopf im Menü öffnet eine Mail an `info@malojaplana.ch`
-   (`src/main.jsx`, `feedbackHref`). Das ist die Tür für die Menschen, die Maloja benutzen. Sie
-   funktioniert nur, wenn das Postfach existiert und jemand es liest — das ist die Verantwortung
-   von Stebler Studios, nicht des Codes.
+1. **Aus der App:** der Feedback-Link in der **Fusszeile** öffnet eine Mail an
+   `info@malojaplana.ch` (`src/main.jsx`, `feedbackHref`), mit Version, Ansicht und Sprache in
+   einem abgetrennten, löschbaren Block. **Und seit 23.09.2026 auch der Fehlerschirm** selbst
+   (`src/ErrorBoundary.jsx`, `meldeHref`) — dort zusätzlich mit der Fehlermeldung des Browsers,
+   auf 200 Zeichen gekürzt. Dieselbe Tür, zwei Stellen. Gesendet wird nie etwas von selbst: die
+   Person sieht den Entwurf im Mailprogramm. Das ist die Tür für die Menschen, die Maloja
+   benutzen. Sie funktioniert nur, wenn das Postfach existiert und jemand es liest — das ist die
+   Verantwortung von Stebler Studios, nicht des Codes.
+
+   🛑 **Beide Stellen liegen hinter dem Beta-Gate.** Ohne Code sieht man nur die Code-Wand; dort
+   führt allein der Rechtliches-Link zur Adresse im Impressum. Ein Melde-Weg **vor** dem Gate
+   fehlt (auch auf den öffentlichen Erklärseiten: Kontakt ja, Meldeweg nein).
 2. **Aus GitHub:** die Issue-Vorlage `.github/ISSUE_TEMPLATE/bug_report.md`. Die Tür für alle,
    die das Repo kennen.
 
@@ -45,7 +53,25 @@ Datei; dafür hat das Studio einen eigenen Weg.
 
 ## Offen
 
-*Zurzeit kein offener Bug. B-1 und B-2 (Crosslink-Prüfung 15.09.2026) sind behoben und live, siehe unten; ihre ausführliche Beschreibung steht in der Git-Historie dieser Datei und in den PRs.*
+- 2026-09-23 · **B-5** · **Der Fehlerschirm sprach immer Englisch.** `ErrorBoundary` wird in
+  `main.jsx` ohne Props gerendert (`React.createElement(ErrorBoundary, null, …)`), also war `t`
+  nie da und jede Person sah den Rückfalltext «Something went wrong» — unabhängig von der
+  gewählten Sprache. Die Ansichts-Fehlergrenze eine Ebene tiefer (`ViewErrorBoundary`) bekommt
+  `palette, t` und war nie betroffen; deshalb fiel es nicht auf. Nachstellen: eine Sprache ≠ EN
+  wählen, einen Absturz im Baum auslösen. Festgehalten in
+  `src/__tests__/fehlerschirmMelden.test.js`, Fix: `t` aus dem I18n-Kontext, sonst `tMitRueckfall`
+  (K64/K71) — PR #273, **gemergt 23.09.2026** (`main` = `20342d4`).
+  Die zweite Hälfte, die **Farben**: `palette` wird nicht übergeben, also standen dort dunkle
+  Rückfallwerte (`#1a1a18` — nicht einmal ein Wert aus der Marken-Tafel) und der Absturz-Schirm
+  war im Hellmodus dunkel → er liest das Thema jetzt aus derselben Quelle wie die App
+  (`or5_theme` über `paletteAusSpeicher` in `config/constants.js`), Test
+  `src/__tests__/fehlerschirmFarben.test.js` — PR #274, **gemergt 23.09.2026**
+  (`main` = `2cb981c`). Der Test hält Schlüssel und Default über **alle drei** Stellen, an denen
+  die Thema-Logik steht (`constants.js`, `main.jsx`, `public/theme-init.js` — die dritte ist
+  unvermeidlich: Script im `<head>`, kann nichts importieren).
+  🛑 **Beides gemergt, nichts davon live** — gemessen 23.09.2026, 22:39: live läuft weiter
+  `index-8FolD38L.js` vom 22.09. Erst nach dem Deploy wandert die Zeile nach «Zuletzt behoben»,
+  mit Bundle-Name und Uhrzeit wie bei B-1 bis B-4.
 
 ## Geprüft — kein offener Bug (2026-07-08)
 

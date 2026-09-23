@@ -25,6 +25,39 @@ DENY='@(gmail|gmx|hotmail|outlook|yahoo|icloud|protonmail|proton|bluewin|hispeed
 /home/clients/[0-9a-f]{8,}'
 
 # Projektspezifische Tokens aus lokaler, gitignorierter Datei ergänzen:
+# 🛑 Fehlt die Liste, LIEF DIESER SCAN BISHER STILL WEITER — nur mit den generischen
+# Mustern, ohne Vornamen und Benutzernamen, und meldete «sauber». Genau so ist am
+# 23.09.2026 ein Vorname nach `main` gelangt: der Commit entstand in einem frischen
+# Worktree, und `.pii-deny.txt` ist gitignoriert, wird also nicht mitkopiert.
+#
+# ZWEI Situationen, bewusst verschieden behandelt:
+#  • LOKAL (Arbeitsplatz, Worktree): die Liste MUSS da sein → sonst Exit 2,
+#    «Scan unvollstaendig», nicht «sauber».
+#  • CI: die Liste kann dort nicht existieren — Entscheid vom 14.07.2026, siehe
+#    .github/workflows/ci.yml («KEIN Secret in CI»). Dort setzt der Workflow
+#    PII_DENY_OPTIONAL=1. Der Lauf ist dann erlaubt, sagt aber LAUT, dass er
+#    unvollstaendig ist, und behauptet nie «sauber».
+#
+# Daraus folgt eine Grenze, die man kennen muss: 🛑 CI ist NICHT das PII-Tor.
+# Das Tor ist der lokale Lauf vor dem Commit. CI faengt nur Mails, Home-Pfade
+# und Klient-Hashes — keine Vornamen.
+VOLLSTAENDIG=1
+if [ ! -f .pii-deny.txt ]; then
+  if [ "${PII_DENY_OPTIONAL:-0}" = "1" ]; then
+    VOLLSTAENDIG=0
+    echo "⚠ PII-Scan UNVOLLSTAENDIG: .pii-deny.txt ist hier nicht verfuegbar (CI)." >&2
+    echo "  Geprueft werden nur die generischen Muster (Mail-Provider, Home-Pfade," >&2
+    echo "  Klient-Hashes). Vornamen und Benutzernamen werden NICHT geprueft." >&2
+    echo "  Das vollstaendige Tor ist der lokale Lauf vor dem Commit." >&2
+  else
+    echo "✗ PII-Scan NICHT gelaufen: .pii-deny.txt fehlt in $(pwd)." >&2
+    echo "  Der Scan liefe sonst ohne die projektspezifischen Tokens (Vorname," >&2
+    echo "  Benutzername, Hoster-Kennungen) und meldete faelschlich «sauber»." >&2
+    echo "  In einem Worktree verlinken:  ln -s ../../../.pii-deny.txt .pii-deny.txt" >&2
+    echo "  Vorlage: .pii-deny.txt.example · in CI: PII_DENY_OPTIONAL=1 setzen" >&2
+    exit 2
+  fi
+fi
 [ -f .pii-deny.txt ] && DENY="$DENY
 $(grep -vE '^\s*#|^\s*$' .pii-deny.txt)"
 
@@ -50,9 +83,14 @@ DEIN-KLIENT-HASH'
 # perl statt grep -P: läuft gleich auf macOS und Linux und versteht dieselben
 # PCRE-Muster wie git grep -P. Ein Muster, das perl nicht versteht, bricht ab
 # (Exit 2), statt still «sauber» zu melden.
+# public/licenses/** ist ausgenommen (23.09.2026): das sind fremde Lizenztexte, die
+# wortgetreu mitgeliefert werden MÜSSEN — MIT verlangt «shall be included in all
+# copies». Die Copyright-Zeilen darin nennen fremde Autoren samt E-Mail
+# (z. B. loose-envify). Sie zu kürzen wäre ein Lizenzverstoss, nicht Datenschutz.
+# Die Ausnahme gilt NUR diesem Ordner; Lizenztexte werden nie von Hand bearbeitet.
 HITS=$(git grep -nIP -f <(printf '%s\n' "$DENY") -- \
         ':!scripts/pii-scan.sh' ':!*.example' ':!.pii-deny.txt' \
-        ':!public/vendor/**' 2>/dev/null \
+        ':!public/vendor/**' ':!public/licenses/**' 2>/dev/null \
       | DENY="$DENY" ALLOW="$ALLOW" perl -ne '
           BEGIN {
             @d = grep { length } split /\n/, $ENV{DENY};
@@ -75,5 +113,9 @@ if [ -n "$HITS" ]; then
   exit 1
 fi
 
-echo "✓ PII-Scan: keine privaten Mails, Home-Pfade oder gesperrten Tokens in getrackten Dateien."
+if [ "$VOLLSTAENDIG" = "1" ]; then
+    echo "✓ PII-Scan: keine privaten Mails, Home-Pfade oder gesperrten Tokens in getrackten Dateien."
+  else
+    echo "⚠ PII-Scan ohne Befund — aber UNVOLLSTAENDIG (nur generische Muster, siehe oben)."
+  fi
 exit 0

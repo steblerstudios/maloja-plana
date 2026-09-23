@@ -10,6 +10,7 @@ import React from 'react';
 import { getCantonName } from './config/cantonalData.js';
 import { text, weight, space, radius, leading, shadow } from './config/tokens.js';
 import { Icon } from './IconSystem.jsx';
+import { zivilstandLabel } from './utils/zivilstand.js';
 
 // ─── Data helpers ──────────────────────────────────────────
 
@@ -76,7 +77,7 @@ function householdText(data, t) {
 
 function maritalLabel(value, t) {
   if (!value) return null;
-  return t('chapters.basis.fields.maritalStatus.options.' + value) || value;
+  return zivilstandLabel(value, t);
 }
 
 // ─── Life sentence builders ────────────────────────────────

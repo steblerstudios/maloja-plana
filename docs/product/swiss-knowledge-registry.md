@@ -6,7 +6,7 @@
 > Prinzip: Jeder Eintrag ist **regelbasiert, deterministisch, auditierbar** —
 > keine AI-generierten Wahrheiten, keine Blackbox-Entscheidungen.
 
-Stand: 2026-05-26
+Stand: 2026-09-23
 
 ---
 
@@ -44,7 +44,11 @@ Stand: 2026-05-26
 ### 1.6 Säule 3a / 3b (Private Vorsorge)
 - **Rechtsgrundlage:** BVV 3 (SR 831.461.3)
 - **Implementiert:** Pension3a + Pension3b Felder (Finanzen-Chapter)
-- **Geplant:** Maximalbeitrag-Rechner (aktuell CHF 7'056), Steuerabzug-Simulation
+- **Höchstabzug 2026:** CHF 7'258 mit Pensionskasse, CHF 36'288 ohne (20 % des Erwerbseinkommens, gedeckelt). Die eine Quelle im Code: `src/data/saeule3a.js`, dort mit ESTV-Beleg und Abrufdatum. Hier NICHT erneut fortschreiben — bis 23.09.2026 stand an dieser Stelle CHF 7'056, der Wert der Steuerjahre 2023/2024.
+- **Geplant:** Maximalbeitrag-Rechner, Steuerabzug-Simulation
+- **Offen:** Die App deckelt die 3a-Eingabe für alle bei `mitPensionskasse`. Für Selbständige ohne 2. Säule ist das zu tief (BVV 3 Art. 7 Abs. 1 lit. b).
+- 🛑 **Dieselbe Zahl, zwei Bedeutungen — nicht «mitreparieren».** Der offene Punkt oben betrifft den STEUERABZUG (`Saeule3aTracker`, `TaxCalculator`): dort ist `mitPensionskasse` für Personen ohne 2. Säule zu tief, und dort gilt das LAUFENDE Jahr. In der Berner Prämienverbilligung ist derselbe Deckel nach unserer Lesart dagegen richtig: KKVV Art. 6 Abs. 4 lit. i rechnet die 3a nur «bis zum nach Bundesrecht zulässigen Maximalbetrag für unselbständig Erwerbstätige» auf. Wer den IPV-Deckel personenabhängig macht, nimmt Personen ohne 2. Säule genau den Abzug weg, der ihnen nach dieser Lesart zusteht. **Vorbehalt:** Die Lesart ist beim ASV Bern angefragt und nicht bestätigt — auch eine dritte Lesart ist denkbar, weil BVV 3 Art. 7 Abs. 1 an die Zugehörigkeit zu einer Vorsorgeeinrichtung anknüpft und nicht an «unselbständig» (`docs/sources/FRAGEN-AN-DIE-AEMTER.md`, Frage 2).
+- 🛑 **Und nicht dasselbe JAHR.** Die Prämienverbilligung rechnet mit dem Höchstabzug des Bemessungsjahres, nicht des laufenden: BE stellt auf die definitive Veranlagung des vorletzten Steuerjahres ab (KKVV Art. 7 Abs. 1), für 2026 also CHF 7'056 aus 2024. Darum trägt `src/data/saeule3a.js` seit dem 23.09.2026 eine Jahrestabelle und nicht nur einen Wert; `SAEULE3A_MAX` ist ausdrücklich das laufende Jahr und für solche Rechnungen falsch. **Abgezogen wird aber erst über BEIDEN Jahresmaxima:** im Band dazwischen (2026: 7'056–7'258) lässt sich nicht unterscheiden, ob jemand zu viel einzahlte oder das Maximum bloss gestiegen ist — sonst zahlt der Maximalzahler drauf. Siehe `SAEULE_3A.bisBundesMaximum` in `src/config/kantonsModell.js`.
 
 ### 1.7 EL (Ergänzungsleistungen)
 - **Rechtsgrundlage:** ELG (SR 831.30)

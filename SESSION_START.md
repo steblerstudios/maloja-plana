@@ -9,6 +9,242 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 23.09., 23:10 — #277 «Rechtstexte nach Tester-Durchsicht» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
+>
+> | | gemessen 23.09., 23:10 |
+> |---|---|
+> | `main` | **`5c523b2`** — «Merge pull request #277», 23:01. Seit dem 19:35-Nachtrag gingen zusätzlich **#276** Stand-Doku und **#277** rein |
+> | Tests auf `main` | **2852 grün** (148 Dateien), Build sauber, PII-Scan sauber |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — unverändert. Gegenprobe am Inhalt: «mindestens 7 Tage» im Live-`de`-Chunk **0 Treffer**, «Kontakt per E-Mail» auf live `/rechtliches/` **0 Treffer**. **Gemergt ist nicht live** |
+> | offene PRs | **vier Entwürfe**: #272 UI/UX-Runde · #278 Melde-Weg · #279 K48 Unterstützungsbeiträge · #280 eingetragene Partnerschaft — alle aus fremden Sitzungen, nicht angefasst |
+>
+> ### Was #277 gebracht hat — vier Rechtstext-Korrekturen, in 5 Sprachen und auf 5 öffentlichen Seiten
+> Aus einer inhaltlichen Durchsicht von aussen (Tester + Grok), jeder Punkt gegen den echten
+> Stand gemessen — lokal **und** live.
+> - **Hoster-Frist:** Der Text sagte wörtlich «die Aufbewahrungsdauer … ist uns nicht belegt».
+>   Jetzt: Infomaniak als **Auftragsbearbeiterin (Art. 9 DSG)**, **mindestens 7 Tage** mit
+>   Quelle (Support-FAQ 1926). Art. 9 **und** Art. 10 DSG im Wortlaut nachgeschlagen.
+> - **Kontakt per E-Mail** fehlte ganz — `info@` stand fünfmal als Adresse da, ohne dass
+>   irgendwo stand, was mit einer Mail dorthin geschieht. Postfach bei Infomaniak **per MX
+>   belegt** (`mta-gw.infomaniak.ch`, Gegenprobe mit erfundener Domain leer).
+> - **Gesundheits-/Religionsfelder:** «das Risiko für Ihre Persönlichkeitsrechte ist gering»
+>   war eine Bewertung — und widersprach zwei Absätze weiter dem eigenen Text, wo dieselbe
+>   Seite die **unverschlüsselten Schnappschüsse** einräumt. Jetzt steht dort die Tatsache.
+> - **«nicht-kommerziell»** ging mit Dual Licensing nicht auf → kostenlos nutzbar,
+>   kommerzielle Lizenz auf Anfrage. (Stand in `docs/legal/*.md`, nicht in der App.)
+>
+> ### 🏠 Postanschrift — Entscheid, nicht Lücke
+> **Es steht bewusst KEINE Strasse im Impressum**, und das ist jetzt ausgewiesen statt still.
+> Stebler Studios hat kein Geschäftsdomizil, und die Wohnadresse gehört nicht in ein
+> öffentliches Repo; es hängt am **Handelsregister-Entscheid** (ein Eintrag macht das Domizil
+> ohnehin öffentlich, OR Art. 931), deshalb wird beides zusammen entschieden.
+> Bisher stand auf `/rechtliches/` pauschal «Angaben gemäss Art. 3 Abs. 1 lit. s UWG» — eine
+> Behauptung von Vollständigkeit ohne Begründung. Jetzt steht dort, was der Artikel wirklich
+> verlangt (Kontaktadresse «einschliesslich derjenigen der elektronischen Post», **nicht
+> zwingend eine Postanschrift**), mit Fedlex-Beleg, in allen fünf Sprachen. Ob UWG hier
+> überhaupt greift → **neue Frage F0** in `docs/legal/k48-fragen-juristin.md`.
+> 🛑 **Gleiche Fassung wie `stebler-studios/website/impressum.html` (22.09.)** — gespiegelt,
+> nicht nachgebaut. Wer eine Seite ändert, ändert die andere mit.
+> 🛑 Ein sichtbarer Platzhalter mit rotem Wächter war der **falsche** Weg und ist zurückgebaut:
+> bei «kommt vorläufig nicht» wäre er ein Dauerzustand geworden. *Ein Gate, das nie grün wird,
+> ist kein Gate, sondern Lärm.* Der Wächter (`src/__tests__/impressumAdresse.test.js`) hütet
+> jetzt drei echte Zusagen und ist grün — Mutationsprobe gemacht.
+>
+> 🛑 **Der Fund des Abends, für den nächsten: Fedlex per `curl` ist kein Messgerät.**
+> `/de`, `/fr`, `/it`, `/rm` **und** eine frei erfundene Sprache `/xx` geben dieselbe
+> 77 151 Byte grosse SPA-Hülle zurück, alle md5-identisch. HTTP 200 misst dort das Werkzeug,
+> nicht den Bestand. Ob das UWG auf Rumantsch existiert, ist damit **nicht** festgestellt —
+> also nicht behauptet. Gefangen hat das nicht meine Sorgfalt, sondern der bestehende Test
+> «Rumantsch hat für keine Quelle eine eigene Adresse — gemessen, nicht vergessen».
+>
+> ✅ **Nachtrag 23.09., 19:35 — #271 «Berner 3a-Deckel» und #275 «3a-Tracker-Jahresgrenze» sind gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
+>
+> | | gemessen 23.09., 19:35 |
+> |---|---|
+> | `main` | **`74ab23b`** — «Merge pull request #275», 17:30 UTC. Heute gingen fünf PRs rein: **#270** 3a-Maximum eine Quelle · **#273** Melde-Weg Fehlerschirm · **#274** Fehlerschirm-Farben · **#271** 17:30:06 UTC · **#275** 17:30:43 UTC |
+> | Tests auf `main` | **2830 grün** (147 Dateien), Build sauber, PII-Scan sauber |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — also VOR allen fünf. Der Build aus `main` ergibt `index-DccaaCZO.js`. **Gemergt ist nicht live** |
+> | offene PRs | **eine: #272** «UI/UX-Runde», Entwurf, nicht aus dieser Sitzung, nicht angefasst |
+>
+> 🛑 **Was der Auslieferung JETZT im Weg steht — und es ist nicht die App.**
+> Der geteilte Haupt-Checkout steht auf `feat/ui-ux-runde-2026-09-23` (= #272, fremde, laufende
+> Arbeit). Das Branch-Gate in `deploy.sh` bricht dort ab; dieselbe Falle wie am 23.09. mittags.
+> Vorher im Haupt-Checkout auf `main` stellen — **`main` ist jetzt frei**, der Worktree dieser
+> Sitzung hält es nicht mehr fest (er steht losgelöst auf `74ab23b`).
+>
+> ✅ **Nachtrag 23.09., 22:57 — aus der Melde-Weg-Sitzung, gegen den Block darüber gemessen.**
+> Der Block stimmt, zwei Zeilen sind nur weitergezogen: `main` = **`2369bbc`** (nach **#276**
+> Stand-Doku, 20:57), und es sind **zwei** offene PRs — **#272** «UI/UX-Runde» (fremd, nicht
+> angefasst) und **#278** «Der Melde-Weg festgehalten» (Doku, Entwurf, aus dieser Sitzung:
+> BUGS.md B-5 auf Stand + Bau-Liste §25 mit den drei Punkten ab Sa 26.09.).
+> Tests auf `main` **2830 grün** (147 Dateien), Build sauber — um 22:39 selbst nachgemessen.
+> **Live weiterhin `index-8FolD38L.js` vom 22.09.** — unverändert, also vor allen PRs von heute.
+>
+> 🛑 **Und der Grund, warum der Deploy nicht von Claude kommt, ist nicht nur das Branch-Gate:**
+> `deploy.sh:103–104` fragt das SFTP-Passwort. Passwörter eingeben ist Claude verboten, und
+> diese Sitzung war nicht interaktiv. Der Deploy ist damit **mechanisch** die Hand von Stebler Studios, nicht
+> bloss per Konvention. Befehl: im Haupt-Checkout `git checkout main && git pull && bash deploy.sh`.
+>
+> ### Was #271 gebracht hat — der Deckel rechnet
+> `SAEULE_3A.bisBundesMaximum.nichtAufgerechnet` stand seit dem 20.09. auf `() => 0`, weil der
+> Frankenwert nicht belegt war. Wortlaut jetzt **an der Quelle gelesen** (BELEX, BSG 842.111.1,
+> Stand 01.12.2025), Art. 6 Abs. 4 lit. i: «Beiträge an die gebundene Selbstvorsorge (Säule 3a)
+> bis zum nach Bundesrecht zulässigen Maximalbetrag **für unselbständig Erwerbstätige** werden
+> dazugerechnet.» Der Erlass nennt **einen** Betrag, nicht den je Person geltenden Höchstabzug.
+> Gemessen: 4'000/Monat + 3a 35'280 ⇒ **CHF 1'284/Jahr statt gar nichts**.
+>
+> 🛑 **Das Jahr war der zweite Fehler, und er war meiner.** Zuerst stand dort 7'258, das Maximum
+> des Anspruchsjahres. Massgebend ist die Veranlagung des **vorletzten** Steuerjahres (Art. 7
+> Abs. 1), also 2024 ⇒ **7'056**. `src/data/saeule3a.js` trägt darum jetzt die ESTV-Jahrestabelle
+> 2021–2026 statt eines Werts. Abgezogen wird aber erst über **beiden** Jahresmaxima: im Band
+> 7'056–7'258 lässt sich nicht unterscheiden, ob jemand zu viel einzahlte oder das Maximum bloss
+> gestiegen ist — ohne diese Regel zahlte ausgerechnet der **Maximalzahler CHF 480/Jahr zu viel**,
+> auf der Rückforderungsseite.
+>
+> ### Was #275 gebracht hat — die Jahresgrenze im Tracker
+> Der 3a-Einzahlungs-Tracker summierte **datumsblind** über alle Zeilen und verglich das mit dem
+> JAHRESmaximum. Wer ihn über Jahre weiterführt, *wofür er gebaut ist*, sah «Maximum erreicht»,
+> ohne es in einem Jahr ausgeschöpft zu haben — und dieselbe Summe ging als `pension3a` in den
+> Steuerrechner, in `budgetSync.js` (`/ 12`) und in die Prämienverbilligung. Drei Zeilen à 7'000
+> ergaben 21'000. Die Jahreszuordnung liegt jetzt in `src/data/saeule3a.js`, damit Anzeige,
+> Formular und Rechenkerne sie **gleich** lesen.
+>
+> ---
+>
+> ## Vier Sätze, die sonst niemand mehr sagt
+>
+> 🛑 **1 — BELEX `/app/` ist ein BLINDES Messgerät, `/api/` ist das richtige.**
+> Roh abgerufen liefert `https://www.belex.sites.be.ch/app/de/texts_of_law/<nr>` für **jede**
+> Nummer dieselbe SPA-Hülle: 842.111.1 und die erfundene 842.111.9 kamen **byte-identisch**
+> zurück (2303 Bytes, gleicher SHA-256). Das ist **exakt der Fedlex-Fehlermodus vom 20.09.**
+> Im JS-ausführenden Browser unterscheidet es sehr wohl — deshalb hielt ich meine erste
+> Gegenprobe für bestanden. **Sie war es nicht.** Was misst: `…/api/texts_of_law/842.111.1` →
+> 200, 2'160'333 Bytes; `…/api/texts_of_law/842.111.9` → **404, 0 Bytes**.
+> *Lehre über den Fall hinaus: Eine Gegenprobe gilt nur für das Werkzeug, mit dem sie gemacht
+> wurde. «Bestanden» ohne Angabe des Werkzeugs ist keine Aussage.*
+>
+> 🛑 **2 — Ein Riegel kann nach einem Fix die FALSCHEN treffen.**
+> Der Mehrjahres-Riegel aus #271 fragte «tragen die Zeilen mehr als ein Kalenderjahr?». Sobald
+> der Tracker in #275 die Jahresgrenze selbst zog, war das die falsche Frage: Wer seine
+> Einzahlungen sauber über Jahre führt, hat selbstverständlich mehrere Jahre in der Liste und
+> trotzdem einen korrekten Jahresbetrag. Der Riegel hätte **genau diesen Menschen** die Zahl
+> weggenommen. Er fragt jetzt am Wert selbst. *Lehre: Wer eine Ursache behebt, muss jede
+> Schadensbegrenzung nachziehen, die auf der Ursache aufbaute — sonst wird der Schutz zum Schaden.*
+>
+> 🛑 **3 — Eine Mutation überlebte die ganze Testbatterie, und es war die wichtigste Stelle.**
+> `pension3a` in `ChapterView.handleDeposits` — dort, wo der Wert entsteht. Unit-Tests einer
+> geteilten Funktion können **nicht** fangen, dass eine Aufrufstelle durch eine eigene Summe
+> ersetzt wird. Ein echter Interaktionstest bräuchte jsdom + Testing-Library, also neue
+> Abhängigkeiten (`CLAUDE.md`: «Avoid: dependency bloat»). Gebaut ist stattdessen eine
+> Quelltext-Prüfung nach dem Muster von `glyphenImText`. **Sie beweist nicht, dass die Oberfläche
+> richtig rechnet** — nur, dass sie die geprüfte Funktion benutzt. Das steht auch so im Test.
+> *Offener Punkt, falls je eine Testumgebung dazukommt: diesen Pfad echt durchspielen.*
+>
+> 🛑 **4 — Aargau geht bewusst NICHT mit, und der Grund ist strukturell.**
+> `SAEULE_3A.schwelleOhneSaeule2` bleibt bei `() => 0`. BE fehlte eine **Zahl** — die holt man
+> an der Quelle, das ist heute geschehen. AG fehlt eine **Angabe über die Person**: ob eine
+> 2. Säule besteht. Leere BVG-Felder heissen «nicht erfasst», nicht «keine Säule 2». Das holt
+> keine Recherche nach; es braucht ein neues Feld **oder** den Entscheid, in AG eine Orientierung
+> statt einer Zahl zu zeigen. **Das ist ein Produktentscheid von Stebler Studios, keine Fachfrage.**
+> Wirkung, solange es offen ist: bei Personen ohne Säule 2 fällt der Anspruch **bis zu 34 % zu
+> tief** aus (nachgerechnet 20.09.: Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50).
+>
+> ---
+>
+> ### Was beim ASV Bern offen bleibt (`docs/sources/FRAGEN-AN-DIE-AEMTER.md`, Frage 2)
+> Die Zahl ist belegt, die **Auslegung** nicht bestätigt. Drei Punkte hängen an einer Antwort:
+> **(a)** Steuerjahr oder Bezugsjahr? **(b)** Gilt ein fester Betrag oder der je Person geltende
+> Höchstabzug? **(c)** BVV 3 Art. 7 Abs. 1 knüpft an die **Zugehörigkeit zu einer
+> Vorsorgeeinrichtung** an, nicht an «unselbständig» — was gilt für **Angestellte ohne
+> Pensionskasse** (Lohn unter der BVG-Eintrittsschwelle)?
+> Solange das offen ist, trägt die Regel ein neues Feld **`vorbehalt`** (nicht `offen`):
+> `offen` = rechnet nicht · `vorbehalt` = rechnet, aber auf vertretbarer statt bestätigter
+> Lesart. Wo der Abzug wirkt, **sieht das auch die Person** (`ipv.vorbehaltBE3aDeckel`, 5 Sprachen).
+>
+> ### Wie geprüft wurde
+> Drei Runden `swiss-precision-pruefer`; die ersten beiden fanden je einen **roten** Befund
+> (falsches Bezugsjahr, unbegrenzter Abzug), beide selbst nachgemessen und behoben. Eine Rüge des
+> Prüfers war ihrerseits falsch (Beleg der 14'000-Schwelle) — Art. 13 Abs. 2 lit. i definiert sie
+> ausdrücklich über Art. 6 Abs. 4; der Prüfer hat das in Runde 2 bestätigt. Dazu **19 Mutationen**
+> eingebaut und wieder entfernt. In der laufenden App gegengemessen (Profil mit Historie
+> 2024/2025/2026): Anzeige «CHF 7'000 von CHF 7'258 für 2026» + «Dazu CHF 14'000 aus früheren
+> Jahren», `pension3a` 21'000 → 7'258 beim Bearbeiten, Kontrast 5,58:1 hell / 4,59:1 dunkel.
+
+> ✅ **Nachtrag 23.09., 11:10 — #266 «Compliance-Übersicht + Regulierungsgrenzen» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben (nicht am Sitzungsanfang):
+>
+> | | gemessen 23.09., 11:10 |
+> |---|---|
+> | `main` | **`09b54a9`** — «Merge pull request #266», 09:03 UTC. CI auf `main` nach dem Merge: **grün** |
+> | Tests auf `main` | **2762 grün** (144 Dateien) — 2723 + 39 neue aus dieser Sitzung |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — also VOR #264, #265 und #266 |
+> | offene PRs | **eine: #267** «Docs: PROMPT.md», Zweig `docs/developer-prompt`, eröffnet **09:04 UTC — eine Minute nach meinem Merge**. Nicht aus dieser Sitzung; nicht angefasst |
+> | Zweig `docs/compliance-uebersicht` | **nicht gelöscht**, steht noch auf dem Remote |
+>
+> 🛑 **Die eine Änderung, bei der der Deploy die Sache selbst ist und nicht nur die Sichtbarkeit:**
+> Die MIT-Lizenz verlangt, dass ihr Text **mit den ausgelieferten Kopien** geht. Im Repo liegen
+> jetzt acht Texte unter `public/licenses/`, live sind zwei. Gemessen mit Kontrollprobe:
+> `/licenses/jsQR-LICENSE.txt` → **200** (seit 17.09. im Build), `/licenses/react-LICENSE.txt`
+> → **404**, erfundener Name ebenfalls 404. Der Pfad wird ausgeliefert, die sechs neuen Texte
+> fehlen dort. **Bis zum Deploy ist die Lizenzlücke im Repo geschlossen, auf der Seite nicht.**
+>
+> **Vollständig gemessen, 11:20 — es sind 6 von 8, nicht nur `react`:**
+>
+> | live 200 | live 404 |
+> |---|---|
+> | `QRCode.js`, `jsQR` | `three`, `react`, `react-dom`, `scheduler`, `js-tokens`, `loose-envify` |
+>
+> Gegenprobe mit erfundenem Namen: 404 — die Methode unterscheidet.
+>
+> 🛑 **Und die Frage davor, die ich zuerst übersprungen hatte: «im Repo» ist nicht «im Build».**
+> Hätte eine `.gitignore`- oder vite-Regel `public/licenses/` aus `dist/` gehalten, würde der
+> Deploy die Lücke **nicht** schliessen — und dieses Dokument behauptete eine Konformität, die
+> nie einträte. Nachgemessen im frischen Build (`dist/licenses/`, gebaut 11:06 aus `main` =
+> `09b54a9` von 11:03): **alle acht Dateien da, 1081–12161 Bytes, keine leer.** Der Deploy
+> schliesst die Lücke also wirklich. *Gefunden hat diese Vorfrage die Parallel-Sitzung
+> «Aufräumen fortgesetzt», nicht ich.*
+>
+> 🛑 **Nebenbefund zum Arbeiten im geteilten Checkout:** der Deploy-Versuch von Stebler Studios brach am
+> Branch-Gate von `deploy.sh` ab — weil der gemeinsame Arbeitsbaum auf **meinem** Zweig
+> `docs/stand-nach-266` stand. Ein Arbeitszweig im geteilten Checkout blockiert den Deploy,
+> auch wenn er nichts verändert. Lehre: nach dem Push zurück auf `main` stellen, oder gleich
+> in einem eigenen Worktree arbeiten (dieser Nachtrag entstand in
+> `.claude/worktrees/stand-266`, ohne den Haupt-Checkout anzufassen).
+>
+> **Was #266 gebracht hat** (9 Commits):
+> - `docs/security/compliance-overview.md` von drei auf **sechzehn Regime** erweitert, je mit
+>   Beleg und Stolperdraht: Aufsichtsrecht (BankG/FINIG/KAG/GwG/FIDLEG/VAG/KVAG), UWG inkl.
+>   Art. 8, OR 99/100, ZPO 32/35, URG, MepV, BGFA/SchKG 27, Barrierefreiheit, PBV/MWST,
+>   KI-Recht, Marke, EU-Produkthaftung, Cyber Resilience Act, App-Store/DSA, Beschaffung,
+>   kantonales IDG, KKG, Lizenzrecht.
+> - **Ergebnis: keine FINMA-Bewilligung und kein Registereintrag nötig** — «FINMA-konform» ist
+>   ohnehin keine Eigenschaft, die man haben kann. Nicht juristisch geprüft (**K48**).
+> - `docs/legal/k48-fragen-juristin.md` **neu**: 20 Fragen in sechs Gruppen, je mit «was daran
+>   hängt», dazu ein Abschnitt «was NICHT geprüft werden muss, weil es gemessen ist».
+> - Zwei Wächter im Code: `regulierungsgrenzen.test.js` (21 Prüfungen, 4 Gegenproben) und
+>   `hinweisImBild.test.js` (rendert **alle 15 gerechneten Ansichten**; dass er beisst, ist
+>   mit einer Mutationsprobe belegt).
+> - **Echte Lücken geschlossen:** `three` fehlte im Lizenzverzeichnis, sechs MIT-Texte fehlten
+>   in der Auslieferung · `KVGWechsel`/`ZusatzWechsel` waren die einzigen Ablauf-Ansichten ohne
+>   Orientierungs-Hinweis im Fuss · der Platzhalter «Wunsch-Kasse» nannte in allen fünf Sprachen
+>   **«Helsana»** als einzigen Kassennamen im Wechselpfad.
+> - **Fachliche Korrekturen nach der Rechts-Prüfung** (neun Stück, jede als Korrektur sichtbar
+>   stehengelassen): **EAA greift voraussichtlich gar nicht** (Art. 4 Abs. 5 nimmt
+>   Kleinstunternehmen aus) · **CRA** hängt am Produktbegriff, nicht an der Paywall
+>   (Erwägungsgrund 12 nimmt Websites/SaaS aus) · **VAG**-Auslöser ist Art. 40 «anbieten oder
+>   abschliessen», nicht der Geldfluss · **DSG Art. 2 Abs. 2 lit. a** nimmt den persönlichen
+>   Gebrauch aus, Verzeichnis und DSFA sind Übererfüllung · **UWG lit. s** gilt ganz oder gar
+>   nicht, das Impressum ist heute freiwillig.
+> - 🛑 **Ein Wächter, der grün war und nichts hielt:** Teil B prüfte die **leere Menge** (kein
+>   Eintrag hat ein `affiliate`-Feld) und liess mit seiner Wortliste **9 von 10** echten
+>   Anbietern durch (Raiffeisen, VIAC, frankly, neon, Yuh, Swiss Life, AXA, Helvetia, Selma).
+>   Jetzt **Erlaubnisliste** statt Verbotsliste ([[feedback_waechter_prueft_die_leere_menge]]).
+> - `pii-scan.sh`: `public/licenses/**` ausgenommen — fremde Lizenztexte müssen wortgetreu
+>   mitgeliefert werden. Mit Attrappe gegengeprüft, ein echtes Leck ausserhalb wird erkannt.
+
+
 > 🔴 **Korrektur 22.09., 13:51 — die Stand-Zeile darüber war an drei Stellen überholt.**
 > Sie wurde um **10:25** geschrieben; der Deploy lief um **10:31**, sechs Minuten später.
 > Unmittelbar vor dem Schreiben dieser Zeilen erhoben:

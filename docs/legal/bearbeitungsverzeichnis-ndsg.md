@@ -12,7 +12,7 @@
 | **Name** | Sophie Stebler |
 | **Adresse** | Basel, Schweiz |
 | **Kontakt** | info@malojaplana.ch |
-| **Datenschutzberater** | Keiner bestellt (keine gesetzliche Pflicht für Einzelpersonen/nicht-kommerzielle Projekte) |
+| **Datenschutzberater** | Keiner bestellt. **Art. 10 Abs. 1 DSG** (SR 235.1): «Private Verantwortliche *können* eine Datenschutzberaterin oder einen Datenschutzberater ernennen» — die Benennung ist fakultativ. Die Bearbeitung findet zudem ausschliesslich lokal auf dem Gerät der nutzenden Person statt. Bis zum 23.09.2026 stand hier als Begründung «keine gesetzliche Pflicht für Einzelpersonen/nicht-kommerzielle Projekte»: das Ergebnis stimmte, die Begründung nicht — das Gesetz stellt nicht auf Kommerzialität ab, und nicht-kommerziell trifft wegen Dual Licensing ohnehin nicht zu |
 
 ---
 

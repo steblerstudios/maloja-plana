@@ -74,8 +74,19 @@ Bitte prüfe und aktualisiere folgende Datenquellen:
 - Quelle: bsv.admin.ch
 
 ### 3a-Maximalbetrag
-- Zieldateien: `src/VorsorgeRechner.jsx`, `src/TaxCalculator.jsx`
-- Aktueller Wert: CHF 7'056 (Stand 2026)
+- Zieldatei: `src/data/saeule3a.js` — **die einzige Stelle**, die den Wert trägt.
+  `TaxCalculator.jsx` und `Saeule3aTracker.jsx` importieren ihn von dort.
+- Quelle: estv.admin.ch → Direkte Bundessteuer → Steuertarife → «Zinssätze / Höchstabzüge
+  Säule 3a», Tabelle «Höchstabzüge Säule 3a». Gegenprobe: faq.bsv.admin.ch
+- Prüfen: **beide** Werte — mit 2. Säule und ohne. Der Wert für 2026 steht im Konstanten-Objekt
+  samt Abrufdatum; stimmt die ESTV-Tabelle damit überein, nur `abgerufen` nachführen.
+
+> 🛑 **Warum dieser Eintrag eine Quelle braucht.** Bis 23.09.2026 stand hier «Aktueller Wert:
+> CHF 7'056 (Stand 2026)» **ohne Quellenzeile** — als einziger Eintrag dieser Liste. Eine
+> Prüfung konnte damit nur die Doku gegen sich selbst halten und ging grün aus, während der
+> Wert zwei Anpassungen alt war (7'056 galt 2023/2024). Dazu zeigte der Eintrag auf
+> `VorsorgeRechner.jsx`, wo der Betrag gar nie stand, und nicht auf `Saeule3aTracker.jsx`, wo
+> er stand. **Ein Eintrag ohne Quelle ist keine Prüfung, sondern eine Abschrift.**
 
 ### EO-Taggeld-Maximum
 - Zieldatei: `src/EOrechner.jsx`

@@ -2,6 +2,7 @@ import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import { IPV_BE, ipvBernRechnen, beMassgebendesEinkommen, beRegion } from '../ipvBern.js';
 import { calculateIPV, preloadPLZ, CANTONAL_IPV } from '../cantonalData.js';
 import { getRegion } from '../../data/praemienRegionen.js';
+import { saeule3aMaximum } from '../../data/saeule3a.js';
 
 // K31 — Prämienverbilligung Kanton Bern 2026 nach der amtlichen Stufentabelle.
 // Quellen (abgerufen 2026-09-20), Wortlaute in docs/sources/ipv-kantone-2026.md, Abschnitt BE:
@@ -254,12 +255,195 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
   // einziger Franken Differenz kippt eine ganze Stufe, im Jahr bis zu CHF 888.
   // Zusätzlich zitierte ipvBern.js dafür KKVV Art. 9 Abs. 2 statt Art. 6 Abs. 4 lit. i —
   // und verlor dabei den Deckel aufs bundesrechtliche Maximum ganz.
+  // ⟨korrigiert 23.09.2026, nachdem der Deckel gebaut war — der alte Satz stimmt nicht mehr⟩
+  // Hier stand: «Der eingesetzte 3a-Betrag ist ein BELIEBIGER Eingabewert». Das galt, solange
+  // `bisBundesMaximum` auf `() => 0` stand. Seit der Deckel rechnet, ist der Betrag NICHT
+  // beliebig: 7'258 ist genau das bundesrechtliche Maximum, also der grösste Wert, bei dem
+  // noch nichts abgezogen wird. Oberhalb davon verändert die 3a das Ergebnis sehr wohl — und
+  // soll es auch; das prüft der Block «der Deckel rechnet» weiter unten.
+  // Dieser Test hier bleibt der Rückfall-Wächter gegen die DOPPELZÄHLUNG, nicht gegen den
+  // Deckel. Er hält fest: eine Einzahlung bis zum Maximum verändert gar nichts.
+  // ⟨23.09.2026, zweite Änderung am selben Tag⟩ Der Betrag steht auf 7'056 statt 7'258: das
+  // Maximum des BEMESSUNGSJAHRES 2024, mit dem BE für das Anspruchsjahr 2026 rechnet
+  // (KKVV Art. 7 Abs. 1). 7'258 läge bereits 202 Franken darüber und würde abgezogen.
   it('Säule 3a zählt NICHT zusätzlich — und kippt damit keine Stufe mehr', () => {
     expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } }))).toMatchObject({ amount: 221 });
-    // der alte Weg hätte hier 11 196 + 7 056 = 18 252 − 2 200 = 16 052 ergeben, also zwei
-    // Stufen tiefer statt derselben
+    // der alte Weg hätte hier 11 196 + 7 056 = 18 252 − 2 200 = 16 052 ergeben und damit in die
+    // Stufe «bis 17 000» geworfen statt in «bis 9 000» (stufen: [9000, 17000, …] in ipvBern.js).
+    // ⟨korrigiert 23.09.2026⟩ Hier stand «zwei Stufen tiefer» — gegen die Stufenliste gerechnet
+    // ist es eine.
     expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } })).amount)
       .toBe(calculateIPV(person({ monthlyIncome: 933 })).amount);
+  });
+
+  // ⟨neu 23.09.2026⟩ DER DECKEL RECHNET — KKVV Art. 6 Abs. 4 lit. i, Wortlaut an der Quelle:
+  // «Beiträge an die gebundene Selbstvorsorge (Säule 3a) bis zum nach Bundesrecht zulässigen
+  // Maximalbetrag für unselbständig Erwerbstätige werden dazugerechnet.» [B]
+  //
+  // 🛑 BE ist eine STUFENTABELLE. Ein Franken kippt eine ganze Stufe — zwischen der obersten
+  // und der zweiten sind das CHF 74/Monat, also 888 im Jahr. Darum wird jede der fünf
+  // Stufengrenzen KNAPP von beiden Seiten geprüft, nicht in der Mitte: ein Test in der Mitte
+  // hätte einen Rundungs- oder Vorzeichenfehler im Abzug gar nicht bemerkt.
+  //
+  // 🛑 MASSGEBEND IST DAS BEMESSUNGSJAHR. KKVV Art. 7 Abs. 1: «aufgrund der definitiven
+  // Veranlagung des vorletzten Steuerjahres» — für das Anspruchsjahr 2026 also 2024, und
+  // dort galten 7'056 (ESTV-Tabelle, src/data/saeule3a.js). Nicht 7'258; das ist der Wert
+  // des Anspruchsjahres und wäre zwei Anpassungen daneben.
+  //
+  // Rechenweg je Fall: me = Einkommen × 12 − max(0, 3a − 7'056) − 2'200 (Sozialabzug
+  // alleinstehend, KKVV Art. 9 Abs. 2 lit. c).
+  describe('K31 BE: der 3a-Deckel an den Stufengrenzen, knapp von beiden Seiten', () => {
+    // 🛑 Abgezogen wird erst über BEIDEN Jahresmaxima — siehe `nichtAufgerechnet`. Für das
+    // Anspruchsjahr 2026 ist das max(7'056, 7'258) = 7'258. Im Band dazwischen kann die App
+    // nicht unterscheiden, ob jemand zu viel einzahlte oder das Maximum bloss gestiegen ist.
+    const SCHWELLE = 7258;
+
+    // [Bezeichnung, Monatseinkommen, 3a-Einzahlung, erwartetes me, Monatsbetrag Region 1]
+    // `null` heisst: über der Anspruchsgrenze, kein Betrag.
+    it.each([
+      // Grenze 9 000 — 19'200 − Überschuss − 2'200
+      ['9 000', 1600, 15258, 9000, 221],
+      ['9 001', 1600, 15257, 9001, 147],
+      // Grenze 17 000 — 30'000 − Überschuss − 2'200
+      ['17 000', 2500, 18058, 17000, 147],
+      ['17 001', 2500, 18057, 17001, 107],
+      // Grenze 25 000
+      ['25 000', 2500, 10058, 25000, 107],
+      ['25 001', 2500, 10057, 25001, 67],
+      // Grenze 35 000 = Anspruchsgrenze ohne Kinder: ein Franken kostet hier ALLES
+      ['35 000', 4000, 18058, 35000, 67],
+      ['35 001', 4000, 18057, 35001, null],
+    ])('massgebendes Einkommen genau %s ⇒ %s', (_, monthlyIncome, pension3a, me, betrag) => {
+      // Der Rechenweg wird hier nachgerechnet, nicht geglaubt: stimmt me nicht, ist der Test
+      // selbst falsch aufgesetzt und würde eine Stufe prüfen, die er gar nicht meint.
+      expect(monthlyIncome * 12 - Math.max(0, pension3a - SCHWELLE) - 2200).toBe(me);
+      // und die Einzahlung muss aus dem Einkommen stammen können, sonst greift der Riegel
+      expect(pension3a).toBeLessThanOrEqual(monthlyIncome * 12);
+      const r = calculateIPV(person({ monthlyIncome, finanzen: { pension3a } }));
+      if (betrag === null) {
+        expect(r).toMatchObject({ eligible: false, amount: 0, noteParams: { value: 35000 } });
+      } else {
+        expect(r).toMatchObject({ eligible: true, amount: betrag });
+      }
+    });
+
+    // Die fünfte Stufe (33.50) gibt es nur für Familien — Grenze 45'000 statt 35'000.
+    it('Grenze 45 000 mit Kind: 45 000 noch letzte Spalte, 45 001 kein Anspruch', () => {
+      const kind = [{ birthDate: '2015-01-01' }];
+      // 6 000 × 12 = 72 000 − Überschuss − (9 750 + 15 000) Sozialabzug
+      const fall = (pension3a) => calculateIPV(person({ monthlyIncome: 6000, children: kind, finanzen: { pension3a } }));
+      expect(72000 - Math.max(0, 9508 - SCHWELLE) - 24750).toBe(45000);
+      expect(fall(9508).annual).toBe(Math.round((33.5 + 119.3) * 12));
+      expect(fall(9507)).toMatchObject({ eligible: false, noteParams: { value: 45000 } });
+    });
+
+    // 🛑 WÄCHTER GEGEN DEN STILLEN RÜCKFALL auf `() => 0`. Fällt `nichtAufgerechnet` je auf
+    // die alte Zeile zurück, wären beide Fälle hier gleich — und der Test merkte es sofort.
+    it('ohne den Deckel wäre es eine Stufe tiefer: die Regel wirkt messbar', () => {
+      const mitDeckel = calculateIPV(person({ monthlyIncome: 1600, finanzen: { pension3a: 15258 } }));
+      const ohneDeckel = calculateIPV(person({ monthlyIncome: 1600 }));   // me = 17 000, Stufe 2
+      expect(mitDeckel.amount).toBe(221);
+      expect(ohneDeckel.amount).toBe(147);
+      // Der Unterschied ist genau die CHF 888 im Jahr, die in ipvBern.js stehen.
+      expect(mitDeckel.annual - ohneDeckel.annual).toBe(888);
+    });
+
+    // 🛑 DER WÄCHTER FÜR DAS BAND ZWISCHEN DEN BEIDEN JAHRESMAXIMA.
+    // Eine angestellte Person mit Pensionskasse zahlt 2026 exakt ihr gesetzliches Maximum
+    // von 7'258 ein — völlig regelkonform, der häufigste 3a-Fall überhaupt. Gegen das
+    // Maximum des Bemessungsjahres (7'056) gehalten entstünde ein Abzug von 202 Franken und
+    // damit eine ganze Stufe: CHF 480 im Jahr ZU VIEL, also Rückforderung.
+    // Genau so rechnete der Code in der ersten Fassung vom 23.09.2026, gemessen in der
+    // dritten Fachprüfungsrunde. Seither wird erst über BEIDEN Maxima abgezogen.
+    it('der Maximalzahler 2026 bekommt keinen Abzug — das Band zwischen den Maxima ist frei', () => {
+      // 1 609 × 12 = 19 308 − 2 200 = 17 108 → Stufe bis 25 000, CHF 107
+      // mit einem Abzug von 202 wäre es 16 906 → Stufe bis 17 000, CHF 147: eine Stufe zu hoch
+      expect(19308 - 2200).toBe(17108);
+      expect(19308 - (7258 - 7056) - 2200).toBe(16906);
+      const mitMaximum = calculateIPV(person({ monthlyIncome: 1609, finanzen: { pension3a: 7258 } }));
+      const ohne3a = calculateIPV(person({ monthlyIncome: 1609 }));
+      expect(mitMaximum).toMatchObject({ amount: 107 });
+      expect(mitMaximum.annual).toBe(ohne3a.annual);          // die 3a ändert für sie nichts
+      expect(147 * 12 - mitMaximum.annual).toBe(480);         // was der Fehler gekostet hätte
+      // Und weil hier gar nichts abgezogen wird, gibt es auch keinen Zusatzvorbehalt.
+      expect(mitMaximum.zusatzVorbehaltKey).toBeUndefined();
+    });
+
+    // Die Gruppe, um die es geht: Personen ohne 2. Säule durften 2024 bundesrechtlich bis
+    // 35'280 abziehen (BVV 3 Art. 7 Abs. 1 lit. b) — KKVV Art. 6 Abs. 4 lit. i rechnet ihnen
+    // trotzdem nur das Unselbständigen-Maximum auf. Nach der ANDEREN Lesart («der je Person
+    // geltende Höchstabzug») wäre der Abzug hier 0 und die Person ohne jeden Anspruch.
+    it('ohne 2. Säule: Deckel auf 7 056, nicht auf den eigenen Höchstabzug', () => {
+      // 4 000 × 12 = 48 000 − (35 280 − 7 056) − 2 200 = 17 576 → Stufe bis 25 000
+      expect(48000 - (35280 - 7056) - 2200).toBe(17576);
+      expect(calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 35280 } })))
+        .toMatchObject({ eligible: true, amount: 107 });
+      // Die andere Lesart hätte me = 45 800 ergeben — über der Grenze 35 000, also gar nichts.
+      expect(calculateIPV(person({ monthlyIncome: 4000 }))).toMatchObject({ eligible: false });
+    });
+
+    // Eine unlesbare Eingabe darf den Betrag nicht verschwinden lassen (NaN im Abzug).
+    it('unlesbare 3a-Eingabe ⇒ Deckel aus, Betrag bleibt — kein NaN', () => {
+      expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 'abc' } })))
+        .toMatchObject({ eligible: true, amount: 221 });
+    });
+
+    // 🛑 DER RIEGEL, DER DEN HÖCHSTBETRAG AUS EINEM VERTIPPER VERHINDERT.
+    // Ist die Einzahlung grösser als das ganze Jahreseinkommen, stammt sie nicht daraus —
+    // häufigster Fall: der KONTOSTAND steht im Feld für die Jahreseinzahlung (`pension3aBalance`
+    // liegt direkt daneben). Ohne den Riegel wurde das Einkommen negativ, auf 0 geklemmt, und
+    // die App zeigte 221/Monat: den HÖCHSTBETRAG aus einem Formularfehler.
+    it('Einzahlung über dem Jahreseinkommen ⇒ keine Zahl, nicht der Höchstbetrag', () => {
+      const r = calculateIPV(person({ monthlyIncome: 5000, finanzen: { pension3a: 80000 } }));
+      expect(r).toMatchObject({ belegt: false, amount: null, offen: 'saeule3aUeberEinkommen' });
+      // Rentenfall: 24 000 Rente, 35 280 Einzahlung — dieselbe Widerlegung.
+      expect(calculateIPV(person({ finanzen: { ahvRente: 2000, pension3a: 35280 } })))
+        .toMatchObject({ belegt: false, amount: null, offen: 'saeule3aUeberEinkommen' });
+      // Genau auf dem Einkommen ist noch kein Widerspruch: 60 000 = 60 000 → es wird gerechnet.
+      expect(calculateIPV(person({ monthlyIncome: 5000, finanzen: { pension3a: 60000 } })).belegt).toBe(true);
+    });
+
+    // 🛑 Und der Riegel darf NICHT greifen, wo der Deckel gar nicht beisst. Sonst nimmt er
+    // der Gruppe mit kleinem Einkommen die Zahl weg — samt dem Hinweis, dass sie den Anspruch
+    // selbst beantragen muss (KKVV Art. 13 Abs. 2 lit. i), ohne den er ganz verfällt.
+    it('kleines Einkommen mit kleiner 3a bekommt seine Zahl — und den Antragshinweis', () => {
+      // 500 × 12 = 6 000 Einkommen, 3a 6 500 → unter dem Maximum 7 056, Abzug 0
+      expect(calculateIPV(person({ monthlyIncome: 500, finanzen: { pension3a: 6500 } })))
+        .toMatchObject({ belegt: true, eligible: true, amount: 221, noteKey: 'ipv.beAntragNoetig' });
+    });
+
+    // Der Tracker summiert datumsblind über Jahre. Drei Jahreszeilen ergäben sonst einen
+    // Abzug, den es nicht gibt — und einen Anspruch, der nicht besteht.
+    it('Einzahlungen aus mehreren Jahren ⇒ keine Zahl statt eines zu hohen Anspruchs', () => {
+      const deposits = [{ date: '2024-03-01', amount: 7000 }, { date: '2025-03-01', amount: 7000 },
+                        { date: '2026-03-01', amount: 7000 }];
+      expect(calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 21000, pension3aDeposits: deposits } })))
+        .toMatchObject({ belegt: false, amount: null, offen: 'saeule3aUeberEinkommen' });
+      // Dieselbe Summe, aber in EINEM Jahr eingezahlt: das ist eine Jahreseinzahlung.
+      const einJahr = [{ date: '2026-01-01', amount: 10000 }, { date: '2026-07-01', amount: 11000 }];
+      expect(calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 21000, pension3aDeposits: einJahr } })).belegt)
+        .toBe(true);
+    });
+
+    // 🛑 Wo der Deckel wirkt, hängt der Betrag an einer beim ASV unbestätigten Lesart — das
+    // muss die Person sehen, nicht nur der Quelltext (Fachprüfung 23.09.2026, zweite Runde).
+    it('wirkt der Deckel, trägt das Ergebnis einen zweiten Vorbehalt — sonst nicht', () => {
+      expect(calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 35280 } })))
+        .toMatchObject({ zusatzVorbehaltKey: 'ipv.vorbehaltBE3aDeckel' });
+      // Einzahlung unter dem Maximum: die Lesart ändert für diese Person nichts, also kein Satz.
+      expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } })).zusatzVorbehaltKey)
+        .toBeUndefined();
+      expect(calculateIPV(person({ monthlyIncome: 933 })).zusatzVorbehaltKey).toBeUndefined();
+    });
+
+    // Rollt das Anspruchsjahr weiter, ohne dass die ESTV-Tabelle nachgeführt wurde, darf die
+    // App nicht still ohne Deckel rechnen. Dieser Test bricht, sobald das Bemessungsjahr aus
+    // der Tabelle fällt — rechtzeitig, weil er das Jahr aus IPV_BE liest.
+    it('beide Jahre von BE sind in der 3a-Tabelle belegt, und die Schwelle ist das höhere', () => {
+      expect(saeule3aMaximum(IPV_BE.jahr - 2)).toBe(7056);      // Bemessungsjahr 2024
+      expect(saeule3aMaximum(IPV_BE.jahr)).toBe(7258);          // Anspruchsjahr 2026
+      expect(Math.max(saeule3aMaximum(IPV_BE.jahr - 2), saeule3aMaximum(IPV_BE.jahr))).toBe(SCHWELLE);
+    });
   });
 
   it('Renten zählen zum Einkommen', () => {
@@ -401,8 +585,18 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
     }
   });
 
-  it('negatives Einkommen sprengt die Obergrenze nicht', () => {
-    const r = calculateIPV(person({ monthlyIncome: -1000 }));
+  // ⟨geändert 23.09.2026, Fachprüfung dritte Runde — die Erwartung selbst war das Problem⟩
+  // Hier stand `expect(r.annual).toBe(2652)`: ein negatives Einkommen ergab den HÖCHSTBETRAG.
+  // Der Test prüfte nur, dass die Obergrenze nicht gesprengt wird — das tat sie nicht, die
+  // Zahl war trotzdem falsch. Ein Minuszeichen im Einkommensfeld ist ein Vertipper, kein
+  // Einkommen, und er führte über `Math.max(0, …)` in `beMassgebendesEinkommen` direkt auf
+  // die oberste Stufe. Damit hatte der neue 3a-Riegel, der genau diesen Schaden verhindern
+  // soll, eine offene Nebentür. Jetzt: keine Zahl, mit Grund.
+  it('negatives Einkommen ergibt keine Zahl — nicht den Höchstbetrag', () => {
+    expect(calculateIPV(person({ monthlyIncome: -1000 })))
+      .toMatchObject({ belegt: false, amount: null, offen: 'einkommenNegativ' });
+    // Die Gegenprobe: 0 ist kein Vertipper, sondern eine erfasste Null — sie rechnet weiter.
+    const r = calculateIPV(person({ monthlyIncome: 0 }));
     expect(r.annual).toBe(2652);
     expect(r.annual).toBeLessThanOrEqual(r.maxAnnual);
   });

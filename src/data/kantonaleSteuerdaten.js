@@ -19,6 +19,7 @@ import {
 import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
+import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 
 const HAUPTORTE = {
   AG: 'Aarau',
@@ -143,6 +144,10 @@ export const ESTV_ABZUEGE_2026 = {
   verheiratete: 2800,
   kind: 6800,
 };
+
+// Der Höchstabzug der Säule 3a steht bewusst NICHT hier, sondern in `./saeule3a.js`:
+// Saeule3aTracker.jsx wird lazy geladen, und ein Import aus dieser Datei zöge die
+// Kantonstabelle (33 KB) und den Rechenkern (14 KB) in dessen Chunk.
 
 /**
  * Steuerbares Einkommen Bund so, wie es der ESTV-Rechner aus einem Nettolohn ableitet.
@@ -317,9 +322,10 @@ export function steuerEingabenAusDaten(data = {}) {
     erwerbsart: f.employmentType || null,
     partnerEinkommen: hh.partnerIncome,
     partnerAngegeben: partnerEinkommenAngegeben(data),
-    verheiratet: data?.basis?.maritalStatus === 'married',
+    // Eingetragene Partnerschaft = Ehe (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4) — utils/zivilstand.js.
+    verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
     // K62.4: der Zivilstand, zu dem ein eingetragenes steuerbares Einkommen gehört (= Profil).
-    direktVerheiratet: data?.basis?.maritalStatus === 'married',
+    direktVerheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
     kinder: hh.childrenCount,
     // K87: die Kinderzahl, zu der ein eingetragenes steuerbares Einkommen gehört (= Profil).
     direktKinder: hh.childrenCount,
