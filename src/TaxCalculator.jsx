@@ -5,7 +5,7 @@ import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, tarifvergleichGrund, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
 import { SAEULE3A_MAX } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -62,6 +62,9 @@ export const hinweisTeile = ({ taxResult, canton, kantonal, gemeinsamDirekt }) =
   canton && !kantonal && 'kanton',
   taxResult && gemeinsamDirekt && 'netto',
 ].filter(Boolean);
+
+// K62.5: warum der Zivilstand-Vergleich keine Zahl zeigt (tarifvergleichGrund).
+const VERGLEICH_OHNE_ZAHL_TEXT = { konkubinatPartner: 'tax.saeulen.konkubinatPartner', konkubinatPartnerOffen: 'tax.saeulen.konkubinatPartnerOffen' };
 
 const TEIL_TEXT = { bund: 'tax.federalTax', kanton: 'tax.cantonalAndMunicipal', netto: 'tax.netIncome' };
 
@@ -123,7 +126,10 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     partnerAngegeben: profilEingaben.partnerAngegeben || !giltAlsVerheiratet(data.basis?.maritalStatus),
   };
   const steuern = steuernFuerProfil(eingaben);
-  const vergleich = tarifvergleichFuerProfil(eingaben);
+  // K62.5: der Vergleich richtet sich nach der Partnerangabe im Profil, nicht nach dem Probiermodus.
+  const vergleichEingaben = { ...eingaben, partnerAngegebenProfil: profilEingaben.partnerAngegeben };
+  const vergleich = tarifvergleichFuerProfil(vergleichEingaben);
+  const ohneVergleich = vergleich ? null : tarifvergleichGrund(vergleichEingaben);
   const annahmen = annahmenTexte(t, steuern.annahmen);
   const income = eingaben.nettolohnJahr;
   const taxResult = steuern.bund;
@@ -399,7 +405,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
     taxResult && !vergleich && React.createElement('div', { style: { marginTop: space.lg, padding: space.md, background: palette.up, borderRadius: radius.sm, border: '1px solid ' + palette.border } },
       React.createElement(PanelTitle, { palette, style: { marginBottom: space.xs } }, t('tax.saeulen.title')),
-      React.createElement('div', { style: { fontSize: text.sm, color: palette.mid } }, t('tax.saeulen.nurGeschaetzt'))
+      React.createElement('div', { 'data-testid': 'tarifvergleich-ohne-zahl', style: { fontSize: text.sm, color: palette.mid } }, t(VERGLEICH_OHNE_ZAHL_TEXT[ohneVergleich] || 'tax.saeulen.nurGeschaetzt'))
     ),
 
     React.createElement('button', { onClick: handleSave, style: { ...buttonStyle, width: '100%' } }, hinweisZeichen('kaestchen'), t('tax.saveData')),
@@ -409,7 +415,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, hinweisZeichen(), t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
-    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(KANTONAL_DATA_ABGERUFEN) })),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(kantonsdatenAbgerufen(canton)) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('trust.localOnly')),

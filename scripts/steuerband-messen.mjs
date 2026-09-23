@@ -15,6 +15,11 @@
 //     Nettolohn und Abzugsposten Bund je Bruttolohn → docs/sources/nettolohn-abzuege-2026.messpunkte.json.
 //     Nur dieses Entwickler-Skript geht ins Netz. Die App selbst bleibt ohne Netzwerk-Calls.
 //
+//   node scripts/steuerband-messen.mjs --messen [--kinder] --kanton TI
+//     Nachmessung EINES Kantons: ersetzt nur dessen Punkte in der Messdatei, alle anderen bleiben
+//     byte-gleich. Die ersetzten Punkte wandern nach docs/sources/kantonssteuer-ersetzt-<KT>-<Datum>.messpunkte.json,
+//     damit alt gegen neu nachvollziehbar bleibt; der Lauf steht in `nachmessungen` der Messdatei.
+//
 //   node scripts/steuerband-messen.mjs
 //     Wertet die Messdateien aus, prüft steuerbarNachEstv() an allen Punkten und schreibt
 //       src/data/kantonssteuerTabelle.js            (Stütztabelle, generiert)
@@ -78,6 +83,22 @@ for (let b = 160000; b <= 300000; b += 10000) BRUTTO.push(b);
 
 const ZIVILSTAND = { ledig: 1, verheiratet: 2 };
 
+// --kanton XX: nur diesen Kanton messen und in die bestehende Messdatei einsetzen (Nachmessung).
+const KANTON_ARG = process.argv.includes('--kanton') ? process.argv[process.argv.indexOf('--kanton') + 1] : null;
+if (KANTON_ARG && !ORTE[KANTON_ARG]) throw new Error('unbekannter Kanton: ' + KANTON_ARG);
+const orteFuerLauf = () => Object.entries(ORTE).filter(([kt]) => !KANTON_ARG || kt === KANTON_ARG);
+
+// Ersetzte Punkte einer Nachmessung aufbewahren (alt gegen neu bleibt nachprüfbar).
+function ersetztArchivieren(kt, teil, daten) {
+  const datum = new Date().toISOString().slice(0, 10);
+  const pfad = resolve(__dirname, '../docs/sources/kantonssteuer-ersetzt-' + kt + '-' + datum + '.messpunkte.json');
+  let archiv = { kanton: kt, ersetzt: datum, zweck: 'Messpunkte, die eine Nachmessung ersetzt hat — nur zur Nachprüfung, die App liest sie nicht.' };
+  try { archiv = JSON.parse(readFileSync(pfad, 'utf-8')); } catch { /* neu */ }
+  archiv[teil] = daten;
+  writeFileSync(pfad, JSON.stringify(archiv, null, 0).replace(/\],\[/g, '],\n[') + '\n');
+  return pfad;
+}
+
 async function post(op, body) {
   const res = await fetch(API + op, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   if (!res.ok) throw new Error(op + ' HTTP ' + res.status);
@@ -97,7 +118,7 @@ async function messen() {
   const version = await post('API_getTaxVersion', {}).catch(() => null);
   const punkte = [];
   const auftraege = [];
-  for (const [kt, o] of Object.entries(ORTE)) {
+  for (const [kt, o] of orteFuerLauf()) {
     for (const [zs, rel] of Object.entries(ZIVILSTAND)) {
       for (const brutto of BRUTTO) auftraege.push({ kt, o, zs, rel, brutto });
     }
@@ -110,11 +131,11 @@ async function messen() {
     while (i < auftraege.length) {
       const a = auftraege[i++];
       await new Promise((r) => setTimeout(r, PAUSE_MS));
-      const r = await post('API_calculateDetailedTaxes', {
+      const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
         SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: a.o.id, Relationship: a.rel,
         Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: a.brutto, Fortune: 0,
         Confession2: a.rel === 2 ? 4 : 0, Age2: a.rel === 2 ? 40 : 0, RevenueType2: 0, Revenue2: 0, Budget: [],
-      });
+      }));
       if (r.Location && (r.Location.Canton !== a.kt || r.Location.BfsID !== a.o.bfs)) {
         throw new Error('Ort passt nicht: ' + a.kt + ' ' + JSON.stringify(r.Location));
       }
@@ -125,6 +146,18 @@ async function messen() {
   }
   await arbeiter();
   punkte.sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2]);
+  if (KANTON_ARG) {
+    // Nachmessung: nur die Punkte dieses Kantons ersetzen, Rest unverändert lassen.
+    const alt = JSON.parse(readFileSync(MESS_PATH, 'utf-8'));
+    const ersetzt = alt.punkte.filter((p) => p[0] === KANTON_ARG);
+    const pfad = ersetztArchivieren(KANTON_ARG, 'ohneKinder', { abgerufen: alt.abgerufen, spalten: alt.spalten, punkte: ersetzt });
+    alt.punkte = alt.punkte.filter((p) => p[0] !== KANTON_ARG).concat(punkte)
+      .sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2]);
+    (alt.nachmessungen ??= []).push({ kanton: KANTON_ARG, abgerufen, ende: new Date().toISOString(), abrufe: punkte.length, gegenprobe: 'erfundene Operation → ' + gegenprobe, version, ersetzt: ersetzt.length, archiv: pfad.split('/docs/')[1] });
+    writeFileSync(MESS_PATH, JSON.stringify(alt, null, 0).replace(/\],\[/g, '],\n[') + '\n');
+    console.log('nachgemessen:', KANTON_ARG, punkte.length, 'Punkte, ersetzt', ersetzt.length, '· Gegenprobe:', gegenprobe);
+    return;
+  }
   writeFileSync(MESS_PATH, JSON.stringify({
     quelle: 'ESTV Steuerrechner, API_calculateDetailedTaxes (' + API + ')',
     webseite: 'https://swisstaxcalculator.estv.admin.ch/',
@@ -186,7 +219,14 @@ async function messenKinder() {
     bloecke: [],
     punkte: [],
   };
-  mess.laeufe.push({ beginn: jetzt, gegenprobe: 'erfundene Operation → ' + gegenprobe, version });
+  if (KANTON_ARG) {
+    // Nachmessung: die Blöcke dieses Kantons verwerfen (archiviert), damit der Lauf sie neu misst.
+    const ersetzt = mess.punkte.filter((p) => p[0] === KANTON_ARG);
+    ersetztArchivieren(KANTON_ARG, 'mitKindern', { laeufe: mess.laeufe, spalten: mess.spalten, punkte: ersetzt });
+    mess.punkte = mess.punkte.filter((p) => p[0] !== KANTON_ARG);
+    mess.bloecke = mess.bloecke.filter((b) => !b.startsWith(KANTON_ARG + '/'));
+  }
+  mess.laeufe.push({ beginn: jetzt, gegenprobe: 'erfundene Operation → ' + gegenprobe, version, ...(KANTON_ARG ? { kanton: KANTON_ARG, nachmessung: true } : {}) });
   const fertig = new Set(mess.bloecke);
   const PAUSE_MS = 150;
   const speichern = () => {
@@ -195,7 +235,7 @@ async function messenKinder() {
   };
   let abrufe = 0;
   try {
-    for (const [kt, o] of Object.entries(ORTE)) {
+    for (const [kt, o] of orteFuerLauf()) {
       for (const [zs, rel] of Object.entries(ZIVILSTAND)) {
         for (const kinder of KINDER) {
           const block = kt + '/' + zs + '/' + kinder;
@@ -379,9 +419,44 @@ function auswerten(mess0, messK, messA) {
 
 const median = (arr) => { const s = [...arr].sort((a, b) => a - b); return s.length ? s[s.length >> 1] : 0; };
 
+// Nachmessung eines Kantons: alt (archiviert) gegen neu, je Messpunkt am selben Bruttolohn.
+function nachmessungAbschnitt(n, mess0, messK) {
+  const archiv = JSON.parse(readFileSync(resolve(__dirname, '../docs/' + n.archiv), 'utf-8'));
+  const neu = new Map();
+  for (const p of mess0.punkte.filter((q) => q[0] === n.kanton)) neu.set(p[1] + '/0/' + p[2], { fed: p[3], kg: p[10] });
+  for (const p of (messK ? messK.punkte : []).filter((q) => q[0] === n.kanton)) neu.set(p[1] + '/' + p[2] + '/' + p[3], { fed: p[4], kg: p[11], tc: p[12] });
+  const alt = new Map();
+  for (const p of archiv.ohneKinder?.punkte || []) alt.set(p[1] + '/0/' + p[2], { fed: p[3], kg: p[10] });
+  for (const p of archiv.mitKindern?.punkte || []) alt.set(p[1] + '/' + p[2] + '/' + p[3], { fed: p[4], kg: p[11], tc: p[12] });
+  const d = [...alt].filter(([k]) => neu.has(k)).map(([k, a]) => ({ k, alt: a.kg, neu: neu.get(k).kg, diff: neu.get(k).kg - a.kg, fedGleich: a.fed === neu.get(k).fed, tc: a.tc != null ? neu.get(k).tc - a.tc : null }));
+  const abs = d.map((x) => Math.abs(x.diff));
+  const tcZahl = {};
+  for (const x of d.filter((q) => q.tc != null)) tcZahl[x.tc] = (tcZahl[x.tc] || 0) + 1;
+  const bsp = (zs, k) => [50000, 80000, 120000].map((b) => { const x = d.find((q) => q.k === zs + '/' + k + '/' + b); return x ? chf(x.alt) + ' → ' + chf(x.neu) : '–'; }).join(' · ');
+  return ['## Nachmessungen', '',
+    '### ' + n.kanton + ' ' + ORTE[n.kanton].ort + ', ' + n.abgerufen.slice(0, 10), '',
+    '- Ersetzt: ' + d.length + ' Messpunkte vom ' + (archiv.ohneKinder?.abgerufen || '?').slice(0, 10) + ' (archiviert in `' + n.archiv.replace(/^sources\//, '') + '`).',
+    '- ESTV K+G neu − alt: **Maximum CHF ' + chf(Math.max(...abs)) + '**, Median CHF ' + chf(median(abs)) + '; tiefer an ' + d.filter((x) => x.diff < 0).length +
+      ', höher an ' + d.filter((x) => x.diff > 0).length + ', gleich an ' + d.filter((x) => x.diff === 0).length + ' Punkten.',
+    '- Steuerbares Einkommen Bund an allen Punkten ' + (d.every((x) => x.fedGleich) ? '**unverändert**' : '**verändert**') + ' — die x-Achse der Tabelle ist dieselbe.',
+    '- Steuerbares Einkommen Kanton neu − alt (nur mit Kindern gespeichert): ' + Object.entries(tcZahl).map(([k, v]) => 'CHF ' + k + ' an ' + v + ' Punkten').join(', ') + '.',
+    '- Beispiele ESTV K+G bei Brutto 50 000 · 80 000 · 120 000 (alt → neu):',
+    '  - ledig, ohne Kinder: ' + bsp('ledig', 0),
+    '  - ledig, 1 Kind: ' + bsp('ledig', 1),
+    '  - verheiratet, ohne Kinder: ' + bsp('verheiratet', 0),
+    '  - verheiratet, 2 Kinder: ' + bsp('verheiratet', 2),
+    ...(n.befund || []).map((z) => '- ' + z),
+    ''];
+}
+
 function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, xGeprueft, fehlend }) {
-  const abgerufen = [mess0.abgerufen, ...(messK ? messK.laeufe.map((l) => l.beginn) : [])];
+  // Datum der Gesamtmessung (ohne Nachmessungen einzelner Kantone) — gilt für alle Kantone, die
+  // nicht nachgemessen sind. Nachgemessene Kantone tragen ihr eigenes Datum.
+  const abgerufen = [mess0.abgerufen, ...(messK ? messK.laeufe.filter((l) => !l.nachmessung).map((l) => l.beginn) : [])];
   const letzterAbruf = abgerufen.slice().sort().at(-1).slice(0, 10);
+  const nachgemessen = {};
+  for (const n of mess0.nachmessungen || []) nachgemessen[n.kanton] = n.abgerufen;
+  for (const l of messK ? messK.laeufe.filter((q) => q.nachmessung) : []) if (!nachgemessen[l.kanton] || l.beginn > nachgemessen[l.kanton]) nachgemessen[l.kanton] = l.beginn;
   const kinderStufen = [0, ...(messK ? [...new Set(messK.punkte.map((p) => p[2]))].sort() : [])];
   const quelle = 'ESTV Steuerrechner (swisstaxcalculator.estv.admin.ch), Steuerjahr ' + STEUERJAHR + ', Kantonshauptort, ohne Kirchensteuer';
 
@@ -405,6 +480,8 @@ function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, x
     "export const KANTONSSTEUER_QUELLE = '" + quelle + "';",
     'export const KANTONSSTEUER_STEUERJAHR = ' + STEUERJAHR + ';',
     "export const KANTONSSTEUER_ABGERUFEN = '" + letzterAbruf + "';",
+    '// Einzeln nachgemessene Kantone: Datum der Nachmessung (gilt statt KANTONSSTEUER_ABGERUFEN).',
+    'export const KANTONSSTEUER_ABGERUFEN_JE_KANTON = {' + Object.entries(nachgemessen).sort().map(([k, d]) => ' ' + k + ": '" + d.slice(0, 10) + "'").join(',') + (Object.keys(nachgemessen).length ? ' ' : '') + '};',
     'export const KANTONSSTEUER_MAX_KINDER = ' + kinderStufen.at(-1) + ';',
     '',
     'export const KANTONSSTEUER_TABELLE = {',
@@ -447,7 +524,9 @@ function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, x
     '  wurde gegen Kanton und BFS-Nummer geprüft.',
     '- Gegenprobe bei jedem Lauf: eine erfundene Operation muss scheitern — ohne Kinder: ' + mess0.gegenprobe +
       (messK ? '; mit Kindern: ' + messK.laeufe.map((l) => l.gegenprobe).join(', ') : '') + '.',
-    '- Abgefragt gedrosselt: ein Abruf nach dem anderen, 150 ms Pause (Lauf mit Kindern; der Lauf ohne Kinder am 16.09. noch mit 4 parallelen Abrufen).', '');
+    '- Abgefragt gedrosselt: ein Abruf nach dem anderen, 150 ms Pause (Lauf mit Kindern; der Lauf ohne Kinder am 16.09. noch mit 4 parallelen Abrufen).',
+    ...(mess0.nachmessungen || []).map((n) => '- **Nachgemessen: ' + n.kanton + '** am ' + n.abgerufen.slice(0, 10) + ' (ohne Kinder ' + n.abgerufen + '–' + n.ende + ', ' + n.abrufe + ' Abrufe, seriell 150 ms; mit Kindern siehe Läufe oben; Gegenprobe: ' + n.gegenprobe + '). Die Punkte dieses Kantons ersetzen die vom 16.09. — siehe «Nachmessungen».'),
+    '');
   L.push('## Messanlage', '',
     '- Unselbständig erwerbend, Alter 40, Konfession «andere/keine» (ohne Kirchensteuer), kein Vermögen.',
     '- **ledig** = Relationship 1. Mit Kindern heisst das **alleinerziehend**: Der ESTV-Rechner kennt keinen eigenen',
@@ -480,6 +559,7 @@ function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, x
     '  dem Nettolohn (gemessen: Brutto 22 500 ohne, 25 000 mit BVG-Beitrag). Zwischen Nettolohn 20 969 und 23 111 kann x',
     '  deshalb um 900 (ledig) zu hoch oder zu tief liegen. Der 13. Monatslohn und Nebeneinkommen gehen so ein, wie die',
     '  App den Jahreslohn bildet.', '');
+  for (const n of mess0.nachmessungen || []) L.push(...nachmessungAbschnitt(n, mess0, messK));
   L.push('## Tabelle und Randregel', '',
     '- Je Kanton × Zivilstand × Kinderzahl eine Reihe von **Stützpunkten**. Jeder Stützpunkt ist ein Messpunkt.',
     '  Zwischen zwei Stützpunkten wird **linear interpoliert**.',

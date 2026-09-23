@@ -1,6 +1,6 @@
 # Maloja Plana — Brand Guidelines
 
-**Stand:** Juni 2026 · **Firma:** Stebler Studios (Basel)
+**Stand:** Juni 2026, **Logo und Farben nachgeführt 24.09.2026** (Markenpaket 1.0) · **Firma:** Stebler Studios (Basel)
 
 Das **eine** kanonische Marken-Referenz-Dokument. Es bündelt Farbe, Typografie, Logo,
 Bildsprache, Stimme und Design-Tokens an einem Ort. Die Detail-Dokumente bleiben als
@@ -10,8 +10,8 @@ Tiefen-Quellen bestehen — diese Seite ist der Einstieg und zeigt auf sie.
 |---------|---------------|
 | Markenentscheidungen (Herleitung, Verworfenes) | [`brand-identity.md`](brand-identity.md) |
 | Vollständige Icon-Liste + Status | [`icon-dictionary.md`](icon-dictionary.md) |
-| Signet-Konzept (Ordner + Berg + Pass) | [`logo-brief.md`](logo-brief.md) |
-| Wortmarke / App-Icon als Vektor | [`wordmark.svg`](wordmark.svg) · [`app-icon.svg`](app-icon.svg) |
+| **Logo seit 24.09.2026** (Bildmarke, Varianten, Herkunft) | [`markenpaket-2026-09/`](markenpaket-2026-09/README.md) · Code: [`MarkenLogo.jsx`](../../src/components/MarkenLogo.jsx) |
+| *Abgelöst:* Signet-Konzept, Gipfel-«M» | [`logo-brief.md`](logo-brief.md) · [`wordmark.svg`](wordmark.svg) · [`app-icon.svg`](app-icon.svg) |
 | Implementierte Tokens (Code) | [`../../src/config/tokens.js`](../../src/config/tokens.js) · [`tokens.css`](../../src/tokens.css) |
 | Stimme / Schreib-Philosophie | `maloja-writing-language` (Sprach-Doku) |
 
@@ -33,15 +33,23 @@ Entscheidung wird an einer Frage gemessen:
 Kulturell neutral, warm-neutraler Unterton, beruhigend, zeitlos. Funktioniert in Light + Dark
 gleich gut.
 
-| Rolle | Hex | Einsatz |
-|-------|-----|---------|
-| Light BG | `#F2F2F0` | Hintergrund hell (warmer Stein) |
-| Surface | `#FAFAF8` | Cards, erhöhte Flächen |
-| Dark | `#24262A` | Hintergrund dunkel (Schiefer) |
-| **Sage** | `#5A7868` | **Primärfarbe** — Buttons, Links, Erfolg, «weiter/sicher» |
-| **Gold** | `#C4A870` | **Akzent** — Wortmarke, Highlights, Premium-Momente |
-| Rose | `#B87070` | Warnung, Fehler |
-| Sky | `#6E90B0` | Info, sekundäre Links |
+*Abgeglichen am 24.09.2026 mit dem Code (`DARK_PALETTE` / `LIGHT_PALETTE` in
+[`constants.js`](../../src/config/constants.js)). Bis dahin stand hier «Dark `#24262A`» und nur
+ein Sage-Wert — das war der **Text** im Hellmodus bzw. nur der Hellmodus.*
+
+| Rolle | Hell | Dunkel | Einsatz |
+|-------|------|--------|---------|
+| Hintergrund | `#F2F2F0` | `#22211F` | Seite (warmer Stein / Anthrazit) |
+| Surface | `#FAFAF8` | `#2B2A26` | Cards, erhöhte Flächen |
+| Text | `#24262A` | `#E6E3DC` | Fliesstext (dunkel: Warmweiss) |
+| **Sage** | `#5A7868` | `#7E9F8C` | **Primärfarbe** — Buttons, Links, Erfolg, «weiter/sicher» |
+| Salbei der Marke | — | `#8FB0A0` | Bildmarke (Weg/Haus), im Code `sageDeep` |
+| **Gold / Sand** | `#C4A870` | `#C4A870` | **Akzent** — Berg in der Bildmarke, Highlights, Fokusring (dunkel) |
+| Rose | `#B87070` | `#B87070` | Warnung, Fehler (Text: `roseDeep`) |
+| Sky | `#6E90B0` | `#6E90B0` | Info, sekundäre Links (Text: `skyDeep`) |
+
+Die Lese-Varianten für Text (`…Deep`) und die Farbenblind-Palette stehen mit Kontrastwerten
+in `constants.js` — dort ist die Quelle, hier nur die Übersicht.
 
 **Prinzip:** Grün (Sage) ist universell positiv + reduziert Stress; Gold = Wert/Qualität in
 jeder Kultur; der warme Unterton verhindert «kalte Behörde». Kein Farbton schliesst eine Kultur
@@ -58,8 +66,12 @@ externen Requests → passt zur Privacy-/Local-First-Architektur).
 | Rolle | Schrift | Warum |
 |-------|---------|-------|
 | **Body, Navigation, Formulare, alles Funktionale** | **Lexend** | Auf Leseflüssigkeit getuned; ermüdet am wenigsten — wichtig, weil viele in einer Fremdsprache unter Stress lesen. |
-| **Editoriale Headlines + Wortmarke/Logo** | **Hanken Grotesk** | Schweizer Grotesk-Tradition, zeitlos, neutral. Headline-Kontrast kommt aus Rolle + Gewicht (Hanken 600/700), nicht aus Serif-vs-Sans. |
+| **Editoriale Headlines** | **Hanken Grotesk** | Schweizer Grotesk-Tradition, zeitlos, neutral. Headline-Kontrast kommt aus Rolle + Gewicht (Hanken 600/700), nicht aus Serif-vs-Sans. |
 | **Accessibility-Toggle** (anklickbar) | **Atkinson Hyperlegible** | Braille Institute; maximale Buchstaben-Eindeutigkeit (b/d/p/q, I/l/1) für Sehbehinderte + Legastheniker. |
+
+**Logo-Schrift:** Der Schriftzug im Logo ist **Ubuntu (laut Markenbuch Regular/Medium), in Pfade umgewandelt** —
+ein Bild, keine Web-Schrift. Die App lädt Ubuntu nicht (Entscheid 24.09.2026: Lexend bleibt
+die Leseschrift, das Logo kommt fertig aus dem Markenpaket).
 
 **Type-Scale** (`tokens.js`, px): `xs 13 · sm 15 · body 16 · lg 19 · xl 23 · 2xl 28 · 3xl 36`.
 **Gewichte:** `normal 400 · medium 500 · semi 600 · bold 700`.
@@ -71,33 +83,42 @@ externen Requests → passt zur Privacy-/Local-First-Architektur).
 
 ---
 
-## 4. Logo & Wortmarke
+## 4. Logo
 
-**Wortmarke:** «Maloja Plana» in **Hanken Grotesk**, mit *einem* eigenen Detail —
+**Seit 24.09.2026: Markenpaket 1.0 — «Ein Weg durch die Berge».** Bildmarke aus Haus/M
+(Salbei), Berg (Sand) und dem Weg dazwischen, darunter das P; dazu der Schriftzug «Maloja
+Plana». Vektor-Adaption des bestätigten Konzepts V3, keine pixelgenaue Nachzeichnung.
+Herkunft, Dateien und Prüfung: [`markenpaket-2026-09/README.md`](markenpaket-2026-09/README.md).
 
-> **Das «M» ist kein Schrift-Buchstabe, sondern zwei gezeichnete Berggipfel** (der Maloja-Pass)
-> — dieselbe Silhouette wie im Signet.
+| Fassung | Einsatz | Wo |
+|---|---|---|
+| **Horizontal** (Standard) | Kopfzeile, Sperrbildschirm, Beta-Tor, Onboarding | `MarkenLogo.jsx` — **die eine Quelle in der App** |
+| Zentriert | Titel, Deckblätter | Paket `logo/logo-zentriert-*` |
+| Bildmarke allein | App-Icon, Profilbild | `public/app-icon.svg`, `icon-*.png` |
+| Favicon (vereinfacht) | Browser-Tab 16/32 px | `public/favicon.svg` |
 
-- **Gipfel-«M»:** zwei Peaks, der rechte etwas höher, moderate Tal-Tiefe; Strichstärke wie
-  Hanken 700 (wirkt wie ein echter Buchstabe). Konstruktion als SVG-Polyline mit fünf Punkten,
-  `round` joins/caps, kein Fill.
-- **Gold-Detail:** ein Goldpunkt (`#C4A870`) am höheren (rechten) Gipfel — Sonne/Markierung
-  über dem Pass.
-- **«aloja»:** Hanken 700, Dark `#24262A` (hell) / `#EDE8E0` (dunkel). **«Plana»:** Hanken 600,
-  Gold `#C4A870`.
-- **Schreibweise:** Titelcase «Maloja Plana» — **nie** Versalien, **nie** kursiv.
+**Farbe nach Fläche:** auf **dunkler** Fläche Salbei `#8FB0A0` + Sand `#C4A870`, Schrift
+Warmweiss `#E6E3DC`; auf **heller** Fläche **einfarbig Anthrazit** `#22211F` (Salbei hätte auf
+`#F2F2F0` nur rund 2:1). Entscheidend ist die Fläche, nicht der eingestellte Modus — das
+Beta-Tor ist immer hell.
 
-**App-Icon / Favicon = das Gipfel-«M» allein** ([`app-icon.svg`](app-icon.svg)) — funktioniert
-winzig. Lebt als Vektor → **0** Byte im App-Bundle. Für Produktion: Text vor Auslieferung in
-Pfade outlinen (kein Font nötig).
+**Regeln (Markenbuch):** Schutzraum = ¼ der sichtbaren Symbolhöhe · horizontales Logo nicht
+unter **180 px** (Druck 40 mm), Symbol nicht unter 32 px (9 mm) · keine Verzerrung, keine
+Effekte, keine Umfärbung ausserhalb der Varianten · Bildmarke und Schriftzug **nicht neu
+anordnen**, nur die gelieferten Fassungen · Titelcase «Maloja Plana», nie Versalien, nie kursiv.
 
-**Signet** (illustrativ, drei Leseebenen): Ordner + Bergsilhouette (bildet M) + Schweizer Pass
-im Eck (bildet P) + goldener Weg → Konzept in [`logo-brief.md`](logo-brief.md). Signet-Farben
-sind noch an Granit anzugleichen (siehe §8).
+> **Abgelöst am 24.09.2026, als Beleg stehengelassen:** Wortmarke in Hanken Grotesk mit einem
+> gezeichneten Gipfel-«M» (Polyline, Goldpunkt am rechten Gipfel), «Plana» in Gold; App-Icon
+> und Favicon = das Gipfel-«M» allein. Auch das Signet-Konzept «Ordner + Berg + Pass» aus
+> [`logo-brief.md`](logo-brief.md) ist damit abgelöst. Dateien: [`wordmark.svg`](wordmark.svg), [`app-icon.svg`](app-icon.svg).
 
 **Claim:** «Ihr Leben. Ihre Übersicht.» (Du-Fassung: «Dein Leben. Deine Übersicht.») ·
 optional «by Stebler Studios». Funktionale Unterzeile (Marketing): «Verstehen, was zusteht.
 Ordnen, was ansteht.»
+
+> **Offen (24.09.2026):** Das Markenpaket führt «Verstehen, was zusteht. Ordnen, was ansteht.»
+> als *den* Claim (Link-Vorschau, Social-Vorlagen) und schlägt «Ein Schritt. Mehr Überblick.»
+> als Leitidee vor. Welcher Satz der Claim ist, ist noch nicht entschieden.
 
 ---
 
@@ -200,13 +221,14 @@ Quelle der Wahrheit: [`src/config/tokens.js`](../../src/config/tokens.js) (JS-Sp
 ## 9. Offene Brand-Themen
 
 - [ ] Export-Icon — neue Metapher (auf Tester-Feedback)
-- [ ] Signet-Farben an Granit angleichen
-- [ ] `og-image.svg` aufs Gipfel-M + Granit; Signet (Ordner+Berg+Pass) angleichen
+- [x] ~~Signet-Farben an Granit angleichen~~ — gegenstandslos, Signet durch Markenpaket 1.0 abgelöst (24.09.2026)
+- [x] `og-image` mit der neuen Bildmarke (24.09.2026, Paket `social-preview-1200x630`)
+- [ ] Claim-Entscheid: «Ihr Leben. Ihre Übersicht.» oder «Verstehen, was zusteht. Ordnen, was ansteht.» (siehe §4)
 - [ ] Vorsorge-/Organspende-Icon-Metaphern klären
-- [ ] OFL-Lizenztexte zu den WOFF2 legen; Wortmarke für Produktion outlinen
+- [ ] OFL-Lizenztexte zu den WOFF2 legen *(Logo-Schriftzug ist seit 24.09. als Pfade geliefert — Outlinen erledigt)*
 - [ ] FR: Entscheid voller tu-Toggle vs. vous-only
 - [ ] RM: muttersprachliche Review vor Deploy
 
-*Erledigt:* Granit-Palette · Wortmarke (Gipfel-M) · Typo-Entscheid (Lexend/Hanken/Atkinson) ·
+*Erledigt:* Granit-Palette · Wortmarke (Gipfel-M, **abgelöst 24.09.2026**) · **Markenpaket 1.0 in App, Icons und Link-Vorschau** · Typo-Entscheid (Lexend/Hanken/Atkinson) ·
 Voice-Entscheid + **Anrede-Toggle DE/IT/RM umgesetzt** · Kapitel-Icons · Bergketten-Karte ·
 **Brand Guidelines gebündelt (dieses Dokument)**.

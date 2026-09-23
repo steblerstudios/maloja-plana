@@ -50,7 +50,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       marginTop: '8px', cursor: permitAdded ? 'default' : 'pointer', fontFamily: 'inherit',
       background: 'none', border: '1px solid ' + (permitAdded ? palette.sage : palette.border),
       borderRadius: radius.sm, padding: '3px 10px', fontSize: text.xs,
-      color: permitAdded ? palette.sage : palette.mid,
+      color: permitAdded ? (palette.sageDeep || palette.sage) : palette.mid,
     },
   }, erledigtZeichen(permitAdded, permitAdded ? t('premium.permitTodoAdded') : t('premium.permitTodoAdd')));
 

@@ -136,7 +136,7 @@ export const UmzugAblauf = ({ palette, t, data, chapters, onNavigate }) => {
                 flexShrink: 0, cursor: isAdded ? 'default' : 'pointer', fontFamily: 'inherit',
                 background: 'none', border: '1px solid ' + (isAdded ? palette.sage : palette.border),
                 borderRadius: radius.sm, padding: '2px 10px', fontSize: text.xs,
-                color: isAdded ? palette.sage : palette.mid,
+                color: isAdded ? (palette.sageDeep || palette.sage) : palette.mid,
               },
             }, erledigtZeichen(isAdded, isAdded ? t('umzug.step3Added') : t('umzug.step3Add')))
           );

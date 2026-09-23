@@ -103,6 +103,27 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallEinstieg.vorlesekarteSub'))
     ),
 
+    // Vorbereitung, nicht Ernstfall: darum leiser als die Vorlesekarte darüber.
+    React.createElement('button', {
+      type: 'button',
+      onClick: () => onNavigate('notfallpass'),
+      style: {
+        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
+        marginTop: '-' + (space.lg) + 'px', marginBottom: space.xl + 'px',
+        padding: space.md + 'px',
+        background: palette.surface,
+        border: '1px solid ' + palette.border,
+        borderRadius: radius.md, fontFamily: 'inherit',
+      },
+    },
+      React.createElement('div', {
+        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
+      }, hinweisZeichen('lock'), t('notfallpass.einstiegTitel')),
+      React.createElement('div', {
+        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
+      }, t('notfallpass.einstiegSub'))
+    ),
+
     SCENARIOS.map(scenario => {
       const filled = scenario.fields.filter(f => hasValue(f.chapter, f.k)).length;
       const total = scenario.fields.length;
@@ -127,7 +148,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         },
           React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('notfallEinstieg.' + scenario.key + '.title')),
           React.createElement('span', {
-            style: { fontSize: text.sm, color: allDone ? palette.sage : palette.mid, fontWeight: weight.medium }
+            style: { fontSize: text.sm, color: allDone ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium }
           }, filled + '/' + total)
         ),
 
@@ -162,10 +183,15 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
               style: {
                 display: 'flex', alignItems: 'center', gap: space.sm + 'px',
                 fontSize: text.sm,
-                color: done ? palette.sage : palette.text,
+                color: done ? (palette.sageDeep || palette.sage) : palette.text,
                 cursor: done ? 'default' : 'pointer',
                 padding: '4px 0',
-                opacity: done ? 0.7 : 1,
+                // Keine reduzierte Deckkraft mehr für «erledigt»: 0.7 drückte den
+                // Kontrast von 6.04 auf 3.16 (hell) bzw. 6.08 auf 3.77 (dunkel) und
+                // hätte die Farbkorrektur eine Zeile darüber wieder aufgehoben.
+                // Erkennbar bleibt der Zustand über die FORM — Haken statt leerem
+                // Kästchen, siehe die Zeile mit hinweisZeichen. Gleiche Begründung
+                // wie bei den Berg-Beschriftungen (dashboardMountainLabelContrast).
               }
             },
               React.createElement('span', {

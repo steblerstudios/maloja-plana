@@ -168,11 +168,17 @@ describe('E38 · Steuerrechner, Kanton Zürich, ledig, ohne Kinder', () => {
     keineBundessteuer(v, 'tax.federalNotCheckedPartner');
   });
 
-  it('Konkubinat ohne Kinder: Bundessteuer auf dem eigenen Einkommen (ESTV 906), keine Kantonszahl', () => {
+  it('Konkubinat ohne Kinder: Bund und Kanton auf dem eigenen Einkommen (ESTV 906 / 7 039), Annahme sichtbar (K62.1)', () => {
     const v = zeige(null, { nettolohn: 71883, partnerIncome: 2000 });
-    zeigtKeineZahl(v, 'tax.bandNotCheckedPartner', 'mitBund');
-    expect(v.betraege).toEqual([906]);
+    zeigtZahl(v, 906, 7039);
     einSteuerbares(v, 67927, 'tax.taxableIncomeEstimated');
+    expect(v.text).toContain('tax.annahmeEinzeln');
+  });
+
+  it('Konkubinat ohne Kinder in BE: Bundessteuer, aber keine Kantonszahl (ESTV rechnet Konkubinat dort höher, K62.1)', () => {
+    const v = zeige(null, { canton: 'BE', nettolohn: 71883, partnerIncome: 2000 });
+    zeigtKeineZahl(v, 'tax.bandKonkubinat', 'mitBund');
+    expect(v.betraege).toEqual([906]);
   });
 
   it('Konkubinat mit Kind: keine Bundessteuer (Kinderabzug kann aufgeteilt sein)', () => {
