@@ -25,7 +25,22 @@ DENY='@(gmail|gmx|hotmail|outlook|yahoo|icloud|protonmail|proton|bluewin|hispeed
 /home/clients/[0-9a-f]{8,}'
 
 # Projektspezifische Tokens aus lokaler, gitignorierter Datei ergänzen:
-[ -f .pii-deny.txt ] && DENY="$DENY
+# 🛑 Fehlt die Liste, LIEF DIESER SCAN BISHER STILL WEITER — nur mit den generischen
+# Mustern, ohne Vornamen und Benutzernamen, und meldete «sauber». Genau so ist am
+# 23.09.2026 ein Vorname nach `main` gelangt: der Commit entstand in einem frischen
+# Worktree, und `.pii-deny.txt` ist gitignoriert, wird also nicht mitkopiert.
+# Ein Wächter, der ohne seine halbe Regelmenge arbeitet und das verschweigt, ist
+# schlimmer als keiner — er erteilt eine Freigabe, die er nicht decken kann.
+# Exit 2 = Scan unvollständig, NICHT «sauber».
+if [ ! -f .pii-deny.txt ]; then
+  echo "✗ PII-Scan NICHT gelaufen: .pii-deny.txt fehlt in $(pwd)." >&2
+  echo "  Der Scan liefe sonst ohne die projektspezifischen Tokens (Vorname," >&2
+  echo "  Benutzername, Hoster-Kennungen) und meldete faelschlich «sauber»." >&2
+  echo "  In einem Worktree verlinken:  ln -s ../../../.pii-deny.txt .pii-deny.txt" >&2
+  echo "  Vorlage: .pii-deny.txt.example" >&2
+  exit 2
+fi
+DENY="$DENY
 $(grep -vE '^\s*#|^\s*$' .pii-deny.txt)"
 
 # Ausnahmen (erlaubt, obwohl sie ein Muster treffen könnten):
