@@ -80,15 +80,32 @@ export class ErrorBoundary extends React.Component {
     return React.createElement('div', {
       role: 'alert',
       style: {
-        width: '100vw', height: '100vh', background: bg, color: textColor,
+        // Drei Dinge, die vorher `width:100vw; height:100vh; align-items:center` waren:
+        //
+        // 1. `height` → `minHeight`, dazu `overflowY:auto`. Mit fester Höhe hatte der
+        //    Schirm keinen Scrollweg: Auf dem Handy QUER (667x375 gemessen) ist die Karte
+        //    höher als der Schirm, und `align-items:center` schiebt ihren oberen Rand über
+        //    die Kante hinaus — 8 bis 19 px, je nach Sprache und Lese-Modus. Nach oben
+        //    scrollen war unmöglich (`window.scrollTo(0,-9999)` liess scrollY auf 0).
+        //    Heute fällt nur Polsterung weg; bis zum Symbol sind es ~25 px. Wächst der
+        //    Text — längere Übersetzung, eine Zeile mehr —, verschwinden Symbol, Titel
+        //    und irgendwann der Melde-Weg **unerreichbar** nach oben. Genau auf diesem
+        //    Schirm ist das am teuersten.
+        // 2. Zentriert wird über `margin:auto` am Kind statt über `align-items:center`.
+        //    Auto-Ränder werden nie negativ: passt die Karte, sitzt sie mittig; passt sie
+        //    nicht, beginnt sie oben und bleibt vollständig erreichbar.
+        // 3. `100vw` → `100%`: 100vw rechnet die Breite der Bildlaufleiste mit und erzeugt
+        //    zusammen mit dem neuen senkrechten Scrollweg einen waagrechten dazu.
+        width: '100%', minHeight: '100dvh', background: bg, color: textColor,
         fontFamily: fontFamily,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        display: 'flex', overflowY: 'auto',
         padding: '20px', boxSizing: 'border-box'
       }
     },
       React.createElement('div', {
         style: {
           maxWidth: '420px', width: '100%', padding: space.xl,
+          margin: 'auto',
           background: surface, borderRadius: radius.md,
           border: '1px solid ' + border, textAlign: 'center'
         }
