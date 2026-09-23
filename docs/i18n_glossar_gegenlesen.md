@@ -44,7 +44,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.ipv`** — deutscher Begriff «IPV»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | **Sie:** IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an Ihre Krankenkassenprämie, wenn das Einkommen tief genug ist.<br>**Du:** IPV — Individuelle Prämienverbilligung: ein Zuschuss des Kantons an deine Krankenkassenprämie, wenn das Einkommen tief genug ist. | «IPV» 64 |
 | 🇬🇧 EN | IPV — individual premium reduction: a cantonal subsidy toward your health-insurance premium when your income is low enough. | «IPV» 32 |
@@ -54,7 +54,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.skos`** — deutscher Begriff «SKOS»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | SKOS — Schweizerische Konferenz für Sozialhilfe: empfiehlt Richtlinien zur Sozialhilfe. Verbindlich sind sie erst, soweit ein Kanton sie übernimmt. | «SKOS» 18 |
 | 🇬🇧 EN | SKOS — Swiss Conference for Social Assistance: recommends guidelines for social assistance. They are binding only where a canton adopts them. | «SKOS» 15 |
@@ -64,7 +64,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.el`** — deutscher Begriff «EL»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | EL — Ergänzungsleistungen: Zuschuss zu AHV oder IV, wenn die Rente den Lebensbedarf nicht deckt. | «EL» 27 |
 | 🇬🇧 EN | EL — supplementary benefits: a top-up to AHV or IV pensions when they do not cover living costs. | «EL» 23 |
@@ -74,7 +74,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.mietbeitraege`** — deutscher Begriff «Mietbeiträge»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Mietbeiträge — kantonale Zuschüsse an die Wohnungsmiete für Haushalte mit tiefem Einkommen. | «Mietbeiträge» 2 |
 | 🇬🇧 EN | Rent subsidies — cantonal contributions toward housing rent for low-income households. | «Rent subsidies» 10 |
@@ -84,7 +84,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.ahv`** — deutscher Begriff «AHV»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | AHV — Alters- und Hinterlassenenversicherung: die staatliche Grundrente im Alter oder beim Tod eines Elternteils. | «AHV» 118 |
 | 🇬🇧 EN | AHV — old-age and survivors’ insurance: the state basic pension in old age or when a parent dies. | «AHV» 86 |
@@ -94,7 +94,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.iv`** — deutscher Begriff «IV»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | IV — Invalidenversicherung: sichert das Einkommen, wenn Krankheit oder Behinderung das Arbeiten dauerhaft einschränkt. | «IV» 30 |
 | 🇬🇧 EN | IV — disability insurance: protects income when illness or disability permanently limits the ability to work. | «IV» 26 |
@@ -104,7 +104,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.kvg`** — deutscher Begriff «KVG»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | KVG — Krankenversicherungsgesetz: regelt die obligatorische Grundversicherung, die alle in der Schweiz haben müssen. | «KVG» 28 |
 | 🇬🇧 EN | KVG — Health Insurance Act: governs the compulsory basic insurance everyone in Switzerland must have. | «KVG» 17 |
@@ -114,7 +114,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.bvg`** — deutscher Begriff «BVG»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | BVG — berufliche Vorsorge (Pensionskasse): die zweite Säule, die zusammen mit der AHV die Rente im Alter bildet. | «BVG» 38 |
 | 🇬🇧 EN | BVG — occupational pension (pension fund): the second pillar that, together with AHV, forms the retirement pension. | «BVG» 26 |
@@ -124,7 +124,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.uvg`** — deutscher Begriff «UVG»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | UVG — Unfallversicherung: deckt die Kosten bei Berufs- und Freizeitunfällen. | «UVG» 13 |
 | 🇬🇧 EN | UVG — accident insurance: covers the costs of occupational and non-occupational accidents. | «UVG» 8 |
@@ -134,7 +134,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.franchise`** — deutscher Begriff «Franchise»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Franchise — der Anteil der Gesundheitskosten pro Jahr, der selbst getragen wird, bevor die Krankenkasse zahlt. | «Franchise» 92 |
 | 🇬🇧 EN | Deductible (Franchise) — the share of health costs paid yourself each year before the health insurer pays. | «Deductible» 62 |
@@ -144,7 +144,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.selbstbehalt`** — deutscher Begriff «Selbstbehalt»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Selbstbehalt — der Eigenanteil (meist 10 %) an den Kosten über der Franchise, bis zu einem jährlichen Höchstbetrag. | «Selbstbehalt» 36 |
 | 🇬🇧 EN | Co-payment/Retention fee (Selbstbehalt) — your share (usually 10%) of costs above the deductible, up to an annual maximum. | «Co-payment» 20 · «Retention fee» 2 |
@@ -154,7 +154,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.beistandschaft`** — deutscher Begriff «Beistandschaft»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Beistandschaft — eine von der Kindes- und Erwachsenenschutzbehörde (KESB) angeordnete Unterstützung, wenn jemand bestimmte Angelegenheiten nicht mehr selbst regeln kann. So wenig wie nötig, abgestuft. Grundlage: ZGB Art. 390 ff. | «Beistandschaft» 3 |
 | 🇬🇧 EN | Deputyship (Beistandschaft) — a support measure ordered by the child and adult protection authority (KESB) when a person can no longer handle certain matters on their own. As little as necessary, graduated. Basis: Civil Code Art. 390 ff. | «Deputyship» 2 |
@@ -164,7 +164,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.nettolohn`** — deutscher Begriff «Nettolohn»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Nettolohn — der Lohn nach Abzug der Sozialversicherungsbeiträge (AHV/IV/EO, ALV, Pensionskasse, Unfallversicherung), aber vor den Steuern. Die Steuern werden in der Schweiz meist separat nach der Veranlagung bezahlt — ausser bei Quellensteuer. | «Nettolohn» 27 |
 | 🇬🇧 EN | Net salary — pay after social insurance contributions (AHV/IV/EO, ALV, pension fund, accident insurance), but before tax. In Switzerland tax is usually paid separately after the assessment — except under withholding tax. | «Net salary» 14 |
@@ -174,7 +174,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.taxpunktwert`** — deutscher Begriff «Taxpunktwert»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Taxpunktwert — der Frankenbetrag je Taxpunkt einer ärztlichen Leistung. Er wird je Kanton vereinbart und genehmigt; dieselbe Behandlung kostet deshalb je nach Kanton unterschiedlich viel. Grundlage: KVG Art. 43 ff. | «Taxpunktwert» 8 |
 | 🇬🇧 EN | Tax point value — the franc amount per tariff point of a medical service. It is agreed and approved canton by canton, so the same treatment costs a different amount depending on the canton. Basis: KVG Art. 43 ff. | «Tax point value» 8 |
@@ -184,7 +184,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.bundessteuer`** — deutscher Begriff «Bundessteuer»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Bundessteuer — die direkte Bundessteuer auf dem Einkommen. Ein Tarif für die ganze Schweiz, unabhängig vom Wohnkanton; Kantons- und Gemeindesteuer kommen separat dazu. Grundlage: DBG Art. 36. | «Bundessteuer» 20 |
 | 🇬🇧 EN | Federal tax — the direct federal tax on income. One tariff for the whole of Switzerland, regardless of canton of residence; cantonal and municipal tax come on top. Basis: DBG Art. 36. | «Federal tax» 16 |
@@ -194,7 +194,7 @@ Gefunden beim Aufbereiten. **Nichts davon ist geändert** — das sind Sprachent
 
 **`glossar.veranlagung`** — deutscher Begriff «Veranlagung»
 
-| | Text | erkanntes Wort · Treffer |
+| | Text | erkanntes Wort · Sätze |
 |---|---|---|
 | 🇩🇪 DE | Veranlagung — der Entscheid der Steuerbehörde für ein Steuerjahr. Darin stehen das steuerbare Einkommen und Vermögen und der geschuldete Betrag. | «Veranlagung» 17 |
 | 🇬🇧 EN | Tax assessment (Veranlagung) — the tax authority's decision for a tax year. It states the taxable income and assets and the amount owed. | «Tax assessment» 3 |
