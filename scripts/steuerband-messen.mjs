@@ -41,6 +41,7 @@ import {
   API, STEUERJAHR, MESS_PATH, PAUSE_MS, ORTE, BRUTTO, ZIVILSTAND,
   post, mitWiederholung, gegenprobeErfundeneOperation, anfrage, pruefeOrt, kantonUndGemeinde as kug,
 } from './estv-schnittstelle.mjs';
+import { STICHPROBE_BRUTTO, SCHWELLE_CHF } from './estv-stichprobe.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = resolve(__dirname, '../src/data/kantonssteuerTabelle.js');
@@ -371,6 +372,40 @@ function nachmessungAbschnitt(n, mess0, messK) {
     ''];
 }
 
+// Stichprobe (scripts/estv-stichprobe.mjs): Umfang und Schwelle aus dem Skript selbst, damit das
+// Quellenblatt nicht von Hand nachgeführt werden muss.
+function stichprobeAbschnitt() {
+  const n = Object.keys(ORTE).length * Object.keys(ZIVILSTAND).length * STICHPROBE_BRUTTO.length;
+  return ['## Stichprobe', '',
+    'Die Tests der App sichern die **Interpolation** der Tabelle, nicht ihre **Aktualität**. Am 23.09.2026 hatte die ESTV',
+    'für TI die Daten des laufenden Steuerjahres geändert, ohne dass sich die Versionsangabe der Schnittstelle änderte',
+    '(«Nachmessungen» oben); die Tests merkten es nicht. Die Stichprobe fragt deshalb den Rechner erneut und vergleicht',
+    'mit den **gespeicherten Messpunkten** — nicht mit der interpolierten Tabelle.', '',
+    '- **Aufruf:** `node scripts/estv-stichprobe.mjs` (optional `--messpunkte <datei>`, `--schwelle <CHF>`). Nur lesend, schreibt',
+    '  nichts. Gleiche Schnittstelle und gleiche Anfrage wie die Messung (beide aus `scripts/estv-schnittstelle.mjs`).',
+    '- **Umfang:** ' + Object.keys(ORTE).length + ' Kantone × ledig/verheiratet × Brutto ' + STICHPROBE_BRUTTO.map(chf).join(' · ') + ', ohne Kinder = **' + n + ' Abrufe**,',
+    '  seriell mit ' + PAUSE_MS + ' ms Pause (rund 40 Sekunden). Vorher: Gegenprobe mit einer erfundenen Operation und Abruf der Version.',
+    '- **Vergleich:** Kantons- + Gemeindesteuer (K+G) und steuerbares Einkommen Bund gegen `steuerfaktor-band-2026.messpunkte.json`.',
+    '  Abweichend ist ein Punkt, wenn einer der beiden Werte um **mehr als CHF ' + SCHWELLE_CHF + '** abweicht. Die ESTV ist ein Rechner,',
+    '  keine Messung mit Streuung: am selben Punkt liefert sie dieselbe Zahl (ZH am 23.09. in allen Feldern gleich wie am 16.09.).',
+    '- **Exit-Code:** 0 = alle ' + n + ' Abrufe erfolgreich, keine Abweichung · 1 = mindestens eine Abweichung · 2 = Messung',
+    '  gescheitert oder unvollständig (Netz, Schnittstelle geändert, Gegenprobe beantwortet, Messpunkt fehlt, weniger als ' + n,
+    '  erfolgreiche Abrufe). 2 hat Vorrang vor 1; gefundene Abweichungen werden trotzdem ausgegeben. Die Zahl der erfolgreichen',
+    '  Abrufe steht immer in der Ausgabe — «0 Abweichungen aus 0 Abrufen» ist 2, nie 0.',
+    '- **Wann (Vorschlag):** vor einem Deploy, der Steuerzahlen zeigt, und wenn die ESTV Änderungen am Rechner ankündigt. Ob und wie oft',
+    '  sie regelmässig läuft, entscheidet Stebler Studios; es gibt bewusst keinen Cron und keinen GitHub-Workflow.',
+    '- **Bei Exit 1:** die Tabelle **nicht von Hand** ändern. Den gemeldeten Kanton nachmessen',
+    '  (`node scripts/steuerband-messen.mjs --messen --kanton XX`, dann `--messen --kinder --kanton XX`, dann ohne Argumente',
+    '  auswerten), den Befund unter «Nachmessungen» begründen (was hat sich geändert, belegt oder nur vermutet) und als',
+    '  eigenen PR vorlegen.',
+    '- **Bei Exit 2:** kein Befund über die Aktualität. Fehlerzeilen lesen; bei Netzproblemen später wiederholen, bei',
+    '  geänderter Schnittstelle zuerst `steuerband-messen.mjs` anpassen.',
+    '- **Grenzen:** geprüft werden nur drei Löhne ohne Kinder. Eine Änderung, die allein Kinderabzüge, andere Lohnbereiche',
+    '  oder andere Gemeinden als den Hauptort betrifft, sieht die Stichprobe nicht. Die TI-Änderung vom 23.09. hätte sie an',
+    '  allen 6 TI-Punkten gemeldet (−29 bis −123 CHF; Gegenprobe mit den archivierten Werten am 24.09.2026).',
+    ''];
+}
+
 function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, xGeprueft, fehlend }) {
   // Datum der Gesamtmessung (ohne Nachmessungen einzelner Kantone) — gilt für alle Kantone, die
   // nicht nachgemessen sind. Nachgemessene Kantone tragen ihr eigenes Datum.
@@ -482,6 +517,7 @@ function schreiben(mess0, messK, messA, { reihen, dbgAbw, ohneSteuerbar, xAbw, x
     '  deshalb um 900 (ledig) zu hoch oder zu tief liegen. Der 13. Monatslohn und Nebeneinkommen gehen so ein, wie die',
     '  App den Jahreslohn bildet.', '');
   for (const n of mess0.nachmessungen || []) L.push(...nachmessungAbschnitt(n, mess0, messK));
+  L.push(...stichprobeAbschnitt());
   L.push('## Tabelle und Randregel', '',
     '- Je Kanton × Zivilstand × Kinderzahl eine Reihe von **Stützpunkten**. Jeder Stützpunkt ist ein Messpunkt.',
     '  Zwischen zwei Stützpunkten wird **linear interpoliert**.',
