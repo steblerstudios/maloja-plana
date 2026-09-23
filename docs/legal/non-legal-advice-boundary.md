@@ -54,11 +54,19 @@ jetzt gezählt — und seither hält ein Test das Ergebnis fest
   allen fünf Sprachen «Helsana» — der einzige Kassenname im ganzen Wechselpfad. Jetzt
   neutral («Name der Kasse»), damit der Pfad keine Kasse bevorzugt.
 
-## Was hier nicht belegt ist
+- **Am Bild geprüft, 23.09.2026:** In der laufenden App (Beispiel-Modus, `#`-Ansichten)
+  zeigen **15 von 15** gerechneten Ansichten einen Hinweis im gerenderten Text —
+  `sozialhilfe`, `tax`, `alv`, `eo`, `vorsorge`, `praemien`, `mietzins`, `schulden`,
+  `premium`, `pflege`, `stipendien`, `kvg`, `anspruchcheck`, `schnellcheck`,
+  `finanzuebersicht`. Keine verlässt sich allein auf das Wort «Schätzung»: es steht
+  überall «Orientierung», «Unverbindlich» oder «Keine rechtsverbindliche Auskunft».
+  Beim Vorsorge-Rechner wurden alle fünf Reiter einzeln angeklickt.
+  *Erste Messung sagte «Vorsorge-Rechner: fehlt» — sie war falsch: das Suchmuster
+  kannte «Keine rechtsverbindliche Auskunft» nicht. Gemessen wurde das Messgerät.*
+- `budget` (CSV-Import) trägt keinen solchen Hinweis und braucht keinen — dort wird
+  nichts gerechnet, nur eine Datei eingelesen.
 
-- Ob jede **Berechnung** im Bild einen Orientierungs-Hinweis zeigt — die Rechner
-  verweisen alle auf Orientierung (`grep`, 10 von 10 Dateien), aber ob der Hinweis in
-  jedem Zustand **sichtbar gerendert** wird, ist nicht am Bild geprüft.
+## Was hier nicht belegt ist
 - Ob diese Formulierungen als Haftungsausschluss rechtlich tragen — Frage an die
   juristische Prüfung (K48). Einordnung des Umfelds:
   `docs/security/compliance-overview.md`.
