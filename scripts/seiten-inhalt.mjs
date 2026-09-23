@@ -438,7 +438,17 @@ export const quelle = q;
 // «Kontaktadresse». Genannt sind Name, Stadt und E-Mail, aber keine Strasse.
 // docs/legal/impressum.md hat dieselbe Lücke — sie steht jetzt nur öffentlich.
 // Ob die Privatadresse hier stehen soll oder eine Geschäfts-/c-o-Adresse, ist
-// keine technische Frage. Bis dahin bleibt es beim Stand des Impressums.
+// keine technische Frage.
+//
+// 23.09.2026: aus einer Durchsicht von aussen erneut aufgeschlagen. Die Lücke
+// ist jetzt SICHTBAR als «[Strasse Nr.], [PLZ]» statt still — und ein Wächter
+// (src/__tests__/impressumAdresse.test.js) ist rot, solange der Platzhalter
+// dasteht. Er wird grün, sobald die echte Adresse eingesetzt ist; bis dahin
+// kann dieser Stand nicht versehentlich live gehen.
+// 🛑 Der Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG» steht unten seit je —
+// er behauptet Vollständigkeit, die die Seite ohne Strasse nicht hat. Ob UWG
+// für ein kostenloses Angebot ohne Bestellvorgang überhaupt greift, ist Frage
+// A-neu in docs/legal/k48-fragen-juristin.md. Nicht selber entscheiden.
 export const SONDERSEITEN = [
   {
     pfad: 'rechtliches',
@@ -452,8 +462,8 @@ export const SONDERSEITEN = [
       {
         titel: 'Anbieterin',
         absaetze: [
-          'Sophie Stebler / Stebler Studios, Basel, Schweiz.<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Angaben gemäss Art. 3 Abs. 1 lit. s UWG.',
+          'Sophie Stebler / Stebler Studios<br>[Strasse Nr.], [PLZ] Basel, Schweiz<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz. Angaben gemäss Art. 3 Abs. 1 lit. s UWG.',
         ],
       },
       {
@@ -468,14 +478,21 @@ export const SONDERSEITEN = [
         titel: 'Datenschutz auf diesen Seiten',
         absaetze: [
           'Die Erklärseiten sind statisches HTML. Sie laden <strong>keine Skripte, keine Cookies und keine Ressourcen von Dritten</strong>; die Schriften liegen auf demselben Server. Es gibt kein Tracking, keine Analyse und keine Werbung.',
-          'Beim Abruf fallen dennoch technische Daten beim Hoster an — <strong>Infomaniak Network SA, Genf</strong>, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung technisch notwendig. Die Aufbewahrungsdauer dieser Logs richtet sich nach dem Standard des Hosters und ist uns nicht belegt.',
+          'Beim Abruf fallen dennoch technische Daten beim Hoster an — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genf, mit Rechenzentren in der Schweiz: IP-Adresse in den Server-Logs, Browsertyp, Betriebssystem und Zeitpunkt des Zugriffs. Das ist für die Auslieferung und die Betriebssicherheit technisch notwendig. Infomaniak handelt dabei als Auftragsbearbeiterin (Art. 9 nDSG). Die Zugriffs- und Fehlerlogs bewahrt Infomaniak nach eigener Angabe mindestens 7 Tage auf (Infomaniak Support-FAQ 1926, abgerufen am 23.09.2026).',
           'Weitere Empfänger gibt es nicht: keine Analyse-Dienste, keine Social-Media-Einbindungen, keine Weitergabe und kein Verkauf von Daten.',
+        ],
+      },
+      {
+        titel: 'Kontakt per E-Mail',
+        absaetze: [
+          'Schreiben Sie an <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, bearbeiten wir Ihre Adresse, den Inhalt der Nachricht und allfällige Anhänge, um zu antworten. Das Postfach liegt bei Infomaniak in der Schweiz. Die Korrespondenz bleibt so lange, wie die Anfrage und übliche Nachfragen es brauchen, danach wird sie gelöscht. Eine Weitergabe an Dritte findet nicht statt, ausser sie ist gesetzlich geschuldet.',
         ],
       },
       {
         titel: 'Daten in der Anwendung',
         absaetze: [
           'Was Sie in Maloja Plana erfassen, bleibt <strong>auf Ihrem Gerät</strong> (localStorage und IndexedDB im Browser). Es gibt kein Konto, keine Anmeldung und keine Übermittlung an die Anbieterin oder an Dritte. Wer die Daten löschen will, löscht sie im Gerät — es gibt keine zweite Kopie anderswo.',
+          'Besonders schützenswerte Angaben (Gesundheit, Sozialhilfe, Weltanschauung) speichert die App ebenfalls nur lokal. Die automatischen Sicherungskopien im Browser sind nicht verschlüsselt.',
           'Weil nichts übermittelt wird, kann die Anbieterin zu Ihren Eingaben auch keine Auskunft erteilen: sie hat sie nie gesehen. Die ausführliche Fassung mit allen Rechten nach DSG steht in der App unter «Datenschutz & Rechtliches».',
         ],
       },
