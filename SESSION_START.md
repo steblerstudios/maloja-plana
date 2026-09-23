@@ -9,6 +9,107 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 23.09., 19:35 — #271 «Berner 3a-Deckel» und #275 «3a-Tracker-Jahresgrenze» sind gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
+>
+> | | gemessen 23.09., 19:35 |
+> |---|---|
+> | `main` | **`74ab23b`** — «Merge pull request #275», 17:30 UTC. Heute gingen fünf PRs rein: **#270** 3a-Maximum eine Quelle · **#273** Melde-Weg Fehlerschirm · **#274** Fehlerschirm-Farben · **#271** 17:30:06 UTC · **#275** 17:30:43 UTC |
+> | Tests auf `main` | **2830 grün** (147 Dateien), Build sauber, PII-Scan sauber |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — also VOR allen fünf. Der Build aus `main` ergibt `index-DccaaCZO.js`. **Gemergt ist nicht live** |
+> | offene PRs | **eine: #272** «UI/UX-Runde», Entwurf, nicht aus dieser Sitzung, nicht angefasst |
+>
+> 🛑 **Was der Auslieferung JETZT im Weg steht — und es ist nicht die App.**
+> Der geteilte Haupt-Checkout steht auf `feat/ui-ux-runde-2026-09-23` (= #272, fremde, laufende
+> Arbeit). Das Branch-Gate in `deploy.sh` bricht dort ab; dieselbe Falle wie am 23.09. mittags.
+> Vorher im Haupt-Checkout auf `main` stellen — **`main` ist jetzt frei**, der Worktree dieser
+> Sitzung hält es nicht mehr fest (er steht losgelöst auf `74ab23b`).
+>
+> ### Was #271 gebracht hat — der Deckel rechnet
+> `SAEULE_3A.bisBundesMaximum.nichtAufgerechnet` stand seit dem 20.09. auf `() => 0`, weil der
+> Frankenwert nicht belegt war. Wortlaut jetzt **an der Quelle gelesen** (BELEX, BSG 842.111.1,
+> Stand 01.12.2025), Art. 6 Abs. 4 lit. i: «Beiträge an die gebundene Selbstvorsorge (Säule 3a)
+> bis zum nach Bundesrecht zulässigen Maximalbetrag **für unselbständig Erwerbstätige** werden
+> dazugerechnet.» Der Erlass nennt **einen** Betrag, nicht den je Person geltenden Höchstabzug.
+> Gemessen: 4'000/Monat + 3a 35'280 ⇒ **CHF 1'284/Jahr statt gar nichts**.
+>
+> 🛑 **Das Jahr war der zweite Fehler, und er war meiner.** Zuerst stand dort 7'258, das Maximum
+> des Anspruchsjahres. Massgebend ist die Veranlagung des **vorletzten** Steuerjahres (Art. 7
+> Abs. 1), also 2024 ⇒ **7'056**. `src/data/saeule3a.js` trägt darum jetzt die ESTV-Jahrestabelle
+> 2021–2026 statt eines Werts. Abgezogen wird aber erst über **beiden** Jahresmaxima: im Band
+> 7'056–7'258 lässt sich nicht unterscheiden, ob jemand zu viel einzahlte oder das Maximum bloss
+> gestiegen ist — ohne diese Regel zahlte ausgerechnet der **Maximalzahler CHF 480/Jahr zu viel**,
+> auf der Rückforderungsseite.
+>
+> ### Was #275 gebracht hat — die Jahresgrenze im Tracker
+> Der 3a-Einzahlungs-Tracker summierte **datumsblind** über alle Zeilen und verglich das mit dem
+> JAHRESmaximum. Wer ihn über Jahre weiterführt, *wofür er gebaut ist*, sah «Maximum erreicht»,
+> ohne es in einem Jahr ausgeschöpft zu haben — und dieselbe Summe ging als `pension3a` in den
+> Steuerrechner, in `budgetSync.js` (`/ 12`) und in die Prämienverbilligung. Drei Zeilen à 7'000
+> ergaben 21'000. Die Jahreszuordnung liegt jetzt in `src/data/saeule3a.js`, damit Anzeige,
+> Formular und Rechenkerne sie **gleich** lesen.
+>
+> ---
+>
+> ## Vier Sätze, die sonst niemand mehr sagt
+>
+> 🛑 **1 — BELEX `/app/` ist ein BLINDES Messgerät, `/api/` ist das richtige.**
+> Roh abgerufen liefert `https://www.belex.sites.be.ch/app/de/texts_of_law/<nr>` für **jede**
+> Nummer dieselbe SPA-Hülle: 842.111.1 und die erfundene 842.111.9 kamen **byte-identisch**
+> zurück (2303 Bytes, gleicher SHA-256). Das ist **exakt der Fedlex-Fehlermodus vom 20.09.**
+> Im JS-ausführenden Browser unterscheidet es sehr wohl — deshalb hielt ich meine erste
+> Gegenprobe für bestanden. **Sie war es nicht.** Was misst: `…/api/texts_of_law/842.111.1` →
+> 200, 2'160'333 Bytes; `…/api/texts_of_law/842.111.9` → **404, 0 Bytes**.
+> *Lehre über den Fall hinaus: Eine Gegenprobe gilt nur für das Werkzeug, mit dem sie gemacht
+> wurde. «Bestanden» ohne Angabe des Werkzeugs ist keine Aussage.*
+>
+> 🛑 **2 — Ein Riegel kann nach einem Fix die FALSCHEN treffen.**
+> Der Mehrjahres-Riegel aus #271 fragte «tragen die Zeilen mehr als ein Kalenderjahr?». Sobald
+> der Tracker in #275 die Jahresgrenze selbst zog, war das die falsche Frage: Wer seine
+> Einzahlungen sauber über Jahre führt, hat selbstverständlich mehrere Jahre in der Liste und
+> trotzdem einen korrekten Jahresbetrag. Der Riegel hätte **genau diesen Menschen** die Zahl
+> weggenommen. Er fragt jetzt am Wert selbst. *Lehre: Wer eine Ursache behebt, muss jede
+> Schadensbegrenzung nachziehen, die auf der Ursache aufbaute — sonst wird der Schutz zum Schaden.*
+>
+> 🛑 **3 — Eine Mutation überlebte die ganze Testbatterie, und es war die wichtigste Stelle.**
+> `pension3a` in `ChapterView.handleDeposits` — dort, wo der Wert entsteht. Unit-Tests einer
+> geteilten Funktion können **nicht** fangen, dass eine Aufrufstelle durch eine eigene Summe
+> ersetzt wird. Ein echter Interaktionstest bräuchte jsdom + Testing-Library, also neue
+> Abhängigkeiten (`CLAUDE.md`: «Avoid: dependency bloat»). Gebaut ist stattdessen eine
+> Quelltext-Prüfung nach dem Muster von `glyphenImText`. **Sie beweist nicht, dass die Oberfläche
+> richtig rechnet** — nur, dass sie die geprüfte Funktion benutzt. Das steht auch so im Test.
+> *Offener Punkt, falls je eine Testumgebung dazukommt: diesen Pfad echt durchspielen.*
+>
+> 🛑 **4 — Aargau geht bewusst NICHT mit, und der Grund ist strukturell.**
+> `SAEULE_3A.schwelleOhneSaeule2` bleibt bei `() => 0`. BE fehlte eine **Zahl** — die holt man
+> an der Quelle, das ist heute geschehen. AG fehlt eine **Angabe über die Person**: ob eine
+> 2. Säule besteht. Leere BVG-Felder heissen «nicht erfasst», nicht «keine Säule 2». Das holt
+> keine Recherche nach; es braucht ein neues Feld **oder** den Entscheid, in AG eine Orientierung
+> statt einer Zahl zu zeigen. **Das ist ein Produktentscheid von Stebler Studios, keine Fachfrage.**
+> Wirkung, solange es offen ist: bei Personen ohne Säule 2 fällt der Anspruch **bis zu 34 % zu
+> tief** aus (nachgerechnet 20.09.: Nettoerwerb 30'000, 3a 6'000 → 1'017.50 statt 1'542.50).
+>
+> ---
+>
+> ### Was beim ASV Bern offen bleibt (`docs/sources/FRAGEN-AN-DIE-AEMTER.md`, Frage 2)
+> Die Zahl ist belegt, die **Auslegung** nicht bestätigt. Drei Punkte hängen an einer Antwort:
+> **(a)** Steuerjahr oder Bezugsjahr? **(b)** Gilt ein fester Betrag oder der je Person geltende
+> Höchstabzug? **(c)** BVV 3 Art. 7 Abs. 1 knüpft an die **Zugehörigkeit zu einer
+> Vorsorgeeinrichtung** an, nicht an «unselbständig» — was gilt für **Angestellte ohne
+> Pensionskasse** (Lohn unter der BVG-Eintrittsschwelle)?
+> Solange das offen ist, trägt die Regel ein neues Feld **`vorbehalt`** (nicht `offen`):
+> `offen` = rechnet nicht · `vorbehalt` = rechnet, aber auf vertretbarer statt bestätigter
+> Lesart. Wo der Abzug wirkt, **sieht das auch die Person** (`ipv.vorbehaltBE3aDeckel`, 5 Sprachen).
+>
+> ### Wie geprüft wurde
+> Drei Runden `swiss-precision-pruefer`; die ersten beiden fanden je einen **roten** Befund
+> (falsches Bezugsjahr, unbegrenzter Abzug), beide selbst nachgemessen und behoben. Eine Rüge des
+> Prüfers war ihrerseits falsch (Beleg der 14'000-Schwelle) — Art. 13 Abs. 2 lit. i definiert sie
+> ausdrücklich über Art. 6 Abs. 4; der Prüfer hat das in Runde 2 bestätigt. Dazu **19 Mutationen**
+> eingebaut und wieder entfernt. In der laufenden App gegengemessen (Profil mit Historie
+> 2024/2025/2026): Anzeige «CHF 7'000 von CHF 7'258 für 2026» + «Dazu CHF 14'000 aus früheren
+> Jahren», `pension3a` 21'000 → 7'258 beim Bearbeiten, Kontrast 5,58:1 hell / 4,59:1 dunkel.
+
 > ✅ **Nachtrag 23.09., 11:10 — #266 «Compliance-Übersicht + Regulierungsgrenzen» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
 > Unmittelbar vor dem Schreiben erhoben (nicht am Sitzungsanfang):
 >
