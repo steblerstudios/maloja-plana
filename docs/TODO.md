@@ -143,6 +143,36 @@ nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Ex
   bei ~null sichtbarem Nutzen. Bei Bedarf gezielt einzelne echte Fälle, nicht als Sweep.
 - Prinzip: Entschlacken via Disclosure/Dropdown, **nie löschen** (Landkarte = Identität).
 
+### C1 — UI/UX-Runde 2026-09-23 (im Browser gemessen, Demo-Profil, 390×844 und 1280×900)
+
+- ✅ **Fünf Text-Aktionen unter dem Trefferflächen-Mass.** «Alle Leistungen prüfen»,
+  «Alle Ansprüche im Überblick», «Trifft eine Situation auf Sie zu?», «Jetzt sichern» und die
+  Grundordnungs-Zeile waren 17–19 px hoch — unter WCAG 2.2 AA 2.5.8 (24×24). Je 8 px Polsterung
+  (jetzt 33–35 px), Aussenabstände um dieselben 8 px gekürzt, Bild unverändert.
+  Die vier verbleibenden Ziele unter 24 px sind Fusszeilen-Links **im Satz** → Inline-Ausnahme.
+- ✅ **Ein Kontrast-Ausreisser.** Grundordnungs-Zähler nutzte bei 100 % `palette.sage` — eine
+  Flächenfarbe — als Text auf `sage+'12'`: 4.0:1. Jetzt `sageDeep`: 6.13:1 dunkel, 5.9:1 hell.
+  Vollsweep beider Modi danach: **201 Textknoten, 0 Durchfaller.**
+- ✅ **Leistungs-Zeile im Dashboard nur noch beim leeren Stand** (`hasMeaningfulProgress`).
+  Gemessen: Orientierung 502 → 384 px, der Berg 657 → 539 px und damit über dem Falz (619 px).
+  Test `dashboardLeistungsZeile.test.js`, Mutationsprobe rot gesehen.
+- ✅ **Die Seite scrollt, nicht mehr ein Kasten darin** (`#mp-main` hatte `overflow-y: auto`).
+  Siehe Commit `6dbfd95`; `--mp-kopf-h` und `--mp-sprungabstand` in `tokens.css` sind die neuen
+  Einzelquellen für Sticky-Offsets und Sprungziele (vorher drei Inline-Werte 52/64/72 px).
+  🛑 **Offen zu prüfen:** der eigentliche iOS-Gewinn (Adressleiste blendet sich aus,
+  Statusleisten-Tipp springt nach oben) ist **auf einem echten iPhone** anzusehen — aus dem
+  Browser hier nicht verifizierbar.
+
+**Offen, Entscheid Stebler Studios (bewusst nicht gebaut):**
+
+- ⏳ **Reihenfolge Hinweis ↔ Orientierung.** Der Entwicklungs-Hinweis (`AlphaBanner`) steht am Handy
+  vor «Was ist jetzt dran?» und kostet ~250 px. Ihn darunter zu schieben wäre die gleiche Bewegung,
+  die `Dashboard.jsx:540` schon einmal gemacht hat — aber es ist ein **Haftungstext**, und die
+  Reihenfolge ist damit keine reine Gestaltungsfrage. Vor einer Änderung: `rechts-pruefer`.
+- ⏳ **`alphaDismissed` ist reiner Komponenten-Zustand** (`Dashboard.jsx:512`) — das × wird bei
+  jedem Neuladen vergessen. Eine Speicherung wäre benutzerfreundlich, betrifft aber denselben
+  Haftungstext. Gleiche Frage, gleicher Prüfer.
+
 ## C2 — 🎨 Design-Vision: Skeuomorphismus als Metaphern-Sammlung (Stebler Studios, BD 2026-06-29)
 
 > **Status: Inspiration / „bis wir dahin kommen" — NICHT jetzt bauen, eigene Design-Phase, schritt-für-schritt gemeinsam.**
@@ -443,7 +473,16 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
 > - Export-Domain: kein `maloja-plana.ch` (Bindestrich) mehr ✓
 > - Autosave: try/catch + `saveError`-State (`main.jsx:562-583`) ✓
 > - **GEFIXT diese Session (`role=status`-Live-Regionen ohne Buttons):** Sandbox-/Demo-/DB-Banner (`main.jsx`) + AlphaBanner (`Dashboard.jsx`) — role auf den Text verschoben, browserverif (0 Buttons in Live-Regionen). ✓
-> - ⏳ **OFFEN, Design-Entscheid (Stebler Studios, „nichts wegnehmen"):** Finanz-Alarm-Flächen detunen (Schulden-KPI-Grid / Armutsbalken / OverdueBanner) + Schulden-Formular Progressive Disclosure. Kein Bug — bewusste Gestaltung.
+> - ✅ **ERLEDIGT — nachgeprüft 2026-09-23 (reproduce-first).** Stand hier bis dahin als
+>   „⏳ OFFEN, Design-Entscheid" und war es seit Wochen nicht mehr. Alle vier Teile am Code belegt:
+>   **Schulden-KPI-Grid** ist eine ruhige Label-Wert-Zeilenliste (`SchuldenManager.jsx:157`, der
+>   Kommentar sagt es wörtlich: „statt KPI-Kachelraster") · **Armuts-Prozentbalken** ist ein
+>   belegter Armutsgrenzen-Befund mit BFS-Quellenzeile geworden, kein Balken
+>   (`FinanzUebersicht.jsx:321-333`) · **OverdueBanner** hat weder Gradient noch rote Bold-Zahl,
+>   nur einen getönten Rand und eine ruhige Zeile (`OverdueBanner.jsx:30-69`) ·
+>   **Schulden-Formular** hat `<details>`-Disclosure (`SchuldenManager.jsx:233`) und ruhige
+>   Rückmeldung bei leerer Eingabe statt stillem return (`:25`, `formError`).
+>   🛑 Lehre: die eigene Doku ist auch nur eine Behauptung — hier zielte sie zwei Monate auf ein Gespenst.
 
 - **SKOS-Vermögensfreibetrag veraltet UND doppelt/widersprüchlich.** `cantonalData.js:293`
   (8000/4000 +2000, Cap 10000) vs `sozialhilfeRechner.js:101` (4000 +2000, kein Cap) → Paar bekommt
@@ -460,9 +499,10 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
   (nur iOS-Shell). Fix: `@capacitor/cli` → devDeps; CI-Guard gegen `@capacitor`-Import in `src/`.
 - **`radius.md` JS↔CSS desync** (`tokens.js:54`=6 vs `tokens.css:67`=10px) — Single-Source-Bruch,
   betrifft alle `radius.md`-Flächen. Fix: auf einen Wert einigen.
-- **Finanz-Alarm-Flächen detunen** — Schulden-KPI-Grid (`SchuldenManager.jsx:147`), Finanzübersicht
+- ✅ ~~**Finanz-Alarm-Flächen detunen**~~ — Schulden-KPI-Grid (`SchuldenManager.jsx:147`), Finanzübersicht
   Armuts-Prozentbalken (`FinanzUebersicht.jsx:207`), OverdueBanner-Gradients+rote Bold-Zahl
   (`OverdueBanner.jsx:37`). Schamsensibelste Stellen + lauteste UI. Fix: Zeilenlisten/`<details>` statt löschen.
+  **Erledigt, am Code belegt 2026-09-23** — Einzelnachweise im ✅-Block oben.
 - **Router-Allow-Liste-Drift** (`hashRouter.js:19`) — `settings`, `taxImport`, `legal` fehlen in
   `VALID_VIEWS` → funktionieren beim Klick, gehen aber bei Reload/PWA-Neustart/geteiltem Link verloren
   (zurück aufs Dashboard). Gleiche Klasse wie früherer kvg/flyer-Fix. Fix: 3 Strings ergänzen + Guard-Test.
@@ -470,8 +510,9 @@ Alle Punkte unten sind NEU (nicht aus früheren Audits). `file:line` zum Zeitpun
   Fehlerwort. Fix: ruhig umformulieren („… bitte prüfen") in allen 5.
 - **Falsche Domain im Export** (`FinanzUebersicht.jsx:95`) — Print/PDF-Footer `maloja-plana.ch`
   (Bindestrich) statt live `malojaplana.ch`. Fix: korrigieren.
-- **Schulden-Formular**: 6 Felder ohne Disclosure, nur creditor+amount Pflicht aber nichts markiert;
+- ✅ ~~**Schulden-Formular**~~: 6 Felder ohne Disclosure, nur creditor+amount Pflicht aber nichts markiert;
   leere Eingabe → `handleAddDebt` returnt still (kein Feedback). Fix: Progressive Disclosure + ruhige Validierung.
+  **Erledigt, am Code belegt 2026-09-23** — `<details>` (`SchuldenManager.jsx:233`) + `formError` (`:25`).
 - **Autosave-Block ungeschützt** (`main.jsx:350-370`) — Throw killt Save-Loop, `isSaving` bleibt true.
   Fix: jedes `setItem` in try/catch + ruhige „Speichern fehlgeschlagen"-Meldung.
 - **Sandbox-Banner** (`main.jsx:618-658`) `role=status` umschliesst 3 Buttons (Live-Region). Fix: Buttons
