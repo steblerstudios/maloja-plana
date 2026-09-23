@@ -740,6 +740,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       rows: sRows,
       status,
       statusColor: sozialhilfe.eligible ? DRUCK.gruen : DRUCK.grau,
+      statusOk: sozialhilfe.eligible,
     });
   }
 
@@ -761,6 +762,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       rows: iRows,
       status,
       statusColor: ipv.eligible ? DRUCK.gruen : DRUCK.grau,
+      statusOk: ipv.eligible,
     });
   }
 
@@ -771,6 +773,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
       rows: [],
       status: el.eligible ? t('sozialhilfe.elPossible') : t('behoerdenDossier.elNotApplicable'),
       statusColor: el.eligible ? DRUCK.gruen : DRUCK.grau,
+      statusOk: el.eligible,
     });
   }
 

@@ -144,10 +144,13 @@ const Lebenssituationen = ({ palette, t, data, onNavigate }) => {
       React.createElement('div', {
         key: z.key,
         ref: (el) => { panelRefs.current[z.key] = el; },
+        // Sprungziel: hält beim scrollIntoView Abstand zur klebenden Kopfzeile (tokens.css).
+        className: 'mp-sprungziel',
         style: {
           marginTop: space.sm, padding: '16px 18px',
           background: palette.up, borderRadius: radius.md,
-          scrollMarginTop: '72px',
+          // Eine Quelle für den Sprungabstand (tokens.css), vorher 72 px inline.
+          scrollMarginTop: 'var(--mp-sprungabstand)',
         }
       },
         React.createElement('p', {

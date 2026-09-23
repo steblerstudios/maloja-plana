@@ -1,5 +1,8 @@
 # Maloja Plana — Logo Design Brief
 
+> **Abgelöst am 24.09.2026** durch das Markenpaket 1.0 ([`markenpaket-2026-09/`](markenpaket-2026-09/README.md),
+> Überblick in [`brand-guidelines.md` §4](brand-guidelines.md)). Dieser Brief bleibt als Herleitung stehen.
+
 **Produkt:** Maloja Plana — privacy-first Swiss life-organizer App
 **Firma:** Stebler Studios (Einzelfirma, Basel)
 **Datum:** Juni 2026

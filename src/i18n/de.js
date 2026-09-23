@@ -3119,25 +3119,6 @@ export default {
     onlyAhvIv: 'EL nur für AHV/IV-Bezüger',
   },
 
-  premiumCalc: {
-    coupleChildren: 'Ehepaar + Kinder',
-    singleChildren: 'Alleinstehend + Kinder',
-    single: 'Single',
-    incomeToHigh: 'Einkommen zu hoch (über CHF {value})',
-    eligible: 'Berechtigt für Prämienverbilligung',
-    doc1: 'Steuererklärung (letzte 2 Jahre)',
-    doc2: 'Lohnzettels',
-    doc3: 'Familienausweis',
-    doc4: 'Bestätigung der Krankenkassenprämien',
-    docTitle: 'KVG §67 Gesuchsdaten',
-    check1: 'Steuererklärung Vorjahr beilegen',
-    check2: 'Aktuelle Prämienrechnung der KK',
-    check3: 'Lohnzettel/Einkommensbescheinigung',
-    check4: 'Mietvertrag (falls vorhanden)',
-    check5: 'Familienausweis (falls relevant)',
-    check6: 'Bestätigung von Unterhaltszahlungen (falls zutreffend)',
-  },
-
   error: {
     title: 'Etwas ist schiefgelaufen',
     message: { sie: 'Ihre Daten sind sicher — sie werden nur lokal auf Ihrem Gerät gespeichert. Bitte versuchen Sie es erneut.', du: 'Deine Daten sind sicher — sie werden nur lokal auf deinem Gerät gespeichert. Bitte versuche es erneut.' },

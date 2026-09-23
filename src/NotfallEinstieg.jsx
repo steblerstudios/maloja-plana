@@ -148,7 +148,7 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
         },
           React.createElement(PanelTitle, { palette, style: { margin: 0 } }, t('notfallEinstieg.' + scenario.key + '.title')),
           React.createElement('span', {
-            style: { fontSize: text.sm, color: allDone ? palette.sage : palette.mid, fontWeight: weight.medium }
+            style: { fontSize: text.sm, color: allDone ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium }
           }, filled + '/' + total)
         ),
 
@@ -183,10 +183,15 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
               style: {
                 display: 'flex', alignItems: 'center', gap: space.sm + 'px',
                 fontSize: text.sm,
-                color: done ? palette.sage : palette.text,
+                color: done ? (palette.sageDeep || palette.sage) : palette.text,
                 cursor: done ? 'default' : 'pointer',
                 padding: '4px 0',
-                opacity: done ? 0.7 : 1,
+                // Keine reduzierte Deckkraft mehr für «erledigt»: 0.7 drückte den
+                // Kontrast von 6.04 auf 3.16 (hell) bzw. 6.08 auf 3.77 (dunkel) und
+                // hätte die Farbkorrektur eine Zeile darüber wieder aufgehoben.
+                // Erkennbar bleibt der Zustand über die FORM — Haken statt leerem
+                // Kästchen, siehe die Zeile mit hinweisZeichen. Gleiche Begründung
+                // wie bei den Berg-Beschriftungen (dashboardMountainLabelContrast).
               }
             },
               React.createElement('span', {

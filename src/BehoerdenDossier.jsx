@@ -84,7 +84,13 @@ export const BehoerdenDossier = ({ palette, t, data, chapters, onNavigate }) => 
       section.status && React.createElement('div', {
         style: {
           fontSize: text.sm, fontWeight: weight.semi,
-          color: section.statusColor || palette.mid,
+          // NICHT section.statusColor: das ist eine DRUCK-Farbe aus dossierGenerator.js,
+          // gebaut fürs weisse Blatt und deshalb unabhängig vom Thema. Am Bildschirm
+          // gemessen: im Hellmodus 4.86:1 (knapp gut), im DUNKELMODUS 2.2:1 — #6B6560
+          // auf #343330, weit unter AA. Der Abschnitt trägt jetzt `statusOk` als
+          // Bedeutung; die Farbe wählt jedes Medium selbst. Der Druck benutzt weiterhin
+          // statusColor (dossierGenerator.js, Zeile mit `bd-status`).
+          color: section.statusOk ? (palette.sageDeep || palette.sage) : palette.mid,
           marginBottom: section.rows.length > 0 ? space.sm : 0,
         }
       }, section.status),

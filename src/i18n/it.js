@@ -3076,25 +3076,6 @@ export default {
     onlyAhvIv: 'PC solo per beneficiari AVS/AI',
   },
 
-  premiumCalc: {
-    coupleChildren: 'Coppia + figli',
-    singleChildren: 'Singolo + figli',
-    single: 'Singolo',
-    incomeToHigh: 'Reddito troppo alto (oltre CHF {value})',
-    eligible: 'Diritto alla riduzione dei premi',
-    doc1: 'Dichiarazione fiscale (ultimi 2 anni)',
-    doc2: 'Buste paga',
-    doc3: 'Certificato di famiglia',
-    doc4: 'Conferma dei premi della cassa malati',
-    docTitle: 'LAMal §67 Dati della domanda',
-    check1: 'Allegare la dichiarazione fiscale dell\'anno precedente',
-    check2: 'Fattura premio attuale della cassa malati',
-    check3: 'Busta paga / conferma del reddito',
-    check4: 'Contratto di locazione (se applicabile)',
-    check5: 'Certificato di famiglia (se applicabile)',
-    check6: 'Conferma pagamenti di mantenimento (se applicabile)',
-  },
-
   error: {
     title: 'Qualcosa è andato storto',
     message: { sie: 'I Suoi dati sono al sicuro — sono memorizzati localmente sul Suo dispositivo. Riprovi.', du: 'I tuoi dati sono al sicuro — sono memorizzati localmente sul tuo dispositivo. Riprova.' },
