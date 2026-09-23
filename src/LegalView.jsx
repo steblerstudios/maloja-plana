@@ -162,6 +162,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.privacy.responsible1') }),
         P({ children: t('legal.privacy.responsible2') }),
         P({ children: t('legal.privacy.responsible3') }),
+        P({ children: t('legal.privacy.responsible4') }),
       ]}),
       Section({ title: t('legal.privacy.localTitle'), palette, children: [
         P({ children: t('legal.privacy.local1') }),
@@ -180,6 +181,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
       ]}),
       Section({ title: t('legal.privacy.hostingTitle'), palette, children: [
         P({ children: t('legal.privacy.hosting1') }),
+        P({ children: t('legal.privacy.hostingSource') }),
         P({ children: t('legal.privacy.hosting2') }),
         // Offizielles Green-Web-Badge — lokal gehostet (kein externer Request/IP-Leak),
         // verlinkt auf den Live-Check der Green Web Foundation.
@@ -197,6 +199,9 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
           })
         ),
       ]}),
+      Section({ title: t('legal.privacy.contactTitle'), palette, children: [
+        P({ children: t('legal.privacy.contact1') }),
+      ]}),
       Section({ title: t('legal.privacy.backupTitle'), palette, children: [
         P({ children: t('legal.privacy.backup1') }),
       ]}),
@@ -204,6 +209,7 @@ export const LegalView = ({ palette, t, lang, onNavigate, section }) => {
         P({ children: t('legal.privacy.rights1') }),
         P({ children: t('legal.privacy.rights2') }),
         P({ children: t('legal.privacy.rights3') }),
+        P({ children: t('legal.privacy.rights4') }),
       ]}),
       Section({ title: t('legal.privacy.securityTitle'), palette, children: [
         P({ children: t('legal.privacy.security1') }),

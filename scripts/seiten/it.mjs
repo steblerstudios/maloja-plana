@@ -270,8 +270,9 @@ export const SONDERSEITEN = [
       {
         titel: 'Fornitrice',
         absaetze: [
-          'Sophie Stebler / Stebler Studios, Basilea, Svizzera.<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — raccoglitore di vita svizzero. Un progetto open source sotto AGPL-3.0. Indicazioni secondo l’art. 3 cpv. 1 lett. s LCSl.',
+          'Sophie Stebler / Stebler Studios<br>Basilea, Svizzera<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — raccoglitore di vita svizzero. Un progetto open source sotto AGPL-3.0. L’utilizzo dell’applicazione è gratuito; per il white label e altri usi commerciali è disponibile su richiesta una licenza separata.',
+          'Sull’indirizzo di contatto: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3" rel="noopener">art. 3 cpv. 1 lett. s n. 1 LCSl</a> esige indicazioni sull’identità e sull’indirizzo di contatto «compreso quello della posta elettronica». La disposizione non prescrive in ogni caso un indirizzo postale. Nome, luogo ed e-mail sono indicati; un indirizzo postale è una decisione aperta e verrà presa insieme alla questione dell’iscrizione nel registro di commercio. Tramite e-mail siamo raggiungibili per ogni richiesta, anche giuridica.',
         ],
       },
       {
@@ -286,14 +287,21 @@ export const SONDERSEITEN = [
         titel: 'Protezione dei dati su queste pagine',
         absaetze: [
           'Le pagine esplicative sono HTML statico. Non caricano <strong>alcuno script, alcun cookie e alcuna risorsa di terzi</strong>; i caratteri si trovano sullo stesso server. Non vi è alcun tracciamento, alcuna analisi e alcuna pubblicità.',
-          'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA, Ginevra</strong>, con centri di calcolo in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura. La durata di conservazione di questi registri segue lo standard dell’hoster e non ci è documentata.',
+          'Alla consultazione vengono comunque raccolti dati tecnici presso l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Ginevra, con centri di calcolo in Svizzera: indirizzo IP nei registri del server, tipo di browser, sistema operativo e momento dell’accesso. Ciò è tecnicamente necessario per la fornitura e per la sicurezza dell’esercizio. Infomaniak agisce in tal senso quale responsabile del trattamento (art. 9 nLPD). Secondo le indicazioni del fornitore, i registri di accesso e di errore vengono conservati almeno 7 giorni (FAQ di supporto Infomaniak 1926, consultata il 23 settembre 2026).',
           'Non vi sono altri destinatari: nessun servizio di analisi, nessuna integrazione di social media, nessuna trasmissione e nessuna vendita di dati.',
+        ],
+      },
+      {
+        titel: 'Contatto via e-mail',
+        absaetze: [
+          'Se scrive a <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, trattiamo il suo indirizzo, il contenuto del messaggio ed eventuali allegati per poter rispondere. La casella di posta si trova presso Infomaniak in Svizzera. La corrispondenza resta finché la richiesta e le consuete domande di chiarimento lo richiedono, poi viene cancellata. Non viene trasmessa a terzi, salvo obbligo di legge.',
         ],
       },
       {
         titel: 'Dati nell’applicazione',
         absaetze: [
           'Quanto lei registra in Maloja Plana resta <strong>sul suo dispositivo</strong> (localStorage e IndexedDB nel browser). Non vi è alcun account, alcuna registrazione e alcuna trasmissione alla fornitrice o a terzi. Chi vuole cancellare i dati li cancella sul dispositivo — non esiste una seconda copia altrove.',
+          'Anche i dati degni di particolare protezione (salute, aiuto sociale, convinzioni) vengono memorizzati dall’applicazione solo localmente. Le copie di sicurezza automatiche nel browser non sono cifrate.',
           'Poiché nulla viene trasmesso, la fornitrice non può nemmeno fornire informazioni sulle sue immissioni: non le ha mai viste. La versione dettagliata con tutti i diritti secondo la LPD figura nell’applicazione sotto «Protezione dei dati e note legali».',
         ],
       },
