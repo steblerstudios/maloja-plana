@@ -2439,8 +2439,11 @@ export default {
     ohneZahlPartnerOffen: "Maloja does not show a tax estimate yet for this situation: you are recorded as married, and the partner income is missing. For married couples both incomes are added together. Please add the partner income in your profile (Personal basics → «Partner net salary»; if your partner has no income of their own, enter 0).",
     annahmeOhneDreizehnten: "Calculated without a 13th monthly salary — if you receive one, the tax is higher. You can state this in the «Finances» chapter.",
     annahmeAlleinverdiener: "Calculated as a single-earner married couple (no partner income).",
+    // K62.1: Konkubinat, Einzelbesteuerung
+    annahmeEinzeln: "Calculated for you alone: people who cohabit are taxed individually, so your partner's income does not count here. Only the incomes of married couples and registered partners are added together (DBG Art. 9).",
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Maloja does not show an amount for cantonal and municipal tax here: it was measured only for married couples with one income, and the partner income is missing. The federal tax above uses the value entered — Maloja assumes it is the joint taxable income from the assessment. If the partner has no income of their own, enter 0 in the profile (Personal basics → «Partner net salary»).",
+    bandKonkubinat: "Maloja shows no amount for cantonal and municipal tax here: in this canton the FTA tax calculator treats cohabiting people differently from people living alone (measured for 2026: higher when cohabiting). Maloja's table covers people living alone only. The federal tax above still applies; it is calculated for each person individually. The FTA tax calculator works out the amount for your municipality (marital status «cohabiting»).",
     ohneZahlZivilstandDirekt: "Maloja does not show a tax estimate for this situation: the taxable income entered belongs to the marital status in the profile. Maloja does not use it for a different marital status. To try this out, untick «Use this value as the basis» — Maloja then estimates from the net salary.",
     ohneZahlKinderDirekt: "Maloja does not show a tax estimate for this situation: the taxable income entered belongs to the number of children in the profile. Maloja does not use it for a different number of children. To try this out, untick «Use this value as the basis» — Maloja then estimates from the net salary.",
     gemeinsamDirektHinweis: "Maloja assumes the value entered is the couple’s joint taxable income from the assessment. The net salary line contains only one person’s own income — so Maloja shows no tax rate and no net income after tax here.",
@@ -2478,6 +2481,9 @@ export default {
       scope: 'Direct federal tax only (DBG Art. 36). Cantonal and municipal taxes are not included here.',
       abzuegeNote: "Each marital status is calculated with its own deductions — taxable income single CHF {ledig}, married CHF {verheiratet} (single-earner couple, with the married-couple deduction and the higher insurance deduction).",
       nurGeschaetzt: "The comparison appears when Maloja estimates the taxable income from your net salary. A figure entered from your assessment applies only to your current marital status.",
+      // K62.5: im Konkubinat kein Vergleich mit einem gedachten Alleinverdiener-Ehepaar
+      konkubinatPartner: "Maloja shows no comparison here while you cohabit: after a marriage both incomes would be added together (DBG Art. 9), with a separate deduction for two-earner couples. Only the single-earner married couple has been measured. The FTA tax calculator works out the comparison with two incomes.",
+      konkubinatPartnerOffen: "When cohabiting, the comparison depends on your partner's income: after a marriage both incomes would be added together. This information is still missing (Personal basics → «Partner net salary»; no income of their own: enter 0).",
     },
   },
 
@@ -3433,6 +3439,7 @@ export default {
       kantonBasis: "FTA tax calculator {year}, cantonal capital {hauptort}, excluding church tax, rough estimate",
       annahmeOhneDreizehnten: "Calculated without a 13th monthly salary",
       annahmeAlleinverdiener: "Single-earner married couple (partner income 0)",
+      annahmeEinzeln: "Cohabiting: calculated for the person alone (individual taxation)",
       disclaimer: "Guidance based on the data entered; does not replace a binding assessment by the responsible authority.",
     },
     generated: 'Generated on {date}',
