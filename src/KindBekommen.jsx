@@ -13,7 +13,7 @@ export const KindBekommen = ({ palette, t, onNavigate }) => {
   const deadline = inDays(90); // KK fürs Kind innert 3 Monaten (rückwirkend ab Geburt)
 
   return React.createElement(AblaufContainer, {
-    palette, icon: 'child',
+    palette, icon: 'family',
     title: t('kind.title'),
     intro: t('kind.intro'),
   },

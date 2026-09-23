@@ -113,12 +113,18 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
   useEffect(() => {
     setActiveSection(null);
     if (sectionTabs.length < 2) return;
-    const root = document.getElementById('mp-main');
-    if (!root) return;
+    // Das Dokument scrollt, nicht mehr #mp-main — die Linie misst deshalb ab dem
+    // Fensterrand. Sie liegt knapp unter der klebenden Kopfzeile plus dem klebenden
+    // Reiter darunter; die Kopfhöhe kommt aus --mp-kopf-h (main.jsx misst sie).
+    const kopfHoehe = () => {
+      const roh = getComputedStyle(document.documentElement).getPropertyValue('--mp-kopf-h');
+      const zahl = parseFloat(roh);
+      return Number.isFinite(zahl) ? zahl : 73;
+    };
     const compute = () => {
       const anchors = document.querySelectorAll('[data-section-k]');
       if (!anchors.length) return;
-      const line = root.getBoundingClientRect().top + 120;
+      const line = kopfHoehe() + 120;
       let current = anchors[0].getAttribute('data-section-k');
       for (const el of anchors) {
         if (el.getBoundingClientRect().top <= line) current = el.getAttribute('data-section-k');
@@ -127,9 +133,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       setActiveSection(current);
     };
     compute();
-    root.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('scroll', compute, { passive: true });
     window.addEventListener('resize', compute);
-    return () => { root.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
+    return () => { window.removeEventListener('scroll', compute); window.removeEventListener('resize', compute); };
   }, [chapter.key, expandedSection, showSecondary, sectionTabs.length]);
 
   // Aktiven Reiter in die (horizontal scrollbare) Leiste holen, damit die
@@ -1619,10 +1625,12 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         'data-section-tablist': '1',
         'aria-label': tr('chapterView.sectionNav'),
         containerStyle: {
-          // top: -24px gleicht das padding-top:24px des Scroll-Containers (#mp-main) aus,
-          // damit der Reiter beim Kleben bündig unter dem „100% lokal"-Streifen sitzt.
-          // Sonst bleibt ein 24px-Spalt, durch den der scrollende Text durchscheint.
-          position: 'sticky', top: '-24px', zIndex: 5,
+          // Seit das Dokument scrollt (statt #mp-main), ist der Bezugspunkt fürs Kleben
+          // der Fensterrand — und dort klebt bereits die Kopfzeile. Der Reiter hängt sich
+          // deshalb unter deren gemessene Höhe (--mp-kopf-h, gesetzt in main.jsx), sonst
+          // verschwände er dahinter. Vorher stand hier -24px als Ausgleich für das
+          // padding-top des alten Scroll-Containers; das gibt es nicht mehr.
+          position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5,
           marginBottom: space.md + 'px',
           background: palette.surface,
           borderBottom: '1px solid ' + palette.border + '55',
@@ -1686,7 +1694,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 'aria-label': field.section,
                 style: {
                   gridColumn: '1 / -1',
-                  scrollMarginTop: '52px',
+                  // Eine Quelle für den Sprungabstand (tokens.css) — vorher 52 px,
+                  // gerechnet auf den alten Scroll-Container #mp-main.
+                  scrollMarginTop: 'var(--mp-sprungabstand)',
                   marginTop: isFirst ? 0 : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
                   borderTop: isFirst ? 'none' : '1px solid ' + palette.sage + '18',
@@ -2238,8 +2248,9 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 role: 'presentation',
                 'aria-label': field.section,
                 style: {
-                  // scroll-margin, damit der klebende Reiter das Ziel nicht verdeckt
-                  scrollMarginTop: '64px',
+                  // scroll-margin, damit Kopfzeile und klebender Reiter das Ziel nicht
+                  // verdecken — eine Quelle (tokens.css), vorher 64 px inline.
+                  scrollMarginTop: 'var(--mp-sprungabstand)',
                   gridColumn: '1 / -1',
                   marginTop: isFirst ? '8px' : space['2xl'] + 'px',
                   paddingTop: isFirst ? 0 : space.lg + 'px',
