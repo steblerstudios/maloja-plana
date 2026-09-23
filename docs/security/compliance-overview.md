@@ -212,7 +212,15 @@ beiden Verwaltungs-Ansichten.
 - Für diese Zielgruppe ist Barrierefreiheit ohnehin Produktanspruch, nicht Auflage:
   Atkinson Hyperlegible als Schrift, `docs/legal/accessibility-statement.md`, eigener
   Prüfer im Review.
-- **EU European Accessibility Act:** nur bei Vertrieb in der EU relevant — siehe 3.
+- **EU European Accessibility Act** (Richtlinie (EU) 2019/882) — **am Text
+  nachgelesen, 23.09.2026:** Sie gilt für Produkte, die **nach dem 28. Juni 2025** in
+  Verkehr gebracht werden (Art. 2 Abs. 1), und für Dienstleistungen an Verbraucher,
+  darunter ausdrücklich **«Dienstleistungen im elektronischen Geschäftsverkehr
+  (E-Commerce)»** — mit Anforderungen an Barrierefreiheits-Informationen und an
+  barrierefreie **Identifizierungs-, Sicherheits- und Zahlungsfunktionen** (Anhang I).
+  → Solange Maloja nichts an EU-Verbraucher verkauft, greift sie nicht. **Mit einer
+  Paywall, die auch in der EU verkauft, greift sie** — und trifft dann genau die
+  Bestellstrecke aus Abschnitt 4.
 
 ---
 
@@ -233,10 +241,16 @@ Dann gilt:
 
 ## 10. KI-Recht
 
-- **Schweiz:** kein KI-Gesetz in Kraft. Der Bundesrat hat 2025 den sektoriellen Weg
-  plus Europarats-Konvention gewählt; eine Vorlage ist in Arbeit. **Vor einem
-  Entscheid den aktuellen Stand auf Fedlex nachsehen — hier steht kein Datum, das
-  man glauben sollte.**
+- **Schweiz — Stand bei der Bundeskanzlei nachgelesen, 23.09.2026:** «In der Schweiz
+  besteht bisher noch keine übergreifende Gesetzgebung spezifisch zu KI.» Der
+  Bundesrat hat am **12. Februar 2025** eine Auslegeordnung diskutiert; das Bundesamt
+  für Justiz erarbeitet **bis Ende 2026** eine Vernehmlassungsvorlage, die die
+  KI-Konvention des Europarats umsetzt — Schwerpunkte **Transparenz, Datenschutz,
+  Nichtdiskriminierung, Aufsicht**. Das BAKOM erarbeitet parallel bis Ende 2026 einen
+  Plan für nicht verbindliche Massnahmen (Branchenlösungen, Selbstverpflichtungen).
+  → **Für Maloja heute keine Pflicht, aber ein absehbarer Rahmen.** Die vier
+  Schwerpunkte sind genau die, an denen eine Local-First-App ohne automatisierten
+  Entscheid gut dasteht.
 - **EU AI Act:** nur bei EU-Markt. Dort wäre ein automatisiertes Scoring von
   Sozialleistungsansprüchen Hochrisiko (Anhang III).
 - **Für Maloja:** ein guter Grund, bei Orientierung zu bleiben und nie einen
@@ -323,7 +337,7 @@ Kosten der Anmeldung: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 
 | Punkt | Priorität | Aufwand |
 |---|---|---|
-| Juristische Durchsicht (K48): Haftungsausschluss, nDSG-Aussagen, Affiliate-Grenze | **Hoch** | Externe Jurist:in, halber Tag |
+| Juristische Durchsicht (K48) — **Fragenliste liegt bereit: `docs/legal/k48-fragen-juristin.md`** | **Hoch** | Externe Jurist:in, halber Tag |
 | Markenanmeldung IGE — mit vorheriger Recherche zur Bekleidungsmarke | Hoch | CHF 550, 3–6 Monate |
 | Entscheid Affiliate (Oktober): Trennlinie aus Abschnitt 1 halten | Hoch | Entscheid |
 | Entscheid Paywall (Oktober) → dann PBV/MWST/Abo-Angaben | Mittel | Entscheid + Texte |
@@ -347,20 +361,24 @@ Kosten der Anmeldung: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 | **UWG Art. 3 Abs. 1 lit. s** (SR 241) | Alle vier Ziffern; gilt für Angebote «im elektronischen Geschäftsverkehr» |
 | **VAG Art. 41** (SR 961.01) | Registrierungspflicht, Voraussetzungen, Inkraftsetzung 1.1.2024 |
 
-### Am Register gegengelesen
+### An der Quelle nachgelesen, 23.09.2026
 
 | Quelle | Ergebnis |
 |---|---|
-| **Swissreg** (IGE), Suchwort «maloja», 23.09.2026 | 7 Treffer, 1 aktiv (Klassen 18/25/35) — Abschnitt 11 |
+| **Swissreg** (IGE), Suchwort «maloja» | 7 Treffer, 1 aktiv (Klassen 18/25/35) — Abschnitt 11 |
+| **Bundeskanzlei**, Seite «Regulierung» (KI) | Keine KI-Gesetzgebung; Vernehmlassungsvorlage des BJ bis Ende 2026 — Abschnitt 10 |
+| **EUR-Lex**, Richtlinie (EU) 2019/882 | Geltung ab 28.6.2025; E-Commerce-Dienstleistungen erfasst — Abschnitt 8 |
 
 ### Was hier **nicht** belegt ist
 
 - **Nichts davon ist juristisch geprüft.** Die Einordnungen stammen aus dem Code und
   aus den Gesetzestexten, nicht von einer Jurist:in (K48). Einen Artikel gelesen zu
   haben ist nicht dasselbe, wie seine Anwendung auf diesen Fall zu beurteilen.
-- Zum **KI-Recht der Schweiz** und zum **European Accessibility Act** steht hier
-  bewusst kein Datum: beide wurden nicht am Erlass gegengelesen, anders als die
-  sechs Bestimmungen oben. Vor einem Entscheid auf Fedlex bzw. EUR-Lex nachsehen.
+- Der Stand zum **KI-Recht** ist eine Momentaufnahme vom 23.09.2026 — die
+  Vernehmlassungsvorlage ist für Ende 2026 angekündigt und kann jederzeit erscheinen.
+  Vor einem Entscheid neu nachsehen.
+- Beim **EAA** ist der Text gelesen, nicht seine Umsetzung in den 27
+  Mitgliedstaaten — welche nationalen Gesetze im Einzelfall gelten, ist offen.
 - Ob die SKOS-Richtlinien in einem Kanton durch Verbindlicherklärung zum amtlichen
   Erlass werden — offene Auslegungsfrage, Abschnitt 6.
 - Ob die Formulierungen der Haftungsausschlüsse tragen, ist eine Rechtsfrage, keine
