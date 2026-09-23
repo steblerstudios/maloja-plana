@@ -177,10 +177,19 @@ export const BERATUNG_HILFE = [
 // Herzensempfehlungen (persönlich, von Stebler Studios kuratiert): Name + Ziel-Link sind
 // sprachunabhängig (Eigennamen), nur die Beschreibung kommt aus i18n
 // (legal.resources.heartfeltN — geteilt mit LegalView). url: null = bewusst kein
-// Link (App-Store-App ohne Website, oder defektes HTTPS-Zertifikat). affiliate:
-// true → Provision, transparent als "Affiliate" gekennzeichnet. group → Themengruppe
-// (Render gruppiert). GETEILTE QUELLE: sowohl Bücherregal (DirektLinks) als auch
-// LegalView importieren diese Liste — nur EINE Wahrheit, kein Duplikat.
+// Link (App-Store-App ohne Website, oder defektes HTTPS-Zertifikat). group →
+// Themengruppe (Render gruppiert). GETEILTE QUELLE: sowohl Bücherregal (DirektLinks)
+// als auch LegalView importieren diese Liste — nur EINE Wahrheit, kein Duplikat.
+//
+// affiliate: true → Provision, transparent als "Affiliate" gekennzeichnet. Ein
+// bezahlter Eintrag braucht ZUSÄTZLICH ein Feld `branche` aus BRANCHEN_ERLAUBT
+// (siehe unten). Das ist keine Formalie: eine Provision von einem Versicherer oder
+// einer Bank macht aus Maloja eine Versicherungsvermittlerin (VAG Art. 40) bzw. eine
+// Anlageberaterin (FIDLEG) — mit Informations-, Verhaltens- und allenfalls
+// Registerpflichten. Eine Erlaubnisliste statt einer Verbotsliste, weil eine
+// Verbotsliste an jedem Namen vorbeigeht, den sie nicht kennt: «VIAC», «frankly»,
+// «neon» und «Raiffeisen» tragen kein Wort, das nach Finanz klingt.
+export const BRANCHEN_ERLAUBT = ['digital', 'kultur', 'gemeinnuetzig', 'handwerk', 'konsumschutz', 'tiere', 'gesundheit', 'bildung'];
 export const HEARTFELT = [
   { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org', group: 'digital' },
   { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' },

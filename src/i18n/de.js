@@ -1843,7 +1843,7 @@ export default {
       sourceTitle: 'Quellcode',
       source1: 'Der vollständige Quellcode ist einsehbar unter: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Verwendete Bibliotheken',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, nur in der iOS-Hülle, nicht in der Web-App). Schriften: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Alle Lizenzen sind mit AGPL-3.0 kompatibel.',
+      thirdParty1: 'React (MIT), three.js (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, nur in der iOS-Hülle, nicht in der Web-App). Schriften: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Alle Lizenzen sind mit AGPL-3.0 kompatibel.',
     },
     ethics: {
       valuesTitle: 'Unsere Haltung',

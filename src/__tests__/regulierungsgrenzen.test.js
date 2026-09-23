@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { HEARTFELT } from '../data/direktLinks.js';
+import { HEARTFELT, BRANCHEN_ERLAUBT } from '../data/direktLinks.js';
 import de from '../i18n/de.js';
 import fr from '../i18n/fr.js';
 import itTexte from '../i18n/it.js';
@@ -14,30 +14,34 @@ import en from '../i18n/en.js';
 // festgehalten, damit sie nicht an der siebten Stelle vergessen gehen.
 //
 //   A · Jede Lebenssituation sagt, dass sie Orientierung ist und keine Beratung.
-//   B · Kein bezahlter Link führt zu einem Finanz- oder Versicherungsanbieter.
-//       (Provision für einen vermittelten Vertrag = Versicherungsvermittlung nach
-//       VAG bzw. Anlageberatung nach FIDLEG — genau das wollen wir nicht sein.)
+//   B · Jeder bezahlte Link trägt eine freigegebene Branche (Erlaubnisliste).
+//       Versicherungsverträge anbieten oder vermitteln = VAG Art. 40, Empfehlung
+//       eines Finanzinstruments = FIDLEG — genau das wollen wir nicht sein.
 //   C · Die zwei Wechselpfade empfehlen keine bestimmte Kasse.
 //
 // Geprüft wird die Zusage, nicht ihre heutige Formulierung: die Muster fragen nach
 // der Aussage, nicht nach einem bestimmten Satz. Rechtslage nicht juristisch
 // geprüft — Bau-Liste K48.
+//
+// Was diese Tests NICHT halten (Rechts-Prüfung 23.09.2026, damit die Grenze
+// aufgeschrieben ist statt angenommen):
+//   · Sie lesen i18n-Texte und Quelltext, sie rendern nichts. Die Aussage «15 von 15
+//     Ansichten zeigen den Hinweis im Bild» ist eine Handmessung, kein Test.
+//   · Die Prüfung der zwei Wechselpfade greift die Zeichenkette `alpha.noAdviceHint`
+//     im JSX ab. Ein gleichwertiger anderer Hinweis würde sie rot machen, obwohl die
+//     Zusage hält — das pinnt die Schreibweise, nicht die Sache. Bewusst behalten,
+//     weil kein leichterer Ersatz da ist; wer hier umbaut, prüft die Sache neu.
 
 const SPRACHEN = { de, fr, it: itTexte, rm, en };
 
 // Die Aussage «das hier orientiert nur / ersetzt keine Beratung», in fünf Sprachen.
 const HINWEIS = {
-  de: /Rechtsberatung|Steuerberatung|Versicherungsberatung|Orientierung|orientier|keine verbindliche|kein medizinischer/i,
+  de: /Rechtsberatung|Steuerberatung|Versicherungsberatung|Orientierung|keine verbindliche|rechtsverbindlich|kein medizinischer/i,
   fr: /conseil juridique|conseil fiscal|orientation|à titre indicatif|sans engagement|ne remplace/i,
   it: /consulenza legale|consulenza fiscale|orientamento|non vincolante|non sostituisce/i,
   rm: /cussegl giuridic|orientaziun|betg oblig|na remplazza/i,
   en: /legal advice|tax advice|orientation|guidance only|not binding|does not replace/i,
 };
-
-// Finanz- und Versicherungsanbieter: dort beginnt der bewilligungs- bzw.
-// registerpflichtige Bereich. Bewusst nach Sache gefragt (Kasse, Bank, Vorsorge,
-// Vergleichsportal), nicht nach einer Namensliste, die veraltet.
-const FINANZNAH = /(versicher|assura|krankenkass|caisse-maladie|cassa-malati|insurance|\bbank\b|banque|banca|vorsorge|pension|hypothek|hypothe|3a|comparis|moneyland|bonus\.ch|finanz|finance)/i;
 
 const lies = (datei) => readFileSync(join(process.cwd(), datei), 'utf8');
 
@@ -77,18 +81,37 @@ describe('Regulierungsgrenzen', () => {
   });
 
   describe('B · kein bezahlter Link in den regulierten Bereich', () => {
-    it('kein Affiliate-Eintrag zeigt auf einen Finanz- oder Versicherungsanbieter', () => {
-      const bezahlt = HEARTFELT.filter((e) => e.affiliate);
-      const heikel = bezahlt.filter((e) => FINANZNAH.test(e.name) || FINANZNAH.test(e.url || ''));
-      expect(heikel.map((e) => e.name), 'Provision von einem Finanz-/Versicherungsanbieter = VAG/FIDLEG').toEqual([]);
+    // Erlaubnisliste, nicht Verbotsliste. Die erste Fassung dieses Tests suchte nach
+    // Wörtern wie «versicher», «bank», «vorsorge» — und liess Raiffeisen, VIAC,
+    // frankly, neon, Yuh, Swiss Life, AXA, Helvetia und Selma anstandslos durch
+    // (gemessen 23.09.2026). Eine Verbotsliste geht an jedem Namen vorbei, den sie
+    // nicht kennt; eine Erlaubnisliste kann das nicht.
+    const pruefe = (liste) => liste
+      .filter((e) => e.affiliate)
+      .filter((e) => !BRANCHEN_ERLAUBT.includes(e.branche));
+
+    it('jeder bezahlte Eintrag trägt eine freigegebene Branche', () => {
+      expect(pruefe(HEARTFELT).map((e) => e.name), 'bezahlter Link ohne freigegebene Branche = VAG/FIDLEG-Risiko').toEqual([]);
     });
 
-    it('Gegenprobe: ein erfundener Kassen-Affiliate würde auffallen', () => {
-      const erfunden = [{ key: 'test', name: 'Beispiel Krankenkasse', url: 'https://beispiel-versicherung.ch', affiliate: true }];
-      const heikel = erfunden.filter((e) => e.affiliate && (FINANZNAH.test(e.name) || FINANZNAH.test(e.url || '')));
-      expect(heikel.length).toBe(1);
-      // …und ein unbezahlter Link auf dieselbe Adresse bleibt erlaubt.
-      expect([{ ...erfunden[0], affiliate: false }].filter((e) => e.affiliate).length).toBe(0);
+    it('Gegenprobe: das Muster erkennt echte Anbieter, die eine Wortliste durchlässt', () => {
+      const echte = ['Raiffeisen', 'VIAC', 'frankly', 'neon', 'Yuh', 'Swiss Life', 'AXA', 'Helvetia', 'Selma', 'PostFinance'];
+      const erfunden = echte.map((name, i) => ({ key: 'test' + i, name, url: `https://${name.toLowerCase().replace(/ /g, '')}.ch`, affiliate: true }));
+      // Ohne `branche` fällt jeder einzelne durch — unabhängig davon, wie der Name klingt.
+      expect(pruefe(erfunden).length).toBe(echte.length);
+      // Mit freigegebener Branche käme er durch: darum ist `branche` ein bewusster
+      // Eintrag von Hand und keine Ableitung aus dem Namen.
+      expect(pruefe([{ key: 't', name: 'Ein Saatgut-Laden', affiliate: true, branche: 'tiere' }]).length).toBe(0);
+      // Ein unbezahlter Link bleibt frei, auch bei einer Bank.
+      expect(pruefe([{ key: 't', name: 'Raiffeisen', affiliate: false }]).length).toBe(0);
+    });
+
+    it('die Branchen-Erlaubnisliste enthält keine Finanz- oder Versicherungsbranche', () => {
+      const VERBOTEN = /versicher|bank|vorsorge|finanz|kredit|anlage|3a/i;
+      const durchgerutscht = BRANCHEN_ERLAUBT.filter((b) => VERBOTEN.test(b));
+      expect(durchgerutscht, 'regulierte Branche in der Erlaubnisliste').toEqual([]);
+      // Gegenprobe: das Muster würde eine solche Branche erkennen.
+      expect(['digital', 'versicherung'].filter((b) => VERBOTEN.test(b))).toEqual(['versicherung']);
     });
   });
 
@@ -111,9 +134,13 @@ describe('Regulierungsgrenzen', () => {
 
     it('Gegenprobe: das Muster erkennt einen Versicherernamen', () => {
       expect(JSON.stringify({ tipp: 'Wechseln Sie zur Helsana.' })).toMatch(VERSICHERER);
+      // Echte Gegenprobe: ein Block mit einem Kassennamen fällt durch, einer ohne nicht.
+      // (Die frühere zweite Zeile wiederholte nur die positive Behauptung von oben —
+      // eine Wiederholung ist keine Gegenprobe, Befund der Rechts-Prüfung 23.09.2026.)
+      const mitName = { ...de.kvgWechsel, step1Text: 'Wechseln Sie zur Sanitas.' };
+      expect(JSON.stringify(mitName)).toMatch(VERSICHERER);
       // Der Platzhalter im KK-Scanner (src/KKScanner.jsx) nennt Kassennamen bewusst —
       // als Eingabe-Beispiel, nicht als Empfehlung. Darum prüft C nur die Wechseltexte.
-      expect(JSON.stringify(de.kvgWechsel)).not.toMatch(VERSICHERER);
     });
   });
 });

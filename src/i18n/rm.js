@@ -1608,7 +1608,7 @@ export default {
       sourceTitle: 'Code-source',
       source1: 'Il code-source cumplet è accessibel sut: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Bibliotecas utilisadas',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, mo en la tgaltscha iOS, betg en l\'app web). Scrittiras: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Tut las licenzas èn cumpatiblas cun AGPL-3.0.', // TODO(rm): Gegenlese Muttersprache
+      thirdParty1: 'React (MIT), three.js (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, mo en la tgaltscha iOS, betg en l\'app web). Scrittiras: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Tut las licenzas èn cumpatiblas cun AGPL-3.0.', // TODO(rm): Gegenlese Muttersprache
     },
     ethics: {
       valuesTitle: 'Nossa posiziun',
