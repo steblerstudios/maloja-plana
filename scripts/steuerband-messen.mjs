@@ -37,51 +37,17 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { berechneBundessteuer } from '../src/data/steuerRechner.js';
 import { steuerbarNachEstv } from '../src/data/kantonaleSteuerdaten.js';
+import {
+  API, STEUERJAHR, MESS_PATH, PAUSE_MS, ORTE, BRUTTO, ZIVILSTAND,
+  post, mitWiederholung, gegenprobeErfundeneOperation, anfrage, pruefeOrt, kantonUndGemeinde as kug,
+} from './estv-schnittstelle.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const MESS_PATH = resolve(__dirname, '../docs/sources/steuerfaktor-band-2026.messpunkte.json');
 const DATA_PATH = resolve(__dirname, '../src/data/kantonssteuerTabelle.js');
 const DOC_PATH = resolve(__dirname, '../docs/sources/kantonssteuer-tabelle-2026.md');
 
-const API = 'https://swisstaxcalculator.estv.admin.ch/delegate/ost-integration/v1/lg-proxy/operation/c3b67379_ESTV/';
-const STEUERJAHR = 2026;
-
-// TaxLocationID aus API_searchLocation (Suche nach dem Hauptort, Kanton geprüft), BFS-Nummer zur Kontrolle.
-const ORTE = {
-  AG: { id: 500000000, ort: 'Aarau', bfs: 4001 },
-  AI: { id: 905000000, ort: 'Appenzell', bfs: 3101 },
-  AR: { id: 910000000, ort: 'Herisau', bfs: 3001 },
-  BE: { id: 300000000, ort: 'Bern', bfs: 351 },
-  BL: { id: 441000000, ort: 'Liestal', bfs: 2829 },
-  BS: { id: 400000000, ort: 'Basel', bfs: 2701 },
-  FR: { id: 170000000, ort: 'Fribourg', bfs: 2196 },
-  GE: { id: 120000000, ort: 'Genève', bfs: 6621 },
-  GL: { id: 875000000, ort: 'Glarus', bfs: 1632 },
-  GR: { id: 700000000, ort: 'Chur', bfs: 3901 },
-  JU: { id: 280000000, ort: 'Delémont', bfs: 6711 },
-  LU: { id: 600000000, ort: 'Luzern', bfs: 1061 },
-  NE: { id: 200000000, ort: 'Neuchâtel', bfs: 6458 },
-  NW: { id: 637000000, ort: 'Stans', bfs: 1509 },
-  OW: { id: 606000000, ort: 'Sarnen', bfs: 1407 },
-  SG: { id: 900000000, ort: 'St. Gallen', bfs: 3203 },
-  SH: { id: 820000000, ort: 'Schaffhausen', bfs: 2939 },
-  SO: { id: 450000000, ort: 'Solothurn', bfs: 2601 },
-  SZ: { id: 643000000, ort: 'Schwyz', bfs: 1372 },
-  TG: { id: 850000000, ort: 'Frauenfeld', bfs: 4566 },
-  TI: { id: 650000000, ort: 'Bellinzona', bfs: 5002 },
-  UR: { id: 646000000, ort: 'Altdorf UR', bfs: 1201 },
-  VD: { id: 100000000, ort: 'Lausanne', bfs: 5586 },
-  VS: { id: 195000000, ort: 'Sion', bfs: 6266 },
-  ZG: { id: 630000000, ort: 'Zug', bfs: 1711 },
-  ZH: { id: 800000000, ort: 'Zürich', bfs: 261 },
-};
-
-// Bruttolöhne: 20 000–150 000 in Schritten von 2 500, danach bis 300 000 in Schritten von 10 000.
-const BRUTTO = [];
-for (let b = 20000; b <= 150000; b += 2500) BRUTTO.push(b);
-for (let b = 160000; b <= 300000; b += 10000) BRUTTO.push(b);
-
-const ZIVILSTAND = { ledig: 1, verheiratet: 2 };
+// Adresse, Orte (TaxLocationID + BFS), Lohnraster, Zivilstände und Anfrage: scripts/estv-schnittstelle.mjs
+// (gemeinsam mit scripts/estv-stichprobe.mjs — eine Quelle).
 
 // --kanton XX: nur diesen Kanton messen und in die bestehende Messdatei einsetzen (Nachmessung).
 const KANTON_ARG = process.argv.includes('--kanton') ? process.argv[process.argv.indexOf('--kanton') + 1] : null;
@@ -99,20 +65,11 @@ function ersetztArchivieren(kt, teil, daten) {
   return pfad;
 }
 
-async function post(op, body) {
-  const res = await fetch(API + op, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  if (!res.ok) throw new Error(op + ' HTTP ' + res.status);
-  const json = await res.json();
-  if (!json || !json.response) throw new Error(op + ' ohne response');
-  return json.response;
-}
-
 async function messen() {
   const abgerufen = new Date().toISOString();
   // Gegenprobe: eine erfundene Operation muss scheitern, sonst unterscheidet das Skript echte
   // Antworten nicht von einer Fehlerseite.
-  let gegenprobe = 'fehlgeschlagen wie erwartet';
-  try { await post('API_gibtEsNicht_' + Date.now(), {}); gegenprobe = 'UNERWARTET beantwortet'; } catch { /* erwartet */ }
+  const gegenprobe = await gegenprobeErfundeneOperation();
   if (gegenprobe !== 'fehlgeschlagen wie erwartet') throw new Error('Gegenprobe: ' + gegenprobe);
 
   const version = await post('API_getTaxVersion', {}).catch(() => null);
@@ -126,21 +83,13 @@ async function messen() {
   let i = 0;
   // Den amtlichen Server schonen: ein Abruf nach dem anderen, kurze Pause dazwischen
   // (~3500 Abrufe ≈ 10 Minuten). Beim Messen am 16.09.2026 liefen noch 4 parallel.
-  const PAUSE_MS = 150;
   async function arbeiter() {
     while (i < auftraege.length) {
       const a = auftraege[i++];
       await new Promise((r) => setTimeout(r, PAUSE_MS));
-      const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
-        SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: a.o.id, Relationship: a.rel,
-        Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: a.brutto, Fortune: 0,
-        Confession2: a.rel === 2 ? 4 : 0, Age2: a.rel === 2 ? 40 : 0, RevenueType2: 0, Revenue2: 0, Budget: [],
-      }));
-      if (r.Location && (r.Location.Canton !== a.kt || r.Location.BfsID !== a.o.bfs)) {
-        throw new Error('Ort passt nicht: ' + a.kt + ' ' + JSON.stringify(r.Location));
-      }
-      // Kantons- und Gemeindesteuer auf dem Einkommen inkl. Personal-/Kopfsteuer, ohne Kirche.
-      const kantonUndGemeinde = r.IncomeTaxCanton + r.IncomeTaxCity + (r.PersonalTax || 0);
+      const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', anfrage({ ortId: a.o.id, rel: a.rel, brutto: a.brutto })));
+      pruefeOrt(r, a.kt, a.o);
+      const kantonUndGemeinde = kug(r);
       punkte.push([a.kt, a.zs, a.brutto, r.TaxableIncomeFed, r.IncomeTaxFed, r.IncomeTaxCanton, r.IncomeTaxCity, r.PersonalTax || 0, r.IncomeTaxChurch, r.TotalTax, kantonUndGemeinde]);
     }
   }
@@ -185,24 +134,11 @@ const KINDERALTER = 8;
 const KINDER_PATH = resolve(__dirname, '../docs/sources/kantonssteuer-kinder-2026.messpunkte.json');
 const SPALTEN = ['kanton', 'zivilstand', 'kinder', 'brutto', 'steuerbarBund', 'bundessteuerEstv', 'kantonssteuer', 'gemeindesteuer', 'personalsteuer', 'kirchensteuer', 'totalSteuer', 'kantonUndGemeinde', 'steuerbarKanton'];
 
-// Ein kurzer Aussetzer der Quelle soll nicht den ganzen Lauf beenden: höchstens zwei neue Versuche,
-// mit 5 bzw. 20 Sekunden Abstand. Danach bricht der Lauf ab (das bis dahin Gemessene ist gespeichert).
-async function mitWiederholung(fn) {
-  for (const warten of [5000, 20000, null]) {
-    try { return await fn(); } catch (e) {
-      if (warten === null) throw e;
-      console.warn('Abruf fehlgeschlagen (' + e.message + '), neuer Versuch in', warten / 1000, 's');
-      await new Promise((r) => setTimeout(r, warten));
-    }
-  }
-}
-
 async function messenKinder() {
   let stand = null;
   try { stand = JSON.parse(readFileSync(KINDER_PATH, 'utf-8')); } catch { /* neu */ }
   // Gegenprobe wie oben, bei jedem Lauf neu.
-  let gegenprobe = 'fehlgeschlagen wie erwartet';
-  try { await post('API_gibtEsNicht_' + Date.now(), {}); gegenprobe = 'UNERWARTET beantwortet'; } catch { /* erwartet */ }
+  const gegenprobe = await gegenprobeErfundeneOperation();
   if (gegenprobe !== 'fehlgeschlagen wie erwartet') throw new Error('Gegenprobe: ' + gegenprobe);
   const version = await post('API_getTaxVersion', {}).catch(() => null);
   const jetzt = new Date().toISOString();
@@ -228,7 +164,6 @@ async function messenKinder() {
   }
   mess.laeufe.push({ beginn: jetzt, gegenprobe: 'erfundene Operation → ' + gegenprobe, version, ...(KANTON_ARG ? { kanton: KANTON_ARG, nachmessung: true } : {}) });
   const fertig = new Set(mess.bloecke);
-  const PAUSE_MS = 150;
   const speichern = () => {
     mess.punkte.sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2] || x[3] - y[3]);
     writeFileSync(KINDER_PATH, JSON.stringify(mess, null, 0).replace(/\],\[/g, '],\n[') + '\n');
@@ -243,21 +178,13 @@ async function messenKinder() {
           const neu = [];
           for (const brutto of BRUTTO) {
             await new Promise((r) => setTimeout(r, PAUSE_MS));
-            const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
-              SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: o.id, Relationship: rel,
-              Confession1: 4, Children: Array.from({ length: kinder }, () => ({ Age: KINDERALTER })),
-              Age1: 40, RevenueType1: 1, Revenue1: brutto, Fortune: 0,
-              Confession2: rel === 2 ? 4 : 0, Age2: rel === 2 ? 40 : 0, RevenueType2: 0, Revenue2: 0, Budget: [],
-            }));
+            const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', anfrage({ ortId: o.id, rel, brutto, kinder, kinderalter: KINDERALTER })));
             abrufe++;
-            if (r.Location && (r.Location.Canton !== kt || r.Location.BfsID !== o.bfs)) {
-              throw new Error('Ort passt nicht: ' + kt + ' ' + JSON.stringify(r.Location));
-            }
+            pruefeOrt(r, kt, o);
             if (typeof r.IncomeTaxCanton !== 'number' || typeof r.TaxableIncomeFed !== 'number') {
               throw new Error('Antwort ohne Zahlen: ' + block + ' ' + brutto);
             }
-            const kug = r.IncomeTaxCanton + r.IncomeTaxCity + (r.PersonalTax || 0);
-            neu.push([kt, zs, kinder, brutto, r.TaxableIncomeFed, r.IncomeTaxFed, r.IncomeTaxCanton, r.IncomeTaxCity, r.PersonalTax || 0, r.IncomeTaxChurch, r.TotalTax, kug, r.TaxableIncomeCanton]);
+            neu.push([kt, zs, kinder, brutto, r.TaxableIncomeFed, r.IncomeTaxFed, r.IncomeTaxCanton, r.IncomeTaxCity, r.PersonalTax || 0, r.IncomeTaxChurch, r.TotalTax, kug(r), r.TaxableIncomeCanton]);
           }
           mess.punkte.push(...neu);
           mess.bloecke.push(block);
@@ -281,18 +208,13 @@ async function messenKinder() {
 const ABZUG_PATH = resolve(__dirname, '../docs/sources/nettolohn-abzuege-2026.messpunkte.json');
 
 async function messenAbzuege() {
-  let gegenprobe = 'fehlgeschlagen wie erwartet';
-  try { await post('API_gibtEsNicht_' + Date.now(), {}); gegenprobe = 'UNERWARTET beantwortet'; } catch { /* erwartet */ }
+  const gegenprobe = await gegenprobeErfundeneOperation();
   if (gegenprobe !== 'fehlgeschlagen wie erwartet') throw new Error('Gegenprobe: ' + gegenprobe);
   const beginn = new Date().toISOString();
   const punkte = [];
   for (const brutto of BRUTTO) {
-    await new Promise((r) => setTimeout(r, 150));
-    const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
-      SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: ORTE.ZH.id, Relationship: 1,
-      Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: brutto, Fortune: 0,
-      Confession2: 0, Age2: 0, RevenueType2: 0, Revenue2: 0, Budget: [],
-    }));
+    await new Promise((r) => setTimeout(r, PAUSE_MS));
+    const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', anfrage({ ortId: ORTE.ZH.id, rel: 1, brutto })));
     const posten = {};
     for (const e of r.InfoBoth || []) if (e.Fed) posten[e.Entry.DE] = e.Fed;
     punkte.push([brutto, r.IncomeP1.NetIncome, r.IncomeP1.BVGContribution, r.TaxableIncomeFed, posten]);
