@@ -14,6 +14,7 @@ import {
   KANTONSSTEUER_TABELLE,
   KANTONSSTEUER_STEUERJAHR,
   KANTONSSTEUER_ABGERUFEN,
+  KANTONSSTEUER_ABGERUFEN_JE_KANTON,
   KANTONSSTEUER_MAX_KINDER,
 } from './kantonssteuerTabelle.js';
 import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
@@ -441,5 +442,10 @@ export function getHauptort(kuerzel) {
 
 export const KANTONAL_DATA_VERSION = String(KANTONSSTEUER_STEUERJAHR);
 export const KANTONAL_DATA_ABGERUFEN = KANTONSSTEUER_ABGERUFEN;
+// Abrufdatum der Messpunkte eines Kantons: einzeln nachgemessene Kantone (z. B. TI am 23.09.2026)
+// tragen ihr eigenes Datum, alle anderen das der Gesamtmessung.
+export function kantonsdatenAbgerufen(kuerzel) {
+  return KANTONSSTEUER_ABGERUFEN_JE_KANTON[kuerzel] || KANTONSSTEUER_ABGERUFEN;
+}
 export const KANTONAL_DATA_SOURCE = 'ESTV Steuerrechner, Steuerjahr ' + KANTONSSTEUER_STEUERJAHR + ', Kantonshauptort, ohne Kirchensteuer';
 export const KANTONAL_MAX_KINDER = KANTONSSTEUER_MAX_KINDER;

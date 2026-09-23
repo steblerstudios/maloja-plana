@@ -38,6 +38,13 @@ kommt der Changelog immer mit, nie doppelt.*
   vorbei vergleicht.
 
 ### Behoben
+- **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
+  CHF 250 über dem heutigen ESTV-Steuerrechner (Median CHF 97, an 434 von 544 Punkten tiefer, nie
+  höher). Belegt: gleicher Ort (Bellinzona), gleiche Steuerfüsse, gleicher Tarif — das steuerbare
+  Einkommen Kanton ist bei gleichem Lohn CHF 500 tiefer, die ESTV rechnet also mit höheren Abzügen.
+  Welcher Abzug, ist offen. Nur TI ersetzt; die 25 anderen Kantone sind unverändert (Abdruck im PR).
+  Der Rechner zeigt das Abrufdatum jetzt je Kanton. `steuerband-messen.mjs --kanton XX` misst einen
+  einzelnen Kanton nach; die ersetzten Punkte bleiben in `docs/sources/` aufbewahrt.
 - **Medikamente und Erkrankungen fehlten im Notfall-Dossier, im Notfall-QR und auf der
   Vorlesekarte**, wenn sie — wie das Kapitel es heute anbietet — als Liste erfasst
   waren. Die gemeinsame Quelle las nur das alte Textfeld. Jetzt zuerst die Liste, das
