@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import {
   schaetzeKantonaleSteuer, kantonssteuerReihe, interpoliere,
   steuerbarNachEstv, kantonssteuerFuerProfil, abzuegeAusTaxData,
-  KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN, KANTONAL_MAX_KINDER,
+  KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN, KANTONAL_MAX_KINDER, kantonsdatenAbgerufen,
 } from '../kantonaleSteuerdaten.js';
 import { KANTONSSTEUER_TABELLE, KANTONSSTEUER_QUELLE } from '../kantonssteuerTabelle.js';
 import de from '../../i18n/de.js';
@@ -143,9 +143,11 @@ describe('E38 · kantonssteuerFuerProfil', () => {
     expect(r.lage).toBe('innerhalb');
   });
 
-  it('Partnereinkommen (Doppelverdiener, Konkubinat) und Bruttolohn → keine Zahl, mit Grund', () => {
+  it('Partnereinkommen (Doppelverdiener, Konkubinat mit Kindern) und Bruttolohn → keine Zahl, mit Grund', () => {
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, verheiratet: true, partnerEinkommen: 1 })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'partner' });
-    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500 })).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
+    // K62.1: Konkubinat ohne Kinder rechnet (Einzelbesteuerung); mit Kindern bleibt es bei keiner Zahl.
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500 }).lage).toBe('innerhalb');
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500, kinder: 1, elterntarif: true })).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'brutto' })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'brutto' });
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'netto' }).lage).toBe('innerhalb');
   });
@@ -221,6 +223,11 @@ describe('K13 / E38 — Kennzeichnung und Datenstand', () => {
   it('Datenstand = ESTV-Steuerrechner 2026, Abrufdatum 16.09.2026', () => {
     expect(KANTONAL_DATA_VERSION).toBe('2026');
     expect(KANTONAL_DATA_ABGERUFEN).toBe('2026-09-16');
+  });
+
+  it('nachgemessener Kanton trägt sein eigenes Abrufdatum (TI 23.09.2026), alle anderen das der Gesamtmessung', () => {
+    expect(kantonsdatenAbgerufen('TI')).toBe('2026-09-23');
+    for (const kt of KANTONE.filter((k) => k !== 'TI')) expect(kantonsdatenAbgerufen(kt)).toBe('2026-09-16');
   });
 
   it('in allen 5 Sprachen: grobe Schätzung, Hauptort + ohne Kirchensteuer, kein alter Eichpunkt', () => {

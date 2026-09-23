@@ -15,6 +15,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 // Ein verstecktes <span>M</span> (visuallyHiddenStyle) stellt den Namen im Text
 // her, ohne das Bild zu ändern. Dieser Wächter hält es fest.
 //
+// Seit 24.09.2026 (Markenpaket 1.0) ist das ganze Logo ein Bild (MarkenLogo.jsx),
+// der volle Name steht dort als versteckter Text. Die Zusage bleibt dieselbe.
+//
 // I18nProvider lädt die Sprachdatei in einem useEffect und rendert serverseitig
 // nichts — deshalb hier die Hook-Attrappe statt des echten Providers.
 // ─────────────────────────────────────────────────────────────

@@ -12,6 +12,13 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
+  dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
+  Telefons übertragen werden können — den das iPhone (und manche Android-Telefone) auf
+  dem Sperrbildschirm zeigt. Je Feld ein Knopf «Kopieren», daneben die Schritte für
+  iPhone und Android, belegt an der Hilfe von Apple und Google. Nichts wird gesendet,
+  kein QR, keine Schnittstelle. Erreichbar über den Notfall-Einstieg und unter dem
+  QR-Code im Notfall-Dossier.
 - **«Eingetragene Partnerschaft» als Zivilstand** (Bau-Liste K98, letzter Teil), in allen
   fünf Sprachen. Seit dem 1. Juli 2022 werden keine neuen Partnerschaften mehr eingetragen;
   bestehende gelten weiter. Steuerlich und in den Sozialversicherungen sind sie der Ehe
@@ -19,6 +26,11 @@ kommt der Changelog immer mit, nie doppelt.*
   Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
   genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
   «Verheiratet oder in eingetragener Partnerschaft».
+- **«Aufgelöste Partnerschaft» als Zivilstand**, in allen fünf Sprachen mit dem amtlichen
+  Begriff der Zivilstandsverordnung (ZStV Art. 8 lit. d Ziff. 1: fr «partenariat dissous»,
+  it «unione domestica sciolta», rm «partenadi schlià»). Bisher blieb nach Auflösung durch
+  Gericht oder Tod nur «geschieden» oder «verwitwet». Maloja rechnet sie wie diese beiden —
+  als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
 - Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
@@ -26,7 +38,32 @@ kommt der Changelog immer mit, nie doppelt.*
   vorbei vergleicht.
 
 ### Behoben
+- **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis
+  CHF 250 über dem heutigen ESTV-Steuerrechner (Median CHF 97, an 434 von 544 Punkten tiefer, nie
+  höher). Belegt: gleicher Ort (Bellinzona), gleiche Steuerfüsse, gleicher Tarif — das steuerbare
+  Einkommen Kanton ist bei gleichem Lohn CHF 500 tiefer, die ESTV rechnet also mit höheren Abzügen.
+  Welcher Abzug, ist offen. Nur TI ersetzt; die 25 anderen Kantone sind unverändert (Abdruck im PR).
+  Der Rechner zeigt das Abrufdatum jetzt je Kanton. `steuerband-messen.mjs --kanton XX` misst einen
+  einzelnen Kanton nach; die ersetzten Punkte bleiben in `docs/sources/` aufbewahrt.
+- **Medikamente und Erkrankungen fehlten im Notfall-Dossier, im Notfall-QR und auf der
+  Vorlesekarte**, wenn sie — wie das Kapitel es heute anbietet — als Liste erfasst
+  waren. Die gemeinsame Quelle las nur das alte Textfeld. Jetzt zuerst die Liste, das
+  Textfeld bleibt Rückfall.
 - Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
+
+### Geändert — Partner-Regeln (K62 Punkte 1, 3, 5)
+- **Konkubinat ohne Kinder bekommt jetzt auch die Kantons- und Gemeindesteuer.** Konkubinatspaare
+  werden einzeln besteuert (DBG Art. 9, StHG Art. 3); die Schätzung rechnet für die Person allein
+  und sagt das dazu. Vorher gab es bei erfasstem Partnereinkommen nur die Bundessteuer.
+  Am ESTV-Steuerrechner gemessen (Konkubinat gegen ledig, 26 Kantone): in **BE, JU und VS** (dort
+  bis Brutto 45 000) rechnet der Kanton Konkubinat höher — dort weiter keine Kantonszahl, mit
+  Begründung. Messung: `docs/sources/konkubinat-kantonssteuer-2026.md`.
+- **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet», «eingetragene Partnerschaft» oder «Konkubinat»,
+  wenn erst eine Person im Haushalt erfasst ist. Nichts wird vorbelegt.
+- **Zivilstand-Vergleich im Konkubinat:** kein Vergleich mehr mit einem gedachten
+  Alleinverdiener-Ehepaar, wenn die Partnerin oder der Partner ein Einkommen hat oder die Angabe
+  fehlt (verheiratet würden beide Einkommen zusammengerechnet). Mit bewusst 0 wie bisher.
+- Dossier-Datei: neue Annahme-Kennung `einzeln_konkubinat` (bestehende unverändert).
 
 ## [0.1.39-beta] — 2026-09-20
 

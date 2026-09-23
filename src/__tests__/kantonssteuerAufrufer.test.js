@@ -52,7 +52,9 @@ const FAELLE = [
   { name: 'ZH ledig, 40 000/Monat (über der Tabelle)', p: profil({ monat: 40000 }), zahl: false },
   { name: 'ZH verheiratet mit Partnereinkommen', p: profil({ monat: 6000, verheiratet: true, partnerIncome: 3000 }), zahl: false, bund: false },
   { name: 'ZH ledig, Lohn als Bruttolohn erfasst', p: profil({ monat: 6000, incomeType: 'brutto' }), zahl: false, bund: false },
-  { name: 'ZH Konkubinat ohne Kinder, Partnereinkommen', p: profil({ monat: 6000, partnerIncome: 3000 }), zahl: false },
+  // K62.1: Konkubinat ohne Kinder = Einzelbesteuerung → Zahl; in BE rechnet die ESTV Konkubinat anders als ledig.
+  { name: 'ZH Konkubinat ohne Kinder, Partnereinkommen', p: profil({ monat: 6000, partnerIncome: 3000 }), zahl: true },
+  { name: 'BE Konkubinat ohne Kinder, Partnereinkommen', p: profil({ canton: 'BE', monat: 6000, partnerIncome: 3000 }), zahl: false },
   { name: 'Wohnkanton ZH, Steuerkanton GE', p: profil({ monat: 6000, steuerkanton: 'GE' }), zahl: true },
 ];
 

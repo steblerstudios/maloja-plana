@@ -112,8 +112,9 @@ describe('E39 · ein steuerbares Einkommen je Profil', () => {
     }
     const r = steuernFuerProfil({ kanton: 'ZH', nettolohnJahr: 90000, direktSteuerbar: 67927, partnerEinkommen: 3000 });
     expect(r.bund.steuer).toBe(906);
-    // Die Kantonstabelle ist für einen zweiten Verdienst nicht gemessen (E38) — dort bleibt es bei keiner Zahl.
-    expect(r.kanton).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
+    // K62.1: nicht verheiratet, ohne Kinder = Konkubinat → einzeln besteuert, die Kantonstabelle «ledig» gilt (ZH).
+    expect(r.kanton).toMatchObject({ lage: 'innerhalb', grund: null });
+    expect(r.annahmen.einzeln).toBe(true);
   });
 
   it('Bruttolohn: keine Zahl für Bund und Kanton', () => {
@@ -127,11 +128,12 @@ describe('E39 · ein steuerbares Einkommen je Profil', () => {
     expect(r).toMatchObject({ steuerbar: null, grund: 'partner', bund: null });
   });
 
-  it('Konkubinat ohne Kinder: Bundessteuer auf dem eigenen Einkommen, Kanton ohne Zahl', () => {
+  it('Konkubinat ohne Kinder: Bund und Kanton auf dem eigenen Einkommen (K62.1)', () => {
     const r = steuernFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 4000 });
     expect(r.quelle).toBe('estv');
     expect(r.bund.steuer).toBe(906);
-    expect(r.kanton.grund).toBe('partner');
+    expect(r.kanton.lage).toBe('innerhalb');
+    expect(r.annahmen.einzeln).toBe(true);
   });
 
   it('nicht verheiratet mit Partnereinkommen und Kindern: keine Zahl (Kinderabzug kann hälftig sein, Art. 35 Abs. 1 lit. a DBG)', () => {

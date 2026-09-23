@@ -19,6 +19,87 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 24.09., 01:13 — Zeichen, Icons, Glossar: sieben PRs gemergt, alle auf ausdrückliches Wort von Stebler Studios.**
+> Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben:
+>
+> **Stand, gemessen 24.09.2026 01:13:** `main` = `69f2ffa` (01:07, #293 aus einer fremden
+> Sitzung) · live = `index-8FolD38L.js`, Commit unbekannt (vor Einführung der `version.json`) ·
+> Abstand nicht messbar · offene PRs: #294 · #286 (Entwürfe, fremde Sitzungen).
+> Auf `69f2ffa`: **3043 Tests grün** (163 Dateien) · Startdatei **64,94 von 65 kB**.
+>
+> 🛑 **Die Startdatei hat noch 60 Byte Luft.** Beim Glossar-PR (#298, gemessen auf seinem Zweig)
+> waren es 60,23 kB; die Merges der Nacht haben ~4,7 kB dazugelegt. Die nächste Änderung, die
+> in die Startdatei wächst, wird vom `size-limit` abgewiesen — **vor dem nächsten Bau-PR messen**,
+> nicht erst im Deploy-Gate. Wer wie viel beigetragen hat, ist nicht gemessen.
+>
+> ### Was gemergt ist
+> | PR | was | Beleg |
+> |---|---|---|
+> | **#288** | drei Icon-Namen zeigten ins Leere (`child`, `calculator`, `shield` → `Icon` gibt still `null`); neuer Test `iconNamen`; Zeichen-Wächter sieht auch `.js` (fand 8× `○` in `budgetSync.js`, ohne aria-hidden auf dem Schirm) | Mutationsproben rot |
+> | **#291** | Stipendien-Ergebnis: Form statt `✓ ○ ⓘ` (voll / Ring mit Kern / hohl), `components/StatusForm.jsx` gemeinsam mit KVG | 5 Tests rot mit den alten Zeichen |
+> | **#295** | Zeichen-Wächter sieht Template-Strings; Lebenslauf ohne `○`; Vermerk: 5 Icons ohne Einsatz **bleiben** (Marken-Vokabular, Entscheid Stebler Studios) | rot mit `○` zurück |
+> | **#297** | toter `premiumCalc`-Block (16 × 5) + zwei rm-Waisen raus; zwei IPV-Unterlagen als ❓ in `docs/TODO.md` §E | Probe-Merge gegen 5 PRs konfliktfrei |
+> | **#298** | **Glossar mehrsprachig:** Form = Kopfwort der übersetzten Erklärung. Sätze mit Begriff: fr 32→442 · it 12→429 · en 215→332 · rm 61→338 · de 450→450 | 3 Mutationsproben rot |
+> | **#299** | Icon-Namen-Test prüft auch die Tabellen (`WERKZEUG_ICON`, `CATEGORY_ICON_KEYS`, `HERZ_ICON`, `chapterIcons`) | rot mit `steuernX` |
+> | **#301** | `docs/i18n_glossar_gegenlesen.md` — 16 Erklärungen × 5 Sprachen + **8 offene Sprachfragen** | nur Doku |
+>
+> ### 🛑 Was offen bleibt
+> 1. **Nicht deployt** — alles oben; live läuft unverändert der Stand vom 22.09.
+> 2. **Gegenlesen** (`docs/i18n_glossar_gegenlesen.md`): rm «LAA» steht in 0 rm-Sätzen, die Texte
+>    sagen «LAINF» (7); rm «SKOS» vs. «COSAS» (13); it «Contributi d’affitto» (0) vs. «all’affitto» (2).
+>    **Seit #298 bestimmt das Kopfwort, was erkannt wird** — ein uneinheitliches Kopfwort heisst,
+>    dass der Begriff in dieser Sprache nicht markiert wird.
+> 3. **Ein voller Testlauf am 23.09. um ~23:40 hatte vier rote Tests** (`glyphenImText`,
+>    `hauptbundleLazy`, `k101QrHinweis`, `secureStore`) bei Mac-Last 16; sechs Läufe danach, bis
+>    Last 20, alle grün. **Ursache nicht gefunden**, die Ausgabe des roten Laufs nicht gesichert.
+>    Tritt es wieder auf: die volle Ausgabe in eine Datei schreiben, bevor neu gestartet wird.
+>
+> ✅ **Nachtrag 24.09., 00:54 — die UI/UX-Runde ist gemergt: #272 (Teil 1) und #296 (Teil 2), beide auf ausdrückliches Wort von Stebler Studios.**
+> Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben, nicht am Sitzungsanfang:
+>
+> **Stand, gemessen 24.09.2026 00:54:** `main` = `ede09c9` (00:53) · live = `index-8FolD38L.js`,
+> Commit unbekannt (ausgeliefert vor Einführung der `version.json`) · Abstand nicht messbar ·
+> offene PRs: #294 · #293 · #290 · #286 · #284 · #282 (alle Entwürfe, alle aus fremden Sitzungen).
+>
+> 🛑 **`main` rückte zwischen dem Merge von #296 (`79e26a3`, 00:47) und dieser Zeile dreimal
+> weiter** — `d90b047` 00:50, `ede09c9` 00:53. Genau dafür gibt es das Skript; eine von Hand
+> geschriebene Zeile wäre in sechs Minuten dreimal falsch geworden.
+>
+> ### Was die beiden PRs gebracht haben — alles im Browser gemessen, nicht behauptet
+>
+> | Eingriff | vorher | nachher |
+> |---|---|---|
+> | Fünf Text-Aktionen am Handy (WCAG 2.2 AA 2.5.8 verlangt 24) | 17–19 px | 33–35 px |
+> | «Was ist jetzt dran?» am Falz (390×844, Falz bei 619 px) | 502 px | 384 px |
+> | Berg mit Fortschritt | 657 px (unter dem Falz) | 539 px (sichtbar) |
+> | Statuszeile Behörden-Dossier, Dunkelmodus | **2,20:1** | 4,81:1 |
+> | Fusszeile (`mid` @ opacity 0,7), auf **jeder** Seite | **3,10:1** | 5,54:1 |
+> | Baum3D, hintere Beschriftung | **1,64:1** | 5,91:1 |
+> | Flächenfarbe als Text, hell, über 10 Ansichten | 9 Durchfaller | **0** |
+>
+> Dazu strukturell: **`#mp-main` ist kein Scroll-Container mehr** — das Dokument scrollt.
+> `--mp-kopf-h` (per ResizeObserver gemessen) und `--mp-sprungabstand` in `tokens.css` sind die
+> neuen Einzelquellen für Sticky-Offsets und Sprungziele; vorher standen dafür drei Inline-Werte
+> (52/64/72 px), alle auf den alten Kasten gerechnet. Der **Fehlerschirm** hat `minHeight: 100dvh`
+> plus `overflowY: auto` und zentriert über `margin: auto`, weil Auto-Ränder nie negativ werden.
+>
+> **Sechs neue Tests**, jeder mit bestandener Mutationsprobe. Die zwei wichtigsten halten eine
+> **Regel mit ihrer Begründung** statt einer Fundstelle: `flaechenfarbeIstKeineTextfarbe` und
+> `deckkraftFrisstKontrast`.
+>
+> ### 🛑 Was offen bleibt — Entscheide, keine Rückstände
+> 1. **Getönte Flächen im Dunkelmodus, zehn Stellen bei 4,06–4,43:1.** Dort stehen bereits die
+>    *richtigen* Textfarben; die Tönung hellt den dunklen Grund auf. Die Farbtafel verspricht ihre
+>    ≥4,5:1 ausdrücklich nur für die **ungetönten** Flächen. Zwei Wege — Tönungen schwächen oder
+>    eine eigene Textstufe —, beide greifen in die ruhige Bildsprache.
+> 2. **Reihenfolge Hinweis ↔ Orientierung** und **`alphaDismissed` nicht gespeichert**: beides am
+>    **Haftungstext**, also `rechts-pruefer` plus Entscheid von Stebler Studios.
+> 3. **Der iOS-Gewinn des Scroll-Umbaus ist unbelegt** — Adressleiste und Statusleisten-Tipp
+>    brauchen ein **echtes iPhone**. Alles andere ist in beiden Breiten und Themen nachgemessen.
+>
+> 🛑 **Nicht deployt.** Live läuft unverändert der Stand vom 22.09.
+> Alle Einzelheiten in `docs/TODO.md`, Abschnitt **C1**.
+
 > ✅ **Nachtrag 23.09., 23:10 — #277 «Rechtstexte nach Tester-Durchsicht» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
 > Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
 >
