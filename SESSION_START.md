@@ -9,6 +9,79 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 23.09., 11:10 — #266 «Compliance-Übersicht + Regulierungsgrenzen» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben (nicht am Sitzungsanfang):
+>
+> | | gemessen 23.09., 11:10 |
+> |---|---|
+> | `main` | **`09b54a9`** — «Merge pull request #266», 09:03 UTC. CI auf `main` nach dem Merge: **grün** |
+> | Tests auf `main` | **2762 grün** (144 Dateien) — 2723 + 39 neue aus dieser Sitzung |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — also VOR #264, #265 und #266 |
+> | offene PRs | **eine: #267** «Docs: PROMPT.md», Zweig `docs/developer-prompt`, eröffnet **09:04 UTC — eine Minute nach meinem Merge**. Nicht aus dieser Sitzung; nicht angefasst |
+> | Zweig `docs/compliance-uebersicht` | **nicht gelöscht**, steht noch auf dem Remote |
+>
+> 🛑 **Die eine Änderung, bei der der Deploy die Sache selbst ist und nicht nur die Sichtbarkeit:**
+> Die MIT-Lizenz verlangt, dass ihr Text **mit den ausgelieferten Kopien** geht. Im Repo liegen
+> jetzt acht Texte unter `public/licenses/`, live sind zwei. Gemessen mit Kontrollprobe:
+> `/licenses/jsQR-LICENSE.txt` → **200** (seit 17.09. im Build), `/licenses/react-LICENSE.txt`
+> → **404**, erfundener Name ebenfalls 404. Der Pfad wird ausgeliefert, die sechs neuen Texte
+> fehlen dort. **Bis zum Deploy ist die Lizenzlücke im Repo geschlossen, auf der Seite nicht.**
+>
+> **Vollständig gemessen, 11:20 — es sind 6 von 8, nicht nur `react`:**
+>
+> | live 200 | live 404 |
+> |---|---|
+> | `QRCode.js`, `jsQR` | `three`, `react`, `react-dom`, `scheduler`, `js-tokens`, `loose-envify` |
+>
+> Gegenprobe mit erfundenem Namen: 404 — die Methode unterscheidet.
+>
+> 🛑 **Und die Frage davor, die ich zuerst übersprungen hatte: «im Repo» ist nicht «im Build».**
+> Hätte eine `.gitignore`- oder vite-Regel `public/licenses/` aus `dist/` gehalten, würde der
+> Deploy die Lücke **nicht** schliessen — und dieses Dokument behauptete eine Konformität, die
+> nie einträte. Nachgemessen im frischen Build (`dist/licenses/`, gebaut 11:06 aus `main` =
+> `09b54a9` von 11:03): **alle acht Dateien da, 1081–12161 Bytes, keine leer.** Der Deploy
+> schliesst die Lücke also wirklich. *Gefunden hat diese Vorfrage die Parallel-Sitzung
+> «Aufräumen fortgesetzt», nicht ich.*
+>
+> 🛑 **Nebenbefund zum Arbeiten im geteilten Checkout:** Sophies Deploy-Versuch brach am
+> Branch-Gate von `deploy.sh` ab — weil der gemeinsame Arbeitsbaum auf **meinem** Zweig
+> `docs/stand-nach-266` stand. Ein Arbeitszweig im geteilten Checkout blockiert den Deploy,
+> auch wenn er nichts verändert. Lehre: nach dem Push zurück auf `main` stellen, oder gleich
+> in einem eigenen Worktree arbeiten (dieser Nachtrag entstand in
+> `.claude/worktrees/stand-266`, ohne den Haupt-Checkout anzufassen).
+>
+> **Was #266 gebracht hat** (9 Commits):
+> - `docs/security/compliance-overview.md` von drei auf **sechzehn Regime** erweitert, je mit
+>   Beleg und Stolperdraht: Aufsichtsrecht (BankG/FINIG/KAG/GwG/FIDLEG/VAG/KVAG), UWG inkl.
+>   Art. 8, OR 99/100, ZPO 32/35, URG, MepV, BGFA/SchKG 27, Barrierefreiheit, PBV/MWST,
+>   KI-Recht, Marke, EU-Produkthaftung, Cyber Resilience Act, App-Store/DSA, Beschaffung,
+>   kantonales IDG, KKG, Lizenzrecht.
+> - **Ergebnis: keine FINMA-Bewilligung und kein Registereintrag nötig** — «FINMA-konform» ist
+>   ohnehin keine Eigenschaft, die man haben kann. Nicht juristisch geprüft (**K48**).
+> - `docs/legal/k48-fragen-juristin.md` **neu**: 20 Fragen in sechs Gruppen, je mit «was daran
+>   hängt», dazu ein Abschnitt «was NICHT geprüft werden muss, weil es gemessen ist».
+> - Zwei Wächter im Code: `regulierungsgrenzen.test.js` (21 Prüfungen, 4 Gegenproben) und
+>   `hinweisImBild.test.js` (rendert **alle 15 gerechneten Ansichten**; dass er beisst, ist
+>   mit einer Mutationsprobe belegt).
+> - **Echte Lücken geschlossen:** `three` fehlte im Lizenzverzeichnis, sechs MIT-Texte fehlten
+>   in der Auslieferung · `KVGWechsel`/`ZusatzWechsel` waren die einzigen Ablauf-Ansichten ohne
+>   Orientierungs-Hinweis im Fuss · der Platzhalter «Wunsch-Kasse» nannte in allen fünf Sprachen
+>   **«Helsana»** als einzigen Kassennamen im Wechselpfad.
+> - **Fachliche Korrekturen nach der Rechts-Prüfung** (neun Stück, jede als Korrektur sichtbar
+>   stehengelassen): **EAA greift voraussichtlich gar nicht** (Art. 4 Abs. 5 nimmt
+>   Kleinstunternehmen aus) · **CRA** hängt am Produktbegriff, nicht an der Paywall
+>   (Erwägungsgrund 12 nimmt Websites/SaaS aus) · **VAG**-Auslöser ist Art. 40 «anbieten oder
+>   abschliessen», nicht der Geldfluss · **DSG Art. 2 Abs. 2 lit. a** nimmt den persönlichen
+>   Gebrauch aus, Verzeichnis und DSFA sind Übererfüllung · **UWG lit. s** gilt ganz oder gar
+>   nicht, das Impressum ist heute freiwillig.
+> - 🛑 **Ein Wächter, der grün war und nichts hielt:** Teil B prüfte die **leere Menge** (kein
+>   Eintrag hat ein `affiliate`-Feld) und liess mit seiner Wortliste **9 von 10** echten
+>   Anbietern durch (Raiffeisen, VIAC, frankly, neon, Yuh, Swiss Life, AXA, Helvetia, Selma).
+>   Jetzt **Erlaubnisliste** statt Verbotsliste ([[feedback_waechter_prueft_die_leere_menge]]).
+> - `pii-scan.sh`: `public/licenses/**` ausgenommen — fremde Lizenztexte müssen wortgetreu
+>   mitgeliefert werden. Mit Attrappe gegengeprüft, ein echtes Leck ausserhalb wird erkannt.
+
+
 > 🔴 **Korrektur 22.09., 13:51 — die Stand-Zeile darüber war an drei Stellen überholt.**
 > Sie wurde um **10:25** geschrieben; der Deploy lief um **10:31**, sechs Minuten später.
 > Unmittelbar vor dem Schreiben dieser Zeilen erhoben:
