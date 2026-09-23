@@ -3092,6 +3092,7 @@ export default {
     message: { sie: 'I Suoi dati sono al sicuro — sono memorizzati localmente sul Suo dispositivo. Riprovi.', du: 'I tuoi dati sono al sicuro — sono memorizzati localmente sul tuo dispositivo. Riprova.' },
     tryAgain: { sie: 'Riprovi', du: 'Riprova' },
     reload: { sie: 'Ricarichi la pagina', du: 'Ricarica la pagina' },
+    report: { sie: 'Segnali un problema', du: 'Segnala un problema' },
     privacy: { sie: 'Nessun dato è stato inviato. Tutto rimane sul Suo dispositivo.', du: 'Nessun dato è stato inviato. Tutto rimane sul tuo dispositivo.' },
     viewCrash: { sie: 'Questa sezione ha riscontrato un errore. I Suoi dati sono al sicuro.', du: 'Questa sezione ha riscontrato un errore. I tuoi dati sono al sicuro.' },
   },

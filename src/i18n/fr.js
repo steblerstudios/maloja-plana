@@ -3091,6 +3091,7 @@ export default {
     message: { sie: 'Vos données sont en sécurité — elles sont stockées localement sur votre appareil. Veuillez réessayer.', du: 'Tes données sont en sécurité — elles sont stockées localement sur ton appareil. Réessaie.' },
     tryAgain: 'Réessayer',
     reload: 'Recharger la page',
+    report: 'Signaler un problème',
     privacy: { sie: 'Aucune donnée n\'a été envoyée. Tout reste sur votre appareil.', du: 'Aucune donnée n\'a été envoyée. Tout reste sur ton appareil.' },
     viewCrash: { sie: 'Cette section a rencontré une erreur. Vos données sont en sécurité.', du: 'Cette section a rencontré une erreur. Tes données sont en sécurité.' },
   },
