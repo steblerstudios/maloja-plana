@@ -77,3 +77,40 @@ describe('Icon-Namen · jeder Verweis trifft das Register', () => {
     expect([...AUSNAHMEN].filter((a) => !benutzt.has(a))).toEqual([]);
   });
 });
+
+describe('Icon-Namen · Zuordnungstabellen', () => {
+  // Stand 24.09.2026. Die Muster oben sehen `icon: '…'` — aber nicht Tabellen
+  // wie `WERKZEUG_ICON = { tax: 'steuern', … }`, `CATEGORY_ICON_KEYS`,
+  // `HERZ_ICON` oder `chapterIcons`, deren Werte über `Icons[…]` laufen. Ein
+  // Tippfehler dort liesse das Icon genauso still verschwinden.
+  const tabellen = () => {
+    const gefunden = [];
+    for (const datei of dateien(SRC)) {
+      if (datei.endsWith('IconSystem.jsx')) continue;
+      const inhalt = fs.readFileSync(datei, 'utf8');
+      for (const m of inhalt.matchAll(/const (\w*(?:icon|Icon|ICON)\w*)\s*=\s*\{([\s\S]*?)\};/g)) {
+        const werte = [...m[2].matchAll(/:\s*'([^']+)'/g)].map((w) => w[1]);
+        if (werte.length) gefunden.push({ ort: `${path.basename(datei)}:${m[1]}`, werte });
+      }
+    }
+    return gefunden;
+  };
+
+  it('findet die Tabellen überhaupt (sonst prüft der Test die leere Menge)', () => {
+    const orte = tabellen().map((t) => t.ort);
+    expect(orte).toEqual(expect.arrayContaining([
+      'Baum3D.jsx:WERKZEUG_ICON', 'CalendarReminders.jsx:CATEGORY_ICON_KEYS',
+      'DirektLinks.jsx:HERZ_ICON', 'Dashboard.jsx:chapterIcons', 'MobileNav.jsx:chapterIcons',
+    ]));
+  });
+
+  it('jeder Wert in einer Icon-Tabelle steht im Register', () => {
+    const unbekannt = tabellen().flatMap((t) => t.werte.filter((w) => !(w in Icons)).map((w) => `${t.ort} → ${w}`));
+    expect(unbekannt).toEqual([]);
+  });
+
+  it('jeder Kapitel-Schlüssel ist auch ein Icon (Dashboard liest `Icons[ch.key]`)', async () => {
+    const { CHAPTER_KEYS } = await import('../config/constants.js');
+    expect(CHAPTER_KEYS.filter((k) => !(k in Icons))).toEqual([]);
+  });
+});
