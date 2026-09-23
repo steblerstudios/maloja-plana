@@ -1151,7 +1151,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
@@ -1517,7 +1517,8 @@ export default {
       responsibleTitle: 'Persuna responsabla',
       responsible1: 'Stebler Studios — Sophie Stebler, Basilea, Svizra',
       responsible2: 'Contact: info@malojaplana.ch',
-      responsible3: { sie: "Maloja Plana è in project Open Source independent da Stebler Studios. Tut las datas vegnan elavuradas exclusivamain localmain sin Voss apparat.", du: "Maloja Plana è in project Open Source independent da Stebler Studios. Tut las datas vegnan elavuradas exclusivamain localmain sin Tes apparat." },
+      responsible3: { sie: "Maloja Plana è in project Open Source independent da Stebler Studios. L'utilisaziun da l'app è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada.", du: "Maloja Plana è in project Open Source independent da Stebler Studios. L'utilisaziun da l'app è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada." }, // TODO(rm): Gegenlese Muttersprache
+      responsible4: { sie: "Quai che Vus endatais en l'app resta sin Voss apparat — questas indicaziuns na ans cuntanschan betg. La nLPD vala tuttina per nus sco gestura da la pagina web: cun la clomada da la pagina vegnan generadas datas tecnicas tar il purschider, e nus elavurain e-mails a info@malojaplana.ch per pudair respunder.", du: "Quai che Ti endateschas en l'app resta sin Tes apparat — questas indicaziuns na ans cuntanschan betg. La nLPD vala tuttina per nus sco gestura da la pagina web: cun la clomada da la pagina vegnan generadas datas tecnicas tar il purschider, e nus elavurain e-mails a info@malojaplana.ch per pudair respunder." }, // TODO(rm): Gegenlese Muttersprache
       localTitle: 'Memorisaziun locala da datas',
       local1: { sie: "Maloja Plana è ina applicaziun web Local-First. Tut las datas persunalas vegnan memorisadas exclusivamain sin Voss apparat — en il localStorage e l'IndexedDB da Voss navigatur.", du: "Maloja Plana è ina applicaziun web Local-First. Tut las datas persunalas vegnan memorisadas exclusivamain sin Tes apparat — en il localStorage e l'IndexedDB da Tes navigatur." },
       local2: "Naginas datas vegnan transmessas ad in server, ina cloud u a terzs. I na dat nagin conto dad utilisader e nagina registraziun.",
@@ -1529,10 +1530,13 @@ export default {
       data4: 'Tut las calculaziuns (taglia, agid social, premias, prevenziun) vegnan fatgas mo en la memoria da lavur e na vegnan betg memorisadas separadamain.',
       sensitiveTitle: 'Datas particularamain sensitivas',
       sensitive1: "Tenor l'endataziun po Maloja Plana cuntegnair datas da sanadad (medicaments, donaziun d'organs), datas davart mesiras d'agid social u convicziuns religiusas.",
-      sensitive2: { sie: 'Cunquai che questas datas vegnan memorisadas exclusivamain localmain e mai transmessas ad in server, è il ristg per Voss dretgs da persunalitad pitschen.', du: 'Cunquai che questas datas vegnan memorisadas exclusivamain localmain e mai transmessas ad in server, è il ristg per Tes dretgs da persunalitad pitschen.' },
+      sensitive2: { sie: "Questas indicaziuns restan sin Voss apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatai talas rubricas mo sche quai Vus convegn — e protegì l'apparat cun in code.", du: "Questas indicaziuns restan sin Tes apparat. Ellas na vegnan transmessas ni a nus ni ad in server. Las copias automaticas en il navigatur n'èn betg criptadas. Endatescha talas rubricas mo sche quai ta convegn — e protegia l'apparat cun in code." }, // TODO(rm): Gegenlese Muttersprache
       hostingTitle: 'Hosting',
-      hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina web vegnan elavuradas automaticamain datas tecnicas (adressa IP, tip da navigatur) en server logs e stizzadas suenter il termin da conservaziun dal purschider.",
+      hosting1: "L'applicaziun web statica (senza datas d'utilisader) vegn hosted tar Infomaniak Network SA (Rue Eugène-Marziano 25, 1227 Les Acacias / Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra. Cun la clomada da la pagina elavurescha Infomaniak sco incumbensada da l'elavuraziun (art. 9 nLPD) datas tecnicas: adressa IP, mument, datoteca clamada, tip da navigatur e sistem operativ. Intent: la consegna da la pagina e la segirezza da la gestiun. Tenor indicaziun dal purschider vegnan ils logs d'access e d'errur conservads almain 7 dis.", // TODO(rm): Gegenlese Muttersprache
+      hostingSource: "Funtauna dal termin da conservaziun: Infomaniak Support-FAQ 1926 (indicaziun dal purschider, consultada ils 23 da settember 2026).", // TODO(rm): Gegenlese Muttersprache
       hosting2: "I na dat nagins cookies d'analisa, nagin tracking, nagins Social-Media-Plugins e nagina reclama.",
+      contactTitle: 'Contact per e-mail',
+      contact1: { sie: "Sche Vus ans scrivais a info@malojaplana.ch, elavurain nus Vossa adressa d'e-mail, il cuntegn dal messadi ed eventualas agiuntas per pudair respunder. La chascha da posta sa chatta tar Infomaniak en Svizra. Nus conservain la correspondenza uschè ditg sco la dumonda e las dumondas consuetas da suandar quai pretendan, lura la stizzain nus. Ina consegna a terzs n'ha betg lieu, nun ch'ella saja debitada da la lescha.", du: "Sche Ti ans scrivas a info@malojaplana.ch, elavurain nus Tia adressa d'e-mail, il cuntegn dal messadi ed eventualas agiuntas per pudair respunder. La chascha da posta sa chatta tar Infomaniak en Svizra. Nus conservain la correspondenza uschè ditg sco la dumonda e las dumondas consuetas da suandar quai pretendan, lura la stizzain nus. Ina consegna a terzs n'ha betg lieu, nun ch'ella saja debitada da la lescha." }, // TODO(rm): Gegenlese Muttersprache
       backupTitle: 'Segirezzas',
       // K39: backup1/rights2/faq a1/a5/a7 adattads ad E10 ed E18.
       // TODO(rm): provisoric — laschar controllar d'ina persuna da lingua materna.
@@ -1541,6 +1545,7 @@ export default {
       rights1: { sie: "Cunquai che tut las datas èn memorisadas localmain, avais Vus da tut temp access direct a tut Vossas datas — senza dumonda d'infurmaziun.", du: "Cunquai che tut las datas èn memorisadas localmain, has Ti da tut temp access direct a tut Tes datas — senza dumonda d'infurmaziun." },
       rights2: { sie: "Vus pudais stizzar Vossas datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzais Vus sez. I na dat naginas copias sin servers.", du: "Ti pos stizzar Tes datas da tut temp: singulas en l'app, tut ensemen sut Configuraziuns → «Datas sin quest apparat» → «Stizzar tut las datas sin quest apparat», u via las datas dal navigatur. Datotecas da segirezza telechargiadas èn ordaifer l'app; quellas stizzas Ti sez. I na dat naginas copias sin servers." },
       rights3: { sie: 'Vus pudais exportar Vossas datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).', du: 'Ti pos exportar Tes datas en in format legibel da maschinas (JSON u CSV) (dretg da consegna da datas, art. 28 nLPD).' },
+      rights4: "Dumondas davart ils logs da hosting u davart e-mails a nus: info@malojaplana.ch", // TODO(rm): Gegenlese Muttersprache
       securityTitle: 'Segirezza da datas',
       security1: { sie: "Las datas d'utilisader na bandunan betg Voss apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain.", du: "Las datas d'utilisader na bandunan betg Tes apparat. Tut las connexiuns a la pagina web èn criptadas cun HTTPS. Il code-source è accessibel publicamain." },
       security2: { sie: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Vossa responsabladad: Segirai Voss apparat cun in pled-clav e fai regularmain segirezzas.', du: 'Cunquai che tut las datas vegnan memorisadas localmain, è la segirezza en Tia responsabladad: Segirescha Tes apparat cun in pled-clav e fai regularmain segirezzas.' },
@@ -1585,7 +1590,7 @@ export default {
       contact1: 'E-mail: info@malojaplana.ch',
       contact2: 'Web: https://malojaplana.ch',
       projectTitle: 'Project',
-      project1: "Maloja Plana è in project Open Source independent da Stebler Studios en svilup activ. Il code-source è accessibel publicamain.",
+      project1: "Maloja Plana è in project Open Source independent da Stebler Studios en svilup activ. L'utilisaziun da l'app è gratuita ed il code-source è accessibel publicamain (AGPL-3.0). Per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada.", // TODO(rm): Gegenlese Muttersprache
       hostingTitle: 'Hosting & domena',
       hosting1: "Il hosting e la domena vegnan furnids da Infomaniak Network SA (Genevra, Svizra) — in purschider svizzer cun centers da datas en Svizra, manads tenor il purschider cun electricitad regenerabla.", // TODO(rm): Gegenlese Muttersprache
       disclaimerTitle: "Exclusiun da responsabladad",
@@ -2988,7 +2993,7 @@ export default {
     estimatedTax: 'Taglientas stimadas',
     netIncome: "Entrada netta (stima annaira)",
     saveData: 'Memorisar las datas',
-    married: 'Maridà/maridada',
+    married: 'Maridà/maridada u en partenariat registrà',
     children: 'Uffants',
     elterntarifConfirm: 'Ils uffants vivan en mia chasada, ed jau surpigl la part principala da lur mantegniment.',
     elterntarifHint: { sie: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Vossa taglia po lura esser pli bassa che quai che vegn mussà qua.', du: 'Sche quai è il cas, vala il tarif per geniturs (DBG art. 36 al. 2bis): il tarif da maridads, main CHF {value} per uffant. Senza confermaziun quinta Maloja cun precauziun cun il tarif da basa e senza questa reducziun — Tia taglia po lura esser pli bassa che quai che vegn mussà qua.' },
@@ -4450,7 +4455,7 @@ export default {
     betreuungsjahre: 'Onns da tgira',
     betreuungsjahreHint: 'Onns da tgirar confamigliars datiers (annunziar mintg\'onn)',
     gutschriftHinweis: 'Per onn chalendar quinta mo ina bonificaziun (educaziun u tgira).',
-    verheiratet: 'Maridà/ada',
+    verheiratet: 'Maridà/ada u en partenariat registrà',
     einkommenPartner: 'Entrada dal partenari (CHF)',
     ahvRente: 'Renta da vegliadetgna AVS stimada',
     monat: 'Mais',

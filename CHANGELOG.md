@@ -19,12 +19,25 @@ kommt der Changelog immer mit, nie doppelt.*
   iPhone und Android, belegt an der Hilfe von Apple und Google. Nichts wird gesendet,
   kein QR, keine Schnittstelle. Erreichbar über den Notfall-Einstieg und unter dem
   QR-Code im Notfall-Dossier.
+- **«Eingetragene Partnerschaft» als Zivilstand** (Bau-Liste K98, letzter Teil), in allen
+  fünf Sprachen. Seit dem 1. Juli 2022 werden keine neuen Partnerschaften mehr eingetragen;
+  bestehende gelten weiter. Steuerlich und in den Sozialversicherungen sind sie der Ehe
+  gleichgestellt (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4, ATSG Art. 13a) — Maloja rechnet
+  Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
+  genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
+  «Verheiratet oder in eingetragener Partnerschaft».
+
+### Geändert
+- Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
+  verstreuter Vergleiche mit `'married'`; ein Test prüft die Quelle, dass niemand an ihr
+  vorbei vergleicht.
 
 ### Behoben
 - **Medikamente und Erkrankungen fehlten im Notfall-Dossier, im Notfall-QR und auf der
   Vorlesekarte**, wenn sie — wie das Kapitel es heute anbietet — als Liste erfasst
   waren. Die gemeinsame Quelle las nur das alte Textfeld. Jetzt zuerst die Liste, das
   Textfeld bleibt Rückfall.
+- Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
 
 ## [0.1.39-beta] — 2026-09-20
 

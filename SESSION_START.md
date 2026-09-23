@@ -9,6 +9,55 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 23.09., 23:10 — #277 «Rechtstexte nach Tester-Durchsicht» ist gemergt, auf ausdrückliches Wort von Stebler Studios.**
+> Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
+>
+> | | gemessen 23.09., 23:10 |
+> |---|---|
+> | `main` | **`5c523b2`** — «Merge pull request #277», 23:01. Seit dem 19:35-Nachtrag gingen zusätzlich **#276** Stand-Doku und **#277** rein |
+> | Tests auf `main` | **2852 grün** (148 Dateien), Build sauber, PII-Scan sauber |
+> | live ausgeliefert | **weiterhin `index-8FolD38L.js`** — unverändert. Gegenprobe am Inhalt: «mindestens 7 Tage» im Live-`de`-Chunk **0 Treffer**, «Kontakt per E-Mail» auf live `/rechtliches/` **0 Treffer**. **Gemergt ist nicht live** |
+> | offene PRs | **vier Entwürfe**: #272 UI/UX-Runde · #278 Melde-Weg · #279 K48 Unterstützungsbeiträge · #280 eingetragene Partnerschaft — alle aus fremden Sitzungen, nicht angefasst |
+>
+> ### Was #277 gebracht hat — vier Rechtstext-Korrekturen, in 5 Sprachen und auf 5 öffentlichen Seiten
+> Aus einer inhaltlichen Durchsicht von aussen (Tester + Grok), jeder Punkt gegen den echten
+> Stand gemessen — lokal **und** live.
+> - **Hoster-Frist:** Der Text sagte wörtlich «die Aufbewahrungsdauer … ist uns nicht belegt».
+>   Jetzt: Infomaniak als **Auftragsbearbeiterin (Art. 9 DSG)**, **mindestens 7 Tage** mit
+>   Quelle (Support-FAQ 1926). Art. 9 **und** Art. 10 DSG im Wortlaut nachgeschlagen.
+> - **Kontakt per E-Mail** fehlte ganz — `info@` stand fünfmal als Adresse da, ohne dass
+>   irgendwo stand, was mit einer Mail dorthin geschieht. Postfach bei Infomaniak **per MX
+>   belegt** (`mta-gw.infomaniak.ch`, Gegenprobe mit erfundener Domain leer).
+> - **Gesundheits-/Religionsfelder:** «das Risiko für Ihre Persönlichkeitsrechte ist gering»
+>   war eine Bewertung — und widersprach zwei Absätze weiter dem eigenen Text, wo dieselbe
+>   Seite die **unverschlüsselten Schnappschüsse** einräumt. Jetzt steht dort die Tatsache.
+> - **«nicht-kommerziell»** ging mit Dual Licensing nicht auf → kostenlos nutzbar,
+>   kommerzielle Lizenz auf Anfrage. (Stand in `docs/legal/*.md`, nicht in der App.)
+>
+> ### 🏠 Postanschrift — Entscheid, nicht Lücke
+> **Es steht bewusst KEINE Strasse im Impressum**, und das ist jetzt ausgewiesen statt still.
+> Stebler Studios hat kein Geschäftsdomizil, und die Wohnadresse gehört nicht in ein
+> öffentliches Repo; es hängt am **Handelsregister-Entscheid** (ein Eintrag macht das Domizil
+> ohnehin öffentlich, OR Art. 931), deshalb wird beides zusammen entschieden.
+> Bisher stand auf `/rechtliches/` pauschal «Angaben gemäss Art. 3 Abs. 1 lit. s UWG» — eine
+> Behauptung von Vollständigkeit ohne Begründung. Jetzt steht dort, was der Artikel wirklich
+> verlangt (Kontaktadresse «einschliesslich derjenigen der elektronischen Post», **nicht
+> zwingend eine Postanschrift**), mit Fedlex-Beleg, in allen fünf Sprachen. Ob UWG hier
+> überhaupt greift → **neue Frage F0** in `docs/legal/k48-fragen-juristin.md`.
+> 🛑 **Gleiche Fassung wie `stebler-studios/website/impressum.html` (22.09.)** — gespiegelt,
+> nicht nachgebaut. Wer eine Seite ändert, ändert die andere mit.
+> 🛑 Ein sichtbarer Platzhalter mit rotem Wächter war der **falsche** Weg und ist zurückgebaut:
+> bei «kommt vorläufig nicht» wäre er ein Dauerzustand geworden. *Ein Gate, das nie grün wird,
+> ist kein Gate, sondern Lärm.* Der Wächter (`src/__tests__/impressumAdresse.test.js`) hütet
+> jetzt drei echte Zusagen und ist grün — Mutationsprobe gemacht.
+>
+> 🛑 **Der Fund des Abends, für den nächsten: Fedlex per `curl` ist kein Messgerät.**
+> `/de`, `/fr`, `/it`, `/rm` **und** eine frei erfundene Sprache `/xx` geben dieselbe
+> 77 151 Byte grosse SPA-Hülle zurück, alle md5-identisch. HTTP 200 misst dort das Werkzeug,
+> nicht den Bestand. Ob das UWG auf Rumantsch existiert, ist damit **nicht** festgestellt —
+> also nicht behauptet. Gefangen hat das nicht meine Sorgfalt, sondern der bestehende Test
+> «Rumantsch hat für keine Quelle eine eigene Adresse — gemessen, nicht vergessen».
+>
 > ✅ **Nachtrag 23.09., 19:35 — #271 «Berner 3a-Deckel» und #275 «3a-Tracker-Jahresgrenze» sind gemergt, auf ausdrückliches Wort von Stebler Studios.**
 > Unmittelbar vor dem Schreiben erhoben, nicht am Sitzungsanfang:
 >
@@ -24,6 +73,19 @@
 > Arbeit). Das Branch-Gate in `deploy.sh` bricht dort ab; dieselbe Falle wie am 23.09. mittags.
 > Vorher im Haupt-Checkout auf `main` stellen — **`main` ist jetzt frei**, der Worktree dieser
 > Sitzung hält es nicht mehr fest (er steht losgelöst auf `74ab23b`).
+>
+> ✅ **Nachtrag 23.09., 22:57 — aus der Melde-Weg-Sitzung, gegen den Block darüber gemessen.**
+> Der Block stimmt, zwei Zeilen sind nur weitergezogen: `main` = **`2369bbc`** (nach **#276**
+> Stand-Doku, 20:57), und es sind **zwei** offene PRs — **#272** «UI/UX-Runde» (fremd, nicht
+> angefasst) und **#278** «Der Melde-Weg festgehalten» (Doku, Entwurf, aus dieser Sitzung:
+> BUGS.md B-5 auf Stand + Bau-Liste §25 mit den drei Punkten ab Sa 26.09.).
+> Tests auf `main` **2830 grün** (147 Dateien), Build sauber — um 22:39 selbst nachgemessen.
+> **Live weiterhin `index-8FolD38L.js` vom 22.09.** — unverändert, also vor allen PRs von heute.
+>
+> 🛑 **Und der Grund, warum der Deploy nicht von Claude kommt, ist nicht nur das Branch-Gate:**
+> `deploy.sh:103–104` fragt das SFTP-Passwort. Passwörter eingeben ist Claude verboten, und
+> diese Sitzung war nicht interaktiv. Der Deploy ist damit **mechanisch** die Hand von Stebler Studios, nicht
+> bloss per Konvention. Befehl: im Haupt-Checkout `git checkout main && git pull && bash deploy.sh`.
 >
 > ### Was #271 gebracht hat — der Deckel rechnet
 > `SAEULE_3A.bisBundesMaximum.nichtAufgerechnet` stand seit dem 20.09. auf `() => 0`, weil der
