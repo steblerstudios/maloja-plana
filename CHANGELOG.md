@@ -26,6 +26,15 @@ kommt der Changelog immer mit, nie doppelt.*
   Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
   genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
   «Verheiratet oder in eingetragener Partnerschaft».
+- **Prämienverbilligung Kanton Luzern mit Betrag (K31).** Für Alleinstehende und
+  Alleinerziehende rechnet die App jetzt nach dem amtlichen Luzerner Modell 2026:
+  Richtprämie der Prämienregion minus einem Prozentsatz des massgebenden Einkommens, der
+  mit dem Einkommen steigt; für Kinder 80 % der Richtprämie fest bis zur Einkommensgrenze.
+  Belegt mit der Prämienverbilligungsverordnung (SRL 866a) und dem Gesetz (SRL 866);
+  das Berechnungsbeispiel der WAS Ausgleichskasse Luzern rechnet die App auf den Rappen
+  nach. Dazu der Vorbehalt (letzte rechtskräftige Veranlagung) und die Anmeldefrist
+  31. Oktober des Vorjahres — in allen fünf Sprachen. Paare, junge Erwachsene und Werte
+  2027 bleiben bewusst ohne Zahl. Luzern ist damit der fünfte belegte Kanton.
 - **«Aufgelöste Partnerschaft» als Zivilstand**, in allen fünf Sprachen mit dem amtlichen
   Begriff der Zivilstandsverordnung (ZStV Art. 8 lit. d Ziff. 1: fr «partenariat dissous»,
   it «unione domestica sciolta», rm «partenadi schlià»). Bisher blieb nach Auflösung durch

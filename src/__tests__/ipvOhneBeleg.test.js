@@ -30,9 +30,10 @@ const t = (k, p) => (p && typeof p === 'object' && Object.keys(p).length ? k + '
 const render = (C, props) => renderToStaticMarkup(React.createElement(C, { palette, t, onNavigate: () => {}, ...props }));
 const fmt = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
 
-// LU, Einperson, 2000/Monat: nach dem (unbelegten) Muster klar unter der Grenze.
+// BS, Einperson, 2000/Monat: nach dem (unbelegten) Muster klar unter der Grenze.
+// (Bis 23.09.2026 stand hier LU; seither rechnet LU nach eigenem Modell.)
 const profil = (extra = {}) => ({
-  basis: { canton: 'LU', household: { adults: 1, children: [] } },
+  basis: { canton: 'BS', household: { adults: 1, children: [] } },
   finanzen: { monthlyIncome: 2000 },
   wohnen: {},
   versicherungen: { kkPremium: 450 },
@@ -42,7 +43,7 @@ const profil = (extra = {}) => ({
 // Der Betrag, den das Muster rechnen WÜRDE — er darf unbelegt nirgends stehen.
 let musterBetrag;
 beforeAll(() => {
-  const zurueck = kantoneBelegtSimulieren(['LU']);
+  const zurueck = kantoneBelegtSimulieren(['BS']);
   musterBetrag = calculateIPV(profil());
   zurueck();
 });
@@ -80,7 +81,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     const html = render(PremiumSubsidy, { data: profil(), onUpdateData: () => {} });
     expect(html).toContain('ipv.orientierungOffen');
     expect(html).toContain('ipv.zurStelle');
-    expect(html).toContain('href="' + CANTONAL_LINKS.LU.ipv + '"');
+    expect(html).toContain('href="' + CANTONAL_LINKS.BS.ipv + '"');
     expect(html).toContain('ipvStatus.orientierungLead');
     expect(html).not.toContain('premium.eligible');
     expect(html).not.toContain('premium.notEligible');
@@ -130,7 +131,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
       belegt: false,
       einschaetzung: 'beim-kanton-pruefen',
       hinweis: 'ipv.orientierungOffen',
-      kantonaleStelle: CANTONAL_LINKS.LU.ipv,
+      kantonaleStelle: CANTONAL_LINKS.BS.ipv,
     });
     expect(JSON.stringify(dok)).not.toMatch(/amount|annual|maxIncome|subsidy/);
   });
@@ -161,7 +162,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
     expect(html).toContain('ipv.statusOffen');
     expect(html).not.toContain('finanzUebersicht.notEligible');
     expect(html).not.toContain('ipv.incomeAboveLimit');
-    const zeilen = druckAbschnitte(t, { income: 2000, canton: 'LU', ipv: calculateIPV(profil()), sozialhilfe: {}, el: {} })
+    const zeilen = druckAbschnitte(t, { income: 2000, canton: 'BS', ipv: calculateIPV(profil()), sozialhilfe: {}, el: {} })
       .flatMap((a) => a.zeilen || a.rows || []);
     const ipvZeile = JSON.stringify(zeilen);
     expect(ipvZeile).toContain('ipv.statusOffen');
@@ -192,7 +193,7 @@ describe('E9 · Kanton nicht belegt: kein Betrag an keiner Stelle', () => {
 
 describe('E9 · belegter Kanton (simuliert): Betrag wie bisher', () => {
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['LU']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
   afterAll(() => zuruecksetzen());
 
   it('IPV-Rechner zeigt «Berechtigt» und die Beträge', () => {
