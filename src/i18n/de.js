@@ -3070,6 +3070,7 @@ export default {
     vorbehalt: 'Der Kanton kann die Berechnungsgrundlagen im Laufe des Jahres noch anpassen. Verbindlich wird der Anspruch erst mit den definitiven Steuerfaktoren {jahr}; zu viel bezogene Beträge sind zurückzuzahlen.',
     // BE rechnet mit den Steuerdaten des Vorvorjahres (KKVV Art. 7 Abs. 1) — der ZH-Satz wäre hier falsch.
     vorbehaltBE: 'Im Kanton Bern ist die definitive Veranlagung {basisjahr} die Grundlage, nicht das heutige Einkommen. Wer heute deutlich weniger verdient, muss eine Neubeurteilung beantragen. Zu viel bezogene Beträge sind zurückzuzahlen.',
+    vorbehaltBE3aDeckel: 'Ein Teil dieser Rechnung ist rechtlich nicht abschliessend geklärt: Bei einer Einzahlung über dem Betrag, den der Bund höchstens anrechnet, hängt die Zahl davon ab, wie der Kanton diese Obergrenze auslegt. Beim Amt für Sozialversicherungen ist nachgefragt, eine Antwort steht aus. Den Betrag dort bestätigen lassen.',
     beAntragNoetig: 'Achtung: Bei einem Einkommen unter 14 000 Franken prüft der Kanton Bern den Anspruch nicht automatisch. Die Überprüfung muss bis zum 31. Dezember selbst beantragt werden, sonst verfällt der Anspruch für dieses Jahr.',
     // AG rechnet mit der Veranlagung von vor DREI Jahren (§ 7 Abs. 1 KVGG) — der BE-Satz wäre hier falsch.
     vorbehaltAG: 'Im Kanton Aargau ist die rechtskräftige Steuerveranlagung {basisjahr} die Grundlage — drei Jahre vor dem Anspruchsjahr, nicht das heutige Einkommen. Wer seither deutlich weniger verdient, kann bei der SVA Aargau eine Neuberechnung verlangen. Zu Unrecht bezogene Beträge werden zurückgefordert.',
@@ -3097,6 +3098,8 @@ export default {
       agKinder: 'Für Haushalte mit Kindern rechnet die App im Kanton Aargau noch nicht: Kinder erhalten dort mindestens die Hälfte ihrer eigenen Krankenkassenprämie, und diese Prämien sind hier nicht erfasst.',
       jahr: 'Die hinterlegten Werte gelten für ein früheres Anspruchsjahr. Sobald die neuen amtlichen Werte eingearbeitet sind, rechnet die App wieder.',
       praemie: 'Für die Rechnung fehlt die Krankenkassenprämie. Die Verbilligung ist höchstens so hoch wie die Prämie selbst — ohne sie wäre die Zahl hier die Obergrenze, nicht der Anspruch.',
+      einkommenNegativ: 'Das erfasste Einkommen ist negativ. Damit lässt sich keine Verbilligung berechnen — bitte den Betrag im Kapitel Finanzen prüfen.',
+      saeule3aUeberEinkommen: 'Die erfasste Einzahlung in die Säule 3a ist höher als die erfassten Einkünfte des Jahres — oder sie verteilt sich auf mehrere Jahre. Dann lässt sich nicht sagen, welcher Teil in den Einkünften schon enthalten ist, und die Zahl wäre zu hoch. Bitte prüfen: Gefragt ist die Einzahlung eines Jahres, nicht der Kontostand und nicht die Summe mehrerer Jahre.',
       laden: 'Die Grundlagen werden noch geladen.',
     },
   },
