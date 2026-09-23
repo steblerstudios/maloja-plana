@@ -826,6 +826,7 @@ export default {
     export: 'Esportazione',
     calendar: 'Calendario',
     notifications: 'Notifiche',
+    installApp: 'Installare come app',
     flyer: 'Volantino da condividere',
     merkliste: 'Promemoria',
     umzug: 'Trasloco',
@@ -857,6 +858,7 @@ export default {
     todesfall: 'Un lutto nella cerchia',
     arztkoffer: 'Salute',
     sub: {
+      installApp: 'Aggiungere alla schermata iniziale',
       arztkoffer: { sie: 'I Suoi strumenti per la salute in una valigetta', du: 'I tuoi strumenti per la salute in una valigetta' },
       kkerst: 'Assicurarsi arrivando in Svizzera',
       pensionierung: 'AVS, cassa pensioni, 3° pilastro',
@@ -1943,6 +1945,8 @@ export default {
       a7: { sie: "Crei un backup sotto Strumenti → Esportazione (crittografato per impostazione predefinita, senza crittografia se lo sceglie) e lo importi sul nuovo dispositivo. Sul vecchio dispositivo può poi eliminare tutto in Impostazioni → «Dati su questo dispositivo». Non c'è sincronizzazione automatica per scelta — richiederebbe un server.", du: "Crea un backup sotto Strumenti → Esportazione (crittografato per impostazione predefinita, senza crittografia se lo scegli) e importalo sul nuovo dispositivo. Sul vecchio dispositivo puoi poi eliminare tutto in Impostazioni → «Dati su questo dispositivo». Non c'è sincronizzazione automatica per scelta — richiederebbe un server." },
       q8: 'Quanto sono aggiornati i dati (imposte, cassa malati, AVS)?',
       a8: 'I dati si basano sui valori ufficiali 2026. Le modifiche fiscali, i premi assicurativi e i parametri AVS vengono aggiornati con gli aggiornamenti dell\'app.',
+      q9: 'Come porto l’app sul telefono?',
+      a9: 'Maloja Plana non si trova in nessun app store — il sito si può invece aggiungere alla schermata iniziale e si comporta poi come un’app. Il percorso cambia da browser a browser; la guida lo spiega passo per passo.',
     },
   },
 
@@ -3631,6 +3635,84 @@ export default {
   pwa: {
     installHint: 'Installa Maloja Plana come app — disponibile offline, direttamente dalla schermata iniziale.',
     install: 'Installa',
+    anleitungHint: 'Maloja Plana si può aggiungere alla schermata iniziale — in questo browser tramite il menu del browser.',
+    anleitung: 'Ecco come',
+  },
+
+  install: {
+    title: 'Installare come app',
+    navSub: 'Aggiungere alla schermata iniziale',
+    lead: 'Maloja Plana non si trova in nessun app store. È un sito web che si può aggiungere alla schermata iniziale — poi si apre con un\'icona propria e a tutto schermo, senza barra degli indirizzi. Ogni browser chiama questo percorso in modo diverso. Qui i passaggi, uno per uno.',
+    schonInstalliert: 'Su questo dispositivo Maloja Plana funziona già come app.',
+    jetztInstallieren: 'Installa ora',
+    jetztInstallierenHinweis: 'Questo browser può occuparsi da sé dell\'installazione. Una finestra lo chiederà; dopodiché Maloja Plana si trova insieme alle altre app.',
+    diesesGeraet: 'Su questo dispositivo',
+    alleGeraete: 'I percorsi secondo il dispositivo',
+    geraetUnbekannt: 'Non è stato possibile riconoscere con certezza questo dispositivo. Per questo sono elencati tutti i percorsi — quello giusto è fra questi.',
+    andereZeigen: 'Mostra i percorsi per altri dispositivi',
+    andereVerbergen: 'Nascondi gli altri dispositivi',
+
+    geraet: {
+      ios: 'iPhone e iPad',
+      android: 'Android',
+      macSafari: 'Mac con Safari',
+      chromium: 'Computer con Chrome o Edge',
+      firefox: 'Firefox',
+    },
+
+    schritte: {
+      ios: [
+        'Aprire malojaplana.ch in Safari.',
+        'Toccare il simbolo di condivisione nella barra in basso — il quadrato con la freccia verso l\'alto.',
+        'Scorrere l\'elenco verso il basso fino a «Aggiungi a Home».',
+        'Toccare «Aggiungi» in alto a destra.',
+      ],
+      android: [
+        'Aprire malojaplana.ch in Chrome.',
+        'Toccare i tre puntini in alto a destra.',
+        'Scegliere «Installa app». A seconda della versione di Chrome la voce si chiama «Aggiungi a schermata Home».',
+        'Confermare. L\'icona si trova poi insieme alle altre app.',
+      ],
+      macSafari: [
+        'Aprire malojaplana.ch in Safari.',
+        'Nel menu «Archivio» fare clic su «Aggiungi al Dock».',
+        'Confermare il nome. Maloja Plana si trova poi nel Dock e si apre in una finestra propria.',
+      ],
+      chromium: [
+        'Aprire malojaplana.ch.',
+        'Fare clic sul simbolo di installazione a destra nella barra degli indirizzi — un piccolo schermo con una freccia.',
+        'Se il simbolo manca, usare il menu in alto a destra e scegliere «Installa Maloja Plana». A seconda della versione la voce si trova in un sottomenu per condividere e salvare.',
+        'Confermare.',
+      ],
+      firefox: [
+        'Su Android: aprire il menu in alto a destra e scegliere «Aggiungi a schermata Home».',
+        'Sul computer non è possibile — vedi la nota.',
+      ],
+    },
+
+    hinweis: {
+      ios: 'In Safari non esiste un pulsante per questo dentro la pagina stessa; il percorso passa sempre dal simbolo di condivisione. Vale anche per Chrome e Firefox su iPhone — su iOS tutti i browser usano la stessa tecnica.',
+      macSafari: '«Aggiungi al Dock» esiste a partire da Safari 17 (macOS Sonoma). Le versioni precedenti non possono installare app web; lì resta un segnalibro.',
+      firefox: 'Firefox sul computer non può installare app web. Maloja Plana vi funziona normalmente nel browser, con tutte le funzioni, raggiungibile come segnalibro. Per un\'icona propria sul computer si usa Chrome, Edge o Safari.',
+    },
+
+    daten: {
+      title: 'Prima: una copia di sicurezza',
+      p1: 'Maloja Plana salva tutto sul dispositivo, non su un server. Questa memoria appartiene al browser — e a seconda del dispositivo e della versione un\'app installata conta come luogo separato. Può quindi capitare che all\'inizio l\'app sia vuota, benché nel browser ci sia tutto.',
+      p2: 'Perciò conviene creare una copia di sicurezza prima di installare. Se poi l\'app è vuota, la copia la riempie in un passaggio. E se non lo è, la copia era comunque la scelta giusta.',
+      cta: 'Alla copia di sicurezza',
+    },
+
+    danach: {
+      title: 'Che cosa cambia — e che cosa no',
+      items: [
+        'Icona propria, avvio proprio, nessuna cornice del browser. L\'app appare come tutte le altre sul dispositivo.',
+        'Utilizzabile offline negli ambiti già aperti almeno una volta. Un calcolatore mai caricato ha bisogno di internet la prima volta.',
+        'Nessun conto, nessun accesso, nessuna notifica senza un\'azione esplicita. L\'installazione non cambia nulla di tutto ciò.',
+        'Le nuove versioni arrivano da sé all\'apertura, non appena c\'è di nuovo internet. Non c\'è nulla da scaricare.',
+        'Per rimuoverla basta cancellare l\'icona come per ogni app. I dati salvati possono sparire con essa — la copia di sicurezza resta.',
+      ],
+    },
   },
 
   kvg: {

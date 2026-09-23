@@ -32,6 +32,8 @@ const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour 
 import { syncDocumentReminders } from './utils/docReminders.js';
 import { istFremdeAenderung } from './utils/fremdeAenderung.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
+const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
+const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
 import BetaGate from './BetaGate.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
@@ -41,7 +43,6 @@ const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
 import { Icon, zurueckZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
@@ -554,6 +555,8 @@ const AppInner = ({ demo }) => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [dbBlocked, setDbBlocked] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
+  // Läuft die Seite schon als installierte App, ist jeder Installations-Hinweis
+  // falsch. Einmal beim Start bestimmt — der Modus wechselt nicht mitten drin.
   const sandboxActive = sandboxMode && sandboxData;
   const activeData = demoMode && demoData ? demoData : (sandboxActive ? sandboxData : data);
   // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
@@ -1317,23 +1320,14 @@ const AppInner = ({ demo }) => {
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
-        installPrompt && React.createElement('div', {
-          style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
-        },
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
-          React.createElement('div', { style: { display: 'flex', gap: space.xs } },
-            React.createElement(PrimaryButton, {
-              palette,
-              onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
-              style: { padding: space.xs + 'px ' + space.sm + 'px' },
-            }, t('pwa.install')),
-            React.createElement('button', {
-              onClick: () => setInstallPrompt(null),
-              'aria-label': t('common.close'),
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
-            }, '×')
-          )
-        ),
+        // Der Weg auf den Startbildschirm. Eigene, nachgeladene Datei:
+        // das Hauptbundle hat 60 Byte Luft unter dem size-limit, der Kasten
+        // kostet 290 B. Begründung ausführlich in InstallHinweis.jsx.
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(InstallHinweis, {
+            palette, t, onNavigate: handleNavigate, installPrompt,
+            onPromptWeg: () => setInstallPrompt(null),
+          })),
         React.createElement(Dashboard, {
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
@@ -1492,6 +1486,9 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+        view === 'installApp' && React.createElement(InstallGuide, {
+          palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
+        }),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),

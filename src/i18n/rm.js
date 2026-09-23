@@ -863,6 +863,7 @@ export default {
     taxImport: 'Import da taglia',
     search: 'Tschertgar',
     notifications: 'Communicaziuns',
+    installApp: 'Installar sco app',
     menu: 'Menu',
     erfassen: 'Agiuntar',
     anspruch: 'Dretgs',
@@ -886,6 +887,7 @@ export default {
     todesfall: 'In mortori en il conturn',
     arztkoffer: 'Sanadad',
     sub: {
+      installApp: 'Metter sin il homescreen',
       arztkoffer: 'Voss utensils da sanadad en ina valisch da medi',
       kkerst: 'S’assicurar sco nov en Svizra',
       pensionierung: 'AVS, cassa da pensiun, 3. pilaster',
@@ -1718,6 +1720,8 @@ export default {
       a7: { sie: 'Creai sut Utensils → Export ina segirezza (sco predefiniziun criptada, senza criptaziun sche Vus tschernis quai) e importai ella sin il nov apparat. Sin il vegl apparat pudais Vus lura stizzar tut sut Configuraziuns → «Datas sin quest apparat». I na dat nagina sincronisaziun automatica — quai dovress in server.', du: 'Creescha sut Utensils → Export ina segirezza (sco predefiniziun criptada, senza criptaziun sche ti tschernas quai) e importescha ella sin il nov apparat. Sin il vegl apparat pos ti lura stizzar tut sut Configuraziuns → «Datas sin quest apparat». I na dat nagina sincronisaziun automatica — quai dovress in server.' },
       q8: 'Quant actuals èn las datas (taglia, assicuranza da malsogna, AVS)?',
       a8: 'Las datas sa basan sin las valurs uffizialas 2026. Midadas da taglia, premias d\'assicuranza e parameters AVS vegnan actualisads cun ils updates da l\'app.',
+      q9: 'Co vegn jau tar l’app sin il telefonin?',
+      a9: 'Maloja Plana n’è en nagin app store — la website sa laschar percunter metter sin il homescreen e sa cumporta lura sco ina app. Il camin è different tenor navigatur; la scursanida mussa mintga pass.',
     },
   },
 
@@ -1832,6 +1836,89 @@ export default {
   pwa: {
     installHint: 'Installar Maloja Plana sco app — disponibel offline, directamain dal homescreen.',
     install: 'Installar',
+    anleitungHint: 'Maloja Plana sa laschar metter sin il homescreen — en quest navigatur sur il menu dal navigatur.',
+    anleitung: 'Uschia va quai',
+  },
+
+  // TODO(rm): Gegenlese Muttersprache — wie beim übrigen Rumantsch in dieser
+  // Datei. Die Menü-Bezeichnungen in «schritte» stehen bewusst so, wie sie auf
+  // dem Gerät erscheinen (Deutsch bzw. Englisch je Systemsprache) und werden
+  // NICHT übersetzt: ein übersetzter Menüname, den es auf dem Bildschirm nicht
+  // gibt, führt in die Irre.
+  install: {
+    title: 'Installar sco app',
+    navSub: 'Metter sin il homescreen',
+    lead: 'Maloja Plana n\'è en nagin app store. Ella è ina website che sa laschar metter sin il homescreen — lura s\'avra ella cun in agen simbol e sin tut il visur, senza lingia d\'adressa. Mintga navigatur numna quest camin autramain. Qua stattan ils pass, in suenter l\'auter.',
+    schonInstalliert: 'Sin quest apparat funcziuna Maloja Plana gia sco app.',
+    jetztInstallieren: 'Installar ussa',
+    jetztInstallierenHinweis: 'Quest navigatur po surpigliar sez l\'installaziun. Ina fanestra dumonda; lura sa chatta Maloja Plana tar las autras apps.',
+    diesesGeraet: 'Sin quest apparat',
+    alleGeraete: 'Ils camins tenor apparat',
+    geraetUnbekannt: 'Quest apparat n\'ha betg pudì vegnir identifitgà cun segirezza. Perquai stattan qua tut ils camins — quel dretg è tranter els.',
+    andereZeigen: 'Mussar ils camins per auters apparats',
+    andereVerbergen: 'Zuppentar ils auters apparats',
+
+    geraet: {
+      ios: 'iPhone ed iPad',
+      android: 'Android',
+      macSafari: 'Mac cun Safari',
+      chromium: 'Computer cun Chrome u Edge',
+      firefox: 'Firefox',
+    },
+
+    schritte: {
+      ios: [
+        'Avrir malojaplana.ch en Safari.',
+        'Tutgar il simbol da cundivider en la lingia sutvart — il quadrat cun la frizza si.',
+        'Sfulattar la glista giu enfin che «Zum Home-Bildschirm» cumpara.',
+        'Tutgar «Hinzufügen» sisum a dretga.',
+      ],
+      android: [
+        'Avrir malojaplana.ch en Chrome.',
+        'Tutgar ils trais puncts sisum a dretga.',
+        'Tscherner «App installieren». Tenor la versiun da Chrome numna l\'endataziun «Zum Startbildschirm hinzufügen».',
+        'Confermar. Il simbol sa chatta lura tar las autras apps.',
+      ],
+      macSafari: [
+        'Avrir malojaplana.ch en Safari.',
+        'En il menu «Ablage» cliccar sin «Zum Dock hinzufügen».',
+        'Confermar il num. Maloja Plana sa chatta lura en il Dock e s\'avra en ina atgna fanestra.',
+      ],
+      chromium: [
+        'Avrir malojaplana.ch.',
+        'Cliccar sin il simbol d\'installaziun a dretga en la lingia d\'adressa — in pitschen visur cun ina frizza.',
+        'Sche il simbol manca, va il camin sur il menu sisum a dretga: tscherner là «Maloja Plana installieren». Tenor la versiun sa chatta l\'endataziun en in submenu per cundivider e memorisar.',
+        'Confermar.',
+      ],
+      firefox: [
+        'Sin Android: avrir il menu sisum a dretga e tscherner «Zum Startbildschirm hinzufügen».',
+        'Sin il computer n\'è quai betg pussaivel — guardar la remartga.',
+      ],
+    },
+
+    hinweis: {
+      ios: 'En Safari na dat i nagin buttun per quai en la pagina sezza; il camin va adina sur il simbol da cundivider. Quai vala er per Chrome e Firefox sin l\'iPhone — sin iOS dovran tut ils navigaturs la medema tecnica.',
+      macSafari: '«Zum Dock hinzufügen» exista a partir da Safari 17 (macOS Sonoma). Versiuns pli veglias na pon betg installar apps web; là resta in segnapagina.',
+      firefox: 'Firefox sin il computer na po betg installar apps web. Maloja Plana funcziuna là normalmain en il navigatur, cun tut las funcziuns, cuntanschibla sco segnapagina. Per in agen simbol sin il computer dovrar Chrome, Edge u Safari.',
+    },
+
+    daten: {
+      title: 'Avant: ina segirezza',
+      p1: 'Maloja Plana memorisescha tut sin l\'apparat, betg sin in server. Quest spazi da memoria tutga al navigatur — e tenor apparat e versiun vala ina app installada sco atgen lieu. I po perquai dar che l\'app saja vida al cumenzament, schebain che en il navigatur stat tut.',
+      p2: 'Perquai far ina segirezza avant l\'installaziun. Sche l\'app è lura vida, l\'emplenescha la segirezza en in pass. E sche betg, è la segirezza tuttina stada gista.',
+      cta: 'Tar la segirezza',
+    },
+
+    danach: {
+      title: 'Tge che mida — e tge betg',
+      items: [
+        'Agen simbol, agen cumenzament, nagin rom dal navigatur. L\'app vesa ora sco mintga autra sin l\'apparat.',
+        'Utilisabla offline en ils secturs ch\'èn gia vegnids avierts ina giada. In calculatur che n\'è mai vegnì chargià dovra internet la emprima giada.',
+        'Nagin conto, nagina annunzia, naginas communicaziuns senza ina acziun explicita. L\'installaziun na mida nagut vi da quai.',
+        'Novas versiuns arrivan da sasezzas cun avrir, uschespert ch\'igl ha danovamain internet. I n\'è nagut da telechargiar.',
+        'Per allontanar basta stizzar il simbol sco tar mintga app. Las datas memorisadas pon svanir cun el — la segirezza resta.',
+      ],
+    },
   },
 
   vorlesen: {
