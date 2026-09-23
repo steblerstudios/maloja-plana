@@ -202,7 +202,9 @@ export function getHouseholdInfo(data) {
 // «Berechtigt» und keine Grenze, sondern nur eine Orientierung (calculateIPV unten).
 // Das Feld `beleg` je Kanton ist Flag und Quellen-Feld zugleich:
 //   beleg: null                                  → nicht amtlich belegt (heute 21 von 26; ZH, BE, AG, SG und LU belegt seit K31)
-//   beleg: { quelle: 'Amt + Erlass/Seite bzw. URL, aufs Wort genau',
+//   beleg: { quelle: 'Erlass-Kürzel + Amt; der Wortlaut steht im Quellenblatt
+//                     docs/sources/ipv-kantone-2026.md (nicht hier doppelt: jedes Zeichen
+//                     dieser Datei liegt im Hauptbundle, gelesen wird zur Laufzeit nur, OB es da ist)',
 //            stand: 'Datum der Prüfung bzw. Gültigkeitsjahr, z. B. 2026' }
 //                                                → belegt; zeigt wieder einen Betrag
 // Beim Belegen maxIncome/subsidy* auf die amtlichen Werte setzen. Ein `beleg` ohne
@@ -211,16 +213,16 @@ export const CANTONAL_IPV = {
   // ZH (K31): eigenes Modell in config/ipvZuerich.js; Grenze und Höchstbetrag hängen von
   // Prämienregion und Haushalt ab, darum hier keine Einzelwerte (die Musterwerte sind entfernt).
   ZH: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'ZH' },
-    beleg: { quelle: 'EG KVG ZH (LS 832.01) §§ 3–7; RRB Nr. 297/2025 und 947/2025; SVA Zürich, Prämienverbilligung: Leistung, Einkommensgrenzen 2026, Regionale Durchschnittsprämien 2026 (svazurich.ch)', stand: 'Jahr 2026, geprüft 2026-09-19' } },
+    beleg: { quelle: 'EG KVG ZH (LS 832.01) · RRB 297/2025, 947/2025 · SVA Zürich — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-19' } },
   // BE (K31): eigenes Modell in config/ipvBern.js (Stufentabelle); Grenze und Höchstbetrag
   // hängen von Prämienregion und Haushalt ab, darum hier keine Einzelwerte.
   BE: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData',
-    beleg: { quelle: 'KKVV BE (BSG 842.111.1, Stand 01.12.2025) Art. 9, 10, 10a, 10d; Amt für Sozialversicherungen, Berechnungsschema und Informationen zur Prämienverbilligung, gültig ab 1. Januar 2026 (asv.dij.be.ch)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
+    beleg: { quelle: 'KKVV BE (BSG 842.111.1) · Amt für Sozialversicherungen BE — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   // LU (K31): eigenes Modell in config/ipvLuzern.js (Richtprämie minus Prozentsatz, der MIT dem
   // Einkommen steigt; Kinder 80 % fest bis zur Einkommensgrenze). Keine publizierte Grenze für
   // Erwachsene, darum maxIncome null wie in SG und AG.
   LU: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyAhvBranch',
-    beleg: { quelle: 'Prämienverbilligungsverordnung LU (SRL 866a, in Kraft seit 01.01.2026, Beschluss 04.11.2025) §§ 2, 2a, 2b, 3, 3b, 7; Prämienverbilligungsgesetz LU (SRL 866, Stand 01.07.2021) §§ 5, 7, 12; WAS Ausgleichskasse Luzern, Richtprämien und Prämienregionen 2026 (November 2025) und Berechnungsbeispiel Prämienverbilligung 2026 (was-luzern.ch)', stand: 'Jahr 2026, geprüft 2026-09-23' } },
+    beleg: { quelle: 'SRL 866a · SRL 866 · WAS Ausgleichskasse Luzern — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-23' } },
   UR: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplyHealthOffice', beleg: null },
   SZ: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyCompensation', beleg: null },
   OW: { maxIncome: 42000, subsidySingle: 2100, subsidyFamily: 4200, subsidyChild: 1050, modelKey: 'ipv.modelFlat', noteKey: 'ipv.noteApplySocialOffice', beleg: null },
@@ -238,13 +240,13 @@ export const CANTONAL_IPV = {
   // deren Satz MIT dem Einkommen steigt). Der Kanton publiziert keine Einkommensgrenze als
   // Zahl — sie ergäbe sich nur aus der Formel —, darum bleibt maxIncome null wie in AG.
   SG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'SG' },
-    beleg: { quelle: 'Regierungsbeschluss über die Prämienverbilligung 2026 (sGS 331.538, nGS 2025-071, vom 9. Dezember 2025, in Vollzug ab 1. Januar 2026) Art. 1–7; Verordnung zum EG zur Krankenversicherung (sGS 331.111, abgerufene Fassung in Vollzug seit 01.08.2026) Art. 12, 14, 19-21; SVA St.Gallen, Merkblatt IPV 2026 (Form. 4100 01.26)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
+    beleg: { quelle: 'sGS 331.538 · sGS 331.111 · SVA St.Gallen — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   GR: { maxIncome: 45000, subsidySingle: 2250, subsidyFamily: 4500, subsidyChild: 1125, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'GR' }, beleg: null },
   // AG (K31): eigenes Modell in config/ipvAargau.js (Richtprämie minus 17,5 % des massgebenden
   // Einkommens). Keine Prämienregionen; die Einkommensgrenze nach § 5 Abs. 5 KVGG publiziert
   // der Kanton nicht als Zahl, darum bleibt maxIncome null und die Anzeige nennt keine Grenze.
   AG: { maxIncome: null, subsidySingle: null, subsidyFamily: null, subsidyChild: null, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'AG' },
-    beleg: { quelle: 'KVGG AG (SAR 837.200, in Kraft seit 01.12.2025) §§ 5–10, 37; V KVGG (SAR 837.211, in Kraft seit 01.09.2025) §§ 3–5 und Anhang 1 «Berechnungselemente für die Verteilung der Prämienverbilligung 2026» (Stand 1. September 2025); SVA Aargau, Informationsblatt Prämienverbilligung (sva-aargau.ch)', stand: 'Jahr 2026, geprüft 2026-09-20' } },
+    beleg: { quelle: 'KVGG AG (SAR 837.200) · V KVGG (SAR 837.211) · SVA Aargau — Wortlaut: docs/sources/ipv-kantone-2026.md', stand: 'Jahr 2026, geprüft 2026-09-20' } },
   TG: { maxIncome: 48000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplySva', noteParams: { canton: 'TG' }, beleg: null },
   TI: { maxIncome: 45000, subsidySingle: 2400, subsidyFamily: 4800, subsidyChild: 1200, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteApplyIas', beleg: null },
   VD: { maxIncome: 54000, subsidySingle: 3000, subsidyFamily: 6000, subsidyChild: 1500, modelKey: 'ipv.modelIncomeBased', noteKey: 'ipv.noteAutoTaxData', beleg: null },
