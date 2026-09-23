@@ -296,6 +296,76 @@ Kosten der Anmeldung: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 
 ---
 
+## 11a. Weitere Regime — geprüft, heute nicht anwendbar
+
+Nachgetragen am 23.09.2026, weil die Frage «und was noch?» eine Antwort verdient.
+
+### Lizenz-Compliance (AGPL-3.0 und Abhängigkeiten) — **erfüllt, gemessen**
+
+| Gemessen 23.09.2026 | Ergebnis |
+|---|---|
+| Laufzeit-Abhängigkeiten (react, react-dom, three + transitiv) | **6 Pakete, alle MIT** |
+| Mitgelieferter Fremdcode | `src/vendor/qrcodejs.js` (MIT), `public/vendor/jsQR.js` (Apache-2.0) |
+| Lizenztexte ausgeliefert | `public/licenses/` → im Build unter `/licenses/` vorhanden |
+| Verzeichnis | `docs/legal/third-party-licenses.md` nennt alle vier |
+
+MIT und Apache-2.0 sind mit AGPL-3.0 vereinbar. **Der AGPL-Netzwerkparagraf (§ 13)
+verlangt, dass Nutzenden einer gehosteten Instanz der Quellcode angeboten wird** —
+erfüllt, weil das Repository öffentlich ist. Bei einer White-Label-Instanz gilt das
+für die Betreiberin genauso: das gehört in den Lizenzvertrag.
+
+### Die drei EU-Regime, die an **einem** Entscheid hängen
+
+Alle drei greifen erst, wenn Maloja in der EU **verkauft** wird. Der Paywall-Entscheid
+im Oktober entscheidet damit über mehr als den Preis.
+
+| Erlass | Was geprüft wurde (EUR-Lex, 23.09.2026) | Folge |
+|---|---|---|
+| **Produkthaftung**, RL (EU) 2024/2853 | Die verschuldensunabhängige Haftung gilt «für alle beweglichen Sachen, **einschliesslich Software**». Umsetzungsfrist der Mitgliedstaaten: **9. Dezember 2026** (Art. 22) | Für eine Software mit Frankenbeträgen die schärfste der drei. Gilt für Produkte, die **nach** diesem Zeitpunkt in Verkehr gebracht werden |
+| **Barrierefreiheit (EAA)**, RL (EU) 2019/882 | Ab 28.6.2025; E-Commerce erfasst, inkl. barrierefreier Identifizierungs-, Sicherheits- und Zahlungsfunktionen | Trifft die Bestellstrecke — Abschnitt 8 |
+| **Cyber Resilience Act**, VO (EU) 2024/2847 | Gilt ab **11.12.2027**; **Art. 14 — Meldepflicht für aktiv ausgenutzte Schwachstellen und schwere Vorfälle — gilt bereits seit 11.9.2026** (Art. 71) und erfasst auch Produkte, die vorher in Verkehr kamen (Art. 69 Abs. 3) | Siehe Ausnahme unten |
+
+> **Die CRA-Ausnahme ist wörtlich an die Monetarisierung geknüpft:** Die Bereitstellung
+> von Produkten, «die als freie und quelloffene Software eingestuft und von ihren
+> Herstellern **nicht zu Geld gemacht** werden», gilt nicht als Geschäftstätigkeit.
+> Solange Maloja kostenlos und quelloffen ist, greift die Verordnung nicht —
+> **«zu Geld gemacht» ist genau die Schwelle, die eine Paywall überschreitet.**
+
+### App-Store-Vertrieb
+
+Das Repository enthält ein Capacitor-iOS-Projekt (`ios/`). Sobald eine App im Store
+liegt, kommen Pflichten **neben** dem Gesetz dazu:
+
+- **Apple App Review Guidelines** und die Datenschutz-Angaben im Store — sie müssen
+  zum Code passen. Bei einer Local-First-App ist das leicht, aber es ist eine eigene
+  Erklärung, die altert.
+- **DSA**: bei Vertrieb in EU-Stores sind Händlerangaben zu hinterlegen.
+- Altersfreigabe, Support-Adresse, Datenschutz-URL.
+
+→ Heute nicht anwendbar: die App wird als Web-Anwendung ausgeliefert, nicht über einen
+Store.
+
+### Öffentliche Beschaffung
+
+Falls Gemeinden oder Sozialdienste Kundinnen werden, gelten je nach Auftragswert
+**BöB/IVöB** — und dann werden Barrierefreiheit (eCH-0059, WCAG) und
+Datenschutzauflagen **Vertragsbedingung**, nicht mehr Produktanspruch. Abschnitt 8.
+
+### Gesundheitsdaten-Infrastruktur (EPDG)
+
+Maloja verwaltet Gesundheitsangaben lokal und ist **kein** elektronisches
+Patientendossier. Eine Anbindung ans EPD wäre ein eigenes, zertifizierungspflichtiges
+Vorhaben — die Grenze verläuft beim Austausch mit Gesundheitsfachpersonen.
+
+### Nicht Produkt, sondern Betrieb
+
+Handelsregister-Eintrag (Einzelunternehmen ab CHF 100 000 Umsatz), MWST-Anmeldung,
+AHV-Status als Selbständige, Aufbewahrung der Geschäftsbücher (OR Art. 958f, 10
+Jahre), Berufshaftpflicht. Gehört **nicht** in dieses Dokument — hier vermerkt, damit
+die Lücke nicht für einen Befund gehalten wird.
+
+---
+
 ## 12. Swiss Made Software / Digital Trust Label
 
 ### Swiss Made Software

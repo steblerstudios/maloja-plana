@@ -1,6 +1,7 @@
 # K48 — Fragen an die Jurist:in
 
 > **Stand: 23.09.2026**, Code-Stand `main` `2f15946`.
+> Ergänzt 23.09.2026 um F5–F7 (EU-Produkthaftung, Cyber Resilience Act, AGPL § 13).
 > Zweck: Die juristische Durchsicht vorbereiten, damit die Zeit in die **Fragen**
 > geht und nicht ins Einlesen. Jede Frage nennt, **was daran hängt** — ohne
 > Entscheid ist eine Antwort nur teuer.
@@ -162,6 +163,28 @@ Produktentscheidung mit Rechtsfolge, nicht umgekehrt.
 **F4. MWST.** Steuerpflicht ab CHF 100 000; elektronische Dienstleistung — wo ist
 der Ort der Leistung bei Kundschaft im Ausland?
 
+**F5. EU-Produkthaftung für Software.** Richtlinie (EU) 2024/2853 erstreckt die
+verschuldensunabhängige Haftung ausdrücklich auf Software; die Mitgliedstaaten
+müssen sie **bis 9. Dezember 2026** umsetzen.
+Fragen: Greift sie bei einem Verkauf an EU-Verbraucher auch für eine Schweizer
+Anbieterin? Ist ein falscher Frankenbetrag in einem Rechner ein «Fehler» im Sinn der
+Richtlinie? Und: Gibt es in der Schweiz eine Entsprechung — deckt das PrHG reine
+Software?
+→ *Was hängt daran:* ob ein EU-Verkauf überhaupt in Frage kommt. Das ist die
+schärfste der drei EU-Regeln.
+
+**F6. Cyber Resilience Act.** VO (EU) 2024/2847 gilt ab 11.12.2027, die
+**Meldepflichten nach Art. 14 bereits seit 11.9.2026**. Die Ausnahme für freie und
+quelloffene Software ist wörtlich daran geknüpft, dass sie «nicht zu Geld gemacht»
+wird.
+Frage: Fällt eine kostenpflichtige Version einer AGPL-Anwendung aus der Ausnahme —
+und ab welcher Form der Monetarisierung (Abo? Spende? Dual Licensing? White-Label?)?
+→ *Was hängt daran:* die Form der Monetarisierung, nicht nur das Ob.
+
+**F7. AGPL § 13 bei White-Label.** Betreibt ein Lizenznehmer eine eigene Instanz,
+muss er den Nutzenden den Quellcode anbieten. Was muss der Lizenzvertrag dazu
+regeln, damit die Pflicht nicht bei der Anbieterin landet?
+
 ---
 
 ## Unterlagen, die bereitliegen
@@ -184,7 +207,10 @@ der Ort der Leistung bei Kundschaft im Ausland?
 
 1. **A1–A3** (Haftung) — betrifft jede Nutzung, heute schon
 2. **B1** (Affiliate) — blockiert den Oktober-Entscheid
-3. **F1/F3** (Bestellstrecke, EU ja/nein) — sind Bauarbeit mit Vorlauf
+3. **F3/F5/F6** (EU ja/nein) — **eine** Frage mit drei Rechtsfolgen: Barrierefreiheit,
+   Produkthaftung für Software, Cyber Resilience Act. Wird der Verkauf auf die Schweiz
+   beschränkt, fallen alle drei weg. Das ist der grösste Hebel auf dieser Liste
+4. **F1** (Bestellstrecke) — Bauarbeit mit Vorlauf
 4. **D1** (SKOS) — betrifft ein gebautes Kernstück
 5. **C1–C3** (Datenschutz) — Position ist dokumentiert, Risiko wirkt klein
 6. **E1** (Marke) — wichtig, aber nicht dringend
