@@ -278,8 +278,9 @@ export const SONDERSEITEN = [
       {
         titel: 'Fournisseuse',
         absaetze: [
-          'Sophie Stebler / Stebler Studios, Bâle, Suisse.<br>Courriel : <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — classeur de vie suisse. Un projet open source sous AGPL-3.0. Indications selon l’art. 3 al. 1 let. s LCD.',
+          'Sophie Stebler / Stebler Studios<br>Bâle, Suisse<br>Courriel : <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — classeur de vie suisse. Un projet open source sous AGPL-3.0. L’utilisation de l’application est gratuite ; pour le white-label et tout autre usage commercial, une licence séparée est disponible sur demande.',
+          'Concernant l’adresse de contact : l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3" rel="noopener">art. 3 al. 1 let. s ch. 1 LCD</a> exige des indications sur l’identité et sur l’adresse de contact « y compris celle du courrier électronique ». La disposition n’impose pas dans tous les cas une adresse postale. Le nom, le lieu et le courriel sont indiqués ; une adresse postale constitue une décision ouverte, qui sera tranchée en même temps que la question de l’inscription au registre du commerce. Le courriel permet de nous joindre pour toute question, y compris juridique.',
         ],
       },
       {
@@ -294,14 +295,21 @@ export const SONDERSEITEN = [
         titel: 'Protection des données sur ces pages',
         absaetze: [
           'Les pages d’explication sont du HTML statique. Elles ne chargent <strong>aucun script, aucun cookie et aucune ressource de tiers</strong> ; les polices de caractères se trouvent sur le même serveur. Il n’y a ni traçage, ni analyse, ni publicité.',
-          'Lors de la consultation, des données techniques sont néanmoins collectées chez l’hébergeur — <strong>Infomaniak Network SA, Genève</strong>, avec des centres de calcul en Suisse : adresse IP dans les journaux du serveur, type de navigateur, système d’exploitation et moment de l’accès. Cela est techniquement nécessaire à la livraison. La durée de conservation de ces journaux suit le standard de l’hébergeur et ne nous est pas documentée.',
+          'Lors de la consultation, des données techniques sont néanmoins collectées chez l’hébergeur — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genève, avec des centres de calcul en Suisse : adresse IP dans les journaux du serveur, type de navigateur, système d’exploitation et moment de l’accès. Cela est techniquement nécessaire à la livraison et à la sécurité de l’exploitation. Infomaniak agit à ce titre en qualité de sous-traitante (art. 9 nLPD). Selon les indications du prestataire, les journaux d’accès et d’erreur sont conservés au moins 7 jours (FAQ de support Infomaniak 1926, consultée le 23 septembre 2026).',
           'Il n’y a pas d’autres destinataires : aucun service d’analyse, aucune intégration de réseaux sociaux, aucune transmission et aucune vente de données.',
+        ],
+      },
+      {
+        titel: 'Contact par courriel',
+        absaetze: [
+          'Si vous écrivez à <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, nous traitons votre adresse, le contenu du message et les éventuelles pièces jointes afin d’y répondre. La boîte aux lettres est hébergée par Infomaniak en Suisse. La correspondance est conservée aussi longtemps que la demande et les questions de suivi habituelles l’exigent, puis elle est supprimée. Elle n’est pas transmise à des tiers, sauf obligation légale.',
         ],
       },
       {
         titel: 'Données dans l’application',
         absaetze: [
           'Ce que vous saisissez dans Maloja Plana reste <strong>sur votre appareil</strong> (localStorage et IndexedDB dans le navigateur). Il n’y a pas de compte, pas de connexion et aucune transmission à la fournisseuse ou à des tiers. Qui veut effacer les données les efface sur l’appareil — il n’existe pas de seconde copie ailleurs.',
+          'Les données sensibles (santé, aide sociale, convictions) sont elles aussi enregistrées uniquement en local par l’application. Les copies de sauvegarde automatiques dans le navigateur ne sont pas chiffrées.',
           'Comme rien n’est transmis, la fournisseuse ne peut pas non plus renseigner sur vos saisies : elle ne les a jamais vues. La version détaillée avec tous les droits selon la LPD figure dans l’application sous « Protection des données et mentions légales ».',
         ],
       },

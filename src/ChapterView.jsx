@@ -13,6 +13,8 @@ import { Schutzschild } from './components/Schutzschild.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { kantonHatMindestlohn, stundenAufMonat, stundenAufJahr, pruefeStundenlohn, LOHNCHECK_DATA_VERSION, WAGECLAIM_BEREIT } from './data/lohnCheck.js';
 import { getLohnKontrollstelle } from './data/lohnRechtsstellen.js';
+// Ein Blatt ohne eigene Importe — kostet hier nichts ausser sich selbst.
+import { einzahlungenImJahr } from './data/saeule3a.js';
 import { openPrintWindow, escapeHtml } from './utils/helpers.js';
 import { VorlesenButton } from './components/VorlesenButton.jsx';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
@@ -820,8 +822,16 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
       const rawDeposits = Array.isArray(data.pension3aDeposits)
         ? data.pension3aDeposits
         : (Number(data.pension3a) > 0 ? [{ date: '', amount: Number(data.pension3a) }] : []);
+      // 🛑 `pension3a` ist ein JAHRESbetrag — das Feld heisst «3. Säule A eingezahlt
+      // CHF/Jahr», der Steuerrechner vergleicht es mit dem Jahreshöchstabzug und
+      // budgetSync.js teilt es durch 12. Bis zum 23.09.2026 stand hier die Summe ALLER
+      // Zeilen: wer den Tracker über Jahre weiterführte, schrieb damit mehrere Jahre in ein
+      // Jahresfeld (drei Zeilen à 7'000 ⇒ 21'000). Gezählt wird jetzt nur das laufende Jahr;
+      // die Zuordnung liegt in src/data/saeule3a.js, damit Anzeige und Formular sie gleich
+      // lesen. Die älteren Zeilen bleiben erhalten und sichtbar — sie sind Historie, kein Müll.
+      const jahrJetzt = new Date().getFullYear();
       const handleDeposits = (deposits) => {
-        const sum = deposits.reduce((s, d) => s + (Number(d.amount) || 0), 0);
+        const sum = einzahlungenImJahr(deposits, jahrJetzt);
         onUpdate('pension3aDeposits', deposits);
         onUpdate('pension3a', sum ? String(sum) : '');
       };
@@ -831,7 +841,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('div', { role: 'group', 'aria-labelledby': fieldId + '-label' },
           React.createElement(React.Suspense, { fallback: null },
             React.createElement(Saeule3aTracker, {
-              palette, t: tr, deposits: rawDeposits,
+              palette, t: tr, deposits: rawDeposits, jahr: jahrJetzt,
               onChange: handleDeposits,
             })
           )

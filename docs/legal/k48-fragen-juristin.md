@@ -166,6 +166,23 @@ MSchG Art. 2 lit. a/c? Und braucht es gegenüber IR 1786104 eine
 
 ## F · Bezahlversion (Entscheid Oktober)
 
+**F0. Kontaktadresse nach UWG Art. 3 Abs. 1 lit. s Ziff. 1 — gilt das heute schon?**
+Diese Frage betrifft im Unterschied zum Rest dieses Abschnitts das **kostenlose,
+heute live stehende** Angebot, nicht die Bezahlversion. Zwei Teile:
+(a) Greift lit. s überhaupt, wenn es keinen Bestellvorgang und keinen Vertrag
+gibt? Der Einleitungssatz spricht von «elektronischem Geschäftsverkehr».
+(b) Falls ja: Impressum, Datenschutz-Reiter und `/rechtliches/` nennen heute
+Name, Ort und E-Mail, **aber keine Strasse** — und `/rechtliches/` trägt zugleich
+den Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG», behauptet also eine
+Vollständigkeit, die sie ohne Strasse nicht hat.
+→ *Was hängt daran:* ob der Satz bleiben darf, und ob eine c/o- oder
+Geschäftsadresse genügt oder die Wohnadresse nötig ist. Eine erreichbare
+Adresse setzen wir so oder so — die Frage ist nur, ob sie geschuldet ist.
+→ *Stand 23.09.2026:* Die Stelle ist als sichtbarer Platzhalter markiert und
+durch einen absichtlich roten Test gesichert
+(`src/__tests__/impressumAdresse.test.js`); ausliefern lässt sich dieser
+Stand nicht. Aufgeschlagen ist die Lücke bei einer Durchsicht von aussen.
+
 **F1. Bestellstrecke nach UWG Art. 3 Abs. 1 lit. s Ziff. 2–4.**
 Der Wortlaut verlangt: Hinweis auf die technischen Schritte zum Vertragsschluss,
 Mittel zur Erkennung und Korrektur von Eingabefehlern, unverzügliche elektronische

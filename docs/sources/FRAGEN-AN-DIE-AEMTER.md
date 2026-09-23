@@ -148,14 +148,48 @@ Teil des Jahres einer Vorsorgeeinrichtung angehörten?
 **bundesrechtliche Maximum für Unselbständigerwerbende**. Welcher Frankenbetrag gilt dafür im
 Bezugsjahr 2026, und richtet er sich nach dem Steuerjahr oder dem Bezugsjahr?
 
-> 🛑 Wir haben diese Zahl **nicht** eingesetzt, weil wir sie nicht belegen konnten: Fedlex
-> lieferte am 20.09.2026 auf eine **erfundene** ELI eine byte-identische Antwort — damit war
-> das Messgerät unbrauchbar und kein Ergebnis daraus gültig. Eine geratene Zahl sähe belegt
-> aus und läge bei jeder Einzahlung über dem Maximum still daneben.
+> ⟨Stand bis 23.09.2026, bleibt als Beleg stehen⟩ 🛑 Wir haben diese Zahl **nicht** eingesetzt,
+> weil wir sie nicht belegen konnten: Fedlex lieferte am 20.09.2026 auf eine **erfundene** ELI
+> eine byte-identische Antwort — damit war das Messgerät unbrauchbar und kein Ergebnis daraus
+> gültig. Eine geratene Zahl sähe belegt aus und läge bei jeder Einzahlung über dem Maximum
+> still daneben.
+>
+> **Nachtrag 23.09.2026 — die Zahl ist da, die Frage bleibt.** Der Frankenwert ist über zwei
+> andere amtliche Quellen erhoben (ESTV-Tabelle «Höchstabzüge Säule 3a», Gegenprobe BSV-FAQ;
+> `src/data/saeule3a.js`), der Wortlaut von Art. 6 Abs. 4 lit. i an der Quelle gelesen (BELEX,
+> Gegenprobe mit einer erfundenen BSG-Nummer bestanden: leere Seite, nicht derselbe Text).
+> **Die zweite Hälfte der Frage — Steuerjahr oder Bezugsjahr — hat das nicht beantwortet.**
+> Die App rechnet seit dem 23.09. mit dem Maximum des **Bemessungsjahres** (Anspruchsjahr
+> minus zwei, KKVV Art. 7 Abs. 1): für 2026 also CHF 7'056 aus dem Steuerjahr 2024, nicht
+> 7'258. Begründung: Art. 6 Abs. 4 korrigiert das Reineinkommen jener Veranlagung, und
+> aufgerechnet werden kann höchstens, was dort abgezogen werden durfte. **Das ist unsere
+> Lesart, nicht Ihre Auskunft** — an einer Stufengrenze gemessen macht die andere Lesart
+> CHF 480 im Jahr aus. Bitte bestätigen oder berichtigen.
+>
+> **Wie wir es bis zur Antwort halten:** Abgezogen wird erst, was ÜBER beiden Jahresmaxima
+> liegt (2026 also über 7'258). Im Band zwischen den Maxima eines Bemessungs- und eines
+> Anspruchsjahres kann die App nicht unterscheiden, ob jemand über das Maximum hinaus
+> eingezahlt hat oder ob das Maximum seither bloss gestiegen ist — und ein Abzug braucht eine
+> positive Begründung. Wer genau das gesetzliche Maximum einzahlt, bekommt so keinen Abzug;
+> das war in einer ersten Fassung anders und ergab CHF 480 im Jahr zu viel.
+>
+> **Und eine Annahme, die wir nennen müssen:** Unser Rechenweg unterstellt, die Veranlagung
+> habe die volle Einzahlung abgezogen. Das trifft für Personen OHNE 2. Säule zu. Bei einer
+> Person MIT Pensionskasse hätte die Veranlagung höchstens den kleinen Höchstabzug gewährt,
+> die Aufrechnung höbe ihn genau auf, und der richtige Abzug wäre null. Ob eine 2. Säule
+> besteht, wissen wir nicht — es ist dieselbe fehlende Angabe wie in Frage 1.
+>
+> Eine dritte Lesart ist uns dabei aufgefallen und wäre uns ebenfalls wichtig: BVV 3 Art. 7
+> Abs. 1 knüpft nicht an «unselbständig» an, sondern an die **Zugehörigkeit zu einer
+> Vorsorgeeinrichtung**. Gilt für Angestellte **ohne** Pensionskasse (Lohn unter der
+> BVG-Eintrittsschwelle) der Betrag nach lit. a oder nach lit. b?
 
-**Stand:** Die Doppelzählung der 3a (sie steckte schon im erfassten Nettoeinkommen und wurde
-ein zweites Mal aufgerechnet) ist behoben. Die beiden kantonalen Sonderregeln sind benannt und
-belegt hinterlegt, **wirken aber noch nicht** — sie hängen an diesen zwei Antworten.
+**Stand (23.09.2026):** Die Doppelzählung der 3a (sie steckte schon im erfassten Nettoeinkommen
+und wurde ein zweites Mal aufgerechnet) ist behoben. Von den beiden kantonalen Sonderregeln
+**rechnet die Berner seit dem 23.09.2026** — unter dem Vorbehalt oben, der im Code als
+`SAEULE_3A.bisBundesMaximum.vorbehalt` steht. Die Aargauer Regel **wirkt weiterhin nicht**: ihr
+fehlt keine Zahl, sondern die Angabe, ob eine Säule 2 besteht (Frage 1). Die holt keine Auskunft
+nach — das ist ein Produktentscheid.
 
 ---
 

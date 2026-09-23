@@ -18,7 +18,7 @@
 //     keine automatische Prüfung; Konkubinat mit gemeinsamem Kind rechnet wie ein Ehepaar.
 import { getRegion } from '../data/praemienRegionen.js';
 import {
-  vermoegenSumme, einkommenJahr, geburtsjahr, praemieJahr,
+  vermoegenSumme, einkommenJahr, rohesEinkommenJahr, geburtsjahr, praemieJahr,
   jahrVorbei, mehrereErwachsene, praemieFehlt, ERWACHSEN, SAEULE_3A,
   kinderAlter, ALTER_UNERFASST, UEBER_18, regionAusPLZ, deckelnProPerson,
   ergebnisOhneAnspruch, ergebnisMitAnspruch,
@@ -36,9 +36,16 @@ export const IPV_BE = {
   // Kinder bis 18: ein Betrag für alle Stufen (KKVV Art. 10d — 80 % der Prämie, unabhängig
   // von der Stufe, solange das Familieneinkommen 45'000 nicht übersteigt).
   kinder: { 1: 119.3, 2: 106, 3: 99.35 },
+  // ⟨Beleg nachgezogen 23.09.2026⟩ Die 750'000 stehen nicht nur im Informationsblatt, sondern
+  // im Erlass selbst: KKVV Art. 13 Abs. 2 lit. l, «Personen mit einem Bruttovermögen von mehr
+  // als 750'000 Franken» — Antragspflicht, kein Ausschluss.
   vermoegen: { freibetragProKopf: 17000, anteil: 0.05, bruttoGrenze: 750000 },
   // Unter diesem korrigierten Reineinkommen prüft der Kanton nicht automatisch, sondern nur
-  // auf Antrag bis 31.12. (Informationsblatt 2026, S. 2).
+  // auf Antrag bis 31.12. ⟨Beleg nachgezogen 23.09.2026: ebenfalls im Erlass, KKVV Art. 13
+  // Abs. 2 lit. i — «Erwachsene, die im Jahr ein Einkommen nach Artikel 6 Absatz 4 von
+  // weniger als 14'000 Franken erzielen und nach Artikel 5 nicht eine Familie bilden». Der
+  // Erlass definiert die Schwelle also selbst über das KORRIGIERTE Reineinkommen; vorher
+  // stand hier nur «Informationsblatt 2026, S. 2».⟩
   antragUnterEinkommen: 14000,
   abzug: { ehepaar: 13000, alleinerziehend: 9750, alleinstehend: 2200, kind: [15000, 12500], kindWeitere: 10000 },
 };
@@ -106,6 +113,22 @@ export function ipvBernRechnen({ region, personen, me }) {
 //   eigenes Alter unbekannt oder nicht eindeutig über 25, Kinder ohne Alter oder über 18
 //   (junge Erwachsene hängen an Ausbildung und eigenem Einkommen — beides nicht erfasst),
 //   Bruttovermögen über 750'000, Gemeinde nicht eindeutig, Anspruchsjahr vorbei.
+//   🛑 QUELLENBESTEUERTE rechnet die App wie ordentlich Veranlagte — falsch, aber nicht
+//   erkennbar: bei ihnen gelten nach KKVV Art. 6a Abs. 1 «75 Prozent des Bruttoeinkommens»,
+//   und der Aufrechnungskatalog von Art. 6 Abs. 4 — also auch der 3a-Deckel — greift gar
+//   nicht. Kein erfasstes Feld BELEGT Quellenbesteuerung (`basis.nationality` gibt es, aber
+//   es sagt darüber nichts). Die Lücke bestand schon vorher; seit dem 3a-Deckel (23.09.2026)
+//   weicht das Ergebnis für diese Gruppe zusätzlich ab. Hier benannt statt still gelassen —
+//   ein Feld dafür ist ein Produktentscheid, keine Fachfrage.
+//   🛑 ZUZÜGERINNEN UND SONDERFÄLLE rechnet die App mit dem falschen Bemessungsjahr. Die
+//   Regel `jahr − 2` ist der REGELFALL (Art. 7 Abs. 1). Art. 7 Abs. 3 stellt für Personen,
+//   die im Vorjahr aus einem anderen Kanton zugezogen sind, auf die Veranlagung des LETZTEN
+//   Steuerjahres ab (für 2026 also 2025, 3a-Maximum 7'258 statt 7'056); Art. 7a gilt für
+//   Quellenbesteuerte, und nach Art. 8 darf das ASV in Sonderfällen — Erwerbsaufnahme nach
+//   der Ausbildung, Zuzug aus dem Ausland, Austritt aus der Sozialhilfe — ganz von den
+//   Steuerdaten abweichen. Die App fragt den Zuzug nicht ab; der angezeigte Vorbehalt
+//   (`ipv.vorbehaltBE`) nennt diesen Personen deshalb ein Basisjahr, das für sie nicht gilt.
+//   (Befund Fachprüfung 23.09.2026, zweite Runde.)
 //   Näherung: korrigiertes Reineinkommen = Erwerbs-, Neben- und Renteneinkommen × 12 plus die
 //   Säule-3a-Einzahlung (KKVV Art. 9 Abs. 2 i. V. m. dem Berechnungsschema, Ziffer 1.1).
 //   Amtlich zählt das Reineinkommen aus den Steuerdaten; es fehlen also die Berufsauslagen und
@@ -169,15 +192,45 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   // Einkommen). Darum ein eigener Grund statt «über der kantonalen Grenze».
   if (vermoegen > IPV_BE.vermoegen.bruttoGrenze) return orientierung('vermoegenAntrag');
   // KKVV Art. 6 Abs. 4 lit. i rechnet die Säule 3a dem Reineinkommen zu — aber nur BIS ZUM
-  // bundesrechtlichen Maximum für Unselbständige. Das Nettoeinkommen der App trägt sie
-  // bereits voll, die Regel wäre also ein Abzug des Überschusses. Ihr Frankenwert ist seit
-  // dem 23.09.2026 belegt (7'258, src/data/saeule3a.js); der Abzug ist aber noch nicht
-  // gebaut und nicht fachgeprüft (siehe SAEULE_3A.bisBundesMaximum.offen) — bis dahin wirkt
-  // der Deckel nicht, betroffen sind nur Einzahlungen über dem Maximum.
+  // «nach Bundesrecht zulässigen Maximalbetrag für unselbständig Erwerbstätige» (Wortlaut an
+  // der Quelle gelesen, 23.09.2026). Das Nettoeinkommen der App trägt sie bereits voll, die
+  // Regel wirkt hier also als Abzug des Überschusses.
+  // ⟨seit 23.09.2026 gebaut; vorher `() => 0`, weil der Frankenwert nicht belegt war⟩
+  // Betroffen sind nur Einzahlungen ÜBER dem Maximum — vor allem Selbständige ohne 2. Säule,
+  // die bundesrechtlich bis 35'280 abziehen dürfen. Ihr Abzug hier ist am grössten, und weil
+  // BE in Stufen rechnet, entscheidet er über eine ganze Stufe (bis CHF 888 im Jahr).
+  //
+  // 🛑 DAS JAHR DES DECKELS IST DAS BEMESSUNGSJAHR, nicht das Anspruchsjahr. Art. 7 Abs. 1:
+  // massgebend ist «die definitive Veranlagung des vorletzten Steuerjahres», und Art. 6
+  // Abs. 4 korrigiert genau jenes Reineinkommen. Aufgerechnet werden kann darum höchstens,
+  // was dort abgezogen werden durfte — für 2026 das Maximum von 2024 (7'056), nicht das von
+  // 2026 (7'258). Dasselbe Jahr, das `vorbehaltBE` der Person ohnehin nennt.
+  // (Befund Fachprüfung 23.09.2026: zuerst stand hier das Maximum des Anspruchsjahres. An
+  // einer Stufengrenze gemessen CHF 480 im Jahr Unterschied, auf der zu tiefen Seite.)
+  const jahre = { bemessungsjahr: jahr - 2, anspruchsjahr: jahr };
+  // Kein belegtes Maximum für dieses Jahr ⇒ keine Zahl. Sonst rechnete die App still ohne
+  // Deckel weiter, und das Fehlen sähe aus wie ein Ergebnis.
+  if (SAEULE_3A.bisBundesMaximum.maximumFuer(jahre.bemessungsjahr) === null) return orientierung('jahr');
+  // 🛑 Ein negatives Einkommen ist ein Vertipper, kein Einkommen — und es endete sonst über
+  // `Math.max(0, …)` in `beMassgebendesEinkommen` bei der HÖCHSTEN Stufe. Derselbe Schaden
+  // wie beim 3a-Riegel darunter, nur über das Minuszeichen. (Befund Fachprüfung 23.09.2026,
+  // dritte Runde; die Lücke bestand schon vorher, wird hier aber mitgeschlossen, weil sie
+  // sonst genau den Riegel daneben aushebelt.)
+  if (rohesEinkommenJahr(f) < 0) return orientierung('einkommenNegativ');
+  // 🛑 Die Herleitung «das Nettoeinkommen trägt die 3a bereits» ist widerlegt, sobald die
+  // Einzahlung grösser ist als das ganze Jahreseinkommen. Dann stammt sie nicht daraus — oder
+  // es steht der Kontostand im Feld für die Jahreseinzahlung. Ohne diesen Riegel zog der
+  // Abzug das Einkommen ins Negative und die App zeigte die HÖCHSTE Stufe: ein Vertipper im
+  // Formular hätte still den Höchstbetrag ergeben (Befund Fachprüfung 23.09.2026).
+  if (SAEULE_3A.bisBundesMaximum.widerlegt(f, rohesEinkommenJahr(f), jahre)) return orientierung('saeule3aUeberEinkommen');
+  // Nebenwirkung, die dazugehört: der Abzug senkt auch `reineinkommen` und kann damit die
+  // 14'000-Schwelle für `antragNoetig` weiter unten unterschreiten. Das ist richtig so — die
+  // KKVV definiert jene Schwelle ausdrücklich über «ein Einkommen nach Artikel 6 Absatz 4»
+  // (Art. 13 Abs. 2 lit. i), also über das KORRIGIERTE Reineinkommen, nicht über das rohe.
   // (Befund Fachprüfung 20.09.2026: hier stand Art. 9 Abs. 2 — die falsche Norm, und der
   // Deckel ging dabei ganz verloren. Zusätzlich wurde die 3a doppelt gezählt; in einer
   // Stufentabelle kostet ein Franken Differenz eine ganze Stufe, bis CHF 888 im Jahr.)
-  const reineinkommen = einkommenJahr(f, SAEULE_3A.bisBundesMaximum);
+  const reineinkommen = einkommenJahr(f, SAEULE_3A.bisBundesMaximum, jahre);
   const me = beMassgebendesEinkommen({ reineinkommen, vermoegen, mitglieder: 1 + kinderZahl, kinderZahl });
 
   const r = ipvBernRechnen({ region, personen: ['e', ...kinderJahre.map(() => 'k')], me });
@@ -190,7 +243,14 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   if (praemieFehlt(praemie)) return orientierung('praemie');
   const annual = deckelnProPerson(r.annual, r.erwachseneAnnual, praemie);
   const maxAnnual = deckelnProPerson(r.maximal, r.erwachseneMaximal, praemie);
-  const gemeinsam = { canton: 'BE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltBE', extra: { region } };
+  // Wirkt der 3a-Deckel bei DIESER Person, hängt ihr Betrag an einer Lesart, die das ASV
+  // nicht bestätigt hat — das gehört in die Anzeige, nicht nur in den Quelltext.
+  // Nur wo der Abzug tatsächlich > 0 ist; bei allen anderen ändert die Lesart nichts.
+  const deckelWirkt = SAEULE_3A.bisBundesMaximum.nichtAufgerechnet(f, jahre) > 0;
+  const gemeinsam = {
+    canton: 'BE', cantonData, jahr, vorbehaltKey: 'ipv.vorbehaltBE',
+    extra: { region, ...(deckelWirkt ? { zusatzVorbehaltKey: 'ipv.vorbehaltBE3aDeckel' } : {}) },
+  };
   if (annual <= 0) {
     return ergebnisOhneAnspruch({ ...gemeinsam, noteKey: 'ipv.incomeAboveLimit', noteParams: { value: r.grenze } });
   }
