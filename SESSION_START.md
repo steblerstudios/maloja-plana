@@ -25,6 +25,19 @@
 > Vorher im Haupt-Checkout auf `main` stellen — **`main` ist jetzt frei**, der Worktree dieser
 > Sitzung hält es nicht mehr fest (er steht losgelöst auf `74ab23b`).
 >
+> ✅ **Nachtrag 23.09., 22:57 — aus der Melde-Weg-Sitzung, gegen den Block darüber gemessen.**
+> Der Block stimmt, zwei Zeilen sind nur weitergezogen: `main` = **`2369bbc`** (nach **#276**
+> Stand-Doku, 20:57), und es sind **zwei** offene PRs — **#272** «UI/UX-Runde» (fremd, nicht
+> angefasst) und **#278** «Der Melde-Weg festgehalten» (Doku, Entwurf, aus dieser Sitzung:
+> BUGS.md B-5 auf Stand + Bau-Liste §25 mit den drei Punkten ab Sa 26.09.).
+> Tests auf `main` **2830 grün** (147 Dateien), Build sauber — um 22:39 selbst nachgemessen.
+> **Live weiterhin `index-8FolD38L.js` vom 22.09.** — unverändert, also vor allen PRs von heute.
+>
+> 🛑 **Und der Grund, warum der Deploy nicht von Claude kommt, ist nicht nur das Branch-Gate:**
+> `deploy.sh:103–104` fragt das SFTP-Passwort. Passwörter eingeben ist Claude verboten, und
+> diese Sitzung war nicht interaktiv. Der Deploy ist damit **mechanisch** Sophies Hand, nicht
+> bloss per Konvention. Befehl: im Haupt-Checkout `git checkout main && git pull && bash deploy.sh`.
+>
 > ### Was #271 gebracht hat — der Deckel rechnet
 > `SAEULE_3A.bisBundesMaximum.nichtAufgerechnet` stand seit dem 20.09. auf `() => 0`, weil der
 > Frankenwert nicht belegt war. Wortlaut jetzt **an der Quelle gelesen** (BELEX, BSG 842.111.1,
