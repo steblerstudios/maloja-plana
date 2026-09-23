@@ -3076,25 +3076,6 @@ export default {
     onlyAhvIv: 'EL only for AHV/IV recipients',
   },
 
-  premiumCalc: {
-    coupleChildren: 'Couple + children',
-    singleChildren: 'Single + children',
-    single: 'Single',
-    incomeToHigh: 'Income too high (over CHF {value})',
-    eligible: 'Eligible for premium subsidy',
-    doc1: 'Tax return (last 2 years)',
-    doc2: 'Pay slips',
-    doc3: 'Family certificate',
-    doc4: 'Health insurance premium confirmation',
-    docTitle: 'KVG §67 Application data',
-    check1: 'Attach previous year tax return',
-    check2: 'Current premium invoice from insurer',
-    check3: 'Pay slip / income confirmation',
-    check4: 'Rental contract (if applicable)',
-    check5: 'Family certificate (if applicable)',
-    check6: 'Maintenance payment confirmation (if applicable)',
-  },
-
   tour: {
     a11yLabel: 'Tour of Maloja',
     reopen: 'Restart the tour',
