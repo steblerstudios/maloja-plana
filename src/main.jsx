@@ -110,7 +110,6 @@ const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
-import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -555,7 +554,17 @@ const AppInner = ({ demo }) => {
   const [installPrompt, setInstallPrompt] = useState(null);
   // Läuft die Seite schon als installierte App, ist jeder Installations-Hinweis
   // falsch. Einmal beim Start bestimmt — der Modus wechselt nicht mitten drin.
-  const [laeuftSchonAlsApp] = useState(() => laeuftAlsApp());
+  // Läuft die Seite schon als installierte App? Bewusst hier inline und NICHT
+  // aus utils/geraetErkennung.js importiert: ein statischer Import zöge das
+  // ganze Modul ins Hauptbundle, und das hat 50 Byte Luft unter dem
+  // size-limit (gemessen 24.09.2026). Die ausführliche Fassung samt Tests
+  // lebt weiter in geraetErkennung.js — die Anleitungs-Seite lädt sie lazy.
+  const [laeuftSchonAlsApp] = useState(() => {
+    try {
+      if (navigator.standalone === true) return true;
+      return window.matchMedia('(display-mode: standalone)').matches;
+    } catch (e) { return false; }
+  });
   // Der Hinweis auf die Anleitung gilt den Browsern OHNE `beforeinstallprompt`
   // (Safari, Firefox). Einmal weggeklickt bleibt er weg: ein Hinweis, der nach
   // jedem Laden zurückkommt, ist eine Aufforderung und keine Hilfe.
@@ -1332,50 +1341,40 @@ const AppInner = ({ demo }) => {
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
         // ── Der Weg auf den Startbildschirm ───────────────────────────────
-        // Zwei Fassungen, weil die Browser sich zwei Fassungen erzwingen:
+        // EIN Banner, zwei Fassungen — nicht zwei Banner:
         //
         //   • Chromium (Chrome/Edge, Desktop + Android) meldet sich per
-        //     `beforeinstallprompt`. Nur dort kann die Seite selbst einen
-        //     Installieren-Knopf anbieten.
-        //   • Safari (iOS UND macOS) und Firefox melden sich nie. Bis 23.09.2026
-        //     stand dort GAR NICHTS — auf jedem iPhone also, und das ist das
-        //     Gerät, auf dem dieser Ordner am ehesten gebraucht wird. Statt des
-        //     Knopfs steht nun der Weg zur Anleitung.
+        //     `beforeinstallprompt`. Nur dort kann die Seite selbst
+        //     installieren, also gibt es dort zusätzlich den Knopf.
+        //   • Safari (iOS UND macOS) und Firefox melden sich nie. Bis
+        //     24.09.2026 stand dort GAR NICHTS — auf jedem iPhone also, und
+        //     das ist das Gerät, auf dem dieser Ordner am ehesten gebraucht
+        //     wird. Dort führt derselbe Kasten zur Anleitung.
         //
-        // Beide verschwinden, sobald die Seite als App läuft; die zweite bleibt
-        // nach dem Wegklicken dauerhaft weg (or5_install_hinweis).
-        !laeuftSchonAlsApp && installPrompt && React.createElement('div', {
+        // Warum zusammengelegt: als zwei getrennte Kästen war der Aufbau
+        // zweimal fast wörtlich da und kostete rund 600 B gzip im
+        // Hauptbundle — genug, um das size-limit zu reissen (CI rot,
+        // 24.09.2026). Der Unterschied sind drei Werte, nicht zwei Blöcke.
+        //
+        // Beide verschwinden, sobald die Seite als App läuft; die Fassung
+        // ohne Knopf bleibt nach dem Wegklicken weg (or5_install_hinweis).
+        !laeuftSchonAlsApp && (installPrompt || !installHinweisWeg) && React.createElement('div', {
           style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
         },
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } },
+            t(installPrompt ? 'pwa.installHint' : 'pwa.anleitungHint')),
           React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
-            React.createElement(PrimaryButton, {
+            installPrompt && React.createElement(PrimaryButton, {
               palette,
               onClick: installAusfuehren,
               style: { padding: space.xs + 'px ' + space.sm + 'px' },
             }, t('pwa.install')),
             React.createElement('button', {
               onClick: () => handleNavigate('installApp'),
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.sandDeep, border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit' }
-            }, t('pwa.anleitung')),
-            React.createElement('button', {
-              onClick: () => setInstallPrompt(null),
-              'aria-label': t('common.close'),
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
-            }, '×')
-          )
-        ),
-        !laeuftSchonAlsApp && !installPrompt && !installHinweisWeg && React.createElement('div', {
-          style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
-        },
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.anleitungHint')),
-          React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
-            React.createElement('button', {
-              onClick: () => handleNavigate('installApp'),
               style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.sandDeep, border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium }
             }, t('pwa.anleitung')),
             React.createElement('button', {
-              onClick: installHinweisVerwerfen,
+              onClick: () => (installPrompt ? setInstallPrompt(null) : installHinweisVerwerfen()),
               'aria-label': t('common.close'),
               style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
             }, '×')
