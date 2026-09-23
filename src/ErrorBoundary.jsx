@@ -1,6 +1,7 @@
 import React from 'react';
 import { version as APP_VERSION } from '../package.json';
 import { text, weight, radius, space, fontFamily } from './config/tokens.js';
+import { paletteAusSpeicher } from './config/constants.js';
 import { I18nContext } from './i18n/index.js';
 import { tMitRueckfall } from './utils/tRueckfall.js';
 
@@ -62,7 +63,10 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (!this.state.hasError) return this.props.children;
 
-    const { palette } = this.props;
+    // Farben: das übergebene palette, sonst das Thema aus dem Speicher — dieselbe
+    // Quelle wie die App. Bis 23.09.2026 standen hier dunkle Rückfallwerte, also
+    // erschien der Absturz-Schirm im Hellmodus dunkel.
+    const palette = this.props.palette || paletteAusSpeicher();
     // Erst das übergebene t, sonst der Kontext, sonst die geladene Sprache. Fehlt
     // ein Schlüssel, bleibt der englische Rückfalltext stehen — nie ein leerer Knopf.
     const tt = tMitRueckfall(this.props.t, this.context?.t, 'Fehlerschirm');

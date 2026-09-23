@@ -429,7 +429,11 @@ nicht eindeutiger Gemeinde und ab 2027.
 
 **Offen geblieben (nicht im Code):** wie in ZH ist das massgebende Einkommen in der App eine
 Näherung — amtlich zählt das Reineinkommen aus den Steuerdaten mit den Aufrechnungen des
-Schemas, die App summiert die erfassten Einkommen plus Säule 3a; das Vermögen ist die Summe
+Schemas, die App summiert die erfassten Einkommen — die Säule 3a steckt im erfassten
+Nettoeinkommen bereits drin und wird seit dem 20.09.2026 nicht mehr zusätzlich aufgerechnet;
+seit dem 23.09.2026 wird der Teil ÜBER dem bundesrechtlichen Maximum des Bemessungsjahres
+(2024: CHF 7'056) sogar abgezogen, wie es Art. 6 Abs. 4 lit. i verlangt. ⟨Hier stand «plus
+Säule 3a» — überholt, der Satz bleibt als Beleg.⟩ Das Vermögen ist die Summe
 der erfassten Posten, nicht das Reinvermögen inkl. Liegenschaft und abzüglich Schulden. **In
 einer Stufentabelle wiegt das schwerer als in einem linearen Modell**: eine Stufe ist in
 Region 1 bis zu CHF 888 im Jahr wert. Ebenfalls nicht gerechnet: Quellenbesteuerte (75 % des
