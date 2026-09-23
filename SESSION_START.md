@@ -19,6 +19,41 @@
 
 **Stand:** 2026-09-22, 10:25 (`main` = `28006b5` nach **#249** a11y-Labels · **#250** Stand-Doku · **#251** SEO-Fixes + Audit-Blatt · **#253** öffentliche Erklärseiten · **#252** Kern-Text ohne JS · **#254** EL/SKOS-Fachkorrektur · **#255** + **#257** Stand-Doku · **#256** Erklärseiten in fünf Sprachen, **gemergt 21.09. 15:32 UTC** · **#259** Vorname raus, **gemergt 21.09. 16:26 UTC** · **#258** Zeichenschicht + Fokus-Falle, **gemergt 22.09. 07:54 UTC** · **#260** Stand-Doku, **gemergt 22.09. 07:58 UTC** · **#262** Stand-Korrektur, **gemergt 22.09. 10:15 UTC** · **#261** Lebensbaum auf die Finanz-Übersicht, **gemergt 22.09. 08:20 UTC** · **live weiterhin `index-nd0WhuaA.js` = 0.1.39-beta, also VOR diesen dreizehn PRs** · **2696 Tests grün auf `main` gemessen** (140 Dateien), eslint sauber, Startdatei **59,09 kB von 65** · **keine offenen PRs**, unmittelbar vor dem Schreiben geprüft)
 
+> ✅ **Nachtrag 24.09., 01:13 — Zeichen, Icons, Glossar: sieben PRs gemergt, alle auf ausdrückliches Wort von Stebler Studios.**
+> Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben:
+>
+> **Stand, gemessen 24.09.2026 01:13:** `main` = `69f2ffa` (01:07, #293 aus einer fremden
+> Sitzung) · live = `index-8FolD38L.js`, Commit unbekannt (vor Einführung der `version.json`) ·
+> Abstand nicht messbar · offene PRs: #294 · #286 (Entwürfe, fremde Sitzungen).
+> Auf `69f2ffa`: **3043 Tests grün** (163 Dateien) · Startdatei **64,94 von 65 kB**.
+>
+> 🛑 **Die Startdatei hat noch 60 Byte Luft.** Beim Glossar-PR (#298, gemessen auf seinem Zweig)
+> waren es 60,23 kB; die Merges der Nacht haben ~4,7 kB dazugelegt. Die nächste Änderung, die
+> in die Startdatei wächst, wird vom `size-limit` abgewiesen — **vor dem nächsten Bau-PR messen**,
+> nicht erst im Deploy-Gate. Wer wie viel beigetragen hat, ist nicht gemessen.
+>
+> ### Was gemergt ist
+> | PR | was | Beleg |
+> |---|---|---|
+> | **#288** | drei Icon-Namen zeigten ins Leere (`child`, `calculator`, `shield` → `Icon` gibt still `null`); neuer Test `iconNamen`; Zeichen-Wächter sieht auch `.js` (fand 8× `○` in `budgetSync.js`, ohne aria-hidden auf dem Schirm) | Mutationsproben rot |
+> | **#291** | Stipendien-Ergebnis: Form statt `✓ ○ ⓘ` (voll / Ring mit Kern / hohl), `components/StatusForm.jsx` gemeinsam mit KVG | 5 Tests rot mit den alten Zeichen |
+> | **#295** | Zeichen-Wächter sieht Template-Strings; Lebenslauf ohne `○`; Vermerk: 5 Icons ohne Einsatz **bleiben** (Marken-Vokabular, Entscheid Stebler Studios) | rot mit `○` zurück |
+> | **#297** | toter `premiumCalc`-Block (16 × 5) + zwei rm-Waisen raus; zwei IPV-Unterlagen als ❓ in `docs/TODO.md` §E | Probe-Merge gegen 5 PRs konfliktfrei |
+> | **#298** | **Glossar mehrsprachig:** Form = Kopfwort der übersetzten Erklärung. Sätze mit Begriff: fr 32→442 · it 12→429 · en 215→332 · rm 61→338 · de 450→450 | 3 Mutationsproben rot |
+> | **#299** | Icon-Namen-Test prüft auch die Tabellen (`WERKZEUG_ICON`, `CATEGORY_ICON_KEYS`, `HERZ_ICON`, `chapterIcons`) | rot mit `steuernX` |
+> | **#301** | `docs/i18n_glossar_gegenlesen.md` — 16 Erklärungen × 5 Sprachen + **8 offene Sprachfragen** | nur Doku |
+>
+> ### 🛑 Was offen bleibt
+> 1. **Nicht deployt** — alles oben; live läuft unverändert der Stand vom 22.09.
+> 2. **Gegenlesen** (`docs/i18n_glossar_gegenlesen.md`): rm «LAA» steht in 0 rm-Sätzen, die Texte
+>    sagen «LAINF» (7); rm «SKOS» vs. «COSAS» (13); it «Contributi d’affitto» (0) vs. «all’affitto» (2).
+>    **Seit #298 bestimmt das Kopfwort, was erkannt wird** — ein uneinheitliches Kopfwort heisst,
+>    dass der Begriff in dieser Sprache nicht markiert wird.
+> 3. **Ein voller Testlauf am 23.09. um ~23:40 hatte vier rote Tests** (`glyphenImText`,
+>    `hauptbundleLazy`, `k101QrHinweis`, `secureStore`) bei Mac-Last 16; sechs Läufe danach, bis
+>    Last 20, alle grün. **Ursache nicht gefunden**, die Ausgabe des roten Laufs nicht gesichert.
+>    Tritt es wieder auf: die volle Ausgabe in eine Datei schreiben, bevor neu gestartet wird.
+>
 > ✅ **Nachtrag 24.09., 00:54 — die UI/UX-Runde ist gemergt: #272 (Teil 1) und #296 (Teil 2), beide auf ausdrückliches Wort von Stebler Studios.**
 > Gemessen mit `bash scripts/stand-jetzt.sh` unmittelbar vor dem Schreiben, nicht am Sitzungsanfang:
 >
