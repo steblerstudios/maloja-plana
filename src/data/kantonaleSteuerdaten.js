@@ -19,6 +19,7 @@ import {
 import { bundessteuerAusSteuerbarem, vergleicheTarife } from './steuerRechner.js';
 import { getHouseholdInfo } from '../config/cantonalData.js';
 import { steuerkantonVorbelegung } from '../utils/steuerkanton.js';
+import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 
 const HAUPTORTE = {
   AG: 'Aarau',
@@ -348,11 +349,12 @@ export function steuerEingabenAusDaten(data = {}) {
     erwerbsart: f.employmentType || null,
     partnerEinkommen: hh.partnerIncome,
     partnerAngegeben: partnerEinkommenAngegeben(data),
-    verheiratet: data?.basis?.maritalStatus === 'married',
+    // Eingetragene Partnerschaft = Ehe (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4) — utils/zivilstand.js.
+    verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
     // K62.1: im Profil als Konkubinat erfasst (Zivilstand «Konkubinat»).
     konkubinat: data?.basis?.maritalStatus === 'cohabiting',
     // K62.4: der Zivilstand, zu dem ein eingetragenes steuerbares Einkommen gehört (= Profil).
-    direktVerheiratet: data?.basis?.maritalStatus === 'married',
+    direktVerheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
     kinder: hh.childrenCount,
     // K87: die Kinderzahl, zu der ein eingetragenes steuerbares Einkommen gehört (= Profil).
     direktKinder: hh.childrenCount,

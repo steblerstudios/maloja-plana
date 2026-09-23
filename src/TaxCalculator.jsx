@@ -12,6 +12,7 @@ import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
 import { KantonssteuerOrientierung, bundOhneZahlText, ERKLAERT_IN_ORIENTIERUNG } from './components/KantonssteuerOrientierung.jsx';
 import { steuerkantonVorbelegung } from './utils/steuerkanton.js';
+import { giltAlsVerheiratet } from './utils/zivilstand.js';
 import { chf, annahmenTexte } from './utils/steuerTexte.js';
 import { visuallyHiddenStyle } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
@@ -88,7 +89,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const [canton, setCanton] = useState(() => steuerkantonVorbelegung(data));
   const [frage, setFrage] = useState(false);
   const [uebernommen, setUebernommen] = useState(false);
-  const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
+  const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
   const [kinder, setKinder] = useState(hh.childrenCount);
   // Elterntarif (DBG Art. 36 Abs. 2bis) für Nicht-Verheiratete: nur mit ausdrücklicher Bestätigung
   // (Kinder im gleichen Haushalt, Unterhalt zur Hauptsache). Ohne sie: vorsichtiger Grundtarif.
@@ -122,7 +123,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     verheiratet, kinder, elterntarif,
     // Probiermodus: Wer im Profil nicht verheiratet ist und hier «verheiratet» ankreuzt, rechnet
     // ein gedachtes Alleinverdiener-Ehepaar (gekennzeichnet). Im Profil verheiratet → Angabe nötig.
-    partnerAngegeben: profilEingaben.partnerAngegeben || data.basis?.maritalStatus !== 'married',
+    partnerAngegeben: profilEingaben.partnerAngegeben || !giltAlsVerheiratet(data.basis?.maritalStatus),
   };
   const steuern = steuernFuerProfil(eingaben);
   // K62.5: der Vergleich richtet sich nach der Partnerangabe im Profil, nicht nach dem Probiermodus.

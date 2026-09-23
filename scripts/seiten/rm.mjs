@@ -283,8 +283,9 @@ export const SONDERSEITEN = [
       {
         titel: 'Purschidra',
         absaetze: [
-          'Sophie Stebler / Stebler Studios, Basilea, Svizra.<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — classeur da vita svizzer. In project da funtauna averta sut AGPL-3.0. Indicaziuns tenor l’art. 3 al. 1 lit. s LCSL.',
+          'Sophie Stebler / Stebler Studios<br>Basilea, Svizra<br>E-mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — classeur da vita svizzer. In project da funtauna averta sut AGPL-3.0. L’utilisaziun da l’applicaziun è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada.',
+          'Tar l’adressa da contact: l’<a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">art. 3 al. 1 lit. s cifra 1 LCSL</a> pretenda indicaziuns davart l’identitad e davart l’adressa da contact «cumpraisa quella da la posta electronica». La disposiziun na prescriva betg en mintga cas ina adressa postala. Num, lieu ed e-mail èn inditgads; ina adressa postala è ina decisiun averta e vegn prisa ensemen cun la dumonda da l’endataziun en il register da commerzi. Via e-mail essan nus cuntanschibels per mintga fatschenda, era per giuridicas.',
         ],
       },
       {
@@ -299,14 +300,21 @@ export const SONDERSEITEN = [
         titel: 'Protecziun da datas sin questas paginas',
         absaetze: [
           'Las paginas explicativas èn HTML static. Ellas na chargian <strong>nagins scripts, nagins cookies e nagins resursas da terzas persunas</strong>; las scrittiras sa chattan sin il medem server. I na dat nagin traçar, nagina analisa e nagina reclama.',
-          'Cun la consultaziun resultan tuttina datas tecnicas tar l’hoster — <strong>Infomaniak Network SA, Genevra</strong>, cun center da calcul en Svizra: adressa IP en ils protocols dal server, tip da navigatur, sistem operativ e mument da l’access. Quai è tecnicamain necessari per la furniziun. La durada da conservaziun da quests protocols sa drizza tenor il standard da l’hoster e n’è betg documentada per nus.',
+          'Cun la consultaziun resultan tuttina datas tecnicas tar l’hoster — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Genevra, cun center da calcul en Svizra: adressa IP en ils protocols dal server, tip da navigatur, sistem operativ e mument da l’access. Quai è tecnicamain necessari per la furniziun e per la segirezza da la gestiun. Infomaniak agescha en quest connex sco incumbensada da l’elavuraziun (art. 9 nLPD). Tenor l’indicaziun dal purschider vegnan ils protocols d’access e d’errur conservads almain 7 dis (Infomaniak Support-FAQ 1926, consultada ils 23 da settember 2026).',
           'Ulteriurs destinaturs n’existan betg: nagins servetschs d’analisa, nagina integraziun da medias socialas, nagina transmissiun e nagina vendita da datas.',
+        ],
+      },
+      {
+        titel: 'Contact per e-mail',
+        absaetze: [
+          'Sche Vus scrivais a <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, elavurain nus Vossa adressa, il cuntegn dal messadi ed eventualas agiuntas per pudair respunder. La chascha da posta sa chatta tar Infomaniak en Svizra. La correspondenza resta uschè ditg sco la dumonda e las dumondas consuetas da suandar quai pretendan, lura vegn ella stizzada. Ella na vegn betg transmessa a terzas persunas, nun ch’il dretg pretenda quai.',
         ],
       },
       {
         titel: 'Datas en l’applicaziun',
         absaetze: [
           'Quai che Vus registrai en Maloja Plana resta <strong>sin Voss apparat</strong> (localStorage ed IndexedDB en il navigatur). I na dat nagin conto, nagina annunzia e nagina transmissiun a la purschidra u a terzas persunas. Tgi che vul stizzar las datas, las stizza sin l’apparat — i n’exista nagina segunda copia autrunda.',
+          'Er las indicaziuns particularamain sensitivas (sanadad, agid social, convicziuns) vegnan memorisadas da l’applicaziun mo localmain. Las copias da segirezza automaticas en il navigatur n’èn betg criptadas.',
           'Perquai che nagut na vegn transmess, na po la purschidra era betg dar infurmaziuns davart Vossas endataziuns: ella n’las ha mai vis. La versiun detagliada cun tut ils dretgs tenor la LPD stat en l’applicaziun sut «Protecziun da datas e chaussas giuridicas».',
         ],
       },

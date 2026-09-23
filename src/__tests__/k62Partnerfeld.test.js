@@ -48,6 +48,7 @@ describe('K62.3 · Feld «Nettolohn Partner/in»', () => {
   it('zeigtPartnereinkommen: die Regel für sich', () => {
     expect(zeigtPartnereinkommen(1, 'married')).toBe(true);
     expect(zeigtPartnereinkommen(1, 'cohabiting')).toBe(true);
+    expect(zeigtPartnereinkommen(1, 'registeredPartnership')).toBe(true);
     expect(zeigtPartnereinkommen(2, 'single')).toBe(true);
     expect(zeigtPartnereinkommen(1, 'single')).toBe(false);
     expect(zeigtPartnereinkommen(1, undefined)).toBe(false);

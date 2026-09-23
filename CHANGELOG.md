@@ -11,6 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **«Eingetragene Partnerschaft» als Zivilstand** (Bau-Liste K98, letzter Teil), in allen
+  fünf Sprachen. Seit dem 1. Juli 2022 werden keine neuen Partnerschaften mehr eingetragen;
+  bestehende gelten weiter. Steuerlich und in den Sozialversicherungen sind sie der Ehe
+  gleichgestellt (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4, ATSG Art. 13a) — Maloja rechnet
+  Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
+  genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
+  «Verheiratet oder in eingetragener Partnerschaft».
+
+### Geändert
+- Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
+  verstreuter Vergleiche mit `'married'`; ein Test prüft die Quelle, dass niemand an ihr
+  vorbei vergleicht.
+
+### Behoben
+- Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
+
 ### Geändert — Partner-Regeln (K62 Punkte 1, 3, 5)
 - **Konkubinat ohne Kinder bekommt jetzt auch die Kantons- und Gemeindesteuer.** Konkubinatspaare
   werden einzeln besteuert (DBG Art. 9, StHG Art. 3); die Schätzung rechnet für die Person allein
@@ -18,7 +35,7 @@ kommt der Changelog immer mit, nie doppelt.*
   Am ESTV-Steuerrechner gemessen (Konkubinat gegen ledig, 26 Kantone): in **BE, JU und VS** (dort
   bis Brutto 45 000) rechnet der Kanton Konkubinat höher — dort weiter keine Kantonszahl, mit
   Begründung. Messung: `docs/sources/konkubinat-kantonssteuer-2026.md`.
-- **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet» oder «Konkubinat»,
+- **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet», «eingetragene Partnerschaft» oder «Konkubinat»,
   wenn erst eine Person im Haushalt erfasst ist. Nichts wird vorbelegt.
 - **Zivilstand-Vergleich im Konkubinat:** kein Vergleich mehr mit einem gedachten
   Alleinverdiener-Ehepaar, wenn die Partnerin oder der Partner ein Einkommen hat oder die Angabe

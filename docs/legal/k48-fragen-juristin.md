@@ -1,7 +1,8 @@
 # K48 — Fragen an die Jurist:in
 
 > **Stand: 23.09.2026**, Code-Stand `main` `2f15946`.
-> Ergänzt 23.09.2026 um F5–F7 (EU-Produkthaftung, Cyber Resilience Act, AGPL § 13).
+> Ergänzt 23.09.2026 um F5–F7 (EU-Produkthaftung, Cyber Resilience Act, AGPL § 13)
+> und G1–G4 (freiwillige Unterstützungsbeiträge).
 > Zweck: Die juristische Durchsicht vorbereiten, damit die Zeit in die **Fragen**
 > geht und nicht ins Einlesen. Jede Frage nennt, **was daran hängt** — ohne
 > Entscheid ist eine Antwort nur teuer.
@@ -166,6 +167,23 @@ MSchG Art. 2 lit. a/c? Und braucht es gegenüber IR 1786104 eine
 
 ## F · Bezahlversion (Entscheid Oktober)
 
+**F0. Kontaktadresse nach UWG Art. 3 Abs. 1 lit. s Ziff. 1 — gilt das heute schon?**
+Diese Frage betrifft im Unterschied zum Rest dieses Abschnitts das **kostenlose,
+heute live stehende** Angebot, nicht die Bezahlversion. Zwei Teile:
+(a) Greift lit. s überhaupt, wenn es keinen Bestellvorgang und keinen Vertrag
+gibt? Der Einleitungssatz spricht von «elektronischem Geschäftsverkehr».
+(b) Falls ja: Impressum, Datenschutz-Reiter und `/rechtliches/` nennen heute
+Name, Ort und E-Mail, **aber keine Strasse** — und `/rechtliches/` trägt zugleich
+den Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG», behauptet also eine
+Vollständigkeit, die sie ohne Strasse nicht hat.
+→ *Was hängt daran:* ob der Satz bleiben darf, und ob eine c/o- oder
+Geschäftsadresse genügt oder die Wohnadresse nötig ist. Eine erreichbare
+Adresse setzen wir so oder so — die Frage ist nur, ob sie geschuldet ist.
+→ *Stand 23.09.2026:* Die Stelle ist als sichtbarer Platzhalter markiert und
+durch einen absichtlich roten Test gesichert
+(`src/__tests__/impressumAdresse.test.js`); ausliefern lässt sich dieser
+Stand nicht. Aufgeschlagen ist die Lücke bei einer Durchsicht von aussen.
+
 **F1. Bestellstrecke nach UWG Art. 3 Abs. 1 lit. s Ziff. 2–4.**
 Der Wortlaut verlangt: Hinweis auf die technischen Schritte zum Vertragsschluss,
 Mittel zur Erkennung und Korrektur von Eingabefehlern, unverzügliche elektronische
@@ -223,6 +241,55 @@ regeln, damit die Pflicht nicht bei der Anbieterin landet?
 
 ---
 
+## G · Freiwillige Unterstützungsbeiträge (vor dem Einbau eines Unterstützen-Knopfs)
+
+Überlegt wird ein Hinweis «Maloja Plana unterstützen» — freiwilliger Beitrag,
+**keine Gegenleistung**, ausdrücklich **nicht steuerlich abzugsfähig** (DBG Art. 33a
+setzt eine steuerbefreite Empfängerin voraus). Die App bliebe vollständig kostenlos.
+Heute gibt es keinen solchen Knopf. Die MWST-Seite ist geklärt: echte Spenden sind
+Nicht-Entgelt (MWSTG Art. 18 Abs. 2 lit. d) und zählen nicht zur Umsatzgrenze.
+Offen ist die Einkommensseite.
+
+**G1. Schenkung oder Einkommen?**
+Beiträge von Nutzenden, die die Weiterentwicklung eines Werkzeugs unterstützen, stehen
+in Zusammenhang mit einer Tätigkeit der Empfängerin. Sind sie steuerfreie Schenkung
+(DBG Art. 24 lit. a, dafür allenfalls kantonale Schenkungssteuer Basel-Stadt) oder
+Einkommen aus selbständiger Erwerbstätigkeit (DBG Art. 18)? Beides zugleich geht nicht.
+Ändert es etwas, ob der Knopf in der App, auf einer separaten Seite oder nur im
+Repository steht — oder ob Unterstützende namentlich genannt werden (MWSTG Art. 3
+lit. i erlaubt die Nennung «in neutraler Form»)?
+→ *Was hängt daran:* welche Steuer überhaupt anfällt — und ob die Formulierung auf
+der Seite daran etwas ändern kann oder nur die Tätigkeit selbst.
+
+**G2. Ab wann gilt Maloja Plana als selbständige Erwerbstätigkeit?**
+Heute kostenlos, ohne Einnahmen. Mit Beiträgen, später allenfalls Bezahlversion,
+White-Label und Dual Licensing (B3, F). Stebler Studios ist dieselbe natürliche
+Person — macht der Name einen Unterschied, oder nur die Tätigkeit?
+→ *Was hängt daran:* ob die Struktur (Einzelfirma, GmbH, Verein) **vor** dem
+Unterstützen-Knopf festgelegt werden muss.
+
+**G3. AHV auf den Beiträgen.**
+Falls Einkommen: Beitragspflicht als Selbständigerwerbende; für geringe
+Nebenerwerbseinkommen gilt AHVV Art. 19 (Beiträge nur auf Verlangen).
+→ *Was hängt daran:* ob eine Anmeldung bei der Ausgleichskasse nötig wird, und ab
+welchem Betrag.
+
+**G4. Was kippt die Einordnung?**
+Unsere Annahme: Jede Gegenleistung — Abzeichen, freigeschaltete Funktion,
+«Supporter-Version» — macht aus dem Beitrag Entgelt und löst die Folgen der
+Bezahlversion aus (F1, F2, F2a; OR Art. 99 Abs. 2 aus A1 fiele weg). Stimmt die
+Grenze, und zählt schon ein öffentlicher Dank in der App als Gegenleistung?
+→ *Was hängt daran:* die Trennlinie, die ein Test im Code halten soll, wie beim
+Affiliate-Verbot (B1).
+
+*Technische Randbedingung, keine Rechtsfrage:* Ein eingebetteter Zahlungsknopf (TWINT,
+Stripe u. ä.) bräche die CSP `connect-src 'self'` und das Versprechen «keine externen
+Netzwerkaufrufe». Ohne Verbindung nach aussen ginge ein einfacher Link oder eine
+QR-Rechnung als statisches Bild — die aber Name und Adresse der Empfängerin im
+öffentlichen Repository zeigt.
+
+---
+
 ## Unterlagen, die bereitliegen
 
 | Dokument | Inhalt |
@@ -250,3 +317,6 @@ regeln, damit die Pflicht nicht bei der Anbieterin landet?
 4. **D1** (SKOS) — betrifft ein gebautes Kernstück
 5. **C1–C3** (Datenschutz) — Position ist dokumentiert, Risiko wirkt klein
 6. **E1** (Marke) — wichtig, aber nicht dringend
+
+**G1–G2** (Unterstützungsbeiträge) rücken nach vorn, sobald ein Unterstützen-Knopf
+gebaut werden soll — sie sind die Bedingung dafür, nicht eine Folge davon.

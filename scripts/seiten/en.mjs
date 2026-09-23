@@ -274,8 +274,9 @@ export const SONDERSEITEN = [
       {
         titel: 'Provider',
         absaetze: [
-          'Sophie Stebler / Stebler Studios, Basel, Switzerland.<br>Email: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — Swiss life folder. An open-source project under AGPL-3.0. Information pursuant to Art. 3 para. 1 lit. s of the Swiss Unfair Competition Act.',
+          'Sophie Stebler / Stebler Studios<br>Basel, Switzerland<br>Email: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — Swiss life folder. An open-source project under AGPL-3.0. The app is free to use; for white-label and other commercial use, a separate licence is available on request.',
+          'On the contact address: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">Art. 3 para. 1 lit. s no. 1 UWG</a> requires details of identity and of the contact address «including that of electronic mail». The provision does not require a postal address in every case. Name, place and email are given; a postal address is an open decision and will be settled together with the question of a commercial register entry. We can be reached by email for any matter, including legal ones.',
         ],
       },
       {
@@ -290,14 +291,21 @@ export const SONDERSEITEN = [
         titel: 'Data protection on these pages',
         absaetze: [
           'The explanatory pages are static HTML. They load <strong>no scripts, no cookies and no third-party resources</strong>; the fonts are on the same server. There is no tracking, no analytics and no advertising.',
-          'When the pages are accessed, technical data nevertheless arises at the host — <strong>Infomaniak Network SA, Geneva</strong>, with data centres in Switzerland: IP address in the server logs, browser type, operating system and time of access. This is technically necessary for delivery. How long these logs are kept follows the host’s standard and is not documented to us.',
+          'When the pages are accessed, technical data nevertheless arises at the host — <strong>Infomaniak Network SA</strong>, Rue Eugène-Marziano 25, 1227 Les Acacias / Geneva, with data centres in Switzerland: IP address in the server logs, browser type, operating system and time of access. This is technically necessary for delivery and operational security. Infomaniak acts as a processor in doing so (Art. 9 nDSG). According to the provider, access and error logs are kept for at least 7 days (Infomaniak support FAQ 1926, retrieved on 23 September 2026).',
           'There are no further recipients: no analytics services, no social media embeds, no passing on and no sale of data.',
+        ],
+      },
+      {
+        titel: 'Contact by email',
+        absaetze: [
+          'If you write to <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>, we process your address, the content of your message and any attachments in order to reply. The mailbox is hosted by Infomaniak in Switzerland. The correspondence is kept for as long as the enquiry and the usual follow-up questions require, then deleted. It is not passed on to third parties unless required by law.',
         ],
       },
       {
         titel: 'Data in the application',
         absaetze: [
           'What you enter in Maloja Plana stays <strong>on your device</strong> (localStorage and IndexedDB in the browser). There is no account, no login and no transmission to the provider or to third parties. Anyone wanting to delete the data deletes it on the device — there is no second copy anywhere else.',
+          'Particularly sensitive information (health, social assistance, beliefs) is likewise stored only locally by the app. The automatic backup copies in the browser are not encrypted.',
           'Because nothing is transmitted, the provider also cannot give information about your entries: it has never seen them. The detailed version with all rights under the Swiss Data Protection Act is in the app under “Data protection and legal”.',
         ],
       },

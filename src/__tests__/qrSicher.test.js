@@ -14,6 +14,7 @@ let utf8Laenge;
 let QR_MAX_BYTES;
 let vcardMaskieren;
 let vcardBauen;
+let vcardFalten;
 let qrNotfallVcard;
 let QR_MAX_BYTES_VCARD;
 let QR_DUNKEL;
@@ -30,7 +31,7 @@ beforeAll(async () => {
   ({ default: QRCode } = await import('../vendor/qrcodejs.js'));
   ({
     qrKuerzen, qrNotfallText, qrZeichnen, utf8Laenge, QR_MAX_BYTES,
-    vcardMaskieren, vcardBauen, qrNotfallVcard, QR_MAX_BYTES_VCARD, QR_DUNKEL, QR_HELL,
+    vcardMaskieren, vcardBauen, vcardFalten, qrNotfallVcard, QR_MAX_BYTES_VCARD, QR_DUNKEL, QR_HELL,
   } = await import('../utils/qrSicher.js'));
 });
 
@@ -330,5 +331,45 @@ describe('qrZeichnen', () => {
     try {
       expect(qrZeichnen(element(), 'Blutgruppe: A')).toBe(false);
     } finally { QRCode.prototype.makeCode = alt; }
+  });
+});
+
+
+// Zeilenfaltung (22.09.2026): die Norm verlangt Zeilen unter 75 Oktetten. Vorher stand die
+// Lücke als bekannt im Code — ein Telefon hatte sie verziehen, was keine Zusage ist.
+describe('vCard · Zeilenfaltung', () => {
+  const oktette = (z) => new TextEncoder().encode(z).length;
+
+  it('hält jede Zeile unter 76 Oktetten, auch mit Umlauten', () => {
+    const notiz = 'Allergien: Nüsse, Pollen. Medikamente: eine absichtlich sehr lange Zeile mit Ümlauten, die weit über fünfundsiebzig Oktette hinausgeht';
+    const vcard = vcardBauen({ name: 'Sophie Stebler', tel: '079 000 00 00', notiz });
+    for (const zeile of vcard.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
+  });
+
+  it('beginnt jede Fortsetzung mit genau einem Leerzeichen', () => {
+    const vcard = vcardBauen({ name: 'N', notiz: 'x'.repeat(200) });
+    const zeilen = vcard.split('\r\n').filter(Boolean);
+    const fortsetzungen = zeilen.filter((z) => z.startsWith(' '));
+    expect(fortsetzungen.length).toBeGreaterThan(0);
+    for (const z of fortsetzungen) expect(z.startsWith('  ')).toBe(false);
+  });
+
+  it('teilt kein Zeichen und kein maskiertes Paar', () => {
+    // 72 Oktette Vorlauf, danach ein maskiertes Semikolon — die Faltung muss davor greifen.
+    const gefaltet = vcardFalten('N'.repeat(73) + '\\;' + 'M'.repeat(10));
+    for (const teil of gefaltet.split('\r\n')) expect(teil.endsWith('\\')).toBe(false);
+    expect(gefaltet.replace(/\r\n /g, '')).toBe('N'.repeat(73) + '\\;' + 'M'.repeat(10));
+  });
+
+  it('lässt kurze Zeilen unangetastet', () => {
+    expect(vcardFalten('BEGIN:VCARD')).toBe('BEGIN:VCARD');
+    expect(vcardFalten('')).toBe('');
+  });
+
+  it('wiegt die Faltung mit: die fertige Karte bleibt unter der Grenze', () => {
+    const abschnitte = [{ titel: 'Notfall', rows: Array.from({ length: 30 }, (_, i) => ({ label: 'Feld ' + i, value: 'Wert mit Ümlaut ' + i })) }];
+    const { text, bytes } = qrNotfallVcard(abschnitte, { name: 'Sophie Stebler', tel: '079 000 00 00' });
+    expect(bytes).toBeLessThanOrEqual(QR_MAX_BYTES_VCARD);
+    for (const zeile of text.split('\r\n')) expect(oktette(zeile)).toBeLessThanOrEqual(75);
   });
 });
