@@ -3079,25 +3079,6 @@ export default {
     onlyAhvIv: 'PC uniquement pour les bénéficiaires AVS/AI',
   },
 
-  premiumCalc: {
-    coupleChildren: 'Couple + enfants',
-    singleChildren: 'Personne seule + enfants',
-    single: 'Personne seule',
-    incomeToHigh: 'Revenu trop élevé (plus de CHF {value})',
-    eligible: 'Droit à la réduction de primes',
-    doc1: 'Déclaration fiscale (2 dernières années)',
-    doc2: 'Fiches de salaire',
-    doc3: 'Livret de famille',
-    doc4: 'Attestation des primes d\'assurance maladie',
-    docTitle: 'LAMal §67 Données de demande',
-    check1: 'Joindre la déclaration fiscale de l\'année précédente',
-    check2: 'Facture de prime actuelle de la caisse maladie',
-    check3: 'Fiche de salaire / attestation de revenu',
-    check4: 'Contrat de bail (si applicable)',
-    check5: 'Livret de famille (si applicable)',
-    check6: 'Attestation de pensions alimentaires (si applicable)',
-  },
-
   error: {
     title: 'Une erreur est survenue',
     message: { sie: 'Vos données sont en sécurité — elles sont stockées localement sur votre appareil. Veuillez réessayer.', du: 'Tes données sont en sécurité — elles sont stockées localement sur ton appareil. Réessaie.' },

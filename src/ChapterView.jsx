@@ -264,7 +264,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
                 border: '1px solid ' + (selected ? palette.sage : palette.border),
                 borderRadius: radius.sm + 'px',
                 background: selected ? palette.sage + '18' : palette.surface,
-                color: selected ? palette.sage : palette.text,
+                color: selected ? (palette.sageDeep || palette.sage) : palette.text,
                 cursor: 'pointer', transition: 'all ' + duration.fast + 'ms ' + ease,
               }
             }, opt.label);
@@ -1675,7 +1675,7 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         React.createElement('p', { style: { fontSize: text.sm, color: palette.mid, margin: '0 0 10px 0' } },
           (() => { const k = 'chapters.' + chapter.key + '.emptyStateHint'; const v = tr(k); return v !== k ? v : tr('chapterView.emptyStateHint'); })()
         ),
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep, opacity: 0.8 } },
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: text.xs, color: palette.sageDeep } },  // kein opacity: 0.8 ergab 3.85:1 hell
           React.createElement(TrustLockIcon, { size: 11, color: 'currentColor' }),
           tr('trust.chapterTrust')
         )

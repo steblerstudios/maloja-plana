@@ -85,7 +85,7 @@ export const MietzinsOrientierung = ({ palette, t, data, onNavigate, isDarkMode 
           style: { padding: '10px 12px', borderRadius: radius.sm, border: '1px solid ' + palette.border, background: palette.surface, fontSize: text.sm, color: toneColor(assessment.tone), lineHeight: leading.normal },
         }, hinweisZeichen(assessment.tone === 'good' ? 'check' : 'info'), t('mietzinsView.result_' + assessment.key, assessment.params || {})),
         // Mietzins-Limite-Vergleich (belegte kantonale Limite).
-        rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? palette.gold : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
+        rentMonthly > 0 && rentLimit > 0 && React.createElement('div', { style: { fontSize: text.sm, color: rentMonthly > rentLimit ? (palette.goldDeep || palette.gold) : palette.mid, marginTop: space.sm + 'px', lineHeight: leading.normal } },
           hinweisZeichen(), t(rentMonthly > rentLimit ? 'mietzinsView.rentOver' : 'mietzinsView.rentWithin', { limit: rentLimit.toLocaleString(), size: householdSize })),
         assessment && assessment.key === 'needIncome' && onNavigate && React.createElement('button', { style: linkBtn, onClick: () => onNavigate('finanzuebersicht') }, t('mietzinsView.enterIncomeLink'))
       ),

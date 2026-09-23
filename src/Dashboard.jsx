@@ -438,7 +438,7 @@ const FortschrittsKarte = ({ palette, t, chapters, chapterCompletions, chapterSt
             })
           ),
           React.createElement('span', {
-            style: { fontSize: text.xs, color: pct === 100 ? palette.sage : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
+            style: { fontSize: text.xs, color: pct === 100 ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: weight.medium, width: '32px', textAlign: 'right', flexShrink: 0 }
           }, pct + '%'),
           React.createElement('span', {
             lang,
@@ -1002,7 +1002,8 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
           style: { fontSize: text.sm, fontWeight: weight.semi, color: palette.text }
         }, t('dashboard.highlightTitle')),
         React.createElement('div', {
-          style: { fontSize: text.xs - 1, color: palette.sageDeep, opacity: 0.8 }
+          // kein opacity: 0.8 druckte sageDeep von 6.04 auf 3.85:1 (hell)
+          style: { fontSize: text.xs - 1, color: palette.sageDeep }
         }, t('dashboard.highlightPrivacy'))
       ),
       (() => {

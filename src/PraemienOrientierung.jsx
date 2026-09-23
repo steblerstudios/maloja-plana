@@ -433,7 +433,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
               React.createElement('tr', { key: ins.nr },
                 React.createElement('td', { style: s.td },
                   React.createElement('button', {
-                    style: { ...s.nameBtn, color: isCurrent ? palette.sage : palette.text },
+                    style: { ...s.nameBtn, color: isCurrent ? (palette.sageDeep || palette.sage) : palette.text },
                     onClick: () => setDetailNr(isOpen ? null : ins.nr)
                   }, aufklappZeichen(isOpen), ins.name, isCurrent ? hinweisZeichen('check', 10) : null)
                 ),
