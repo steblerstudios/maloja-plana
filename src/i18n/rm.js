@@ -1515,7 +1515,7 @@ export default {
     lastUpdated: 'Stadi: {date} · Tenor la nLPD (en vigur dapi il 1.9.2023)',
     privacy: {
       responsibleTitle: 'Persuna responsabla',
-      responsible1: 'Stebler Studios — Sophie Stebler, [Strasse Nr.], [PLZ] Basilea, Svizra',
+      responsible1: 'Stebler Studios — Sophie Stebler, Basilea, Svizra',
       responsible2: 'Contact: info@malojaplana.ch',
       responsible3: { sie: "Maloja Plana è in project Open Source independent da Stebler Studios. L'utilisaziun da l'app è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada.", du: "Maloja Plana è in project Open Source independent da Stebler Studios. L'utilisaziun da l'app è gratuita; per white-label ed autras utilisaziuns commerzialas datti sin dumonda ina licenza separada." }, // TODO(rm): Gegenlese Muttersprache
       responsible4: { sie: "Quai che Vus endatais en l'app resta sin Voss apparat — questas indicaziuns na ans cuntanschan betg. La nLPD vala tuttina per nus sco gestura da la pagina web: cun la clomada da la pagina vegnan generadas datas tecnicas tar il purschider, e nus elavurain e-mails a info@malojaplana.ch per pudair respunder.", du: "Quai che Ti endateschas en l'app resta sin Tes apparat — questas indicaziuns na ans cuntanschan betg. La nLPD vala tuttina per nus sco gestura da la pagina web: cun la clomada da la pagina vegnan generadas datas tecnicas tar il purschider, e nus elavurain e-mails a info@malojaplana.ch per pudair respunder." }, // TODO(rm): Gegenlese Muttersprache
@@ -1585,7 +1585,7 @@ export default {
     imprint: {
       operatorTitle: 'Exploratrice',
       operator1: 'Stebler Studios — Sophie Stebler',
-      operator2: '[Strasse Nr.], [PLZ] Basilea, Svizra',
+      operator2: 'Basilea, Svizra',
       contactTitle: 'Contact',
       contact1: 'E-mail: info@malojaplana.ch',
       contact2: 'Web: https://malojaplana.ch',

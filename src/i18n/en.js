@@ -1744,7 +1744,7 @@ export default {
     lastUpdated: 'As of: {date} · In accordance with the Swiss nDSG (in effect since 1.9.2023)',
     privacy: {
       responsibleTitle: 'Responsible person',
-      responsible1: 'Stebler Studios — Sophie Stebler, [Strasse Nr.], [PLZ] Basel, Switzerland',
+      responsible1: 'Stebler Studios — Sophie Stebler, Basel, Switzerland',
       responsible2: 'Contact: info@malojaplana.ch',
       responsible3: 'Maloja Plana is an independent open-source project by Stebler Studios. The app is free to use; for white-label and other commercial use, a separate licence is available on request.',
       responsible4: 'What you enter in the app stays on your device — it never reaches us. The Swiss nDSG still applies to us as the operator of this website: technical data arises at the host when the page is requested, and we process emails sent to info@malojaplana.ch in order to reply.',
@@ -1813,7 +1813,7 @@ export default {
     imprint: {
       operatorTitle: 'Operator',
       operator1: 'Stebler Studios — Sophie Stebler',
-      operator2: '[Strasse Nr.], [PLZ] Basel, Switzerland',
+      operator2: 'Basel, Switzerland',
       contactTitle: 'Contact',
       contact1: 'Email: info@malojaplana.ch',
       contact2: 'Web: https://malojaplana.ch',

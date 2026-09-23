@@ -75,6 +75,36 @@ export const GEPRUEFT = 'September 2026';
 // `src/__tests__/oeffentlicheSeiten.test.js` prüft die Form, nicht die
 // Erreichbarkeit — ein Test, der ins Netz greift, ist kein Test.
 export const QUELLEN = {
+  // Amtliche Sammlung des Bundes. Steht hier, weil das Impressum den Artikel
+  // nennt, auf den es sich stützt — und wer einen Artikel nennt, soll ihn
+  // belegen können. Dieselbe Adresse verwendet das Studio-Impressum
+  // (stebler-studios/website/impressum.html, 22.09.2026), bewusst wörtlich
+  // übernommen statt neu gebaut.
+  //
+  // 🛑 KEIN `rm`-EINTRAG, und das ist gemessen, nicht vergessen. Bundesrecht
+  // erscheint durchgehend auf Deutsch, Französisch und Italienisch; auf
+  // Rumantsch nur teilweise. Ob das UWG dazugehört, liess sich am 23.09.2026
+  // NICHT feststellen: `curl` bekommt von Fedlex für /de, /fr, /it, /rm — und
+  // für eine frei erfundene Sprache `xx` — dieselbe 77 151 Byte grosse
+  // SPA-Hülle zurück, alle vier md5-identisch. Der Statuscode 200 misst dort
+  // das Werkzeug, nicht den Bestand. Was nicht belegbar ist, wird nicht
+  // behauptet: die rätoromanische Seite verlinkt die deutsche Fassung, wie es
+  // die englische auch tut. Englisch fehlt aus demselben Grund — Fedlex führt
+  // Bundesrecht nicht auf Englisch.
+  fedlexUwgArt3: {
+    url: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3',
+    text: 'UWG Art. 3 Abs. 1 Bst. s Ziff. 1 (SR 241, amtliche Sammlung)',
+    sprachen: {
+      fr: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/fr#art_3',
+      it: 'https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/it#art_3',
+    },
+    texte: {
+      fr: 'LCD art. 3 al. 1 let. s ch. 1 (RS 241, recueil officiel)',
+      it: 'LCSl art. 3 cpv. 1 lett. s n. 1 (RS 241, raccolta ufficiale)',
+      en: 'Swiss Unfair Competition Act, Art. 3 para. 1 lit. s no. 1 (SR 241)',
+      rm: 'LCSL art. 3 al. 1 lit. s cifra 1 (DS 241, collecziun uffiziala)',
+    },
+  },
   estvRechner: {
     url: 'https://www.estv.admin.ch/de/steuerrechner-steuern-berechnen',
     text: 'Steuerrechner der Eidgenössischen Steuerverwaltung',
@@ -434,21 +464,33 @@ export const quelle = q;
 // Bei Änderungen dort muss diese Seite mit — der Wächter prüft das nicht
 // inhaltlich, das bleibt Handarbeit.
 //
-// 🛑 OFFEN, Entscheid Stebler Studios: Art. 3 Abs. 1 lit. s UWG verlangt
-// «Kontaktadresse». Genannt sind Name, Stadt und E-Mail, aber keine Strasse.
-// docs/legal/impressum.md hat dieselbe Lücke — sie steht jetzt nur öffentlich.
-// Ob die Privatadresse hier stehen soll oder eine Geschäfts-/c-o-Adresse, ist
-// keine technische Frage.
+// ─── Die Postanschrift · Entscheid Stebler Studios 23.09.2026 ───────────────
 //
-// 23.09.2026: aus einer Durchsicht von aussen erneut aufgeschlagen. Die Lücke
-// ist jetzt SICHTBAR als «[Strasse Nr.], [PLZ]» statt still — und ein Wächter
-// (src/__tests__/impressumAdresse.test.js) ist rot, solange der Platzhalter
-// dasteht. Er wird grün, sobald die echte Adresse eingesetzt ist; bis dahin
-// kann dieser Stand nicht versehentlich live gehen.
-// 🛑 Der Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG» steht unten seit je —
-// er behauptet Vollständigkeit, die die Seite ohne Strasse nicht hat. Ob UWG
-// für ein kostenloses Angebot ohne Bestellvorgang überhaupt greift, ist Frage
-// A-neu in docs/legal/k48-fragen-juristin.md. Nicht selber entscheiden.
+// Genannt sind Name, Ort und E-Mail — KEINE Strasse. Das ist ein Entscheid,
+// keine vergessene Zeile, und er ist hier bewusst dokumentiert.
+//
+// Was das Gesetz verlangt: UWG Art. 3 Abs. 1 Bst. s Ziff. 1 fordert Angaben
+// über Identität und «Kontaktadresse einschliesslich derjenigen der
+// elektronischen Post». Es schreibt nicht in jedem Fall eine Postanschrift
+// vor, und ob ein kostenloses Angebot ohne Bestellvorgang überhaupt als
+// «elektronischer Geschäftsverkehr» im Sinn der Bestimmung gilt, ist eine
+// Auslegungsfrage. Sie wird hier NICHT beantwortet — sie liegt als Frage F0
+// in docs/legal/k48-fragen-juristin.md.
+//
+// Warum keine Adresse: Stebler Studios hat (Stand 23.09.2026) kein
+// Geschäftsdomizil, und die Wohnadresse soll nicht ins öffentliche Repo. Das
+// hängt am Handelsregister-Entscheid: ein Eintrag macht die Domiziladresse
+// ohnehin öffentlich (OR Art. 931), deshalb wird beides zusammen entschieden.
+//
+// 🛑 Dieselbe Stelle, dieselbe Begründung steht im Studio-Impressum
+// (stebler-studios/website/impressum.html, Fassung vom 22.09.2026). Wer hier
+// etwas ändert, ändert es dort mit — sonst laufen zwei Fassungen auseinander.
+//
+// Was sich am 23.09. geändert hat: vorher stand hier pauschal «Angaben gemäss
+// Art. 3 Abs. 1 lit. s UWG» — eine Behauptung von Vollständigkeit ohne
+// Begründung. Jetzt steht da, was der Artikel verlangt und was offen ist.
+// Aufgeschlagen bei einer Durchsicht von aussen.
+// ─────────────────────────────────────────────────────────────────────────────
 export const SONDERSEITEN = [
   {
     pfad: 'rechtliches',
@@ -462,8 +504,9 @@ export const SONDERSEITEN = [
       {
         titel: 'Anbieterin',
         absaetze: [
-          'Sophie Stebler / Stebler Studios<br>[Strasse Nr.], [PLZ] Basel, Schweiz<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
-          'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz. Angaben gemäss Art. 3 Abs. 1 lit. s UWG.',
+          'Sophie Stebler / Stebler Studios<br>Basel, Schweiz<br>E-Mail: <a href="mailto:info@malojaplana.ch">info@malojaplana.ch</a>',
+          'Maloja Plana — Schweizer Lebensordner. Ein Open-Source-Projekt unter AGPL-3.0. Die Nutzung der App ist kostenlos; für White-Label und andere kommerzielle Nutzung gibt es auf Anfrage eine separate Lizenz.',
+          'Zur Kontaktadresse: <a href="https://www.fedlex.admin.ch/eli/cc/1988/223_223_223/de#art_3" rel="noopener">UWG Art. 3 Abs. 1 Bst. s Ziff. 1</a> verlangt Angaben über Identität und Kontaktadresse «einschliesslich derjenigen der elektronischen Post». Eine Postanschrift schreibt die Bestimmung nicht in jedem Fall vor. Angegeben sind Name, Ort und E-Mail; eine Postanschrift ist ein offener Entscheid und wird zusammen mit der Frage des Handelsregister-Eintrags entschieden. Über die E-Mail-Adresse sind wir für alle Anliegen erreichbar, auch für rechtliche.',
         ],
       },
       {

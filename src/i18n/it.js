@@ -1744,7 +1744,7 @@ export default {
     lastUpdated: 'Aggiornato: {date} · Conformemente alla nLPD (in vigore dal 1.9.2023)',
     privacy: {
       responsibleTitle: 'Persona responsabile',
-      responsible1: 'Stebler Studios — Sophie Stebler, [Strasse Nr.], [PLZ] Basilea, Svizzera',
+      responsible1: 'Stebler Studios — Sophie Stebler, Basilea, Svizzera',
       responsible2: 'Contatto: info@malojaplana.ch',
       responsible3: { sie: 'Maloja Plana è un progetto open source indipendente di Stebler Studios. L\'utilizzo dell\'app è gratuito; per il white label e altri usi commerciali è disponibile su richiesta una licenza separata.', du: 'Maloja Plana è un progetto open source indipendente di Stebler Studios. L\'utilizzo dell\'app è gratuito; per il white label e altri usi commerciali è disponibile su richiesta una licenza separata.' },
       responsible4: { sie: 'Ciò che inserisce nell\'app resta sul Suo dispositivo — queste indicazioni non ci raggiungono. La nLPD vale comunque per noi in quanto gestore del sito: alla chiamata della pagina si generano dati tecnici presso il provider, e trattiamo le e-mail inviate a info@malojaplana.ch per poter rispondere.', du: 'Ciò che inserisci nell\'app resta sul tuo dispositivo — queste indicazioni non ci raggiungono. La nLPD vale comunque per noi in quanto gestore del sito: alla chiamata della pagina si generano dati tecnici presso il provider, e trattiamo le e-mail inviate a info@malojaplana.ch per poter rispondere.' },
@@ -1813,7 +1813,7 @@ export default {
     imprint: {
       operatorTitle: 'Gestore',
       operator1: 'Stebler Studios — Sophie Stebler',
-      operator2: '[Strasse Nr.], [PLZ] Basilea, Svizzera',
+      operator2: 'Basilea, Svizzera',
       contactTitle: 'Contatto',
       contact1: 'E-mail: info@malojaplana.ch',
       contact2: 'Web: https://malojaplana.ch',
