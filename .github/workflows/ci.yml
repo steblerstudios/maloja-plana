@@ -35,7 +35,14 @@ jobs:
       # mit der lokalen, geprüften .pii-deny.txt, BEVOR etwas live geht). Bewusst
       # KEIN Secret in CI: eine per-Zeile gepflegte Deny-Liste driftet und erzeugt
       # Fehlalarme (Nachname↔Marke, Streu-Einträge) — 2026-07-14 gelernt.
+      # PII_DENY_OPTIONAL=1: der Scan darf hier OHNE die lokale Deny-Liste laufen,
+      # sagt das aber laut und behauptet nicht «sauber» (seit 23.09.2026).
+      # 🛑 Damit ist klar, was CI leisten kann und was nicht: CI faengt Mails,
+      # Home-Pfade und Klient-Hashes — KEINE Vornamen. Das vollstaendige Tor ist
+      # der lokale Lauf vor dem Commit.
       - name: PII-Scan (Mails/Home-Pfade/Hashes in getrackten Dateien)
+        env:
+          PII_DENY_OPTIONAL: "1"
         run: bash scripts/pii-scan.sh
 
       - run: npm run build

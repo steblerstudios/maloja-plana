@@ -43,7 +43,7 @@
 > schliesst die Lücke also wirklich. *Gefunden hat diese Vorfrage die Parallel-Sitzung
 > «Aufräumen fortgesetzt», nicht ich.*
 >
-> 🛑 **Nebenbefund zum Arbeiten im geteilten Checkout:** Sophies Deploy-Versuch brach am
+> 🛑 **Nebenbefund zum Arbeiten im geteilten Checkout:** der Deploy-Versuch von Stebler Studios brach am
 > Branch-Gate von `deploy.sh` ab — weil der gemeinsame Arbeitsbaum auf **meinem** Zweig
 > `docs/stand-nach-266` stand. Ein Arbeitszweig im geteilten Checkout blockiert den Deploy,
 > auch wenn er nichts verändert. Lehre: nach dem Push zurück auf `main` stellen, oder gleich
