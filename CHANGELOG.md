@@ -11,6 +11,23 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **«Eingetragene Partnerschaft» als Zivilstand** (Bau-Liste K98, letzter Teil), in allen
+  fünf Sprachen. Seit dem 1. Juli 2022 werden keine neuen Partnerschaften mehr eingetragen;
+  bestehende gelten weiter. Steuerlich und in den Sozialversicherungen sind sie der Ehe
+  gleichgestellt (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4, ATSG Art. 13a) — Maloja rechnet
+  Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
+  genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
+  «Verheiratet oder in eingetragener Partnerschaft».
+
+### Geändert
+- Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
+  verstreuter Vergleiche mit `'married'`; ein Test prüft die Quelle, dass niemand an ihr
+  vorbei vergleicht.
+
+### Behoben
+- Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
+
 ## [0.1.39-beta] — 2026-09-20
 
 *Enthält alles aus `0.1.38-beta` (siehe unten) — **jene Version wurde nie ausgeliefert**.

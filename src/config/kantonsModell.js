@@ -17,6 +17,7 @@
 // und wird hier nicht wiederholt. Das Blatt hat bewusst keine eigenen Importe, kostet also
 // nichts ausser sich selbst.
 import { saeule3aMaximum, groessteJahresEinzahlung } from '../data/saeule3a.js';
+import { giltAlsVerheiratet } from '../utils/zivilstand.js';
 
 // ─── Eingaben lesen ────────────────────────────────────────────────────────────
 
@@ -362,8 +363,9 @@ export function jahrVorbei(jahr) {
 // `cohabiting` gehört dazu: Konkubinat rechnet je nach Kanton wie ein Paar, und das
 // Einkommen der zweiten Person kennt die App nicht. (Befund Fachprüfung 20.09.2026 —
 // der Riegel prüfte nur `married`, `cohabiting` lief durch und rechnete.)
+// Die eingetragene Partnerschaft zählt wie die Ehe (giltAlsVerheiratet, utils/zivilstand.js).
 export function mehrereErwachsene(hh, b) {
-  return hh.adults !== 1 || b.maritalStatus === 'married' || b.maritalStatus === 'cohabiting';
+  return hh.adults !== 1 || giltAlsVerheiratet(b.maritalStatus) || b.maritalStatus === 'cohabiting';
 }
 
 // 🛑 DER RIEGEL, DER VIERMAL GEFEHLT HAT.
