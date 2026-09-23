@@ -27,6 +27,29 @@
 > → **404**, erfundener Name ebenfalls 404. Der Pfad wird ausgeliefert, die sechs neuen Texte
 > fehlen dort. **Bis zum Deploy ist die Lizenzlücke im Repo geschlossen, auf der Seite nicht.**
 >
+> **Vollständig gemessen, 11:20 — es sind 6 von 8, nicht nur `react`:**
+>
+> | live 200 | live 404 |
+> |---|---|
+> | `QRCode.js`, `jsQR` | `three`, `react`, `react-dom`, `scheduler`, `js-tokens`, `loose-envify` |
+>
+> Gegenprobe mit erfundenem Namen: 404 — die Methode unterscheidet.
+>
+> 🛑 **Und die Frage davor, die ich zuerst übersprungen hatte: «im Repo» ist nicht «im Build».**
+> Hätte eine `.gitignore`- oder vite-Regel `public/licenses/` aus `dist/` gehalten, würde der
+> Deploy die Lücke **nicht** schliessen — und dieses Dokument behauptete eine Konformität, die
+> nie einträte. Nachgemessen im frischen Build (`dist/licenses/`, gebaut 11:06 aus `main` =
+> `09b54a9` von 11:03): **alle acht Dateien da, 1081–12161 Bytes, keine leer.** Der Deploy
+> schliesst die Lücke also wirklich. *Gefunden hat diese Vorfrage die Parallel-Sitzung
+> «Aufräumen fortgesetzt», nicht ich.*
+>
+> 🛑 **Nebenbefund zum Arbeiten im geteilten Checkout:** Sophies Deploy-Versuch brach am
+> Branch-Gate von `deploy.sh` ab — weil der gemeinsame Arbeitsbaum auf **meinem** Zweig
+> `docs/stand-nach-266` stand. Ein Arbeitszweig im geteilten Checkout blockiert den Deploy,
+> auch wenn er nichts verändert. Lehre: nach dem Push zurück auf `main` stellen, oder gleich
+> in einem eigenen Worktree arbeiten (dieser Nachtrag entstand in
+> `.claude/worktrees/stand-266`, ohne den Haupt-Checkout anzufassen).
+>
 > **Was #266 gebracht hat** (9 Commits):
 > - `docs/security/compliance-overview.md` von drei auf **sechzehn Regime** erweitert, je mit
 >   Beleg und Stolperdraht: Aufsichtsrecht (BankG/FINIG/KAG/GwG/FIDLEG/VAG/KVAG), UWG inkl.
