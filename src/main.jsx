@@ -31,6 +31,7 @@ const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ defa
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
+const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
 import BetaGate from './BetaGate.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
@@ -109,6 +110,7 @@ const MerklisteView = React.lazy(() => import('./MerklisteView.jsx'));
 const SearchView = React.lazy(() => import('./SearchView.jsx'));
 import { runtimeEventBus } from './runtime/singleton.ts';
 import { text, weight, space, radius, shadow, fontFamily, duration, ease } from './config/tokens.js';
+import { laeuftAlsApp } from './utils/geraetErkennung.js';
 
 // Per-view error boundary — catches crashes in individual tools
 // without taking down the entire app
@@ -551,6 +553,15 @@ const AppInner = ({ demo }) => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [dbBlocked, setDbBlocked] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
+  // Läuft die Seite schon als installierte App, ist jeder Installations-Hinweis
+  // falsch. Einmal beim Start bestimmt — der Modus wechselt nicht mitten drin.
+  const [laeuftSchonAlsApp] = useState(() => laeuftAlsApp());
+  // Der Hinweis auf die Anleitung gilt den Browsern OHNE `beforeinstallprompt`
+  // (Safari, Firefox). Einmal weggeklickt bleibt er weg: ein Hinweis, der nach
+  // jedem Laden zurückkommt, ist eine Aufforderung und keine Hilfe.
+  const [installHinweisWeg, setInstallHinweisWeg] = useState(() => {
+    try { return localStorage.getItem('or5_install_hinweis') === 'weg'; } catch (e) { return false; }
+  });
   const sandboxActive = sandboxMode && sandboxData;
   const activeData = demoMode && demoData ? demoData : (sandboxActive ? sandboxData : data);
   // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
@@ -694,6 +705,20 @@ const AppInner = ({ demo }) => {
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
+  // Ein Aufruf, zwei Orte: das Dashboard-Banner und die Anleitungs-Seite drücken
+  // denselben Knopf. Zwei Kopien derselben drei Zeilen wären zwei Orte, an denen
+  // sie auseinanderlaufen können.
+  const installAusfuehren = () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    installPrompt.userChoice.then(() => setInstallPrompt(null));
+  };
+  const installHinweisVerwerfen = () => {
+    setInstallHinweisWeg(true);
+    // Gesperrter Speicher (Privatmodus) ist kein Fehlerfall — dann gilt das
+    // Wegklicken eben nur für diese Sitzung.
+    try { localStorage.setItem('or5_install_hinweis', 'weg'); } catch (e) { /* */ }
+  };
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
@@ -1300,18 +1325,51 @@ const AppInner = ({ demo }) => {
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
-        installPrompt && React.createElement('div', {
+        // ── Der Weg auf den Startbildschirm ───────────────────────────────
+        // Zwei Fassungen, weil die Browser sich zwei Fassungen erzwingen:
+        //
+        //   • Chromium (Chrome/Edge, Desktop + Android) meldet sich per
+        //     `beforeinstallprompt`. Nur dort kann die Seite selbst einen
+        //     Installieren-Knopf anbieten.
+        //   • Safari (iOS UND macOS) und Firefox melden sich nie. Bis 23.09.2026
+        //     stand dort GAR NICHTS — auf jedem iPhone also, und das ist das
+        //     Gerät, auf dem dieser Ordner am ehesten gebraucht wird. Statt des
+        //     Knopfs steht nun der Weg zur Anleitung.
+        //
+        // Beide verschwinden, sobald die Seite als App läuft; die zweite bleibt
+        // nach dem Wegklicken dauerhaft weg (or5_install_hinweis).
+        !laeuftSchonAlsApp && installPrompt && React.createElement('div', {
           style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
         },
           React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.installHint')),
-          React.createElement('div', { style: { display: 'flex', gap: space.xs } },
+          React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
             React.createElement(PrimaryButton, {
               palette,
-              onClick: () => { installPrompt.prompt(); installPrompt.userChoice.then(() => setInstallPrompt(null)); },
+              onClick: installAusfuehren,
               style: { padding: space.xs + 'px ' + space.sm + 'px' },
             }, t('pwa.install')),
             React.createElement('button', {
+              onClick: () => handleNavigate('installApp'),
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.sandDeep, border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit' }
+            }, t('pwa.anleitung')),
+            React.createElement('button', {
               onClick: () => setInstallPrompt(null),
+              'aria-label': t('common.close'),
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
+            }, '×')
+          )
+        ),
+        !laeuftSchonAlsApp && !installPrompt && !installHinweisWeg && React.createElement('div', {
+          style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
+        },
+          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } }, t('pwa.anleitungHint')),
+          React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
+            React.createElement('button', {
+              onClick: () => handleNavigate('installApp'),
+              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.sandDeep, border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium }
+            }, t('pwa.anleitung')),
+            React.createElement('button', {
+              onClick: installHinweisVerwerfen,
               'aria-label': t('common.close'),
               style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
             }, '×')
@@ -1482,6 +1540,10 @@ const AppInner = ({ demo }) => {
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
+      view === 'installApp' && React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
+        React.createElement(InstallGuide, {
+          palette, t, onNavigate: handleNavigate, installPrompt, onInstall: installAusfuehren,
+        })),
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),

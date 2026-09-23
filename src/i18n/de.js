@@ -824,6 +824,7 @@ export default {
     export: 'Export',
     calendar: 'Kalender',
     notifications: 'Benachrichtigungen',
+    installApp: 'Als App installieren',
     asyl: 'Asyl & Schutz',
     flyer: 'Flyer zum Teilen',
     merkliste: 'Merkliste',
@@ -856,6 +857,7 @@ export default {
     todesfall: 'Todesfall im Umfeld',
     arztkoffer: 'Gesundheit',
     sub: {
+      installApp: 'Auf den Startbildschirm legen',
       arztkoffer: { sie: 'Ihre Gesundheits-Werkzeuge im Arztkoffer', du: 'Deine Gesundheits-Werkzeuge im Arztkoffer' },
       kkerst: 'Neu in der Schweiz versichern',
       pensionierung: 'AHV, Pensionskasse, 3. Säule',
@@ -1950,6 +1952,8 @@ export default {
       a7: { sie: 'Erstellen Sie unter Werkzeuge → Export eine Sicherung (in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar) und importieren Sie sie auf dem neuen Gerät. Auf dem alten Gerät können Sie danach unter Einstellungen → «Daten auf diesem Gerät» alles löschen. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.', du: 'Erstelle unter Werkzeuge → Export eine Sicherung (in der Voreinstellung verschlüsselt, ohne Verschlüsselung wählbar) und importiere sie auf dem neuen Gerät. Auf dem alten Gerät kannst Du danach unter Einstellungen → «Daten auf diesem Gerät» alles löschen. Eine automatische Synchronisierung gibt es bewusst nicht — das würde einen Server erfordern.' },
       q8: 'Wie aktuell sind die Daten (Steuern, KVG, AHV)?',
       a8: 'Die Daten basieren auf den offiziellen Werten 2026. Steueränderungen, KVG-Prämien und AHV-Parameter werden bei Updates der App aktualisiert.',
+      q9: 'Wie bekomme ich die App auf mein Handy?',
+      a9: 'Es gibt Maloja Plana in keinem App Store — die Website lässt sich stattdessen auf den Startbildschirm legen und verhält sich danach wie eine App. Der Weg unterscheidet sich je Browser; die Anleitung führt Schritt für Schritt hindurch.',
     },
   },
 
@@ -3633,6 +3637,87 @@ export default {
   pwa: {
     installHint: 'Maloja Plana als App installieren — offline verfügbar, direkt vom Homescreen.',
     install: 'Installieren',
+    // Der Weg für alle Browser, die `beforeinstallprompt` nicht kennen (Safari,
+    // Firefox). Dort gibt es keinen Knopf, den die Seite drücken könnte — nur
+    // eine Anleitung.
+    anleitungHint: 'Maloja Plana lässt sich auf den Startbildschirm legen — in diesem Browser über das Browser-Menü.',
+    anleitung: 'So geht es',
+  },
+
+  install: {
+    title: 'Als App installieren',
+    navSub: 'Auf den Startbildschirm legen',
+    lead: 'Maloja Plana gibt es in keinem App Store. Es ist eine Website, die sich auf den Startbildschirm legen lässt — danach öffnet sie sich mit eigenem Symbol und im ganzen Bildschirm, ohne Adresszeile. Der Weg dorthin heisst in jedem Browser anders. Hier steht er Schritt für Schritt.',
+    schonInstalliert: 'Maloja Plana läuft auf diesem Gerät bereits als App.',
+    jetztInstallieren: 'Jetzt installieren',
+    jetztInstallierenHinweis: 'Dieser Browser kann die Installation selbst übernehmen. Ein Fenster fragt nach; danach liegt Maloja Plana bei den übrigen Apps.',
+    diesesGeraet: 'Auf diesem Gerät',
+    alleGeraete: 'Die Wege je Gerät',
+    geraetUnbekannt: 'Dieses Gerät liess sich nicht eindeutig zuordnen. Darum stehen hier alle Wege — der passende ist dabei.',
+    andereZeigen: 'Wege auf anderen Geräten anzeigen',
+    andereVerbergen: 'Andere Geräte ausblenden',
+
+    geraet: {
+      ios: 'iPhone und iPad',
+      android: 'Android',
+      macSafari: 'Mac mit Safari',
+      chromium: 'Computer mit Chrome oder Edge',
+      firefox: 'Firefox',
+    },
+
+    schritte: {
+      ios: [
+        'malojaplana.ch in Safari öffnen.',
+        'Unten in der Leiste auf das Teilen-Zeichen tippen — das Quadrat mit dem Pfeil nach oben.',
+        'In der Liste nach unten wischen, bis «Zum Home-Bildschirm» erscheint.',
+        'Oben rechts auf «Hinzufügen» tippen.',
+      ],
+      android: [
+        'malojaplana.ch in Chrome öffnen.',
+        'Oben rechts auf die drei Punkte tippen.',
+        '«App installieren» wählen. Je nach Chrome-Version heisst der Eintrag «Zum Startbildschirm hinzufügen».',
+        'Bestätigen. Das Symbol liegt danach bei den übrigen Apps.',
+      ],
+      macSafari: [
+        'malojaplana.ch in Safari öffnen.',
+        'Im Menü «Ablage» auf «Zum Dock hinzufügen» klicken.',
+        'Den Namen bestätigen. Maloja Plana liegt danach im Dock und öffnet sich in einem eigenen Fenster.',
+      ],
+      chromium: [
+        'malojaplana.ch öffnen.',
+        'Rechts in der Adresszeile auf das Installieren-Zeichen klicken — ein kleiner Bildschirm mit einem Pfeil darin.',
+        'Fehlt das Zeichen, führt der Weg über das Menü oben rechts: dort «Maloja Plana installieren» wählen. Je nach Version liegt der Eintrag in einem Untermenü zum Teilen und Speichern.',
+        'Bestätigen.',
+      ],
+      firefox: [
+        'Auf Android: oben rechts das Menü öffnen und «Zum Startbildschirm hinzufügen» wählen.',
+        'Am Computer geht es nicht — siehe Hinweis.',
+      ],
+    },
+
+    hinweis: {
+      ios: 'In Safari gibt es dafür keinen Knopf in der Seite selbst; der Weg führt immer über das Teilen-Zeichen. Das gilt auch für Chrome und Firefox auf dem iPhone — auf iOS verwenden alle Browser dieselbe Technik.',
+      macSafari: '«Zum Dock hinzufügen» gibt es ab Safari 17 (macOS Sonoma). Ältere Versionen können Web-Apps nicht ablegen; dort bleibt ein Lesezeichen.',
+      firefox: 'Firefox am Computer kann Web-Apps nicht installieren. Maloja Plana läuft dort ganz normal im Browser, mit allen Funktionen — als Lesezeichen jederzeit erreichbar. Wer am Computer ein eigenes Symbol möchte, nimmt Chrome, Edge oder Safari.',
+    },
+
+    daten: {
+      title: 'Vorher: eine Sicherung',
+      p1: 'Maloja Plana speichert alles auf dem Gerät, nicht auf einem Server. Dieser Speicher hängt am Browser — und eine installierte App zählt je nach Gerät und Version als eigener Ort. Es kann also vorkommen, dass die App zu Beginn leer ist, obwohl im Browser alles steht.',
+      p2: 'Darum vor dem Installieren eine Sicherung anlegen. Ist die App danach leer, füllt die Sicherung sie in einem Schritt. Und wenn nicht, war sie trotzdem richtig.',
+      cta: 'Zur Sicherung',
+    },
+
+    danach: {
+      title: 'Was sich ändert — und was nicht',
+      items: [
+        'Eigenes Symbol, eigener Start, kein Browser-Rahmen. Die App sieht aus wie jede andere auf dem Gerät.',
+        'Offline nutzbar in den Bereichen, die schon einmal geöffnet waren. Ein Rechner, der noch nie geladen wurde, braucht beim ersten Mal Internet.',
+        'Kein Konto, keine Anmeldung, keine Benachrichtigungen ohne Zutun. Daran ändert die Installation nichts.',
+        'Neue Fassungen kommen beim Öffnen von selbst, sobald wieder Internet da ist. Es gibt nichts nachzuladen.',
+        'Zum Entfernen genügt es, das Symbol zu löschen wie bei jeder App. Die gespeicherten Angaben verschwinden dabei unter Umständen mit — die Sicherung bleibt.',
+      ],
+    },
   },
 
   kvg: {
