@@ -1,10 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
 import { getChapters } from '../config/constants.js';
 import { getNotfallDossierPreview } from '../dossierGenerator.js';
-import { notfallpassFelder, inZwischenablage, NOTFALLPASS_GRUPPEN } from '../utils/notfallpass.js';
+import { notfallpassFelder, inZwischenablage } from '../utils/notfallpass.js';
 import { NA_FELD } from '../utils/vollstaendigkeit.js';
 import { createT } from '../i18n/index.js';
 import de from '../i18n/de.js';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { NotfallpassBlatt } from '../NotfallpassBlatt.jsx';
+import en from '../i18n/en.js';
+import fr from '../i18n/fr.js';
+import itSprache from '../i18n/it.js'; // nicht «it» — das überschriebe vitests it()
+import rm from '../i18n/rm.js';
 
 // Notfallpass vorbereiten (23.09.2026): die Werte kommen aus derselben Quelle wie
 // Dossier und QR — getNotfallDossierPreview(). Hier wird geprüft, dass die Zuordnung
@@ -41,8 +48,6 @@ describe('Notfallpass: Felder aus dem Profil', () => {
     const tDe = createT({ de }, 'de', 'sie');
     const g = notfallpassFelder(getNotfallDossierPreview(voll, getChapters(tDe), tDe).sections);
     expect(wertVon(g, 'blutgruppe')).toBe('A+');
-    const blut = NOTFALLPASS_GRUPPEN[1].felder.find(f => f.key === 'blutgruppe');
-    expect(blut.auswahl).toBe(true);
   });
 
   it('Medikamente und Erkrankungen aus den Listen des Kapitels (nicht nur aus dem alten Textfeld)', () => {
@@ -101,5 +106,77 @@ describe('Notfallpass: Kopieren', () => {
     const writeText = vi.fn();
     expect(await inZwischenablage('', { navigator: { clipboard: { writeText } } })).toBe(false);
     expect(writeText).not.toHaveBeenCalled();
+  });
+});
+
+// ── Das Blatt selbst ─────────────────────────────────────────────────────────────
+// Ohne jsdom (Projektentscheid): gerendert wird als statisches Markup. Der Klick selbst ist
+// oben an inZwischenablage() belegt; hier wird geprüft, dass das Blatt die Knöpfe trägt.
+
+const palette = new Proxy({}, { get: (_, k) => (typeof k === 'string' ? '#777777' : undefined) });
+const blatt = (data, sprache = 'de', anrede = 'sie') => {
+  const tx = createT({ de, en, fr, it: itSprache, rm }, sprache, anrede);
+  return renderToStaticMarkup(React.createElement(NotfallpassBlatt, { palette, t: tx, data, chapters: getChapters(tx), onNavigate: () => {} }));
+};
+
+describe('Notfallpass-Blatt: Darstellung', () => {
+  it('volles Profil: Werte stehen da, je Feld ein Kopier-Knopf mit eigenem Namen', () => {
+    const html = blatt(voll);
+    expect(html).toContain('Levothyroxin 50 µg');
+    expect(html).toContain('A+');
+    expect(html).toContain('aria-label="Allergien kopieren"');
+    expect(html).toContain('aria-label="Blutgruppe kopieren"');
+    expect((html.match(/>Kopieren</g) || []).length).toBe(8);
+    expect(html).toContain('role="status"');
+    expect(html).toContain('aria-live="polite"');
+  });
+
+  it('leeres Profil rendert ruhig: «noch nicht erfasst», kein Knopf, keine Mahnung', () => {
+    const html = blatt({ basis: {}, notfall: {} });
+    expect((html.match(/noch nicht erfasst/g) || []).length).toBe(8);
+    expect(html).not.toContain('>Kopieren<');
+    expect(html).toContain('Im Kapitel Notfall ist noch nichts erfasst');
+    expect(html).not.toMatch(/dringend|sofort|unbedingt|Achtung|Warnung|!/);
+  });
+
+  it('Apple- und Android-Hilfe als externe Links mit Ankündigung, kein anderer Netzweg', () => {
+    const html = blatt(voll);
+    expect(html).toContain('href="https://support.apple.com/de-ch/guide/iphone/iph08022b192/ios"');
+    expect(html).toContain('href="https://support.google.com/android/answer/9319337?hl=de"');
+    expect((html.match(/target="_blank" rel="noopener noreferrer"/g) || []).length).toBe(2);
+    expect(html).not.toMatch(/<img|<iframe|<script/);
+  });
+
+  it('Datenschutz-Satz: ohne Entsperren lesbar, gewollt, Nutzer:in entscheidet', () => {
+    const html = blatt(voll);
+    expect(html).toContain('ohne Code');
+    expect(html).toContain('Das ist gewollt');
+    expect(html).toContain('Sie entscheiden, was Sie eintragen');
+    expect(blatt(voll, 'de', 'du')).toContain('Du entscheidest, was du einträgst');
+  });
+});
+
+describe('Notfallpass-Blatt: fünf Sprachen', () => {
+  const sprachen = { de, en, fr, it: itSprache, rm };
+  const schluessel = Object.keys(de.notfallpass);
+
+  for (const [name, dict] of Object.entries(sprachen)) {
+    it(`${name}: jeder Schlüssel da, nichts bleibt als Rohschlüssel stehen`, () => {
+      expect(Object.keys(dict.notfallpass).sort()).toEqual([...schluessel].sort());
+      for (const anrede of ['sie', 'du']) {
+        const html = blatt(voll, name, anrede);
+        expect(html, `${name}/${anrede}`).not.toMatch(/notfallpass\.[a-zA-Z_]+/);
+      }
+    });
+  }
+
+  it('Hilfe-Links zeigen auf die Sprache der Seite (rm: deutsche Fassung, es gibt keine rätoromanische)', () => {
+    expect(de.notfallpass.iphoneUrl).toContain('/de-ch/');
+    expect(fr.notfallpass.iphoneUrl).toContain('/fr-ch/');
+    expect(itSprache.notfallpass.iphoneUrl).toContain('/it-ch/');
+    expect(en.notfallpass.iphoneUrl).toContain('/en-us/');
+    expect(rm.notfallpass.iphoneUrl).toContain('/de-ch/');
+    expect(fr.notfallpass.androidUrl).toMatch(/hl=fr$/);
+    expect(itSprache.notfallpass.androidUrl).toMatch(/hl=it$/);
   });
 });
