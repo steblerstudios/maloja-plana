@@ -78,6 +78,27 @@ export function applyColorBlind(palette, active) {
   return { ...palette, ...(isDark ? CB_DARK : CB_LIGHT), colorBlind: true };
 }
 
+// Die Farbtafel aus dem Speicher — für Stellen, die kein `palette` von der App
+// bekommen. Das ist genau eine: der Fehlerschirm (`ErrorBoundary`), der ausserhalb
+// von AppInner hängt und dort ohne Props gerendert wird. Er zeigte bis 23.09.2026
+// immer die dunklen Rückfallwerte, also einen dunklen Absturz-Schirm im Hellmodus.
+//
+// Dieselbe Quelle und Logik wie main.jsx (`or5_theme` als JSON, ohne Eintrag
+// dunkel; `or5_colorblind` als '1') und wie `public/theme-init.js`. Dass es diese
+// Funktion gibt, HÄLT die Gleichheit — vorher stand die Logik zweimal da, jetzt
+// ist sie hier zentral und theme-init.js bleibt die eine unvermeidliche Kopie:
+// das Script läuft im <head>, vor dem Bundle, und kann nichts importieren.
+// `fehlerschirmFarben.test.js` prüft, dass alle drei Stellen denselben Schlüssel
+// und denselben Default tragen.
+export function paletteAusSpeicher(storage) {
+  const laden = (key) => {
+    try { return (storage || localStorage).getItem(key); } catch (e) { return null; }
+  };
+  let dunkel = true;
+  try { dunkel = JSON.parse(laden('or5_theme') || 'true'); } catch (e) { dunkel = true; }
+  return applyColorBlind(dunkel ? DARK_PALETTE : LIGHT_PALETTE, laden('or5_colorblind') === '1');
+}
+
 import { getCantonName, CANTON_CODES } from './cantonalData.js';
 const cantonOptions = (t) => CANTON_CODES.map(c => ({ value: c, label: getCantonName(c, t) }));
 

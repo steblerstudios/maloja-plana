@@ -60,10 +60,13 @@ Datei; dafür hat das Studio einen eigenen Weg.
   `palette, t` und war nie betroffen; deshalb fiel es nicht auf. Nachstellen: eine Sprache ≠ EN
   wählen, einen Absturz im Baum auslösen. Festgehalten in
   `src/__tests__/fehlerschirmMelden.test.js`, Fix: `t` aus dem I18n-Kontext, sonst `tMitRueckfall`
-  (K64/K71). **Nicht live** — wartet auf Merge + Deploy.
-  🛑 Offen geblieben: die **Farben** des Schirms kommen weiter aus den dunklen Rückfallwerten
-  (`palette` wird nicht übergeben, und für Farben gibt es keine CSS-Variablen). Im Light Mode
-  ist der Absturz-Schirm also dunkel. Eigener Punkt, nicht in diesem Fix.
+  (K64/K71) — PR #273, **gemergt 23.09.2026** (`main` = `20342d4`). Die zweite Hälfte, die
+  **Farben**, folgt im Fix darunter: `palette` wird nicht übergeben, also standen dort dunkle
+  Rückfallwerte und der Absturz-Schirm war im Hellmodus dunkel → er liest das Thema jetzt aus
+  derselben Quelle wie die App (`or5_theme`, `paletteAusSpeicher` in `config/constants.js`),
+  Test `src/__tests__/fehlerschirmFarben.test.js`.
+  🛑 **Beides noch nicht live** — live läuft `index-8FolD38L.js` vom 22.09.2026. Erst nach dem
+  Deploy wandert die Zeile nach «Zuletzt behoben».
 
 ## Geprüft — kein offener Bug (2026-07-08)
 
