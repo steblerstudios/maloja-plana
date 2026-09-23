@@ -19,6 +19,11 @@ kommt der Changelog immer mit, nie doppelt.*
   Bundes- und Kantonssteuer, Vorsorge und den Haushalt bei der Prämienverbilligung darum
   genau wie bei Verheirateten. Der Schalter in Steuer- und Vorsorgerechner heisst jetzt
   «Verheiratet oder in eingetragener Partnerschaft».
+- **«Aufgelöste Partnerschaft» als Zivilstand**, in allen fünf Sprachen mit dem amtlichen
+  Begriff der Zivilstandsverordnung (ZStV Art. 8 lit. d Ziff. 1: fr «partenariat dissous»,
+  it «unione domestica sciolta», rm «partenadi schlià»). Bisher blieb nach Auflösung durch
+  Gericht oder Tod nur «geschieden» oder «verwitwet». Maloja rechnet sie wie diese beiden —
+  als alleinstehend, nie wie verheiratet (DBG Art. 9 Abs. 1bis, ATSG Art. 13a Abs. 2/3).
 
 ### Geändert
 - Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
