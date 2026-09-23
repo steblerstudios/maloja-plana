@@ -1015,7 +1015,7 @@ export default {
     nettolohn: 'Net salary — pay after social insurance contributions (AHV/IV/EO, ALV, pension fund, accident insurance), but before tax. In Switzerland tax is usually paid separately after the assessment — except under withholding tax.',
     taxpunktwert: 'Tax point value — the franc amount per tariff point of a medical service. It is agreed and approved canton by canton, so the same treatment costs a different amount depending on the canton. Basis: KVG Art. 43 ff.',
     bundessteuer: 'Federal tax — the direct federal tax on income. One tariff for the whole of Switzerland, regardless of canton of residence; cantonal and municipal tax come on top. Basis: DBG Art. 36.',
-    veranlagung: 'Assessment — the tax authority\'s decision for a tax year. It states the taxable income and assets and the amount owed.',
+    veranlagung: 'Tax assessment (Veranlagung) — the tax authority\'s decision for a tax year. It states the taxable income and assets and the amount owed.',
     ipv: 'IPV — individual premium reduction: a cantonal subsidy toward your health-insurance premium when your income is low enough.',
     skos: 'SKOS — Swiss Conference for Social Assistance: recommends guidelines for social assistance. They are binding only where a canton adopts them.',
     el: 'EL — supplementary benefits: a top-up to AHV or IV pensions when they do not cover living costs.',
@@ -1026,7 +1026,7 @@ export default {
     bvg: 'BVG — occupational pension (pension fund): the second pillar that, together with AHV, forms the retirement pension.',
     uvg: 'UVG — accident insurance: covers the costs of occupational and non-occupational accidents.',
     franchise: 'Deductible (Franchise) — the share of health costs paid yourself each year before the health insurer pays.',
-    selbstbehalt: 'Retention (Selbstbehalt) — your share (usually 10%) of costs above the deductible, up to an annual maximum.',
+    selbstbehalt: 'Co-payment/Retention fee (Selbstbehalt) — your share (usually 10%) of costs above the deductible, up to an annual maximum.',
     beistandschaft: 'Deputyship (Beistandschaft) — a support measure ordered by the child and adult protection authority (KESB) when a person can no longer handle certain matters on their own. As little as necessary, graduated. Basis: Civil Code Art. 390 ff.',
   },
   settingsDrawer: {
