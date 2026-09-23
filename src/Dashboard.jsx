@@ -525,12 +525,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
     // ─── Welcome area ──────────────────────────────────────
+    // Der Anspruch (dashboard.welcome) steht immer — er ist die Identität der Seite.
+    // Die Leistungs-Zeile darunter beantwortet "Was ist das hier?" und hilft genau
+    // einmal: beim ersten Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr
+    // bei jedem Öffnen vorgesetzt. Gemessen am Handy (390x844): sie kostet 123 px
+    // einer Bildschirmseite, die nur 619 px hoch ist — ohne sie kommt der Berg mit
+    // dem Fortschritt über den Falz. Weggenommen wird nichts: für neue Nutzerinnen
+    // und Nutzer steht sie unverändert da.
+    // (Suchmaschinen sehen diesen Text ohnehin nie — sie kommen nicht hinter das
+    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement(PageTitle, {
         palette,
         style: { margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
-      React.createElement('p', {
+      !hasMeaningfulProgress && React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
       }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
