@@ -1279,7 +1279,7 @@ export default {
         phone: 'Telefon',
         email: 'E-Mail',
         ahv: 'AHV-Nummer',
-        maritalStatus: { label: 'Zivilstand', options: { single: 'Ledig', married: 'Verheiratet', registeredPartnership: 'Eingetragene Partnerschaft', cohabiting: 'Konkubinat', divorced: 'Geschieden', widowed: 'Verwitwet' } },
+        maritalStatus: { label: 'Zivilstand', options: { single: 'Ledig', married: 'Verheiratet', registeredPartnership: 'Eingetragene Partnerschaft', cohabiting: 'Konkubinat', divorced: 'Geschieden', widowed: 'Verwitwet', dissolvedPartnership: 'Aufgelöste Partnerschaft' } },
         dependents: 'Anzahl Kinder',
         household: {
           adults: 'Erwachsene im Haushalt',

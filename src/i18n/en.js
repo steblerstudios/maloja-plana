@@ -1273,7 +1273,7 @@ export default {
         phone: 'Phone',
         email: 'Email',
         ahv: 'AHV number',
-        maritalStatus: { label: 'Marital status', options: { single: 'Single', married: 'Married', registeredPartnership: 'Registered partnership', cohabiting: 'Cohabiting', divorced: 'Divorced', widowed: 'Widowed' } },
+        maritalStatus: { label: 'Marital status', options: { single: 'Single', married: 'Married', registeredPartnership: 'Registered partnership', cohabiting: 'Cohabiting', divorced: 'Divorced', widowed: 'Widowed', dissolvedPartnership: 'Dissolved partnership' } },
         dependents: 'Number of children',
         household: {
           adults: 'Adults in household',
