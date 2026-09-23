@@ -667,7 +667,7 @@ export default {
     chosen: 'Gewählt',
     step3Note3b: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.',
     wunschKasseLabel: 'Wunsch-Kasse (optional)',
-    wunschKassePlaceholder: 'z.B. Helsana',
+    wunschKassePlaceholder: 'Name der Kasse',
     reminderTitleTo: 'Wechsel zu {insurer} — Frist',
     todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
     path3bCaveat: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.',

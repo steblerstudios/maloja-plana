@@ -653,7 +653,7 @@ export default {
     chosen: 'Scelto',
     step3Note3b: { sie: 'Se la nuova cassa si occupa del cambio, gestisce la disdetta al posto Suo — non deve scrivere personalmente una lettera.', du: 'Se la nuova cassa si occupa del cambio, gestisce lei la disdetta — non devi scrivere tu una lettera.' },
     wunschKasseLabel: 'Cassa desiderata (facoltativo)',
-    wunschKassePlaceholder: 'p. es. Helsana',
+    wunschKassePlaceholder: 'Nome della cassa',
     reminderTitleTo: 'Passaggio a {insurer} — termine',
     todoText: 'Cambiare cassa malati: confrontare i premi',
     path3bCaveat: { sie: 'Non tutte le casse lo fanno in modo affidabile — si faccia confermare per iscritto la disdetta della vecchia cassa. Disdire da soli è sempre la via sicura.', du: 'Non tutte le casse lo fanno in modo affidabile — fatti confermare per iscritto la disdetta della vecchia cassa. Disdire da soli è sempre la via sicura.' },

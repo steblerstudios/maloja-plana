@@ -653,7 +653,7 @@ export default {
     chosen: 'Selected',
     step3Note3b: 'If the new insurer handles the switch, it takes care of the cancellation — you don\'t need to write a letter yourself.',
     wunschKasseLabel: 'Preferred insurer (optional)',
-    wunschKassePlaceholder: 'e.g. Helsana',
+    wunschKassePlaceholder: 'Name of the insurer',
     reminderTitleTo: 'Switch to {insurer} — deadline',
     todoText: 'Switch health insurer: compare premiums',
     path3bCaveat: 'Not every insurer reliably does this — get written confirmation that the old policy was cancelled. Cancelling yourself is always the safe way.',

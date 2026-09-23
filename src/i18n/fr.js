@@ -653,7 +653,7 @@ export default {
     chosen: 'Choisi',
     step3Note3b: { sie: 'Si la nouvelle caisse s\'occupe du changement, elle se charge de la résiliation — vous n\'avez pas à écrire de lettre vous-même.', du: 'Si la nouvelle caisse s\'occupe du changement, elle se charge de la résiliation — tu n\'as pas à écrire de lettre toi-même.' },
     wunschKasseLabel: 'Caisse souhaitée (facultatif)',
-    wunschKassePlaceholder: 'p. ex. Helsana',
+    wunschKassePlaceholder: 'Nom de la caisse',
     reminderTitleTo: 'Passage à {insurer} — délai',
     todoText: 'Changer de caisse-maladie : comparer les primes',
     path3bCaveat: { sie: 'Toutes les caisses ne le font pas de manière fiable — demandez une confirmation écrite de la résiliation de l\'ancienne caisse. Résilier soi-même est toujours la voie sûre.', du: 'Toutes les caisses ne le font pas de manière fiable — demande une confirmation écrite de la résiliation de l\'ancienne caisse. Résilier soi-même est toujours la voie sûre.' },
