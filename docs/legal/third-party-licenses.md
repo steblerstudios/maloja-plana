@@ -10,9 +10,17 @@
 |---|---|---|---|
 | react | ^18.2.0 | MIT | UI-Framework |
 | react-dom | ^18.2.0 | MIT | DOM-Rendering |
+| **three** | **^0.186.0** | **MIT** | **3D-Lebensbaum (`Baum3D.jsx`)** |
+| loose-envify | transitiv | MIT | über react |
+| js-tokens | transitiv | MIT | über loose-envify |
+| scheduler | transitiv | MIT | über react-dom |
 | @capacitor/core | ^8.4.1 | MIT | Native Bridge (iOS-Vorbereitung) |
 | @capacitor/cli | ^8.4.1 | MIT | Capacitor CLI |
 | @capacitor/ios | ^8.4.1 | MIT | iOS-Plattform |
+
+*`three` und die drei transitiven Pakete fehlten bis 23.09.2026 in dieser Tabelle —
+gefunden bei der Rechts-Prüfung des Zweigs `docs/compliance-uebersicht`. `three` ist
+seit dem 3D-Lebensbaum eine echte Laufzeit-Abhängigkeit und landet im Bundle.*
 
 ## Vendored Libraries
 
@@ -21,7 +29,19 @@
 | qrcodejs | src/vendor/qrcodejs.js | MIT | QR-Code-Generierung (Organspende, KK-Scanner) |
 | jsQR | public/vendor/jsQR.js | Apache-2.0 | QR-Code-Scanning |
 
-Lizenztexte der beiden Bibliotheken werden mit ausgeliefert: `public/licenses/jsQR-LICENSE.txt` (Apache-2.0) und `public/licenses/QRCode.js-LICENSE.txt` (MIT), im Build unter `/licenses/`.
+## Ausgelieferte Lizenztexte
+
+Die MIT-Lizenz verlangt, dass ihr Text **mitgeliefert** wird («shall be included in
+all copies or substantial portions of the Software») — nicht nur, dass die Lizenz
+genannt wird. Seit 23.09.2026 liegen darum **alle acht** Texte unter
+`public/licenses/` und im Build unter `/licenses/`:
+
+`react` · `react-dom` · `three` · `scheduler` · `loose-envify` · `js-tokens`
+(alle MIT) · `QRCode.js-LICENSE.txt` (MIT) · `jsQR-LICENSE.txt` (Apache-2.0)
+
+*Bis dahin waren es nur die zwei vendorierten Dateien. Die sechs npm-Pakete sind ins
+Bundle kompiliert, ihre Lizenztexte fehlten in der Auslieferung — aufgefallen bei der
+Rechts-Prüfung am 23.09.2026.*
 
 ## Dev Dependencies
 

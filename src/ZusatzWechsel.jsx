@@ -86,7 +86,9 @@ export const ZusatzWechsel = ({ palette, t, data, onNavigate }) => {
       onNavigate && React.createElement(AblaufLink, { palette, label: t('zusatzWechsel.policeLink'), onClick: () => onNavigate('unterlagen') })
     ),
 
-    React.createElement(AblaufFooter, { palette, notes: [t('zusatzWechsel.footerFrist'), t('trust.localOnly')] })
+    // Zusatzversicherung ist VVG-Geschäft — derselbe Orientierungs-Hinweis wie
+    // im KVG-Wechselpfad und in den übrigen Ablauf-Ansichten.
+    React.createElement(AblaufFooter, { palette, notes: [t('zusatzWechsel.footerFrist'), t('alpha.noAdviceHint'), t('trust.localOnly')] })
   );
 };
 

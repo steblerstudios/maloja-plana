@@ -1,7 +1,9 @@
 # Datenschutz & Sicherheit — Ehrliche Positionsbestimmung
 
-> Stand: 2026-05-29
+> Stand: 2026-05-29, nachgemessen und an einer Stelle präzisiert am 23.09.2026
+> (Code-Stand `main` `2f15946`).
 > Zweck: Dokumentiert, was Maloja Plana heute wirklich macht und was NICHT.
+> Aufsichtsrecht, UWG, URG und die übrigen Regime: `docs/security/compliance-overview.md`.
 > Keine Marketing-Versprechen. Keine ISO-Behauptungen. Nur Fakten.
 
 ---
@@ -47,8 +49,15 @@
 ### Keine Verschlüsselung
 - localStorage ist **nicht verschlüsselt** — jeder mit Zugang zum Browser kann die Daten lesen
 - IndexedDB ist **nicht verschlüsselt**
-- Exportierte Dateien sind **nicht verschlüsselt**
-- Es gibt **keine Passwort-Sperre** für die App
+- Die **Exporte** (JSON, CSV, `MANIFEST.txt`) sind **nicht verschlüsselt** — nur die
+  Sicherung als `.maloja` ist es (AES-256-GCM, siehe oben). Bis 23.09.2026 stand hier
+  «Exportierte Dateien sind nicht verschlüsselt», was dem Absatz über die `.maloja`-
+  Sicherung weiter oben widersprach; der Code kann beides und unterscheidet danach,
+  welchen Knopf man drückt (`src/ZipExport.jsx`, `src/utils/backupCrypto.js`).
+- Es gibt **keine Passwort-Sperre** für die App. `src/LockScreen.jsx` existiert, ist
+  aber eine reine Design-Vorschau und wird nur im Entwicklungsmodus geladen
+  (`src/main.jsx`, `import.meta.env.DEV`) — nachgemessen 23.09.2026, damit der nächste
+  Blick auf den Dateinamen nicht das Gegenteil annimmt.
 
 ### Keine Rechts-/Finanzberatung
 - Berechnungen (SKOS, IPV, Budget, Steuern) sind **Orientierungswerte**

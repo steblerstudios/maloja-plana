@@ -667,7 +667,7 @@ export default {
     chosen: 'Gewählt',
     step3Note3b: 'Wenn die neue Kasse den Wechsel übernimmt, kümmert sie sich um die Kündigung — du musst selbst keinen Brief schreiben.',
     wunschKasseLabel: 'Wunsch-Kasse (optional)',
-    wunschKassePlaceholder: 'z.B. Helsana',
+    wunschKassePlaceholder: 'Name der Kasse',
     reminderTitleTo: 'Wechsel zu {insurer} — Frist',
     todoText: 'Krankenkassen-Wechsel: Prämien vergleichen',
     path3bCaveat: 'Nicht jede Kasse übernimmt das zuverlässig — lass dir die Kündigung der alten Kasse schriftlich bestätigen. Selbst kündigen ist immer der sichere Weg.',
@@ -1608,7 +1608,7 @@ export default {
       sourceTitle: 'Code-source',
       source1: 'Il code-source cumplet è accessibel sut: https://github.com/steblerstudios/maloja-plana',
       thirdPartyTitle: 'Bibliotecas utilisadas',
-      thirdParty1: 'React (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, mo en la tgaltscha iOS, betg en l\'app web). Scrittiras: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Tut las licenzas èn cumpatiblas cun AGPL-3.0.', // TODO(rm): Gegenlese Muttersprache
+      thirdParty1: 'React (MIT), three.js (MIT), Vite (MIT), QRCode.js (MIT), jsQR (Apache-2.0), Capacitor (MIT, mo en la tgaltscha iOS, betg en l\'app web). Scrittiras: Lexend, Hanken Grotesk, Atkinson Hyperlegible (SIL Open Font License 1.1). Tut las licenzas èn cumpatiblas cun AGPL-3.0.', // TODO(rm): Gegenlese Muttersprache
     },
     ethics: {
       valuesTitle: 'Nossa posiziun',
@@ -1667,7 +1667,7 @@ export default {
       // TODO(rm): provisorischer DE-Fallback — RM nachziehen
       heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Sustegn social', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Maschina da tschertgar che investescha sias entradas en il reboschiment.',
-      heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
+      heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels — e noss agen hoster.',
       heartfelt3: 'Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',
       heartfelt4: 'Bischuts fatgs a maun da pasta polimera e fotografias da viadi.',
       heartfelt5: 'Lavurs da gipsader, pictur e plattas en la regiun da Basilea.',
