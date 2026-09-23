@@ -755,6 +755,7 @@ export default {
     skipToContent: 'Vai al contenuto',
     saved: 'Salvato',
     saveError: 'Impossibile salvare — verificare lo spazio disponibile.',
+    fremdGeaendert: 'Modificato in un\'altra finestra. Per non sovrascrivere nulla, questa finestra non salva più.',
     notSaved: 'Non salvato',
     never: 'Mai',
     justNow: 'proprio ora',

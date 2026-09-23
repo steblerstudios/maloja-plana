@@ -755,6 +755,7 @@ export default {
     skipToContent: 'Skip to content',
     saved: 'Saved',
     saveError: 'Could not save — please check available storage.',
+    fremdGeaendert: 'Changed in another window. So that nothing there is overwritten, this window no longer saves.',
     notSaved: 'Not saved',
     never: 'Never',
     justNow: 'just now',

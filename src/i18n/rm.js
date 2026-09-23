@@ -783,6 +783,8 @@ export default {
     skipToContent: 'Siglir al cuntegn',
     saved: 'Memorisà',
     saveError: 'Betg pussaivel da memorisar — controllar per plaschair il spazi.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    fremdGeaendert: 'Midà en in\'autra fanestra. Per che nagut na vegnia surscrit là, na memorisescha questa fanestra betg pli.',
     notSaved: 'Betg memorisà',
     never: 'Mai',
     justNow: 'ussa gist',

@@ -755,6 +755,7 @@ export default {
     skipToContent: 'Zum Inhalt springen',
     saved: 'Gespeichert',
     saveError: 'Konnte nicht gespeichert werden — bitte Speicherplatz prüfen.',
+    fremdGeaendert: 'In einem anderen Fenster geändert. Damit dort nichts überschrieben wird, speichert dieses Fenster nicht mehr.',
     notSaved: 'Nicht gespeichert',
     never: 'Nie',
     justNow: 'gerade eben',

@@ -755,6 +755,7 @@ export default {
     skipToContent: 'Aller au contenu',
     saved: 'Enregistré',
     saveError: 'Enregistrement impossible — veuillez vérifier l\'espace disponible.',
+    fremdGeaendert: 'Modifié dans une autre fenêtre. Pour ne rien y écraser, cette fenêtre n\'enregistre plus.',
     notSaved: 'Non enregistré',
     never: 'Jamais',
     justNow: 'à l\'instant',
