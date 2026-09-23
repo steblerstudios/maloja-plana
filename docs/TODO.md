@@ -189,13 +189,26 @@ kein waagrechter Überlauf irgendwo, kein Absturz, keine Ansicht ohne `#mp-main`
   **Zwei mögliche Wege, beide sind Gestaltungsentscheide:** die Tönungen im Dunkelmodus
   schwächen bzw. abdunkeln — oder eine eigene Textstufe für getönte Flächen einführen.
   🛑 Nicht einseitig geändert: die getönten Flächen sind Teil der ruhigen Bildsprache.
-- ⏳ **Rund 35 weitere Stellen setzen noch eine Flächenfarbe in Textposition** — gefunden per
-  Abtastung aller `color:`/`statusColor:`-Ausdrücke in `src/**/*.jsx`. Sie sind **nicht** als
-  Durchfaller gemessen, weil das Demo-Profil ihre Zustände nicht erreicht (z. B. «bezahlt»,
-  «abgedeckt», «Anspruch ja»). Viele davon sind zudem **Symbole und Diagrammfarben**, wo 3:1
-  gilt und die Farbe richtig ist. Jede Stelle braucht die Einzelfrage «Text oder Grafik?» —
-  darum nicht im Rutsch geändert. Liste erzeugen:
-  `grep`-Abtastung wie in der Sitzung vom 23.09. (siehe Commit-Text von `5b554ae`).
+- ✅ **Die 45 nackten Flächenfarben einzeln beurteilt** (`f4ae661`) — 14 waren Text und sind
+  umgestellt; **31 bleiben zu Recht**: Symbole (`hinweisZeichen` liefert ein SVG),
+  Diagrammfarben, Zonenfüllungen, ein Balken-Hintergrund, zwei Aufzählungszeichen. Dort gilt
+  3:1 bzw. «dekorativ».
+- ✅ **Deckkraft rechnet den Kontrast weg** (`f4ae661`) — vier Stellen, gemessen im Hellmodus:
+  Fusszeile `mid @0.7` = **3.10:1** (auf *jeder* Seite, trägt «Datenschutz & Rechtliches» und
+  den Melde-Weg) · Notfall-Einstieg `sageDeep @0.7` = 3.16 · Offline-Hinweis `mid @0.8` = 3.80 ·
+  Vertrauens-Zeile `sageDeep @0.8` = 3.85 (zweimal). Alle vier ohne Deckkraft; Fusszeile jetzt
+  5.54:1. Wächter: `deckkraftFrisstKontrast.test.js`, mit **einer** benannten Ausnahme (der
+  `disabled` IK-Eingang — WCAG 1.4.3 nimmt inaktive Bedienelemente aus).
+  🛑 Die Farbtafel kann das nicht sehen: sie rechnet mit der Farbe, gesehen wird die Mischung.
+
+- ⏳ 🌳 **Lebensbaum: vier Beschriftungen bei Deckkraft 0.34 → 1.64–2.03:1.** «Ausbildung 82 %»
+  und «Finanzen 35 %» auf der Finanz-Übersicht. Stabil, keine Animation; `pointer-events: none`,
+  und **nur manche** Äste sind gedimmt — das wirkt wie ein gewollter Zustand, nicht wie ein
+  Versehen. 🛑 **Bewusst nicht angefasst:** der Lebensbaum gehört zur Atmosphäre-Schicht, die
+  im Gestalt-Skill ausdrücklich als *unantastbar* geführt ist. Die Angabe steht zudem als
+  `aria-label` am Knopf und in der Kapitelliste, ist also nicht verloren.
+  **Frage an Stebler Studios:** ist die Dimmung ein Zustand (dann Form statt Deckkraft, wie bei
+  den Berg-Beschriftungen gelöst) oder reine Tiefenwirkung (dann bleibt sie)?
 - ⏳ **Reihenfolge Hinweis ↔ Orientierung.** Der Entwicklungs-Hinweis (`AlphaBanner`) steht am Handy
   vor «Was ist jetzt dran?» und kostet ~250 px. Ihn darunter zu schieben wäre die gleiche Bewegung,
   die `Dashboard.jsx:540` schon einmal gemacht hat — aber es ist ein **Haftungstext**, und die
