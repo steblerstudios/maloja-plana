@@ -163,8 +163,39 @@ nur noch Punkte, die einen Entscheid von Stebler Studios brauchen (Hero-Copy, Ex
   Statusleisten-Tipp springt nach oben) ist **auf einem echten iPhone** anzusehen — aus dem
   Browser hier nicht verifizierbar.
 
+- ✅ **Fehlerschirm: nichts rutscht mehr unerreichbar über die obere Kante** (`11a9baa`).
+  `height: 100vh` + `align-items: center` ohne Scrollweg. Am Handy **quer** (667×375) gemessen:
+  8 px (Italienisch) bis 19 px (Deutsch, Lese-Modus) über der Kante, `scrollTo(0,-9999)` liess
+  `scrollY` auf 0. Abgeschnitten war nur Polsterung — bis zum Symbol waren es ~25 px. Jetzt
+  `minHeight: 100dvh` + `overflowY: auto`, zentriert über `margin: auto` (Auto-Ränder werden nie
+  negativ). Hochkant weiterhin exakt zentriert.
+- ✅ **Flächenfarben standen als Text — elf Ausdrücke** (`5b554ae`). `sage`, `gold` und `rose`
+  sind Flächenfarben; `constants.js` hält dafür `sageDeep`/`goldDeep`/`roseDeep` bereit und
+  begründet sie. Die Regel stand nirgends als Prüfung. Hellmodus: **9 → 0** Durchfaller.
+  Neuer Test hält die Regel mit ihrer Begründung (`flaechenfarbeIstKeineTextfarbe.test.js`).
+- ✅ **Statuszeile des Behörden-Dossiers kam aus der DRUCK-Tafel** (`e65ba5a`) — im Dunkelmodus
+  **2.20:1**, der schlimmste gemessene Wert. Jetzt 4.81:1 dunkel / 5.25:1 hell.
+
+**Der Durchlauf selbst** (23.09., Demo-Profil, 390×844, alle 62 Ansichten der Hash-Route):
+kein waagrechter Überlauf irgendwo, kein Absturz, keine Ansicht ohne `#mp-main`.
+
 **Offen, Entscheid Stebler Studios (bewusst nicht gebaut):**
 
+- ⏳ 🎨 **Getönte Flächen im Dunkelmodus — zehn Stellen bei 4.06–4.43:1.** Dort stehen bereits
+  die *richtigen* Textfarben (`mid`, `sageDeep`); sie fallen trotzdem knapp unter AA, weil die
+  Tönung (`sage+'14'`, `gold+'18'` und ähnlich) den dunklen Grund **aufhellt**. Die Tafel
+  verspricht ihre ≥4.5:1 ausdrücklich nur für die ungetönten Flächen (surface/bg/up).
+  Betroffen: `praemien` (2), `tax` (2), `vorsorge` (2), `eo` (1), `sozialhilfe` (1), `alv` (2).
+  **Zwei mögliche Wege, beide sind Gestaltungsentscheide:** die Tönungen im Dunkelmodus
+  schwächen bzw. abdunkeln — oder eine eigene Textstufe für getönte Flächen einführen.
+  🛑 Nicht einseitig geändert: die getönten Flächen sind Teil der ruhigen Bildsprache.
+- ⏳ **Rund 35 weitere Stellen setzen noch eine Flächenfarbe in Textposition** — gefunden per
+  Abtastung aller `color:`/`statusColor:`-Ausdrücke in `src/**/*.jsx`. Sie sind **nicht** als
+  Durchfaller gemessen, weil das Demo-Profil ihre Zustände nicht erreicht (z. B. «bezahlt»,
+  «abgedeckt», «Anspruch ja»). Viele davon sind zudem **Symbole und Diagrammfarben**, wo 3:1
+  gilt und die Farbe richtig ist. Jede Stelle braucht die Einzelfrage «Text oder Grafik?» —
+  darum nicht im Rutsch geändert. Liste erzeugen:
+  `grep`-Abtastung wie in der Sitzung vom 23.09. (siehe Commit-Text von `5b554ae`).
 - ⏳ **Reihenfolge Hinweis ↔ Orientierung.** Der Entwicklungs-Hinweis (`AlphaBanner`) steht am Handy
   vor «Was ist jetzt dran?» und kostet ~250 px. Ihn darunter zu schieben wäre die gleiche Bewegung,
   die `Dashboard.jsx:540` schon einmal gemacht hat — aber es ist ein **Haftungstext**, und die
