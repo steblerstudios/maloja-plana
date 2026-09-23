@@ -35,7 +35,7 @@
 >
 > 🛑 **Und der Grund, warum der Deploy nicht von Claude kommt, ist nicht nur das Branch-Gate:**
 > `deploy.sh:103–104` fragt das SFTP-Passwort. Passwörter eingeben ist Claude verboten, und
-> diese Sitzung war nicht interaktiv. Der Deploy ist damit **mechanisch** Sophies Hand, nicht
+> diese Sitzung war nicht interaktiv. Der Deploy ist damit **mechanisch** die Hand von Stebler Studios, nicht
 > bloss per Konvention. Befehl: im Haupt-Checkout `git checkout main && git pull && bash deploy.sh`.
 >
 > ### Was #271 gebracht hat — der Deckel rechnet
