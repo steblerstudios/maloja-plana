@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import {
   schaetzeKantonaleSteuer, kantonssteuerReihe, interpoliere,
   steuerbarNachEstv, kantonssteuerFuerProfil, abzuegeAusTaxData,
-  KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN, KANTONAL_MAX_KINDER,
+  KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN, KANTONAL_MAX_KINDER, kantonsdatenAbgerufen,
 } from '../kantonaleSteuerdaten.js';
 import { KANTONSSTEUER_TABELLE, KANTONSSTEUER_QUELLE } from '../kantonssteuerTabelle.js';
 import de from '../../i18n/de.js';
@@ -221,6 +221,11 @@ describe('K13 / E38 — Kennzeichnung und Datenstand', () => {
   it('Datenstand = ESTV-Steuerrechner 2026, Abrufdatum 16.09.2026', () => {
     expect(KANTONAL_DATA_VERSION).toBe('2026');
     expect(KANTONAL_DATA_ABGERUFEN).toBe('2026-09-16');
+  });
+
+  it('nachgemessener Kanton trägt sein eigenes Abrufdatum (TI 23.09.2026), alle anderen das der Gesamtmessung', () => {
+    expect(kantonsdatenAbgerufen('TI')).toBe('2026-09-23');
+    for (const kt of KANTONE.filter((k) => k !== 'TI')) expect(kantonsdatenAbgerufen(kt)).toBe('2026-09-16');
   });
 
   it('in allen 5 Sprachen: grobe Schätzung, Hauptort + ohne Kirchensteuer, kein alter Eichpunkt', () => {

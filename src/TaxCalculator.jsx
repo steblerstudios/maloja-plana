@@ -5,7 +5,7 @@ import { LabeledField } from './components/LabeledField.jsx';
 import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
-import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, kantonsdatenAbgerufen } from './data/kantonaleSteuerdaten.js';
 import { SAEULE3A_MAX } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
@@ -409,7 +409,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
     ),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.sm } }, hinweisZeichen(), t('tax.federalTax') + ': DBG Art. 36, ' + t('tax.dataVersion') + ': ' + STEUER_DATA_VERSION),
-    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(KANTONAL_DATA_ABGERUFEN) })),
+    canton && React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('tax.cantonalAndMunicipal') + ': ' + t('tax.dataVersion') + ': ' + t('tax.bandChecked', { year: KANTONAL_DATA_VERSION, date: datumCH(kantonsdatenAbgerufen(canton)) })),
     React.createElement(OfficialLinkBox, { palette, t, data, ids: 'steuern', cantonalKey: 'steuererklaerung' }),
 
     React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, marginTop: space.xs } }, hinweisZeichen(), t('trust.localOnly')),
