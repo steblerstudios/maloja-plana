@@ -39,7 +39,7 @@ export const AutoSaveStatus = ({ palette, t, lastSave, isSaving, saveError }) =>
     }
   },
     React.createElement('span', {
-      style: { fontSize: text.sm, color: saveError ? (palette.roseDeep || palette.rose) : palette.sage }
+      style: { fontSize: text.sm, color: saveError ? (palette.roseDeep || palette.rose) : (palette.sageDeep || palette.sage) }
     }, saveError ? hinweisZeichen('warning', 12) : (isSaving ? '...' : hinweisZeichen('check', 12))),
     React.createElement('span', null,
       saveError ? t('common.saveError') : (isSaving ? t('common.saving') : t('common.saved'))

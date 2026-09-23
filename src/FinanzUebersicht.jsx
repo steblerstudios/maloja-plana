@@ -457,7 +457,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         : el.noteKey === 'el.onlyAhvIv'
           ? t('sozialhilfe.elOnlyAhvIv')
           : t('finanzUebersicht.notApplicable'),
-      statusColor: el.eligible ? palette.gold : palette.mid,
+      statusColor: el.eligible ? (palette.goldDeep || palette.gold) : palette.mid,
       detail: el.eligible ? formatCHF(el.deficit) + ' ' + t('common.perMonth') : null,
     }),
 

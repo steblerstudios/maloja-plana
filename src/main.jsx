@@ -986,7 +986,12 @@ const AppInner = ({ demo }) => {
   const footerEl = React.createElement('footer', {
     role: 'contentinfo',
     style: {
-      fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px', opacity: 0.7,
+      // Kein opacity mehr: 0.7 auf `mid` ergab 3.10:1 hell / 3.47:1 dunkel — die
+      // Fusszeile trägt «Datenschutz & Rechtliches», den Melde-Weg und die Version
+      // und steht auf JEDER Seite. Die Farbtafel ist auf ≥4.5:1 hin gebaut;
+      // Deckkraft rechnet das wieder weg, ohne dass die Tafel es sehen kann.
+      // Ruhig bleibt die Zeile über Schriftgrösse und Laufweite.
+      fontSize: text.xs, color: palette.mid, letterSpacing: '0.3px',
       display: 'flex', flexWrap: 'wrap', gap: space.sm, alignItems: 'center',
       padding: '16px 20px', width: '100%', maxWidth: contentMax,
       marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box',
@@ -1181,7 +1186,8 @@ const AppInner = ({ demo }) => {
       React.createElement('span', { style: { fontSize: text.xs, color: palette.sageDeep, letterSpacing: '0.2px' } }, t('trust.localBadge')),
       isOffline && React.createElement('span', {
         role: 'status',
-        style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm, opacity: 0.8 }
+        // Kein opacity: mid@0.8 ergab 3.80:1 hell — und das hier ist eine Statusmeldung.
+        style: { fontSize: text.xs, color: palette.mid, marginLeft: space.sm }
       }, '· offline')
     ),
     dbBlocked && React.createElement('div', {
