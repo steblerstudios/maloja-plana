@@ -170,3 +170,49 @@ describe('Typografie bleibt, wo sie ist', () => {
     expect(piktogramme().some((g) => TYPOGRAFIE.has(g.ch))).toBe(false);
   });
 });
+
+describe('Template-Strings · die Schicht, die die beiden Zählungen oben nicht sehen', () => {
+  // Stand 24.09.2026. Die Zählungen oben lesen nur '…' und "…". Zeichen in
+  // `…` blieben unsichtbar — so standen drei ○ vor Telefon, E-Mail und Adresse
+  // im gedruckten Lebenslauf (`cvGenerator.js`). Die sind weg; was hier bleibt,
+  // steht in der Erlaubnisliste mit Datei UND Zeichen.
+  // 🛑 Grenze: die Paarung `…` ist einfach und kennt keine VERSCHACHTELTEN
+  // Vorlagen (`${a.map(x => `• ${x}`)}`). Das • im Manifest-Listenpunkt von
+  // zipExport.js fällt so durch die Lücke — gewollt ist es trotzdem.
+  const ERLAUBT = new Set([
+    // Text-Manifest der Datensicherung: eine .txt-Datei, die Linien sind dort
+    // die Gestaltung selbst.
+    'zipExport.js:─', 'zipExport.js:═',
+    // Fusszeile des Lebenslaufs: «Erstellt mit … • Datum», ein Trenner.
+    'cvGenerator.js:•',
+  ]);
+
+  const inVorlagen = () => {
+    const gefunden = [];
+    for (const datei of jsxDateien(SRC)) {
+      // Kommentare und Konsolen-Meldungen sind nicht die Oberfläche — und ein
+      // Backtick in einem Kommentar würde die Paarung sonst verschieben.
+      const text = fs.readFileSync(datei, 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .split('\n')
+        .filter((z) => !z.trimStart().startsWith('//') && !/console\.\w+\(/.test(z))
+        .join('\n');
+      for (const m of text.matchAll(/`(?:[^`\\]|\\.)*`/g)) {
+        for (const ch of m[0]) {
+          if (!istJenseitsAscii(ch) || !IST_SYMBOL.test(ch) || TYPOGRAFIE.has(ch)) continue;
+          gefunden.push(`${path.basename(datei)}:${ch}`);
+        }
+      }
+    }
+    return gefunden;
+  };
+
+  it('kein Piktogramm ausserhalb der Erlaubnisliste', () => {
+    expect([...new Set(inVorlagen())].filter((k) => !ERLAUBT.has(k))).toEqual([]);
+  });
+
+  it('jede Erlaubnis wird noch gebraucht (sonst sieht der Test nichts mehr)', () => {
+    const da = new Set(inVorlagen());
+    expect([...ERLAUBT].filter((k) => !da.has(k))).toEqual([]);
+  });
+});
