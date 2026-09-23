@@ -151,7 +151,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       },
         React.createElement('div', { style: s.label }, t('sh.anspruch')),
         React.createElement('div', {
-          style: { ...s.big, color: result.hatAnspruch ? palette.sage : palette.mid }
+          style: { ...s.big, color: result.hatAnspruch ? (palette.sageDeep || palette.sage) : palette.mid }
         },
           result.hatAnspruch
             ? 'CHF ' + fmt(result.totalUnterstuetzung) + ' / ' + t('sh.monat')

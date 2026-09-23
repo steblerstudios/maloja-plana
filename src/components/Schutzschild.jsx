@@ -43,7 +43,7 @@ export const Schutzschild = ({ palette, t, versicherungen, employed, annualIncom
   },
     h('span', { 'aria-hidden': true, style: { color: p.covered ? palette.sage : palette.mid, fontWeight: weight.semi, width: '14px', textAlign: 'center' } }, hinweisZeichen(p.covered ? 'check' : 'kaestchen', 12)),
     h('span', null, t('schutzschild.' + p.key)),
-    h('span', { style: { marginLeft: 'auto', fontSize: text.xs, color: p.covered ? palette.sage : palette.mid } }, p.covered ? t('schutzschild.covered') : t('schutzschild.open'))
+    h('span', { style: { marginLeft: 'auto', fontSize: text.xs, color: p.covered ? (palette.sageDeep || palette.sage) : palette.mid } }, p.covered ? t('schutzschild.covered') : t('schutzschild.open'))
   );
 
   const groupBlock = (group, titleKey, clipId, note) => {
