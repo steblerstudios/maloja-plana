@@ -35,11 +35,33 @@ Ein persönliches Organisationswerkzeug, das hilft, Informationen zum eigenen Le
 - Notfallkarte: «Orientierung, kein medizinischer oder rechtlicher Rat — im Notfall zählt der Notruf (144).» (Z. 266).
 - Dokumente: `docs/legal/impressum.md` (Haftungsausschluss), `docs/legal/nutzungsbedingungen.md`.
 
+## Nachgemessen am 23.09.2026
+
+Die ersten zwei Punkte unten waren offen («nicht geprüft», «nicht gezählt»). Sie sind
+jetzt gezählt — und seither hält ein Test das Ergebnis fest
+(`src/__tests__/regulierungsgrenzen.test.js`, Teil A):
+
+- **Alle fünf Sprachfassungen tragen die Sätze.** In `de`, `fr`, `it`, `rm` und `en`
+  trägt **jede** der 10 `footerNote`-Fusszeilen einen Orientierungs- bzw.
+  Keine-Beratung-Hinweis — 0 ohne.
+- **Zwei Ansichten trugen ihn nicht:** `KVGWechsel.jsx` und `ZusatzWechsel.jsx` waren
+  die einzigen Ablauf-Ansichten ohne solchen Hinweis im Fuss — ausgerechnet die zwei,
+  die an eine Versicherung heranführen. Ergänzt am 23.09.2026 mit dem bestehenden
+  Schlüssel `alpha.noAdviceHint` («Maloja Plana dient der Orientierung und ersetzt
+  keine Rechts-, Steuer- oder Versicherungsberatung»), der schon in `SchuldenManager`,
+  `EOrechner`, `Saeule3aTracker` und `BudgetSync` steht.
+- **Nebenbefund, ebenfalls behoben:** Der Platzhalter im Feld «Wunsch-Kasse» nannte in
+  allen fünf Sprachen «Helsana» — der einzige Kassenname im ganzen Wechselpfad. Jetzt
+  neutral («Name der Kasse»), damit der Pfad keine Kasse bevorzugt.
+
 ## Was hier nicht belegt ist
 
-- Ob die vier anderen Sprachfassungen (`src/i18n/`) dieselben Sätze tragen — nicht geprüft.
-- Ob jede Berechnung und jede Vorlage im Bild einen Orientierungs-Hinweis zeigt — nicht gezählt; die Zeilen oben sind Stichproben aus `grep`.
-- Ob diese Formulierungen als Haftungsausschluss rechtlich tragen — Frage an die juristische Prüfung.
+- Ob jede **Berechnung** im Bild einen Orientierungs-Hinweis zeigt — die Rechner
+  verweisen alle auf Orientierung (`grep`, 10 von 10 Dateien), aber ob der Hinweis in
+  jedem Zustand **sichtbar gerendert** wird, ist nicht am Bild geprüft.
+- Ob diese Formulierungen als Haftungsausschluss rechtlich tragen — Frage an die
+  juristische Prüfung (K48). Einordnung des Umfelds:
+  `docs/security/compliance-overview.md`.
 
 ---
 
