@@ -4613,12 +4613,15 @@ export default {
   },
   saeule3a: {
     add: 'Ajouter un versement',
-    ofMax: 'sur {max}',
+    ofMax: 'sur {max} pour {jahr}',
+    forYear: 'pour {jahr}',
     remaining: 'encore {amount} jusqu’au maximum',
     maxReached: 'Maximum atteint — bravo.',
+    maxUnknown: 'Pour {jahr}, la déduction maximale n’est pas encore enregistrée ici. Le montant ci-dessus reste correctement additionné.',
+    earlierYears: 'S’y ajoutent {amount} d’années antérieures. Ils ne comptent pas pour le maximum {jahr} — chaque année a le sien.',
     date: 'Date',
     amount: 'Montant (CHF)',
-    selfEmployedNote: 'Maximum 2026 avec caisse de pension : CHF 7’258. Indépendants sans caisse de pension : jusqu’à 20 % du revenu (max. CHF 36’288).',
+    selfEmployedNote: 'Maximum {jahr} avec caisse de pension : {mit}. Sans caisse de pension : jusqu’à {satz} % du revenu de l’activité lucrative (au plus {ohne}).',
   },
   diseases: {
     add: 'Ajouter une maladie',

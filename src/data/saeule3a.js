@@ -73,3 +73,53 @@ export const SAEULE3A_HOECHSTABZUG = {
 // FALSCH für jede Rechnung, die auf einer älteren Veranlagung beruht — dort
 // `saeule3aMaximum(bemessungsjahr)` verwenden.
 export const SAEULE3A_MAX = SAEULE3A_HOECHSTABZUG.mitPensionskasse;
+
+// ─── Einzahlungen nach Kalenderjahr ───────────────────────────────────────────
+//
+// 🛑 WARUM DAS HIER STEHT UND NICHT IM TRACKER (Befund 23.09.2026).
+// Der Höchstabzug ist ein JAHRESbetrag, das Eingabefeld heisst «3. Säule A eingezahlt
+// CHF/Jahr» — der Einzahlungs-Tracker summierte aber datumsblind über alle erfassten
+// Zeilen. Wer ihn über mehrere Jahre weiterführt, wofür er gebaut ist, erzeugte damit eine
+// «Jahreseinzahlung» über mehrere Jahre: drei Zeilen à 7'000 ergaben 21'000. Das lief in den
+// Steuerrechner, in die Budget-Synchronisation (`pension3a / 12`) und in die Berner
+// Prämienverbilligung.
+// Die Jahreszuordnung gehört darum an dieselbe Stelle wie die Jahrestabelle: Anzeige,
+// Formular und Rechenkerne müssen sie gleich lesen, sonst driftet sie wieder auseinander.
+
+// In welches Kalenderjahr eine Zeile zählt. `null`, wenn sie kein lesbares Datum trägt.
+function jahrDerZeile(zeile) {
+  const j = String(zeile?.date || '').slice(0, 4);
+  return /^\d{4}$/.test(j) ? Number(j) : null;
+}
+
+const betragDerZeile = (zeile) => Math.max(0, Number(zeile?.amount) || 0);
+
+// Summe der Einzahlungen EINES Kalenderjahres.
+// 🛑 Undatierte Zeilen zählen zum `laufendenJahr` — nicht gar nicht. Das ist die treue
+// Lesart der Migration in ChapterView.jsx: ein alter Einzelwert aus dem Feld «eingezahlt
+// CHF/Jahr» wird dort zu genau einer Zeile OHNE Datum, und gemeint war das laufende Jahr.
+// Sie stillschweigend fallen zu lassen hiesse, bei jeder migrierten Person die Einzahlung
+// auf 0 zu setzen — eine zu hohe Verbilligung und ein zu tiefer Steuerabzug.
+export function einzahlungenImJahr(deposits, jahr, laufendesJahr = jahr) {
+  return (Array.isArray(deposits) ? deposits : []).reduce((summe, zeile) => {
+    const j = jahrDerZeile(zeile) ?? laufendesJahr;
+    return j === jahr ? summe + betragDerZeile(zeile) : summe;
+  }, 0);
+}
+
+// Alle Kalenderjahre mit erfassten Zeilen, aufsteigend. Undatierte zählen zum laufenden Jahr.
+export function jahreMitEinzahlungen(deposits, laufendesJahr) {
+  const jahre = new Set((Array.isArray(deposits) ? deposits : [])
+    .map((zeile) => jahrDerZeile(zeile) ?? laufendesJahr));
+  return [...jahre].sort((a, b) => a - b);
+}
+
+// Die grösste Summe, die in EINEM einzelnen Jahr eingezahlt wurde.
+// `null`, wenn gar keine Zeilen erfasst sind — dann lässt sich nichts darüber sagen.
+// Gebraucht von der Prämienverbilligung, um zu erkennen, ob ein gespeicherter
+// `pension3a`-Wert überhaupt ein Jahresbetrag sein KANN (siehe kantonsModell.js).
+export function groessteJahresEinzahlung(deposits, laufendesJahr) {
+  const jahre = jahreMitEinzahlungen(deposits, laufendesJahr);
+  if (!jahre.length) return null;
+  return Math.max(...jahre.map((j) => einzahlungenImJahr(deposits, j, laufendesJahr)));
+}
