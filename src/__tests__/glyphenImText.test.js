@@ -30,11 +30,16 @@ const SRC = path.resolve(__dirname, '..');
 // Zeichen, die als Schriftzeichen in den Text gehören.
 const TYPOGRAFIE = new Set([...'·—–’‘“”„«»…‹›−≈%‰§°±×÷']);
 
+// Seit 23.09.2026 auch `.js`: bis dahin sah der Test nur `.jsx` — und übersah
+// acht `icon: '○'` in `budgetSync.js`, die `BudgetSync.jsx` als Text auf den
+// Schirm brachte, ohne aria-hidden. Daten reisen in die Oberfläche, die Datei-
+// endung sagt nichts darüber. Ausgenommen bleibt `i18n/`: dort ist der Pfeil
+// Typografie im Satz («CHF 250/Mt. → ca. CHF 3'000/Jahr»), kein Piktogramm.
 const jsxDateien = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
   const p = path.join(dir, e.name);
-  if (e.isDirectory()) return e.name === '__tests__' ? [] : jsxDateien(p);
+  if (e.isDirectory()) return e.name === '__tests__' || e.name === 'i18n' ? [] : jsxDateien(p);
   // IconSystem trägt die Muster als Beispiel im Kommentar des Bausteins.
-  return e.name.endsWith('.jsx') && e.name !== 'IconSystem.jsx' ? [p] : [];
+  return /\.jsx?$/.test(e.name) && e.name !== 'IconSystem.jsx' ? [p] : [];
 });
 
 // Symbol- oder Interpunktionszeichen jenseits von ASCII, per Unicode-Eigenschaft
@@ -110,7 +115,10 @@ describe('Piktogramme im Text · Höchststand, der nur sinken darf', () => {
   // HTML-Zeichenkette des Exports — dort gibt es keinen React-Knoten.
   // Sinkt eine Zahl, wird sie hier nachgezogen — das ist der Fortschritt.
   // Steigt sie, ist neue Schuld entstanden und der Test bricht.
-  const HOECHSTSTAND = 2;
+  // 23.09.2026: 2 → 3, ohne neue Schuld — der Test sieht seither auch `.js`.
+  // Das dritte ist das `✓` im CSS des gedruckten Flyers (`flyerGenerator.js`),
+  // ebenfalls eine Zeichenkette ohne React-Knoten.
+  const HOECHSTSTAND = 3;
 
   it(`höchstens ${HOECHSTSTAND} geklebte Piktogramme im ganzen Baum`, () => {
     const gefunden = piktogramme();
@@ -132,7 +140,12 @@ describe('Allein stehende Piktogramme · Höchststand, der nur sinken darf', () 
   // Was bleibt, sind vor allem ✓/○-Zustandszeichen, die teils in Datenobjekte
   // fliessen und bis in Druck und Export reichen — die brauchen je einen Blick,
   // keinen Suchlauf.
-  const HOECHSTSTAND = 6;
+  // 23.09.2026: 6 → 5. Gezählt ab jetzt auch in `.js`: acht `○` aus
+  // `budgetSync.js` sind weg (sie standen ohne aria-hidden auf dem Schirm),
+  // dazu kommt das `✓` in der Druck-Tabelle des Dossiers (`dossierGenerator.js`).
+  // In `.jsx` bleiben 4: `stipResultMarker` (✓ ○ ⓘ, Ton-Entscheid offen) und
+  // die antippbare Glossar-Markierung ⓘ.
+  const HOECHSTSTAND = 5;
 
   it(`höchstens ${HOECHSTSTAND} allein stehende Piktogramme`, () => {
     expect(alleinStehende().length).toBeLessThanOrEqual(HOECHSTSTAND);
