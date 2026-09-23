@@ -143,9 +143,11 @@ describe('E38 · kantonssteuerFuerProfil', () => {
     expect(r.lage).toBe('innerhalb');
   });
 
-  it('Partnereinkommen (Doppelverdiener, Konkubinat) und Bruttolohn → keine Zahl, mit Grund', () => {
+  it('Partnereinkommen (Doppelverdiener, Konkubinat mit Kindern) und Bruttolohn → keine Zahl, mit Grund', () => {
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, verheiratet: true, partnerEinkommen: 1 })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'partner' });
-    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500 })).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
+    // K62.1: Konkubinat ohne Kinder rechnet (Einzelbesteuerung); mit Kindern bleibt es bei keiner Zahl.
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500 }).lage).toBe('innerhalb');
+    expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, partnerEinkommen: 500, kinder: 1, elterntarif: true })).toMatchObject({ lage: 'ungeprueft', grund: 'partner' });
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'brutto' })).toMatchObject({ lage: 'ungeprueft', kantonal: null, grund: 'brutto' });
     expect(kantonssteuerFuerProfil({ kanton: 'ZH', nettolohnJahr: 71883, einkommensart: 'netto' }).lage).toBe('innerhalb');
   });

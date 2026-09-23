@@ -847,6 +847,7 @@ function getBehoerdenSections(data, chapters, t, calculations) {
 //   calculations.tax.assumptions   = [{ code, text }, …]
 //     code 'ohne_13_monatslohn'      ohne 13. Monatslohn gerechnet
 //     code 'alleinverdiener_ehepaar' Alleinverdiener-Ehepaar (Partnereinkommen 0)
+//     code 'einzeln_konkubinat'      K62.1: im Konkubinat für die Person allein gerechnet
 // Die Kennungen sind Teil des Formats: nie umbenennen, nur neue dazunehmen.
 // Die App liest diese Datei nicht wieder ein (Stand 17.09.2026: kein Import-Pfad). Wer später einen
 // Leser baut: Dateien 1.0 tragen an denselben Stellen Strings statt Objekte.
@@ -858,6 +859,7 @@ export const STEUER_KENNUNG = Object.freeze({
   kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
+  annahmeEinzeln: 'einzeln_konkubinat',
   // K93: Einordnung der ganzen Datei (wie der Hinweis im PDF-Dossier), anredefrei.
   disclaimer: 'orientierung',
 });
@@ -963,6 +965,7 @@ export function generateBehoerdenJSON(data, calculations, t) {
       assumptions: [
         ...(tax.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
         ...(tax.annahmen?.alleinverdiener ? [erl('annahmeAlleinverdiener')] : []),
+        ...(tax.annahmen?.einzeln ? [erl('annahmeEinzeln')] : []),
       ],
     };
   }

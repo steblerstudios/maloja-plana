@@ -191,14 +191,15 @@ export function abzuegeAusTaxData(taxData = {}) {
  *   direktSteuerbar > 0      → dieser Wert (steuerbares Einkommen direkte Bundessteuer)
  *   sonst Nettolohn          → steuerbarNachEstv()
  * Keine Zahl ('ungeprueft'), wenn die Lage nicht gemessen ist:
- *   Partnereinkommen > 0 (Doppelverdiener oder Konkubinat), Lohn als Bruttolohn erfasst
- *   (die Abzüge vom Brutto kennt die App nicht), sowie die Fälle aus schaetzeKantonaleSteuer().
+ *   Partnereinkommen > 0 bei Verheirateten oder mit Kindern (K62.1: nicht mehr im Konkubinat ohne
+ *   Kinder, siehe KONKUBINAT_WIE_LEDIG_AB), Lohn als Bruttolohn erfasst (die Abzüge vom Brutto
+ *   kennt die App nicht), sowie die Fälle aus schaetzeKantonaleSteuer().
  * @returns {{ lage, bereich, kantonal, steuerbar: number|null, grund: string|null }}
  */
 export function kantonssteuerFuerProfil({
   kanton, nettolohnJahr = 0, direktSteuerbar = 0, einkommensart = null, partnerEinkommen = 0,
   verheiratet = false, kinder = 0, elterntarif = false, berufsauslagen = 0, weitereAbzuege = 0, bundessteuer = 0,
-  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder,
+  erwerbsart = null, partnerAngegeben = true, direktVerheiratet, direktKinder, konkubinat = false,
 } = {}) {
   if (!kanton) return { lage: 'keinKanton', bereich: null, kantonal: null, steuerbar: null, grund: null };
   const direkt = Number(direktSteuerbar) > 0;
@@ -207,7 +208,9 @@ export function kantonssteuerFuerProfil({
   if (direkt && direktZivilstandAbweichend(verheiratet, direktVerheiratet)) grund = 'zivilstandDirekt';
   // K87: ebenso nur für die Kinderzahl, zu der er gehört.
   else if (direkt && direktKinderAbweichend(kinder, direktKinder)) grund = 'kinderDirekt';
-  else if (Number(partnerEinkommen) > 0) grund = 'partner';
+  // K62.1: ein Partnereinkommen verhindert die Zahl nur, wo es zählt — in der Ehe (Zusammenrechnung)
+  // und bei Kindern (Aufteilung der Kinderabzüge). Dieselbe Regel wie steuerbaresEinkommenFuerProfil().
+  else if (Number(partnerEinkommen) > 0 && (verheiratet || kinder > 0)) grund = 'partner';
   else if (!direkt && einkommensart === 'brutto') grund = 'brutto';
   else if (!direkt && ERWERBSART_OHNE_SCHAETZUNG[erwerbsart]) grund = ERWERBSART_OHNE_SCHAETZUNG[erwerbsart];
   // R4: Die Reihe «verheiratet» ist als Alleinverdiener-Ehepaar gemessen. Ohne Angabe zum
@@ -218,7 +221,31 @@ export function kantonssteuerFuerProfil({
   else if (verheiratet && !partnerAngegeben) grund = direkt ? 'partnerOffenDirekt' : 'partnerOffen';
   if (grund) return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund };
   const steuerbar = steuerbaresEinkommenFuerProfil({ nettolohnJahr, direktSteuerbar, verheiratet, kinder, berufsauslagen, weitereAbzuege }).steuerbar ?? 0;
+  // K62.1: Konkubinat, wo die ESTV Konkubinat und «ledig» verschieden rechnet → keine Zahl.
+  if (imKonkubinat({ verheiratet, konkubinat, partnerEinkommen }) && !(steuerbar >= (KONKUBINAT_WIE_LEDIG_AB[kanton] ?? 0))) {
+    return { lage: 'ungeprueft', bereich: null, kantonal: null, steuerbar: null, grund: 'konkubinatKanton' };
+  }
   return { ...schaetzeKantonaleSteuer({ kanton, steuerbaresEinkommen: steuerbar, bundessteuer, verheiratet, kinder, elterntarif }), steuerbar, grund: null };
+}
+
+// ── K62.1 · Konkubinat ────────────────────────────────────────────────────────────────────
+// Konkubinatspaare werden einzeln besteuert: Zusammengerechnet wird nur das Einkommen von Ehegatten
+// und eingetragenen Partner:innen (DBG Art. 9 Abs. 1 und 1bis; StHG Art. 3 Abs. 3 und 4, Fedlex,
+// gelesen 23.09.2026). Ohne Kinder rechnet die ESTV eine Person im Konkubinat deshalb wie eine
+// alleinstehende — für den Bund in allen 26 Kantonen, für Kanton und Gemeinde nicht überall.
+// Gemessen am ESTV-Steuerrechner 2026 (Zivilstand «Konkubinat», Relationship 3, gegen «ledig»,
+// Hauptort, 68 Bruttolöhne je Kanton; docs/sources/konkubinat-kantonssteuer-2026.md): steuerbares
+// Einkommen und Bundessteuer überall gleich, das Einkommen der zweiten Person ändert nichts; die
+// Kantons- und Gemeindesteuer weicht in drei Kantonen ab, immer nach oben (Konkubinat zahlt mehr):
+//   BE an allen 68 Punkten, CHF 403 (Brutto 30 000) bis 683; JU an allen 68, CHF 269 bis 495;
+//   VS nur bis Brutto 45 000 (steuerbar Bund 37 213), bis CHF 1 259; ab Brutto 47 500 (39 417) gleich.
+// Die Tabelle gilt dort für Konkubinat erst ab dem steuerbaren Einkommen unten (Infinity = nie);
+// dazwischen wird nicht interpoliert. Kantone ohne Eintrag: gleich an allen 68 Punkten.
+export const KONKUBINAT_WIE_LEDIG_AB = Object.freeze({ BE: Infinity, JU: Infinity, VS: 39417 });
+
+// Lebt die Person im Konkubinat? Im Profil so erfasst, oder nicht verheiratet mit Partnereinkommen.
+export function imKonkubinat({ verheiratet = false, konkubinat = false, partnerEinkommen = 0 } = {}) {
+  return !verheiratet && (konkubinat === true || Number(partnerEinkommen) > 0);
 }
 
 /**
@@ -324,6 +351,8 @@ export function steuerEingabenAusDaten(data = {}) {
     partnerAngegeben: partnerEinkommenAngegeben(data),
     // Eingetragene Partnerschaft = Ehe (DBG Art. 9 Abs. 1bis, StHG Art. 3 Abs. 4) — utils/zivilstand.js.
     verheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
+    // K62.1: im Profil als Konkubinat erfasst (Zivilstand «Konkubinat»).
+    konkubinat: data?.basis?.maritalStatus === 'cohabiting',
     // K62.4: der Zivilstand, zu dem ein eingetragenes steuerbares Einkommen gehört (= Profil).
     direktVerheiratet: giltAlsVerheiratet(data?.basis?.maritalStatus),
     kinder: hh.childrenCount,
@@ -337,7 +366,7 @@ export function steuerEingabenAusDaten(data = {}) {
 /**
  * E39: Bundessteuer und Kantons-/Gemeindesteuer aus demselben steuerbaren Einkommen.
  * @returns {{ steuerbar, quelle, grund, bund: object|null, kanton: object, gemeinsamDirekt: boolean,
- *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean } }}
+ *             annahmen: { ohneDreizehnten: boolean, alleinverdiener: boolean, einzeln: boolean } }}
  *   bund = null, wenn es kein steuerbares Einkommen gibt (grund sagt warum).
  *   gemeinsamDirekt (K86) = verheiratet und direkt eingetragener Wert: Maloja nimmt an, dass es der
  *     gemeinsame Wert aus der Veranlagung ist. Der Nettolohn im Profil ist nur der eigene — darum
@@ -345,6 +374,7 @@ export function steuerEingabenAusDaten(data = {}) {
  *   annahmen (R4) = was die Seiten zur Zahl dazuschreiben:
  *     ohneDreizehnten — aus dem Nettolohn geschätzt, Frage nach dem 13. Monatslohn offen
  *     alleinverdiener — verheiratet und gerechnet wie gemessen (Partnereinkommen 0)
+ *     einzeln (K62.1) — Konkubinat: für die Person allein gerechnet, ohne das Partnereinkommen
  */
 export function steuernFuerProfil(p = {}) {
   const basis = steuerbaresEinkommenFuerProfil(p);
@@ -358,6 +388,8 @@ export function steuernFuerProfil(p = {}) {
   const annahmen = {
     ohneDreizehnten: basis.quelle === 'estv' && p.dreizehnter === 'offen',
     alleinverdiener: p.verheiratet === true && (basis.quelle === 'estv' || Boolean(kanton.kantonal)),
+    // K62.1: im Konkubinat für die Person allein gerechnet (Einzelbesteuerung).
+    einzeln: basis.steuerbar != null && imKonkubinat(p),
   };
   return { ...basis, bund, kanton, annahmen, gemeinsamDirekt };
 }
@@ -367,17 +399,40 @@ export function steuernFuerProfil(p = {}) {
  * zum Zivilstand gehört (Verheiratetenabzug, höherer Versicherungsabzug; verheiratet wie gemessen
  * als Alleinverdiener-Ehepaar). Nur auf dem Weg über den Nettolohn: ein direkt eingetragener Wert
  * stammt aus einer Veranlagung mit einem bestimmten Zivilstand, der andere ist nicht bekannt.
+ * K62.5: Im Konkubinat ist «verheiratet» eine gedachte Heirat — dann würden beide Einkommen
+ * zusammengerechnet (DBG Art. 9 Abs. 1). Gemessen ist nur das Alleinverdiener-Ehepaar; für zwei
+ * Einkommen fehlen der Zweiverdienerabzug (Art. 33 Abs. 2) und die Abzüge der zweiten Person, und die
+ * App kennt deren Einkommen nur als Monats-Nettolohn. Darum kein Vergleich, solange die Partnerin
+ * oder der Partner ein Einkommen hat oder die Angabe fehlt (tarifvergleichGrund); mit bewusst 0 gilt
+ * das Alleinverdiener-Ehepaar wie gemessen.
  * @returns {object|null} vergleicheTarife() oder null
  */
 export function tarifvergleichFuerProfil(p = {}) {
-  const basis = steuerbaresEinkommenFuerProfil(p);
-  if (basis.quelle !== 'estv') return null;
+  if (tarifvergleichGrund(p)) return null;
   const abz = { nettolohnJahr: p.nettolohnJahr, kinder: p.kinder, berufsauslagen: p.berufsauslagen, weitereAbzuege: p.weitereAbzuege };
   return vergleicheTarife(
     steuerbarNachEstv({ ...abz, verheiratet: false }),
     p.kinder, p.elterntarif,
     steuerbarNachEstv({ ...abz, verheiratet: true }),
   );
+}
+
+/**
+ * Warum es keinen Tarifvergleich gibt (null = es gibt einen).
+ *   'geschaetzt'             kein steuerbares Einkommen aus dem Nettolohn (eingetragener Wert, keine Zahl)
+ *   'konkubinatPartner'      K62.5: nicht verheiratet, Partnereinkommen > 0
+ *   'konkubinatPartnerOffen' K62.5: im Profil Konkubinat, Partnereinkommen nie beantwortet
+ * Massgebend ist der Zivilstand im Profil (direktVerheiratet), nicht der Probiermodus des
+ * Steuerrechners, und die Partnerangabe im Profil (partnerAngegebenProfil; der Steuerrechner setzt
+ * partnerAngegeben für den Probiermodus bei Nicht-Verheirateten auf true, siehe TaxCalculator.jsx).
+ */
+export function tarifvergleichGrund(p = {}) {
+  const profilVerheiratet = p.direktVerheiratet ?? p.verheiratet;
+  const partnerAngegeben = p.partnerAngegebenProfil ?? p.partnerAngegeben;
+  if (!profilVerheiratet && Number(p.partnerEinkommen) > 0) return 'konkubinatPartner';
+  if (!profilVerheiratet && p.konkubinat === true && partnerAngegeben === false) return 'konkubinatPartnerOffen';
+  if (steuerbaresEinkommenFuerProfil(p).quelle !== 'estv') return 'geschaetzt';
+  return null;
 }
 
 export function getHauptort(kuerzel) {

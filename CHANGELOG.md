@@ -44,6 +44,20 @@ kommt der Changelog immer mit, nie doppelt.*
   Textfeld bleibt Rückfall.
 - Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
 
+### Geändert — Partner-Regeln (K62 Punkte 1, 3, 5)
+- **Konkubinat ohne Kinder bekommt jetzt auch die Kantons- und Gemeindesteuer.** Konkubinatspaare
+  werden einzeln besteuert (DBG Art. 9, StHG Art. 3); die Schätzung rechnet für die Person allein
+  und sagt das dazu. Vorher gab es bei erfasstem Partnereinkommen nur die Bundessteuer.
+  Am ESTV-Steuerrechner gemessen (Konkubinat gegen ledig, 26 Kantone): in **BE, JU und VS** (dort
+  bis Brutto 45 000) rechnet der Kanton Konkubinat höher — dort weiter keine Kantonszahl, mit
+  Begründung. Messung: `docs/sources/konkubinat-kantonssteuer-2026.md`.
+- **Feld «Nettolohn Partner/in»** erscheint auch bei Zivilstand «verheiratet», «eingetragene Partnerschaft» oder «Konkubinat»,
+  wenn erst eine Person im Haushalt erfasst ist. Nichts wird vorbelegt.
+- **Zivilstand-Vergleich im Konkubinat:** kein Vergleich mehr mit einem gedachten
+  Alleinverdiener-Ehepaar, wenn die Partnerin oder der Partner ein Einkommen hat oder die Angabe
+  fehlt (verheiratet würden beide Einkommen zusammengerechnet). Mit bewusst 0 wie bisher.
+- Dossier-Datei: neue Annahme-Kennung `einzeln_konkubinat` (bestehende unverändert).
+
 ## [0.1.39-beta] — 2026-09-20
 
 *Enthält alles aus `0.1.38-beta` (siehe unten) — **jene Version wurde nie ausgeliefert**.

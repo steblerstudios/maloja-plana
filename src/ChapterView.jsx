@@ -29,6 +29,7 @@ import { LohnEinordnung } from './components/LohnEinordnung.jsx';
 import { trifftNichtZu, NA_FELD, feldHatWert, postenSumme } from './utils/vollstaendigkeit.js';
 import { keineKontaktperson, naGruppeUmschalten, naVerdeckt, naKopplung } from './utils/naGruppen.js';
 import { ansichtIkon } from './config/ansichtenRegister.js';
+import { giltAlsVerheiratet } from './utils/zivilstand.js';
 // Die zuständige Stelle für den Mindestlohn-Befund — aus derselben Registry, die auch der
 // Brief nutzt. Vorher stand im Kapitel fest „das kantonale Arbeitsinspektorat"; das gibt es
 // in JU (gar keine Kontrollstelle → Weg übers Arbeitsgericht), BS (AWA) und NE (ORCT) unter
@@ -59,6 +60,12 @@ const DiseaseManager = React.lazy(() => import('./DiseaseManager.jsx'));
 const Saeule3aTracker = React.lazy(() => import('./Saeule3aTracker.jsx'));
 const LanguageManager = React.lazy(() => import('./LanguageManager.jsx'));
 const JobManager = React.lazy(() => import('./JobManager.jsx'));
+
+// K62.3: Wann das Feld «Nettolohn Partner/in» erscheint. Die Steuerschätzung braucht die Angabe bei
+// «verheiratet» (sonst keine Zahl, R4) und im Konkubinat (Zivilstand-Vergleich, K62.5) — auch wenn
+// im Haushalt erst eine Person erfasst ist. Eingetragene Partnerschaft zählt wie verheiratet.
+export const zeigtPartnereinkommen = (adultCount, maritalStatus) =>
+  adultCount >= 2 || giltAlsVerheiratet(maritalStatus) || maritalStatus === 'cohabiting';
 
 export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allData, onUpdate, onUpdateIn, onAddDocument, onNavigate, demoMode, simpleView, nextChapter, onNext, isDarkMode }) => {
   const vorlesen = useVorlesenContext();
@@ -327,8 +334,10 @@ export const ChapterViewComplete = ({ palette, t: tEingang, chapter, data, allDa
         }, '+ ' + tr('chapters.basis.fields.household.addAdult'))
       ),
 
-      // Partner income — only when 2+ adults
-      adultCount >= 2 && React.createElement('div', { style: { marginBottom: space.md } },
+      // Partnereinkommen: bei 2+ Erwachsenen — K62.3 auch, wenn der Zivilstand «verheiratet» oder
+      // «Konkubinat» ist und noch keine zweite Person erfasst wurde (die Steuerschätzung fragt danach).
+      // Nur sichtbar machen, nichts vorbelegen und die Erwachsenen-Liste nicht ändern.
+      zeigtPartnereinkommen(adultCount, data.maritalStatus) && React.createElement('div', { style: { marginBottom: space.md } },
         React.createElement('label', { htmlFor: 'hh-partner-income', style: hhLabel }, tr('chapters.basis.fields.household.partnerIncome')),
         React.createElement('input', {
           id: 'hh-partner-income',
