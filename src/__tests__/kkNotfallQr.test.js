@@ -41,9 +41,14 @@ const kkData = {
   ahv: '756.1234.5678.90', franchise: '2500', model: 'Standard',
 };
 
+// Entfaltet vor dem Lesen: die Norm bricht Zeilen über 75 Oktette um und setzt der
+// Fortsetzung ein Leerzeichen voran (seit 22.09.2026 auch bei uns). Jeder Leser muss das
+// rückgängig machen — ein Telefon tut es, dieser Test tut es hier.
+const entfalten = (vcard) => String(vcard).replace(/\r\n /g, '');
+
 const felderVon = (vcard) => {
   const aus = {};
-  for (const zeile of vcard.split('\r\n')) {
+  for (const zeile of entfalten(vcard).split('\r\n')) {
     const i = zeile.indexOf(':');
     if (i === -1) continue;
     aus[zeile.slice(0, i)] = zeile.slice(i + 1);

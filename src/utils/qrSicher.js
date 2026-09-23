@@ -151,9 +151,37 @@ export function vcardMaskieren(wert) {
 // der Kontaktkarte WÄHLBAR ist statt abgetippt werden zu müssen. Das ist der eigentliche
 // Gewinn gegenüber dem Klartext und im Notfall der Unterschied, auf den es ankommt.
 //
-// 🛑 Zeilenfaltung (Norm: Zeilen < 75 Oktette umbrechen) ist NICHT eingebaut. Im Versuch vom
-// 22.09. hat eine lange NOTE-Zeile funktioniert — an einem Gerät. Bleibt als bekannte Lücke
-// stehen, statt sie stillschweigend für erledigt zu halten.
+// Faltet eine vCard-Zeile nach der Norm (RFC 2426 §2.6): höchstens 75 Oktette je Zeile,
+// jede Fortsetzung beginnt mit EINEM Leerzeichen, das beim Lesen wieder wegfällt.
+//
+// Gezählt wird in UTF-8-Bytes, nicht in Zeichen — sonst bräche die Zeile mitten in einem
+// Umlaut. Zwei Dinge bleiben darum zusammen: ein Zeichen selbst, und ein maskiertes Paar
+// (\\; \\, \\\\ \\n) — träfe die Faltung zwischen Backslash und Zeichen, läse das
+// Telefon die Maskierung falsch. Die Fortsetzungszeile trägt ihr Leerzeichen im Budget mit,
+// darum 74 Oktette Inhalt statt 75.
+export function vcardFalten(zeile, maxOktette = 75) {
+  const zeichen = [...String(zeile ?? '')];
+  const teile = [];
+  let aktuell = '';
+  let grenze = maxOktette;
+  for (let i = 0; i < zeichen.length; i++) {
+    let stueck = zeichen[i];
+    if (stueck === '\\' && i + 1 < zeichen.length) { stueck += zeichen[i + 1]; i += 1; }
+    if (aktuell && utf8Laenge(aktuell + stueck) > grenze) {
+      teile.push(aktuell);
+      aktuell = stueck;
+      grenze = maxOktette - 1;
+    } else {
+      aktuell += stueck;
+    }
+  }
+  if (aktuell || teile.length === 0) teile.push(aktuell);
+  return teile[0] + teile.slice(1).map((t) => '\r\n ' + t).join('');
+}
+
+// Zeilenfaltung eingebaut am 22.09.2026 (vorher stand hier die Lücke als bekannt vermerkt).
+// Sie kostet je Umbruch drei Oktette (CRLF + Leerzeichen) — die wiegen mit, weil
+// qrNotfallVcard die FERTIGE Karte misst und nicht den Inhalt davor.
 export function vcardBauen({ name = '', tel = '', notiz = '' } = {}) {
   const anzeige = String(name ?? '').trim();
   const nummer = String(tel ?? '').trim();
@@ -165,7 +193,7 @@ export function vcardBauen({ name = '', tel = '', notiz = '' } = {}) {
   if (nummer) zeilen.push('TEL;TYPE=CELL:' + vcardMaskieren(nummer));
   if (notiz) zeilen.push('NOTE:' + vcardMaskieren(notiz));
   zeilen.push('END:VCARD');
-  return zeilen.join('\r\n') + '\r\n';
+  return zeilen.map((z) => vcardFalten(z)).join('\r\n') + '\r\n';
 }
 
 // Baut die Notfall-Angaben als vCard und hält dabei die FERTIGE Nutzlast unter `maxBytes`.

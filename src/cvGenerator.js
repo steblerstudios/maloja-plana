@@ -1,6 +1,7 @@
 // CV/Resume Generator for Switzerland — i18n-aware
 import { getFullName } from './config/constants.js';
 import { escapeHtml } from './utils/helpers.js';
+import { zivilstandLabel } from './utils/zivilstand.js';
 
 export const generateCVTemplate = (data, t) => {
   return {
@@ -14,7 +15,8 @@ export const generateCVTemplate = (data, t) => {
     personal: {
       dateOfBirth: data.basis?.dateOfBirth || '',
       nationality: data.basis?.nationality || '',
-      maritalStatus: data.basis?.maritalStatus || ''
+      // Der Lebenslauf zeigt den Text der Sprache, nicht den gespeicherten Schlüssel («married»).
+      maritalStatus: zivilstandLabel(data.basis?.maritalStatus, t)
     },
     experience: {
       current: {

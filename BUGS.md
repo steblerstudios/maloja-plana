@@ -60,13 +60,18 @@ Datei; dafür hat das Studio einen eigenen Weg.
   `palette, t` und war nie betroffen; deshalb fiel es nicht auf. Nachstellen: eine Sprache ≠ EN
   wählen, einen Absturz im Baum auslösen. Festgehalten in
   `src/__tests__/fehlerschirmMelden.test.js`, Fix: `t` aus dem I18n-Kontext, sonst `tMitRueckfall`
-  (K64/K71) — PR #273, **gemergt 23.09.2026** (`main` = `20342d4`). Die zweite Hälfte, die
-  **Farben**, folgt im Fix darunter: `palette` wird nicht übergeben, also standen dort dunkle
-  Rückfallwerte und der Absturz-Schirm war im Hellmodus dunkel → er liest das Thema jetzt aus
-  derselben Quelle wie die App (`or5_theme`, `paletteAusSpeicher` in `config/constants.js`),
-  Test `src/__tests__/fehlerschirmFarben.test.js`.
-  🛑 **Beides noch nicht live** — live läuft `index-8FolD38L.js` vom 22.09.2026. Erst nach dem
-  Deploy wandert die Zeile nach «Zuletzt behoben».
+  (K64/K71) — PR #273, **gemergt 23.09.2026** (`main` = `20342d4`).
+  Die zweite Hälfte, die **Farben**: `palette` wird nicht übergeben, also standen dort dunkle
+  Rückfallwerte (`#1a1a18` — nicht einmal ein Wert aus der Marken-Tafel) und der Absturz-Schirm
+  war im Hellmodus dunkel → er liest das Thema jetzt aus derselben Quelle wie die App
+  (`or5_theme` über `paletteAusSpeicher` in `config/constants.js`), Test
+  `src/__tests__/fehlerschirmFarben.test.js` — PR #274, **gemergt 23.09.2026**
+  (`main` = `2cb981c`). Der Test hält Schlüssel und Default über **alle drei** Stellen, an denen
+  die Thema-Logik steht (`constants.js`, `main.jsx`, `public/theme-init.js` — die dritte ist
+  unvermeidlich: Script im `<head>`, kann nichts importieren).
+  🛑 **Beides gemergt, nichts davon live** — gemessen 23.09.2026, 22:39: live läuft weiter
+  `index-8FolD38L.js` vom 22.09. Erst nach dem Deploy wandert die Zeile nach «Zuletzt behoben»,
+  mit Bundle-Name und Uhrzeit wie bei B-1 bis B-4.
 
 ## Geprüft — kein offener Bug (2026-07-08)
 

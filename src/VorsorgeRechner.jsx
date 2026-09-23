@@ -12,6 +12,7 @@ import { ScrollFadeStrip } from './components/ScrollFadeStrip.jsx';
 import { berechneKapitalbezug, kapitalsteuerBandbreite, vergleicheStaffelung, alleKapitalKantone } from './data/kapitalbezugSteuer.js';
 import { useIsMobile } from './hooks/useIsMobile.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { giltAlsVerheiratet } from './utils/zivilstand.js';
 
 function parseYear(dateStr) {
   if (!dateStr) return null;
@@ -46,7 +47,7 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
   const [betreuungsjahre, setBetreuungsjahre] = useState('');
   const [bezugAlter, setBezugAlter] = useState(() => String(refAlterJahre));
   const [ruecktrittDragging, setRuecktrittDragging] = useState(false);  // Zukunft-Graph: Handle wird gerade gezogen → Live-Tooltip
-  const [verheiratet, setVerheiratet] = useState(data.basis?.maritalStatus === 'married');
+  const [verheiratet, setVerheiratet] = useState(giltAlsVerheiratet(data.basis?.maritalStatus));
   const [einkommenPartner, setEinkommenPartner] = useState(() => {
     // K62: 0 ist eine Antwort (kein Partnereinkommen) und wird als «0» übernommen.
     const p = data.basis?.household?.partnerIncome;
