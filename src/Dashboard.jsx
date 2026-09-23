@@ -216,9 +216,11 @@ export const QuickCheck = ({ palette, t, onNavigate, data }) => {
     React.createElement('button', {
       onClick: () => onNavigate('schnellcheck'),
       style: {
-        background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+        // 8 px Polsterung hebt das Ziel von 17 auf 33 px (WCAG 2.2 AA: 24x24);
+        // marginTop ist um dieselben 8 px gekürzt, das Bild bleibt gleich.
+        background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
         fontSize: text.xs, color: palette.sandDeep, fontFamily: 'inherit',
-        fontWeight: weight.medium, marginTop: space.md,
+        fontWeight: weight.medium, marginTop: space.sm,
       }
     }, t('dashboard.quickCheckAllLeistungen'))
   );
@@ -523,12 +525,21 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
   return React.createElement('div', { style: { maxWidth: '720px', margin: '0 auto' } },
 
     // ─── Welcome area ──────────────────────────────────────
+    // Der Anspruch (dashboard.welcome) steht immer — er ist die Identität der Seite.
+    // Die Leistungs-Zeile darunter beantwortet "Was ist das hier?" und hilft genau
+    // einmal: beim ersten Mal. Wer schon Daten erfasst hat, bekommt sie nicht mehr
+    // bei jedem Öffnen vorgesetzt. Gemessen am Handy (390x844): sie kostet 123 px
+    // einer Bildschirmseite, die nur 619 px hoch ist — ohne sie kommt der Berg mit
+    // dem Fortschritt über den Falz. Weggenommen wird nichts: für neue Nutzerinnen
+    // und Nutzer steht sie unverändert da.
+    // (Suchmaschinen sehen diesen Text ohnehin nie — sie kommen nicht hinter das
+    // BetaGate; die indexierten Texte kommen aus scripts/build-seiten.mjs.)
     React.createElement('div', { style: { marginBottom: '0', paddingTop: '8px' } },
       React.createElement(PageTitle, {
         palette,
         style: { margin: '0 0 8px 0', lineHeight: leading.tight, letterSpacing: '-0.3px' }
       }, t('dashboard.welcome')),
-      React.createElement('p', {
+      !hasMeaningfulProgress && React.createElement('p', {
         style: { fontSize: text.body, color: palette.mid, margin: 0, lineHeight: leading.relaxed }
       }, React.createElement(GlossarText, { t, palette }, t('dashboard.tagline') + ' ' + t('dashboard.taglineBenefit'))),
 
@@ -899,8 +910,11 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         'aria-expanded': mvoExpanded,
         style: {
           display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
-          background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit',
-          marginBottom: space.sm, color: palette.text,
+          // Polsterung statt padding:0 — die Zeile war 19 px hoch und lag damit unter
+          // dem WCAG-2.2-AA-Mindestziel (2.5.8, 24x24). marginBottom ist um dieselben
+          // 8 px gekürzt, damit der Rhythmus unverändert bleibt.
+          background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', fontFamily: 'inherit',
+          marginBottom: space.xs, color: palette.text,
         }
       },
         React.createElement('span', {
@@ -908,7 +922,9 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         }, t('mvo.title')),
         React.createElement('span', { style: { display: 'flex', alignItems: 'center', gap: '6px' } },
           React.createElement('span', {
-            style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? palette.sage : palette.mid }
+            // sage ist eine Flächenfarbe — als Text auf sage+'12' nur 4.0:1. sageDeep
+            // ist die dafür gebaute Vordergrund-Variante (siehe constants.js).
+            style: { fontSize: text.sm, fontWeight: weight.medium, color: mvo.pct === 100 ? (palette.sageDeep || palette.sage) : palette.mid }
           }, mvo.filled + '/' + mvo.total),
           React.createElement('span', {
             style: { fontSize: '10px', color: palette.mid, transition: `transform ${duration.fast}ms ${ease}`, transform: mvoExpanded ? 'rotate(180deg)' : 'rotate(0)' }
@@ -1310,15 +1326,17 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
       React.createElement('button', {
         onClick: () => onNavigate('ansprueche'),
         style: {
-          display: 'block', marginTop: space.md, background: 'none', border: 'none', cursor: 'pointer',
-          padding: 0, fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+          // Zwei gestapelte Text-Aktionen, je 19 px hoch. Polsterung hebt sie auf 35 px;
+          // die marginTop sind um dieselben 8 px gekürzt, damit der Abstand gleich bleibt.
+          display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
+          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
         },
       }, t('dashboard.anspruchAlleLink')),
       React.createElement('button', {
         onClick: () => onNavigate('situationen'),
         style: {
-          display: 'block', marginTop: space.sm, background: 'none', border: 'none', cursor: 'pointer',
-          padding: 0, fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
+          display: 'block', marginTop: 0, background: 'none', border: 'none', cursor: 'pointer',
+          padding: '8px 0', fontSize: text.sm, color: palette.sageDeep || palette.sage, fontFamily: 'inherit', fontWeight: weight.medium,
         },
       }, t('lebenszustaende.dashboardLink'))
     ),
@@ -1467,12 +1485,13 @@ export const DashboardComplete = ({ palette, t, chapters, data, onSelectChapter,
         }
       },
         React.createElement('div', {
-          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: '6px' }
+          style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed, marginBottom: 0 }
         }, reason + ' ' + t('dashboard.exportReminder')),
         React.createElement('button', {
           onClick: () => onNavigate('export'),
           style: {
-            background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+            // War 19 px hoch; 8 px Polsterung statt der 6 px Aussenabstand darüber.
+            background: 'none', border: 'none', cursor: 'pointer', padding: '8px 0',
             fontSize: text.sm, color: palette.sageDeep || palette.sage,
             fontFamily: 'inherit', fontWeight: weight.medium,
           }
