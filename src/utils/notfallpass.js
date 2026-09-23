@@ -34,9 +34,7 @@ export const NOTFALLPASS_GRUPPEN = [
       { key: 'erkrankungen', feld: 'notfall.chronicDiseases' },
       { key: 'medikamente', feld: 'notfall.medications' },
       { key: 'allergien', feld: 'notfall.allergies' },
-      // Die Blutgruppe wird im Notfallpass aus einer Liste gewählt, nicht getippt → kein
-      // Kopier-Knopf, nur zum Ablesen.
-      { key: 'blutgruppe', feld: 'notfall.bloodType', auswahl: true },
+      { key: 'blutgruppe', feld: 'notfall.bloodType' },
       { key: 'kontaktName', feld: 'notfall.emergencyContact' },
       { key: 'kontaktTelefon', feld: 'notfall.emergencyPhone' },
     ],
