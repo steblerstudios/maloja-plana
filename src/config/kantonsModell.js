@@ -16,7 +16,7 @@
 // Der Frankenwert des bundesrechtlichen 3a-Maximums steht an EINER Stelle (src/data/saeule3a.js)
 // und wird hier nicht wiederholt. Das Blatt hat bewusst keine eigenen Importe, kostet also
 // nichts ausser sich selbst.
-import { saeule3aMaximum } from '../data/saeule3a.js';
+import { saeule3aMaximum, groessteJahresEinzahlung } from '../data/saeule3a.js';
 
 // ─── Eingaben lesen ────────────────────────────────────────────────────────────
 
@@ -71,10 +71,29 @@ export function vermoegenSumme(f) {
 // entsteht nicht über die Oberfläche (`type: 'number'`), sondern nur aus Altdaten.
 const betrag3a = (f) => Math.max(0, Number(f.pension3a) || 0);
 
-// Die Einzahlungszeilen des Trackers, sofern erfasst. Jede Zeile trägt `date` und `amount`.
-const einzahlungsJahre = (f) => [...new Set((Array.isArray(f.pension3aDeposits) ? f.pension3aDeposits : [])
-  .map((d) => String(d?.date || '').slice(0, 4))
-  .filter((j) => /^\d{4}$/.test(j)))];
+// Kann der gespeicherte `pension3a`-Wert überhaupt EIN Jahr sein?
+//
+// ⟨umgebaut 23.09.2026, nachdem die Ursache behoben war — der alte Weg steht als Beleg⟩
+// Vorher wurde gefragt: «tragen die Einzahlungszeilen mehr als ein Kalenderjahr?». Das war
+// richtig, solange der Tracker datumsblind über alle Zeilen summierte. Seit er nur noch das
+// laufende Jahr nach `pension3a` schreibt, ist es FALSCH und hätte die Falschen getroffen:
+// Wer seine Einzahlungen über Jahre sauber weiterführt — wofür der Tracker gebaut ist —,
+// hat selbstverständlich mehrere Jahre in der Liste und trotzdem einen korrekten
+// Jahresbetrag. Der Riegel hätte genau diesen Menschen die Zahl weggenommen.
+//
+// Gefragt wird jetzt am Wert selbst: `pension3a` ist höchstens dann ein Jahresbetrag, wenn
+// er die grösste Summe eines EINZELNEN Jahres nicht übersteigt. Damit bleibt der Riegel
+// dort scharf, wo er gebraucht wird — bei Altdaten aus der Zeit vor dem Fix und bei von
+// Hand bearbeiteten Profilen, die die Oberfläche nie durchlaufen haben. Beide gibt es: die
+// Migration greift erst, wenn jemand das Kapitel öffnet, und bis dahin liegt der alte
+// Mehrjahres-Wert unverändert im Speicher.
+//
+// Ohne erfasste Zeilen lässt sich nichts sagen (`null`) — dann greift der Riegel nicht,
+// wie schon vorher.
+function ueberEinJahrHinaus(f, laufendesJahr) {
+  const groesstesJahr = groessteJahresEinzahlung(f.pension3aDeposits, laufendesJahr);
+  return groesstesJahr !== null && betrag3a(f) > groesstesJahr;
+}
 
 // Ab welchem Betrag überhaupt abgezogen wird: das HÖHERE der beiden Jahresmaxima.
 // Warum nicht einfach das des Bemessungsjahres, steht ausführlich bei `nichtAufgerechnet`.
@@ -216,12 +235,16 @@ export const SAEULE_3A = Object.freeze({
     //     `beMassgebendesEinkommen` klemmte auf 0 — und die App zeigte die HÖCHSTE Stufe.
     //     Ein Vertipper im Formular hätte still den Höchstbetrag ergeben.
     //
-    // (2) Die erfassten Einzahlungen stammen aus MEHREREN Kalenderjahren. Der Tracker
-    //     summiert datumsblind über alle Zeilen (Saeule3aTracker.jsx, ChapterView.jsx), er
-    //     ist zum Weiterführen gebaut. Drei Jahreszeilen à 7'000 ergeben dann eine
-    //     «Jahreseinzahlung» von 21'000 und einen Abzug, den es nicht gibt — gemessen in der
-    //     Fachprüfung: CHF 804 Anspruch, wo keiner besteht. Richtung: zu hoch, also
-    //     Rückforderung. Undatierte Zeilen sagen nichts und lösen das hier nicht aus.
+    // (2) Der gespeicherte `pension3a` reicht ÜBER EIN JAHR HINAUS. Bis zum 23.09.2026
+    //     summierte der Tracker datumsblind über alle Zeilen; drei Jahreszeilen à 7'000
+    //     ergaben eine «Jahreseinzahlung» von 21'000 und einen Abzug, den es nicht gibt —
+    //     gemessen: CHF 804 Anspruch, wo keiner besteht. Richtung: zu hoch, also
+    //     Rückforderung.
+    //     Die Ursache ist seither behoben (der Tracker schreibt nur noch das laufende Jahr),
+    //     der Riegel bleibt aber: Die Migration greift erst, wenn jemand das Kapitel öffnet,
+    //     und bis dahin liegt der alte Mehrjahres-Wert unverändert im Speicher. Was er prüft,
+    //     hat sich dabei geändert — siehe `ueberEinJahrHinaus`; «mehrere Jahre in der Liste»
+    //     ist seit dem Fix normal und kein Fehler mehr.
     //
     // 🛑 BEIDE erst ab dem Maximum. Bleibt die Einzahlung darunter, ist der Abzug ohnehin 0
     // und nichts ist widerlegt — dann darf der Riegel nicht greifen. Sonst nähme er gerade
@@ -229,10 +252,11 @@ export const SAEULE_3A = Object.freeze({
     // selbst einen Antrag stellen muss und ohne diesen Hinweis den ganzen Anspruch verliert.
     // (So stand es zuerst: 6'000 Einkommen, 3a 6'500 ⇒ keine Zahl, obwohl der Deckel bei
     // 7'056 gar nicht beisst.)
-    // ⚠️ Eine Zeile aus EINEM vergangenen Jahr läuft hier durch: geprüft wird «mehr als ein
-    // Jahr», nicht «welches Jahr». Bewusst so — die App nimmt die heutigen Angaben ohnehin
-    // als Stellvertreter der Veranlagung (siehe `betrag3a`), ein einzelnes abweichendes Jahr
-    // ist darin kein Widerspruch. Mehrere Jahre sind einer: dann ist es keine Jahreszahl mehr.
+    // ⚠️ Ein Betrag, der zu EINEM einzelnen vergangenen Jahr gehört, läuft hier durch:
+    // geprüft wird, ob der Wert über ein Jahr hinausreicht, nicht welches Jahr es ist.
+    // Bewusst so — die App nimmt die heutigen Angaben ohnehin als Stellvertreter der
+    // Veranlagung (siehe `betrag3a`), ein einzelnes abweichendes Jahr ist darin kein
+    // Widerspruch. Mehrere Jahre in EINER Zahl sind einer.
     widerlegt: (f, jahresEinkommen, jahre) => {
       const schwelle = abzugsSchwelle(jahre);
       // Unter der Schwelle entsteht gar kein Abzug — dann ist auch nichts zu widerlegen.
@@ -242,7 +266,10 @@ export const SAEULE_3A = Object.freeze({
       // Heute folgenlos (das NaN endet ohnehin in `amount: null`), aber die Absicht gehört
       // hingeschrieben, damit sie eine spätere Korrektur dort überlebt.
       const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
-      return ueberEinkommen || einzahlungsJahre(f).length > 1;
+      // Undatierte Zeilen zählen zum Anspruchsjahr — dasselbe Jahr, das der Tracker als das
+      // laufende führt. Für 2026 fallen beide zusammen; die Zuordnung liegt in saeule3a.js,
+      // damit Anzeige, Formular und Rechenkern sie gleich lesen.
+      return ueberEinkommen || ueberEinJahrHinaus(f, jahre?.anspruchsjahr);
     },
   }),
 

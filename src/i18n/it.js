@@ -4578,12 +4578,15 @@ export default {
   },
   saeule3a: {
     add: 'Aggiungi versamento',
-    ofMax: 'su {max}',
+    ofMax: 'su {max} per il {jahr}',
+    forYear: 'per il {jahr}',
     remaining: 'ancora {amount} fino al massimo',
     maxReached: 'Massimo raggiunto — ottimo.',
+    maxUnknown: 'Per il {jahr} la deduzione massima non è ancora registrata qui. L’importo sopra è comunque sommato correttamente.',
+    earlierYears: 'Si aggiungono {amount} di anni precedenti. Non contano per il massimo {jahr} — ogni anno ha il suo.',
     date: 'Data',
     amount: 'Importo (CHF)',
-    selfEmployedNote: 'Massimo 2026 con cassa pensioni: CHF 7’258. Indipendenti senza cassa pensioni: fino al 20 % del reddito (max. CHF 36’288).',
+    selfEmployedNote: 'Massimo {jahr} con cassa pensioni: {mit}. Senza cassa pensioni: fino al {satz} % del reddito da lavoro (al massimo {ohne}).',
   },
   diseases: {
     add: 'Aggiungi malattia',

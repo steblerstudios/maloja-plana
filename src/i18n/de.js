@@ -4555,12 +4555,15 @@ export default {
   },
   saeule3a: {
     add: 'Einzahlung hinzufügen',
-    ofMax: 'von {max}',
+    ofMax: 'von {max} für {jahr}',
+    forYear: 'für {jahr}',
     remaining: 'noch {amount} bis zum Maximum',
     maxReached: 'Maximum erreicht — gut gemacht.',
+    maxUnknown: 'Für {jahr} ist der Höchstabzug hier noch nicht hinterlegt. Der Betrag oben zählt trotzdem richtig zusammen.',
+    earlierYears: 'Dazu {amount} aus früheren Jahren. Die zählen nicht zum Maximum {jahr} — jedes Jahr hat sein eigenes.',
     date: 'Datum',
     amount: 'Betrag (CHF)',
-    selfEmployedNote: 'Maximum 2026 mit Pensionskasse: CHF 7’258. Selbständige ohne Pensionskasse: bis 20 % des Einkommens (max. CHF 36’288).',
+    selfEmployedNote: 'Maximum {jahr} mit Pensionskasse: {mit}. Ohne Pensionskasse: bis {satz} % des Erwerbseinkommens (höchstens {ohne}).',
   },
   diseases: {
     add: 'Erkrankung hinzufügen',

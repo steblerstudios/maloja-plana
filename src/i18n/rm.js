@@ -4763,12 +4763,15 @@ export default {
   },
   saeule3a: {
     add: 'Agiuntar pajament',
-    ofMax: 'da {max}',
+    ofMax: 'da {max} per {jahr}',
+    forYear: 'per {jahr}',
     remaining: 'anc {amount} fin al maximum',
     maxReached: 'Maximum cuntanschì — fitg bain.',
+    maxUnknown: 'Per {jahr} n’è la deducziun maximala anc betg registrada qua. L’import survart vegn tuttina sumà correctamain.',
+    earlierYears: 'Ultra da quai {amount} dals onns precedents. Quels na quintan betg per il maximum {jahr} — mintga onn ha il ses.',
     date: 'Data',
     amount: 'Import (CHF)',
-    selfEmployedNote: 'Maximum 2026 cun cassa da pensiun: CHF 7’258. Independents senza cassa da pensiun: fin 20 % da l’entrada (max. CHF 36’288).',
+    selfEmployedNote: 'Maximum {jahr} cun cassa da pensiun: {mit}. Senza cassa da pensiun: fin {satz} % da l’entrada da lavur (al pli {ohne}).',
   },
   diseases: {
     add: 'Agiuntar malsogna',

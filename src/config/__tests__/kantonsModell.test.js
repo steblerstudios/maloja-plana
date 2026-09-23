@@ -212,6 +212,32 @@ describe('Eingaben lesen', () => {
       // Und auch hier: unter dem Maximum ist die Jahresfrage gegenstandslos.
       expect(w([{ date: '2024-03-01', amount: 3000 }, { date: '2025-03-01', amount: 3000 }], 6000)).toBe(false);
     });
+
+    // 🛑 DER FALL, DEN DER RIEGEL BEINAHE BESTRAFT HÄTTE (Umbau 23.09.2026).
+    // Bis der Tracker die Jahresgrenze selbst zog, fragte dieser Riegel: «tragen die Zeilen
+    // mehr als ein Kalenderjahr?». Seit der Tracker nur noch das laufende Jahr nach
+    // `pension3a` schreibt, ist das die FALSCHE Frage — wer seine Einzahlungen über Jahre
+    // sauber weiterführt, wofür der Tracker gebaut ist, hat selbstverständlich mehrere Jahre
+    // in der Liste und trotzdem einen korrekten Jahresbetrag. Der alte Riegel hätte genau
+    // diesen Menschen die Zahl weggenommen.
+    it('gepflegte Historie über Jahre ist kein Widerspruch — nur der WERT zählt', () => {
+      const historie = [
+        { date: '2024-03-01', amount: 7056 },
+        { date: '2025-03-01', amount: 7258 },
+        { date: '2026-03-01', amount: 12000 },   // laufendes Jahr, über dem Maximum
+      ];
+      const w = (pension3a) => SAEULE_3A.bisBundesMaximum.widerlegt(
+        { monthlyIncome: 4000, pension3a, pension3aDeposits: historie },
+        48000, { bemessungsjahr: 2024, anspruchsjahr: 2026 });
+      // 12'000 ist die Summe EINES Jahres — es wird gerechnet, der Deckel greift normal.
+      expect(w(12000)).toBe(false);
+      expect(SAEULE_3A.bisBundesMaximum.nichtAufgerechnet(
+        { pension3a: 12000 }, { bemessungsjahr: 2024, anspruchsjahr: 2026 })).toBe(12000 - 7258);
+      // Der Altbestand aus der Zeit vor dem Fix bleibt erkannt: 26'314 über alle Jahre.
+      expect(w(7056 + 7258 + 12000)).toBe(true);
+      // Und ein Wert, der knapp über der grössten Jahressumme liegt, ebenfalls.
+      expect(w(12001)).toBe(true);
+    });
   });
 
   // Die drei Regeln sind absichtlich EINZELN benannt, auch wo sie heute dasselbe rechnen —

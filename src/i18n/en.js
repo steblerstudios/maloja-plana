@@ -4615,12 +4615,15 @@ export default {
   },
   saeule3a: {
     add: 'Add contribution',
-    ofMax: 'of {max}',
+    ofMax: 'of {max} for {jahr}',
+    forYear: 'for {jahr}',
     remaining: '{amount} left to the maximum',
     maxReached: 'Maximum reached — well done.',
+    maxUnknown: 'The maximum deduction for {jahr} is not recorded here yet. The amount above still adds up correctly.',
+    earlierYears: 'Plus {amount} from earlier years. Those do not count towards the {jahr} maximum — each year has its own.',
     date: 'Date',
     amount: 'Amount (CHF)',
-    selfEmployedNote: 'Maximum 2026 with pension fund: CHF 7,258. Self-employed without pension fund: up to 20% of income (max. CHF 36,288).',
+    selfEmployedNote: 'Maximum for {jahr} with a pension fund: {mit}. Without a pension fund: up to {satz}% of earned income (at most {ohne}).',
   },
   diseases: {
     add: 'Add condition',
