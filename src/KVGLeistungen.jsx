@@ -9,6 +9,7 @@ import { loadVorsorgeDates, saveVorsorgeDate } from './utils/vorsorge.js';
 import { renderSource } from './utils/renderSource.js';
 import { getCantonName } from './config/cantonalData.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { StatusForm } from './components/StatusForm.jsx';
 
 // Status-Punkt-Farben (Granit-Palette). „excluded" (nicht gedeckt) ist bewusst
 // neutral-grau — es ist Information, kein Alarm (dignity-first, Faden 3-II/2).
@@ -26,14 +27,10 @@ const StatusBadge = ({ status, label, palette }) => {
   const colors = STATUS_COLORS(palette);
   const dot = colors[status] || palette.mid;
   const marker = palette.colorBlind
-    ? React.createElement('svg', { width: '9', height: '9', viewBox: '0 0 10 10', 'aria-hidden': 'true', style: { flexShrink: 0 } },
-        status === 'covered'
-          ? React.createElement('circle', { cx: '5', cy: '5', r: '4', fill: dot })
-          : status === 'limited'
-            ? React.createElement(React.Fragment, null,
-                React.createElement('circle', { cx: '5', cy: '5', r: '4', fill: 'none', stroke: dot, strokeWidth: '1.4' }),
-                React.createElement('circle', { cx: '5', cy: '5', r: '1.6', fill: dot }))
-            : React.createElement('circle', { cx: '5', cy: '5', r: '3.6', fill: 'none', stroke: dot, strokeWidth: '1.4' }))
+    ? React.createElement(StatusForm, {
+        form: status === 'covered' ? 'voll' : status === 'limited' ? 'kern' : 'hohl',
+        color: dot,
+      })
     : React.createElement('span', {
         style: { width: '7px', height: '7px', borderRadius: '50%', background: dot, flexShrink: 0 }
       });

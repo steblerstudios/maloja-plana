@@ -157,7 +157,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     section: { padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', marginBottom: space.md + 'px', fontSize: text.sm },
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px' },
     input: { width: '120px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
-    gemeindeBtn: (active) => ({ padding: '6px 12px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sage : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
+    gemeindeBtn: (active) => ({ padding: '6px 12px', fontSize: text.sm, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? (palette.sageDeep || palette.sage) : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     highlight: { padding: space.md + 'px', background: palette.sage + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.sage, marginBottom: space.md + 'px' },
     warn: { padding: space.md + 'px', background: palette.gold + '22', borderRadius: radius.sm + 'px', border: '1px solid ' + palette.gold, marginBottom: space.md + 'px' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: text.sm },
@@ -165,7 +165,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     nameBtn: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm, color: palette.text, textAlign: 'left' },
-    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? palette.sage : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
+    targetBtn: (chosen) => ({ background: chosen ? palette.sage + '22' : 'none', border: '1px solid ' + (chosen ? palette.sage : palette.border), borderRadius: radius.sm + 'px', padding: '3px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: text.xs, color: chosen ? (palette.sageDeep || palette.sage) : palette.mid, fontWeight: chosen ? weight.semi : weight.normal }),
   };
 
   return React.createElement('div', { style: s.card },
@@ -275,7 +275,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         canToggle && saving > 0 && React.createElement('div', { style: { fontSize: text.xs, color: palette.sageDeep, marginTop: '2px' } },
           t('po.unfallSaving', { diff: saving.toFixed(2) })
         ),
-        Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? (palette.roseDeep || palette.rose) : palette.sage } },
+        Math.abs(userPremium - shownRef) > 1 && React.createElement('div', { style: { fontSize: text.sm, marginTop: space.xs + 'px', color: userPremium > shownRef ? (palette.roseDeep || palette.rose) : (palette.sageDeep || palette.sage) } },
           t(userPremium > shownRef ? 'po.premiumAbove' : 'po.premiumBelow', {
             diff: Math.abs(userPremium - shownRef).toFixed(2)
           })
@@ -319,7 +319,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                           border: '1px solid ' + (isActive ? palette.sage : 'transparent'),
                           borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
                           cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
-                          color: isActive ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
+                          color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
                         },
                       }, erledigtZeichen(isActive, 'CHF ' + amount.toFixed(2)))
@@ -329,7 +329,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                 React.createElement('td', { style: { ...cell, padding: 0 } },
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
-                    style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? palette.sage : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
+                    style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
                   }, 'CHF ' + f.franchise.toLocaleString())
                 ),
                 hasOhne ? variantCell('mit', f.premium)
@@ -359,7 +359,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       reserveCheck && React.createElement('div', {
         style: {
           fontSize: text.sm,
-          color: reserveCheck.level === 'strong' ? palette.sage : (reserveCheck.level === 'ok' ? palette.text : palette.gold),
+          color: reserveCheck.level === 'strong' ? (palette.sageDeep || palette.sage) : (reserveCheck.level === 'ok' ? palette.text : (palette.goldDeep || palette.gold)),
           lineHeight: leading.normal, marginBottom: space.xs + 'px',
         },
       },
@@ -423,7 +423,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                       border: '1px solid ' + (chosenVariant === variant ? palette.sage : 'transparent'),
                       borderRadius: radius.sm + 'px', padding: '5px 8px', width: '100%', textAlign: 'right',
                       cursor: 'pointer', fontFamily: 'inherit', fontSize: text.sm,
-                      color: chosenVariant === variant ? palette.sage : (variant === 'ohne' ? palette.mid : palette.text),
+                      color: chosenVariant === variant ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
                     },
                   }, erledigtZeichen(chosenVariant === variant, 'CHF ' + amount.toFixed(2)))
@@ -433,7 +433,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
               React.createElement('tr', { key: ins.nr },
                 React.createElement('td', { style: s.td },
                   React.createElement('button', {
-                    style: { ...s.nameBtn, color: isCurrent ? palette.sage : palette.text },
+                    style: { ...s.nameBtn, color: isCurrent ? (palette.sageDeep || palette.sage) : palette.text },
                     onClick: () => setDetailNr(isOpen ? null : ins.nr)
                   }, aufklappZeichen(isOpen), ins.name, isCurrent ? hinweisZeichen('check', 10) : null)
                 ),

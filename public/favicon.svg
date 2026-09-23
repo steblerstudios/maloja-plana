@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#24262A"/>
-  <polyline points="7,23 13,10 16,16 20,8 25,23" fill="none" stroke="#EDECE8" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
-  <circle cx="20" cy="8" r="2" fill="#C4A870"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="Maloja Plana"><rect width="32" height="32" rx="7" fill="#22211F" /><path d="M3 26V12L9 6L15 12L10 16V26Z" fill="#8FB0A0" /><path d="M14 7L20 2L29 12V16Z" fill="#C4A870" /><path d="M16 26V20C16 15 29 14 29 21C29 25 25 27 22 27V21H20V30H16Z" fill="#8FB0A0" /></svg>

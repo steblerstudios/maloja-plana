@@ -12,6 +12,13 @@ die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — s
 kommt der Changelog immer mit, nie doppelt.*
 
 ### Neu
+- **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
+  dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
+  Telefons übertragen werden können — den das iPhone (und manche Android-Telefone) auf
+  dem Sperrbildschirm zeigt. Je Feld ein Knopf «Kopieren», daneben die Schritte für
+  iPhone und Android, belegt an der Hilfe von Apple und Google. Nichts wird gesendet,
+  kein QR, keine Schnittstelle. Erreichbar über den Notfall-Einstieg und unter dem
+  QR-Code im Notfall-Dossier.
 - **«Eingetragene Partnerschaft» als Zivilstand** (Bau-Liste K98, letzter Teil), in allen
   fünf Sprachen. Seit dem 1. Juli 2022 werden keine neuen Partnerschaften mehr eingetragen;
   bestehende gelten weiter. Steuerlich und in den Sozialversicherungen sind sie der Ehe
@@ -31,6 +38,10 @@ kommt der Changelog immer mit, nie doppelt.*
   vorbei vergleicht.
 
 ### Behoben
+- **Medikamente und Erkrankungen fehlten im Notfall-Dossier, im Notfall-QR und auf der
+  Vorlesekarte**, wenn sie — wie das Kapitel es heute anbietet — als Liste erfasst
+  waren. Die gemeinsame Quelle las nur das alte Textfeld. Jetzt zuerst die Liste, das
+  Textfeld bleibt Rückfall.
 - Der Lebenslauf zeigte den Zivilstand als internen Schlüssel («married») statt als Text.
 
 ## [0.1.39-beta] — 2026-09-20
