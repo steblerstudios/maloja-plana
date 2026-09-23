@@ -11,8 +11,10 @@ Was davon in `public/` liegt:
 | `public/app-icon.svg` | Paket `logo/app-icon.svg`, 1:1 (abgerundet, Fläche `#2B2A26`) |
 | `public/icon-192.png`, `icon-512.png` | aus `app-icon.svg` gerendert (`sips`) — Manifest `purpose: any` |
 | `public/icon-maskable-*.png`, `apple-touch-icon.png` | aus `icon-maskable.svg` hier gerendert: randlos, Zeichen in der 80-%-Schutzzone |
+| `public/og-image.svg` | Paket `anwendungen/social-preview-1200x630.svg`, 1:1 (Schrift in Pfaden, kein Ubuntu nötig) |
+| `public/og-image.png` | aus `og-image.svg` gerendert, 1200 × 630 |
 
-Noch nicht übernommen: Link-Vorschau (`og-image`), Wortmarke im Kopf der App (das «M als Gipfel»
+Noch nicht übernommen: Wortmarke im Kopf der App (das «M als Gipfel»
 in `main.jsx`, `LockScreen.jsx`, `BetaGate.jsx`, `Onboarding.jsx`) und die Schriftfrage
 (Paket: Ubuntu · App: Lexend/Hanken). Das ist ein Entscheid, kein Rückstand.
 
