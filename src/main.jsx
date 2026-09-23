@@ -32,6 +32,7 @@ const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour 
 import { syncDocumentReminders } from './utils/docReminders.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 const InstallGuide = React.lazy(() => import('./InstallGuide.jsx'));
+const InstallHinweis = React.lazy(() => import('./InstallHinweis.jsx'));
 import BetaGate from './BetaGate.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
 // deshalb nicht in der Startdatei zu liegen: gemessen 2,88 kB gzip, die Hälfte der
@@ -41,7 +42,6 @@ const MobileNav = React.lazy(() => import('./MobileNav.jsx'));
 import { Icon, zurueckZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import CalmLoader from './components/CalmLoader.jsx';
-import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
 import { MarkenLogo } from './components/MarkenLogo.jsx';
@@ -556,23 +556,6 @@ const AppInner = ({ demo }) => {
   const [installPrompt, setInstallPrompt] = useState(null);
   // Läuft die Seite schon als installierte App, ist jeder Installations-Hinweis
   // falsch. Einmal beim Start bestimmt — der Modus wechselt nicht mitten drin.
-  // Läuft die Seite schon als installierte App? Bewusst hier inline und NICHT
-  // aus utils/geraetErkennung.js importiert: ein statischer Import zöge das
-  // ganze Modul ins Hauptbundle, und das hat 50 Byte Luft unter dem
-  // size-limit (gemessen 24.09.2026). Die ausführliche Fassung samt Tests
-  // lebt weiter in geraetErkennung.js — die Anleitungs-Seite lädt sie lazy.
-  const [laeuftSchonAlsApp] = useState(() => {
-    try {
-      if (navigator.standalone === true) return true;
-      return window.matchMedia('(display-mode: standalone)').matches;
-    } catch (e) { return false; }
-  });
-  // Der Hinweis auf die Anleitung gilt den Browsern OHNE `beforeinstallprompt`
-  // (Safari, Firefox). Einmal weggeklickt bleibt er weg: ein Hinweis, der nach
-  // jedem Laden zurückkommt, ist eine Aufforderung und keine Hilfe.
-  const [installHinweisWeg, setInstallHinweisWeg] = useState(() => {
-    try { return localStorage.getItem('or5_install_hinweis') === 'weg'; } catch (e) { return false; }
-  });
   const sandboxActive = sandboxMode && sandboxData;
   const activeData = demoMode && demoData ? demoData : (sandboxActive ? sandboxData : data);
   // Sandbox ("Probier-Modus"): writes go to an in-memory copy, never persisted, until applied.
@@ -716,20 +699,6 @@ const AppInner = ({ demo }) => {
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
-  // Ein Aufruf, zwei Orte: das Dashboard-Banner und die Anleitungs-Seite drücken
-  // denselben Knopf. Zwei Kopien derselben drei Zeilen wären zwei Orte, an denen
-  // sie auseinanderlaufen können.
-  const installAusfuehren = () => {
-    if (!installPrompt) return;
-    installPrompt.prompt();
-    installPrompt.userChoice.then(() => setInstallPrompt(null));
-  };
-  const installHinweisVerwerfen = () => {
-    setInstallHinweisWeg(true);
-    // Gesperrter Speicher (Privatmodus) ist kein Fehlerfall — dann gilt das
-    // Wegklicken eben nur für diese Sitzung.
-    try { localStorage.setItem('or5_install_hinweis', 'weg'); } catch (e) { /* */ }
-  };
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
   useEffect(() => {
@@ -1338,46 +1307,14 @@ const AppInner = ({ demo }) => {
       view === 'dashboard' && React.createElement(React.Fragment, null,
         React.createElement(StorageWarning, { palette, t }),
         React.createElement(OverdueBanner, { palette, t, onNavigate: setView }),
-        // ── Der Weg auf den Startbildschirm ───────────────────────────────
-        // EIN Banner, zwei Fassungen — nicht zwei Banner:
-        //
-        //   • Chromium (Chrome/Edge, Desktop + Android) meldet sich per
-        //     `beforeinstallprompt`. Nur dort kann die Seite selbst
-        //     installieren, also gibt es dort zusätzlich den Knopf.
-        //   • Safari (iOS UND macOS) und Firefox melden sich nie. Bis
-        //     24.09.2026 stand dort GAR NICHTS — auf jedem iPhone also, und
-        //     das ist das Gerät, auf dem dieser Ordner am ehesten gebraucht
-        //     wird. Dort führt derselbe Kasten zur Anleitung.
-        //
-        // Warum zusammengelegt: als zwei getrennte Kästen war der Aufbau
-        // zweimal fast wörtlich da und kostete rund 600 B gzip im
-        // Hauptbundle — genug, um das size-limit zu reissen (CI rot,
-        // 24.09.2026). Der Unterschied sind drei Werte, nicht zwei Blöcke.
-        //
-        // Beide verschwinden, sobald die Seite als App läuft; die Fassung
-        // ohne Knopf bleibt nach dem Wegklicken weg (or5_install_hinweis).
-        !laeuftSchonAlsApp && (installPrompt || !installHinweisWeg) && React.createElement('div', {
-          style: { margin: space.md + 'px ' + space.md + 'px 0', padding: space.md + 'px', background: palette.up, border: '1px solid ' + palette.border, borderRadius: radius.md + 'px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: space.sm }
-        },
-          React.createElement('span', { style: { fontSize: text.sm, color: palette.text } },
-            t(installPrompt ? 'pwa.installHint' : 'pwa.anleitungHint')),
-          React.createElement('div', { style: { display: 'flex', gap: space.xs, alignItems: 'center' } },
-            installPrompt && React.createElement(PrimaryButton, {
-              palette,
-              onClick: installAusfuehren,
-              style: { padding: space.xs + 'px ' + space.sm + 'px' },
-            }, t('pwa.install')),
-            React.createElement('button', {
-              onClick: () => handleNavigate('installApp'),
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.sandDeep, border: 'none', cursor: 'pointer', fontSize: text.sm, fontFamily: 'inherit', fontWeight: weight.medium }
-            }, t('pwa.anleitung')),
-            React.createElement('button', {
-              onClick: () => (installPrompt ? setInstallPrompt(null) : installHinweisVerwerfen()),
-              'aria-label': t('common.close'),
-              style: { padding: space.xs + 'px ' + space.sm + 'px', background: 'transparent', color: palette.mid, border: 'none', cursor: 'pointer', fontSize: text.sm }
-            }, '×')
-          )
-        ),
+        // Der Weg auf den Startbildschirm. Eigene, nachgeladene Datei:
+        // das Hauptbundle hat 60 Byte Luft unter dem size-limit, der Kasten
+        // kostet 290 B. Begründung ausführlich in InstallHinweis.jsx.
+        React.createElement(React.Suspense, { fallback: null },
+          React.createElement(InstallHinweis, {
+            palette, t, onNavigate: handleNavigate, installPrompt,
+            onPromptWeg: () => setInstallPrompt(null),
+          })),
         React.createElement(Dashboard, {
           palette, t, chapters, data: activeData,
           onSelectChapter: (idx) => startTransition(() => { setActiveChapter(idx); setView('chapter'); }),
@@ -1536,6 +1473,9 @@ const AppInner = ({ demo }) => {
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
+        view === 'installApp' && React.createElement(InstallGuide, {
+          palette, t, onNavigate: handleNavigate, installPrompt, onPromptWeg: () => setInstallPrompt(null),
+        }),
         view === 'settings' && React.createElement(SettingsView, {
           palette, t, controls: settingsControls,
           onEditBasis: () => startTransition(() => { setActiveChapter(0); setView('chapter'); }),
@@ -1544,10 +1484,6 @@ const AppInner = ({ demo }) => {
         }),
       )),
       view === 'legal' && React.createElement(LegalView, { palette, t, lang, onNavigate: handleNavigate, section: legalSection, data: activeData }),
-      view === 'installApp' && React.createElement(React.Suspense, { fallback: React.createElement(CalmLoader, { palette, t }) },
-        React.createElement(InstallGuide, {
-          palette, t, onNavigate: handleNavigate, installPrompt, onInstall: installAusfuehren,
-        })),
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),

@@ -4,6 +4,9 @@ import { PrimaryButton } from './components/PrimaryButton.jsx';
 import { text, weight, leading, space, radius } from './config/tokens.js';
 import { Icon, zurueckZeichen, aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
 import { GERAETE, aktuellesGeraet, laeuftAlsApp } from './utils/geraetErkennung.js';
+// Eine Quelle für «jetzt installieren» — sie liegt beim Dashboard-Hinweis,
+// weil beide Nutzer nachgeladen sind und nichts davon ins Startbundle darf.
+import { installAusloesen } from './InstallHinweis.jsx';
 
 // ─── Als App installieren ─────────────────────────────────────────────────────
 //
@@ -85,7 +88,7 @@ const Geraetblock = ({ kennung, t, palette, hervorgehoben }) => {
   );
 };
 
-export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onInstall }) => {
+export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onPromptWeg }) => {
   const [andereOffen, setAndereOffen] = useState(false);
   // Einmal beim ersten Rendern bestimmt: der Browser wechselt während einer
   // Sitzung nicht, und ein Zustand hier hält die Seite ruhig.
@@ -139,7 +142,7 @@ export const InstallGuide = ({ palette, t, onNavigate, installPrompt, onInstall 
     },
       React.createElement(PrimaryButton, {
         palette,
-        onClick: onInstall,
+        onClick: () => installAusloesen(installPrompt, onPromptWeg),
         icon: React.createElement(Icon, { name: 'download', size: 14, color: palette.onSand }),
       }, t('install.jetztInstallieren')),
       React.createElement('div', {
