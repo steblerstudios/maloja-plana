@@ -60,10 +60,11 @@ Abweichungen der Kantons- und Gemeindesteuer (Konkubinat minus ledig, immer ≥ 
 Die Messung zeigt, **dass** diese drei Kantone Konkubinat anders rechnen; welcher Abzug es ist, wurde
 nicht an den kantonalen Gesetzen geprüft und steht deshalb nicht in der App.
 
-**Nebenbefund TI:** Konkubinat und ledig sind live gleich. Die Tabelle «ledig» vom 16.09. liegt für TI
-aber an 67 von 68 Punkten neben dem heutigen Rechner (bis CHF 250, innerhalb der ±3 %-Grenze der
-Tabelle). Der ESTV-Rechner hat die TI-Werte seit dem 16.09. geändert; die Tabelle ist für TI neu zu
-messen (eigener Punkt, nicht Teil von K62).
+**Nebenbefund TI:** Konkubinat und ledig sind live gleich. Die Messpunkte «ledig» vom 16.09. liegen für
+TI aber an 67 von 68 Punkten über dem heutigen Rechner, bis CHF 250 (z. B. Brutto 30 000: 863 → heute
+806; 80 000: 8 682 → 8 568); an 9 Punkten (Brutto 22 500–47 500) ausserhalb der Grenze der Tabelle
+(±3 % oder CHF 50). Der ESTV-Rechner hat die TI-Werte seit dem 16.09. geändert; die Tabelle ist für TI
+neu zu messen (eigener Punkt, nicht Teil von K62). In der Messdatei stehen für TI die Werte von heute.
 
 ## Regel in der App
 
