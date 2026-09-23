@@ -429,7 +429,8 @@ export const BudgetSync = ({ palette, t, data, isDarkMode, _onUpdate }) => {
           marginBottom: idx < budget.recommendations.length - 1 ? '6px' : 0
         }
       },
-        React.createElement('span', { style: { marginRight: '6px' } }, rec.icon),
+        // Kein Zeichen davor: das `○` war ein Aufzählungspunkt ohne aria-hidden
+        // («weisser Kreis» im Screenreader). Die Karte trägt die Abgrenzung schon.
         rec.text
       ))
     ),
