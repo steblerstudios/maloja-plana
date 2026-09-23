@@ -11,13 +11,13 @@ import rm from '../i18n/rm.js';
 // Die Kontaktadresse im Impressum · 23.09.2026
 //
 // 🛑 DIESER WÄCHTER IST ABSICHTLICH ROT. Er wird grün, sobald die echte,
-// zustellfähige Adresse eingesetzt ist — und nur Sophie hat sie.
+// zustellfähige Adresse eingesetzt ist — die kann nur Stebler Studios setzen.
 //
 // Hergang: Eine Durchsicht von aussen hat bemerkt, dass Impressum und
 // Datenschutz «Basel, Schweiz» nennen, aber keine Strasse. Die öffentliche
 // Seite trägt zugleich den Satz «Angaben gemäss Art. 3 Abs. 1 lit. s UWG» —
 // sie behauptet also eine Vollständigkeit, die sie nicht hat. Ob UWG für ein
-// kostenloses Angebot ohne Bestellvorgang überhaupt greift, ist Frage C6 in
+// kostenloses Angebot ohne Bestellvorgang überhaupt greift, ist Frage F0 in
 // docs/legal/k48-fragen-juristin.md und NICHT hier zu entscheiden. Eine
 // erreichbare Adresse ist so oder so richtig.
 //
@@ -77,7 +77,7 @@ describe('Kontaktadresse im Impressum', () => {
   // überall anschlägt. Ein fertiger Adresstext muss ihn zufriedenstellen —
   // sonst prüft er seine eigene Formulierung statt die Sache.
   it('ein vollständiger Adresstext liesse ihn durch', () => {
-    const fertig = 'Stebler Studios — Sophie Stebler, Musterweg 1, 4051 Basel, Schweiz';
+    const fertig = 'Stebler Studios — Musterweg 1, 4051 Basel, Schweiz';
     for (const p of PLATZHALTER) expect(fertig).not.toContain(p);
   });
 });
