@@ -544,6 +544,11 @@ Alles klar als post-V1 markiert.
 }
 ```
 
+> ⚠️ **Die Zahlen oben sind Musterwerte, keine Vorgaben** — so auch `pension3a: 7056`.
+> Das ist NICHT das geltende 3a-Maximum (2026: CHF 7'258). Verbindlich ist allein
+> `src/data/saeule3a.js`. Dieses Dokument trägt den Stand 2026-05-27 und wird nicht
+> nachgeführt; angemerkt am 23.09.2026, weil die Zahl beim Suchen wie ein Gesetzeswert aussah.
+
 ### Keine Migration nötig
 
 Neue Felder werden in `finanzen` hinzugefügt.

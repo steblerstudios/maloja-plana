@@ -144,6 +144,10 @@ export const ESTV_ABZUEGE_2026 = {
   kind: 6800,
 };
 
+// Der Höchstabzug der Säule 3a steht bewusst NICHT hier, sondern in `./saeule3a.js`:
+// Saeule3aTracker.jsx wird lazy geladen, und ein Import aus dieser Datei zöge die
+// Kantonstabelle (33 KB) und den Rechenkern (14 KB) in dessen Chunk.
+
 /**
  * Steuerbares Einkommen Bund so, wie es der ESTV-Rechner aus einem Nettolohn ableitet.
  * @param {object} p

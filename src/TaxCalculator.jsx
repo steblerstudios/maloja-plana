@@ -6,6 +6,7 @@ import { Icon, hinweisZeichen, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, radius , space } from './config/tokens.js';
 import { grenzsteuersatz, STEUER_DATA_VERSION, STEUER_PARAMS } from './data/steuerRechner.js';
 import { steuernFuerProfil, steuerEingabenAusDaten, tarifvergleichFuerProfil, KANTONAL_DATA_VERSION, KANTONAL_DATA_ABGERUFEN } from './data/kantonaleSteuerdaten.js';
+import { SAEULE3A_MAX } from './data/saeule3a.js';
 import { getHouseholdInfo, getCantonName } from './config/cantonalData.js';
 import { OfficialLinkBox } from './OfficialLinkBox.jsx';
 import { SteuerSaeulen } from './components/SteuerSaeulen.jsx';
@@ -73,7 +74,7 @@ export const TaxCalculator = ({ palette, t, data, onSave, onNavigate }) => {
   const hh = getHouseholdInfo(data);
   const deductions = [
     { label: t('tax.workCosts'), key: 'workCosts', default: 0, max: 5000 },
-    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: 7258 },
+    { label: t('tax.pension3a'), key: 'pension3a', default: 0, max: SAEULE3A_MAX },
     { label: t('tax.debtInterest'), key: 'debtInterest', default: 0, max: 50000 },
     { label: t('tax.maintenance'), key: 'maintenance', default: 0, max: 50000 },
     { label: t('tax.education'), key: 'education', default: 0, max: 10000 },

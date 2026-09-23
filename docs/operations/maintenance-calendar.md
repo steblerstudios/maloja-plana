@@ -77,7 +77,7 @@
 | Mietzinsbeiträge (BS/BL/GE/ZG) | 2025 | 2026-06 | 2027-01 |
 | BVG-Grenzwerte | 2026 | 2026-06 | 2027-01 |
 | EO-Taggeld | 2026 | 2026-06 | 2027-01 |
-| 3a-Maximum | 2026 (CHF 7'056) | 2026-06 | 2027-01 |
+| 3a-Maximum | 2026 (CHF 7'258 mit PK / 36'288 ohne) | 2026-09-23 | 2027-01 |
 | Kantonale IPV-Modelle | 2026 | 2026-06 | 2027-01 |
 
 ---
@@ -154,3 +154,29 @@ siehe Q2). Kein toter Link.
 (`analytics-weg1-anleitung.md`) — braucht das Panel.
 
 **Nächste Wartung:** Dezember (Q4). Januar 2027 = Datenquellen-Update (Tabelle oben).
+
+### 2026-09-23 — Ausserplanmässig: 3a-Maximum war zwei Anpassungen alt
+
+**Auslöser:** Beim Gegenlesen eines fremden Finanz-Dokuments fiel auf, dass Code und Doku im
+eigenen Repo verschiedene 3a-Maxima führten — Code 7'258, fünf Dokumente 7'056 «Stand 2026».
+
+**An der Quelle erhoben (23.09.2026):** ESTV, «Höchstabzüge Säule 3a bei der Direkten
+Bundessteuer» — 2026 und 2025 je **7'258** (mit 2. Säule) bzw. **36'288** (ohne). 7'056/35'280
+galten 2023 und 2024. Gegenprobe BSV-FAQ, identisch. Für 2026 unverändert bestätigt
+(Medienmitteilung EFD, 17.11.2025). **Der Code hatte recht, die Doku war zwei Jahre alt.**
+
+**Warum die Prüfung im Juni das nicht sah — zwei Gründe, beide behoben:**
+
+1. Der Eintrag «3a-Maximalbetrag» in `maintenance-prompt.md` war der **einzige** ohne
+   Quellenzeile. Die Prüfung konnte den Wert nur gegen die Doku halten, in der er stand.
+   *Eine Prüfung, die ihre eigene Liste gegen sich selbst hält, geht immer grün aus.*
+2. Der Eintrag nannte als Zieldatei `VorsorgeRechner.jsx` — dort steht der Betrag **nicht** und
+   stand er nie. Die Datei, die ihn trug (`Saeule3aTracker.jsx`), war nicht genannt.
+
+**Geändert:** Der Wert liegt neu an **einer** Stelle (`src/data/saeule3a.js`, mit Quelle,
+Rechtsgrundlage und Abrufdatum), vorher an zwei Code- und fünf Doku-Stellen. Die
+Wartungsanleitung hat jetzt Quelle und richtige Zieldatei.
+
+**Offen, nicht in diesem Durchgang entschieden:** Die App deckelt die 3a-Eingabe für alle bei
+7'258. Für Selbständige ohne 2. Säule ist das zu tief (BVV 3 Art. 7 Abs. 1 lit. b: 20 % des
+Erwerbseinkommens, höchstens 36'288). Produktentscheid, kein Wartungsfall.

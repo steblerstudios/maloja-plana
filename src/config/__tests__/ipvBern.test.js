@@ -254,11 +254,18 @@ describe('K31 calculateIPV für BE (App-Angaben → Modell)', () => {
   // einziger Franken Differenz kippt eine ganze Stufe, im Jahr bis zu CHF 888.
   // Zusätzlich zitierte ipvBern.js dafür KKVV Art. 9 Abs. 2 statt Art. 6 Abs. 4 lit. i —
   // und verlor dabei den Deckel aufs bundesrechtliche Maximum ganz.
+  // Der eingesetzte 3a-Betrag ist hier ein BELIEBIGER Eingabewert, kein Prüfgegenstand: Die
+  // Zusage lautet «ein beliebiger 3a-Betrag verändert das Ergebnis nicht», und die zweite
+  // Erwartung prüft genau das — gegen denselben Fall ohne 3a. Der Betrag steht trotzdem auf
+  // dem geltenden Maximum (src/data/saeule3a.js), damit hier kein überholter Gesetzeswert
+  // liegen bleibt; bis zum 23.09.2026 stand 7'056, das Maximum der Steuerjahre 2023/2024.
   it('Säule 3a zählt NICHT zusätzlich — und kippt damit keine Stufe mehr', () => {
-    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } }))).toMatchObject({ amount: 221 });
-    // der alte Weg hätte hier 11 196 + 7 056 = 18 252 − 2 200 = 16 052 ergeben, also zwei
-    // Stufen tiefer statt derselben
-    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7056 } })).amount)
+    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7258 } }))).toMatchObject({ amount: 221 });
+    // der alte Weg hätte hier 11 196 + 7 258 = 18 454 − 2 200 = 16 254 ergeben und damit in die
+    // Stufe «bis 17 000» geworfen statt in «bis 9 000» (stufen: [9000, 17000, …] in ipvBern.js).
+    // ⟨korrigiert 23.09.2026⟩ Hier stand «zwei Stufen tiefer» — gegen die Stufenliste gerechnet
+    // ist es eine. Der Fehler hing nicht am Betrag: auch mit 7'056 ergab sich dieselbe Stufe.
+    expect(calculateIPV(person({ monthlyIncome: 933, finanzen: { pension3a: 7258 } })).amount)
       .toBe(calculateIPV(person({ monthlyIncome: 933 })).amount);
   });
 

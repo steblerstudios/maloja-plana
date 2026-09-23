@@ -170,9 +170,10 @@ export function ipvBern(data, hh, ipvData, youngAdultsCount, orientierung, looku
   if (vermoegen > IPV_BE.vermoegen.bruttoGrenze) return orientierung('vermoegenAntrag');
   // KKVV Art. 6 Abs. 4 lit. i rechnet die Säule 3a dem Reineinkommen zu — aber nur BIS ZUM
   // bundesrechtlichen Maximum für Unselbständige. Das Nettoeinkommen der App trägt sie
-  // bereits voll, die Regel wäre also ein Abzug des Überschusses. Ihr Frankenwert ist
-  // NICHT belegt (siehe SAEULE_3A.bisBundesMaximum.offen) — bis dahin wirkt der Deckel
-  // nicht, betroffen sind nur Einzahlungen über dem Maximum.
+  // bereits voll, die Regel wäre also ein Abzug des Überschusses. Ihr Frankenwert ist seit
+  // dem 23.09.2026 belegt (7'258, src/data/saeule3a.js); der Abzug ist aber noch nicht
+  // gebaut und nicht fachgeprüft (siehe SAEULE_3A.bisBundesMaximum.offen) — bis dahin wirkt
+  // der Deckel nicht, betroffen sind nur Einzahlungen über dem Maximum.
   // (Befund Fachprüfung 20.09.2026: hier stand Art. 9 Abs. 2 — die falsche Norm, und der
   // Deckel ging dabei ganz verloren. Zusätzlich wurde die 3a doppelt gezählt; in einer
   // Stufentabelle kostet ein Franken Differenz eine ganze Stufe, bis CHF 888 im Jahr.)
