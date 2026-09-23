@@ -9,5 +9,4 @@ export const chf = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))
 export const annahmenTexte = (t, annahmen) => [
   annahmen?.ohneDreizehnten && t('tax.annahmeOhneDreizehnten'),
   annahmen?.alleinverdiener && t('tax.annahmeAlleinverdiener'),
-  annahmen?.einzeln && t('tax.annahmeEinzeln'),
 ].filter(Boolean);

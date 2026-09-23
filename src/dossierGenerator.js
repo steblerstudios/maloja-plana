@@ -389,30 +389,6 @@ export function generateLebensmappe(data, chapters, t, documents) {
 // Curated, reduced set — not a data dump. Focused on what
 // someone else needs when they have to help.
 
-// Medikamente und Erkrankungen werden im Kapitel als LISTE erfasst (medicationsList,
-// chronicDiseasesList); das alte Textfeld bleibt nur als Rückfall für frühere Einträge.
-//
-// 🛑 Gefunden am 23.09.2026 beim Bau des Notfallpass-Blatts: diese Funktion las nur das
-// Textfeld. Wer Medikamente in der Liste erfasst hatte — der einzige Weg, den das Kapitel
-// heute anbietet —, fand sie weder im Dossier noch im QR noch auf der Vorlesekarte.
-// Format wie auf der gedruckten Notfallkarte (ChapterView): «Name Dosis Einheit».
-function medikamenteText(notfall) {
-  const liste = Array.isArray(notfall?.medicationsList) ? notfall.medicationsList.filter(m => m && m.name) : [];
-  if (liste.length) {
-    return liste.map(m => [m.name, m.dose ? m.dose + (m.unit ? ' ' + m.unit : '') : ''].filter(Boolean).join(' ')).join(', ');
-  }
-  return typeof notfall?.medications === 'string' ? notfall.medications : '';
-}
-
-function erkrankungenText(notfall) {
-  const liste = Array.isArray(notfall?.chronicDiseasesList) ? notfall.chronicDiseasesList.filter(x => x && x.name) : [];
-  if (liste.length) return liste.map(x => x.name + (x.code ? ' (' + x.code + ')' : '')).join(', ');
-  return typeof notfall?.chronicDiseases === 'string' ? notfall.chronicDiseases : '';
-}
-
-// Jede Zeile trägt `feld` («kapitel.feld»): so können andere Ausgänge (Notfallpass-Blatt)
-// eine Angabe gezielt finden, ohne eine zweite Feldliste zu führen oder über die
-// übersetzten Etiketten zu vergleichen.
 function getNotfallSections(data, chapters, t) {
   const d = (chapterKey, fieldKey) => (data[chapterKey] || {})[fieldKey] || '';
   const sel = (chapterKey, fieldKey) => resolveSelect(chapters, chapterKey, fieldKey, d(chapterKey, fieldKey));
@@ -424,56 +400,56 @@ function getNotfallSections(data, chapters, t) {
       key: 'person',
       title: t('notfallDossier.sectionPerson'),
       rows: [
-        { feld: 'basis.name', label: t('lebensmappe.name'), value: getFullName(data.basis) },
-        { feld: 'basis.dateOfBirth', label: lbl('basis', 'dateOfBirth'), value: dt('basis', 'dateOfBirth') },
-        { feld: 'basis.phone', label: lbl('basis', 'phone'), value: d('basis', 'phone') },
-        { feld: 'wohnen.address', label: lbl('wohnen', 'address'), value: [d('wohnen', 'address'), [d('wohnen', 'postalCode'), d('wohnen', 'city')].filter(Boolean).join(' ')].filter(Boolean).join(', ') },
+        { label: t('lebensmappe.name'), value: getFullName(data.basis) },
+        { label: lbl('basis', 'dateOfBirth'), value: dt('basis', 'dateOfBirth') },
+        { label: lbl('basis', 'phone'), value: d('basis', 'phone') },
+        { label: lbl('wohnen', 'address'), value: [d('wohnen', 'address'), [d('wohnen', 'postalCode'), d('wohnen', 'city')].filter(Boolean).join(' ')].filter(Boolean).join(', ') },
       ].filter(r => r.value),
     },
     {
       key: 'contact',
       title: t('notfallDossier.sectionContact'),
       rows: [
-        { feld: 'notfall.emergencyContact', label: lbl('notfall', 'emergencyContact'), value: d('notfall', 'emergencyContact') },
-        { feld: 'notfall.emergencyPhone', label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
+        { label: lbl('notfall', 'emergencyContact'), value: d('notfall', 'emergencyContact') },
+        { label: lbl('notfall', 'emergencyPhone'), value: d('notfall', 'emergencyPhone') },
       ].filter(r => r.value),
     },
     {
       key: 'medical',
       title: t('notfallDossier.sectionMedical'),
       rows: [
-        { feld: 'notfall.bloodType', label: lbl('notfall', 'bloodType'), value: sel('notfall', 'bloodType') },
-        { feld: 'notfall.allergies', label: lbl('notfall', 'allergies'), value: d('notfall', 'allergies') },
-        { feld: 'notfall.medications', label: lbl('notfall', 'medications'), value: medikamenteText(data.notfall) },
-        { feld: 'notfall.chronicDiseases', label: lbl('notfall', 'chronicDiseases'), value: erkrankungenText(data.notfall) },
+        { label: lbl('notfall', 'bloodType'), value: sel('notfall', 'bloodType') },
+        { label: lbl('notfall', 'allergies'), value: d('notfall', 'allergies') },
+        { label: lbl('notfall', 'medications'), value: d('notfall', 'medications') },
+        { label: lbl('notfall', 'chronicDiseases'), value: d('notfall', 'chronicDiseases') },
       ].filter(r => r.value),
     },
     {
       key: 'care',
       title: t('notfallDossier.sectionCare'),
       rows: [
-        { feld: 'notfall.doctor', label: lbl('notfall', 'doctor'), value: d('notfall', 'doctor') },
-        { feld: 'notfall.doctorPhone', label: lbl('notfall', 'doctorPhone'), value: d('notfall', 'doctorPhone') },
-        { feld: 'notfall.hospital', label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
+        { label: lbl('notfall', 'doctor'), value: d('notfall', 'doctor') },
+        { label: lbl('notfall', 'doctorPhone'), value: d('notfall', 'doctorPhone') },
+        { label: lbl('notfall', 'hospital'), value: d('notfall', 'hospital') },
       ].filter(r => r.value),
     },
     {
       key: 'provision',
       title: t('notfallDossier.sectionProvision'),
       rows: [
-        { feld: 'notfall.organDonor', label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
-        { feld: 'notfall.patientenverfuegung', label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
-        { feld: 'notfall.vorsorgeauftrag', label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
-        { feld: 'notfall.bestattungswuensche', label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },
+        { label: lbl('notfall', 'organDonor'), value: sel('notfall', 'organDonor') },
+        { label: lbl('notfall', 'patientenverfuegung'), value: sel('notfall', 'patientenverfuegung') },
+        { label: lbl('notfall', 'vorsorgeauftrag'), value: sel('notfall', 'vorsorgeauftrag') },
+        { label: lbl('notfall', 'bestattungswuensche'), value: sel('notfall', 'bestattungswuensche') },
       ].filter(r => r.value),
     },
     {
       key: 'insurance',
       title: t('notfallDossier.sectionInsurance'),
       rows: [
-        { feld: 'versicherungen.kkInsurer', label: lbl('versicherungen', 'kkInsurer'), value: d('versicherungen', 'kkInsurer') },
-        { feld: 'versicherungen.kkCardNumber', label: lbl('versicherungen', 'kkCardNumber'), value: d('versicherungen', 'kkCardNumber') },
-        { feld: 'basis.ahv', label: lbl('basis', 'ahv'), value: d('basis', 'ahv') },
+        { label: lbl('versicherungen', 'kkInsurer'), value: d('versicherungen', 'kkInsurer') },
+        { label: lbl('versicherungen', 'kkCardNumber'), value: d('versicherungen', 'kkCardNumber') },
+        { label: lbl('basis', 'ahv'), value: d('basis', 'ahv') },
       ].filter(r => r.value),
     },
   ];
@@ -483,7 +459,7 @@ function getNotfallSections(data, chapters, t) {
   // Feldnamen aus der Export-Vorschau heraus (es steht kein Wert der Person da).
   const kontakt = sections.find(s => s.key === 'contact');
   if (!kontakt.rows.length && keineKontaktperson(data.notfall) && sections.some(s => s.rows.length)) {
-    kontakt.rows.push({ feld: 'notfall.emergencyContact', label: lbl('notfall', 'emergencyContact'), value: t('naZustand.keineKontaktperson'), platzhalter: true });
+    kontakt.rows.push({ label: lbl('notfall', 'emergencyContact'), value: t('naZustand.keineKontaktperson'), platzhalter: true });
   }
   return sections;
 }
@@ -847,7 +823,6 @@ function getBehoerdenSections(data, chapters, t, calculations) {
 //   calculations.tax.assumptions   = [{ code, text }, …]
 //     code 'ohne_13_monatslohn'      ohne 13. Monatslohn gerechnet
 //     code 'alleinverdiener_ehepaar' Alleinverdiener-Ehepaar (Partnereinkommen 0)
-//     code 'einzeln_konkubinat'      K62.1: im Konkubinat für die Person allein gerechnet
 // Die Kennungen sind Teil des Formats: nie umbenennen, nur neue dazunehmen.
 // Die App liest diese Datei nicht wieder ein (Stand 17.09.2026: kein Import-Pfad). Wer später einen
 // Leser baut: Dateien 1.0 tragen an denselben Stellen Strings statt Objekte.
@@ -859,7 +834,6 @@ export const STEUER_KENNUNG = Object.freeze({
   kantonBasis: 'estv_hauptort_ohne_kirchensteuer',
   annahmeOhneDreizehnten: 'ohne_13_monatslohn',
   annahmeAlleinverdiener: 'alleinverdiener_ehepaar',
-  annahmeEinzeln: 'einzeln_konkubinat',
   // K93: Einordnung der ganzen Datei (wie der Hinweis im PDF-Dossier), anredefrei.
   disclaimer: 'orientierung',
 });
@@ -965,7 +939,6 @@ export function generateBehoerdenJSON(data, calculations, t) {
       assumptions: [
         ...(tax.annahmen?.ohneDreizehnten ? [erl('annahmeOhneDreizehnten')] : []),
         ...(tax.annahmen?.alleinverdiener ? [erl('annahmeAlleinverdiener')] : []),
-        ...(tax.annahmen?.einzeln ? [erl('annahmeEinzeln')] : []),
       ],
     };
   }

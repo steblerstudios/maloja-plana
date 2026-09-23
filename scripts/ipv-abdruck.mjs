@@ -23,20 +23,13 @@ await import('../src/data/plzGemeinde.js');
 await import('../src/config/ipvZuerich.js');
 await import('../src/config/ipvBern.js');
 await import('../src/config/ipvAargau.js');
-// ⟨ergänzt 23.09.2026, K31 LU⟩ SG fehlte hier: ohne diese Zeile antwortete St.Gallen im
-// ganzen Abdruck nur «laden», der Fächer hielt also seine Rechnung gar nicht fest.
-await import('../src/config/ipvStGallen.js');
-// LU erst ab K31 LU. Der Abdruck VOR dem Einbau läuft mit derselben Skriptfassung — dort
-// fehlt die Datei, darum ohne Fehler übergangen, damit vorher/nachher denselben Fächer haben.
-await import('../src/config/ipvLuzern.js').catch(() => {});
 await new Promise((r) => setTimeout(r, 50));
 
 // Bewusst breit gefächert: jeder Riegel soll von beiden Seiten getroffen werden.
 const KANTONE = ['ZH', 'BE', 'AG', 'LU', 'SG', 'XX'];
 const ORTE = [
   ['8001', 'Zürich'], ['8620', 'Wetzikon'], ['3011', 'Bern'], ['3634', 'Thierachern'],
-  ['5000', 'Aarau'], ['9000', 'St.Gallen'], ['6003', 'Luzern'], ['6210', 'Sursee'],
-  ['0000', 'Nirgendwo'], ['', ''],
+  ['5000', 'Aarau'], ['9000', 'St.Gallen'], ['0000', 'Nirgendwo'], ['', ''],
 ];
 const EINKOMMEN = [0, 800, 1500, 2500, 4000, 6000, 9000, 20000];
 const PRAEMIEN = [null, 0, 200, 450, 700];
@@ -91,9 +84,8 @@ for (const canton of KANTONE) {
 // Eingaben, die durchkommen — damit der Abdruck auch die Rechnung selbst festhält
 // und nicht bloss die Riegel davor.
 const RECHEN_ORTE = [['8001', 'Zürich'], ['8620', 'Wetzikon'], ['8750', 'Glarus'],
-  ['3011', 'Bern'], ['3634', 'Thierachern'], ['2502', 'Biel'], ['5000', 'Aarau'], ['5610', 'Wohlen'],
-  ['9000', 'St.Gallen'], ['6003', 'Luzern'], ['6210', 'Sursee'], ['6280', 'Hochdorf']];
-for (const canton of ['ZH', 'BE', 'AG', 'SG', 'LU']) {
+  ['3011', 'Bern'], ['3634', 'Thierachern'], ['2502', 'Biel'], ['5000', 'Aarau'], ['5610', 'Wohlen']];
+for (const canton of ['ZH', 'BE', 'AG']) {
   for (const [postalCode, city] of RECHEN_ORTE) {
     for (const monthlyIncome of [0, 500, 1200, 1800, 2400, 3000, 3600, 4200, 5000, 6000]) {
       for (const kkPremium of [150, 320, 480, 650]) {

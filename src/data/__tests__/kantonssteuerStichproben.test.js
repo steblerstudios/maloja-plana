@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { schaetzeKantonaleSteuer } from '../kantonaleSteuerdaten.js';
 
 // E38 — Stichproben je Kanton × Zivilstand × Kinderzahl, als feste Zahlen aus dem ESTV-Steuerrechner
-// (Steuerjahr 2026, Hauptort, ohne Kirchensteuer, abgerufen 16.09.2026, TI nachgemessen 23.09.2026; Rohwerte in
+// (Steuerjahr 2026, Hauptort, ohne Kirchensteuer, abgerufen 16.09.2026; Rohwerte in
 // docs/sources/steuerfaktor-band-2026.messpunkte.json und kantonssteuer-kinder-2026.messpunkte.json).
 // Je Reihe die zwei Messpunkte nächst Brutto 80 000 und 130 000, die KEIN Stützpunkt der Tabelle sind —
 // die Tabelle muss hier also wirklich interpolieren.
@@ -328,22 +328,22 @@ const STICHPROBEN = [
   ['TG', 'verheiratet', 2, 130000, 91575, 9020],
   ['TG', 'verheiratet', 3, 82500, 42865, 1220],
   ['TG', 'verheiratet', 3, 130000, 84075, 7546],
-  ['TI', 'ledig', 0, 80000, 67927, 8568],
-  ['TI', 'ledig', 0, 130000, 111275, 19032],
-  ['TI', 'ledig', 1, 80000, 60427, 2819],
-  ['TI', 'ledig', 1, 130000, 103775, 11581],
-  ['TI', 'ledig', 2, 82500, 55065, 1504],
-  ['TI', 'ledig', 2, 130000, 96275, 8705],
-  ['TI', 'ledig', 3, 80000, 45427, 478],
-  ['TI', 'ledig', 3, 130000, 88775, 6167],
-  ['TI', 'verheiratet', 0, 80000, 63227, 4066],
-  ['TI', 'verheiratet', 0, 130000, 106575, 13577],
-  ['TI', 'verheiratet', 1, 80000, 55727, 2178],
-  ['TI', 'verheiratet', 1, 130000, 99075, 10478],
-  ['TI', 'verheiratet', 2, 82500, 50365, 1175],
-  ['TI', 'verheiratet', 2, 130000, 91575, 7768],
-  ['TI', 'verheiratet', 3, 85000, 45005, 480],
-  ['TI', 'verheiratet', 3, 130000, 84075, 5289],
+  ['TI', 'ledig', 0, 80000, 67927, 8682],
+  ['TI', 'ledig', 0, 130000, 111275, 19152],
+  ['TI', 'ledig', 1, 80000, 60427, 2895],
+  ['TI', 'ledig', 1, 130000, 103775, 11703],
+  ['TI', 'ledig', 2, 80000, 52927, 1375],
+  ['TI', 'ledig', 2, 130000, 96275, 8813],
+  ['TI', 'ledig', 3, 80000, 45427, 520],
+  ['TI', 'ledig', 3, 130000, 88775, 6265],
+  ['TI', 'verheiratet', 0, 77500, 61087, 3809],
+  ['TI', 'verheiratet', 0, 130000, 106575, 13700],
+  ['TI', 'verheiratet', 1, 77500, 53587, 1964],
+  ['TI', 'verheiratet', 1, 130000, 99075, 10601],
+  ['TI', 'verheiratet', 2, 82500, 50365, 1214],
+  ['TI', 'verheiratet', 2, 127500, 89400, 7437],
+  ['TI', 'verheiratet', 3, 82500, 42865, 347],
+  ['TI', 'verheiratet', 3, 130000, 84075, 5386],
   ['UR', 'ledig', 0, 80000, 67927, 7357],
   ['UR', 'ledig', 0, 130000, 111275, 13358],
   ['UR', 'ledig', 1, 80000, 60427, 5265],

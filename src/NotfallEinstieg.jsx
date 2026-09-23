@@ -103,27 +103,6 @@ export const NotfallEinstieg = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallEinstieg.vorlesekarteSub'))
     ),
 
-    // Vorbereitung, nicht Ernstfall: darum leiser als die Vorlesekarte darüber.
-    React.createElement('button', {
-      type: 'button',
-      onClick: () => onNavigate('notfallpass'),
-      style: {
-        display: 'block', width: '100%', textAlign: 'left', cursor: 'pointer',
-        marginTop: '-' + (space.lg) + 'px', marginBottom: space.xl + 'px',
-        padding: space.md + 'px',
-        background: palette.surface,
-        border: '1px solid ' + palette.border,
-        borderRadius: radius.md, fontFamily: 'inherit',
-      },
-    },
-      React.createElement('div', {
-        style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, marginBottom: '4px' }
-      }, hinweisZeichen('lock'), t('notfallpass.einstiegTitel')),
-      React.createElement('div', {
-        style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.relaxed }
-      }, t('notfallpass.einstiegSub'))
-    ),
-
     SCENARIOS.map(scenario => {
       const filled = scenario.fields.filter(f => hasValue(f.chapter, f.k)).length;
       const total = scenario.fields.length;

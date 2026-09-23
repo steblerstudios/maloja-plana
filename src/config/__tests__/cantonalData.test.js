@@ -142,14 +142,14 @@ describe('calculateSozialhilfe — Vermögensfreibetrag (SKOS-RL D.3.1, ab 1.1.2
 
 // K31: ZH ist seit 19.09.2026 belegt, BE und AG seit 20.09.2026 — alle drei mit eigenem
 // Modell (Tests in ipvZuerich.test.js, ipvBern.test.js bzw. ipvAargau.test.js).
-const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG', 'LU'];
+const EIGENES_MODELL = ['ZH', 'BE', 'AG', 'SG'];
 const UNBELEGT = Object.keys(CANTONAL_IPV).filter((k) => !EIGENES_MODELL.includes(k));
 
 describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
-  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 21 null, ZH, BE, AG, SG und LU mit Quelle', () => {
+  it('alle 26 Kantone tragen das Feld beleg (Flag + Quelle/Stand): 22 null, ZH, BE, AG und SG mit Quelle', () => {
     const zeilen = Object.entries(CANTONAL_IPV);
     expect(zeilen).toHaveLength(26);
-    expect(UNBELEGT).toHaveLength(21);
+    expect(UNBELEGT).toHaveLength(22);
     for (const k of UNBELEGT) expect(CANTONAL_IPV[k]).toHaveProperty('beleg', null);
     for (const k of EIGENES_MODELL) expect(CANTONAL_IPV[k].beleg.quelle).toBeTruthy();
   });
@@ -175,19 +175,19 @@ describe('calculateIPV — E9: ohne amtlichen Beleg kein Betrag', () => {
   });
 
   it('prüfenswert hängt nur an der erfassten Prämie, nie an der (unbelegten) Grenze', () => {
-    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'BS' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
+    const r = (monthlyIncome, kkPremium) => calculateIPV({ basis: { canton: 'LU' }, finanzen: { monthlyIncome }, versicherungen: { kkPremium } }).anspruchMoeglich;
     expect(r(1000, 300)).toBe(true);
     expect(r(50000, 300)).toBe(true);
     expect(r(1000, 0)).toBe(false);
   });
 
   it('ein beleg ohne quelle zählt nicht als belegt', () => {
-    const vorher = CANTONAL_IPV.BS.beleg;
-    CANTONAL_IPV.BS.beleg = { quelle: '', stand: '2026' };
+    const vorher = CANTONAL_IPV.LU.beleg;
+    CANTONAL_IPV.LU.beleg = { quelle: '', stand: '2026' };
     try {
-      expect(calculateIPV({ basis: { canton: 'BS' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
+      expect(calculateIPV({ basis: { canton: 'LU' }, finanzen: { monthlyIncome: 1000 } }).amount).toBeNull();
     } finally {
-      CANTONAL_IPV.BS.beleg = vorher;
+      CANTONAL_IPV.LU.beleg = vorher;
     }
   });
 });
@@ -197,14 +197,13 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
   // so they verify the model — not a snapshot of yearly-updated figures.
   // E9: das Modell rechnet nur für amtlich belegte Kantone; hier simuliert.
   // K31: bis 19.09.2026 lief dieser Block mit ZH, danach mit BE; beide haben jetzt ein
-  // eigenes Modell. Der lineare Abbau gilt weiter für die übrigen Kantone — bis 23.09.2026
-  // lief er hier mit LU, seither hat auch LU ein eigenes Modell; darum BS (gleiche Musterwerte).
+  // eigenes Modell. Der lineare Abbau gilt weiter für die übrigen 24 Kantone — darum hier LU.
   let zuruecksetzen;
-  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['BS']); });
+  beforeAll(() => { zuruecksetzen = kantoneBelegtSimulieren(['LU']); });
   afterAll(() => zuruecksetzen());
-  const zh = CANTONAL_IPV.BS;
+  const zh = CANTONAL_IPV.LU;
   const ipv = (overrides = {}) => calculateIPV({
-    basis: { canton: 'BS' },
+    basis: { canton: 'LU' },
     finanzen: {},
     ...overrides,
   });
@@ -229,7 +228,7 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('uses the family subsidy plus per-child amount when children are present', () => {
     const r = ipv({
-      basis: { canton: 'BS', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
+      basis: { canton: 'LU', household: { adults: 1, children: [{ age: 5 }, { age: 8 }] } },
       finanzen: { monthlyIncome: 0 },
     });
     expect(r.maxAnnual).toBe(zh.subsidyFamily + 2 * zh.subsidyChild);
@@ -253,8 +252,8 @@ describe('calculateIPV — kantonale Prämienverbilligung (belegter Kanton, simu
 
   it('counts partner income towards the income limit', () => {
     // single monthly income alone is well within the limit, partner income pushes it over
-    const r = ipv({ basis: { canton: 'BS', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
-    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 > 54000 (BS-Musterwert)
+    const r = ipv({ basis: { canton: 'LU', household: { adults: 2, partnerIncome: 4000 } }, finanzen: { monthlyIncome: 1000 } });
+    expect(r.eligible).toBe(false); // (1000 + 4000) × 12 = 60000 > 54000 (LU-Musterwert)
   });
 });
 

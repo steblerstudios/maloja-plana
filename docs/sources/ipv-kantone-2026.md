@@ -489,7 +489,7 @@ einen eigenen Weg (Informationsblatt S. 3), die App rechnet ihre Renten heute al
 
 ## LU — Luzern
 
-**Beurteilung:** abbildbar — **in der App gebaut 23.09.2026 (K31)**, siehe «Nachprüfung 23.09.2026» unten
+**Beurteilung:** abbildbar
 **Modell (kurz):** Richtprämie (3 Regionen) minus Selbstbehalt; der Prozentsatz beträgt 10 % + 0,00006 Prozentpunkte je Franken massgebendes Einkommen (progressiv); Kinder 80 % und junge Erwachsene in Ausbildung 50 % Verbilligung bis zu einer Familien-Einkommensgrenze; Vermögensgrenze 100'000 / 200'000 (+50'000 je Kind)
 **Zuständig / Weg:** WAS Wirtschaft Arbeit Soziales, Ausgleichskasse Luzern (Sozialversicherungszentrum); Anmeldung nötig, «spätestens Ende Oktober des Vorjahres» (für 2026: bis 31.10.2025; für 2027: bis 31.10.2026); bei späterer Anmeldung werden nur die danach fällig werdenden Prämien verbilligt; Auszahlung an den Krankenversicherer
 **Gültigkeit:** 2026 definitiv (Prämienverbilligungsverordnung, in Kraft seit 01.01.2026, Beschlussdatum 04.11.2025)
@@ -544,126 +544,6 @@ Der heutige App-Wert (maxIncome/subsidySingle LU) lag dem Unteragenten nicht vor
 4. Berechnungsbeispiel Prämienverbilligung / Anspruch Prämienverbilligung 2026, WAS Ausgleichskasse Luzern, ohne Datum (PDF). https://www.was-luzern.ch/sites/default/files/documents/AK_IPV_Merkblatt_Berechnungsbeispiel_2026.pdf — abgerufen 16.09.2026
 5. Berechnung der Prämienverbilligung (Online-Rechner-Seite), WAS Luzern. https://www.was-luzern.ch/berechnung-ipv — abgerufen 16.09.2026
 6. News «Prämienverbilligung 2026 – jetzt anmelden», WAS Luzern, 18.08.2025 («Die Anmeldefrist läuft bis am 31. Oktober 2025.»). https://www.was-luzern.ch/news/praemienverbilligung-2026-jetzt-anmelden — abgerufen 16.09.2026
-
-### Nachprüfung 23.09.2026 (K31, Einbau in die App)
-
-Alle Quellen an diesem Tag neu abgerufen. **Gegenprobe je Adresse** mit einer erfundenen
-Variante, weil manche Rechtssammlungen für jeden Pfad dieselbe Hülle liefern (Befund BELEX
-23.09.2026). Nur wo echt und erfunden verschieden antworten, gilt der Abruf als Beleg.
-
-| Adresse | echt | erfunden |
-|---|---|---|
-| `https://srl.lu.ch/api/de/texts_of_law/866a/show_as_json` | 200, 286'349 B, JSON | `…/866a9/…` → **404**, 0 B |
-| `https://srl.lu.ch/api/de/texts_of_law/866/show_as_json` | 200, 179'651 B, JSON | `…/866zz/…` → **404**, 0 B |
-| `https://www.was-luzern.ch/sites/default/files/documents/2026_Richtpr%C3%A4mien_Pr%C3%A4mienregion.pdf` | 200, 197'304 B, PDF | `…Pr%C3%A4mienregionXX.pdf` → **404**, HTML |
-| `https://www.was-luzern.ch/sites/default/files/documents/AK_IPV_Merkblatt_Berechnungsbeispiel_2026.pdf` | 200, 293'506 B, PDF | `…Berechnungsbeispiel_2099.pdf` → **404**, HTML |
-| `https://www.was-luzern.ch/praemienverbilligung` | 200 | `…praemienverbilligungxyz` → **404** |
-| `https://www.lu.ch/verwaltung/GSD/Praemienverbilligung` (Link der App) | 200 | `…PraemienverbilligungXYZ` → **404** |
-
-🛑 **Die `/app/…`-Adressen der SRL sind NICHT der Beleg**, sondern die `/api/…`-Adressen oben —
-dieselbe Falle wie bei BELEX. Der Wortlaut unten stammt aus dem JSON (`selected_version`),
-Version der Verordnung: «Aktuelle Version in Kraft seit: 01.01.2026 (Beschlussdatum:
-04.11.2025)», `future_versions`: 0. Gesetz: «in Kraft seit: 01.07.2021», `future_versions`: 0.
-
-**Verordnung SRL 866a** (Wortlaut):
-
-> § 2 Abs. 1: «Ein Anspruch auf Prämienverbilligung nach § 7 Absatz 1 des Gesetzes über die Verbilligung von Prämien der Krankenversicherung (Prämienverbilligungsgesetz) vom 24. Januar 1995 besteht für das Jahr 2026, soweit die anrechenbaren Prämien das massgebende Einkommen um einen bestimmten Prozentsatz übersteigen. Dieser Prozentsatz beträgt für das Jahr 2026 mindestens 10 Prozent. Für jeden Franken des massgebenden Einkommens steigt er um 0,00006 Prozentpunkte an.»
-
-> § 2a Abs. 1: «Eltern oder Elternteile, unter deren Obhut Kinder bis zum vollendeten 18. Lebensjahr leben, haben für das Jahr 2026 Anspruch auf die Verbilligung der anrechenbaren Prämien für Kinder um 80 Prozent, sofern die persönlichen Voraussetzungen gemäss § 5 des Prämienverbilligungsgesetzes erfüllt sind und ihr massgebendes Einkommen im Sinn von § 7 Absätze 2–6 des Prämienverbilligungsgesetzes eine bestimmte Einkommensgrenze nicht überschreitet. Diese Einkommensgrenze beträgt für das Jahr 2026 a. bei Eltern Fr. 96 392.– b. bei einem Elternteil Fr. 77 114.–»
-
-> § 2a Abs. 2 (junge Erwachsene, nicht gebaut): «… werden für das Jahr 2026 um die Hälfte verbilligt, sofern diese … eine mindestens sechs Monate dauernde Ausbildung absolvieren, welche einen Anspruch auf eine Ausbildungszulage … begründet.»
-
-> § 2b: «Prämienverbilligungen gemäss § 2a sind von den Leistungen, die gemäss § 2 festgesetzt werden, abzuziehen.»
-
-> § 3 Abs. 1: Richtprämien pro Jahr in Franken — Region 1: Erwachsene 5628.–, junge Erwachsene 4044.–, Kinder 1308.–; Region 2: 5304.– / 3780.– / 1224.–; Region 3: 5100.– / 3660.– / 1176.–
-
-> § 3a: BVG-Einkäufe werden hinzugerechnet, «soweit sie 20 000 Franken pro Steuerjahr übersteigen.»
-
-> § 3b: «Der Pauschalbetrag für Kinder und junge Erwachsene in Ausbildung im Sinn von § 7 Absatz 2 des Prämienverbilligungsgesetzes beträgt pro Kind oder jungen Erwachsenen in Ausbildung 9000 Franken.»
-
-> § 7: «Liegt der gesamte Anspruch auf Prämienverbilligung unter 100 Franken, wird der Betrag nicht ausbezahlt.»
-
-**Gesetz SRL 866** (Wortlaut):
-
-> § 5 Abs. 2: «Personen, die gemeinsam besteuert werden, haben einen Gesamtanspruch auf Prämienverbilligung, der bei getrennter Auszahlung nach Anzahl der berechtigten Personen aufgeteilt wird. Eine Teilzahlung darf in keinem Fall die anrechenbare Prämie der berechtigten Person übersteigen.»
-
-> § 5 Abs. 3: «Massgebend sind die persönlichen und familiären Verhältnisse am 1. November des Jahres vor dem Jahr, für das Prämienverbilligung beansprucht wird.»
-
-> § 7 Abs. 2 (Auszug): «… ist vom Nettoeinkommen gemäss der Steuerveranlagung auszugehen. … Hinzuzuzählen sind … b. Beiträge an anerkannte Formen der Selbstvorsorge gemäss § 40 Absatz 1e des Steuergesetzes, … e. 10 Prozent des Reinvermögens; als Reinvermögen gilt das Vermögen vor Abzug der steuerfreien Beträge gemäss § 52 des Steuergesetzes … Davon abzuziehen sind die krankheits-, unfall- und behinderungsbedingten Kosten (§ 40 Abs. 1h Steuergesetz) sowie ein Pauschalbetrag von mindestens 9000 Franken pro Kind und jungen Erwachsenen in Ausbildung.»
-
-> § 7 Abs. 2ter: «Übersteigt das Reinvermögen bei Verheirateten 200 000 Franken und bei Alleinstehenden 100 000 Franken, besteht kein Anspruch auf Prämienverbilligung. Wohnen Kinder oder junge Erwachsene in Ausbildung bei den Eltern oder einem Elternteil, erhöht sich diese Vermögensgrenze um 50 000 Franken pro Kind und jungen Erwachsenen in Ausbildung.»
-
-> § 7 Abs. 4 (Auszug): «Massgebend sind die Steuerwerte der letzten rechtskräftigen Steuerveranlagung gemäss Steuergesetz.»
-
-> § 7 Abs. 7: «Die Prämienverbilligung darf die im Kalenderjahr geschuldeten Prämien für die Krankenpflege-Grundversicherung nicht übersteigen.»
-
-> § 8a Abs. 2 (Auszug): «Das Gesuch um Erhöhung der Prämienverbilligung ist spätestens am letzten Tag des Jahres einzureichen, für das eine Änderung der Verhältnisse geltend gemacht wird.»
-
-> § 12 Abs. 2/3: «Die Anmeldung ist … spätestens Ende Oktober des Vorjahres … einzureichen.» — «Wird das Gesuch erst im Jahr, für das Anspruch auf Prämienverbilligung geltend gemacht wird, eingereicht, werden nur diejenigen Prämien verbilligt, die nach der Gesuchstellung fällig werden.»
-
-> § 8 Abs. 2/3: für EL- und Sozialhilfebeziehende «finden keine Anwendung» u. a. § 12 (Anmeldung).
-
-**WAS, Richtprämien 2026** (Textlayer, PDF Seite 1): «Erwachsene (ab Jahrgang 2000)» ·
-«junge Erwachsene (Jahrgang 2001-2007)» · «Kinder (Jahrgang 2008-2026)»; Beträge wie § 3
-(Region 1: «Fr. 5'628.- … Fr. 4'044.- … Fr. 1'308.-»). Region 1 «Ebikon, Emmen, Horw, Kriens,
-Luzern»; Region 2 «Adligenswil, Buchrain, Dierikon, Eich, Malters, Meggen, Meierskappel,
-Neuenkirch, Nottwil, Oberkirch, Root, Rothenburg, Ruswil, Schenkon, Sempach, Sursee,
-Udligenswil, Werthenstein, Wolhusen»; Region 3 «übrige Gemeinden».
-
-**Abgleich der Regionen:** alle 79 Luzerner Gemeinden der BAG-Daten der App
-(`src/data/praemienRegionen.js`) gegen diese Liste — **0 Abweichungen**, alle 24 namentlich
-genannten Gemeinden gefunden; Gegenprobe mit erfundenem Namen: nicht gefunden. Als Test
-festgehalten (`src/config/__tests__/ipvLuzern.test.js`).
-
-**WAS, Berechnungsbeispiel 2026.** 🛑 Die Zahlen stehen **nur als Bild** im PDF (kein
-Textlayer; `pdfimages` zeigt 5 Rasterbilder), gelesen am Seitenbild. Als Text vorhanden sind
-nur die Erläuterungen, u. a.: «Für Kinder und Jugendliche in Ausbildung gibt es einen fixen
-Kinderanteil, wenn das massgebende Einkommen CHF 77'114.00 bei einem Elternteil resp.
-CHF 96'392.00 bei zwei Elternteilen nicht übersteigt.» · «Ungerade Beträge runden wir auf.» ·
-«Der gesamte Prämienverbilligungs-Anspruch wird anteilsmässig (im Verhältnis der Richtprämie)
-auf die in der Berechnung eingeschlossenen Personen aufgeteilt. Bei Kindern wird zudem 80% und
-bei jungen Erwachsenen 50% der Richtprämie hinzugerechnet.»
-Am Bild abgelesen (Steuerveranlagung 2024, Ehepaar, zwei Kinder): Nettoeinkommen 60'000 ·
-+ 3a 5'000 · + Geschäftsverluste 7'000 · + 10 % von 25'000 Reinvermögen = 2'500 ·
-− Krankheitskosten 3'000 · − Freibetrag Kinder 18'000 → **massgebend 53'500** · Prozentsatz
-10.00 + 3.21 = **13.21 %** · anrechenbare Prämien **10'670.40** · fixer Kinderanteil
-**1'881.60** · eigener Anteil **7'067.35** · Jahresanspruch **5'484.65** · Monatsanspruch je
-Erwachsene **143.55**, je Kind **85.05**, total **457.20** / Jahr **5'486.40**.
-
-**Was sich daraus ergibt (eigene Rechnung, kein Zitat):**
-- Die Region steht im Beispiel nicht. 10'670.40 geht nur mit Region 3 auf:
-  2 × 5'100 + 2 × 20 % × 1'176. Das Kind zählt in den anrechenbaren Prämien also mit den
-  20 %, die der feste Anteil nicht deckt — so wirkt § 2b.
-- Die Aufteilung gewichtet mit den **anrechenbaren** Prämien, nicht mit der vollen Richtprämie:
-  (10'670.40 − 7'067.35) × 5'100 / 10'670.40 = 1'722.11 → 143.51 → **143.55**. Mit voller
-  Gewichtung wären es 122.– im Monat.
-- «Ungerade Beträge runden wir auf»: die Monatsbeträge je Person sind auf **5 Rappen
-  aufgerundet** (143.51 → 143.55; 85.02 → 85.05). Die Einheit ist abgeleitet.
-- Alle acht Zahlen des Beispiels rechnet die App exakt nach (Test «das amtliche
-  Berechnungsbeispiel [4] — jede Zahl»).
-
-**Erledigte offene Punkte vom 16.09.:**
-- «Wie genau der Pauschalbetrag von 9000 je Kind wirkt»: ein **Abzug** vom massgebenden
-  Einkommen — § 7 Abs. 2 letzter Satz [2] wörtlich («Davon abzuziehen sind … ein
-  Pauschalbetrag»), bestätigt durch das Beispiel (− 18'000 für zwei Kinder).
-- Rundung: siehe oben (5 Rappen je Monat und Person, abgeleitet; Frage an die WAS).
-
-**Neu offen (in `FRAGEN-AN-DIE-AEMTER.md`, Abschnitt 7):** Rundungseinheit · Gewichtung der
-Aufteilung · Kinder über der Kinder-Grenze in den anrechenbaren Prämien · Deckel § 7 Abs. 7
-je Person oder je Haushalt.
-
-**WAS-Seiten, 23.09.2026 abgerufen** (Gegenproben siehe Tabelle; `…/berechnung-ipv` → 200,
-`…/berechnung-ipvxyz` → 404):
-- `https://www.was-luzern.ch/praemienverbilligung`: «Bitte reichen Sie das Gesuch bis am
-  31. Oktober des Vorjahres ein (Prämienverbilligung 2027 - Frist bis 31. Oktober 2026). …
-  Eine rückwirkende Anmeldung ist nicht möglich.»
-- `https://www.was-luzern.ch/berechnung-ipv`: «Die Faktoren für die Berechnung der
-  Prämienverbilligung 2027 werden vom Regierungsrat erst Mitte November 2026 festgelegt.»
-
-**Bewusst nicht gebaut:** Paare und mehrere Erwachsene · junge Erwachsene 19–25 · Kinder über
-der Kinder-Grenze, wenn noch ein allgemeiner Anspruch bleibt (bei einer erwachsenen Person
-erst ab fünf Kindern) · Quellenbesteuerte, EL- und Sozialhilfebeziehende · Werte 2027 (laut
-WAS «erst Mitte November 2026»).
 
 ---
 

@@ -193,41 +193,6 @@ nach — das ist ein Produktentscheid.
 
 ---
 
-## 7 · WAS Ausgleichskasse Luzern — Aufteilung, Rundung und die Kinder über der Grenze
-
-*Aufgenommen 23.09.2026 beim Einbau von LU. Entwurf — **nicht gesendet**.*
-
-**Worum es geht:** Formel und Zahlen 2026 stehen vollständig in der Prämienverbilligungs-
-verordnung (SRL 866a) und im Gesetz (SRL 866). Das Berechnungsbeispiel der WAS rechnen wir auf
-den Rappen nach (alle acht Zahlen). Vier Punkte leiten wir aber nur aus dem Beispiel ab — sie
-stehen in keinem Erlass, und das Beispiel zeigt jeweils nur einen Fall.
-
-**Frage 1 — Rundung:** «Ungerade Beträge runden wir auf.» Die Zahlen des Beispiels ergeben sich,
-wenn der **Monatsbetrag je Person auf 5 Rappen** aufgerundet wird (143.51 → 143.55,
-85.02 → 85.05). Ist das die Regel — oder wird auf eine andere Einheit gerundet?
-
-**Frage 2 — Aufteilung:** Der Text sagt «anteilsmässig (im Verhältnis der Richtprämie)».
-Die Zahlen des Beispiels gehen aber nur auf, wenn mit den **anrechenbaren** Prämien gewichtet
-wird, also das Kind mit 20 % seiner Richtprämie (sonst 122.– statt 143.55 im Monat für die
-erwachsene Person). Ist das so gemeint? Es zählt für uns, weil wir den Anteil der erwachsenen
-Person auf ihre Prämie begrenzen.
-
-**Frage 3 — Kinder über der Einkommensgrenze von § 2a:** Unter der Grenze zählt das Kind in
-den anrechenbaren Prämien mit 20 %, und der feste Anteil von 80 % kommt dazu. Zählt es **über**
-der Grenze mit 100 % seiner Richtprämie? Folgen hat das nur, wenn dort noch ein allgemeiner
-Anspruch bleibt — bei einem Elternteil erst ab fünf Kindern. Bis zur Antwort zeigt die App in
-diesem Fall keinen Betrag.
-
-**Frage 4 — Deckel § 7 Abs. 7 SRL 866:** «Die Prämienverbilligung darf die im Kalenderjahr
-geschuldeten Prämien … nicht übersteigen.» Gilt das **je Person** oder für den **Haushalt**
-gesamt? Wir kennen nur die Prämie der erwachsenen Person und begrenzen deren Anteil darauf;
-den Kinderanteil begrenzen wir nicht, weil die Kinderprämien nicht erfasst sind.
-
-**Stand:** LU ist für 2026 gebaut (Entwurfs-PR, K31). Die Werte 2027 sind **nicht** eingebaut —
-die WAS nennt «erst Mitte November 2026». Ab 01.01.2027 zeigt die App für LU keinen Betrag mehr.
-
----
-
 ## Warum überhaupt fragen
 
 Diese App rechnet Beträge, auf die Menschen sich verlassen und die am Ende in einem Dossier für

@@ -194,16 +194,7 @@ export const NotfallDossier = ({ palette, t, data, chapters, onNavigate }) => {
       }, t('notfallDossier.qrFehler')),
       qrStatus !== 'fehler' && qrGekuerzt && React.createElement('p', {
         style: { fontSize: text.xs, color: palette.mid, lineHeight: leading.normal, margin: '10px 0 0' }
-      }, t('notfallDossier.qrGekuerzt')),
-      // Zweiter Ausgang derselben Angaben: der Notfallpass auf dem Telefon (Entscheid 22.09.2026).
-      React.createElement('button', {
-        type: 'button',
-        onClick: () => onNavigate('notfallpass'),
-        style: {
-          background: 'none', border: 'none', cursor: 'pointer', padding: 0, margin: '12px 0 0',
-          fontSize: text.sm, color: palette.sandDeep, fontFamily: 'inherit', fontWeight: weight.medium,
-        },
-      }, t('notfallpass.dossierVerweis'))
+      }, t('notfallDossier.qrGekuerzt'))
     ),
 
     hasSections && React.createElement('div', {

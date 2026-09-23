@@ -16,12 +16,11 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
 
 - **ESTV, Steuerrechner** — <https://swisstaxcalculator.estv.admin.ch/>, Rechner «Einkommens- und Vermögenssteuer», detaillierte
   Berechnung. Abgefragt über die Schnittstelle der Web-Oberfläche: `API_calculateDetailedTaxes` (https://swisstaxcalculator.estv.admin.ch/delegate/ost-integration/v1/lg-proxy/operation/c3b67379_ESTV/).
-- Abrufe (UTC): ohne Kinder 2026-09-16T17:12:04.772Z; mit Kindern 2026-09-16T17:50:43.576Z–2026-09-16T18:26:48.212Z (10608 Abrufe), 2026-09-23T21:53:26.770Z–2026-09-23T21:54:49.429Z (408 Abrufe).
+- Abrufe (UTC): ohne Kinder 2026-09-16T17:12:04.772Z; mit Kindern 2026-09-16T17:50:43.576Z–2026-09-16T18:26:48.212Z (10608 Abrufe).
 - Steuerjahr **2026**. Ort je Kanton: Kantonshauptort (TaxLocationID aus `API_searchLocation`); jede Antwort
   wurde gegen Kanton und BFS-Nummer geprüft.
-- Gegenprobe bei jedem Lauf: eine erfundene Operation muss scheitern — ohne Kinder: erfundene Operation → fehlgeschlagen wie erwartet; mit Kindern: erfundene Operation → fehlgeschlagen wie erwartet, erfundene Operation → fehlgeschlagen wie erwartet.
+- Gegenprobe bei jedem Lauf: eine erfundene Operation muss scheitern — ohne Kinder: erfundene Operation → fehlgeschlagen wie erwartet; mit Kindern: erfundene Operation → fehlgeschlagen wie erwartet.
 - Abgefragt gedrosselt: ein Abruf nach dem anderen, 150 ms Pause (Lauf mit Kindern; der Lauf ohne Kinder am 16.09. noch mit 4 parallelen Abrufen).
-- **Nachgemessen: TI** am 2026-09-23 (ohne Kinder 2026-09-23T21:52:59.924Z–2026-09-23T21:53:26.383Z, 136 Abrufe, seriell 150 ms; mit Kindern siehe Läufe oben; Gegenprobe: erfundene Operation → fehlgeschlagen wie erwartet). Die Punkte dieses Kantons ersetzen die vom 16.09. — siehe «Nachmessungen».
 
 ## Messanlage
 
@@ -57,25 +56,6 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
   deshalb um 900 (ledig) zu hoch oder zu tief liegen. Der 13. Monatslohn und Nebeneinkommen gehen so ein, wie die
   App den Jahreslohn bildet.
 
-## Nachmessungen
-
-### TI Bellinzona, 2026-09-23
-
-- Ersetzt: 544 Messpunkte vom 2026-09-16 (archiviert in `kantonssteuer-ersetzt-TI-2026-09-23.messpunkte.json`).
-- ESTV K+G neu − alt: **Maximum CHF 250**, Median CHF 97; tiefer an 434, höher an 0, gleich an 110 Punkten.
-- Steuerbares Einkommen Bund an allen Punkten **unverändert** — die x-Achse der Tabelle ist dieselbe.
-- Steuerbares Einkommen Kanton neu − alt (nur mit Kindern gespeichert): CHF 0 an 48 Punkten, CHF -500 an 360 Punkten.
-- Beispiele ESTV K+G bei Brutto 50 000 · 80 000 · 120 000 (alt → neu):
-  - ledig, ohne Kinder: 3'318 → 3'228 · 8'682 → 8'568 · 16'987 → 16'867
-  - ledig, 1 Kind: 427 → 387 · 2'895 → 2'819 · 9'604 → 9'496
-  - verheiratet, ohne Kinder: 972 → 943 · 4'142 → 4'066 · 11'504 → 11'381
-  - verheiratet, 2 Kinder: 40 → 40 · 1'047 → 1'009 · 6'110 → 6'011
-- **Anlass:** Bei der Arbeit an K62 (PR #284) lag die TI-Reihe «ledig» vom 16.09. an 67 von 68 Punkten bis CHF 250 über dem ESTV-Rechner, an 9 Punkten ausserhalb der Tabellengrenze. Die übrigen Kantone stimmten.
-- **Belegt — gleicher Ort, gleiche Steuerfüsse:** Antwort weiterhin Bellinzona, BFS 5002, TaxLocationID 650000000; Steuerfuss Kanton 100 %, Gemeinde 93 % (`TaxRates`). Gemeindesteuer/Kantonssteuer vorher 1 589/1 709 = 0,930, nachher 1 546/1 662 = 0,930 (ledig, Brutto 50 000). Kirchensteuer 0 in beiden Messungen. Schnittstellen-Version unverändert «api 1.7.2 (22.09.2021)» — sie zeigt die Programm-, nicht die Datenversion.
-- **Belegt — die kantonalen Abzüge sind gestiegen, der Tarif nicht:** An allen 360 Punkten mit Kindern und steuerbarem Einkommen liegt das steuerbare Einkommen Kanton (`TaxableIncomeCanton`) heute genau CHF 500 tiefer als am 16.09.; die 48 übrigen haben 0. Legt man die alten K+G-Werte auf die neue Kurve (K+G über steuerbarem Einkommen Kanton) an ihrem alten steuerbaren Einkommen, treffen sie sie auf höchstens CHF 27 (354 Punkte; die grösste Abweichung an einem Kopfsteuer-Punkt, 20 gegen 47) — der Tarif selbst ist also derselbe. Ohne Kinder speichert die Messdatei das steuerbare Einkommen Kanton nicht; rückgerechnet über dieselbe Kurve ergibt sich ebenfalls rund CHF 500 (ledig 55 von 66, verheiratet 53 von 61 Punkten auf CHF 50 genau).
-- **Gegenprobe des Messgeräts:** ZH am selben Abend an denselben Punkten in allen Feldern gleich wie am 16.09. (ledig, Brutto 50 000/80 000/120 000). Eine zweite TI-Abfrage aller 136 Punkte ohne Kinder lieferte dieselben Werte wie die Nachmessung. Das Messgerät unterscheidet also: für die Gegenthese «nichts hat sich geändert» hätte es die alten Werte geliefert.
-- **Vermutung, nicht belegt — welcher Abzug:** Heute weist der Rechner für TI «Abzug private Versicherungen / Sparzinsen» CHF 4 560 (ledig) bzw. 9 120 (verheiratet), ledig mit 1 Kind 5 760, und «Übrige Berufsauslagen» CHF 3 500 aus. Die Aufschlüsselung vom 16.09. wurde nicht gespeichert; welcher Posten sich um CHF 500 verschoben hat, lässt sich deshalb nicht belegen. Naheliegend ist der Versicherungsabzug (Art. 32 LT, Ticino). Ob die ESTV damit eine Gesetzesänderung für 2026 nachgetragen oder einen Datenfehler berichtigt hat, ist offen — bitte bei der ESTV oder der Divisione delle contribuzioni prüfen.
-
 ## Tabelle und Randregel
 
 - Je Kanton × Zivilstand × Kinderzahl eine Reihe von **Stützpunkten**. Jeder Stützpunkt ist ein Messpunkt.
@@ -96,7 +76,7 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
 ## Interpolationsfehler (an allen Messpunkten)
 
 - Grenze laut Auftrag: höchstens ±3 % der ESTV K+G oder ±CHF 50 (das Grössere).
-- Messpunkte in der Tabelle: **13780**, davon 11133 nicht Stützpunkt.
+- Messpunkte in der Tabelle: **13780**, davon 11127 nicht Stützpunkt.
 - Ausserhalb der Grenze: **0**.
 - Abweichung Tabelle − ESTV: **Maximum CHF 391**, Median CHF 5 (nur Nicht-Stützpunkte: Median CHF 8).
 - Grösste relative Abweichung bei ESTV K+G ab CHF 1 000: **1.7 %**; Median 0.1 %.
@@ -269,14 +249,14 @@ Rechners. Der Faktor und das Band aus E37 sind entfernt.
 | TG Frauenfeld | verheiratet | 1 | 790–253'339 | 13 | 91 | 0.4 % | 180 / 3'364 / 8'960 |
 | TG Frauenfeld | verheiratet | 2 | 1'940–245'839 | 11 | 91 | 0.7 % | 0 / 2'098 / 7'484 |
 | TG Frauenfeld | verheiratet | 3 | 1'193–238'339 | 11 | 74 | 0.5 % | 0 / 956 / 6'047 |
-| TI Bellinzona | ledig | 0 | 13'940–265'539 | 17 | 226 | 0.7 % | 3'228 / 8'568 / 16'867 |
-| TI Bellinzona | ledig | 1 | 6'440–258'039 | 16 | 175 | 0.4 % | 387 / 2'819 / 9'496 |
-| TI Bellinzona | ledig | 2 | 1'269–250'539 | 18 | 150 | 0.7 % | 20 / 1'338 / 6'889 |
-| TI Bellinzona | ledig | 3 | 1'471–243'039 | 16 | 153 | 0.5 % | 20 / 478 / 4'410 |
-| TI Bellinzona | verheiratet | 0 | 8'290–260'839 | 16 | 168 | 0.6 % | 943 / 4'066 / 11'381 |
-| TI Bellinzona | verheiratet | 1 | 790–253'339 | 16 | 149 | 0.5 % | 40 / 2'178 / 8'534 |
-| TI Bellinzona | verheiratet | 2 | 1'940–245'839 | 16 | 91 | 0.5 % | 40 / 1'009 / 6'011 |
-| TI Bellinzona | verheiratet | 3 | 1'193–238'339 | 16 | 117 | 0.5 % | 40 / 142 / 3'703 |
+| TI Bellinzona | ledig | 0 | 13'940–265'539 | 19 | 230 | 0.5 % | 3'318 / 8'682 / 16'987 |
+| TI Bellinzona | ledig | 1 | 6'440–258'039 | 18 | 174 | 0.5 % | 427 / 2'895 / 9'604 |
+| TI Bellinzona | ledig | 2 | 1'269–250'539 | 18 | 145 | 0.4 % | 20 / 1'375 / 6'987 |
+| TI Bellinzona | ledig | 3 | 1'471–243'039 | 15 | 148 | 0.6 % | 20 / 520 / 4'507 |
+| TI Bellinzona | verheiratet | 0 | 8'290–260'839 | 16 | 164 | 0.5 % | 972 / 4'142 / 11'504 |
+| TI Bellinzona | verheiratet | 1 | 790–253'339 | 17 | 146 | 0.6 % | 105 / 2'241 / 8'640 |
+| TI Bellinzona | verheiratet | 2 | 1'940–245'839 | 17 | 167 | 0.5 % | 40 / 1'047 / 6'110 |
+| TI Bellinzona | verheiratet | 3 | 1'193–238'339 | 17 | 110 | 0.4 % | 40 / 181 / 3'778 |
 | UR Altdorf UR | ledig | 0 | 13'940–265'539 | 3 | 1 | 0.1 % | 3'714 / 7'357 / 12'153 |
 | UR Altdorf UR | ledig | 1 | 6'440–258'039 | 4 | 1 | 0.1 % | 1'624 / 5'265 / 10'062 |
 | UR Altdorf UR | ledig | 2 | 1'269–250'539 | 4 | 1 | 0.0 % | 350 / 3'992 / 8'789 |
@@ -584,14 +564,14 @@ Je Reihe: steuerbar Bund → ESTV K+G (CHF).
 
 <details><summary>TI — Bellinzona</summary>
 
-- **ledig, 0 Kinder:** 13'940 → 20 · 16'269 → 89 · 19'311 → 301 · 21'640 → 533 · 23'971 → 806 · 26'187 → 1'020 · 30'597 → 1'367 · 35'007 → 2'022 · 43'827 → 3'629 · 54'853 → 5'823 · 61'467 → 7'217 · 63'649 → 7'566 · 76'482 → 10'572 · 78'646 → 11'203 · 98'224 → 15'783 · 210'819 → 44'211 · 265'539 → 58'675
-- **ledig, 1 Kind:** 6'440 → 20 · 29'713 → 20 · 31'917 → 221 · 38'533 → 732 · 42'943 → 958 · 51'763 → 1'633 · 56'149 → 2'183 · 58'287 → 2'486 · 68'982 → 4'152 · 71'146 → 4'546 · 86'374 → 7'612 · 97'249 → 9'967 · 119'001 → 15'412 · 148'599 → 22'419 · 185'079 → 31'510 · 258'039 → 51'028
-- **ledig, 2 Kinder:** 1'269 → 20 · 33'237 → 20 · 35'443 → 92 · 37'647 → 259 · 42'057 → 612 · 44'263 → 763 · 46'467 → 873 · 48'649 → 1'004 · 52'927 → 1'338 · 57'205 → 1'691 · 61'482 → 2'247 · 63'646 → 2'562 · 74'523 → 4'258 · 89'749 → 7'319 · 100'626 → 9'647 · 168'459 → 26'056 · 186'699 → 30'614 · 250'539 → 47'523
-- **ledig, 3 Kinder:** 1'471 → 20 · 38'967 → 20 · 41'149 → 138 · 47'565 → 663 · 51'843 → 898 · 53'982 → 1'043 · 60'497 → 1'549 · 62'673 → 1'780 · 67'023 → 2'334 · 77'899 → 4'031 · 80'074 → 4'410 · 95'301 → 7'475 · 106'239 → 9'817 · 151'839 → 20'747 · 188'319 → 29'717 · 243'039 → 44'045
-- **verheiratet, 0 Kinder:** 8'290 → 40 · 23'693 → 40 · 25'897 → 188 · 32'513 → 717 · 36'923 → 943 · 45'743 → 1'600 · 47'947 → 1'837 · 52'357 → 2'400 · 61'087 → 3'733 · 65'365 → 4'430 · 80'473 → 7'476 · 93'524 → 10'286 · 119'627 → 16'872 · 142'279 → 22'206 · 187'879 → 33'589 · 260'839 → 53'312
-- **verheiratet, 1 Kind:** 790 → 40 · 29'423 → 40 · 31'627 → 233 · 38'243 → 747 · 42'653 → 972 · 51'449 → 1'638 · 53'587 → 1'900 · 57'865 → 2'476 · 68'622 → 4'157 · 70'797 → 4'547 · 86'024 → 7'613 · 96'900 → 9'987 · 112'127 → 13'772 · 143'899 → 21'370 · 189'499 → 32'651 · 253'339 → 49'807
-- **verheiratet, 2 Kinder:** 1'940 → 40 · 32'947 → 40 · 35'153 → 105 · 37'357 → 271 · 41'767 → 624 · 43'949 → 772 · 48'227 → 1'009 · 56'782 → 1'686 · 61'122 → 2'254 · 63'297 → 2'567 · 74'174 → 4'278 · 93'750 → 8'213 · 104'627 → 10'674 · 145'519 → 20'535 · 191'119 → 31'755 · 245'839 → 46'300
-- **verheiratet, 3 Kinder:** 1'193 → 40 · 38'587 → 40 · 40'727 → 142 · 42'865 → 309 · 47'143 → 666 · 53'622 → 1'055 · 60'147 → 1'562 · 62'323 → 1'787 · 66'674 → 2'354 · 71'024 → 3'021 · 79'725 → 4'411 · 94'951 → 7'476 · 110'659 → 10'893 · 165'379 → 24'058 · 192'739 → 30'883 · 238'339 → 42'869
+- **ledig, 0 Kinder:** 13'940 → 20 · 16'269 → 140 · 19'311 → 352 · 21'640 → 588 · 23'971 → 863 · 26'187 → 1'057 · 28'393 → 1'224 · 30'597 → 1'439 · 32'803 → 1'757 · 35'007 → 2'114 · 43'827 → 3'720 · 54'853 → 5'924 · 61'467 → 7'323 · 63'649 → 7'680 · 74'343 → 10'185 · 76'482 → 10'822 · 98'224 → 15'904 · 210'819 → 44'338 · 265'539 → 58'810
+- **ledig, 1 Kind:** 6'440 → 20 · 27'507 → 20 · 29'713 → 92 · 31'917 → 259 · 36'327 → 612 · 38'533 → 757 · 42'943 → 997 · 49'557 → 1'496 · 51'763 → 1'691 · 56'149 → 2'247 · 58'287 → 2'562 · 68'982 → 4'228 · 84'198 → 7'280 · 97'249 → 10'074 · 116'827 → 14'973 · 148'599 → 22'543 · 185'079 → 31'635 · 258'039 → 51'167
+- **ledig, 2 Kinder:** 1'269 → 20 · 33'237 → 20 · 35'443 → 130 · 37'647 → 296 · 42'057 → 655 · 44'263 → 788 · 46'467 → 898 · 48'649 → 1'043 · 55'065 → 1'542 · 57'205 → 1'754 · 61'482 → 2'309 · 74'523 → 4'351 · 89'749 → 7'417 · 100'626 → 9'753 · 122'859 → 15'193 · 150'219 → 21'699 · 186'699 → 30'738 · 250'539 → 47'660
+- **ledig, 3 Kinder:** 1'471 → 20 · 38'967 → 20 · 41'149 → 176 · 47'565 → 701 · 51'843 → 923 · 60'497 → 1'587 · 62'673 → 1'842 · 67'023 → 2'411 · 77'899 → 4'107 · 80'074 → 4'507 · 95'301 → 7'573 · 106'239 → 9'924 · 151'839 → 20'862 · 188'319 → 29'842 · 243'039 → 44'178
+- **verheiratet, 0 Kinder:** 8'290 → 40 · 23'693 → 40 · 25'897 → 226 · 32'513 → 742 · 36'923 → 972 · 45'743 → 1'638 · 47'947 → 1'900 · 52'357 → 2'476 · 63'227 → 4'142 · 65'365 → 4'527 · 82'647 → 8'003 · 93'524 → 10'405 · 119'627 → 16'995 · 142'279 → 22'323 · 187'879 → 33'722 · 260'839 → 53'449
+- **verheiratet, 1 Kind:** 790 → 40 · 27'217 → 40 · 29'423 → 105 · 31'627 → 271 · 36'037 → 624 · 38'243 → 772 · 42'653 → 1'009 · 51'449 → 1'686 · 55'727 → 2'241 · 57'865 → 2'551 · 68'622 → 4'232 · 86'024 → 7'710 · 96'900 → 10'094 · 112'127 → 13'895 · 143'899 → 21'486 · 189'499 → 32'776 · 253'339 → 49'944
+- **verheiratet, 2 Kinder:** 1'940 → 40 · 32'947 → 40 · 35'153 → 142 · 37'357 → 309 · 41'767 → 666 · 46'087 → 908 · 48'227 → 1'047 · 54'643 → 1'547 · 56'782 → 1'748 · 61'122 → 2'317 · 63'297 → 2'642 · 74'174 → 4'371 · 91'575 → 7'866 · 102'451 → 10'244 · 172'879 → 27'346 · 181'999 → 29'613 · 245'839 → 46'439
+- **verheiratet, 3 Kinder:** 1'193 → 40 · 38'587 → 40 · 40'727 → 181 · 47'143 → 708 · 51'446 → 939 · 53'622 → 1'092 · 60'147 → 1'600 · 62'323 → 1'850 · 64'498 → 2'128 · 66'674 → 2'431 · 75'374 → 3'778 · 79'725 → 4'508 · 94'951 → 7'573 · 110'659 → 11'016 · 165'379 → 24'182 · 192'739 → 31'007 · 238'339 → 43'002
 
 </details>
 

@@ -783,6 +783,8 @@ export default {
     skipToContent: 'Siglir al cuntegn',
     saved: 'Memorisà',
     saveError: 'Betg pussaivel da memorisar — controllar per plaschair il spazi.',
+    // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen.
+    fremdGeaendert: 'Midà en in\'autra fanestra. Per che nagut na vegnia surscrit là, na memorisescha questa fanestra betg pli.',
     notSaved: 'Betg memorisà',
     never: 'Mai',
     justNow: 'ussa gist',
@@ -1149,7 +1151,7 @@ export default {
         phone: 'Telefon',
         email: 'E-mail',
         ahv: 'Numer AVS',
-        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va', dissolvedPartnership: 'Partenadi schlià' } },
+        maritalStatus: { label: 'Stadi civil', options: { single: 'Liber/a', married: 'Maridà/ada', registeredPartnership: 'Partenariat registrà', cohabiting: 'Concubinat', divorced: 'Divorziada/à', widowed: 'Vaidg/va' } },
         dependents: "Dumber d'uffants",
         household: {
           adults: 'Creschids en il ménaschi',
@@ -2021,12 +2023,6 @@ export default {
     sgUnterMindestbetrag: 'Tenor quest quint existiss in dretg, ma el na vegn betg pajà ora: il chantun Son Gagl na paja nagina sbassada da premias sut 100 francs per persuna ed onn.',
     sgFristLaeuft: 'Per {jahr} dura il termin per in dretg per l’entir onn fin ils 31 da mars {jahr}. Tgi che survegn prestaziuns cumplementaras survegn la sbassada senza annunzia.',
     sgFristFolgejahr: 'Il termin per in dretg per l’entir onn {jahr} durava fin ils 31 da mars {jahr} ed è passà. L’import qua mussa da tge ch’i va. Co ch’ina annunzia pli tarda vegn tractada e da cura che ins po s’annunziar per {folgejahr}, di la SVA St.Gallen — las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras survegn la sbassada senza annunzia.',
-    // K31 LU (23.09.2026): Prämienverbilligungsgesetz SRL 866 §§ 7, 8a, 12; Verordnung SRL 866a § 7.
-    vorbehaltLU: 'En il chantun Lucerna è la basa l’ultima taxaziun fiscala giuridicamain valaivla, betg l’entrada dad oz. Sche las relaziuns èn sa midadas considerablamain dapi il 1. da november da l’onn precedent, po ins pretender tar la WAS Ausgleichskasse Luzern in’adattaziun — per l’onn current il pli tard ils 31 da december. Imports retratgs a tort vegnan pretendids enavos.',
-    luKeinAnspruch: 'Tenor questa quintada n’exista nagin dretg: la premia da referenza na surpassa betg la part atgna da l’entrada decisiva. Il chantun Lucerna na publitgescha nagina limita d’entrada sco cifra — ella resulta pir da la quintada.',
-    luUnterMindestbetrag: 'Tenor questa quintada dess i in dretg, el na vegn dentant betg pajà ora: il chantun Lucerna na paja nagina reducziun da las premias, sch’il dretg total è sut 100 francs.',
-    luFristLaeuft: 'En il chantun Lucerna sto la reducziun da las premias vegnir annunziada mintga onn da nov — per {jahr} fin ils 31 d’october {vorjahr}, tar la WAS Ausgleichskasse Luzern. Tgi che s’annunzia pli tard, survegn la reducziun mo per las premias che scadan suenter. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
-    luFristVorbei: 'Il termin d’annunzia per {jahr} durava fin ils 31 d’october {vorjahr}. Tgi che s’annunzia pir ussa, survegn la reducziun mo per las premias che scadan suenter l’annunzia — betg retroactivamain. L’import qua mussa l’entir dretg annual. Per {folgejahr} dura il termin fin ils 31 d’october {jahr}; las valurs per {folgejahr} n’èn anc betg decididas. Tgi che survegn prestaziuns cumplementaras u agid social na sto betg s’annunziar.',
     naeherung: 'Quintà cun las indicaziuns da entradas e facultad registradas qua, betg cun l’entrada imposabla. Il post chantunal quinta cun ils facturs fiscals ed arriva perquai vi dad in import in pau auter.',
     offenGrund: {
       haushalt: 'Per pèrs e chasadas cun plirs creschids na quinta l’applicaziun anc betg: mancan l’vegliadetgna e las entradas da la segunda persuna.',
@@ -2131,55 +2127,6 @@ export default {
     step3EmptyLink: 'Agiuntar indicaziuns d’urgenza',
     dossierLink: 'Dossier d’urgenza cumplet (per stampar)',
     footerCalm: 'Questa carta resta mo sin tes apparat — nagin auter la vesa.',
-  },
-  notfallpass: {
-    title: 'Preparar il pass d’urgenza',
-    intro: 'L’iPhone ed intgins telefonins Android mussan in pass d’urgenza sin il visur bloccà — senza debloccar. Questa app na po betg emplenir el sezza; ti endatas las indicaziuns a maun. Qua èn ellas prontas, champ per champ.',
-    datenschutz: 'Quai che stat en il pass d’urgenza po leger tgi che tegna tes telefonin en maun — senza code. Quai è vulì: en cas d’urgenza è impurtant che insatgi chattia las indicaziuns. Ti decidas tge che ti endatas.',
-    angabenTitel: 'Tias indicaziuns, champ per champ',
-    angabenText: 'Prendidas dal chapitel Urgenza, en la successiun da l’agid dad Apple. Transferescha quai che ti vuls.',
-    leer: 'En il chapitel Urgenza n’è anc nagut endatà. Uschespert che ti endatas insatge là, è quai pront qua.',
-    leerLink: 'Al chapitel Urgenza',
-    gruppe_profil: 'En las infurmaziuns da sanadad',
-    gruppe_pass: 'En il pass d’urgenza',
-    profilHinweis: 'Num e data da naschientscha endatas ti en l’app «Health»: tutgar sin tes maletg, lura «Gesundheitsprofil» e «Bearbeiten» (sin in telefonin tudestg).',
-    feld_name: 'Num',
-    feld_geburtsdatum: 'Data da naschientscha',
-    feld_erkrankungen: 'Malsognas',
-    feld_medikamente: 'Medicaments',
-    feld_allergien: 'Allergias',
-    feld_blutgruppe: 'Gruppa da sang',
-    feld_kontaktName: 'Contact d’urgenza: num',
-    feld_kontaktTelefon: 'Contact d’urgenza: telefon',
-    nichtErfasst: 'anc betg endatà',
-    kopieren: 'Copiar',
-    kopiertKurz: 'Copià',
-    kopierenAria: 'Copiar: {feld}',
-    kopiert: '{feld}: copià.',
-    kopierenFehler: 'Copiar n’ha betg funcziunà qua. Ti pos marcar l’indicaziun u la scriver giu.',
-    iphoneTitel: 'Sin l’iPhone',
-    iphone1: 'Avra l’app «Health», tutga sin tes maletg e lura sin «Notfallpass».',
-    iphone2: 'Tutga sin «Los gehts» u «Bearbeiten» ed endatescha las indicaziuns da survart.',
-    iphone3: 'Sut «Notfallkontakte» tutgar sin «Notfallkontakt hinzufügen». Ti tschernas ord tes contacts — endatescha l’emprim la persuna là, sch’ella manca.',
-    iphone4: 'Scrollar engiu, activar «Im Sperrzustand zeigen» e tutgar sin «Fertig».',
-    iphoneSperr: 'Uschia chattan agidantas ed agidants il pass: sin il visur bloccà stritgar ensi u smatgar la tasta Home, tutgar «Notfall», lura «Notfallpass».',
-    iphoneNotruf: 'L’opziun «Notruf» parta il pass automaticamain durant ina clamada d’urgenza — tenor Apple mo en ils Stadis Unids ed en il Canada.',
-    iphoneLink: 'Agid dad Apple: Notfallpass einrichten und anzeigen (tudestg)',
-    iphoneUrl: 'https://support.apple.com/de-ch/guide/iphone/iph08022b192/ios',
-    androidTitel: 'Sin Android',
-    androidText: 'Betg mintga telefonin Android ha questa app. Nua ch’ella exista (a partir dad Android 12), sa numna ella «Persönliche Sicherheit», en la glista da las apps curt «Sicherheit».',
-    android1: 'Avra l’app «Sicherheit», s’annunzia sche necessari cun tes conto da Google e tutga sin «Meine Infos».',
-    android2: 'Sut «Medizinische Daten» endatar gruppa da sang, allergias e medicaments.',
-    android3: 'Sut «Notfallkontakte» tutgar sin «Kontakt hinzufügen» e tscherner la persuna ord tes contacts.',
-    android4: 'Sut «Zugriff auf Notfallinformationen» tscherner «Anzeigen, wenn gesperrt».',
-    androidLink: 'Agid dad Android: Im Notfall Hilfe anfordern (tudestg)',
-    androidUrl: 'https://support.google.com/android/answer/9319337?hl=de',
-    dossierLink: 'Dossier d’urgenza cun code QR (per stampar)',
-    dossierVerweis: 'Preparar las medemas indicaziuns per il pass d’urgenza en il telefonin',
-    zurueck: 'Enavos a l’urgenza',
-    einstiegTitel: 'Preparar il pass d’urgenza en il telefonin',
-    einstiegSub: 'Per il visur bloccà: tias indicaziuns champ per champ per transferir, cun ils pass per iPhone ed Android.',
-    fussNichtsUebertragen: 'Questa pagina na trametta nagut. Copià vegn mo, sche ti tutgas sin «Copiar».',
   },
   notfallDossier: {
     title: "Dossier d'urgenza",
@@ -2360,7 +2307,6 @@ export default {
       kantonBasis: "Calculatur da taglia da l'AFT {year}, lieu principal {hauptort}, senza taglia da baselgia, stimaziun aproximativa", // TODO(rm): provisorisch
       annahmeOhneDreizehnten: "Quintà senza 13avla paja", // TODO(rm): provisorisch
       annahmeAlleinverdiener: "Pèr maridà cun ina suletta entrada (entrada dal partenari u da la partenaria: 0)", // TODO(rm): provisorisch
-      annahmeEinzeln: "Concubinat: quintà per la persuna suletta (taxaziun individuala)", // TODO(rm): provisorisch
       disclaimer: "Orientaziun sin basa da las indicaziuns endatadas; na remplazza nagin examen liant tras il post cumpetent.", // TODO(rm): provisorisch
     },
     generated: 'Creà ils {date}',
@@ -3041,11 +2987,8 @@ export default {
     ohneZahlPartnerOffen: "Per questa situaziun na mussa Maloja anc nagina stimaziun da taglia: il stadi civil registrà è «maridà», e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. Tar persunas maridadas vegnan las duas entradas sumadas. Per plaschair cumplettar questa entrada en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»; sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0).", // TODO(rm): provisorisch
     annahmeOhneDreizehnten: { sie: "Quintà senza 13avla paja — sche Vus survegnis ina, è la taglia pli auta. Vus pudais indicar quai en il chapitel «Finanzas & daners».", du: "Quintà senza 13avla paja — sche ti survegns ina, è la taglia pli auta. Ti pos indicar quai en il chapitel «Finanzas & daners»." }, // TODO(rm): provisorisch
     annahmeAlleinverdiener: "Quintà sco pèr maridà cun ina suletta entrada (senza entrada dal partenari u da la partenaria).", // TODO(rm): provisorisch
-    // K62.1: Konkubinat, Einzelbesteuerung
-    annahmeEinzeln: { sie: "Quintà mo per Vus: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9).", du: "Quintà mo per tai: en il concubinat vegn mintga persuna taxada separadamain; l'entrada dal partenari u da la partenaria na quinta qua betg. Sumadas vegnan mo las entradas da pèrs maridads e da partenadis registrads (LTFD art. 9)." }, // TODO(rm): provisorisch
     // K62.4: Steuerrechner, Finanzübersicht und Dossier — dieselbe Regel, kein Widerspruch
     bandPartnerOffenDirekt: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: ella è vegnida mesirada mo per pèrs maridads cun ina suletta entrada, e l'indicaziun davart l'entrada dal partenari u da la partenaria manca. La taglia federala survart sa basa sin la valur endatada — Maloja suppona ch'i saja l'entrada taxabla cuminaivla tenor la taxaziun. Sch'il partenari u la partenaria n'ha nagina atgna entrada, endatar 0 en il profil (Basa persunala → «Salari net dal partenari/da la partenaria»).", // TODO(rm): provisorisch
-    bandKonkubinat: { sie: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per Vossa vischnanca (stadi civil «concubinat»).", du: "Per la taglia chantunala e communala na mussa Maloja qua nagin import: en quest chantun quinta il calculatur da taglia da l'AFT persunas en concubinat auter che persunas soletas (mesirà per il 2026: pli aut en il concubinat). La tabella da Maloja vala mo per persunas soletas. La taglia federala survart vala, ella vegn quintada separadamain per mintga persuna. Il calculatur da taglia da l'AFT quinta l'import per tia vischnanca (stadi civil «concubinat»)." }, // TODO(rm): provisorisch
     ohneZahlZivilstandDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al stadi civil en il profil. Per in auter stadi civil na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch
     ohneZahlKinderDirekt: "Per questa situaziun na mussa Maloja nagina stimaziun da taglia: l'entrada taxabla endatada correspunda al dumber d'uffants en il profil. Per in auter dumber d'uffants na la dovra Maloja betg. Per empruvar, allontanar il crutschin «Duvrar quest valur sco basa» — lura stima Maloja a basa dal salari net.", // TODO(rm): provisorisch (K87)
     gemeinsamDirektHinweis: "Maloja suppona che la valur endatada saja l'entrada taxabla cuminaivla dal pèr tenor la taxaziun. La lingia dal salari net cuntegna mo l'atgna entrada — perquai na mussa Maloja qua nagina quota da taglia e nagina entrada netta suenter las taglias.", // TODO(rm): provisorisch (K86)
@@ -3083,9 +3026,6 @@ export default {
       scope: 'Mo l’imposta federala directa (DBG art. 36). Las taxas chantunalas e communalas n’èn betg incluidas qua.',
       abzuegeNote: "Mintga stadi civil è quintà cun sias atgnas deducziuns — entrada taxabla nubil CHF {ledig}, maridà CHF {verheiratet} (pèr cun ina suletta entrada, cun la deducziun per persunas maridadas e la deducziun d'assicuranza pli auta).", // TODO(rm): provisorisch
       nurGeschaetzt: { sie: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Voss stadi civil actual.", du: "La cumparegliaziun cumpara, sche Maloja stima l'entrada taxabla a basa da la paja netta. Ina cifra endatada da la taxaziun vala mo per Tes stadi civil actual." }, // TODO(rm): provisorisch
-      // K62.5: im Konkubinat kein Vergleich mit einem gedachten Alleinverdiener-Ehepaar
-      konkubinatPartner: "En il concubinat na mussa Maloja qua nagina cumparegliaziun: suenter ina maridaglia vegnissan las duas entradas sumadas (LTFD art. 9), cun ina atgna deducziun per pèrs cun duas entradas. Mesirà è mo il pèr maridà cun ina suletta entrada. Il calculatur da taglia da l'AFT quinta la cumparegliaziun cun duas entradas.", // TODO(rm): provisorisch
-      konkubinatPartnerOffen: { sie: "En il concubinat dependa la cumparegliaziun da l'entrada dal partenari u da la partenaria: suenter ina maridaglia vegnissan las duas entradas sumadas. L'indicaziun manca anc (Basa persunala → «Salari net dal partenari/da la partenaria»; senza atgna entrada: endatar 0).", du: "En il concubinat dependa la cumparegliaziun da l'entrada dal partenari u da la partenaria: suenter ina maridaglia vegnissan las duas entradas sumadas. L'indicaziun manca anc (Basa persunala → «Salari net dal partenari/da la partenaria»; senza atgna entrada: endatescha 0)." }, // TODO(rm): provisorisch
     },
   },
 

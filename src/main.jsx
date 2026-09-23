@@ -30,6 +30,7 @@ import { isOnboardingDone, isTourDone } from './utils/einfuehrungStatus.js';
 const Onboarding = React.lazy(() => import('./Onboarding.jsx').then(m => ({ default: m.Onboarding })));
 const Tour = React.lazy(() => import('./Tour.jsx').then(m => ({ default: m.Tour })));
 import { syncDocumentReminders } from './utils/docReminders.js';
+import { istFremdeAenderung } from './utils/fremdeAenderung.js';
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 import BetaGate from './BetaGate.jsx';
 // Die beiden Schubladen sind erst nach einem Griff zum Menü zu sehen und brauchen
@@ -67,7 +68,6 @@ const NotificationSettings = React.lazy(() => import('./NotificationSettings.jsx
 const NotfallEinstieg = React.lazy(() => import('./NotfallEinstieg.jsx'));
 const ArztkofferView = React.lazy(() => import('./ArztkofferView.jsx'));
 const NotfallVorlesekarte = React.lazy(() => import('./NotfallVorlesekarte.jsx'));
-const NotfallpassBlatt = React.lazy(() => import('./NotfallpassBlatt.jsx'));
 const PraemienOrientierung = React.lazy(() => import('./PraemienOrientierung.jsx'));
 const MietzinsOrientierung = React.lazy(() => import('./MietzinsOrientierung.jsx'));
 const KVGWechsel = React.lazy(() => import('./KVGWechsel.jsx'));
@@ -698,8 +698,20 @@ const AppInner = ({ demo }) => {
   }, []);
   const lastPersistedData = React.useRef(data);
   const lastPersistedDocs = React.useRef(documents);
+  // K116: Ein anderer Maloja-Tab hat gespeichert. Dieser Tab hält einen älteren Stand,
+  // und das Auto-Save schreibt den ganzen Stand — weiterschreiben hiesse, die Eingaben
+  // dort still zu überschreiben (erprobt 24.09.). Kein Zusammenführen: nicht mehr
+  // zurückschreiben, ruhig melden, neu laden lassen.
+  const [fremdGeaendert, setFremdGeaendert] = useState(false);
+  useEffect(() => {
+    if (demo) return;
+    const onStorage = (e) => { if (istFremdeAenderung(e.key)) setFremdGeaendert(true); };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [demo]);
   useEffect(() => {
     const timer = setInterval(() => {
+      if (fremdGeaendert) return;
       if (data !== lastPersistedData.current || documents !== lastPersistedDocs.current) {
         setIsSaving(true);
         try {
@@ -727,7 +739,7 @@ const AppInner = ({ demo }) => {
       }
     }, 5000);
     return () => clearInterval(timer);
-  }, [data, documents]);
+  }, [data, documents, fremdGeaendert]);
 
   const updateData = (chapter, field, value) => {
     if (demoMode) return;
@@ -1475,7 +1487,6 @@ const AppInner = ({ demo }) => {
         view === 'notfalleinstieg' && React.createElement(NotfallEinstieg, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'gesundheit' && React.createElement(ArztkofferView, { palette, t, onNavigate: handleNavigate, isDarkMode }),
         view === 'notfallkarte' && React.createElement(NotfallVorlesekarte, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
-        view === 'notfallpass' && React.createElement(NotfallpassBlatt, { palette, t, data: activeData, chapters, onNavigate: handleNavigate }),
         view === 'export' && React.createElement(ZipExport, { palette, t, data: activeData, documents: docs, demoMode }),
         view === 'calendar' && React.createElement(CalendarReminders, { palette, t, data: activeData, onNavigate: handleNavigate, isMobile }),
         view === 'notifications' && React.createElement(NotificationSettings, { palette, t }),
@@ -1490,7 +1501,7 @@ const AppInner = ({ demo }) => {
       // Handy/Tablet: Fusszeile als ruhige letzte Zeile im Scroll-Inhalt.
       isMobile && footerEl
     ),
-    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError }),
+    React.createElement(AutoSaveStatus, { palette, t, lastSave, isSaving, saveError, fremdGeaendert }),
     // Web: Fusszeile pinned unter dem Inhalt.
     !isMobile && footerEl,
     isMobile && React.createElement(BottomAnchor, { palette, t, view, onNavigate: handleNavigate, onMenu: () => setMobileNavOpen(true), leftHand })

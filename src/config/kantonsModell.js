@@ -34,10 +34,9 @@ export function vermoegenSumme(f) {
 // Säule 3a bereits. Die kantonale Regel wirkt darum als ABZUG: sie sagt, welcher Teil der 3a
 // im massgebenden Einkommen NICHT stehen bleiben darf.
 //
-//   voll                 ZH, SG, LU — unbedingte Zurechnung, keine Schwelle, kein Deckel.
+//   voll                 ZH, SG — unbedingte Zurechnung, keine Schwelle, kein Deckel.
 //                        ZH: § 5 Abs. 1 lit. b EG KVG (LS 832.01)
 //                        SG: Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)
-//                        LU: § 7 Abs. 2 lit. b Prämienverbilligungsgesetz (SRL 866)
 //                        ⇒ Abzug 0. Der App-Wert ist hier genau richtig.
 //   bisBundesMaximum     BE — nur bis zum bundesrechtlichen Maximum für Unselbständige.
 //                        KKVV Art. 6 Abs. 4 lit. i
@@ -111,8 +110,8 @@ function abzugsSchwelle(jahre) {
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
-    kantone: 'ZH, SG, LU',
-    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111) · LU § 7 Abs. 2 lit. b (SRL 866)',
+    kantone: 'ZH, SG',
+    beleg: 'ZH § 5 Abs. 1 lit. b EG KVG (LS 832.01) · SG Art. 12 Abs. 2 Ziff. 2 (sGS 331.111)',
     nichtAufgerechnet: () => 0,
   }),
 
@@ -406,8 +405,6 @@ export const KEIN_PRAEMIENDECKEL = Object.freeze({
 //                       Quelle auftaucht.
 //   imAnspruchsjahr     AG — die SVA führt für 2027 die Jahrgänge 2002–2008 als junge
 //                       Erwachsene; erwachsen ist, wer im Anspruchsjahr 26 wird.
-//                       LU — die WAS führt für 2026 «Erwachsene (ab Jahrgang 2000)» in ihrer
-//                       amtlichen Richtprämien-Tabelle, also dieselbe Regel. (23.09.2026)
 //
 // ⚠️ Der Unterschied zwischen den beiden Regeln ist echt und beträgt einen Jahrgang: für das
 // Anspruchsjahr 2026 rechnet AG für den Jahrgang 2000, die anderen nicht. Gemessen am
