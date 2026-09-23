@@ -11,6 +11,21 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 die Versionsnummer + Datum, und `package.json` wird im selben PR angehoben — so
 kommt der Changelog immer mit, nie doppelt.*
 
+### Neu
+- **Notfallpass vorbereiten.** Ein neues Blatt im Notfall-Bereich legt die Angaben aus
+  dem Kapitel Notfall Feld für Feld bereit, damit sie von Hand in den Notfallpass des
+  Telefons übertragen werden können — den das iPhone (und manche Android-Telefone) auf
+  dem Sperrbildschirm zeigt. Je Feld ein Knopf «Kopieren», daneben die Schritte für
+  iPhone und Android, belegt an der Hilfe von Apple und Google. Nichts wird gesendet,
+  kein QR, keine Schnittstelle. Erreichbar über den Notfall-Einstieg und unter dem
+  QR-Code im Notfall-Dossier.
+
+### Behoben
+- **Medikamente und Erkrankungen fehlten im Notfall-Dossier, im Notfall-QR und auf der
+  Vorlesekarte**, wenn sie — wie das Kapitel es heute anbietet — als Liste erfasst
+  waren. Die gemeinsame Quelle las nur das alte Textfeld. Jetzt zuerst die Liste, das
+  Textfeld bleibt Rückfall.
+
 ## [0.1.39-beta] — 2026-09-20
 
 *Enthält alles aus `0.1.38-beta` (siehe unten) — **jene Version wurde nie ausgeliefert**.
