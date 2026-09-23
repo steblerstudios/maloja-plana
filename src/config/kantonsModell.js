@@ -54,14 +54,21 @@ export const SAEULE_3A = Object.freeze({
     name: 'bisBundesMaximum',
     kantone: 'BE',
     beleg: 'KKVV Art. 6 Abs. 4 lit. i',
-    // 🛑 Die Norm steht, die ZAHL fehlt. Der Frankenwert des bundesrechtlichen 3a-Maximums
-    // 2026 ist NICHT belegt: Fedlex lieferte am 20.09.2026 für eine ERFUNDENE ELI eine
-    // byte-identische Antwort — das Messgerät war unbrauchbar, also gilt kein Ergebnis
-    // daraus. Eine geratene Zahl wäre hier schlimmer als keine: sie würde bei jedem
-    // Selbständigen mit hoher Einzahlung still danebenliegen und sähe belegt aus.
-    offen: 'Frankenwert des bundesrechtlichen 3a-Maximums 2026 für Unselbständige — nicht '
-      + 'belegt (Fedlex antwortete auf eine erfundene ELI byte-identisch). Bis dahin wirkt '
-      + 'der Deckel nicht; betroffen sind nur Einzahlungen ÜBER dem Maximum.',
+    // ⟨23.09.2026: die ZAHL ist jetzt belegt — der Deckel wirkt trotzdem noch nicht.⟩
+    // Hier stand, der Frankenwert sei nicht belegt, weil Fedlex am 20.09.2026 auf eine
+    // ERFUNDENE ELI byte-identisch antwortete. Das Messgerät war unbrauchbar, der Schluss
+    // war richtig. Am 23.09.2026 über zwei andere Wege erhoben: ESTV-Tabelle «Höchstabzüge
+    // Säule 3a» (2026: 7'258 mit 2. Säule) und BSV-FAQ, gleicher Wert; Rechtsgrundlage
+    // BVV 3 Art. 7 Abs. 1 lit. a. Der Wert steht in src/data/saeule3a.js.
+    //
+    // 🛑 Was JETZT fehlt, ist nicht mehr die Zahl, sondern die Rechnung: der Abzug des
+    // Überschusses (pension3a − Maximum, wenn positiv) ist nicht gebaut und nicht
+    // fachgeprüft. BE ist eine Stufentabelle — ein Franken Differenz kippt eine Stufe.
+    // Darum hier bewusst weiter `() => 0` statt einer schnellen Zeile.
+    offen: 'Deckel wirkt noch nicht. Der Frankenwert ist seit 23.09.2026 belegt (7258, '
+      + 'ESTV/BVV 3 Art. 7 Abs. 1 lit. a, siehe src/data/saeule3a.js), aber der Abzug des '
+      + 'Überschusses ist nicht gebaut und nicht fachgeprüft. Betroffen sind nur '
+      + 'Einzahlungen ÜBER dem Maximum.',
     nichtAufgerechnet: () => 0,
   }),
 

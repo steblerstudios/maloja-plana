@@ -60,7 +60,7 @@ Ein Schweizer Haushalt hat 15–25 regelmässige Ausgabeposten. Das aktuelle Bud
 | **Hausratversicherung** | Feld existiert, nicht im Budget | Important | — |
 | **Rechtsschutzversicherung** | Fehlt | Experimental | Optional |
 | **Autoversicherung** | Feld existiert, nicht im Budget | Important | Wenn Auto vorhanden |
-| **Säule 3a** | Feld existiert, nicht im Budget | Important | Max. CHF 7'056/Jahr (2026) |
+| **Säule 3a** | Feld existiert, nicht im Budget | Important | Max. CHF 7'258/Jahr (2026, mit PK) — Quelle: `src/data/saeule3a.js` |
 | **BVG (Referenz)** | Referenzwert, nicht Ausgabe | Core | Richtig so — Arbeitgeber zahlt mit |
 | **AHV (Referenz)** | Referenzwert, nicht Ausgabe | Core | Richtig so |
 

@@ -61,13 +61,17 @@ describe('Eingaben lesen', () => {
   // Nettoeinkommen der App («was auf Ihrem Konto ankommt») trägt sie bereits, also war es
   // eine Doppelzählung: Einkommen zu hoch ⇒ Verbilligung zu tief, in allen vier Kantonen.
   // Dieser Test hält genau das fest. Fällt er um, ist der Fehler zurück.
+  // Die 7'056 im Text oben ist Historie und bleibt. Die EINGABEN unten stehen seit dem
+  // 23.09.2026 auf dem geltenden Maximum (7'258, src/data/saeule3a.js) — der Betrag ist hier
+  // beliebig, aber ein überholter Gesetzeswert als Testeingabe sieht beim Suchen aus wie ein
+  // gepflegter Wert. Genau so blieb die Doku zwei Jahre auf 7'056 stehen.
   it('einkommenJahr: Säule 3a wird NICHT ein zweites Mal aufgerechnet', () => {
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 })).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 })).toBe(12000);
     expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 0 })).toBe(12000);
     // und die Regel ändert daran nichts, solange zwei von dreien noch nicht wirken
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.voll)).toBe(12000);
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.bisBundesMaximum)).toBe(12000);
-    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7056 }, SAEULE_3A.schwelleOhneSaeule2)).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.voll)).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.bisBundesMaximum)).toBe(12000);
+    expect(einkommenJahr({ monthlyIncome: 1000, pension3a: 7258 }, SAEULE_3A.schwelleOhneSaeule2)).toBe(12000);
   });
 
   // Die drei Regeln sind absichtlich EINZELN benannt, auch wo sie heute dasselbe rechnen —
@@ -80,9 +84,13 @@ describe('Eingaben lesen', () => {
       for (const r of Object.values(SAEULE_3A)) expect(r.beleg).toMatch(/Art\.|§/);
     });
 
+    // ⟨23.09.2026⟩ Hier stand für BE `toMatch(/nicht belegt/)`. Das pinnte den GRUND der
+    // Lücke, nicht die Lücke: als der Frankenwert belegt war, war der Satz überholt, obwohl
+    // der Deckel weiterhin nicht wirkt. Geprüft wird jetzt, dass die Regel ihre Lücke
+    // benennt — nicht, mit welcher Begründung.
     it('nur `voll` ist fertig — die anderen zwei sagen, was ihnen fehlt', () => {
       expect(SAEULE_3A.voll.offen).toBeUndefined();
-      expect(SAEULE_3A.bisBundesMaximum.offen).toMatch(/nicht belegt/);
+      expect(SAEULE_3A.bisBundesMaximum.offen).toMatch(/Deckel/);
       expect(SAEULE_3A.schwelleOhneSaeule2.offen).toMatch(/nicht SICHER/);
     });
 

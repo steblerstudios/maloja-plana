@@ -44,7 +44,9 @@ Stand: 2026-05-26
 ### 1.6 Säule 3a / 3b (Private Vorsorge)
 - **Rechtsgrundlage:** BVV 3 (SR 831.461.3)
 - **Implementiert:** Pension3a + Pension3b Felder (Finanzen-Chapter)
-- **Geplant:** Maximalbeitrag-Rechner (aktuell CHF 7'056), Steuerabzug-Simulation
+- **Höchstabzug 2026:** CHF 7'258 mit Pensionskasse, CHF 36'288 ohne (20 % des Erwerbseinkommens, gedeckelt). Die eine Quelle im Code: `src/data/saeule3a.js`, dort mit ESTV-Beleg und Abrufdatum. Hier NICHT erneut fortschreiben — bis 23.09.2026 stand an dieser Stelle CHF 7'056, der Wert der Steuerjahre 2023/2024.
+- **Geplant:** Maximalbeitrag-Rechner, Steuerabzug-Simulation
+- **Offen:** Die App deckelt die 3a-Eingabe für alle bei `mitPensionskasse`. Für Selbständige ohne 2. Säule ist das zu tief (BVV 3 Art. 7 Abs. 1 lit. b).
 
 ### 1.7 EL (Ergänzungsleistungen)
 - **Rechtsgrundlage:** ELG (SR 831.30)

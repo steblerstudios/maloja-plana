@@ -252,6 +252,9 @@ describe('K31 calculateIPV für ZH (App-Angaben → Modell)', () => {
   // Das war eine Doppelzählung und kostete bei 48 000 Basiseinkommen 610.–/Jahr.
   // Nachgerechnet gegen den Rechenkern: Referenzprämie 0,7 × 640 × 12 = 5 376, Eigenanteil
   // 8,4 %. Bei 48 000 also 5 376 − 4 032 = 1 344 — mit der alten Doppelzählung nur 734.33.
+  // 🛑 Die 7'258 hier NICHT durch die Konstante aus src/data/saeule3a.js ersetzen: Sie trägt
+  // die Rechnung des Kommentars bis zur 734 unten. Ändert sich das Maximum, wäre 734 nicht
+  // mehr «der alte, zu tiefe Wert» — der Wächter prüfte dann eine Zahl ohne Bedeutung.
   it('Säule 3a zählt NICHT zusätzlich zum Nettoeinkommen', () => {
     const mitDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 7258 } })).annual;
     const ohneDreiA = calculateIPV(person({ monthlyIncome: 4000, finanzen: { pension3a: 0 } })).annual;
