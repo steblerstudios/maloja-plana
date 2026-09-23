@@ -32,6 +32,19 @@
 @font-face { font-family: 'Atkinson Hyperlegible'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/atkinson-hyperlegible-latin-700-normal.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
+  /* Höhe der klebenden Kopfzeile. Seit das Dokument selbst scrollt, hängen sich
+     die Sektionsreiter darunter. main.jsx misst die echte Höhe und überschreibt
+     diesen Wert (die Kopfzeile bricht auf schmalen Schirmen um); der Vorgabewert
+     hier gilt nur, bis die erste Messung da ist. */
+  --mp-kopf-h: 73px;
+
+  /* Abstand, den ein Sprungziel zum oberen Rand halten muss, damit es nicht unter
+     der Kopfzeile und der klebenden Sektionsleiste (46 px gemessen) landet. EINE
+     Quelle: die Regel unten und die Ansichten, die den Wert inline setzen, greifen
+     beide hierauf zu. Vorher standen an drei Stellen je eigene Zahlen (52/64/72 px),
+     die auf den alten Scroll-Container gerechnet waren. */
+  --mp-sprungabstand: calc(var(--mp-kopf-h, 73px) + 56px);
+
   /* ─── Spacing scale (4px base grid) ───────────────────── */
   --mp-space-2xs: 2px;
   --mp-space-xs:  4px;
@@ -193,6 +206,17 @@ textarea:focus-visible,
   outline: 2px solid var(--mp-focus) !important;
   outline-offset: 2px !important;
   z-index: 1;
+}
+
+/* ─── Sprungziele unter der klebenden Kopfzeile ──────────
+   Seit das Dokument selbst scrollt, klebt die Kopfzeile über dem Inhalt — und in
+   den Kapiteln zusätzlich die Sektionsleiste darunter. Ein scrollIntoView mit
+   block:'start' würde das Ziel genau dahinter schieben. scroll-margin-top hält
+   den nötigen Abstand frei: Kopfhöhe (gemessen) plus die Leiste. */
+[data-section-k],
+[id^="mp-section-"],
+.mp-sprungziel {
+  scroll-margin-top: var(--mp-sprungabstand);
 }
 
 /* ─── Skip-to-content link (keyboard users) ────────────── */

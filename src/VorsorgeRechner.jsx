@@ -206,11 +206,13 @@ export const VorsorgeRechner = ({ palette, t, data, onNavigate, onUpdateData }) 
     td: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border },
     tdActive: { padding: '6px 8px', borderBottom: '1px solid ' + palette.border, fontWeight: weight.semi, color: palette.sageDeep },
     // Reiter wie im ChapterView: sticky + einzeilig horizontal scrollbar (Jakob's Law —
-    // gleiches Verhalten wie in den Finanzen-Kapiteln). top:-24px gleicht das padding-top
-    // des Scroll-Containers aus, damit die Leiste bündig unter dem „100% lokal"-Streifen klebt.
+    // gleiches Verhalten wie in den Finanzen-Kapiteln). Die Leiste hängt sich unter die
+    // klebende Kopfzeile (--mp-kopf-h, in main.jsx gemessen); vorher stand hier -24px als
+    // Ausgleich für das padding-top des alten Scroll-Containers #mp-main, den es nicht
+    // mehr gibt — das Dokument selbst scrollt.
     // Sticky Wrapper hält die Leiste oben; das Scrollen passiert im inneren tabRow.
     // Die dynamische Rand-Verblendung (ScrollFadeStrip) signalisiert „hier geht's weiter".
-    tabWrap: { position: 'sticky', top: '-24px', zIndex: 5, marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
+    tabWrap: { position: 'sticky', top: 'var(--mp-kopf-h, 73px)', zIndex: 5, marginBottom: space.md + 'px', background: palette.surface, borderBottom: '1px solid ' + palette.border + '55' },
     tabRow: { display: 'flex', flexWrap: 'nowrap', gap: space.xs + 'px', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: space.sm + 'px 0' },
     tab: (active) => ({ flexShrink: 0, whiteSpace: 'nowrap', padding: '8px 16px', fontSize: text.sm, fontWeight: active ? weight.semi : weight.normal, border: '1px solid ' + (active ? palette.sage : palette.border), borderRadius: radius.sm + 'px', background: active ? palette.sage + '22' : palette.surface, color: active ? palette.sageDeep : palette.text, cursor: 'pointer', fontFamily: 'inherit' }),
     source: { marginTop: space.md + 'px', fontSize: text.xs, color: palette.skyDeep },
