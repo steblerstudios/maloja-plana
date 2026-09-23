@@ -15,6 +15,11 @@
 //     Nettolohn und Abzugsposten Bund je Bruttolohn → docs/sources/nettolohn-abzuege-2026.messpunkte.json.
 //     Nur dieses Entwickler-Skript geht ins Netz. Die App selbst bleibt ohne Netzwerk-Calls.
 //
+//   node scripts/steuerband-messen.mjs --messen [--kinder] --kanton TI
+//     Nachmessung EINES Kantons: ersetzt nur dessen Punkte in der Messdatei, alle anderen bleiben
+//     byte-gleich. Die ersetzten Punkte wandern nach docs/sources/kantonssteuer-ersetzt-<KT>-<Datum>.messpunkte.json,
+//     damit alt gegen neu nachvollziehbar bleibt; der Lauf steht in `nachmessungen` der Messdatei.
+//
 //   node scripts/steuerband-messen.mjs
 //     Wertet die Messdateien aus, prüft steuerbarNachEstv() an allen Punkten und schreibt
 //       src/data/kantonssteuerTabelle.js            (Stütztabelle, generiert)
@@ -78,6 +83,22 @@ for (let b = 160000; b <= 300000; b += 10000) BRUTTO.push(b);
 
 const ZIVILSTAND = { ledig: 1, verheiratet: 2 };
 
+// --kanton XX: nur diesen Kanton messen und in die bestehende Messdatei einsetzen (Nachmessung).
+const KANTON_ARG = process.argv.includes('--kanton') ? process.argv[process.argv.indexOf('--kanton') + 1] : null;
+if (KANTON_ARG && !ORTE[KANTON_ARG]) throw new Error('unbekannter Kanton: ' + KANTON_ARG);
+const orteFuerLauf = () => Object.entries(ORTE).filter(([kt]) => !KANTON_ARG || kt === KANTON_ARG);
+
+// Ersetzte Punkte einer Nachmessung aufbewahren (alt gegen neu bleibt nachprüfbar).
+function ersetztArchivieren(kt, teil, daten) {
+  const datum = new Date().toISOString().slice(0, 10);
+  const pfad = resolve(__dirname, '../docs/sources/kantonssteuer-ersetzt-' + kt + '-' + datum + '.messpunkte.json');
+  let archiv = { kanton: kt, ersetzt: datum, zweck: 'Messpunkte, die eine Nachmessung ersetzt hat — nur zur Nachprüfung, die App liest sie nicht.' };
+  try { archiv = JSON.parse(readFileSync(pfad, 'utf-8')); } catch { /* neu */ }
+  archiv[teil] = daten;
+  writeFileSync(pfad, JSON.stringify(archiv, null, 0).replace(/\],\[/g, '],\n[') + '\n');
+  return pfad;
+}
+
 async function post(op, body) {
   const res = await fetch(API + op, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   if (!res.ok) throw new Error(op + ' HTTP ' + res.status);
@@ -97,7 +118,7 @@ async function messen() {
   const version = await post('API_getTaxVersion', {}).catch(() => null);
   const punkte = [];
   const auftraege = [];
-  for (const [kt, o] of Object.entries(ORTE)) {
+  for (const [kt, o] of orteFuerLauf()) {
     for (const [zs, rel] of Object.entries(ZIVILSTAND)) {
       for (const brutto of BRUTTO) auftraege.push({ kt, o, zs, rel, brutto });
     }
@@ -110,11 +131,11 @@ async function messen() {
     while (i < auftraege.length) {
       const a = auftraege[i++];
       await new Promise((r) => setTimeout(r, PAUSE_MS));
-      const r = await post('API_calculateDetailedTaxes', {
+      const r = await mitWiederholung(() => post('API_calculateDetailedTaxes', {
         SimKey: null, TaxYear: STEUERJAHR, TaxLocationID: a.o.id, Relationship: a.rel,
         Confession1: 4, Children: [], Age1: 40, RevenueType1: 1, Revenue1: a.brutto, Fortune: 0,
         Confession2: a.rel === 2 ? 4 : 0, Age2: a.rel === 2 ? 40 : 0, RevenueType2: 0, Revenue2: 0, Budget: [],
-      });
+      }));
       if (r.Location && (r.Location.Canton !== a.kt || r.Location.BfsID !== a.o.bfs)) {
         throw new Error('Ort passt nicht: ' + a.kt + ' ' + JSON.stringify(r.Location));
       }
@@ -125,6 +146,18 @@ async function messen() {
   }
   await arbeiter();
   punkte.sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2]);
+  if (KANTON_ARG) {
+    // Nachmessung: nur die Punkte dieses Kantons ersetzen, Rest unverändert lassen.
+    const alt = JSON.parse(readFileSync(MESS_PATH, 'utf-8'));
+    const ersetzt = alt.punkte.filter((p) => p[0] === KANTON_ARG);
+    const pfad = ersetztArchivieren(KANTON_ARG, 'ohneKinder', { abgerufen: alt.abgerufen, spalten: alt.spalten, punkte: ersetzt });
+    alt.punkte = alt.punkte.filter((p) => p[0] !== KANTON_ARG).concat(punkte)
+      .sort((x, y) => x[0].localeCompare(y[0]) || x[1].localeCompare(y[1]) || x[2] - y[2]);
+    (alt.nachmessungen ??= []).push({ kanton: KANTON_ARG, abgerufen, ende: new Date().toISOString(), abrufe: punkte.length, gegenprobe: 'erfundene Operation → ' + gegenprobe, version, ersetzt: ersetzt.length, archiv: pfad.split('/docs/')[1] });
+    writeFileSync(MESS_PATH, JSON.stringify(alt, null, 0).replace(/\],\[/g, '],\n[') + '\n');
+    console.log('nachgemessen:', KANTON_ARG, punkte.length, 'Punkte, ersetzt', ersetzt.length, '· Gegenprobe:', gegenprobe);
+    return;
+  }
   writeFileSync(MESS_PATH, JSON.stringify({
     quelle: 'ESTV Steuerrechner, API_calculateDetailedTaxes (' + API + ')',
     webseite: 'https://swisstaxcalculator.estv.admin.ch/',
@@ -186,7 +219,14 @@ async function messenKinder() {
     bloecke: [],
     punkte: [],
   };
-  mess.laeufe.push({ beginn: jetzt, gegenprobe: 'erfundene Operation → ' + gegenprobe, version });
+  if (KANTON_ARG) {
+    // Nachmessung: die Blöcke dieses Kantons verwerfen (archiviert), damit der Lauf sie neu misst.
+    const ersetzt = mess.punkte.filter((p) => p[0] === KANTON_ARG);
+    ersetztArchivieren(KANTON_ARG, 'mitKindern', { laeufe: mess.laeufe, spalten: mess.spalten, punkte: ersetzt });
+    mess.punkte = mess.punkte.filter((p) => p[0] !== KANTON_ARG);
+    mess.bloecke = mess.bloecke.filter((b) => !b.startsWith(KANTON_ARG + '/'));
+  }
+  mess.laeufe.push({ beginn: jetzt, gegenprobe: 'erfundene Operation → ' + gegenprobe, version, ...(KANTON_ARG ? { kanton: KANTON_ARG, nachmessung: true } : {}) });
   const fertig = new Set(mess.bloecke);
   const PAUSE_MS = 150;
   const speichern = () => {
@@ -195,7 +235,7 @@ async function messenKinder() {
   };
   let abrufe = 0;
   try {
-    for (const [kt, o] of Object.entries(ORTE)) {
+    for (const [kt, o] of orteFuerLauf()) {
       for (const [zs, rel] of Object.entries(ZIVILSTAND)) {
         for (const kinder of KINDER) {
           const block = kt + '/' + zs + '/' + kinder;
