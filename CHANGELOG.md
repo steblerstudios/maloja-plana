@@ -45,6 +45,14 @@ kommt der Changelog immer mit, nie doppelt.*
 - Eine Hilfsfunktion `giltAlsVerheiratet()` (`src/utils/zivilstand.js`) statt fünf
   verstreuter Vergleiche mit `'married'`; ein Test prüft die Quelle, dass niemand an ihr
   vorbei vergleicht.
+- **Startdatei schlanker, Deckel bleibt bei 65 kB (E36).** Das Icon-Register ist geteilt:
+  `src/IconKern.jsx` trägt die 35 Icons, die der fest geladene Teil zeigt (Kopfzeile,
+  Dashboard, Hinweise); die übrigen 39 stehen weiter in `src/IconSystem.jsx` und hängen
+  sich in dasselbe `Icons`-Objekt ein, sobald eine nachgeladene Ansicht sie mitbringt.
+  Jede nachgeladene Ansicht importiert wie bisher `IconSystem.jsx` und wartet damit auf das
+  volle Register, bevor sie zeichnet — kein Icon kommt verspätet. Ein Wächter
+  (`iconNamen.test.js`) prüft, dass fest geladene Dateien nur Kern-Namen zeigen.
+  Startdatei 64,71 → 62,00 kB gzip.
 
 ### Behoben
 - **Kantonssteuer Tessin neu gemessen** (23.09.2026). Die Messpunkte vom 16.09. lagen bis

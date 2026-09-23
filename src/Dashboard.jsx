@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Icons from './IconSystem.jsx';
+import Icons from './IconKern.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
 import { text, weight, leading, space, radius, shadow, ease, duration } from './config/tokens.js';
 import { PageTitle, PanelTitle, Eyebrow } from './components/Heading.jsx';
@@ -8,7 +8,7 @@ import { loadReminders } from './utils/reminders.js';
 import { grundordnung, feldHatWert, kapitelVollstaendigkeit } from './utils/vollstaendigkeit.js';
 import { kapitelStatus, astFarben } from './utils/lebensbereichFruechte.js';
 import { useT } from './i18n/index.js';
-import { aufklappZeichen, hinweisZeichen } from './IconSystem.jsx';
+import { aufklappZeichen, hinweisZeichen } from './IconKern.jsx';
 
 // Der räumliche Lebensbaum wird nachgeladen, nicht mitgeliefert: wer auf die
 // flache Ansicht stellt, lädt three.js (rund 145 KB gzip) gar nicht erst.
