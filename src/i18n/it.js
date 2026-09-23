@@ -1273,7 +1273,7 @@ export default {
         phone: 'Telefono',
         email: 'E-mail',
         ahv: 'Numero AVS',
-        maritalStatus: { label: 'Stato civile', options: { single: 'Celibe/Nubile', married: 'Coniugato/a', registeredPartnership: 'Unione domestica registrata', cohabiting: 'Concubinato', divorced: 'Divorziato/a', widowed: 'Vedovo/a' } },
+        maritalStatus: { label: 'Stato civile', options: { single: 'Celibe/Nubile', married: 'Coniugato/a', registeredPartnership: 'Unione domestica registrata', cohabiting: 'Concubinato', divorced: 'Divorziato/a', widowed: 'Vedovo/a', dissolvedPartnership: 'Unione domestica sciolta' } },
         dependents: 'Numero di figli',
         household: {
           adults: 'Adulti nel nucleo familiare',

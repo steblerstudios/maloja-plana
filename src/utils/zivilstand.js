@@ -20,9 +20,26 @@
 export const ZIVILSTAND_VERHEIRATET = 'married';
 export const ZIVILSTAND_EINGETRAGEN = 'registeredPartnership';
 
+// «Aufgelöste Partnerschaft» — der amtliche Zivilstand nach dem Ende einer eingetragenen
+// Partnerschaft. Belegt am 23.09.2026 an Fedlex:
+//   · ZStV Art. 8 lit. d Ziff. 1 (SR 211.112.2, Fassung 1.6.2025): kennt drei Status —
+//     «gerichtlich aufgelöste Partnerschaft / durch Tod aufgelöste Partnerschaft / durch
+//     Verschollenerklärung aufgelöste Partnerschaft»; fr «partenariat dissous», it «unione
+//     domestica sciolta», rm «partenadi schlià». https://fedlex.data.admin.ch/eli/cc/2004/362
+//   · ATSG Art. 13a Abs. 2 und 3 (SR 830.1): die überlebende Person ist «einem Witwer
+//     gleichgestellt», die gerichtliche Auflösung «einer Scheidung».
+//   · DBG Art. 9 Abs. 1bis (SR 642.11, Fassung 2.9.2026): zusammengerechnet wird nur «in
+//     rechtlich und tatsächlich ungetrennter eingetragener Partnerschaft»; für Unterhalt und
+//     Auseinandersetzung «bei … Auflösung» gilt dasselbe wie für Ehegatten — also wie
+//     geschieden bzw. verwitwet: Einzeltarif, Elterntarif nur mit Kindern im Haushalt.
+// Maloja fragt die drei Arten nicht einzeln: kein Rechner behandelt «geschieden» oder
+// «verwitwet» heute besonders — alle rechnen wie alleinstehend. Wird einmal eine
+// Hinterlassenenrente gerechnet, muss die Art der Auflösung dazu (Witwer-, nicht Witwenregeln).
+export const ZIVILSTAND_AUFGELOEST = 'dissolvedPartnership';
+
 // true für «verheiratet» und «eingetragene Partnerschaft» — überall dort, wo das Recht
 // beide gleich behandelt (gemeinsame Veranlagung, Verheiratetentarif, Plafonierung,
-// Haushalt mit zwei Erwachsenen).
+// Haushalt mit zwei Erwachsenen). Die aufgelöste Partnerschaft gehört nicht dazu.
 export function giltAlsVerheiratet(zivilstand) {
   return zivilstand === ZIVILSTAND_VERHEIRATET || zivilstand === ZIVILSTAND_EINGETRAGEN;
 }
