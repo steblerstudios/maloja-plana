@@ -22,7 +22,9 @@ export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) 
     st.mode === 'orientation' ? t('po.tachoOrientation')
     : st.mode === 'below' ? t('po.tachoReadoutBelow', { costs: num(st.costs), be: num(st.breakEven), high: num(st.high) })
     : t('po.tachoReadoutAbove', { costs: num(st.costs), be: num(st.breakEven), low: num(st.low) });
-  const readoutColor = st.mode === 'below' ? palette.sage : st.mode === 'above' ? palette.sandDeep : palette.mid;
+  // sageDeep, nicht sage: die Ableselinie ist Text (4.5:1), nicht eine Zonenfläche (3:1).
+  // sage als Text lag hier bei 4.35:1 dunkel und 4.11:1 hell — beides unter AA.
+  const readoutColor = st.mode === 'below' ? (palette.sageDeep || palette.sage) : st.mode === 'above' ? palette.sandDeep : palette.mid;
 
   const zones = [
     { from: 0, to: st.breakEven, color: palette.sage, opacity: 0.85 },

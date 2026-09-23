@@ -131,7 +131,7 @@ export const ChartsAdvanced = ({ palette, t, data }) => {
       ),
       React.createElement('div', null,
         React.createElement('div', { style: { fontSize: text.xs, color: palette.mid } }, t('budgetSync.remaining') || 'Verfügbar'),
-        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: remaining > 0 ? palette.sage : palette.rose } }, 'CHF ' + remaining.toLocaleString('de-CH'))
+        React.createElement('div', { style: { fontSize: text.lg, fontWeight: weight.semi, color: remaining > 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) } }, 'CHF ' + remaining.toLocaleString('de-CH'))
       )
     ),
 

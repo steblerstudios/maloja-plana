@@ -414,6 +414,7 @@ const AppInner = ({ demo }) => {
   // Anker spiegelt sich, damit die Einhand-Bedienung dem linken Daumen entgegenkommt.
   const [leftHand, setLeftHand] = useState(() => { try { return localStorage.getItem('or5_lefthand') === '1'; } catch { return false; } });
   useEffect(() => { try { localStorage.setItem('or5_lefthand', leftHand ? '1' : '0'); } catch {} }, [leftHand]);
+
   const palette = applyColorBlind(isDarkMode ? DARK_PALETTE : LIGHT_PALETTE, colorBlind);
   const vorlesen = useVorlesen(lang);
   const vw = useViewport();
@@ -422,6 +423,30 @@ const AppInner = ({ demo }) => {
   // nicht mehr in eine Reihe → Sekundär-Bedienelemente wandern ins ☰-Menü.
   const isMobile = vw < 560;
   const contentMax = vw >= 1024 ? '780px' : isTablet ? '680px' : '520px';
+
+  // ─── Kopfhöhe als CSS-Variable ───────────────────────────────────────────
+  // Seit das Dokument selbst scrollt, klebt der Kopf (position: sticky) über dem
+  // Inhalt. Alles, was sich darunter hängen soll — die Sektionsreiter im
+  // ChapterView, die Reiter im Vorsorge-Rechner — braucht seine Höhe. Die ist
+  // nicht konstant: auf schmalen Schirmen bricht die Kopfzeile um (73 px statt
+  // 52 px gemessen). Deshalb gemessen statt geraten, und bei jeder Änderung neu.
+  useEffect(() => {
+    const kopf = document.querySelector('header[role="banner"]');
+    if (!kopf) return;
+    const setzen = () => {
+      try {
+        document.documentElement.style.setProperty('--mp-kopf-h', Math.round(kopf.getBoundingClientRect().height) + 'px');
+      } catch { /* Stil-Zugriff blockiert — die Reiter fallen auf den Vorgabewert zurück */ }
+    };
+    setzen();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', setzen);
+      return () => window.removeEventListener('resize', setzen);
+    }
+    const beobachter = new ResizeObserver(setzen);
+    beobachter.observe(kopf);
+    return () => beobachter.disconnect();
+  }, [isMobile, simpleView]);
 
   // ─── Data loading with migration ──────────────────────────
   const [data, setData] = useState(() => {
@@ -815,8 +840,11 @@ const AppInner = ({ demo }) => {
     // startTransition: erlaubt den Suspense-Fallback beim Wechsel auf einen Lazy-View.
     startTransition(() => setView(viewName));
     requestAnimationFrame(() => {
+      // Das Dokument scrollt, nicht mehr <main> — der Sprung nach oben geht ans Fenster.
+      // `preventScroll` bleibt: der Fokus soll die Seite nicht ein zweites Mal bewegen.
+      window.scrollTo({ top: 0, behavior: 'instant' });
       const main = document.getElementById('mp-main');
-      if (main) { main.scrollTop = 0; main.focus({ preventScroll: true }); }
+      if (main) main.focus({ preventScroll: true });
     });
   };
 
@@ -1007,7 +1035,10 @@ const AppInner = ({ demo }) => {
   );
 
   return React.createElement(VorlesenContext.Provider, { value: vorlesen },
-  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100vw', height: '100vh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
+  // minHeight statt fester height: das Dokument selbst scrollt, nicht ein Kasten
+  // darin (siehe Kommentar am <main>). 100dvh statt 100vh, weil 100vh auf iOS die
+  // eingeblendete Adressleiste nicht mitrechnet und unten abgeschnitten würde.
+  React.createElement('div', { 'aria-label': t('common.appName'), style: { width: '100%', minHeight: '100dvh', background: palette.bg, color: palette.text, fontFamily: fontFamily, display: 'flex', flexDirection: 'column', boxSizing: 'border-box', ...(isMobile ? { paddingBottom: 'calc(58px + env(safe-area-inset-bottom))' } : {}), ...(grayscale ? { filter: 'grayscale(1)' } : {}) } },
     // Skip-to-content link for keyboard users
     React.createElement('a', { href: '#mp-main', className: 'mp-skip-link' }, t('common.skipToContent') || 'Skip to content'),
     // Nur einhängen, wenn offen — sonst lüde das nachgeladene Stück schon beim Start
@@ -1237,7 +1268,14 @@ const AppInner = ({ demo }) => {
         }, t('sandbox.apply'))
       )
     ),
-    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, overflowY: 'auto', padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
+    // Kein eigener Scroll-Kasten mehr (vorher `overflowY: 'auto'`). Ein innerer
+    // Scroll-Container kostet auf iOS dauerhaft Platz: die Adressleiste blendet sich
+    // nur aus, wenn das DOKUMENT scrollt — und der Tipp auf die Statusleiste springt
+    // nur im Dokument nach oben. Dazu blieben die Leisten über <main> (Demo-/Sandbox-
+    // Hinweis) permanent stehen, statt wegzuscrollen. Jetzt scrollt die Seite; klebend
+    // bleibt nur der Kopf (position: sticky), und die Reiter darin hängen sich per
+    // --mp-kopf-h darunter.
+    React.createElement('main', { id: 'mp-main', role: 'main', tabIndex: -1, style: { flex: 1, padding: '24px 20px 32px 20px', outline: 'none', width: '100%', maxWidth: contentMax, marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' } },
       view !== 'dashboard' && React.createElement('button', {
         onClick: () => setView('dashboard'),
         'aria-label': t('nav.backToDashboard'),

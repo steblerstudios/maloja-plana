@@ -422,7 +422,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
         : ipv.belegt === false
           ? t('ipv.statusOffen')
           : t('finanzUebersicht.notEligible'),
-      statusColor: ipv.eligible ? palette.sage : palette.mid,
+      statusColor: ipv.eligible ? (palette.sageDeep || palette.sage) : palette.mid,
       detail: ipv.eligible
         ? formatCHF(ipv.annual) + ' ' + t('common.perYear')
         : ipv.belegt === false
@@ -444,7 +444,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       status: sozialhilfe.eligible
         ? t('sozialhilfe.entitled') + ': ~ ' + formatCHF(sozialhilfe.deficit) + ' ' + t('common.perMonth')
         : t('sozialhilfe.notEntitled'),
-      statusColor: sozialhilfe.eligible ? palette.gold : palette.sage,
+      statusColor: sozialhilfe.eligible ? (palette.goldDeep || palette.gold) : (palette.sageDeep || palette.sage),
       detail: t('sozialhilfe.basicNeeds') + ': ' + formatCHF(sozialhilfe.grundbedarf) + ' | ' + t('sozialhilfe.totalNeeds') + ': ' + formatCHF(sozialhilfe.totalBedarf),
       onClick: () => onNavigate('sozialhilfe'),
     }),
@@ -510,7 +510,7 @@ export const FinanzUebersicht = ({ palette, t, data, onNavigate, isDarkMode, cha
       },
         React.createElement('span', { style: { fontSize: text.sm, fontWeight: weight.semi } }, t('finanzUebersicht.freeAmount')),
         React.createElement('span', {
-          style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? palette.sage : (palette.roseDeep || palette.rose) }
+          style: { fontSize: text.lg, fontWeight: weight.semi, color: freeAmount >= 0 ? (palette.sageDeep || palette.sage) : (palette.roseDeep || palette.rose) }
         }, formatCHF(freeAmount))
       )
     ),

@@ -186,7 +186,6 @@ const getBudgetRecommendations = (budget, t) => {
   if (rentPercentage > 40) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.rentInfo') : 'Your housing costs make up a large part of your budget. This is not uncommon in many Swiss cities.'
     });
   }
@@ -195,7 +194,6 @@ const getBudgetRecommendations = (budget, t) => {
   if (totalExpensesPercentage > 90) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.budgetTight') : 'Your budget is tight. Free budget counselling is available — for example through Caritas or your local municipality.'
     });
   }
@@ -203,7 +201,6 @@ const getBudgetRecommendations = (budget, t) => {
   if (budget.remaining < 0) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.deficitInfo') : 'Expenses currently exceed income. This can be temporary — your canton\'s debt counselling service can help.'
     });
   }
@@ -211,7 +208,6 @@ const getBudgetRecommendations = (budget, t) => {
   if (budget.income > 0 && budget.remaining >= 0 && totalExpensesPercentage <= 90) {
     recommendations.push({
       level: 'calm',
-      icon: '○',
       text: t ? t('budget.budgetCalm') : 'You have an overview of your finances. Every step counts.'
     });
   }
@@ -220,13 +216,11 @@ const getBudgetRecommendations = (budget, t) => {
   if (budget.ipvRelief > 0) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.ipvHint', { amount: budget.ipvRelief }) : 'You may be eligible for premium reduction (IPV).'
     });
   } else if (budget.ipvOrientierung) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.ipvHintOhneBetrag') : 'Check the premium reduction (IPV): the canton decides on entitlement and amount.'
     });
   }
@@ -236,7 +230,6 @@ const getBudgetRecommendations = (budget, t) => {
   if (hc && budget.income > 0 && budget.income < hc.skosGrundbedarf) {
     recommendations.push({
       level: 'info',
-      icon: '○',
       text: t ? t('budget.sozialhilfeHint') : 'Your income is below the SKOS basic needs threshold. Social assistance may be an option.'
     });
   }
@@ -247,7 +240,6 @@ const getBudgetRecommendations = (budget, t) => {
     if (isRetired) {
       recommendations.push({
         level: 'info',
-        icon: '○',
         text: t ? t('budget.elHint') : 'With a modest income in retirement, supplementary benefits (EL) may be available.'
       });
     }
