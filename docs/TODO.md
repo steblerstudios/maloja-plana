@@ -277,6 +277,12 @@ Designprinzip-Satz: *„Jeder Bereich verwendet die reale Metapher, die Menschen
   + 94 direktLinks). **0 echte tote Links** — alle 2xx/3xx; einzig 3× `baselland.ch` 403 = bekannter
   WAF-False-Positive (im echten Browser gültig, siehe [[link-check]]). Asyl-Orgs (SEM/Caritas/HEKS/
   SFH/SRK/EPER) + Stipendien (EDK/SBFI/stipendium.ch) alle 200.
+- ❓ **IPV-Unterlagenliste: zwei Punkte offen (2026-09-24).** Beim Entfernen des toten
+  Übersetzungsblocks `premiumCalc` (nirgends gelesen, 16 Schlüssel × 5 Sprachen) standen darin
+  zwei Unterlagen, die die heutige Liste `premium.doc1..4` nicht kennt: **«Mietvertrag (falls
+  vorhanden)»** und **«Bestätigung von Unterhaltszahlungen (falls zutreffend)»**. Beides ist
+  kantonal verschieden. 🛑 **Erst mit kantonaler Quelle übernehmen, nicht geraten.** Der alte
+  Wortlaut steht in der git-Historie (Commit «Toter Übersetzungsbestand»).
 
 ## F — Grössere Features (Stebler Studios wählt Reihenfolge)
 
