@@ -143,16 +143,18 @@ describe('Allein stehende Piktogramme · Höchststand, der nur sinken darf', () 
   // 23.09.2026: 6 → 5. Gezählt ab jetzt auch in `.js`: acht `○` aus
   // `budgetSync.js` sind weg (sie standen ohne aria-hidden auf dem Schirm),
   // dazu kommt das `✓` in der Druck-Tabelle des Dossiers (`dossierGenerator.js`).
-  // In `.jsx` bleiben 4: `stipResultMarker` (✓ ○ ⓘ, Ton-Entscheid offen) und
-  // die antippbare Glossar-Markierung ⓘ.
-  const HOECHSTSTAND = 5;
+  // Später am 23.09.2026: 5 → 2. `stipResultMarker` (✓ ○ ⓘ) ist eine Form
+  // geworden (`StatusForm`, wie in der KVG-Statuslogik). Es bleiben die
+  // antippbare Glossar-Markierung ⓘ und das ✓ im Druck-Dossier. Damit gibt es
+  // kein allein stehendes ○ mehr — es steht auch nicht mehr in der Liste.
+  const HOECHSTSTAND = 2;
 
   it(`höchstens ${HOECHSTSTAND} allein stehende Piktogramme`, () => {
     expect(alleinStehende().length).toBeLessThanOrEqual(HOECHSTSTAND);
   });
 
   it('kein Zeichen ausserhalb der bekannten Liste', () => {
-    const BEKANNT = new Set([...'✓○ⓘ']);
+    const BEKANNT = new Set([...'✓ⓘ']);
     const neue = [...new Set(alleinStehende().map((g) => g.ch))].filter((c) => !BEKANNT.has(c));
     expect(neue).toEqual([]);
   });
