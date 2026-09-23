@@ -201,14 +201,20 @@ kein waagrechter Überlauf irgendwo, kein Absturz, keine Ansicht ohne `#mp-main`
   `disabled` IK-Eingang — WCAG 1.4.3 nimmt inaktive Bedienelemente aus).
   🛑 Die Farbtafel kann das nicht sehen: sie rechnet mit der Farbe, gesehen wird die Mischung.
 
-- ⏳ 🌳 **Lebensbaum: vier Beschriftungen bei Deckkraft 0.34 → 1.64–2.03:1.** «Ausbildung 82 %»
-  und «Finanzen 35 %» auf der Finanz-Übersicht. Stabil, keine Animation; `pointer-events: none`,
-  und **nur manche** Äste sind gedimmt — das wirkt wie ein gewollter Zustand, nicht wie ein
-  Versehen. 🛑 **Bewusst nicht angefasst:** der Lebensbaum gehört zur Atmosphäre-Schicht, die
-  im Gestalt-Skill ausdrücklich als *unantastbar* geführt ist. Die Angabe steht zudem als
-  `aria-label` am Knopf und in der Kapitelliste, ist also nicht verloren.
-  **Frage an Stebler Studios:** ist die Dimmung ein Zustand (dann Form statt Deckkraft, wie bei
-  den Berg-Beschriftungen gelöst) oder reine Tiefenwirkung (dann bleibt sie)?
+- ✅ 🌳 **Lebensbaum (räumlich): Tiefe über Farbe statt über Deckkraft** (`08d485a`).
+  Die Frage «Zustand oder Tiefe?» ist am Code beantwortet: `m.vorne` ist ein Skalarprodukt
+  gegen die Blickrichtung (`Baum3D.jsx` ~719) — **reine Geometrie**. «Form statt Farbe» greift
+  also nicht, es gibt keinen Zustand. Entschieden hat es die Datei selbst: vierzig Zeilen unter
+  dem `opacity: m.vorne ? 1 : 0.34` steht an der Prozentzahl der Satz *«Feste Farbe statt
+  opacity: Deckkraft auf Text senkt den Kontrast unkontrolliert»* — die eine Stelle hob die
+  andere auf. Gemessen hinten: Name **2.03 → 5.91:1**, Prozentzahl **1.64 → 5.91:1**; vorne
+  unverändert 14.43:1. Der Sprung 14.43 → 5.91 trägt das Zurücktreten weiterhin.
+  Dekoration darf blasser bleiben: Pillen-Rand 55 → 2A, `aria-hidden`-Symbol opacity 0.45.
+  🛑 Kein Bild davon geprüft — ohne eingeblendete Vorschau-Leiste rendert die Seite keine
+  Frames; die Werte stammen aus dem DOM.
+  🛑 **Lücke im allgemeinen Wächter:** `deckkraftFrisstKontrast.test.js` sieht nur Deckkraft auf
+  Zeilen, die selbst eine Schriftgrösse tragen. Hier sass sie auf einem **Container** und wirkte
+  auf die Kinder — statisch nicht erkennbar. Dafür `baum3dTiefeOhneDeckkraft.test.js`.
 - ⏳ **Reihenfolge Hinweis ↔ Orientierung.** Der Entwicklungs-Hinweis (`AlphaBanner`) steht am Handy
   vor «Was ist jetzt dran?» und kostet ~250 px. Ihn darunter zu schieben wäre die gleiche Bewegung,
   die `Dashboard.jsx:540` schon einmal gemacht hat — aber es ist ein **Haftungstext**, und die
