@@ -14,8 +14,16 @@ Was davon in `public/` liegt:
 | `public/og-image.svg` | Paket `anwendungen/social-preview-1200x630.svg`, 1:1 (Schrift in Pfaden, kein Ubuntu nötig) |
 | `public/og-image.png` | aus `og-image.svg` gerendert, 1200 × 630 |
 
-Noch nicht übernommen: Wortmarke im Kopf der App (das «M als Gipfel»
-in `main.jsx`, `LockScreen.jsx`, `BetaGate.jsx`, `Onboarding.jsx`) und die Schriftfrage
-(Paket: Ubuntu · App: Lexend/Hanken). Das ist ein Entscheid, kein Rückstand.
+| `logo-horizontal-dunkel.svg` (hier) | Paket `logo/logo-horizontal-dunkel.svg`, pixelgeprüft gegen das gelieferte PNG (197 von 206 800 Pixeln weichen ab, nur Kantenglättung) |
+| `src/components/MarkenLogo.jsx` | dieselben Pfade als EINE Logo-Quelle für Kopfzeile, Sperrbildschirm, Beta-Tor, Onboarding. `markenLogo.test.js` hält sie mit der SVG gleich |
+
+**Farbe nach Fläche, nicht nach Modus:** dunkle Fläche → Salbei/Sand, Schrift Warmweiss; helle
+Fläche → einfarbig Anthrazit `#22211F` (Markenbuch). Das Beta-Tor ist immer hell, darum
+entscheidet die Palette der Fläche, nicht `data-theme`.
+
+**Schrift:** Der Schriftzug ist Ubuntu **in Pfaden**, also ein Bild. Die App-Schrift bleibt
+Lexend; es wird keine Ubuntu-Datei geladen (Entscheid Stebler Studios, 24.09.2026).
+
+Noch offen: `brand-guidelines.md` beschreibt noch das alte Gipfel-Signet und die Granit-Palette.
 
 Neu rendern: `sips -s format png -z 512 512 public/app-icon.svg --out public/icon-512.png`

@@ -2,8 +2,9 @@ import React, { useState, Suspense } from 'react';
 import { LIGHT_PALETTE } from './config/constants.js';
 import { useT } from './i18n/index.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
-import { text, weight, radius , leading , space, visuallyHiddenStyle } from './config/tokens.js';
+import { text, weight, radius , leading , space } from './config/tokens.js';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 const LegalView = React.lazy(() => import('./LegalView.jsx'));
 
@@ -115,15 +116,9 @@ export const BetaGate = ({ children }) => {
         'aria-label': 'Maloja Plana',
         style: { fontSize: text.xl, fontWeight: weight.bold, margin: '0 0 ' + space.sm + 'px', color: palette.text, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '2px' }
       },
-        React.createElement('svg', { width: '20', height: '23', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
-          React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-          React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
-        ),
-        // Das «M» ist der Gipfel im SVG — als Text fehlt es. Ohne dieses versteckte
-        // «M» liest jede Text-Extraktion (Suchmaschine, KI-Crawler) «aloja Plana».
-        // aria-label oben deckt nur Screenreader ab, nicht den Textknoten.
-        React.createElement('span', { style: visuallyHiddenStyle }, 'M'),
-        'aloja Plana'
+        // Der Name steckt als versteckter Text im Logo: Screenreader UND Text-Extraktion
+        // (Suchmaschine, KI-Crawler) lesen «Maloja Plana» (Wächter: markennameImTitel.test.js).
+        React.createElement(MarkenLogo, { palette, breite: 220 })
       ),
       React.createElement('p', {
         style: { fontSize: text.sm, color: palette.mid, marginBottom: space.md, lineHeight: leading.normal }
