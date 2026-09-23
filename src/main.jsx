@@ -43,6 +43,7 @@ import CalmLoader from './components/CalmLoader.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
 import AutoSaveStatus from './AutoSaveStatus.jsx';
 import StorageWarning from './StorageWarning.jsx';
+import { MarkenLogo } from './components/MarkenLogo.jsx';
 const DocumentTresor = React.lazy(() => import('./DocumentTresor.jsx'));
 const KKScanner = React.lazy(() => import('./KKScanner.jsx'));
 const BudgetImport = React.lazy(() => import('./BudgetImport.jsx'));
@@ -1096,8 +1097,8 @@ const AppInner = ({ demo }) => {
       // ARIA-Rolle ersetzt die native Semantik, damit hatte die Seite für
       // Screenreader gar kein h1 mehr (WCAG 1.3.1). Das Anklickbare ist jetzt ein
       // <button> IM h1: Überschrift und Bedienelement sind zwei Dinge, nicht eines.
-      // `aria-label` bleibt am h1, weil das «M» der Wortmarke ein SVG ist — sonst
-      // hiesse die Überschrift «aloja Plana».
+      // `aria-label` bleibt am h1: das Logo ist ein SVG (aria-hidden), der Name steht
+      // zusätzlich als versteckter Text darin (MarkenLogo.jsx).
       React.createElement('h1', {
         'aria-label': t('common.appName'),
         style: { fontSize: text.lg, fontWeight: weight.semi, margin: 0, letterSpacing: '0.3px', display: 'flex' }
@@ -1111,12 +1112,8 @@ const AppInner = ({ demo }) => {
             cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2px',
           }
         },
-          // Wortmarke — das «M» von Maloja IST der Gipfel (Maloja-Pass)
-          React.createElement('svg', { width: '17', height: '19', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
-            React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.4', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-            React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.7', fill: palette.gold })
-          ),
-          'aloja Plana'
+          // Logo aus EINER Quelle (MarkenLogo.jsx) — Bildmarke + Schriftzug, Name als versteckter Text
+          React.createElement(MarkenLogo, { palette, breite: 180 })
         )
       ),
       React.createElement('div', { style: { display: 'flex', gap: space.sm, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' } },
