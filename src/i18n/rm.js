@@ -2005,6 +2005,7 @@ export default {
     jahrOhneRegion: 'Quint per l’onn da dretg {jahr}. En il chantun Argovia vala la medema premia da referenza en tut il chantun — i na dat naginas regiuns da premias.',
     vorbehalt: 'Il chantun po anc adattar las basas da quint durant l’onn. Il dretg vegn obligatoric pir cun ils facturs fiscals definitivs {jahr}; imports retschavids memia bler ston vegnir restituids.',
     vorbehaltBE: 'En il chantun Berna è la taxaziun definitiva {basisjahr} la basa, betg l’entrada dad oz. Tgi che gudogna oz notablamain pli pauc sto dumandar ina nova examinaziun. Imports retschavids memia bler ston vegnir restituids.',
+    vorbehaltBE3aDeckel: 'Ina part da quest quint n’è betg definitivamain scleria giuridicamain: en cas d’in pajament pli aut che l’import maximal che la Confederaziun quenta, dependa la cifra da co ch’il chantun interpretescha questa limita. La dumonda è vegnida fatga a l’Uffizi da las assicuranzas socialas, la resposta manca anc. Laschar confermar l’import là.',
     beAntragNoetig: 'Attenziun: cun ina entrada sut 14 000 francs n’examinescha il chantun Berna il dretg betg automaticamain. L’examinaziun sto vegnir dumandada enfin ils 31 da december, uschiglio croda il dretg per quest onn.',
     // TODO(rm): provisorisch — von Muttersprachler:in gegenlesen (K31/AG, 20.09.2026).
     vorbehaltAG: 'En il chantun Argovia è la taxaziun definitiva {basisjahr} la basa — trais onns avant l’onn da dretg, betg l’entrada dad oz. Tgi che gudogna dapi lura notablamain pli pauc po dumandar ina nova quintada tar la SVA Aargau. Imports retschavids nunlegitimamain vegnan pretends enavos.',
@@ -2029,6 +2030,8 @@ export default {
       mindestanspruch: 'En quest sectur d’entrada n’è la regla chantunala betg univoca. Meglier nagina cifra che ina che sbaglia per pliras tschientinas da francs.',
       jahr: 'Ils valurs memorisads valan per in onn da dretg pli vegl. Uschespert che ils nums valurs uffizials èn integrads, quinta l’applicaziun puspè.',
       praemie: 'Per il quint manca la premia da la cassa da malsauns. La reducziun n’è mai pli auta che la premia sezza — senza ella fiss la cifra qua la limita superiura, betg il dretg.',
+      einkommenNegativ: 'L’entrada registrada è negativa. Uschia na sa lascha calcular nagina reducziun — controllai per plaschair l’import en il chapitel Finanzas.',
+      saeule3aUeberEinkommen: 'Il pajament en la 3. pitga A è pli aut che las entradas registradas da l’onn — u el sa repartescha sin plirs onns. Lura na sa lascha betg dir, tge part ch’è gia cuntegnida en las entradas, e la cifra fiss memia auta. Per plaschair controllar: dumandà è il pajament d’in onn, betg il stadi dal conto e betg la summa da plirs onns.',
       laden: 'Las basas vegnan anc chargiadas.',
     },
   },

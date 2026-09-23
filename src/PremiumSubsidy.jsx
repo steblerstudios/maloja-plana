@@ -316,6 +316,14 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
       // Jahren (§ 7 Abs. 1 KVGG). Ein Satz für alle wäre für zwei der drei Kantone falsch.
       React.createElement('div', { style: { marginTop: space.xs } },
         t(ipvResult.vorbehaltKey || 'ipv.vorbehalt', { jahr: ipvResult.jahr, basisjahr: ipvResult.basisjahr ?? ipvResult.jahr - 2 })),
+      // 🛑 Ein ZWEITER Vorbehalt, und nur für die, die er betrifft: Wo der 3a-Deckel wirkt,
+      // hängt der ganze Betrag an einer Lesart von KKVV Art. 6 Abs. 4 lit. i, die beim ASV
+      // Bern angefragt und nicht bestätigt ist (SAEULE_3A.bisBundesMaximum.vorbehalt). Ohne
+      // diesen Satz stünde eine Zahl im Brief, deren Grundlage strittig ist, und niemand
+      // wüsste es. Steht nur bei `zusatzVorbehaltKey` — sonst wäre es Lärm für alle anderen.
+      // (Befund Fachprüfung 23.09.2026: der Vorbehalt lag im Code und kam nie bei der Person an.)
+      ipvResult.zusatzVorbehaltKey && React.createElement('div', { style: { marginTop: space.xs } },
+        t(ipvResult.zusatzVorbehaltKey)),
       // Der Weg zur zuständigen Stelle gehört auch dorthin, wo ein Betrag steht — gerade wenn
       // der Anspruch beantragt werden muss.
       stelleUrl && React.createElement(ExternerLink, { t, href: stelleUrl, style: { display: 'inline-block', marginTop: space.xs, fontSize: text.xs, fontWeight: weight.semi, color: palette.sageDeep, textDecoration: 'underline', textUnderlineOffset: '2px' } }, t('ipv.zurStelle'))

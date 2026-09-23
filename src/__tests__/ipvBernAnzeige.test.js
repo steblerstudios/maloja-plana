@@ -49,6 +49,20 @@ describe('K31 IPV-Rechner, Kanton Bern', () => {
     expect(html).toContain('ipv.vorbehaltBE(2026|2024)');
   });
 
+  // 🛑 DER WÄCHTER FÜR DEN ZWEITEN VORBEHALT — und zwar in der ANZEIGE, nicht in der Datenzeile.
+  // Wo der 3a-Deckel wirkt, hängt der ganze Betrag an einer Lesart von KKVV Art. 6 Abs. 4
+  // lit. i, die beim ASV Bern angefragt und nicht bestätigt ist. Genau diese Lücke — der
+  // Vorbehalt lag im Code und kam nie bei der Person an — war ein Befund der Fachprüfung
+  // vom 23.09.2026. Ein Test auf der Datenzeile allein hätte ihn nicht bemerkt.
+  it('wirkt der 3a-Deckel, steht der zweite Vorbehalt im HTML — sonst nicht', () => {
+    const mitDeckel = { ...profil(4000), finanzen: { monthlyIncome: 4000, pension3a: 35280 } };
+    expect(render(mitDeckel)).toContain('ipv.vorbehaltBE3aDeckel');
+    // Einzahlung im Band unter der Schwelle: kein Abzug, also auch kein zweiter Vorbehalt.
+    expect(render({ ...profil(1500), finanzen: { monthlyIncome: 1500, pension3a: 7258 } }))
+      .not.toContain('ipv.vorbehaltBE3aDeckel');
+    expect(render(profil(1500))).not.toContain('ipv.vorbehaltBE3aDeckel');
+  });
+
   // Ohne Betrag: der Grund gehört sichtbar dazu. «Kein Betrag» heisst hier «eine Angabe fehlt»,
   // nicht «der Kanton ist ungeprüft».
   it.each([

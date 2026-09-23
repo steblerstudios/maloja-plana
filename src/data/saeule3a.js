@@ -33,14 +33,43 @@
 // heute alle bei `mitPensionskasse` — für Selbständige ohne PK ist das zu tief (offener
 // Punkt, siehe docs/product/swiss-knowledge-registry.md).
 
+// 🛑 NICHT NUR DAS LAUFENDE JAHR. Die Tabelle oben stand bis zum 23.09.2026 nur als
+// Kommentar hier — und genau das reichte nicht: Die Prämienverbilligung rechnet nicht mit dem
+// Höchstabzug des laufenden Jahres, sondern mit dem des BEMESSUNGSJAHRES. Im Kanton Bern ist
+// das die definitive Veranlagung des vorletzten Steuerjahres (KKVV Art. 7 Abs. 1), für das
+// Anspruchsjahr 2026 also 2024 — dort galten 7'056, nicht 7'258. Eine Aufrechnung kann nicht
+// grösser sein als der Abzug, den sie rückgängig macht.
+// Wer hier ein Jahr fortschreibt, ändert damit NICHT nur den Steuerrechner, sondern auch die
+// Prämienverbilligung von BE — zwei Jahre später. Darum die Jahre einzeln, nicht ein Wert.
+// Werte wörtlich aus der ESTV-Tabelle «Höchstabzüge Säule 3a», an der Quelle abgelesen am
+// 23.09.2026 (alle sechs publizierten Jahre, nicht nur die gebrauchten).
+export const SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR = Object.freeze({
+  2026: Object.freeze({ mitPensionskasse: 7258, ohnePensionskasse: 36288 }),
+  2025: Object.freeze({ mitPensionskasse: 7258, ohnePensionskasse: 36288 }),
+  2024: Object.freeze({ mitPensionskasse: 7056, ohnePensionskasse: 35280 }),
+  2023: Object.freeze({ mitPensionskasse: 7056, ohnePensionskasse: 35280 }),
+  2022: Object.freeze({ mitPensionskasse: 6883, ohnePensionskasse: 34416 }),
+  2021: Object.freeze({ mitPensionskasse: 6883, ohnePensionskasse: 34416 }),
+});
+
+// Höchstabzug für Angestellte mit Pensionskasse in EINEM bestimmten Steuerjahr.
+// Gibt `null` zurück, wenn das Jahr nicht belegt ist — bewusst nicht den nächstbesten Wert:
+// ein stiller Rückfall aufs laufende Jahr wäre genau der Fehler, den diese Tabelle verhindert.
+// Wer `null` bekommt, zeigt keine Zahl (so macht es ipvBern.js), statt eine zu raten.
+export function saeule3aMaximum(steuerjahr) {
+  return SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[steuerjahr]?.mitPensionskasse ?? null;
+}
+
 export const SAEULE3A_HOECHSTABZUG = {
-  mitPensionskasse: 7258,
-  ohnePensionskasse: 36288,
+  ...SAEULE3A_HOECHSTABZUG_JE_STEUERJAHR[2026],
   satzOhnePensionskasse: 0.20,
   steuerjahr: 2026,
   abgerufen: '2026-09-23',
   quelle: 'ESTV, Höchstabzüge Säule 3a bei der Direkten Bundessteuer (BVV 3 Art. 7 Abs. 1)',
 };
 
-// Bequemer Kurzname für den häufigen Fall (Angestellte mit Pensionskasse).
+// Bequemer Kurzname für den häufigen Fall: Angestellte mit Pensionskasse, LAUFENDES Jahr.
+// 🛑 Richtig für «wie viel darf ich dieses Jahr einzahlen» (Saeule3aTracker, TaxCalculator).
+// FALSCH für jede Rechnung, die auf einer älteren Veranlagung beruht — dort
+// `saeule3aMaximum(bemessungsjahr)` verwenden.
 export const SAEULE3A_MAX = SAEULE3A_HOECHSTABZUG.mitPensionskasse;

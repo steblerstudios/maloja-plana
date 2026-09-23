@@ -13,6 +13,11 @@
 // Wiederholung: er macht aus einem sichtbaren Unterschied einen unsichtbaren.
 // Darum sind die Regeln unten **benannt und belegt**, nicht vereinheitlicht.
 
+// Der Frankenwert des bundesrechtlichen 3a-Maximums steht an EINER Stelle (src/data/saeule3a.js)
+// und wird hier nicht wiederholt. Das Blatt hat bewusst keine eigenen Importe, kostet also
+// nichts ausser sich selbst.
+import { saeule3aMaximum } from '../data/saeule3a.js';
+
 // ─── Eingaben lesen ────────────────────────────────────────────────────────────
 
 // Vermögen ist in allen vier Kantonen dieselbe Summe der drei erfassten Posten.
@@ -38,10 +43,50 @@ export function vermoegenSumme(f) {
 //                        bei Personen OHNE Säule 2.
 //                        § 6 Abs. 5 KVGG (SAR 837.200) i. V. m. § 5 Abs. 1 V KVGG (837.211)
 //
-// 🛑 ZWEI DIESER DREI WIRKEN HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
+// 🛑 EINE DIESER DREI WIRKT HEUTE NOCH NICHT — und das steht hier, statt still zu fehlen.
 // Gleiche Bauart wie `KEIN_PRAEMIENDECKEL`: ein Weglassen, das als Entscheid lesbar ist,
-// wird beim nächsten Kanton nicht kopiert. Beide geben `0` zurück wie `voll`, aber aus
-// einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
+// wird beim nächsten Kanton nicht kopiert. `schwelleOhneSaeule2` gibt `0` zurück wie `voll`,
+// aber aus einem benannten Grund — wer die Zahl später einsetzt, sieht sofort, was ihm fehlte.
+// ⟨23.09.2026: vorher waren es ZWEI. `bisBundesMaximum` rechnet seit heute; der alte Satz
+// steht hier als Beleg, damit der Weg von «fehlt» nach «rechnet» lesbar bleibt.⟩
+
+// Die Jahreseinzahlung in die Säule 3a — das Feld heisst «3. Säule A eingezahlt CHF/Jahr»
+// (src/i18n/de.js), ist also ein Jahresbetrag und wird NICHT mit 12 multipliziert.
+//
+// 🛑 EHRLICH GESAGT: dieser Betrag ist der des LAUFENDEN Jahres, der Deckel (BE) der des
+// Bemessungsjahres. Das ist kein Versehen, sondern dieselbe Näherung wie beim Einkommen: die
+// App kennt die Veranlagung von vor zwei Jahren nicht und nimmt die heutigen Angaben als
+// deren Stellvertreter. Innerhalb dieser Näherung ist das Maximum des Bemessungsjahres das
+// stimmige — die Aufrechnung macht einen Abzug JENER Veranlagung rückgängig. Wer beides
+// mischt (heutiger Betrag, heutiger Deckel), rechnet gegen KKVV Art. 7 Abs. 1.
+// (Fachprüfung 23.09.2026, zweite Runde: der Kommentar behauptete hier vorher, der Betrag
+// sei schon deshalb sauber, weil das Feld «CHF/Jahr» heisst. Das trägt der Datenweg nicht.)
+//
+// Bewusst nicht `Number(f.pension3a || 0)` wie in `einkommenJahr`: eine unlesbare Eingabe
+// ('abc') ergäbe dort NaN, und ein NaN im Abzug macht aus einem gültigen Einkommen ein
+// ungültiges — die App zeigte dann gar keine Zahl, obwohl sie eine hat. Unlesbar und negativ
+// zählen darum als 0, der Deckel ist dann aus.
+// ⚠️ Das liegt auf der ZU TIEFEN Seite, und die ist nach dem Block bei `einkommenJahr` auch
+// nicht harmlos. Hier trotzdem so: eine unlesbare Zahl zu deuten wäre Raten, und der Fall
+// entsteht nicht über die Oberfläche (`type: 'number'`), sondern nur aus Altdaten.
+const betrag3a = (f) => Math.max(0, Number(f.pension3a) || 0);
+
+// Die Einzahlungszeilen des Trackers, sofern erfasst. Jede Zeile trägt `date` und `amount`.
+const einzahlungsJahre = (f) => [...new Set((Array.isArray(f.pension3aDeposits) ? f.pension3aDeposits : [])
+  .map((d) => String(d?.date || '').slice(0, 4))
+  .filter((j) => /^\d{4}$/.test(j)))];
+
+// Ab welchem Betrag überhaupt abgezogen wird: das HÖHERE der beiden Jahresmaxima.
+// Warum nicht einfach das des Bemessungsjahres, steht ausführlich bei `nichtAufgerechnet`.
+// `null`, wenn das Bemessungsjahr nicht belegt ist — dann gilt kein Deckel.
+// `jahre` ist `{ bemessungsjahr, anspruchsjahr }`; fehlt das Anspruchsjahr oder ist es nicht
+// belegt, zählt allein das Bemessungsjahr (dann gibt es kein Band, das zu schonen wäre).
+function abzugsSchwelle(jahre) {
+  const bemessung = saeule3aMaximum(jahre?.bemessungsjahr);
+  if (bemessung === null) return null;
+  return Math.max(bemessung, saeule3aMaximum(jahre?.anspruchsjahr) ?? bemessung);
+}
+
 export const SAEULE_3A = Object.freeze({
   voll: Object.freeze({
     name: 'voll',
@@ -53,23 +98,152 @@ export const SAEULE_3A = Object.freeze({
   bisBundesMaximum: Object.freeze({
     name: 'bisBundesMaximum',
     kantone: 'BE',
-    beleg: 'KKVV Art. 6 Abs. 4 lit. i',
-    // ⟨23.09.2026: die ZAHL ist jetzt belegt — der Deckel wirkt trotzdem noch nicht.⟩
-    // Hier stand, der Frankenwert sei nicht belegt, weil Fedlex am 20.09.2026 auf eine
-    // ERFUNDENE ELI byte-identisch antwortete. Das Messgerät war unbrauchbar, der Schluss
-    // war richtig. Am 23.09.2026 über zwei andere Wege erhoben: ESTV-Tabelle «Höchstabzüge
-    // Säule 3a» (2026: 7'258 mit 2. Säule) und BSV-FAQ, gleicher Wert; Rechtsgrundlage
-    // BVV 3 Art. 7 Abs. 1 lit. a. Der Wert steht in src/data/saeule3a.js.
+    beleg: 'KKVV Art. 6 Abs. 4 lit. i (BSG 842.111.1, Stand 01.12.2025)',
+    // Wortlaut an der Quelle, abgerufen 23.09.2026 aus der bernischen Erlass-Sammlung
+    // (https://www.belex.sites.be.ch/app/de/texts_of_law/842.111.1):
+    //   «Beiträge an die gebundene Selbstvorsorge (Säule 3a) bis zum nach Bundesrecht
+    //    zulässigen Maximalbetrag für unselbständig Erwerbstätige werden dazugerechnet.»
     //
-    // 🛑 Was JETZT fehlt, ist nicht mehr die Zahl, sondern die Rechnung: der Abzug des
-    // Überschusses (pension3a − Maximum, wenn positiv) ist nicht gebaut und nicht
-    // fachgeprüft. BE ist eine Stufentabelle — ein Franken Differenz kippt eine Stufe.
-    // Darum hier bewusst weiter `() => 0` statt einer schnellen Zeile.
-    offen: 'Deckel wirkt noch nicht. Der Frankenwert ist seit 23.09.2026 belegt (7258, '
-      + 'ESTV/BVV 3 Art. 7 Abs. 1 lit. a, siehe src/data/saeule3a.js), aber der Abzug des '
-      + 'Überschusses ist nicht gebaut und nicht fachgeprüft. Betroffen sind nur '
-      + 'Einzahlungen ÜBER dem Maximum.',
-    nichtAufgerechnet: () => 0,
+    // 🛑 GEGENPROBE — und die erste Fassung dieses Satzes war selbst ein blindes Messgerät.
+    // ⟨Hier stand am 23.09.2026: «Gegenprobe bestanden: eine ERFUNDENE BSG-Nummer (842.111.9)
+    // liefert dort eine LEERE Seite, nicht denselben Text.» Das galt nur im Browser, der die
+    // Seite ausführt. Roh abgerufen ist `/app/de/texts_of_law/…` eine SPA-Hülle und für jede
+    // Nummer, echt oder erfunden, BYTE-IDENTISCH (2303 Bytes, gleicher SHA-256) — exakt der
+    // Fehlermodus, an dem Fedlex am 20.09. gescheitert ist. Der Satz stehengelassen, weil
+    // genau dieser Kommentar sonst zum nächsten Kanton kopiert wird.⟩
+    // Das Messgerät, das WIRKLICH misst, ist die API:
+    //   https://www.belex.sites.be.ch/api/texts_of_law/842.111.1  → HTTP 200, 2'160'333 Bytes
+    //   https://www.belex.sites.be.ch/api/texts_of_law/842.111.9  → HTTP 404, 0 Bytes
+    // Erst dieser Unterschied ist ein bestandener Test. Der Wortlaut oben ist über beide Wege
+    // gelesen und stimmt zeichengleich überein.
+    //
+    // 🛑 WELCHER BETRAG — drei Lesarten, und die App folgt der mittleren:
+    //   (a) der je Person geltende Höchstabzug. Dann hätte der Halbsatz «für unselbständig
+    //       Erwerbstätige» keinen Inhalt; wer ohne 2. Säule 36'288 einzahlt, bekäme sie voll
+    //       aufgerechnet. Wir halten das für falsch — der Erlass grenzt gerade dagegen ab.
+    //   (b) EIN fester Betrag, das Maximum «mit 2. Säule» (BVV 3 Art. 7 Abs. 1 lit. a).
+    //       Danach rechnet die App. Bei 36'288 Einzahlung ⇒ Abzug 29'030 statt 0.
+    //   (c) wörtlich «für unselbständig Erwerbstätige»: BVV 3 knüpft nicht an selbständig
+    //       oder nicht an, sondern an die ZUGEHÖRIGKEIT zu einer Vorsorgeeinrichtung. Für
+    //       Angestellte OHNE Pensionskasse (Lohn unter der BVG-Eintrittsschwelle) wäre der
+    //       «für Unselbständige zulässige» Betrag demnach lit. b, also 20 % / 35'280.
+    //       Diese Gruppe behandelt die App wie alle anderen.
+    // (b) ist eine vertretbare Lesart, kein Befund. Die Frage liegt beim ASV Bern
+    // (docs/sources/FRAGEN-AN-DIE-AEMTER.md, Frage 2) und ist nicht beantwortet.
+    //
+    // 🛑 WELCHES JAHR — das war der zweite Fehler, gefunden in der Fachprüfung 23.09.2026.
+    // Zuerst stand hier `SAEULE3A_MAX`, also der Höchstabzug des ANSPRUCHSJAHRES (7'258).
+    // Massgebend ist aber die definitive Veranlagung des vorletzten Steuerjahres (KKVV
+    // Art. 7 Abs. 1) — Art. 6 Abs. 4 korrigiert JENES Reineinkommen. Aufgerechnet werden
+    // kann nur, was dort abgezogen werden durfte: für das Anspruchsjahr 2026 das Maximum
+    // von 2024, also 7'056. Die App sagt es dem Menschen längst selbst («Im Kanton Bern ist
+    // die definitive Veranlagung {basisjahr} die Grundlage», i18n `ipv.vorbehaltBE`) — nur
+    // der Deckel rechnete zwei Jahre daneben. Gemessener Unterschied an einer Stufengrenze:
+    // CHF 480 im Jahr, auf der zu tiefen Seite.
+    // 🛑 `vorbehalt` ist NICHT `offen`, und der Unterschied ist der Punkt:
+    //   `offen`      = die Regel rechnet nicht. Es fehlt etwas, ohne das keine Zahl entsteht.
+    //   `vorbehalt`  = die Regel rechnet, aber auf einer vertretbaren Lesart statt auf einer
+    //                  bestätigten. Die Zahl ist da und begründet — sie kann sich ändern,
+    //                  wenn das Amt antwortet.
+    // Ohne diese Trennung müsste man zwischen «gar keine Zahl» und «keine offene Frage»
+    // wählen, und beides wäre gelogen. (Eingeführt 23.09.2026 nach der Fachprüfung, die
+    // zu Recht bemängelte, dass mit dem Entfernen von `offen` die Frage ans ASV unsichtbar
+    // wurde — obwohl sie in FRAGEN-AN-DIE-AEMTER.md weiter offen steht.)
+    vorbehalt: 'Gerechnet nach der Lesart «ein fester Betrag, das Maximum mit 2. Säule, aus '
+      + 'dem Bemessungsjahr». Wortlaut und Frankenwerte sind belegt, die Lesart ist beim ASV '
+      + 'Bern angefragt und nicht bestätigt (FRAGEN-AN-DIE-AEMTER.md, Frage 2). Betroffen '
+      + 'sind nur Einzahlungen ÜBER dem Maximum.',
+    maximumFuer: (bemessungsjahr) => saeule3aMaximum(bemessungsjahr),
+    // Das rohe Nettoeinkommen trägt die 3a voll, der Kanton rechnet sie nur bis zum Maximum
+    // auf ⇒ abzuziehen ist der Überschuss. Gegengerechnet am Erlassweg, Nettoeinkommen
+    // 60'000, Einzahlung 20'000, Maximum 7'056: amtlich Reineinkommen 40'000 +
+    // min(20'000, 7'056) = 47'056; hier 60'000 − max(0, 20'000 − 7'056) = 47'056.
+    //
+    // 🛑 DIESER RECHENWEG UNTERSTELLT, die Veranlagung habe die volle Einzahlung abgezogen —
+    // also 40'000 statt 60'000 − 7'056. Das trifft zu für Personen OHNE 2. Säule (BVV 3
+    // Art. 7 Abs. 1 lit. b, bis 35'280). Für eine Person MIT Pensionskasse hätte die
+    // Veranlagung höchstens 7'056 abgezogen, die Aufrechnung von 7'056 hübe das genau auf,
+    // und der richtige Abzug wäre NULL. Ob eine 2. Säule besteht, weiss die App nicht — es
+    // ist dieselbe fehlende Angabe, die `schwelleOhneSaeule2` (AG) blockiert.
+    // Wir rechnen hier trotzdem, weil der Fall ohne 2. Säule derjenige ist, für den der
+    // Deckel überhaupt geschrieben wurde: nur dort werden Beträge weit über dem
+    // Unselbständigen-Maximum einbezahlt. Bei einer Person mit PK über 7'258 wäre die
+    // Einzahlung ohnehin gesetzwidrig. Die Annahme steht hier, statt still zu wirken, und
+    // sie ist Teil der Frage ans ASV (FRAGEN-AN-DIE-AEMTER.md, Frage 2).
+    // (Befund Fachprüfung 23.09.2026, dritte Runde: die Annahme trug die ganze Rechnung und
+    // war nirgends benannt.)
+    // Der Abzug senkt das massgebende Einkommen, hebt also die Verbilligung — das ist die
+    // richtige Richtung: eine zu tiefe Verbilligung hält Berechtigte vom Antrag ab und ist
+    // NICHT die vorsichtige Seite (siehe den Block bei `einkommenJahr`).
+    //
+    // 🛑 ABGEZOGEN WIRD ERST ÜBER BEIDEN JAHRESMAXIMA — der Fehler, den die dritte
+    // Fachprüfungsrunde am 23.09.2026 gefunden hat, und er war messbar:
+    // Eine angestellte Person mit Pensionskasse zahlt 2026 exakt ihr gesetzliches Maximum
+    // von 7'258 ein. Gegen das Maximum des Bemessungsjahres (7'056) gehalten, entstand
+    // daraus ein Abzug von 202 Franken — und an einer Stufengrenze gemessen CHF 480 im Jahr
+    // ZU VIEL, also auf der Rückforderungsseite. Diese Person hat nichts falsch gemacht;
+    // der Abzug war reines Artefakt daraus, dass der Betrag aus dem laufenden Jahr stammt
+    // und der Deckel aus dem Bemessungsjahr (siehe `betrag3a`).
+    //
+    // Im Band zwischen den beiden Maxima (2026: 7'056–7'258) kann die App NICHT
+    // unterscheiden, ob jemand über das Maximum hinaus eingezahlt hat oder ob das Maximum
+    // seither bloss gestiegen ist. Ein Abzug braucht aber eine positive Begründung — «dieser
+    // Teil wurde nicht aufgerechnet». Wo die fehlt, wird nicht abgezogen. Das ist dieselbe
+    // Haltung wie beim `() => 0` von vorher, nur eng begrenzt statt pauschal.
+    //
+    // ⚠️ Der Preis, offen gesagt: für jemanden, der WIRKLICH über dem Maximum des
+    // Bemessungsjahres lag, fällt der Abzug um bis zu 202 Franken zu klein aus — im
+    // ungünstigsten Fall eine Stufe zu tief. Das ist die andere Fehlerrichtung, und sie ist
+    // nach dem Block bei `einkommenJahr` nicht harmlos. Sie bleibt, weil die Gegenrichtung
+    // (Rückforderung) einen Fall trifft, der völlig gewöhnlich ist — den Maximalzahler —,
+    // und diese Richtung nur einen, der ohnehin ausserhalb der Norm liegt.
+    //
+    // Ohne belegtes Bemessungsjahr KEIN Deckel, und der Aufrufer muss das vorher abfangen
+    // (ipvBern.js tut es mit `orientierung('jahr')`). Hier `0` statt eines geratenen Werts.
+    nichtAufgerechnet: (f, jahre) => {
+      const schwelle = abzugsSchwelle(jahre);
+      return schwelle === null ? 0 : Math.max(0, betrag3a(f) - schwelle);
+    },
+    // 🛑 Wann die Herleitung NICHT trägt (Befund Fachprüfung 23.09.2026, in der zweiten
+    // Runde geschärft). Zwei getrennte Widerlegungen, beide nur dort, wo der Deckel
+    // überhaupt beisst:
+    //
+    // (1) Die Einzahlung ist grösser als das ganze erfasste Jahreseinkommen. «Das
+    //     Nettoeinkommen trägt die 3a bereits» gilt nur, wenn sie AUS diesem Einkommen kam;
+    //     hier kam sie es nicht — aus Vermögen, oder es steht der KONTOSTAND im Feld für die
+    //     Jahreseinzahlung (`pension3aBalance` liegt direkt daneben, die Verwechslung ist
+    //     nah). Ungebremst zog der Abzug das Einkommen ins Negative,
+    //     `beMassgebendesEinkommen` klemmte auf 0 — und die App zeigte die HÖCHSTE Stufe.
+    //     Ein Vertipper im Formular hätte still den Höchstbetrag ergeben.
+    //
+    // (2) Die erfassten Einzahlungen stammen aus MEHREREN Kalenderjahren. Der Tracker
+    //     summiert datumsblind über alle Zeilen (Saeule3aTracker.jsx, ChapterView.jsx), er
+    //     ist zum Weiterführen gebaut. Drei Jahreszeilen à 7'000 ergeben dann eine
+    //     «Jahreseinzahlung» von 21'000 und einen Abzug, den es nicht gibt — gemessen in der
+    //     Fachprüfung: CHF 804 Anspruch, wo keiner besteht. Richtung: zu hoch, also
+    //     Rückforderung. Undatierte Zeilen sagen nichts und lösen das hier nicht aus.
+    //
+    // 🛑 BEIDE erst ab dem Maximum. Bleibt die Einzahlung darunter, ist der Abzug ohnehin 0
+    // und nichts ist widerlegt — dann darf der Riegel nicht greifen. Sonst nähme er gerade
+    // der Gruppe mit kleinem Einkommen die Zahl weg, die nach KKVV Art. 13 Abs. 2 lit. i
+    // selbst einen Antrag stellen muss und ohne diesen Hinweis den ganzen Anspruch verliert.
+    // (So stand es zuerst: 6'000 Einkommen, 3a 6'500 ⇒ keine Zahl, obwohl der Deckel bei
+    // 7'056 gar nicht beisst.)
+    // ⚠️ Eine Zeile aus EINEM vergangenen Jahr läuft hier durch: geprüft wird «mehr als ein
+    // Jahr», nicht «welches Jahr». Bewusst so — die App nimmt die heutigen Angaben ohnehin
+    // als Stellvertreter der Veranlagung (siehe `betrag3a`), ein einzelnes abweichendes Jahr
+    // ist darin kein Widerspruch. Mehrere Jahre sind einer: dann ist es keine Jahreszahl mehr.
+    widerlegt: (f, jahresEinkommen, jahre) => {
+      const schwelle = abzugsSchwelle(jahre);
+      // Unter der Schwelle entsteht gar kein Abzug — dann ist auch nichts zu widerlegen.
+      if (schwelle === null || betrag3a(f) <= schwelle) return false;
+      // `Number.isFinite` ausdrücklich: bei unlesbarem Einkommen ist `jahresEinkommen` NaN,
+      // und jeder Vergleich damit wäre `false` — der Riegel griffe stillschweigend nie.
+      // Heute folgenlos (das NaN endet ohnehin in `amount: null`), aber die Absicht gehört
+      // hingeschrieben, damit sie eine spätere Korrektur dort überlebt.
+      const ueberEinkommen = Number.isFinite(jahresEinkommen) && betrag3a(f) > Math.max(0, jahresEinkommen);
+      return ueberEinkommen || einzahlungsJahre(f).length > 1;
+    },
   }),
 
   schwelleOhneSaeule2: Object.freeze({
@@ -80,6 +254,14 @@ export const SAEULE_3A = Object.freeze({
     // besteht. Die App führt `bvgInsurer`, `bvgContribution` und `bvgBalance`, aber leere
     // Felder heissen «nicht erfasst», nicht «keine Säule 2». Aus einem Nichtwissen in die
     // eine oder andere Richtung zu rechnen, wäre beides geraten.
+    //
+    // ⟨23.09.2026⟩ WARUM DIESE REGEL NICHT MIT BE ZUSAMMEN GEBAUT WURDE, obwohl beide gleich
+    // aussehen: BE fehlte eine ZAHL, und eine Zahl kann man an der Quelle holen — das ist
+    // heute geschehen. AG fehlt eine ANGABE ÜBER DIE PERSON, die in der App nicht steht.
+    // Die holt kein Erlass nach; sie braucht entweder ein neues Feld oder den Entscheid,
+    // in AG eine Orientierung statt einer Zahl zu zeigen. Beides ist ein Produktentscheid
+    // von Stebler Studios, keine Fachrecherche. Darum bleibt hier `() => 0` — nicht weil es
+    // vergessen wurde, sondern weil der nächste Schritt nicht am Code hängt.
     // Bis das entschieden ist, bleibt es beim bisherigen Verhalten (volle Zurechnung) —
     // ausdrücklich, nicht aus Versehen. Wirkung: bei Personen ohne Säule 2 fällt der
     // Anspruch bis zu 34 % zu tief aus (nachgerechnet 20.09.2026: Nettoerwerb 30'000,
@@ -115,12 +297,21 @@ export const SAEULE_3A = Object.freeze({
 //
 // 🛑 Eine zu tiefe Zahl ist NICHT die vorsichtige Seite. Sie hält Berechtigte vom Antrag ab —
 // dieselbe Klasse Schaden wie eine zu hohe.
-export function einkommenJahr(f, regel = SAEULE_3A.voll) {
-  const roh = ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
+// Das rohe Jahres-Nettoeinkommen aus den erfassten Monatsfeldern — ohne jede kantonale Regel.
+// Eigene Funktion, weil BE es zweimal braucht: einmal für die Rechnung und einmal, um zu
+// prüfen, ob die 3a-Einzahlung überhaupt daraus stammen kann.
+export function rohesEinkommenJahr(f) {
+  return ['monthlyIncome', 'sideIncome', 'ahvRente', 'ivRente', 'bvgRente']
     .reduce((s, k) => s + Number(f[k] || 0), 0) * 12;
+}
+
+// `jahre` = `{ bemessungsjahr, anspruchsjahr }` und wird nur von `bisBundesMaximum` (BE)
+// gebraucht: dort hängt der Deckel am Steuerjahr der zugrunde liegenden Veranlagung, nicht
+// am Anspruchsjahr — und die Schwelle an beiden. Die anderen Regeln ignorieren das Argument.
+export function einkommenJahr(f, regel = SAEULE_3A.voll, jahre = null) {
   // Die kantonale Regel wirkt jetzt als ABZUG, nicht als Zuschlag: im rohen Nettoeinkommen
   // ist die volle 3a enthalten, also muss weg, was der Kanton NICHT aufrechnen würde.
-  return roh - regel.nichtAufgerechnet(f);
+  return rohesEinkommenJahr(f) - regel.nichtAufgerechnet(f, jahre);
 }
 
 export function geburtsjahr(b) {
