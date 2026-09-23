@@ -1893,7 +1893,7 @@ export default {
       affiliateMarker: 'Affiliato',
       heartfeltGroups: { digital: 'Digitale e privacy', soziales: 'Sostegno sociale', konsum: 'Consumo e media', tiere: 'Animali e assistenza', gesundheit: 'Corpo e salute', kunst: 'Arte e artigianato', gemeinschaft: 'Comunità e transizioni di vita' },
       heartfelt1: 'Motore di ricerca che investe i ricavi nella riforestazione.',
-      heartfelt2: 'Hosting svizzero a energia verde, con data center propri ed efficienti.',
+      heartfelt2: 'Hosting svizzero a energia verde, con data center propri ed efficienti — e il nostro hoster.',
       heartfelt3: 'Servizio email senza pubblicità, rispettoso della privacy, alimentato a energia verde.',
       heartfelt4: 'Gioielli fatti a mano in pasta polimerica e fotografie di viaggio.',
       heartfelt5: 'Lavori di gessatura, pittura e piastrellatura nella regione di Basilea.',

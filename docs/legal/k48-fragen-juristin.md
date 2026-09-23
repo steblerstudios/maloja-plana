@@ -40,13 +40,19 @@ Das spart Zeit — diese Punkte sind am Code bzw. am Bild belegt, Stand 23.09.20
 
 ## A · Haftung und Abgrenzung — die Kernfrage
 
-**A1. Trägt der Haftungsausschluss bei einem Rechenfehler?**
+**A1. Trägt der Haftungsausschluss bei einem Rechenfehler — und gilt er überhaupt?**
 Die Rechner nennen konkrete Beträge; jemand könnte danach handeln (z. B. kein
 IPV-Gesuch stellen, weil die App «kein Anspruch» andeutet). OR Art. 100 Abs. 1 macht
 die Wegbedingung für grobe Fahrlässigkeit nichtig.
+**Die Vorfrage ist aber eine andere:** Bei kostenloser Nutzung gibt es gar keinen
+Vertrag. Dann geht es nicht um Vertragshaftung, sondern um **Art. 41 OR und
+Vertrauenshaftung** — und dort hilft ein Ausschluss in Nutzungsbedingungen nicht,
+weil ihn niemand vereinbart hat. Umgekehrt spricht **OR Art. 99 Abs. 2** für uns:
+milderes Haftungsmass, «wenn das Geschäft für den Schuldner keinerlei Vorteil
+bezweckt» — dieser Vorteil entsteht mit der Paywall.
 → *Was hängt daran:* ob die heutigen Formulierungen reichen oder ob es eine andere
 Konstruktion braucht (z. B. Beträge nur als Spannen, oder ein aktiver Vorbehalt vor
-dem Ergebnis).
+dem Ergebnis) — und ob sich die Lage mit dem Preis grundlegend ändert.
 
 **A2. Wo läge hier grobe Fahrlässigkeit?**
 Konkret: ein Kanton ändert seine Ansätze, wir merken es drei Monate nicht, die App
@@ -68,9 +74,13 @@ müssen.
 
 **B1. Ab wann ist ein Affiliate-Link Versicherungsvermittlung (VAG Art. 40/41)?**
 Heute gibt es keinen. Geplant ist eventuell ein Affiliate-Programm.
-Unterfragen: Genügt ein Link **ohne** Beratung? Macht es einen Unterschied, ob die
-Provision **pro abgeschlossenem Vertrag** oder **pro Klick** fliesst? Zählt die
-Aufnahme eines Versicherers in eine Empfehlungsliste schon als Vermittlung?
+Art. 40 Abs. 1 knüpft an das **Anbieten oder Abschliessen** von Versicherungsverträgen
+an, nicht an den Geldfluss.
+Unterfragen: Ist ein Link mit Provision schon ein «Anbieten»? Macht es einen
+Unterschied, ob **pro Vertrag** oder **pro Klick** gezahlt wird? Zählt die Aufnahme
+eines Versicherers in eine Empfehlungsliste schon als Vermittlung? Und: Würden wir zu
+**gebundenen** Vermittlern (Art. 40 Abs. 3) — dann kein Registereintrag, aber Art. 43,
+44 und die Informationspflicht nach Art. 45?
 → *Was hängt daran:* ob das Affiliate-Modell überhaupt gebaut wird. Die heutige
 Trennlinie im Code lautet: **kein bezahlter Link zu Finanz- oder
 Versicherungsanbietern** (ein Test hält sie).
@@ -88,6 +98,16 @@ Lizenzvertrag dazu regeln?
 ---
 
 ## C · Datenschutz
+
+**C0. Ist das DSG hier überhaupt anwendbar?**
+**Art. 2 Abs. 2 lit. a**: nicht anwendbar auf «Personendaten, die von einer
+natürlichen Person ausschliesslich zum persönlichen Gebrauch bearbeitet werden».
+Wenn die Daten das Gerät nie verlassen, bearbeitet die nutzende Person ihre eigenen
+Daten — Stebler Studios wäre dafür nicht Verantwortliche (Art. 5 lit. j), sondern nur
+für das Hosting.
+→ *Was hängt daran:* ob Bearbeitungsverzeichnis und DSFA Pflicht oder freiwillige
+Übererfüllung sind. Wir führen sie so oder so weiter; die Frage ist, was wir öffentlich
+behaupten dürfen.
 
 **C1. Ist «Auskunftsrecht nicht anwendbar» haltbar?**
 Unsere Position: Die Anbieterin hat keinen Zugriff auf die Daten, also läuft DSG
@@ -149,14 +169,23 @@ Mittel zur Erkennung und Korrektur von Eingabefehlern, unverzügliche elektronis
 Bestätigung. Was heisst das konkret für eine App mit Abo?
 → *Was hängt daran:* **Bauarbeit**, die vor dem Verkaufsstart fertig sein muss.
 
-**F2. Abo-Recht.** Laufzeit, Kündigung, automatische Verlängerung, Preisänderungen —
-welche Vorgaben gelten, und was gehört in die AGB?
+**F2. Abo-Recht und AGB.** Laufzeit, Kündigung, automatische Verlängerung,
+Preisänderungen — welche Vorgaben gelten, und was gehört in die AGB? Dazu **UWG
+Art. 8**: welche Klauseln wären ein «erhebliches und ungerechtfertigtes Missverhältnis»?
+Das trifft zugleich unseren Haftungsausschluss.
+
+**F2a. Gerichtsstand.** Impressum und App nennen Basel-Stadt. **ZPO Art. 35 Abs. 1
+lit. a** verbietet den Vorausverzicht auf den Konsumentengerichtsstand (Art. 32).
+Heute folgenlos, weil es keinen Vertrag gibt. Mit der Paywall: müssen wir die Klausel
+ändern — und was setzen wir stattdessen hin?
 
 **F3. Verkauf an Personen in der EU — ausschliessen oder erfüllen?**
-Bei EU-Verbrauchern kämen DSGVO **und** der European Accessibility Act dazu
-(Richtlinie (EU) 2019/882, anwendbar seit 28.6.2025; E-Commerce-Dienstleistungen
-sind erfasst, inkl. barrierefreier Identifizierungs-, Sicherheits- und
-Zahlungsfunktionen).
+Bei EU-Verbrauchern käme die **DSGVO** dazu. Beim **European Accessibility Act**
+(RL (EU) 2019/882) greift dagegen voraussichtlich **Art. 4 Abs. 5**: Kleinstunternehmen,
+die Dienstleistungen anbieten, sind ausgenommen (< 10 Beschäftigte, ≤ 2 Mio. EUR,
+Art. 3 Nr. 23).
+Fragen: Trägt die Kleinstunternehmen-Ausnahme auch für eine Schweizer Anbieterin?
+Und ab welcher Grösse fiele sie weg?
 → *Was hängt daran:* ob der Kauf auf die Schweiz beschränkt wird — eine
 Produktentscheidung mit Rechtsfolge, nicht umgekehrt.
 
@@ -174,12 +203,16 @@ Software?
 schärfste der drei EU-Regeln.
 
 **F6. Cyber Resilience Act.** VO (EU) 2024/2847 gilt ab 11.12.2027, die
-**Meldepflichten nach Art. 14 bereits seit 11.9.2026**. Die Ausnahme für freie und
-quelloffene Software ist wörtlich daran geknüpft, dass sie «nicht zu Geld gemacht»
-wird.
-Frage: Fällt eine kostenpflichtige Version einer AGPL-Anwendung aus der Ausnahme —
-und ab welcher Form der Monetarisierung (Abo? Spende? Dual Licensing? White-Label?)?
-→ *Was hängt daran:* die Form der Monetarisierung, nicht nur das Ob.
+**Meldepflichten nach Art. 14 bereits seit 11.9.2026**, Kapitel IV seit 11.6.2026.
+**Vorfrage zuerst:** Erwägungsgrund 12 nimmt Websites, die kein Produkt mit digitalen
+Elementen unterstützen, und Cloud-/SaaS-Dienste vom Anwendungsbereich aus. Ist eine im
+Browser ausgelieferte Web-Anwendung damit ganz draussen — und wird eine **native
+App-Store-App** (`ios/`, Capacitor) zum Produkt mit digitalen Elementen?
+Erst danach: Fällt eine kostenpflichtige AGPL-Anwendung aus der FOSS-Ausnahme, und ab
+welcher Form der Monetarisierung (Abo? Spende? Dual Licensing? White-Label?)? Und
+greifen die Pflichten für «Verwalter quelloffener Software» nach **Art. 24** auch ohne
+Monetarisierung?
+→ *Was hängt daran:* zuerst die Vertriebsform, dann die Monetarisierung.
 
 **F7. AGPL § 13 bei White-Label.** Betreibt ein Lizenznehmer eine eigene Instanz,
 muss er den Nutzenden den Quellcode anbieten. Was muss der Lizenzvertrag dazu

@@ -1667,7 +1667,7 @@ export default {
       // TODO(rm): provisorischer DE-Fallback — RM nachziehen
       heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Sustegn social', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Maschina da tschertgar che investescha sias entradas en il reboschiment.',
-      heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels.',
+      heartfelt2: 'Hosting svizzer cun energia verda e agens center da datas spargnaivels — e noss agen hoster.',
       heartfelt3: 'Servetsch d’e-mail senza reclama, respectus da la sfera privata, cun energia verda.',
       heartfelt4: 'Bischuts fatgs a maun da pasta polimera e fotografias da viadi.',
       heartfelt5: 'Lavurs da gipsader, pictur e plattas en la regiun da Basilea.',

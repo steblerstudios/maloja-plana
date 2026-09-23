@@ -15,12 +15,14 @@
 nutzenden Person läuft. Es hält kein fremdes Geld, vermittelt keinen Vertrag,
 empfiehlt kein Produkt und entscheidet nichts.**
 
-Solange dieser Satz stimmt, liegt Maloja Plana in keinem bewilligungs- oder
-registerpflichtigen Bereich. Jeder Abschnitt unten prüft einen Teil davon. Wo ein
-Teil kippen könnte, steht ein **Stolperdraht**.
+Solange dieser Satz stimmt, spricht alles dafür, dass Maloja Plana in keinem
+bewilligungs- oder registerpflichtigen Bereich liegt — **juristisch bestätigt ist das
+nicht** (K48). Jeder Abschnitt unten prüft einen Teil davon. Wo ein Teil kippen
+könnte, steht ein **Stolperdraht**.
 
-Festgehalten im Code: `src/__tests__/regulierungsgrenzen.test.js` (20 Prüfungen,
-jede mit Gegenprobe).
+Festgehalten im Code: `src/__tests__/regulierungsgrenzen.test.js` — 21 Prüfungen, davon
+**vier Gegenproben**. (Hier stand «20 Prüfungen, jede mit Gegenprobe»; das war zu
+grosszügig gezählt, Befund der Rechts-Prüfung 23.09.2026.)
 
 ---
 
@@ -36,17 +38,33 @@ Registereintrag nötig ist.
 | **FINIG** (Vermögensverwalter, Trustees) | Nein | Kein fremdes Vermögen wird verwaltet | — | — |
 | **KAG** (kollektive Kapitalanlagen) | Nein | Kein Fonds, kein Vertrieb | — | — |
 | **GwG** (Geldwäscherei) | Nein | Keine Finanzintermediation, kein Geldfluss über Maloja | — | — |
-| **FIDLEG** (Finanzdienstleistungen) | Nein | Keine persönliche Empfehlung zu **Finanzinstrumenten**. `Saeule3aTracker.jsx` und `VorsorgeRechner.jsx` erfassen und rechnen, sie empfehlen kein Produkt. 3a-Konten und Freizügigkeitskonten sind keine Finanzinstrumente | `src/Saeule3aTracker.jsx`, `src/VorsorgeRechner.jsx` — kein Produktname, keine Empfehlung | **Sobald ein 3a-**Fonds** oder ETF empfohlen wird**, ist das Anlageberatung: Kundenberater-Register, Ombudsstellen-Anschluss, Verhaltensregeln |
-| **VAG Art. 41** (Versicherungsvermittlung) | Nein | Kein Vertrag wird vermittelt, keine Provision von einem Versicherer. Die Wechselpfade führen auf **amtliche** Vergleiche, nicht auf Anbieter | `src/KVGWechsel.jsx`, `src/ZusatzWechsel.jsx`; Test C: kein Versicherername in den Wechseltexten (5 Sprachen) | **Sobald für einen abgeschlossenen Vertrag Geld von einem Versicherer fliesst** — auch als Affiliate-Provision |
+| **FIDLEG** (Finanzdienstleistungen) | Nein | Keine persönliche Empfehlung zu **Finanzinstrumenten**. `Saeule3aTracker.jsx` und `VorsorgeRechner.jsx` erfassen und rechnen, sie empfehlen kein Produkt. 3a- und Freizügigkeitskonten sind keine Finanzinstrumente: **FIDLEG Art. 3 lit. a** erfasst unter Ziff. 6 nur Einlagen mit **risiko- oder kursabhängigem** Rückzahlungswert (Fedlex, geprüft 23.09.2026) | `src/Saeule3aTracker.jsx`, `src/VorsorgeRechner.jsx` — kein Produktname, keine Empfehlung | **Sobald ein 3a-**Fonds** oder ETF empfohlen wird**, ist das Anlageberatung: Kundenberater-Register, Ombudsstellen-Anschluss, Verhaltensregeln |
+| **VAG Art. 41** (Versicherungsvermittlung) | Nein | Kein Vertrag wird vermittelt, keine Provision von einem Versicherer. Die Wechselpfade führen auf **amtliche** Vergleiche, nicht auf Anbieter | `src/KVGWechsel.jsx`, `src/ZusatzWechsel.jsx`; Test C: kein Versicherername in den Wechseltexten (5 Sprachen) | **Sobald Versicherungsverträge angeboten oder vermittelt werden** (Art. 40 Abs. 1) — der Geldfluss ist nicht der Auslöser, siehe unten |
 | **KVG/KVAG + Branchenvereinbarung** | Nein | Dasselbe: keine Vermittlung in der Grundversicherung | wie oben | wie oben; in der Grundversicherung zusätzlich die Vorgaben der Branchenvereinbarung |
 
-**VAG Art. 41 im Wortlaut** (Fedlex, geprüft 23.09.2026): «Ungebundene
-Versicherungsvermittlerinnen und -vermittler dürfen nur tätig werden, wenn sie im
-Register nach Artikel 42 eingetragen sind.» Eingetragen wird, wer Sitz oder Wohnsitz
-in der Schweiz hat, guten Ruf geniesst, die Fähigkeiten nach Art. 43 nachweist **und
-eine Berufshaftpflichtversicherung abgeschlossen hat**. Diese Fassung ist seit dem
-**1. Januar 2024** in Kraft (BG vom 18. März 2022, AS 2023 355) — das Datum ist am
-Gesetzestext geprüft, nicht erinnert.
+**Der Auslöser steht in VAG Art. 40, nicht im Geldfluss** (Fedlex, geprüft
+23.09.2026). Abs. 1 im Wortlaut: «Versicherungsvermittlerinnen und -vermittler sind,
+unabhängig von ihrer Bezeichnung, Personen, die im Interesse von
+Versicherungsunternehmen oder anderen Personen Versicherungsverträge **anbieten oder
+abschliessen**.»
+
+> **Korrektur vom 23.09.2026:** Der Stolperdraht in der Tabelle oben lautete «sobald
+> Geld von einem Versicherer fliesst». Das ist zugleich **zu eng und zu weit**.
+> Zu eng, weil der Auslöser das *Anbieten* ist, nicht die Provision. Zu weit, weil
+> wer im Interesse eines Versicherers handelt, **gebundener** Vermittler wird
+> (Art. 40 Abs. 2/3) — und die Registrierungspflicht nach Art. 41 trifft nur die
+> **ungebundenen**. Gebundene unterliegen stattdessen Art. 43 (Fähigkeiten), Art. 44
+> (unzulässige Tätigkeiten) und **Art. 45 (Informationspflicht)**. Die richtige Folge
+> heisst darum: **Verhaltens- und Informationspflichten, allenfalls Registereintrag.**
+> Welche Variante zutrifft, ist eine Rechtsfrage → K48 B1.
+
+**VAG Art. 41 Abs. 1**: «Ungebundene Versicherungsvermittlerinnen und -vermittler
+dürfen nur tätig werden, wenn sie im Register nach Artikel 42 eingetragen sind.»
+Eingetragen wird, wer Sitz, Wohnsitz **oder eine Niederlassung** in der Schweiz hat,
+guten Ruf geniesst, die Fähigkeiten nach Art. 43 nachweist und eine
+Berufshaftpflichtversicherung abgeschlossen hat **oder gleichwertige finanzielle
+Sicherheiten** vorweist. Diese Fassung ist seit dem **1. Januar 2024** in Kraft
+(BG vom 18. März 2022, AS 2023 355).
 
 ### Der Affiliate-Entscheid ist der eine Hebel
 
@@ -60,7 +78,15 @@ Versicherungsanbieter (Test B).
 > **Trennlinie für den Oktober-Entscheid:** Affiliate zu einem Saatgut-Shop oder einer
 > Suchmaschine ist harmlos. Affiliate zu Krankenkassen, Versicherern, Banken,
 > 3a-Anbietern oder Vergleichsportalen ist der Schritt in den regulierten Bereich —
-> dort fängt VAG bzw. FIDLEG an. Der Test lässt den zweiten Fall nicht durch.
+> dort fängt VAG bzw. FIDLEG an.
+>
+> **Korrektur vom 23.09.2026:** Hier stand «Der Test lässt den zweiten Fall nicht
+> durch». Das war falsch. Die erste Fassung suchte nach Wörtern wie «versicher» oder
+> «bank» und liess **Raiffeisen, VIAC, frankly, neon, Yuh, Swiss Life, AXA, Helvetia
+> und Selma** anstandslos durch — 9 von 10 nachgemessen. Seit dem 23.09. gilt eine
+> **Erlaubnisliste**: ein bezahlter Eintrag braucht ein von Hand gesetztes Feld
+> `branche` aus `BRANCHEN_ERLAUBT`. Eine Verbotsliste geht an jedem Namen vorbei, den
+> sie nicht kennt; eine Erlaubnisliste kann das nicht.
 
 ---
 
@@ -72,12 +98,17 @@ Versicherungsanbieter (Test B).
 | **UWG** (Impressum, Werbeaussagen) | Konform | Impressum nach Art. 3 Abs. 1 lit. s; Werbeaussagen mit Test gesichert |
 | **OR** (Nutzungsbedingungen, Haftung) | Vorhanden, Grenze beachten | Art. 100 OR: Haftung für grobe Fahrlässigkeit lässt sich nicht wegbedingen |
 | **URG** (Quellen) | Aufmerksamkeit nötig | Gesetze sind frei — **SKOS-Richtlinien nicht** |
-| **MepV** (Medizinprodukte) | Nicht anwendbar | Reine Dokumentation, keine Dosierung, keine Auswertung |
-| **BGFA** (Anwaltsmonopol) | Nicht anwendbar | Rechtsberatung ist in der Schweiz frei; das Monopol betrifft die Parteivertretung vor Gericht |
+| **MepV** (Medizinprodukte) | Nicht anwendbar | Dosisangaben werden erfasst und wiedergegeben, aber nicht abgeleitet, berechnet oder bewertet |
+| **BGFA** (Anwaltsmonopol) | Voraussichtlich nicht anwendbar, **kantonale Prüfung offen** | Rechtsberatung ist in der Schweiz frei; das Monopol betrifft die Parteivertretung vor Gericht. **Aber:** kantonales Recht kann die berufsmässige Vertretung regeln, für Betreibungssachen ausdrücklich **SchKG Art. 27** — und Maloja hat einen Schuldenteil und Briefvorlagen bis zur Betreibung. K48 A3 |
 | **DSGVO/GDPR** | Nicht direkt anwendbar | Kein EU-Targeting, keine Datenverarbeitung in der EU |
 | **BehiG / WCAG 2.1 AA** | Teilweise konform | Für Private kein gesetzlicher WCAG-Zwang; Produktanspruch trotzdem |
 | **PBV / MWST** | Noch nicht anwendbar | Erst mit einer Bezahlversion |
 | **KI-Recht (CH/EU)** | Nicht anwendbar | Kein automatisierter Einzelentscheid, kein EU-Markt |
+| **UWG Art. 8** (missbräuchliche AGB) | Erst mit Bezahlversion | Der in der Praxis schärfere Hebel neben OR Art. 100 |
+| **ZPO Art. 32/35** (Gerichtsstand) | Erst mit Bezahlversion | Gegenüber Konsument:innen ist die Klausel «Basel-Stadt» **nicht** vorab wirksam |
+| **PrHG** (CH-Produktehaftung) | Offen | Ob reine Software erfasst ist, ist ungeklärt — K48 F5 |
+| **KKG** (Konsumkredit) | Nicht berührt | Nachbarnorm zum Schuldenteil: sobald es Richtung Kredit oder Umschuldung geht, greift die kantonale Bewilligungspflicht (Art. 39) |
+| **Kantonales Datenschutzrecht** (z. B. IDG BS) | Nicht anwendbar, aber vorgemerkt | Sobald eine **Gemeinde** die App einsetzt, gilt nicht das DSG, sondern kantonales Recht — andere Aufsicht, andere Meldewege |
 | **Markenrecht** | Offen | Keine IGE-Eintragung |
 | **ISO 27001:2022** | Dokumentation vorbereitet | Kein Audit durchgeführt |
 | **eCH-0059** | Orientierung | Schweizer Accessibility-Standard |
@@ -86,12 +117,29 @@ Versicherungsanbieter (Test B).
 
 ## 3. nDSG-Compliance
 
-Das ist das eigentliche Regime von Maloja Plana: verarbeitet werden **besonders
-schützenswerte Personendaten**. DSG Art. 5 lit. c nennt ausdrücklich «Daten über die
-Gesundheit» (Ziff. 2) und «Daten über Massnahmen der sozialen Hilfe» (Ziff. 6) —
-beides Kernstoff dieser App (Fedlex, geprüft 23.09.2026). Dass diese Daten das Gerät
-nicht verlassen, ist die tragende Schutzmassnahme, nicht ein Nebeneffekt der
-Architektur.
+Verarbeitet werden **besonders schützenswerte Personendaten**: DSG Art. 5 lit. c nennt
+ausdrücklich «Daten über die Gesundheit» (Ziff. 2) und «Daten über Massnahmen der
+sozialen Hilfe» (Ziff. 6) — beides Kernstoff dieser App (Fedlex, geprüft 23.09.2026).
+
+### Vorfrage: Wer bearbeitet hier eigentlich?
+
+> **Korrektur vom 23.09.2026:** Dieser Abschnitt begann mit «Das ist das eigentliche
+> Regime von Maloja Plana». Das überdehnt das DSG in die eigene Richtung — derselbe
+> Fehler wie eine zu starke Werbeaussage, nur umgekehrt.
+>
+> **DSG Art. 2 Abs. 2 lit. a**: «Es ist nicht anwendbar auf: a. Personendaten, die von
+> einer natürlichen Person **ausschliesslich zum persönlichen Gebrauch** bearbeitet
+> werden.» Solange die Daten das Gerät nie verlassen, bearbeitet die **nutzende
+> Person ihre eigenen Daten zum persönlichen Gebrauch**. Stebler Studios ist dafür
+> nicht Verantwortliche im Sinn von Art. 5 lit. j. Eine Verantwortlichkeit entsteht
+> real erst beim **Hosting** (technische Daten beim Laden).
+>
+> Dass Verzeichnis (Art. 12) und DSFA (Art. 22) trotzdem geführt werden, ist gut und
+> bleibt — aber es ist **Übererfüllung, nicht Pflichterfüllung**. Ob das so trägt, ist
+> eine Rechtsfrage → K48 C1.
+
+Dass die Daten das Gerät nicht verlassen, ist die tragende Schutzmassnahme, nicht ein
+Nebeneffekt der Architektur.
 
 | Anforderung | Artikel | Umsetzung | Dokument |
 |---|---|---|---|
@@ -103,6 +151,8 @@ Architektur.
 | Meldepflicht Datenverlust | Art. 24 | Nicht anwendbar (keine serverseitigen Daten) | `incident-response.md` |
 | Automatisierte Einzelentscheidung | Art. 21 | Nicht anwendbar — Maloja entscheidet nichts, es zeigt Orientierung | Test A |
 | DSFA | Art. 22 | Kurzfassung vorhanden | `docs/legal/dsfa-kurzfassung.md` |
+| **Auftragsbearbeiter** | **Art. 9** | Genau eine reale Drittbearbeitung: der Hoster (Infomaniak, CH). Stand des Auftragsbearbeitungsvertrags → K48 C3 | — |
+| **Strafbestimmungen** | **Art. 60/61** | Das nDSG sanktioniert die **natürliche Person**, nicht das Unternehmen — bei einem Einzelunternehmen trifft das die Inhaberin persönlich (Busse bis 250 000 Fr., u. a. für Verletzung der Informationspflicht nach Art. 19) | — |
 
 **Gemessen am 23.09.2026** (`src/`, `index.html`):
 
@@ -136,6 +186,7 @@ Act (siehe 8.).
 | Bestellablauf (Art. 3 Abs. 1 lit. s Ziff. 2–4) | **Noch nicht anwendbar** — siehe unten |
 | Keine irreführenden Angaben (Art. 3 Abs. 1 lit. b) | Absolute Privatheits-Werbung («100 % privat/lokal») ist seit 17.09.2026 untersagt und mit `src/__tests__/e43Werbeaussagen.test.js` in sieben Dateien gesichert |
 | Transparenz bezahlter Empfehlungen | Affiliate-Marker + Hinweistext in fünf Sprachen, bevor der erste bezahlte Link existiert |
+| **Missbräuchliche AGB (Art. 8)** | **Fehlte bis 23.09.2026 in diesem Dokument.** Unlauter handelt, wer AGB verwendet, die «in Treu und Glauben verletzender Weise zum Nachteil der Konsumentinnen und Konsumenten ein erhebliches und ungerechtfertigtes Missverhältnis» zwischen Rechten und Pflichten vorsehen. Mit einer Bezahlversion ist das der **in der Praxis schärfere Hebel neben OR Art. 100** — er trifft den Haftungsausschluss und die Gerichtsstandsklausel zugleich |
 
 **Wortlaut geprüft (Fedlex, 23.09.2026):** Art. 3 Abs. 1 lit. s richtet sich an
 Anbietende von «Waren, Werken oder Leistungen **im elektronischen
@@ -144,10 +195,16 @@ Identität und Kontaktadresse inkl. E-Mail, (2) Hinweis auf die technischen Schr
 zum Vertragsschluss, (3) technische Mittel, um Eingabefehler vor der Bestellung zu
 erkennen und zu korrigieren, (4) unverzügliche elektronische Bestellbestätigung.
 
-Heute erfüllt Maloja Punkt 1 — die Punkte 2–4 setzen einen Bestellvorgang voraus,
-den es nicht gibt. **Mit der Paywall im Oktober werden sie Pflicht**, und zwar als
-Bauarbeit, nicht als Textarbeit (Bestellstrecke, Korrekturmöglichkeit,
-Bestätigungsmail).
+> **Korrektur vom 23.09.2026:** Hier stand «Punkt 1 erfüllt, Punkte 2–4 noch nicht
+> anwendbar». Das spaltet eine Norm, die als Ganzes an **eine** Bedingung hängt: das
+> Anbieten im elektronischen Geschäftsverkehr. Gibt es keines, greift **auch Ziff. 1
+> nicht** — und ausserhalb von lit. s kennt das Schweizer Recht keine allgemeine
+> Impressumspflicht.
+>
+> Richtig ist: **lit. s greift heute mangels elektronischem Geschäftsverkehr nicht.
+> Das Impressum halten wir trotzdem vor** — freiwillig, weil es zur Haltung gehört und
+> weil es mit der Paywall ohnehin Pflicht wird. **Dann greift die Norm vollständig**,
+> und die Ziffern 2–4 sind Bauarbeit an der Bestellstrecke, nicht Textarbeit.
 
 ---
 
@@ -159,16 +216,38 @@ Bestätigungsmail).
 Verabredung, wonach die Haftung für rechtswidrige Absicht oder grobe Fahrlässigkeit
 ausgeschlossen sein würde, ist nichtig» (OR Art. 100 Abs. 1). Ein pauschales «keine
 Haftung» trägt also nur begrenzt: gegen Rechenungenauigkeiten im
-Orientierungswerkzeug ja, gegen jede Nachlässigkeit nein. Frage an K48.
+Orientierungswerkzeug ja, gegen jede Nachlässigkeit nein.
+
+**Und das Argument, das hier fehlte — es spricht für uns:** OR Art. 99 Abs. 2: «Das
+Mass der Haftung richtet sich nach der besonderen Natur des Geschäftes und wird
+insbesondere **milder** beurteilt, wenn das Geschäft für den Schuldner keinerlei
+Vorteil bezweckt.» Für ein **kostenloses** Werkzeug ist das der stärkste Satz im
+ganzen Haftungsteil. **Er fällt weg, sobald Geld fliesst** — noch ein Grund, den
+Paywall-Entscheid nicht nur als Preisfrage zu behandeln.
+
+**Die Vorfrage, die hier ganz fehlte:** Ohne Vertrag (Gratisnutzung) geht es gar nicht
+um Vertragshaftung, sondern um **Art. 41 OR und Vertrauenshaftung** — und dort hilft
+ein Haftungsausschluss in Nutzungsbedingungen nicht, weil ihn niemand vereinbart hat.
+Das ist die eigentliche Frage an K48 A1, nicht die Formulierung des Ausschlusses.
+
+**Gerichtsstand:** Impressum und App nennen Basel-Stadt. **ZPO Art. 35 Abs. 1 lit. a**
+(Fedlex, geprüft): «Auf die Gerichtsstände nach den Artikeln 32–34 können **nicht zum
+Voraus** oder durch Einlassung verzichten: a. die Konsumentin oder der Konsument.»
+Art. 32 Abs. 1 lit. a gibt der Konsumentin das Gericht am Wohnsitz **einer** Partei.
+Heute folgenlos, weil es keinen Vertrag gibt — **mit der Paywall eine unwirksame
+Klausel**, und nach UWG Art. 8 zusätzlich angreifbar.
 
 ---
 
 ## 6. URG — Quellen
 
-**URG Art. 5 im Wortlaut** (Fedlex, geprüft 23.09.2026): nicht geschützt sind
-«Gesetze, Verordnungen, völkerrechtliche Verträge und andere amtliche Erlasse»
-(lit. a) sowie «Entscheidungen, Protokolle und Berichte von Behörden und öffentlichen
-Verwaltungen» (lit. c).
+**URG Art. 5 im Wortlaut** (Fedlex, geprüft 23.09.2026): «Durch **das Urheberrecht**
+nicht geschützt sind: a. Gesetze, Verordnungen, völkerrechtliche Verträge und andere
+amtliche Erlasse; … c. Entscheidungen, Protokolle und Berichte von Behörden und
+öffentlichen Verwaltungen.» **Abs. 2** ergänzt: «Ebenfalls nicht geschützt sind
+amtliche oder gesetzlich geforderte Sammlungen **und Übersetzungen** der Werke nach
+Absatz 1.» — für eine fünfsprachige App der nützlichste Teil der Norm: amtliche
+Übersetzungen der Gesetzestexte sind frei verwendbar.
 
 | Quelle | Geschützt? | Folge für Maloja |
 |---|---|---|
@@ -194,8 +273,16 @@ richtige Linie — sie muss beim nächsten SKOS-Update gehalten werden.
 `ArztkofferView.jsx` **dokumentieren** — sie geben keine Dosierungsempfehlung, keine
 Wechselwirkungsprüfung und keine Symptomauswertung.
 
-Gemessen 23.09.2026: kein Treffer für Dosierung/Wechselwirkung/Interaktion in den
-beiden Verwaltungs-Ansichten.
+> **Korrektur vom 23.09.2026:** Hier stand als Beleg «kein Treffer für
+> Dosierung/Wechselwirkung/Interaktion». Diese Messung war wertlos — **der Code ist
+> englisch.** `MedicationManager.jsx:21` legt `{ name, substance, dose, unit, frequency,
+> notes }` an und rendert ein Dosis-Feld mit Einheiten (`mg`, `µg`, `g`, `ml`, `IE`,
+> `Tropfen`, `Hübe`). Es gibt also sehr wohl **Dosierungsdaten**.
+>
+> Die tragfähige Aussage lautet: **Dosisangaben werden erfasst und wiedergegeben, aber
+> nicht abgeleitet, berechnet oder bewertet.** Wer eine Zahl einträgt, bekommt sie
+> zurück — die App sagt nicht, ob sie richtig ist. Das Ergebnis (kein Medizinprodukt)
+> bleibt, die Begründung ist jetzt belegbar.
 
 > **Stolperdraht:** Der Moment, in dem die App aus Eingaben eine medizinische
 > Aussage ableitet («diese zwei Medikamente vertragen sich nicht»), macht sie zu
@@ -218,9 +305,18 @@ beiden Verwaltungs-Ansichten.
   darunter ausdrücklich **«Dienstleistungen im elektronischen Geschäftsverkehr
   (E-Commerce)»** — mit Anforderungen an Barrierefreiheits-Informationen und an
   barrierefreie **Identifizierungs-, Sicherheits- und Zahlungsfunktionen** (Anhang I).
-  → Solange Maloja nichts an EU-Verbraucher verkauft, greift sie nicht. **Mit einer
-  Paywall, die auch in der EU verkauft, greift sie** — und trifft dann genau die
-  Bestellstrecke aus Abschnitt 4.
+
+  > **Korrektur vom 23.09.2026:** Hier stand, mit einer Paywall greife der EAA. Das ist
+  > zu streng. **Art. 4 Abs. 5** im Wortlaut: «**Kleinstunternehmen**, die
+  > Dienstleistungen anbieten, sind von der Erfüllung der Barrierefreiheitsanforderungen
+  > nach Absatz 3 dieses Artikels und von **allen Verpflichtungen** im Zusammenhang mit
+  > der Erfüllung dieser Anforderungen **ausgenommen**.» Kleinstunternehmen ist in
+  > Art. 3 Nr. 23 definiert: weniger als zehn Beschäftigte **und** höchstens 2 Mio. EUR
+  > Jahresumsatz oder Bilanzsumme. Stebler Studios liegt klar darunter.
+  >
+  > Die EAA-Frage lautet für Maloja also nicht «verkaufen wir in die EU?», sondern
+  > **«bleiben wir Kleinstunternehmen?»** — und die Barrierefreiheit bleibt, was sie
+  > ohnehin war: Produktanspruch, nicht Auflage.
 
 ---
 
@@ -300,19 +396,33 @@ Kosten der Anmeldung: ca. CHF 550 für drei Klassen, 10 Jahre Schutz.
 
 Nachgetragen am 23.09.2026, weil die Frage «und was noch?» eine Antwort verdient.
 
-### Lizenz-Compliance (AGPL-3.0 und Abhängigkeiten) — **erfüllt, gemessen**
+### Lizenz-Compliance (AGPL-3.0 und Abhängigkeiten) — **war lückenhaft, am 23.09. geschlossen**
+
+> Dieser Abschnitt sagte zuerst «erfüllt, gemessen». Das war falsch, und die
+> Rechts-Prüfung am selben Tag hat es aufgedeckt. Beide Lücken sind geschlossen; der
+> Hergang bleibt stehen, weil er die Art des Fehlers zeigt: **gemessen war, welche
+> Lizenzen gelten — nicht, ob wir ihre Auflagen erfüllen.**
+
+| | Vorher | Jetzt |
+|---|---|---|
+| `three` (^0.186.0) im Verzeichnis | **fehlte** in `third-party-licenses.md` und in der In-App-Liste | aufgenommen, dazu die drei transitiven Pakete |
+| Ausgelieferte Lizenztexte | **nur 2** (die vendorierten) | **8** — die sechs npm-Pakete kamen dazu |
+
+Der Punkt ist nicht formal: **MIT verlangt, dass der Lizenztext mitgeliefert wird**
+(«shall be included in all copies or substantial portions of the Software»), nicht
+bloss, dass die Lizenz genannt wird. React, react-dom und three sind ins Bundle
+kompiliert; ihre Texte fehlten in der Auslieferung.
 
 | Gemessen 23.09.2026 | Ergebnis |
 |---|---|
-| Laufzeit-Abhängigkeiten (react, react-dom, three + transitiv) | **6 Pakete, alle MIT** |
+| Laufzeit-Abhängigkeiten (react, react-dom, three + transitiv) | 6 Pakete, alle MIT |
 | Mitgelieferter Fremdcode | `src/vendor/qrcodejs.js` (MIT), `public/vendor/jsQR.js` (Apache-2.0) |
-| Lizenztexte ausgeliefert | `public/licenses/` → im Build unter `/licenses/` vorhanden |
-| Verzeichnis | `docs/legal/third-party-licenses.md` nennt alle vier |
+| Lizenztexte ausgeliefert | `public/licenses/`, 8 Dateien → im Build unter `/licenses/` |
 
 MIT und Apache-2.0 sind mit AGPL-3.0 vereinbar. **Der AGPL-Netzwerkparagraf (§ 13)
 verlangt, dass Nutzenden einer gehosteten Instanz der Quellcode angeboten wird** —
 erfüllt, weil das Repository öffentlich ist. Bei einer White-Label-Instanz gilt das
-für die Betreiberin genauso: das gehört in den Lizenzvertrag.
+für die Betreiberin genauso: das gehört in den Lizenzvertrag (K48 F7).
 
 ### Die drei EU-Regime, die an **einem** Entscheid hängen
 
@@ -321,15 +431,26 @@ im Oktober entscheidet damit über mehr als den Preis.
 
 | Erlass | Was geprüft wurde (EUR-Lex, 23.09.2026) | Folge |
 |---|---|---|
-| **Produkthaftung**, RL (EU) 2024/2853 | Die verschuldensunabhängige Haftung gilt «für alle beweglichen Sachen, **einschliesslich Software**». Umsetzungsfrist der Mitgliedstaaten: **9. Dezember 2026** (Art. 22) | Für eine Software mit Frankenbeträgen die schärfste der drei. Gilt für Produkte, die **nach** diesem Zeitpunkt in Verkehr gebracht werden |
-| **Barrierefreiheit (EAA)**, RL (EU) 2019/882 | Ab 28.6.2025; E-Commerce erfasst, inkl. barrierefreier Identifizierungs-, Sicherheits- und Zahlungsfunktionen | Trifft die Bestellstrecke — Abschnitt 8 |
-| **Cyber Resilience Act**, VO (EU) 2024/2847 | Gilt ab **11.12.2027**; **Art. 14 — Meldepflicht für aktiv ausgenutzte Schwachstellen und schwere Vorfälle — gilt bereits seit 11.9.2026** (Art. 71) und erfasst auch Produkte, die vorher in Verkehr kamen (Art. 69 Abs. 3) | Siehe Ausnahme unten |
+| **Produkthaftung**, RL (EU) 2024/2853 | **Art. 2 Abs. 1**: gilt für Produkte, die **nach dem 9. Dezember 2026** in Verkehr gebracht oder in Betrieb genommen werden. **Art. 2 Abs. 2**: «Diese Richtlinie gilt nicht für freie und quelloffene Software, die **ausserhalb einer Geschäftstätigkeit** entwickelt oder bereitgestellt wird.» Dass Software erfasst ist, sagt Erwägungsgrund 6; verbindlich ist die Definition in Art. 4 Nr. 1 | Von den dreien die schärfste, **wenn** sie greift — die FOSS-Tür hängt an derselben Schwelle wie beim CRA |
+| **Barrierefreiheit (EAA)**, RL (EU) 2019/882 | Ab 28.6.2025; E-Commerce erfasst. **Aber Art. 4 Abs. 5**: «Kleinstunternehmen, die Dienstleistungen anbieten, sind von der Erfüllung der Barrierefreiheitsanforderungen … **ausgenommen**.» Kleinstunternehmen = < 10 Beschäftigte und ≤ 2 Mio. EUR Umsatz oder Bilanzsumme (Art. 3 Nr. 23) | **Greift für Stebler Studios voraussichtlich gar nicht** — siehe Abschnitt 8 |
+| **Cyber Resilience Act**, VO (EU) 2024/2847 | Gilt ab **11.12.2027**; **Art. 14 (Meldepflicht) seit 11.9.2026**, Kapitel IV seit 11.6.2026 (Art. 71 Abs. 2); Art. 14 erfasst auch früher in Verkehr gebrachte Produkte (Art. 69 Abs. 3) | Die Vorfrage ist der Produktbegriff, nicht die Paywall — siehe unten |
 
-> **Die CRA-Ausnahme ist wörtlich an die Monetarisierung geknüpft:** Die Bereitstellung
-> von Produkten, «die als freie und quelloffene Software eingestuft und von ihren
-> Herstellern **nicht zu Geld gemacht** werden», gilt nicht als Geschäftstätigkeit.
-> Solange Maloja kostenlos und quelloffen ist, greift die Verordnung nicht —
-> **«zu Geld gemacht» ist genau die Schwelle, die eine Paywall überschreitet.**
+> **Korrektur vom 23.09.2026 (Rechts-Prüfung).** Hier stand, die CRA-Ausnahme sei
+> «wörtlich an die Monetarisierung geknüpft». Das war in zwei Punkten schief:
+>
+> 1. **Die Vorfrage ist der Produktbegriff.** Erwägungsgrund 12: «Dagegen fallen
+>    Websites, die die Funktionalität eines Produkts mit digitalen Elementen nicht
+>    unterstützen, oder Cloud-Dienste … **nicht in den Anwendungsbereich** dieser
+>    Verordnung»; für SaaS gilt stattdessen die NIS-2-Richtlinie. Eine im Browser
+>    ausgelieferte Web-Anwendung ist damit sehr wahrscheinlich ausserhalb —
+>    **unabhängig vom Preis**. Der eigentliche Stolperdraht ist der **App Store**
+>    (`ios/`, Capacitor): eine native App ist ein Produkt mit digitalen Elementen.
+> 2. **Das Zitat «nicht zu Geld gemacht» stammt aus Erwägungsgrund 18**, nicht aus
+>    einem Artikel. Es ist Auslegungshilfe, keine operative Ausnahme. Und **Art. 24**
+>    legt «Verwaltern quelloffener Software» eigene Pflichten auf — ganz ohne
+>    Monetarisierung.
+>
+> Was unverändert stimmt: die Daten aus Art. 71 Abs. 2 und Art. 69 Abs. 3.
 
 ### App-Store-Vertrieb
 
@@ -351,6 +472,11 @@ Falls Gemeinden oder Sozialdienste Kundinnen werden, gelten je nach Auftragswert
 **BöB/IVöB** — und dann werden Barrierefreiheit (eCH-0059, WCAG) und
 Datenschutzauflagen **Vertragsbedingung**, nicht mehr Produktanspruch. Abschnitt 8.
 
+**Und mehr als eine Vertragsbedingung:** Sobald eine Gemeinde oder ein Sozialdienst
+die App einsetzt, gilt für diese Bearbeitung **nicht das DSG, sondern das kantonale
+Informations- und Datenschutzgesetz** (in Basel-Stadt das IDG). Andere
+Rechtsgrundlage, andere Aufsichtsbehörde, andere Meldewege.
+
 ### Gesundheitsdaten-Infrastruktur (EPDG)
 
 Maloja verwaltet Gesundheitsangaben lokal und ist **kein** elektronisches
@@ -370,7 +496,7 @@ die Lücke nicht für einen Befund gehalten wird.
 
 ### Swiss Made Software
 - Entwicklung: Schweiz (Basel)
-- Hosting: Infomaniak (Genf, CH) — **qualifizierend** (Schweizer Provider, Rechenzentren in der Schweiz)
+- Hosting: Infomaniak (Genf, CH) — Schweizer Provider, Rechenzentren in der Schweiz. *Ob das für das Label «qualifiziert», steht hier ohne Quelle; «Swiss Made Software» ist eine private, markenrechtlich geschützte Kennzeichnung mit eigenen Kriterien. **Bevor diese Aussage je in der App erscheint, muss sie belegt sein** — sonst ist sie UWG-relevant.*
 
 ### Digital Trust Label (Swiss Digital Initiative)
 
@@ -429,7 +555,11 @@ die Lücke nicht für einen Befund gehalten wird.
 | **URG Art. 5** (SR 231.1) | Wortlaut der nicht geschützten Werke, lit. a und lit. c |
 | **OR Art. 100 Abs. 1** (SR 220) | Wegbedingung für Absicht/grobe Fahrlässigkeit ist nichtig |
 | **UWG Art. 3 Abs. 1 lit. s** (SR 241) | Alle vier Ziffern; gilt für Angebote «im elektronischen Geschäftsverkehr» |
-| **VAG Art. 41** (SR 961.01) | Registrierungspflicht, Voraussetzungen, Inkraftsetzung 1.1.2024 |
+| **VAG Art. 40/41** (SR 961.01) | Definition der Vermittlung, Registrierungspflicht, Voraussetzungen, Inkraftsetzung 1.1.2024 |
+| **DSG Art. 2 Abs. 2 lit. a** | Ausnahme für den ausschliesslich persönlichen Gebrauch |
+| **ZPO Art. 32/35** (SR 272) | Konsumentengerichtsstand, Verzichtsverbot zum Voraus |
+| **OR Art. 99 Abs. 2** | Mildere Haftung, wenn das Geschäft keinen Vorteil bezweckt |
+| **FIDLEG Art. 3 lit. a** | 3a-/Freizügigkeitskonten sind keine Finanzinstrumente |
 
 ### An der Quelle nachgelesen, 23.09.2026
 
@@ -437,7 +567,13 @@ die Lücke nicht für einen Befund gehalten wird.
 |---|---|
 | **Swissreg** (IGE), Suchwort «maloja» | 7 Treffer, 1 aktiv (Klassen 18/25/35) — Abschnitt 11 |
 | **Bundeskanzlei**, Seite «Regulierung» (KI) | Keine KI-Gesetzgebung; Vernehmlassungsvorlage des BJ bis Ende 2026 — Abschnitt 10 |
-| **EUR-Lex**, Richtlinie (EU) 2019/882 | Geltung ab 28.6.2025; E-Commerce-Dienstleistungen erfasst — Abschnitt 8 |
+| **EUR-Lex**, RL (EU) 2019/882 (EAA) | Geltung ab 28.6.2025; E-Commerce erfasst; **Art. 4 Abs. 5 Kleinstunternehmen-Ausnahme** — Abschnitt 8 |
+| **EUR-Lex**, RL (EU) 2024/2853 (Produkthaftung) | Art. 2 Abs. 1 (9.12.2026) und Art. 2 Abs. 2 (FOSS ausserhalb einer Geschäftstätigkeit) — Abschnitt 11a |
+| **EUR-Lex**, VO (EU) 2024/2847 (CRA) | Art. 71 Abs. 2, Art. 69 Abs. 3, Art. 24, Erwägungsgrund 12 — Abschnitt 11a |
+
+*Bis zur Rechts-Prüfung am 23.09.2026 nannte diese Liste nur die EAA, während die
+Tabelle in 11a für alle drei Erlasse «geprüft» behauptete. Die Zahlen stimmten — der
+Beleg fehlte. Genau das soll dieser Abschnitt verhindern.*
 
 ### Was hier **nicht** belegt ist
 

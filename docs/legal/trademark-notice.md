@@ -6,9 +6,14 @@
 
 „Maloja Plana" ist eine Projektbezeichnung von Sophie Stebler / Stebler Studios.
 
-Der Name, das Logo und die visuelle Identität (Farbpalette, Piktogramme, Typografie-Kombination Cormorant Garamond + DM Sans) sind **nicht** durch die AGPL-3.0-Lizenz abgedeckt und dürfen ohne schriftliche Genehmigung nicht für abgeleitete Projekte verwendet werden.
+Der Name, das Logo und die visuelle Identität (Farbpalette, Piktogramme, Typografie-Kombination **Lexend + Hanken Grotesk + Atkinson Hyperlegible**) sind **nicht** durch die AGPL-3.0-Lizenz abgedeckt und dürfen ohne schriftliche Genehmigung nicht für abgeleitete Projekte verwendet werden.
 
 ---
+
+*Bis 23.09.2026 stand hier «Cormorant Garamond + DM Sans» — diese Schriften werden seit
+dem Schriftwechsel (K75) nicht mehr ausgeliefert. `third-party-licenses.md` war am
+17.09. korrigiert worden, der Markenhinweis nicht. Ein Markenhinweis, der eine nicht
+verwendete Typografie schützt, schützt nichts.*
 
 ## Was die AGPL erlaubt
 

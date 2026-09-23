@@ -192,7 +192,7 @@ export const BERATUNG_HILFE = [
 export const BRANCHEN_ERLAUBT = ['digital', 'kultur', 'gemeinnuetzig', 'handwerk', 'konsumschutz', 'tiere', 'gesundheit', 'bildung'];
 export const HEARTFELT = [
   { key: 'heartfelt1', name: 'Ecosia', url: 'https://www.ecosia.org', group: 'digital' },
-  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' },
+  { key: 'heartfelt2', name: 'Infomaniak', url: 'https://www.infomaniak.com', group: 'digital' }, // zugleich unser Hoster — kein bezahlter Link, aber eine Geschäftsbeziehung; steht darum auch in der Beschreibung (legal.resources.heartfelt2)
   { key: 'heartfelt3', name: 'Posteo', url: 'https://posteo.de', group: 'digital' },
   { key: 'heartfelt4', name: 'artfuljana', url: 'https://artfuljana.ch', group: 'kunst' },
   { key: 'heartfelt5', name: 'Baukunst Nick', url: null, group: 'kunst' }, // HTTPS-Zertifikat defekt – vorerst kein Link

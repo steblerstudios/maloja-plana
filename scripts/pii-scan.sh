@@ -50,9 +50,14 @@ DEIN-KLIENT-HASH'
 # perl statt grep -P: läuft gleich auf macOS und Linux und versteht dieselben
 # PCRE-Muster wie git grep -P. Ein Muster, das perl nicht versteht, bricht ab
 # (Exit 2), statt still «sauber» zu melden.
+# public/licenses/** ist ausgenommen (23.09.2026): das sind fremde Lizenztexte, die
+# wortgetreu mitgeliefert werden MÜSSEN — MIT verlangt «shall be included in all
+# copies». Die Copyright-Zeilen darin nennen fremde Autoren samt E-Mail
+# (z. B. loose-envify). Sie zu kürzen wäre ein Lizenzverstoss, nicht Datenschutz.
+# Die Ausnahme gilt NUR diesem Ordner; Lizenztexte werden nie von Hand bearbeitet.
 HITS=$(git grep -nIP -f <(printf '%s\n' "$DENY") -- \
         ':!scripts/pii-scan.sh' ':!*.example' ':!.pii-deny.txt' \
-        ':!public/vendor/**' 2>/dev/null \
+        ':!public/vendor/**' ':!public/licenses/**' 2>/dev/null \
       | DENY="$DENY" ALLOW="$ALLOW" perl -ne '
           BEGIN {
             @d = grep { length } split /\n/, $ENV{DENY};

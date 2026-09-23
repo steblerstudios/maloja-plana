@@ -1892,7 +1892,7 @@ export default {
       affiliateMarker: 'Affilié',
       heartfeltGroups: { digital: 'Numérique & vie privée', soziales: 'Soutien social', konsum: 'Consommation & médias', tiere: 'Animaux & assistance', gesundheit: 'Corps & santé', kunst: 'Art & artisanat', gemeinschaft: 'Communauté & transitions de vie' },
       heartfelt1: 'Moteur de recherche qui investit ses recettes dans le reboisement.',
-      heartfelt2: 'Hébergement suisse à énergie verte, avec ses propres centres de données économes en ressources.',
+      heartfelt2: 'Hébergement suisse à énergie verte, avec ses propres centres de données économes en ressources — et notre propre hébergeur.',
       heartfelt3: 'Service de messagerie sans publicité, respectueux de la vie privée, alimenté en énergie verte.',
       heartfelt4: 'Bijoux faits main en pâte polymère et photographies de voyage.',
       heartfelt5: 'Plâtrerie, peinture et carrelage dans la région de Bâle.',

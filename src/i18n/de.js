@@ -1900,7 +1900,7 @@ export default {
       affiliateMarker: 'Affiliate',
       heartfeltGroups: { digital: 'Digital & Privatsphäre', soziales: 'Soziale Unterstützung', konsum: 'Konsum & Medien', tiere: 'Tiere & Assistenz', gesundheit: 'Körper & Gesundheit', kunst: 'Kunst & Handwerk', gemeinschaft: 'Gemeinschaft & Lebensübergänge' },
       heartfelt1: 'Suchmaschine, die ihre Einnahmen in Aufforstung steckt.',
-      heartfelt2: 'Schweizer Hosting mit Ökostrom und eigenen, ressourcenschonenden Rechenzentren.',
+      heartfelt2: 'Schweizer Hosting mit Ökostrom und eigenen, ressourcenschonenden Rechenzentren — und unser eigener Hoster.',
       heartfelt3: 'Werbefreier, datenschutzfreundlicher E-Mail-Dienst, betrieben mit Ökostrom.',
       heartfelt4: 'Handgefertigter Polymer-Clay-Schmuck und Reisefotografie.',
       heartfelt5: 'Gipser-, Maler- und Plattenarbeiten aus der Region Basel.',
