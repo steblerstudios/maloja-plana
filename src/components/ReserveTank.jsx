@@ -19,9 +19,10 @@ export const ReserveTank = ({ palette, t, savings, monthlyExpenses }) => {
     st.mode === 'noexpenses' ? t('finanzUebersicht.tankOrientation')
     : st.level === 'empty' ? t('finanzUebersicht.tankReadoutEmpty', { recommend: st.recommendMonths })
     : t('finanzUebersicht.tankReadout', { savings: num(st.savings), months: num1(st.months), recommend: st.recommendMonths });
+  // sageDeep, nicht sage: die Ableselinie ist Text (4.5:1), nicht eine Zonenfläche (3:1).
   const readoutColor =
     st.mode === 'noexpenses' ? palette.mid
-    : (st.level === 'strong' || st.level === 'ok') ? palette.sage
+    : (st.level === 'strong' || st.level === 'ok') ? (palette.sageDeep || palette.sage)
     : palette.sandDeep;
 
   const zones = [

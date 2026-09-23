@@ -96,11 +96,11 @@ export const generateCVHTML = (cvData, t) => {
   <div class="header">
     <h1>${escapeHtml(cvData.header.name)}</h1>
     <div class="contact">
-      <div class="contact-item">○ ${escapeHtml(cvData.header.phone)}</div>
-      <div class="contact-item">○ ${escapeHtml(cvData.header.email)}</div>
+      <div class="contact-item">${escapeHtml(cvData.header.phone)}</div>
+      <div class="contact-item">${escapeHtml(cvData.header.email)}</div>
     </div>
     <div class="contact" style="margin-top: 4px;">
-      <div class="contact-item">○ ${escapeHtml(cvData.header.address)}</div>
+      <div class="contact-item">${escapeHtml(cvData.header.address)}</div>
       <div class="contact-item">${escapeHtml(cvData.header.city)}</div>
     </div>
   </div>

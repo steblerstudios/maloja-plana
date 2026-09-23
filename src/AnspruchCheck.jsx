@@ -21,9 +21,9 @@ export const AnspruchCheck = ({ palette, t, data, onNavigate }) => {
   const [probe, setProbe] = useState(data);
 
   // Bei Schrittwechsel sanft nach oben — der neue Schritt beginnt am Anfang.
+  // Das Dokument scrollt, nicht mehr <main> (dessen overflow ist weg).
   useEffect(() => {
-    const m = document.querySelector('main');
-    if (m && typeof m.scrollTo === 'function') m.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
   }, [step]);
 
   const steps = [

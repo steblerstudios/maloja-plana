@@ -257,7 +257,7 @@ export const SchuldenManager = ({ palette, t, data, onSave, onNavigate }) => {
         schulden.map(debt => React.createElement('div', { key: debt.id, style: cardStyle },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: '6px' } },
             React.createElement('strong', null, debt.creditor),
-            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? palette.sage : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
+            React.createElement('span', { style: { fontWeight: weight.semi, color: debt.status === 'paid' ? (palette.sageDeep || palette.sage) : debt.status === 'overdue' ? palette.roseDeep : palette.text } }, 'CHF ' + debt.amount.toFixed(2))
           ),
           React.createElement('div', { style: { color: palette.mid, fontSize: text.sm, marginBottom: '6px' } },
             (debt.dueDate ? debt.dueDate + ' · ' : '') + statusLabel(debt.status)

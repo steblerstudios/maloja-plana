@@ -976,6 +976,13 @@ const _palette = () => React.createElement('svg', { viewBox: '0 0 24 24', fill: 
 // ═══════════════════════════════════════════════════════════════
 // Icon Registry
 // ═══════════════════════════════════════════════════════════════
+//
+// 🛑 Nicht jedes Icon hier hat schon einen Einsatz — und das ist kein toter Code.
+// Stand 24.09.2026 ohne Verwendung, aber gestaltetes Marken-Vokabular aus
+// docs/brand/icon-dictionary.md: `kalenderUhr` (Bahnhofsuhr, geplant für
+// Frist/Zeit), `mietzinsverbilligung` (Chalet + Pfeil, Leitform Haus),
+// `exportTool` (Sackmesser-Gestalt), `delete`, `filter` (Trichter).
+// Stebler Studios hat entschieden: behalten (~300 B). Nur auf Zuruf entfernen.
 
 const _iconFactories = {
   // Chapter icons

@@ -9,12 +9,16 @@ import { renderSource } from './utils/renderSource.js';
 import { PageTitle, PanelTitle } from './components/Heading.jsx';
 import { ExternerLink } from './components/ExternerLink.jsx';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { StatusForm } from './components/StatusForm.jsx';
 
-// Ergebnis-Marker des Berechtigungs-Checks: eigenes Zeichen je Ton, damit sich
+// Ergebnis-Marker des Berechtigungs-Checks: eigene FORM je Ton, damit sich
 // „Ja / Nein / Vielleicht" auch OHNE Farbe (Schwarzweiss-Modus) unterscheiden —
-// nicht nur über sage/rose/gold. ○ = „trifft hier nicht zu" (würdevoll, kein
-// Alarm, wie der hohle Ring der KVG-Statuslogik), bewusst nicht ✕.
-export const stipResultMarker = (tone) => tone === 'yes' ? '✓' : tone === 'no' ? '○' : 'ⓘ';
+// nicht nur über sage/rose/gold. Dieselbe Formsprache wie die KVG-Statuslogik
+// (`StatusForm`): voll = trifft zu, Ring mit Kern = unklar, hohl = „trifft hier
+// nicht zu" (würdevoll, kein Alarm), bewusst kein ✕.
+// Bis 23.09.2026 waren es die Buchstaben ✓ ○ ⓘ, an den Satz geklebt in einer
+// aria-live-Region — vorgelesen als «weisser Kreis, …».
+export const stipResultMarker = (tone) => tone === 'yes' ? 'voll' : tone === 'no' ? 'hohl' : 'kern';
 
 export const StipendienView = ({ palette, t, data, onNavigate }) => {
   const vorlesen = useVorlesenContext();
@@ -99,7 +103,13 @@ export const StipendienView = ({ palette, t, data, onNavigate }) => {
           border: '1px solid ' + (resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold) + '66',
           color: palette.text,
         }
-      }, stipResultMarker(resultTone) + ' ' + t(resultKey))
+      },
+        React.createElement(StatusForm, {
+          form: stipResultMarker(resultTone),
+          color: resultTone === 'yes' ? palette.sage : resultTone === 'no' ? palette.rose : palette.gold,
+          size: 10, style: { display: 'inline-block', verticalAlign: '-1px', marginRight: '6px' },
+        }),
+        t(resultKey))
     ),
 
     // Wer kann beantragen?

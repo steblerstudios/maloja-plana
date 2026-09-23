@@ -174,7 +174,7 @@ export const SozialhilfeView = ({ palette, t, data, onNavigate }) => {
     React.createElement('div', { style: { marginBottom: space.md } },
       React.createElement(PanelTitle, { palette, icon: React.createElement(Icon, { name: 'rechner', size: 20 }), style: { marginBottom: space.sm + 4 } }, t('sozialhilfe.elSection')),
       React.createElement('div', { style: { padding: space.md, background: palette.up, borderRadius: radius.sm } },
-        React.createElement('div', { style: { fontWeight: weight.semi, color: el.eligible ? palette.sage : palette.mid, marginBottom: space.xs, fontSize: text.sm } },
+        React.createElement('div', { style: { fontWeight: weight.semi, color: el.eligible ? (palette.sageDeep || palette.sage) : palette.mid, marginBottom: space.xs, fontSize: text.sm } },
           hinweisZeichen(el.eligible ? 'check' : 'info'),
           el.eligible ? t('sozialhilfe.elPossible') : t(el.noteKey, el.noteParams)
         ),

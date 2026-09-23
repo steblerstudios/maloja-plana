@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { text, weight, radius, leading, space } from './config/tokens.js';
 import { TrustLockIcon } from './components/TrustLockIcon.jsx';
 import { PrimaryButton } from './components/PrimaryButton.jsx';
+import { MarkenLogo } from './components/MarkenLogo.jsx';
 
 // ─── Tresor-LockScreen (At-Rest-Entsperrwand) ───────────────────────────────
 // Die ruhige „Schloss auf deinen Unterlagen"-Wand: erscheint beim App-Start, wenn
@@ -68,11 +69,7 @@ export const LockScreen = ({ palette, t, onUnlock, onLegal }) => {
         'aria-label': 'Maloja Plana',
         style: { fontSize: text.xl, fontWeight: weight.bold, margin: '0 0 ' + space.sm + 'px', color: palette.text, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '2px' },
       },
-        React.createElement('svg', { width: '20', height: '23', viewBox: '0 0 20 22', fill: 'none', 'aria-hidden': 'true', style: { display: 'block', flexShrink: 0 } },
-          React.createElement('polyline', { points: '2,19 6.5,4 10,11 13.5,2 18,19', fill: 'none', stroke: palette.text, strokeWidth: '2.8', strokeLinejoin: 'round', strokeLinecap: 'round' }),
-          React.createElement('circle', { cx: '13.5', cy: '2.4', r: '1.9', fill: palette.gold })
-        ),
-        'aloja Plana'
+        React.createElement(MarkenLogo, { palette, breite: 220 })
       ),
 
       // Schloss-Zeile + Titel
