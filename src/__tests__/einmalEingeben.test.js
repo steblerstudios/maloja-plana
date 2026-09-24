@@ -44,12 +44,18 @@ const profil = {
 describe('Sozialhilfe-Rechner übernimmt, was im Profil steht', () => {
   const html = zeichne(SozialhilfeRechner, profil);
   it('andere Einkünfte und Vermögen sind vorbefüllt, mit Hinweis', () => {
+    expect(feldWert(html, t('sh.einkommen'))).toBe('5200');
     expect(feldWert(html, t('sh.andereEinkuenfte'))).toBe('815');
     expect(feldWert(html, t('sh.vermoegen'))).toBe('6500');
     expect(html).toContain(t('sh.ausProfilHint'));
   });
   it('«erwerbstätig» ist angekreuzt', () => {
     expect(html).toMatch(/<input type="checkbox" checked=""[^>]*\/>\s*Erwerbstätig/);
+  });
+  it('Konkubinat: Partnerlohn nicht übernommen, Hinweis am Feld', () => {
+    const konk = zeichne(SozialhilfeRechner, { ...profil, basis: { ...profil.basis, maritalStatus: 'cohabiting', household: { adultsList: [{}], partnerIncome: '3000' } } });
+    expect(feldWert(konk, t('sh.andereEinkuenfte'))).toBe('815');
+    expect(konk).toContain(t('sh.konkubinatHint'));
   });
   it('leeres Profil: keine Vorbefüllung, kein Hinweis', () => {
     const leer = zeichne(SozialhilfeRechner, {});

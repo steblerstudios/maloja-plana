@@ -4470,6 +4470,7 @@ export default {
     nettoBruttoHint: "Il reddito salvato è indicato come lordo — inserire qui il reddito netto per l'aiuto sociale.",
     ausProfilHint: "Sommato dal profilo — liberamente modificabile qui.",
     nebenerwerbBruttoHint: "Il reddito accessorio è salvato come lordo e quindi non è conteggiato — aggiungere qui l'importo netto.",
+    konkubinatHint: "In concubinato non conta l'intero salario della o del partner, ma un contributo di concubinato — lo stabilisce il servizio sociale. Per questo qui non è precompilato.",
     andereEinkuenfte: 'Altri redditi (CHF)',
     vermoegen: 'Patrimonio (CHF)',
     erwerbstaetig: 'Occupato/a',

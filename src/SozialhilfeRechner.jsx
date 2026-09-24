@@ -23,8 +23,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
   // Sozialhilfe basiert auf dem NETTO-Einkommen: ist das Einkommen als Brutto hinterlegt,
   // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
-  const nettoBruttoMismatch = data?.finanzen?.incomeType === 'brutto';
-  const [einkommen, setEinkommen] = useState((data?.finanzen?.monthlyIncome && !nettoBruttoMismatch) ? String(data.finanzen.monthlyIncome) : '');
+  const nettoBruttoMismatch = vorbefuellt.hauptBrutto;
+  const [einkommen, setEinkommen] = useState(vorbefuellt.einkommen);
   const [andereEinkuenfte, setAndereEinkuenfte] = useState(vorbefuellt.andereEinkuenfte);
   const [vermoegen, setVermoegen] = useState(vorbefuellt.vermoegen);
   const [erwerbstaetig, setErwerbstaetig] = useState(vorbefuellt.erwerbstaetig);
@@ -131,9 +131,12 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         field('sh.kvg', kvg, setKvg, '380'),
       ),
       React.createElement('div', { style: s.inputRow },
-        field('sh.einkommen', einkommen, setEinkommen, '0', nettoBruttoMismatch ? t('sh.nettoBruttoHint') : null),
+        field('sh.einkommen', einkommen, setEinkommen, '0',
+          nettoBruttoMismatch ? t('sh.nettoBruttoHint')
+            : vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint')
+            : vorbefuellt.einkommenMitNebenerwerb ? t('sh.ausProfilHint') : null),
         field('sh.andereEinkuenfte', andereEinkuenfte, setAndereEinkuenfte, '0',
-          vorbefuellt.nebenerwerbBrutto ? t('sh.nebenerwerbBruttoHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
+          vorbefuellt.partnerKonkubinat ? t('sh.konkubinatHint') : (vorbefuellt.andereEinkuenfte ? t('sh.ausProfilHint') : null)),
         field('sh.vermoegen', vermoegen, setVermoegen, '0', vorbefuellt.vermoegen ? t('sh.ausProfilHint') : null),
       ),
       React.createElement('div', { style: { marginTop: space.sm + 'px' } },

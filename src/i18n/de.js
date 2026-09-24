@@ -4525,6 +4525,7 @@ export default {
     nettoBruttoHint: 'Das hinterlegte Einkommen ist als Brutto markiert — für die Sozialhilfe bitte das Netto-Einkommen eintragen.',
     ausProfilHint: 'Aus dem Profil zusammengezählt — hier frei anpassbar.',
     nebenerwerbBruttoHint: 'Der Nebenerwerb ist als Brutto hinterlegt und darum nicht mitgezählt — hier den Netto-Betrag ergänzen.',
+    konkubinatHint: 'Im Konkubinat zählt nicht der ganze Lohn der Partnerin oder des Partners, sondern ein Konkubinatsbeitrag — die Sozialbehörde legt ihn fest. Darum hier nicht vorbefüllt.',
     andereEinkuenfte: 'Andere Einkünfte (CHF)',
     vermoegen: 'Vermögen (CHF)',
     erwerbstaetig: 'Erwerbstätig',

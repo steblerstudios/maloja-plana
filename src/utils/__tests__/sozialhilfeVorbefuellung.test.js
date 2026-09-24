@@ -5,7 +5,7 @@ import { sozialhilfeVorbefuellung as vb } from '../sozialhilfeVorbefuellung.js';
 // aber nur, was auf derselben Basis steht (monatlich, netto) und nach denselben Regeln zählt.
 describe('sozialhilfeVorbefuellung', () => {
   it('leeres Profil: nichts vorbefüllt, eine erwachsene Person', () => {
-    expect(vb({})).toEqual({ adults: 1, andereEinkuenfte: '', vermoegen: '', erwerbstaetig: false, nebenerwerbBrutto: false });
+    expect(vb({})).toEqual({ adults: 1, einkommen: '', einkommenMitNebenerwerb: false, hauptBrutto: false, andereEinkuenfte: '', vermoegen: '', erwerbstaetig: false, nebenerwerbBrutto: false, partnerKonkubinat: false });
     expect(vb(undefined).andereEinkuenfte).toBe('');
   });
 
@@ -18,25 +18,49 @@ describe('sozialhilfeVorbefuellung', () => {
     expect(vb({ finanzen: { savingsAccount: 0 } }).vermoegen).toBe('0');
   });
 
-  it('andere Einkünfte = Zulagen + Alimente + Nebenerwerb netto', () => {
-    const r = vb({ finanzen: { familienzulagen: 215, alimenteReceived: '600', sideIncome: 400, sideIncomeType: 'netto' } });
-    expect(r.andereEinkuenfte).toBe('1215');
-    expect(r.nebenerwerbBrutto).toBe(false);
+  it('Erwerbseinkommen = Monatslohn + Nebenerwerb (beide netto) — der Nebenerwerb bekommt so den Freibetrag', () => {
+    const r = vb({ finanzen: { monthlyIncome: 3000, incomeType: 'netto', sideIncome: 400, sideIncomeType: 'netto', familienzulagen: 215 } });
+    expect(r.einkommen).toBe('3400');
+    expect(r.einkommenMitNebenerwerb).toBe(true);
+    expect(r.andereEinkuenfte).toBe('215');
   });
 
   it('Nebenerwerb brutto bleibt draussen und wird gemeldet', () => {
-    const r = vb({ finanzen: { familienzulagen: 215, sideIncome: 400, sideIncomeType: 'brutto' } });
-    expect(r.andereEinkuenfte).toBe('215');
+    const r = vb({ finanzen: { monthlyIncome: 3000, sideIncome: 400, sideIncomeType: 'brutto' } });
+    expect(r.einkommen).toBe('3000');
     expect(r.nebenerwerbBrutto).toBe(true);
+    expect(r.einkommenMitNebenerwerb).toBe(false);
   });
 
-  it('Partnereinkommen zählt nur, wenn das Feld sichtbar wäre', () => {
-    const zwei = { basis: { household: { adultsList: [{}], partnerIncome: '3000' } } };
-    expect(vb(zwei).andereEinkuenfte).toBe('3000');
-    expect(vb(zwei).adults).toBe(2);
-    // Zweite Person gelöscht, Zivilstand ledig: der gespeicherte Wert bleibt, zählt aber nicht.
-    const geloescht = { basis: { maritalStatus: 'single', household: { adultsList: [], partnerIncome: '3000' } } };
-    expect(vb(geloescht).andereEinkuenfte).toBe('');
+  it('Hauptlohn brutto: Erwerbseinkommen leer — auch mit Nebenerwerb (sonst sähe es vollständig aus)', () => {
+    const r = vb({ finanzen: { monthlyIncome: 6000, incomeType: 'brutto', sideIncome: 400 } });
+    expect(r.einkommen).toBe('');
+    expect(r.hauptBrutto).toBe(true);
+  });
+
+  it('andere Einkünfte = Zulagen + Alimente', () => {
+    expect(vb({ finanzen: { familienzulagen: 215, alimenteReceived: '600' } }).andereEinkuenfte).toBe('815');
+  });
+
+  it('Partnerlohn zählt bei Ehe/eingetragener Partnerschaft, sofern das Feld sichtbar wäre', () => {
+    const ehe = { basis: { maritalStatus: 'married', household: { adultsList: [{}], partnerIncome: '3000' } } };
+    expect(vb(ehe).andereEinkuenfte).toBe('3000');
+    expect(vb(ehe).adults).toBe(2);
+    expect(vb(ehe).partnerKonkubinat).toBe(false);
+    const ep = { basis: { maritalStatus: 'registeredPartnership', household: { adultsList: [{}], partnerIncome: '3000' } } };
+    expect(vb(ep).andereEinkuenfte).toBe('3000');
+  });
+
+  it('Konkubinat: Partnerlohn nicht vorbefüllt, Hinweis statt Wert', () => {
+    const r = vb({ basis: { maritalStatus: 'cohabiting', household: { adultsList: [{}], partnerIncome: '3000' } } });
+    expect(r.andereEinkuenfte).toBe('');
+    expect(r.partnerKonkubinat).toBe(true);
+  });
+
+  it('zweite Person gelöscht, ledig: der gespeicherte Partnerlohn zählt nicht und löst keinen Hinweis aus', () => {
+    const r = vb({ basis: { maritalStatus: 'single', household: { adultsList: [], partnerIncome: '3000' } } });
+    expect(r.andereEinkuenfte).toBe('');
+    expect(r.partnerKonkubinat).toBe(false);
   });
 
   it('Unsinn und negative Werte zählen nicht', () => {

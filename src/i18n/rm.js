@@ -3740,6 +3740,7 @@ export default {
     nettoBruttoHint: "L'entrada memorisada è marcada sco brut — endatar qua per plaschair l'entrada netta per l'agid social.",
     ausProfilHint: "Summà ord il profil — qua libramain adattabel.",
     nebenerwerbBruttoHint: "L'entrada accessorica è memorisada sco brut e perquai betg quintada — qua agiuntar l'import net.",
+    konkubinatHint: "En concubinat na quinta betg l'entir salari da la partenaria u dal partenari, mabain ina contribuziun da concubinat — il servetsch social la fixescha. Perquai na vegn nagut emplenì qua ordavant.",
     andereEinkuenfte: 'Autras entradas (CHF)',
     vermoegen: 'Facultad (CHF)',
     erwerbstaetig: 'Activ',

@@ -4491,6 +4491,7 @@ export default {
     nettoBruttoHint: "Le revenu enregistré est indiqué comme brut — veuillez saisir ici le revenu net pour l'aide sociale.",
     ausProfilHint: "Additionné à partir du profil — librement modifiable ici.",
     nebenerwerbBruttoHint: "Le revenu accessoire est enregistré en brut et n'est donc pas compté — ajouter ici le montant net.",
+    konkubinatHint: "En concubinage, ce n'est pas tout le salaire de la ou du partenaire qui compte, mais une contribution de concubinage — fixée par le service social. C'est pourquoi rien n'est prérempli ici.",
     andereEinkuenfte: 'Autres revenus (CHF)',
     vermoegen: 'Fortune (CHF)',
     erwerbstaetig: 'En emploi',
