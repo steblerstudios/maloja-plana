@@ -1,6 +1,6 @@
 # Third-Party-Lizenzen — Maloja Plana
 
-**Stand: Juni 2026, nachgeführt 17.09.2026**
+**Stand: Juni 2026, nachgeführt 17.09.2026 und 24.09.2026**
 
 ---
 
@@ -14,9 +14,6 @@
 | loose-envify | transitiv | MIT | über react |
 | js-tokens | transitiv | MIT | über loose-envify |
 | scheduler | transitiv | MIT | über react-dom |
-| @capacitor/core | ^8.4.1 | MIT | Native Bridge (iOS-Vorbereitung) |
-| @capacitor/cli | ^8.4.1 | MIT | Capacitor CLI |
-| @capacitor/ios | ^8.4.1 | MIT | iOS-Plattform |
 
 *`three` und die drei transitiven Pakete fehlten bis 23.09.2026 in dieser Tabelle —
 gefunden bei der Rechts-Prüfung des Zweigs `docs/compliance-uebersicht`. `three` ist
@@ -47,11 +44,23 @@ Rechts-Prüfung am 23.09.2026.*
 
 | Paket | Version | Lizenz | Zweck |
 |---|---|---|---|
-| vite | ^4.4.0 | MIT | Build-Tool |
-| @vitejs/plugin-react | ^4.0.0 | MIT | React-Support für Vite |
+| vite | ^7.3.6 | MIT | Build-Tool |
+| @vitejs/plugin-react | ^5.2.0 | MIT | React-Support für Vite |
 | vitest | ^4.1.6 | MIT | Test-Framework |
 | size-limit | ^12.1.0 | MIT | Bundle-Size-Monitoring |
 | @size-limit/file | ^12.1.0 | MIT | Size-Limit-Plugin |
+| eslint | ^9.39.5 | MIT | Lint |
+| @eslint/js | ^9.39.5 | MIT | Lint-Grundregeln |
+| eslint-plugin-react-hooks | ^7.1.1 | MIT | Lint-Regeln für React-Hooks |
+| globals | ^17.7.0 | MIT | Lint: bekannte globale Namen |
+| @capacitor/core | ^8.4.1 | MIT | Native Bridge (iOS-Vorbereitung) |
+| @capacitor/cli | ^8.4.1 | MIT | Capacitor CLI |
+| @capacitor/ios | ^8.4.1 | MIT | iOS-Plattform |
+
+*Nachgeführt 24.09.2026 (Deploy-Gate 0.1.40-beta) an `package.json` `devDependencies`: vite stand
+hier noch auf ^4.4.0 und @vitejs/plugin-react auf ^4.0.0; die vier Lint-Pakete fehlten; die drei
+Capacitor-Pakete standen unter «Runtime», `package.json` führt sie als Dev-Abhängigkeiten (sie
+landen nicht im Web-Bundle). Lizenzen aus `node_modules/<paket>/package.json` gelesen.*
 
 ## Schriftarten
 
