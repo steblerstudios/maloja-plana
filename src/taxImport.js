@@ -241,5 +241,9 @@ export const applyTaxToFinanzen = (matched, currentFinanzen = {}) => {
       applied.push(f);
     }
   }
+  // monthlyIncome kommt hier nur aus Brutto-Begriffen (FIELD_MAP). Ohne die passende
+  // Einkommensart hielte der Rest der App ihn für netto — die Sozialhilfe übernähme dann
+  // einen Bruttolohn. Das Feld war leer, eine alte Einkommensart beschrieb also keinen Wert.
+  if (applied.some(f => f.target === 'monthlyIncome')) merged.incomeType = 'brutto';
   return { merged, applied, kept };
 };

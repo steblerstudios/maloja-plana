@@ -171,6 +171,18 @@ describe('applyTaxToFinanzen', () => {
     expect(merged.savingsAccount).toBe('18500'); // neu gefüllt
     expect(applied.map(a => a.target)).toEqual(['savingsAccount']);
     expect(kept.map(k => k.target)).toEqual(['monthlyIncome']);
+    expect(merged.incomeType).toBeUndefined(); // bestehender Lohn: Einkommensart unberührt
+  });
+
+  // Nicht zweimal eingeben heisst auch: was übernommen wird, trägt seine Basis mit.
+  it('ein importierter Bruttolohn wird als brutto markiert — auch gegen eine verwaiste «netto»-Angabe', () => {
+    const { matched } = mapTaxFields([{ rawKey: 'Bruttolohn', rawValue: '60000' }]);
+    expect(applyTaxToFinanzen(matched, {}).merged.incomeType).toBe('brutto');
+    expect(applyTaxToFinanzen(matched, { incomeType: 'netto' }).merged.incomeType).toBe('brutto');
+  });
+  it('ohne Lohn im Import bleibt die Einkommensart unberührt', () => {
+    const { matched } = mapTaxFields([{ rawKey: 'Sparkonto', rawValue: '18500' }]);
+    expect(applyTaxToFinanzen(matched, { incomeType: 'netto' }).merged.incomeType).toBe('netto');
   });
 });
 
