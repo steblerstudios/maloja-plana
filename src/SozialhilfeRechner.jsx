@@ -5,6 +5,7 @@ import { berechneSozialhilfe } from './data/sozialhilfeRechner.js';
 import { Icon, aufklappZeichen } from './IconSystem.jsx';
 import { text, weight, space, radius } from './config/tokens.js';
 import { renderSource } from './utils/renderSource.js';
+import { zahl } from './utils/geld.js';
 import { sozialhilfeVorbefuellung } from './utils/sozialhilfeVorbefuellung.js';
 
 export const SozialhilfeRechner = ({ palette, t, data }) => {
@@ -14,12 +15,15 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
   const kanton = data?.basis?.canton || '';
   const vorbefuellt = useMemo(() => sozialhilfeVorbefuellung(data), [data]);
   const initAdults = Math.min(4, vorbefuellt.adults);
-  const initChildren = Array.isArray(household?.children) ? household.children.length : 0;
+  const initChildren = Math.min(5, vorbefuellt.kinder);
 
   const [adults, setAdults] = useState(initAdults);
   const [kinderCount, setKinderCount] = useState(initChildren);
+  // Mitbewohnende ausserhalb der Unterstützungseinheit + wie der Haushalt geführt wird (SKOS C.3.1/C.3.2).
+  const [weiterePersonen, setWeiterePersonen] = useState(Math.min(5, vorbefuellt.weiterePersonen));
+  const [wohnform, setWohnform] = useState(vorbefuellt.wohnform === 'allein' ? 'familienaehnlich' : vorbefuellt.wohnform);
   // Vorbefüllen aus bereits erfassten Angaben (überschreibbar) — nicht zweimal eingeben.
-  const [miete, setMiete] = useState(data?.wohnen?.rentAmount ? String(data.wohnen.rentAmount) : '');
+  const [miete, setMiete] = useState(vorbefuellt.miete);
   const [kvg, setKvg] = useState(data?.versicherungen?.kkPremium ? String(data.versicherungen.kkPremium) : '');
   // Sozialhilfe basiert auf dem NETTO-Einkommen: ist das Einkommen als Brutto hinterlegt,
   // NICHT vorbefüllen (falsche Basis) — stattdessen ruhiger Hinweis am Feld.
@@ -37,6 +41,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     return berechneSozialhilfe({
       adults,
       kinderImHaushalt: kinderCount,
+      weiterePersonen,
+      wohnform,
       miete: m,
       krankenkassePraemie: k,
       erwerbseinkommen: Number(einkommen) || 0,
@@ -46,7 +52,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       integrationsMassnahme: integration,
       kanton,
     });
-  }, [adults, kinderCount, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration, kanton]);
+  }, [adults, kinderCount, weiterePersonen, wohnform, miete, kvg, einkommen, andereEinkuenfte, vermoegen, erwerbstaetig, integration, kanton]);
 
   const s = {
     card: { maxWidth: '720px', background: palette.surface, padding: space.lg + 'px', borderRadius: radius.md + 'px', border: '1px solid ' + palette.border },
@@ -55,7 +61,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     label: { fontWeight: weight.semi, marginBottom: space.xs + 'px', fontSize: text.sm },
     hint: { color: palette.mid, fontSize: text.xs, marginBottom: space.xs + 'px' },
     inputRow: { display: 'flex', gap: space.md + 'px', flexWrap: 'wrap', marginBottom: space.sm + 'px', alignItems: 'flex-end' },
-    inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px' },
+    inputGroup: { display: 'flex', flexDirection: 'column', minWidth: '140px', maxWidth: '240px' },
     input: { width: '140px', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none' },
     select: { width: '100%', padding: '8px 12px', fontSize: text.body, border: '1px solid ' + palette.border, borderRadius: radius.sm + 'px', background: palette.surface, color: palette.text, fontFamily: 'inherit', outline: 'none', appearance: 'none', WebkitAppearance: 'none', paddingRight: '28px', cursor: 'pointer', boxSizing: 'border-box' },
     selectWrap: { position: 'relative', display: 'inline-block', width: '80px' },
@@ -70,7 +76,7 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
     source: { marginTop: space.md + 'px', fontSize: text.sm, color: palette.mid, padding: space.md + 'px', background: palette.up, borderRadius: radius.sm + 'px', border: '1px solid ' + palette.border, lineHeight: '1.5' },
   };
 
-  const fmt = (v) => v != null ? v.toLocaleString('de-CH', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : '–';
+  const fmt = (v) => v != null ? zahl(v) : '–';
 
   const field = (labelKey, value, setter, placeholder, hint) =>
     React.createElement('div', { style: s.inputGroup },
@@ -99,6 +105,8 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
       React.createElement('div', { style: s.inputRow },
         React.createElement('div', { style: s.inputGroup },
           React.createElement('div', { style: s.label }, t('sh.erwachsene')),
+          React.createElement('div', { style: s.hint }, t('sh.erwachseneHint')),
+          vorbefuellt.jungErwachsen && React.createElement('div', { style: s.hint }, t('sh.jungeErwachseneHint')),
           React.createElement('div', { style: s.selectWrap },
             React.createElement('select', {
               style: s.select, value: adults,
@@ -127,8 +135,34 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
             React.createElement('div', { style: s.selectChevron }, aufklappZeichen(true))
           )
         ),
-        field('sh.miete', miete, setMiete, '1200'),
+        React.createElement('div', { style: s.inputGroup },
+          React.createElement('div', { style: s.label }, t('sh.weiterePersonen')),
+          React.createElement('div', { style: s.hint }, t('sh.weiterePersonenHint')),
+          React.createElement('div', { style: s.selectWrap },
+            React.createElement('select', {
+              style: s.select, value: weiterePersonen,
+              'aria-label': t('sh.weiterePersonen'),
+              onChange: e => setWeiterePersonen(Number(e.target.value)),
+            },
+              [0,1,2,3,4,5].map(n =>
+                React.createElement('option', { key: n, value: n }, n)
+              )
+            ),
+            React.createElement('div', { style: s.selectChevron }, aufklappZeichen(true))
+          )
+        ),
+        field('sh.miete', miete, setMiete, '1200', weiterePersonen > 0 ? t('sh.mieteAnteilHint') : null),
         field('sh.kvg', kvg, setKvg, '380'),
+      ),
+      weiterePersonen > 0 && React.createElement('div', { style: { marginBottom: space.sm + 'px' } },
+        React.createElement('div', { style: s.label, id: 'sh-wohnform' }, t('sh.wohnform')),
+        React.createElement('div', { role: 'radiogroup', 'aria-labelledby': 'sh-wohnform' },
+          ['familienaehnlich', 'zweckWg'].map(w => React.createElement('label', { key: w, style: s.checkbox },
+            React.createElement('input', { type: 'radio', name: 'sh-wohnform', value: w, checked: wohnform === w, onChange: () => setWohnform(w) }),
+            t(w === 'zweckWg' ? 'sh.wohnformZweckWg' : 'sh.wohnformFamilienaehnlich')
+          ))
+        ),
+        React.createElement('div', { style: { ...s.hint, marginBottom: space.sm + 'px' } }, t('sh.wohnformHint'))
       ),
       React.createElement('div', { style: s.inputRow },
         field('sh.einkommen', einkommen, setEinkommen, '0',
@@ -182,7 +216,10 @@ export const SozialhilfeRechner = ({ palette, t, data }) => {
         ),
         React.createElement('tbody', null,
           React.createElement('tr', null,
-            React.createElement('td', { style: s.td }, t('sh.gbl') + ' (' + result.haushaltGroesse + ' ' + t('sh.personen') + ')'),
+            React.createElement('td', { style: s.td }, t('sh.gbl') + ' (' + (
+              result.wohnform === 'familienaehnlich' ? t('sh.gblAnteil', { einheit: result.haushaltGroesse, haushalt: result.haushaltGroesse + result.weiterePersonen })
+                : result.wohnform === 'zweckWg' ? t('sh.gblZweckWg', { einheit: result.haushaltGroesse })
+                : result.haushaltGroesse + ' ' + t('sh.personen')) + ')'),
             React.createElement('td', { style: s.tdRight }, fmt(result.gbl))
           ),
           React.createElement('tr', null,

@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import { zahl as geldZahl } from '../utils/geld.js';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
@@ -33,19 +34,19 @@ describe('K31 IPV-Rechner, Kanton Aargau', () => {
     const html = render(profil(1500));
     expect(html).toContain('premium.eligible');
     expect(html).toContain('CHF 347');
-    expect(html).toContain('CHF 4168');
+    expect(html).toContain('CHF 4’168');
     expect(html).not.toContain('ipv.orientierungOffen');
   });
 
   it('nennt keine Einkommensgrenze — weder eine amtliche noch die alten Musterwerte', () => {
     const html = render(profil(1500));
     expect(html).not.toContain('premium.maxIncome');
-    expect(html).not.toContain((51000).toLocaleString());
+    expect(html).not.toContain(geldZahl(51000));
     // Auch die abgeleitete Grenze (33 314 massgebend bzw. 41 814 bereinigt) steht nirgends —
     // sie wäre unsere eigene Rechnung, keine amtliche Angabe.
     for (const zahl of [33314, 41814]) {
       expect(html).not.toContain(String(zahl));
-      expect(html).not.toContain(zahl.toLocaleString());
+      expect(html).not.toContain(geldZahl(zahl));
     }
   });
 

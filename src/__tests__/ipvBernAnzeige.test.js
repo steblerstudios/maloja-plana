@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import { zahl } from '../utils/geld.js';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { preloadPLZ } from '../config/cantonalData.js';
@@ -30,10 +31,11 @@ describe('K31 IPV-Rechner, Kanton Bern', () => {
     const html = render(profil(1500));
     expect(html).toContain('premium.eligible');
     expect(html).toContain('CHF 147');
-    expect(html).toContain('CHF 1764');
-    expect(html).toContain((35000).toLocaleString());
+  // Seit 24.09.2026 mit Tausendertrennung aus utils/geld.js — vorher CHF-Beträge ohne ’ bzw. nach Gerätesprache.
+    expect(html).toContain('CHF 1’764');
+    expect(html).toContain(zahl(35000));
     expect(html).not.toContain('ipv.orientierungOffen');
-    expect(html).not.toContain((45000).toLocaleString());
+    expect(html).not.toContain(zahl(45000));
   });
 
   it('über der Grenze: «Einkommen über Grenze» mit der amtlichen Grenze 35 000', () => {

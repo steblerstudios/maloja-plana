@@ -17,10 +17,11 @@ import { verfuegungZuordnung, VERFUEGUNG_ZUORDNUNG } from './data/ipvAbzug.js';
 import { abweichungen, mitUebergabe } from './data/schnellcheckUebergabe.js';
 import { text, weight, radius , space } from './config/tokens.js';
 import { GlossarText } from './GlossarBegriff.jsx';
+import { betrag, zahl } from './utils/geld.js';
 import { geburtsjahr } from './config/kantonsModell.js';
 
 // Schweizer Format mit Tausender-Apostroph, konsistent zu Pegel/Beleg.
-const fmtCHF = (n) => 'CHF ' + Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+const fmtCHF = (n) => betrag(n || 0);
 
 // schnellcheckZahlen (B-1/E22): { monthlyIncome, rentAmount, kkPremium } aus dem
 // Schnellcheck, übergeben von main.jsx. Der Rechner rechnet damit und sagt es; das
@@ -349,7 +350,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         // Nicht jeder Kanton publiziert eine Einkommensgrenze als Zahl: der Aargau definiert
         // sie in § 5 Abs. 5 KVGG, veröffentlicht sie aber nicht. Eine abgeleitete Zahl wäre
         // unsere eigene Rechnung — dann lieber keine Zeile (K31, 20.09.2026).
-        ipvResult.cantonData.maxIncome != null && React.createElement('div', null, t('premium.maxIncome', { value: ipvResult.cantonData.maxIncome.toLocaleString() })),
+        ipvResult.cantonData.maxIncome != null && React.createElement('div', null, t('premium.maxIncome', { value: zahl(ipvResult.cantonData.maxIncome, { hoechstens: 2 }) })),
         React.createElement('div', null, t('premium.note', { value: t(ipvResult.cantonData.noteKey, ipvResult.cantonData.noteParams) }))
       ),
       // E9: unbelegt weder Modell noch Grenze noch Verfahrens-Hinweis (für GL nachweislich
@@ -455,7 +456,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px', borderBottom: '1px solid ' + palette.border + '33' } },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
             React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.monthlySubsidy')),
-            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, 'CHF ' + ipvResult.amount)
+            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.amount, { hoechstens: 2 }))
           ),
           ipvResult.reductionPercent != null && ipvResult.reductionPercent < 100 && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.reductionNote', { percent: ipvResult.reductionPercent })
@@ -464,7 +465,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
         React.createElement('div', { style: { padding: space.sm + 'px ' + space.md + 'px' } },
           React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: space.md } },
             React.createElement('span', { style: { fontSize: text.body, color: palette.text } }, t('premium.annualSubsidy')),
-            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, 'CHF ' + (ipvResult.annual || 0))
+            React.createElement('span', { style: { fontSize: text.body, fontWeight: weight.semi, color: palette.text, whiteSpace: 'nowrap' } }, betrag(ipvResult.annual || 0, { hoechstens: 2 }))
           ),
           ipvResult.maxAnnual && ipvResult.annual < ipvResult.maxAnnual && React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginTop: space.xs } },
             t('premium.maxPossible', { value: ipvResult.maxAnnual })
@@ -488,7 +489,7 @@ export const PremiumSubsidy = ({ palette, t, data: profil, onNavigate, onUpdateD
               }
             },
               React.createElement('div', { style: { fontWeight: weight.semi } }, key + ' — ' + getCantonName(key, t)),
-              React.createElement('div', { style: { color: palette.mid } }, 'Max: CHF ' + val.maxIncome.toLocaleString() + ' | Single: CHF ' + val.subsidySingle + t('common.perYear'))
+              React.createElement('div', { style: { color: palette.mid } }, 'Max: ' + betrag(val.maxIncome, { hoechstens: 2 }) + ' | Single: ' + betrag(val.subsidySingle, { hoechstens: 2 }) + t('common.perYear'))
             )
           )
         )

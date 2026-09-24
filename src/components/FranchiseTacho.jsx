@@ -2,6 +2,7 @@ import React from 'react';
 import { Gauge } from './Gauge.jsx';
 import { tachoState } from '../data/franchiseTacho.js';
 import { text, weight, space, leading } from '../config/tokens.js';
+import { zahl } from '../utils/geld.js';
 
 // Franchise-Tacho: das erste „Instrument". Liest die bestehende Franchise-
 // Optimierer-Logik (franchiseOpt) als Halbkreis-Skala — Break-even als Marke,
@@ -10,7 +11,7 @@ import { text, weight, space, leading } from '../config/tokens.js';
 // Die numerischen Zeilen (Ersparnis/Reserve/Reserve-Check) bleiben darunter.
 // num: Schweizer Tausender-Trennung ohne Währungspräfix (die Sätze bringen „CHF" selbst mit).
 // fmt: mit „CHF " — nur für die Skalen-Enden, wo kein Satz drumherum steht.
-const num = (n) => Number(n || 0).toLocaleString('de-CH', { maximumFractionDigits: 0 });
+const num = (n) => zahl(n || 0);
 const fmt = (n) => 'CHF ' + num(n);
 
 export const FranchiseTacho = ({ palette, t, franchiseOpt, costs, onNavigate }) => {

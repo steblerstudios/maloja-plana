@@ -11,6 +11,7 @@ import { KKLastCard } from './KKLastCard.jsx';
 import { UvgHinweis } from './components/UvgHinweis.jsx';
 import { berechneFranchise, SELBSTBEHALT_MAX, SELBSTBEHALT_MAX_KINDER } from './data/kvgLeistungen.js';
 import { FranchiseTacho } from './components/FranchiseTacho.jsx';
+import { zahl, betrag } from './utils/geld.js';
 
 function ageClassFromBirth(dateStr) {
   if (!dateStr) return 'erwachsen';
@@ -322,7 +323,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                           color: isActive ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                           fontWeight: isActive ? weight.semi : weight.normal,
                         },
-                      }, erledigtZeichen(isActive, 'CHF ' + amount.toFixed(2)))
+                      }, erledigtZeichen(isActive, betrag(amount, { stellen: 2 })))
                 );
               };
               return React.createElement('tr', { key: f.franchise },
@@ -330,10 +331,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                   React.createElement('button', {
                     type: 'button', onClick: () => setPickedFranchise(f.franchise),
                     style: { ...s.nameBtn, padding: '5px 8px', color: franchiseActive ? (palette.sageDeep || palette.sage) : palette.text, fontWeight: franchiseActive ? weight.semi : weight.normal },
-                  }, 'CHF ' + f.franchise.toLocaleString())
+                  }, 'CHF ' + zahl(f.franchise, { hoechstens: 2 }))
                 ),
                 hasOhne ? variantCell('mit', f.premium)
-                  : React.createElement('td', { style: { ...cell, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
+                  : React.createElement('td', { style: { ...cell, textAlign: 'right' } }, betrag(f.premium, { stellen: 2 })),
                 hasOhne && variantCell('ohne', ohnePrem)
               );
             })
@@ -350,11 +351,11 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
       // Franchise-Tacho: visuelle Kopfzeile des Optimierers (Instrument über derselben Logik)
       React.createElement(FranchiseTacho, { palette, t, franchiseOpt, costs: healthCostsYTD, onNavigate }),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.text, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
-        t('po.franchiseOptSaving', { high: franchiseOpt.highFra.toLocaleString(), low: franchiseOpt.lowFra.toLocaleString(), saving: franchiseOpt.annualSaving.toLocaleString() })),
+        t('po.franchiseOptSaving', { high: zahl(franchiseOpt.highFra, { hoechstens: 2 }), low: zahl(franchiseOpt.lowFra, { hoechstens: 2 }), saving: zahl(franchiseOpt.annualSaving, { hoechstens: 2 }) })),
       React.createElement('div', { style: { fontSize: text.sm, color: palette.mid, lineHeight: leading.normal, marginBottom: space.xs + 'px' } },
-        t('po.franchiseOptReserve', { reserve: franchiseOpt.reserve.toLocaleString(), sb: franchiseOpt.sbMax })),
+        t('po.franchiseOptReserve', { reserve: zahl(franchiseOpt.reserve, { hoechstens: 2 }), sb: franchiseOpt.sbMax })),
       franchiseOpt.breakEven != null && React.createElement('div', { style: { fontSize: text.sm, color: palette.sageDeep, lineHeight: leading.normal, marginBottom: space.xs + 'px', fontWeight: weight.medium } },
-        t('po.franchiseOptBreakeven', { breakeven: franchiseOpt.breakEven.toLocaleString() })),
+        t('po.franchiseOptBreakeven', { breakeven: zahl(franchiseOpt.breakEven, { hoechstens: 2 }) })),
       // Reserve-Check: trägt das Polster den Maximalfall? (sage = tragbar, gold = ruhiger Hinweis)
       reserveCheck && React.createElement('div', {
         style: {
@@ -364,9 +365,9 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
         },
       },
         t('po.reserveCheck_' + reserveCheck.level, {
-          savings: reserveCheck.savings.toLocaleString(),
-          need: reserveCheck.need.toLocaleString(),
-          ideal: reserveCheck.ideal.toLocaleString(),
+          savings: zahl(reserveCheck.savings, { hoechstens: 2 }),
+          need: zahl(reserveCheck.need, { hoechstens: 2 }),
+          ideal: zahl(reserveCheck.ideal, { hoechstens: 2 }),
         }),
         // Bei dünner/fehlender Reserve ruhig in die Finanzübersicht verweisen.
         onNavigate && (reserveCheck.level === 'low' || reserveCheck.level === 'none') && React.createElement('button', {
@@ -382,7 +383,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
     regionInfo && allInsurers.length > 0 && React.createElement('div', { style: { marginBottom: space.md + 'px' } },
       React.createElement('div', { style: { ...s.label, marginBottom: space.xs + 'px' } }, t('po.allInsurersTitle')),
       React.createElement('div', { style: { fontSize: text.xs, color: palette.mid, marginBottom: space.sm + 'px' } },
-        t('po.compareFranchiseNote', { franchise: compFranchise.toLocaleString() }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
+        t('po.compareFranchiseNote', { franchise: zahl(compFranchise, { hoechstens: 2 }) }) + ' ' + (onUpdateData ? t('po.chooseByPrice') : '')),
       // Franchise direkt hier wählbar (verschiedene Franchisen vergleichen) — treibt dieselbe Vergleichs-Franchise
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: space.xs + 'px', marginBottom: space.sm + 'px' } },
         React.createElement('span', { style: { fontSize: text.xs, color: palette.mid } }, t('po.thFranchise') + ':'),
@@ -390,7 +391,7 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
           React.createElement('button', {
             key: fr, type: 'button', 'aria-pressed': compFranchise === fr,
             onClick: () => setPickedFranchise(fr), style: s.gemeindeBtn(compFranchise === fr),
-          }, 'CHF ' + fr.toLocaleString())
+          }, 'CHF ' + zahl(fr, { hoechstens: 2 }))
         )
       ),
       React.createElement('table', { style: s.table },
@@ -426,8 +427,8 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                       color: chosenVariant === variant ? (palette.sageDeep || palette.sage) : (variant === 'ohne' ? palette.mid : palette.text),
                       fontWeight: chosenVariant === variant ? weight.semi : weight.normal,
                     },
-                  }, erledigtZeichen(chosenVariant === variant, 'CHF ' + amount.toFixed(2)))
-                : 'CHF ' + amount.toFixed(2)
+                  }, erledigtZeichen(chosenVariant === variant, betrag(amount, { stellen: 2 })))
+                : betrag(amount, { stellen: 2 })
             );
             const out = [
               React.createElement('tr', { key: ins.nr },
@@ -457,10 +458,10 @@ export const PraemienOrientierung = ({ palette, t, data, onNavigate, onUpdateDat
                     ),
                     React.createElement('tbody', null,
                       ladderMit.map(f => React.createElement('tr', { key: f.franchise },
-                        React.createElement('td', { style: s.td }, 'CHF ' + f.franchise.toLocaleString()),
-                        React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, 'CHF ' + f.premium.toFixed(2)),
+                        React.createElement('td', { style: s.td }, 'CHF ' + zahl(f.franchise, { hoechstens: 2 })),
+                        React.createElement('td', { style: { ...s.td, textAlign: 'right' } }, betrag(f.premium, { stellen: 2 })),
                         ohneMap && React.createElement('td', { style: { ...s.td, textAlign: 'right', color: palette.mid } },
-                          ohneMap[f.franchise] != null ? 'CHF ' + ohneMap[f.franchise].toFixed(2) : '–')
+                          ohneMap[f.franchise] != null ? betrag(ohneMap[f.franchise], { stellen: 2 }) : '–')
                       ))
                     )
                   )

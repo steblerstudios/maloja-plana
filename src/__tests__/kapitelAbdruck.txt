@@ -79,7 +79,7 @@ de kapitel=versicherungen title~ef27b74c short~dca3d9ce description~deb8fbd8 fel
 de   k=kkInsurer type="text" mvo=true section~a6b6d59a orientation~73f99cd4 link~8ce59537 placeholder~3cd655d7 label~308f6858 sectionIntro~bcc4d385
 de   k=kkModel type="select" label~86df66a1 options=7 optWerte~8aa6d6ea optLabels~83eac850
 de   k=kkPremium type="currency" mvo=true label~8a67ec89
-de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b options=10 optWerte~98b76529 optLabels~6fdc5753
+de   k=franchise type="select" mvo=true orientation~e16d2456 label~8fedf44b options=10 optWerte~98b76529 optLabels~9a237633
 de   k=kkCardNumber type="text" label~8fdb99db
 de   k=policyNumber type="text" hint~d822c8ff label~45658792
 de   k=kkZusatz type="text" placeholder~e363faf1 label~32e009c5
