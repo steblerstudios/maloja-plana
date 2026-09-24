@@ -23,9 +23,9 @@ import frTexte from '../i18n/fr.js';
 import itTexte from '../i18n/it.js';
 import rmTexte from '../i18n/rm.js';
 
-const schirm = ({ props = {}, context = null, meldung = 'Kaputt' } = {}) => {
+const schirm = ({ props = {}, context = null, meldung = 'Kaputt', fehler = null } = {}) => {
   const eb = new ErrorBoundary(props);
-  eb.state = { hasError: true, error: new Error(meldung) };
+  eb.state = { hasError: true, error: fehler || new Error(meldung) };
   eb.context = context;
   return renderToString(eb.render());
 };
@@ -43,20 +43,37 @@ describe('Der Fehlerschirm bietet einen Melde-Weg', () => {
     expect(adresse).toContain('mailto:info@malojaplana.ch');
   });
 
-  it('legt Version, Ansicht, Sprache und Fehlermeldung in den Entwurf', () => {
-    const adresse = meldeAdresse(schirm({ context: { t: () => '', lang: 'fr' }, meldung: 'Boom' }));
+  it('legt Version, Ansicht, Sprache und die Fehlerart in den Entwurf', () => {
+    const adresse = meldeAdresse(schirm({ context: { t: () => '', lang: 'fr' }, fehler: new TypeError('Boom') }));
     const entwurf = decodeURIComponent(adresse.split('&body=')[1]);
     expect(entwurf).toContain('Version: ' + APP_VERSION);
     expect(entwurf).toContain('Ansicht: Fehlerschirm');
     expect(entwurf).toContain('Sprache: fr');
-    expect(entwurf).toContain('Fehler: Boom');
+    expect(entwurf).toContain('Fehler: TypeError');
   });
 
-  it('kürzt die Fehlermeldung auf 200 Zeichen — kein langer Zwischenstand wandert mit', () => {
-    const adresse = meldeAdresse(schirm({ meldung: 'x'.repeat(500) }));
-    const entwurf = decodeURIComponent(adresse.split('&body=')[1]);
-    expect(entwurf).toContain('Fehler: ' + 'x'.repeat(200));
-    expect(entwurf).not.toContain('x'.repeat(201));
+  // K119 (24.09.2026): bis dahin ging `error.message` mit, auf 200 Zeichen
+  // gekürzt. Ein echter Browser-Fehler zitiert die Eingabe — Kürzen schützt
+  // davor nicht. Der Fehler hier ist echt erzeugt, nicht ausgedacht.
+  it('trägt keine Eingabe aus der Fehlermeldung in den Entwurf', () => {
+    let echt;
+    try { JSON.parse('Alex Muster, Basel'); } catch (e) { echt = e; }
+    // Vorbedingung: die Meldung zitiert die Eingabe wirklich — sonst prüfte der Test nichts.
+    expect(echt.message).toContain('Alex Muster');
+    const entwurf = decodeURIComponent(meldeAdresse(schirm({ fehler: echt })).split('&body=')[1]);
+    expect(entwurf).toContain('Fehler: SyntaxError');
+    expect(entwurf).not.toContain('Alex');
+    expect(entwurf).not.toContain('Basel');
+  });
+
+  it('nimmt nur einen schlichten Fehlernamen — alles andere wird zu «—»', () => {
+    for (const name of ['Alex Muster', 'Fehler: 8001 Zürich', '', 'x'.repeat(41), '1Error']) {
+      const fehler = new Error('egal');
+      fehler.name = name;
+      const entwurf = decodeURIComponent(meldeAdresse(schirm({ fehler })).split('&body=')[1]);
+      expect(entwurf, JSON.stringify(name)).toContain('Fehler: —');
+      if (name) expect(entwurf, JSON.stringify(name)).not.toContain(name);
+    }
   });
 
   it('schickt nichts von selbst — ein Link zum Mailprogramm, kein Formular', () => {

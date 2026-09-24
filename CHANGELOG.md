@@ -68,6 +68,11 @@ kommt der Changelog immer mit, nie doppelt.*
   **61,15 kB**, also 3,85 kB Luft unter dem Deckel.
 
 ### Behoben
+- **Absturz-Meldung ohne Fehlertext** (K119, 24.09.2026). Der Mail-Entwurf auf dem Fehlerschirm
+  enthielt bis zu 200 Zeichen der Browser-Fehlermeldung. Manche Fehler zitieren darin die
+  Eingabe selbst — bei einem JSON-Fehler etwa den gelesenen Text. Jetzt steht nur noch die
+  Fehlerart im Entwurf (`TypeError`, `SyntaxError` …), und nur, wenn sie ein schlichter
+  Bezeichner ist; sonst «—». Gesendet wird weiterhin nichts von selbst.
 - **«undefined» in der aufgeklappten Grundordnung** (24.09.2026). Unter «Fortschritt im Detail» →
   «Ihre Grundordnung» begann jede Kapitel-Kopfzeile mit «undefined» («undefined Persönliche
   Basis»): der Code klebte ein Kapitel-Icon-Feld an den Titel, das die Kapitel nicht haben. Die

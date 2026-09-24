@@ -28,8 +28,8 @@ Zwei Türen, beide führen in dieselbe Liste:
 1. **Aus der App:** der Feedback-Link in der **Fusszeile** öffnet eine Mail an
    `info@malojaplana.ch` (`src/main.jsx`, `feedbackHref`), mit Version, Ansicht und Sprache in
    einem abgetrennten, löschbaren Block. **Und seit 23.09.2026 auch der Fehlerschirm** selbst
-   (`src/ErrorBoundary.jsx`, `meldeHref`) — dort zusätzlich mit der Fehlermeldung des Browsers,
-   auf 200 Zeichen gekürzt. Dieselbe Tür, zwei Stellen. Gesendet wird nie etwas von selbst: die
+   (`src/ErrorBoundary.jsx`, `meldeHref`) — dort zusätzlich mit der Fehlerart (`TypeError` …),
+   **nicht** der Fehlermeldung: die kann die Eingabe zitieren (K119, 24.09.2026). Dieselbe Tür, zwei Stellen. Gesendet wird nie etwas von selbst: die
    Person sieht den Entwurf im Mailprogramm. Das ist die Tür für die Menschen, die Maloja
    benutzen. Sie funktioniert nur, wenn das Postfach existiert und jemand es liest — das ist die
    Verantwortung von Stebler Studios, nicht des Codes.

@@ -44,12 +44,17 @@ export class ErrorBoundary extends React.Component {
 
   // Melde-Entwurf: Betreff + abgetrennter Kontext-Block, gleiche Bauweise wie der
   // Feedback-Link in der Fusszeile (main.jsx). Drei unkritische Werte plus die
-  // Fehlermeldung des Browsers — ohne sie ist eine Absturz-Meldung kaum
-  // nachstellbar. Sie ist auf 200 Zeichen gekürzt, damit keine langen
-  // Zwischenstände mitwandern, steht sichtbar im Entwurf und ist löschbar.
-  // Gesendet wird nichts automatisch.
+  // Fehlerart (`TypeError`, `SyntaxError` …). Gesendet wird nichts automatisch.
+  //
+  // Bis 24.09.2026 stand hier `error.message`, auf 200 Zeichen gekürzt (K119).
+  // Kürzen hilft nicht: manche Browser zitieren bei einem JSON-Fehler die Eingabe
+  // selbst, und die ersten 200 Zeichen eines Lebensordners sind genau das, was
+  // nicht in eine Mail gehört. Jetzt gilt eine Erlaubnisliste statt einer Kürzung:
+  // mit geht nur ein schlichter Bezeichner — ein eigener Fehlername mit
+  // Leerzeichen, Ziffernfolgen am Anfang oder Satzzeichen wird zu «—».
   meldeHref(tx) {
-    const meldung = String(this.state.error?.message || '').slice(0, 200);
+    const art = String(this.state.error?.name || '');
+    const meldung = /^[A-Za-z][A-Za-z0-9]{0,39}$/.test(art) ? art : '';
     const body = '\n\n\n— — —\n' + tx('beta.feedbackContext', '') + '\n'
       + 'Version: ' + APP_VERSION + '\n'
       + 'Ansicht: Fehlerschirm\n'
