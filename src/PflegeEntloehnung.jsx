@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { text, weight, space, radius, leading } from './config/tokens.js';
-import { ExternerLink } from './components/ExternerLink.jsx';
 import { ErgebnisArt } from './components/ErgebnisArt.jsx';
 import { ergebnis, ERGEBNIS_ART } from './data/ergebnisArt.js';
+import { text, weight, space, radius, leading } from './config/tokens.js';
+import { ExternerLink } from './components/ExternerLink.jsx';
 
 // Kleiner Orientierungs-Rechner: pflegende Angehörige können bei manchen
 // (Spitex-nahen) Organisationen angestellt und für ihre Pflege entlöhnt werden.
